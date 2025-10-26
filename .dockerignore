@@ -1,0 +1,33 @@
+# Dependencies
+node_modules
+
+# Build outputs
+build
+dist
+.vite
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# VCS
+.git
+.gitignore
+
+# Docker
+Dockerfile*
+.dockerignore
+
+# OS/editor
+.DS_Store
+*.swp
+*.swo
+.idea
+.vscode
+
+# Misc
+coverage
+
+**/temp/run-*/**

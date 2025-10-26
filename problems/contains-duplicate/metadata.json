@@ -1,0 +1,48 @@
+{
+  "id": "contains-duplicate",
+  "title": "3. Contains Duplicate",
+  "difficulty": "Easy",
+  "category": "array",
+  "link": "https://leetcode.com/problems/contains-duplicate/",
+  "examples": [
+    {
+      "input": "nums = [1,2,3,1]",
+      "output": true
+    },
+    {
+      "input": "nums = [1,2,3,4]",
+      "output": false
+    },
+    {
+      "input": "nums = [1,1,1,3,3,4,3,2,4,2]",
+      "output": true
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean containsDuplicate(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\n class Solution:\n    def containsDuplicate(self, nums: List[int]) -> bool:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool containsDuplicate(vector<int>& nums) {\n        return false;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3,1]"
+    },
+    {
+      "nums": "[1,2,3,4]"
+    },
+    {
+      "nums": "[1,1,1,3,3,4,3,2,4,2]"
+    }
+  ],
+  "functionName": "containsDuplicate",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "A common solution runs in O(n) time using a hash set: iterate through the array and check whether the current element is already in the set. If so, return true; otherwise insert it. If no duplicates are found, return false."
+  ]
+}

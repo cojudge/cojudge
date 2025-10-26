@@ -1,0 +1,55 @@
+{
+  "id": "binary-tree-level-order-traversal",
+  "title": "64. Binary Tree Level Order Traversal",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/binary-tree-level-order-traversal/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [3,9,20,null,null,15,7]",
+      "output": "[[3],[9,20],[15,7]]"
+    },
+    {
+      "input": "root = [1]",
+      "output": "[[1]]"
+    },
+    {
+      "input": "root = []",
+      "output": "[]"
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nimport java.util.*;\nclass Solution {\n    public List<List<Integer>> levelOrder(TreeNode root) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nfrom typing import List\nclass Solution:\n    def levelOrder(self, root) -> List[List[int]]:\n        # TODO: return level order traversal values\n        pass\n",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> levelOrder(TreeNode* root) {\n        \n    }\n};\n"
+  },
+  "testCases": [
+    {
+      "root": "[3,9,20,null,null,15,7]"
+    },
+    {
+      "root": "[1]"
+    },
+    {
+      "root": "[]"
+    },
+    {
+      "root": "[1,2,3,4,5]"
+    },
+    {
+      "root": "[1,null,2,3,4]"
+    }
+  ],
+  "functionName": "levelOrder",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    }
+  ],
+  "outputType": "int_list_2d",
+  "hints": [
+    "Perform a breadth-first search (BFS), collecting node values level by level."
+  ]
+}

@@ -1,0 +1,6 @@
+[
+  { "s": "leetcode", "wordDict": ["leet","code"] },
+  { "s": "applepenapple", "wordDict": ["apple","pen"] },
+  { "s": "catsandog", "wordDict": ["cats","dog","sand","and","cat"] },
+  { "s": "@javascript: 'a'.repeat(40000)", "wordDict": ["a","aa","aaa","aaaa","aaaaa"], "_isLargeTest": true }
+]

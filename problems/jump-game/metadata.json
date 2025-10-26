@@ -1,0 +1,44 @@
+{
+  "id": "jump-game",
+  "title": "26. Jump Game",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/jump-game/",
+  "examples": [
+    {
+      "input": "nums=[2,3,1,1,4]",
+      "output": "true"
+    },
+    {
+      "input": "nums=[3,2,1,0,4]",
+      "output": "false"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean canJump(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def canJump(self, nums: List[int]) -> bool:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool canJump(vector<int>& nums) {\n        return false;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "nums": "[2,3,1,1,4]"
+    },
+    {
+      "nums": "[3,2,1,0,4]"
+    },
+    {
+      "nums": "[0]"
+    }
+  ],
+  "functionName": "canJump",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Greedy keeps the furthest reachable index; if it ever falls behind current index, it's impossible."
+  ]
+}

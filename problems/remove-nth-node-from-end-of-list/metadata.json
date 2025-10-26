@@ -1,0 +1,59 @@
+{
+  "id": "remove-nth-node-from-end-of-list",
+  "title": "44. Remove Nth Node From End Of List",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/",
+  "category": "linked-list",
+  "examples": [
+    {
+      "input": "head = [1,2,3,4,5], n = 2",
+      "output": "[1,2,3,5]"
+    },
+    {
+      "input": "head = [1], n = 1",
+      "output": "[]"
+    },
+    {
+      "input": "head = [1,2], n = 1",
+      "output": "[1]"
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for singly-linked list. \nListNode {\n    int val;\n    ListNode next;\n    ListNode() {}\n    ListNode(int val) { this.val = val; }\n    ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n}\n*/\nclass Solution {\n    public ListNode removeNthFromEnd(ListNode head, int n) {\n        \n    }\n}",
+    "python": "# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\nclass Solution:\n    def removeNthFromEnd(self, head, n: int):\n        pass\n",
+    "cpp": "/*\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode(): val(0), next(nullptr) {}\n    ListNode(int x): val(x), next(nullptr) {}\n    ListNode(int x, ListNode* next): val(x), next(next) {}\n};\n*/\nclass Solution {\npublic:\n    ListNode* removeNthFromEnd(ListNode* head, int n) {\n        return nullptr;\n    }\n};\n"
+  },
+  "testCases": [
+    {
+      "head": "[1,2,3,4,5]",
+      "n": 2
+    },
+    {
+      "head": "[1]",
+      "n": 1
+    },
+    {
+      "head": "[1,2]",
+      "n": 1
+    },
+    {
+      "head": "[1,2]",
+      "n": 2
+    }
+  ],
+  "functionName": "removeNthFromEnd",
+  "params": [
+    {
+      "name": "head",
+      "type": "list_node"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "list_node",
+  "hints": [
+    "Given the head of a linked list, remove the nth node from the end of the list and return its head."
+  ]
+}

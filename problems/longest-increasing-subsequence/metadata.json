@@ -1,0 +1,44 @@
+{
+  "id": "longest-increasing-subsequence",
+  "title": "18. Longest Increasing Subsequence",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/longest-increasing-subsequence/",
+  "examples": [
+    {
+      "input": "nums = [10,9,2,5,3,7,101,18]",
+      "output": "4"
+    },
+    {
+      "input": "nums = [0,1,0,3,2,3]",
+      "output": "4"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int lengthOfLIS(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def lengthOfLIS(self, nums: List[int]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int lengthOfLIS(vector<int>& nums) {\n        return 0;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "nums": "[10,9,2,5,3,7,101,18]"
+    },
+    {
+      "nums": "[0,1,0,3,2,3]"
+    },
+    {
+      "nums": "[7,7,7,7,7,7,7]"
+    }
+  ],
+  "functionName": "lengthOfLIS",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Patience sorting in O(n log n): maintain tails[i] = minimum tail of an increasing subsequence of length i+1."
+  ]
+}

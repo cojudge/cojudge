@@ -1,0 +1,48 @@
+{
+  "id": "linked-list-cycle",
+  "title": "41. Detect Cycle in a Linked List",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/linked-list-cycle/",
+  "category": "linked-list",
+  "examples": [
+    {
+      "input": "head = [3,2,0,-4], pos = 1",
+      "output": "true"
+    },
+    {
+      "input": "head = [1,2], pos = 0",
+      "output": "true"
+    },
+    {
+      "input": "head = [1], pos = -1",
+      "output": "false"
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for singly-linked list. \nListNode {\n    int val;\n    ListNode next;\n    ListNode() {}\n    ListNode(int val) { this.val = val; }\n    ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n}\n*/\nclass Solution {\n    public boolean hasCycle(ListNode head) {\n        \n    }\n}",
+    "python": "# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\nclass Solution:\n    def hasCycle(self, head) -> bool:\n        pass\n",
+    "cpp": "/*\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode(): val(0), next(nullptr) {}\n    ListNode(int x): val(x), next(nullptr) {}\n    ListNode(int x, ListNode* next): val(x), next(next) {}\n};\n*/\nclass Solution {\npublic:\n    bool hasCycle(ListNode* head) {\n        return false;\n    }\n};\n"
+  },
+  "testCases": [
+    {
+      "head": "[]"
+    },
+    {
+      "head": "[1]"
+    },
+    {
+      "head": "[1,2,3,4,5]"
+    }
+  ],
+  "functionName": "hasCycle",
+  "params": [
+    {
+      "name": "head",
+      "type": "list_node"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Use Floyd's Tortoise and Hare algorithm to detect if a cycle exists in a singly linked list."
+  ]
+}

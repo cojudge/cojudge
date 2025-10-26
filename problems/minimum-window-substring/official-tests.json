@@ -1,0 +1,9 @@
+[
+  { "s": "ADOBECODEBANC", "t": "ABC" },
+  { "s": "a", "t": "a" },
+  { "s": "a", "t": "aa" },
+  { "s": "bba", "t": "ab" },
+  { "s": "aa", "t": "aa" },
+  { "s": "aa", "t": "aaa" },
+  { "s": "abc", "t": "cba" }
+]

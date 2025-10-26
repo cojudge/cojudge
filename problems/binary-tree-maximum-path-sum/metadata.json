@@ -1,0 +1,55 @@
+{
+  "id": "binary-tree-maximum-path-sum",
+  "title": "63. Binary Tree Maximum Path Sum",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/binary-tree-maximum-path-sum/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [1,2,3]",
+      "output": "6"
+    },
+    {
+      "input": "root = [-10,9,20,null,null,15,7]",
+      "output": "42"
+    },
+    {
+      "input": "root = [2,-1]",
+      "output": "2"
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public int maxPathSum(TreeNode root) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\nclass Solution:\n    def maxPathSum(self, root) -> int:\n        # TODO: return the maximum path sum\n        pass\n",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\nclass Solution {\npublic:\n    int maxPathSum(TreeNode* root) {\n        \n    }\n};\n"
+  },
+  "testCases": [
+    {
+      "root": "[1,2,3]"
+    },
+    {
+      "root": "[-10,9,20,null,null,15,7]"
+    },
+    {
+      "root": "[2,-1]"
+    },
+    {
+      "root": "[-3]"
+    },
+    {
+      "root": "[9,6,-3,null,null,-6,2,null,null,2,null,-6,-6,-6]"
+    }
+  ],
+  "functionName": "maxPathSum",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use DFS to compute the maximum gain from each node and track the best split path passing through each node."
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "id": "graph-valid-tree",
+  "title": "33. Graph Valid Tree",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/graph-valid-tree/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "n=5, edges=[[0,1],[0,2],[0,3],[1,4]]",
+      "output": "true"
+    },
+    {
+      "input": "n=5, edges=[[0,1],[1,2],[2,3],[1,3],[1,4]]",
+      "output": "false"
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public boolean validTree(int n, int[][] edges) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def validTree(self, n: int, edges: List[List[int]]) -> bool:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool validTree(int n, vector<vector<int>>& edges) {\n        return false;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "n": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          4
+        ]
+      ]
+    },
+    {
+      "n": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ]
+      ]
+    },
+    {
+      "n": 1,
+      "edges": []
+    }
+  ],
+  "functionName": "validTree",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "edges",
+      "type": "int_array_2d",
+      "visualizeType": "undirected_edges",
+      "numNodesRef": "n"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "An undirected graph is a tree iff it is connected and has exactly n-1 edges. Use Union-Find or BFS/DFS."
+  ]
+}

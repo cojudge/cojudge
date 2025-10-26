@@ -1,0 +1,44 @@
+{
+  "id": "container-with-most-water",
+  "title": "10. Container With Most Water",
+  "difficulty": "Medium",
+  "category": "array",
+  "link": "https://leetcode.com/problems/container-with-most-water/",
+  "examples": [
+    {
+      "input": "height = [1,8,6,2,5,4,8,3,7]",
+      "output": "49"
+    },
+    {
+      "input": "height = [1,1]",
+      "output": "1"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxArea(int[] height) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxArea(self, height: List[int]) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int maxArea(vector<int>& height) {\n        return 0;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "height": "[1,8,6,2,5,4,8,3,7]"
+    },
+    {
+      "height": "[1,1]"
+    },
+    {
+      "height": "[4,3,2,1,4]"
+    }
+  ],
+  "functionName": "maxArea",
+  "params": [
+    {
+      "name": "height",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use a two-pointer approach starting at both ends, moving the shorter side inward each step. This guarantees O(n) time."
+  ]
+}

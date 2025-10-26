@@ -1,0 +1,99 @@
+{
+  "id": "number-of-islands",
+  "title": "30. Number of Islands",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/number-of-islands/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "grid = [[1,1,1,1,0],[1,1,0,1,0],[1,1,0,0,0],[0,0,0,0,0]]",
+      "output": "1"
+    },
+    {
+      "input": "grid = [[1,1,0,0,0],[1,1,0,0,0],[0,0,1,0,0],[0,0,0,1,1]]",
+      "output": "3"
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int numIslands(int[][] grid) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numIslands(self, grid: List[List[int]]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int numIslands(vector<vector<int>>& grid) {\n        return 0;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "grid": [
+        [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "grid": [
+        [
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          1
+        ]
+      ]
+    }
+  ],
+  "functionName": "numIslands",
+  "params": [
+    {
+      "name": "grid",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use DFS/BFS to flood-fill each unvisited land cell and count components."
+  ]
+}

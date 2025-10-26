@@ -1,0 +1,7 @@
+[
+  { "text1": "abcde", "text2": "ace" },
+  { "text1": "abc", "text2": "abc" },
+  { "text1": "abc", "text2": "def" },
+  { "text1": "bl", "text2": "yby" },
+  { "text1": "@javascript: 'a'.repeat(30000)", "text2": "@javascript: 'a'.repeat(30000)", "_isLargeTest": true }
+]

@@ -1,0 +1,63 @@
+{
+  "id": "word-break",
+  "title": "20. Word Break",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/word-break/",
+  "examples": [
+    {
+      "input": "s=\"leetcode\", wordDict=[\"leet\",\"code\"]",
+      "output": "true"
+    },
+    {
+      "input": "s=\"applepenapple\", wordDict=[\"apple\",\"pen\"]",
+      "output": "true"
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public boolean wordBreak(String s, List<String> wordDict) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> bool:\n        pass\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool wordBreak(string s, vector<string>& wordDict) {\n        return false;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "s": "leetcode",
+      "wordDict": [
+        "leet",
+        "code"
+      ]
+    },
+    {
+      "s": "applepenapple",
+      "wordDict": [
+        "apple",
+        "pen"
+      ]
+    },
+    {
+      "s": "catsandog",
+      "wordDict": [
+        "cats",
+        "dog",
+        "sand",
+        "and",
+        "cat"
+      ]
+    }
+  ],
+  "functionName": "wordBreak",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "wordDict",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "DP over prefixes: dp[i]=true if there exists j<i such that dp[j] and s[j..i) in dict. Optimize by max word length."
+  ]
+}

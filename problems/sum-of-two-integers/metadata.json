@@ -1,0 +1,51 @@
+{
+  "id": "sum-of-two-integers",
+  "title": "11. Sum of Two Integers",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/sum-of-two-integers/",
+  "category": "binary",
+  "examples": [
+    {
+      "input": "a = 1, b = 2",
+      "output": "3"
+    },
+    {
+      "input": "a = 2, b = 3",
+      "output": "5"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int getSum(int a, int b) {\n        \n    }\n}",
+    "python": "class Solution:\n    def getSum(self, a: int, b: int) -> int:\n        pass\n",
+    "cpp": "class Solution {\npublic:\n    int getSum(int a, int b) {\n        return 0;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "a": 1,
+      "b": 2
+    },
+    {
+      "a": 2,
+      "b": 3
+    },
+    {
+      "a": -1,
+      "b": 1
+    }
+  ],
+  "functionName": "getSum",
+  "params": [
+    {
+      "name": "a",
+      "type": "int"
+    },
+    {
+      "name": "b",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use bitwise operations: the partial sum is `a ^ b` and the carry is `(a & b) << 1`. Iterate until the carry is zero."
+  ]
+}

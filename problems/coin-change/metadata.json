@@ -1,0 +1,56 @@
+{
+  "id": "coin-change",
+  "title": "17. Coin Change",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/coin-change/",
+  "examples": [
+    {
+      "input": "coins = [1,2,5], amount = 11",
+      "output": "3",
+      "explanation": "11 = 5 + 5 + 1"
+    },
+    {
+      "input": "coins = [2], amount = 3",
+      "output": "-1"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int coinChange(int[] coins, int amount) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def coinChange(self, coins: List[int], amount: int) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int coinChange(vector<int>& coins, int amount) {\n        return -1;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "coins": "[1,2,5]",
+      "amount": 11
+    },
+    {
+      "coins": "[2]",
+      "amount": 3
+    },
+    {
+      "coins": "[1]",
+      "amount": 0
+    },
+    {
+      "coins": "[2,5,10,1]",
+      "amount": 27
+    }
+  ],
+  "functionName": "coinChange",
+  "params": [
+    {
+      "name": "coins",
+      "type": "int_array"
+    },
+    {
+      "name": "amount",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Unbounded knapsack DP: dp[a] = min over coins c (dp[a-c] + 1). Initialize dp[0]=0 and others to INF."
+  ]
+}

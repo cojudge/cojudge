@@ -1,0 +1,50 @@
+{
+  "id": "climbing-stairs",
+  "title": "16. Climbing Stairs",
+  "difficulty": "Easy",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/climbing-stairs/",
+  "examples": [
+    {
+      "input": "n = 2",
+      "output": "2"
+    },
+    {
+      "input": "n = 3",
+      "output": "3"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int climbStairs(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def climbStairs(self, n: int) -> int:\n        pass\n",
+    "cpp": "class Solution {\npublic:\n    int climbStairs(int n) {\n        return 0;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "n": 1
+    },
+    {
+      "n": 2
+    },
+    {
+      "n": 3
+    },
+    {
+      "n": 4
+    },
+    {
+      "n": 5
+    }
+  ],
+  "functionName": "climbStairs",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Classic DP: ways[n] = ways[n-1] + ways[n-2]. With O(1) space we can keep just the last two values."
+  ]
+}

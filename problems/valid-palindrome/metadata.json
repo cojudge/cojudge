@@ -1,0 +1,44 @@
+{
+  "id": "valid-palindrome",
+  "title": "56. Valid Palindrome",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/valid-palindrome/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s=\"A man, a plan, a canal: Panama\"",
+      "output": "true"
+    },
+    {
+      "input": "s=\"race a car\"",
+      "output": "false"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isPalindrome(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def isPalindrome(self, s: str) -> bool:\n        pass\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool isPalindrome(string s) {\n        return false;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "s": "A man, a plan, a canal: Panama"
+    },
+    {
+      "s": "race a car"
+    },
+    {
+      "s": " "
+    }
+  ],
+  "functionName": "isPalindrome",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Use two pointers from both ends, skipping non-alphanumeric characters and comparing case-insensitively."
+  ]
+}

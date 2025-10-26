@@ -1,0 +1,62 @@
+{
+  "id": "merge-two-sorted-lists",
+  "title": "42. Merge Two Sorted Lists",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/merge-two-sorted-lists/",
+  "category": "linked-list",
+  "examples": [
+    {
+      "input": "list1 = [1,2,4], list2 = [1,3,4]",
+      "output": "[1,1,2,3,4,4]"
+    },
+    {
+      "input": "list1 = [], list2 = []",
+      "output": "[]"
+    },
+    {
+      "input": "list1 = [], list2 = [0]",
+      "output": "[0]"
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for singly-linked list. \nListNode {\n    int val;\n    ListNode next;\n    ListNode() {}\n    ListNode(int val) { this.val = val; }\n    ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n}\n*/\nclass Solution {\n    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {\n        \n    }\n}",
+    "python": "# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\nclass Solution:\n    def mergeTwoLists(self, list1, list2):\n        pass\n",
+    "cpp": "/*\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode(): val(0), next(nullptr) {}\n    ListNode(int x): val(x), next(nullptr) {}\n    ListNode(int x, ListNode* next): val(x), next(next) {}\n};\n*/\nclass Solution {\npublic:\n    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {\n        return nullptr;\n    }\n};\n"
+  },
+  "testCases": [
+    {
+      "list1": "[1,2,4]",
+      "list2": "[1,3,4]"
+    },
+    {
+      "list1": "[]",
+      "list2": "[]"
+    },
+    {
+      "list1": "[]",
+      "list2": "[0]"
+    },
+    {
+      "list1": "[5]",
+      "list2": "[1,3,4,7]"
+    }
+  ],
+  "functionName": "mergeTwoLists",
+  "params": [
+    {
+      "name": "list1",
+      "type": "list_node"
+    },
+    {
+      "name": "list2",
+      "type": "list_node"
+    }
+  ],
+  "outputType": "list_node",
+  "hints": [
+    "Use a dummy head and a tail pointer; at each step, attach the smaller of list1 or list2 and advance that list.",
+    "When one list runs out, attach the remainder of the other list.",
+    "You can do this iteratively (preferred for O(1) stack) or recursively (clearer but uses call stack).",
+    "Re-use nodes by adjusting next pointers; don't allocate new nodes unless required by the environment."
+  ]
+}

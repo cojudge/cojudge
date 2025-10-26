@@ -1,0 +1,57 @@
+{
+  "id": "alien-dictionary",
+  "title": "32. Alien Dictionary",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/alien-dictionary/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "words = [\"wrt\",\"wrf\",\"er\",\"ett\",\"rftt\"]",
+      "output": "\"wertf\" (one valid order)"
+    },
+    {
+      "input": "words = [\"z\",\"x\"]",
+      "output": "\"zx\""
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public String alienOrder(String[] words) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def alienOrder(self, words: List[str]) -> str:\n        pass\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string alienOrder(vector<string>& words) {\n        return \"\";\n    }\n};"
+  },
+  "testCases": [
+    {
+      "words": [
+        "wrt",
+        "wrf",
+        "er",
+        "ett",
+        "rftt"
+      ]
+    },
+    {
+      "words": [
+        "z",
+        "x"
+      ]
+    },
+    {
+      "words": [
+        "z",
+        "x",
+        "z"
+      ]
+    }
+  ],
+  "functionName": "alienOrder",
+  "params": [
+    {
+      "name": "words",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Build a graph of precedence constraints from adjacent words and perform topological sort. If a cycle exists or an invalid prefix condition occurs, return an empty string."
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "maximum-depth-of-binary-tree",
+  "title": "60. Maximum Depth of Binary Tree",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [3,9,20,null,null,15,7]",
+      "output": "3"
+    },
+    {
+      "input": "root = [1,null,2]",
+      "output": "2"
+    },
+    {
+      "input": "root = []",
+      "output": "0"
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public int maxDepth(TreeNode root) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\nclass Solution:\n    def maxDepth(self, root):\n        # TODO: return the maximum depth of the binary tree\n        pass\n",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\nclass Solution {\npublic:\n    int maxDepth(TreeNode* root) {\n        \n    }\n};\n"
+  },
+  "testCases": [
+    {
+      "root": "[3,9,20,null,null,15,7]"
+    },
+    {
+      "root": "[1,null,2]"
+    },
+    {
+      "root": "[]"
+    },
+    {
+      "root": "[1]"
+    },
+    {
+      "root": "[1,2,3,4,5]"
+    }
+  ],
+  "functionName": "maxDepth",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Compute the maximum depth of a binary tree."
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": "kth-smallest-element-in-a-bst",
+  "title": "69. Kth Smallest Element in a BST",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/kth-smallest-element-in-a-bst/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [3,1,4,null,2], k = 1",
+      "output": "1"
+    },
+    {
+      "input": "root = [5,3,6,2,4,null,7,1], k = 3",
+      "output": "3"
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public int kthSmallest(TreeNode root, int k) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\nclass Solution:\n    def kthSmallest(self, root, k: int) -> int:\n        # TODO: return kth smallest value in BST\n        pass\n",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\nclass Solution {\npublic:\n    int kthSmallest(TreeNode* root, int k) {\n        \n    }\n};\n"
+  },
+  "testCases": [
+    {
+      "root": "[3,1,4,null,2]",
+      "k": 1
+    },
+    {
+      "root": "[5,3,6,2,4,null,7,1]",
+      "k": 3
+    },
+    {
+      "root": "[2,1,3]",
+      "k": 2
+    },
+    {
+      "root": "[1]",
+      "k": 1
+    },
+    {
+      "root": "[5,4,6,3]",
+      "k": 1
+    }
+  ],
+  "functionName": "kthSmallest",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use in-order traversal to visit nodes in ascending order and stop at k."
+  ]
+}

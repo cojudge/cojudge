@@ -1,0 +1,108 @@
+{
+  "id": "word-search-ii",
+  "title": "73. Word Search II",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/word-search-ii/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "board = [[a,b,c,e],[s,f,c,s],[a,d,e,e]], words = [see,abcced,abcb]",
+      "output": "[see,abcced]"
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> findWords(char[][] board, String[] words) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:\n        return []\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {\n        return {};\n    }\n};"
+  },
+  "testCases": [
+    {
+      "board": [
+        [
+          "o",
+          "a",
+          "a",
+          "n"
+        ],
+        [
+          "e",
+          "t",
+          "a",
+          "e"
+        ],
+        [
+          "i",
+          "h",
+          "k",
+          "r"
+        ],
+        [
+          "i",
+          "f",
+          "l",
+          "v"
+        ]
+      ],
+      "words": [
+        "oath",
+        "pea",
+        "eat",
+        "rain"
+      ]
+    },
+    {
+      "board": [
+        [
+          "a",
+          "b"
+        ],
+        [
+          "c",
+          "d"
+        ]
+      ],
+      "words": [
+        "ab",
+        "cb",
+        "ad",
+        "bd",
+        "ac",
+        "ca",
+        "da",
+        "bc",
+        "db",
+        "adcb",
+        "dabc",
+        "abb",
+        "acb"
+      ]
+    },
+    {
+      "board": [
+        [
+          "a",
+          "a"
+        ]
+      ],
+      "words": [
+        "aaa"
+      ]
+    }
+  ],
+  "functionName": "findWords",
+  "params": [
+    {
+      "name": "board",
+      "type": "char_array_2d",
+      "visualizeType": "matrix"
+    },
+    {
+      "name": "words",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Build a trie of words and backtrack from each cell, pruning via the trie; mark visited cells and collect matches once per word."
+  ]
+}

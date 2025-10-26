@@ -1,0 +1,89 @@
+{
+  "id": "non-overlapping-intervals",
+  "title": "37. Non-overlapping Intervals",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/non-overlapping-intervals/",
+  "category": "interval",
+  "examples": [
+    {
+      "input": "intervals = [[1,2],[2,3],[3,4],[1,3]]",
+      "output": "1"
+    },
+    {
+      "input": "intervals = [[1,2],[1,2],[1,2]]",
+      "output": "2"
+    },
+    {
+      "input": "intervals = [[1,2],[2,3]]",
+      "output": "0"
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int eraseOverlapIntervals(int[][] intervals) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int eraseOverlapIntervals(vector<vector<int>>& intervals) {\n        return 0;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "intervals": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          1,
+          3
+        ]
+      ]
+    },
+    {
+      "intervals": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "intervals": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    }
+  ],
+  "functionName": "eraseOverlapIntervals",
+  "params": [
+    {
+      "name": "intervals",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sort intervals by end time and greedily keep intervals with the earliest finishing time.",
+    "Track the end of the last kept interval; when an interval starts < lastEnd, count a removal, else update lastEnd.",
+    "This is equivalent to selecting a maximum set of non-overlapping intervals. Answer = n - size of that set."
+  ]
+}

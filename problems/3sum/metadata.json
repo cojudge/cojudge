@@ -1,0 +1,54 @@
+{
+  "id": "3sum",
+  "title": "9. 3Sum",
+  "difficulty": "Medium",
+  "category": "array",
+  "link": "https://leetcode.com/problems/3sum/",
+  "examples": [
+    {
+      "input": "nums = [-1,0,1,2,-1,-4]",
+      "output": "[[-1,-1,2],[-1,0,1]]"
+    },
+    {
+      "input": "nums = [0,1,1]",
+      "output": "[]"
+    },
+    {
+      "input": "nums = [0,0,0]",
+      "output": "[[0,0,0]]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] threeSum(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def threeSum(self, nums: List[int]) -> List[List[int]]:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> threeSum(vector<int>& nums) {\n        return {};\n    }\n};"
+  },
+  "testCases": [
+    {
+      "nums": "[-1,0,1,2,-1,-4]"
+    },
+    {
+      "nums": "[0,1,1]"
+    },
+    {
+      "nums": "[0,0,0]"
+    },
+    {
+      "nums": "[]"
+    },
+    {
+      "nums": "[1,-1,-1,0]"
+    }
+  ],
+  "functionName": "threeSum",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Sort the array and use a two-pointer sweep for each fixed i, skipping duplicates to avoid repeated triplets. Output can be in any order; duplicates are not allowed."
+  ]
+}

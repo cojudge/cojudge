@@ -1,0 +1,5 @@
+[
+  { "head": "[]", "_note": "empty list, no cycle" },
+  { "head": "[1]", "_note": "single node, no cycle" },
+  { "head": "[1,2,3,4,5]", "_note": "linear list, no cycle" }
+]

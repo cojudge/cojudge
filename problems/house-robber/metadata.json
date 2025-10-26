@@ -1,0 +1,41 @@
+{
+  "id": "house-robber",
+  "title": "22. House Robber",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/house-robber/",
+  "examples": [
+    {
+      "input": "nums=[1,2,3,1]",
+      "output": "4"
+    },
+    {
+      "input": "nums=[2,7,9,3,1]",
+      "output": "12"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int rob(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def rob(self, nums: List[int]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int rob(vector<int>& nums) {\n        return 0;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3,1]"
+    },
+    {
+      "nums": "[2,7,9,3,1]"
+    }
+  ],
+  "functionName": "rob",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "DP with two states per step: rob or skip current house."
+  ]
+}

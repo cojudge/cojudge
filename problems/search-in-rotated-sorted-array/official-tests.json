@@ -1,0 +1,13 @@
+[
+  { "nums": "[4,5,6,7,0,1,2]", "target": 0 },
+  { "nums": "[4,5,6,7,0,1,2]", "target": 3 },
+  { "nums": "[1]", "target": 0 },
+  { "nums": "[1,3]", "target": 3 },
+  { "nums": "[6,7,8,1,2,3,4,5]", "target": 2 },
+  { "nums": "[6,7,8,1,2,3,4,5]", "target": 9 },
+  { "nums": "[5,1,3]", "target": 3 },
+  { "nums": "[5,1,3]", "target": 5 },
+  { "nums": "[5,1,3]", "target": 0 },
+  { "nums": "[1,2,3,4,5,6,7]", "target": 4 },
+  { "nums": "@javascript:JSON.stringify([...(Array(100000).keys())].map(x=>x))", "target": 99999, "_isLargeTest": true }
+]

@@ -1,0 +1,65 @@
+{
+  "id": "same-tree",
+  "title": "61. Same Tree",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/same-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "p = [1,2,3], q = [1,2,3]",
+      "output": "true"
+    },
+    {
+      "input": "p = [1,2], q = [1,null,2]",
+      "output": "false"
+    },
+    {
+      "input": "p = [], q = []",
+      "output": "true"
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public boolean isSameTree(TreeNode p, TreeNode q) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\nclass Solution:\n    def isSameTree(self, p, q) -> bool:\n        # TODO: return True if trees are identical\n        pass\n",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\nclass Solution {\npublic:\n    bool isSameTree(TreeNode* p, TreeNode* q) {\n        \n    }\n};\n"
+  },
+  "testCases": [
+    {
+      "p": "[1,2,3]",
+      "q": "[1,2,3]"
+    },
+    {
+      "p": "[1,2]",
+      "q": "[1,null,2]"
+    },
+    {
+      "p": "[]",
+      "q": "[]"
+    },
+    {
+      "p": "[1,2,1]",
+      "q": "[1,2,2]"
+    },
+    {
+      "p": "[0,-5,10]",
+      "q": "[0,-5,10]"
+    }
+  ],
+  "functionName": "isSameTree",
+  "params": [
+    {
+      "name": "p",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    },
+    {
+      "name": "q",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Compare two binary trees recursively to verify identical structure and node values."
+  ]
+}

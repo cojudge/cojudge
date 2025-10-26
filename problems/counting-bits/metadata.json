@@ -1,0 +1,50 @@
+{
+  "id": "counting-bits",
+  "title": "13. Counting Bits",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/counting-bits/",
+  "category": "binary",
+  "examples": [
+    {
+      "input": "n = 2",
+      "output": "[0,1,1]"
+    },
+    {
+      "input": "n = 5",
+      "output": "[0,1,1,2,1,2]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] countBits(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def countBits(self, n: int) -> list[int]:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> countBits(int n) {\n        return {};\n    }\n};"
+  },
+  "testCases": [
+    {
+      "n": 0
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 2
+    },
+    {
+      "n": 5
+    },
+    {
+      "n": 16
+    }
+  ],
+  "functionName": "countBits",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Use DP: `ans[i] = ans[i >> 1] + (i & 1)`."
+  ]
+}

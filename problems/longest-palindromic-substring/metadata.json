@@ -1,0 +1,47 @@
+{
+  "id": "longest-palindromic-substring",
+  "title": "57. Longest Palindromic Substring",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/longest-palindromic-substring/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s=\"babad\"",
+      "output": "\"bab\" or \"aba\""
+    },
+    {
+      "input": "s=\"cbbd\"",
+      "output": "\"bb\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String longestPalindrome(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def longestPalindrome(self, s: str) -> str:\n        pass\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string longestPalindrome(string s) {\n        return \"\";\n    }\n};"
+  },
+  "testCases": [
+    {
+      "s": "babad"
+    },
+    {
+      "s": "cbbd"
+    },
+    {
+      "s": "a"
+    },
+    {
+      "s": "ac"
+    }
+  ],
+  "functionName": "longestPalindrome",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Expand around centers (both odd and even) to find the longest palindromic substring in O(n^2) time and O(1) space."
+  ]
+}

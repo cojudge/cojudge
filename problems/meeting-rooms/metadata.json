@@ -1,0 +1,68 @@
+{
+  "id": "meeting-rooms",
+  "title": "38. Meeting Rooms",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/meeting-rooms/",
+  "category": "interval",
+  "examples": [
+    {
+      "input": "intervals = [[0,30],[5,10],[15,20]]",
+      "output": "false"
+    },
+    {
+      "input": "intervals = [[7,10],[2,4]]",
+      "output": "true"
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public boolean canAttendMeetings(int[][] intervals) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def canAttendMeetings(self, intervals: List[List[int]]) -> bool:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool canAttendMeetings(vector<vector<int>>& intervals) {\n        return true;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "intervals": [
+        [
+          0,
+          30
+        ],
+        [
+          5,
+          10
+        ],
+        [
+          15,
+          20
+        ]
+      ]
+    },
+    {
+      "intervals": [
+        [
+          7,
+          10
+        ],
+        [
+          2,
+          4
+        ]
+      ]
+    },
+    {
+      "intervals": []
+    }
+  ],
+  "functionName": "canAttendMeetings",
+  "params": [
+    {
+      "name": "intervals",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Sort intervals by start time and check adjacent pairs: if intervals[i].start < intervals[i-1].end then there's a conflict.",
+    "Alternatively, sort starts and ends separately and sweep with two pointers to detect overlaps.",
+    "Empty or single interval inputs are always attendable."
+  ]
+}

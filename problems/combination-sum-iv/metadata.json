@@ -1,0 +1,43 @@
+{
+  "id": "combination-sum-iv",
+  "title": "21. Combination Sum IV",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/combination-sum-iv/",
+  "examples": [
+    {
+      "input": "nums=[1,2,3], target=4",
+      "output": "7"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int combinationSum4(int[] nums, int target) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def combinationSum4(self, nums: List[int], target: int) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int combinationSum4(vector<int>& nums, int target) {\n        return 0;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3]",
+      "target": 4
+    },
+    {
+      "nums": "[9]",
+      "target": 3
+    }
+  ],
+  "functionName": "combinationSum4",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "DP over target values: dp[t] = sum(dp[t - x]) for all x in nums with t-x >= 0."
+  ]
+}

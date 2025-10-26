@@ -1,0 +1,5 @@
+{
+    "title": "Blind 75",
+    "description": "Blind 75 is a curated list of the 75 most frequently asked LeetCode questions to help you prepare efficiently for technical interviews at top tech companies [(Source)](https://www.teamblind.com/post/new-year-gift-curated-list-of-top-75-leetcode-questions-to-save-your-time-oam1oreu).\n\nMost of the questions are covered but some of them with unconventional inputs/outputs like [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/description/) are not implemented yet.",
+    "category-order": ["array", "binary", "dp", "graph", "interval", "linked-list", "matrix", "string", "tree", "heap"]
+}

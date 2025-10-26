@@ -1,0 +1,51 @@
+{
+  "id": "valid-anagram",
+  "title": "53. Valid Anagram",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/valid-anagram/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s=\"anagram\", t=\"nagaram\"",
+      "output": "true"
+    },
+    {
+      "input": "s=\"rat\", t=\"car\"",
+      "output": "false"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isAnagram(String s, String t) {\n        \n    }\n}",
+    "python": "class Solution:\n    def isAnagram(self, s: str, t: str) -> bool:\n        pass\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool isAnagram(string s, string t) {\n        return false;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "s": "anagram",
+      "t": "nagaram"
+    },
+    {
+      "s": "rat",
+      "t": "car"
+    },
+    {
+      "s": "",
+      "t": ""
+    }
+  ],
+  "functionName": "isAnagram",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "t",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Count character frequencies and compare, or sort both strings and compare equality."
+  ]
+}

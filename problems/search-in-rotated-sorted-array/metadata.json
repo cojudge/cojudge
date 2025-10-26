@@ -1,0 +1,51 @@
+{
+  "id": "search-in-rotated-sorted-array",
+  "title": "8. Search in Rotated Sorted Array",
+  "difficulty": "Medium",
+  "category": "array",
+  "link": "https://leetcode.com/problems/search-in-rotated-sorted-array/",
+  "examples": [
+    {
+      "input": "nums = [4,5,6,7,0,1,2], target = 0",
+      "output": "4"
+    },
+    {
+      "input": "nums = [4,5,6,7,0,1,2], target = 3",
+      "output": "-1"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int search(int[] nums, int target) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def search(self, nums: List[int], target: int) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int search(vector<int>& nums, int target) {\n        return -1;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "nums": "[4,5,6,7,0,1,2]",
+      "target": 0
+    },
+    {
+      "nums": "[4,5,6,7,0,1,2]",
+      "target": 3
+    },
+    {
+      "nums": "[1]",
+      "target": 0
+    }
+  ],
+  "functionName": "search",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use modified binary search to determine which half is sorted and decide where to continue the search."
+  ]
+}

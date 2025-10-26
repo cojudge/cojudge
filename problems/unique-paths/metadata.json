@@ -1,0 +1,47 @@
+{
+  "id": "unique-paths",
+  "title": "25. Unique Paths",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/unique-paths/",
+  "examples": [
+    {
+      "input": "m=3, n=7",
+      "output": "28"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int uniquePaths(int m, int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def uniquePaths(self, m: int, n: int) -> int:\n        pass\n",
+    "cpp": "class Solution {\npublic:\n    int uniquePaths(int m, int n) {\n        return 0;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "m": 3,
+      "n": 7
+    },
+    {
+      "m": 3,
+      "n": 2
+    },
+    {
+      "m": 7,
+      "n": 3
+    }
+  ],
+  "functionName": "uniquePaths",
+  "params": [
+    {
+      "name": "m",
+      "type": "int"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Combinatorics: C(m+n-2, m-1)."
+  ]
+}

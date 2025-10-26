@@ -1,0 +1,65 @@
+{
+  "id": "subtree-of-another-tree",
+  "title": "66. Subtree of Another Tree",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/subtree-of-another-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [3,4,5,1,2], subRoot = [4,1,2]",
+      "output": "true"
+    },
+    {
+      "input": "root = [3,4,5,1,2,null,null,null,null,0], subRoot = [4,1,2]",
+      "output": "false"
+    },
+    {
+      "input": "root = [], subRoot = []",
+      "output": "true"
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public boolean isSubtree(TreeNode root, TreeNode subRoot) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\nclass Solution:\n    def isSubtree(self, root, subRoot) -> bool:\n        # TODO: return True if subRoot is a subtree of root\n        pass\n",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\nclass Solution {\npublic:\n    bool isSubtree(TreeNode* root, TreeNode* subRoot) {\n        \n    }\n};\n"
+  },
+  "testCases": [
+    {
+      "root": "[3,4,5,1,2]",
+      "subRoot": "[4,1,2]"
+    },
+    {
+      "root": "[3,4,5,1,2,null,null,null,null,0]",
+      "subRoot": "[4,1,2]"
+    },
+    {
+      "root": "[]",
+      "subRoot": "[]"
+    },
+    {
+      "root": "[1,1]",
+      "subRoot": "[1]"
+    },
+    {
+      "root": "[1,2,3]",
+      "subRoot": "[2,3]"
+    }
+  ],
+  "functionName": "isSubtree",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    },
+    {
+      "name": "subRoot",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Traverse the main tree and use a helper to check structural and value equality with subRoot."
+  ]
+}

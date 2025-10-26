@@ -1,0 +1,54 @@
+{
+  "id": "top-k-frequent-elements",
+  "title": "75. Top K Frequent Elements",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/top-k-frequent-elements/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "nums = [1,1,1,2,2,3], k = 2",
+      "output": "[1,2]"
+    },
+    {
+      "input": "nums = [1], k = 1",
+      "output": "[1]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] topKFrequent(int[] nums, int k) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def topKFrequent(self, nums: List[int], k: int) -> List[int]:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> topKFrequent(vector<int>& nums, int k) {\n        return {};\n    }\n};"
+  },
+  "testCases": [
+    {
+      "nums": "[1,1,1,2,2,3]",
+      "k": 2
+    },
+    {
+      "nums": "[1]",
+      "k": 1
+    },
+    {
+      "nums": "[4,4,4,4,6,6,6,7,7,8]",
+      "k": 2
+    }
+  ],
+  "functionName": "topKFrequent",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Count frequencies with a hash map first.",
+    "Use a min-heap of size k keyed by frequency to keep the top k elements in O(n log k).",
+    "Or use bucket sort: build buckets by frequency and collect from highest frequency down in O(n).",
+    "The answer order doesn't matter unless specified."
+  ]
+}

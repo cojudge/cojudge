@@ -1,0 +1,47 @@
+{
+  "id": "reverse-bits",
+  "title": "15. Reverse Bits",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/reverse-bits/",
+  "category": "binary",
+  "examples": [
+    {
+      "input": "n = 43261596 (00000010100101000001111010011100)",
+      "output": "964176192 (00111001011110000010100101000000)"
+    },
+    {
+      "input": "n = 4294967293 (11111111111111111111111111111101)",
+      "output": "3221225471 (10111111111111111111111111111111)"
+    }
+  ],
+  "starterCode": {
+    "java": "public class Solution {\n    public int reverseBits(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def reverseBits(self, n: int) -> int:\n        pass\n",
+    "cpp": "class Solution {\npublic:\n    uint32_t reverseBits(uint32_t n) {\n        return 0;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "n": 43261596
+    },
+    {
+      "n": -3
+    },
+    {
+      "n": 0
+    },
+    {
+      "n": -1
+    }
+  ],
+  "functionName": "reverseBits",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Iterate 32 times: shift result left and add the least significant bit of n, then unsigned right shift n."
+  ]
+}

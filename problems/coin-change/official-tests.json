@@ -1,0 +1,7 @@
+[
+  { "coins": "[1,2,5]", "amount": 11 },
+  { "coins": "[2]", "amount": 3 },
+  { "coins": "[1]", "amount": 0 },
+  { "coins": "[2,5,10,1]", "amount": 27 },
+  { "coins": "[1,3,4]", "amount": 9999, "_isLargeTest": true }
+]

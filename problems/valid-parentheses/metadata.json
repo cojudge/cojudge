@@ -1,0 +1,54 @@
+{
+  "id": "valid-parentheses",
+  "title": "55. Valid Parentheses",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/valid-parentheses/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s=\"()\"",
+      "output": "true"
+    },
+    {
+      "input": "s=\"()[]{}\"",
+      "output": "true"
+    },
+    {
+      "input": "s=\"(]\"",
+      "output": "false"
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public boolean isValid(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def isValid(self, s: str) -> bool:\n        pass\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool isValid(string s) {\n        return false;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "s": "()"
+    },
+    {
+      "s": "()[]{}"
+    },
+    {
+      "s": "(]"
+    },
+    {
+      "s": "([)]"
+    },
+    {
+      "s": "{[]}"
+    }
+  ],
+  "functionName": "isValid",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Use a stack to match opening and closing brackets. Ensure types match and stack is empty at the end."
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "id": "merge-intervals",
+  "title": "36. Merge Intervals",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/merge-intervals/",
+  "category": "interval",
+  "examples": [
+    {
+      "input": "intervals = [[1,3],[2,6],[8,10],[15,18]]",
+      "output": "[[1,6],[8,10],[15,18]]"
+    },
+    {
+      "input": "intervals = [[1,4],[4,5]]",
+      "output": "[[1,5]]"
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int[][] merge(int[][] intervals) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def merge(self, intervals: List[List[int]]) -> List[List[int]]:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> merge(vector<vector<int>>& intervals) {\n        return {};\n    }\n};"
+  },
+  "testCases": [
+    {
+      "intervals": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          15,
+          18
+        ]
+      ]
+    },
+    {
+      "intervals": [
+        [
+          1,
+          4
+        ],
+        [
+          4,
+          5
+        ]
+      ]
+    },
+    {
+      "intervals": []
+    },
+    {
+      "intervals": [
+        [
+          1,
+          4
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          3,
+          5
+        ]
+      ]
+    }
+  ],
+  "functionName": "merge",
+  "params": [
+    {
+      "name": "intervals",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Sort intervals by start time first.",
+    "Maintain a current merged interval [s, e]; for each interval [a, b], if a <= e, merge by setting e = max(e, b), otherwise push [s, e] and start a new one.",
+    "The sort dominates the complexity: O(n log n).",
+    "Watch out for touching intervals like [1,4] and [4,5] — they should be merged."
+  ]
+}

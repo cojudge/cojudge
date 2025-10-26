@@ -1,0 +1,83 @@
+{
+  "id": "number-of-connected-components-in-an-undirected-graph",
+  "title": "34. Number of Connected Components in an Undirected Graph",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "n=5, edges=[[0,1],[1,2],[3,4]]",
+      "output": "2"
+    },
+    {
+      "input": "n=5, edges=[[0,1],[1,2],[2,3],[3,4]]",
+      "output": "1"
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int countComponents(int n, int[][] edges) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def countComponents(self, n: int, edges: List[List[int]]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int countComponents(int n, vector<vector<int>>& edges) {\n        return 0;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "n": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "n": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "n": 4,
+      "edges": []
+    }
+  ],
+  "functionName": "countComponents",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "edges",
+      "type": "int_array_2d",
+      "visualizeType": "undirected_edges",
+      "numNodesRef": "n"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use Union-Find to union endpoints and count unique roots, or BFS/DFS to count visited components."
+  ]
+}

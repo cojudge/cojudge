@@ -1,0 +1,7 @@
+[
+  { "nums": "[2,3,1,1,4]" },
+  { "nums": "[3,2,1,0,4]" },
+  { "nums": "[0]" },
+  { "nums": "[2,0]" },
+  { "nums": "@javascript: JSON.stringify(Array.from({length: 300000}, (_,i)=> (i%5)))", "_isLargeTest": true }
+]

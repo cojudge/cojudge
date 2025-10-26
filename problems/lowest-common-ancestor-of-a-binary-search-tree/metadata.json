@@ -1,0 +1,57 @@
+{
+  "id": "lowest-common-ancestor-of-a-binary-search-tree",
+  "title": "70. Lowest Common Ancestor of BST",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [6,2,8,0,4,7,9,null,null,3,5], p = [2,0,4,null,null,3,5], q = [8,7,9]",
+      "output": "6"
+    },
+    {
+      "input": "root = [6,2,8,0,4,7,9,null,null,3,5], p = [2,0,4,null,null,3,5], q = [4,3,5]",
+      "output": "2"
+    },
+    {
+      "input": "root = [2,1], p = 2, q = 1",
+      "output": "2"
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\nclass Solution:\n    def lowestCommonAncestor(self, root, p, q):\n        pass\n",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\nclass Solution {\npublic:\n    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {\n        \n    }\n};\n"
+  },
+  "testCases": [
+    {
+      "root": "[6,2,8,0,4,7,9,null,null,3,5]",
+      "q": "[8,7,9]",
+      "p": "[2,0,4,null,null,3,5]"
+    },
+    {
+      "root": "[6,2,8,0,4,7,9,null,null,3,5]",
+      "p": "[2,0,4,null,null,3,5]",
+      "q": "[4,3,5]"
+    }
+  ],
+  "functionName": "lowestCommonAncestor",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    },
+    {
+      "name": "p",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    },
+    {
+      "name": "q",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    }
+  ],
+  "outputType": "tree_node"
+}

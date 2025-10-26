@@ -1,0 +1,44 @@
+{
+  "id": "house-robber-ii",
+  "title": "23. House Robber II",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/house-robber-ii/",
+  "examples": [
+    {
+      "input": "nums=[2,3,2]",
+      "output": "3"
+    },
+    {
+      "input": "nums=[1,2,3,1]",
+      "output": "4"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int rob(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def rob(self, nums: List[int]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int rob(vector<int>& nums) {\n        return 0;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "nums": "[2,3,2]"
+    },
+    {
+      "nums": "[1,2,3,1]"
+    },
+    {
+      "nums": "[1,2,3]"
+    }
+  ],
+  "functionName": "rob",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Split into two cases: rob from [0..n-2] or [1..n-1], and take the max."
+  ]
+}

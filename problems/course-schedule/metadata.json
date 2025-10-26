@@ -1,0 +1,51 @@
+{
+  "id": "course-schedule",
+  "title": "28. Course Schedule",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/course-schedule/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "numCourses = 2, prerequisites = [[1,0]]",
+      "output": "true"
+    },
+    {
+      "input": "numCourses = 2, prerequisites = [[1,0],[0,1]]",
+      "output": "false"
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public boolean canFinish(int numCourses, int[][] prerequisites) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {\n        return false;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "numCourses": 2,
+      "prerequisites": "[[1,0]]"
+    },
+    {
+      "numCourses": 2,
+      "prerequisites": "[[1,0],[0,1]]"
+    },
+    {
+      "numCourses": 5,
+      "prerequisites": "[[1,4],[2,4],[3,1],[3,2]]"
+    }
+  ],
+  "functionName": "canFinish",
+  "params": [
+    {
+      "name": "numCourses",
+      "type": "int"
+    },
+    {
+      "name": "prerequisites",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Model courses as a directed graph with edges bi->ai. You can finish all courses iff the graph is acyclic. Use Kahn's algorithm (BFS on indegrees) or DFS cycle detection."
+  ]
+}

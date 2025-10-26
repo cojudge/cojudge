@@ -1,0 +1,50 @@
+{
+  "id": "best-time-to-buy-and-sell-stock",
+  "title": "2. Best Time to Buy and Sell Stock",
+  "difficulty": "Easy",
+  "category": "array",
+  "link": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",
+  "examples": [
+    {
+      "input": "prices = [7,1,5,3,6,4]",
+      "output": 5,
+      "explanation": "Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5. Note that buying on day 1 and selling on day 2 is not allowed because you must buy before you sell."
+    },
+    {
+      "input": "prices = [7,6,4,3,1]",
+      "output": 0,
+      "explanation": "In this case no transaction is done and the max profit = 0."
+    },
+    {
+      "input": "prices = [1,2]",
+      "output": 1
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxProfit(int[] prices) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxProfit(self, prices: List[int]) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int maxProfit(vector<int>& prices) {\n        return 0;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "prices": "[7,1,5,3,6,4]"
+    },
+    {
+      "prices": "[7,6,4,3,1]"
+    },
+    {
+      "prices": "[1,2]"
+    }
+  ],
+  "functionName": "maxProfit",
+  "params": [
+    {
+      "name": "prices",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "This problem asks for the maximum difference prices[j] - prices[i] where j > i. The optimal O(n) solution keeps track of the minimum price seen so far and the maximum profit obtainable at each step."
+  ]
+}

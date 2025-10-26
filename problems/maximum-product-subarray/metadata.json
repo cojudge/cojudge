@@ -1,0 +1,44 @@
+{
+  "id": "maximum-product-subarray",
+  "title": "6. Maximum Product Subarray",
+  "difficulty": "Medium",
+  "category": "array",
+  "link": "https://leetcode.com/problems/maximum-product-subarray/",
+  "examples": [
+    {
+      "input": "nums = [2,3,-2,4]",
+      "output": "6"
+    },
+    {
+      "input": "nums = [-2,0,-1]",
+      "output": "0"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxProduct(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxProduct(self, nums: List[int]) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int maxProduct(vector<int>& nums) {\n        return 0;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "nums": "[2,3,-2,4]"
+    },
+    {
+      "nums": "[-2,0,-1]"
+    },
+    {
+      "nums": "[0,2]"
+    }
+  ],
+  "functionName": "maxProduct",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Track the maximum and minimum product ending at each position (since a negative flips the sign). Swap when encountering negatives, update current max/min, and keep a global best."
+  ]
+}

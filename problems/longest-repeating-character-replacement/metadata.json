@@ -1,0 +1,51 @@
+{
+  "id": "longest-repeating-character-replacement",
+  "title": "51. Longest Repeating Character Replacement",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/longest-repeating-character-replacement/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s=\"ABAB\", k=2",
+      "output": "4"
+    },
+    {
+      "input": "s=\"AABABBA\", k=1",
+      "output": "4"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int characterReplacement(String s, int k) {\n        \n    }\n}",
+    "python": "class Solution:\n    def characterReplacement(self, s: str, k: int) -> int:\n        pass\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int characterReplacement(string s, int k) {\n        return 0;\n    }\n};"
+  },
+  "testCases": [
+    {
+      "s": "ABAB",
+      "k": 2
+    },
+    {
+      "s": "AABABBA",
+      "k": 1
+    },
+    {
+      "s": "AAAA",
+      "k": 2
+    }
+  ],
+  "functionName": "characterReplacement",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use a sliding window with frequency counts of letters and track the highest frequency in the window. Shrink the window when (window size - maxFreq) > k."
+  ]
+}

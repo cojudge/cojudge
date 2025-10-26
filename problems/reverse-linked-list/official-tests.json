@@ -1,0 +1,15 @@
+[
+  { "head": "[1,2,3,4,5]" },
+  { "head": "[1,2]" },
+  { "head": "[]" },
+  { "head": "[0]" },
+  { "head": "[1,1,1,1]" },
+  { "head": "[2,1,3,5,6,4,7]" },
+  { "head": "[10,20,30,40,50,60,70,80,90,100]" },
+  { "head": "[5,4,3,2,1]" },
+  { "head": "[7,6,5,4,3,2,1]" },
+  { "head": "[1000000,999999,123456,0,-1,-2,-3]" },
+  { "head": "@javascript:JSON.stringify(Array.from({length:100000}, (_, i) => i + 1))", "_isLargeTest": true },
+  { "head": "@javascript:JSON.stringify(Array(200000).fill(1))", "_isLargeTest": true },
+  { "head": "@javascript:JSON.stringify(Array.from({length:600000}, (_, i) => i % 10))", "_isLargeTest": true }
+]
