@@ -21,14 +21,9 @@
 
 ## Quickstart
 
-- Linux/macOS
+- Linux/macOS/Windows (WSL)
 ```bash
 ./run.sh
-```
-
-- Windows (PowerShell)
-```powershell
-./run.ps1
 ```
 
 This builds the image, starts the container, and prints the link: http://localhost:5375
@@ -55,9 +50,9 @@ npm run dev
 Create a new folder under `problems/<your-problem-slug>/` with:
 
 - `statement.md` – problem description (Markdown)
-- `metadata.json` – problem metadata
-- `official-tests.json` – input/output pairs
-- `Marker.java` – The judger program to determine if an output is correct or not and to give one correct solution. It has to be written in java and called `Marker.java`. No `Marker.py` or `Marker.cpp` are needed. 
+- `metadata.json` – problem metadata (category, difficulty, input structure, starter code, etc.)
+- `official-tests.json` – an array of inputs for the official tests that will run when user clicks `Submit`. Only inputs are needed. **No need to write the expected output**. Our code will get the expected output by passing your input to your `Marker.java`
+- `Marker.java` – The judger class should contain two public method: 1) isCorrect(testcase, userOutput) that judges if an output is correct for this testcase, and 2) {functionName}(testcase) that gives one correct solution. {functionName} is what you defined on `metadata.json`. The judger has to be written in java and called `Marker.java`. **No** `Marker.py` or `Marker.cpp` are needed. 
 
 Refer to `/problems/two-sum` for a detailed example.
 
