@@ -1,16 +1,20 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import type * as Monaco from 'monaco-editor';
     export let value = '';
     export let language = 'javascript';
+    export let fontSize: number = 14;
 
-    let editor;
-    let editorElement;
+    let editor: Monaco.editor.IStandaloneCodeEditor | null = null;
+    let editorElement: HTMLDivElement;
     let monacoRef: any;
 
-    onMount(async () => {
-    const monaco = await import('monaco-editor');
-    monacoRef = monaco;
-    monaco.editor.defineTheme('custom-dark', {
+    onMount(() => {
+        let disposed = false;
+        import('monaco-editor').then((monaco) => {
+            if (disposed) return;
+            monacoRef = monaco;
+            monaco.editor.defineTheme('custom-dark', {
             base: 'vs-dark', // Start with the vs-dark theme as a base
             inherit: true,
             rules: [
@@ -33,25 +37,27 @@
         });
         // --- End of theme definition ---
 
-
-        editor = monaco.editor.create(editorElement, {
+            editor = monaco.editor.create(editorElement, {
             value,
             language,
             theme: 'custom-dark',
             automaticLayout: true,
             fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-            fontSize: 14,
+            fontSize,
             minimap: {
                 enabled: false
             }
         });
 
-        editor.onDidChangeModelContent(() => {
-            value = editor.getValue();
+            editor.onDidChangeModelContent(() => {
+                if (!editor) return;
+                value = editor.getValue();
+            });
         });
 
         return () => {
-            editor.dispose();
+            disposed = true;
+            editor?.dispose();
         };
     });
 
@@ -63,6 +69,10 @@
         }
     }
 
+    $: if (editor && typeof fontSize === 'number') {
+        editor.updateOptions({ fontSize });
+    }
+
     // Update editor content when `value` prop changes externally (e.g., language switch)
     $: if (editor && typeof value === 'string') {
         const current = editor.getValue();
@@ -72,7 +82,7 @@
     }
 </script>
 
-<div bind:this={editorElement} />
+<div bind:this={editorElement}></div>
 
 <style>
     div {

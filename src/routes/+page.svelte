@@ -158,7 +158,7 @@
 </script>
 
 <svelte:head>
-    <title>Home | Offline Code Judge for LeetCode-style problems</title>
+    <title>Home | Offline Code Judge for LeetCode-style problems - Cojudge</title>
 </svelte:head>
 
 <div class="container">

@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-	<title>Offline Code Judge for LeetCode-style problems</title>
+	<title>Offline Code Judge for LeetCode-style problems - Cojudge</title>
 	<link rel="icon" href={favicon} />
 </svelte:head>
 

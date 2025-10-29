@@ -20,6 +20,11 @@
     let workspaceElement: HTMLElement;
     let openedHints = new Set<number>([]);
 
+    let showSettings = false;
+    let settingsContainer: HTMLElement | null = null;
+    const fontSizes: number[] = Array.from({ length: 13 }, (_, i) => 12 + i); // 12..24
+    let fontSize: number = $userSettingsStorage.editorFontSize ?? 14;
+
     // Persist code to store per problem+language
     $: if (code !== undefined) {
         const key = codeKey();
@@ -54,6 +59,23 @@
     onMount(async () => {
         const module = await import('$lib/components/CodeEditor.svelte');
         CodeEditor = module.default;
+    });
+
+    onMount(() => {
+        const handleDocClick = (e: MouseEvent) => {
+            if (showSettings && settingsContainer && !settingsContainer.contains(e.target as Node)) {
+                showSettings = false;
+            }
+        };
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') showSettings = false;
+        };
+        document.addEventListener('click', handleDocClick);
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('click', handleDocClick);
+            document.removeEventListener('keydown', handleKeyDown);
+        };
     });
 
     // When language changes, refresh code from store or starter code, and persist globally
@@ -108,10 +130,14 @@
         // Revert the editor to starter code for the current language
         code = data.problem.starterCode?.[language] ?? '';
     }
+
+    $: if (typeof fontSize === 'number') {
+        userSettingsStorage.update((s) => ({ ...s, editorFontSize: fontSize }));
+    }
 </script>
 
 <svelte:head>
-    <title>{data.problem.title}</title>
+    <title>{data.problem.title} - Cojudge</title>
 </svelte:head>
 
 <div
@@ -195,6 +221,7 @@
                         aria-label="Reset Code"
                         on:click={handleResetClick}
                     >
+                        <!-- Reset icon -->
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path d="M4 4v6h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M20 20v-6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -203,13 +230,39 @@
                         </svg>
                     </button>
                 </Tooltip>
+                <div class="settings-wrapper" bind:this={settingsContainer}>
+                    <Tooltip text={"Settings"} pos={"bottom"}>
+                        <button
+                            class="icon-button"
+                            title="Editor Settings"
+                            aria-label="Editor Settings"
+                            on:click={() => (showSettings = !showSettings)}
+                        >
+                            <!-- Cog icon -->
+                            <svg width="16px" height="16px" viewBox="0 0 32 32" id="Lager_100" data-name="Lager 100" xmlns="http://www.w3.org/2000/svg">
+                                <path id="Path_78" data-name="Path 78" d="M30.329,13.721l-2.65-.441a11.922,11.922,0,0,0-1.524-3.653l1.476-2.066a1.983,1.983,0,0,0-.211-2.553l-.428-.428a1.983,1.983,0,0,0-2.553-.211L22.373,5.845A11.922,11.922,0,0,0,18.72,4.321l-.441-2.65A2,2,0,0,0,16.306,0h-.612a2,2,0,0,0-1.973,1.671l-.441,2.65A11.922,11.922,0,0,0,9.627,5.845L7.561,4.369a1.983,1.983,0,0,0-2.553.211l-.428.428a1.983,1.983,0,0,0-.211,2.553L5.845,9.627A11.922,11.922,0,0,0,4.321,13.28l-2.65.441A2,2,0,0,0,0,15.694v.612a2,2,0,0,0,1.671,1.973l2.65.441a11.922,11.922,0,0,0,1.524,3.653L4.369,24.439a1.983,1.983,0,0,0,.211,2.553l.428.428a1.983,1.983,0,0,0,2.553.211l2.066-1.476a11.922,11.922,0,0,0,3.653,1.524l.441,2.65A2,2,0,0,0,15.694,32h.612a2,2,0,0,0,1.973-1.671l.441-2.65a11.922,11.922,0,0,0,3.653-1.524l2.066,1.476a1.983,1.983,0,0,0,2.553-.211l.428-.428a1.983,1.983,0,0,0,.211-2.553l-1.476-2.066a11.922,11.922,0,0,0,1.524-3.653l2.65-.441A2,2,0,0,0,32,16.306v-.612A2,2,0,0,0,30.329,13.721ZM16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Z" 
+                                    fill="currentColor"/>
+                            </svg>
+                        </button>
+                    </Tooltip>
+                    {#if showSettings}
+                        <div class="settings-dropdown" role="dialog" aria-label="Editor settings">
+                            <label for="font-size-select">Font size</label>
+                            <select id="font-size-select" bind:value={fontSize}>
+                                {#each fontSizes as size}
+                                    <option value={size}>{size}px</option>
+                                {/each}
+                            </select>
+                        </div>
+                    {/if}
+                </div>
                 <div style="font-size:0.85rem;color:var(--color-text-secondary);">{imageName || language.toUpperCase()}</div>
             </div>
         </div>
 
         <div class="editor-container">
             {#if CodeEditor}
-                <svelte:component this={CodeEditor} bind:value={code} {language} />
+                <svelte:component this={CodeEditor} bind:value={code} {language} {fontSize} />
             {:else}
                 Loading...
             {/if}
@@ -367,6 +420,38 @@
 
     .icon-button:hover {
         transform: translateY(-2px);
+    }
+
+    /* Settings dropdown */
+    .settings-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+    .settings-dropdown {
+        position: absolute;
+        top: 36px;
+        right: 0;
+        border: 1px solid var(--color-border);
+        background-color: var(--color-bg);
+        border-radius: var(--border-radius-md);
+        padding: var(--spacing-2);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+        z-index: 20;
+        min-width: 170px;
+        display: grid;
+        gap: var(--spacing-1);
+    }
+    .settings-dropdown label {
+        font-size: 0.85rem;
+        color: var(--color-text-secondary);
+    }
+    .settings-dropdown select {
+        background: transparent;
+        color: var(--color-text);
+        border: 1px solid var(--color-border);
+        border-radius: 6px;
+        padding: 6px 8px;
+        font-family: inherit;
     }
 
     /* Hints section */
