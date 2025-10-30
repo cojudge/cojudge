@@ -276,6 +276,8 @@
     // A reactive statement to get the currently selected test case
     $: activeTestCase = testCaseResults[activeTestCaseIndex];
 
+    function delay(ms: number) { return new Promise((res) => setTimeout(res, ms)); }
+
     async function handleRun() {
         isLoading = true;
         runningMessage = '';
@@ -304,7 +306,8 @@
                 return copy;
             });
 
-            const response = await fetch('/api/run', {
+            // Kick off run job
+            const startRes = await fetch('/api/run', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -314,26 +317,75 @@
                     testCases: payloadTestCases
                 })
             });
-            const results = await response.json();
-            if (response.ok) {
-                testCaseResults = results;
-                for (const tc of testCaseResults) {
-                    if (!tc.isCorrect) {
-                        status = 'sample-tests-failed';
-                    }
-                }
-                if (status != 'sample-tests-failed') {
-                    status = 'sample-tests-passed';
-                }
-            } else {
+            const startBody = await startRes.json();
+            if (!startRes.ok || !startBody?.jobId) {
+                const errMsg = startBody?.error || 'Failed to start run job';
                 testCaseResults = testCaseResults.map((tc: any) => ({
                     ...tc,
                     output: null,
                     logs: '',
                     isCorrect: false,
-                    error: results.error || (results.timeout ? 'Time Limit Exceeded' : 'An unknown error occurred.')
+                    error: errMsg
                 }));
-                status = results.timeout ? 'sample-tests-failed-tle' : 'sample-tests-failed';
+                status = 'sample-tests-failed';
+                return;
+            }
+
+            const jobId = startBody.jobId as string;
+            // Poll until ready
+            while (true) {
+                const pollRes = await fetch(`/api/run?jobId=${encodeURIComponent(jobId)}`);
+                const body = await pollRes.json();
+                if (!pollRes.ok) {
+                    const errMsg = body?.error || 'Run job failed';
+                    testCaseResults = testCaseResults.map((tc: any) => ({
+                        ...tc,
+                        output: null,
+                        logs: '',
+                        isCorrect: false,
+                        error: errMsg
+                    }));
+                    status = 'sample-tests-failed';
+                    break;
+                }
+                if (!body?.ready) {
+                    await delay(600);
+                    continue;
+                }
+                if (body?.timeout) {
+                    testCaseResults = testCaseResults.map((tc: any) => ({
+                        ...tc,
+                        output: null,
+                        logs: '',
+                        isCorrect: false,
+                        error: 'Time Limit Exceeded'
+                    }));
+                    status = 'sample-tests-failed-tle';
+                    break;
+                }
+                if (Array.isArray(body?.results)) {
+                    const results = body.results;
+                    testCaseResults = results;
+                    for (const tc of testCaseResults) {
+                        if (!tc.isCorrect) {
+                            status = 'sample-tests-failed';
+                        }
+                    }
+                    if (status != 'sample-tests-failed') {
+                        status = 'sample-tests-passed';
+                    }
+                    break;
+                }
+                // Fallback: unexpected shape
+                testCaseResults = testCaseResults.map((tc: any) => ({
+                    ...tc,
+                    output: null,
+                    logs: '',
+                    isCorrect: false,
+                    error: 'Unexpected response from run job'
+                }));
+                status = 'sample-tests-failed';
+                break;
             }
         } catch (err) {
             console.error(err);

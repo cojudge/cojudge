@@ -1,16 +1,14 @@
-import { ensureImageAvailable, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE, type Param } from "$lib/utils/util";
+import { ensureImageAvailable, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import { ProgramRunner } from "./ProgramRunner";
 import fs from 'fs/promises';
 import path from 'path';
 import { generateJavaRunner, javaImage, javaListNodeClass, javaTreeNodeClass } from "$lib/utils/javaUtil";
-import { fileURLToPath } from "url";
+import tar from 'tar-stream';
 const docker = new Dockerode();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 export class JavaRunner extends ProgramRunner {
-    private tempDir: string | null = null;
+    private container: Dockerode.Container | null = null;
     private compiled = false;
 
     constructor(problemId: string, testCases: any[], code: string) {
@@ -19,64 +17,58 @@ export class JavaRunner extends ProgramRunner {
 
     async compile(): Promise<void> {
         try {
-            await fs.mkdir(path.join(__dirname, 'temp'));
-        } catch (err) {}
-        this.tempDir = await fs.mkdtemp(path.join(__dirname, 'temp/run-'));
-        try {
+            // Read problem metadata and generate runner code
             const problemPath = path.resolve('problems', this.problemId, 'metadata.json');
             const problemContent = await fs.readFile(problemPath, 'utf-8');
             const problemData = JSON.parse(problemContent);
-
             const runnerCode = generateJavaRunner(problemData.functionName, problemData.params, this.testCases, problemData.outputType);
-            await fs.writeFile(path.join(this.tempDir, 'ListNode.java'), javaListNodeClass);
-            await fs.writeFile(path.join(this.tempDir, 'TreeNode.java'), javaTreeNodeClass);
-            await fs.writeFile(path.join(this.tempDir, 'Solution.java'), this.code);
-            await fs.writeFile(path.join(this.tempDir, 'Main.java'), runnerCode);
 
             // Ensure Java image exists; pull it if missing
             await ensureImageAvailable(docker, javaImage);
-            const container = await docker.createContainer({
+
+            this.container = await docker.createContainer({
                 Image: javaImage,
-                Cmd: ['timeout', '5', '/bin/sh', '-c', 'javac *.java'],
+                Cmd: ['sh', '-lc', 'tail -f /dev/null'], // keep container running for execs
                 WorkingDir: '/app',
-                HostConfig: {
-                    Binds: [`${this.tempDir}:/app`]
-                },
                 Tty: false
             });
-            try {
-                await container.start();
-                const { StatusCode } = await container.wait();
+            await this.container.start();
 
-                const logStream = await container.logs({ stdout: true, stderr: true, follow: true });
-                let stdout = '';
-                let stderr = '';
-                const streamPromise = new Promise((resolve, reject) => {
-                    container.modem.demuxStream(
-                        logStream,
-                        { write: (chunk: any) => (stdout += chunk.toString()) },
-                        { write: (chunk: any) => (stderr += chunk.toString()) }
-                    );
-                    logStream.on('end', resolve);
-                    logStream.on('error', reject);
-                });
-                await streamPromise;
-                if (StatusCode == LINUX_TIMEOUT_CODE) {
-                    throw new Error(TIMEOUT_MESSAGE);
-                }
-                if (StatusCode !== 0) {
-                    throw new Error(stderr || stdout);
-                }
-                this.compiled = true;
-            } finally {
-                try {
-                    const info = await container.inspect();
-                    if (info.State.Running) {
-                        await container.stop();
-                    }
-                    await container.remove();
-                } catch {}
+            // Create an in-memory tar archive of sources and upload to /app
+            const pack = tar.pack();
+            pack.entry({ name: 'ListNode.java' }, Buffer.from(javaListNodeClass));
+            pack.entry({ name: 'TreeNode.java' }, Buffer.from(javaTreeNodeClass));
+            pack.entry({ name: 'Solution.java' }, Buffer.from(this.code));
+            pack.entry({ name: 'Main.java' }, Buffer.from(runnerCode));
+            pack.finalize();
+            await this.container.putArchive(pack as any, { path: '/app' });
+
+            // Compile inside the container
+            const exec = await this.container.exec({
+                Cmd: ['timeout', '5', '/bin/sh', '-c', 'javac *.java'],
+                AttachStdout: true,
+                AttachStderr: true
+            });
+            const stream: any = await exec.start({ hijack: true, stdin: false });
+            let stdout = '';
+            let stderr = '';
+            await new Promise((resolve, reject) => {
+                (this.container as any).modem.demuxStream(
+                    stream,
+                    { write: (chunk: any) => (stdout += chunk.toString()) },
+                    { write: (chunk: any) => (stderr += chunk.toString()) }
+                );
+                stream.on('end', resolve);
+                stream.on('error', reject);
+            });
+            const inspect = await exec.inspect();
+            if (inspect.ExitCode === LINUX_TIMEOUT_CODE) {
+                throw new Error(TIMEOUT_MESSAGE);
             }
+            if (inspect.ExitCode !== 0) {
+                throw new Error(stderr || stdout);
+            }
+            this.compiled = true;
         } catch (e) {
             await this.cleanup();
             throw e;
@@ -84,45 +76,30 @@ export class JavaRunner extends ProgramRunner {
     }
 
     async run(): Promise<string[]> {
-        if (!this.tempDir || !this.compiled) throw new Error('JavaRunner: not compiled. Call compile() first.');
-        let container: any;
+        if (!this.compiled || !this.container) throw new Error('JavaRunner: not compiled. Call compile() first.');
         try {
-            await ensureImageAvailable(docker, javaImage);
-            container = await docker.createContainer({
-                Image: javaImage,
+            const exec = await this.container.exec({
                 Cmd: ['timeout', '2', '/bin/sh', '-c', 'java Main'],
-                WorkingDir: '/app',
-                HostConfig: {
-                    Binds: [`${this.tempDir}:/app`]
-                },
-                Tty: false
+                AttachStdout: true,
+                AttachStderr: true
             });
-
-            await container.start();
-            const { StatusCode } = await container.wait();
-            if (StatusCode == LINUX_TIMEOUT_CODE) {
-                throw new Error(TIMEOUT_MESSAGE);
-            }
-
-            const logStream = await container.logs({
-                stdout: true,
-                stderr: true,
-                follow: true
-            });
-
+            const stream: any = await exec.start({ hijack: true, stdin: false });
             let stdout = '';
             let stderr = '';
-
-            const streamPromise = new Promise((resolve, reject) => {
-                container.modem.demuxStream(logStream, { write: (chunk: any) => stdout += chunk.toString() }, { write: (chunk: any) => stderr += chunk.toString() });
-                
-                logStream.on('end', resolve);
-                logStream.on('error', reject);
+            await new Promise((resolve, reject) => {
+                (this.container as any).modem.demuxStream(
+                    stream,
+                    { write: (chunk: any) => (stdout += chunk.toString()) },
+                    { write: (chunk: any) => (stderr += chunk.toString()) }
+                );
+                stream.on('end', resolve);
+                stream.on('error', reject);
             });
-
-            await streamPromise;
-
-            if (StatusCode !== 0) {
+            const inspect = await exec.inspect();
+            if (inspect.ExitCode === LINUX_TIMEOUT_CODE) {
+                throw new Error(TIMEOUT_MESSAGE);
+            }
+            if (inspect.ExitCode !== 0) {
                 throw new Error(stderr || stdout);
             }
             const results = stdout.split('---\n').filter(res => res.trim() !== '');
@@ -130,26 +107,21 @@ export class JavaRunner extends ProgramRunner {
         } catch (error: any) {
             throw new Error(`${error}`);
         } finally {
-            if (container) {
-                try {
-                    const containerInfo = await container.inspect();
-                    if (containerInfo.State.Running) {
-                        await container.stop();
-                    }
-                    await container.remove();
-                } catch {}
-            }
             await this.cleanup();
         }
     }
 
     private async cleanup() {
-        if (this.tempDir) {
+        if (this.container) {
             try {
-                await fs.rm(this.tempDir, { recursive: true, force: true });
+                const info = await this.container.inspect();
+                if (info.State.Running) {
+                    await this.container.stop();
+                }
+                await this.container.remove();
             } catch {}
-            this.tempDir = null;
-            this.compiled = false;
+            this.container = null;
         }
+        this.compiled = false;
     }
 }
