@@ -9,7 +9,7 @@
     export let problem: any;
     export let code: string;
     export let language: ProgrammingLanguage = 'java';
-    type StatusType = 'no-status' | 'sample-tests-passed' | 'sample-tests-failed' | 'accepted' | 'failed' | 'tle' | 'running' | 'sample-tests-failed-tle';
+    type StatusType = 'no-status' | 'sample-tests-passed' | 'sample-tests-failed' | 'accepted' | 'failed' | 'tle' | 'running' | 'sample-tests-failed-tle' | 'preparing' | 'pending' | 'judging';
     let activeMainTab: 'testcase' | 'output' | 'console' | 'submission' = 'testcase';
     let activeTestCaseIndex = 0;
     let isLoading = false;
@@ -45,7 +45,13 @@
             case 'failed':
                 return 'Failed';
             case 'running':
-                return 'Running...';
+                return 'Running';
+            case 'pending':
+                return 'Pending';
+            case 'preparing':
+                return 'Preparing / Compiling';
+            case 'judging':
+                return 'Judging';
             case 'sample-tests-failed-tle':
                 return 'Sample Tests Failed (TLE)'
             case 'tle':
@@ -349,9 +355,13 @@
                     break;
                 }
                 if (!body?.ready) {
+                    if (body?.status) {
+                        runningMessage = statusToString(body?.status);
+                    }
                     await delay(600);
                     continue;
                 }
+                runningMessage = '';
                 if (body?.timeout) {
                     testCaseResults = testCaseResults.map((tc: any) => ({
                         ...tc,
@@ -477,6 +487,9 @@
                         break;
                     }
                     if (!body?.ready) {
+                        if (body?.passedTc) {
+                            runningMessage = `Passed ${body?.passedTc}`;
+                        }
                         await delay(600);
                         continue;
                     }

@@ -8,9 +8,8 @@ import type { ProgramRunner } from '$lib/runners/ProgramRunner';
 import { JavaRunner } from '$lib/runners/JavaRunner';
 import { PythonRunner } from '$lib/runners/PythonRunner';
 import { CppRunner } from '$lib/runners/CppRunner';
-import { TIMEOUT_MESSAGE } from '$lib/utils/util';
+import { TIMEOUT_MESSAGE, type JobStatus } from '$lib/utils/util';
 
-type JobStatus = 'pending' | 'running' | 'completed' | 'error';
 type SubmitResult = {
     accepted?: boolean;
     allAccepted?: boolean;
@@ -55,7 +54,7 @@ async function executeSubmit(problemId: string, language: string, code: string, 
             testCases = JSON.parse(officialContent);
             totalTc = testCases.length;
             if (startTcNo >= totalTc) {
-                job.result = { allAccepted: true, totalTc, passedTc: 0, results: [] };
+                job.result = { allAccepted: true, totalTc, passedTc: totalTc, results: [] };
                 job.status = 'completed';
                 return;
             }
@@ -155,7 +154,7 @@ async function executeSubmit(problemId: string, language: string, code: string, 
             error: null
         }));
         const accepted = markerResponses.every((m: any) => m.isCorrect);
-        job.result = { accepted, totalTc, passedTc, results: finalResponse };
+        job.result = { accepted, totalTc, passedTc: (job.result?.passedTc ? job.result?.passedTc : 0) + testCases.length, results: finalResponse };
         job.status = 'completed';
     } catch (error: any) {
         if (error && error.toString() && error.toString().indexOf(TIMEOUT_MESSAGE) !== -1) {
@@ -183,7 +182,7 @@ export const GET: RequestHandler = async ({ url }) => {
     const job = jobs.get(jobId);
     if (!job) return json({ error: 'Job not found' }, { status: 404 });
     if (job.status === 'pending' || job.status === 'running') {
-        return json({ ready: false, status: job.status });
+        return json({ ready: false, status: job.status, passedTc: job.result?.passedTc });
     }
     if (job.timeout) {
         return json({ ready: true, timeout: true, timeoutTestCase: job.timeoutTestCase });

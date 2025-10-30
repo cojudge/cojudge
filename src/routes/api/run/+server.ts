@@ -7,9 +7,8 @@ import type { ProgramRunner } from '$lib/runners/ProgramRunner';
 import { JavaRunner } from '$lib/runners/JavaRunner';
 import { PythonRunner } from '$lib/runners/PythonRunner';
 import { CppRunner } from '$lib/runners/CppRunner';
-import { TIMEOUT_MESSAGE } from '$lib/utils/util';
+import { TIMEOUT_MESSAGE, type JobStatus } from '$lib/utils/util';
 
-type JobStatus = 'pending' | 'running' | 'completed' | 'error';
 type RunSuccess = Array<{
     output: string | null;
     logs: string;
@@ -55,8 +54,9 @@ async function executeRun(problemId: string, language: string, code: string, tes
             throw new Error(`${language} is not supported yet`);
         }
 
-        job.status = 'running';
+        job.status = 'preparing';
         await programRunner.compile();
+        job.status = 'running';
         const rawResults = await programRunner.run();
 
         // Parse each chunk to separate final result from user logs
@@ -79,6 +79,7 @@ async function executeRun(problemId: string, language: string, code: string, tes
         });
 
         const onlyOutputs = parsed.map((p) => p.output);
+        job.status = 'judging';
         const markerResponses = await getMarkerResponses(
             problemId,
             problemData.functionName,
@@ -127,7 +128,7 @@ export const GET: RequestHandler = async ({ url }) => {
     if (!job) {
         return json({ error: 'Job not found' }, { status: 404 });
     }
-    if (job.status === 'pending' || job.status === 'running') {
+    if (job.status === 'pending' || job.status === 'running' || job.status === 'preparing' || job.status === 'judging') {
         return json({ ready: false, status: job.status });
     }
     // completed or error
