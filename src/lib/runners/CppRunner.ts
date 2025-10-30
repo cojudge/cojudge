@@ -3,26 +3,21 @@ import Dockerode from "dockerode";
 import { ProgramRunner } from "./ProgramRunner";
 import fs from 'fs/promises';
 import path from 'path';
-import { fileURLToPath } from "url";
 import { cppImage, cppListNodeClass, generateCppRunner, cppTreeNodeClass } from "$lib/utils/cppUtil";
+import tar from 'tar-stream';
 
 const docker = new Dockerode();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 export class CppRunner extends ProgramRunner {
-    private tempDir: string | null = null;
+    private container: Dockerode.Container | null = null;
     private compiled = false;
 
     constructor(problemId: string, testCases: any[], code: string) {
         super(problemId, testCases, code);
     }
 
-    // Step 1: compile (generate files and build with g++)
+    // Step 1: prepare and compile inside a container (no host bind mount)
     async compile(): Promise<void> {
-        try { await fs.mkdir(path.join(__dirname, 'temp')); } catch {}
-        this.tempDir = await fs.mkdtemp(path.join(__dirname, 'temp/run-'));
-
         try {
             const problemPath = path.resolve('problems', this.problemId, 'metadata.json');
             const problemContent = await fs.readFile(problemPath, 'utf-8');
@@ -33,46 +28,48 @@ export class CppRunner extends ProgramRunner {
             ${this.code}
             `;
             const runnerCode = generateCppRunner(problemData.functionName, problemData.params, this.testCases);
-            await fs.writeFile(path.join(this.tempDir, 'ListNode.cpp'), cppListNodeClass);
-            await fs.writeFile(path.join(this.tempDir, 'TreeNode.cpp'), cppTreeNodeClass);
-            await fs.writeFile(path.join(this.tempDir, 'Solution.cpp'), solutionCode);
-            await fs.writeFile(path.join(this.tempDir, 'Main.cpp'), runnerCode);
-
             await ensureImageAvailable(docker, cppImage);
-            const container = await docker.createContainer({
+
+            // Create a long-lived container, we'll exec to compile/run
+            this.container = await docker.createContainer({
                 Image: cppImage,
-                Cmd: ['timeout', '7', '/bin/sh', '-c', 'g++ -std=c++17 -O2 -pipe -s -o main Main.cpp'],
+                Cmd: ['sh', '-lc', 'tail -f /dev/null'],
                 WorkingDir: '/app',
-                HostConfig: { Binds: [`${this.tempDir}:/app`] },
-                User: `${process.getuid?.() ?? 1000}:${process.getgid?.() ?? 1000}`,
                 Tty: false
             });
-            try {
-                await container.start();
-                const { StatusCode } = await container.wait();
-                const logStream = await container.logs({ stdout: true, stderr: true, follow: true });
-                let stdout = '';
-                let stderr = '';
-                const streamPromise = new Promise((resolve, reject) => {
-                    container.modem.demuxStream(
-                        logStream,
-                        { write: (chunk: any) => (stdout += chunk.toString()) },
-                        { write: (chunk: any) => (stderr += chunk.toString()) }
-                    );
-                    logStream.on('end', resolve);
-                    logStream.on('error', reject);
-                });
-                await streamPromise;
-                if (StatusCode == LINUX_TIMEOUT_CODE) throw new Error(TIMEOUT_MESSAGE);
-                if (StatusCode !== 0) throw new Error(stderr || stdout);
-                this.compiled = true;
-            } finally {
-                try {
-                    const info = await container.inspect();
-                    if (info.State.Running) await container.stop();
-                    await container.remove();
-                } catch {}
-            }
+            await this.container.start();
+
+            // Upload sources via tar archive
+            const pack = tar.pack();
+            pack.entry({ name: 'ListNode.cpp' }, Buffer.from(cppListNodeClass));
+            pack.entry({ name: 'TreeNode.cpp' }, Buffer.from(cppTreeNodeClass));
+            pack.entry({ name: 'Solution.cpp' }, Buffer.from(solutionCode));
+            pack.entry({ name: 'Main.cpp' }, Buffer.from(runnerCode));
+            pack.finalize();
+            await this.container.putArchive(pack as any, { path: '/app' });
+
+            // Compile with the original command via exec
+            const exec = await this.container.exec({
+                Cmd: ['timeout', '7', '/bin/sh', '-c', 'g++ -std=c++17 -O2 -pipe -s -o main Main.cpp'],
+                AttachStdout: true,
+                AttachStderr: true
+            });
+            const stream: any = await exec.start({ hijack: true, stdin: false });
+            let stdout = '';
+            let stderr = '';
+            await new Promise((resolve, reject) => {
+                (this.container as any).modem.demuxStream(
+                    stream,
+                    { write: (chunk: any) => (stdout += chunk.toString()) },
+                    { write: (chunk: any) => (stderr += chunk.toString()) }
+                );
+                stream.on('end', resolve);
+                stream.on('error', reject);
+            });
+            const inspect = await exec.inspect();
+            if (inspect.ExitCode === LINUX_TIMEOUT_CODE) throw new Error(TIMEOUT_MESSAGE);
+            if (inspect.ExitCode !== 0) throw new Error(stderr || stdout);
+            this.compiled = true;
         } catch (e) {
             await this.cleanup();
             throw e;
@@ -81,60 +78,49 @@ export class CppRunner extends ProgramRunner {
 
     // Step 2: run previously compiled program
     async run(): Promise<string[]> {
-        if (!this.tempDir || !this.compiled) {
+        if (!this.container || !this.compiled) {
             throw new Error('CppRunner: not compiled. Call compile() first.');
         }
-        let container: any;
         try {
-            await ensureImageAvailable(docker, cppImage);
-            container = await docker.createContainer({
-                Image: cppImage,
+            // Run with the original command via exec
+            const exec = await this.container.exec({
                 Cmd: ['timeout', '1', '/bin/sh', '-c', './main'],
-                WorkingDir: '/app',
-                HostConfig: { Binds: [`${this.tempDir}:/app`] },
-                User: `${process.getuid?.() ?? 1000}:${process.getgid?.() ?? 1000}`,
-                Tty: false
+                AttachStdout: true,
+                AttachStderr: true
             });
-
-            await container.start();
-            const { StatusCode } = await container.wait();
-            if (StatusCode == LINUX_TIMEOUT_CODE) throw new Error(TIMEOUT_MESSAGE);
-
-            const logStream = await container.logs({ stdout: true, stderr: true, follow: true });
+            const stream: any = await exec.start({ hijack: true, stdin: false });
             let stdout = '';
             let stderr = '';
-            const streamPromise = new Promise((resolve, reject) => {
-                container.modem.demuxStream(
-                    logStream,
+            await new Promise((resolve, reject) => {
+                (this.container as any).modem.demuxStream(
+                    stream,
                     { write: (chunk: any) => (stdout += chunk.toString()) },
                     { write: (chunk: any) => (stderr += chunk.toString()) }
                 );
-                logStream.on('end', resolve);
-                logStream.on('error', reject);
+                stream.on('end', resolve);
+                stream.on('error', reject);
             });
-            await streamPromise;
-            if (StatusCode !== 0) throw new Error(stderr || stdout);
+            const inspect = await exec.inspect();
+            if (inspect.ExitCode === LINUX_TIMEOUT_CODE) throw new Error(TIMEOUT_MESSAGE);
+            if (inspect.ExitCode !== 0) throw new Error(stderr || stdout);
             const results = stdout.split('---\n').filter((res) => res.trim() !== '');
             return results;
         } catch (error: any) {
             throw new Error(`${error}`);
         } finally {
-            if (container) {
-                try {
-                    const info = await container.inspect();
-                    if (info.State.Running) await container.stop();
-                    await container.remove();
-                } catch {}
-            }
             await this.cleanup();
         }
     }
 
     private async cleanup() {
-        if (this.tempDir) {
-            try { await fs.rm(this.tempDir, { recursive: true, force: true }); } catch {}
-            this.tempDir = null;
-            this.compiled = false;
+        if (this.container) {
+            try {
+                const info = await this.container.inspect();
+                if (info.State.Running) await this.container.stop();
+                await this.container.remove();
+            } catch {}
+            this.container = null;
         }
+        this.compiled = false;
     }
 }

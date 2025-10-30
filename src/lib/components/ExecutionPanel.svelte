@@ -9,7 +9,7 @@
     export let problem: any;
     export let code: string;
     export let language: ProgrammingLanguage = 'java';
-    type StatusType = 'no-status' | 'sample-tests-passed' | 'sample-tests-failed' | 'accepted' | 'failed' | 'tle' | 'running' | 'sample-tests-failed-tle';
+    type StatusType = 'no-status' | 'sample-tests-passed' | 'sample-tests-failed' | 'accepted' | 'failed' | 'tle' | 'running' | 'sample-tests-failed-tle' | 'preparing' | 'pending' | 'judging';
     let activeMainTab: 'testcase' | 'output' | 'console' | 'submission' = 'testcase';
     let activeTestCaseIndex = 0;
     let isLoading = false;
@@ -45,7 +45,13 @@
             case 'failed':
                 return 'Failed';
             case 'running':
-                return 'Running...';
+                return 'Running';
+            case 'pending':
+                return 'Pending';
+            case 'preparing':
+                return 'Preparing / Compiling';
+            case 'judging':
+                return 'Judging';
             case 'sample-tests-failed-tle':
                 return 'Sample Tests Failed (TLE)'
             case 'tle':
@@ -276,6 +282,8 @@
     // A reactive statement to get the currently selected test case
     $: activeTestCase = testCaseResults[activeTestCaseIndex];
 
+    function delay(ms: number) { return new Promise((res) => setTimeout(res, ms)); }
+
     async function handleRun() {
         isLoading = true;
         runningMessage = '';
@@ -304,7 +312,8 @@
                 return copy;
             });
 
-            const response = await fetch('/api/run', {
+            // Kick off run job
+            const startRes = await fetch('/api/run', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -314,26 +323,79 @@
                     testCases: payloadTestCases
                 })
             });
-            const results = await response.json();
-            if (response.ok) {
-                testCaseResults = results;
-                for (const tc of testCaseResults) {
-                    if (!tc.isCorrect) {
-                        status = 'sample-tests-failed';
-                    }
-                }
-                if (status != 'sample-tests-failed') {
-                    status = 'sample-tests-passed';
-                }
-            } else {
+            const startBody = await startRes.json();
+            if (!startRes.ok || !startBody?.jobId) {
+                const errMsg = startBody?.error || 'Failed to start run job';
                 testCaseResults = testCaseResults.map((tc: any) => ({
                     ...tc,
                     output: null,
                     logs: '',
                     isCorrect: false,
-                    error: results.error || (results.timeout ? 'Time Limit Exceeded' : 'An unknown error occurred.')
+                    error: errMsg
                 }));
-                status = results.timeout ? 'sample-tests-failed-tle' : 'sample-tests-failed';
+                status = 'sample-tests-failed';
+                return;
+            }
+
+            const jobId = startBody.jobId as string;
+            // Poll until ready
+            while (true) {
+                const pollRes = await fetch(`/api/run?jobId=${encodeURIComponent(jobId)}`);
+                const body = await pollRes.json();
+                if (!pollRes.ok) {
+                    const errMsg = body?.error || 'Run job failed';
+                    testCaseResults = testCaseResults.map((tc: any) => ({
+                        ...tc,
+                        output: null,
+                        logs: '',
+                        isCorrect: false,
+                        error: errMsg
+                    }));
+                    status = 'sample-tests-failed';
+                    break;
+                }
+                if (!body?.ready) {
+                    if (body?.status) {
+                        runningMessage = statusToString(body?.status);
+                    }
+                    await delay(600);
+                    continue;
+                }
+                runningMessage = '';
+                if (body?.timeout) {
+                    testCaseResults = testCaseResults.map((tc: any) => ({
+                        ...tc,
+                        output: null,
+                        logs: '',
+                        isCorrect: false,
+                        error: 'Time Limit Exceeded'
+                    }));
+                    status = 'sample-tests-failed-tle';
+                    break;
+                }
+                if (Array.isArray(body?.results)) {
+                    const results = body.results;
+                    testCaseResults = results;
+                    for (const tc of testCaseResults) {
+                        if (!tc.isCorrect) {
+                            status = 'sample-tests-failed';
+                        }
+                    }
+                    if (status != 'sample-tests-failed') {
+                        status = 'sample-tests-passed';
+                    }
+                    break;
+                }
+                // Fallback: unexpected shape
+                testCaseResults = testCaseResults.map((tc: any) => ({
+                    ...tc,
+                    output: null,
+                    logs: '',
+                    isCorrect: false,
+                    error: 'Unexpected response from run job'
+                }));
+                status = 'sample-tests-failed';
+                break;
             }
         } catch (err) {
             console.error(err);
@@ -371,18 +433,70 @@
                         runningMessage = totalTc > 0 ? `Passed ${tcNo} / ${totalTc}` : '';
                     }
                 }
-                const response = await fetch('/api/submit', {
+                const startRes = await fetch('/api/submit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ problemId: problem.id, language, code, startTcNo: tcNo })
                 });
-                const body = await response.json();
-                if (!response.ok) {
+                const startBody = await startRes.json();
+                if (!startRes.ok || !startBody?.jobId) {
+                    const errMsg = startBody?.error || 'Failed to start submit job';
                     runningMessage = '';
-                    status = body.timeout ? 'tle' : 'failed';
-                    runningMessage = `${body.timeout ? 'TLE' : 'Failed'} on Test ${tcNo + 1}`;
-                    // Prepare submission failure details (TLE or generic failure)
-                    if (body?.timeout && body?.timeoutTestCase) {
+                    status = 'failed';
+                    submissionFailure = {
+                        type: 'failed',
+                        index: tcNo,
+                        testCase: null,
+                        yourAnswer: null,
+                        expectedAnswer: null,
+                        error: errMsg
+                    };
+                    activeMainTab = 'submission';
+                    break;
+                }
+                const jobId = startBody.jobId as string;
+                // Poll until completed
+                while (true) {
+                    const pollRes = await fetch(`/api/submit?jobId=${encodeURIComponent(jobId)}`);
+                    const body = await pollRes.json();
+                    if (!pollRes.ok) {
+                        runningMessage = '';
+                        status = body.timeout ? 'tle' : 'failed';
+                        runningMessage = `${body.timeout ? 'TLE' : 'Failed'} on Test ${tcNo + 1}`;
+                        // Prepare failure details
+                        if (body?.timeout && body?.timeoutTestCase) {
+                            submissionFailure = {
+                                type: 'tle',
+                                index: tcNo,
+                                testCase: body.timeoutTestCase || null,
+                                yourAnswer: null,
+                                expectedAnswer: null,
+                                error: 'Time Limit Exceeded'
+                            };
+                        } else {
+                            submissionFailure = {
+                                type: 'failed',
+                                index: tcNo,
+                                testCase: null,
+                                yourAnswer: null,
+                                expectedAnswer: null,
+                                error: body?.error || 'Submission failed'
+                            };
+                        }
+                        activeMainTab = 'submission';
+                        break;
+                    }
+                    if (!body?.ready) {
+                        if (body?.passedTc) {
+                            runningMessage = `Passed ${body?.passedTc}`;
+                        }
+                        await delay(600);
+                        continue;
+                    }
+                    if (body?.timeout) {
+                        runningMessage = '';
+                        status = 'tle';
+                        runningMessage = `TLE on Test ${tcNo + 1}`;
                         submissionFailure = {
                             type: 'tle',
                             index: tcNo,
@@ -392,51 +506,45 @@
                             error: 'Time Limit Exceeded'
                         };
                         activeMainTab = 'submission';
-                    } else {
+                        break;
+                    }
+                    if (body.totalTc) {
+                        totalTc = body.totalTc;
+                    }
+                    if (body.allAccepted) {
+                        status = 'accepted';
+                        runningMessage = '';
+                        userStore.update((prev) => ({ ...prev, [problem.id]: true }));
+                        break;
+                    }
+                    if (!body.accepted) {
+                        runningMessage = `Failed on Test ${tcNo + 1}`;
+                        status = 'failed';
+                        const results: any[] = body.results || [];
+                        let localFailIndex = 0;
+                        for (let i = 0; i < results.length; i++) {
+                            if (!results[i]?.isCorrect) { localFailIndex = i; break; }
+                        }
+                        const failing = results[localFailIndex] || {};
+                        const globalIndex = tcNo + localFailIndex;
                         submissionFailure = {
                             type: 'failed',
-                            index: tcNo,
-                            testCase: null,
-                            yourAnswer: null,
-                            expectedAnswer: null,
-                            error: body?.error || 'Submission failed'
+                            index: globalIndex,
+                            testCase: failing || null,
+                            yourAnswer: failing?.output ?? null,
+                            expectedAnswer: failing?.correctAnswer ?? null,
+                            error: failing?.error ?? null
                         };
                         activeMainTab = 'submission';
+                        break;
                     }
-                    break;
-                }
-                if (body.totalTc) {
-                    totalTc = body.totalTc;
-                }
-                if (body.allAccepted) {
-                    status = 'accepted';
-                    runningMessage = '';
-                    userStore.update((prev) => ({ ...prev, [problem.id]: true }));
-                    break;
-                }
-                if (!body.accepted) {
-                    runningMessage = `Failed on Test ${tcNo + 1}`;
-                    status = 'failed';
-                    // capture first failing test in this chunk (results are per-chunk)
-                    const results: any[] = body.results || [];
-                    let localFailIndex = 0;
-                    for (let i = 0; i < results.length; i++) {
-                        if (!results[i]?.isCorrect) { localFailIndex = i; break; }
-                    }
-                    const failing = results[localFailIndex] || {};
-                    const globalIndex = tcNo + localFailIndex;
-                    submissionFailure = {
-                        type: 'failed',
-                        index: globalIndex,
-                        testCase: failing || null,
-                        yourAnswer: failing?.output ?? null,
-                        expectedAnswer: failing?.correctAnswer ?? null,
-                        error: failing?.error ?? null
-                    };
-                    activeMainTab = 'submission';
-                    break;
-                } else {
+                    // Accepted this chunk; advance tcNo and process next chunk
                     tcNo = tcNo + (body.passedTc || 1);
+                    break;
+                }
+                // If status became failed or accepted inside polling, exit outer while
+                if (status === 'failed' || status === 'accepted' || status === 'tle') {
+                    break;
                 }
             } catch (err) {
                 console.error(err);

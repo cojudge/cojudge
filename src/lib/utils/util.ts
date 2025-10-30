@@ -1,5 +1,7 @@
 import type Dockerode from "dockerode";
 
+export type JobStatus = 'pending' | 'preparing' | 'running' | 'completed' | 'error' | 'judging';
+
 export function getDifficultyClass(difficulty: string) {
     if (!difficulty) return '';
     return `difficulty-${difficulty.toLowerCase()}`;

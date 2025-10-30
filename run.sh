@@ -38,8 +38,6 @@ docker run -d \
   --name "${NAME}" \
   -p "${HOST_PORT}:${APP_PORT}" \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -v "${PWD}":"${PWD}" \
-  -w "${PWD}" \
   --restart=unless-stopped \
   "${IMAGE}" >/dev/null
 
