@@ -93,3 +93,15 @@ This is a more complicated process but it is definitely doable.
 6. Add a new `<option>` on the UI for the new language in `#language-select`
 
 Refer to `javaUtil.ts`, `JavaRunner.ts` and `problems/two-sum` for a detailed example. 
+
+## Troubleshooting
+
+### Error Connecting to Docker on macOS with Colima
+
+Some Docker environments on macOS (like Colima) use a non-default Docker socket path. If the application has trouble connecting to Docker, you can specify the path manually by setting the `HOST_DOCKER_SOCKET` environment variable.
+
+**Example:**
+```bash
+# Find your socket path by running `colima status`
+HOST_DOCKER_SOCKET="/Users/your-user/.colima/default/docker.sock" ./run.sh
+```

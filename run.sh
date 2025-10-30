@@ -5,6 +5,7 @@ IMAGE=${IMAGE:-cojudge}
 NAME=${NAME:-cojudge}
 HOST_PORT=${HOST_PORT:-5375}
 APP_PORT=${APP_PORT:-3000}
+HOST_DOCKER_SOCKET=${HOST_DOCKER_SOCKET:-/var/run/docker.sock}
 
 # Colors (optional)
 GREEN="\033[0;32m"
@@ -37,7 +38,7 @@ echo -e "${YELLOW}Starting container '${NAME}' on http://localhost:${HOST_PORT} 
 docker run -d \
   --name "${NAME}" \
   -p "${HOST_PORT}:${APP_PORT}" \
-  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v "${HOST_DOCKER_SOCKET}:/var/run/docker.sock" \
   --restart=unless-stopped \
   "${IMAGE}" >/dev/null
 
