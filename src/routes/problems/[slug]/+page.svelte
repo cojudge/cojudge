@@ -212,6 +212,16 @@
                     <option value="python">Python</option>
                     <option value="cpp">C++</option>
                 </select>
+                <div class="tab-bar" role="tablist" aria-label="Editor tabs">
+                    <div class="tab active" role="tab" aria-selected="true" tabindex="0">
+                        <span class="tab-favicon" aria-hidden="true">
+                            {#if language === 'java'}J{/if}
+                            {#if language === 'python'}Py{/if}
+                            {#if language === 'cpp'}C{/if}
+                        </span>
+                        <span class="tab-title">Solution-1</span>
+                    </div>
+                </div>
             </div>
             <div style="display:flex;align-items:center;gap:var(--spacing-2);">
                 <Tooltip text={"Reset Code"} pos={"bottom"}>
@@ -328,6 +338,56 @@
         flex-grow: 1;
         min-height: 0;
         padding: var(--spacing-1); /* Padding around the editor */
+    }
+
+    /* --- Browser-like Tabs --- */
+    .tab-bar {
+        display: flex;
+        align-items: flex-end;
+        gap: 6px;
+        padding: 0 var(--spacing-1) var(--spacing-1) var(--spacing-1);
+        overflow-x: auto;
+        scrollbar-width: thin;
+    }
+    /* Compact the tab bar when shown inside the header */
+    .editor-header .tab-bar {
+        padding: 0;
+    }
+    .tab {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border: 1px solid var(--color-border);
+        background: rgba(255,255,255,0.02);
+        color: var(--color-text);
+        border-radius: 10px 10px 0 0;
+        font-size: 0.85rem;
+        line-height: 1;
+        user-select: none;
+    }
+    .tab.active {
+        background-color: var(--color-surface);
+        border-bottom-color: transparent;
+        box-shadow: 0 -1px 0 var(--color-surface), 0 1px 0 var(--color-surface);
+    }
+    .tab-favicon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        font-weight: 700;
+        font-size: 0.7rem;
+        color: var(--color-primary-text);
+        background: var(--color-border-active);
+    }
+    .tab-title {
+        white-space: nowrap;
+        max-width: 24ch;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .badge {
