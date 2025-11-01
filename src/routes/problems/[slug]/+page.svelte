@@ -162,12 +162,11 @@
 
     // New tab state (simple add button)
     async function addNewTab() {
-        const newTabLanguage = language;
         const newTabName = `Solution-${tabs.length + 1}`;
         const nextId = uuidv4();
         const fileName = newTabName.trim() || `Solution-${nextId}`;
         tabs = [...tabs, { fileId: nextId, fileName }];
-        const newCode = data.problem.starterCode?.[newTabLanguage] ?? '';
+        const newCode = data.problem.starterCode?.[language] ?? '';
         const fkey = fileKey();
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
