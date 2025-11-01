@@ -15,8 +15,6 @@
 - Persistent Code & Progress Tracking via Local Storage
 - Browser-like tabs to organize your local solutions
 
-![Browser-like Tabs](./screenshots/tabs.png)
-
 ## Requirements
 
 - Docker (installed and running)
