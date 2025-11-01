@@ -13,6 +13,9 @@
 - Multiple languages support (Java/Python/C++)
 - Extensible: add new problems by dropping folders in `problems/`
 - Persistent Code & Progress Tracking via Local Storage
+- Browser-like tabs to organize your local solutions
+
+![Browser-like Tabs](./screenshots/tabs.png)
 
 ## Requirements
 
@@ -23,6 +26,8 @@
 
 - Linux/macOS/Windows (WSL)
 ```bash
+git clone https://github.com/cojudge/cojudge
+cd cojudge
 ./run.sh
 ```
 
