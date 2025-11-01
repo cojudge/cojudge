@@ -164,7 +164,7 @@
     async function addNewTab() {
         const newTabName = `Solution-${tabs.length + 1}`;
         const nextId = uuidv4();
-        const fileName = newTabName.trim() || `Solution-${nextId}`;
+        const fileName = newTabName;
         tabs = [...tabs, { fileId: nextId, fileName }];
         const newCode = data.problem.starterCode?.[language] ?? '';
         const fkey = fileKey();
