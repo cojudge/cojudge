@@ -482,6 +482,7 @@
                                 on:dragover={(e) => handleDragOver(e, t.fileId)}
                                 on:drop={(e) => handleDrop(e, t.fileId)}
                                 on:dragend={handleDragEnd}
+                                on:auxclick={(e) => { if (e.button === 1) { e.preventDefault(); e.stopPropagation(); closeTab(t.fileId); } }}
                             >
                                 {#if editingTabId === t.fileId}
                                     <input
