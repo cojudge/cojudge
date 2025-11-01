@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
+    import { onMount, tick } from 'svelte';
     import { marked } from 'marked';
     import ExecutionPanel from '$lib/components/ExecutionPanel.svelte';
     import { getDifficultyClass, type ProgrammingLanguage } from '$lib/utils/util.js';
@@ -14,21 +14,73 @@
     let CodeEditor: any = null;
     let language: ProgrammingLanguage = $userSettingsStorage.preferredLanguage ?? 'java';
     const fileKey = () => `${problemId}`;
-    const getInitialCode = () => {
+
+    // Tabs are grouped by fileId (language-agnostic)
+    type TabMeta = { fileId: string; fileName: string };
+
+    function getFiles(): FileEntry[] {
         try {
-            return (JSON.parse($fileStore[fileKey()] || `[]`) as FileEntry[])[0].content;
+            return JSON.parse($fileStore[fileKey()] || '[]') as FileEntry[];
         } catch (err) {
-            return data.problem.starterCode?.[language] ?? '';
-        }
-    };
-    const getInitialTabs = () => {
-        try {
-            return JSON.parse($fileStore[fileKey()]) as FileEntry[];
-        } catch (err) {
-            return [{fileName: "Solution", fileId: uuidv4(), language: language, content: getInitialCode()} as FileEntry]
+            return [];
         }
     }
-    let code = getInitialCode(); 
+
+    function getInitialTabs(): TabMeta[] {
+        const files = getFiles();
+        if (!files.length) {
+            // Create a default tab; the language-specific entry will be created lazily
+            return [{ fileId: uuidv4(), fileName: 'Solution' }];
+        }
+        const byId = new Map<string, TabMeta>();
+        for (const f of files) {
+            if (!byId.has(f.fileId)) byId.set(f.fileId, { fileId: f.fileId, fileName: f.fileName || 'Solution' });
+        }
+        return Array.from(byId.values());
+    }
+
+    // Ensure an entry exists for current tab+language, optionally with initial content
+    function ensureEntry(fileId: string, lang: ProgrammingLanguage, initialContent: string) {
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            const existing = files.find((x) => x.fileId === fileId && x.language === lang);
+            if (!existing) {
+                files = [
+                    ...files,
+                    {
+                        fileId,
+                        fileName: (tabs.find((t) => t.fileId === fileId)?.fileName) || 'Solution',
+                        language: lang,
+                        content: initialContent,
+                        isActive: false
+                    } as FileEntry
+                ];
+            }
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
+    }
+
+    let suppressSave = false; // prevent save during programmatic loads
+
+    async function loadOrInitFile(lang: ProgrammingLanguage) {
+        if (activeTabId < 0 || activeTabId >= tabs.length) return;
+        const currentId = tabs[activeTabId].fileId;
+        const files = getFiles();
+        const entry = files.find((x) => x.fileId === currentId && x.language === lang);
+        suppressSave = true;
+        if (entry) {
+            code = entry.content;
+        } else {
+            const starter = data.problem.starterCode?.[lang] ?? '';
+            code = starter;
+            ensureEntry(currentId, lang, starter);
+        }
+        await tick();
+        suppressSave = false;
+    }
+
+    let code: string;
     let isResizing = false;
     let workspaceElement: HTMLElement;
     let openedHints = new Set<number>([]);
@@ -38,58 +90,99 @@
     const fontSizes: number[] = Array.from({ length: 13 }, (_, i) => 12 + i); // 12..24
     let fontSize: number = $userSettingsStorage.editorFontSize ?? 14;
 
-    let tabs: FileEntry[] = getInitialTabs();
+    let tabs: TabMeta[] = getInitialTabs();
     let activeTabId: number = 0;
+    let editingTabId: string | null = null;
+    let editingName = '';
+    let renameInputEl: HTMLInputElement | null = null;
 
-    // New tab modal state
-    let showNewTabModal = false;
-    let newTabName: string = `Solution-${tabs.length + 1}`;
-    let newTabLanguage: ProgrammingLanguage = language;
+    function startRename(fileId: string, currentName: string) {
+        editingTabId = fileId;
+        editingName = currentName;
+        // Focus the input on next tick
+        tick().then(() => {
+            renameInputEl?.focus();
+            renameInputEl?.select();
+        });
+    }
 
-    function openNewTabModal() {
-        newTabName = `Solution-${tabs.length + 1}`;
-        newTabLanguage = language;
-        showNewTabModal = true;
-    }
-    function cancelNewTab() {
-        showNewTabModal = false;
-    }
-    function confirmNewTab() {
-        const nextId = uuidv4();
-        tabs = [...tabs, { fileId: nextId, fileName: newTabName.trim() || `Solution-${nextId}`, language: newTabLanguage } as FileEntry];
-        showNewTabModal = false;
+    function applyRename() {
+        if (!editingTabId) return;
+        const newName = editingName.trim();
+        const targetId = editingTabId;
+        const oldName = tabs.find(t => t.fileId === targetId)?.fileName || 'Solution';
+        const finalName = newName || oldName;
+        // Update tabs
+        tabs = tabs.map(t => t.fileId === targetId ? { ...t, fileName: finalName } : t);
+        // Update all store entries for this fileId
         const fkey = fileKey();
-        const newCode = data.problem.starterCode?.[newTabLanguage] ?? '';
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
-            files = [...files, {
-                fileId: tabs[tabs.length - 1].fileId,
-                fileName: newTabName.trim(),
-                language: newTabLanguage,
-                content: newCode
-            }] as FileEntry[];
-            return {...s, [fkey]: JSON.stringify(files)};
+            for (const f of files) {
+                if (f.fileId === targetId) f.fileName = finalName;
+            }
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
+        editingTabId = null;
+        editingName = '';
+        renameInputEl = null;
+    }
+
+    function cancelRename() {
+        editingTabId = null;
+        editingName = '';
+        renameInputEl = null;
+    }
+
+    // New tab state (simple add button)
+    async function addNewTab() {
+        const newTabLanguage = language;
+        const newTabName = `Solution-${tabs.length + 1}`;
+        const nextId = uuidv4();
+        const fileName = newTabName.trim() || `Solution-${nextId}`;
+        tabs = [...tabs, { fileId: nextId, fileName }];
+        const newCode = data.problem.starterCode?.[newTabLanguage] ?? '';
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            files = [
+                ...files,
+                {
+                    fileId: nextId,
+                    fileName,
+                    language: language,
+                    content: newCode,
+                    isActive: false
+                } as FileEntry
+            ];
+            return { ...s, [fkey]: JSON.stringify(files) };
         });
         activeTabId = tabs.length - 1;
+        await loadOrInitFile(language);
     }
-    // Persist code to store per problem+language
-    $: if (code !== undefined) {
+    $: if (!suppressSave && code !== undefined) {
         const fkey = fileKey();
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
-            const existingFile = files.find(x => x.fileId === tabs[activeTabId].fileId && x.language === tabs[activeTabId].language); 
+            if (activeTabId < 0 || activeTabId >= tabs.length) return s;
+            const existingFile = files.find(x => x.fileId === tabs[activeTabId].fileId && x.language === language); 
             if (existingFile) {
                 existingFile.content = code;
             } else {
                 files = [...files, {
                     fileId: tabs[activeTabId].fileId,
                     fileName: tabs[activeTabId].fileName,
-                    language: tabs[activeTabId].language,
-                    content: code
+                    language: language,
+                    content: code,
+                    isActive: false
                 } as FileEntry];
             }
             return {...s, [fkey]: JSON.stringify(files)};
         });
+    }
+
+    $: if (language) {
+        loadOrInitFile(language);
     }
 
     function closeTab(fileId: string) {
@@ -153,7 +246,6 @@
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
                 showSettings = false;
-                showNewTabModal = false;
             }
         };
         document.addEventListener('click', handleDocClick);
@@ -164,15 +256,11 @@
         };
     });
 
-    $: if (activeTabId >= 0) {
-        const fkey = fileKey();
-        const files = JSON.parse($fileStore[fkey] || '[]') as FileEntry[];
-        const existingFile = files.find(x => x.fileId === tabs[activeTabId].fileId && x.language === tabs[activeTabId].language);
-        if (existingFile) {
-            code = existingFile.content;
-            language = existingFile.language as ProgrammingLanguage;
-            $userSettingsStorage.preferredLanguage = language;
-        }
+    async function activateTab(fileId: string) {
+        const idx = tabs.findIndex((t) => t.fileId === fileId);
+        if (idx === -1) return;
+        activeTabId = idx;
+        await loadOrInitFile(language);
     }
 
     // Runtime image name (like in ExecutionPanel)
@@ -209,7 +297,7 @@
         const fkey = fileKey();
         fileStore.update((s) => {
             const files = JSON.parse(s[fkey] || '[]') as FileEntry[];
-            const existingFile = files.find(x => x.fileId === tabs[activeTabId].fileId && x.language === tabs[activeTabId].language); 
+            const existingFile = files.find(x => x.fileId === tabs[activeTabId].fileId && x.language === language); 
             if (existingFile) {
                 existingFile.content = data.problem.starterCode?.[language] ?? '';
             }
@@ -287,36 +375,71 @@
     <!-- Right Pane: Editor and Console -->
     <div class="editor-pane">
         <div class="editor-header" style="display:flex;align-items:center;justify-content:space-between;padding:var(--spacing-2);border-bottom:1px solid var(--color-border);">
-            <div style="display:flex;gap:var(--spacing-2);align-items:center;">
-                <div class="tab-bar" role="tablist" aria-label="Editor tabs">
-                    {#each tabs as t}
-                        <div
-                            class="tab {t.fileId === tabs[activeTabId].fileId ? 'active' : ''}"
-                            role="tab"
-                            aria-selected={t.fileId === tabs[activeTabId].fileId}
-                            tabindex={t.fileId === tabs[activeTabId].fileId ? 0 : -1}
-                            on:click={() => (activeTabId = tabs.findIndex(x => x.fileId === t.fileId))}
-                            on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activeTabId = tabs.findIndex(x => x.fileId === t.fileId); } }}
-                        >
-                            <span class="tab-favicon" aria-hidden="true">
-                                {#if t.language === 'java'}J{/if}
-                                {#if t.language === 'python'}Py{/if}
-                                {#if t.language === 'cpp'}C{/if}
-                            </span>
-                            <span class="tab-title">{t.fileName}</span>
-                            {#if tabs.length > 1}
+            <div class="lang-dropdown-tabs-container">
+                <div style="display:flex;gap:var(--spacing-2);align-items:center;">
+                    <label for="language-select" style="font-size:0.9rem;color:var(--color-text-secondary);">Language</label>
+                    <select id="language-select" bind:value={language} on:change={() => { 
+                        userSettingsStorage.update((s) => ({ ...s, preferredLanguage: language }));
+                        loadOrInitFile(language);
+                    }}>
+                        <option value="java">Java</option>
+                        <option value="python">Python</option>
+                        <option value="cpp">C++</option>
+                    </select>
+                </div>
+                <div style="display:flex;gap:var(--spacing-2);align-items:center;">
+                    <div class="tab-bar" role="tablist" aria-label="Editor tabs">
+                        {#each tabs as t}
+                            <div
+                                class="tab {t.fileId === tabs[activeTabId].fileId ? 'active' : ''}"
+                                role="tab"
+                                aria-selected={t.fileId === tabs[activeTabId].fileId}
+                                tabindex={t.fileId === tabs[activeTabId].fileId ? 0 : -1}
+                                on:click={() => activateTab(t.fileId)}
+                                on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateTab(t.fileId); } }}
+                            >
+                                {#if editingTabId === t.fileId}
+                                    <input
+                                        class="tab-rename-input"
+                                        type="text"
+                                        bind:value={editingName}
+                                        bind:this={renameInputEl}
+                                        on:click|stopPropagation
+                                        on:keydown|stopPropagation={(e) => {
+                                            if (e.key === 'Enter') { e.preventDefault(); applyRename(); }
+                                            else if (e.key === 'Escape') { e.preventDefault(); cancelRename(); }
+                                        }}
+                                        on:blur={applyRename}
+                                    />
+                                {:else}
+                                    <span class="tab-title">{t.fileName}</span>
+                                {/if}
                                 <button
-                                    class="tab-close"
-                                    aria-label="Close tab"
-                                    title="Close"
-                                    on:click|stopPropagation={() => closeTab(t.fileId)}
+                                    class="tab-rename"
+                                    aria-label="Rename tab"
+                                    title="Rename"
+                                    on:click|stopPropagation={() => startRename(t.fileId, t.fileName)}
                                 >
-                                    ×
+                                    <!-- Pencil icon -->
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        <path d="M14.06 6.19l3.75 3.75 1.69-1.69a1.5 1.5 0 000-2.12L17.87 4.5a1.5 1.5 0 00-2.12 0l-1.69 1.69z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    </svg>
                                 </button>
-                            {/if}
-                        </div>
-                    {/each}
-                    <button class="tab-add" aria-label="New tab" title="New tab" on:click={openNewTabModal}>+</button>
+                                {#if tabs.length > 1}
+                                    <button
+                                        class="tab-close"
+                                        aria-label="Close tab"
+                                        title="Close"
+                                        on:click|stopPropagation={() => closeTab(t.fileId)}
+                                    >
+                                        ×
+                                    </button>
+                                {/if}
+                            </div>
+                        {/each}
+                        <button class="tab-add" aria-label="New tab" title="New tab" on:click={addNewTab}>+</button>
+                    </div>
                 </div>
             </div>
             <div style="display:flex;align-items:center;gap:var(--spacing-2);">
@@ -373,27 +496,6 @@
                 Loading...
             {/if}
         </div>
-        {#if showNewTabModal}
-            <div class="modal-backdrop" role="presentation" on:click={cancelNewTab}>
-                <div class="modal" role="dialog" aria-modal="true" aria-label="Create new solution" tabindex="-1" on:click|stopPropagation on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') e.preventDefault(); }}>
-                    <div class="modal-body">
-                        <label class="modal-label" for="new-tab-name">File Name</label>
-                        <input id="new-tab-name" class="modal-input" type="text" bind:value={newTabName} />
-
-                        <label class="modal-label" for="new-tab-lang">Language</label>
-                        <select id="new-tab-lang" class="modal-input" bind:value={newTabLanguage}>
-                            <option value="java">Java</option>
-                            <option value="python">Python</option>
-                            <option value="cpp">C++</option>
-                        </select>
-                    </div>
-                    <div class="modal-actions">
-                        <button class="btn secondary" on:click={cancelNewTab}>Cancel</button>
-                        <button class="btn primary" on:click={confirmNewTab}>OK</button>
-                    </div>
-                </div>
-            </div>
-        {/if}
         <ExecutionPanel problem={data.problem} {code} {language} />
     </div>
 </div>
@@ -493,7 +595,6 @@
     .tab {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
         padding: 6px 10px;
         border: 1px solid var(--color-border);
         background: rgba(255,255,255,0.02);
@@ -538,7 +639,6 @@
         justify-content: center;
         width: 18px;
         height: 18px;
-        margin-left: 6px;
         border-radius: 4px;
         border: 1px solid transparent;
         background: transparent;
@@ -547,10 +647,55 @@
         line-height: 1;
         font-size: 12px;
         padding: 0;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.12s ease-in-out;
     }
     .tab-close:hover {
         background: rgba(255,255,255,0.06);
         color: var(--color-text);
+    }
+
+    .tab-rename {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        margin-left: 4px;
+        border-radius: 4px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        line-height: 1;
+        font-size: 12px;
+        padding: 0;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.12s ease-in-out;
+    }
+    .tab-rename:hover {
+        background: rgba(255,255,255,0.06);
+        color: var(--color-text);
+    }
+
+    .tab:hover .tab-rename,
+    .tab:hover .tab-close,
+    .tab.active .tab-rename,
+    .tab.active .tab-close {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .tab-rename-input {
+        background: rgba(0,0,0,0.2);
+        border: 1px solid var(--color-border);
+        color: var(--color-text);
+        border-radius: 4px;
+        padding: 2px 4px;
+        font-size: 0.85rem;
+        max-width: 18ch;
     }
 
     .badge {
@@ -730,10 +875,6 @@
         font-family: inherit;
     }
 
-    .modal-body select {
-        background: var(--color-bg);
-    }
-
     /* Hints section */
     .hint-item {
         margin-top: var(--spacing-3);
@@ -762,5 +903,10 @@
     }
     .hint-body {
         padding: 0 var(--spacing-3) var(--spacing-3);
+    }
+
+    .lang-dropdown-tabs-container {
+        display: flex;
+        gap:var(--spacing-2)
     }
 </style>
