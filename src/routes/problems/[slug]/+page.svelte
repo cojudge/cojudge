@@ -8,12 +8,14 @@
     import userSettingsStorage from '$lib/stores/userSettingsStorage';
     import Tooltip from '$lib/components/Tooltip.svelte';
     import { v4 as uuidv4 } from 'uuid';
+    import codeStore from '$lib/stores/codeStore.js';
 
     export let data;
     const problemId = data.problem.id;
     let CodeEditor: any = null;
     let language: ProgrammingLanguage = $userSettingsStorage.preferredLanguage ?? 'java';
     const fileKey = () => `${problemId}`;
+    const codeKey = () => `${problemId}:${language}`;
 
     // Tabs are grouped by fileId (language-agnostic)
     type TabMeta = { fileId: string; fileName: string };
@@ -96,7 +98,7 @@
         if (entry) {
             code = entry.content;
         } else {
-            const starter = data.problem.starterCode?.[lang] ?? '';
+            const starter = $codeStore[codeKey()] ?? data.problem.starterCode?.[lang] ?? '';
             code = starter;
             ensureEntry(currentId, lang, starter);
         }
