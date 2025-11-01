@@ -273,6 +273,7 @@
         if (!confirm("Are you sure you want to remove this file? This cannot be undone")) return;
         const idx = tabs.findIndex((t) => t.fileId === fileId);
         if (idx === -1) return;
+        activateTab(tabs.find(x => x.fileId !== fileId)?.fileId);
         const fkey = fileKey();
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
@@ -341,7 +342,8 @@
         };
     });
 
-    async function activateTab(fileId: string) {
+    async function activateTab(fileId?: string) {
+        if (!fileId) return;
         const idx = tabs.findIndex((t) => t.fileId === fileId);
         if (idx === -1) return;
         activeTabId = idx;
