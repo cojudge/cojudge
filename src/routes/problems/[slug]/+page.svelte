@@ -245,7 +245,10 @@
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
             if (activeTabId < 0 || activeTabId >= tabs.length) return s;
-            const existingFile = files.find(x => x.fileId === tabs[activeTabId].fileId && x.language === language); 
+            const existingFile = files.find(x => 
+                x.fileId === tabs[activeTabId].fileId &&
+                x.language === language
+            );
             if (existingFile) {
                 existingFile.content = code;
             } else {
