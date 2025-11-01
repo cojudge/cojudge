@@ -1003,6 +1003,6 @@
 
     .lang-dropdown-tabs-container {
         display: flex;
-        gap:var(--spacing-2)
+        gap:var(--spacing-2);
     }
 </style>
