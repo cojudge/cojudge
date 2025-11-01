@@ -458,10 +458,18 @@
             <div class="lang-dropdown-tabs-container">
                 <div style="display:flex;gap:var(--spacing-2);align-items:center;">
                     <label for="language-select" style="font-size:0.9rem;color:var(--color-text-secondary);">Language</label>
-                    <select id="language-select" bind:value={language} on:change={() => { 
-                        userSettingsStorage.update((s) => ({ ...s, preferredLanguage: language }));
-                        loadOrInitFile(language);
-                    }}>
+                    <select
+                        id="language-select"
+                        bind:value={language}
+                        on:focus={() => (suppressSave = true)}
+                        on:mousedown={() => (suppressSave = true)}
+                        on:keydown={() => (suppressSave = true)}
+                        on:change={() => {
+                            // Persist preference; actual loading will be triggered by reactive `$: if (language)`
+                            userSettingsStorage.update((s) => ({ ...s, preferredLanguage: language }));
+                        }}
+                        on:blur={() => (suppressSave = false)}
+                    >
                         <option value="java">Java</option>
                         <option value="python">Python</option>
                         <option value="cpp">C++</option>
@@ -952,7 +960,7 @@
         font-size: 0.85rem;
         color: var(--color-text-secondary);
     }
-    .settings-dropdown select {
+    .settings-dropdown select, #language-select {
         background: var(--color-bg);
         color: var(--color-text);
         border: 1px solid var(--color-border);
