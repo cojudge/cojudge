@@ -37,7 +37,7 @@
         const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number }>();
         files.forEach((f, idx) => {
             const existing = groups.get(f.fileId);
-            const orderVal = (typeof (f as any).order === 'number') ? (f as any).order as number : null;
+            const orderVal = (typeof f.order === 'number') ? f.order : null;
             if (!existing) {
                 groups.set(f.fileId, {
                     fileId: f.fileId,
