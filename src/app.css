@@ -9,6 +9,8 @@
   --color-surface: rgba(255, 255, 255, 0.05); /* Floating surface color */
   --color-surface-hover: rgba(255, 255, 255, 0.1);
 
+  --color-highlight: #D48F43;
+
   --color-text-primary: #f0f0f0; /* Off-white for headings and important text */
   --color-text-secondary: rgba(235, 235, 245, 0.7); /* Lighter text for paragraphs */
 

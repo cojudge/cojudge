@@ -4,18 +4,31 @@
     import ExecutionPanel from '$lib/components/ExecutionPanel.svelte';
     import { getDifficultyClass, type ProgrammingLanguage } from '$lib/utils/util.js';
     import { leftPaneWidthStore } from '$lib/stores/layoutStore';
-    import codeStore from '$lib/stores/codeStore';
+    import fileStore, { type FileEntry } from '$lib/stores/fileStore.js';
     import userSettingsStorage from '$lib/stores/userSettingsStorage';
     import Tooltip from '$lib/components/Tooltip.svelte';
+    import { v4 as uuidv4 } from 'uuid';
 
     export let data;
     const problemId = data.problem.id;
     let CodeEditor: any = null;
-    // support per-problem-per-language storage using key `${problemId}:${language}`
-    // default to user's preferred language from settings
     let language: ProgrammingLanguage = $userSettingsStorage.preferredLanguage ?? 'java';
-    const codeKey = () => `${problemId}:${language}`;
-    let code = $codeStore[codeKey()] ?? data.problem.starterCode?.[language] ?? '';
+    const fileKey = () => `${problemId}`;
+    const getInitialCode = () => {
+        try {
+            return (JSON.parse($fileStore[fileKey()] || `[]`) as FileEntry[])[0].content;
+        } catch (err) {
+            return data.problem.starterCode?.[language] ?? '';
+        }
+    };
+    const getInitialTabs = () => {
+        try {
+            return JSON.parse($fileStore[fileKey()]) as FileEntry[];
+        } catch (err) {
+            return [{fileName: "Solution", fileId: uuidv4(), language: language, content: getInitialCode()} as FileEntry]
+        }
+    }
+    let code = getInitialCode(); 
     let isResizing = false;
     let workspaceElement: HTMLElement;
     let openedHints = new Set<number>([]);
@@ -25,10 +38,80 @@
     const fontSizes: number[] = Array.from({ length: 13 }, (_, i) => 12 + i); // 12..24
     let fontSize: number = $userSettingsStorage.editorFontSize ?? 14;
 
+    let tabs: FileEntry[] = getInitialTabs();
+    let activeTabId: number = 0;
+
+    // New tab modal state
+    let showNewTabModal = false;
+    let newTabName: string = `Solution-${tabs.length + 1}`;
+    let newTabLanguage: ProgrammingLanguage = language;
+
+    function openNewTabModal() {
+        newTabName = `Solution-${tabs.length + 1}`;
+        newTabLanguage = language;
+        showNewTabModal = true;
+    }
+    function cancelNewTab() {
+        showNewTabModal = false;
+    }
+    function confirmNewTab() {
+        const nextId = uuidv4();
+        tabs = [...tabs, { fileId: nextId, fileName: newTabName.trim() || `Solution-${nextId}`, language: newTabLanguage } as FileEntry];
+        showNewTabModal = false;
+        const fkey = fileKey();
+        const newCode = data.problem.starterCode?.[newTabLanguage] ?? '';
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            files = [...files, {
+                fileId: tabs[tabs.length - 1].fileId,
+                fileName: newTabName.trim(),
+                language: newTabLanguage,
+                content: newCode
+            }] as FileEntry[];
+            return {...s, [fkey]: JSON.stringify(files)};
+        });
+        activeTabId = tabs.length - 1;
+    }
     // Persist code to store per problem+language
     $: if (code !== undefined) {
-        const key = codeKey();
-        codeStore.update((s) => (s[key] === code ? s : { ...s, [key]: code }));
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            const existingFile = files.find(x => x.fileId === tabs[activeTabId].fileId && x.language === tabs[activeTabId].language); 
+            if (existingFile) {
+                existingFile.content = code;
+            } else {
+                files = [...files, {
+                    fileId: tabs[activeTabId].fileId,
+                    fileName: tabs[activeTabId].fileName,
+                    language: tabs[activeTabId].language,
+                    content: code
+                } as FileEntry];
+            }
+            return {...s, [fkey]: JSON.stringify(files)};
+        });
+    }
+
+    function closeTab(fileId: string) {
+        if (tabs.length <= 1) return;
+        if (!confirm("Are you sure you want to remove this file? This cannot be undone")) return;
+        const idx = tabs.findIndex((t) => t.fileId === fileId);
+        if (idx === -1) return;
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            files = files.filter((f) => f.fileId !== fileId);
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
+        // Update tabs list
+        const newTabs = tabs.filter((t) => t.fileId !== fileId);
+        // Update active tab index safely
+        if (activeTabId === idx) {
+            activeTabId = Math.max(0, idx - 1);
+        } else if (activeTabId > idx) {
+            activeTabId = activeTabId - 1;
+        }
+        tabs = newTabs;
     }
 
     function handleMouseDown(event: MouseEvent) {
@@ -68,7 +151,10 @@
             }
         };
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') showSettings = false;
+            if (e.key === 'Escape') {
+                showSettings = false;
+                showNewTabModal = false;
+            }
         };
         document.addEventListener('click', handleDocClick);
         document.addEventListener('keydown', handleKeyDown);
@@ -78,14 +164,14 @@
         };
     });
 
-    // When language changes, refresh code from store or starter code, and persist globally
-    $: if (language) {
-        const stored = $codeStore[codeKey()];
-        const starter = data.problem.starterCode?.[language] ?? '';
-        if (stored !== undefined) {
-            code = stored;
-        } else {
-            code = starter;
+    $: if (activeTabId >= 0) {
+        const fkey = fileKey();
+        const files = JSON.parse($fileStore[fkey] || '[]') as FileEntry[];
+        const existingFile = files.find(x => x.fileId === tabs[activeTabId].fileId && x.language === tabs[activeTabId].language);
+        if (existingFile) {
+            code = existingFile.content;
+            language = existingFile.language as ProgrammingLanguage;
+            $userSettingsStorage.preferredLanguage = language;
         }
     }
 
@@ -118,16 +204,17 @@
 
     // Reset code for the current problem + language
     function handleResetClick() {
-        const confirmed = confirm('Are you sure you want to reset the code for this language? This action cannot be undone.');
+        const confirmed = confirm('Are you sure you want to reset the code for this file? This action cannot be undone.');
         if (!confirmed) return;
-        // Remove only the current language of current problem from store
-        const key = codeKey();
-        codeStore.update((s) => {
-            const next = { ...s };
-            delete next[key];
-            return next;
-        });
-        // Revert the editor to starter code for the current language
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            const files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            const existingFile = files.find(x => x.fileId === tabs[activeTabId].fileId && x.language === tabs[activeTabId].language); 
+            if (existingFile) {
+                existingFile.content = data.problem.starterCode?.[language] ?? '';
+            }
+            return {...s, [fkey]: JSON.stringify(files)};
+        })
         code = data.problem.starterCode?.[language] ?? '';
     }
 
@@ -201,26 +288,35 @@
     <div class="editor-pane">
         <div class="editor-header" style="display:flex;align-items:center;justify-content:space-between;padding:var(--spacing-2);border-bottom:1px solid var(--color-border);">
             <div style="display:flex;gap:var(--spacing-2);align-items:center;">
-                <label for="language-select" style="font-size:0.9rem;color:var(--color-text-secondary);">Language</label>
-                <select id="language-select" bind:value={language} on:change={() => { 
-                    // Update editor code with stored or starter code for the selected language
-                    code = $codeStore[codeKey()] ?? data.problem.starterCode?.[language] ?? ''; 
-                    // Persist the preferred language globally
-                    userSettingsStorage.update((s) => ({ ...s, preferredLanguage: language }));
-                }}>
-                    <option value="java">Java</option>
-                    <option value="python">Python</option>
-                    <option value="cpp">C++</option>
-                </select>
                 <div class="tab-bar" role="tablist" aria-label="Editor tabs">
-                    <div class="tab active" role="tab" aria-selected="true" tabindex="0">
-                        <span class="tab-favicon" aria-hidden="true">
-                            {#if language === 'java'}J{/if}
-                            {#if language === 'python'}Py{/if}
-                            {#if language === 'cpp'}C{/if}
-                        </span>
-                        <span class="tab-title">Solution-1</span>
-                    </div>
+                    {#each tabs as t}
+                        <div
+                            class="tab {t.fileId === tabs[activeTabId].fileId ? 'active' : ''}"
+                            role="tab"
+                            aria-selected={t.fileId === tabs[activeTabId].fileId}
+                            tabindex={t.fileId === tabs[activeTabId].fileId ? 0 : -1}
+                            on:click={() => (activeTabId = tabs.findIndex(x => x.fileId === t.fileId))}
+                            on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activeTabId = tabs.findIndex(x => x.fileId === t.fileId); } }}
+                        >
+                            <span class="tab-favicon" aria-hidden="true">
+                                {#if t.language === 'java'}J{/if}
+                                {#if t.language === 'python'}Py{/if}
+                                {#if t.language === 'cpp'}C{/if}
+                            </span>
+                            <span class="tab-title">{t.fileName}</span>
+                            {#if tabs.length > 1}
+                                <button
+                                    class="tab-close"
+                                    aria-label="Close tab"
+                                    title="Close"
+                                    on:click|stopPropagation={() => closeTab(t.fileId)}
+                                >
+                                    ×
+                                </button>
+                            {/if}
+                        </div>
+                    {/each}
+                    <button class="tab-add" aria-label="New tab" title="New tab" on:click={openNewTabModal}>+</button>
                 </div>
             </div>
             <div style="display:flex;align-items:center;gap:var(--spacing-2);">
@@ -277,6 +373,27 @@
                 Loading...
             {/if}
         </div>
+        {#if showNewTabModal}
+            <div class="modal-backdrop" role="presentation" on:click={cancelNewTab}>
+                <div class="modal" role="dialog" aria-modal="true" aria-label="Create new solution" tabindex="-1" on:click|stopPropagation on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') e.preventDefault(); }}>
+                    <div class="modal-body">
+                        <label class="modal-label" for="new-tab-name">File Name</label>
+                        <input id="new-tab-name" class="modal-input" type="text" bind:value={newTabName} />
+
+                        <label class="modal-label" for="new-tab-lang">Language</label>
+                        <select id="new-tab-lang" class="modal-input" bind:value={newTabLanguage}>
+                            <option value="java">Java</option>
+                            <option value="python">Python</option>
+                            <option value="cpp">C++</option>
+                        </select>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn secondary" on:click={cancelNewTab}>Cancel</button>
+                        <button class="btn primary" on:click={confirmNewTab}>OK</button>
+                    </div>
+                </div>
+            </div>
+        {/if}
         <ExecutionPanel problem={data.problem} {code} {language} />
     </div>
 </div>
@@ -353,6 +470,26 @@
     .editor-header .tab-bar {
         padding: 0;
     }
+    .tab-bar {
+        flex-wrap: nowrap;
+    }
+    .tab-add {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 1px solid var(--color-border);
+        background: transparent;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        margin-left: 4px;
+    }
+    .tab-add:hover {
+        background: rgba(255,255,255,0.06);
+        color: var(--color-text);
+    }
     .tab {
         display: inline-flex;
         align-items: center;
@@ -368,7 +505,7 @@
     }
     .tab.active {
         background-color: var(--color-surface);
-        border-bottom-color: transparent;
+        border-bottom-color: var(--color-highlight);
         box-shadow: 0 -1px 0 var(--color-surface), 0 1px 0 var(--color-surface);
     }
     .tab-favicon {
@@ -388,6 +525,32 @@
         max-width: 24ch;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+    .tab:hover {
+        background: rgba(255,255,255,0.06);
+        color: var(--color-text);
+        cursor: pointer;
+    }
+
+    .tab-close {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        margin-left: 6px;
+        border-radius: 4px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        line-height: 1;
+        font-size: 12px;
+        padding: 0;
+    }
+    .tab-close:hover {
+        background: rgba(255,255,255,0.06);
+        color: var(--color-text);
     }
 
     .badge {
@@ -482,6 +645,59 @@
         transform: translateY(-2px);
     }
 
+    .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        display: grid;
+        place-items: center;
+        z-index: 50;
+    }
+    .modal {
+        background: var(--color-bg);
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius-lg);
+        width: min(420px, calc(100vw - 32px));
+        box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+        overflow: hidden;
+    }
+    .modal-body {
+        display: grid;
+        gap: 8px;
+        padding: 16px;
+    }
+    .modal-label {
+        font-size: 0.85rem;
+        color: var(--color-text-secondary);
+    }
+    .modal-input {
+        background: transparent;
+        color: var(--color-text);
+        border: 1px solid var(--color-border);
+        border-radius: 6px;
+        padding: 6px 8px;
+        font-family: inherit;
+    }
+    .modal-actions {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+        padding: 12px 16px 16px;
+    }
+    .btn {
+        padding: 6px 10px;
+        border-radius: 6px;
+        border: 1px solid var(--color-border);
+        background: transparent;
+        color: var(--color-text);
+        cursor: pointer;
+        font: inherit;
+    }
+    .btn.primary {
+        border-color: var(--color-border-active);
+        background: rgba(255,255,255,0.06);
+    }
+
     /* Settings dropdown */
     .settings-wrapper {
         position: relative;
@@ -506,12 +722,16 @@
         color: var(--color-text-secondary);
     }
     .settings-dropdown select {
-        background: transparent;
+        background: var(--color-bg);
         color: var(--color-text);
         border: 1px solid var(--color-border);
         border-radius: 6px;
         padding: 6px 8px;
         font-family: inherit;
+    }
+
+    .modal-body select {
+        background: var(--color-bg);
     }
 
     /* Hints section */
