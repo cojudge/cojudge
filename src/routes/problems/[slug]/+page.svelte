@@ -384,7 +384,7 @@
                 existingFile.content = data.problem.starterCode?.[language] ?? '';
             }
             return {...s, [fkey]: JSON.stringify(files)};
-        })
+        });
         code = data.problem.starterCode?.[language] ?? '';
     }
 
