@@ -271,7 +271,7 @@
 
     function closeTab(fileId: string) {
         if (tabs.length <= 1) return;
-        if (!confirm("Are you sure you want to remove this file? This cannot be undone")) return;
+        if (!confirm("Are you sure you want to remove this file? This action cannot be undone")) return;
         const idx = tabs.findIndex((t) => t.fileId === fileId);
         if (idx === -1) return;
         if (activeTabId === idx) {
