@@ -197,7 +197,7 @@
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
             for (const f of files) {
                 const idx = orderById.get(f.fileId);
-                if (idx !== undefined) (f as any).order = idx;
+                if (idx !== undefined) f.order = idx;
             }
             return { ...s, [fkey]: JSON.stringify(files) };
         });
