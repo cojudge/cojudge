@@ -187,6 +187,7 @@
         activeTabId = tabs.length - 1;
         await loadOrInitFile(language);
         persistTabOrder();
+        startRename(nextId, fileName);
     }
 
     function persistTabOrder() {
@@ -273,7 +274,9 @@
         if (!confirm("Are you sure you want to remove this file? This cannot be undone")) return;
         const idx = tabs.findIndex((t) => t.fileId === fileId);
         if (idx === -1) return;
-        activateTab(tabs.find(x => x.fileId !== fileId)?.fileId);
+        if (activeTabId === idx) {
+            activateTab(tabs.find(x => x.fileId !== fileId)?.fileId);
+        }
         const fkey = fileKey();
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
@@ -282,12 +285,6 @@
         });
         // Update tabs list
         const newTabs = tabs.filter((t) => t.fileId !== fileId);
-        // Update active tab index safely
-        if (activeTabId === idx) {
-            activeTabId = Math.max(0, idx - 1);
-        } else if (activeTabId > idx) {
-            activeTabId = activeTabId - 1;
-        }
         tabs = newTabs;
         // Re-number orders after removal
         persistTabOrder();
