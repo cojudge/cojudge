@@ -32,11 +32,33 @@
             // Create a default tab; the language-specific entry will be created lazily
             return [{ fileId: uuidv4(), fileName: 'Solution' }];
         }
-        const byId = new Map<string, TabMeta>();
-        for (const f of files) {
-            if (!byId.has(f.fileId)) byId.set(f.fileId, { fileId: f.fileId, fileName: f.fileName || 'Solution' });
-        }
-        return Array.from(byId.values());
+        const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number }>();
+        files.forEach((f, idx) => {
+            const existing = groups.get(f.fileId);
+            const orderVal = (typeof (f as any).order === 'number') ? (f as any).order as number : null;
+            if (!existing) {
+                groups.set(f.fileId, {
+                    fileId: f.fileId,
+                    fileName: f.fileName || 'Solution',
+                    order: orderVal,
+                    firstIndex: idx
+                });
+            } else {
+                if (orderVal !== null) {
+                    if (existing.order === null || orderVal < existing.order) existing.order = orderVal;
+                }
+            }
+        });
+        const list = Array.from(groups.values());
+        list.sort((a, b) => {
+            const ao = a.order; const bo = b.order;
+            if (ao !== null && bo !== null) return ao - bo;
+            if (ao !== null) return -1;
+            if (bo !== null) return 1;
+            // Fallback to first appearance order in stored array
+            return a.firstIndex - b.firstIndex;
+        });
+        return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName }));
     }
 
     // Ensure an entry exists for current tab+language, optionally with initial content
@@ -46,6 +68,7 @@
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
             const existing = files.find((x) => x.fileId === fileId && x.language === lang);
             if (!existing) {
+                const tabIndex = tabs.findIndex((t) => t.fileId === fileId);
                 files = [
                     ...files,
                     {
@@ -53,7 +76,8 @@
                         fileName: (tabs.find((t) => t.fileId === fileId)?.fileName) || 'Solution',
                         language: lang,
                         content: initialContent,
-                        isActive: false
+                        isActive: false,
+                        order: tabIndex >= 0 ? tabIndex : undefined
                     } as FileEntry
                 ];
             }
@@ -152,13 +176,67 @@
                     fileName,
                     language: language,
                     content: newCode,
-                    isActive: false
+                    isActive: false,
+                    order: tabs.length - 1
                 } as FileEntry
             ];
             return { ...s, [fkey]: JSON.stringify(files) };
         });
         activeTabId = tabs.length - 1;
         await loadOrInitFile(language);
+        persistTabOrder();
+    }
+
+    function persistTabOrder() {
+        const fkey = fileKey();
+        const orderById = new Map<string, number>();
+        tabs.forEach((t, idx) => orderById.set(t.fileId, idx));
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            for (const f of files) {
+                const idx = orderById.get(f.fileId);
+                if (idx !== undefined) (f as any).order = idx;
+            }
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
+    }
+
+    function moveTab(sourceId: string, targetId: string) {
+        if (sourceId === targetId) return;
+        const from = tabs.findIndex((t) => t.fileId === sourceId);
+        const to = tabs.findIndex((t) => t.fileId === targetId);
+        if (from < 0 || to < 0) return;
+        const activeFileId = tabs[activeTabId]?.fileId;
+        const updated = [...tabs];
+        const [moved] = updated.splice(from, 1);
+        updated.splice(to, 0, moved);
+        tabs = updated;
+        // Recompute activeTabId by locating current active fileId
+        if (activeFileId) {
+            const newIdx = tabs.findIndex((t) => t.fileId === activeFileId);
+            if (newIdx !== -1) activeTabId = newIdx;
+        }
+        persistTabOrder();
+    }
+
+    let draggingId: string | null = null;
+    function handleDragStart(e: DragEvent, fileId: string) {
+        draggingId = fileId;
+        try { e.dataTransfer?.setData('text/plain', fileId); } catch {}
+        if (e.dataTransfer) e.dataTransfer.effectAllowed = 'move';
+    }
+    function handleDragOver(e: DragEvent, _fileId: string) {
+        e.preventDefault();
+        if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+    }
+    function handleDrop(e: DragEvent, targetId: string) {
+        e.preventDefault();
+        const source = draggingId || e.dataTransfer?.getData('text/plain') || '';
+        if (source) moveTab(source, targetId);
+        draggingId = null;
+    }
+    function handleDragEnd() {
+        draggingId = null;
     }
     $: if (!suppressSave && code !== undefined) {
         const fkey = fileKey();
@@ -205,6 +283,8 @@
             activeTabId = activeTabId - 1;
         }
         tabs = newTabs;
+        // Re-number orders after removal
+        persistTabOrder();
     }
 
     function handleMouseDown(event: MouseEvent) {
@@ -397,6 +477,11 @@
                                 tabindex={t.fileId === tabs[activeTabId].fileId ? 0 : -1}
                                 on:click={() => activateTab(t.fileId)}
                                 on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateTab(t.fileId); } }}
+                                draggable={true}
+                                on:dragstart={(e) => handleDragStart(e, t.fileId)}
+                                on:dragover={(e) => handleDragOver(e, t.fileId)}
+                                on:drop={(e) => handleDrop(e, t.fileId)}
+                                on:dragend={handleDragEnd}
                             >
                                 {#if editingTabId === t.fileId}
                                     <input

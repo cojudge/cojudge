@@ -11,6 +11,7 @@ export type FileEntry = {
     language: string;
     isActive: boolean;
     fileId: string; // uuid
+    order?: number;
 };
 
 // Dictionary: key = problem slug, value = JSON string of FileEntry[]
