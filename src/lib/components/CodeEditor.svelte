@@ -4,6 +4,7 @@
     export let value = '';
     export let language = 'javascript';
     export let fontSize: number = 14;
+    export let theme: 'dark' | 'light' = 'dark';
 
     let editor: Monaco.editor.IStandaloneCodeEditor | null = null;
     let editorElement: HTMLDivElement;
@@ -15,32 +16,53 @@
             if (disposed) return;
             monacoRef = monaco;
             monaco.editor.defineTheme('custom-dark', {
-            base: 'vs-dark', // Start with the vs-dark theme as a base
-            inherit: true,
-            rules: [
-                { token: 'comment', foreground: '808080' },
-                { token: 'keyword', foreground: 'D48F43' },
-                { token: 'number', foreground: '8AAC55' },
-                { token: 'string', foreground: 'CE9178' },
-            ],
-            colors: {
-                // --- Override the editor's "chrome" colors ---
-                'editor.background': '#3A302E', 
-                'editor.foreground': '#F0F0F0',
-                'editorGutter.background': '#3A302E',
-                'editorLineNumber.foreground': '#858585',
-                'editorLineNumber.activeForeground': '#C5C5C5',
-                'editorCursor.foreground': '#42c882',
-                'editor.selectionBackground': '#FFFFFF20',
-                'editor.lineHighlightBackground': '#FFFFFF10',
-            }
-        });
-        // --- End of theme definition ---
+                base: 'vs-dark',
+                inherit: true,
+                rules: [
+                    { token: 'comment', foreground: '8b8b8b' },
+                    { token: 'keyword', foreground: 'd48f43' },
+                    { token: 'number', foreground: '8aac55' },
+                    { token: 'string', foreground: 'ce9178' },
+                ],
+                colors: {
+                    'editor.background': '#3a302e',
+                    'editor.foreground': '#f0f0f0',
+                    'editorGutter.background': '#3a302e',
+                    'editorLineNumber.foreground': '#858585',
+                    'editorLineNumber.activeForeground': '#c5c5c5',
+                    'editorCursor.foreground': '#42c882',
+                    'editor.selectionBackground': '#ffffff20',
+                    'editor.lineHighlightBackground': '#ffffff10',
+                }
+            });
+
+            monaco.editor.defineTheme('custom-light', {
+                base: 'vs',
+                inherit: true,
+                rules: [
+                    { token: 'comment', foreground: '6b7280' },
+                    { token: 'keyword', foreground: 'd48f43' },
+                    { token: 'number', foreground: '047857' },
+                    { token: 'string', foreground: 'b45309' },
+                ],
+                colors: {
+                    'editor.background': '#f8fafc',
+                    'editor.foreground': '#1f2937',
+                    'editorGutter.background': '#f1f5f9',
+                    'editorLineNumber.foreground': '#94a3b8',
+                    'editorLineNumber.activeForeground': '#475569',
+                    'editorCursor.foreground': '#d48f43',
+                    'editor.selectionBackground': '#d48f4330',
+                    'editor.lineHighlightBackground': '#f1f5f9',
+                }
+            });
+
+            const themeId = theme === 'light' ? 'custom-light' : 'custom-dark';
 
             editor = monaco.editor.create(editorElement, {
             value,
             language,
-            theme: 'custom-dark',
+            theme: themeId,
             automaticLayout: true,
             fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
             fontSize,
@@ -79,6 +101,11 @@
         if (current !== value) {
             editor.setValue(value);
         }
+    }
+
+    $: if (monacoRef) {
+        const themeId = theme === 'light' ? 'custom-light' : 'custom-dark';
+        monacoRef.editor.setTheme(themeId);
     }
 </script>
 
