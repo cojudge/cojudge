@@ -3,6 +3,21 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script>
+			(function () {
+				try {
+					var raw = localStorage.getItem('user-settings');
+					if (!raw) return;
+					var parsed = JSON.parse(raw);
+					var theme = parsed && parsed.theme;
+					if (theme === 'light' || theme === 'dark') {
+						document.documentElement.dataset.theme = theme;
+					}
+				} catch (err) {
+					console.warn(err);
+				}
+			})();
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

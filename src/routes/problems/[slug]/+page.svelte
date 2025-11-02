@@ -5,7 +5,7 @@
     import { getDifficultyClass, type ProgrammingLanguage } from '$lib/utils/util.js';
     import { leftPaneWidthStore } from '$lib/stores/layoutStore';
     import fileStore, { type FileEntry } from '$lib/stores/fileStore.js';
-    import userSettingsStorage from '$lib/stores/userSettingsStorage';
+    import userSettingsStorage, { type ThemeChoice } from '$lib/stores/userSettingsStorage';
     import Tooltip from '$lib/components/Tooltip.svelte';
     import { v4 as uuidv4 } from 'uuid';
     import codeStore from '$lib/stores/codeStore.js';
@@ -115,6 +115,7 @@
     let settingsContainer: HTMLElement | null = null;
     const fontSizes: number[] = Array.from({ length: 13 }, (_, i) => 12 + i); // 12..24
     let fontSize: number = $userSettingsStorage.editorFontSize ?? 14;
+    let theme: ThemeChoice = $userSettingsStorage.theme ?? 'dark';
 
     let tabs: TabMeta[] = getInitialTabs();
     let activeTabId: number = 0;
@@ -389,8 +390,18 @@
         code = data.problem.starterCode?.[language] ?? '';
     }
 
-    $: if (typeof fontSize === 'number') {
-        userSettingsStorage.update((s) => ({ ...s, editorFontSize: fontSize }));
+    $: {
+        const currentFontSize = $userSettingsStorage.editorFontSize;
+        if (typeof fontSize === 'number' && currentFontSize !== fontSize) {
+            userSettingsStorage.update((s) => ({ ...s, editorFontSize: fontSize }));
+        }
+    }
+
+    $: {
+        const currentTheme = $userSettingsStorage.theme;
+        if (theme && currentTheme !== theme) {
+            userSettingsStorage.update((s) => ({ ...s, theme }));
+        }
     }
 </script>
 
@@ -579,6 +590,11 @@
                                     <option value={size}>{size}px</option>
                                 {/each}
                             </select>
+                            <label for="theme-select">Theme</label>
+                            <select id="theme-select" bind:value={theme}>
+                                <option value="dark">Dark</option>
+                                <option value="light">Light</option>
+                            </select>
                         </div>
                     {/if}
                 </div>
@@ -588,7 +604,7 @@
 
         <div class="editor-container">
             {#if CodeEditor}
-                <svelte:component this={CodeEditor} bind:value={code} {language} {fontSize} />
+                <svelte:component this={CodeEditor} bind:value={code} {language} {fontSize} {theme} />
             {:else}
                 Loading...
             {/if}
@@ -835,7 +851,6 @@
         transform: translate(-50%, -50%);
         width: 4px;
         height: 32px;
-        background-color: var(--color-border-active);
         border-radius: 4px;
         transition: background-color 0.2s ease-in-out;
     }
@@ -849,13 +864,12 @@
     .example {
         margin-top: var(--spacing-4);
         background-color: rgba(255,255,255,0.02);
-        border: 1px solid var(--color-border-active);
         padding: var(--spacing-3);
         border-radius: var(--border-radius-md);
     }
 
     .example pre {
-        background: rgba(0,0,0,0.25);
+        background: var(--color-second-bg);
         color: var(--color-text);
         padding: var(--spacing-2);
         border-radius: 6px;
@@ -976,7 +990,6 @@
     .hint-item {
         margin-top: var(--spacing-3);
         background-color: rgba(255,255,255,0.02);
-        border: 1px solid var(--color-border-active);
         border-radius: var(--border-radius-md);
         overflow: hidden;
     }

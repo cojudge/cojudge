@@ -4,29 +4,6 @@
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
 
-  /* Color Palette */
-  --color-bg: #443835; /* Deep muted brown from your image */
-  --color-surface: rgba(255, 255, 255, 0.05); /* Floating surface color */
-  --color-surface-hover: rgba(255, 255, 255, 0.1);
-
-  --color-highlight: #D48F43;
-
-  --color-text-primary: #f0f0f0; /* Off-white for headings and important text */
-  --color-text-secondary: rgba(235, 235, 245, 0.7); /* Lighter text for paragraphs */
-
-  --color-primary: #42c882; /* Vibrant minty green for buttons */
-  --color-primary-text: #000000; /* Black text on the bright button for contrast */
-  
-  --color-border: rgba(255, 255, 255, 0.1);
-  
-  /* Difficulty Badge Colors */
-  --color-easy: #42c882;
-  --color-medium: #ffc107;
-  --color-hard: #dc3545;
-
-  --color-incorrect: lightcoral;
-  --color-correct: lightgreen;
-
   /* Sizing */
   --spacing-1: 0.25rem;
   --spacing-2: 0.5rem;
@@ -34,11 +11,76 @@
   --spacing-4: 1.5rem;
   --spacing-5: 3rem;
   --border-radius-sm: 8px;
+  --border-radius-md: 12px;
   --border-radius-lg: 16px;
+  --scrollbar-size: 10px;
+}
+
+:root,
+:root[data-theme='dark'] {
+  --color-bg: #443835;
+  --color-second-bg: rgba(0,0,0,0.25);
+  --color-surface: rgba(255, 255, 255, 0.05);
+  --color-surface-hover: rgba(255, 255, 255, 0.1);
+
+  --color-highlight: #d48f43;
+
+  --color-text: #f0f0f0;
+  --color-text-primary: #f0f0f0;
+  --color-text-secondary: rgba(235, 235, 245, 0.7);
+
+  --color-primary: #42c882;
+  --color-primary-text: #000000;
+
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-active: rgba(255, 255, 255, 0);
+
+  --color-easy: #42c882;
+  --color-medium: #ffc107;
+  --color-hard: #dc3545;
+
+  --color-incorrect: lightcoral;
+  --color-correct: lightgreen;
+
+  --scrollbar-thumb: rgba(255, 255, 255, 0.28);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.45);
+  --scrollbar-track: rgba(255, 255, 255, 0.06);
+}
+
+:root[data-theme='light'] {
+  --color-bg: #f8fafc;
+  --color-second-bg: rgba(0,0,0,0.05);
+  --color-surface: #ffffff;
+  --color-surface-hover: #f1f5f9;
+
+  --color-highlight: #d48f43;
+
+  --color-text: #0f172a;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+
+  --color-primary: #42c882;
+  --color-primary-text: #1f2937;
+
+  --color-border: rgba(0, 0, 0, 0.1);
+  --color-border-active: rgba(0, 0, 0, 0.05);
+
+  --color-easy: #22c55e;
+  --color-medium: #f59e0b;
+  --color-hard: #dc2626;
+
+  --color-incorrect: #dc2626;
+  --color-correct: #16a34a;
+
+  --scrollbar-thumb: rgba(100, 116, 139, 0.45);
+  --scrollbar-thumb-hover: rgba(71, 85, 105, 0.55);
+  --scrollbar-track: rgba(148, 163, 184, 0.2);
 }
 
 /* Basic Reset and Global Styles */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -46,14 +88,17 @@ body {
   margin: 0;
   font-family: var(--font-sans);
   background-color: var(--color-bg);
-  color: var(--color-text-secondary); /* Default to secondary text color */
+  color: var(--color-text-secondary);
   line-height: 1.6;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   margin: 0;
   font-weight: 600;
-  color: var(--color-text-primary); /* Primary text for headings */
+  color: var(--color-text-primary);
+  /* Primary text for headings */
 }
 
 a {
@@ -72,12 +117,6 @@ a:hover {
   - Firefox: uses scrollbar-color/width
   - Chromium/WebKit: uses ::-webkit-scrollbar pseudos
 */
-:root {
-  --scrollbar-size: 10px;
-  --scrollbar-thumb: rgba(255, 255, 255, 0.28);
-  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.45);
-  --scrollbar-track: rgba(255, 255, 255, 0.06);
-}
 
 /* Prefer smoother, more stable page scrolling */
 html {
@@ -120,12 +159,17 @@ html {
 }
 
 /* Make common scroll areas feel consistent */
-body, pre, textarea {
+body,
+pre,
+textarea {
   scrollbar-gutter: stable both-edges;
 }
 
 /* Optional: slightly reveal track on hover to hint scrollability */
-.problem-pane:hover, .editor-pane:hover, pre:hover, textarea:hover {
+.problem-pane:hover,
+.editor-pane:hover,
+pre:hover,
+textarea:hover {
   /* Firefox hover color */
   scrollbar-color: var(--scrollbar-thumb-hover) transparent;
 }

@@ -933,7 +933,7 @@
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    border: 1px solid var(--color-border-active);
+    border: none;
     background: transparent;
     color: var(--color-text-secondary);
     cursor: pointer;

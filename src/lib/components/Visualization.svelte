@@ -10,6 +10,7 @@
   let canvasEl: HTMLCanvasElement;
   let resizeTimer: number | undefined;
   let ro: ResizeObserver | null = null;
+  let themeObserver: MutationObserver | null = null;
   let lastObserved = { width: 0, height: 0 };
 
   // Utilities
@@ -490,11 +491,15 @@
 
   function themeColors() {
     const css = getComputedStyle(document.documentElement);
+    const pick = (key: string, fallback: string) => {
+      const value = css.getPropertyValue(key).trim();
+      return value || fallback;
+    };
     return {
-      nodeColor: css.getPropertyValue('--surface-2').trim() || '#4a3730',
-      borderColor: css.getPropertyValue('--accent').trim() || '#22c55e',
-      edgeColor: css.getPropertyValue('--edge').trim() || '#9c8f87',
-      textColor: css.getPropertyValue('--text').trim() || '#f5efe9',
+      nodeColor: pick('--visual-surface-2', '#4a3730'),
+      borderColor: pick('--visual-accent', '#22c55e'),
+      edgeColor: pick('--visual-edge', '#9c8f87'),
+      textColor: pick('--visual-text', '#f5efe9'),
     };
   }
 
@@ -560,10 +565,16 @@
       if (containerEl) ro.observe(containerEl);
     }
 
+    if (typeof MutationObserver !== 'undefined') {
+      themeObserver = new MutationObserver(() => scheduleDraw());
+      themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    }
+
     return () => {
       window.removeEventListener('resize', onResize);
       if (ro) { ro.disconnect(); ro = null; }
       if (resizeTimer) { clearTimeout(resizeTimer); }
+      if (themeObserver) { themeObserver.disconnect(); themeObserver = null; }
     };
   });
 
@@ -582,37 +593,63 @@
 {/if}
 
 <style>
-  :root {
-    --bg: #2f231e;
-    --surface: #3a2a24;
-    --surface-2: #4a3730;
-    --border: #5a463f;
-    --text: #f5efe9;
-    --text-dim: #d8cfc8;
-    --edge: #9c8f87;
-    --accent: #22c55e;
-    --accent-strong: #16a34a;
+  :global(:root) {
+    --visual-bg: #2f231e;
+    --visual-surface: #3a2a24;
+    --visual-surface-2: #4a3730;
+    --visual-border: #5a463f;
+    --visual-text: #f5efe9;
+    --visual-text-dim: #d8cfc8;
+    --visual-edge: #9c8f87;
+    --visual-accent: #22c55e;
+    --visual-accent-strong: #16a34a;
+    --visual-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  :global(:root[data-theme='light']) {
+    --visual-bg: #f7f3ed;
+    --visual-surface: #ffffff;
+    --visual-surface-2: #f3e5d5;
+    --visual-border: rgba(212, 143, 67, 0.35);
+    --visual-text: #1f2937;
+    --visual-text-dim: #64748b;
+    --visual-edge: rgba(212, 143, 67, 0.5);
+    --visual-accent: #d48f43;
+    --visual-accent-strong: #b15c1c;
+    --visual-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
   }
 
   .canvas-container {
-    border: 1px solid var(--border);
+    border: 1px solid var(--visual-border);
     width: 100%;
     max-height: 70vh;
     overflow: auto;
-    background: var(--surface);
+    background: var(--visual-surface);
     border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    box-shadow: var(--visual-shadow);
   }
-  canvas { display: block; width: 100%; height: auto; }
+
+  canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: transparent;
+  }
 
   .other {
-    color: var(--text);
-    background: var(--surface);
-    border: 1px solid var(--border);
+    color: var(--visual-text);
+    background: var(--visual-surface);
+    border: 1px solid var(--visual-border);
     border-radius: 12px;
     padding: 12px;
     max-height: 70vh;
     overflow: auto;
   }
-  .other pre { margin: 0; white-space: pre-wrap; word-break: break-word; }
+
+  .other pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: inherit;
+  }
 </style>
