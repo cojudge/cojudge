@@ -26,6 +26,7 @@
 ```bash
 git clone https://github.com/cojudge/cojudge
 cd cojudge
+chmod +x run.sh
 ./run.sh
 ```
 
