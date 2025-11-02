@@ -109,5 +109,6 @@ Some Docker environments on macOS (like Colima) use a non-default Docker socket 
 HOST_DOCKER_SOCKET="/Users/your-user/.colima/default/docker.sock" ./run.sh
 ```
 
-**Contact**
+## Contact
+
 Feel free to use the [Issue page](https://github.com/cojudge/cojudge/issues) or [Discussion page](https://github.com/cojudge/cojudge/discussions) for any issues, feedback, comments, feature requests, or anything else related to cojudge. If you would rather reach out privately, contact me [here](https://waiyip.life/#contact); I'll respond as soon as I can.
