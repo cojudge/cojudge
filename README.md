@@ -1,8 +1,8 @@
 > Self-contained, open-source offline code judge with personalized tracker for LeetCode-style problems — powered by Docker.
 
-![Demo](./screenshots/ide.gif)
-
 ![Light Mode](./screenshots/lightmode.png)
+
+![Demo](./screenshots/ide.gif)
 
 ![Progress Tracker](./screenshots/progresstracker.png)
 
@@ -11,7 +11,7 @@
 - Offline-first: judge solutions without an internet connection
 - Docker sandboxes: consistent, isolated runs across machines
 - LeetCode-style problem packs with statements and tests
-- Simple & fast web UI (SvelteKit) with in-browser editor
+- Simple & fast web UI (SvelteKit) with in-browser editor and light/dark mode support
 - Multiple languages support (Java/Python/C++)
 - Extensible: add new problems by dropping folders in `problems/`
 - Persistent Code & Progress Tracking via Local Storage
