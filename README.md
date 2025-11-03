@@ -2,6 +2,8 @@
 
 ![Demo](./screenshots/ide.gif)
 
+![Light Mode](./screenshots/lightmode.png)
+
 ![Progress Tracker](./screenshots/progresstracker.png)
 
 ## Highlights

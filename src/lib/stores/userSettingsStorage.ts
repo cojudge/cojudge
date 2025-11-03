@@ -15,7 +15,7 @@ const STORAGE_KEY = 'user-settings';
 const defaultSettings: UserSettings = {
     preferredLanguage: 'java',
     editorFontSize: 14,
-    theme: 'dark',
+    theme: 'light',
 };
 
 function normalizeSettings(input: any): UserSettings {
