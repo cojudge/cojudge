@@ -489,7 +489,7 @@
                         <option value="cpp">C++</option>
                     </select>
                 </div>
-                <div style="display:flex;gap:var(--spacing-2);align-items:center;">
+                <div class="tabs-container">
                     <div class="tab-bar" role="tablist" aria-label="Editor tabs">
                         {#each tabs as t}
                             <div
@@ -680,13 +680,13 @@
         padding: 0 var(--spacing-1) var(--spacing-1) var(--spacing-1);
         overflow-x: auto;
         scrollbar-width: thin;
+        flex: 1;
+        min-width: 0;
+        flex-wrap: nowrap;
     }
     /* Compact the tab bar when shown inside the header */
     .editor-header .tab-bar {
         padding: 0;
-    }
-    .tab-bar {
-        flex-wrap: nowrap;
     }
     .tab-add {
         display: inline-flex;
@@ -700,6 +700,7 @@
         color: var(--color-text-secondary);
         cursor: pointer;
         margin-left: 4px;
+        flex-shrink: 0;
     }
     .tab-add:hover {
         background: rgba(255,255,255,0.06);
@@ -1017,6 +1018,16 @@
 
     .lang-dropdown-tabs-container {
         display: flex;
-        gap:var(--spacing-2);
+        gap: var(--spacing-2);
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .tabs-container {
+        display: flex;
+        gap: var(--spacing-2);
+        align-items: center;
+        flex: 1;
+        min-width: 0;
     }
 </style>
