@@ -107,7 +107,7 @@ export class JavaRunner extends ProgramRunner {
         } catch (error: any) {
             throw new Error(`${error}`);
         } finally {
-            await this.cleanup();
+            this.cleanup();
         }
     }
 

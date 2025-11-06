@@ -71,7 +71,7 @@ export class CppRunner extends ProgramRunner {
             if (inspect.ExitCode !== 0) throw new Error(stderr || stdout);
             this.compiled = true;
         } catch (e) {
-            await this.cleanup();
+            this.cleanup();
             throw e;
         }
     }
@@ -108,7 +108,7 @@ export class CppRunner extends ProgramRunner {
         } catch (error: any) {
             throw new Error(`${error}`);
         } finally {
-            await this.cleanup();
+            this.cleanup();
         }
     }
 

@@ -37,6 +37,17 @@ export async function getMarkerResponses(problemId: string, functionName: string
     const markerCode = await fs.readFile(markerPath, 'utf-8');
     await ensureImageAvailable(docker, javaImage);
     let container: Dockerode.Container | null = null;
+    const cleanup = async() => {
+        if (container) {
+            try {
+                const info = await container.inspect();
+                if (info.State.Running) {
+                    await container.stop();
+                }
+                await container.remove();
+            } catch {}
+        }
+    }
     try {
         // Create container that stays up for execs
         container = await docker.createContainer({
@@ -122,15 +133,7 @@ export async function getMarkerResponses(problemId: string, functionName: string
             } as MarkerResponse;
         });
     } finally {
-        if (container) {
-            try {
-                const info = await container.inspect();
-                if (info.State.Running) {
-                    await container.stop();
-                }
-                await container.remove();
-            } catch {}
-        }
+        cleanup();
     }
 }
 
