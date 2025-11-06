@@ -25,8 +25,31 @@ if ! docker info >/dev/null 2>&1; then
   exit 1
 fi
 
-echo -e "${YELLOW}Building image '${IMAGE}'...${NC}"
-docker build -t "${IMAGE}" .
+# Check internet connectivity
+check_internet() {
+  # Try to reach a reliable DNS server with a short timeout
+  if timeout 3 ping -c 1 8.8.8.8 >/dev/null 2>&1 || timeout 3 ping -c 1 1.1.1.1 >/dev/null 2>&1; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+# Build image only if internet is available
+if check_internet; then
+  echo -e "${YELLOW}Building image '${IMAGE}'...${NC}"
+  docker build -t "${IMAGE}" .
+else
+  echo -e "${YELLOW}No internet connection detected. Skipping build process.${NC}"
+  echo -e "${YELLOW}Using existing image '${IMAGE}' if available...${NC}"
+  
+  # Check if the image exists locally
+  if ! docker image inspect "${IMAGE}" >/dev/null 2>&1; then
+    echo -e "${RED}Image '${IMAGE}' not found locally and cannot build without internet.${NC}"
+    echo -e "${YELLOW}Please ensure you have internet connection to build the image first.${NC}"
+    exit 1
+  fi
+fi
 
 # Stop previous container if exists
 if docker ps -a --format '{{.Names}}' | grep -q "^${NAME}$"; then
