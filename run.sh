@@ -27,8 +27,7 @@ fi
 
 # Check internet connectivity
 check_internet() {
-  # Try to reach a reliable DNS server with a short timeout
-  if timeout 3 ping -c 1 8.8.8.8 >/dev/null 2>&1 || timeout 3 ping -c 1 1.1.1.1 >/dev/null 2>&1; then
+  if nc -zw1 google.com 443; then
     return 0
   else
     return 1
