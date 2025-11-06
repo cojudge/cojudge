@@ -1,6 +1,6 @@
 import type { Param } from "./util";
 
-export const javaImage = 'openjdk:17-slim';
+export const javaImage = 'alpine/java:22-jdk';
 
 export const javaListNodeClass = `
     public class ListNode {
