@@ -1,5 +1,17 @@
 {
     "title": "Blind 75",
     "description": "Blind 75 is a curated list of the 75 most frequently asked LeetCode questions to help you prepare efficiently for technical interviews at top tech companies [(Source)](https://www.teamblind.com/post/new-year-gift-curated-list-of-top-75-leetcode-questions-to-save-your-time-oam1oreu).\n\nMost of the questions are covered but some of them with unconventional inputs/outputs like [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/description/) are not implemented yet.",
-    "category-order": ["array", "binary", "dp", "graph", "interval", "linked-list", "matrix", "string", "tree", "heap"]
+    "category-order": ["array", "binary", "dp", "graph", "interval", "linked-list", "matrix", "string", "tree", "heap"],
+    "problems-of-category": {
+        "array": ["3sum", "best-time-to-buy-and-sell-stock", "container-with-most-water", "contains-duplicate", "find-minimum-in-rotated-sorted-array", "maximum-product-subarray", "maximum-subarray", "product-of-array-except-self", "search-in-rotated-sorted-array", "two-sum"],
+        "binary": ["counting-bits", "missing-number", "number-of-1-bits", "reverse-bits", "sum-of-two-integers"],
+        "dp": ["climbing-stairs", "coin-change", "combination-sum-iv", "decode-ways", "house-robber", "house-robber-ii", "jump-game", "longest-common-subsequence", "longest-increasing-subsequence", "unique-paths", "word-break"],
+        "graph": ["alien-dictionary", "course-schedule", "graph-valid-tree", "longest-consecutive-sequence", "number-of-connected-components-in-an-undirected-graph", "number-of-islands", "pacific-atlantic-water-flow"],
+        "interval": ["insert-interval", "meeting-rooms", "meeting-rooms-ii", "merge-intervals", "non-overlapping-intervals"],
+        "linked-list": ["linked-list-cycle", "merge-k-sorted-lists", "merge-two-sorted-lists", "remove-nth-node-from-end-of-list", "reverse-linked-list"],
+        "matrix": ["spiral-matrix", "word-search"],
+        "string": ["group-anagrams", "longest-palindromic-substring", "longest-repeating-character-replacement", "longest-substring-without-repeating-characters", "minimum-window-substring", "palindromic-substrings", "valid-anagram", "valid-palindrome", "valid-parentheses"],
+        "tree": ["binary-tree-level-order-traversal", "binary-tree-maximum-path-sum", "construct-binary-tree-from-preorder-and-inorder-traversal", "invert-binary-tree", "kth-smallest-element-in-a-bst", "lowest-common-ancestor-of-a-binary-search-tree", "maximum-depth-of-binary-tree", "same-tree", "subtree-of-another-tree", "validate-binary-search-tree", "word-search-ii"],
+        "heap": ["top-k-frequent-elements"]
+    }
 }

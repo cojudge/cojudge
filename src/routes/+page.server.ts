@@ -37,8 +37,38 @@ export const load: PageServerLoad = async () => {
         courseInfo = null;
     }
 
+    const allProblems = problems.filter((p): p is NonNullable<typeof p> => Boolean(p));
+
+    let finalProblems = allProblems;
+    const mapping: Record<string, string[]> | undefined = (courseInfo?.["problems-of-category"]) as any;
+    if (mapping && typeof mapping === 'object') {
+        const byId = new Map<string, typeof allProblems[number]>();
+        for (const p of allProblems) byId.set(p.id, p);
+
+        const ordered: typeof allProblems = [];
+        const seen = new Set<string>();
+
+        const categories: string[] = Array.isArray(courseInfo?.["category-order"]) && (courseInfo as any)["category-order"].length
+            ? (courseInfo as any)["category-order"]
+            : Object.keys(mapping);
+
+        for (const cat of categories) {
+            const ids = mapping[cat] || [];
+            for (const id of ids) {
+                if (seen.has(id)) continue;
+                const meta = byId.get(id);
+                if (meta) {
+                    ordered.push(meta);
+                    seen.add(id);
+                }
+            }
+        }
+
+        finalProblems = ordered;
+    }
+
     return {
-        problems: problems.filter((p): p is NonNullable<typeof p> => Boolean(p)),
+        problems: finalProblems,
         courseInfo
     };
 };
