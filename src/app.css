@@ -16,7 +16,6 @@
   --scrollbar-size: 10px;
 }
 
-:root,
 :root[data-theme='dark'] {
   --color-bg: #443835;
   --color-second-bg: rgba(0,0,0,0.25);
@@ -47,6 +46,7 @@
   --scrollbar-track: rgba(255, 255, 255, 0.06);
 }
 
+:root,
 :root[data-theme='light'] {
   --color-bg: #f8fafc;
   --color-second-bg: rgba(0,0,0,0.05);
