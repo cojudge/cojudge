@@ -155,6 +155,18 @@
             return dirMul * (a.title || "").localeCompare(b.title || "");
         });
     }
+
+    let totalProblems = 0;
+    let solvedCount = 0;
+    $: (function computeOverall() {
+        const problems: Problem[] = (data?.problems ?? []) as Problem[];
+        totalProblems = problems.length;
+        let done = 0;
+        for (const p of problems) {
+            if (checkMap[p.id]) done++;
+        }
+        solvedCount = done;
+    })();
 </script>
 
 <svelte:head>
@@ -167,6 +179,24 @@
         <span class="tab active" aria-current="page">{courseTitle}</span>
     </nav>
     <div class="intro">
+        <!-- Overall progress at top of intro -->
+        <div class="overall">
+            <div class="overall-count" aria-live="polite">
+                {solvedCount} / {totalProblems}
+            </div>
+            <div
+                class="intro-progressbar"
+                role="progressbar"
+                aria-valuemin={0}
+                aria-valuemax={totalProblems}
+                aria-valuenow={solvedCount}
+            >
+                <div
+                    class="intro-progressbar-fill"
+                    style={`width: ${(totalProblems ? (solvedCount / totalProblems) * 100 : 0).toFixed(0)}%;`}
+                ></div>
+            </div>
+        </div>
         {@html renderMarkdown(courseDescription)}
     </div>
 
@@ -330,7 +360,7 @@
     .intro {
         position: relative;
         margin: var(--spacing-3) 0 var(--spacing-4);
-        padding: calc(var(--spacing-4) + 2px) var(--spacing-4) var(--spacing-4);
+        padding: var(--spacing-4);
         background: var(--color-surface);
         border: 1px solid var(--color-border, #e5e7eb);
         border-radius: var(--border-radius-lg);
@@ -341,23 +371,37 @@
         line-height: 1.65;
         animation: intro-fade 0.35s ease-out both;
     }
-    /* Accent bar */
-    .intro::before {
-        content: "";
+
+    .overall {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-3);
+        margin-bottom: var(--spacing-3);
+    }
+    .overall-count {
+        font-weight: 700;
+        font-size: 1rem;
+        color: var(--color-text);
+        min-width: 72px;
+        text-align: center;
+    }
+    .intro-progressbar {
+        position: relative;
+        flex: 1 1 auto;
+        height: 10px;
+        background-color: var(--color-surface, #1118270d);
+        border-radius: 999px;
+        overflow: hidden;
+    }
+    .intro-progressbar-fill {
         position: absolute;
         left: 0;
-        right: 0;
         top: 0;
-        height: 3px;
-        background: linear-gradient(
-            90deg,
-            var(--color-primary, #3b82f6),
-            #a78bfa,
-            #f472b6
-        );
-        border-top-left-radius: inherit;
-        border-top-right-radius: inherit;
-        pointer-events: none;
+        bottom: 0;
+        width: 0%;
+        background-color: var(--color-primary, #3b82f6);
+        border-radius: 999px;
+        transition: width 0.25s ease;
     }
     .intro a {
         color: inherit;
