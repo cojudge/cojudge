@@ -9,6 +9,7 @@
     import Tooltip from '$lib/components/Tooltip.svelte';
     import { v4 as uuidv4 } from 'uuid';
     import codeStore from '$lib/stores/codeStore.js';
+    import userStore from '$lib/stores/userStore';
 
     export let data;
     const problemId = data.problem.id;
@@ -422,7 +423,17 @@
                     <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
             </a>
-            <h1>{data.problem.title}</h1>
+            <div class="title-row">
+                <h1>{data.problem.title}</h1>
+                {#if $userStore && $userStore[fileKey()]}
+                    <span class="solved-pill" title="You've solved this problem" aria-label="Solved" role="status">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Solved
+                    </span>
+                {/if}
+            </div>
             <span class="badge {getDifficultyClass(data.problem.difficulty)}">
                 {data.problem.difficulty}
             </span>
@@ -642,6 +653,17 @@
 
     /* Prose styling for the dark theme */
     .prose h1 { font-size: 1.75rem; margin-bottom: var(--spacing-3); }
+    .title-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--spacing-2);
+    }
+    .title-row h1 {
+        margin: 0 0 var(--spacing-3) 0;
+        flex: 1 1 auto;
+        min-width: 0;
+    }
     
     .back-button {
         display: inline-flex;
@@ -825,6 +847,22 @@
     .difficulty-easy { background-color: var(--color-easy); }
     .difficulty-medium { background-color: var(--color-medium); }
     .difficulty-hard { background-color: var(--color-hard); color: #fff; }
+
+    .solved-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: var(--spacing-1) var(--spacing-2);
+        font-size: 0.8rem;
+        font-weight: 700;
+        line-height: 1;
+        border-radius: 999px;
+        background-color: var(--color-easy);
+        color: var(--color-primary-text);
+        margin-left: var(--spacing-1);
+        margin-bottom: var(--spacing-2);
+        flex: 0 0 auto;
+    }
 
     .external-link {
         color: var(--color-text-secondary);
