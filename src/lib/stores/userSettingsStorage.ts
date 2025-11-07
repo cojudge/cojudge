@@ -24,7 +24,7 @@ function normalizeSettings(input: any): UserSettings {
     const size = typeof rawSize === 'number' ? rawSize : defaultSettings.editorFontSize;
     const editorFontSize = Math.min(24, Math.max(12, size));
     const rawTheme = (input?.theme ?? defaultSettings.theme) as ThemeChoice;
-    const theme: ThemeChoice = rawTheme === 'light' ? 'light' : 'dark';
+    const theme: ThemeChoice = rawTheme === 'dark' ? 'dark' : 'light';
     return { preferredLanguage, editorFontSize, theme };
 }
 

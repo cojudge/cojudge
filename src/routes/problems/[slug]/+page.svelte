@@ -116,7 +116,7 @@
     let settingsContainer: HTMLElement | null = null;
     const fontSizes: number[] = Array.from({ length: 13 }, (_, i) => 12 + i); // 12..24
     let fontSize: number = $userSettingsStorage.editorFontSize ?? 14;
-    let theme: ThemeChoice = $userSettingsStorage.theme ?? 'dark';
+    let theme: ThemeChoice = $userSettingsStorage.theme ?? 'light';
 
     let tabs: TabMeta[] = getInitialTabs();
     let activeTabId: number = 0;

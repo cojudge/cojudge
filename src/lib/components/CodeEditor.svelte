@@ -4,7 +4,7 @@
     export let value = '';
     export let language = 'javascript';
     export let fontSize: number = 14;
-    export let theme: 'dark' | 'light' = 'dark';
+    export let theme: 'dark' | 'light' = 'light';
 
     let editor: Monaco.editor.IStandaloneCodeEditor | null = null;
     let editorElement: HTMLDivElement;
