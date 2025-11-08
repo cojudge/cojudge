@@ -63,6 +63,7 @@ Create a new folder under `problems/<your-problem-slug>/` with the following fil
   4.1. `{outputType} {functionName}(testcase)` that gives the correct solution. `{functionName}` is what you defined in `metadata.json`. This is the correct solution that can pass the LeetCode judge in Java. You can usually find a Java solution on the LeetCode discussion forum pretty easily for any problem. The judger has to be written in Java and called `Marker.java`. **No** `Marker.py` or `Marker.cpp` are needed.
 
   4.2. `boolean isCorrect(testcase, userOutput)` that judges if a user output is correct for the given testcase.
+
 5. Add the problem to `courses/blind75/courseinfo.json`
 
 Refer to `/problems/two-sum` for a detailed example.
