@@ -53,12 +53,15 @@ npm run dev
 
 ## Add a problem
 
-Create a new folder under `problems/<your-problem-slug>/` with:
+Create a new folder under `problems/<your-problem-slug>/` with the following files:
 
-- `statement.md` – problem description (Markdown)
-- `metadata.json` – problem metadata (category, difficulty, input structure, starter code, etc.)
-- `official-tests.json` – an array of inputs for the official tests that will run when user clicks `Submit`. Only inputs are needed. **No need to write the expected output**. Our code will get the expected output by passing your input to your `Marker.java`
-- `Marker.java` – The judger class should contain two public method: 1) isCorrect(testcase, userOutput) that judges if an output is correct for this testcase, and 2) {functionName}(testcase) that gives one correct solution. {functionName} is what you defined on `metadata.json`. The judger has to be written in java and called `Marker.java`. **No** `Marker.py` or `Marker.cpp` are needed. 
+1. `statement.md` – problem description in Markdown
+2. `metadata.json` – problem metadata (difficulty, input structure, starter code, etc.)
+3. `official-tests.json` – an array of inputs for the official tests that will run when user clicks `Submit`. Only inputs are needed. **No need to write the expected output**. Our code will get the expected output by passing your input to your `Marker.java`
+4. `Marker.java` – The judger class should contain two public method: 
+  4.1 `{outputType} {functionName}(testcase)` that gives the correct solution. {functionName} is what you defined on `metadata.json`. This is the correct solution that can pass LeetCode judge on Java. You should be able to find the Java solution on LeetCode disscussion forum prettey easily for any problem. The judger has to be written in java and called `Marker.java`. **No** `Marker.py` or `Marker.cpp` are needed. 
+  4.2 `boolean isCorrect(testcase, userOutput)` that judges if an output is correct for this testcase
+5. Add the problem to `courses/blind75/courseinfo.json`
 
 Refer to `/problems/two-sum` for a detailed example.
 
