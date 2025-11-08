@@ -1,0 +1,10 @@
+# Enforce LF endings where required by Unix/WSL runtimes
+# Scripts with shebangs and Docker-related files must be LF on checkout
+*.sh text eol=lf
+*.bash text eol=lf
+Dockerfile text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Optional: keep these as text with normalized line endings
+*.env text eol=lf
