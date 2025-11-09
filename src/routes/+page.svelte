@@ -533,10 +533,10 @@
     }
     .btn {
         appearance: none;
-        border: 1px solid rgba(0, 0, 0, 0.15);
+        border: 1px solid var(--color-text);
         padding: 0.35rem 0.75rem;
         border-radius: 0.375rem;
-        background: var(--color-btn, #f6f8fa);
+        background: var(--color-btn);
         cursor: pointer;
         font-size: 0.9rem;
         color: inherit;
