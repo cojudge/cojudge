@@ -8,7 +8,9 @@ const STORAGE_KEY = 'solutions';
 const defaultValue = {};
 
 // Load the saved object from localStorage, or use the default
-const initialValue = browser ? (JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultValue) : defaultValue;
+const initialValue = browser
+    ? (JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null') || defaultValue)
+    : defaultValue;
 
 // Create a writable store that holds an object mapping problem IDs to code strings
 const codeStore = writable<Record<string, string>>(initialValue);

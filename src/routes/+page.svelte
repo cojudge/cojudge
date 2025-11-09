@@ -3,6 +3,11 @@
     import { getDifficultyClass } from "$lib/utils/util.js";
     import SortIcon from "$lib/components/SortIcon.svelte";
     import userStore from "$lib/stores/userStore";
+    import { browser } from '$app/environment';
+    import codeStore from '$lib/stores/codeStore';
+    import fileStore from '$lib/stores/fileStore';
+    import userSettingsStorage from '$lib/stores/userSettingsStorage';
+    let fileInputEl: HTMLInputElement | null = null;
     let checkMap: Record<string, boolean> = {};
 
     // Keep a local copy of the store for easy access in the template
@@ -13,6 +18,7 @@
     // When this component is destroyed, unsubscribe
     import { onDestroy } from "svelte";
     import { marked } from "marked";
+    import Tooltip from "$lib/components/Tooltip.svelte";
     onDestroy(() => unsubscribe());
 
     // Types for problems from the loader
@@ -48,7 +54,11 @@
     // Render markdown safely from trusted source (local JSON)
     marked.use({ gfm: true });
     function renderMarkdown(md: string = ""): string {
-        return marked.parse(md ?? "");
+        const rendered = marked.parse(md ?? "");
+        // marked.parse can return Promise<string> in some configs; ensure sync string
+        if (typeof rendered === 'string') return rendered;
+        console.warn('Unexpected async markdown parse - returning empty string');
+        return '';
     }
 
     // Course title, description and category order from server data
@@ -167,6 +177,96 @@
         }
         solvedCount = done;
     })();
+
+    // ==== Export / Import Helpers (moved from layout) ====
+    function parseMaybe(str: string | null) {
+        if (str == null) return null;
+        try {
+            return JSON.parse(str);
+        } catch {
+            return str;
+        }
+    }
+
+    function exportLocalStorage() {
+        if (!browser) return;
+        const data: Record<string, unknown> = {};
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (!key) continue;
+            data[key] = parseMaybe(localStorage.getItem(key));
+        }
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        const ts = new Date().toISOString().replace(/[:.]/g, '-');
+        a.href = url;
+        a.download = `cojudge-localStorage-backup-${ts}.json`;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+            URL.revokeObjectURL(url);
+            a.remove();
+        }, 0);
+    }
+
+    function sanitizeUserCheckboxes(input: unknown): Record<string, boolean> {
+        const out: Record<string, boolean> = {};
+        if (!input || typeof input !== 'object') return out;
+        for (const [k, v] of Object.entries(input as Record<string, unknown>)) {
+            out[k] = v === true || v === 'true';
+        }
+        return out;
+    }
+
+    function importLocalStorageObject(obj: Record<string, unknown>) {
+        const KNOWN_KEYS = new Set(['solutions', 'user-checkboxes', 'files', 'user-settings']);
+        if ('solutions' in obj && obj['solutions'] && typeof obj['solutions'] === 'object') {
+            codeStore.set(obj['solutions'] as Record<string, string>);
+        }
+        if ('user-checkboxes' in obj) {
+            userStore.set(sanitizeUserCheckboxes(obj['user-checkboxes']));
+        }
+        if ('files' in obj && obj['files'] && typeof obj['files'] === 'object') {
+            fileStore.set(obj['files'] as Record<string, string>);
+        }
+        if ('user-settings' in obj && obj['user-settings'] && typeof obj['user-settings'] === 'object') {
+            userSettingsStorage.set(obj['user-settings'] as any);
+        }
+        if (browser) {
+            for (const [k, v] of Object.entries(obj)) {
+                if (KNOWN_KEYS.has(k)) continue;
+                try {
+                    const toStore = typeof v === 'string' ? (v as string) : JSON.stringify(v);
+                    localStorage.setItem(k, toStore);
+                } catch {
+                    /* ignore */
+                }
+            }
+        }
+    }
+
+    async function onImportFileSelected(e: Event) {
+        const input = e.currentTarget as HTMLInputElement;
+        const file = input.files?.[0];
+        if (!file) return;
+        try {
+            const text = await file.text();
+            const obj = JSON.parse(text);
+            if (!obj || typeof obj !== 'object') throw new Error('Invalid JSON structure.');
+            if (browser && !confirm('Importing will overwrite your current local data. Continue?')) return;
+            importLocalStorageObject(obj as Record<string, unknown>);
+            if (browser) alert('Import complete.');
+        } catch (err: any) {
+            if (browser) alert(`Failed to import: ${err?.message || String(err)}`);
+        } finally {
+            if (input) input.value = '';
+        }
+    }
+
+    function triggerImport() {
+        fileInputEl?.click();
+    }
 </script>
 
 <svelte:head>
@@ -174,6 +274,15 @@
 </svelte:head>
 
 <div class="container">
+    <div class="backup-toolbar">
+        <Tooltip text="Export all local data to a JSON file" pos={"bottom"}>
+            <button class="btn" onclick={exportLocalStorage} disabled={!browser} title="Export all local data to a JSON file">Export data</button>
+        </Tooltip>
+        <Tooltip text="Import data from a JSON backup" pos={"bottom"}>
+            <button class="btn" onclick={triggerImport} disabled={!browser} title="Import data from a JSON backup">Import data</button>
+        </Tooltip>
+        <input bind:this={fileInputEl} type="file" accept="application/json" class="hidden-file-input" onchange={onImportFileSelected} />
+    </div>
     <!-- Simple tab-style header using the course title from JSON -->
     <nav class="tabs" aria-label="Course">
         <span class="tab active" aria-current="page">{courseTitle}</span>
@@ -210,7 +319,7 @@
         <div class="group">
             <button
                 class="group-header {openGroups.has(key) ? 'open' : ''}"
-                on:click={() => toggleGroup(key)}
+                onclick={() => toggleGroup(key)}
                 aria-expanded={openGroups.has(key)}
             >
                 <div class="group-left">
@@ -244,7 +353,7 @@
                                 <th>
                                     <button
                                         class="th-button"
-                                        on:click={() =>
+                                        onclick={() =>
                                             toggleSort(key, "title")}
                                         aria-label="Sort by title"
                                     >
@@ -264,7 +373,7 @@
                                 <th>
                                     <button
                                         class="th-button"
-                                        on:click={() =>
+                                        onclick={() =>
                                             toggleSort(key, "difficulty")}
                                         aria-label="Sort by difficulty"
                                     >
@@ -294,7 +403,7 @@
                                                     problem.id
                                                 ] === true}
                                                 disabled
-                                                on:change={(e) => {
+                                                onchange={(e) => {
                                                     userStore.update(
                                                         (prev) => ({
                                                             ...prev,
@@ -403,14 +512,7 @@
         border-radius: 999px;
         transition: width 0.25s ease;
     }
-    .intro a {
-        color: inherit;
-        text-decoration-color: color-mix(in oklab, currentColor 35%, transparent);
-        text-underline-offset: 3px;
-    }
-    .intro a:hover {
-        text-decoration-color: currentColor;
-    }
+    /* Removed unused .intro link styles (no anchor tags inside intro after relocation) */
     @keyframes intro-fade {
         from {
             opacity: 0;
@@ -421,6 +523,29 @@
             transform: translateY(0);
         }
     }
+
+    .backup-toolbar {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        justify-content: flex-end;
+        margin-bottom: var(--spacing-2);
+    }
+    .btn {
+        appearance: none;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        padding: 0.35rem 0.75rem;
+        border-radius: 0.375rem;
+        background: var(--color-btn, #f6f8fa);
+        cursor: pointer;
+        font-size: 0.9rem;
+        color: inherit;
+    }
+    .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+    .hidden-file-input { display: none; }
     .tab {
         position: relative;
         display: inline-flex;
