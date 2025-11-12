@@ -1,4 +1,4 @@
-> Self-contained, open-source offline code judge with personalized tracker for LeetCode-style problems — powered by Docker.
+> Solve classic algorithmic problems without the internet or having to deal with installing runtimes. No discussion forum, no LLM assistant, not even the internet. Solve the curated list with just you, the problem and the judge.
 
 ![Light Mode](./screenshots/lightmode.png)
 
@@ -16,6 +16,7 @@
 - Extensible: add new problems by dropping folders in `problems/`
 - Persistent Code & Progress Tracking via Local Storage
 - Browser-like tabs to organize your local solutions
+- Extensive problems: includes 60+ problems with sample testcases and hidden testcases from Blind 75
 
 ## Requirements
 
