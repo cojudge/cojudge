@@ -275,11 +275,11 @@
 
 <div class="container">
     <div class="backup-toolbar">
-        <Tooltip text="Export all local data to a JSON file" pos={"bottom"}>
-            <button class="btn" onclick={exportLocalStorage} disabled={!browser} title="Export all local data to a JSON file">Export data</button>
+        <Tooltip text="Export all progress data (solved problems, settings, code, etc.) to a JSON file" pos={"bottom"}>
+            <button class="btn" onclick={exportLocalStorage} disabled={!browser} title="Export all progress (settings, code, etc.) to a JSON file">Export progress</button>
         </Tooltip>
-        <Tooltip text="Import data from a JSON backup" pos={"bottom"}>
-            <button class="btn" onclick={triggerImport} disabled={!browser} title="Import data from a JSON backup">Import data</button>
+        <Tooltip text="Import progress data (solved problems, settings, code, etc.) from a JSON backup" pos={"bottom"}>
+            <button class="btn" onclick={triggerImport} disabled={!browser} title="Import progress (settings, code, etc.) from a JSON backup">Import progress</button>
         </Tooltip>
         <input bind:this={fileInputEl} type="file" accept="application/json" class="hidden-file-input" onchange={onImportFileSelected} />
     </div>
