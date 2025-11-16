@@ -31,6 +31,26 @@
         error?: string | null;
     } | null;
     let submissionFailure: SubmissionFailure = null;
+    // Remember last non-zero height to restore after hide
+    let lastNonMinHeight = 35; // percent
+    let minExecPanelHeight = 15;
+
+    // Track last non-zero height whenever user resizes/shows the panel
+    $: if ($execPaneHeightStore > minExecPanelHeight) {
+        lastNonMinHeight = $execPaneHeightStore;
+    }
+
+    function togglePanelVisibility() {
+        if ($execPaneHeightStore > minExecPanelHeight) {
+            // Hide and remember current height
+            lastNonMinHeight = $execPaneHeightStore || lastNonMinHeight || 35;
+            $execPaneHeightStore = minExecPanelHeight;
+        } else {
+            // Show, restore last height with a sane minimum
+            const restore = Math.max(12, Math.min(90, lastNonMinHeight || 35));
+            $execPaneHeightStore = restore;
+        }
+    }
 
     function statusToString(status: StatusType) {
         switch (status) {
@@ -88,7 +108,6 @@
 
     function handleResizerKeydown(e: KeyboardEvent) {
         if (!panelElement?.parentElement) return;
-        const parentRect = panelElement.parentElement.getBoundingClientRect();
         const step = 2; // percentage points
         let next = $execPaneHeightStore;
         if (e.key === 'ArrowUp' || e.key === 'PageUp') {
@@ -121,6 +140,11 @@
                 if (!isLoading) {
                     handleRun();
                 }
+            }
+            // Toggle show/hide panel: Ctrl+J (or Cmd+J)
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'j' || e.key === 'J')) {
+                e.preventDefault();
+                togglePanelVisibility();
             }
         };
         window.addEventListener('keydown', keyHandler);
@@ -590,7 +614,7 @@
         {/if}
     </div>
 
-    <div class="content" class:hide={$execPaneHeightStore <= 15}>
+    <div class="content" class:hide={$execPaneHeightStore <= minExecPanelHeight}>
         {#if activeMainTab === 'testcase'}
             <div class="testcase-view">
                 <div class="case-selector">
@@ -743,6 +767,29 @@
 
     <div class="actions">
         <div class="buttons">
+            <!-- Show/Hide panel button -->
+            <Tooltip text={'Ctrl + J'}>
+                <button
+                    class="icon-btn"
+                    aria-label={$execPaneHeightStore > minExecPanelHeight ? 'Hide panel' : 'Show panel'}
+                    on:click={togglePanelVisibility}
+                >
+                    {#if $execPaneHeightStore > minExecPanelHeight}
+                        <!-- Eye (visible) icon -->
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                    {:else}
+                        <!-- Eye-off (hidden) icon -->
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    {/if}
+                </button>
+            </Tooltip>
             <!-- Runtime image presence indicator + action -->
             <Tooltip text={
                 isPullingImage
