@@ -331,6 +331,10 @@
             if (e.key === 'Escape') {
                 showSettings = false;
             }
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'b' || e.key === 'B')) {
+                e.preventDefault();
+                toggleProblemPaneVisibility();
+            }
         };
         document.addEventListener('click', handleDocClick);
         document.addEventListener('keydown', handleKeyDown);
@@ -351,6 +355,21 @@
     // Runtime image name (like in ExecutionPanel)
     let imageStatus: 'unknown' | 'present' | 'absent' = 'unknown';
     let imageName: string = '';
+    // Problem pane visibility memory and toggle
+    let lastNonZeroLeftWidth = 50; // default width percentage
+    $: if ($leftPaneWidthStore && $leftPaneWidthStore > 0) {
+        lastNonZeroLeftWidth = $leftPaneWidthStore;
+    }
+    function toggleProblemPaneVisibility() {
+        const current = $leftPaneWidthStore === null ? 50 : $leftPaneWidthStore;
+        if (current > 5) {
+            lastNonZeroLeftWidth = current || lastNonZeroLeftWidth || 50;
+            $leftPaneWidthStore = 0;
+        } else {
+            const restore = Math.max(10, Math.min(70, lastNonZeroLeftWidth || 50));
+            $leftPaneWidthStore = restore;
+        }
+    }
 
     async function refreshImageStatus() {
         try {
@@ -413,16 +432,40 @@
 <div
     class="workspace"
     bind:this={workspaceElement}
-    style="grid-template-columns: {Math.max(2, $leftPaneWidthStore === null ? 50 : $leftPaneWidthStore)}% auto 1fr;"
+    style="grid-template-columns: {Math.max(0, $leftPaneWidthStore === null ? 50 : $leftPaneWidthStore)}% auto 1fr;"
 >
     <!-- Left Pane: Problem Statement -->
     <div class="problem-pane" class:hide={($leftPaneWidthStore === null ? 50 : $leftPaneWidthStore) < 5}>
         <div class="prose">
-            <a class="back-button" href="/" aria-label="Back to problems list">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-            </a>
+            <Tooltip text="Back" pos="bottom"> 
+                <a class="back-button" href="/" aria-label="Back">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </a>
+            </Tooltip>
+            <Tooltip text="Ctrl + B" pos="bottom">
+                <button
+                    class="back-button"
+                    aria-label={($leftPaneWidthStore === null ? 50 : $leftPaneWidthStore) > 5 ? 'Hide problem pane' : 'Show problem pane'}
+                    on:click={toggleProblemPaneVisibility}
+                >
+                    {#if ($leftPaneWidthStore === null ? 50 : $leftPaneWidthStore) > 5}
+                        <!-- Eye icon (visible) -->
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                    {:else}
+                        <!-- Eye-off icon (hidden) -->
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    {/if}
+                </button>
+            </Tooltip>
             <div class="title-row">
                 <h1>{data.problem.title}</h1>
                 {#if $userStore && $userStore[fileKey()]}
@@ -666,6 +709,8 @@
     }
     
     .back-button {
+        border: 0;
+        cursor: pointer;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -682,6 +727,7 @@
         background-color: rgba(255,255,255,0.03);
         color: var(--color-text);
     }
+    .pane-toggle { margin-left: 4px; }
     
     /* Right Pane Layout */
     .editor-pane {
