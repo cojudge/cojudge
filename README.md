@@ -13,6 +13,7 @@
 - LeetCode-style problem packs with statements and tests
 - Simple & fast web UI (SvelteKit) with in-browser editor and light/dark mode support
 - Multiple languages support (Java/Python/C++)
+- Code Playground: Run code snippets in Java, Python, or C++ without a problem context
 - Extensible: add new problems by dropping folders in `problems/`
 - Persistent Code & Progress Tracking via Local Storage
 - Browser-like tabs to organize your local solutions
@@ -104,6 +105,8 @@ This is a more complicated process but it is definitely doable.
 5. Update `type ProgrammingLanguage = 'java' | 'python' | 'cpp' | 'your_new_lang'` on `util.ts`;
 
 6. Add a new `<option>` on the UI for the new language in `#language-select`
+
+7. Create a new class that extends `PlaygroundRunner` (e.g. `PlaygroundJavascriptRunner`) in `src/lib/runners/PlaygroundRunners.ts` and add the instantiation logic in `src/routes/api/playground/run/+server.ts`.
 
 Refer to `javaUtil.ts`, `JavaRunner.ts` and `problems/two-sum` for a detailed example. 
 

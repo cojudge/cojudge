@@ -1,12 +1,12 @@
 <script lang="ts">
     export let data;
-    import { getDifficultyClass } from "$lib/utils/util.js";
-    import SortIcon from "$lib/components/SortIcon.svelte";
-    import userStore from "$lib/stores/userStore";
     import { browser } from '$app/environment';
+    import SortIcon from "$lib/components/SortIcon.svelte";
     import codeStore from '$lib/stores/codeStore';
     import fileStore from '$lib/stores/fileStore';
     import userSettingsStorage from '$lib/stores/userSettingsStorage';
+    import userStore from "$lib/stores/userStore";
+    import { getDifficultyClass } from "$lib/utils/util.js";
     let fileInputEl: HTMLInputElement | null = null;
     let checkMap: Record<string, boolean> = {};
 
@@ -14,11 +14,10 @@
     const unsubscribe = userStore.subscribe((value) => {
         checkMap = value || {};
     });
-
-    // When this component is destroyed, unsubscribe
-    import { onDestroy } from "svelte";
-    import { marked } from "marked";
+// When this component is destroyed, unsubscribe
     import Tooltip from "$lib/components/Tooltip.svelte";
+    import { marked } from "marked";
+    import { onDestroy } from "svelte";
     onDestroy(() => unsubscribe());
 
     // Types for problems from the loader
@@ -280,6 +279,12 @@
         </Tooltip>
         <Tooltip text="Import progress data (solved problems, settings, code, etc.) from a JSON backup" pos={"bottom"}>
             <button class="btn" onclick={triggerImport} disabled={!browser} title="Import progress (settings, code, etc.) from a JSON backup">Import progress</button>
+        </Tooltip>
+        <Tooltip text="Code playground" pos={"bottom"}>
+            <button onclick={() => window.location.href = "playground"} class="btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                Playground
+                <span class="badge">NEW</span>
+            </button>
         </Tooltip>
         <input bind:this={fileInputEl} type="file" accept="application/json" class="hidden-file-input" onchange={onImportFileSelected} />
     </div>
@@ -743,5 +748,16 @@
     .difficulty-hard {
         background-color: var(--color-hard);
         color: #fff;
+    }
+
+    .badge {
+        font-size: 0.6rem;
+        background-color: var(--color-primary, #3b82f6);
+        color: #fff;
+        padding: 2px 5px;
+        border-radius: 4px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
     }
 </style>
