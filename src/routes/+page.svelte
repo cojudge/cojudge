@@ -283,7 +283,7 @@
         <Tooltip text="Code playground" pos={"bottom"}>
             <button onclick={() => window.location.href = "playground"} class="btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
                 Playground
-                <span class="badge">NEW</span>
+                <span class="span-badge">NEW</span>
             </button>
         </Tooltip>
         <input bind:this={fileInputEl} type="file" accept="application/json" class="hidden-file-input" onchange={onImportFileSelected} />
@@ -750,7 +750,7 @@
         color: #fff;
     }
 
-    .badge {
+    .span-badge {
         font-size: 0.6rem;
         background-color: var(--color-primary, #3b82f6);
         color: #fff;
