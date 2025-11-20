@@ -19,7 +19,7 @@
                 base: 'vs-dark',
                 inherit: true,
                 rules: [
-                    { token: 'comment', foreground: '8b8b8b' },
+                    { token: 'comment', foreground: 'b2ff66' },
                     { token: 'keyword', foreground: 'd48f43' },
                     { token: 'number', foreground: '8aac55' },
                     { token: 'string', foreground: 'ce9178' },
@@ -40,7 +40,7 @@
                 base: 'vs',
                 inherit: true,
                 rules: [
-                    { token: 'comment', foreground: '6b7280' },
+                    { token: 'comment', foreground: '66cc00' },
                     { token: 'keyword', foreground: 'd48f43' },
                     { token: 'number', foreground: '047857' },
                     { token: 'string', foreground: 'b45309' },
