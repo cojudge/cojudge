@@ -58,7 +58,7 @@ export class PythonRunner extends ProgramRunner {
         try {
             // Run the program inside the prepared container with the exact Cmd array
             const exec = await this.container.exec({
-                Cmd: ['timeout', '5', 'python', '-B', 'main.py'],
+                Cmd: ['python', '-B', 'main.py'],
                 AttachStdout: true,
                 AttachStderr: true,
                 WorkingDir: '/app',

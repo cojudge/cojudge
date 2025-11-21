@@ -69,7 +69,7 @@ export async function getMarkerResponses(problemId: string, functionName: string
 
         // Compile
         const compileExec = await container.exec({
-            Cmd: ['timeout', '5', '/bin/sh', '-c', 'javac *.java'],
+            Cmd: ['/bin/sh', '-c', 'javac *.java'],
             AttachStdout: true,
             AttachStderr: true
         });
@@ -94,7 +94,7 @@ export async function getMarkerResponses(problemId: string, functionName: string
         }
 
         const runExec = await container.exec({
-            Cmd: ['timeout', '2', '/bin/sh', '-c', 'java Main'],
+            Cmd: ['/bin/sh', '-c', 'java Main'],
             AttachStdout: true,
             AttachStderr: true
         });

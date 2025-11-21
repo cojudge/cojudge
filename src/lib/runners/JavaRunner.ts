@@ -45,7 +45,7 @@ export class JavaRunner extends ProgramRunner {
 
             // Compile inside the container
             const exec = await this.container.exec({
-                Cmd: ['timeout', '5', '/bin/sh', '-c', 'javac *.java'],
+                Cmd: ['/bin/sh', '-c', 'javac *.java'],
                 AttachStdout: true,
                 AttachStderr: true
             });
@@ -79,7 +79,7 @@ export class JavaRunner extends ProgramRunner {
         if (!this.compiled || !this.container) throw new Error('JavaRunner: not compiled. Call compile() first.');
         try {
             const exec = await this.container.exec({
-                Cmd: ['timeout', '2', '/bin/sh', '-c', 'java Main'],
+                Cmd: ['/bin/sh', '-c', 'java Main'],
                 AttachStdout: true,
                 AttachStderr: true
             });

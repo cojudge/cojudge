@@ -37,7 +37,7 @@ export class PlaygroundJavaRunner extends PlaygroundRunner {
         await this.container.putArchive(pack as any, { path: '/app' });
 
         const exec = await this.container.exec({
-            Cmd: ['timeout', '10', '/bin/sh', '-c', 'javac Main.java'],
+            Cmd: ['/bin/sh', '-c', 'javac Main.java'],
             AttachStdout: true,
             AttachStderr: true
         });
@@ -64,7 +64,7 @@ export class PlaygroundJavaRunner extends PlaygroundRunner {
         if (!this.container) throw new Error('Container not initialized');
         
         const exec = await this.container.exec({
-            Cmd: ['timeout', '5', '/bin/sh', '-c', 'java Main'],
+            Cmd: ['/bin/sh', '-c', 'java Main'],
             AttachStdout: true,
             AttachStderr: true
         });
@@ -164,7 +164,7 @@ export class PlaygroundCppRunner extends PlaygroundRunner {
         await this.container.putArchive(pack as any, { path: '/app' });
 
         const exec = await this.container.exec({
-            Cmd: ['timeout', '10', '/bin/sh', '-c', 'g++ -o main main.cpp'],
+            Cmd: ['/bin/sh', '-c', 'g++ -o main main.cpp'],
             AttachStdout: true,
             AttachStderr: true
         });
@@ -191,7 +191,7 @@ export class PlaygroundCppRunner extends PlaygroundRunner {
         if (!this.container) throw new Error('Container not initialized');
         
         const exec = await this.container.exec({
-            Cmd: ['timeout', '5', '/bin/sh', '-c', './main'],
+            Cmd: ['/bin/sh', '-c', './main'],
             AttachStdout: true,
             AttachStderr: true
         });

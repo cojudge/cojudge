@@ -84,7 +84,7 @@ export class CppRunner extends ProgramRunner {
         try {
             // Run with the original command via exec
             const exec = await this.container.exec({
-                Cmd: ['timeout', '2', '/bin/sh', '-c', './main'],
+                Cmd: ['/bin/sh', '-c', './main'],
                 AttachStdout: true,
                 AttachStderr: true
             });
