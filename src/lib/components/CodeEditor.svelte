@@ -1,10 +1,11 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
     import type * as Monaco from 'monaco-editor';
+    import { onMount } from 'svelte';
     export let value = '';
     export let language = 'javascript';
     export let fontSize: number = 14;
     export let theme: 'dark' | 'light' = 'light';
+    export let readOnly: boolean = false;
 
     let editor: Monaco.editor.IStandaloneCodeEditor | null = null;
     let editorElement: HTMLDivElement;
@@ -66,6 +67,7 @@
             automaticLayout: true,
             fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
             fontSize,
+            readOnly,
             minimap: {
                 enabled: false
             }
@@ -93,6 +95,10 @@
 
     $: if (editor && typeof fontSize === 'number') {
         editor.updateOptions({ fontSize });
+    }
+
+    $: if (editor && typeof readOnly === 'boolean') {
+        editor.updateOptions({ readOnly });
     }
 
     // Update editor content when `value` prop changes externally (e.g., language switch)

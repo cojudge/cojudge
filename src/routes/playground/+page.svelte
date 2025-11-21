@@ -1,11 +1,18 @@
 <script lang="ts">
+    import { replaceState } from '$app/navigation';
+    import { page } from '$app/stores';
     import PlaygroundExecutionPanel from '$lib/components/PlaygroundExecutionPanel.svelte';
+    import ShareModal from '$lib/components/ShareModal.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
+    import { initFirebase } from '$lib/firebase';
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { type FileEntry } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice } from '$lib/stores/userSettingsStorage';
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
+    import { doc, getDoc, setDoc } from 'firebase/firestore';
+    import QRCode from 'qrcode';
     import { onMount, tick } from 'svelte';
+    import { get } from 'svelte/store';
     import { v4 as uuidv4 } from 'uuid';
 
     const problemId = 'playground';
@@ -34,7 +41,8 @@ int main() {
 
     function getFiles(): FileEntry[] {
         try {
-            return JSON.parse($fileStore[fileKey()] || '[]') as FileEntry[];
+            const s = get(fileStore);
+            return JSON.parse(s[fileKey()] || '[]') as FileEntry[];
         } catch (err) {
             return [];
         }
@@ -110,7 +118,8 @@ int main() {
         if (entry) {
             code = entry.content;
         } else {
-            const starter = $codeStore[codeKey()] ?? starterCode[lang] ?? '';
+            const cStore = get(codeStore);
+            const starter = cStore[codeKey()] ?? starterCode[lang] ?? '';
             code = starter;
             ensureEntry(currentId, lang, starter);
         }
@@ -373,6 +382,11 @@ int main() {
         code = starterCode[language] ?? '';
     }
 
+    let isFirebaseAvailable = false;
+    let showShareModal = false;
+    let shareUrl = '';
+    let qrCodeDataUrl = '';
+
     $: {
         const currentFontSize = $userSettingsStorage.editorFontSize;
         if (typeof fontSize === 'number' && currentFontSize !== fontSize) {
@@ -384,6 +398,153 @@ int main() {
         const currentTheme = $userSettingsStorage.theme;
         if (theme && currentTheme !== theme) {
             userSettingsStorage.update((s) => ({ ...s, theme }));
+        }
+    }
+
+    onMount(async () => {
+        const fb = initFirebase();
+        if (fb) {
+            isFirebaseAvailable = true;
+        }
+
+        const forkData = ($page.state as any).forkData as { content: string; language: ProgrammingLanguage; fileName: string } | undefined;
+        
+        if (forkData) {
+            const { content, language: lang, fileName } = forkData;
+            
+            // Add as new tab
+            const newTabName = fileName ? `Fork of ${fileName}` : `Forked Solution`;
+            const nextId = uuidv4();
+            
+            // Update tabs
+            tabs = [...tabs, { fileId: nextId, fileName: newTabName }];
+            
+            // Update file store
+            const fkey = fileKey();
+            fileStore.update((s) => {
+                let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+                files = [
+                    ...files,
+                    {
+                        fileId: nextId,
+                        fileName: newTabName,
+                        language: lang,
+                        content: content,
+                        isActive: false,
+                        order: tabs.length - 1
+                    } as FileEntry
+                ];
+                return { ...s, [fkey]: JSON.stringify(files) };
+            });
+            
+            // Switch to new tab
+            activeTabId = tabs.length - 1;
+            language = lang; 
+            userSettingsStorage.update(s => ({ ...s, preferredLanguage: language }));
+            
+            await tick();
+            await loadOrInitFile(language);
+            persistTabOrder();
+            
+            // Clear state to prevent re-forking on reload
+            replaceState($page.url, {});
+        }
+
+        const forkId = $page.url.searchParams.get('forkId');
+        if (forkId && fb && fb.db) {
+            try {
+                const snap = await getDoc(doc(fb.db, 'shares', forkId));
+                if (snap.exists()) {
+                    const data = snap.data();
+                    
+                    if (data.content && data.language) {
+                        // Add as new tab
+                        const newTabName = data.fileName ? `Fork of ${data.fileName}` : `Forked Solution`;
+                        const nextId = uuidv4();
+                        
+                        // Update tabs
+                        tabs = [...tabs, { fileId: nextId, fileName: newTabName }];
+                        
+                        // Update file store
+                        const fkey = fileKey();
+                        fileStore.update((s) => {
+                            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+                            files = [
+                                ...files,
+                                {
+                                    fileId: nextId,
+                                    fileName: newTabName,
+                                    language: data.language,
+                                    content: data.content,
+                                    isActive: false,
+                                    order: tabs.length - 1
+                                } as FileEntry
+                            ];
+                            return { ...s, [fkey]: JSON.stringify(files) };
+                        });
+                        
+                        // Switch to new tab
+                        activeTabId = tabs.length - 1;
+                        language = data.language; // Switch language to match forked code
+                        userSettingsStorage.update(s => ({ ...s, preferredLanguage: language }));
+                        
+                        await tick();
+                        await loadOrInitFile(language);
+                        persistTabOrder();
+                    }
+                    
+                    // Clean URL
+                    const newUrl = new URL($page.url);
+                    newUrl.searchParams.delete('forkId');
+                    window.history.replaceState({}, '', newUrl);
+                } else {
+                    alert('Shared solution not found.');
+                }
+            } catch (e) {
+                console.error('Error loading shared solution:', e);
+                alert('Error loading shared solution.');
+            }
+        }
+    });
+
+    function generateShortId(length: number = 4): string {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    }
+
+    async function handleShare() {
+        if (!isFirebaseAvailable) return;
+        
+        const fb = initFirebase();
+        if (!fb || !fb.db) return;
+
+        const shareId = generateShortId(4);
+        
+        // Get current file content
+        const currentTab = tabs[activeTabId];
+        const files = getFiles();
+        const currentFile = files.find(f => f.fileId === currentTab.fileId && f.language === language);
+        const content = currentFile ? currentFile.content : (starterCode[language] ?? '');
+        
+        // Save to Firestore
+        try {
+            await setDoc(doc(fb.db, 'shares', shareId), {
+                content,
+                language,
+                fileName: currentTab.fileName,
+                createdAt: new Date().toISOString()
+            });
+
+            shareUrl = `${window.location.origin}/p/${shareId}`;
+            qrCodeDataUrl = await QRCode.toDataURL(shareUrl);
+            showShareModal = true;
+        } catch (e) {
+            console.error('Error sharing:', e);
+            alert('Failed to share solution. Please check your configuration.');
         }
     }
 </script>
@@ -485,6 +646,23 @@ int main() {
                 </div>
             </div>
             <div style="display:flex;align-items:center;gap:var(--spacing-2);">
+                {#if isFirebaseAvailable}
+                    <Tooltip text={"Share"} pos={"bottom"}>
+                        <button
+                            class="icon-button"
+                            title="Share"
+                            aria-label="Share"
+                            on:click={handleShare}
+                        >
+                            <!-- Share icon -->
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 6l-4-4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 2v13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </Tooltip>
+                {/if}
                 <Tooltip text={"Reset Code"} pos={"bottom"}>
                     <button
                         class="icon-button"
@@ -545,6 +723,14 @@ int main() {
         </div>
         <PlaygroundExecutionPanel {code} {language} />
     </div>
+
+    {#if showShareModal}
+        <ShareModal 
+            url={shareUrl} 
+            qrCodeDataUrl={qrCodeDataUrl} 
+            on:close={() => showShareModal = false} 
+        />
+    {/if}
 </div>
 
 <style>
