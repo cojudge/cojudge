@@ -50,7 +50,7 @@ export class CppRunner extends ProgramRunner {
 
             // Compile with the original command via exec
             const exec = await this.container.exec({
-                Cmd: ['timeout', '7', '/bin/sh', '-c', 'g++ -std=c++17 -O2 -pipe -s -o main Main.cpp'],
+                Cmd: ['/bin/sh', '-c', 'g++ -std=c++17 -O2 -pipe -s -o main Main.cpp'],
                 AttachStdout: true,
                 AttachStderr: true
             });
