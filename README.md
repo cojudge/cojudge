@@ -6,6 +6,8 @@
 
 ![Progress Tracker](./screenshots/progresstracker.png)
 
+### Demo site: [https://cojudge.cloud](https://cojudge.cloud)
+
 ## Highlights
 
 - Offline-first: judge solutions without an internet connection
