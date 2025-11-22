@@ -16,7 +16,7 @@ export type ProgrammingLanguage = 'java' | 'python' | 'cpp';
 
 export const LINUX_TIMEOUT_CODE = 124;
 
-export const EXECUTION_TIMEOUT_SECONDS = '15';
+export const EXECUTION_TIMEOUT_SECONDS = '30';
 
 export const TIMEOUT_MESSAGE = 'TIMEOUT';
 
