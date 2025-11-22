@@ -1,10 +1,10 @@
+import { generateJavaRunner, javaImage, javaListNodeClass, javaTreeNodeClass } from "$lib/utils/javaUtil";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
-import { ProgramRunner } from "./ProgramRunner";
 import fs from 'fs/promises';
 import path from 'path';
-import { generateJavaRunner, javaImage, javaListNodeClass, javaTreeNodeClass } from "$lib/utils/javaUtil";
 import tar from 'tar-stream';
+import { ProgramRunner } from "./ProgramRunner";
 const docker = new Dockerode();
 
 export class JavaRunner extends ProgramRunner {
@@ -30,7 +30,8 @@ export class JavaRunner extends ProgramRunner {
                 Image: javaImage,
                 Cmd: ['sh', '-lc', 'tail -f /dev/null'], // keep container running for execs
                 WorkingDir: '/app',
-                Tty: false
+                Tty: false,
+                Labels: { 'cojudge.created': 'true' }
             });
             await this.container.start();
 

@@ -35,7 +35,8 @@ export class CppRunner extends ProgramRunner {
                 Image: cppImage,
                 Cmd: ['sh', '-lc', 'tail -f /dev/null'],
                 WorkingDir: '/app',
-                Tty: false
+                Tty: false,
+                Labels: { 'cojudge.created': 'true' }
             });
             await this.container.start();
 

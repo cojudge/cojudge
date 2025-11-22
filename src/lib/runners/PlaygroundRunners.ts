@@ -27,7 +27,8 @@ export class PlaygroundJavaRunner extends PlaygroundRunner {
             Image: javaImage,
             Cmd: ['sh', '-lc', 'tail -f /dev/null'],
             WorkingDir: '/app',
-            Tty: false
+            Tty: false,
+            Labels: { 'cojudge.created': 'true' }
         });
         await this.container.start();
 
@@ -102,7 +103,8 @@ export class PlaygroundPythonRunner extends PlaygroundRunner {
             Image: pythonImage,
             Cmd: ['sh', '-lc', 'tail -f /dev/null'],
             WorkingDir: '/app',
-            Tty: false
+            Tty: false,
+            Labels: { 'cojudge.created': 'true' }
         });
         await this.container.start();
 
@@ -154,7 +156,8 @@ export class PlaygroundCppRunner extends PlaygroundRunner {
             Image: cppImage,
             Cmd: ['sh', '-lc', 'tail -f /dev/null'],
             WorkingDir: '/app',
-            Tty: false
+            Tty: false,
+            Labels: { 'cojudge.created': 'true' }
         });
         await this.container.start();
 

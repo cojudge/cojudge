@@ -1,10 +1,10 @@
+import { generatePythonRunner, pythonImage, pythonListNodeClass, pythonTreeNodeClass } from "$lib/utils/pythonUtil";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
-import { ProgramRunner } from "./ProgramRunner";
 import fs from 'fs/promises';
 import path from 'path';
-import { generatePythonRunner, pythonImage, pythonListNodeClass, pythonTreeNodeClass } from "$lib/utils/pythonUtil";
 import tar from 'tar-stream';
+import { ProgramRunner } from "./ProgramRunner";
 
 const docker = new Dockerode();
 
@@ -33,7 +33,8 @@ export class PythonRunner extends ProgramRunner {
                 Image: pythonImage,
                 Cmd: ['sh', '-lc', 'tail -f /dev/null'],
                 WorkingDir: '/app',
-                Tty: false
+                Tty: false,
+                Labels: { 'cojudge.created': 'true' }
             });
             await this.container.start();
 
