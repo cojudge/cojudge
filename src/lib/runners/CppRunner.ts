@@ -1,10 +1,10 @@
-import { ensureImageAvailable, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
+import { cppImage, cppListNodeClass, cppTreeNodeClass, generateCppRunner } from "$lib/utils/cppUtil";
+import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
-import { ProgramRunner } from "./ProgramRunner";
 import fs from 'fs/promises';
 import path from 'path';
-import { cppImage, cppListNodeClass, generateCppRunner, cppTreeNodeClass } from "$lib/utils/cppUtil";
 import tar from 'tar-stream';
+import { ProgramRunner } from "./ProgramRunner";
 
 const docker = new Dockerode();
 
@@ -84,7 +84,7 @@ export class CppRunner extends ProgramRunner {
         try {
             // Run with the original command via exec
             const exec = await this.container.exec({
-                Cmd: ['/bin/sh', '-c', './main'],
+                Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', './main'],
                 AttachStdout: true,
                 AttachStderr: true
             });

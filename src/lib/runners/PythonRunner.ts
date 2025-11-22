@@ -1,4 +1,4 @@
-import { ensureImageAvailable, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
+import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import { ProgramRunner } from "./ProgramRunner";
 import fs from 'fs/promises';
@@ -58,7 +58,7 @@ export class PythonRunner extends ProgramRunner {
         try {
             // Run the program inside the prepared container with the exact Cmd array
             const exec = await this.container.exec({
-                Cmd: ['python', '-B', 'main.py'],
+                Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, 'python', '-B', 'main.py'],
                 AttachStdout: true,
                 AttachStderr: true,
                 WorkingDir: '/app',

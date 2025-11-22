@@ -1,4 +1,4 @@
-import { ensureImageAvailable, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
+import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import { ProgramRunner } from "./ProgramRunner";
 import fs from 'fs/promises';
@@ -79,7 +79,7 @@ export class JavaRunner extends ProgramRunner {
         if (!this.compiled || !this.container) throw new Error('JavaRunner: not compiled. Call compile() first.');
         try {
             const exec = await this.container.exec({
-                Cmd: ['/bin/sh', '-c', 'java Main'],
+                Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'java Main'],
                 AttachStdout: true,
                 AttachStderr: true
             });

@@ -1,7 +1,7 @@
 import { cppImage } from "$lib/utils/cppUtil";
 import { javaImage } from "$lib/utils/javaUtil";
 import { pythonImage } from "$lib/utils/pythonUtil";
-import { ensureImageAvailable, TIMEOUT_MESSAGE } from "$lib/utils/util";
+import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import tar from 'tar-stream';
 
@@ -64,7 +64,7 @@ export class PlaygroundJavaRunner extends PlaygroundRunner {
         if (!this.container) throw new Error('Container not initialized');
         
         const exec = await this.container.exec({
-            Cmd: ['/bin/sh', '-c', 'java Main'],
+            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'java Main'],
             AttachStdout: true,
             AttachStderr: true
         });
@@ -116,7 +116,7 @@ export class PlaygroundPythonRunner extends PlaygroundRunner {
         if (!this.container) throw new Error('Container not initialized');
         
         const exec = await this.container.exec({
-            Cmd: ['timeout', '5', '/bin/sh', '-c', 'python3 main.py'],
+            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'python3 main.py'],
             AttachStdout: true,
             AttachStderr: true
         });
@@ -191,7 +191,7 @@ export class PlaygroundCppRunner extends PlaygroundRunner {
         if (!this.container) throw new Error('Container not initialized');
         
         const exec = await this.container.exec({
-            Cmd: ['/bin/sh', '-c', './main'],
+            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', './main'],
             AttachStdout: true,
             AttachStderr: true
         });

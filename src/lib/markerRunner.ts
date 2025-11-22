@@ -94,7 +94,7 @@ export async function getMarkerResponses(problemId: string, functionName: string
         }
 
         const runExec = await container.exec({
-            Cmd: ['/bin/sh', '-c', 'java Main'],
+            Cmd: ['timeout', '15', '/bin/sh', '-c', 'java Main'],
             AttachStdout: true,
             AttachStderr: true
         });
