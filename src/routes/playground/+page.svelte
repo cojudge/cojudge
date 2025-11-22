@@ -24,14 +24,15 @@
     const starterCode = {
         java: `public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        // your code goes here
     }
 }`,
-        python: `print("Hello World!")`,
+        python: `# your code goes here`,
         cpp: `#include <iostream>
+using namespace std;
 
 int main() {
-    std::cout << "Hello World!" << std::endl;
+    // your code goes here
     return 0;
 }`
     };
