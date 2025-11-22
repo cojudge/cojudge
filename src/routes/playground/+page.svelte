@@ -99,6 +99,8 @@ int main() {
                         fileName: (tabs.find((t) => t.fileId === fileId)?.fileName) || 'Solution',
                         language: lang,
                         content: initialContent,
+                        output: '',
+                        logs: '',
                         isActive: false,
                         order: tabIndex >= 0 ? tabIndex : undefined
                     } as FileEntry
@@ -118,10 +120,14 @@ int main() {
         suppressSave = true;
         if (entry) {
             code = entry.content;
+            output = entry.output || '';
+            logs = entry.logs || '';
         } else {
             const cStore = get(codeStore);
             const starter = cStore[codeKey()] ?? starterCode[lang] ?? '';
             code = starter;
+            output = '';
+            logs = '';
             ensureEntry(currentId, lang, starter);
         }
         await tick();
@@ -129,6 +135,8 @@ int main() {
     }
 
     let code: string;
+    let output: string = '';
+    let logs: string = '';
     let showSettings = false;
     let settingsContainer: HTMLElement | null = null;
     const fontSizes: number[] = Array.from({ length: 13 }, (_, i) => 12 + i); // 12..24
@@ -196,6 +204,8 @@ int main() {
                     fileName,
                     language: language,
                     content: newCode,
+                    output: '',
+                    logs: '',
                     isActive: false,
                     order: tabs.length - 1
                 } as FileEntry
@@ -259,7 +269,7 @@ int main() {
     function handleDragEnd() {
         draggingId = null;
     }
-    $: if (!suppressSave && code !== undefined) {
+    $: if (!suppressSave && (code !== undefined || output !== undefined || logs !== undefined)) {
         const fkey = fileKey();
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
@@ -270,12 +280,16 @@ int main() {
             );
             if (existingFile) {
                 existingFile.content = code;
+                existingFile.output = output;
+                existingFile.logs = logs;
             } else {
                 files = [...files, {
                     fileId: tabs[activeTabId].fileId,
                     fileName: tabs[activeTabId].fileName,
                     language: language,
                     content: code,
+                    output: output,
+                    logs: logs,
                     isActive: false
                 } as FileEntry];
             }
@@ -431,6 +445,8 @@ int main() {
                         fileName: newTabName,
                         language: lang,
                         content: content,
+                        output: '',
+                        logs: '',
                         isActive: false,
                         order: tabs.length - 1
                     } as FileEntry
@@ -477,6 +493,8 @@ int main() {
                                     fileName: newTabName,
                                     language: data.language,
                                     content: data.content,
+                                    output: '',
+                                    logs: '',
                                     isActive: false,
                                     order: tabs.length - 1
                                 } as FileEntry
@@ -530,6 +548,8 @@ int main() {
         const files = getFiles();
         const currentFile = files.find(f => f.fileId === currentTab.fileId && f.language === language);
         const content = currentFile ? currentFile.content : (starterCode[language] ?? '');
+        const fileOutput = currentFile ? (currentFile.output || '') : '';
+        const fileLogs = currentFile ? (currentFile.logs || '') : '';
         
         // Save to Firestore
         try {
@@ -537,6 +557,8 @@ int main() {
                 content,
                 language,
                 fileName: currentTab.fileName,
+                output: fileOutput,
+                logs: fileLogs,
                 createdAt: new Date().toISOString()
             });
 
@@ -722,7 +744,7 @@ int main() {
                 Loading...
             {/if}
         </div>
-        <PlaygroundExecutionPanel {code} {language} />
+        <PlaygroundExecutionPanel {code} {language} bind:output bind:logs />
     </div>
 
     {#if showShareModal}

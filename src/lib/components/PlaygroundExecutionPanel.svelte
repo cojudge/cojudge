@@ -6,12 +6,13 @@
 
     export let code: string;
     export let language: ProgrammingLanguage = 'java';
+    export let output: string = '';
+    export let logs: string = '';
+    export let readOnly: boolean = false;
 
     let isLoading = false;
     let isResizing = false;
     let panelElement: HTMLElement;
-    let output: string = '';
-    let logs: string = '';
     let error: string | null = null;
     let hasRunOnce = false;
     let runningMessage = '';
@@ -208,7 +209,7 @@
     </div>
 
     <div class="content" class:hide={$execPaneHeightStore <= minExecPanelHeight}>
-        {#if hasRunOnce}
+        {#if hasRunOnce || output || logs || error}
             <div class="output-view">
                 {#if error}
                     <div class="result-item">
@@ -298,6 +299,7 @@
                 {runningMessage}
             </span>
             <div style="margin-right: 20px">
+              {#if !readOnly}
               <Tooltip text={"Ctrl + '"}>
                   <button
                       class="btn btn-secondary"
@@ -307,6 +309,7 @@
                       Run
                   </button>
               </Tooltip>
+              {/if}
             </div>
         </div>
     </div>

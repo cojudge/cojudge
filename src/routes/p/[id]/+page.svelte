@@ -11,9 +11,12 @@
     let fileName = '';
     let problemId = '';
     let problemTitle = '';
+    let output = '';
+    let logs = '';
     let loading = true;
     let error = '';
     let CodeEditor: any = null;
+    let PlaygroundExecutionPanel: any = null;
     let fontSize = $userSettingsStorage.editorFontSize ?? 14;
     let theme = $userSettingsStorage.theme ?? 'light';
 
@@ -22,6 +25,8 @@
     onMount(async () => {
         const module = await import('$lib/components/CodeEditor.svelte');
         CodeEditor = module.default;
+        const panelModule = await import('$lib/components/PlaygroundExecutionPanel.svelte');
+        PlaygroundExecutionPanel = panelModule.default;
 
         const fb = initFirebase();
         if (!fb || !fb.db) {
@@ -39,6 +44,8 @@
                 fileName = data.fileName || 'Solution';
                 problemId = data.problemId || '';
                 problemTitle = data.problemTitle || '';
+                output = data.output || '';
+                logs = data.logs || '';
             } else {
                 error = 'Solution not found';
             }
@@ -108,6 +115,16 @@
                 />
             {/if}
         </div>
+        {#if PlaygroundExecutionPanel}
+            <svelte:component 
+                this={PlaygroundExecutionPanel} 
+                {code} 
+                {language} 
+                {output} 
+                {logs} 
+                readOnly={true}
+            />
+        {/if}
     {/if}
 </div>
 
@@ -146,11 +163,6 @@
         display: flex;
         align-items: center;
         gap: 1rem;
-    }
-
-    .file-name {
-        font-weight: 600;
-        font-size: 1.1rem;
     }
 
     .lang-badge {
