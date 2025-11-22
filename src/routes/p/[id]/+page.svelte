@@ -9,13 +9,15 @@
     let code = '';
     let language = 'java';
     let fileName = '';
+    let problemId = '';
+    let problemTitle = '';
     let loading = true;
     let error = '';
     let CodeEditor: any = null;
     let fontSize = $userSettingsStorage.editorFontSize ?? 14;
     let theme = $userSettingsStorage.theme ?? 'light';
 
-    const id = $page.params.id;
+    const id = $page.params.id || '';
 
     onMount(async () => {
         const module = await import('$lib/components/CodeEditor.svelte');
@@ -35,6 +37,8 @@
                 code = data.content || '';
                 language = data.language || 'java';
                 fileName = data.fileName || 'Solution';
+                problemId = data.problemId || '';
+                problemTitle = data.problemTitle || '';
             } else {
                 error = 'Solution not found';
             }
@@ -47,15 +51,27 @@
     });
 
     function handleFork() {
-        goto('/playground', {
-            state: {
-                forkData: {
-                    content: code,
-                    language: language,
-                    fileName: fileName
+        if (problemId) {
+            goto(`/problems/${problemId}`, {
+                state: {
+                    forkData: {
+                        content: code,
+                        language: language,
+                        fileName: fileName
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            goto('/playground', {
+                state: {
+                    forkData: {
+                        content: code,
+                        language: language,
+                        fileName: fileName
+                    }
+                }
+            });
+        }
     }
 </script>
 
@@ -67,8 +83,8 @@
     {:else}
         <div class="header">
             <div class="title">
-                <span class="file-name">{fileName}</span>
-                <span class="lang-badge">{language}</span>
+                <span class="lang-badge">{problemTitle}</span>
+                <span class="lang-badge">{fileName} ({language})</span>
             </div>
             <button class="fork-btn" on:click={handleFork}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -77,7 +93,7 @@
                     <path d="M6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M15 6a9 9 0 0 0-9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                Fork to Playground
+                Fork to {problemId ? 'Problem' : 'Playground'}
             </button>
         </div>
         <div class="editor-wrapper">

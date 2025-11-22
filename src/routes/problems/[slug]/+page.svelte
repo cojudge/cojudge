@@ -1,15 +1,20 @@
 <script lang="ts">
-    import { onMount, tick } from 'svelte';
-    import { marked } from 'marked';
+    import { page } from '$app/stores';
     import ExecutionPanel from '$lib/components/ExecutionPanel.svelte';
-    import { getDifficultyClass, type ProgrammingLanguage } from '$lib/utils/util.js';
-    import { leftPaneWidthStore } from '$lib/stores/layoutStore';
-    import fileStore, { type FileEntry } from '$lib/stores/fileStore.js';
-    import userSettingsStorage, { type ThemeChoice } from '$lib/stores/userSettingsStorage';
+    import ShareModal from '$lib/components/ShareModal.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
-    import { v4 as uuidv4 } from 'uuid';
+    import { initFirebase } from '$lib/firebase';
     import codeStore from '$lib/stores/codeStore.js';
+    import fileStore, { type FileEntry } from '$lib/stores/fileStore.js';
+    import { leftPaneWidthStore } from '$lib/stores/layoutStore';
+    import userSettingsStorage, { type ThemeChoice } from '$lib/stores/userSettingsStorage';
     import userStore from '$lib/stores/userStore';
+    import { getDifficultyClass, type ProgrammingLanguage } from '$lib/utils/util.js';
+    import { doc, setDoc } from 'firebase/firestore';
+    import { marked } from 'marked';
+    import QRCode from 'qrcode';
+    import { onMount, tick } from 'svelte';
+    import { v4 as uuidv4 } from 'uuid';
 
     export let data;
     const problemId = data.problem.id;
@@ -90,6 +95,11 @@
 
     let suppressSave = false; // prevent save during programmatic loads
 
+    let isFirebaseAvailable = false;
+    let showShareModal = false;
+    let shareUrl = '';
+    let qrCodeDataUrl = '';
+
     async function loadOrInitFile(lang: ProgrammingLanguage) {
         if (activeTabId < 0 || activeTabId >= tabs.length) return;
         const currentId = tabs[activeTabId].fileId;
@@ -163,12 +173,12 @@
     }
 
     // New tab state (simple add button)
-    async function addNewTab() {
-        const newTabName = `Solution-${tabs.length + 1}`;
+    async function addNewTab(customName: string = '', customContent: string = '') {
+        const newTabName = customName || `Solution-${tabs.length + 1}`;
         const nextId = uuidv4();
         const fileName = newTabName;
         tabs = [...tabs, { fileId: nextId, fileName }];
-        const newCode = data.problem.starterCode?.[language] ?? '';
+        const newCode = customContent || (data.problem.starterCode?.[language] ?? '');
         const fkey = fileKey();
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
@@ -188,7 +198,9 @@
         activeTabId = tabs.length - 1;
         await loadOrInitFile(language);
         persistTabOrder();
-        startRename(nextId, fileName);
+        if (!customName) {
+            startRename(nextId, fileName);
+        }
     }
 
     function persistTabOrder() {
@@ -319,6 +331,24 @@
     onMount(async () => {
         const module = await import('$lib/components/CodeEditor.svelte');
         CodeEditor = module.default;
+
+        const fb = initFirebase();
+        if (fb) isFirebaseAvailable = true;
+
+        const forkData = ($page.state as any).forkData as { content: string; language: ProgrammingLanguage; fileName: string } | undefined;
+        
+        if (forkData) {
+            if (forkData.language) {
+                language = forkData.language;
+                await tick();
+            }
+            
+            code = forkData.content;
+            
+            if (forkData.fileName) {
+                addNewTab(`Fork of ${forkData.fileName}`, forkData.content);
+            }
+        }
     });
 
     onMount(() => {
@@ -421,6 +451,47 @@
         const currentTheme = $userSettingsStorage.theme;
         if (theme && currentTheme !== theme) {
             userSettingsStorage.update((s) => ({ ...s, theme }));
+        }
+    }
+
+    function generateShortId(length: number = 4): string {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    }
+
+    async function handleShare() {
+        const fb = initFirebase();
+        if (!fb || !fb.db) return;
+
+        const shareId = generateShortId(4);
+        
+        // Get current file content
+        const currentTab = tabs[activeTabId];
+        const files = getFiles();
+        const currentFile = files.find(f => f.fileId === currentTab.fileId && f.language === language);
+        const content = currentFile ? currentFile.content : (data.problem.starterCode?.[language] ?? '');
+        
+        // Save to Firestore
+        try {
+            await setDoc(doc(fb.db, 'shares', shareId), {
+                content,
+                language,
+                fileName: currentTab.fileName,
+                createdAt: new Date(),
+                problemId: data.problem.id,
+                problemTitle: data.problem.title
+            });
+            
+            shareUrl = `${window.location.origin}/p/${shareId}`;
+            qrCodeDataUrl = await QRCode.toDataURL(shareUrl);
+            showShareModal = true;
+        } catch (e) {
+            console.error('Error sharing:', e);
+            alert('Failed to create share link');
         }
     }
 </script>
@@ -600,11 +671,20 @@
                                 {/if}
                             </div>
                         {/each}
-                        <button class="tab-add" aria-label="New tab" title="New tab" on:click={addNewTab}>+</button>
+                        <button class="tab-add" aria-label="New tab" title="New tab" on:click={() => addNewTab()}>+</button>
                     </div>
                 </div>
             </div>
             <div style="display:flex;align-items:center;gap:var(--spacing-2);">
+                <Tooltip text={"Share Code"} pos={"bottom"}>
+                    <button class="icon-button" on:click={handleShare} title="Share Code">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="16 6 12 2 8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line x1="12" y1="2" x2="12" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </Tooltip>
                 <Tooltip text={"Reset Code"} pos={"bottom"}>
                     <button
                         class="icon-button"
@@ -665,6 +745,14 @@
         </div>
         <ExecutionPanel problem={data.problem} {code} {language} />
     </div>
+
+    {#if showShareModal}
+        <ShareModal 
+            url={shareUrl} 
+            {qrCodeDataUrl} 
+            on:close={() => showShareModal = false} 
+        />
+    {/if}
 </div>
 
 <style>
