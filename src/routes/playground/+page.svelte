@@ -37,8 +37,10 @@ int main() {
 }`,
         csharp: `using System;
 
-class Program {
-    static void Main() {
+class Program
+{
+    static void Main()
+    {
         // your code goes here
     }
 }`
