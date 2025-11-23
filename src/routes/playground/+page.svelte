@@ -17,7 +17,7 @@
 
     const problemId = 'playground';
     let CodeEditor: any = null;
-    let language: ProgrammingLanguage = $userSettingsStorage.preferredLanguage ?? 'java';
+    let language: ProgrammingLanguage = $userSettingsStorage.playgroundPreferredLanguage ?? 'java';
     const fileKey = () => `${problemId}`;
     const codeKey = () => `${problemId}:${language}`;
 
@@ -469,7 +469,7 @@ class Program
             // Switch to new tab
             activeTabId = tabs.length - 1;
             language = lang; 
-            userSettingsStorage.update(s => ({ ...s, preferredLanguage: language }));
+            userSettingsStorage.update(s => ({ ...s, playgroundPreferredLanguage: language }));
             
             await tick();
             await loadOrInitFile(language);
@@ -517,7 +517,7 @@ class Program
                         // Switch to new tab
                         activeTabId = tabs.length - 1;
                         language = data.language; // Switch language to match forked code
-                        userSettingsStorage.update(s => ({ ...s, preferredLanguage: language }));
+                        userSettingsStorage.update(s => ({ ...s, playgroundPreferredLanguage: language }));
                         
                         await tick();
                         await loadOrInitFile(language);
@@ -610,7 +610,7 @@ class Program
                         on:keydown={() => (suppressSave = true)}
                         on:change={() => {
                             // Persist preference; actual loading will be triggered by reactive `$: if (language)`
-                            userSettingsStorage.update((s) => ({ ...s, preferredLanguage: language }));
+                            userSettingsStorage.update((s) => ({ ...s, playgroundPreferredLanguage: language }));
                         }}
                         on:blur={() => (suppressSave = false)}
                     >

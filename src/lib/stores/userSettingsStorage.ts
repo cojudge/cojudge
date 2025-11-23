@@ -1,11 +1,12 @@
-import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 import type { ProgrammingLanguage } from '$lib/utils/util';
+import { writable } from 'svelte/store';
 
 export type ThemeChoice = 'dark' | 'light';
 
 export interface UserSettings {
     preferredLanguage: ProgrammingLanguage;
+    playgroundPreferredLanguage: ProgrammingLanguage;
     editorFontSize: number;
     theme: ThemeChoice;
 }
@@ -14,18 +15,20 @@ const STORAGE_KEY = 'user-settings';
 
 const defaultSettings: UserSettings = {
     preferredLanguage: 'java',
+    playgroundPreferredLanguage: 'java',
     editorFontSize: 14,
     theme: 'light',
 };
 
 function normalizeSettings(input: any): UserSettings {
     const preferredLanguage = (input?.preferredLanguage ?? defaultSettings.preferredLanguage) as ProgrammingLanguage;
+    const playgroundPreferredLanguage = (input?.playgroundPreferredLanguage ?? defaultSettings.playgroundPreferredLanguage) as ProgrammingLanguage;
     const rawSize = input?.editorFontSize;
     const size = typeof rawSize === 'number' ? rawSize : defaultSettings.editorFontSize;
     const editorFontSize = Math.min(24, Math.max(12, size));
     const rawTheme = (input?.theme ?? defaultSettings.theme) as ThemeChoice;
     const theme: ThemeChoice = rawTheme === 'dark' ? 'dark' : 'light';
-    return { preferredLanguage, editorFontSize, theme };
+    return { preferredLanguage, playgroundPreferredLanguage, editorFontSize, theme };
 }
 
 // Load initial settings from localStorage if available
