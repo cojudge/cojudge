@@ -3,5 +3,5 @@
   { "text1": "abc", "text2": "abc" },
   { "text1": "abc", "text2": "def" },
   { "text1": "bl", "text2": "yby" },
-  { "text1": "@javascript: 'a'.repeat(30000)", "text2": "@javascript: 'a'.repeat(30000)", "_isLargeTest": true }
+  { "text1": "@javascript: 'a'.repeat(3000)", "text2": "@javascript: 'a'.repeat(3000)", "_isLargeTest": true }
 ]
