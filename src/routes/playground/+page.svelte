@@ -81,6 +81,10 @@ int main() {
             // Fallback to first appearance order in stored array
             return a.firstIndex - b.firstIndex;
         });
+        if (files.length) {
+            code = files[0].content;
+        }
+        
         return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName }));
     }
 
