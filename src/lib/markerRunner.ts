@@ -54,7 +54,8 @@ export async function getMarkerResponses(problemId: string, functionName: string
             Image: javaImage,
             Cmd: ['sh', '-lc', 'tail -f /dev/null'],
             WorkingDir: '/app',
-            Tty: false
+            Tty: false,
+            Labels: { 'cojudge.created': 'true' }
         });
         await container.start();
 
