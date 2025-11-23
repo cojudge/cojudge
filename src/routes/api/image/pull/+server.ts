@@ -1,10 +1,11 @@
-import { json } from '@sveltejs/kit';
-import type { RequestHandler } from './$types';
-import Dockerode from 'dockerode';
+import { cppImage } from '$lib/utils/cppUtil';
+import { csharpImage } from '$lib/utils/csharpUtil';
 import { javaImage } from '$lib/utils/javaUtil';
 import { pythonImage } from '$lib/utils/pythonUtil';
-import { cppImage } from '$lib/utils/cppUtil';
 import { ensureImageAvailable } from '$lib/utils/util';
+import { json } from '@sveltejs/kit';
+import Dockerode from 'dockerode';
+import type { RequestHandler } from './$types';
 
 const docker = new Dockerode();
 
@@ -12,6 +13,7 @@ function imageForLanguage(language: string) {
     if (language === 'java') return { image: javaImage, language };
     if (language === 'python') return { image: pythonImage, language };
     if (language === 'cpp') return { image: cppImage, language };
+    if (language === 'csharp') return { image: csharpImage, language };
     return null;
 }
 

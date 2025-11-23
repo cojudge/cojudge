@@ -12,7 +12,7 @@ export type Param = {
     type: string;
 };
 
-export type ProgrammingLanguage = 'java' | 'python' | 'cpp';
+export type ProgrammingLanguage = 'java' | 'python' | 'cpp' | 'csharp';
 
 export const LINUX_TIMEOUT_CODE = 124;
 

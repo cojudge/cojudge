@@ -34,6 +34,13 @@ using namespace std;
 int main() {
     // your code goes here
     return 0;
+}`,
+        csharp: `using System;
+
+class Program {
+    static void Main() {
+        // your code goes here
+    }
 }`
     };
 
@@ -81,10 +88,9 @@ int main() {
             // Fallback to first appearance order in stored array
             return a.firstIndex - b.firstIndex;
         });
-        if (files.length) {
-            code = files[0].content;
+        if (files.find(x => x.language === language)) {
+            code = files.find(x => x.language === language)!.content;
         }
-        
         return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName }));
     }
 
@@ -609,6 +615,7 @@ int main() {
                         <option value="java">Java</option>
                         <option value="python">Python</option>
                         <option value="cpp">C++</option>
+                        <option value="csharp">C#</option>
                     </select>
                 </div>
                 <div class="tabs-container">
