@@ -43,7 +43,8 @@ class Program
     {
         // your code goes here
     }
-}`
+}`,
+        plaintext: ``
     };
 
     // Tabs are grouped by fileId (language-agnostic)
@@ -618,6 +619,7 @@ class Program
                         <option value="python">Python</option>
                         <option value="cpp">C++</option>
                         <option value="csharp">C#</option>
+                        <option value="plaintext">Plaintext</option>
                     </select>
                 </div>
                 <div class="tabs-container">
@@ -757,7 +759,9 @@ class Program
                 Loading...
             {/if}
         </div>
-        <PlaygroundExecutionPanel {code} {language} bind:output bind:logs />
+        {#if language !== 'plaintext'}
+            <PlaygroundExecutionPanel {code} {language} bind:output bind:logs />
+        {/if}
     </div>
 
     {#if showShareModal}
