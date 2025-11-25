@@ -19,6 +19,7 @@
 :root[data-theme='dark'] {
   --color-bg: #443835;
   --color-second-bg: rgba(0,0,0,0.25);
+  --color-third-bg: rgba(0,0,0,0.1);
   --color-surface: rgba(255, 255, 255, 0.05);
   --color-surface-hover: rgba(255, 255, 255, 0.1);
 
@@ -50,6 +51,7 @@
 :root[data-theme='light'] {
   --color-bg: #f8fafc;
   --color-second-bg: rgba(0,0,0,0.05);
+  --color-third-bg: rgba(0,0,0,0.03);
   --color-surface: #ffffff;
   --color-surface-hover: #f1f5f9;
 

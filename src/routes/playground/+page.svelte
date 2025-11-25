@@ -48,7 +48,7 @@ class Program
     };
 
     // Tabs are grouped by fileId (language-agnostic)
-    type TabMeta = { fileId: string; fileName: string };
+    type TabMeta = { fileId: string; fileName: string; isOpen: boolean };
 
     function getFiles(): FileEntry[] {
         try {
@@ -63,7 +63,7 @@ class Program
         const files = getFiles();
         if (!files.length) {
             // Create a default tab; the language-specific entry will be created lazily
-            return [{ fileId: uuidv4(), fileName: 'Solution' }];
+            return [{ fileId: uuidv4(), fileName: 'Solution', isOpen: true }];
         }
         const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number }>();
         files.forEach((f, idx) => {
@@ -94,7 +94,7 @@ class Program
         if (files.find(x => x.language === language)) {
             code = files.find(x => x.language === language)!.content;
         }
-        return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName }));
+        return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName, isOpen: true }));
     }
 
     // Ensure an entry exists for current tab+language, optionally with initial content
@@ -162,9 +162,12 @@ class Program
     let editingName = '';
     let renameInputEl: HTMLInputElement | null = null;
 
-    function startRename(fileId: string, currentName: string) {
+    let renamingSource: 'sidebar' | 'tab' | null = null;
+
+    function startRename(fileId: string, currentName: string, source: 'sidebar' | 'tab') {
         editingTabId = fileId;
         editingName = currentName;
+        renamingSource = source;
         // Focus the input on next tick
         tick().then(() => {
             renameInputEl?.focus();
@@ -191,21 +194,23 @@ class Program
         });
         editingTabId = null;
         editingName = '';
+        renamingSource = null;
         renameInputEl = null;
     }
 
     function cancelRename() {
         editingTabId = null;
         editingName = '';
+        renamingSource = null;
         renameInputEl = null;
     }
 
     // New tab state (simple add button)
-    async function addNewTab() {
+    async function addNewTab(source: 'sidebar' | 'tab' = 'tab') {
         const newTabName = `Solution-${tabs.length + 1}`;
         const nextId = uuidv4();
         const fileName = newTabName;
-        tabs = [...tabs, { fileId: nextId, fileName }];
+        tabs = [...tabs, { fileId: nextId, fileName, isOpen: true }];
         const newCode = starterCode[language] ?? '';
         const fkey = fileKey();
         fileStore.update((s) => {
@@ -228,7 +233,7 @@ class Program
         activeTabId = tabs.length - 1;
         await loadOrInitFile(language);
         persistTabOrder();
-        startRename(nextId, fileName);
+        startRename(nextId, fileName, source);
     }
 
     function persistTabOrder() {
@@ -315,12 +320,51 @@ class Program
     }
 
     function closeTab(fileId: string) {
+        // Just hide from tab bar
+        tabs = tabs.map(t => t.fileId === fileId ? { ...t, isOpen: false } : t);
+        
+        // If we closed the active tab, switch to another open one if possible
+        // But for now, let's just keep the content visible or switch to the nearest open tab?
+        // VS Code behavior: switch to next open tab.
+        const currentTab = tabs[activeTabId];
+        if (currentTab.fileId === fileId) {
+            // Find another open tab
+            // Try next one
+            let nextOpenIdx = -1;
+            for (let i = activeTabId + 1; i < tabs.length; i++) {
+                if (tabs[i].isOpen) {
+                    nextOpenIdx = i;
+                    break;
+                }
+            }
+            // If not found, try previous one
+            if (nextOpenIdx === -1) {
+                for (let i = activeTabId - 1; i >= 0; i--) {
+                    if (tabs[i].isOpen) {
+                        nextOpenIdx = i;
+                        break;
+                    }
+                }
+            }
+            
+            if (nextOpenIdx !== -1) {
+                activeTabId = nextOpenIdx;
+                loadOrInitFile(language);
+            }
+        }
+    }
+
+    function deleteFile(fileId: string) {
         if (tabs.length <= 1) return;
         if (!confirm("Are you sure you want to remove this file? This action cannot be undone")) return;
         const idx = tabs.findIndex((t) => t.fileId === fileId);
         if (idx === -1) return;
         if (activeTabId === idx) {
-            activateTab(tabs.find(x => x.fileId !== fileId)?.fileId);
+            // Find another file to activate (doesn't have to be open, but preferably)
+            const nextFile = tabs.find((x, i) => i !== idx); // Just pick any other
+            if (nextFile) {
+                activateTab(nextFile.fileId);
+            }
         }
         const fkey = fileKey();
         fileStore.update((s) => {
@@ -333,6 +377,10 @@ class Program
         tabs = newTabs;
         // Re-number orders after removal
         persistTabOrder();
+        
+        let newActiveId = tabs[activeTabId].fileId;
+        const newIdx = newTabs.findIndex(t => t.fileId === newActiveId);
+        if (newIdx !== -1) activeTabId = newIdx;
     }
 
     onMount(async () => {
@@ -363,6 +411,12 @@ class Program
         if (!fileId) return;
         const idx = tabs.findIndex((t) => t.fileId === fileId);
         if (idx === -1) return;
+        
+        // Ensure tab is open
+        if (!tabs[idx].isOpen) {
+            tabs = tabs.map((t, i) => i === idx ? { ...t, isOpen: true } : t);
+        }
+
         activeTabId = idx;
         await loadOrInitFile(language);
     }
@@ -445,7 +499,7 @@ class Program
             const nextId = uuidv4();
             
             // Update tabs
-            tabs = [...tabs, { fileId: nextId, fileName: newTabName }];
+            tabs = [...tabs, { fileId: nextId, fileName: newTabName, isOpen: true }];
             
             // Update file store
             const fkey = fileKey();
@@ -492,10 +546,8 @@ class Program
                         const newTabName = data.fileName ? `Fork of ${data.fileName}` : `Forked Solution`;
                         const nextId = uuidv4();
                         
-                        // Update tabs
-                        tabs = [...tabs, { fileId: nextId, fileName: newTabName }];
-                        
-                        // Update file store
+            // Update tabs
+            tabs = [...tabs, { fileId: nextId, fileName: newTabName, isOpen: true }];                        // Update file store
                         const fkey = fileKey();
                         fileStore.update((s) => {
                             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
@@ -583,6 +635,46 @@ class Program
             alert('Failed to share solution. Please check your configuration.');
         }
     }
+
+    let isSidebarOpen = $userSettingsStorage.isSidebarOpen ?? true;
+    $: {
+        const currentSidebarState = $userSettingsStorage.isSidebarOpen;
+        if (currentSidebarState !== isSidebarOpen) {
+             userSettingsStorage.update(s => ({ ...s, isSidebarOpen }));
+        }
+    }
+    $: hasOpenTabs = tabs.some(t => t.isOpen);
+    let isMac = false;
+
+    onMount(() => {
+        isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+        const handleDocClick = (e: MouseEvent) => {
+            if (showSettings && settingsContainer && !settingsContainer.contains(e.target as Node)) {
+                showSettings = false;
+            }
+        };
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                showSettings = false;
+            }
+            // Ctrl+Shift+E or Cmd+Shift+E
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'e') {
+                e.preventDefault();
+                isSidebarOpen = !isSidebarOpen;
+            }
+            // Ctrl+B or Cmd+B
+            if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'b') {
+                e.preventDefault();
+                isSidebarOpen = !isSidebarOpen;
+            }
+        };
+        document.addEventListener('click', handleDocClick);
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('click', handleDocClick);
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    });
 </script>
 
 <svelte:head>
@@ -590,19 +682,175 @@ class Program
 </svelte:head>
 
 <div class="workspace">
+    <!-- Activity Bar -->
+    <div class="activity-bar">
+        <a href="/" class="activity-icon" title="Home">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 22V12h6v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
+        <button 
+            class="activity-icon {isSidebarOpen ? 'active' : ''}" 
+            on:click={() => isSidebarOpen = !isSidebarOpen}
+            title="Explorer"
+        >
+            <!-- Explorer Icon (Files) -->
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M13 2v7h7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Left Sidebar -->
+    {#if isSidebarOpen}
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <span>EXPLORER</span>
+            <button class="icon-button" on:click={() => addNewTab('sidebar')} title="New File">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+        <div class="file-list">
+            {#each tabs as t}
+                <div
+                    class="file-item {hasOpenTabs && t.fileId === tabs[activeTabId].fileId ? 'active' : ''}"
+                    on:click={() => activateTab(t.fileId)}
+                    draggable={true}
+                    on:dragstart={(e) => handleDragStart(e, t.fileId)}
+                    on:dragover={(e) => handleDragOver(e, t.fileId)}
+                    on:drop={(e) => handleDrop(e, t.fileId)}
+                    on:dragend={handleDragEnd}
+                    on:contextmenu|preventDefault={(e) => { /* maybe context menu later */ }}
+                    role="button"
+                    tabindex="0"
+                    on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateTab(t.fileId); } }}
+                >
+                    {#if editingTabId === t.fileId && renamingSource === 'sidebar'}
+                         <input
+                            class="file-rename-input"
+                            type="text"
+                            bind:value={editingName}
+                            bind:this={renameInputEl}
+                            on:click|stopPropagation
+                            on:keydown|stopPropagation={(e) => {
+                                if (e.key === 'Enter') { e.preventDefault(); applyRename(); }
+                                else if (e.key === 'Escape') { e.preventDefault(); cancelRename(); }
+                            }}
+                            on:blur={applyRename}
+                        />
+                    {:else}
+                        <span class="file-name">{t.fileName}</span>
+                    {/if}
+                    
+                    <div class="file-actions">
+                        <button
+                            class="file-action-btn"
+                            title="Rename"
+                            on:click|stopPropagation={() => startRename(t.fileId, t.fileName, 'sidebar')}
+                        >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                <path d="M14.06 6.19l3.75 3.75 1.69-1.69a1.5 1.5 0 000-2.12L17.87 4.5a1.5 1.5 0 00-2.12 0l-1.69 1.69z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                            </svg>
+                        </button>
+                        {#if tabs.length > 1}
+                            <button
+                                class="file-action-btn"
+                                title="Delete"
+                                on:click|stopPropagation={() => deleteFile(t.fileId)}
+                            >
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        {/if}
+                    </div>
+                </div>
+            {/each}
+        </div>
+    </div>
+    {/if}
+
     <!-- Right Pane: Editor and Console -->
     <div class="editor-pane">
+        {#if hasOpenTabs}
         <div class="editor-header" style="display:flex;align-items:center;justify-content:space-between;padding:var(--spacing-2);border-bottom:1px solid var(--color-border);">
-            <div class="lang-dropdown-tabs-container">
-                <div style="display:flex;gap:var(--spacing-2);align-items:center;">
-                    <Tooltip text="Back" pos="bottom"> 
-                        <a class="back-button" href="/" aria-label="Back">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        </a>
-                    </Tooltip>
-                    <label for="language-select" style="font-size:0.9rem;color:var(--color-text-secondary);">Language</label>
+            <div class="tabs-container">
+                <div class="tab-bar" role="tablist" aria-label="Editor tabs">
+                    {#each tabs as t}
+                        {#if t.isOpen}
+                        <div
+                            class="tab {t.fileId === tabs[activeTabId].fileId ? 'active' : ''}"
+                            role="tab"
+                            aria-selected={t.fileId === tabs[activeTabId].fileId}
+                            tabindex={t.fileId === tabs[activeTabId].fileId ? 0 : -1}
+                            on:click={() => activateTab(t.fileId)}
+                            on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateTab(t.fileId); } }}
+                            draggable={true}
+                            on:dragstart={(e) => handleDragStart(e, t.fileId)}
+                            on:dragover={(e) => handleDragOver(e, t.fileId)}
+                            on:drop={(e) => handleDrop(e, t.fileId)}
+                            on:dragend={handleDragEnd}
+                            on:mousedown={(e) => { 
+                                e.preventDefault();
+                                e.stopPropagation();
+                                if (e.which === 2) {
+                                    closeTab(t.fileId);
+                                }
+                            }}
+                        >
+                            {#if editingTabId === t.fileId && renamingSource === 'tab'}
+                                <input
+                                    class="tab-rename-input"
+                                    type="text"
+                                    bind:value={editingName}
+                                    bind:this={renameInputEl}
+                                    on:click|stopPropagation
+                                    on:keydown|stopPropagation={(e) => {
+                                        if (e.key === 'Enter') { e.preventDefault(); applyRename(); }
+                                        else if (e.key === 'Escape') { e.preventDefault(); cancelRename(); }
+                                    }}
+                                    on:blur={applyRename}
+                                />
+                            {:else}
+                                <span class="tab-title">{t.fileName}</span>
+                            {/if}
+                            
+                            <button
+                                class="tab-rename"
+                                aria-label="Rename tab"
+                                title="Rename"
+                                on:click|stopPropagation={() => startRename(t.fileId, t.fileName, 'tab')}
+                            >
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    <path d="M14.06 6.19l3.75 3.75 1.69-1.69a1.5 1.5 0 000-2.12L17.87 4.5a1.5 1.5 0 00-2.12 0l-1.69 1.69z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                </svg>
+                            </button>
+
+                            {#if tabs.length > 1}
+                                <button
+                                    class="tab-close"
+                                    aria-label="Close tab"
+                                    title="Close"
+                                    on:click|stopPropagation={() => closeTab(t.fileId)}
+                                >
+                                    ×
+                                </button>
+                            {/if}
+                        </div>
+                        {/if}
+                    {/each}
+                    <button class="tab-add" aria-label="New tab" title="New tab" on:click={() => addNewTab('tab')}>+</button>
+                </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--spacing-2);">
+                <div style="display:flex;align-items:center;gap:var(--spacing-1);">
+                    <label for="language-select" style="font-size:0.9rem;color:var(--color-text-secondary);margin-right:4px;">Language</label>
                     <select
                         id="language-select"
                         bind:value={language}
@@ -622,68 +870,6 @@ class Program
                         <option value="plaintext">Plaintext</option>
                     </select>
                 </div>
-                <div class="tabs-container">
-                    <div class="tab-bar" role="tablist" aria-label="Editor tabs">
-                        {#each tabs as t}
-                            <div
-                                class="tab {t.fileId === tabs[activeTabId].fileId ? 'active' : ''}"
-                                role="tab"
-                                aria-selected={t.fileId === tabs[activeTabId].fileId}
-                                tabindex={t.fileId === tabs[activeTabId].fileId ? 0 : -1}
-                                on:click={() => activateTab(t.fileId)}
-                                on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateTab(t.fileId); } }}
-                                draggable={true}
-                                on:dragstart={(e) => handleDragStart(e, t.fileId)}
-                                on:dragover={(e) => handleDragOver(e, t.fileId)}
-                                on:drop={(e) => handleDrop(e, t.fileId)}
-                                on:dragend={handleDragEnd}
-                                on:auxclick={(e) => { if (e.button === 1) { e.preventDefault(); e.stopPropagation(); closeTab(t.fileId); } }}
-                            >
-                                {#if editingTabId === t.fileId}
-                                    <input
-                                        class="tab-rename-input"
-                                        type="text"
-                                        bind:value={editingName}
-                                        bind:this={renameInputEl}
-                                        on:click|stopPropagation
-                                        on:keydown|stopPropagation={(e) => {
-                                            if (e.key === 'Enter') { e.preventDefault(); applyRename(); }
-                                            else if (e.key === 'Escape') { e.preventDefault(); cancelRename(); }
-                                        }}
-                                        on:blur={applyRename}
-                                    />
-                                {:else}
-                                    <span class="tab-title">{t.fileName}</span>
-                                {/if}
-                                <button
-                                    class="tab-rename"
-                                    aria-label="Rename tab"
-                                    title="Rename"
-                                    on:click|stopPropagation={() => startRename(t.fileId, t.fileName)}
-                                >
-                                    <!-- Pencil icon -->
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                                        <path d="M14.06 6.19l3.75 3.75 1.69-1.69a1.5 1.5 0 000-2.12L17.87 4.5a1.5 1.5 0 00-2.12 0l-1.69 1.69z" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                                    </svg>
-                                </button>
-                                {#if tabs.length > 1}
-                                    <button
-                                        class="tab-close"
-                                        aria-label="Close tab"
-                                        title="Close"
-                                        on:click|stopPropagation={() => closeTab(t.fileId)}
-                                    >
-                                        ×
-                                    </button>
-                                {/if}
-                            </div>
-                        {/each}
-                        <button class="tab-add" aria-label="New tab" title="New tab" on:click={addNewTab}>+</button>
-                    </div>
-                </div>
-            </div>
-            <div style="display:flex;align-items:center;gap:var(--spacing-2);">
                 {#if isFirebaseAvailable}
                     <Tooltip text={"Share"} pos={"bottom"}>
                         <button
@@ -748,7 +934,6 @@ class Program
                         </div>
                     {/if}
                 </div>
-                <div style="font-size:0.85rem;color:var(--color-text-secondary);">{imageName || language.toUpperCase()}</div>
             </div>
         </div>
 
@@ -761,6 +946,22 @@ class Program
         </div>
         {#if language !== 'plaintext'}
             <PlaygroundExecutionPanel {code} {language} bind:output bind:logs />
+        {/if}
+        {:else}
+        <div class="empty-state">
+            <div class="empty-state-content">
+                <div class="empty-shortcuts">
+                    <div class="shortcut-row">
+                        <span class="shortcut-label">Toggle Explorer</span>
+                        <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">SHIFT</span><span class="key">E</span></span>
+                    </div>
+                    <div class="shortcut-row">
+                        <span class="shortcut-label">Toggle Sidebar</span>
+                        <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">B</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
         {/if}
     </div>
 
@@ -776,42 +977,154 @@ class Program
 <style>
     .workspace {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         height: 100vh;
-        padding: var(--spacing-3);
+        padding: 0;
         background-color: var(--color-bg); /* Use the main background */
     }
 
     .editor-pane {
         background-color: var(--color-surface); /* Floating surface */
-        border: 1px solid var(--color-border);
-        border-radius: var(--border-radius-lg);
         display: flex;
         flex-direction: column;
         overflow: hidden;
         flex: 1;
     }
 
-    .back-button {
-        border: 0;
-        cursor: pointer;
-        display: inline-flex;
+    /* Activity Bar */
+    .activity-bar {
+        width: 48px;
+        background-color: var(--color-bg);
+        border-right: 1px solid var(--color-border);
+        display: flex;
+        flex-direction: column;
         align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        border-radius: 8px;
-        background: transparent;
-        color: var(--color-text-secondary);
-        text-decoration: none;
-        transition: background-color 0.12s ease, color 0.12s ease;
+        padding-top: var(--spacing-2);
+        flex-shrink: 0;
+        z-index: 10;
     }
 
-    .back-button:hover {
-        background-color: rgba(255,255,255,0.03);
+    .activity-icon {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        position: relative;
+        padding: 0;
+    }
+
+    .activity-icon:hover {
+        color: var(--color-text);
+    }
+
+    .activity-icon.active {
+        color: var(--color-text);
+        border-left: 2px solid var(--color-highlight); /* Visual indicator */
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+        width: 250px;
+        background-color: var(--color-bg);
+        border-right: 1px solid var(--color-border);
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+    }
+
+    .sidebar.closed {
+        transform: translateX(-100%);
+    }
+
+    .sidebar-header {
+        height: 53px; /* Match editor header height roughly */
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 var(--spacing-2);
+        border-bottom: 1px solid var(--color-border);
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--color-text-secondary);
+        letter-spacing: 0.05em;
+    }
+
+    .file-list {
+        flex: 1;
+        overflow-y: auto;
+        padding: var(--spacing-1) 0;
+    }
+
+    .file-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 6px var(--spacing-2);
+        cursor: pointer;
+        color: var(--color-text-secondary);
+        font-size: 0.9rem;
+        user-select: none;
+    }
+
+    .file-item:hover {
+        background-color: var(--color-second-bg);
+        color: var(--color-text);
+    }
+
+    .file-item.active {
+        background-color: var(--color-third-bg);
+        color: var(--color-text);
+    }
+
+    .file-name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 1;
+    }
+
+    .file-actions {
+        display: none;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .file-item:hover .file-actions {
+        display: flex;
+    }
+
+    .file-action-btn {
+        background: transparent;
+        border: none;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        padding: 2px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .file-action-btn:hover {
+        background-color: rgba(255,255,255,0.1);
         color: var(--color-text);
     }
     
+    .file-rename-input {
+        background: var(--color-bg);
+        border: 1px solid var(--color-highlight);
+        color: var(--color-text);
+        border-radius: 2px;
+        padding: 2px 4px;
+        font-size: 0.9rem;
+        width: 100%;
+    }
+
     /* Right Pane Layout */
     .editor-pane {
         padding: 0; /* No padding on the pane itself */
@@ -950,6 +1263,15 @@ class Program
         font-size: 0.85rem;
         max-width: 18ch;
     }
+    
+    .tabs-container {
+        display: flex;
+        gap: var(--spacing-2);
+        align-items: center;
+        flex: 1;
+        min-width: 0;
+    }
+
 
     /* Small, subtle icon button */
     .icon-button {
@@ -1002,18 +1324,54 @@ class Program
         font-family: inherit;
     }
 
-    .lang-dropdown-tabs-container {
+    /* Empty State */
+    .empty-state {
         display: flex;
-        gap: var(--spacing-2);
-        flex: 1;
-        min-width: 0;
-    }
-    
-    .tabs-container {
-        display: flex;
-        gap: var(--spacing-2);
+        flex-direction: column;
         align-items: center;
-        flex: 1;
-        min-width: 0;
+        justify-content: center;
+        height: 100%;
+        color: var(--color-text-secondary);
+        background-color: var(--color-bg);
+        user-select: none;
+    }
+    .empty-state-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+    .empty-logo svg {
+        width: 128px;
+        height: 128px;
+        opacity: 0.1;
+        color: var(--color-text);
+    }
+    .empty-shortcuts {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        min-width: 300px;
+    }
+    .shortcut-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+    }
+    .shortcut-keys {
+        display: flex;
+        gap: 4px;
+    }
+    .key {
+        background-color: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: 3px;
+        padding: 2px 6px;
+        font-size: 0.8rem;
+        min-width: 20px;
+        text-align: center;
+        box-shadow: 0 1px 0 var(--color-border);
+        color: var(--color-text);
     }
 </style>

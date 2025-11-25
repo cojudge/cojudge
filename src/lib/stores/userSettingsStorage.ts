@@ -9,6 +9,7 @@ export interface UserSettings {
     playgroundPreferredLanguage: ProgrammingLanguage;
     editorFontSize: number;
     theme: ThemeChoice;
+    isSidebarOpen: boolean;
 }
 
 const STORAGE_KEY = 'user-settings';
@@ -18,6 +19,7 @@ const defaultSettings: UserSettings = {
     playgroundPreferredLanguage: 'java',
     editorFontSize: 14,
     theme: 'light',
+    isSidebarOpen: true,
 };
 
 function normalizeSettings(input: any): UserSettings {
@@ -28,7 +30,8 @@ function normalizeSettings(input: any): UserSettings {
     const editorFontSize = Math.min(24, Math.max(12, size));
     const rawTheme = (input?.theme ?? defaultSettings.theme) as ThemeChoice;
     const theme: ThemeChoice = rawTheme === 'dark' ? 'dark' : 'light';
-    return { preferredLanguage, playgroundPreferredLanguage, editorFontSize, theme };
+    const isSidebarOpen = typeof input?.isSidebarOpen === 'boolean' ? input.isSidebarOpen : defaultSettings.isSidebarOpen;
+    return { preferredLanguage, playgroundPreferredLanguage, editorFontSize, theme, isSidebarOpen };
 }
 
 // Load initial settings from localStorage if available
