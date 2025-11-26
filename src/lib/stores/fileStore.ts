@@ -1,5 +1,5 @@
-import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
+import { writable } from 'svelte/store';
 
 // The key we'll use to save the data in localStorage
 const STORAGE_KEY = 'files';
@@ -14,6 +14,7 @@ export type FileEntry = {
     order?: number;
     output?: string;
     logs?: string;
+    lastViewed?: number;
 };
 
 // Dictionary: key = problem slug, value = JSON string of FileEntry[]

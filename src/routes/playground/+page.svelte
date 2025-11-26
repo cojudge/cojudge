@@ -48,7 +48,7 @@ class Program
     };
 
     // Tabs are grouped by fileId (language-agnostic)
-    type TabMeta = { fileId: string; fileName: string; isOpen: boolean };
+    type TabMeta = { fileId: string; fileName: string; isOpen: boolean; lastViewed?: number };
 
     function getFiles(): FileEntry[] {
         try {
@@ -63,23 +63,26 @@ class Program
         const files = getFiles();
         if (!files.length) {
             // Create a default tab; the language-specific entry will be created lazily
-            return [{ fileId: uuidv4(), fileName: 'Solution', isOpen: true }];
+            return [{ fileId: uuidv4(), fileName: 'Solution', isOpen: true, lastViewed: Date.now() }];
         }
-        const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number }>();
+        const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number; lastViewed: number }>();
         files.forEach((f, idx) => {
             const existing = groups.get(f.fileId);
             const orderVal = (typeof f.order === 'number') ? f.order : null;
+            const lv = f.lastViewed || 0;
             if (!existing) {
                 groups.set(f.fileId, {
                     fileId: f.fileId,
                     fileName: f.fileName || 'Solution',
                     order: orderVal,
-                    firstIndex: idx
+                    firstIndex: idx,
+                    lastViewed: lv
                 });
             } else {
                 if (orderVal !== null) {
                     if (existing.order === null || orderVal < existing.order) existing.order = orderVal;
                 }
+                if (lv > existing.lastViewed) existing.lastViewed = lv;
             }
         });
         const list = Array.from(groups.values());
@@ -94,7 +97,7 @@ class Program
         if (files.find(x => x.language === language)) {
             code = files.find(x => x.language === language)!.content;
         }
-        return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName, isOpen: true }));
+        return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName, isOpen: true, lastViewed: g.lastViewed }));
     }
 
     // Ensure an entry exists for current tab+language, optionally with initial content
@@ -143,6 +146,28 @@ class Program
             logs = '';
             ensureEntry(currentId, lang, starter);
         }
+        
+        // Update lastViewed
+        const now = Date.now();
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            // Update all entries for this fileId (or just the current language?)
+            // Usually viewing a file means viewing it in some language.
+            // But the sidebar groups by fileId. So we should probably update all entries for this fileId
+            // OR just the one we are viewing, and the sidebar aggregator picks the max.
+            // The sidebar aggregator (getInitialTabs) picks the max.
+            // So updating just the current language entry is enough.
+            const idx = files.findIndex((x) => x.fileId === currentId && x.language === lang);
+            if (idx >= 0) {
+                files[idx].lastViewed = now;
+            }
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
+        
+        // Update local tabs state
+        tabs = tabs.map(t => t.fileId === currentId ? { ...t, lastViewed: now } : t);
+
         await tick();
         suppressSave = false;
     }
@@ -163,6 +188,54 @@ class Program
     let renameInputEl: HTMLInputElement | null = null;
 
     let renamingSource: 'sidebar' | 'tab' | null = null;
+
+    function getDateLabel(timestamp?: number): string {
+        if (!timestamp) return 'Older';
+        const date = new Date(timestamp);
+        const now = new Date();
+        const diffTime = now.getTime() - date.getTime();
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        
+        // Check if it is today (ignoring time)
+        const isToday = date.getDate() === now.getDate() &&
+                        date.getMonth() === now.getMonth() &&
+                        date.getFullYear() === now.getFullYear();
+                        
+        if (isToday) return 'Today';
+        
+        const yesterday = new Date(now);
+        yesterday.setDate(yesterday.getDate() - 1);
+        const isYesterday = date.getDate() === yesterday.getDate() &&
+                            date.getMonth() === yesterday.getMonth() &&
+                            date.getFullYear() === yesterday.getFullYear();
+                            
+        if (isYesterday) return 'Yesterday';
+        
+        if (diffDays <= 7) return 'Previous 7 days';
+        if (diffDays <= 30) return 'Previous 30 days';
+        
+        return 'Older';
+    }
+
+    $: groupedTabs = (() => {
+        const groups: Record<string, TabMeta[]> = {
+            'Today': [],
+            'Yesterday': [],
+            'Previous 7 days': [],
+            'Previous 30 days': [],
+            'Older': []
+        };
+        
+        tabs.forEach(t => {
+            const label = getDateLabel(t.lastViewed);
+            if (!groups[label]) groups[label] = [];
+            groups[label].push(t);
+        });
+        
+        return groups;
+    })();
+    
+    const groupOrder = ['Today', 'Yesterday', 'Previous 7 days', 'Previous 30 days', 'Older'];
 
     function startRename(fileId: string, currentName: string, source: 'sidebar' | 'tab') {
         editingTabId = fileId;
@@ -715,61 +788,68 @@ class Program
             </button>
         </div>
         <div class="file-list">
-            {#each tabs as t}
-                <div
-                    class="file-item {hasOpenTabs && t.fileId === tabs[activeTabId].fileId ? 'active' : ''}"
-                    on:click={() => activateTab(t.fileId)}
-                    draggable={true}
-                    on:dragstart={(e) => handleDragStart(e, t.fileId)}
-                    on:dragover={(e) => handleDragOver(e, t.fileId)}
-                    on:drop={(e) => handleDrop(e, t.fileId)}
-                    on:dragend={handleDragEnd}
-                    on:contextmenu|preventDefault={(e) => { /* maybe context menu later */ }}
-                    role="button"
-                    tabindex="0"
-                    on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateTab(t.fileId); } }}
-                >
-                    {#if editingTabId === t.fileId && renamingSource === 'sidebar'}
-                         <input
-                            class="file-rename-input"
-                            type="text"
-                            bind:value={editingName}
-                            bind:this={renameInputEl}
-                            on:click|stopPropagation
-                            on:keydown|stopPropagation={(e) => {
-                                if (e.key === 'Enter') { e.preventDefault(); applyRename(); }
-                                else if (e.key === 'Escape') { e.preventDefault(); cancelRename(); }
-                            }}
-                            on:blur={applyRename}
-                        />
-                    {:else}
-                        <span class="file-name">{t.fileName}</span>
-                    {/if}
-                    
-                    <div class="file-actions">
-                        <button
-                            class="file-action-btn"
-                            title="Rename"
-                            on:click|stopPropagation={() => startRename(t.fileId, t.fileName, 'sidebar')}
-                        >
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                                <path d="M14.06 6.19l3.75 3.75 1.69-1.69a1.5 1.5 0 000-2.12L17.87 4.5a1.5 1.5 0 00-2.12 0l-1.69 1.69z" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                            </svg>
-                        </button>
-                        {#if tabs.length > 1}
-                            <button
-                                class="file-action-btn"
-                                title="Delete"
-                                on:click|stopPropagation={() => deleteFile(t.fileId)}
+            {#each groupOrder as group}
+                {#if groupedTabs[group] && groupedTabs[group].length > 0}
+                    <div class="file-group">
+                        <div class="file-group-header">{group}</div>
+                        {#each groupedTabs[group] as t}
+                            <div
+                                class="file-item {hasOpenTabs && t.fileId === tabs[activeTabId].fileId ? 'active' : ''}"
+                                on:click={() => activateTab(t.fileId)}
+                                draggable={true}
+                                on:dragstart={(e) => handleDragStart(e, t.fileId)}
+                                on:dragover={(e) => handleDragOver(e, t.fileId)}
+                                on:drop={(e) => handleDrop(e, t.fileId)}
+                                on:dragend={handleDragEnd}
+                                on:contextmenu|preventDefault={(e) => { /* maybe context menu later */ }}
+                                role="button"
+                                tabindex="0"
+                                on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateTab(t.fileId); } }}
                             >
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                        {/if}
+                                {#if editingTabId === t.fileId && renamingSource === 'sidebar'}
+                                     <input
+                                        class="file-rename-input"
+                                        type="text"
+                                        bind:value={editingName}
+                                        bind:this={renameInputEl}
+                                        on:click|stopPropagation
+                                        on:keydown|stopPropagation={(e) => {
+                                            if (e.key === 'Enter') { e.preventDefault(); applyRename(); }
+                                            else if (e.key === 'Escape') { e.preventDefault(); cancelRename(); }
+                                        }}
+                                        on:blur={applyRename}
+                                    />
+                                {:else}
+                                    <span class="file-name">{t.fileName}</span>
+                                {/if}
+                                
+                                <div class="file-actions">
+                                    <button
+                                        class="file-action-btn"
+                                        title="Rename"
+                                        on:click|stopPropagation={() => startRename(t.fileId, t.fileName, 'sidebar')}
+                                    >
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                            <path d="M14.06 6.19l3.75 3.75 1.69-1.69a1.5 1.5 0 000-2.12L17.87 4.5a1.5 1.5 0 00-2.12 0l-1.69 1.69z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        </svg>
+                                    </button>
+                                    {#if tabs.length > 1}
+                                        <button
+                                            class="file-action-btn"
+                                            title="Delete"
+                                            on:click|stopPropagation={() => deleteFile(t.fileId)}
+                                        >
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </button>
+                                    {/if}
+                                </div>
+                            </div>
+                        {/each}
                     </div>
-                </div>
+                {/if}
             {/each}
         </div>
     </div>
@@ -1322,6 +1402,19 @@ class Program
         border-radius: 6px;
         padding: 6px 8px;
         font-family: inherit;
+    }
+
+    .file-group-header {
+        padding: 4px var(--spacing-2);
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--color-text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-top: 8px;
+    }
+    .file-group:first-child .file-group-header {
+        margin-top: 0;
     }
 
     /* Empty State */
