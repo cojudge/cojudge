@@ -3,10 +3,8 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /shares/{shareId} {
       allow read: if true;
-      allow create: if true;
-      // Optional: prevent overwriting existing shares
-      // allow update: if false;
-      // allow delete: if false;
+      allow create: if request.resource.data.ownerId == request.auth.uid;
+      allow update: if resource.data.ownerId == request.auth.uid;
     }
   }
 }

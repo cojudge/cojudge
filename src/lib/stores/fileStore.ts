@@ -15,6 +15,7 @@ export type FileEntry = {
     output?: string;
     logs?: string;
     lastViewed?: number;
+    shareId?: string;
 };
 
 // Dictionary: key = problem slug, value = JSON string of FileEntry[]
