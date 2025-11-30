@@ -1171,10 +1171,6 @@ class Program
         flex-shrink: 0;
     }
 
-    .sidebar.closed {
-        transform: translateX(-100%);
-    }
-
     .sidebar-header {
         height: 53px; /* Match editor header height roughly */
         display: flex;
@@ -1487,12 +1483,6 @@ class Program
         flex-direction: column;
         align-items: center;
         gap: 2rem;
-    }
-    .empty-logo svg {
-        width: 128px;
-        height: 128px;
-        opacity: 0.1;
-        color: var(--color-text);
     }
     .empty-shortcuts {
         display: flex;
