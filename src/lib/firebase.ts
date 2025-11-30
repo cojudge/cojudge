@@ -1,4 +1,5 @@
-import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
+import { getApp, getApps, initializeApp, type FirebaseApp } from 'firebase/app';
+import { getAuth, signInAnonymously, type Auth } from 'firebase/auth';
 import { getFirestore, type Firestore } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -12,6 +13,7 @@ const firebaseConfig = {
 
 let app: FirebaseApp | undefined;
 let db: Firestore | undefined;
+let auth: Auth | undefined;
 
 export function initFirebase() {
     if (!firebaseConfig.apiKey) {
@@ -24,7 +26,18 @@ export function initFirebase() {
         app = getApp();
     }
     db = getFirestore(app);
-    return { app, db };
+    auth = getAuth(app);
+    
+    return { app, db, auth };
+}
+
+export async function ensureAuthenticated() {
+    const { auth } = initFirebase() || {};
+    if (!auth) throw new Error('Firebase not initialized');
+    if (!auth.currentUser) {
+        await signInAnonymously(auth);
+    }
+    return auth.currentUser;
 }
 
 export const firebaseApp = getApps().length ? getApp() : (firebaseConfig.apiKey ? initializeApp(firebaseConfig) : undefined);

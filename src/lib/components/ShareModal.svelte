@@ -11,6 +11,10 @@
         dispatch('close');
     }
 
+    function generateNew() {
+        dispatch('generateNew');
+    }
+
     function copyToClipboard() {
         navigator.clipboard.writeText(url);
         copied = true;
@@ -25,6 +29,7 @@
 <div class="modal-backdrop" on:click={close}>
     <div class="modal-content" on:click|stopPropagation>
         <h3>Share</h3>
+        <p class="info-text">Latest changes saved to the following url:</p>
         <div class="url-container">
             <input type="text" readonly value={url} />
             <button on:click={copyToClipboard}>{copied ? 'Copied' : 'Copy'}</button>
@@ -34,6 +39,7 @@
                 <img src={qrCodeDataUrl} alt="QR Code" />
             </div>
         {/if}
+        <button class="generate-btn" on:click={generateNew}>Generate New Link</button>
         <button class="close-btn" on:click={close}>Close</button>
     </div>
 </div>
@@ -67,6 +73,12 @@
     h3 {
         margin: 0;
         font-size: 1.2rem;
+    }
+
+    .info-text {
+        margin: 0;
+        font-size: 0.7rem;
+        color: var(--color-text-secondary);
     }
 
     .url-container {
@@ -113,5 +125,20 @@
     
     .close-btn:hover {
         background: rgba(255, 255, 255, 0.1);
+    }
+
+    .generate-btn {
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+        background: var(--color-highlight);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        font-weight: 500;
+    }
+    .generate-btn:hover {
+        opacity: 0.9;
     }
 </style>

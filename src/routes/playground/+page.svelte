@@ -4,12 +4,12 @@
     import PlaygroundExecutionPanel from '$lib/components/PlaygroundExecutionPanel.svelte';
     import ShareModal from '$lib/components/ShareModal.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
-    import { initFirebase } from '$lib/firebase';
+    import { ensureAuthenticated, initFirebase } from '$lib/firebase';
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { type FileEntry } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice } from '$lib/stores/userSettingsStorage';
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
-    import { doc, getDoc, setDoc } from 'firebase/firestore';
+    import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
     import QRCode from 'qrcode';
     import { onMount, tick } from 'svelte';
     import { get } from 'svelte/store';
@@ -673,40 +673,110 @@ class Program
         return result;
     }
 
-    async function handleShare() {
-        if (!isFirebaseAvailable) return;
+    async function handleSave(silent = false): Promise<string | null> {
+        if (!isFirebaseAvailable) return null;
         
-        const fb = initFirebase();
-        if (!fb || !fb.db) return;
+        const { db, auth } = initFirebase() || {};
+        if (!db || !auth) return null;
 
-        const shareId = generateShortId(4);
-        
-        // Get current file content
-        const currentTab = tabs[activeTabId];
-        const files = getFiles();
-        const currentFile = files.find(f => f.fileId === currentTab.fileId && f.language === language);
-        const content = currentFile ? currentFile.content : (starterCode[language] ?? '');
-        const fileOutput = currentFile ? (currentFile.output || '') : '';
-        const fileLogs = currentFile ? (currentFile.logs || '') : '';
-        
-        // Save to Firestore
         try {
-            await setDoc(doc(fb.db, 'shares', shareId), {
-                content,
-                language,
-                fileName: currentTab.fileName,
-                output: fileOutput,
-                logs: fileLogs,
-                createdAt: new Date().toISOString()
-            });
+            const user = await ensureAuthenticated();
+            if (!user) throw new Error('Authentication failed');
 
+            const currentTab = tabs[activeTabId];
+            const files = getFiles();
+            const currentFile = files.find(f => f.fileId === currentTab.fileId && f.language === language);
+            const content = currentFile ? currentFile.content : (starterCode[language] ?? '');
+            const fileOutput = currentFile ? (currentFile.output || '') : '';
+            const fileLogs = currentFile ? (currentFile.logs || '') : '';
+            
+            let shareId = currentFile?.shareId;
+            
+            if (shareId) {
+                // Try to update existing
+                try {
+                    await updateDoc(doc(db, 'shares', shareId), {
+                        content,
+                        language,
+                        fileName: currentTab.fileName,
+                        output: fileOutput,
+                        logs: fileLogs,
+                        updatedAt: new Date().toISOString(),
+                        ownerId: user.uid
+                    });
+                    if (!silent) alert('Saved successfully!');
+                    return shareId;
+                } catch (e: any) {
+                    if (e.code === 'permission-denied') {
+                        if (silent || confirm('You do not have permission to update this shared code. Create a new copy?')) {
+                            shareId = undefined; // Force create new
+                        } else {
+                            return null;
+                        }
+                    } else {
+                        throw e;
+                    }
+                }
+            }
+            
+            if (!shareId) {
+                // Create new
+                shareId = generateShortId(4);
+                await setDoc(doc(db, 'shares', shareId), {
+                    content,
+                    language,
+                    fileName: currentTab.fileName,
+                    output: fileOutput,
+                    logs: fileLogs,
+                    createdAt: new Date().toISOString(),
+                    ownerId: user.uid
+                });
+                
+                // Update local file with shareId
+                const fkey = fileKey();
+                fileStore.update((s) => {
+                    let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+                    const idx = files.findIndex(f => f.fileId === currentTab.fileId && f.language === language);
+                    if (idx >= 0) {
+                        files[idx].shareId = shareId;
+                    }
+                    return { ...s, [fkey]: JSON.stringify(files) };
+                });
+                
+                if (!silent) alert(`Saved! Share ID: ${shareId}`);
+                return shareId;
+            }
+        } catch (e) {
+            console.error('Error saving:', e);
+            if (!silent) alert('Failed to save.');
+            return null;
+        }
+        return null;
+    }
+
+    async function handleShare() {
+        const shareId = await handleSave(true);
+        if (shareId) {
             shareUrl = `${window.location.origin}/p/${shareId}`;
             qrCodeDataUrl = await QRCode.toDataURL(shareUrl);
             showShareModal = true;
-        } catch (e) {
-            console.error('Error sharing:', e);
-            alert('Failed to share solution. Please check your configuration.');
         }
+    }
+
+    async function handleGenerateNewLink() {
+        // Clear shareId for current file to force creation of new share
+        const currentTab = tabs[activeTabId];
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            const idx = files.findIndex(f => f.fileId === currentTab.fileId && f.language === language);
+            if (idx >= 0) {
+                delete files[idx].shareId;
+            }
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
+        
+        await handleShare();
     }
 
     let isSidebarOpen = $userSettingsStorage.isSidebarOpen ?? true;
@@ -1050,6 +1120,7 @@ class Program
             url={shareUrl} 
             qrCodeDataUrl={qrCodeDataUrl} 
             on:close={() => showShareModal = false} 
+            on:generateNew={handleGenerateNewLink}
         />
     {/if}
 </div>
