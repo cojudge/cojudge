@@ -65,24 +65,27 @@ class Program
             // Create a default tab; the language-specific entry will be created lazily
             return [{ fileId: uuidv4(), fileName: 'Solution', isOpen: true, lastViewed: Date.now() }];
         }
-        const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number; lastViewed: number }>();
+        const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number; lastViewed: number; isOpen: boolean }>();
         files.forEach((f, idx) => {
             const existing = groups.get(f.fileId);
             const orderVal = (typeof f.order === 'number') ? f.order : null;
             const lv = f.lastViewed || 0;
+            const open = f.isOpen !== false;
             if (!existing) {
                 groups.set(f.fileId, {
                     fileId: f.fileId,
                     fileName: f.fileName || 'Solution',
                     order: orderVal,
                     firstIndex: idx,
-                    lastViewed: lv
+                    lastViewed: lv,
+                    isOpen: open
                 });
             } else {
                 if (orderVal !== null) {
                     if (existing.order === null || orderVal < existing.order) existing.order = orderVal;
                 }
                 if (lv > existing.lastViewed) existing.lastViewed = lv;
+                if (f.isOpen !== undefined) existing.isOpen = f.isOpen;
             }
         });
         const list = Array.from(groups.values());
@@ -97,7 +100,7 @@ class Program
         if (files.find(x => x.language === language)) {
             code = files.find(x => x.language === language)!.content;
         }
-        return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName, isOpen: true, lastViewed: g.lastViewed }));
+        return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName, isOpen: g.isOpen, lastViewed: g.lastViewed }));
     }
 
     // Ensure an entry exists for current tab+language, optionally with initial content
@@ -108,17 +111,19 @@ class Program
             const existing = files.find((x) => x.fileId === fileId && x.language === lang);
             if (!existing) {
                 const tabIndex = tabs.findIndex((t) => t.fileId === fileId);
+                const tab = tabs.find((t) => t.fileId === fileId);
                 files = [
                     ...files,
                     {
                         fileId,
-                        fileName: (tabs.find((t) => t.fileId === fileId)?.fileName) || 'Solution',
+                        fileName: tab?.fileName || 'Solution',
                         language: lang,
                         content: initialContent,
                         output: '',
                         logs: '',
                         isActive: false,
-                        order: tabIndex >= 0 ? tabIndex : undefined
+                        order: tabIndex >= 0 ? tabIndex : undefined,
+                        isOpen: tab ? tab.isOpen : true
                     } as FileEntry
                 ];
             }
@@ -165,7 +170,20 @@ class Program
     let theme: ThemeChoice = $userSettingsStorage.theme ?? 'light';
 
     let tabs: TabMeta[] = getInitialTabs();
-    let activeTabId: number = 0;
+    let activeTabId: number = (() => {
+        let bestIdx = -1;
+        let maxViewed = -1;
+        for (let i = 0; i < tabs.length; i++) {
+            if (tabs[i].isOpen) {
+                const lv = tabs[i].lastViewed || 0;
+                if (lv > maxViewed) {
+                    maxViewed = lv;
+                    bestIdx = i;
+                }
+            }
+        }
+        return bestIdx !== -1 ? bestIdx : 0;
+    })();
     let editingTabId: string | null = null;
     let editingName = '';
     let renameInputEl: HTMLInputElement | null = null;
@@ -281,7 +299,8 @@ class Program
                     output: '',
                     logs: '',
                     isActive: false,
-                    order: tabs.length - 1
+                    order: tabs.length - 1,
+                    isOpen: true
                 } as FileEntry
             ];
             return { ...s, [fkey]: JSON.stringify(files) };
@@ -364,7 +383,8 @@ class Program
                     content: code,
                     output: output,
                     logs: logs,
-                    isActive: false
+                    isActive: false,
+                    isOpen: tabs[activeTabId].isOpen
                 } as FileEntry];
             }
             return {...s, [fkey]: JSON.stringify(files)};
@@ -378,6 +398,13 @@ class Program
     function closeTab(fileId: string) {
         // Just hide from tab bar
         tabs = tabs.map(t => t.fileId === fileId ? { ...t, isOpen: false } : t);
+        
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            files = files.map(f => f.fileId === fileId ? { ...f, isOpen: false } : f);
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
         
         // If we closed the active tab, switch to another open one if possible
         // But for now, let's just keep the content visible or switch to the nearest open tab?
@@ -471,6 +498,12 @@ class Program
         // Ensure tab is open
         if (!tabs[idx].isOpen) {
             tabs = tabs.map((t, i) => i === idx ? { ...t, isOpen: true } : t);
+            const fkey = fileKey();
+            fileStore.update((s) => {
+                let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+                files = files.map(f => f.fileId === fileId ? { ...f, isOpen: true } : f);
+                return { ...s, [fkey]: JSON.stringify(files) };
+            });
         }
 
         activeTabId = idx;
@@ -571,7 +604,8 @@ class Program
                         output: '',
                         logs: '',
                         isActive: false,
-                        order: tabs.length - 1
+                        order: tabs.length - 1,
+                        isOpen: true
                     } as FileEntry
                 ];
                 return { ...s, [fkey]: JSON.stringify(files) };
@@ -617,7 +651,8 @@ class Program
                                     output: '',
                                     logs: '',
                                     isActive: false,
-                                    order: tabs.length - 1
+                                    order: tabs.length - 1,
+                                    isOpen: true
                                 } as FileEntry
                             ];
                             return { ...s, [fkey]: JSON.stringify(files) };
