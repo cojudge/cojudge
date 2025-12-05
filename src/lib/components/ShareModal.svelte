@@ -59,7 +59,7 @@
     }
 
     .modal-content {
-        background: var(--color-surface);
+        background: var(--color-bg);
         padding: 20px;
         border-radius: 8px;
         border: 1px solid var(--color-border);
