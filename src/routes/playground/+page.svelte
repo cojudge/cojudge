@@ -797,6 +797,28 @@ class Program
         await handleShare();
     }
 
+    let showSearch = false;
+    let searchQuery = '';
+    let searchInputEl: HTMLInputElement | null = null;
+    let selectedIndex = 0;
+    
+    $: filteredFiles = searchQuery 
+        ? tabs.filter(t => t.fileName.toLowerCase().includes(searchQuery.toLowerCase()))
+        : tabs.slice().sort((a, b) => (b.lastViewed || 0) - (a.lastViewed || 0));
+
+    $: if (searchQuery !== undefined) selectedIndex = 0;
+
+    function openSearch() {
+        showSearch = true;
+        searchQuery = '';
+        selectedIndex = 0;
+        tick().then(() => searchInputEl?.focus());
+    }
+
+    function closeSearch() {
+        showSearch = false;
+    }
+
     let isSidebarOpen = $userSettingsStorage.isSidebarOpen ?? true;
     $: {
         const currentSidebarState = $userSettingsStorage.isSidebarOpen;
@@ -817,6 +839,12 @@ class Program
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
                 showSettings = false;
+                closeSearch();
+            }
+            // Cmd+P or Ctrl+P
+            if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'p') {
+                e.preventDefault();
+                if (showSearch) closeSearch(); else openSearch();
             }
             // Ctrl+Shift+E or Cmd+Shift+E
             if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'e') {
@@ -1120,6 +1148,10 @@ class Program
             <div class="empty-state-content">
                 <div class="empty-shortcuts">
                     <div class="shortcut-row">
+                        <span class="shortcut-label">Quick Open</span>
+                        <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">P</span></span>
+                    </div>
+                    <div class="shortcut-row">
                         <span class="shortcut-label">Toggle Explorer</span>
                         <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">SHIFT</span><span class="key">E</span></span>
                     </div>
@@ -1140,6 +1172,57 @@ class Program
             on:close={() => showShareModal = false} 
             on:generateNew={handleGenerateNewLink}
         />
+    {/if}
+
+    {#if showSearch}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div class="search-overlay" on:click={closeSearch}>
+            <div class="search-modal" on:click|stopPropagation>
+                <input 
+                    bind:this={searchInputEl}
+                    bind:value={searchQuery}
+                    placeholder="Search files by name..."
+                    class="search-input"
+                    on:keydown={(e) => {
+                        if (e.key === 'Escape') closeSearch();
+                        if (e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            selectedIndex = (selectedIndex + 1) % filteredFiles.length;
+                        }
+                        if (e.key === 'ArrowUp') {
+                            e.preventDefault();
+                            selectedIndex = (selectedIndex - 1 + filteredFiles.length) % filteredFiles.length;
+                        }
+                        if (e.key === 'Enter' && filteredFiles.length > 0) {
+                            activateTab(filteredFiles[selectedIndex].fileId);
+                            closeSearch();
+                        }
+                    }}
+                />
+                <div class="search-results">
+                    {#each filteredFiles as file, i}
+                        <!-- svelte-ignore a11y-click-events-have-key-events -->
+                        <div 
+                            class="search-result-item {i === selectedIndex ? 'selected' : ''}"
+                            on:click={() => {
+                                activateTab(file.fileId);
+                                closeSearch();
+                            }}
+                            on:mouseenter={() => selectedIndex = i}
+                        >
+                            <span class="search-file-name">{file.fileName}</span>
+                            {#if file.isOpen}
+                                <span class="search-file-badge">Open</span>
+                            {/if}
+                        </div>
+                    {/each}
+                    {#if filteredFiles.length === 0}
+                        <div class="search-no-results">No matching files</div>
+                    {/if}
+                </div>
+            </div>
+        </div>
     {/if}
 </div>
 
@@ -1545,5 +1628,81 @@ class Program
         text-align: center;
         box-shadow: 0 1px 0 var(--color-border);
         color: var(--color-text);
+    }
+
+    /* Search Overlay */
+    .search-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 80px;
+    }
+
+    .search-modal {
+        width: 600px;
+        max-width: 90vw;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: 6px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 12px 16px;
+        font-size: 1.1rem;
+        background: var(--color-bg);
+        color: var(--color-text);
+        border: none;
+        border-bottom: 1px solid var(--color-border);
+        outline: none;
+    }
+
+    .search-results {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .search-result-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 16px;
+        cursor: pointer;
+        border-bottom: 1px solid transparent;
+        color: var(--color-text-secondary);
+    }
+
+    .search-result-item:hover, .search-result-item.selected {
+        background: var(--color-highlight);
+        color: var(--color-text);
+    }
+
+    .search-file-name {
+        font-size: 0.95rem;
+    }
+
+    .search-file-badge {
+        font-size: 0.75rem;
+        padding: 2px 6px;
+        background: var(--color-bg);
+        border-radius: 4px;
+        color: var(--color-text-secondary);
+    }
+
+    .search-no-results {
+        padding: 16px;
+        text-align: center;
+        color: var(--color-text-secondary);
     }
 </style>
