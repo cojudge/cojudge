@@ -1648,7 +1648,7 @@ class Program
     .search-modal {
         width: 600px;
         max-width: 90vw;
-        background: var(--color-surface);
+        background: var(--color-bg);
         border: 1px solid var(--color-border);
         border-radius: 6px;
         box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
