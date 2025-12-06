@@ -438,7 +438,6 @@ class Program
     }
 
     function deleteFile(fileId: string) {
-        if (tabs.length <= 1) return;
         if (!confirm("Are you sure you want to remove this file? This action cannot be undone")) return;
         const idx = tabs.findIndex((t) => t.fileId === fileId);
         if (idx === -1) return;
@@ -858,6 +857,12 @@ class Program
                 e.preventDefault();
                 isSidebarOpen = !isSidebarOpen;
             }
+            // Ctrl+Alt+N or Cmd+Alt+N
+            if ((e.ctrlKey || e.metaKey) && e.altKey && (e.key.toLowerCase() === 'n' || e.code === 'KeyN')) {
+                e.preventDefault();
+                e.stopPropagation();
+                addNewTab('tab');
+            }
         };
         document.addEventListener('click', handleDocClick);
         window.addEventListener('keydown', handleKeyDown);
@@ -1160,6 +1165,10 @@ class Program
                     <div class="shortcut-row">
                         <span class="shortcut-label">Toggle Sidebar</span>
                         <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">B</span></span>
+                    </div>
+                    <div class="shortcut-row">
+                        <span class="shortcut-label">New Tab</span>
+                        <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">ALT</span><span class="key">N</span></span>
                     </div>
                 </div>
             </div>
