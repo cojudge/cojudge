@@ -827,6 +827,8 @@ class Program
         }
     }
     $: hasOpenTabs = tabs.some(t => t.isOpen);
+    $: activeTabName = tabs[activeTabId]?.fileName;
+    $: pageTitle = activeTabName ? `${activeTabName} - Playground - Cojudge` : 'Playground - Cojudge';
     let isMac = false;
 
     onMount(() => {
@@ -867,7 +869,7 @@ class Program
 </script>
 
 <svelte:head>
-    <title>Playground - Cojudge</title>
+    <title>{pageTitle}</title>
 </svelte:head>
 
 <div class="workspace">
