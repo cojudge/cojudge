@@ -8,6 +8,7 @@
     export let language: ProgrammingLanguage = 'java';
     export let output: string = '';
     export let logs: string = '';
+    export let isMac: boolean;
     export let readOnly: boolean = false;
 
     let isLoading = false;
@@ -241,7 +242,7 @@
 
     <div class="actions">
         <div class="buttons">
-            <Tooltip text={'Ctrl + J'}>
+            <Tooltip text={`${isMac ? "CMD" : "CONTROL"} + J`}>
                 <button
                     class="icon-btn"
                     aria-label={$execPaneHeightStore > minExecPanelHeight ? 'Hide panel' : 'Show panel'}
@@ -300,7 +301,7 @@
             </span>
             <div style="margin-right: 20px">
               {#if !readOnly}
-              <Tooltip text={"Ctrl + '"}>
+              <Tooltip text={`${isMac ? "CMD" : "CONTROL"} + '`}>
                   <button
                       class="btn btn-secondary"
                       on:click={handleRun}

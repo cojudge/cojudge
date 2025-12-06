@@ -1141,7 +1141,7 @@ class Program
             {/if}
         </div>
         {#if language !== 'plaintext'}
-            <PlaygroundExecutionPanel {code} {language} bind:output bind:logs />
+            <PlaygroundExecutionPanel {code} {language} {isMac} bind:output bind:logs />
         {/if}
         {:else}
         <div class="empty-state">
