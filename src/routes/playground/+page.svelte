@@ -952,7 +952,7 @@ class Program
                                             <path d="M14.06 6.19l3.75 3.75 1.69-1.69a1.5 1.5 0 000-2.12L17.87 4.5a1.5 1.5 0 00-2.12 0l-1.69 1.69z" stroke="currentColor" stroke-width="1.5" fill="none"/>
                                         </svg>
                                     </button>
-                                    {#if tabs.length > 1}
+                                    {#if tabs.length >= 1}
                                         <button
                                             class="file-action-btn"
                                             title="Delete"
@@ -1030,7 +1030,7 @@ class Program
                                 </svg>
                             </button>
 
-                            {#if tabs.length > 1}
+                            {#if tabs.length >= 1}
                                 <button
                                     class="tab-close"
                                     aria-label="Close tab"
