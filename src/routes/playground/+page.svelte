@@ -131,7 +131,7 @@ class Program
         });
     }
 
-    let suppressSave = false; // prevent save during programmatic loads
+    let suppressSave = true; // prevent save during programmatic loads
 
     async function loadOrInitFile(lang: ProgrammingLanguage) {
         if (activeTabId < 0 || activeTabId >= tabs.length) return;
