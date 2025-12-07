@@ -48,7 +48,7 @@ class Program
     };
 
     // Tabs are grouped by fileId (language-agnostic)
-    type TabMeta = { fileId: string; fileName: string; isOpen: boolean; lastViewed?: number };
+    type TabMeta = { fileId: string; fileName: string; isOpen: boolean; lastUpdated?: number };
 
     function getFiles(): FileEntry[] {
         try {
@@ -63,13 +63,13 @@ class Program
         const files = getFiles();
         if (!files.length) {
             // Create a default tab; the language-specific entry will be created lazily
-            return [{ fileId: uuidv4(), fileName: 'Solution', isOpen: true, lastViewed: Date.now() }];
+            return [{ fileId: uuidv4(), fileName: 'Solution', isOpen: true, lastUpdated: Date.now() }];
         }
-        const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number; lastViewed: number; isOpen: boolean }>();
+        const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number; lastUpdated: number; isOpen: boolean }>();
         files.forEach((f, idx) => {
             const existing = groups.get(f.fileId);
             const orderVal = (typeof f.order === 'number') ? f.order : null;
-            const lv = f.lastViewed || 0;
+            const lv = f.lastUpdated || (f as any).lastViewed || 0;
             const open = f.isOpen !== false;
             if (!existing) {
                 groups.set(f.fileId, {
@@ -77,14 +77,14 @@ class Program
                     fileName: f.fileName || 'Solution',
                     order: orderVal,
                     firstIndex: idx,
-                    lastViewed: lv,
+                    lastUpdated: lv,
                     isOpen: open
                 });
             } else {
                 if (orderVal !== null) {
                     if (existing.order === null || orderVal < existing.order) existing.order = orderVal;
                 }
-                if (lv > existing.lastViewed) existing.lastViewed = lv;
+                if (lv > existing.lastUpdated) existing.lastUpdated = lv;
                 if (f.isOpen !== undefined) existing.isOpen = f.isOpen;
             }
         });
@@ -100,7 +100,7 @@ class Program
         if (files.find(x => x.language === language)) {
             code = files.find(x => x.language === language)!.content;
         }
-        return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName, isOpen: g.isOpen, lastViewed: g.lastViewed }));
+        return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName, isOpen: g.isOpen, lastUpdated: g.lastUpdated }));
     }
 
     // Ensure an entry exists for current tab+language, optionally with initial content
@@ -152,10 +152,6 @@ class Program
             ensureEntry(currentId, lang, starter);
         }
         
-        const now = Date.now();        
-
-        tabs = tabs.map(t => t.fileId === currentId ? { ...t, lastViewed: now } : t);
-
         await tick();
         suppressSave = false;
     }
@@ -175,7 +171,7 @@ class Program
         let maxViewed = -1;
         for (let i = 0; i < tabs.length; i++) {
             if (tabs[i].isOpen) {
-                const lv = tabs[i].lastViewed || 0;
+                const lv = tabs[i].lastUpdated || 0;
                 if (lv > maxViewed) {
                     maxViewed = lv;
                     bestIdx = i;
@@ -228,7 +224,7 @@ class Program
         };
         
         tabs.forEach(t => {
-            const label = getDateLabel(t.lastViewed);
+            const label = getDateLabel(t.lastUpdated);
             if (!groups[label]) groups[label] = [];
             groups[label].push(t);
         });
@@ -256,13 +252,17 @@ class Program
         const oldName = tabs.find(t => t.fileId === targetId)?.fileName || 'Solution';
         const finalName = newName || oldName;
         // Update tabs
-        tabs = tabs.map(t => t.fileId === targetId ? { ...t, fileName: finalName } : t);
+        const now = Date.now();
+        tabs = tabs.map(t => t.fileId === targetId ? { ...t, fileName: finalName, lastUpdated: now } : t);
         // Update all store entries for this fileId
         const fkey = fileKey();
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
             for (const f of files) {
-                if (f.fileId === targetId) f.fileName = finalName;
+                if (f.fileId === targetId) {
+                    f.fileName = finalName;
+                    f.lastUpdated = now;
+                }
             }
             return { ...s, [fkey]: JSON.stringify(files) };
         });
@@ -284,7 +284,8 @@ class Program
         const newTabName = `Solution-${tabs.length + 1}`;
         const nextId = uuidv4();
         const fileName = newTabName;
-        tabs = [...tabs, { fileId: nextId, fileName, isOpen: true }];
+        const now = Date.now();
+        tabs = [...tabs, { fileId: nextId, fileName, isOpen: true, lastUpdated: now }];
         const newCode = starterCode[language] ?? '';
         const fkey = fileKey();
         fileStore.update((s) => {
@@ -300,7 +301,8 @@ class Program
                     logs: '',
                     isActive: false,
                     order: tabs.length - 1,
-                    isOpen: true
+                    isOpen: true,
+                    lastUpdated: now
                 } as FileEntry
             ];
             return { ...s, [fkey]: JSON.stringify(files) };
@@ -364,6 +366,12 @@ class Program
     }
     $: if (!suppressSave && (code !== undefined || output !== undefined || logs !== undefined)) {
         const fkey = fileKey();
+        const now = Date.now();
+
+        if (activeTabId >= 0 && activeTabId < tabs.length) {
+             tabs = tabs.map((t, i) => i === activeTabId ? { ...t, lastUpdated: now } : t);
+        }
+
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
             if (activeTabId < 0 || activeTabId >= tabs.length) return s;
@@ -375,6 +383,7 @@ class Program
                 existingFile.content = code;
                 existingFile.output = output;
                 existingFile.logs = logs;
+                existingFile.lastUpdated = now;
             } else {
                 files = [...files, {
                     fileId: tabs[activeTabId].fileId,
@@ -384,7 +393,8 @@ class Program
                     output: output,
                     logs: logs,
                     isActive: false,
-                    isOpen: tabs[activeTabId].isOpen
+                    isOpen: tabs[activeTabId].isOpen,
+                    lastUpdated: now
                 } as FileEntry];
             }
             return {...s, [fkey]: JSON.stringify(files)};
@@ -585,9 +595,10 @@ class Program
             // Add as new tab
             const newTabName = fileName ? `Fork of ${fileName}` : `Forked Solution`;
             const nextId = uuidv4();
+            const now = Date.now();
             
             // Update tabs
-            tabs = [...tabs, { fileId: nextId, fileName: newTabName, isOpen: true }];
+            tabs = [...tabs, { fileId: nextId, fileName: newTabName, isOpen: true, lastUpdated: now }];
             
             // Update file store
             const fkey = fileKey();
@@ -604,7 +615,8 @@ class Program
                         logs: '',
                         isActive: false,
                         order: tabs.length - 1,
-                        isOpen: true
+                        isOpen: true,
+                        lastUpdated: now
                     } as FileEntry
                 ];
                 return { ...s, [fkey]: JSON.stringify(files) };
@@ -634,9 +646,10 @@ class Program
                         // Add as new tab
                         const newTabName = data.fileName ? `Fork of ${data.fileName}` : `Forked Solution`;
                         const nextId = uuidv4();
+                        const now = Date.now();
                         
             // Update tabs
-            tabs = [...tabs, { fileId: nextId, fileName: newTabName, isOpen: true }];                        // Update file store
+            tabs = [...tabs, { fileId: nextId, fileName: newTabName, isOpen: true, lastUpdated: now }];                        // Update file store
                         const fkey = fileKey();
                         fileStore.update((s) => {
                             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
@@ -651,7 +664,8 @@ class Program
                                     logs: '',
                                     isActive: false,
                                     order: tabs.length - 1,
-                                    isOpen: true
+                                    isOpen: true,
+                                    lastUpdated: now
                                 } as FileEntry
                             ];
                             return { ...s, [fkey]: JSON.stringify(files) };
@@ -803,7 +817,7 @@ class Program
     
     $: filteredFiles = searchQuery 
         ? tabs.filter(t => t.fileName.toLowerCase().includes(searchQuery.toLowerCase()))
-        : tabs.slice().sort((a, b) => (b.lastViewed || 0) - (a.lastViewed || 0));
+        : tabs.slice().sort((a, b) => (b.lastUpdated || 0) - (a.lastUpdated || 0));
 
     $: if (searchQuery !== undefined) selectedIndex = 0;
 

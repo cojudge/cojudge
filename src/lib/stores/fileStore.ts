@@ -14,7 +14,7 @@ export type FileEntry = {
     order?: number;
     output?: string;
     logs?: string;
-    lastViewed?: number;
+    lastUpdated?: number;
     shareId?: string;
     isOpen?: boolean;
 };
