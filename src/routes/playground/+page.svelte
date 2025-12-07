@@ -1154,19 +1154,27 @@ class Program
         <div class="empty-state">
             <div class="empty-state-content">
                 <div class="empty-shortcuts">
-                    <div class="shortcut-row">
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <!-- svelte-ignore a11y-no-static-element-interactions -->
+                    <div class="shortcut-row" on:click={() => openSearch()}>
                         <span class="shortcut-label">Quick Open</span>
                         <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">P</span></span>
                     </div>
-                    <div class="shortcut-row">
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <!-- svelte-ignore a11y-no-static-element-interactions -->
+                    <div class="shortcut-row" on:click={() => isSidebarOpen = !isSidebarOpen}>
                         <span class="shortcut-label">Toggle Explorer</span>
                         <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">SHIFT</span><span class="key">E</span></span>
                     </div>
-                    <div class="shortcut-row">
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <!-- svelte-ignore a11y-no-static-element-interactions -->
+                    <div class="shortcut-row" on:click={() => isSidebarOpen = !isSidebarOpen}>
                         <span class="shortcut-label">Toggle Sidebar</span>
                         <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">B</span></span>
                     </div>
-                    <div class="shortcut-row">
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <!-- svelte-ignore a11y-no-static-element-interactions -->
+                    <div class="shortcut-row" on:click={() => addNewTab('tab')}>
                         <span class="shortcut-label">New Tab</span>
                         <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">ALT</span><span class="key">N</span></span>
                     </div>
@@ -1624,6 +1632,14 @@ class Program
         justify-content: space-between;
         align-items: center;
         font-size: 0.9rem;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+    }
+
+    .shortcut-row:hover {
+        background-color: rgba(255, 255, 255, 0.05);
     }
     .shortcut-keys {
         display: flex;
