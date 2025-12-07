@@ -1415,6 +1415,8 @@ class Program
         flex-grow: 1;
         min-height: 0;
         padding: var(--spacing-1); /* Padding around the editor */
+        display: flex;
+        flex-direction: column;
     }
 
     /* --- Browser-like Tabs --- */

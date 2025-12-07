@@ -115,11 +115,12 @@
     }
 </script>
 
-<div bind:this={editorElement}></div>
+<div class="code-editor" bind:this={editorElement}></div>
 
 <style>
-    div {
+    .code-editor {
         width: 100%;
         height: 100%;
+        overflow: hidden;
     }
 </style>
