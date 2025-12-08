@@ -15,7 +15,7 @@
     let isResizing = false;
     let panelElement: HTMLElement;
     let error: string | null = null;
-    let hasRunOnce = false;
+    let hasRunOnce = readOnly;
     let runningMessage = '';
 
     // Docker image status for the selected language
@@ -300,7 +300,6 @@
                 {runningMessage}
             </span>
             <div style="margin-right: 20px">
-              {#if !readOnly}
               <Tooltip text={`${isMac ? "CMD" : "CONTROL"} + '`}>
                   <button
                       class="btn btn-secondary"
@@ -310,7 +309,6 @@
                       Run
                   </button>
               </Tooltip>
-              {/if}
             </div>
         </div>
     </div>
