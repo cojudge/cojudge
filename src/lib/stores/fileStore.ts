@@ -16,6 +16,7 @@ export type FileEntry = {
     logs?: string;
     lastUpdated?: number;
     shareId?: string;
+    lastSharedContent?: string;
     isOpen?: boolean;
 };
 

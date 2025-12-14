@@ -143,12 +143,14 @@ class Program
             code = entry.content;
             output = entry.output || '';
             logs = entry.logs || '';
+            lastSharedContent = entry.lastSharedContent;
         } else {
             const cStore = get(codeStore);
             const starter = cStore[codeKey()] ?? starterCode[lang] ?? '';
             code = starter;
             output = '';
             logs = '';
+            lastSharedContent = undefined;
             ensureEntry(currentId, lang, starter);
         }
         
@@ -159,6 +161,7 @@ class Program
     let code: string;
     let output: string = '';
     let logs: string = '';
+    let lastSharedContent: string | undefined;
     let showSettings = false;
     let settingsContainer: HTMLElement | null = null;
     const fontSizes: number[] = Array.from({ length: 13 }, (_, i) => 12 + i); // 12..24
@@ -735,6 +738,19 @@ class Program
                         updatedAt: new Date().toISOString(),
                         ownerId: user.uid
                     });
+
+                    // Update local store with lastSharedContent
+                    const fkey = fileKey();
+                    fileStore.update((s) => {
+                        let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+                        const idx = files.findIndex(f => f.fileId === currentTab.fileId && f.language === language);
+                        if (idx >= 0) {
+                            files[idx].lastSharedContent = content;
+                        }
+                        return { ...s, [fkey]: JSON.stringify(files) };
+                    });
+                    lastSharedContent = content;
+
                     if (!silent) alert('Saved successfully!');
                     return shareId;
                 } catch (e: any) {
@@ -770,9 +786,11 @@ class Program
                     const idx = files.findIndex(f => f.fileId === currentTab.fileId && f.language === language);
                     if (idx >= 0) {
                         files[idx].shareId = shareId;
+                        files[idx].lastSharedContent = content;
                     }
                     return { ...s, [fkey]: JSON.stringify(files) };
                 });
+                lastSharedContent = content;
                 
                 if (!silent) alert(`Saved! Share ID: ${shareId}`);
                 return shareId;
@@ -1094,6 +1112,7 @@ class Program
                             title="Share"
                             aria-label="Share"
                             on:click={handleShare}
+                            style="position: relative;"
                         >
                             <!-- Share icon -->
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1101,6 +1120,9 @@ class Program
                                 <path d="M16 6l-4-4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M12 2v13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
+                            {#if lastSharedContent == undefined || code !== lastSharedContent}
+                                <div class="unsaved-dot"></div>
+                            {/if}
                         </button>
                     </Tooltip>
                 {/if}
@@ -1747,5 +1769,16 @@ class Program
         padding: 16px;
         text-align: center;
         color: var(--color-text-secondary);
+    }
+
+    .unsaved-dot {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        width: 6px;
+        height: 6px;
+        background-color: var(--color-highlight);
+        border-radius: 50%;
+        border: 1px solid var(--color-bg);
     }
 </style>
