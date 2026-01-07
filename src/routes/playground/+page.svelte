@@ -1224,6 +1224,7 @@ class Program
         <ShareModal 
             url={shareUrl} 
             qrCodeDataUrl={qrCodeDataUrl} 
+            {code}
             on:close={() => showShareModal = false} 
             on:generateNew={handleGenerateNewLink}
         />

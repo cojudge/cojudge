@@ -750,6 +750,7 @@
         <ShareModal 
             url={shareUrl} 
             {qrCodeDataUrl} 
+            {code}
             on:close={() => showShareModal = false} 
         />
     {/if}

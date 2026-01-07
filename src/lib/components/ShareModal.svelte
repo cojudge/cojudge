@@ -3,8 +3,10 @@
 
     export let url: string;
     export let qrCodeDataUrl: string;
+    export let code: string = '';
 
     let copied = false;
+    let sourceCopied = false;
     const dispatch = createEventDispatcher();
 
     function close() {
@@ -20,6 +22,14 @@
         copied = true;
         setTimeout(() => {
             copied = false;
+        }, 3000);
+    }
+
+    function copySourceCode() {
+        navigator.clipboard.writeText(code);
+        sourceCopied = true;
+        setTimeout(() => {
+            sourceCopied = false;
         }, 3000);
     }
 </script>
@@ -40,6 +50,9 @@
             </div>
         {/if}
         <button class="generate-btn" on:click={generateNew}>Generate New Link</button>
+        {#if code}
+            <button class="copy-code-btn" on:click={copySourceCode}>{sourceCopied ? 'Copied' : 'Copy Source Code'}</button>
+        {/if}
         <button class="close-btn" on:click={close}>Close</button>
     </div>
 </div>
@@ -139,6 +152,20 @@
         font-weight: 500;
     }
     .generate-btn:hover {
+        opacity: 0.9;
+    }
+
+    .copy-code-btn {
+        padding: 0.5rem 1rem;
+        background: var(--color-highlight);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        font-weight: 500;
+    }
+    .copy-code-btn:hover {
         opacity: 0.9;
     }
 </style>
