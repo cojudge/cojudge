@@ -21,7 +21,8 @@
   "starterCode": {
     "java": "import java.util.*;\nclass Solution {\n    public int[][] insert(int[][] intervals, int[] newInterval) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:\n        pass\n",
-    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {\n        return {};\n    }\n};"
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[][] Insert(int[][] intervals, int[] newInterval) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {

@@ -17,7 +17,8 @@
   "starterCode": {
     "java": "class Solution {\n    public int hammingWeight(int n) {\n        \n    }\n}",
     "python": "class Solution:\n    def hammingWeight(self, n: int) -> int:\n        pass\n",
-    "cpp": "class Solution {\npublic:\n    int hammingWeight(uint32_t n) {\n        return 0;\n    }\n};"
+    "cpp": "class Solution {\npublic:\n    int hammingWeight(uint32_t n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int HammingWeight(int n) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {

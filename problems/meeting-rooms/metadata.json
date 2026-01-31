@@ -17,7 +17,8 @@
   "starterCode": {
     "java": "import java.util.*;\nclass Solution {\n    public boolean canAttendMeetings(int[][] intervals) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def canAttendMeetings(self, intervals: List[List[int]]) -> bool:\n        pass\n",
-    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool canAttendMeetings(vector<vector<int>>& intervals) {\n        return true;\n    }\n};"
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool canAttendMeetings(vector<vector<int>>& intervals) {\n        return true;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool CanAttendMeetings(int[][] intervals) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {

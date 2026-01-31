@@ -13,7 +13,8 @@
   "starterCode": {
     "java": "class Solution {\n    public int combinationSum4(int[] nums, int target) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def combinationSum4(self, nums: List[int], target: int) -> int:\n        pass\n",
-    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int combinationSum4(vector<int>& nums, int target) {\n        return 0;\n    }\n};"
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int combinationSum4(vector<int>& nums, int target) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int CombinationSum4(int[] nums, int target) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {

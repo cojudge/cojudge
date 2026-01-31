@@ -17,7 +17,8 @@
   "starterCode": {
     "java": "class Solution {\n    public int lengthOfLIS(int[] nums) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def lengthOfLIS(self, nums: List[int]) -> int:\n        pass\n",
-    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int lengthOfLIS(vector<int>& nums) {\n        return 0;\n    }\n};"
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int lengthOfLIS(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int LengthOfLIS(int[] nums) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {

@@ -17,7 +17,8 @@
   "starterCode": {
     "java": "class Solution {\n    public int getSum(int a, int b) {\n        \n    }\n}",
     "python": "class Solution:\n    def getSum(self, a: int, b: int) -> int:\n        pass\n",
-    "cpp": "class Solution {\npublic:\n    int getSum(int a, int b) {\n        return 0;\n    }\n};"
+    "cpp": "class Solution {\npublic:\n    int getSum(int a, int b) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int GetSum(int a, int b) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {

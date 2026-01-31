@@ -17,7 +17,8 @@
   "starterCode": {
     "java": "class Solution {\n    public int[] spiralOrder(int[][] matrix) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:\n        pass\n",
-    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> spiralOrder(vector<vector<int>>& matrix) {\n        return {};\n    }\n};"
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> spiralOrder(vector<vector<int>>& matrix) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] SpiralOrder(int[][] matrix) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {

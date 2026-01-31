@@ -17,7 +17,8 @@
   "starterCode": {
     "java": "import java.util.*;\nclass Solution {\n    public int numIslands(int[][] grid) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def numIslands(self, grid: List[List[int]]) -> int:\n        pass\n",
-    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int numIslands(vector<vector<int>>& grid) {\n        return 0;\n    }\n};"
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int numIslands(vector<vector<int>>& grid) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int NumIslands(int[][] grid) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {

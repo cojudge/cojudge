@@ -17,7 +17,8 @@
   "starterCode": {
     "java": "class Solution {\n    public int findMin(int[] nums) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def findMin(self, nums: List[int]) -> int:\n        ",
-    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int findMin(vector<int>& nums) {\n        return 0;\n    }\n};"
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int findMin(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindMin(int[] nums) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {

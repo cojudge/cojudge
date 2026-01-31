@@ -612,6 +612,7 @@
                         <option value="java">Java</option>
                         <option value="python">Python</option>
                         <option value="cpp">C++</option>
+                        <option value="csharp">C#</option>
                     </select>
                 </div>
                 <div class="tabs-container">

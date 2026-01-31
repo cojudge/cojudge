@@ -17,7 +17,8 @@
   "starterCode": {
     "java": "import java.util.*;\nclass Solution {\n    public String alienOrder(String[] words) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def alienOrder(self, words: List[str]) -> str:\n        pass\n",
-    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string alienOrder(vector<string>& words) {\n        return \"\";\n    }\n};"
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string alienOrder(vector<string>& words) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string AlienOrder(string[] words) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {

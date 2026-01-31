@@ -17,7 +17,8 @@
   "starterCode": {
     "java": "import java.util.*;\nclass Solution {\n    public boolean validTree(int n, int[][] edges) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def validTree(self, n: int, edges: List[List[int]]) -> bool:\n        pass\n",
-    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool validTree(int n, vector<vector<int>>& edges) {\n        return false;\n    }\n};"
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool validTree(int n, vector<vector<int>>& edges) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool ValidTree(int n, int[][] edges) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {

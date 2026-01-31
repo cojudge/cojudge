@@ -17,7 +17,8 @@
   "starterCode": {
     "java": "class Solution {\n    public int countSubstrings(String s) {\n        \n    }\n}",
     "python": "class Solution:\n    def countSubstrings(self, s: str) -> int:\n        pass\n",
-    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int countSubstrings(string s) {\n        return 0;\n    }\n};"
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int countSubstrings(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int CountSubstrings(string s) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {

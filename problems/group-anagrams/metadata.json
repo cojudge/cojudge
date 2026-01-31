@@ -13,7 +13,8 @@
   "starterCode": {
     "java": "import java.util.*;\nclass Solution {\n    public List<List<String>> groupAnagrams(String[] strs) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:\n        pass\n",
-    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<string>> groupAnagrams(vector<string>& strs) {\n        return {};\n    }\n};"
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<string>> groupAnagrams(vector<string>& strs) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public List<List<String>> GroupAnagrams(string[] strs) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {

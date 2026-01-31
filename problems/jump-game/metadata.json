@@ -17,7 +17,8 @@
   "starterCode": {
     "java": "class Solution {\n    public boolean canJump(int[] nums) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def canJump(self, nums: List[int]) -> bool:\n        pass\n",
-    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool canJump(vector<int>& nums) {\n        return false;\n    }\n};"
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool canJump(vector<int>& nums) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool CanJump(int[] nums) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {

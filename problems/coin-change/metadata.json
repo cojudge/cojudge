@@ -18,7 +18,8 @@
   "starterCode": {
     "java": "class Solution {\n    public int coinChange(int[] coins, int amount) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def coinChange(self, coins: List[int], amount: int) -> int:\n        pass\n",
-    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int coinChange(vector<int>& coins, int amount) {\n        return -1;\n    }\n};"
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int coinChange(vector<int>& coins, int amount) {\n        return -1;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int CoinChange(int[] coins, int amount) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {

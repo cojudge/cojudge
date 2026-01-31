@@ -22,7 +22,8 @@
   "starterCode": {
     "java": "class Solution {\n    public int maxSubArray(int[] nums) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def maxSubArray(self, nums: List[int]) -> int:\n        ",
-    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int maxSubArray(vector<int>& nums) {\n        return 0;\n    }\n};"
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int maxSubArray(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MaxSubArray(int[] nums) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {

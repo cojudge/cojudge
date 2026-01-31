@@ -21,7 +21,8 @@
   "starterCode": {
     "java": "class Solution {\n    public boolean exist(char[][] board, String word) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def exist(self, board: List[List[str]], word: str) -> bool:\n        pass\n",
-    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool exist(vector<vector<char>>& board, string word) {\n        return false;\n    }\n};"
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool exist(vector<vector<char>>& board, string word) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool Exist(char[][] board, string word) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {

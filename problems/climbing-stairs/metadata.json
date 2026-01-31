@@ -17,7 +17,8 @@
   "starterCode": {
     "java": "class Solution {\n    public int climbStairs(int n) {\n        \n    }\n}",
     "python": "class Solution:\n    def climbStairs(self, n: int) -> int:\n        pass\n",
-    "cpp": "class Solution {\npublic:\n    int climbStairs(int n) {\n        return 0;\n    }\n};"
+    "cpp": "class Solution {\npublic:\n    int climbStairs(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int ClimbStairs(int n) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {

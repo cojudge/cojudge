@@ -22,7 +22,8 @@
   "starterCode": {
     "java": "class Solution {\n    public int[] twoSum(int[] nums, int target) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def twoSum(self, nums: List[int], target: int) -> List[int]:\n        ",
-    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> twoSum(vector<int>& nums, int target) {\n        return {};\n    }\n};"
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> twoSum(vector<int>& nums, int target) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] TwoSum(int[] nums, int target) \n    {\n        \n    }\n}"
   },
   "testCases": [
     {
