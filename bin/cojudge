@@ -33,6 +33,27 @@ function getLogFile() {
   return path.join(rootDir, "cojudge.log");
 }
 
+function getProgressFile() {
+  return path.join(rootDir, ".cojudge_progress.json");
+}
+
+function loadProgress() {
+  const progressFile = getProgressFile();
+  if (fs.existsSync(progressFile)) {
+    try {
+      return JSON.parse(fs.readFileSync(progressFile, "utf8"));
+    } catch (e) {
+      return { solvedSlugs: [] };
+    }
+  }
+  return { solvedSlugs: [] };
+}
+
+function saveProgress(progress) {
+  const progressFile = getProgressFile();
+  fs.writeFileSync(progressFile, JSON.stringify(progress, null, 2), "utf8");
+}
+
 function showHelp() {
   console.log(`
 CoJudge CLI - Offline-first competitive programming platform
@@ -41,17 +62,20 @@ Usage:
   cojudge [options]              Start the server and open in browser
   cojudge start <slug> <file>    Open a specific problem or playground with a file
   cojudge list                   List all available problem slugs
+  cojudge mark <slug>            Mark a problem as solved
+  cojudge unmark <slug>          Unmark a problem as solved
   cojudge -p, --port <number>    Specify port (default: 5375)
   cojudge -v, --version          Show current version and date
   cojudge -u, --update           Update cojudge to the latest version
   cojudge -s, --status           Show if the server is running
   cojudge -l, --logs             Stream the server logs
-  cojudge -k, --kill     Stop the server
+  cojudge -k, --kill             Stop the server
   cojudge -h, --help             Show this help message
 
 Examples:
   cojudge start two-sum Solution.java
   cojudge start playground my-script.py
+  cojudge mark two-sum
 `);
 }
 
@@ -167,18 +191,107 @@ function killServer() {
   }
 }
 
+function getDifficultyOrder(difficulty) {
+  const d = (difficulty || "").toLowerCase();
+  if (d === "easy") return 1;
+  if (d === "medium") return 2;
+  if (d === "hard") return 3;
+  return 4;
+}
+
 function listProblems() {
   const problemsPath = path.join(rootDir, "problems");
+  const blind75Path = path.join(rootDir, "courses", "blind75", "courseinfo.json");
+  
   try {
-    const files = fs.readdirSync(problemsPath);
-    const slugs = files.filter(f => {
+    let orderedSlugs = [];
+    if (fs.existsSync(blind75Path)) {
+      const courseInfo = JSON.parse(fs.readFileSync(blind75Path, "utf8"));
+      const categories = courseInfo["category-order"] || [];
+      const categoryProblems = courseInfo["problems-of-category"] || {};
+      
+      categories.forEach(cat => {
+        const slugs = categoryProblems[cat] || [];
+        // For each category, we want to sort by difficulty
+        const problemsWithMetadata = slugs.map(slug => {
+          const metaPath = path.join(problemsPath, slug, "metadata.json");
+          let difficulty = "unknown";
+          let title = slug;
+          if (fs.existsSync(metaPath)) {
+            try {
+              const meta = JSON.parse(fs.readFileSync(metaPath, "utf8"));
+              difficulty = meta.difficulty || "unknown";
+              title = meta.title || slug;
+            } catch (e) {}
+          }
+          return { slug, difficulty, title };
+        });
+        
+        problemsWithMetadata.sort((a, b) => {
+          const diffA = getDifficultyOrder(a.difficulty);
+          const diffB = getDifficultyOrder(b.difficulty);
+          if (diffA !== diffB) return diffA - diffB;
+          // IMPORTANT: If difficulties are the same, order by the title (alphabetical)
+          return a.title.localeCompare(b.title);
+        });
+        
+        orderedSlugs.push(...problemsWithMetadata.map(p => p.slug));
+      });
+    } else {
+      // Fallback to alphabetical if blind75 info not found
+      orderedSlugs = fs.readdirSync(problemsPath).filter(f => {
+        return fs.statSync(path.join(problemsPath, f)).isDirectory();
+      }).sort();
+    }
+    
+    const progress = loadProgress();
+    const solved = new Set(progress.solvedSlugs || []);
+    
+    console.log("Available problem slugs (ordered by Blind 75 categories & difficulty):");
+    orderedSlugs.forEach(s => {
+      const mark = solved.has(s) ? "✅" : "  ";
+      console.log(`  ${mark} ${s}`);
+    });
+    
+    // Also check for problems that might not be in blind 75 list but exist in folders
+    const allFolders = fs.readdirSync(problemsPath).filter(f => {
       return fs.statSync(path.join(problemsPath, f)).isDirectory();
     });
-    console.log("Available problem slugs:");
-    slugs.forEach(s => console.log(`  ${s}`));
+    const extraSlugs = allFolders.filter(f => !orderedSlugs.includes(f)).sort();
+    
+    if (extraSlugs.length > 0) {
+      console.log("\nOther problems:");
+      extraSlugs.forEach(s => {
+        const mark = solved.has(s) ? "✅" : "  ";
+        console.log(`  ${mark} ${s}`);
+      });
+    }
+    
+    const totalCount = orderedSlugs.length + extraSlugs.length;
+    console.log(`\nProgress: ${solved.size}/${totalCount} (${Math.round((solved.size / totalCount) * 100)}%)`);
   } catch (e) {
     console.error("Could not list problems:", e.message);
   }
+}
+
+function markProblem(slug, solvedValue) {
+  const problemsPath = path.join(rootDir, "problems", slug);
+  if (!fs.existsSync(problemsPath)) {
+    console.error(`Error: Problem slug '${slug}' not found.`);
+    return;
+  }
+  
+  const progress = loadProgress();
+  const solvedSet = new Set(progress.solvedSlugs || []);
+  if (solvedValue) {
+    solvedSet.add(slug);
+    console.log(`Marked '${slug}' as solved.`);
+  } else {
+    solvedSet.delete(slug);
+    console.log(`Unmarked '${slug}' as solved.`);
+  }
+  progress.solvedSlugs = Array.from(solvedSet);
+  saveProgress(progress);
 }
 
 function handleStart(argsToUse) {
@@ -232,6 +345,26 @@ async function main() {
 
   if (action === 'list') {
     listProblems();
+    return;
+  }
+  
+  if (action === 'mark') {
+    const slug = args[1];
+    if (!slug) {
+      console.error("Error: Please specify a problem slug to mark.");
+      return;
+    }
+    markProblem(slug, true);
+    return;
+  }
+  
+  if (action === 'unmark') {
+    const slug = args[1];
+    if (!slug) {
+      console.error("Error: Please specify a problem slug to unmark.");
+      return;
+    }
+    markProblem(slug, false);
     return;
   }
 

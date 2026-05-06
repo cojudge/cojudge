@@ -48,6 +48,8 @@ cojudge
 | `cojudge` | Start server & open browser |
 | `cojudge <slug> <file>` | Open specific problem with starter file |
 | `cojudge list` | List all available problem slugs |
+| `cojudge mark <slug>` | Mark a problem as solved |
+| `cojudge unmark <slug>` | Unmark a problem as solved |
 | `cojudge -p, --port <port>` | Start server on specific port (default 5375) |
 | `cojudge -s, --status` | Check if server is running |
 | `cojudge -u, --update` | Update to latest version (git pull) |

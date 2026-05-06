@@ -141,3 +141,6 @@ vite.config.ts.timestamp-*
 **/temp/run-*/**
 
 test-results/**/*
+
+# User Progress Data
+.cojudge_progress.json
