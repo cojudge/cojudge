@@ -1,48 +1,47 @@
-import { cppImage } from '$lib/utils/cppUtil';
-import { csharpImage } from '$lib/utils/csharpUtil';
-import { javaImage } from '$lib/utils/javaUtil';
-import { pythonImage } from '$lib/utils/pythonUtil';
-import { ensureImageAvailable } from '$lib/utils/util';
+import { getPullStatus, startPull, cancelPull } from '$lib/server/imagePuller';
 import { json } from '@sveltejs/kit';
 import Dockerode from 'dockerode';
 import type { RequestHandler } from './$types';
+import { javaImage } from '$lib/utils/javaUtil';
+import { pythonImage } from '$lib/utils/pythonUtil';
+import { cppImage } from '$lib/utils/cppUtil';
+import { csharpImage } from '$lib/utils/csharpUtil';
 
 const docker = new Dockerode();
 
 function imageForLanguage(language: string) {
-    if (language === 'java') return { image: javaImage, language };
-    if (language === 'python') return { image: pythonImage, language };
-    if (language === 'cpp') return { image: cppImage, language };
-    if (language === 'csharp') return { image: csharpImage, language };
+    if (language === 'java') return javaImage;
+    if (language === 'python') return pythonImage;
+    if (language === 'cpp') return cppImage;
+    if (language === 'csharp') return csharpImage;
     return null;
 }
 
+export const GET: RequestHandler = async ({ url }) => {
+    const language = url.searchParams.get('language') || '';
+    const status = getPullStatus(language);
+    return json({ pulling: !!status, ...status });
+};
+
 export const POST: RequestHandler = async ({ request }) => {
     const { language } = await request.json();
-    const mapping = imageForLanguage(language);
-    if (!mapping) {
+    const image = imageForLanguage(language);
+    if (!image) {
         return json({ error: `Unsupported language: ${language}` }, { status: 400 });
     }
     try {
-        // Ensure the marker image (i.e. javaImage) exists
-        ensureImageAvailable(docker, javaImage);
-        // If it already exists, return early
-        try {
-            await docker.getImage(mapping.image).inspect();
-            return json({ pulled: false, present: true, image: mapping.image });
-        } catch {}
-        const result = await new Promise<{ pulled: boolean }>((resolve, reject) => {
-            docker.pull(mapping.image, (err: any, stream: any) => {
-                if (err) return reject(err);
-                (docker as any).modem.followProgress(
-                    stream,
-                    (doneErr: any) => (doneErr ? reject(doneErr) : resolve({ pulled: true })),
-                    () => {}
-                );
-            });
+        // Just start it and return
+        startPull(language).catch(err => {
+            console.error(`Failed to pull image for ${language}:`, err);
         });
-        return json({ pulled: result.pulled, present: true, image: mapping.image });
+        return json({ started: true });
     } catch (err: any) {
-        return json({ error: 'Failed to pull image', details: String(err?.message ?? err) }, { status: 500 });
+        return json({ error: 'Failed to start pull', details: String(err?.message ?? err) }, { status: 500 });
     }
+};
+
+export const DELETE: RequestHandler = async ({ request }) => {
+    const { language } = await request.json();
+    cancelPull(language);
+    return json({ cancelled: true });
 };
