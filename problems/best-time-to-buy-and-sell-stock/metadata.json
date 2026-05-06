@@ -24,7 +24,8 @@
     "java": "class Solution {\n    public int maxProfit(int[] prices) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def maxProfit(self, prices: List[int]) -> int:\n        ",
     "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int maxProfit(vector<int>& prices) {\n        return 0;\n    }\n};",
-    "csharp": "public class Solution \n{\n    public int MaxProfit(int[] prices) \n    {\n        \n    }\n}"
+    "csharp": "public class Solution \n{\n    public int MaxProfit(int[] prices) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_profit(prices: Vec<i32>) -> i32 {\n        \n    }\n}"
   },
   "testCases": [
     {

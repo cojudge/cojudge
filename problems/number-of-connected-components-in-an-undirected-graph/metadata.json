@@ -18,7 +18,8 @@
     "java": "import java.util.*;\nclass Solution {\n    public int countComponents(int n, int[][] edges) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def countComponents(self, n: int, edges: List[List[int]]) -> int:\n        pass\n",
     "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int countComponents(int n, vector<vector<int>>& edges) {\n        return 0;\n    }\n};",
-    "csharp": "public class Solution \n{\n    public int CountComponents(int n, int[][] edges) \n    {\n        \n    }\n}"
+    "csharp": "public class Solution \n{\n    public int CountComponents(int n, int[][] edges) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_components(n: i32, edges: String) -> i32 {\n        \n    }\n}"
   },
   "testCases": [
     {

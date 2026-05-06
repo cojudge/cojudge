@@ -18,7 +18,8 @@
     "java": "public class Solution {\n    public int reverseBits(int n) {\n        \n    }\n}",
     "python": "class Solution:\n    def reverseBits(self, n: int) -> int:\n        pass\n",
     "cpp": "class Solution {\npublic:\n    uint32_t reverseBits(uint32_t n) {\n        return 0;\n    }\n};",
-    "csharp": "public class Solution \n{\n    public int ReverseBits(int n) \n    {\n        \n    }\n}"
+    "csharp": "public class Solution \n{\n    public int ReverseBits(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reverse_bits(n: i32) -> i32 {\n        \n    }\n}"
   },
   "testCases": [
     {

@@ -22,7 +22,8 @@
     "java": "class Solution {\n    public boolean containsDuplicate(int[] nums) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def containsDuplicate(self, nums: List[int]) -> bool:\n        ",
     "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool containsDuplicate(vector<int>& nums) {\n        return false;\n    }\n};",
-    "csharp": "public class Solution \n{\n    public bool ContainsDuplicate(int[] nums) \n    {\n        \n    }\n}"
+    "csharp": "public class Solution \n{\n    public bool ContainsDuplicate(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn contains_duplicate(nums: Vec<i32>) -> bool {\n        \n    }\n}"
   },
   "testCases": [
     {

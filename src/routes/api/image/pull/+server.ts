@@ -6,6 +6,7 @@ import { javaImage } from '$lib/utils/javaUtil';
 import { pythonImage } from '$lib/utils/pythonUtil';
 import { cppImage } from '$lib/utils/cppUtil';
 import { csharpImage } from '$lib/utils/csharpUtil';
+import { rustImage } from '$lib/utils/rustUtil';
 
 const docker = new Dockerode();
 
@@ -14,6 +15,7 @@ function imageForLanguage(language: string) {
     if (language === 'python') return pythonImage;
     if (language === 'cpp') return cppImage;
     if (language === 'csharp') return csharpImage;
+    if (language === 'rust') return rustImage;
     return null;
 }
 

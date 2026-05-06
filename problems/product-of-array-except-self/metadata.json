@@ -18,7 +18,8 @@
     "java": "class Solution {\n    public int[] productExceptSelf(int[] nums) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def productExceptSelf(self, nums: List[int]) -> List[int]:\n        ",
     "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> productExceptSelf(vector<int>& nums) {\n        return {};\n    }\n};",
-    "csharp": "public class Solution \n{\n    public int[] ProductExceptSelf(int[] nums) \n    {\n        \n    }\n}"
+    "csharp": "public class Solution \n{\n    public int[] ProductExceptSelf(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {\n        \n    }\n}"
   },
   "testCases": [
     {

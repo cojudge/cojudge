@@ -1,5 +1,6 @@
 import { cppImage } from '$lib/utils/cppUtil';
 import { csharpImage } from '$lib/utils/csharpUtil';
+import { rustImage } from '$lib/utils/rustUtil';
 import { javaImage } from '$lib/utils/javaUtil';
 import { pythonImage } from '$lib/utils/pythonUtil';
 import { getPullStatus } from '$lib/server/imagePuller';
@@ -14,6 +15,7 @@ function imageForLanguage(language: string) {
     if (language === 'python') return { image: pythonImage, language };
     if (language === 'cpp') return { image: cppImage, language };
     if (language === 'csharp') return { image: csharpImage, language };
+    if (language === 'rust') return { image: rustImage, language };
     return null;
 }
 

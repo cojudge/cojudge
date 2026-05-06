@@ -18,7 +18,8 @@
     "java": "class Solution {\n    public int[] topKFrequent(int[] nums, int k) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def topKFrequent(self, nums: List[int], k: int) -> List[int]:\n        ",
     "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> topKFrequent(vector<int>& nums, int k) {\n        return {};\n    }\n};",
-    "csharp": "public class Solution \n{\n    public int[] TopKFrequent(int[] nums, int k) \n    {\n        \n    }\n}"
+    "csharp": "public class Solution \n{\n    public int[] TopKFrequent(int[] nums, int k) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {\n        \n    }\n}"
   },
   "testCases": [
     {

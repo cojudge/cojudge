@@ -18,7 +18,8 @@
     "java": "class Solution {\n    public int[] spiralOrder(int[][] matrix) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:\n        pass\n",
     "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> spiralOrder(vector<vector<int>>& matrix) {\n        return {};\n    }\n};",
-    "csharp": "public class Solution \n{\n    public int[] SpiralOrder(int[][] matrix) \n    {\n        \n    }\n}"
+    "csharp": "public class Solution \n{\n    public int[] SpiralOrder(int[][] matrix) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn spiral_order(matrix: String) -> Vec<i32> {\n        \n    }\n}"
   },
   "testCases": [
     {

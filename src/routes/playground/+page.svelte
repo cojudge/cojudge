@@ -44,6 +44,9 @@ class Program
         // your code goes here
     }
 }`,
+        rust: `fn main() {
+    // your code goes here
+}`,
         plaintext: ``
     };
 
@@ -1102,6 +1105,7 @@ class Program
                         <option value="python">Python</option>
                         <option value="cpp">C++</option>
                         <option value="csharp">C#</option>
+                        <option value="rust">Rust</option>
                         <option value="plaintext">Plaintext</option>
                     </select>
                 </div>

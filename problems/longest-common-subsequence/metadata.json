@@ -18,7 +18,8 @@
     "java": "class Solution {\n    public int longestCommonSubsequence(String text1, String text2) {\n        \n    }\n}",
     "python": "class Solution:\n    def longestCommonSubsequence(self, text1: str, text2: str) -> int:\n        pass\n",
     "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int longestCommonSubsequence(string text1, string text2) {\n        return 0;\n    }\n};",
-    "csharp": "public class Solution \n{\n    public int LongestCommonSubsequence(string text1, string text2) \n    {\n        \n    }\n}"
+    "csharp": "public class Solution \n{\n    public int LongestCommonSubsequence(string text1, string text2) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn longest_common_subsequence(text1: String, text2: String) -> i32 {\n        \n    }\n}"
   },
   "testCases": [
     {

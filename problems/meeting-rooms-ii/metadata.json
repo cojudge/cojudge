@@ -18,7 +18,8 @@
     "java": "import java.util.*;\nclass Solution {\n    public int minMeetingRooms(int[][] intervals) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def minMeetingRooms(self, intervals: List[List[int]]) -> int:\n        pass\n",
     "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int minMeetingRooms(vector<vector<int>>& intervals) {\n        return 0;\n    }\n};",
-    "csharp": "public class Solution \n{\n    public int MinMeetingRooms(int[][] intervals) \n    {\n        \n    }\n}"
+    "csharp": "public class Solution \n{\n    public int MinMeetingRooms(int[][] intervals) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_meeting_rooms(intervals: String) -> i32 {\n        \n    }\n}"
   },
   "testCases": [
     {

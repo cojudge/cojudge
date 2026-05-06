@@ -22,7 +22,8 @@
     "java": "import java.util.*;\nclass Solution {\n    public boolean isValid(String s) {\n        \n    }\n}",
     "python": "class Solution:\n    def isValid(self, s: str) -> bool:\n        pass\n",
     "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool isValid(string s) {\n        return false;\n    }\n};",
-    "csharp": "public class Solution \n{\n    public bool IsValid(string s) \n    {\n        \n    }\n}"
+    "csharp": "public class Solution \n{\n    public bool IsValid(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_valid(s: String) -> bool {\n        \n    }\n}"
   },
   "testCases": [
     {

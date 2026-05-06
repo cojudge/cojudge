@@ -18,7 +18,8 @@
     "java": "import java.util.*;\nclass Solution {\n    public int longestConsecutive(int[] nums) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def longestConsecutive(self, nums: List[int]) -> int:\n        pass\n",
     "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int longestConsecutive(vector<int>& nums) {\n        return 0;\n    }\n};",
-    "csharp": "public class Solution \n{\n    public int LongestConsecutive(int[] nums) \n    {\n        \n    }\n}"
+    "csharp": "public class Solution \n{\n    public int LongestConsecutive(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn longest_consecutive(nums: Vec<i32>) -> i32 {\n        \n    }\n}"
   },
   "testCases": [
     {

@@ -14,7 +14,8 @@
     "java": "class Solution {\n    public int uniquePaths(int m, int n) {\n        \n    }\n}",
     "python": "class Solution:\n    def uniquePaths(self, m: int, n: int) -> int:\n        pass\n",
     "cpp": "class Solution {\npublic:\n    int uniquePaths(int m, int n) {\n        return 0;\n    }\n};",
-    "csharp": "public class Solution \n{\n    public int UniquePaths(int m, int n) \n    {\n        \n    }\n}"
+    "csharp": "public class Solution \n{\n    public int UniquePaths(int m, int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn unique_paths(m: i32, n: i32) -> i32 {\n        \n    }\n}"
   },
   "testCases": [
     {

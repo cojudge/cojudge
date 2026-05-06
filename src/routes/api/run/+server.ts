@@ -8,6 +8,7 @@ import { JavaRunner } from '$lib/runners/JavaRunner';
 import { PythonRunner } from '$lib/runners/PythonRunner';
 import { CppRunner } from '$lib/runners/CppRunner';
 import { CSharpRunner } from '$lib/runners/CSharpRunner';
+import { RustRunner } from '$lib/runners/RustRunner';
 import { TIMEOUT_MESSAGE, type JobStatus } from '$lib/utils/util';
 
 type RunSuccess = Array<{
@@ -52,6 +53,8 @@ async function executeRun(problemId: string, language: string, code: string, tes
             programRunner = new CppRunner(problemId, testCases, code);
         } else if (language === 'csharp') {
             programRunner = new CSharpRunner(problemId, testCases, code);
+        } else if (language === 'rust') {
+            programRunner = new RustRunner(problemId, testCases, code);
         }
         if (!programRunner) {
             throw new Error(`${language} is not supported yet`);
