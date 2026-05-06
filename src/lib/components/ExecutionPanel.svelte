@@ -32,6 +32,8 @@
     let runningMessage: string = "";
     // Docker image status for the selected language
     let imageStatus: "unknown" | "present" | "absent" = "unknown";
+    let isDockerRunning = true;
+    let isCheckingDocker = false;
     let isPullingImage = false;
     let pullProgress = 0;
     let pullStatusMessage = "";
@@ -174,12 +176,16 @@
 
     // Image status helpers
     async function refreshImageStatus() {
+        if (isCheckingDocker) return;
+        isCheckingDocker = true;
+        const startTime = Date.now();
         try {
             const res = await fetch(
                 `/api/image/status?language=${encodeURIComponent(language)}`,
             );
             if (!res.ok) throw new Error("status request failed");
             const body = await res.json();
+            isDockerRunning = body.docker !== false;
             imageStatus = body.present ? "present" : "absent";
             imageName = body.image || "";
 
@@ -195,6 +201,13 @@
             }
         } catch {
             imageStatus = "unknown";
+            isDockerRunning = true; // Fallback to avoid hiding button on network error
+        } finally {
+            const elapsed = Date.now() - startTime;
+            if (elapsed < 500) {
+                await new Promise((r) => setTimeout(r, 500 - elapsed));
+            }
+            isCheckingDocker = false;
         }
     }
 
@@ -1088,150 +1101,182 @@
                     {/if}
                 </button>
             </Tooltip>
-            <!-- Runtime image presence indicator + action -->
-            <Tooltip
-                text={isPullingImage
-                    ? `${Math.round(pullProgress * 100)}% ${pullStatusMessage} (${imageName})`
-                    : imageStatus === "present"
-                      ? `Local runtime ready${imageName ? ` (${imageName})` : ""}`
-                      : `Download runtime ${imageName ? ` (${imageName})` : ""}`}
-            >
-                <div class="runtime-status-container">
-                    {#if isPullingImage}
-                        <button
-                            class="icon-btn progress-btn"
-                            aria-label="Cancel download"
-                            on:click={cancelPullImage}
-                        >
-                            <svg width="24" height="24" viewBox="0 0 24 24">
-                                <!-- Background circle -->
-                                <circle
-                                    cx="12"
-                                    cy="12"
-                                    r="10"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-opacity="0.1"
-                                    stroke-width="2"
-                                />
-                                <!-- Progress circle -->
-                                <circle
-                                    cx="12"
-                                    cy="12"
-                                    r="10"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-dasharray="62.83"
-                                    stroke-dashoffset={62.83 *
-                                        (1 - pullProgress)}
-                                    transform="rotate(-90 12 12)"
-                                    stroke-linecap="round"
-                                />
-                                <!-- Stop square -->
-                                <rect
-                                    x="9"
-                                    y="9"
-                                    width="6"
-                                    height="6"
-                                    fill="currentColor"
-                                    rx="1"
-                                />
-                            </svg>
-                        </button>
-                    {:else}
-                        <button
-                            class="icon-btn"
-                            aria-label="Runtime image status"
-                            class:non-button-hover={imageStatus === "present"}
-                            on:click={() => {
-                                if (
-                                    imageStatus === "absent" ||
-                                    imageStatus === "unknown"
-                                )
-                                    pullRuntimeImage();
-                            }}
-                        >
-                            {#if imageStatus === "present"}
-                                <!-- Check/ready icon -->
-                                <svg
-                                    width="18"
-                                    height="18"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10Z"
-                                        fill="currentColor"
-                                        fill-opacity="0.12"
-                                    />
-                                    <path
-                                        d="M9 12.5l2 2 4-4"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    />
-                                </svg>
-                            {:else}
-                                <!-- Download icon -->
-                                <svg
-                                    width="18"
-                                    height="18"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        d="M12 3v10m0 0l-4-4m4 4l4-4"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    />
-                                    <path
-                                        d="M5 17h14v2a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-2Z"
-                                        fill="currentColor"
-                                        fill-opacity="0.12"
-                                    />
-                                </svg>
-                            {/if}
-                        </button>
-                    {/if}
+            {#if isCheckingDocker}
+                <div class="docker-error-msg">
+                    <svg
+                        class="spin"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        style="margin-right: 0.5rem;"
+                    >
+                        <path
+                            d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2"
+                            stroke="currentColor"
+                            stroke-width="3"
+                            stroke-linecap="round"
+                        />
+                    </svg>
+                    Checking Docker...
                 </div>
-            </Tooltip>
-            <span
-                class="status"
-                class:correct={status == "accepted" ||
-                    status == "sample-tests-passed"}
-                class:incorrect={status == "failed" ||
-                    status == "sample-tests-failed" ||
-                    status == "sample-tests-failed-tle" ||
-                    status == "tle"}
-            >
-                {#if runningMessage}
-                    {runningMessage}
-                {:else}
-                    {statusToString(status)}
-                {/if}
-            </span>
-            <Tooltip text={"Ctrl + '"}>
-                <button
-                    class="btn btn-secondary"
-                    on:click={handleRun}
-                    disabled={isLoading}
+            {:else if !isDockerRunning}
+                <div class="docker-error-msg">
+                    Docker engine not detected.
+                    <button
+                        class="link-btn"
+                        on:click={refreshImageStatus}
+                        style="margin-left: 0.5rem;">Check again</button
+                    >
+                </div>
+            {:else}
+                <!-- Runtime image presence indicator + action -->
+                <Tooltip
+                    text={isPullingImage
+                        ? `${Math.round(pullProgress * 100)}% ${pullStatusMessage} (${imageName})`
+                        : imageStatus === "present"
+                          ? `Local runtime ready${imageName ? ` (${imageName})` : ""}`
+                          : `Download runtime ${imageName ? ` (${imageName})` : ""}`}
                 >
-                    Run
-                </button>
-            </Tooltip>
-            <Tooltip text={"Ctrl + Shift + '"}>
-                <button
-                    class="btn btn-primary"
-                    on:click={handleSubmit}
-                    disabled={isLoading}>Submit</button
+                    <div class="runtime-status-container">
+                        {#if isPullingImage}
+                            <button
+                                class="icon-btn progress-btn"
+                                aria-label="Cancel download"
+                                on:click={cancelPullImage}
+                            >
+                                <svg width="24" height="24" viewBox="0 0 24 24">
+                                    <!-- Background circle -->
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="10"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-opacity="0.1"
+                                        stroke-width="2"
+                                    />
+                                    <!-- Progress circle -->
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="10"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-dasharray="62.83"
+                                        stroke-dashoffset={62.83 *
+                                            (1 - pullProgress)}
+                                        transform="rotate(-90 12 12)"
+                                        stroke-linecap="round"
+                                    />
+                                    <!-- Stop square -->
+                                    <rect
+                                        x="9"
+                                        y="9"
+                                        width="6"
+                                        height="6"
+                                        fill="currentColor"
+                                        rx="1"
+                                    />
+                                </svg>
+                            </button>
+                        {:else}
+                            <button
+                                class="icon-btn"
+                                aria-label="Runtime image status"
+                                class:non-button-hover={imageStatus ===
+                                    "present"}
+                                on:click={() => {
+                                    if (
+                                        imageStatus === "absent" ||
+                                        imageStatus === "unknown"
+                                    )
+                                        pullRuntimeImage();
+                                }}
+                            >
+                                {#if imageStatus === "present"}
+                                    <!-- Check/ready icon -->
+                                    <svg
+                                        width="18"
+                                        height="18"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10Z"
+                                            fill="currentColor"
+                                            fill-opacity="0.12"
+                                        />
+                                        <path
+                                            d="M9 12.5l2 2 4-4"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                {:else}
+                                    <!-- Download icon -->
+                                    <svg
+                                        width="18"
+                                        height="18"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M12 3v10m0 0l-4-4m4 4l4-4"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                        <path
+                                            d="M5 17h14v2a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-2Z"
+                                            fill="currentColor"
+                                            fill-opacity="0.12"
+                                        />
+                                    </svg>
+                                {/if}
+                            </button>
+                        {/if}
+                    </div>
+                </Tooltip>
+                <span
+                    class="status"
+                    class:correct={status == "accepted" ||
+                        status == "sample-tests-passed"}
+                    class:incorrect={status == "failed" ||
+                        status == "sample-tests-failed" ||
+                        status == "sample-tests-failed-tle" ||
+                        status == "tle"}
                 >
-            </Tooltip>
+                    {#if runningMessage}
+                        {runningMessage}
+                    {:else}
+                        {statusToString(status)}
+                    {/if}
+                </span>
+                <Tooltip text={"Ctrl + '"}>
+                    <button
+                        class="btn btn-secondary"
+                        on:click={handleRun}
+                        disabled={isLoading}
+                    >
+                        Run
+                    </button>
+                </Tooltip>
+                <Tooltip text={"Ctrl + Shift + '"}>
+                    <button
+                        class="btn btn-primary"
+                        on:click={handleSubmit}
+                        disabled={isLoading}>Submit</button
+                    >
+                </Tooltip>
+            {/if}
         </div>
     </div>
 </div>
@@ -1476,6 +1521,13 @@
     .runtime-status-container {
         display: flex;
         align-items: center;
+    }
+    .docker-error-msg {
+        display: flex;
+        align-items: center;
+        color: var(--color-text-secondary);
+        font-size: 0.85rem;
+        padding: 0 0.5rem;
     }
     .progress-btn {
         width: 32px;

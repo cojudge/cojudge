@@ -28,12 +28,19 @@ export const GET: RequestHandler = async ({ url }) => {
     const pullStatus = getPullStatus(language);
     try {
         await docker.getImage(mapping.image).inspect();
-        return json({ present: true, image: mapping.image, language: mapping.language, pulling: !!pullStatus, ...pullStatus });
+        return json({ present: true, docker: true, image: mapping.image, language: mapping.language, pulling: !!pullStatus, ...pullStatus });
     } catch (err: any) {
         const notFound = err?.statusCode === 404 || /no such image/i.test(String(err?.message ?? ''));
         if (notFound) {
-            return json({ present: false, image: mapping.image, language: mapping.language, pulling: !!pullStatus, ...pullStatus });
+            return json({ present: false, docker: true, image: mapping.image, language: mapping.language, pulling: !!pullStatus, ...pullStatus });
         }
-        return json({ error: 'Failed to check image status', pulling: !!pullStatus, ...pullStatus }, { status: 500 });
+        
+        // Check if it's a connection error (docker not running)
+        const isDockerError = err.code === 'ECONNREFUSED' || err.code === 'ENOENT' || err.message?.includes('connect');
+        if (isDockerError) {
+             return json({ docker: false, present: false, error: 'Docker daemon not found' }, { status: 200 });
+        }
+
+        return json({ error: 'Failed to check image status', docker: true, pulling: !!pullStatus, ...pullStatus }, { status: 500 });
     }
 };

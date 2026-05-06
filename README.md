@@ -23,8 +23,8 @@
 
 ## Requirements
 
-- Docker (installed and running)
-- Node.js and npm (for development only)
+- Node.js (v18+) and npm
+- Docker (installed and running, required for code execution)
 
 ## Quickstart
 
@@ -36,11 +36,22 @@ chmod +x run.sh
 ./run.sh
 ```
 
-This builds the image, starts the container, and prints the link: http://localhost:5375
+This installs dependencies, builds the app, and starts it at: http://localhost:5375.
+
+**Note:** You can browse problems and organize solutions without Docker. Docker is only required when you actually want to `Run` or `Submit` code.
+
+## Running with Docker (Containerized)
+
+If you prefer to run the entire application inside a Docker container:
+```bash
+chmod +x docker.sh
+./docker.sh
+```
+This builds a local image named `cojudge` and runs it, mapping the host Docker socket so the judge can spawn sibling containers.
 
 ## Development
 
-1) Add $USER to docker group
+1) Add $USER to docker group (if using Docker)
 ```bash
 sudo usermod -aG docker "$USER"
 newgrp docker
@@ -121,7 +132,7 @@ Some Docker environments on macOS (like Colima) use a non-default Docker socket 
 **Example:**
 ```bash
 # Find your socket path by running `colima status`
-HOST_DOCKER_SOCKET="/Users/your-user/.colima/default/docker.sock" ./run.sh
+HOST_DOCKER_SOCKET="/Users/your-user/.colima/default/docker.sock" ./docker.sh
 ```
 
 ## Contact
