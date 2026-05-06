@@ -29,5 +29,5 @@ printf "%bBuilding application...%b\n" "$YELLOW" "$NC"
 npm run build
 
 printf "%bStarting application on http://localhost:%s ...%b\n" "$YELLOW" "$PORT" "$NC"
-printf "%bNote: Docker is required for code execution but not for browsing.%b\n" "$GREEN" "$NC"
+printf "%bNote: Docker is required for code execution but not for browsing and editing.%b\n" "$GREEN" "$NC"
 npm run preview -- --port "$PORT" --host

@@ -34,23 +34,6 @@ CoJudge is an offline-first competitive programming platform built with SvelteKi
   newgrp docker
   ```
 
-### Installation
-```bash
-git clone https://github.com/cojudge/cojudge
-cd cojudge
-npm install
-```
-
-### Running
-```bash
-# Development
-npm run dev
-
-# Production
-chmod +x run.sh
-./run.sh
-```
-
 ## Adding Problems
 
 1. Create folder: `problems/<slug>/`
@@ -66,6 +49,9 @@ chmod +x run.sh
 Please refer to `docs/ADD_LANGUAGE.md`
 
 ## Key Components
+
+### CLI
+- Tool: `cojudge` (defined in `bin/cojudge`)
 
 ### Code Execution
 - `src/lib/runners/` - Language-specific execution logic

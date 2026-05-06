@@ -173,12 +173,13 @@
     }
 
     // New tab state (simple add button)
-    async function addNewTab(customName: string = '', customContent: string = '') {
+    async function addNewTab(customName: string = '', customContent: string = '', customLang: ProgrammingLanguage | null = null) {
+        const targetLang = customLang || language;
         const newTabName = customName || `Solution-${tabs.length + 1}`;
         const nextId = uuidv4();
         const fileName = newTabName;
         tabs = [...tabs, { fileId: nextId, fileName }];
-        const newCode = customContent || (data.problem.starterCode?.[language] ?? '');
+        const newCode = customContent || (data.problem.starterCode?.[targetLang] ?? '');
         const fkey = fileKey();
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
@@ -187,7 +188,7 @@
                 {
                     fileId: nextId,
                     fileName,
-                    language: language,
+                    language: targetLang,
                     content: newCode,
                     isActive: false,
                     order: tabs.length - 1
@@ -196,6 +197,7 @@
             return { ...s, [fkey]: JSON.stringify(files) };
         });
         activeTabId = tabs.length - 1;
+        if (customLang) language = customLang;
         await loadOrInitFile(language);
         persistTabOrder();
         if (!customName) {
@@ -334,6 +336,28 @@
 
         const fb = initFirebase();
         if (fb) isFirebaseAvailable = true;
+
+        // Check for tabs in URL params (sent by CLI)
+        const urlParams = new URLSearchParams(window.location.search);
+        const tabsParam = urlParams.get('tabs');
+        if (tabsParam) {
+            try {
+                const requestedTabs = JSON.parse(decodeURIComponent(tabsParam)) as { name: string, lang: ProgrammingLanguage, content?: string }[];
+                if (requestedTabs.length > 0) {
+                    suppressSave = true;
+                    for (const rt of requestedTabs) {
+                        await addNewTab(rt.name, rt.content || '', rt.lang);
+                    }
+                    if (requestedTabs.length > 0) {
+                        window.history.replaceState({}, '', window.location.pathname);
+                        suppressSave = false;
+                        return;
+                    }
+                }
+            } catch (e) {
+                console.error('Failed to parse tabs from URL', e);
+            }
+        }
 
         const forkData = ($page.state as any).forkData as { content: string; language: ProgrammingLanguage; fileName: string } | undefined;
         

@@ -1,0 +1,274 @@
+#!/usr/bin/env node
+
+import { spawn, execSync } from "child_process";
+import { fileURLToPath } from "url";
+import path from "path";
+import fs from "fs";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const rootDir = path.resolve(__dirname, "..");
+
+const args = process.argv.slice(2);
+
+function getParam(param) {
+  const index = args.findIndex(arg => arg === param);
+  if (index !== -1 && args[index + 1]) {
+    return args[index + 1];
+  }
+  return null;
+}
+
+const PORT = getParam("-p") || getParam("--port") || process.env.PORT || 5375;
+
+function getPIDs(port) {
+  try {
+    const stdout = execSync(`lsof -i :${port} -t`).toString().trim();
+    return stdout ? stdout.split("\n") : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function getLogFile() {
+  return path.join(rootDir, "cojudge.log");
+}
+
+function showHelp() {
+  console.log(`
+CoJudge CLI - Offline-first competitive programming platform
+
+Usage:
+  cojudge [options]              Start the server and open in browser
+  cojudge start <slug> <file>    Open a specific problem or playground with a file
+  cojudge list                   List all available problem slugs
+  cojudge -p, --port <number>    Specify port (default: 5375)
+  cojudge -v, --version          Show current version and date
+  cojudge -u, --update           Update cojudge to the latest version
+  cojudge -s, --status           Show if the server is running
+  cojudge -l, --logs             Stream the server logs
+  cojudge -k, --kill     Stop the server
+  cojudge -h, --help             Show this help message
+
+Examples:
+  cojudge start two-sum Solution.java
+  cojudge start playground my-script.py
+`);
+}
+
+function getLangFromExt(ext) {
+  switch (ext.toLowerCase()) {
+    case '.java': return 'java';
+    case '.py': return 'python';
+    case '.cpp':
+    case '.cc':
+    case '.hpp':
+    case '.h': return 'cpp';
+    case '.rs': return 'rust';
+    case '.cs': return 'csharp';
+    default: return 'plaintext';
+  }
+}
+
+function openBrowser(port, path = '') {
+  const url = `http://localhost:${port}${path}`;
+  console.log(`Opening ${url} in browser...`);
+  const start =
+    process.platform === "darwin"
+      ? "open"
+      : process.platform === "win32"
+        ? "start"
+        : "xdg-open";
+  try {
+    spawn(start, [url], { detached: true }).unref();
+  } catch (e) {
+    console.error(`Failed to open browser: ${e.message}`);
+  }
+}
+
+function startServer(callback) {
+  const logFile = getLogFile();
+  console.log(`Starting cojudge on port ${PORT}... (this might take a moment if building)`);
+  console.log(`Logs are being written to ${logFile}`);
+
+  try {
+    const out = fs.openSync(logFile, "a");
+    const err = fs.openSync(logFile, "a");
+
+    const child = spawn("sh", [path.join(rootDir, "run.sh")], {
+      cwd: rootDir,
+      env: { ...process.env, PORT: PORT.toString() },
+      stdio: ["ignore", out, err],
+      detached: true,
+    });
+    child.unref();
+
+    console.log(`Waiting for server to start on port ${PORT}...`);
+    let attempts = 0;
+    const maxAttempts = 60;
+    const interval = setInterval(() => {
+      attempts++;
+      if (getPIDs(PORT).length > 0) {
+        clearInterval(interval);
+        console.log("Server started!");
+        if (callback) callback();
+        process.exit(0);
+      }
+      if (attempts >= maxAttempts) {
+        clearInterval(interval);
+        console.log(`Server is taking too long to start. Check logs with 'cojudge -l'.`);
+        process.exit(1);
+      }
+    }, 1000);
+  } catch (e) {
+    console.error(`Failed to start server: ${e.message}`);
+    process.exit(1);
+  }
+}
+
+function printVersion() {
+  try {
+    const commit = execSync('git log -1 --format="%h"', { cwd: rootDir }).toString().trim();
+    const date = execSync('git log -1 --format="%cd" --date=format:"%Y-%m-%d %H:%M:%S"', { cwd: rootDir }).toString().trim();
+    console.log(`cojudge version: ${commit} (${date})`);
+  } catch (e) {
+    console.log("cojudge version unknown");
+  }
+}
+
+function updateRepo() {
+  console.log("Updating cojudge...");
+  try {
+    execSync("git pull", { cwd: rootDir, stdio: "inherit" });
+    console.log("Update complete.");
+  } catch (e) {
+    console.error("Update failed.");
+  }
+}
+
+function streamLogs() {
+  const logFile = getLogFile();
+  if (fs.existsSync(logFile)) {
+    console.log(`Streaming logs from ${logFile}...`);
+    const tail = spawn("tail", ["-f", logFile], { stdio: "inherit" });
+    process.on("SIGINT", () => { tail.kill(); process.exit(); });
+  } else {
+    console.log("No log file found.");
+  }
+}
+
+function killServer() {
+  const pids = getPIDs(PORT);
+  if (pids.length > 0) {
+    console.log(`Stopping cojudge on port ${PORT}...`);
+    pids.forEach(pid => { try { process.kill(parseInt(pid), "SIGTERM"); } catch (e) {} });
+    console.log("Stopped.");
+  } else {
+    console.log(`cojudge is not running on port ${PORT}.`);
+  }
+}
+
+function listProblems() {
+  const problemsPath = path.join(rootDir, "problems");
+  try {
+    const files = fs.readdirSync(problemsPath);
+    const slugs = files.filter(f => {
+      return fs.statSync(path.join(problemsPath, f)).isDirectory();
+    });
+    console.log("Available problem slugs:");
+    slugs.forEach(s => console.log(`  ${s}`));
+  } catch (e) {
+    console.error("Could not list problems:", e.message);
+  }
+}
+
+function handleStart(argsToUse) {
+  const slug = argsToUse[1];
+  const filename = argsToUse[2];
+  let browserPath = '';
+
+  if (slug) {
+    if (slug === 'playground') {
+      browserPath = '/playground';
+    } else {
+      browserPath = `/problems/${slug}`;
+    }
+
+    if (filename) {
+      if (!fs.existsSync(filename)) {
+        console.error(`Error: File '${filename}' does not exist.`);
+        process.exit(1);
+      }
+
+      const ext = path.extname(filename);
+      const lang = getLangFromExt(ext);
+      const name = path.basename(filename); // Keep the extension
+      let content = '';
+      
+      try {
+        content = fs.readFileSync(filename, 'utf8');
+      } catch (e) {
+        console.warn(`Could not read file ${filename}: ${e.message}`);
+      }
+
+      browserPath += `?tabs=${encodeURIComponent(JSON.stringify([{ name, lang, content }]))}`;
+    }
+  }
+
+  const pids = getPIDs(PORT);
+  if (pids.length > 0) {
+    openBrowser(PORT, browserPath);
+  } else {
+    startServer(() => openBrowser(PORT, browserPath));
+  }
+}
+
+async function main() {
+  const action = args[0];
+
+  if (action === 'start') {
+    handleStart(args);
+    return;
+  }
+
+  if (action === 'list') {
+    listProblems();
+    return;
+  }
+
+  if (!action || action === "-p" || action === "--port") {
+    const pids = getPIDs(PORT);
+    if (pids.length > 0) {
+      console.log(`CoJudge is already running on port ${PORT} (PID: ${pids.join(", ")})`);
+      openBrowser(PORT);
+    } else {
+      startServer(() => openBrowser(PORT));
+    }
+  } else if (action === "-v" || action === "--version") {
+    printVersion();
+  } else if (action === "-u" || action === "--update") {
+    updateRepo();
+  } else if (action === "-s" || action === "--status") {
+    const pids = getPIDs(PORT);
+    if (pids.length > 0) {
+      console.log(`cojudge is RUNNING (PID: ${pids.join(", ")}) on port ${PORT}`);
+    } else {
+      console.log(`cojudge is NOT RUNNING on port ${PORT}`);
+    }
+  } else if (action === "-l" || action === "--logs") {
+    streamLogs();
+  } else if (action === "-k" || action === "--kill") {
+    killServer();
+  } else if (action === "-h" || action === "--help") {
+    showHelp();
+  } else {
+    // If first arg isn't a flag, assume it's a slug or 'start' was omitted
+    if (action && !action.startsWith('-')) {
+      handleStart(['start', ...args]);
+      return;
+    }
+    console.log(`Unknown command: ${action}`);
+    showHelp();
+  }
+}
+
+main();

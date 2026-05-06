@@ -484,7 +484,60 @@ class Program
     onMount(async () => {
         const module = await import('$lib/components/CodeEditor.svelte');
         CodeEditor = module.default;
+
+        // Check for tabs in URL params (sent by CLI)
+        const urlParams = new URLSearchParams(window.location.search);
+        const tabsParam = urlParams.get('tabs');
+        if (tabsParam) {
+            try {
+                const requestedTabs = JSON.parse(decodeURIComponent(tabsParam)) as { name: string, lang: ProgrammingLanguage, content?: string }[];
+                if (requestedTabs.length > 0) {
+                    suppressSave = true; // Use existing variable
+                    for (const rt of requestedTabs) {
+                        await addNewTabFromCLI(rt.name, rt.lang, rt.content || '');
+                    }
+                    window.history.replaceState({}, '', window.location.pathname);
+                    suppressSave = false;
+                    return;
+                }
+            } catch (e) {
+                console.error('Failed to parse tabs from URL', e);
+            }
+        }
     });
+
+    async function addNewTabFromCLI(customName: string, customLang: ProgrammingLanguage, customContent: string = '') {
+        const nextId = uuidv4();
+        const now = Date.now();
+        tabs = [...tabs, { fileId: nextId, fileName: customName, isOpen: true, lastUpdated: now }];
+        const newCode = customContent || starterCode[customLang] || '';
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            files = [
+                ...files,
+                {
+                    fileId: nextId,
+                    fileName: customName,
+                    language: customLang,
+                    content: newCode,
+                    output: '',
+                    logs: '',
+                    isActive: false,
+                    order: tabs.length - 1,
+                    isOpen: true,
+                    lastUpdated: now
+                } as FileEntry
+            ];
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
+        activeTabId = tabs.length - 1;
+        language = customLang;
+        userSettingsStorage.update((s) => ({ ...s, playgroundPreferredLanguage: language }));
+        await tick();
+        await loadOrInitFile(language);
+        persistTabOrder();
+    }
 
     onMount(() => {
         const handleDocClick = (e: MouseEvent) => {

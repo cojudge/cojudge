@@ -24,21 +24,47 @@
 ## Requirements
 
 - Node.js (v18+) and npm
-- Docker (installed and running, required for code execution)
+- Docker (installed and running, only required while judging)
 
 ## Quickstart
 
-- Linux/macOS/Windows (WSL)
+### 1. Installation
+Install the cojudge cli globally:
 ```bash
 git clone https://github.com/cojudge/cojudge
 cd cojudge
+npm install -g .
+```
+
+### 2. Usage
+Simply run `cojudge` to start the server and open it in your browser:
+```bash
+cojudge
+```
+
+### CLI Commands
+| Command | Description |
+| --- | --- |
+| `cojudge` | Start server & open browser |
+| `cojudge <slug> <file>` | Open specific problem with starter file |
+| `cojudge list` | List all available problem slugs |
+| `cojudge -p, --port <port>` | Start server on specific port (default 5375) |
+| `cojudge -s, --status` | Check if server is running |
+| `cojudge -u, --update` | Update to latest version (git pull) |
+| `cojudge -l, --logs` | Stream the server logs |
+| `cojudge -k, --kill` | Stop the server |
+| `cojudge -v, --version` | Show current version & age |
+| `cojudge -h, --help` | Show help message |
+
+**Note:** You can browse problems and organize solutions without Docker. Docker is only required when you actually want to `Run` or `Submit` code.
+
+## Alternative: Manual Run
+If you don't want to install the CLI:
+```bash
 chmod +x run.sh
 ./run.sh
 ```
-
-This installs dependencies, builds the app, and starts it at: http://localhost:5375.
-
-**Note:** You can browse problems and organize solutions without Docker. Docker is only required when you actually want to `Run` or `Submit` code.
+This starts the app at: http://localhost:5375.
 
 ## Running with Docker (Containerized)
 
