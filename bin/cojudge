@@ -4,6 +4,7 @@ import { spawn, execSync } from "child_process";
 import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
+import os from "os";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, "..");
@@ -30,11 +31,36 @@ function getPIDs(port) {
 }
 
 function getLogFile() {
-  return path.join(rootDir, "cojudge.log");
+  const homeConfigDir = path.join(os.homedir(), ".cojudge");
+  if (!fs.existsSync(homeConfigDir)) {
+    try {
+      fs.mkdirSync(homeConfigDir, { recursive: true });
+    } catch (e) {
+      return path.join(rootDir, "cojudge.log");
+    }
+  }
+  return path.join(homeConfigDir, "cojudge.log");
 }
 
 function getProgressFile() {
-  return path.join(rootDir, ".cojudge_progress.json");
+  const homeProgressFile = path.join(os.homedir(), ".cojudge", "progress.json");
+  const localProgressFile = path.join(rootDir, ".cojudge_progress.json");
+  
+  // If local exists but home doesn't, we might want to migrate or use local
+  if (fs.existsSync(localProgressFile) && !fs.existsSync(homeProgressFile)) {
+    return localProgressFile;
+  }
+  
+  const homeConfigDir = path.join(os.homedir(), ".cojudge");
+  if (!fs.existsSync(homeConfigDir)) {
+    try {
+      fs.mkdirSync(homeConfigDir, { recursive: true });
+    } catch (e) {
+      return localProgressFile;
+    }
+  }
+  
+  return homeProgressFile;
 }
 
 function loadProgress() {
@@ -163,6 +189,9 @@ function updateRepo() {
   console.log("Updating cojudge...");
   try {
     execSync("git pull", { cwd: rootDir, stdio: "inherit" });
+    console.log("Installing dependencies and building...");
+    execSync("npm install", { cwd: rootDir, stdio: "inherit" });
+    execSync("npm run build", { cwd: rootDir, stdio: "inherit" });
     console.log("Update complete.");
   } catch (e) {
     console.error("Update failed.");

@@ -29,12 +29,16 @@
 ## Quickstart
 
 ### 1. Installation
-Install the cojudge cli globally:
+The easiest way to install CoJudge without dealing with NPM permission issues is to run our install script:
+
 ```bash
 git clone https://github.com/cojudge/cojudge
 cd cojudge
-npm install -g .
+./install.sh
+source ~/.zshrc # or ~/.bashrc, depending on your shell
 ```
+
+This will install dependencies, build the app, and add a `cojudge` alias to your shell configuration.
 
 ### 2. Usage
 Simply run `cojudge` to start the server and open it in your browser:
@@ -59,6 +63,24 @@ cojudge
 | `cojudge -h, --help` | Show help message |
 
 **Note:** You can browse problems and organize solutions without Docker. Docker is only required when you actually want to `Run` or `Submit` code.
+
+### Manual Global Installation (If you prefer)
+If you'd rather install it globally via NPM and have the necessary permissions:
+```bash
+npm install -g .
+```
+
+### Troubleshooting Installation (Permission Denied)
+
+If you encounter an `EACCES` error when running `npm install -g .` (especially on macOS with Homebrew), it's likely because your user doesn't have permissions to write to the global `node_modules` folder.
+
+You can fix this by either:
+1. **Using sudo** (not recommended but fast):
+   ```bash
+   sudo npm install -g .
+   ```
+2. **Fixing npm permissions** (recommended): Follow the [official npm guide](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally) to change npm's default directory.
+3. **Using the install script** (easiest): Use `./install.sh` as described in the Quickstart section.
 
 ## Alternative: Manual Run
 If you don't want to install the CLI:

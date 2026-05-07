@@ -22,11 +22,15 @@ if ! command -v npm >/dev/null 2>&1; then
   exit 1
 fi
 
-printf "%bInstalling dependencies...%b\n" "$YELLOW" "$NC"
-npm install
+if [ ! -d "node_modules" ]; then
+  printf "%bInstalling dependencies...%b\n" "$YELLOW" "$NC"
+  npm install
+fi
 
-printf "%bBuilding application...%b\n" "$YELLOW" "$NC"
-npm run build
+if [ ! -d ".svelte-kit/output" ]; then
+  printf "%bBuilding application...%b\n" "$YELLOW" "$NC"
+  npm run build
+fi
 
 printf "%bStarting application on http://localhost:%s ...%b\n" "$YELLOW" "$PORT" "$NC"
 printf "%bNote: Docker is required for code execution but not for browsing and editing.%b\n" "$GREEN" "$NC"
