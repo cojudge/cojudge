@@ -14,8 +14,8 @@
 - Docker sandboxes: consistent, isolated runs across machines
 - LeetCode-style problem packs with statements and tests
 - Simple & fast web UI (SvelteKit) with in-browser editor and light/dark mode support
-- Multiple languages support (Java/Python/C++)
-- Code Playground: Run code snippets in Java, Python, or C++ without a problem context
+- Multiple languages support (Java/Python/C++/Rust/C#)
+- Code Playground: Run code snippets in Java, Python, C++, Rust, or C# without a problem context
 - Extensible: add new problems by dropping folders in `problems/`
 - Persistent Code & Progress Tracking via Local Storage
 - Browser-like tabs to organize your local solutions
@@ -60,6 +60,7 @@ cojudge
 | --- | --- |
 | `cojudge` | Start server & open browser |
 | `cojudge <slug> <file>` | Open specific problem in browser with local file |
+| `cojudge init <slug> [--lang <lang>] [--output <filename>]` | Initialize a problem file with starter code with filename. Fall back to, for example `solution.rs`, if `filename` is not provided |
 | `cojudge run <slug> <file>` | Run sample tests for a problem from CLI (require running Docker) |
 | `cojudge submit <slug> <file>`| Submit code for a problem from CLI (require running Docker) |
 | `cojudge run <file>` | Run a playground file from CLI (require running Docker) |
