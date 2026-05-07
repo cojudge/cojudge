@@ -50,7 +50,10 @@ cojudge
 | Command | Description |
 | --- | --- |
 | `cojudge` | Start server & open browser |
-| `cojudge <slug> <file>` | Open specific problem with starter file |
+| `cojudge <slug> <file>` | Open specific problem in browser with local file |
+| `cojudge run <slug> <file>` | Run sample tests for a problem from CLI (require running Docker) |
+| `cojudge submit <slug> <file>`| Submit code for a problem from CLI (require running Docker) |
+| `cojudge run <file>` | Run a playground file from CLI (require running Docker) |
 | `cojudge list` | List all available problem slugs |
 | `cojudge mark <slug>` | Mark a problem as solved |
 | `cojudge unmark <slug>` | Unmark a problem as solved |
@@ -62,7 +65,7 @@ cojudge
 | `cojudge -v, --version` | Show current version & age |
 | `cojudge -h, --help` | Show help message |
 
-**Note:** You can browse problems and organize solutions without Docker. Docker is only required when you actually want to `Run` or `Submit` code.
+**Note:** You can browse problems and organize solutions without Docker. Docker is only required when you actually want to `Run` or `Submit` code, either from the web UI or CLI.
 
 ### Manual Global Installation (If you prefer)
 If you'd rather install it globally via NPM and have the necessary permissions:
