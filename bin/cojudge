@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { spawn, execSync } from "child_process";
+import { spawn, execSync, exec } from "child_process";
 import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
@@ -24,10 +24,14 @@ const PORT = getParam("-p") || getParam("--port") || process.env.PORT || 5375;
 function getPIDs(port) {
   try {
     if (process.platform === "win32") {
-      const stdout = execSync(`netstat -ano | findstr :${port} | findstr LISTENING`).toString().trim();
+      const stdout = execSync(
+        `netstat -ano | findstr :${port} | findstr LISTENING`,
+      )
+        .toString()
+        .trim();
       const lines = stdout.split("\n");
       const pids = new Set();
-      lines.forEach(line => {
+      lines.forEach((line) => {
         const parts = line.trim().split(/\s+/);
         if (parts.length >= 5) {
           pids.add(parts[parts.length - 1]);
@@ -145,31 +149,48 @@ function getLangFromExt(ext) {
 function openBrowser(port, path = "") {
   const url = `http://localhost:${port}${path}`;
   console.log(`Opening ${url} in browser...`);
-  const isWin = process.platform === "win32";
-  const start =
-    process.platform === "darwin"
-      ? "open"
-      : isWin
-        ? "start"
-        : "xdg-open";
-  try {
-    if (isWin) {
-      // 'start' is a cmd internal, so we use cmd /c. We escape & for cmd.
-      const escapedUrl = url.replace(/&/g, "^&");
-      spawn("cmd", ["/c", "start", escapedUrl], { detached: true, windowsHide: true }).unref();
-    } else {
-      spawn(start, [url], { detached: true }).unref();
+  const plat = process.platform;
+  const cmd =
+    plat === "win32"
+      ? `start "" "${url}"`
+      : plat === "darwin"
+        ? `open "${url}"`
+        : `xdg-open "${url}"`;
+
+  exec(cmd, (err) => {
+    if (err) {
+      console.error(`Failed to open browser: ${err.message}`);
     }
-  } catch (e) {
-    console.error(`Failed to open browser: ${e.message}`);
-  }
+  });
 }
 
 function startServer(callback, shouldExit = true) {
   const logFile = getLogFile();
-  console.log(
-    `Starting cojudge on port ${PORT}... (this might take a moment if building)`,
-  );
+
+  if (!fs.existsSync(path.join(rootDir, "node_modules"))) {
+    console.log("Installing dependencies (first-time setup)...");
+    try {
+      execSync("npm install", { cwd: rootDir, stdio: "inherit" });
+    } catch (e) {
+      console.error("Failed to install dependencies.");
+      process.exit(1);
+    }
+  }
+
+  if (
+    !fs.existsSync(path.join(rootDir, ".svelte-kit", "output")) &&
+    !fs.existsSync(path.join(rootDir, "build"))
+  ) {
+    console.log("Building application (first-time setup)...");
+    try {
+      execSync("npm run build", { cwd: rootDir, stdio: "inherit" });
+    } catch (e) {
+      console.error("Failed to build application.");
+      process.exit(1);
+    }
+  }
+
+  console.log(`Starting cojudge on port ${PORT}...`);
   console.log(`Logs are being written to ${logFile}`);
 
   try {
@@ -177,13 +198,21 @@ function startServer(callback, shouldExit = true) {
     const err = fs.openSync(logFile, "a");
 
     const isWin = process.platform === "win32";
-    const cmd = isWin ? "powershell" : "sh";
-    const runScript = isWin ? "run.ps1" : "run.sh";
-    const scriptPath = path.join(rootDir, runScript);
-    
-    const spawnArgs = isWin 
-      ? ["-ExecutionPolicy", "Bypass", "-File", `"${scriptPath}"`] 
-      : [scriptPath];
+    const cmd = process.execPath;
+    const vitePath = path.join(
+      rootDir,
+      "node_modules",
+      "vite",
+      "bin",
+      "vite.js",
+    );
+    const spawnArgs = [
+      vitePath,
+      "preview",
+      "--port",
+      PORT.toString(),
+      "--host",
+    ];
 
     const child = spawn(cmd, spawnArgs, {
       cwd: rootDir,
@@ -191,7 +220,6 @@ function startServer(callback, shouldExit = true) {
       stdio: ["ignore", out, err],
       detached: true,
       windowsHide: true,
-      shell: isWin
     });
     child.unref();
 
@@ -204,7 +232,9 @@ function startServer(callback, shouldExit = true) {
         clearInterval(interval);
         console.log("Server started!");
         if (callback) callback();
-        if (shouldExit) process.exit(0);
+        if (shouldExit) {
+          setTimeout(() => process.exit(0), 1000);
+        }
       }
       if (attempts >= maxAttempts) {
         clearInterval(interval);
@@ -258,7 +288,9 @@ function streamLogs() {
     console.log(`Streaming logs from ${logFile}...`);
     const isWin = process.platform === "win32";
     const cmd = isWin ? "powershell" : "tail";
-    const args = isWin ? ["-Command", `Get-Content "${logFile}" -Wait`] : ["-f", logFile];
+    const args = isWin
+      ? ["-Command", `Get-Content "${logFile}" -Wait`]
+      : ["-f", logFile];
     const tail = spawn(cmd, args, { stdio: "inherit" });
     process.on("SIGINT", () => {
       tail.kill();
@@ -449,6 +481,7 @@ function handleStart(argsToUse) {
   const pids = getPIDs(PORT);
   if (pids.length > 0) {
     openBrowser(PORT, browserPath);
+    setTimeout(() => process.exit(0), 1000);
   } else {
     startServer(() => openBrowser(PORT, browserPath));
   }
@@ -933,6 +966,7 @@ async function main() {
         `CoJudge is already running on port ${PORT} (PID: ${pids.join(", ")})`,
       );
       openBrowser(PORT);
+      setTimeout(() => process.exit(0), 1000);
     } else {
       startServer(() => openBrowser(PORT));
     }
