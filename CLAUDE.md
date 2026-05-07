@@ -2,7 +2,7 @@
 
 ## Overview
 
-CoJudge is an offline-first competitive programming platform built with SvelteKit and Docker. It provides a LeetCode-style environment for solving algorithmic problems without internet access.
+Cojudge is an offline-first code judge built with SvelteKit and Docker. It provides a LeetCode-style environment for solving algorithmic problems without internet access.
 
 ## Architecture
 

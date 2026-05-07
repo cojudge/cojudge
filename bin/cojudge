@@ -82,7 +82,7 @@ function saveProgress(progress) {
 
 function showHelp() {
   console.log(`
-CoJudge CLI - Offline-first competitive programming platform
+Cojudge CLI - Offline code judge
 
 Usage:
   cojudge [options]              Start the server and open in browser
