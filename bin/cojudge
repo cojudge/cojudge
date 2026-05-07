@@ -23,6 +23,18 @@ const PORT = getParam("-p") || getParam("--port") || process.env.PORT || 5375;
 
 function getPIDs(port) {
   try {
+    if (process.platform === "win32") {
+      const stdout = execSync(`netstat -ano | findstr :${port} | findstr LISTENING`).toString().trim();
+      const lines = stdout.split("\n");
+      const pids = new Set();
+      lines.forEach(line => {
+        const parts = line.trim().split(/\s+/);
+        if (parts.length >= 5) {
+          pids.add(parts[parts.length - 1]);
+        }
+      });
+      return Array.from(pids);
+    }
     const stdout = execSync(`lsof -i :${port} -t`).toString().trim();
     return stdout ? stdout.split("\n") : [];
   } catch (e) {
@@ -133,14 +145,21 @@ function getLangFromExt(ext) {
 function openBrowser(port, path = "") {
   const url = `http://localhost:${port}${path}`;
   console.log(`Opening ${url} in browser...`);
+  const isWin = process.platform === "win32";
   const start =
     process.platform === "darwin"
       ? "open"
-      : process.platform === "win32"
+      : isWin
         ? "start"
         : "xdg-open";
   try {
-    spawn(start, [url], { detached: true }).unref();
+    if (isWin) {
+      // 'start' is a cmd internal, so we use cmd /c. We escape & for cmd.
+      const escapedUrl = url.replace(/&/g, "^&");
+      spawn("cmd", ["/c", "start", escapedUrl], { detached: true, windowsHide: true }).unref();
+    } else {
+      spawn(start, [url], { detached: true }).unref();
+    }
   } catch (e) {
     console.error(`Failed to open browser: ${e.message}`);
   }
@@ -157,11 +176,22 @@ function startServer(callback, shouldExit = true) {
     const out = fs.openSync(logFile, "a");
     const err = fs.openSync(logFile, "a");
 
-    const child = spawn("sh", [path.join(rootDir, "run.sh")], {
+    const isWin = process.platform === "win32";
+    const cmd = isWin ? "powershell" : "sh";
+    const runScript = isWin ? "run.ps1" : "run.sh";
+    const scriptPath = path.join(rootDir, runScript);
+    
+    const spawnArgs = isWin 
+      ? ["-ExecutionPolicy", "Bypass", "-File", `"${scriptPath}"`] 
+      : [scriptPath];
+
+    const child = spawn(cmd, spawnArgs, {
       cwd: rootDir,
       env: { ...process.env, PORT: PORT.toString() },
       stdio: ["ignore", out, err],
       detached: true,
+      windowsHide: true,
+      shell: isWin
     });
     child.unref();
 
@@ -226,7 +256,10 @@ function streamLogs() {
   const logFile = getLogFile();
   if (fs.existsSync(logFile)) {
     console.log(`Streaming logs from ${logFile}...`);
-    const tail = spawn("tail", ["-f", logFile], { stdio: "inherit" });
+    const isWin = process.platform === "win32";
+    const cmd = isWin ? "powershell" : "tail";
+    const args = isWin ? ["-Command", `Get-Content "${logFile}" -Wait`] : ["-f", logFile];
+    const tail = spawn(cmd, args, { stdio: "inherit" });
     process.on("SIGINT", () => {
       tail.kill();
       process.exit();

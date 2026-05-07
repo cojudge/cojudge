@@ -31,11 +31,20 @@
 ### 1. Installation
 The easiest way to install CoJudge without dealing with NPM permission issues is to run our install script:
 
+#### Mac / Linux
 ```bash
 git clone https://github.com/cojudge/cojudge
 cd cojudge
 ./install.sh
 source ~/.zshrc # or ~/.bashrc, depending on your shell
+```
+
+#### Windows Powershell
+```powerhshell
+git clone https://github.com/cojudge/cojudge
+cd cojudge
+./install.ps1
+. $PROFILE
 ```
 
 This will install dependencies, build the app, and add a `cojudge` alias to your shell configuration.

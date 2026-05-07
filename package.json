@@ -12,6 +12,7 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
+		"postinstall": "node -e \"const fs = require('fs'); const path = 'node_modules/@firebase/util/dist/postinstall.mjs'; if (fs.existsSync('node_modules/@firebase/util/dist') && !fs.existsSync(path)) fs.writeFileSync(path, 'export const getDefaultsFromPostinstall = () => undefined;');\"",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"

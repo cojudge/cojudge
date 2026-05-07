@@ -12,7 +12,7 @@ NC="\033[0m"
 # Check for Node.js
 if ! command -v node >/dev/null 2>&1; then
   printf "%bError: Node.js is not installed.%b\n" "$RED" "$NC"
-  printf "Please install Node.js (v18+) to run CoJudge.\n"
+  printf "Please install Node.js (v18+) to run Cojudge.\n"
   exit 1
 fi
 
