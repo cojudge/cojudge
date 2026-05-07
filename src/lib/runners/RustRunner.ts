@@ -1,4 +1,4 @@
-import { rustImage, rustListNodeClass, rustTreeNodeClass, generateRustRunner } from "$lib/utils/rustUtil";
+import { rustImage, generateRustRunner } from "$lib/utils/rustUtil";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import fs from 'fs/promises';
@@ -22,7 +22,7 @@ export class RustRunner extends ProgramRunner {
             const problemContent = await fs.readFile(problemPath, 'utf-8');
             const problemData = JSON.parse(problemContent);
             
-            const runnerCode = generateRustRunner(problemData.functionName, problemData.params, this.testCases);
+            const runnerCode = generateRustRunner(problemData.functionName, problemData.params, this.testCases, this.code);
             await ensureImageAvailable(docker, rustImage);
 
             this.container = await docker.createContainer({
@@ -35,9 +35,6 @@ export class RustRunner extends ProgramRunner {
             await this.container.start();
 
             const pack = tar.pack();
-            pack.entry({ name: 'list_node.rs' }, Buffer.from(rustListNodeClass));
-            pack.entry({ name: 'tree_node.rs' }, Buffer.from(rustTreeNodeClass));
-            pack.entry({ name: 'solution.rs' }, Buffer.from(this.code));
             pack.entry({ name: 'main.rs' }, Buffer.from(runnerCode));
             pack.finalize();
             await this.container.putArchive(pack as any, { path: '/app' });
