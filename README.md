@@ -1,6 +1,8 @@
 > Solve classic algorithmic problems without the internet or having to deal with installing runtimes. No discussion forum, no LLM assistant, not even the internet. Solve the curated list with just you, the problem and the judge.
 
-![Light Mode](./screenshots/lightmode.png)
+|![Web UI](/screenshots/lightmode.png) | ![CLI](/screenshots/cli.png) |
+|:---:|:---:|
+| localhost web | CLI |
 
 ![Demo](./screenshots/ide.gif)
 
