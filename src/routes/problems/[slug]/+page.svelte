@@ -128,6 +128,7 @@
     const fontSizes: number[] = Array.from({ length: 13 }, (_, i) => 12 + i); // 12..24
     let fontSize: number = $userSettingsStorage.editorFontSize ?? 14;
     let theme: ThemeChoice = $userSettingsStorage.theme ?? 'light';
+    let vimMode: 'off' | 'on' = $userSettingsStorage.vimMode ?? 'off';
 
     let tabs: TabMeta[] = getInitialTabs();
     let activeTabId: number = 0;
@@ -479,6 +480,13 @@
         }
     }
 
+    $: {
+        const currentVimMode = $userSettingsStorage.vimMode;
+        if (vimMode && currentVimMode !== vimMode) {
+            userSettingsStorage.update((s) => ({ ...s, vimMode }));
+        }
+    }
+
     function generateShortId(length: number = 4): string {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         let result = '';
@@ -759,6 +767,11 @@
                                 <option value="dark">Dark</option>
                                 <option value="light">Light</option>
                             </select>
+                            <label for="vim-mode-select">Key Bindings</label>
+                            <select id="vim-mode-select" bind:value={vimMode}>
+                                <option value="off">Standard</option>
+                                <option value="on">Vim</option>
+                            </select>
                         </div>
                     {/if}
                 </div>
@@ -768,7 +781,7 @@
 
         <div class="editor-container">
             {#if CodeEditor}
-                <svelte:component this={CodeEditor} bind:value={code} {language} {fontSize} {theme} />
+                <svelte:component this={CodeEditor} bind:value={code} {language} {fontSize} {theme} {vimMode} />
             {:else}
                 Loading...
             {/if}

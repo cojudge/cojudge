@@ -19,6 +19,7 @@
     let PlaygroundExecutionPanel: any = null;
     let fontSize = $userSettingsStorage.editorFontSize ?? 14;
     let theme = $userSettingsStorage.theme ?? 'light';
+    let vimMode = $userSettingsStorage.vimMode ?? 'off';
 
     const id = $page.params.id || '';
 
@@ -131,6 +132,7 @@
                     {language} 
                     {fontSize} 
                     {theme} 
+                    {vimMode}
                     readOnly={true}
                 />
             {/if}

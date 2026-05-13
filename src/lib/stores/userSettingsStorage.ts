@@ -9,6 +9,7 @@ export interface UserSettings {
     playgroundPreferredLanguage: ProgrammingLanguage;
     editorFontSize: number;
     theme: ThemeChoice;
+    vimMode: 'off' | 'on';
     isSidebarOpen: boolean;
 }
 
@@ -19,6 +20,7 @@ const defaultSettings: UserSettings = {
     playgroundPreferredLanguage: 'java',
     editorFontSize: 14,
     theme: 'light',
+    vimMode: 'off',
     isSidebarOpen: true,
 };
 
@@ -30,8 +32,9 @@ function normalizeSettings(input: any): UserSettings {
     const editorFontSize = Math.min(24, Math.max(12, size));
     const rawTheme = (input?.theme ?? defaultSettings.theme) as ThemeChoice;
     const theme: ThemeChoice = rawTheme === 'dark' ? 'dark' : 'light';
+    const vimMode = input?.vimMode === 'on' ? 'on' : 'off';
     const isSidebarOpen = typeof input?.isSidebarOpen === 'boolean' ? input.isSidebarOpen : defaultSettings.isSidebarOpen;
-    return { preferredLanguage, playgroundPreferredLanguage, editorFontSize, theme, isSidebarOpen };
+    return { preferredLanguage, playgroundPreferredLanguage, editorFontSize, theme, vimMode, isSidebarOpen };
 }
 
 // Load initial settings from localStorage if available
