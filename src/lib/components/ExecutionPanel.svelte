@@ -4,6 +4,7 @@
     import testCaseStore from "$lib/stores/testCaseStore";
     import Tooltip from "./Tooltip.svelte";
     import Visualization from "./Visualization.svelte";
+    import SaveStatus from "./SaveStatus.svelte";
     import userStore from "$lib/stores/userStore";
     import type { ProgrammingLanguage } from "$lib/utils/util";
     export let problem: any;
@@ -1035,6 +1036,9 @@
 
     <div class="actions">
         <div class="buttons">
+            <div style="display: flex; align-items: center; margin-right: 8px;">
+                <SaveStatus />
+            </div>
             <!-- Show/Hide panel button -->
             <Tooltip text={"Ctrl + J"}>
                 <button

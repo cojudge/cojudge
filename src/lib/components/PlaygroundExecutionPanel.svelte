@@ -3,6 +3,7 @@
     import type { ProgrammingLanguage } from "$lib/utils/util";
     import { onMount } from "svelte";
     import Tooltip from "./Tooltip.svelte";
+    import SaveStatus from "./SaveStatus.svelte";
 
     export let code: string;
     export let language: ProgrammingLanguage = "java";
@@ -348,6 +349,9 @@
 
     <div class="actions">
         <div class="buttons">
+            <div style="display: flex; align-items: center; margin-right: 8px;">
+                <SaveStatus />
+            </div>
             <Tooltip text={`${isMac ? "CMD" : "CONTROL"} + J`}>
                 <button
                     class="icon-btn"

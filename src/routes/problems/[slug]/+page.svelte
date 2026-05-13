@@ -1,4 +1,5 @@
 <script lang="ts">
+    import SaveStatus from '$lib/components/SaveStatus.svelte';
     import { page } from '$app/stores';
     import ExecutionPanel from '$lib/components/ExecutionPanel.svelte';
     import ShareModal from '$lib/components/ShareModal.svelte';
@@ -539,6 +540,9 @@
                     </svg>
                 </a>
             </Tooltip>
+            <div style="display: flex; align-items: center; margin: 0 8px;">
+                <SaveStatus />
+            </div>
             <Tooltip text="Ctrl + B" pos="bottom">
                 <button
                     class="back-button"

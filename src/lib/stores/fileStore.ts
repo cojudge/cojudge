@@ -1,5 +1,6 @@
 import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
+import { saveStatus } from './saveStatus';
 
 // The key we'll use to save the data in localStorage
 const STORAGE_KEY = 'files';
@@ -35,9 +36,16 @@ const initialValue: FileStoreShape = browser
 const fileStore = writable<FileStoreShape>(initialValue);
 
 // Subscribe to changes and save the entire object back to localStorage
+let saveTimeout: any;
 if (browser) {
     fileStore.subscribe((value) => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+        
+        saveStatus.set('saving');
+        if (saveTimeout) clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(() => {
+            saveStatus.set('saved');
+        }, 500);
     });
 }
 

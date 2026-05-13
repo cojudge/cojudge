@@ -218,7 +218,9 @@
         return out;
     }
 
+    import { saveStatus } from '$lib/stores/saveStatus';
     function importLocalStorageObject(obj: Record<string, unknown>) {
+        saveStatus.set('saving');
         const KNOWN_KEYS = new Set(['solutions', 'user-checkboxes', 'files', 'user-settings']);
         if ('solutions' in obj && obj['solutions'] && typeof obj['solutions'] === 'object') {
             codeStore.set(obj['solutions'] as Record<string, string>);
@@ -243,6 +245,10 @@
                 }
             }
         }
+        
+        setTimeout(() => {
+            saveStatus.set('saved');
+        }, 500);
     }
 
     async function onImportFileSelected(e: Event) {

@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
+import { saveStatus } from './saveStatus';
 
 // The key we'll use to save the data in localStorage
 const STORAGE_KEY = 'solutions';
@@ -16,9 +17,16 @@ const initialValue = browser
 const codeStore = writable<Record<string, string>>(initialValue);
 
 // Subscribe to changes and save the entire object back to localStorage
+let saveTimeout: any;
 if (browser) {
     codeStore.subscribe((value) => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+
+        saveStatus.set('saving');
+        if (saveTimeout) clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(() => {
+            saveStatus.set('saved');
+        }, 500);
     });
 }
 
