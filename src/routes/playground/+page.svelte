@@ -49,6 +49,7 @@ class Program
 }`,
         plaintext: ``
     };
+    const programmingLanguages: ProgrammingLanguage[] = ['java', 'python', 'cpp', 'csharp', 'rust', 'plaintext'];
 
     // Tabs are grouped by fileId (language-agnostic)
     type TabMeta = { fileId: string; fileName: string; isOpen: boolean; lastUpdated?: number };
@@ -60,6 +61,35 @@ class Program
         } catch (err) {
             return [];
         }
+    }
+
+    function isProgrammingLanguage(value: string): value is ProgrammingLanguage {
+        return programmingLanguages.includes(value as ProgrammingLanguage);
+    }
+
+    function normalizeContent(content: string | undefined | null): string {
+        return (content ?? '').replace(/\r\n/g, '\n').trim();
+    }
+
+    function hasNonDefaultContent(entry: FileEntry): entry is FileEntry & { language: ProgrammingLanguage } {
+        if (!isProgrammingLanguage(entry.language)) return false;
+        const content = normalizeContent(entry.content);
+        return content !== '' && content !== normalizeContent(starterCode[entry.language] ?? '');
+    }
+
+    function getLanguageForTab(fileId: string): ProgrammingLanguage {
+        const nonDefaultFiles = getFiles().filter((f): f is FileEntry & { language: ProgrammingLanguage } =>
+            f.fileId === fileId && hasNonDefaultContent(f)
+        );
+        if (nonDefaultFiles.length === 0) return language;
+
+        const currentLanguageFile = nonDefaultFiles.find((f) => f.language === language);
+        if (currentLanguageFile) return language;
+
+        const lastEditedFile = nonDefaultFiles.reduce((latest, candidate) =>
+            (candidate.lastUpdated ?? 0) >= (latest.lastUpdated ?? 0) ? candidate : latest
+        );
+        return lastEditedFile.language;
     }
 
     function getInitialTabs(): TabMeta[] {
@@ -563,7 +593,8 @@ class Program
         if (!fileId) return;
         const idx = tabs.findIndex((t) => t.fileId === fileId);
         if (idx === -1) return;
-        
+        const targetLanguage = getLanguageForTab(fileId);
+
         // Ensure tab is open
         if (!tabs[idx].isOpen) {
             tabs = tabs.map((t, i) => i === idx ? { ...t, isOpen: true } : t);
@@ -576,7 +607,8 @@ class Program
         }
 
         activeTabId = idx;
-        await loadOrInitFile(language);
+        language = targetLanguage;
+        await loadOrInitFile(targetLanguage);
     }
 
     // Runtime image name (like in ExecutionPanel)
