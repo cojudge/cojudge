@@ -548,9 +548,6 @@
                     </svg>
                 </a>
             </Tooltip>
-            <div style="display: flex; align-items: center; margin: 0 8px;">
-                <SaveStatus />
-            </div>
             <Tooltip text="Ctrl + B" pos="bottom">
                 <button
                     class="back-button"
