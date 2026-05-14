@@ -1,5 +1,6 @@
 <script lang="ts">
     import type * as Monaco from 'monaco-editor';
+    import { configureMonacoVim } from '$lib/utils/vimMode';
     import { onMount } from 'svelte';
     export let value = '';
     export let language = 'javascript';
@@ -19,23 +20,11 @@
         Promise.all([
             import('monaco-editor'),
             import('monaco-vim')
-        ]).then(([monaco, { initVimMode, VimMode }]) => {
+        ]).then(([monaco, vim]) => {
             if (disposed) return;
+            const { initVimMode, VimMode } = vim as any;
             monacoRef = monaco;
-            const Vim = VimMode.Vim;
-
-            // Fix for '%' jumping only one way in monaco-vim
-            Vim.defineEx('jump', 'j', (cm: any) => {
-                // In monaco-vim's CMAdapter, the editor instance is often 
-                // stored in different locations depending on the version.
-                // Usually it's either in cm.editor, cm.monaco, or we can use the existing 'editor' variable from onMount context.
-                const monacoEditor = cm.editor || editor;
-                if (monacoEditor) {
-                    monacoEditor.trigger('vim', 'editor.action.jumpToBracket', {});
-                }
-            });
-            Vim.map('%', ':jump<CR>', 'normal');
-            Vim.map('%', ':jump<CR>', 'visual');
+            configureMonacoVim(VimMode.Vim);
             
             monaco.editor.defineTheme('custom-dark', {
                 base: 'vs-dark',
@@ -117,13 +106,6 @@
             // Initial vim mode
             updateVimMode(vimMode);
 
-            // Create a subscriber for vimMode changes
-            const unsubscribeVim = () => {
-                if (vimModeInstance) {
-                    vimModeInstance.dispose();
-                    vimModeInstance = null;
-                }
-            };
         });
 
         return () => {
