@@ -51,13 +51,14 @@ check_internet() {
 }
 
 # Build image only if internet is available
-if check_internet; then
+if [ "${SKIP_BUILD:-false}" = "true" ]; then
+  printf "%bSkipping build as requested for image '%s'.%b\n" "$YELLOW" "$IMAGE" "$NC"
+elif check_internet; then
   printf "%bBuilding production image '%s'...%b\n" "$YELLOW" "$IMAGE" "$NC"
   docker build -t "${IMAGE}" .
 else
   printf "%bNo internet connection detected. Skipping build process.%b\n" "$YELLOW" "$NC"
   printf "%bUsing existing image '%s' if available...%b\n" "$YELLOW" "$IMAGE" "$NC"
-  
   # Check if the image exists locally
   if ! docker image inspect "${IMAGE}" >/dev/null 2>&1; then
     printf "%bImage '%s' not found locally and cannot build without internet.%b\n" "$RED" "$IMAGE" "$NC"
