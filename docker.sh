@@ -52,7 +52,7 @@ check_internet() {
 
 # Build image only if internet is available
 if check_internet; then
-  printf "%bBuilding image '%s'...%b\n" "$YELLOW" "$IMAGE" "$NC"
+  printf "%bBuilding production image '%s'...%b\n" "$YELLOW" "$IMAGE" "$NC"
   docker build -t "${IMAGE}" .
 else
   printf "%bNo internet connection detected. Skipping build process.%b\n" "$YELLOW" "$NC"
