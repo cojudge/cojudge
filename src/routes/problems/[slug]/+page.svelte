@@ -85,6 +85,7 @@
                         fileName: (tabs.find((t) => t.fileId === fileId)?.fileName) || 'Solution',
                         language: lang,
                         content: initialContent,
+                        viewState: null,
                         isActive: false,
                         order: tabIndex >= 0 ? tabIndex : undefined
                     } as FileEntry
@@ -109,9 +110,11 @@
         suppressSave = true;
         if (entry) {
             code = entry.content;
+            currentViewState = entry.viewState ?? null;
         } else {
             const starter = $codeStore[codeKey()] ?? data.problem.starterCode?.[lang] ?? '';
             code = starter;
+            currentViewState = null;
             ensureEntry(currentId, lang, starter);
         }
         await tick();
@@ -119,6 +122,8 @@
     }
 
     let code: string;
+    let currentViewState: string | null = null;
+    let editorComponent: any;
     let isResizing = false;
     let workspaceElement: HTMLElement;
     let openedHints = new Set<number>([]);
@@ -175,7 +180,7 @@
     }
 
     // New tab state (simple add button)
-    async function addNewTab(customName: string = '', customContent: string = '', customLang: ProgrammingLanguage | null = null) {
+    async function addNewTab(customName: string = '', customContent: string = '', customLang: ProgrammingLanguage | null = null, customViewState: string | null = null) {
         const targetLang = customLang || language;
         const newTabName = customName || `Solution-${tabs.length + 1}`;
         const nextId = uuidv4();
@@ -192,6 +197,7 @@
                     fileName,
                     language: targetLang,
                     content: newCode,
+                    viewState: customViewState,
                     isActive: false,
                     order: tabs.length - 1
                 } as FileEntry
@@ -260,6 +266,7 @@
     }
     $: if (!suppressSave && code !== undefined) {
         const fkey = fileKey();
+        const latestViewState = editorComponent?.getViewState?.() || currentViewState;
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
             if (activeTabId < 0 || activeTabId >= tabs.length) return s;
@@ -269,12 +276,14 @@
             );
             if (existingFile) {
                 existingFile.content = code;
+                existingFile.viewState = latestViewState;
             } else {
                 files = [...files, {
                     fileId: tabs[activeTabId].fileId,
                     fileName: tabs[activeTabId].fileName,
                     language: language,
                     content: code,
+                    viewState: latestViewState,
                     isActive: false
                 } as FileEntry];
             }
@@ -361,7 +370,7 @@
             }
         }
 
-        const forkData = ($page.state as any).forkData as { content: string; language: ProgrammingLanguage; fileName: string } | undefined;
+        const forkData = ($page.state as any).forkData as { content: string; language: ProgrammingLanguage; viewState?: string; fileName: string } | undefined;
         
         if (forkData) {
             if (forkData.language) {
@@ -370,9 +379,10 @@
             }
             
             code = forkData.content;
+            currentViewState = forkData.viewState ?? null;
             
             if (forkData.fileName) {
-                addNewTab(`Fork of ${forkData.fileName}`, forkData.content);
+                addNewTab(`Fork of ${forkData.fileName}`, forkData.content, language, currentViewState);
             }
         }
     });
@@ -392,18 +402,44 @@
                 toggleProblemPaneVisibility();
             }
         };
+        const handleUnload = () => {
+            saveCurrentViewState();
+        };
         document.addEventListener('click', handleDocClick);
         document.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('beforeunload', handleUnload);
         return () => {
             document.removeEventListener('click', handleDocClick);
             document.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('beforeunload', handleUnload);
         };
     });
+
+    function saveCurrentViewState() {
+        if (!editorComponent || activeTabId < 0 || activeTabId >= tabs.length) return;
+        const state = editorComponent.getViewState();
+        if (!state) return;
+        
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            const existingFile = files.find(x => 
+                x.fileId === tabs[activeTabId].fileId &&
+                x.language === language
+            );
+            if (existingFile) {
+                existingFile.viewState = state;
+            }
+            return {...s, [fkey]: JSON.stringify(files)};
+        });
+        currentViewState = state;
+    }
 
     async function activateTab(fileId?: string) {
         if (!fileId) return;
         const idx = tabs.findIndex((t) => t.fileId === fileId);
         if (idx === -1) return;
+        saveCurrentViewState();
         activeTabId = idx;
         await loadOrInitFile(language);
     }
@@ -507,12 +543,14 @@
         const files = getFiles();
         const currentFile = files.find(f => f.fileId === currentTab.fileId && f.language === language);
         const content = currentFile ? currentFile.content : (data.problem.starterCode?.[language] ?? '');
+        const viewState = currentFile ? currentFile.viewState : (editorComponent?.getViewState() || null);
         
         // Save to Firestore
         try {
             await setDoc(doc(fb.db, 'shares', shareId), {
                 content,
                 language,
+                viewState,
                 fileName: currentTab.fileName,
                 createdAt: new Date(),
                 problemId: data.problem.id,
@@ -637,6 +675,7 @@
                         on:mousedown={() => (suppressSave = true)}
                         on:keydown={() => (suppressSave = true)}
                         on:change={() => {
+                            saveCurrentViewState();
                             // Persist preference; actual loading will be triggered by reactive `$: if (language)`
                             userSettingsStorage.update((s) => ({ ...s, preferredLanguage: language }));
                         }}
@@ -778,7 +817,16 @@
 
         <div class="editor-container">
             {#if CodeEditor}
-                <svelte:component this={CodeEditor} bind:value={code} {language} {fontSize} {theme} {vimMode} />
+                <svelte:component 
+                    this={CodeEditor} 
+                    bind:this={editorComponent}
+                    bind:value={code} 
+                    {language} 
+                    {fontSize} 
+                    {theme} 
+                    {vimMode} 
+                    viewState={currentViewState}
+                />
             {:else}
                 Loading...
             {/if}

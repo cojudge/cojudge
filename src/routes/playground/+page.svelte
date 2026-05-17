@@ -152,6 +152,7 @@ class Program
                         fileName: tab?.fileName || 'Solution',
                         language: lang,
                         content: initialContent,
+                        viewState: null,
                         output: '',
                         logs: '',
                         isActive: false,
@@ -174,6 +175,7 @@ class Program
         suppressSave = true;
         if (entry) {
             code = entry.content;
+            currentViewState = entry.viewState ?? null;
             output = entry.output || '';
             logs = entry.logs || '';
             lastSharedContent = entry.lastSharedContent;
@@ -181,6 +183,7 @@ class Program
             const cStore = get(codeStore);
             const starter = cStore[codeKey()] ?? starterCode[lang] ?? '';
             code = starter;
+            currentViewState = null;
             output = '';
             logs = '';
             lastSharedContent = undefined;
@@ -192,6 +195,8 @@ class Program
     }
 
     let code: string;
+    let currentViewState: string | null = null;
+    let editorComponent: any;
     let output: string = '';
     let logs: string = '';
     let lastSharedContent: string | undefined;
@@ -334,6 +339,7 @@ class Program
                     fileName,
                     language: language,
                     content: newCode,
+                    viewState: null,
                     output: '',
                     logs: '',
                     isActive: false,
@@ -404,6 +410,7 @@ class Program
     $: if (!suppressSave && (code !== undefined || output !== undefined || logs !== undefined)) {
         const fkey = fileKey();
         const now = Date.now();
+        const latestViewState = editorComponent?.getViewState?.() || currentViewState;
 
         if (activeTabId >= 0 && activeTabId < tabs.length) {
              tabs = tabs.map((t, i) => i === activeTabId ? { ...t, lastUpdated: now } : t);
@@ -418,6 +425,7 @@ class Program
             );
             if (existingFile) {
                 existingFile.content = code;
+                existingFile.viewState = latestViewState;
                 existingFile.output = output;
                 existingFile.logs = logs;
                 existingFile.lastUpdated = now;
@@ -427,6 +435,7 @@ class Program
                     fileName: tabs[activeTabId].fileName,
                     language: language,
                     content: code,
+                    viewState: latestViewState,
                     output: output,
                     logs: logs,
                     isActive: false,
@@ -589,11 +598,33 @@ class Program
         };
     });
 
+    function saveCurrentViewState() {
+        if (!editorComponent || activeTabId < 0 || activeTabId >= tabs.length) return;
+        const state = editorComponent.getViewState();
+        if (!state) return;
+        
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            const existingFile = files.find(x => 
+                x.fileId === tabs[activeTabId].fileId &&
+                x.language === language
+            );
+            if (existingFile) {
+                existingFile.viewState = state;
+            }
+            return {...s, [fkey]: JSON.stringify(files)};
+        });
+        currentViewState = state;
+    }
+
     async function activateTab(fileId?: string) {
         if (!fileId) return;
         const idx = tabs.findIndex((t) => t.fileId === fileId);
         if (idx === -1) return;
         const targetLanguage = getLanguageForTab(fileId);
+
+        saveCurrentViewState();
 
         // Ensure tab is open
         if (!tabs[idx].isOpen) {
@@ -686,10 +717,10 @@ class Program
             isFirebaseAvailable = true;
         }
 
-        const forkData = ($page.state as any).forkData as { content: string; language: ProgrammingLanguage; fileName: string } | undefined;
+        const forkData = ($page.state as any).forkData as { content: string; language: ProgrammingLanguage; viewState?: string; fileName: string } | undefined;
         
         if (forkData) {
-            const { content, language: lang, fileName } = forkData;
+            const { content, language: lang, viewState, fileName } = forkData;
             
             // Add as new tab
             const newTabName = fileName ? `Fork of ${fileName}` : `Forked Solution`;
@@ -710,6 +741,7 @@ class Program
                         fileName: newTabName,
                         language: lang,
                         content: content,
+                        viewState: viewState,
                         output: '',
                         logs: '',
                         isActive: false,
@@ -759,6 +791,7 @@ class Program
                                     fileName: newTabName,
                                     language: data.language,
                                     content: data.content,
+                                    viewState: data.viewState,
                                     output: '',
                                     logs: '',
                                     isActive: false,
@@ -817,6 +850,7 @@ class Program
             const files = getFiles();
             const currentFile = files.find(f => f.fileId === currentTab.fileId && f.language === language);
             const content = currentFile ? currentFile.content : (starterCode[language] ?? '');
+            const viewState = currentFile ? currentFile.viewState : (editorComponent?.getViewState() || null);
             const fileOutput = currentFile ? (currentFile.output || '') : '';
             const fileLogs = currentFile ? (currentFile.logs || '') : '';
             
@@ -828,6 +862,7 @@ class Program
                     await updateDoc(doc(db, 'shares', shareId), {
                         content,
                         language,
+                        viewState,
                         fileName: currentTab.fileName,
                         output: fileOutput,
                         logs: fileLogs,
@@ -868,6 +903,7 @@ class Program
                 await setDoc(doc(db, 'shares', shareId), {
                     content,
                     language,
+                    viewState,
                     fileName: currentTab.fileName,
                     output: fileOutput,
                     logs: fileLogs,
@@ -992,11 +1028,16 @@ class Program
                 addNewTab('tab');
             }
         };
+        const handleUnload = () => {
+            saveCurrentViewState();
+        };
         document.addEventListener('click', handleDocClick);
         window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('beforeunload', handleUnload);
         return () => {
             document.removeEventListener('click', handleDocClick);
             window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('beforeunload', handleUnload);
         };
     });
 </script>
@@ -1189,6 +1230,7 @@ class Program
                         on:mousedown={() => (suppressSave = true)}
                         on:keydown={() => (suppressSave = true)}
                         on:change={() => {
+                            saveCurrentViewState();
                             // Persist preference; actual loading will be triggered by reactive `$: if (language)`
                             userSettingsStorage.update((s) => ({ ...s, playgroundPreferredLanguage: language }));
                         }}
@@ -1280,7 +1322,16 @@ class Program
 
         <div class="editor-container">
             {#if CodeEditor}
-                <svelte:component this={CodeEditor} bind:value={code} {language} {fontSize} {theme} {vimMode} />
+                <svelte:component 
+                    this={CodeEditor} 
+                    bind:this={editorComponent}
+                    bind:value={code} 
+                    {language} 
+                    {fontSize} 
+                    {theme} 
+                    {vimMode} 
+                    viewState={currentViewState}
+                />
             {:else}
                 Loading...
             {/if}

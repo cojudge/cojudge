@@ -8,6 +8,7 @@
 
     let code = '';
     let language = 'java';
+    let viewState = '';
     let fileName = '';
     let problemId = '';
     let problemTitle = '';
@@ -42,6 +43,7 @@
                 const data = snap.data();
                 code = data.content || '';
                 language = data.language || 'java';
+                viewState = data.viewState || '';
                 fileName = data.fileName || 'Solution';
                 problemId = data.problemId || '';
                 problemTitle = data.problemTitle || '';
@@ -65,6 +67,7 @@
                     forkData: {
                         content: code,
                         language: language,
+                        viewState: viewState,
                         fileName: fileName
                     }
                 }
@@ -75,6 +78,7 @@
                     forkData: {
                         content: code,
                         language: language,
+                        viewState: viewState,
                         fileName: fileName
                     }
                 }
@@ -134,6 +138,7 @@
                     {theme} 
                     {vimMode}
                     readOnly={true}
+                    viewState={viewState}
                 />
             {/if}
         </div>

@@ -8,12 +8,19 @@
     export let theme: 'dark' | 'light' = 'light';
     export let vimMode: 'off' | 'on' = 'off';
     export let readOnly: boolean = false;
+    export let viewState: string | null = null;
 
     let editor: Monaco.editor.IStandaloneCodeEditor | null = null;
     let editorElement: HTMLDivElement;
     let monacoRef: any;
     let vimModeInstance: any = null;
     let vimStatusElement: HTMLDivElement;
+
+    export function getViewState() {
+        if (!editor) return null;
+        const state = editor.saveViewState();
+        return state ? JSON.stringify(state) : null;
+    }
 
     onMount(() => {
         let disposed = false;
@@ -71,17 +78,25 @@
             const themeId = theme === 'light' ? 'custom-light' : 'custom-dark';
 
             editor = monaco.editor.create(editorElement, {
-            value,
-            language,
-            theme: themeId,
-            automaticLayout: true,
-            fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-            fontSize,
-            readOnly,
-            minimap: {
-                enabled: false
+                value,
+                language,
+                theme: themeId,
+                automaticLayout: true,
+                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+                fontSize,
+                readOnly,
+                minimap: {
+                    enabled: false
+                }
+            });
+
+            if (viewState) {
+                try {
+                    editor.restoreViewState(JSON.parse(viewState));
+                } catch (e) {
+                    console.error('Failed to restore view state', e);
+                }
             }
-        });
 
             editor.onDidChangeModelContent(() => {
                 if (!editor) return;
@@ -154,6 +169,13 @@
         const current = editor.getValue();
         if (current !== value) {
             editor.setValue(value);
+            if (viewState) {
+                try {
+                    editor.restoreViewState(JSON.parse(viewState));
+                } catch (e) {
+                    console.error('Failed to restore view state', e);
+                }
+            }
         }
     }
 
