@@ -90,14 +90,6 @@
                 }
             });
 
-            if (viewState) {
-                try {
-                    editor.restoreViewState(JSON.parse(viewState));
-                } catch (e) {
-                    console.error('Failed to restore view state', e);
-                }
-            }
-
             editor.onDidChangeModelContent(() => {
                 if (!editor) return;
                 value = editor.getValue();
@@ -169,13 +161,24 @@
         const current = editor.getValue();
         if (current !== value) {
             editor.setValue(value);
-            if (viewState) {
-                try {
-                    editor.restoreViewState(JSON.parse(viewState));
-                } catch (e) {
-                    console.error('Failed to restore view state', e);
-                }
+        }
+    }
+
+    // Restore viewState when the prop changes (e.g., switching files/tabs)
+    $: if (editor && viewState !== undefined) {
+        if (viewState) {
+            try {
+                editor.restoreViewState(JSON.parse(viewState));
+            } catch (e) {
+                console.error('Failed to restore view state', e);
             }
+        } else {
+            const model = editor.getModel();
+            if (model) {
+                editor.trigger('viewState', 'editor.unfoldAll', {});
+            }
+            editor.setScrollTop(0);
+            editor.setPosition({ lineNumber: 1, column: 1 });
         }
     }
 

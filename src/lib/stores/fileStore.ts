@@ -19,7 +19,7 @@ export type FileEntry = {
     shareId?: string;
     lastSharedContent?: string;
     isOpen?: boolean;
-    viewState?: string;
+    viewState?: string | null;
 };
 
 // Dictionary: key = problem slug, value = JSON string of FileEntry[]
