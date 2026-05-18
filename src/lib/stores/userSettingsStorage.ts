@@ -4,6 +4,8 @@ import { writable } from 'svelte/store';
 
 export type ThemeChoice = 'dark' | 'light';
 
+export type ActivePanel = 'explorer' | 'search' | null;
+
 export interface UserSettings {
     preferredLanguage: ProgrammingLanguage;
     playgroundPreferredLanguage: ProgrammingLanguage;
@@ -11,6 +13,7 @@ export interface UserSettings {
     theme: ThemeChoice;
     vimMode: 'off' | 'on';
     isSidebarOpen: boolean;
+    activePanel: ActivePanel;
 }
 
 const STORAGE_KEY = 'user-settings';
@@ -22,6 +25,7 @@ const defaultSettings: UserSettings = {
     theme: 'light',
     vimMode: 'off',
     isSidebarOpen: true,
+    activePanel: 'explorer',
 };
 
 function normalizeSettings(input: any): UserSettings {
@@ -34,7 +38,9 @@ function normalizeSettings(input: any): UserSettings {
     const theme: ThemeChoice = rawTheme === 'dark' ? 'dark' : 'light';
     const vimMode = input?.vimMode === 'on' ? 'on' : 'off';
     const isSidebarOpen = typeof input?.isSidebarOpen === 'boolean' ? input.isSidebarOpen : defaultSettings.isSidebarOpen;
-    return { preferredLanguage, playgroundPreferredLanguage, editorFontSize, theme, vimMode, isSidebarOpen };
+    const validPanels: ActivePanel[] = ['explorer', 'search', null];
+    const activePanel = validPanels.includes(input?.activePanel as ActivePanel) ? input.activePanel as ActivePanel : defaultSettings.activePanel;
+    return { preferredLanguage, playgroundPreferredLanguage, editorFontSize, theme, vimMode, isSidebarOpen, activePanel };
 }
 
 // Load initial settings from localStorage if available

@@ -144,3 +144,5 @@ test-results/**/*
 
 # User Progress Data
 .cojudge_progress.json
+
+build/**/*

@@ -7,7 +7,7 @@
     import { ensureAuthenticated, initFirebase } from '$lib/firebase';
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { type FileEntry } from '$lib/stores/fileStore.js';
-    import userSettingsStorage, { type ThemeChoice } from '$lib/stores/userSettingsStorage';
+    import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
     import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
     import QRCode from 'qrcode';
@@ -618,11 +618,11 @@ class Program
         currentViewState = state;
     }
 
-    async function activateTab(fileId?: string) {
+    async function activateTab(fileId?: string, preferredLang?: ProgrammingLanguage) {
         if (!fileId) return;
         const idx = tabs.findIndex((t) => t.fileId === fileId);
         if (idx === -1) return;
-        const targetLanguage = getLanguageForTab(fileId);
+        const targetLanguage = preferredLang || getLanguageForTab(fileId);
 
         saveCurrentViewState();
 
@@ -982,12 +982,148 @@ class Program
         showSearch = false;
     }
 
-    let isSidebarOpen = $userSettingsStorage.isSidebarOpen ?? true;
-    $: {
-        const currentSidebarState = $userSettingsStorage.isSidebarOpen;
-        if (currentSidebarState !== isSidebarOpen) {
-             userSettingsStorage.update(s => ({ ...s, isSidebarOpen }));
+    let activePanel: ActivePanel = $userSettingsStorage.activePanel ?? 'explorer';
+    $: isSidebarOpen = activePanel !== null;
+
+    function persistPanel() {
+        userSettingsStorage.update(s => ({
+            ...s,
+            activePanel,
+            isSidebarOpen: activePanel !== null,
+        }));
+    }
+
+    let globalSearchQuery = '';
+    let globalSearchInputEl: HTMLInputElement | null = null;
+    let globalSearchCaseSensitive = false;
+    let globalSearchRegex = false;
+    let collapsedResults = new Set<string>();
+    let globalSearchResults: { fileId: string; fileName: string; language: ProgrammingLanguage; fileNameMatch: boolean; matches: { line: number; text: string; language: ProgrammingLanguage }[] }[] = [];
+
+    function toggleResultCollapse(fileId: string) {
+        if (collapsedResults.has(fileId)) {
+            collapsedResults.delete(fileId);
+        } else {
+            collapsedResults.add(fileId);
         }
+        collapsedResults = collapsedResults; // Trigger reactivity
+    }
+
+    function performGlobalSearch() {
+        if (!globalSearchQuery) {
+            globalSearchResults = [];
+            return;
+        }
+        const query = globalSearchQuery;
+        const caseSensitive = globalSearchCaseSensitive;
+        const useRegex = globalSearchRegex;
+
+        let pattern: RegExp;
+        let fileNamePattern: RegExp;
+        try {
+            const flags = caseSensitive ? 'g' : 'gi';
+            if (useRegex) {
+                pattern = new RegExp(query, flags);
+                fileNamePattern = new RegExp(query, flags);
+            } else {
+                const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                pattern = new RegExp(escaped, flags);
+                fileNamePattern = new RegExp(escaped, flags);
+            }
+        } catch {
+            globalSearchResults = [];
+            return;
+        }
+
+        const files = getFiles();
+        const resultsMap = new Map<string, { fileId: string; fileName: string; language: ProgrammingLanguage; fileNameMatch: boolean; matches: { line: number; text: string; language: ProgrammingLanguage }[] }>();
+
+        // First, check filenames from tabs
+        for (const t of tabs) {
+            fileNamePattern.lastIndex = 0;
+            if (fileNamePattern.test(t.fileName)) {
+                resultsMap.set(t.fileId, {
+                    fileId: t.fileId,
+                    fileName: t.fileName,
+                    language: getLanguageForTab(t.fileId),
+                    fileNameMatch: true,
+                    matches: []
+                });
+            }
+        }
+
+        // Then, check all contents in all FileEntries
+        for (const f of files) {
+            const content = f.content ?? '';
+            const lines = content.split('\n');
+            const fileMatches: { line: number; text: string; language: ProgrammingLanguage }[] = [];
+            for (let i = 0; i < lines.length; i++) {
+                const lineText = lines[i];
+                pattern.lastIndex = 0;
+                if (pattern.test(lineText)) {
+                    fileMatches.push({ line: i + 1, text: lineText, language: f.language as ProgrammingLanguage });
+                }
+            }
+
+            if (fileMatches.length > 0) {
+                let existing = resultsMap.get(f.fileId);
+                if (!existing) {
+                    const tab = tabs.find(t => t.fileId === f.fileId);
+                    const fname = tab ? tab.fileName : (f.fileName || 'Solution');
+                    existing = {
+                        fileId: f.fileId,
+                        fileName: fname,
+                        language: f.language as ProgrammingLanguage,
+                        fileNameMatch: false,
+                        matches: []
+                    };
+                    resultsMap.set(f.fileId, existing);
+                }
+                // Only add matches if they aren't already added (avoid duplicates across languages if content is identical)
+                for (const m of fileMatches) {
+                    if (!existing.matches.find(exm => exm.line === m.line && exm.text === m.text && exm.language === m.language)) {
+                        existing.matches.push(m);
+                    }
+                }
+            }
+        }
+
+        globalSearchResults = Array.from(resultsMap.values());
+    }
+
+    function activatePanel(panel: ActivePanel) {
+        if (activePanel === panel) {
+            activePanel = null;
+        } else {
+            activePanel = panel;
+            if (panel === 'search') {
+                tick().then(() => globalSearchInputEl?.focus());
+            }
+        }
+        persistPanel();
+    }
+
+    function highlightMatch(text: string, query: string, caseSensitive: boolean, useRegex: boolean): string {
+        if (!query) return escapeHtml(text);
+        try {
+            const flags = caseSensitive ? 'g' : 'gi';
+            const regex = useRegex ? new RegExp(query, flags) : new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
+            return escapeHtml(text).replace(regex, '<mark>$&</mark>');
+        } catch {
+            return escapeHtml(text);
+        }
+    }
+
+    function escapeHtml(s: string): string {
+        return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    $: {
+        globalSearchQuery;
+        globalSearchCaseSensitive;
+        globalSearchRegex;
+        tabs;
+        performGlobalSearch();
     }
     $: hasOpenTabs = tabs.some(t => t.isOpen);
     $: activeTabName = tabs[activeTabId]?.fileName;
@@ -1014,12 +1150,22 @@ class Program
             // Ctrl+Shift+E or Cmd+Shift+E
             if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'e') {
                 e.preventDefault();
-                isSidebarOpen = !isSidebarOpen;
+                activePanel = activePanel === 'explorer' ? null : 'explorer';
+                persistPanel();
             }
             // Ctrl+B or Cmd+B
             if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'b') {
                 e.preventDefault();
-                isSidebarOpen = !isSidebarOpen;
+                activePanel = activePanel !== null ? null : 'explorer';
+                persistPanel();
+            }
+            // Ctrl+Shift+F or Cmd+Shift+F
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'f') {
+                e.preventDefault();
+                activePanel = activePanel === 'search' ? null : 'search';
+                if (activePanel === 'search') {
+                    tick().then(() => globalSearchInputEl?.focus());
+                }
             }
             // Ctrl+Alt+N or Cmd+Alt+N
             if ((e.ctrlKey || e.metaKey) && e.altKey && (e.key.toLowerCase() === 'n' || e.code === 'KeyN')) {
@@ -1056,8 +1202,8 @@ class Program
             </svg>
         </a>
         <button 
-            class="activity-icon {isSidebarOpen ? 'active' : ''}" 
-            on:click={() => isSidebarOpen = !isSidebarOpen}
+            class="activity-icon {activePanel === 'explorer' ? 'active' : ''}" 
+            on:click={() => activatePanel('explorer')}
             title="Explorer"
         >
             <!-- Explorer Icon (Files) -->
@@ -1066,11 +1212,23 @@ class Program
                 <path d="M13 2v7h7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </button>
+        <button 
+            class="activity-icon {activePanel === 'search' ? 'active' : ''}" 
+            on:click={() => activatePanel('search')}
+            title="Search"
+        >
+            <!-- Search Icon -->
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
     </div>
 
     <!-- Left Sidebar -->
     {#if isSidebarOpen}
     <div class="sidebar">
+        {#if activePanel === 'explorer'}
         <div class="sidebar-header">
             <span>EXPLORER</span>
             <button class="icon-button" on:click={() => addNewTab('sidebar')} title="New File">
@@ -1144,6 +1302,82 @@ class Program
                 {/if}
             {/each}
         </div>
+        {:else if activePanel === 'search'}
+        <div class="sidebar-header">
+            <span>SEARCH</span>
+        </div>
+        <div class="search-panel">
+            <div class="search-input-row">
+                <div class="search-input-container">
+                    <input
+                        type="text"
+                        class="search-input"
+                        placeholder="Search"
+                        bind:value={globalSearchQuery}
+                        bind:this={globalSearchInputEl}
+                        spellcheck="false"
+                    />
+                    <div class="search-toggle-buttons">
+                        <button
+                            class="search-toggle-btn {globalSearchCaseSensitive ? 'active' : ''}"
+                            on:click={() => { globalSearchCaseSensitive = !globalSearchCaseSensitive; persistPanel(); }}
+                            title="Match Case (Alt+C)"
+                        >Aa</button>
+                        <button
+                            class="search-toggle-btn {globalSearchRegex ? 'active' : ''}"
+                            on:click={() => { globalSearchRegex = !globalSearchRegex; persistPanel(); }}
+                            title="Use Regular Expression (Alt+R)"
+                        >.*</button>
+                    </div>
+                </div>
+            </div>
+            {#if globalSearchQuery.trim()}
+                <div class="search-results-summary">
+                    {#if globalSearchResults.length === 0}
+                        No results found.
+                    {:else}
+                        {@const contentMatches = globalSearchResults.reduce((sum, r) => sum + r.matches.length, 0)}
+                        {@const fileNameOnlyMatches = globalSearchResults.filter(r => r.fileNameMatch && r.matches.length === 0).length}
+                        {contentMatches + " "}{#if contentMatches === 1} result{:else} results{/if}{#if fileNameOnlyMatches > 0} + {fileNameOnlyMatches} filename match{#if fileNameOnlyMatches !== 1}es{/if}{/if} in {globalSearchResults.length} file{#if globalSearchResults.length !== 1}s{/if}
+                    {/if}
+                </div>
+                <div class="search-results">
+                    {#each globalSearchResults as result}
+                        <div class="search-result-group">
+                            <!-- svelte-ignore a11y-click-events-have-key-events -->
+                            <!-- svelte-ignore a11y-no-static-element-interactions -->
+                            <div class="search-result-file" on:click={() => toggleResultCollapse(result.fileId)}>
+                                <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: rotate({collapsedResults.has(result.fileId) ? '0deg' : '90deg'});">
+                                    <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <div class="search-result-file-info" on:click|stopPropagation={() => activateTab(result.fileId)}>
+                                    <svg class="file-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M13 2v7h7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <span class="file-name">{@html highlightMatch(result.fileName, globalSearchQuery, globalSearchCaseSensitive, globalSearchRegex)}</span>
+                                </div>
+                                {#if result.matches.length > 0}
+                                <span class="search-result-count">{result.matches.length}</span>
+                                {/if}
+                            </div>
+                            {#if !collapsedResults.has(result.fileId)}
+                                {#each result.matches as match}
+                                    {@const highlightedText = highlightMatch(match.text, globalSearchQuery, globalSearchCaseSensitive, globalSearchRegex)}
+                                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                                    <!-- svelte-ignore a11y-no-static-element-interactions -->
+                                    <div class="search-result-match" on:click={() => { activateTab(result.fileId, match.language); }}>
+                                        <span class="search-result-line">{match.line}</span>
+                                        <span class="search-result-text">{@html highlightedText}</span>
+                                    </div>
+                                {/each}
+                            {/if}
+                        </div>
+                    {/each}
+                </div>
+            {/if}
+        </div>
+        {/if}
     </div>
     {/if}
 
@@ -1351,15 +1585,21 @@ class Program
                     </div>
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <!-- svelte-ignore a11y-no-static-element-interactions -->
-                    <div class="shortcut-row" on:click={() => isSidebarOpen = !isSidebarOpen}>
+                    <div class="shortcut-row" on:click={() => { activePanel = activePanel === 'explorer' ? null : 'explorer'; persistPanel(); }}>
                         <span class="shortcut-label">Toggle Explorer</span>
                         <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">SHIFT</span><span class="key">E</span></span>
                     </div>
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <!-- svelte-ignore a11y-no-static-element-interactions -->
-                    <div class="shortcut-row" on:click={() => isSidebarOpen = !isSidebarOpen}>
+                    <div class="shortcut-row" on:click={() => { activePanel = activePanel !== null ? null : 'explorer'; persistPanel(); }}>
                         <span class="shortcut-label">Toggle Sidebar</span>
                         <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">B</span></span>
+                    </div>
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <!-- svelte-ignore a11y-no-static-element-interactions -->
+                    <div class="shortcut-row" on:click={() => { activePanel = activePanel === 'search' ? null : 'search'; persistPanel(); if (activePanel === 'search') tick().then(() => globalSearchInputEl?.focus()); }}>
+                        <span class="shortcut-label">Search in Files</span>
+                        <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">SHIFT</span><span class="key">F</span></span>
                     </div>
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -1392,7 +1632,7 @@ class Program
                     bind:this={searchInputEl}
                     bind:value={searchQuery}
                     placeholder="Search files by name..."
-                    class="search-input"
+                    class="search-file-input"
                     on:keydown={(e) => {
                         if (e.key === 'Escape') closeSearch();
                         if (e.key === 'ArrowDown') {
@@ -1543,6 +1783,8 @@ class Program
         overflow: hidden;
         text-overflow: ellipsis;
         flex: 1;
+        user-select: none;
+        -webkit-user-select: none;
     }
 
     .file-actions {
@@ -1580,6 +1822,186 @@ class Program
         padding: 2px 4px;
         font-size: 0.9rem;
         width: 100%;
+    }
+
+    /* Search Panel Styles */
+    .search-panel {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        overflow: hidden;
+    }
+
+    .search-input-row {
+        padding: var(--spacing-2);
+    }
+
+    .search-input-container {
+        display: flex;
+        align-items: center;
+        border: 1px solid var(--color-border);
+        border-radius: 2px;
+        padding: 2px;
+        transition: border-color 0.2s;
+    }
+
+    .search-input-container:focus-within {
+        border-color: var(--color-highlight);
+    }
+
+    .search-input {
+        width: 100%;
+        background: transparent;
+        border: none;
+        color: var(--color-text);
+        outline: none;
+        font-family: inherit;
+        flex: 1;
+    }
+
+    .search-input::placeholder {
+        color: var(--color-text-secondary);
+        opacity: 0.5;
+    }
+
+    .search-toggle-buttons {
+        display: flex;
+        gap: 2px;
+        padding-right: 2px;
+    }
+
+    .search-toggle-btn {
+        background: transparent;
+        border: 1px solid transparent;
+        color: var(--color-text-secondary);
+        border-radius: 3px;
+        padding: 1px 4px;
+        font-size: 0.75rem;
+        cursor: pointer;
+        font-family: var(--font-mono, monospace);
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 20px;
+        height: 20px;
+    }
+
+    .search-toggle-btn:hover {
+        background: var(--color-second-bg);
+        color: var(--color-text);
+    }
+
+    .search-toggle-btn.active {
+        color: var(--color-text);
+        background: rgba(var(--color-highlight-rgb, 59, 130, 246), 0.3);
+        border-color: var(--color-highlight);
+    }
+
+    .search-results-summary {
+        padding: 4px var(--spacing-2);
+        font-size: 0.75rem;
+        color: var(--color-text-secondary);
+        opacity: 0.8;
+    }
+
+    .search-results {
+        flex: 1;
+        overflow-y: auto;
+        padding: 0;
+    }
+
+    .search-result-group {
+        margin-bottom: 0;
+    }
+
+    .search-result-file {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px var(--spacing-1);
+        cursor: pointer;
+        color: var(--color-text);
+        font-size: 0.85rem;
+        font-weight: 400;
+        user-select: none;
+    }
+
+    .search-result-file-info {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .search-result-file:hover {
+        background-color: var(--color-second-bg);
+    }
+
+    .chevron-icon {
+        color: var(--color-text-secondary);
+        opacity: 0.7;
+        flex-shrink: 0;
+        transition: transform 0.1s ease;
+    }
+
+    .file-icon {
+        color: var(--color-text-secondary);
+        opacity: 0.8;
+        flex-shrink: 0;
+    }
+
+    .search-result-count {
+        margin-left: auto;
+        background: var(--color-second-bg);
+        color: var(--color-text-secondary);
+        border-radius: 10px;
+        padding: 0 6px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        min-width: 18px;
+        text-align: center;
+    }
+
+    .search-result-match {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        padding: 2px var(--spacing-2) 2px 42px;
+        cursor: pointer;
+        font-size: 0.82rem;
+        color: var(--color-text-secondary);
+        white-space: nowrap;
+    }
+
+    .search-result-match:hover {
+        background-color: var(--color-second-bg);
+        color: var(--color-text);
+    }
+
+    .search-result-line {
+        color: var(--color-text-secondary);
+        opacity: 0.5;
+        font-size: 0.75rem;
+        flex-shrink: 0;
+        min-width: 24px;
+        text-align: right;
+    }
+
+    .search-result-text {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: pre;
+        font-family: var(--font-mono, monospace);
+        font-size: 0.8rem;
+    }
+
+    .search-result-text :global(mark), .search-result-file :global(mark) {
+        background: rgba(234, 179, 8, 0.4); /* VSCode-like yellow highlight */
+        color: inherit;
+        border-radius: 1px;
     }
 
     /* Right Pane Layout */
@@ -1877,6 +2299,14 @@ class Program
     }
 
     .search-input {
+        width: 100%;
+        background: var(--color-bg);
+        color: var(--color-text);
+        border: none;
+        outline: none;
+    }
+
+    .search-file-input {
         width: 100%;
         padding: 12px 16px;
         font-size: 1.1rem;
