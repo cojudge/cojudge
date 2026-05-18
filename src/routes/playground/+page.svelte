@@ -982,7 +982,7 @@ class Program
         showSearch = false;
     }
 
-    let activePanel: ActivePanel = $userSettingsStorage.activePanel ?? 'explorer';
+    let activePanel: ActivePanel = $userSettingsStorage.activePanel;
     $: isSidebarOpen = activePanel !== null;
 
     function persistPanel() {
