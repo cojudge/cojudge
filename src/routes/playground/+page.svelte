@@ -9,6 +9,7 @@
     import fileStore, { type FileEntry } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
+    import { renderMarkdown } from '$lib/utils/markdown';
     import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
     import QRCode from 'qrcode';
     import { onMount, tick } from 'svelte';
@@ -47,12 +48,14 @@ class Program
         rust: `fn main() {
     // your code goes here
 }`,
-        plaintext: ``
+        plaintext: ``,
+        markdown: `# Write your markdown here.
+`
     };
-    const programmingLanguages: ProgrammingLanguage[] = ['java', 'python', 'cpp', 'csharp', 'rust', 'plaintext'];
+    const programmingLanguages: ProgrammingLanguage[] = ['java', 'python', 'cpp', 'csharp', 'rust', 'plaintext', 'markdown'];
 
     // Tabs are grouped by fileId (language-agnostic)
-    type TabMeta = { fileId: string; fileName: string; isOpen: boolean; lastUpdated?: number };
+    type TabMeta = { fileId: string; fileName: string; isOpen: boolean; lastUpdated?: number; type?: 'editor' | 'preview'; sourceFileId?: string };
 
     function getFiles(): FileEntry[] {
         try {
@@ -98,7 +101,7 @@ class Program
             // Create a default tab; the language-specific entry will be created lazily
             return [{ fileId: uuidv4(), fileName: 'Solution', isOpen: true, lastUpdated: Date.now() }];
         }
-        const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number; lastUpdated: number; isOpen: boolean }>();
+        const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number; lastUpdated: number; isOpen: boolean; type?: 'editor' | 'preview'; sourceFileId?: string }>();
         files.forEach((f, idx) => {
             const existing = groups.get(f.fileId);
             const orderVal = (typeof f.order === 'number') ? f.order : null;
@@ -111,7 +114,9 @@ class Program
                     order: orderVal,
                     firstIndex: idx,
                     lastUpdated: lv,
-                    isOpen: open
+                    isOpen: open,
+                    type: f.type,
+                    sourceFileId: f.sourceFileId
                 });
             } else {
                 if (orderVal !== null) {
@@ -119,6 +124,8 @@ class Program
                 }
                 if (lv > existing.lastUpdated) existing.lastUpdated = lv;
                 if (f.isOpen !== undefined) existing.isOpen = f.isOpen;
+                if (f.type) existing.type = f.type;
+                if (f.sourceFileId) existing.sourceFileId = f.sourceFileId;
             }
         });
         const list = Array.from(groups.values());
@@ -133,7 +140,7 @@ class Program
         if (files.find(x => x.language === language)) {
             code = files.find(x => x.language === language)!.content;
         }
-        return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName, isOpen: g.isOpen, lastUpdated: g.lastUpdated }));
+        return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName, isOpen: g.isOpen, lastUpdated: g.lastUpdated, type: g.type, sourceFileId: g.sourceFileId }));
     }
 
     // Ensure an entry exists for current tab+language, optionally with initial content
@@ -266,6 +273,7 @@ class Program
         };
         
         tabs.forEach(t => {
+            if (t.type === 'preview') return;
             const label = getDateLabel(t.lastUpdated);
             if (!groups[label]) groups[label] = [];
             groups[label].push(t);
@@ -362,10 +370,41 @@ class Program
         tabs.forEach((t, idx) => orderById.set(t.fileId, idx));
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            
+            // Remove entries that are not in tabs AND are preview tabs
+            files = files.filter(f => f.type !== 'preview' || orderById.has(f.fileId));
+
+            // Update order and properties for existing files
             for (const f of files) {
                 const idx = orderById.get(f.fileId);
-                if (idx !== undefined) f.order = idx;
+                if (idx !== undefined) {
+                    f.order = idx;
+                    const tab = tabs[idx];
+                    f.isOpen = tab.isOpen;
+                    if (tab.type === 'preview') {
+                        f.type = 'preview';
+                        f.sourceFileId = tab.sourceFileId;
+                    }
+                }
             }
+
+            // Add missing preview tabs
+            tabs.forEach((t, idx) => {
+                if (t.type === 'preview' && !files.find(f => f.fileId === t.fileId)) {
+                    files.push({
+                        fileId: t.fileId,
+                        fileName: t.fileName,
+                        language: 'markdown',
+                        content: '',
+                        isOpen: true,
+                        lastUpdated: t.lastUpdated,
+                        type: 'preview',
+                        sourceFileId: t.sourceFileId,
+                        order: idx
+                    } as FileEntry);
+                }
+            });
+
             return { ...s, [fkey]: JSON.stringify(files) };
         });
     }
@@ -407,7 +446,7 @@ class Program
     function handleDragEnd() {
         draggingId = null;
     }
-    $: if (!suppressSave && (code !== undefined || output !== undefined || logs !== undefined)) {
+    $: if (!suppressSave && tabs[activeTabId]?.type !== 'preview' && (code !== undefined || output !== undefined || logs !== undefined)) {
         const fkey = fileKey();
         const now = Date.now();
         const latestViewState = editorComponent?.getViewState?.() || currentViewState;
@@ -452,7 +491,31 @@ class Program
     }
 
     function closeTab(fileId: string) {
-        // Just hide from tab bar
+        const tabToClose = tabs.find(t => t.fileId === fileId);
+        if (tabToClose?.type === 'preview') {
+            const closedIdx = tabs.findIndex(t => t.fileId === fileId);
+            tabs = tabs.filter(t => t.fileId !== fileId);
+            if (tabs[activeTabId]?.fileId === fileId || activeTabId >= tabs.length) {
+                let nextOpenIdx = -1;
+                for (let i = Math.min(closedIdx, tabs.length - 1); i >= 0; i--) {
+                    if (tabs[i].isOpen) { nextOpenIdx = i; break; }
+                }
+                if (nextOpenIdx === -1) {
+                    for (let i = Math.min(closedIdx, tabs.length - 1); i < tabs.length; i++) {
+                        if (tabs[i].isOpen) { nextOpenIdx = i; break; }
+                    }
+                }
+                if (nextOpenIdx !== -1) {
+                    activeTabId = nextOpenIdx;
+                    if (tabs[nextOpenIdx].type !== 'preview') {
+                        loadOrInitFile(language);
+                    }
+                }
+            }
+            persistTabOrder();
+            return;
+        }
+
         tabs = tabs.map(t => t.fileId === fileId ? { ...t, isOpen: false } : t);
         
         const fkey = fileKey();
@@ -462,30 +525,17 @@ class Program
             return { ...s, [fkey]: JSON.stringify(files) };
         });
         
-        // If we closed the active tab, switch to another open one if possible
-        // But for now, let's just keep the content visible or switch to the nearest open tab?
-        // VS Code behavior: switch to next open tab.
         const currentTab = tabs[activeTabId];
         if (currentTab.fileId === fileId) {
-            // Find another open tab
-            // Try next one
             let nextOpenIdx = -1;
             for (let i = activeTabId + 1; i < tabs.length; i++) {
-                if (tabs[i].isOpen) {
-                    nextOpenIdx = i;
-                    break;
-                }
+                if (tabs[i].isOpen) { nextOpenIdx = i; break; }
             }
-            // If not found, try previous one
             if (nextOpenIdx === -1) {
                 for (let i = activeTabId - 1; i >= 0; i--) {
-                    if (tabs[i].isOpen) {
-                        nextOpenIdx = i;
-                        break;
-                    }
+                    if (tabs[i].isOpen) { nextOpenIdx = i; break; }
                 }
             }
-            
             if (nextOpenIdx !== -1) {
                 activeTabId = nextOpenIdx;
                 loadOrInitFile(language);
@@ -495,30 +545,32 @@ class Program
 
     function deleteFile(fileId: string) {
         if (!confirm("Are you sure you want to remove this file? This action cannot be undone")) return;
-        const idx = tabs.findIndex((t) => t.fileId === fileId);
-        if (idx === -1) return;
-        if (activeTabId === idx) {
-            // Find another file to activate (doesn't have to be open, but preferably)
-            const nextFile = tabs.find((x, i) => i !== idx); // Just pick any other
-            if (nextFile) {
-                activateTab(nextFile.fileId);
+        
+        const tabsToRemove = tabs.filter(t => t.fileId === fileId || t.sourceFileId === fileId);
+        const activeTabWillBeRemoved = tabsToRemove.some(t => t.fileId === tabs[activeTabId]?.fileId);
+
+        if (activeTabWillBeRemoved) {
+            const nextTab = tabs.find(t => !tabsToRemove.includes(t));
+            if (nextTab) {
+                activateTab(nextTab.fileId);
             }
         }
+
         const fkey = fileKey();
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
-            files = files.filter((f) => f.fileId !== fileId);
+            files = files.filter((f) => f.fileId !== fileId && f.sourceFileId !== fileId);
             return { ...s, [fkey]: JSON.stringify(files) };
         });
-        // Update tabs list
-        const newTabs = tabs.filter((t) => t.fileId !== fileId);
-        tabs = newTabs;
-        // Re-number orders after removal
+
+        tabs = tabs.filter((t) => !tabsToRemove.includes(t));
         persistTabOrder();
-        
-        let newActiveId = tabs[activeTabId].fileId;
-        const newIdx = newTabs.findIndex(t => t.fileId === newActiveId);
-        if (newIdx !== -1) activeTabId = newIdx;
+
+        if (tabs.length > 0) {
+            activeTabId = Math.max(0, Math.min(activeTabId, tabs.length - 1));
+        } else {
+            activeTabId = 0;
+        }
     }
 
     onMount(async () => {
@@ -622,22 +674,24 @@ class Program
         if (!fileId) return;
         const idx = tabs.findIndex((t) => t.fileId === fileId);
         if (idx === -1) return;
-        const targetLanguage = preferredLang || getLanguageForTab(fileId);
 
         saveCurrentViewState();
 
-        // Ensure tab is open
-        if (!tabs[idx].isOpen) {
-            tabs = tabs.map((t, i) => i === idx ? { ...t, isOpen: true } : t);
-            const fkey = fileKey();
-            fileStore.update((s) => {
-                let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
-                files = files.map(f => f.fileId === fileId ? { ...f, isOpen: true } : f);
-                return { ...s, [fkey]: JSON.stringify(files) };
-            });
-        }
+        const now = Date.now();
+        tabs = tabs.map((t, i) => i === idx ? { ...t, isOpen: true, lastUpdated: now } : t);
+        
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            files = files.map(f => f.fileId === fileId ? { ...f, isOpen: true, lastUpdated: now } : f);
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
 
         activeTabId = idx;
+
+        if (tabs[idx].type === 'preview') return;
+
+        const targetLanguage = preferredLang || getLanguageForTab(fileId);
         language = targetLanguage;
         await loadOrInitFile(targetLanguage);
     }
@@ -683,6 +737,24 @@ class Program
             return {...s, [fkey]: JSON.stringify(files)};
         });
         code = starterCode[language] ?? '';
+    }
+
+    function openMarkdownPreview() {
+        const sourceTab = tabs[activeTabId];
+        const sourceFileId = sourceTab?.fileId;
+        const sourceFileName = sourceTab?.fileName || 'Solution';
+        const nextId = uuidv4();
+        const now = Date.now();
+        tabs = [...tabs, { 
+            fileId: nextId, 
+            fileName: `Preview: ${sourceFileName}`, 
+            isOpen: true, 
+            lastUpdated: now, 
+            type: 'preview', 
+            sourceFileId 
+        }];
+        activeTabId = tabs.length - 1;
+        persistTabOrder();
     }
 
     let isFirebaseAvailable = false;
@@ -1127,6 +1199,17 @@ class Program
     }
     $: hasOpenTabs = tabs.some(t => t.isOpen);
     $: activeTabName = tabs[activeTabId]?.fileName;
+    $: activeTab = tabs[activeTabId];
+    $: fileStoreValue = $fileStore;
+    $: previewHtml = (() => {
+        if (!activeTab || activeTab.type !== 'preview' || !activeTab.sourceFileId) return '';
+        const fkey = fileKey();
+        const files = JSON.parse(fileStoreValue[fkey] || '[]') as FileEntry[];
+        const sourceEntry = files.find((f: FileEntry) => f.fileId === activeTab.sourceFileId && f.language === 'markdown');
+        const src = sourceEntry?.content ?? '';
+        
+        return renderMarkdown(src);
+    })();
     $: pageTitle = activeTabName ? `${activeTabName} - Playground - Cojudge` : 'Playground - Cojudge';
     let isMac = false;
 
@@ -1423,20 +1506,28 @@ class Program
                                     on:blur={applyRename}
                                 />
                             {:else}
+                                {#if t.type === 'preview'}
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="margin-right:2px;flex-shrink:0;">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                {/if}
                                 <span class="tab-title">{t.fileName}</span>
                             {/if}
                             
-                            <button
-                                class="tab-rename"
-                                aria-label="Rename tab"
-                                title="Rename"
-                                on:click|stopPropagation={() => startRename(t.fileId, t.fileName, 'tab')}
-                            >
+                            {#if t.type !== 'preview'}
+                                <button
+                                    class="tab-rename"
+                                    aria-label="Rename tab"
+                                    title="Rename"
+                                    on:click|stopPropagation={() => startRename(t.fileId, t.fileName, 'tab')}
+                                >
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                     <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" stroke="currentColor" stroke-width="1.5" fill="none"/>
                                     <path d="M14.06 6.19l3.75 3.75 1.69-1.69a1.5 1.5 0 000-2.12L17.87 4.5a1.5 1.5 0 00-2.12 0l-1.69 1.69z" stroke="currentColor" stroke-width="1.5" fill="none"/>
                                 </svg>
                             </button>
+                            {/if}
 
                             {#if tabs.length >= 1}
                                 <button
@@ -1455,6 +1546,9 @@ class Program
                 </div>
             </div>
             <div style="display:flex;align-items:center;gap:var(--spacing-2);">
+                {#if activeTab?.type === 'preview'}
+                    <span style="font-size:0.9rem;color:var(--color-text-secondary);">Markdown Preview</span>
+                {:else}
                 <div style="display:flex;align-items:center;gap:var(--spacing-1);">
                     <label for="language-select" style="font-size:0.9rem;color:var(--color-text-secondary);margin-right:4px;">Language</label>
                     <select
@@ -1465,7 +1559,6 @@ class Program
                         on:keydown={() => (suppressSave = true)}
                         on:change={() => {
                             saveCurrentViewState();
-                            // Persist preference; actual loading will be triggered by reactive `$: if (language)`
                             userSettingsStorage.update((s) => ({ ...s, playgroundPreferredLanguage: language }));
                         }}
                         on:blur={() => (suppressSave = false)}
@@ -1476,9 +1569,26 @@ class Program
                         <option value="csharp">C#</option>
                         <option value="rust">Rust</option>
                         <option value="plaintext">Plaintext</option>
+                        <option value="markdown">Markdown</option>
                     </select>
                 </div>
-                {#if isFirebaseAvailable}
+                {#if language === 'markdown'}
+                    <Tooltip text={"Preview"} pos={"bottom"}>
+                        <button
+                            class="icon-button"
+                            title="Preview Markdown"
+                            aria-label="Preview Markdown"
+                            on:click={openMarkdownPreview}
+                        >
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </Tooltip>
+                {/if}
+                {/if}
+                {#if isFirebaseAvailable && tabs[activeTabId]?.type !== 'preview'}
                     <Tooltip text={"Share"} pos={"bottom"}>
                         <button
                             class="icon-button"
@@ -1555,7 +1665,11 @@ class Program
         </div>
 
         <div class="editor-container">
-            {#if CodeEditor}
+            {#if activeTab?.type === 'preview'}
+                <div class="markdown-preview markdown-body">
+                    {@html previewHtml}
+                </div>
+            {:else if CodeEditor}
                 <svelte:component 
                     this={CodeEditor} 
                     bind:this={editorComponent}
@@ -1570,7 +1684,7 @@ class Program
                 Loading...
             {/if}
         </div>
-        {#if language !== 'plaintext'}
+        {#if language !== 'plaintext' && language !== 'markdown' && activeTab?.type !== 'preview'}
             <PlaygroundExecutionPanel {code} {language} {isMac} bind:output bind:logs />
         {/if}
         {:else}
@@ -2012,9 +2126,32 @@ class Program
     .editor-container {
         flex-grow: 1;
         min-height: 0;
-        padding: var(--spacing-1); /* Padding around the editor */
+        padding: var(--spacing-1);
         display: flex;
         flex-direction: column;
+    }
+
+    .markdown-preview {
+        flex-grow: 1;
+        min-height: 0;
+        overflow-y: auto;
+        padding: var(--spacing-4);
+        width: 100%;
+        text-align: left;
+    }
+
+    .markdown-preview img {
+        max-width: 100%;
+        box-sizing: content-box;
+    }
+
+    .markdown-preview a {
+        color: var(--color-highlight);
+        text-decoration: none;
+    }
+
+    .markdown-preview a:hover {
+        text-decoration: underline;
     }
 
     /* --- Browser-like Tabs --- */

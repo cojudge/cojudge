@@ -20,6 +20,8 @@ export type FileEntry = {
     lastSharedContent?: string;
     isOpen?: boolean;
     viewState?: string | null;
+    type?: 'editor' | 'preview';
+    sourceFileId?: string;
 };
 
 // Dictionary: key = problem slug, value = JSON string of FileEntry[]
