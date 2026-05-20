@@ -1547,7 +1547,21 @@ class Program
             </div>
             <div style="display:flex;align-items:center;gap:var(--spacing-2);">
                 {#if activeTab?.type === 'preview'}
-                    <span style="font-size:0.9rem;color:var(--color-text-secondary);">Markdown Preview</span>
+                    <div style="display:flex;align-items:center;gap:var(--spacing-1);">
+                        <span style="font-size:0.9rem;color:var(--color-text-secondary);">Markdown Preview</span>
+                        <Tooltip text={"Source"} pos={"bottom"}>
+                            <button
+                                class="icon-button"
+                                title="Source"
+                                aria-label="Source"
+                                on:click={() => activateTab(activeTab?.sourceFileId)}
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path d="M16 18l6-6-6-6M8 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </Tooltip>
+                    </div>
                 {:else}
                 <div style="display:flex;align-items:center;gap:var(--spacing-1);">
                     <label for="language-select" style="font-size:0.9rem;color:var(--color-text-secondary);margin-right:4px;">Language</label>
