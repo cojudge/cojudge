@@ -1,4 +1,4 @@
-import { cppImage, cppListNodeClass, cppTreeNodeClass, generateCppRunner } from "$lib/utils/cppUtil";
+import { cppImage, cppListNodeClass, cppTreeNodeClass, generateCppRunner, generateCppClassSolution } from "$lib/utils/cppUtil";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import fs from 'fs/promises';
@@ -22,11 +22,6 @@ export class CppRunner extends ProgramRunner {
             const problemPath = path.resolve('problems', this.problemId, 'metadata.json');
             const problemContent = await fs.readFile(problemPath, 'utf-8');
             const problemData = JSON.parse(problemContent);
-            const solutionCode = `
-            #include "ListNode.cpp"
-            #include "TreeNode.cpp"
-            ${this.code}
-            `;
             const runnerCode = generateCppRunner(problemData.functionName, problemData.params, this.testCases);
             await ensureImageAvailable(docker, cppImage);
 
@@ -44,7 +39,16 @@ export class CppRunner extends ProgramRunner {
             const pack = tar.pack();
             pack.entry({ name: 'ListNode.cpp' }, Buffer.from(cppListNodeClass));
             pack.entry({ name: 'TreeNode.cpp' }, Buffer.from(cppTreeNodeClass));
-            pack.entry({ name: 'Solution.cpp' }, Buffer.from(solutionCode));
+            if (problemData.classProblem) {
+                const className = problemData.classProblem.userClassName || 'MedianFinder';
+                const wrapperCode = generateCppClassSolution(className);
+                const userCode = `#include "ListNode.cpp"\n#include "TreeNode.cpp"\n${this.code}`;
+                pack.entry({ name: `${className}.cpp` }, Buffer.from(userCode));
+                pack.entry({ name: 'Solution.cpp' }, Buffer.from(wrapperCode));
+            } else {
+                const solutionCode = `#include "ListNode.cpp"\n#include "TreeNode.cpp"\n${this.code}`;
+                pack.entry({ name: 'Solution.cpp' }, Buffer.from(solutionCode));
+            }
             pack.entry({ name: 'Main.cpp' }, Buffer.from(runnerCode));
             pack.finalize();
             await this.container.putArchive(pack as any, { path: '/app' });

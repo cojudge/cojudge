@@ -174,6 +174,29 @@ pub fn to_int_array(s: &str) -> Vec<i32> {
         .collect()
 }
 
+pub fn to_int_array_2d(s: &str) -> Vec<Vec<i32>> {
+    let s = s.trim();
+    if s == "[]" || s.is_empty() { return vec![]; }
+    let s = s.strip_prefix('[').unwrap_or(s).strip_suffix(']').unwrap_or(s);
+    let mut res: Vec<Vec<i32>> = vec![];
+    let mut depth = 0i32;
+    let mut start = 0usize;
+    for (i, c) in s.char_indices() {
+        if c == '[' {
+            if depth == 0 { start = i; }
+            depth += 1;
+        }
+        else if c == ']' {
+            depth -= 1;
+            if depth == 0 {
+                let part = s[start..=i].trim();
+                if !part.is_empty() { res.push(to_int_array(part)); }
+            }
+        }
+    }
+    res
+}
+
 pub fn to_string_array(s: &str) -> Vec<String> {
     let s = s.trim();
     if s == "[]" || s.is_empty() { return vec![]; }
@@ -227,9 +250,23 @@ export function rustGetFullParam(params: Param[], tc: any): string {
     } else if (p.type === "boolean") {
       parts.push(String(val) === "true" ? "true" : "false");
     } else if (p.type === "string_array") {
+      let strVal: string;
+      if (Array.isArray(val)) {
+        try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+      } else {
+        strVal = String(val ?? '[]');
+      }
       parts.push(
-        `to_string_array(${rustEscapeStringLiteral(JSON.stringify(val ?? []))})`,
+        `to_string_array(${rustEscapeStringLiteral(strVal)})`,
       );
+    } else if (p.type === "int_array_2d" || p.type === "int_matrix") {
+      let strVal: string;
+      if (Array.isArray(val)) {
+        try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+      } else {
+        strVal = String(val ?? '[]');
+      }
+      parts.push(`to_int_array_2d(${rustEscapeStringLiteral(strVal)})`);
     } else if (p.type === "list_node") {
       parts.push(
         `to_list_node(${rustEscapeStringLiteral(String(val ?? "[]"))})`,
@@ -245,11 +282,46 @@ export function rustGetFullParam(params: Param[], tc: any): string {
   return parts.join(", ");
 }
 
+export function generateRustClassSolution(className: string): string {
+  return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<${className}> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "${className}" {
+                obj = Some(${className}::new());
+                result.push("null".to_string());
+            } else if op == "addNum" {
+                if let Some(ref mut o) = obj {
+                    o.add_num(values[i][0]);
+                }
+                result.push("null".to_string());
+            } else if op == "findMedian" {
+                if let Some(ref o) = obj {
+                    let med = o.find_median();
+                    if med == (med as i64) as f64 {
+                        result.push(format!("{}.0", med as i64));
+                    } else {
+                        result.push(format!("{}", med));
+                    }
+                }
+            }
+        }
+        result
+    }
+}
+`;
+}
+
 export function generateRustRunner(
   functionName: string,
   params: Param[],
   testCases: any[],
   code: string,
+  className?: string,
 ): string {
   const snakedFunctionName = functionName
     .replace(/([A-Z])/g, "_$1")
@@ -268,13 +340,15 @@ export function generateRustRunner(
     .join("\n    ");
 
   // Remove common imports from user code to avoid "defined multiple times" errors
-  const cleanedCode = code
+  const cleanedCode = (code || "")
     .replace(/use std::rc::Rc;/g, "// use std::rc::Rc;")
     .replace(/use std::cell::RefCell;/g, "// use std::cell::RefCell;")
     .replace(
       /use std::collections::VecDeque;/g,
       "// use std::collections::VecDeque;",
     );
+
+  const solutionCode = className ? generateRustClassSolution(className) : '';
 
   return `
 use std::rc::Rc;
@@ -285,8 +359,11 @@ ${rustListNodeClass}
 
 ${rustTreeNodeClass}
 
-// Solution code
+// User code
 ${cleanedCode}
+
+// Solution wrapper
+${solutionCode}
 
 // Helper methods for display
 ${rustHelperMethods}

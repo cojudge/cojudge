@@ -22,7 +22,8 @@ export class RustRunner extends ProgramRunner {
             const problemContent = await fs.readFile(problemPath, 'utf-8');
             const problemData = JSON.parse(problemContent);
             
-            const runnerCode = generateRustRunner(problemData.functionName, problemData.params, this.testCases, this.code);
+            const className = problemData.classProblem?.userClassName;
+            const runnerCode = generateRustRunner(problemData.functionName, problemData.params, this.testCases, this.code, className);
             await ensureImageAvailable(docker, rustImage);
 
             this.container = await docker.createContainer({

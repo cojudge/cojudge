@@ -425,6 +425,37 @@ export function getDisplayFuncName(outputType: string): string {
             'CSharpHelper.DisplayOutput';
 }
 
+export function generateCSharpClassSolution(className: string): string {
+    return `
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public List<string> Solve(string[] operations, int[][] values) {
+        var result = new List<string>();
+        ${className} obj = null;
+        for (int i = 0; i < operations.Length; i++) {
+            string op = operations[i];
+            if (op == "${className}") {
+                obj = new ${className}();
+                result.Add("null");
+            } else if (op == "addNum") {
+                obj.AddNum(values[i][0]);
+                result.Add("null");
+            } else if (op == "findMedian") {
+                double med = obj.FindMedian();
+                if (med == (long)med) {
+                    result.Add(((long)med).ToString() + ".0");
+                } else {
+                    result.Add(med.ToString());
+                }
+            }
+        }
+        return result;
+    }
+}`;
+}
+
 export function generateCSharpRunner(functionName: string, params: Param[], testCases: any[], outputType: string): string {
     // Convert camelCase to PascalCase for C#
     const csharpFunctionName = functionName.charAt(0).toUpperCase() + functionName.slice(1);

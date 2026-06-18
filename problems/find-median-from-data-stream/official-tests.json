@@ -1,0 +1,50 @@
+[
+    {
+        "operations": "[\"MedianFinder\",\"addNum\",\"findMedian\",\"addNum\",\"findMedian\"]",
+        "values": "[[],[1],[],[2],[]]"
+    },
+    {
+        "operations": "[\"MedianFinder\",\"addNum\",\"addNum\",\"addNum\",\"addNum\",\"findMedian\"]",
+        "values": "[[],[1],[2],[3],[4],[]]"
+    },
+    {
+        "operations": "[\"MedianFinder\",\"addNum\",\"findMedian\"]",
+        "values": "[[],[-1],[]]"
+    },
+    {
+        "operations": "[\"MedianFinder\",\"addNum\",\"addNum\",\"findMedian\",\"addNum\",\"findMedian\"]",
+        "values": "[[],[-1],[-2],[],[-3],[]]"
+    },
+    {
+        "operations": "[\"MedianFinder\",\"addNum\",\"addNum\",\"addNum\",\"addNum\",\"findMedian\",\"addNum\",\"findMedian\"]",
+        "values": "[[],[10],[20],[30],[40],[],[50],[]]"
+    },
+    {
+        "operations": "[\"MedianFinder\",\"addNum\",\"findMedian\",\"addNum\",\"findMedian\",\"addNum\",\"findMedian\",\"addNum\",\"findMedian\",\"addNum\",\"findMedian\"]",
+        "values": "[[],[0],[],[1],[],[2],[],[3],[],[4],[]]"
+    },
+    {
+        "operations": "[\"MedianFinder\",\"addNum\",\"addNum\",\"findMedian\"]",
+        "values": "[[],[100000],[0],[]]"
+    },
+    {
+        "operations": "[\"MedianFinder\",\"addNum\",\"addNum\",\"addNum\",\"findMedian\"]",
+        "values": "[[],[5],[5],[5],[]]"
+    },
+    {
+        "operations": "[\"MedianFinder\",\"addNum\",\"addNum\",\"findMedian\",\"addNum\",\"addNum\",\"findMedian\",\"addNum\",\"findMedian\"]",
+        "values": "[[],[3],[1],[],[4],[2],[],[5],[]]"
+    },
+    {
+        "operations": "[\"MedianFinder\",\"addNum\",\"findMedian\",\"addNum\",\"findMedian\",\"addNum\",\"findMedian\"]",
+        "values": "[[],[-5],[],[-10],[],[-15],[]]"
+    },
+    {
+        "operations": "[\"MedianFinder\",\"addNum\",\"addNum\",\"addNum\",\"addNum\",\"addNum\",\"addNum\",\"addNum\",\"findMedian\"]",
+        "values": "[[],[2],[4],[6],[8],[10],[12],[14],[]]"
+    },
+    {
+        "operations": "[\"MedianFinder\",\"addNum\",\"findMedian\",\"addNum\",\"findMedian\",\"addNum\",\"findMedian\",\"addNum\",\"findMedian\"]",
+        "values": "[[],[-10000],[],[10000],[],[-5000],[],[5000],[]]"
+    }
+]

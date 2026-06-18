@@ -1,0 +1,54 @@
+{
+  "id": "find-median-from-data-stream",
+  "title": "295. Find Median from Data Stream",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/find-median-from-data-stream/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "operations = [\"MedianFinder\",\"addNum\",\"findMedian\",\"addNum\",\"findMedian\"]\nvalues = [[],[1],[],[2],[]]",
+      "output": "[null,null,1.0,null,1.5]",
+      "explanation": "After adding 1, the median is 1.0. After adding 2, the median is 1.5."
+    },
+    {
+      "input": "operations = [\"MedianFinder\",\"addNum\",\"addNum\",\"addNum\",\"addNum\",\"findMedian\"]\nvalues = [[],[1],[2],[3],[4],[]]",
+      "output": "[null,null,null,null,null,2.5]",
+      "explanation": "After adding [1,2,3,4], the median is (2+3)/2 = 2.5."
+    }
+  ],
+  "classProblem": {
+    "userClassName": "MedianFinder"
+  },
+  "starterCode": {
+    "java": "class MedianFinder {\n    public MedianFinder() {\n        \n    }\n    \n    public void addNum(int num) {\n        \n    }\n    \n    public double findMedian() {\n        return 0.0;\n    }\n}",
+    "python": "class MedianFinder:\n    def __init__(self):\n        \n    def addNum(self, num: int) -> None:\n        \n    def findMedian(self) -> float:\n        return 0.0",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass MedianFinder {\npublic:\n    MedianFinder() {\n        \n    }\n    \n    void addNum(int num) {\n        \n    }\n    \n    double findMedian() {\n        return 0.0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class MedianFinder {\n    public MedianFinder() {\n        \n    }\n    \n    public void AddNum(int num) {\n        \n    }\n    \n    public double FindMedian() {\n        return 0.0;\n    }\n}",
+    "rust": "use std::collections::BinaryHeap;\nuse std::cmp::Reverse;\n\npub struct MedianFinder {\n    \n}\n\nimpl MedianFinder {\n    pub fn new() -> Self {\n        MedianFinder {}\n    }\n    \n    pub fn add_num(&mut self, num: i32) {\n        \n    }\n    \n    pub fn find_median(&self) -> f64 {\n        0.0\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"MedianFinder\",\"addNum\",\"findMedian\",\"addNum\",\"findMedian\"]",
+      "values": "[[],[1],[],[2],[]]"
+    },
+    {
+      "operations": "[\"MedianFinder\",\"addNum\",\"addNum\",\"addNum\",\"addNum\",\"findMedian\"]",
+      "values": "[[],[1],[2],[3],[4],[]]"
+    },
+    {
+      "operations": "[\"MedianFinder\",\"addNum\",\"findMedian\"]",
+      "values": "[[],[-1],[]]"
+    }
+  ],
+  "functionName": "solve",
+  "params": [
+    { "name": "operations", "type": "string_array" },
+    { "name": "values", "type": "int_array_2d" }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Use two heaps: a max-heap for the smaller half and a min-heap for the larger half.",
+    "When adding a number, add to the max-heap first, then balance by moving the largest from max-heap to min-heap. If the min-heap has more elements, move the smallest back to the max-heap.",
+    "The median is the top of the max-heap if sizes differ, or the average of both tops if sizes are equal."
+  ]
+}

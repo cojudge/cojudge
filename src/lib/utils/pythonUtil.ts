@@ -141,6 +141,12 @@ export function pyGetFullParam(params: Param[], tc: any): string {
         } else if (param.type === 'tree_node') {
             const escaped = String(val ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
             parts.push(`read_tree_node('${escaped}')`);
+        } else if (param.type === 'string_array') {
+            const escaped = String(val ?? '[]').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+            parts.push(`literal_eval('${escaped}')`);
+        } else if (param.type === 'int_array_2d' || param.type === 'int_matrix') {
+            const escaped = String(val ?? '[]').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+            parts.push(`literal_eval('${escaped}')`);
         } else {
             // default: pass as string literal
             const escaped = String(val ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
@@ -148,6 +154,32 @@ export function pyGetFullParam(params: Param[], tc: any): string {
         }
     }
     return parts.join(', ');
+}
+
+export function generatePythonClassSolution(className: string): string {
+    return `
+from typing import List
+from ${className} import ${className}
+
+class Solution:
+    def solve(self, operations: List[str], values: List[List[int]]) -> List[str]:
+        result = []
+        obj = None
+        for i, op in enumerate(operations):
+            if op == "${className}":
+                obj = ${className}()
+                result.append("null")
+            elif op == "addNum":
+                obj.addNum(values[i][0])
+                result.append("null")
+            elif op == "findMedian":
+                med = obj.findMedian()
+                if med == int(med):
+                    result.append(str(int(med)) + ".0")
+                else:
+                    result.append(str(med))
+        return result
+`;
 }
 
 export function generatePythonRunner(functionName: string, params: Param[], testCases: any[]): string {

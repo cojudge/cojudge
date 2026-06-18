@@ -1,4 +1,4 @@
-import { generateJavaRunner, javaImage, javaListNodeClass, javaTreeNodeClass } from "$lib/utils/javaUtil";
+import { generateJavaRunner, generateJavaClassSolution, javaImage, javaListNodeClass, javaTreeNodeClass } from "$lib/utils/javaUtil";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import fs from 'fs/promises';
@@ -39,7 +39,14 @@ export class JavaRunner extends ProgramRunner {
             const pack = tar.pack();
             pack.entry({ name: 'ListNode.java' }, Buffer.from(javaListNodeClass));
             pack.entry({ name: 'TreeNode.java' }, Buffer.from(javaTreeNodeClass));
-            pack.entry({ name: 'Solution.java' }, Buffer.from(this.code));
+            if (problemData.classProblem) {
+                const className = problemData.classProblem.userClassName || 'MedianFinder';
+                const wrapperCode = generateJavaClassSolution(className);
+                pack.entry({ name: `${className}.java` }, Buffer.from(this.code));
+                pack.entry({ name: 'Solution.java' }, Buffer.from(wrapperCode));
+            } else {
+                pack.entry({ name: 'Solution.java' }, Buffer.from(this.code));
+            }
             pack.entry({ name: 'Main.java' }, Buffer.from(runnerCode));
             pack.finalize();
             await this.container.putArchive(pack as any, { path: '/app' });

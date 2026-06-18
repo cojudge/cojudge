@@ -473,6 +473,47 @@ export function cppGetFullParam(params: Param[], tc: any): string {
     return parts.join(', ');
 }
 
+export function generateCppClassSolution(className: string): string {
+    return `#include <vector>
+#include <string>
+#include <sstream>
+#include "${className}.cpp"
+using namespace std;
+
+class Solution {
+public:
+    vector<string> solve(vector<string>& operations, vector<vector<int>>& values) {
+        vector<string> result;
+        ${className}* obj = nullptr;
+        for (int i = 0; i < operations.size(); i++) {
+            string& op = operations[i];
+            if (op == "${className}") {
+                delete obj;
+                obj = new ${className}();
+                result.push_back("null");
+            } else if (op == "addNum") {
+                obj->addNum(values[i][0]);
+                result.push_back("null");
+            } else if (op == "findMedian") {
+                double med = obj->findMedian();
+                if (med == (long)med) {
+                    ostringstream ss;
+                    ss << (long)med << ".0";
+                    result.push_back(ss.str());
+                } else {
+                    ostringstream ss;
+                    ss << med;
+                    result.push_back(ss.str());
+                }
+            }
+        }
+        delete obj;
+        return result;
+    }
+};
+`;
+}
+
 export function generateCppRunner(functionName: string, params: Param[], testCases: any[]): string {
     const calls = testCases
         .map((tc, caseIndex) => {

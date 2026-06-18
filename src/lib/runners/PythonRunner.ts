@@ -1,4 +1,4 @@
-import { generatePythonRunner, pythonImage, pythonListNodeClass, pythonTreeNodeClass } from "$lib/utils/pythonUtil";
+import { generatePythonRunner, generatePythonClassSolution, pythonImage, pythonListNodeClass, pythonTreeNodeClass } from "$lib/utils/pythonUtil";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import fs from 'fs/promises';
@@ -23,9 +23,6 @@ export class PythonRunner extends ProgramRunner {
             const problemContent = await fs.readFile(problemPath, 'utf-8');
             const problemData = JSON.parse(problemContent);
             const runnerCode = generatePythonRunner(problemData.functionName, problemData.params, this.testCases);
-            const solutionCode = `from ListNode import ListNode\nfrom TreeNode import TreeNode\n${this.code}`;
-
-            // Ensure Python image exists; pull if missing
             await ensureImageAvailable(docker, pythonImage);
 
             // Create a long-lived container; no bind mounts
@@ -42,7 +39,16 @@ export class PythonRunner extends ProgramRunner {
             const pack = tar.pack();
             pack.entry({ name: 'ListNode.py' }, Buffer.from(pythonListNodeClass));
             pack.entry({ name: 'TreeNode.py' }, Buffer.from(pythonTreeNodeClass));
-            pack.entry({ name: 'Solution.py' }, Buffer.from(solutionCode));
+            if (problemData.classProblem) {
+                const className = problemData.classProblem.userClassName || 'MedianFinder';
+                const wrapperCode = generatePythonClassSolution(className);
+                const userCode = `from ListNode import ListNode\nfrom TreeNode import TreeNode\n${this.code}`;
+                pack.entry({ name: `${className}.py` }, Buffer.from(userCode));
+                pack.entry({ name: 'Solution.py' }, Buffer.from(wrapperCode));
+            } else {
+                const solutionCode = `from ListNode import ListNode\nfrom TreeNode import TreeNode\n${this.code}`;
+                pack.entry({ name: 'Solution.py' }, Buffer.from(solutionCode));
+            }
             pack.entry({ name: 'main.py' }, Buffer.from(runnerCode));
             pack.finalize();
             await this.container.putArchive(pack as any, { path: '/app' });

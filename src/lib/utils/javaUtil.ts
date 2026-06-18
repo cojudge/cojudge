@@ -399,6 +399,35 @@ export function getDisplayFuncName(outputType: string): string {
             'displayOutput';
 }
 
+export function generateJavaClassSolution(className: string): string {
+    return `
+import java.util.*;
+class Solution {
+    public List<String> solve(String[] operations, int[][] values) {
+        List<String> result = new ArrayList<>();
+        ${className} obj = null;
+        for (int i = 0; i < operations.length; i++) {
+            String op = operations[i];
+            if (op.equals("${className}")) {
+                obj = new ${className}();
+                result.add("null");
+            } else if (op.equals("addNum")) {
+                obj.addNum(values[i][0]);
+                result.add("null");
+            } else if (op.equals("findMedian")) {
+                double med = obj.findMedian();
+                if (med == (long) med) {
+                    result.add(String.valueOf((long) med) + ".0");
+                } else {
+                    result.add(String.valueOf(med));
+                }
+            }
+        }
+        return result;
+    }
+}`;
+}
+
 export function generateJavaRunner(functionName: string, params: Param[], testCases: any[], outputType: string): string {
     const testCalls = testCases
         .map((tc, idx) => {
