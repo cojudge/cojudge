@@ -133,40 +133,21 @@ npm run dev
 
 ## Add a problem
 
-Create a new folder under `problems/<your-problem-slug>/` with the following files:
+See [`docs/ADD_PROBLEMS.md`](docs/ADD_PROBLEMS.md) for a comprehensive guide covering:
 
-1. `statement.md` – problem description in Markdown
-2. `metadata.json` – problem metadata (difficulty, input structure, starter code, etc.)
-3. `official-tests.json` – an array of inputs for the official tests that will run when user clicks `Submit`. Only inputs are needed. **No need to write the expected output**. Our code will get the expected output by passing your input to your `Marker.java`
-4. `Marker.java` – The judger class should contain two public methods:
+- Required files (`statement.md`, `metadata.json`, `official-tests.json`, `Marker.java`)
+- Standard function-based problems vs class-based design problems
+- Supported parameter/output types
+- Starter code conventions for all 5 languages (Java, Python, C++, C#, Rust)
+- How to write `Marker.java` with the reference solution and `isCorrect` validator
+- Registration in `courses/blind75/courseinfo.json`
+- Verification checklist (`cojudge init`/`run`/`submit`)
 
-  4.1. `{outputType} {functionName}(testcase)` that gives the correct solution. `{functionName}` is what you defined in `metadata.json`. This is the correct solution that can pass the LeetCode judge in Java. You can usually find a Java solution on the LeetCode discussion forum pretty easily for any problem. The judger has to be written in Java and called `Marker.java`. **No** `Marker.py` or `Marker.cpp` are needed.
-
-  4.2. `boolean isCorrect(testcase, userOutput)` that judges if a user output is correct for the given testcase.
-
-5. Add the problem to `courses/blind75/courseinfo.json`
-
-Refer to `/problems/two-sum` for a detailed example.
+Refer to `problems/two-sum` for a minimal example.
 
 #### Note on problems
 
 Some test cases and reference marker solutions were AI‑assisted and human‑reviewed. Issues may remain—please open an issue or PR if you spot anything.
-
-The prompt that was given to copilot for generating problems:
-1. With CSV data for adding multiple problems.
-```plaintext
-Refer to /problems/two-sum, please add the following problems:
-Category,Title,Description,Link
-[problem1_category],[problem1_title],[problem1_description],[problem1_link]
-[problem2_category],[problem2_title],[problem2_description],[problem2_link]
-...
-```
-
-2. With a screenshot
-```plaintext
-Refer to /problems/two-sum, please add the problem shown in the image.
-[pasted image] 
-```
 
 ## Add a programming language
 

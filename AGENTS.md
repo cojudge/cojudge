@@ -1,4 +1,4 @@
-# CoJudge Development Guide
+# Cojudge Development Guide
 
 ## Overview
 
@@ -33,6 +33,18 @@ Cojudge is an offline-first code judge built with SvelteKit and Docker. It provi
   sudo usermod -aG docker "$USER"
   newgrp docker
   ```
+
+## Adding Problems
+
+When asked to add a new problem, follow the guide in [`docs/ADD_PROBLEMS.md`](docs/ADD_PROBLEMS.md). It covers:
+
+- Required files and their format
+- Standard function-based vs class-based design problems
+- Supported parameter/output types
+- Starter code conventions for all 5 languages
+- How to write `Marker.java` with reference solution and `isCorrect` validator
+- Registration in `courses/blind75/courseinfo.json`
+- Verification steps
 
 ## Adding Problems
 
@@ -82,15 +94,3 @@ The application runs as:
 - SvelteKit dev server (development)
 - Docker container with built frontend (production)
 - Multiple language runtime containers for execution
-
-## Troubleshooting
-
-### Docker Issues
-- Check Docker daemon status
-- Verify user in docker group
-- For Colima/macOS: Set `HOST_DOCKER_SOCKET` environment variable
-
-### Common Issues
-- Container build failures: Check base images and dependencies
-- Language runtime errors: Verify Docker images and compilation steps
-- UI problems: Check SvelteKit configuration and build process
