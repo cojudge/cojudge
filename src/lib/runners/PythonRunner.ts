@@ -42,7 +42,7 @@ export class PythonRunner extends ProgramRunner {
             pack.entry({ name: 'GraphNode.py' }, Buffer.from(pythonGraphNodeClass));
             if (problemData.classProblem) {
                 const className = problemData.classProblem.userClassName || 'MedianFinder';
-                const wrapperCode = generatePythonClassSolution(className);
+                const wrapperCode = generatePythonClassSolution(className, problemData.params, problemData.outputType);
                 const userCode = `from ListNode import ListNode\nfrom TreeNode import TreeNode\nfrom GraphNode import GraphNode\n${this.code}`;
                 pack.entry({ name: `${className}.py` }, Buffer.from(userCode));
                 pack.entry({ name: 'Solution.py' }, Buffer.from(wrapperCode));

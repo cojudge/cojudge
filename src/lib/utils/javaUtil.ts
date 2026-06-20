@@ -464,7 +464,19 @@ export function getDisplayFuncName(outputType: string): string {
             'displayOutput';
 }
 
-export function generateJavaClassSolution(className: string): string {
+export function generateJavaClassSolution(className: string, params?: Param[], outputType?: string): string {
+    // For roundtrip pattern (e.g., Codec class with tree input/output)
+    if (params && params.length > 0 && params[0]?.type === 'tree_node') {
+        return `
+import java.util.*;
+class Solution {
+    public TreeNode solve(TreeNode root) {
+        ${className} ser = new ${className}();
+        ${className} deser = new ${className}();
+        return deser.deserialize(ser.serialize(root));
+    }
+}`;
+    }
     return `
 import java.util.*;
 class Solution {

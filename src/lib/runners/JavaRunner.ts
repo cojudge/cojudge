@@ -42,7 +42,7 @@ export class JavaRunner extends ProgramRunner {
             pack.entry({ name: 'GraphNode.java' }, Buffer.from(javaGraphNodeClass));
             if (problemData.classProblem) {
                 const className = problemData.classProblem.userClassName || 'MedianFinder';
-                const wrapperCode = generateJavaClassSolution(className);
+                const wrapperCode = generateJavaClassSolution(className, problemData.params, problemData.outputType);
                 pack.entry({ name: `${className}.java` }, Buffer.from(this.code));
                 pack.entry({ name: 'Solution.java' }, Buffer.from(wrapperCode));
             } else {

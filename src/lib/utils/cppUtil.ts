@@ -538,7 +538,24 @@ export function cppGetFullParam(params: Param[], tc: any): string {
     return parts.join(', ');
 }
 
-export function generateCppClassSolution(className: string): string {
+export function generateCppClassSolution(className: string, params?: Param[], outputType?: string): string {
+    if (params && params.length > 0 && params[0]?.type === 'tree_node') {
+        return `#include <string>
+#include <sstream>
+#include <deque>
+using namespace std;
+#include "${className}.cpp"
+
+class Solution {
+public:
+    TreeNode* solve(TreeNode* root) {
+        ${className} ser;
+        ${className} deser;
+        return deser.deserialize(ser.serialize(root));
+    }
+};
+`;
+    }
     return `#include <vector>
 #include <string>
 #include <sstream>

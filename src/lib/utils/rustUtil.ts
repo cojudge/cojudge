@@ -348,7 +348,20 @@ export function rustGetFullParam(params: Param[], tc: any): string {
   return parts.join(", ");
 }
 
-export function generateRustClassSolution(className: string): string {
+export function generateRustClassSolution(className: string, params?: Param[], outputType?: string): string {
+  if (params && params.length > 0 && params[0]?.type === 'tree_node') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
+        let ser = ${className}::new();
+        let deser = ${className}::new();
+        deser.deserialize(ser.serialize(root))
+    }
+}
+`;
+  }
   return `
 pub struct Solution;
 
@@ -414,7 +427,7 @@ export function generateRustRunner(
       "// use std::collections::VecDeque;",
     );
 
-  const solutionCode = className ? generateRustClassSolution(className) : '';
+  const solutionCode = className ? generateRustClassSolution(className, params) : '';
 
   return `
 use std::rc::Rc;

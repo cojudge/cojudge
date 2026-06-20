@@ -492,7 +492,19 @@ export function getDisplayFuncName(outputType: string): string {
             'CSharpHelper.DisplayOutput';
 }
 
-export function generateCSharpClassSolution(className: string): string {
+export function generateCSharpClassSolution(className: string, params?: Param[], outputType?: string): string {
+    if (params && params.length > 0 && params[0]?.type === 'tree_node') {
+        return `
+using System;
+
+public class Solution {
+    public TreeNode Solve(TreeNode root) {
+        ${className} ser = new ${className}();
+        ${className} deser = new ${className}();
+        return deser.deserialize(ser.serialize(root));
+    }
+}`;
+    }
     return `
 using System;
 using System.Collections.Generic;

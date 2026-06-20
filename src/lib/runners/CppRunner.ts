@@ -42,7 +42,7 @@ export class CppRunner extends ProgramRunner {
             pack.entry({ name: 'GraphNode.cpp' }, Buffer.from(cppGraphNodeClass));
             if (problemData.classProblem) {
                 const className = problemData.classProblem.userClassName || 'MedianFinder';
-                const wrapperCode = generateCppClassSolution(className);
+                const wrapperCode = generateCppClassSolution(className, problemData.params, problemData.outputType);
                 const userCode = `#include "ListNode.cpp"\n#include "TreeNode.cpp"\n#include "GraphNode.cpp"\n${this.code}`;
                 pack.entry({ name: `${className}.cpp` }, Buffer.from(userCode));
                 pack.entry({ name: 'Solution.cpp' }, Buffer.from(wrapperCode));

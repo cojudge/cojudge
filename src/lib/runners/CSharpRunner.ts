@@ -55,7 +55,7 @@ export class CSharpRunner extends ProgramRunner {
             pack.entry({ name: 'GraphNode.cs' }, Buffer.from(csharpGraphNodeClass));
             if (problemData.classProblem) {
                 const className = problemData.classProblem.userClassName || 'MedianFinder';
-                const wrapperCode = generateCSharpClassSolution(className);
+                const wrapperCode = generateCSharpClassSolution(className, problemData.params, problemData.outputType);
                 pack.entry({ name: `${className}.cs` }, Buffer.from(this.code));
                 pack.entry({ name: 'Solution.cs' }, Buffer.from(wrapperCode));
             } else {

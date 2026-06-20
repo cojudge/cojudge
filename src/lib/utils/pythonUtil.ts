@@ -203,7 +203,20 @@ export function pyGetFullParam(params: Param[], tc: any): string {
     return parts.join(', ');
 }
 
-export function generatePythonClassSolution(className: string): string {
+export function generatePythonClassSolution(className: string, params?: Param[], outputType?: string): string {
+    if (params && params.length > 0 && params[0]?.type === 'tree_node') {
+        return `
+from typing import List, Optional
+from TreeNode import TreeNode
+from ${className} import ${className}
+
+class Solution:
+    def solve(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        ser = ${className}()
+        deser = ${className}()
+        return deser.deserialize(ser.serialize(root))
+`;
+    }
     return `
 from typing import List
 from ${className} import ${className}
