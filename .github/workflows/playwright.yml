@@ -24,12 +24,9 @@ jobs:
       with:
         path: ~/.cache/ms-playwright
         key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
-    - name: Install Playwright (cached)
-      if: steps.playwright-cache.outputs.cache-hit == 'true'
-      run: npx playwright install-deps chromium
-    - name: Install Playwright (fresh)
+    - name: Install Playwright Browsers
       if: steps.playwright-cache.outputs.cache-hit != 'true'
-      run: npx playwright install chromium --with-deps
+      run: npx playwright install chromium
     - name: Run Playwright tests
       run: npm run test:e2e
     - uses: actions/upload-artifact@v4
