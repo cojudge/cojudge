@@ -1,0 +1,53 @@
+{
+    "id": "clone-graph",
+    "title": "133. Clone Graph",
+    "difficulty": "Medium",
+    "link": "https://leetcode.com/problems/clone-graph/",
+    "category": "graph",
+    "examples": [
+        {
+            "input": "adjList = [[2,4],[1,3],[2,4],[1,3]]",
+            "output": "[[2,4],[1,3],[2,4],[1,3]]",
+            "explanation": "A graph with 4 nodes connected as a cycle."
+        },
+        {
+            "input": "adjList = [[]]",
+            "output": "[[]]",
+            "explanation": "A graph with 1 node and no neighbors."
+        },
+        {
+            "input": "adjList = []",
+            "output": "[]",
+            "explanation": "An empty graph."
+        },
+        {
+            "input": "adjList = [[2],[1]]",
+            "output": "[[2],[1]]",
+            "explanation": "Two nodes connected by a single edge."
+        }
+    ],
+    "starterCode": {
+        "java": "/*\n// Definition for a GraphNode.\nclass GraphNode {\n    public int val;\n    public List<GraphNode> neighbors;\n    public GraphNode() {\n        val = 0;\n        neighbors = new ArrayList<GraphNode>();\n    }\n    public GraphNode(int _val) {\n        val = _val;\n        neighbors = new ArrayList<GraphNode>();\n    }\n    public GraphNode(int _val, List<GraphNode> _neighbors) {\n        val = _val;\n        neighbors = _neighbors;\n    }\n};\n*/\nimport java.util.*;\nclass Solution {\n    public GraphNode cloneGraph(GraphNode node) {\n        \n    }\n}",
+        "python": "# Definition for a GraphNode.\n# class GraphNode:\n#     def __init__(self, val=0, neighbors=None):\n#         self.val = val\n#         self.neighbors = neighbors if neighbors is not None else []\n\nfrom typing import Optional, List\nclass Solution:\n    def cloneGraph(self, node: Optional['GraphNode']) -> Optional['GraphNode']:\n        ",
+        "cpp": "/*\n// Definition for a GraphNode.\nclass GraphNode {\npublic:\n    int val;\n    vector<GraphNode*> neighbors;\n    GraphNode() {\n        val = 0;\n        neighbors = vector<GraphNode*>();\n    }\n    GraphNode(int _val) {\n        val = _val;\n        neighbors = vector<GraphNode*>();\n    }\n    GraphNode(int _val, vector<GraphNode*> _neighbors) {\n        val = _val;\n        neighbors = _neighbors;\n    }\n};\n*/\n#include <vector>\n#include <unordered_map>\nusing namespace std;\n\nclass Solution {\npublic:\n    GraphNode* cloneGraph(GraphNode* node) {\n        return nullptr;\n    }\n};",
+        "csharp": "/*\n// Definition for a GraphNode.\nclass GraphNode {\n    public int val;\n    public List<GraphNode> neighbors;\n    public GraphNode() {\n        val = 0;\n        neighbors = new List<GraphNode>();\n    }\n    public GraphNode(int _val) {\n        val = _val;\n        neighbors = new List<GraphNode>();\n    }\n    public GraphNode(int _val, List<GraphNode> _neighbors) {\n        val = _val;\n        neighbors = _neighbors;\n    }\n};\n*/\nusing System;\nusing System.Collections.Generic;\n\npublic class Solution {\n    public GraphNode CloneGraph(GraphNode node) {\n        \n    }\n}",
+        "rust": "// Definition for a GraphNode.\n// #[derive(Debug, PartialEq, Eq)]\n// pub struct GraphNode {\n//   pub val: i32,\n//   pub neighbors: Vec<Option<Rc<RefCell<GraphNode>>>>,\n// }\n//\n// impl GraphNode {\n//   pub fn new(val: i32) -> Self {\n//     GraphNode { val, neighbors: vec![] }\n//   }\n// }\n\nuse std::rc::Rc;\nuse std::cell::RefCell;\nuse std::collections::HashMap;\n\npub struct Solution;\n\nimpl Solution {\n    pub fn clone_graph(node: Option<Rc<RefCell<GraphNode>>>) -> Option<Rc<RefCell<GraphNode>>> {\n        None\n    }\n}"
+    },
+    "testCases": [
+        { "adjList": "[[2,4],[1,3],[2,4],[1,3]]" },
+        { "adjList": "[[]]" },
+        { "adjList": "[]" },
+        { "adjList": "[[2],[1]]" },
+        { "adjList": "[[2],[1,3],[2,4],[3,5],[4,6],[5,7],[6,8],[7,9],[8,10],[9]]" }
+    ],
+    "functionName": "cloneGraph",
+    "params": [
+        { "name": "adjList", "type": "graph_node" }
+    ],
+    "outputType": "graph_node",
+    "hints": [
+        "Use a HashMap to map original nodes to their clones.",
+        "Traverse the graph using DFS or BFS. For each node visited, create a clone if not already created, then recursively/breadth-first clone its neighbors.",
+        "Be careful to avoid infinite loops due to cycles in the graph."
+    ]
+}

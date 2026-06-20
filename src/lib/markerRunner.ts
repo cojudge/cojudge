@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import Dockerode from 'dockerode';
 import tar from 'tar-stream';
-import { formatAndSplitJavaString, getDisplayFuncName, javaGetFullParam, javaHelperMethods, javaImage, javaListNodeClass, javaTreeNodeClass } from './utils/javaUtil';
+import { formatAndSplitJavaString, getDisplayFuncName, javaGetFullParam, javaHelperMethods, javaImage, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from './utils/javaUtil';
 import { ensureImageAvailable, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE, type Param } from './utils/util';
 
 const docker = new Dockerode();
@@ -63,6 +63,7 @@ export async function getMarkerResponses(problemId: string, functionName: string
         const pack = tar.pack();
         pack.entry({ name: 'ListNode.java' }, Buffer.from(javaListNodeClass));
         pack.entry({ name: 'TreeNode.java' }, Buffer.from(javaTreeNodeClass));
+        pack.entry({ name: 'GraphNode.java' }, Buffer.from(javaGraphNodeClass));
         pack.entry({ name: 'Marker.java' }, Buffer.from(markerCode));
         pack.entry({ name: 'Main.java' }, Buffer.from(runner));
         pack.finalize();

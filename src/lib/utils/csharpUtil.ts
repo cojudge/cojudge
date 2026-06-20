@@ -23,6 +23,17 @@ public class TreeNode {
 }
 `;
 
+export const csharpGraphNodeClass = `
+using System.Collections.Generic;
+public class GraphNode {
+    public int val;
+    public List<GraphNode> neighbors;
+    public GraphNode() { neighbors = new List<GraphNode>(); }
+    public GraphNode(int val) { this.val = val; neighbors = new List<GraphNode>(); }
+    public GraphNode(int val, List<GraphNode> neighbors) { this.val = val; this.neighbors = neighbors; }
+}
+`;
+
 export const csharpHelperMethods = `
 public static class CSharpHelper {
     public static ListNode[] ToListNodeArray(string s) {
@@ -352,6 +363,60 @@ public static class CSharpHelper {
         }
         return root;
     }
+    
+    public static GraphNode ToGraphNode(string s) {
+        int[][] adj = ToIntArray2d(s);
+        if (adj.Length == 0) return null;
+        Dictionary<int, GraphNode> map = new Dictionary<int, GraphNode>();
+        for (int i = 0; i < adj.Length; i++) {
+            map[i + 1] = new GraphNode(i + 1);
+        }
+        for (int i = 0; i < adj.Length; i++) {
+            GraphNode node = map[i + 1];
+            foreach (int neighbor in adj[i]) {
+                node.neighbors.Add(map[neighbor]);
+            }
+        }
+        return map[1];
+    }
+    
+    public static string DisplayOutput(GraphNode node) {
+        if (node == null) return "[]";
+        Dictionary<int, List<int>> adj = new Dictionary<int, List<int>>();
+        HashSet<GraphNode> visited = new HashSet<GraphNode>();
+        Queue<GraphNode> q = new Queue<GraphNode>();
+        q.Enqueue(node);
+        visited.Add(node);
+        while (q.Count > 0) {
+            GraphNode cur = q.Dequeue();
+            List<int> neighbors = new List<int>();
+            foreach (GraphNode n in cur.neighbors) {
+                neighbors.Add(n.val);
+                if (!visited.Contains(n)) {
+                    visited.Add(n);
+                    q.Enqueue(n);
+                }
+            }
+            adj[cur.val] = neighbors;
+        }
+        var keys = new List<int>(adj.Keys);
+        keys.Sort();
+        StringBuilder sb = new StringBuilder("[");
+        bool first = true;
+        foreach (int key in keys) {
+            if (!first) sb.Append(",");
+            first = false;
+            sb.Append("[");
+            List<int> neighbors = adj[key];
+            for (int j = 0; j < neighbors.Count; j++) {
+                if (j > 0) sb.Append(",");
+                sb.Append(neighbors[j]);
+            }
+            sb.Append("]");
+        }
+        sb.Append("]");
+        return sb.ToString();
+    }
 }
 `;
 
@@ -387,6 +452,8 @@ export function csharpGetFullParam(params: Param[], tc: any): string {
             fullParam += `CSharpHelper.ToListNode(${formatAndSplitCSharpString(val)})`;
         } else if ((param.type as any) === 'tree_node') {
             fullParam += `CSharpHelper.ToTreeNode(${formatAndSplitCSharpString(val)})`;
+        } else if ((param.type as any) === 'graph_node') {
+            fullParam += `CSharpHelper.ToGraphNode(${formatAndSplitCSharpString(val)})`;
         } else if (param.type === 'string_array') {
             let strVal: string;
             if (Array.isArray(val)) {

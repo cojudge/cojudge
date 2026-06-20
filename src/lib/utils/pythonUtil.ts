@@ -17,6 +17,14 @@ class TreeNode:
         self.right = right
 `;
 
+export const pythonGraphNodeClass = `
+from typing import List
+class GraphNode:
+    def __init__(self, val: int = 0, neighbors: 'Optional[List[GraphNode]]' = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+`;
+
 export const pythonHelperMethods = `# helper display to normalize outputs
 from typing import Any, Optional, List
 from ast import literal_eval
@@ -51,18 +59,42 @@ def display_tree_node(root: Optional[TreeNode]) -> str:
     # convert to leetcode-like string with nulls
     return '[' + ','.join('null' if v is None else str(v) for v in out) + ']'
 
+def display_graph_node(node: Optional['GraphNode']) -> str:
+    if node is None:
+        return '[]'
+    adj = {}
+    visited = set()
+    from collections import deque
+    q = deque([node])
+    visited.add(node)
+    while q:
+        cur = q.popleft()
+        neighbors = []
+        for n in cur.neighbors:
+            neighbors.append(n.val)
+            if n not in visited:
+                visited.add(n)
+                q.append(n)
+        adj[cur.val] = neighbors
+    result = []
+    for k in sorted(adj):
+        result.append(adj[k])
+    return str(result)
+
 def display_output(x: Any) -> str:
     if isinstance(x, bool):
         return 'true' if x else 'false'
     if isinstance(x, list):
         return str(x)
-    # Duck-typing for ListNode / TreeNode to avoid module identity issues
+    # Duck-typing for ListNode / TreeNode / GraphNode to avoid module identity issues
     if x is None:
         return 'null'
     if hasattr(x, 'val') and hasattr(x, 'next') and type(x).__name__ == 'ListNode':
         return display_list_node(x)  # type: ignore
     if hasattr(x, 'val') and hasattr(x, 'left') and hasattr(x, 'right') and type(x).__name__ == 'TreeNode':
         return display_tree_node(x)  # type: ignore
+    if hasattr(x, 'val') and hasattr(x, 'neighbors') and type(x).__name__ == 'GraphNode':
+        return display_graph_node(x)  # type: ignore
     return str(x)
 
 def to_list_node_array(x: str) -> List[Optional[ListNode]]:
@@ -82,6 +114,18 @@ def to_list_node(x: str) -> Optional[ListNode]:
         cur.next = ListNode(x)
         cur = cur.next
     return dummy.next
+
+def read_graph_node(x: str) -> Optional['GraphNode']:
+    if not x or x.strip() == '[]':
+        return None
+    adj = literal_eval(x)
+    if not isinstance(adj, list) or not adj:
+        return None
+    nodes = [GraphNode(i + 1) for i in range(len(adj))]
+    for i, neighbors in enumerate(adj):
+        for nb in neighbors:
+            nodes[i].neighbors.append(nodes[nb - 1])
+    return nodes[0]
 
 def read_tree_node(x: str) -> Optional[TreeNode]:
     if not x or x.strip() == '[]':
@@ -141,6 +185,9 @@ export function pyGetFullParam(params: Param[], tc: any): string {
         } else if (param.type === 'tree_node') {
             const escaped = String(val ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
             parts.push(`read_tree_node('${escaped}')`);
+        } else if (param.type === 'graph_node') {
+            const escaped = String(val ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+            parts.push(`read_graph_node('${escaped}')`);
         } else if (param.type === 'string_array') {
             const escaped = String(val ?? '[]').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
             parts.push(`literal_eval('${escaped}')`);
@@ -189,5 +236,5 @@ export function generatePythonRunner(functionName: string, params: Param[], test
         return `__res = sol.${functionName}(${fullParam})\nprint(':::RESULT:::' + display_output(__res))\nprint('---')`;
     }).join('\n');
 
-    return `from typing import List, Optional, Any\n\n${pythonListNodeClass}\n${pythonTreeNodeClass}\n\n${pythonHelperMethods}\nif __name__ == '__main__':\n    from Solution import Solution\n    sol = Solution()\n    ${calls}\n`;
+    return `from typing import List, Optional, Any\n\n${pythonListNodeClass}\n${pythonTreeNodeClass}\n${pythonGraphNodeClass}\n\n${pythonHelperMethods}\nif __name__ == '__main__':\n    from Solution import Solution\n    sol = Solution()\n    ${calls}\n`;
 }

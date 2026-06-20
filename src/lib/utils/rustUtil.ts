@@ -38,7 +38,8 @@ impl TreeNode {
     }
   }
 }
-`;
+`; 
+// Note: rustGraphNodeClass not a separate export; GraphNode included in generateRustRunner output
 
 export const rustHelperMethods = `
 pub trait CojudgeDisplay {
@@ -79,6 +80,49 @@ impl CojudgeDisplay for Option<Box<ListNode>> {
 
 impl CojudgeDisplay for () {
     fn to_cojudge_string(&self) -> String { "void".to_string() }
+}
+
+impl CojudgeDisplay for Option<Rc<RefCell<GraphNode>>> {
+    fn to_cojudge_string(&self) -> String {
+        if self.is_none() { return "[]".to_string(); }
+        let mut adj: std::collections::BTreeMap<i32, Vec<i32>> = std::collections::BTreeMap::new();
+        let mut visited = std::collections::HashSet::new();
+        let mut q = std::collections::VecDeque::new();
+        q.push_back(self.clone());
+        visited.insert(self.as_ref().unwrap().borrow().val);
+        while let Some(cur) = q.pop_front() {
+            if let Some(cur_rc) = cur {
+                let cur_node = cur_rc.borrow();
+                let mut neighbors = Vec::new();
+                for n_opt in &cur_node.neighbors {
+                    if let Some(n_rc) = n_opt {
+                        let n = n_rc.borrow();
+                        neighbors.push(n.val);
+                        if visited.insert(n.val) {
+                            q.push_back(Some(n_rc.clone()));
+                        }
+                    }
+                }
+                adj.insert(cur_node.val, neighbors);
+            }
+        }
+        let mut res = String::from("[");
+        let mut first = true;
+        for i in 1..=adj.len() as i32 {
+            if !first { res.push(','); }
+            first = false;
+            res.push('[');
+            if let Some(neighbors) = adj.get(&i) {
+                for (j, v) in neighbors.iter().enumerate() {
+                    if j > 0 { res.push(','); }
+                    res.push_str(&v.to_string());
+                }
+            }
+            res.push(']');
+        }
+        res.push(']');
+        res
+    }
 }
 
 impl CojudgeDisplay for Option<Rc<RefCell<TreeNode>>> {
@@ -197,6 +241,24 @@ pub fn to_int_array_2d(s: &str) -> Vec<Vec<i32>> {
     res
 }
 
+pub fn to_graph_node(s: &str) -> Option<Rc<RefCell<GraphNode>>> {
+    let s = s.trim();
+    if s == "[]" || s.is_empty() { return None; }
+    let adj = to_int_array_2d(s);
+    let mut nodes: Vec<Rc<RefCell<GraphNode>>> = (0..adj.len())
+        .map(|i| Rc::new(RefCell::new(GraphNode::new((i + 1) as i32))))
+        .collect();
+    for i in 0..adj.len() {
+        for &nb in &adj[i] {
+            let idx = (nb - 1) as usize;
+            if idx < nodes.len() {
+                nodes[i].borrow_mut().neighbors.push(Some(nodes[idx].clone()));
+            }
+        }
+    }
+    nodes.into_iter().next()
+}
+
 pub fn to_string_array(s: &str) -> Vec<String> {
     let s = s.trim();
     if s == "[]" || s.is_empty() { return vec![]; }
@@ -274,6 +336,10 @@ export function rustGetFullParam(params: Param[], tc: any): string {
     } else if (p.type === "tree_node") {
       parts.push(
         `to_tree_node(${rustEscapeStringLiteral(String(val ?? "[]"))})`,
+      );
+    } else if (p.type === "graph_node") {
+      parts.push(
+        `to_graph_node(${rustEscapeStringLiteral(String(val ?? "[]"))})`,
       );
     } else {
       parts.push(`${rustEscapeStringLiteral(String(val ?? ""))}.to_string()`);
@@ -358,6 +424,23 @@ use std::collections::VecDeque;
 ${rustListNodeClass}
 
 ${rustTreeNodeClass}
+
+// GraphNode
+#[derive(Debug, PartialEq, Eq)]
+pub struct GraphNode {
+  pub val: i32,
+  pub neighbors: Vec<Option<Rc<RefCell<GraphNode>>>>,
+}
+
+impl GraphNode {
+  #[inline]
+  pub fn new(val: i32) -> Self {
+    GraphNode {
+      val,
+      neighbors: vec![]
+    }
+  }
+}
 
 // User code
 ${cleanedCode}

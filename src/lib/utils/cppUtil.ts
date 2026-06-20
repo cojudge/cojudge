@@ -24,6 +24,18 @@ struct TreeNode {
 };
 `;
 
+export const cppGraphNodeClass = `
+#include <vector>
+using namespace std;
+struct GraphNode {
+    int val;
+    vector<GraphNode*> neighbors;
+    GraphNode(): val(0) {}
+    GraphNode(int x): val(x) {}
+    GraphNode(int x, vector<GraphNode*> neighbors): val(x), neighbors(neighbors) {}
+};
+`;
+
 // Helper methods in C++ to normalize IO and parsing
 export const cppHelperMethods = `
 #include <bits/stdc++.h>
@@ -398,6 +410,57 @@ static TreeNode* to_tree_node(const string &s) {
     return root;
 }
 
+static string display_output(GraphNode* node) {
+    if (!node) return "[]";
+    map<int, vector<int>> adj;
+    unordered_set<GraphNode*> visited;
+    deque<GraphNode*> q;
+    q.push_back(node);
+    visited.insert(node);
+    while (!q.empty()) {
+        GraphNode* cur = q.front(); q.pop_front();
+        vector<int> neighbors;
+        for (GraphNode* n : cur->neighbors) {
+            neighbors.push_back(n->val);
+            if (!visited.count(n)) {
+                visited.insert(n);
+                q.push_back(n);
+            }
+        }
+        adj[cur->val] = neighbors;
+    }
+    string s = "[";
+    bool first = true;
+    for (auto& p : adj) {
+        if (!first) s += ",";
+        first = false;
+        s += "[";
+        for (size_t j = 0; j < p.second.size(); j++) {
+            if (j > 0) s += ",";
+            s += to_string(p.second[j]);
+        }
+        s += "]";
+    }
+    s += "]";
+    return s;
+}
+
+static GraphNode* to_graph_node(const string &s) {
+    vector<vector<int>> adj = to_int_array_2d(s);
+    if (adj.empty()) return nullptr;
+    unordered_map<int, GraphNode*> map;
+    for (size_t i = 0; i < adj.size(); i++) {
+        map[i + 1] = new GraphNode(i + 1);
+    }
+    for (size_t i = 0; i < adj.size(); i++) {
+        GraphNode* node = map[i + 1];
+        for (int neighbor : adj[i]) {
+            node->neighbors.push_back(map[neighbor]);
+        }
+    }
+    return map[1];
+}
+
 // escape helper for static usage if needed
 `;
 
@@ -465,6 +528,8 @@ export function cppGetFullParam(params: Param[], tc: any): string {
             parts.push(`to_list_node_array(${cppEscapeStringLiteral(val ?? '[]')})`);
         } else if (p.type === 'tree_node') {
             parts.push(`to_tree_node(${cppEscapeStringLiteral(val ?? '[]')})`);
+        } else if (p.type === 'graph_node') {
+            parts.push(`to_graph_node(${cppEscapeStringLiteral(val ?? '[]')})`);
         } else {
             // default pass as string
             parts.push(cppEscapeStringLiteral(String(val ?? '')));
@@ -605,6 +670,15 @@ export function generateCppRunner(functionName: string, params: Param[], testCas
                         strVal = String(raw ?? '[]');
                     }
                     decls.push(`TreeNode* ${vname} = to_tree_node(${cppEscapeStringLiteral(strVal)});`);
+                    args.push(vname);
+                } else if (p.type === 'graph_node') {
+                    let strVal: string;
+                    if (Array.isArray(raw)) {
+                        try { strVal = JSON.stringify(raw); } catch { strVal = '[]'; }
+                    } else {
+                        strVal = String(raw ?? '[]');
+                    }
+                    decls.push(`GraphNode* ${vname} = to_graph_node(${cppEscapeStringLiteral(strVal)});`);
                     args.push(vname);
                 } else {
                     // Default to string

@@ -1,4 +1,4 @@
-import { generateCSharpRunner, generateCSharpClassSolution, csharpImage, csharpListNodeClass, csharpTreeNodeClass } from "$lib/utils/csharpUtil";
+import { generateCSharpRunner, generateCSharpClassSolution, csharpImage, csharpListNodeClass, csharpTreeNodeClass, csharpGraphNodeClass } from "$lib/utils/csharpUtil";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import fs from 'fs/promises';
@@ -52,6 +52,7 @@ export class CSharpRunner extends ProgramRunner {
             const pack = tar.pack();
             pack.entry({ name: 'ListNode.cs' }, Buffer.from(csharpListNodeClass));
             pack.entry({ name: 'TreeNode.cs' }, Buffer.from(csharpTreeNodeClass));
+            pack.entry({ name: 'GraphNode.cs' }, Buffer.from(csharpGraphNodeClass));
             if (problemData.classProblem) {
                 const className = problemData.classProblem.userClassName || 'MedianFinder';
                 const wrapperCode = generateCSharpClassSolution(className);

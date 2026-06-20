@@ -1,4 +1,4 @@
-import { generatePythonRunner, generatePythonClassSolution, pythonImage, pythonListNodeClass, pythonTreeNodeClass } from "$lib/utils/pythonUtil";
+import { generatePythonRunner, generatePythonClassSolution, pythonImage, pythonListNodeClass, pythonTreeNodeClass, pythonGraphNodeClass } from "$lib/utils/pythonUtil";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import fs from 'fs/promises';
@@ -39,14 +39,15 @@ export class PythonRunner extends ProgramRunner {
             const pack = tar.pack();
             pack.entry({ name: 'ListNode.py' }, Buffer.from(pythonListNodeClass));
             pack.entry({ name: 'TreeNode.py' }, Buffer.from(pythonTreeNodeClass));
+            pack.entry({ name: 'GraphNode.py' }, Buffer.from(pythonGraphNodeClass));
             if (problemData.classProblem) {
                 const className = problemData.classProblem.userClassName || 'MedianFinder';
                 const wrapperCode = generatePythonClassSolution(className);
-                const userCode = `from ListNode import ListNode\nfrom TreeNode import TreeNode\n${this.code}`;
+                const userCode = `from ListNode import ListNode\nfrom TreeNode import TreeNode\nfrom GraphNode import GraphNode\n${this.code}`;
                 pack.entry({ name: `${className}.py` }, Buffer.from(userCode));
                 pack.entry({ name: 'Solution.py' }, Buffer.from(wrapperCode));
             } else {
-                const solutionCode = `from ListNode import ListNode\nfrom TreeNode import TreeNode\n${this.code}`;
+                const solutionCode = `from ListNode import ListNode\nfrom TreeNode import TreeNode\nfrom GraphNode import GraphNode\n${this.code}`;
                 pack.entry({ name: 'Solution.py' }, Buffer.from(solutionCode));
             }
             pack.entry({ name: 'main.py' }, Buffer.from(runnerCode));

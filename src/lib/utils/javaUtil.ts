@@ -23,6 +23,17 @@ export const javaTreeNodeClass = `
     }
 `;
 
+export const javaGraphNodeClass = `
+    import java.util.*;
+    public class GraphNode {
+        int val;
+        List<GraphNode> neighbors;
+        GraphNode() { neighbors = new ArrayList<>(); }
+        GraphNode(int val) { this.val = val; neighbors = new ArrayList<>(); }
+        GraphNode(int val, List<GraphNode> neighbors) { this.val = val; this.neighbors = neighbors; }
+    }
+`;
+
 export const javaHelperMethods = `
     private static ListNode[] to_list_node_array(String s) throws Exception {
         String[] sarr = to_string_array(s);
@@ -279,6 +290,58 @@ export const javaHelperMethods = `
         for (int i = 0; i < rows.size(); i++) res[i] = rows.get(i);
         return res;
     }
+    private static GraphNode to_graph_node(String s) throws Exception {
+        if (s == null || s.equals("null") || s.trim().equals("[]")) return null;
+        int[][] adj = to_int_array_2d(s);
+        if (adj.length == 0) return null;
+        Map<Integer, GraphNode> map = new HashMap<>();
+        for (int i = 0; i < adj.length; i++) {
+            map.put(i + 1, new GraphNode(i + 1));
+        }
+        for (int i = 0; i < adj.length; i++) {
+            GraphNode node = map.get(i + 1);
+            for (int neighbor : adj[i]) {
+                node.neighbors.add(map.get(neighbor));
+            }
+        }
+        return map.get(1);
+    }
+    private static String displayOutput(GraphNode node) {
+        if (node == null) return "[]";
+        Map<Integer, List<Integer>> adj = new LinkedHashMap<>();
+        Set<GraphNode> visited = new HashSet<>();
+        Queue<GraphNode> q = new LinkedList<>();
+        q.add(node);
+        visited.add(node);
+        while (!q.isEmpty()) {
+            GraphNode cur = q.poll();
+            List<Integer> neighbors = new ArrayList<>();
+            for (GraphNode n : cur.neighbors) {
+                neighbors.add(n.val);
+                if (!visited.contains(n)) {
+                    visited.add(n);
+                    q.add(n);
+                }
+            }
+            adj.put(cur.val, neighbors);
+        }
+        TreeSet<Integer> keys = new TreeSet<>(adj.keySet());
+        StringBuilder sb = new StringBuilder("[");
+        boolean first = true;
+        for (int key : keys) {
+            if (!first) sb.append(",");
+            first = false;
+            sb.append("[");
+            List<Integer> neighbors = adj.get(key);
+            for (int j = 0; j < neighbors.size(); j++) {
+                if (j > 0) sb.append(",");
+                sb.append(neighbors.get(j));
+            }
+            sb.append("]");
+        }
+        sb.append("]");
+        return sb.toString();
+    }
     private static TreeNode to_tree_node(String s) throws Exception {
         if (s == null) return null;
         String t = s.trim();
@@ -360,6 +423,8 @@ export function javaGetFullParam(params: Param[], tc: any): string {
             fullParam += `to_list_node(${formatAndSplitJavaString(val)})`;
         } else if ((param.type as any) === 'tree_node') {
             fullParam += `to_tree_node(${formatAndSplitJavaString(val)})`;
+        } else if ((param.type as any) === 'graph_node') {
+            fullParam += `to_graph_node(${formatAndSplitJavaString(val)})`;
         } else if (param.type === 'string_array') {
             // Accept either a raw string like "[\"a\",\"b\"]" or an actual array ["a","b"]
             let strVal: string;

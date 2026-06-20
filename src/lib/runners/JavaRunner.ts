@@ -1,4 +1,4 @@
-import { generateJavaRunner, generateJavaClassSolution, javaImage, javaListNodeClass, javaTreeNodeClass } from "$lib/utils/javaUtil";
+import { generateJavaRunner, generateJavaClassSolution, javaImage, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from "$lib/utils/javaUtil";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import fs from 'fs/promises';
@@ -39,6 +39,7 @@ export class JavaRunner extends ProgramRunner {
             const pack = tar.pack();
             pack.entry({ name: 'ListNode.java' }, Buffer.from(javaListNodeClass));
             pack.entry({ name: 'TreeNode.java' }, Buffer.from(javaTreeNodeClass));
+            pack.entry({ name: 'GraphNode.java' }, Buffer.from(javaGraphNodeClass));
             if (problemData.classProblem) {
                 const className = problemData.classProblem.userClassName || 'MedianFinder';
                 const wrapperCode = generateJavaClassSolution(className);
