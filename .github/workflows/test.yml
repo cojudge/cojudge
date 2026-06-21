@@ -1,0 +1,29 @@
+name: Verify Problem Submissions
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Pull Java runtime image
+        run: docker pull alpine/java:22-jdk
+
+      - name: Verify problem submissions
+        run: node scripts/verify-submissions.js

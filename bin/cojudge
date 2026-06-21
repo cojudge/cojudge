@@ -886,7 +886,7 @@ async function handleSubmit(argsToUse) {
         console.log(
           `\nSummary: ${passedTcCount}/${totalTcCount} test cases passed.`,
         );
-        process.exit(0);
+        process.exit(1);
       }
 
       // batch passed
