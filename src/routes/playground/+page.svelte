@@ -48,11 +48,16 @@ class Program
         rust: `fn main() {
     // your code goes here
 }`,
+        go: `package main
+
+func main() {
+    // your code goes here
+}`,
         plaintext: ``,
         markdown: `# Write your markdown here.
 `
     };
-    const programmingLanguages: ProgrammingLanguage[] = ['java', 'python', 'cpp', 'csharp', 'rust', 'plaintext', 'markdown'];
+    const programmingLanguages: ProgrammingLanguage[] = ['java', 'python', 'cpp', 'csharp', 'rust', 'go', 'plaintext', 'markdown'];
 
     // Tabs are grouped by fileId (language-agnostic)
     type TabMeta = { fileId: string; fileName: string; isOpen: boolean; lastUpdated?: number; type?: 'editor' | 'preview'; sourceFileId?: string };
@@ -1582,6 +1587,7 @@ class Program
                         <option value="cpp">C++</option>
                         <option value="csharp">C#</option>
                         <option value="rust">Rust</option>
+                        <option value="go">Go</option>
                         <option value="plaintext">Plaintext</option>
                         <option value="markdown">Markdown</option>
                     </select>

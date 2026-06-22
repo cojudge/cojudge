@@ -1,5 +1,6 @@
 import { cppImage } from '$lib/utils/cppUtil';
 import { csharpImage } from '$lib/utils/csharpUtil';
+import { goImage } from '$lib/utils/goUtil';
 import { rustImage } from '$lib/utils/rustUtil';
 import { javaImage } from '$lib/utils/javaUtil';
 import { pythonImage } from '$lib/utils/pythonUtil';
@@ -16,6 +17,7 @@ function imageForLanguage(language: string) {
     if (language === 'cpp') return { image: cppImage, language };
     if (language === 'csharp') return { image: csharpImage, language };
     if (language === 'rust') return { image: rustImage, language };
+    if (language === 'go') return { image: goImage, language };
     return null;
 }
 

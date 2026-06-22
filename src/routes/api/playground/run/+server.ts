@@ -1,4 +1,4 @@
-import { PlaygroundCppRunner, PlaygroundCSharpRunner, PlaygroundJavaRunner, PlaygroundPythonRunner, PlaygroundRustRunner } from '$lib/runners/PlaygroundRunners';
+import { PlaygroundCppRunner, PlaygroundCSharpRunner, PlaygroundGoRunner, PlaygroundJavaRunner, PlaygroundPythonRunner, PlaygroundRustRunner } from '$lib/runners/PlaygroundRunners';
 import { TIMEOUT_MESSAGE, type JobStatus } from '$lib/utils/util';
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
@@ -39,6 +39,8 @@ async function executeRun(language: string, code: string, job: RunJob) {
             runner = new PlaygroundCSharpRunner(code);
         } else if (language === 'rust') {
             runner = new PlaygroundRustRunner(code);
+        } else if (language === 'go') {
+            runner = new PlaygroundGoRunner(code);
         }
         if (!runner) {
             throw new Error(`${language} is not supported yet`);

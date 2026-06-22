@@ -24,7 +24,8 @@
     "python": "class MedianFinder:\n    def __init__(self):\n        \n    def addNum(self, num: int) -> None:\n        \n    def findMedian(self) -> float:\n        return 0.0",
     "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass MedianFinder {\npublic:\n    MedianFinder() {\n        \n    }\n    \n    void addNum(int num) {\n        \n    }\n    \n    double findMedian() {\n        return 0.0;\n    }\n};",
     "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class MedianFinder {\n    public MedianFinder() {\n        \n    }\n    \n    public void AddNum(int num) {\n        \n    }\n    \n    public double FindMedian() {\n        return 0.0;\n    }\n}",
-    "rust": "use std::collections::BinaryHeap;\nuse std::cmp::Reverse;\n\npub struct MedianFinder {\n    \n}\n\nimpl MedianFinder {\n    pub fn new() -> Self {\n        MedianFinder {}\n    }\n    \n    pub fn add_num(&mut self, num: i32) {\n        \n    }\n    \n    pub fn find_median(&self) -> f64 {\n        0.0\n    }\n}"
+    "rust": "use std::collections::BinaryHeap;\nuse std::cmp::Reverse;\n\npub struct MedianFinder {\n    \n}\n\nimpl MedianFinder {\n    pub fn new() -> Self {\n        MedianFinder {}\n    }\n    \n    pub fn add_num(&mut self, num: i32) {\n        \n    }\n    \n    pub fn find_median(&self) -> f64 {\n        0.0\n    }\n}",
+    "go": "package main\n\ntype MedianFinder struct {\n    \n}\n\nfunc Constructor() MedianFinder {\n    return MedianFinder{}\n}\n\nfunc (this *MedianFinder) AddNum(num int) {\n    \n}\n\nfunc (this *MedianFinder) FindMedian() float64 {\n    return 0.0\n}"
   },
   "testCases": [
     {
@@ -42,8 +43,14 @@
   ],
   "functionName": "solve",
   "params": [
-    { "name": "operations", "type": "string_array" },
-    { "name": "values", "type": "int_array_2d" }
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array_2d"
+    }
   ],
   "outputType": "string_list",
   "hints": [

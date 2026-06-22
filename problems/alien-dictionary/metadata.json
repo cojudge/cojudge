@@ -19,7 +19,8 @@
     "python": "from typing import List\nclass Solution:\n    def alienOrder(self, words: List[str]) -> str:\n        pass\n",
     "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string alienOrder(vector<string>& words) {\n        return \"\";\n    }\n};",
     "csharp": "public class Solution \n{\n    public string AlienOrder(string[] words) \n    {\n        \n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn alien_order(words: Vec<String>) -> String {\n        \n    }\n}"
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn alien_order(words: Vec<String>) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc AlienOrder(words []string) string {\n    \n}"
   },
   "testCases": [
     {

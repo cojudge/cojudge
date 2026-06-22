@@ -19,7 +19,8 @@
     "python": "from typing import List\nclass Solution:\n    def numIslands(self, grid: List[List[int]]) -> int:\n        pass\n",
     "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int numIslands(vector<vector<int>>& grid) {\n        return 0;\n    }\n};",
     "csharp": "public class Solution \n{\n    public int NumIslands(int[][] grid) \n    {\n        \n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_islands(grid: String) -> i32 {\n        \n    }\n}"
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_islands(grid: String) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc NumIslands(grid [][]int) int {\n    \n}"
   },
   "testCases": [
     {

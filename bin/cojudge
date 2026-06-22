@@ -111,7 +111,7 @@ Usage:
   cojudge mark <slug>            Mark a problem as solved
   cojudge unmark <slug>          Unmark a problem as solved
   cojudge init <slug>           Initialize a problem file with starter code
-                                 (Options: --lang java|python|cpp|rust|csharp)
+                                 (Options: --lang java|python|cpp|rust|csharp|go)
   cojudge -p, --port <number>    Specify port (default: 5375)
   cojudge -v, --version          Show current version and date
   cojudge -u, --update           Update cojudge to the latest version
@@ -144,6 +144,8 @@ function getLangFromExt(ext) {
       return "rust";
     case ".cs":
       return "csharp";
+    case ".go":
+      return "go";
     default:
       return "plaintext";
   }
@@ -958,11 +960,12 @@ async function handleInit(argsToUse) {
     cpp: ".cpp",
     rust: ".rs",
     csharp: ".cs",
+    go: ".go",
   };
 
   const extension = extMap[lang] || ".txt";
   let defaultFilename = `solution${extension}`;
-  if (["java", "cpp", "csharp"].includes(lang)) {
+  if (["java", "cpp", "csharp", "go"].includes(lang)) {
     defaultFilename = `Solution${extension}`;
   }
   const outputFilename = getParam("--output") || defaultFilename;

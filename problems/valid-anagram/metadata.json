@@ -19,7 +19,8 @@
     "python": "class Solution:\n    def isAnagram(self, s: str, t: str) -> bool:\n        pass\n",
     "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool isAnagram(string s, string t) {\n        return false;\n    }\n};",
     "csharp": "public class Solution \n{\n    public bool IsAnagram(string s, string t) \n    {\n        \n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_anagram(s: String, t: String) -> bool {\n        \n    }\n}"
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_anagram(s: String, t: String) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc IsAnagram(s string, t string) bool {\n    \n}"
   },
   "testCases": [
     {

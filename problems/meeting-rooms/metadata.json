@@ -19,7 +19,8 @@
     "python": "from typing import List\nclass Solution:\n    def canAttendMeetings(self, intervals: List[List[int]]) -> bool:\n        pass\n",
     "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool canAttendMeetings(vector<vector<int>>& intervals) {\n        return true;\n    }\n};",
     "csharp": "public class Solution \n{\n    public bool CanAttendMeetings(int[][] intervals) \n    {\n        \n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_attend_meetings(intervals: String) -> bool {\n        \n    }\n}"
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_attend_meetings(intervals: String) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc CanAttendMeetings(intervals [][]int) bool {\n    \n}"
   },
   "testCases": [
     {

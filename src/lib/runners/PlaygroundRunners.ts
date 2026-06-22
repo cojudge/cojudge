@@ -1,5 +1,6 @@
 import { cppImage } from "$lib/utils/cppUtil";
 import { csharpImage } from "$lib/utils/csharpUtil";
+import { goImage } from "$lib/utils/goUtil";
 import { javaImage } from "$lib/utils/javaUtil";
 import { pythonImage } from "$lib/utils/pythonUtil";
 import { rustImage } from "$lib/utils/rustUtil";
@@ -335,6 +336,95 @@ export class PlaygroundRustRunner extends PlaygroundRunner {
 
         const exec = await this.container.exec({
             Cmd: ['/bin/sh', '-c', 'rustc --edition 2021 -O main.rs -o main'],
+            AttachStdout: true,
+            AttachStderr: true
+        });
+        const stream: any = await exec.start({ hijack: true, stdin: false });
+        let stdout = '';
+        let stderr = '';
+        await new Promise((resolve, reject) => {
+            (this.container as any).modem.demuxStream(
+                stream,
+                { write: (chunk: any) => (stdout += chunk.toString()) },
+                { write: (chunk: any) => (stderr += chunk.toString()) }
+            );
+            stream.on('end', resolve);
+            stream.on('error', reject);
+        });
+        
+        const inspect = await exec.inspect();
+        if (inspect.ExitCode !== 0) {
+            throw new Error(`Compilation failed:\n${stderr || stdout}`);
+        }
+    }
+
+    async run(): Promise<{ output: string; logs: string }> {
+        if (!this.container) throw new Error('Container not initialized');
+        
+        const exec = await this.container.exec({
+            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', './main'],
+            AttachStdout: true,
+            AttachStderr: true
+        });
+        const stream: any = await exec.start({ hijack: true, stdin: false });
+        let stdout = '';
+        let stderr = '';
+        await new Promise((resolve, reject) => {
+            (this.container as any).modem.demuxStream(
+                stream,
+                { write: (chunk: any) => (stdout += chunk.toString()) },
+                { write: (chunk: any) => (stderr += chunk.toString()) }
+            );
+            stream.on('end', resolve);
+            stream.on('error', reject);
+        });
+        
+        const inspect = await exec.inspect();
+        if (inspect.ExitCode === 124) {
+            throw new Error(TIMEOUT_MESSAGE);
+        }
+        
+        await this.container.stop();
+        await this.container.remove();
+        
+        return { output: stdout, logs: stderr };
+    }
+}
+
+export class PlaygroundGoRunner extends PlaygroundRunner {
+    private container: Dockerode.Container | null = null;
+
+    async compile(): Promise<void> {
+        await ensureImageAvailable(docker, goImage);
+        this.container = await docker.createContainer({
+            Image: goImage,
+            Cmd: ['sh', '-lc', 'tail -f /dev/null'],
+            WorkingDir: '/app',
+            Tty: false,
+            Labels: { 'cojudge.created': 'true' }
+        });
+        await this.container.start();
+
+        const pack = tar.pack();
+        pack.entry({ name: 'main.go' }, Buffer.from(this.code));
+        pack.finalize();
+        await this.container.putArchive(pack as any, { path: '/app' });
+
+        // Initialize Go module
+        const initExec = await this.container.exec({
+            Cmd: ['/bin/sh', '-c', 'go mod init playground'],
+            AttachStdout: true,
+            AttachStderr: true
+        });
+        const initStream: any = await initExec.start({ hijack: true, stdin: false });
+        await new Promise((resolve, reject) => {
+            initStream.on('end', resolve);
+            initStream.on('error', reject);
+            initStream.resume();
+        });
+
+        const exec = await this.container.exec({
+            Cmd: ['/bin/sh', '-c', 'go build -o main .'],
             AttachStdout: true,
             AttachStderr: true
         });

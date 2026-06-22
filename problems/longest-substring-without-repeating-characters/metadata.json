@@ -26,7 +26,8 @@
     "python": "class Solution:\n    def lengthOfLongestSubstring(self, s: str) -> int:\n        pass\n",
     "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int lengthOfLongestSubstring(string s) {\n        return 0;\n    }\n};",
     "csharp": "public class Solution \n{\n    public int LengthOfLongestSubstring(string s) \n    {\n        \n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn length_of_longest_substring(s: String) -> i32 {\n        \n    }\n}"
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn length_of_longest_substring(s: String) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc LengthOfLongestSubstring(s string) int {\n    \n}"
   },
   "testCases": [
     {

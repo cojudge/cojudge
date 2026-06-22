@@ -19,7 +19,8 @@
     "python": "class Solution:\n    def countBits(self, n: int) -> list[int]:\n        pass\n",
     "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> countBits(int n) {\n        return {};\n    }\n};",
     "csharp": "public class Solution \n{\n    public int[] CountBits(int n) \n    {\n        \n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_bits(n: i32) -> Vec<i32> {\n        \n    }\n}"
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_bits(n: i32) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc CountBits(n int) []int {\n    \n}"
   },
   "testCases": [
     {

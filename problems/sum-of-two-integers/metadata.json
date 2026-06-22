@@ -19,7 +19,8 @@
     "python": "class Solution:\n    def getSum(self, a: int, b: int) -> int:\n        pass\n",
     "cpp": "class Solution {\npublic:\n    int getSum(int a, int b) {\n        return 0;\n    }\n};",
     "csharp": "public class Solution \n{\n    public int GetSum(int a, int b) \n    {\n        \n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn get_sum(a: i32, b: i32) -> i32 {\n        \n    }\n}"
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn get_sum(a: i32, b: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc GetSum(a int, b int) int {\n    \n}"
   },
   "testCases": [
     {
