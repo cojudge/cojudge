@@ -5,6 +5,8 @@ import fs from 'fs/promises';
 import path from 'path';
 import tar from 'tar-stream';
 import { ProgramRunner } from "./ProgramRunner";
+import ContainerPool from "./ContainerPool";
+
 const docker = new Dockerode();
 
 export class CSharpRunner extends ProgramRunner {
@@ -17,38 +19,37 @@ export class CSharpRunner extends ProgramRunner {
 
     async compile(): Promise<void> {
         try {
-            // Read problem metadata and generate runner code
             const problemPath = path.resolve('problems', this.problemId, 'metadata.json');
             const problemContent = await fs.readFile(problemPath, 'utf-8');
             const problemData = JSON.parse(problemContent);
             const runnerCode = generateCSharpRunner(problemData.functionName, problemData.params, this.testCases, problemData.outputType);
 
-            // Ensure C# image exists; pull it if missing
             await ensureImageAvailable(docker, csharpImage);
 
-            this.container = await docker.createContainer({
-                Image: csharpImage,
-                Cmd: ['sh', '-lc', 'tail -f /dev/null'], // keep container running for execs
-                WorkingDir: '/app',
-                Tty: false,
-                Labels: { 'cojudge.created': 'true' }
-            });
-            await this.container.start();
+            this.container = await ContainerPool.acquire(csharpImage);
+            if (!this.container) {
+                this.container = await docker.createContainer({
+                    Image: csharpImage,
+                    Cmd: ['sh', '-lc', 'tail -f /dev/null'],
+                    WorkingDir: '/app',
+                    Tty: false,
+                    Labels: { 'cojudge.created': 'true' }
+                });
+                await this.container.start();
 
-            // Initialize a .NET project first
-            const initExec = await this.container.exec({
-                Cmd: ['/bin/sh', '-c', 'dotnet new console'],
-                AttachStdout: true,
-                AttachStderr: true
-            });
-            const initStream: any = await initExec.start({ hijack: true, stdin: false });
-            await new Promise((resolve, reject) => {
-                initStream.on('end', resolve);
-                initStream.on('error', reject);
-                initStream.resume(); // Consume stream
-            });
+                const initExec = await this.container.exec({
+                    Cmd: ['/bin/sh', '-c', 'dotnet new console'],
+                    AttachStdout: true,
+                    AttachStderr: true
+                });
+                const initStream: any = await initExec.start({ hijack: true, stdin: false });
+                await new Promise((resolve, reject) => {
+                    initStream.on('end', resolve);
+                    initStream.on('error', reject);
+                    initStream.resume();
+                });
+            }
 
-            // Create an in-memory tar archive of sources and upload to /app
             const pack = tar.pack();
             pack.entry({ name: 'ListNode.cs' }, Buffer.from(csharpListNodeClass));
             pack.entry({ name: 'TreeNode.cs' }, Buffer.from(csharpTreeNodeClass));
@@ -65,7 +66,6 @@ export class CSharpRunner extends ProgramRunner {
             pack.finalize();
             await this.container.putArchive(pack as any, { path: '/app' });
 
-            // Compile inside the container
             const exec = await this.container.exec({
                 Cmd: ['/bin/sh', '-c', 'dotnet build'],
                 AttachStdout: true,
@@ -92,7 +92,10 @@ export class CSharpRunner extends ProgramRunner {
             }
             this.compiled = true;
         } catch (e) {
-            await this.cleanup();
+            if (this.container) {
+                await ContainerPool.markForCleanup(this.container);
+                this.container = null;
+            }
             throw e;
         }
     }
@@ -129,21 +132,11 @@ export class CSharpRunner extends ProgramRunner {
         } catch (error: any) {
             throw new Error(`${error}`);
         } finally {
-            this.cleanup();
+            if (this.container) {
+                await ContainerPool.release(csharpImage, this.container);
+                this.container = null;
+            }
+            this.compiled = false;
         }
-    }
-
-    private async cleanup() {
-        if (this.container) {
-            try {
-                const info = await this.container.inspect();
-                if (info.State.Running) {
-                    await this.container.stop();
-                }
-                await this.container.remove();
-            } catch {}
-            this.container = null;
-        }
-        this.compiled = false;
     }
 }

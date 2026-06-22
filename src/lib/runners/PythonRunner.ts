@@ -5,6 +5,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import tar from 'tar-stream';
 import { ProgramRunner } from "./ProgramRunner";
+import ContainerPool from "./ContainerPool";
 
 const docker = new Dockerode();
 
@@ -16,7 +17,6 @@ export class PythonRunner extends ProgramRunner {
         super(problemId, testCases, code);
     }
 
-    // For Python, compile prepares the container and uploads sources; no actual compilation
     async compile(): Promise<void> {
         try {
             const problemPath = path.resolve('problems', this.problemId, 'metadata.json');
@@ -25,17 +25,18 @@ export class PythonRunner extends ProgramRunner {
             const runnerCode = generatePythonRunner(problemData.functionName, problemData.params, this.testCases);
             await ensureImageAvailable(docker, pythonImage);
 
-            // Create a long-lived container; no bind mounts
-            this.container = await docker.createContainer({
-                Image: pythonImage,
-                Cmd: ['sh', '-lc', 'tail -f /dev/null'],
-                WorkingDir: '/app',
-                Tty: false,
-                Labels: { 'cojudge.created': 'true' }
-            });
-            await this.container.start();
+            this.container = await ContainerPool.acquire(pythonImage);
+            if (!this.container) {
+                this.container = await docker.createContainer({
+                    Image: pythonImage,
+                    Cmd: ['sh', '-lc', 'tail -f /dev/null'],
+                    WorkingDir: '/app',
+                    Tty: false,
+                    Labels: { 'cojudge.created': 'true' }
+                });
+                await this.container.start();
+            }
 
-            // Upload sources via in-memory tar archive
             const pack = tar.pack();
             pack.entry({ name: 'ListNode.py' }, Buffer.from(pythonListNodeClass));
             pack.entry({ name: 'TreeNode.py' }, Buffer.from(pythonTreeNodeClass));
@@ -56,7 +57,10 @@ export class PythonRunner extends ProgramRunner {
 
             this.prepared = true;
         } catch (e) {
-            this.cleanup();
+            if (this.container) {
+                await ContainerPool.markForCleanup(this.container);
+                this.container = null;
+            }
             throw e;
         }
     }
@@ -64,7 +68,6 @@ export class PythonRunner extends ProgramRunner {
     async run(): Promise<string[]> {
         if (!this.prepared || !this.container) throw new Error('PythonRunner: not prepared. Call compile() first.');
         try {
-            // Run the program inside the prepared container with the exact Cmd array
             const exec = await this.container.exec({
                 Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, 'python', '-B', 'main.py'],
                 AttachStdout: true,
@@ -92,19 +95,11 @@ export class PythonRunner extends ProgramRunner {
         } catch (error: any) {
             throw new Error(`${error}`);
         } finally {
-            this.cleanup();
+            if (this.container) {
+                await ContainerPool.release(pythonImage, this.container);
+                this.container = null;
+            }
+            this.prepared = false;
         }
-    }
-
-    private async cleanup() {
-        if (this.container) {
-            try {
-                const info = await this.container.inspect();
-                if (info.State.Running) await this.container.stop();
-                await this.container.remove();
-            } catch {}
-            this.container = null;
-        }
-        this.prepared = false;
     }
 }

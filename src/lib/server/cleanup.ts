@@ -1,22 +1,22 @@
 import { EXECUTION_TIMEOUT_SECONDS } from '$lib/utils/util';
 import Dockerode from 'dockerode';
+import ContainerPool from '$lib/runners/ContainerPool';
 
 const docker = new Dockerode();
-// Add a buffer to the timeout to avoid race conditions with running jobs
 const TIMEOUT_MS = (parseInt(EXECUTION_TIMEOUT_SECONDS) + 10) * 1000;
 
 export function startCleanupCron() {
     console.log('Starting container cleanup cron job...');
-    
-    // Run immediately on startup
     cleanupContainers();
-
-    // Run every minute
     setInterval(cleanupContainers, 60 * 1000);
 }
 
 async function cleanupContainers() {
     try {
+        // Clean stale containers from the pool (idle > 5 minutes)
+        await ContainerPool.cleanupStale(300000);
+
+        // Clean any orphaned containers with cojudge label that are too old
         const containers = await docker.listContainers({
             all: true,
             filters: {
@@ -25,22 +25,20 @@ async function cleanupContainers() {
         });
 
         const now = Date.now();
-
         for (const containerInfo of containers) {
-            // Created is in seconds
             const createdTime = containerInfo.Created * 1000;
             const age = now - createdTime;
 
             if (age > TIMEOUT_MS) {
                 const container = docker.getContainer(containerInfo.Id);
                 try {
-                    console.log(`Cleaning up container ${containerInfo.Id} (age: ${age}ms)`);
+                    console.log(`Cleaning up orphaned container ${containerInfo.Id.substring(0, 12)} (age: ${age}ms)`);
                     if (containerInfo.State === 'running') {
-                        await container.stop();
+                        await container.stop({ t: 1 });
                     }
                     await container.remove({ force: true });
                 } catch (err) {
-                    console.error(`Failed to cleanup container ${containerInfo.Id}:`, err);
+                    console.error(`Failed to cleanup container ${containerInfo.Id.substring(0, 12)}:`, err);
                 }
             }
         }

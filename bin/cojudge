@@ -656,7 +656,7 @@ async function handleRun(argsToUse) {
           results = polledData.results;
         }
       } else {
-        await new Promise((r) => setTimeout(r, 500));
+        await new Promise((r) => setTimeout(r, 100));
       }
     }
 
@@ -837,7 +837,7 @@ async function handleSubmit(argsToUse) {
           if (data.timeout) throw new Error("Time Limit Exceeded");
           jobResult = data;
         } else {
-          await new Promise((r) => setTimeout(r, 500));
+          await new Promise((r) => setTimeout(r, 100));
         }
       }
 

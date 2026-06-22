@@ -4,6 +4,7 @@ import Dockerode from 'dockerode';
 import tar from 'tar-stream';
 import { formatAndSplitJavaString, getDisplayFuncName, javaGetFullParam, javaHelperMethods, javaImage, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from './utils/javaUtil';
 import { ensureImageAvailable, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE, type Param } from './utils/util';
+import ContainerPool from './runners/ContainerPool';
 
 const docker = new Dockerode();
 
@@ -37,29 +38,19 @@ export async function getMarkerResponses(problemId: string, functionName: string
     const markerCode = await fs.readFile(markerPath, 'utf-8');
     await ensureImageAvailable(docker, javaImage);
     let container: Dockerode.Container | null = null;
-    const cleanup = async() => {
-        if (container) {
-            try {
-                const info = await container.inspect();
-                if (info.State.Running) {
-                    await container.stop();
-                }
-                await container.remove();
-            } catch {}
-        }
-    }
     try {
-        // Create container that stays up for execs
-        container = await docker.createContainer({
-            Image: javaImage,
-            Cmd: ['sh', '-lc', 'tail -f /dev/null'],
-            WorkingDir: '/app',
-            Tty: false,
-            Labels: { 'cojudge.created': 'true' }
-        });
-        await container.start();
+        container = await ContainerPool.acquire(javaImage);
+        if (!container) {
+            container = await docker.createContainer({
+                Image: javaImage,
+                Cmd: ['sh', '-lc', 'tail -f /dev/null'],
+                WorkingDir: '/app',
+                Tty: false,
+                Labels: { 'cojudge.created': 'true' }
+            });
+            await container.start();
+        }
 
-        // Upload sources via in-memory tar
         const pack = tar.pack();
         pack.entry({ name: 'ListNode.java' }, Buffer.from(javaListNodeClass));
         pack.entry({ name: 'TreeNode.java' }, Buffer.from(javaTreeNodeClass));
@@ -69,7 +60,6 @@ export async function getMarkerResponses(problemId: string, functionName: string
         pack.finalize();
         await container.putArchive(pack as any, { path: '/app' });
 
-        // Compile
         const compileExec = await container.exec({
             Cmd: ['/bin/sh', '-c', 'javac *.java'],
             AttachStdout: true,
@@ -135,8 +125,8 @@ export async function getMarkerResponses(problemId: string, functionName: string
             } as MarkerResponse;
         });
     } finally {
-        cleanup();
+        if (container) {
+            await ContainerPool.release(javaImage, container);
+        }
     }
 }
-
-

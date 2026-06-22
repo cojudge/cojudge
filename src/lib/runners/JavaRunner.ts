@@ -1,15 +1,17 @@
-import { generateJavaRunner, generateJavaClassSolution, javaImage, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from "$lib/utils/javaUtil";
+import { generateJavaRunner, generateJavaRunnerWithMarker, generateJavaClassSolution, javaImage, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from "$lib/utils/javaUtil";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import fs from 'fs/promises';
 import path from 'path';
 import tar from 'tar-stream';
 import { ProgramRunner } from "./ProgramRunner";
+import ContainerPool from "./ContainerPool";
 const docker = new Dockerode();
 
 export class JavaRunner extends ProgramRunner {
     private container: Dockerode.Container | null = null;
     private compiled = false;
+    private useMarker = false;
 
     constructor(problemId: string, testCases: any[], code: string) {
         super(problemId, testCases, code);
@@ -17,29 +19,51 @@ export class JavaRunner extends ProgramRunner {
 
     async compile(): Promise<void> {
         try {
-            // Read problem metadata and generate runner code
             const problemPath = path.resolve('problems', this.problemId, 'metadata.json');
             const problemContent = await fs.readFile(problemPath, 'utf-8');
             const problemData = JSON.parse(problemContent);
-            const runnerCode = generateJavaRunner(problemData.functionName, problemData.params, this.testCases, problemData.outputType);
 
-            // Ensure Java image exists; pull it if missing
+            let runnerCode: string;
+            const markerPath = path.resolve('problems', this.problemId, 'Marker.java');
+            let hasMarker = false;
+            try {
+                await fs.access(markerPath);
+                hasMarker = true;
+            } catch {}
+
+            if (hasMarker) {
+                this.useMarker = true;
+                runnerCode = generateJavaRunnerWithMarker(
+                    problemData.functionName, problemData.params, this.testCases, problemData.outputType
+                );
+            } else {
+                runnerCode = generateJavaRunner(
+                    problemData.functionName, problemData.params, this.testCases, problemData.outputType
+                );
+            }
+
             await ensureImageAvailable(docker, javaImage);
 
-            this.container = await docker.createContainer({
-                Image: javaImage,
-                Cmd: ['sh', '-lc', 'tail -f /dev/null'], // keep container running for execs
-                WorkingDir: '/app',
-                Tty: false,
-                Labels: { 'cojudge.created': 'true' }
-            });
-            await this.container.start();
+            this.container = await ContainerPool.acquire(javaImage);
+            if (!this.container) {
+                this.container = await docker.createContainer({
+                    Image: javaImage,
+                    Cmd: ['sh', '-lc', 'tail -f /dev/null'],
+                    WorkingDir: '/app',
+                    Tty: false,
+                    Labels: { 'cojudge.created': 'true' }
+                });
+                await this.container.start();
+            }
 
-            // Create an in-memory tar archive of sources and upload to /app
             const pack = tar.pack();
             pack.entry({ name: 'ListNode.java' }, Buffer.from(javaListNodeClass));
             pack.entry({ name: 'TreeNode.java' }, Buffer.from(javaTreeNodeClass));
             pack.entry({ name: 'GraphNode.java' }, Buffer.from(javaGraphNodeClass));
+            if (hasMarker) {
+                const markerCode = await fs.readFile(markerPath, 'utf-8');
+                pack.entry({ name: 'Marker.java' }, Buffer.from(markerCode));
+            }
             if (problemData.classProblem) {
                 const className = problemData.classProblem.userClassName || 'MedianFinder';
                 const wrapperCode = generateJavaClassSolution(className, problemData.params, problemData.outputType);
@@ -52,7 +76,6 @@ export class JavaRunner extends ProgramRunner {
             pack.finalize();
             await this.container.putArchive(pack as any, { path: '/app' });
 
-            // Compile inside the container
             const exec = await this.container.exec({
                 Cmd: ['/bin/sh', '-c', 'javac *.java'],
                 AttachStdout: true,
@@ -79,7 +102,8 @@ export class JavaRunner extends ProgramRunner {
             }
             this.compiled = true;
         } catch (e) {
-            await this.cleanup();
+            await ContainerPool.markForCleanup(this.container!);
+            this.container = null;
             throw e;
         }
     }
@@ -116,21 +140,11 @@ export class JavaRunner extends ProgramRunner {
         } catch (error: any) {
             throw new Error(`${error}`);
         } finally {
-            this.cleanup();
+            if (this.container) {
+                await ContainerPool.release(javaImage, this.container);
+                this.container = null;
+            }
+            this.compiled = false;
         }
-    }
-
-    private async cleanup() {
-        if (this.container) {
-            try {
-                const info = await this.container.inspect();
-                if (info.State.Running) {
-                    await this.container.stop();
-                }
-                await this.container.remove();
-            } catch {}
-            this.container = null;
-        }
-        this.compiled = false;
     }
 }

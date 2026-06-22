@@ -38,6 +38,10 @@ function genId() {
     return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 }
 
+function isJavaLanguage(language: string): boolean {
+    return language === 'java';
+}
+
 async function executeSubmit(problemId: string, language: string, code: string, startTcNo: number, job: SubmitJob) {
     let timeoutTestcase: any = null;
     try {
@@ -47,7 +51,6 @@ async function executeSubmit(problemId: string, language: string, code: string, 
         const problemContent = await fs.readFile(problemPath, 'utf-8');
         const problemData = JSON.parse(problemContent);
 
-        // Prefer official tests when available
         let officialTestsPath = path.resolve('problems', problemId, 'official-tests.json');
         let testCases: any[] = [];
         let totalTc = 0;
@@ -63,7 +66,6 @@ async function executeSubmit(problemId: string, language: string, code: string, 
             }
             let tcNo = startTcNo;
             const newTestCases = [testCases[tcNo]];
-            // Set the default timeout test case to the first in this chunk
             timeoutTestcase = newTestCases[0];
             while (!testCases[tcNo]._isLargeTest && tcNo + 1 < testCases.length && !testCases[tcNo + 1]._isLargeTest) {
                 newTestCases.push(testCases[tcNo + 1]);
@@ -71,7 +73,6 @@ async function executeSubmit(problemId: string, language: string, code: string, 
             }
             testCases = newTestCases;
             passedTc = newTestCases.length;
-            // Evaluate any @javascript: fields in the test cases
             const JAVASCRIPT_PREFIX = '@javascript:';
             for (let i = 0; i < testCases.length; i++) {
                 const tc = testCases[i];
@@ -81,7 +82,6 @@ async function executeSubmit(problemId: string, language: string, code: string, 
                         if (typeof v === 'string' && v.startsWith(JAVASCRIPT_PREFIX)) {
                             const expr = v.slice(JAVASCRIPT_PREFIX.length);
                             try {
-                                // run in a minimal sandbox; do not expose require or other host globals
                                 const evaluated = vm.runInNewContext(expr, {}, { timeout: 2000 });
                                 if (typeof evaluated === 'string') {
                                     tc[k] = evaluated;
@@ -98,7 +98,6 @@ async function executeSubmit(problemId: string, language: string, code: string, 
                 }
             }
         } catch (err) {
-            // fallback to problem's sample test cases
             testCases = problemData.testCases || [];
             totalTc = testCases.length;
             passedTc = testCases.length;
@@ -128,36 +127,69 @@ async function executeSubmit(problemId: string, language: string, code: string, 
         }
         await programRunner.compile();
         const rawResults = await programRunner.run();
-        const parsed = rawResults.map((chunk) => {
-            try {
+
+        const hasMergedMarker = isJavaLanguage(language) &&
+            rawResults.length > 0 &&
+            rawResults[0].includes(':::VERDICT:::');
+
+        let markerResponses: any[];
+        if (hasMergedMarker) {
+            markerResponses = rawResults.map((chunk) => {
                 const lines = (chunk || '').split('\n');
-                const idx = lines.findIndex((l) => l.startsWith(':::RESULT:::'));
-                if (idx === -1) {
+                const resultLine = lines.find((l) => l.startsWith(':::RESULT:::'));
+                const verdictLine = lines.find((l) => l.startsWith(':::VERDICT:::'));
+                const answerLine = lines.find((l) => l.startsWith(':::ANSWER:::'));
+                return {
+                    output: resultLine ? resultLine.slice(':::RESULT:::'.length).trim() : '',
+                    isCorrect: verdictLine ? verdictLine.slice(':::VERDICT:::'.length).trim() === 'true' : false,
+                    correctAnswer: answerLine ? answerLine.slice(':::ANSWER:::'.length).trim() : '',
+                    logs: lines
+                        .filter((l) =>
+                            !l.startsWith(':::RESULT:::') &&
+                            !l.startsWith(':::VERDICT:::') &&
+                            !l.startsWith(':::ANSWER:::')
+                        )
+                        .filter((l) => l.trim().length > 0)
+                        .join('\n')
+                };
+            });
+        } else {
+            const parsed = rawResults.map((chunk) => {
+                try {
+                    const lines = (chunk || '').split('\n');
+                    const idx = lines.findIndex((l) => l.startsWith(':::RESULT:::'));
+                    if (idx === -1) {
+                        return { output: (chunk || '').trim(), logs: '' };
+                    }
+                    const output = lines[idx].slice(':::RESULT:::'.length).trim();
+                    const logs = lines
+                        .filter((_, i) => i !== idx)
+                        .filter((l) => l.trim().length > 0)
+                        .join('\n');
+                    return { output, logs };
+                } catch {
                     return { output: (chunk || '').trim(), logs: '' };
                 }
-                const output = lines[idx].slice(':::RESULT:::'.length).trim();
-                const logs = lines
-                    .filter((_, i) => i !== idx)
-                    .filter((l) => l.trim().length > 0)
-                    .join('\n');
-                return { output, logs };
-            } catch {
-                return { output: (chunk || '').trim(), logs: '' };
-            }
-        });
-        const onlyOutputs = parsed.map((p) => p.output);
-        const markerResponses = await getMarkerResponses(
-            problemId,
-            problemData.functionName,
-            problemData.params,
-            testCases,
-            onlyOutputs,
-            problemData.outputType
-        );
+            });
+            const onlyOutputs = parsed.map((p) => p.output);
+            markerResponses = await getMarkerResponses(
+                problemId,
+                problemData.functionName,
+                problemData.params,
+                testCases,
+                onlyOutputs,
+                problemData.outputType
+            );
+            markerResponses = markerResponses.map((mr, i) => ({
+                ...mr,
+                logs: parsed[i]?.logs ?? ''
+            }));
+        }
+
         const finalResponse = testCases.map((tc, index) => ({
             ...tc,
-            output: parsed[index]?.output ?? 'No output',
-            logs: parsed[index]?.logs ?? '',
+            output: markerResponses[index]?.output ?? 'No output',
+            logs: markerResponses[index]?.logs ?? '',
             isCorrect: markerResponses[index].isCorrect,
             correctAnswer: markerResponses[index].correctAnswer,
             error: null

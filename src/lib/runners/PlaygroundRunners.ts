@@ -7,6 +7,7 @@ import { rustImage } from "$lib/utils/rustUtil";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import tar from 'tar-stream';
+import ContainerPool from "./ContainerPool";
 
 const docker = new Dockerode();
 
@@ -26,14 +27,17 @@ export class PlaygroundJavaRunner extends PlaygroundRunner {
 
     async compile(): Promise<void> {
         await ensureImageAvailable(docker, javaImage);
-        this.container = await docker.createContainer({
-            Image: javaImage,
-            Cmd: ['sh', '-lc', 'tail -f /dev/null'],
-            WorkingDir: '/app',
-            Tty: false,
-            Labels: { 'cojudge.created': 'true' }
-        });
-        await this.container.start();
+        this.container = await ContainerPool.acquire(javaImage);
+        if (!this.container) {
+            this.container = await docker.createContainer({
+                Image: javaImage,
+                Cmd: ['sh', '-lc', 'tail -f /dev/null'],
+                WorkingDir: '/app',
+                Tty: false,
+                Labels: { 'cojudge.created': 'true' }
+            });
+            await this.container.start();
+        }
 
         const pack = tar.pack();
         pack.entry({ name: 'Main.java' }, Buffer.from(this.code));
@@ -87,11 +91,13 @@ export class PlaygroundJavaRunner extends PlaygroundRunner {
         
         const inspect = await exec.inspect();
         if (inspect.ExitCode === 124) {
+            await ContainerPool.markForCleanup(this.container);
+            this.container = null;
             throw new Error(TIMEOUT_MESSAGE);
         }
-        
-        await this.container.stop();
-        await this.container.remove();
+
+        await ContainerPool.release(javaImage, this.container);
+        this.container = null;
         
         return { output: stdout, logs: stderr };
     }
@@ -102,14 +108,17 @@ export class PlaygroundPythonRunner extends PlaygroundRunner {
 
     async compile(): Promise<void> {
         await ensureImageAvailable(docker, pythonImage);
-        this.container = await docker.createContainer({
-            Image: pythonImage,
-            Cmd: ['sh', '-lc', 'tail -f /dev/null'],
-            WorkingDir: '/app',
-            Tty: false,
-            Labels: { 'cojudge.created': 'true' }
-        });
-        await this.container.start();
+        this.container = await ContainerPool.acquire(pythonImage);
+        if (!this.container) {
+            this.container = await docker.createContainer({
+                Image: pythonImage,
+                Cmd: ['sh', '-lc', 'tail -f /dev/null'],
+                WorkingDir: '/app',
+                Tty: false,
+                Labels: { 'cojudge.created': 'true' }
+            });
+            await this.container.start();
+        }
 
         const pack = tar.pack();
         pack.entry({ name: 'main.py' }, Buffer.from(this.code));
@@ -140,11 +149,13 @@ export class PlaygroundPythonRunner extends PlaygroundRunner {
         
         const inspect = await exec.inspect();
         if (inspect.ExitCode === 124) {
+            await ContainerPool.markForCleanup(this.container);
+            this.container = null;
             throw new Error(TIMEOUT_MESSAGE);
         }
-        
-        await this.container.stop();
-        await this.container.remove();
+
+        await ContainerPool.release(pythonImage, this.container);
+        this.container = null;
         
         return { output: stdout, logs: stderr };
     }
@@ -155,14 +166,17 @@ export class PlaygroundCppRunner extends PlaygroundRunner {
 
     async compile(): Promise<void> {
         await ensureImageAvailable(docker, cppImage);
-        this.container = await docker.createContainer({
-            Image: cppImage,
-            Cmd: ['sh', '-lc', 'tail -f /dev/null'],
-            WorkingDir: '/app',
-            Tty: false,
-            Labels: { 'cojudge.created': 'true' }
-        });
-        await this.container.start();
+        this.container = await ContainerPool.acquire(cppImage);
+        if (!this.container) {
+            this.container = await docker.createContainer({
+                Image: cppImage,
+                Cmd: ['sh', '-lc', 'tail -f /dev/null'],
+                WorkingDir: '/app',
+                Tty: false,
+                Labels: { 'cojudge.created': 'true' }
+            });
+            await this.container.start();
+        }
 
         const pack = tar.pack();
         pack.entry({ name: 'main.cpp' }, Buffer.from(this.code));
@@ -216,11 +230,13 @@ export class PlaygroundCppRunner extends PlaygroundRunner {
         
         const inspect = await exec.inspect();
         if (inspect.ExitCode === 124) {
+            await ContainerPool.markForCleanup(this.container);
+            this.container = null;
             throw new Error(TIMEOUT_MESSAGE);
         }
-        
-        await this.container.stop();
-        await this.container.remove();
+
+        await ContainerPool.release(cppImage, this.container);
+        this.container = null;
         
         return { output: stdout, logs: stderr };
     }
@@ -231,27 +247,29 @@ export class PlaygroundCSharpRunner extends PlaygroundRunner {
 
     async compile(): Promise<void> {
         await ensureImageAvailable(docker, csharpImage);
-        this.container = await docker.createContainer({
-            Image: csharpImage,
-            Cmd: ['sh', '-lc', 'tail -f /dev/null'],
-            WorkingDir: '/app',
-            Tty: false,
-            Labels: { 'cojudge.created': 'true' }
-        });
-        await this.container.start();
+        this.container = await ContainerPool.acquire(csharpImage);
+        if (!this.container) {
+            this.container = await docker.createContainer({
+                Image: csharpImage,
+                Cmd: ['sh', '-lc', 'tail -f /dev/null'],
+                WorkingDir: '/app',
+                Tty: false,
+                Labels: { 'cojudge.created': 'true' }
+            });
+            await this.container.start();
 
-        // Initialize project
-        const initExec = await this.container.exec({
-            Cmd: ['/bin/sh', '-c', 'dotnet new console'],
-            AttachStdout: true,
-            AttachStderr: true
-        });
-        const initStream: any = await initExec.start({ hijack: true, stdin: false });
-        await new Promise((resolve, reject) => {
-            initStream.on('end', resolve);
-            initStream.on('error', reject);
-            initStream.resume(); // Consume stream
-        });
+            const initExec = await this.container.exec({
+                Cmd: ['/bin/sh', '-c', 'dotnet new console'],
+                AttachStdout: true,
+                AttachStderr: true
+            });
+            const initStream: any = await initExec.start({ hijack: true, stdin: false });
+            await new Promise((resolve, reject) => {
+                initStream.on('end', resolve);
+                initStream.on('error', reject);
+                initStream.resume();
+            });
+        }
 
         const pack = tar.pack();
         pack.entry({ name: 'Program.cs' }, Buffer.from(this.code));
@@ -305,11 +323,13 @@ export class PlaygroundCSharpRunner extends PlaygroundRunner {
         
         const inspect = await exec.inspect();
         if (inspect.ExitCode === 124) {
+            await ContainerPool.markForCleanup(this.container);
+            this.container = null;
             throw new Error(TIMEOUT_MESSAGE);
         }
-        
-        await this.container.stop();
-        await this.container.remove();
+
+        await ContainerPool.release(csharpImage, this.container);
+        this.container = null;
         
         return { output: stdout, logs: stderr };
     }
@@ -320,14 +340,17 @@ export class PlaygroundRustRunner extends PlaygroundRunner {
 
     async compile(): Promise<void> {
         await ensureImageAvailable(docker, rustImage);
-        this.container = await docker.createContainer({
-            Image: rustImage,
-            Cmd: ['sh', '-lc', 'tail -f /dev/null'],
-            WorkingDir: '/app',
-            Tty: false,
-            Labels: { 'cojudge.created': 'true' }
-        });
-        await this.container.start();
+        this.container = await ContainerPool.acquire(rustImage);
+        if (!this.container) {
+            this.container = await docker.createContainer({
+                Image: rustImage,
+                Cmd: ['sh', '-lc', 'tail -f /dev/null'],
+                WorkingDir: '/app',
+                Tty: false,
+                Labels: { 'cojudge.created': 'true' }
+            });
+            await this.container.start();
+        }
 
         const pack = tar.pack();
         pack.entry({ name: 'main.rs' }, Buffer.from(this.code));
@@ -381,11 +404,13 @@ export class PlaygroundRustRunner extends PlaygroundRunner {
         
         const inspect = await exec.inspect();
         if (inspect.ExitCode === 124) {
+            await ContainerPool.markForCleanup(this.container);
+            this.container = null;
             throw new Error(TIMEOUT_MESSAGE);
         }
-        
-        await this.container.stop();
-        await this.container.remove();
+
+        await ContainerPool.release(rustImage, this.container);
+        this.container = null;
         
         return { output: stdout, logs: stderr };
     }
@@ -396,32 +421,34 @@ export class PlaygroundGoRunner extends PlaygroundRunner {
 
     async compile(): Promise<void> {
         await ensureImageAvailable(docker, goImage);
-        this.container = await docker.createContainer({
-            Image: goImage,
-            Cmd: ['sh', '-lc', 'tail -f /dev/null'],
-            WorkingDir: '/app',
-            Tty: false,
-            Labels: { 'cojudge.created': 'true' }
-        });
-        await this.container.start();
+        this.container = await ContainerPool.acquire(goImage);
+        if (!this.container) {
+            this.container = await docker.createContainer({
+                Image: goImage,
+                Cmd: ['sh', '-lc', 'tail -f /dev/null'],
+                WorkingDir: '/app',
+                Tty: false,
+                Labels: { 'cojudge.created': 'true' }
+            });
+            await this.container.start();
+
+            const initExec = await this.container.exec({
+                Cmd: ['/bin/sh', '-c', 'go mod init playground'],
+                AttachStdout: true,
+                AttachStderr: true
+            });
+            const initStream: any = await initExec.start({ hijack: true, stdin: false });
+            await new Promise((resolve, reject) => {
+                initStream.on('end', resolve);
+                initStream.on('error', reject);
+                initStream.resume();
+            });
+        }
 
         const pack = tar.pack();
         pack.entry({ name: 'main.go' }, Buffer.from(this.code));
         pack.finalize();
         await this.container.putArchive(pack as any, { path: '/app' });
-
-        // Initialize Go module
-        const initExec = await this.container.exec({
-            Cmd: ['/bin/sh', '-c', 'go mod init playground'],
-            AttachStdout: true,
-            AttachStderr: true
-        });
-        const initStream: any = await initExec.start({ hijack: true, stdin: false });
-        await new Promise((resolve, reject) => {
-            initStream.on('end', resolve);
-            initStream.on('error', reject);
-            initStream.resume();
-        });
 
         const exec = await this.container.exec({
             Cmd: ['/bin/sh', '-c', 'go build -o main .'],
@@ -470,11 +497,13 @@ export class PlaygroundGoRunner extends PlaygroundRunner {
         
         const inspect = await exec.inspect();
         if (inspect.ExitCode === 124) {
+            await ContainerPool.markForCleanup(this.container);
+            this.container = null;
             throw new Error(TIMEOUT_MESSAGE);
         }
-        
-        await this.container.stop();
-        await this.container.remove();
+
+        await ContainerPool.release(goImage, this.container);
+        this.container = null;
         
         return { output: stdout, logs: stderr };
     }

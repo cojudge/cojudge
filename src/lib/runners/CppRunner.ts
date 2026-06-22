@@ -5,6 +5,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import tar from 'tar-stream';
 import { ProgramRunner } from "./ProgramRunner";
+import ContainerPool from "./ContainerPool";
 
 const docker = new Dockerode();
 
@@ -16,7 +17,6 @@ export class CppRunner extends ProgramRunner {
         super(problemId, testCases, code);
     }
 
-    // Step 1: prepare and compile inside a container (no host bind mount)
     async compile(): Promise<void> {
         try {
             const problemPath = path.resolve('problems', this.problemId, 'metadata.json');
@@ -25,17 +25,18 @@ export class CppRunner extends ProgramRunner {
             const runnerCode = generateCppRunner(problemData.functionName, problemData.params, this.testCases);
             await ensureImageAvailable(docker, cppImage);
 
-            // Create a long-lived container, we'll exec to compile/run
-            this.container = await docker.createContainer({
-                Image: cppImage,
-                Cmd: ['sh', '-lc', 'tail -f /dev/null'],
-                WorkingDir: '/app',
-                Tty: false,
-                Labels: { 'cojudge.created': 'true' }
-            });
-            await this.container.start();
+            this.container = await ContainerPool.acquire(cppImage);
+            if (!this.container) {
+                this.container = await docker.createContainer({
+                    Image: cppImage,
+                    Cmd: ['sh', '-lc', 'tail -f /dev/null'],
+                    WorkingDir: '/app',
+                    Tty: false,
+                    Labels: { 'cojudge.created': 'true' }
+                });
+                await this.container.start();
+            }
 
-            // Upload sources via tar archive
             const pack = tar.pack();
             pack.entry({ name: 'ListNode.cpp' }, Buffer.from(cppListNodeClass));
             pack.entry({ name: 'TreeNode.cpp' }, Buffer.from(cppTreeNodeClass));
@@ -54,7 +55,6 @@ export class CppRunner extends ProgramRunner {
             pack.finalize();
             await this.container.putArchive(pack as any, { path: '/app' });
 
-            // Compile with the original command via exec
             const exec = await this.container.exec({
                 Cmd: ['/bin/sh', '-c', 'g++ -std=c++17 -O2 -pipe -s -o main Main.cpp'],
                 AttachStdout: true,
@@ -77,18 +77,19 @@ export class CppRunner extends ProgramRunner {
             if (inspect.ExitCode !== 0) throw new Error(stderr || stdout);
             this.compiled = true;
         } catch (e) {
-            this.cleanup();
+            if (this.container) {
+                await ContainerPool.markForCleanup(this.container);
+                this.container = null;
+            }
             throw e;
         }
     }
 
-    // Step 2: run previously compiled program
     async run(): Promise<string[]> {
         if (!this.container || !this.compiled) {
             throw new Error('CppRunner: not compiled. Call compile() first.');
         }
         try {
-            // Run with the original command via exec
             const exec = await this.container.exec({
                 Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', './main'],
                 AttachStdout: true,
@@ -114,19 +115,11 @@ export class CppRunner extends ProgramRunner {
         } catch (error: any) {
             throw new Error(`${error}`);
         } finally {
-            this.cleanup();
+            if (this.container) {
+                await ContainerPool.release(cppImage, this.container);
+                this.container = null;
+            }
+            this.compiled = false;
         }
-    }
-
-    private async cleanup() {
-        if (this.container) {
-            try {
-                const info = await this.container.inspect();
-                if (info.State.Running) await this.container.stop();
-                await this.container.remove();
-            } catch {}
-            this.container = null;
-        }
-        this.compiled = false;
     }
 }

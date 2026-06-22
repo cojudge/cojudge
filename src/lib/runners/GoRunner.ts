@@ -5,6 +5,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import tar from 'tar-stream';
 import { ProgramRunner } from "./ProgramRunner";
+import ContainerPool from "./ContainerPool";
 
 const docker = new Dockerode();
 
@@ -27,33 +28,35 @@ export class GoRunner extends ProgramRunner {
 
             await ensureImageAvailable(docker, goImage);
 
-            this.container = await docker.createContainer({
-                Image: goImage,
-                Cmd: ['sh', '-lc', 'tail -f /dev/null'],
-                WorkingDir: '/app',
-                Tty: false,
-                Labels: { 'cojudge.created': 'true' }
-            });
-            await this.container.start();
+            this.container = await ContainerPool.acquire(goImage);
+            if (!this.container) {
+                this.container = await docker.createContainer({
+                    Image: goImage,
+                    Cmd: ['sh', '-lc', 'tail -f /dev/null'],
+                    WorkingDir: '/app',
+                    Tty: false,
+                    Labels: { 'cojudge.created': 'true' }
+                });
+                await this.container.start();
+
+                const initExec = await this.container.exec({
+                    Cmd: ['/bin/sh', '-c', 'go mod init solution'],
+                    AttachStdout: true,
+                    AttachStderr: true
+                });
+                const initStream: any = await initExec.start({ hijack: true, stdin: false });
+                await new Promise((resolve, reject) => {
+                    initStream.on('end', resolve);
+                    initStream.on('error', reject);
+                    initStream.resume();
+                });
+            }
 
             const pack = tar.pack();
             pack.entry({ name: 'solution.go' }, Buffer.from(this.code));
             pack.entry({ name: 'main.go' }, Buffer.from(runnerCode));
             pack.finalize();
             await this.container.putArchive(pack as any, { path: '/app' });
-
-            // Initialize Go module
-            const initExec = await this.container.exec({
-                Cmd: ['/bin/sh', '-c', 'go mod init solution'],
-                AttachStdout: true,
-                AttachStderr: true
-            });
-            const initStream: any = await initExec.start({ hijack: true, stdin: false });
-            await new Promise((resolve, reject) => {
-                initStream.on('end', resolve);
-                initStream.on('error', reject);
-                initStream.resume();
-            });
 
             const exec = await this.container.exec({
                 Cmd: ['/bin/sh', '-c', 'go build -o main .'],
@@ -77,7 +80,10 @@ export class GoRunner extends ProgramRunner {
             if (inspect.ExitCode !== 0) throw new Error(stderr || stdout);
             this.compiled = true;
         } catch (e) {
-            await this.cleanup();
+            if (this.container) {
+                await ContainerPool.markForCleanup(this.container);
+                this.container = null;
+            }
             throw e;
         }
     }
@@ -112,19 +118,11 @@ export class GoRunner extends ProgramRunner {
         } catch (error: any) {
             throw new Error(`${error}`);
         } finally {
-            await this.cleanup();
+            if (this.container) {
+                await ContainerPool.release(goImage, this.container);
+                this.container = null;
+            }
+            this.compiled = false;
         }
-    }
-
-    private async cleanup() {
-        if (this.container) {
-            try {
-                const info = await this.container.inspect();
-                if (info.State.Running) await this.container.stop();
-                await this.container.remove();
-            } catch {}
-            this.container = null;
-        }
-        this.compiled = false;
     }
 }

@@ -5,6 +5,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import tar from 'tar-stream';
 import { ProgramRunner } from "./ProgramRunner";
+import ContainerPool from "./ContainerPool";
 
 const docker = new Dockerode();
 
@@ -26,14 +27,17 @@ export class RustRunner extends ProgramRunner {
             const runnerCode = generateRustRunner(problemData.functionName, problemData.params, this.testCases, this.code, className);
             await ensureImageAvailable(docker, rustImage);
 
-            this.container = await docker.createContainer({
-                Image: rustImage,
-                Cmd: ['sh', '-lc', 'tail -f /dev/null'],
-                WorkingDir: '/app',
-                Tty: false,
-                Labels: { 'cojudge.created': 'true' }
-            });
-            await this.container.start();
+            this.container = await ContainerPool.acquire(rustImage);
+            if (!this.container) {
+                this.container = await docker.createContainer({
+                    Image: rustImage,
+                    Cmd: ['sh', '-lc', 'tail -f /dev/null'],
+                    WorkingDir: '/app',
+                    Tty: false,
+                    Labels: { 'cojudge.created': 'true' }
+                });
+                await this.container.start();
+            }
 
             const pack = tar.pack();
             pack.entry({ name: 'main.rs' }, Buffer.from(runnerCode));
@@ -62,7 +66,10 @@ export class RustRunner extends ProgramRunner {
             if (inspect.ExitCode !== 0) throw new Error(stderr || stdout);
             this.compiled = true;
         } catch (e) {
-            await this.cleanup();
+            if (this.container) {
+                await ContainerPool.markForCleanup(this.container);
+                this.container = null;
+            }
             throw e;
         }
     }
@@ -97,19 +104,11 @@ export class RustRunner extends ProgramRunner {
         } catch (error: any) {
             throw new Error(`${error}`);
         } finally {
-            await this.cleanup();
+            if (this.container) {
+                await ContainerPool.release(rustImage, this.container);
+                this.container = null;
+            }
+            this.compiled = false;
         }
-    }
-
-    private async cleanup() {
-        if (this.container) {
-            try {
-                const info = await this.container.inspect();
-                if (info.State.Running) await this.container.stop();
-                await this.container.remove();
-            } catch {}
-            this.container = null;
-        }
-        this.compiled = false;
     }
 }

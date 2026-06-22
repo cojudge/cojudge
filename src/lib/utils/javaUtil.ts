@@ -509,7 +509,6 @@ export function generateJavaRunner(functionName: string, params: Param[], testCa
     const testCalls = testCases
         .map((tc, idx) => {
             let fullParam = javaGetFullParam(params, tc);
-            // Store final result to avoid including user prints into the answer
             return `var __res${idx} = sol.${functionName}(${fullParam});\nSystem.out.println(":::RESULT:::" + ${getDisplayFuncName(outputType)}(__res${idx}));\nSystem.out.println("---");`;
         })
         .join('\n        ');
@@ -520,6 +519,33 @@ public class Main {
     ${javaHelperMethods}
     public static void main(String[] args) throws Exception {
         Solution sol = new Solution();
+        ${testCalls}
+    }
+}`;
+}
+
+export function generateJavaRunnerWithMarker(functionName: string, params: Param[], testCases: any[], outputType: string): string {
+    const displayFunc = getDisplayFuncName(outputType);
+    const testCalls = testCases
+        .map((tc, idx) => {
+            let fullParam = javaGetFullParam(params, tc);
+            return [
+                `var __res${idx} = sol.${functionName}(${fullParam});`,
+                `System.out.println(":::RESULT:::" + ${displayFunc}(__res${idx}));`,
+                `System.out.println(":::VERDICT:::" + marker.isCorrect(${fullParam}, __res${idx}));`,
+                `System.out.println(":::ANSWER:::" + ${displayFunc}(marker.${functionName}(${fullParam})));`,
+                `System.out.println("---");`
+            ].join('\n');
+        })
+        .join('\n        ');
+
+    return `
+import java.util.*;
+public class Main {
+    ${javaHelperMethods}
+    public static void main(String[] args) throws Exception {
+        Solution sol = new Solution();
+        Marker marker = new Marker();
         ${testCalls}
     }
 }`;

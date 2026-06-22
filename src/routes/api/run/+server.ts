@@ -33,10 +33,13 @@ type RunJob = {
 const jobs: Map<string, RunJob> = new Map();
 
 function genId() {
-    // Prefer crypto.randomUUID if available
     const g: any = globalThis as any;
     if (g.crypto && typeof g.crypto.randomUUID === 'function') return g.crypto.randomUUID();
     return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function isJavaLanguage(language: string): boolean {
+    return language === 'java';
 }
 
 async function executeRun(problemId: string, language: string, code: string, testCases: any[], job: RunJob) {
@@ -68,47 +71,97 @@ async function executeRun(problemId: string, language: string, code: string, tes
         job.status = 'running';
         const rawResults = await programRunner.run();
 
-        // Parse each chunk to separate final result from user logs
-        const parsed = rawResults.map((chunk) => {
-            try {
-                const lines = (chunk || '').split('\n');
-                const idx = lines.findIndex((l) => l.startsWith(':::RESULT:::'));
-                if (idx === -1) {
+        // Check if this is a merged marker result (Java with Marker.java)
+        const hasMergedMarker = isJavaLanguage(language) &&
+            rawResults.length > 0 &&
+            rawResults[0].includes(':::VERDICT:::');
+
+        if (hasMergedMarker) {
+            // Parse merged output format: :::RESULT:::, :::VERDICT:::, :::ANSWER:::
+            const finalResponse: RunSuccess = rawResults.map((chunk, index) => {
+                try {
+                    const lines = (chunk || '').split('\n');
+                    const resultLine = lines.find((l) => l.startsWith(':::RESULT:::'));
+                    const verdictLine = lines.find((l) => l.startsWith(':::VERDICT:::'));
+                    const answerLine = lines.find((l) => l.startsWith(':::ANSWER:::'));
+
+                    const output = resultLine ? resultLine.slice(':::RESULT:::'.length).trim() : (chunk || '').trim();
+                    const isCorrect = verdictLine ? verdictLine.slice(':::VERDICT:::'.length).trim() === 'true' : false;
+                    const correctAnswer = answerLine ? answerLine.slice(':::ANSWER:::'.length).trim() : '';
+                    const logs = lines
+                        .filter((l) =>
+                            !l.startsWith(':::RESULT:::') &&
+                            !l.startsWith(':::VERDICT:::') &&
+                            !l.startsWith(':::ANSWER:::')
+                        )
+                        .filter((l) => l.trim().length > 0)
+                        .join('\n');
+
+                    return {
+                        ...(testCases[index] || {}),
+                        output,
+                        logs,
+                        isCorrect,
+                        correctAnswer,
+                        error: null
+                    };
+                } catch {
+                    return {
+                        ...(testCases[index] || {}),
+                        output: (chunk || '').trim(),
+                        logs: '',
+                        isCorrect: false,
+                        correctAnswer: '',
+                        error: null
+                    };
+                }
+            });
+
+            job.results = finalResponse;
+            job.status = 'completed';
+        } else {
+            // Standard flow: parse output and call marker separately
+            const parsed = rawResults.map((chunk) => {
+                try {
+                    const lines = (chunk || '').split('\n');
+                    const idx = lines.findIndex((l) => l.startsWith(':::RESULT:::'));
+                    if (idx === -1) {
+                        return { output: (chunk || '').trim(), logs: '' };
+                    }
+                    const output = lines[idx].slice(':::RESULT:::'.length).trim();
+                    const logs = lines
+                        .filter((_, i) => i !== idx)
+                        .filter((l) => l.trim().length > 0)
+                        .join('\n');
+                    return { output, logs };
+                } catch {
                     return { output: (chunk || '').trim(), logs: '' };
                 }
-                const output = lines[idx].slice(':::RESULT:::'.length).trim();
-                const logs = lines
-                    .filter((_, i) => i !== idx)
-                    .filter((l) => l.trim().length > 0)
-                    .join('\n');
-                return { output, logs };
-            } catch {
-                return { output: (chunk || '').trim(), logs: '' };
-            }
-        });
+            });
 
-        const onlyOutputs = parsed.map((p) => p.output);
-        job.status = 'judging';
-        const markerResponses = await getMarkerResponses(
-            problemId,
-            problemData.functionName,
-            problemData.params,
-            testCases,
-            onlyOutputs,
-            problemData.outputType
-        );
+            const onlyOutputs = parsed.map((p) => p.output);
+            job.status = 'judging';
+            const markerResponses = await getMarkerResponses(
+                problemId,
+                problemData.functionName,
+                problemData.params,
+                testCases,
+                onlyOutputs,
+                problemData.outputType
+            );
 
-        const finalResponse: RunSuccess = testCases.map((tc: any, index: number) => ({
-            ...tc,
-            output: parsed[index]?.output ?? 'No output',
-            logs: parsed[index]?.logs ?? '',
-            isCorrect: markerResponses[index].isCorrect,
-            correctAnswer: markerResponses[index].correctAnswer,
-            error: null
-        }));
+            const finalResponse: RunSuccess = testCases.map((tc: any, index: number) => ({
+                ...tc,
+                output: parsed[index]?.output ?? 'No output',
+                logs: parsed[index]?.logs ?? '',
+                isCorrect: markerResponses[index].isCorrect,
+                correctAnswer: markerResponses[index].correctAnswer,
+                error: null
+            }));
 
-        job.results = finalResponse;
-        job.status = 'completed';
+            job.results = finalResponse;
+            job.status = 'completed';
+        }
     } catch (error: any) {
         if (error && error.toString && error.toString().indexOf(TIMEOUT_MESSAGE) !== -1) {
             job.timeout = true;
@@ -122,11 +175,9 @@ async function executeRun(problemId: string, language: string, code: string, tes
 
 export const POST: RequestHandler = async ({ request }) => {
     const { problemId, language, code, testCases } = await request.json();
-    // Create a job and start execution in background
     const id = genId();
     const job: RunJob = { id, status: 'pending', createdAt: Date.now() };
     jobs.set(id, job);
-    // fire and forget
     executeRun(problemId, language, code, testCases, job);
     return json({ jobId: id });
 };
@@ -140,7 +191,6 @@ export const GET: RequestHandler = async ({ url }) => {
     if (job.status === 'pending' || job.status === 'running' || job.status === 'preparing' || job.status === 'judging') {
         return json({ ready: false, status: job.status });
     }
-    // completed or error
     if (job.timeout) {
         return json({ ready: true, timeout: true });
     }
