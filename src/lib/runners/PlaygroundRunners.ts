@@ -26,9 +26,9 @@ export class PlaygroundJavaRunner extends PlaygroundRunner {
     private container: Dockerode.Container | null = null;
 
     async compile(): Promise<void> {
-        await ensureImageAvailable(docker, javaImage);
         this.container = await ContainerPool.acquire(javaImage);
         if (!this.container) {
+            await ensureImageAvailable(docker, javaImage);
             this.container = await docker.createContainer({
                 Image: javaImage,
                 Cmd: ['sh', '-lc', 'tail -f /dev/null'],
@@ -107,9 +107,9 @@ export class PlaygroundPythonRunner extends PlaygroundRunner {
     private container: Dockerode.Container | null = null;
 
     async compile(): Promise<void> {
-        await ensureImageAvailable(docker, pythonImage);
         this.container = await ContainerPool.acquire(pythonImage);
         if (!this.container) {
+            await ensureImageAvailable(docker, pythonImage);
             this.container = await docker.createContainer({
                 Image: pythonImage,
                 Cmd: ['sh', '-lc', 'tail -f /dev/null'],
@@ -165,9 +165,9 @@ export class PlaygroundCppRunner extends PlaygroundRunner {
     private container: Dockerode.Container | null = null;
 
     async compile(): Promise<void> {
-        await ensureImageAvailable(docker, cppImage);
         this.container = await ContainerPool.acquire(cppImage);
         if (!this.container) {
+            await ensureImageAvailable(docker, cppImage);
             this.container = await docker.createContainer({
                 Image: cppImage,
                 Cmd: ['sh', '-lc', 'tail -f /dev/null'],
@@ -246,9 +246,9 @@ export class PlaygroundCSharpRunner extends PlaygroundRunner {
     private container: Dockerode.Container | null = null;
 
     async compile(): Promise<void> {
-        await ensureImageAvailable(docker, csharpImage);
         this.container = await ContainerPool.acquire(csharpImage);
         if (!this.container) {
+            await ensureImageAvailable(docker, csharpImage);
             this.container = await docker.createContainer({
                 Image: csharpImage,
                 Cmd: ['sh', '-lc', 'tail -f /dev/null'],
@@ -339,9 +339,9 @@ export class PlaygroundRustRunner extends PlaygroundRunner {
     private container: Dockerode.Container | null = null;
 
     async compile(): Promise<void> {
-        await ensureImageAvailable(docker, rustImage);
         this.container = await ContainerPool.acquire(rustImage);
         if (!this.container) {
+            await ensureImageAvailable(docker, rustImage);
             this.container = await docker.createContainer({
                 Image: rustImage,
                 Cmd: ['sh', '-lc', 'tail -f /dev/null'],
@@ -420,9 +420,9 @@ export class PlaygroundGoRunner extends PlaygroundRunner {
     private container: Dockerode.Container | null = null;
 
     async compile(): Promise<void> {
-        await ensureImageAvailable(docker, goImage);
         this.container = await ContainerPool.acquire(goImage);
         if (!this.container) {
+            await ensureImageAvailable(docker, goImage);
             this.container = await docker.createContainer({
                 Image: goImage,
                 Cmd: ['sh', '-lc', 'tail -f /dev/null'],

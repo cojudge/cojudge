@@ -42,10 +42,9 @@ export class JavaRunner extends ProgramRunner {
                 );
             }
 
-            await ensureImageAvailable(docker, javaImage);
-
             this.container = await ContainerPool.acquire(javaImage);
             if (!this.container) {
+                await ensureImageAvailable(docker, javaImage);
                 this.container = await docker.createContainer({
                     Image: javaImage,
                     Cmd: ['sh', '-lc', 'tail -f /dev/null'],

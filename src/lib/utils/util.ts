@@ -20,10 +20,17 @@ export const EXECUTION_TIMEOUT_SECONDS = '30';
 
 export const TIMEOUT_MESSAGE = 'TIMEOUT';
 
+const availableImages = new Set<string>();
+
+export function resetImageCache() {
+    availableImages.clear();
+}
+
 export async function ensureImageAvailable(docker: Dockerode, image: string) {
+    if (availableImages.has(image)) return;
     try {
         await docker.getImage(image).inspect();
-        return;
+        availableImages.add(image);
     } catch (err: any) {
         const notFound = err?.statusCode === 404 || /no such image/i.test(String(err?.message ?? ''));
         if (!notFound) throw err;
@@ -37,5 +44,6 @@ export async function ensureImageAvailable(docker: Dockerode, image: string) {
                 );
             });
         });
+        availableImages.add(image);
     }
 }

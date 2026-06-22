@@ -36,11 +36,11 @@ export async function getMarkerResponses(problemId: string, functionName: string
     }`;
     const markerPath = path.resolve('problems', problemId, 'Marker.java');
     const markerCode = await fs.readFile(markerPath, 'utf-8');
-    await ensureImageAvailable(docker, javaImage);
     let container: Dockerode.Container | null = null;
     try {
         container = await ContainerPool.acquire(javaImage);
         if (!container) {
+            await ensureImageAvailable(docker, javaImage);
             container = await docker.createContainer({
                 Image: javaImage,
                 Cmd: ['sh', '-lc', 'tail -f /dev/null'],

@@ -16,7 +16,7 @@ async function cleanupContainers() {
         // Clean stale containers from the pool (idle > 5 minutes)
         await ContainerPool.cleanupStale(300000);
 
-        // Clean any orphaned containers with cojudge label that are too old
+        // Clean any orphaned containers (not in pool) older than 5 minutes
         const containers = await docker.listContainers({
             all: true,
             filters: {
@@ -29,7 +29,7 @@ async function cleanupContainers() {
             const createdTime = containerInfo.Created * 1000;
             const age = now - createdTime;
 
-            if (age > TIMEOUT_MS) {
+            if (age > TIMEOUT_MS && !ContainerPool.hasContainer(containerInfo.Id)) {
                 const container = docker.getContainer(containerInfo.Id);
                 try {
                     console.log(`Cleaning up orphaned container ${containerInfo.Id.substring(0, 12)} (age: ${age}ms)`);

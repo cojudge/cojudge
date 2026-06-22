@@ -26,10 +26,9 @@ export class GoRunner extends ProgramRunner {
             const className = problemData.classProblem?.userClassName;
             const runnerCode = generateGoRunner(problemData.functionName, problemData.params, this.testCases, problemData.outputType, className);
 
-            await ensureImageAvailable(docker, goImage);
-
             this.container = await ContainerPool.acquire(goImage);
             if (!this.container) {
+                await ensureImageAvailable(docker, goImage);
                 this.container = await docker.createContainer({
                     Image: goImage,
                     Cmd: ['sh', '-lc', 'tail -f /dev/null'],

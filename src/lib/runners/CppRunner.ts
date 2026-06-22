@@ -23,10 +23,10 @@ export class CppRunner extends ProgramRunner {
             const problemContent = await fs.readFile(problemPath, 'utf-8');
             const problemData = JSON.parse(problemContent);
             const runnerCode = generateCppRunner(problemData.functionName, problemData.params, this.testCases);
-            await ensureImageAvailable(docker, cppImage);
 
             this.container = await ContainerPool.acquire(cppImage);
             if (!this.container) {
+                await ensureImageAvailable(docker, cppImage);
                 this.container = await docker.createContainer({
                     Image: cppImage,
                     Cmd: ['sh', '-lc', 'tail -f /dev/null'],

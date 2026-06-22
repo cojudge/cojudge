@@ -23,10 +23,10 @@ export class PythonRunner extends ProgramRunner {
             const problemContent = await fs.readFile(problemPath, 'utf-8');
             const problemData = JSON.parse(problemContent);
             const runnerCode = generatePythonRunner(problemData.functionName, problemData.params, this.testCases);
-            await ensureImageAvailable(docker, pythonImage);
 
             this.container = await ContainerPool.acquire(pythonImage);
             if (!this.container) {
+                await ensureImageAvailable(docker, pythonImage);
                 this.container = await docker.createContainer({
                     Image: pythonImage,
                     Cmd: ['sh', '-lc', 'tail -f /dev/null'],

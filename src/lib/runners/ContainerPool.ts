@@ -100,7 +100,7 @@ class ContainerPool {
     private static async cleanContainer(container: Dockerode.Container): Promise<void> {
         try {
             const exec = await container.exec({
-                Cmd: ['sh', '-c', 'cd /tmp && rm -rf /app && mkdir /app'],
+                Cmd: ['sh', '-c', 'rm -f /app/*.java /app/*.py /app/*.cpp /app/*.cs /app/*.rs /app/*.go /app/*.class /app/Main /app/main 2>/dev/null; mkdir -p /app'],
                 AttachStdout: true,
                 AttachStderr: true
             });
@@ -125,6 +125,15 @@ class ContainerPool {
             try { await container.stop({ t: 1 }); } catch {}
             await container.remove({ force: true });
         } catch {}
+    }
+
+    static hasContainer(containerId: string): boolean {
+        for (const [, entries] of this.pools.entries()) {
+            if (entries.some(e => e.container.id === containerId)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     static getStats(): Record<string, { idle: number; inUse: number }> {

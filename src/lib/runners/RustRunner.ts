@@ -25,10 +25,10 @@ export class RustRunner extends ProgramRunner {
             
             const className = problemData.classProblem?.userClassName;
             const runnerCode = generateRustRunner(problemData.functionName, problemData.params, this.testCases, this.code, className);
-            await ensureImageAvailable(docker, rustImage);
 
             this.container = await ContainerPool.acquire(rustImage);
             if (!this.container) {
+                await ensureImageAvailable(docker, rustImage);
                 this.container = await docker.createContainer({
                     Image: rustImage,
                     Cmd: ['sh', '-lc', 'tail -f /dev/null'],

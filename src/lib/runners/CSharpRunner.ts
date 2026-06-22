@@ -24,10 +24,9 @@ export class CSharpRunner extends ProgramRunner {
             const problemData = JSON.parse(problemContent);
             const runnerCode = generateCSharpRunner(problemData.functionName, problemData.params, this.testCases, problemData.outputType);
 
-            await ensureImageAvailable(docker, csharpImage);
-
             this.container = await ContainerPool.acquire(csharpImage);
             if (!this.container) {
+                await ensureImageAvailable(docker, csharpImage);
                 this.container = await docker.createContainer({
                     Image: csharpImage,
                     Cmd: ['sh', '-lc', 'tail -f /dev/null'],
