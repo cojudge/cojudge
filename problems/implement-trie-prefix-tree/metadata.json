@@ -1,0 +1,59 @@
+{
+  "id": "implement-trie-prefix-tree",
+  "title": "208. Implement Trie (Prefix Tree)",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/implement-trie-prefix-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "operations = [\"Trie\",\"insert\",\"search\",\"search\",\"startsWith\",\"insert\",\"search\"]\nvalues = [\"\",\"apple\",\"apple\",\"app\",\"app\",\"app\",\"app\"]",
+      "output": "[null,null,true,false,true,null,true]",
+      "explanation": "After inserting 'apple', searching 'apple' returns true, searching 'app' returns false, startsWith('app') returns true. After inserting 'app', searching 'app' returns true."
+    },
+    {
+      "input": "operations = [\"Trie\",\"insert\",\"search\",\"startsWith\"]\nvalues = [\"\",\"hello\",\"hello\",\"hell\"]",
+      "output": "[null,null,true,true]",
+      "explanation": "After inserting 'hello', both search('hello') and startsWith('hell') return true."
+    }
+  ],
+  "classProblem": {
+    "userClassName": "Trie"
+  },
+  "starterCode": {
+    "java": "class Trie {\n    public Trie() {\n        \n    }\n    \n    public void insert(String word) {\n        \n    }\n    \n    public boolean search(String word) {\n        return false;\n    }\n    \n    public boolean startsWith(String prefix) {\n        return false;\n    }\n}",
+    "python": "class Trie:\n    def __init__(self):\n        \n    def insert(self, word: str) -> None:\n        \n    def search(self, word: str) -> bool:\n        return False\n    def startsWith(self, prefix: str) -> bool:\n        return False",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Trie {\npublic:\n    Trie() {\n        \n    }\n    \n    void insert(string word) {\n        \n    }\n    \n    bool search(string word) {\n        return false;\n    }\n    \n    bool startsWith(string prefix) {\n        return false;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Trie {\n    public Trie() {\n        \n    }\n    \n    public void Insert(string word) {\n        \n    }\n    \n    public bool Search(string word) {\n        return false;\n    }\n    \n    public bool StartsWith(string prefix) {\n        return false;\n    }\n}",
+    "rust": "pub struct Trie {\n    \n}\n\nimpl Trie {\n    pub fn new() -> Self {\n        Trie {}\n    }\n    \n    pub fn insert(&mut self, word: String) {\n        \n    }\n    \n    pub fn search(&self, word: String) -> bool {\n        false\n    }\n    \n    pub fn starts_with(&self, prefix: String) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\ntype Trie struct {\n    \n}\n\nfunc Constructor() Trie {\n    return Trie{}\n}\n\nfunc (this *Trie) Insert(word string) {\n    \n}\n\nfunc (this *Trie) Search(word string) bool {\n    return false\n}\n\nfunc (this *Trie) StartsWith(prefix string) bool {\n    return false\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"Trie\",\"insert\",\"search\",\"search\",\"startsWith\",\"insert\",\"search\"]",
+      "values": "[\"\",\"apple\",\"apple\",\"app\",\"app\",\"app\",\"app\"]"
+    },
+    {
+      "operations": "[\"Trie\",\"insert\",\"search\",\"startsWith\"]",
+      "values": "[\"\",\"hello\",\"hello\",\"hell\"]"
+    }
+  ],
+  "functionName": "solve",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "A Trie (prefix tree) is a tree data structure used for efficient retrieval of keys in a dataset of strings.",
+    "Each node contains an array of child pointers (one for each character) and a boolean flag indicating whether the node marks the end of a word.",
+    "For insert: traverse character by character, creating nodes as needed, and mark the final node as end of word.",
+    "For search: traverse character by character; if a character is missing, return false; check the end-of-word flag at the final node.",
+    "For startsWith: same as search but return true if the path exists, regardless of the end-of-word flag."
+  ]
+}

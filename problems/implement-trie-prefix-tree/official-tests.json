@@ -1,0 +1,38 @@
+[
+    {
+        "operations": "[\"Trie\",\"insert\",\"search\",\"search\",\"startsWith\",\"insert\",\"search\"]",
+        "values": "[\"\",\"apple\",\"apple\",\"app\",\"app\",\"app\",\"app\"]"
+    },
+    {
+        "operations": "[\"Trie\",\"insert\",\"search\",\"startsWith\"]",
+        "values": "[\"\",\"hello\",\"hello\",\"hell\"]"
+    },
+    {
+        "operations": "[\"Trie\",\"insert\",\"search\",\"search\",\"startsWith\",\"startsWith\"]",
+        "values": "[\"\",\"abc\",\"abc\",\"ab\",\"a\",\"abc\"]"
+    },
+    {
+        "operations": "[\"Trie\",\"search\",\"startsWith\",\"insert\",\"search\"]",
+        "values": "[\"\",\"key\",\"ke\",\"key\",\"key\"]"
+    },
+    {
+        "operations": "[\"Trie\",\"insert\",\"search\",\"search\",\"search\",\"startsWith\"]",
+        "values": "[\"\",\"a\",\"a\",\"aa\",\"aaa\",\"a\"]"
+    },
+    {
+        "operations": "[\"Trie\",\"insert\",\"insert\",\"insert\",\"search\",\"search\",\"search\",\"startsWith\",\"startsWith\",\"startsWith\"]",
+        "values": "[\"\",\"cat\",\"car\",\"card\",\"cat\",\"car\",\"card\",\"ca\",\"car\",\"dog\"]"
+    },
+    {
+        "operations": "[\"Trie\",\"insert\",\"startsWith\",\"startsWith\"]",
+        "values": "[\"\",\"leet\",\"lee\",\"leetc\"]"
+    },
+    {
+        "operations": "[\"Trie\",\"insert\",\"insert\",\"search\",\"search\",\"startsWith\"]",
+        "values": "[\"\",\"code\",\"cojudge\",\"code\",\"cojudge\",\"coj\"]"
+    },
+    {
+        "operations": "[\"Trie\",\"insert\",\"search\"]",
+        "values": "[\"\",\"zebra\",\"zebra\"]"
+    }
+]

@@ -217,6 +217,29 @@ class Solution:
         return deser.deserialize(ser.serialize(root))
 `;
     }
+    if (params && params.length > 1 && params[1]?.type === 'string_array') {
+        return `
+from typing import List
+from ${className} import ${className}
+
+class Solution:
+    def solve(self, operations: List[str], values: List[str]) -> List[str]:
+        result = []
+        obj = None
+        for i, op in enumerate(operations):
+            if op == "${className}":
+                obj = ${className}()
+                result.append("null")
+            elif op == "insert":
+                obj.insert(values[i])
+                result.append("null")
+            elif op == "search":
+                result.append(str(obj.search(values[i])).lower())
+            elif op == "startsWith":
+                result.append(str(obj.startsWith(values[i])).lower())
+        return result
+`;
+    }
     return `
 from typing import List
 from ${className} import ${className}

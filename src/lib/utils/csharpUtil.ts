@@ -177,14 +177,14 @@ public static class CSharpHelper {
             if (c == '\\'' && !inDQ) { inSQ = !inSQ; continue; }
             if (c == ',' && !inDQ && !inSQ) {
                 string token = cur.ToString().Trim();
-                if (token.Length > 0) res.Add(token);
+                res.Add(token);
                 cur.Clear();
             } else {
                 cur.Append(c);
             }
         }
         string last = cur.ToString().Trim();
-        if (last.Length > 0) res.Add(last);
+        res.Add(last);
         // unescape wrapping quotes if any remained
         for (int i = 0; i < res.Count; i++) {
             string x = res[i].Trim();
@@ -502,6 +502,33 @@ public class Solution {
         ${className} ser = new ${className}();
         ${className} deser = new ${className}();
         return deser.deserialize(ser.serialize(root));
+    }
+}`;
+    }
+    if (params && params.length > 1 && params[1]?.type === 'string_array') {
+        return `
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public List<string> Solve(string[] operations, string[] values) {
+        var result = new List<string>();
+        ${className} obj = null;
+        for (int i = 0; i < operations.Length; i++) {
+            string op = operations[i];
+            if (op == "${className}") {
+                obj = new ${className}();
+                result.Add("null");
+            } else if (op == "insert") {
+                obj.Insert(values[i]);
+                result.Add("null");
+            } else if (op == "search") {
+                result.Add(obj.Search(values[i]).ToString().ToLower());
+            } else if (op == "startsWith") {
+                result.Add(obj.StartsWith(values[i]).ToString().ToLower());
+            }
+        }
+        return result;
     }
 }`;
     }

@@ -362,6 +362,38 @@ impl Solution {
 }
 `;
   }
+  if (params && params.length > 1 && params[1]?.type === 'string_array') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<String>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<${className}> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "${className}" {
+                obj = Some(${className}::new());
+                result.push("null".to_string());
+            } else if op == "insert" {
+                if let Some(ref mut o) = obj {
+                    o.insert(values[i].clone());
+                }
+                result.push("null".to_string());
+            } else if op == "search" {
+                if let Some(ref o) = obj {
+                    result.push(o.search(values[i].clone()).to_string());
+                }
+            } else if op == "startsWith" {
+                if let Some(ref o) = obj {
+                    result.push(o.starts_with(values[i].clone()).to_string());
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
   return `
 pub struct Solution;
 

@@ -153,17 +153,17 @@ export const javaHelperMethods = `
             if (c == '\\'' && !inDQ) { inSQ = !inSQ; continue; }
             if (c == ',' && !inDQ && !inSQ) {
                 String token = cur.toString().trim();
-                if (token.length() > 0) res.add(token);
+                res.add(token);
                 cur.setLength(0);
             } else {
                 cur.append(c);
             }
         }
         String last = cur.toString().trim();
-        if (last.length() > 0) res.add(last);
+        res.add(last);
         // unescape wrapping quotes if any remained
         for (int i = 0; i < res.size(); i++) {
-            String x = res.get(i).trim();
+            String x = res.get(i);
             if ((x.startsWith("\\"") && x.endsWith("\\"")) || (x.startsWith("'") && x.endsWith("'"))) {
                 res.set(i, x.substring(1, x.length()-1));
             } else {
@@ -474,6 +474,31 @@ class Solution {
         ${className} ser = new ${className}();
         ${className} deser = new ${className}();
         return deser.deserialize(ser.serialize(root));
+    }
+}`;
+    }
+    if (params && params.length > 1 && params[1]?.type === 'string_array') {
+        return `
+import java.util.*;
+class Solution {
+    public List<String> solve(String[] operations, String[] values) {
+        List<String> result = new ArrayList<>();
+        ${className} obj = null;
+        for (int i = 0; i < operations.length; i++) {
+            String op = operations[i];
+            if (op.equals("${className}")) {
+                obj = new ${className}();
+                result.add("null");
+            } else if (op.equals("insert")) {
+                obj.insert(values[i]);
+                result.add("null");
+            } else if (op.equals("search")) {
+                result.add(String.valueOf(obj.search(values[i])));
+            } else if (op.equals("startsWith")) {
+                result.add(String.valueOf(obj.startsWith(values[i])));
+            }
+        }
+        return result;
     }
 }`;
     }

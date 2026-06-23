@@ -223,18 +223,14 @@ func toStringArray(s string) []string {
         }
         if c == ',' && !inDQ && !inSQ {
             token := strings.TrimSpace(cur.String())
-            if token != "" {
-                res = append(res, token)
-            }
+            res = append(res, token)
             cur.Reset()
         } else {
             cur.WriteRune(c)
         }
     }
     last := strings.TrimSpace(cur.String())
-    if last != "" {
-        res = append(res, last)
-    }
+    res = append(res, last)
     return res
 }
 
@@ -488,6 +484,27 @@ func Solve(root *TreeNode) *TreeNode {
     var ser Codec
     var deser Codec
     return deser.Deserialize(ser.Serialize(root))
+}`;
+    }
+    if (params && params.length > 1 && params[1]?.type === 'string_array') {
+        return `
+func Solve(operations []string, values []string) []string {
+    result := []string{}
+    var obj *${className}
+    for i, op := range operations {
+        if op == "${className}" {
+            obj = &${className}{}
+            result = append(result, "null")
+        } else if op == "insert" {
+            obj.Insert(values[i])
+            result = append(result, "null")
+        } else if op == "search" {
+            result = append(result, strconv.FormatBool(obj.Search(values[i])))
+        } else if op == "startsWith" {
+            result = append(result, strconv.FormatBool(obj.StartsWith(values[i])))
+        }
+    }
+    return result
 }`;
     }
     return `

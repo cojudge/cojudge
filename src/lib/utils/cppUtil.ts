@@ -232,14 +232,14 @@ static vector<string> to_string_array(const string &s) {
         if (c == '\\'' && !inDQ) { inSQ = !inSQ; continue; }
         if (c == ',' && !inDQ && !inSQ) {
             string token = trim(cur);
-            if (!token.empty()) res.push_back(unquote(token));
+            res.push_back(unquote(token));
             cur.clear();
         } else {
             cur.push_back(c);
         }
     }
     string last = trim(cur);
-    if (!last.empty()) res.push_back(unquote(last));
+    res.push_back(unquote(last));
     return res;
 }
 
@@ -552,6 +552,39 @@ public:
         ${className} ser;
         ${className} deser;
         return deser.deserialize(ser.serialize(root));
+    }
+};
+`;
+    }
+    if (params && params.length > 1 && params[1]?.type === 'string_array') {
+        return `#include <vector>
+#include <string>
+#include <sstream>
+#include "${className}.cpp"
+using namespace std;
+
+class Solution {
+public:
+    vector<string> solve(vector<string>& operations, vector<string>& values) {
+        vector<string> result;
+        ${className}* obj = nullptr;
+        for (int i = 0; i < operations.size(); i++) {
+            string& op = operations[i];
+            if (op == "${className}") {
+                delete obj;
+                obj = new ${className}();
+                result.push_back("null");
+            } else if (op == "insert") {
+                obj->insert(values[i]);
+                result.push_back("null");
+            } else if (op == "search") {
+                result.push_back(obj->search(values[i]) ? "true" : "false");
+            } else if (op == "startsWith") {
+                result.push_back(obj->startsWith(values[i]) ? "true" : "false");
+            }
+        }
+        delete obj;
+        return result;
     }
 };
 `;
