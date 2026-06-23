@@ -1,6 +1,6 @@
 {
     "title": "Blind 75",
-    "description": "Blind 75 is a curated list of the 75 most frequently asked LeetCode questions to help you prepare efficiently for technical interviews at top tech companies [(Source)](https://www.teamblind.com/post/new-year-gift-curated-list-of-top-75-leetcode-questions-to-save-your-time-oam1oreu). This is a work in progress but most problems are already covered.",
+    "description": "Blind 75 is a curated list of the 75 most frequently asked LeetCode questions to help you prepare efficiently for technical interviews at top tech companies [(Source)](https://www.teamblind.com/post/new-year-gift-curated-list-of-top-75-leetcode-questions-to-save-your-time-oam1oreu). This is a work in progress but most problems are already covered. [Contributions are welcome.](https://github.com/cojudge/cojudge)",
     "category-order": ["array", "binary", "dp", "graph", "interval", "linked-list", "matrix", "string", "tree", "heap"],
     "problems-of-category": {
         "array": ["3sum", "best-time-to-buy-and-sell-stock", "container-with-most-water", "contains-duplicate", "find-minimum-in-rotated-sorted-array", "maximum-product-subarray", "maximum-subarray", "product-of-array-except-self", "search-in-rotated-sorted-array", "two-sum"],
