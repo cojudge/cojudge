@@ -1,6 +1,10 @@
 import type { Param } from "./util";
+import { env } from '$env/dynamic/private';
 
-export const goImage = 'golang:1.22-alpine';
+// Docker image for running Go code. Override via COJUDGE_GO_IMAGE env var.
+// On memory-constrained machines, build a custom image with pre-compiled
+// stdlib: see docker/go/Dockerfile for instructions.
+export const goImage = env.COJUDGE_GO_IMAGE || 'golang:1.22-alpine';
 
 export const goListNodeClass = `
 type ListNode struct {
