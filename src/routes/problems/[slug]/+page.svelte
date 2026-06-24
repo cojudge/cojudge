@@ -4,7 +4,7 @@
     import ExecutionPanel from '$lib/components/ExecutionPanel.svelte';
     import ShareModal from '$lib/components/ShareModal.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
-    import { initFirebase } from '$lib/firebase';
+    import { initFirebase, ensureAuthenticated } from '$lib/firebase';
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { type FileEntry } from '$lib/stores/fileStore.js';
     import { leftPaneWidthStore } from '$lib/stores/layoutStore';
@@ -547,6 +547,7 @@
         
         // Save to Firestore
         try {
+            const user = await ensureAuthenticated();
             await setDoc(doc(fb.db, 'shares', shareId), {
                 content,
                 language,
@@ -554,7 +555,8 @@
                 fileName: currentTab.fileName,
                 createdAt: new Date(),
                 problemId: data.problem.id,
-                problemTitle: data.problem.title
+                problemTitle: data.problem.title,
+                ownerId: user.uid
             });
             
             shareUrl = `${window.location.origin}/p/${shareId}`;
