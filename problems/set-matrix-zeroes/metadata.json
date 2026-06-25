@@ -1,0 +1,52 @@
+{
+  "id": "set-matrix-zeroes",
+  "title": "46. Set Matrix Zeroes",
+  "difficulty": "Medium",
+  "category": "matrix",
+  "link": "https://leetcode.com/problems/set-matrix-zeroes/",
+  "examples": [
+    {
+      "input": "matrix = [[1,1,1],[1,0,1],[1,1,1]]",
+      "output": "[[1,0,1],[0,0,0],[1,0,1]]"
+    },
+    {
+      "input": "matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]",
+      "output": "[[0,0,0,0],[0,4,5,0],[0,3,1,0]]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] setZeroes(int[][] matrix) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def setZeroes(self, matrix: List[List[int]]) -> List[List[int]]:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> setZeroes(vector<vector<int>>& matrix) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[][] SetZeroes(int[][] matrix) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn set_zeroes(matrix: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc SetZeroes(matrix [][]int) [][]int {\n    \n}"
+  },
+  "testCases": [
+    {
+      "matrix": "[[1,1,1],[1,0,1],[1,1,1]]"
+    },
+    {
+      "matrix": "[[0,1,2,0],[3,4,5,2],[1,3,1,5]]"
+    },
+    {
+      "matrix": "[[1,2,3],[4,5,6]]"
+    },
+    {
+      "matrix": "[[1]]"
+    }
+  ],
+  "functionName": "setZeroes",
+  "params": [
+    {
+      "name": "matrix",
+      "type": "int_array_2d",
+      "visualizeType": "matrix"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Use the first row and first column as markers so the solution stays O(1) extra space.",
+    "Track whether the first row or first column originally contained a zero before reusing them as markers."
+  ]
+}
