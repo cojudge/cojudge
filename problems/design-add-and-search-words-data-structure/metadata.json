@@ -1,0 +1,56 @@
+{
+  "id": "design-add-and-search-words-data-structure",
+  "title": "211. Design Add and Search Words Data Structure",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "operations = [\"WordDictionary\",\"addWord\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\",\"search\"]\nvalues = [\"\",\"bad\",\"dad\",\"mad\",\"pad\",\"bad\",\".ad\",\"b..\"]",
+      "output": "[null,null,null,null,false,true,true,true]",
+      "explanation": "After adding 'bad', 'dad', and 'mad', searching 'pad' returns false, 'bad' returns true, '.ad' matches 'bad'/'dad'/'mad', 'b..' matches 'bad'."
+    },
+    {
+      "input": "operations = [\"WordDictionary\",\"addWord\",\"search\",\"search\",\"search\"]\nvalues = [\"\",\"a\",\".\",\"a\",\"aa\"]",
+      "output": "[null,null,true,true,false]",
+      "explanation": "After adding 'a', searching '.' matches 'a', searching 'a' matches 'a', searching 'aa' returns false."
+    }
+  ],
+  "classProblem": {
+    "userClassName": "WordDictionary"
+  },
+  "starterCode": {
+    "java": "class WordDictionary {\n    public WordDictionary() {\n        \n    }\n    \n    public void addWord(String word) {\n        \n    }\n    \n    public boolean search(String word) {\n        return false;\n    }\n}",
+    "python": "class WordDictionary:\n    def __init__(self):\n        \n    def addWord(self, word: str) -> None:\n        \n    def search(self, word: str) -> bool:\n        return False",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass WordDictionary {\npublic:\n    WordDictionary() {\n        \n    }\n    \n    void addWord(string word) {\n        \n    }\n    \n    bool search(string word) {\n        return false;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class WordDictionary {\n    public WordDictionary() {\n        \n    }\n    \n    public void AddWord(string word) {\n        \n    }\n    \n    public bool Search(string word) {\n        return false;\n    }\n}",
+    "rust": "pub struct WordDictionary {\n    \n}\n\nimpl WordDictionary {\n    pub fn new() -> Self {\n        WordDictionary {}\n    }\n    \n    pub fn add_word(&mut self, word: String) {\n        \n    }\n    \n    pub fn search(&self, word: String) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\ntype WordDictionary struct {\n    \n}\n\nfunc Constructor() WordDictionary {\n    return WordDictionary{}\n}\n\nfunc (this *WordDictionary) AddWord(word string) {\n    \n}\n\nfunc (this *WordDictionary) Search(word string) bool {\n    return false\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"WordDictionary\",\"addWord\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\",\"search\"]",
+      "values": "[\"\",\"bad\",\"dad\",\"mad\",\"pad\",\"bad\",\".ad\",\"b..\"]"
+    },
+    {
+      "operations": "[\"WordDictionary\",\"addWord\",\"search\",\"search\",\"search\"]",
+      "values": "[\"\",\"a\",\".\",\"a\",\"aa\"]"
+    }
+  ],
+  "functionName": "solve",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Use a Trie (prefix tree) as the underlying data structure for efficient prefix matching.",
+    "For the search method with '.', use DFS/backtracking to try all 26 possible child nodes when a dot is encountered."
+  ]
+}

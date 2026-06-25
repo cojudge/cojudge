@@ -538,7 +538,35 @@ export function cppGetFullParam(params: Param[], tc: any): string {
     return parts.join(', ');
 }
 
-export function generateCppClassSolution(className: string, params?: Param[], outputType?: string): string {
+const cppStringOpMap: Record<string, { void: boolean, code: string }> = {
+    addWord: { void: true, code: 'obj->addWord(values[i]);' },
+    insert: { void: true, code: 'obj->insert(values[i]);' },
+    search: { void: false, code: 'obj->search(values[i]) ? "true" : "false"' },
+    startsWith: { void: false, code: 'obj->startsWith(values[i]) ? "true" : "false"' },
+};
+
+function generateCppBranches(operations: string[], isInt: boolean): string {
+    return operations.map((op, i) => {
+        const cond = i === 0 ? 'if' : 'else if';
+        if (isInt) {
+            if (op === 'addNum') {
+                return `            } ${cond} (op == "addNum") {\n                obj->addNum(values[i][0]);\n                result.push_back("null");`;
+            } else if (op === 'findMedian') {
+                return `            } ${cond} (op == "findMedian") {\n                double med = obj->findMedian();\n                if (med == (long)med) {\n                    ostringstream ss;\n                    ss << (long)med << ".0";\n                    result.push_back(ss.str());\n                } else {\n                    ostringstream ss;\n                    ss << med;\n                    result.push_back(ss.str());\n                }`;
+            }
+            return '';
+        }
+        const entry = cppStringOpMap[op];
+        if (!entry) return '';
+        if (entry.void) {
+            return `            } ${cond} (op == "${op}") {\n                ${entry.code}\n                result.push_back("null");`;
+        } else {
+            return `            } ${cond} (op == "${op}") {\n                result.push_back(${entry.code});`;
+        }
+    }).join('\n');
+}
+
+export function generateCppClassSolution(className: string, params?: Param[], outputType?: string, operations?: string[]): string {
     if (params && params.length > 0 && params[0]?.type === 'tree_node') {
         return `#include <string>
 #include <sstream>
@@ -557,6 +585,8 @@ public:
 `;
     }
     if (params && params.length > 1 && params[1]?.type === 'string_array') {
+        const ops = operations || ['addWord', 'insert', 'search', 'startsWith'];
+        const branches = generateCppBranches(ops, false);
         return `#include <vector>
 #include <string>
 #include <sstream>
@@ -574,13 +604,7 @@ public:
                 delete obj;
                 obj = new ${className}();
                 result.push_back("null");
-            } else if (op == "insert") {
-                obj->insert(values[i]);
-                result.push_back("null");
-            } else if (op == "search") {
-                result.push_back(obj->search(values[i]) ? "true" : "false");
-            } else if (op == "startsWith") {
-                result.push_back(obj->startsWith(values[i]) ? "true" : "false");
+${branches}
             }
         }
         delete obj;
@@ -589,6 +613,8 @@ public:
 };
 `;
     }
+    const ops = operations || ['addNum', 'findMedian'];
+    const branches = generateCppBranches(ops, true);
     return `#include <vector>
 #include <string>
 #include <sstream>
@@ -606,20 +632,7 @@ public:
                 delete obj;
                 obj = new ${className}();
                 result.push_back("null");
-            } else if (op == "addNum") {
-                obj->addNum(values[i][0]);
-                result.push_back("null");
-            } else if (op == "findMedian") {
-                double med = obj->findMedian();
-                if (med == (long)med) {
-                    ostringstream ss;
-                    ss << (long)med << ".0";
-                    result.push_back(ss.str());
-                } else {
-                    ostringstream ss;
-                    ss << med;
-                    result.push_back(ss.str());
-                }
+${branches}
             }
         }
         delete obj;

@@ -492,7 +492,35 @@ export function getDisplayFuncName(outputType: string): string {
             'CSharpHelper.DisplayOutput';
 }
 
-export function generateCSharpClassSolution(className: string, params?: Param[], outputType?: string): string {
+const csharpStringOpMap: Record<string, { void: boolean, code: string }> = {
+    addWord: { void: true, code: 'obj.AddWord(values[i]);' },
+    insert: { void: true, code: 'obj.Insert(values[i]);' },
+    search: { void: false, code: 'obj.Search(values[i]).ToString().ToLower()' },
+    startsWith: { void: false, code: 'obj.StartsWith(values[i]).ToString().ToLower()' },
+};
+
+function generateCsharpBranches(operations: string[], isInt: boolean): string {
+    return operations.map((op, i) => {
+        const cond = i === 0 ? "if" : "else if";
+        if (isInt) {
+            if (op === 'addNum') {
+                return `            } ${cond} (op == "addNum") {\n                obj.AddNum(values[i][0]);\n                result.Add("null");`;
+            } else if (op === 'findMedian') {
+                return `            } ${cond} (op == "findMedian") {\n                double med = obj.FindMedian();\n                if (med == (long)med) {\n                    result.Add(((long)med).ToString() + ".0");\n                } else {\n                    result.Add(med.ToString());\n                }`;
+            }
+            return '';
+        }
+        const entry = csharpStringOpMap[op];
+        if (!entry) return '';
+        if (entry.void) {
+            return `            } ${cond} (op == "${op}") {\n                ${entry.code}\n                result.Add("null");`;
+        } else {
+            return `            } ${cond} (op == "${op}") {\n                result.Add(${entry.code});`;
+        }
+    }).join('\n');
+}
+
+export function generateCSharpClassSolution(className: string, params?: Param[], outputType?: string, operations?: string[]): string {
     if (params && params.length > 0 && params[0]?.type === 'tree_node') {
         return `
 using System;
@@ -506,6 +534,8 @@ public class Solution {
 }`;
     }
     if (params && params.length > 1 && params[1]?.type === 'string_array') {
+        const ops = operations || ['addWord', 'insert', 'search', 'startsWith'];
+        const branches = generateCsharpBranches(ops, false);
         return `
 using System;
 using System.Collections.Generic;
@@ -519,19 +549,15 @@ public class Solution {
             if (op == "${className}") {
                 obj = new ${className}();
                 result.Add("null");
-            } else if (op == "insert") {
-                obj.Insert(values[i]);
-                result.Add("null");
-            } else if (op == "search") {
-                result.Add(obj.Search(values[i]).ToString().ToLower());
-            } else if (op == "startsWith") {
-                result.Add(obj.StartsWith(values[i]).ToString().ToLower());
+${branches}
             }
         }
         return result;
     }
 }`;
     }
+    const ops = operations || ['addNum', 'findMedian'];
+    const branches = generateCsharpBranches(ops, true);
     return `
 using System;
 using System.Collections.Generic;
@@ -545,16 +571,7 @@ public class Solution {
             if (op == "${className}") {
                 obj = new ${className}();
                 result.Add("null");
-            } else if (op == "addNum") {
-                obj.AddNum(values[i][0]);
-                result.Add("null");
-            } else if (op == "findMedian") {
-                double med = obj.FindMedian();
-                if (med == (long)med) {
-                    result.Add(((long)med).ToString() + ".0");
-                } else {
-                    result.Add(med.ToString());
-                }
+${branches}
             }
         }
         return result;

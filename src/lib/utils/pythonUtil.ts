@@ -203,7 +203,35 @@ export function pyGetFullParam(params: Param[], tc: any): string {
     return parts.join(', ');
 }
 
-export function generatePythonClassSolution(className: string, params?: Param[], outputType?: string): string {
+const pythonStringOpMap: Record<string, { void: boolean, code: string }> = {
+    addWord: { void: true, code: 'obj.addWord(values[i])' },
+    insert: { void: true, code: 'obj.insert(values[i])' },
+    search: { void: false, code: 'str(obj.search(values[i])).lower()' },
+    startsWith: { void: false, code: 'str(obj.startsWith(values[i])).lower()' },
+};
+
+function generatePythonBranches(operations: string[], isInt: boolean): string {
+    return operations.map((op, i) => {
+        const cond = i === 0 ? 'if' : 'elif';
+        if (isInt) {
+            if (op === 'addNum') {
+                return `            ${cond} op == "addNum":\n                obj.addNum(values[i][0])\n                result.append("null")`;
+            } else if (op === 'findMedian') {
+                return `            ${cond} op == "findMedian":\n                med = obj.findMedian()\n                if med == int(med):\n                    result.append(str(int(med)) + ".0")\n                else:\n                    result.append(str(med))`;
+            }
+            return '';
+        }
+        const entry = pythonStringOpMap[op];
+        if (!entry) return '';
+        if (entry.void) {
+            return `            ${cond} op == "${op}":\n                ${entry.code}\n                result.append("null")`;
+        } else {
+            return `            ${cond} op == "${op}":\n                result.append(${entry.code})`;
+        }
+    }).join('\n');
+}
+
+export function generatePythonClassSolution(className: string, params?: Param[], outputType?: string, operations?: string[]): string {
     if (params && params.length > 0 && params[0]?.type === 'tree_node') {
         return `
 from typing import List, Optional
@@ -218,6 +246,8 @@ class Solution:
 `;
     }
     if (params && params.length > 1 && params[1]?.type === 'string_array') {
+        const ops = operations || ['addWord', 'insert', 'search', 'startsWith'];
+        const branches = generatePythonBranches(ops, false);
         return `
 from typing import List
 from ${className} import ${className}
@@ -230,16 +260,12 @@ class Solution:
             if op == "${className}":
                 obj = ${className}()
                 result.append("null")
-            elif op == "insert":
-                obj.insert(values[i])
-                result.append("null")
-            elif op == "search":
-                result.append(str(obj.search(values[i])).lower())
-            elif op == "startsWith":
-                result.append(str(obj.startsWith(values[i])).lower())
+${branches}
         return result
 `;
     }
+    const ops = operations || ['addNum', 'findMedian'];
+    const branches = generatePythonBranches(ops, true);
     return `
 from typing import List
 from ${className} import ${className}
@@ -252,15 +278,7 @@ class Solution:
             if op == "${className}":
                 obj = ${className}()
                 result.append("null")
-            elif op == "addNum":
-                obj.addNum(values[i][0])
-                result.append("null")
-            elif op == "findMedian":
-                med = obj.findMedian()
-                if med == int(med):
-                    result.append(str(int(med)) + ".0")
-                else:
-                    result.append(str(med))
+${branches}
         return result
 `;
 }

@@ -1,4 +1,5 @@
 import type { Param } from "./util";
+import { extractOperations } from "./util";
 import { env } from '$env/dynamic/private';
 
 // Docker image for running Go code. Override via COJUDGE_GO_IMAGE env var.
@@ -481,7 +482,34 @@ export function goGetFullParam(params: Param[], tc: any): string {
     return parts.join(", ");
 }
 
-export function generateGoClassSolution(className: string, params?: Param[], outputType?: string): string {
+const goStringOpMap: Record<string, { void: boolean, code: string }> = {
+    addWord: { void: true, code: 'obj.AddWord(values[i])' },
+    insert: { void: true, code: 'obj.Insert(values[i])' },
+    search: { void: false, code: 'strconv.FormatBool(obj.Search(values[i]))' },
+    startsWith: { void: false, code: 'strconv.FormatBool(obj.StartsWith(values[i]))' },
+};
+
+function generateGoBranches(operations: string[], isInt: boolean): string {
+    return operations.map((op, i) => {
+        if (isInt) {
+            if (op === 'addNum') {
+                return `        } else if op == "addNum" {\n            obj.AddNum(values[i][0])\n            result = append(result, "null")`;
+            } else if (op === 'findMedian') {
+                return `        } else if op == "findMedian" {\n            med := obj.FindMedian()\n            if med == float64(int64(med)) {\n                result = append(result, fmt.Sprintf("%d.0", int64(med)))\n            } else {\n                result = append(result, strconv.FormatFloat(med, 'f', -1, 64))\n            }`;
+            }
+            return '';
+        }
+        const entry = goStringOpMap[op];
+        if (!entry) return '';
+        if (entry.void) {
+            return `        } else if op == "${op}" {\n            ${entry.code}\n            result = append(result, "null")`;
+        } else {
+            return `        } else if op == "${op}" {\n            result = append(result, ${entry.code})`;
+        }
+    }).join('\n');
+}
+
+export function generateGoClassSolution(className: string, params?: Param[], outputType?: string, operations?: string[]): string {
     if (params && params.length > 0 && params[0]?.type === 'tree_node') {
         return `
 func Solve(root *TreeNode) *TreeNode {
@@ -491,6 +519,8 @@ func Solve(root *TreeNode) *TreeNode {
 }`;
     }
     if (params && params.length > 1 && params[1]?.type === 'string_array') {
+        const ops = operations || ['addWord', 'insert', 'search', 'startsWith'];
+        const branches = generateGoBranches(ops, false);
         return `
 func Solve(operations []string, values []string) []string {
     result := []string{}
@@ -499,18 +529,14 @@ func Solve(operations []string, values []string) []string {
         if op == "${className}" {
             obj = &${className}{}
             result = append(result, "null")
-        } else if op == "insert" {
-            obj.Insert(values[i])
-            result = append(result, "null")
-        } else if op == "search" {
-            result = append(result, strconv.FormatBool(obj.Search(values[i])))
-        } else if op == "startsWith" {
-            result = append(result, strconv.FormatBool(obj.StartsWith(values[i])))
+${branches}
         }
     }
     return result
 }`;
     }
+    const ops = operations || ['addNum', 'findMedian'];
+    const branches = generateGoBranches(ops, true);
     return `
 func Solve(operations []string, values [][]int) []string {
     result := []string{}
@@ -519,16 +545,7 @@ func Solve(operations []string, values [][]int) []string {
         if op == "${className}" {
             obj = &${className}{}
             result = append(result, "null")
-        } else if op == "addNum" {
-            obj.AddNum(values[i][0])
-            result = append(result, "null")
-        } else if op == "findMedian" {
-            med := obj.FindMedian()
-            if med == float64(int64(med)) {
-                result = append(result, fmt.Sprintf("%d.0", int64(med)))
-            } else {
-                result = append(result, strconv.FormatFloat(med, 'f', -1, 64))
-            }
+${branches}
         }
     }
     return result
@@ -555,7 +572,8 @@ export function generateGoRunner(
         })
         .join("\n        ");
 
-    const solutionCode = className ? generateGoClassSolution(className, params, outputType) : '';
+    const operations = extractOperations(testCases, className || '');
+    const solutionCode = className ? generateGoClassSolution(className, params, outputType, operations) : '';
 
     return `package main
 

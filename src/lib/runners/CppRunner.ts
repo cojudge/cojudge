@@ -1,4 +1,5 @@
 import { cppImage, cppListNodeClass, cppTreeNodeClass, cppGraphNodeClass, generateCppRunner, generateCppClassSolution } from "$lib/utils/cppUtil";
+import { extractOperations } from "$lib/utils/util";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import fs from 'fs/promises';
@@ -43,7 +44,8 @@ export class CppRunner extends ProgramRunner {
             pack.entry({ name: 'GraphNode.cpp' }, Buffer.from(cppGraphNodeClass));
             if (problemData.classProblem) {
                 const className = problemData.classProblem.userClassName || 'MedianFinder';
-                const wrapperCode = generateCppClassSolution(className, problemData.params, problemData.outputType);
+                const operations = extractOperations(this.testCases, className);
+                const wrapperCode = generateCppClassSolution(className, problemData.params, problemData.outputType, operations);
                 const userCode = `#include "ListNode.cpp"\n#include "TreeNode.cpp"\n#include "GraphNode.cpp"\n${this.code}`;
                 pack.entry({ name: `${className}.cpp` }, Buffer.from(userCode));
                 pack.entry({ name: 'Solution.cpp' }, Buffer.from(wrapperCode));

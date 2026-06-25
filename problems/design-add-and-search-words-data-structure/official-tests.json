@@ -1,0 +1,58 @@
+[
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"bad\",\"dad\",\"mad\",\"pad\",\"bad\",\".ad\",\"b..\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"a\",\".\",\"a\",\"aa\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"at\",\"and\",\"an\",\"an\",\"a.\",\".\",\"...\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"search\",\"search\",\"addWord\",\"search\"]",
+        "values": "[\"\",\"a\",\".\",\"a\",\"a\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"addWord\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"cat\",\"car\",\"card\",\"cart\",\"cat\",\"c.t\",\"c..\",\"ca.\",\"c.r.\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"leetcode\",\"leet\",\"code\",\"leet\",\"leetcod.\",\"le.tcode\",\".....\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"addWord\",\"addWord\",\"addWord\",\"search\",\"search\"]",
+        "values": "[\"\",\"a\",\"ab\",\"abc\",\"abcd\",\"a.c\",\"a..d\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"hello\",\"world\",\"hello\",\"world\",\"h.llo\",\"w.r..\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"search\",\"search\"]",
+        "values": "[\"\",\"xyz\",\"x.z\",\"x..\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"addWord\",\"search\",\"search\"]",
+        "values": "[\"\",\"abcdefghij\",\"klmnopqrst\",\"abcdefghij\",\"klmnopqrst\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"search\",\"search\"]",
+        "values": "[\"\",\"a\",\".\",\"..\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"addWord\",\"addWord\",\"addWord\",\"search\",\"search\"]",
+        "values": "[\"\",\"aa\",\"ab\",\"ba\",\"bb\",\"..\",\".a\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\"]",
+        "values": "[\"\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"search\",\"addWord\",\"search\"]",
+        "values": "[\"\",\"word\",\"word\",\"word\"]"
+    }
+]

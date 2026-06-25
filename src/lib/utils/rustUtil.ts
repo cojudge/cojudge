@@ -1,4 +1,5 @@
 import type { Param } from "./util";
+import { extractOperations } from "./util";
 
 export const rustImage = "rust:1.78-slim";
 
@@ -348,7 +349,35 @@ export function rustGetFullParam(params: Param[], tc: any): string {
   return parts.join(", ");
 }
 
-export function generateRustClassSolution(className: string, params?: Param[], outputType?: string): string {
+const rustStringOpMap: Record<string, { void: boolean, code: string }> = {
+    addWord: { void: true, code: `o.add_word(values[i].clone());` },
+    insert: { void: true, code: `o.insert(values[i].clone());` },
+    search: { void: false, code: `o.search(values[i].clone()).to_string()` },
+    startsWith: { void: false, code: `o.starts_with(values[i].clone()).to_string()` },
+};
+
+function generateRustBranches(operations: string[], isInt: boolean): string {
+    return operations.map((op, i) => {
+        const cond = i === 0 ? 'if' : 'else if';
+        if (isInt) {
+            if (op === 'addNum') {
+                return `            } ${cond} op == "addNum" {\n                if let Some(ref mut o) = obj {\n                    o.add_num(values[i][0]);\n                }\n                result.push("null".to_string());`;
+            } else if (op === 'findMedian') {
+                return `            } ${cond} op == "findMedian" {\n                if let Some(ref o) = obj {\n                    let med = o.find_median();\n                    if med == (med as i64) as f64 {\n                        result.push(format!("{}.0", med as i64));\n                    } else {\n                        result.push(format!("{}", med));\n                    }\n                }`;
+            }
+            return '';
+        }
+        const entry = rustStringOpMap[op];
+        if (!entry) return '';
+        if (entry.void) {
+            return `            } ${cond} op == "${op}" {\n                if let Some(ref mut o) = obj {\n                    ${entry.code}\n                }\n                result.push("null".to_string());`;
+        } else {
+            return `            } ${cond} op == "${op}" {\n                if let Some(ref o) = obj {\n                    result.push(${entry.code});\n                }`;
+        }
+    }).join('\n');
+}
+
+export function generateRustClassSolution(className: string, params?: Param[], outputType?: string, operations?: string[]): string {
   if (params && params.length > 0 && params[0]?.type === 'tree_node') {
     return `
 pub struct Solution;
@@ -363,6 +392,8 @@ impl Solution {
 `;
   }
   if (params && params.length > 1 && params[1]?.type === 'string_array') {
+    const ops = operations || ['addWord', 'insert', 'search', 'startsWith'];
+    const branches = generateRustBranches(ops, false);
     return `
 pub struct Solution;
 
@@ -374,19 +405,7 @@ impl Solution {
             if op == "${className}" {
                 obj = Some(${className}::new());
                 result.push("null".to_string());
-            } else if op == "insert" {
-                if let Some(ref mut o) = obj {
-                    o.insert(values[i].clone());
-                }
-                result.push("null".to_string());
-            } else if op == "search" {
-                if let Some(ref o) = obj {
-                    result.push(o.search(values[i].clone()).to_string());
-                }
-            } else if op == "startsWith" {
-                if let Some(ref o) = obj {
-                    result.push(o.starts_with(values[i].clone()).to_string());
-                }
+${branches}
             }
         }
         result
@@ -394,6 +413,8 @@ impl Solution {
 }
 `;
   }
+  const ops = operations || ['addNum', 'findMedian'];
+  const branches = generateRustBranches(ops, true);
   return `
 pub struct Solution;
 
@@ -405,20 +426,7 @@ impl Solution {
             if op == "${className}" {
                 obj = Some(${className}::new());
                 result.push("null".to_string());
-            } else if op == "addNum" {
-                if let Some(ref mut o) = obj {
-                    o.add_num(values[i][0]);
-                }
-                result.push("null".to_string());
-            } else if op == "findMedian" {
-                if let Some(ref o) = obj {
-                    let med = o.find_median();
-                    if med == (med as i64) as f64 {
-                        result.push(format!("{}.0", med as i64));
-                    } else {
-                        result.push(format!("{}", med));
-                    }
-                }
+${branches}
             }
         }
         result
@@ -459,7 +467,8 @@ export function generateRustRunner(
       "// use std::collections::VecDeque;",
     );
 
-  const solutionCode = className ? generateRustClassSolution(className, params) : '';
+  const operations = extractOperations(testCases, className || '');
+  const solutionCode = className ? generateRustClassSolution(className, params, undefined, operations) : '';
 
   return `
 use std::rc::Rc;

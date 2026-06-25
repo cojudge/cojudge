@@ -464,8 +464,29 @@ export function getDisplayFuncName(outputType: string): string {
             'displayOutput';
 }
 
-export function generateJavaClassSolution(className: string, params?: Param[], outputType?: string): string {
-    // For roundtrip pattern (e.g., Codec class with tree input/output)
+const javaStringOpMap: Record<string, { void: boolean, code: string }> = {
+    addWord: { void: true, code: 'obj.addWord(values[i]);' },
+    insert: { void: true, code: 'obj.insert(values[i]);' },
+    search: { void: false, code: 'String.valueOf(obj.search(values[i]))' },
+    startsWith: { void: false, code: 'String.valueOf(obj.startsWith(values[i]))' },
+    addNum: { void: true, code: 'obj.addNum(values[i][0]);' },
+    findMedian: { void: false, code: 'String.valueOf(obj.findMedian())' },
+};
+
+function generateJavaClassSolutionBranches(operations: string[]): string {
+    return operations.map((op, i) => {
+        const entry = javaStringOpMap[op];
+        if (!entry) return '';
+        const cond = i === 0 ? 'if' : 'else if';
+        if (entry.void) {
+            return `            } ${cond} (op.equals("${op}")) {\n                ${entry.code}\n                result.add("null");`;
+        } else {
+            return `            } ${cond} (op.equals("${op}")) {\n                result.add(${entry.code});`;
+        }
+    }).join('\n');
+}
+
+export function generateJavaClassSolution(className: string, params?: Param[], outputType?: string, operations?: string[]): string {
     if (params && params.length > 0 && params[0]?.type === 'tree_node') {
         return `
 import java.util.*;
@@ -478,6 +499,8 @@ class Solution {
 }`;
     }
     if (params && params.length > 1 && params[1]?.type === 'string_array') {
+        const ops = operations || ['addWord', 'insert', 'search', 'startsWith'];
+        const branches = generateJavaClassSolutionBranches(ops);
         return `
 import java.util.*;
 class Solution {
@@ -489,19 +512,23 @@ class Solution {
             if (op.equals("${className}")) {
                 obj = new ${className}();
                 result.add("null");
-            } else if (op.equals("insert")) {
-                obj.insert(values[i]);
-                result.add("null");
-            } else if (op.equals("search")) {
-                result.add(String.valueOf(obj.search(values[i])));
-            } else if (op.equals("startsWith")) {
-                result.add(String.valueOf(obj.startsWith(values[i])));
+${branches}
             }
         }
         return result;
     }
 }`;
     }
+    const intOps = operations || ['addNum', 'findMedian'];
+    const branches = intOps.map((op, i) => {
+        const cond = i === 0 ? 'if' : 'else if';
+        if (op === 'addNum') {
+            return `            } ${cond} (op.equals("addNum")) {\n                obj.addNum(values[i][0]);\n                result.add("null");`;
+        } else if (op === 'findMedian') {
+            return `            } ${cond} (op.equals("findMedian")) {\n                double med = obj.findMedian();\n                if (med == (long) med) {\n                    result.add(String.valueOf((long) med) + ".0");\n                } else {\n                    result.add(String.valueOf(med));\n                }`;
+        }
+        return '';
+    }).join('\n');
     return `
 import java.util.*;
 class Solution {
@@ -513,16 +540,7 @@ class Solution {
             if (op.equals("${className}")) {
                 obj = new ${className}();
                 result.add("null");
-            } else if (op.equals("addNum")) {
-                obj.addNum(values[i][0]);
-                result.add("null");
-            } else if (op.equals("findMedian")) {
-                double med = obj.findMedian();
-                if (med == (long) med) {
-                    result.add(String.valueOf((long) med) + ".0");
-                } else {
-                    result.add(String.valueOf(med));
-                }
+${branches}
             }
         }
         return result;
