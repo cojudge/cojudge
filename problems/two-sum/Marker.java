@@ -12,6 +12,7 @@ class Marker {
     }
     public boolean isCorrect(int[] nums, int target, int[] output) {
         if (output.length == 0) return twoSum(nums, target).length == 0;
+        if (output.length != 2 || output[0] == output[1]) return false;
         return nums[output[0]] + nums[output[1]] == target;
     }
 }
