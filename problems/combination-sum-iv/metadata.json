@@ -26,6 +26,42 @@
     {
       "nums": "[9]",
       "target": 3
+    },
+    {
+      "nums": "[1]",
+      "target": 5
+    },
+    {
+      "nums": "[]",
+      "target": 5
+    },
+    {
+      "nums": "[1,2]",
+      "target": 5
+    },
+    {
+      "nums": "[3,5]",
+      "target": 7
+    },
+    {
+      "nums": "[1,2,5]",
+      "target": 5
+    },
+    {
+      "nums": "[10,20,30]",
+      "target": 50
+    },
+    {
+      "nums": "[1,2,3]",
+      "target": 10
+    },
+    {
+      "nums": "[2]",
+      "target": 100
+    },
+    {
+      "nums": "[1,2,3,4]",
+      "target": 100
     }
   ],
   "functionName": "combinationSum4",
