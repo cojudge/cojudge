@@ -87,14 +87,14 @@ def display_output(x: Any) -> str:
     if isinstance(x, list):
         return str(x)
     # Duck-typing for ListNode / TreeNode / GraphNode to avoid module identity issues
-    if x is None:
-        return 'null'
     if hasattr(x, 'val') and hasattr(x, 'next') and type(x).__name__ == 'ListNode':
         return display_list_node(x)  # type: ignore
     if hasattr(x, 'val') and hasattr(x, 'left') and hasattr(x, 'right') and type(x).__name__ == 'TreeNode':
         return display_tree_node(x)  # type: ignore
     if hasattr(x, 'val') and hasattr(x, 'neighbors') and type(x).__name__ == 'GraphNode':
         return display_graph_node(x)  # type: ignore
+    if x is None:
+        return '[]'
     return str(x)
 
 def to_list_node_array(x: str) -> List[Optional[ListNode]]:
