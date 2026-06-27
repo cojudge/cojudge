@@ -1,0 +1,52 @@
+{
+  "id": "rotate-image",
+  "title": "48. Rotate Image",
+  "difficulty": "Medium",
+  "category": "matrix",
+  "link": "https://leetcode.com/problems/rotate-image/",
+  "examples": [
+    {
+      "input": "matrix = [[1,2,3],[4,5,6],[7,8,9]]",
+      "output": "[[7,4,1],[8,5,2],[9,6,3]]"
+    },
+    {
+      "input": "matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]",
+      "output": "[[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] rotate(int[][] matrix) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def rotate(self, matrix: List[List[int]]) -> List[List[int]]:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> rotate(vector<vector<int>>& matrix) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[][] Rotate(int[][] matrix) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn rotate(matrix: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc Rotate(matrix [][]int) [][]int {\n    \n}"
+  },
+  "testCases": [
+    {
+      "matrix": "[[1,2,3],[4,5,6],[7,8,9]]"
+    },
+    {
+      "matrix": "[[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]"
+    },
+    {
+      "matrix": "[[1]]"
+    },
+    {
+      "matrix": "[[1,2],[3,4]]"
+    }
+  ],
+  "functionName": "rotate",
+  "params": [
+    {
+      "name": "matrix",
+      "type": "int_array_2d",
+      "visualizeType": "matrix"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Rotate the matrix layer by layer, starting from the outermost layer and working inward.",
+    "Each layer can be rotated by moving groups of four cells at a time in a cycle."
+  ]
+}
