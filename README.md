@@ -13,15 +13,17 @@
 ## Highlights
 
 - Offline-first: judge solutions without an internet connection
+- Custom test cases: add your own test cases and compare the expected output with your code output, just like in LeetCode but no internet connection is required here
+- Dynamic judging: judge solutions with custom `isCorrect(output)` logic for each problem instead of just checking `str(output) == str(expected)`
 - Docker sandboxes: consistent, isolated runs across machines
 - LeetCode-style problem packs with statements and tests
 - Simple & fast web UI (SvelteKit) with in-browser editor and light/dark mode support
-- Multiple languages support (Java/Python/C++/Rust/C#)
-- Code Playground: Run code snippets in Java, Python, C++, Rust, or C# without a problem context
+- Multiple languages support (Java/Python/C++/Rust/C#/Go)
+- Code Playground: Run code snippets in Java, Python, C++, Rust, C# or Go without a problem context
 - Extensible: add new problems by dropping folders in `problems/`
 - Persistent Code & Progress Tracking via Local Storage
 - Browser-like tabs to organize your local solutions
-- Extensive problems: includes 60+ problems with sample testcases and hidden testcases from Blind 75
+- Extensive problems: includes all 75 problems with sample test cases, hidden test cases and reference solutions from Blind 75
 
 ## Requirements
 
@@ -31,7 +33,7 @@
 ## Quickstart
 
 ### 1. Installation
-The easiest way to install CoJudge without dealing with NPM permission issues is to run our install script:
+The easiest way to install `cojudge` without dealing with NPM permission issues is to run our install script:
 
 #### Mac / Linux
 ```bash
