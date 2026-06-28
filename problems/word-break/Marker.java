@@ -1,7 +1,7 @@
 import java.util.*;
 class Marker {
-    public boolean wordBreak(String s, java.util.List<String> wordDict) {
-        Set<String> set = new HashSet<>(wordDict);
+    public boolean wordBreak(String s, String[] wordDict) {
+        Set<String> set = new HashSet<>(Arrays.asList(wordDict));
         int n = s.length();
         boolean[] dp = new boolean[n + 1];
         dp[0] = true;
@@ -14,7 +14,7 @@ class Marker {
         }
         return dp[n];
     }
-    public boolean isCorrect(String s, java.util.List<String> wordDict, boolean output) {
+    public boolean isCorrect(String s, String[] wordDict, boolean output) {
         return wordBreak(s, wordDict) == output;
     }
 }

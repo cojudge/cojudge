@@ -9,18 +9,15 @@ Use a hash map to store each element's value and its index while iterating throu
 
 ## Implementation
 
-```java
-import java.util.*;
-class Solution {
-    public int[] twoSum(int[] nums, int target) {
-        int n = nums.length;
-        Map<Integer, Integer> mp = new HashMap<>();
-        for (int i = 0; i < n; i++) {
-            int want = target - nums[i];
-            if (mp.containsKey(want)) return new int[] {i, mp.get(want)};
-            mp.put(nums[i], i);
-        }
-        return new int[]{};
-    }
-}
+```python
+from typing import List
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        seen = {}
+        for i, v in enumerate(nums):
+            want = target - v
+            if want in seen:
+                return [seen[want], i]
+            seen[v] = i
+        return []
 ```

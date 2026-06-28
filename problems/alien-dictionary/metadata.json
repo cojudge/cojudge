@@ -24,26 +24,13 @@
   },
   "testCases": [
     {
-      "words": [
-        "wrt",
-        "wrf",
-        "er",
-        "ett",
-        "rftt"
-      ]
+      "words": "[\"wrt\",\"wrf\",\"er\",\"ett\",\"rftt\"]"
     },
     {
-      "words": [
-        "z",
-        "x"
-      ]
+      "words": "[\"z\",\"x\"]"
     },
     {
-      "words": [
-        "z",
-        "x",
-        "z"
-      ]
+      "words": "[\"z\",\"x\",\"z\"]"
     }
   ],
   "functionName": "alienOrder",

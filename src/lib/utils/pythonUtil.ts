@@ -171,7 +171,9 @@ export function pyGetFullParam(params: Param[], tc: any): string {
             const escaped = (val ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
             parts.push(`'${escaped}'`);
         } else if (param.type === 'int_array') {
-            parts.push(`${val}`); // value is like "[1,2,3]"
+            const raw = val ?? '[]';
+            const str = Array.isArray(raw) ? JSON.stringify(raw) : `${raw}`;
+            parts.push(str);
         } else if (param.type === 'int') {
             parts.push(`${val}`);
         } else if (param.type === 'boolean') {
@@ -189,10 +191,14 @@ export function pyGetFullParam(params: Param[], tc: any): string {
             const escaped = String(val ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
             parts.push(`read_graph_node('${escaped}')`);
         } else if (param.type === 'string_array') {
-            const escaped = String(val ?? '[]').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+            const raw = val ?? '[]';
+            const str = Array.isArray(raw) ? JSON.stringify(raw): String(raw);
+            const escaped = str.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
             parts.push(`literal_eval('${escaped}')`);
-        } else if (param.type === 'int_array_2d' || param.type === 'int_matrix') {
-            const escaped = String(val ?? '[]').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        } else if (param.type === 'int_array_2d' || param.type === 'int_matrix' || param.type === 'char_array_2d') {
+            const raw = val ?? '[]';
+            const str = Array.isArray(raw) ? JSON.stringify(raw): String(raw);
+            const escaped = str.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
             parts.push(`literal_eval('${escaped}')`);
         } else {
             // default: pass as string literal
