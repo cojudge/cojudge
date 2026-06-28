@@ -12,7 +12,7 @@
     import userStore from '$lib/stores/userStore';
     import { getDifficultyClass, type ProgrammingLanguage } from '$lib/utils/util.js';
     import { doc, setDoc } from 'firebase/firestore';
-    import { marked } from 'marked';
+    import { renderMarkdown } from '$lib/utils/markdown';
     import QRCode from 'qrcode';
     import { onMount, tick } from 'svelte';
     import { v4 as uuidv4 } from 'uuid';
@@ -127,6 +127,7 @@
     let isResizing = false;
     let workspaceElement: HTMLElement;
     let openedHints = new Set<number>([]);
+    let viewMode: 'statement' | 'solution' = 'statement';
 
     let showSettings = false;
     let settingsContainer: HTMLElement | null = null;
@@ -581,12 +582,20 @@
     <!-- Left Pane: Problem Statement -->
     <div class="problem-pane" class:hide={($leftPaneWidthStore === null ? 50 : $leftPaneWidthStore) < 5}>
         <div class="prose">
-            <Tooltip text="Back" pos="bottom"> 
-                <a class="back-button" href="/" aria-label="Back">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </a>
+            <Tooltip text={'Back'} pos="bottom"> 
+                {#if viewMode === 'solution'}
+                    <button class="back-button" aria-label="Back" on:click={() => viewMode = 'statement'}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                {:else}
+                    <a class="back-button" href="/" aria-label="Back">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                {/if}
             </Tooltip>
             <Tooltip text="Ctrl + B" pos="bottom">
                 <button
@@ -625,39 +634,62 @@
                 {data.problem.difficulty}
             </span>
             <a href={data.problem.link} target="_blank" rel="noopener noreferrer" class="external-link">↗</a>
-            <!-- Statement content is sourced from problems/[slug]/statement.md (attached on server as problem.statement) -->
-            {@html marked(data.problem.statement)}
-            {#each data.problem.examples as example}
-                <div class="example">
-                    <pre class="example-input">{example.input}</pre>
-                    <pre class="example-output">{example.output}</pre>
-                    {#if example.explanation}
-                        {@html marked(example.explanation)}
-                    {/if}
+            {#if viewMode === 'solution'}
+                <!-- Solution content from problems/[slug]/solution.md -->
+                <div class="markdown-body">
+                    {@html renderMarkdown(data.problem.solution)}
                 </div>
-            {/each}
-
-            {#if data.problem.hints && data.problem.hints.length}
-                {#each data.problem.hints as hint, i}
-                    <div class="hint-item">
-                        <button
-                            class="hint-header"
-                            on:click={() => {
-                                const next = new Set(openedHints);
-                                if (next.has(i)) next.delete(i); else next.add(i);
-                                openedHints = next; // reassign to trigger reactivity
-                            }}
-                        >
-                            <span>Hint {i + 1}</span>
-                            <span class="chevron">{openedHints.has(i) ? "▾" : "▸"}</span>
-                        </button>
-                        {#if openedHints.has(i)}
-                            <div class="hint-body">
-                                {@html marked(hint)}
+            {:else}
+                <!-- Statement content is sourced from problems/[slug]/statement.md (attached on server as problem.statement) -->
+                <div class="markdown-body">
+                    {@html renderMarkdown(data.problem.statement)}
+                </div>
+                {#each data.problem.examples as example}
+                    <div class="example">
+                        <pre class="example-input">{example.input}</pre>
+                        <pre class="example-output">{example.output}</pre>
+                        {#if example.explanation}
+                            <div class="markdown-body">
+                                {@html renderMarkdown(example.explanation)}
                             </div>
                         {/if}
                     </div>
                 {/each}
+
+                {#if data.problem.hints && data.problem.hints.length}
+                    {#each data.problem.hints as hint, i}
+                        <div class="hint-item">
+                            <button
+                                class="hint-header"
+                                on:click={() => {
+                                    const next = new Set(openedHints);
+                                    if (next.has(i)) next.delete(i); else next.add(i);
+                                    openedHints = next; // reassign to trigger reactivity
+                                }}
+                            >
+                                <span>Hint {i + 1}</span>
+                                <span class="chevron">{openedHints.has(i) ? "▾" : "▸"}</span>
+                            </button>
+                            {#if openedHints.has(i)}
+                                <div class="hint-body markdown-body">
+                                    {@html renderMarkdown(hint)}
+                                </div>
+                            {/if}
+                        </div>
+                    {/each}
+                {/if}
+
+                {#if data.problem.solution}
+                    <div class="hint-item">
+                        <button
+                            class="hint-header"
+                            on:click={() => viewMode = 'solution'}
+                        >
+                            <span>Reference Solution</span>
+                            <span class="chevron">▸</span>
+                        </button>
+                    </div>
+                {/if}
             {/if}
         </div>
     </div>

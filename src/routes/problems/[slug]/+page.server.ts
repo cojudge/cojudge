@@ -21,6 +21,15 @@ export const load: PageServerLoad = async ({ params }) => {
             problem.statement = '';
         }
 
+        // Load solution.md if present and attach as problem.solution
+        const solutionPath = path.join(baseDir, 'solution.md');
+        try {
+            const solutionMd = await fs.readFile(solutionPath, 'utf-8');
+            problem.solution = solutionMd;
+        } catch {
+            problem.solution = null;
+        }
+
         // Normalize hints to an array of strings to ensure UI always works consistently
         if (Array.isArray(problem.hints)) {
             problem.hints = problem.hints.map((h: unknown) => String(h));
