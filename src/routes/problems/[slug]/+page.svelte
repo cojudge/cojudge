@@ -687,7 +687,7 @@
                             on:click={() => {
                                 if ($userStore && $userStore[fileKey()]) {
                                     viewMode = 'solution';
-                                } else if (confirm('Are you sure you want to view the solution? Try solving it yourself!')) {
+                                } else if (confirm('Are you sure you want to view the solution? Try solving it yourself first!')) {
                                     viewMode = 'solution';
                                 }
                             }}
