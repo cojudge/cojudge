@@ -1,6 +1,6 @@
 {
   "id": "serialize-and-deserialize-binary-tree",
-  "title": "297. Serialize and Deserialize Binary Tree",
+  "title": "72. Serialize and Deserialize Binary Tree",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/",
   "category": "tree",

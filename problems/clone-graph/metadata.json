@@ -1,6 +1,6 @@
 {
   "id": "clone-graph",
-  "title": "133. Clone Graph",
+  "title": "27. Clone Graph",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/clone-graph/",
   "category": "graph",

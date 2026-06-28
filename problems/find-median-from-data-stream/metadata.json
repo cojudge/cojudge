@@ -1,6 +1,6 @@
 {
   "id": "find-median-from-data-stream",
-  "title": "295. Find Median from Data Stream",
+  "title": "74. Find Median from Data Stream",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/find-median-from-data-stream/",
   "category": "heap",

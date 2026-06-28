@@ -1,6 +1,6 @@
 {
   "id": "implement-trie-prefix-tree",
-  "title": "208. Implement Trie (Prefix Tree)",
+  "title": "65. Implement Trie (Prefix Tree)",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/implement-trie-prefix-tree/",
   "category": "tree",

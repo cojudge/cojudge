@@ -293,7 +293,7 @@ The implementation should be **Python** and must pass all official tests (`cojud
 
 ## 6. Class-Based Problems (Design Problems)
 
-For problems like **295. Find Median from Data Stream** where the user implements a class with multiple methods (not a single function), add a `classProblem` field to `metadata.json`:
+For problems like **74. Find Median from Data Stream** where the user implements a class with multiple methods (not a single function), add a `classProblem` field to `metadata.json`:
 
 ```json
 {
