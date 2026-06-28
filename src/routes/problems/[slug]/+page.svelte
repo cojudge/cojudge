@@ -683,7 +683,14 @@
                     <div class="hint-item">
                         <button
                             class="hint-header"
-                            on:click={() => viewMode = 'solution'}
+                            class:unsolved={!($userStore && $userStore[fileKey()])}
+                            on:click={() => {
+                                if ($userStore && $userStore[fileKey()]) {
+                                    viewMode = 'solution';
+                                } else if (confirm('Are you sure you want to view the solution? Try solving it yourself!')) {
+                                    viewMode = 'solution';
+                                }
+                            }}
                         >
                             <span>Reference Solution</span>
                             <span class="chevron">▸</span>
@@ -1305,6 +1312,9 @@
         border: none;
         cursor: pointer;
         font-weight: 700;
+    }
+    .hint-header.unsolved {
+        opacity: 0.5;
     }
     .chevron {
         font-size: 1rem;
