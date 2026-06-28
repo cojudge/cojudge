@@ -114,7 +114,7 @@ public static class CSharpHelper {
         sb.Append("[");
         int sz = lst.Count, idx = 0;
         foreach (string s in lst) {
-            sb.Append(s);
+            sb.Append('"').Append(s).Append('"');
             bool isLast = idx == sz - 1;
             if (!isLast) {
                 sb.Append(",");
@@ -530,6 +530,19 @@ public class Solution {
         ${className} ser = new ${className}();
         ${className} deser = new ${className}();
         return deser.deserialize(ser.serialize(root));
+    }
+}`;
+    }
+    if (params && params.length === 1 && params[0]?.type === 'string_array') {
+        return `
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public List<string> Solve(string[] strs) {
+        ${className} codec = new ${className}();
+        string encoded = codec.Encode(strs);
+        return codec.Decode(encoded);
     }
 }`;
     }

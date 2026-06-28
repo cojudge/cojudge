@@ -64,7 +64,11 @@ func displayOutput(x interface{}) string {
         }
         return "[" + strings.Join(parts, ",") + "]"
     case []string:
-        return "[" + strings.Join(v, ",") + "]"
+        quoted := make([]string, len(v))
+        for i, s := range v {
+            quoted[i] = "\\"" + s + "\\""
+        }
+        return "[" + strings.Join(quoted, ",") + "]"
     case [][]string:
         parts := make([]string, len(v))
         for i, row := range v {
@@ -516,6 +520,14 @@ func Solve(root *TreeNode) *TreeNode {
     var ser Codec
     var deser Codec
     return deser.Deserialize(ser.Serialize(root))
+}`;
+    }
+    if (params && params.length === 1 && params[0]?.type === 'string_array') {
+        return `
+func Solve(strs []string) []string {
+    var codec ${className}
+    encoded := codec.Encode(strs)
+    return codec.Decode(encoded)
 }`;
     }
     if (params && params.length > 1 && params[1]?.type === 'string_array') {

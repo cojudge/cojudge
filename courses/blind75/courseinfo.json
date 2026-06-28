@@ -10,7 +10,7 @@
         "interval": ["insert-interval", "meeting-rooms", "meeting-rooms-ii", "merge-intervals", "non-overlapping-intervals"],
         "linked-list": ["linked-list-cycle", "merge-k-sorted-lists", "merge-two-sorted-lists", "remove-nth-node-from-end-of-list", "reorder-list", "reverse-linked-list"],
         "matrix": ["rotate-image", "set-matrix-zeroes", "spiral-matrix", "word-search"],
-        "string": ["group-anagrams", "longest-palindromic-substring", "longest-repeating-character-replacement", "longest-substring-without-repeating-characters", "minimum-window-substring", "palindromic-substrings", "valid-anagram", "valid-palindrome", "valid-parentheses"],
+        "string": ["encode-and-decode-strings", "group-anagrams", "longest-palindromic-substring", "longest-repeating-character-replacement", "longest-substring-without-repeating-characters", "minimum-window-substring", "palindromic-substrings", "valid-anagram", "valid-palindrome", "valid-parentheses"],
         "tree": ["binary-tree-level-order-traversal", "binary-tree-maximum-path-sum", "construct-binary-tree-from-preorder-and-inorder-traversal", "implement-trie-prefix-tree", "design-add-and-search-words-data-structure", "invert-binary-tree", "kth-smallest-element-in-a-bst", "lowest-common-ancestor-of-a-binary-search-tree", "maximum-depth-of-binary-tree", "same-tree", "serialize-and-deserialize-binary-tree", "subtree-of-another-tree", "validate-binary-search-tree", "word-search-ii"],
         "heap": ["find-median-from-data-stream", "top-k-frequent-elements"]
     }

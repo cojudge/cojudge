@@ -245,6 +245,18 @@ class Solution:
         return deser.deserialize(ser.serialize(root))
 `;
     }
+    if (params && params.length === 1 && params[0]?.type === 'string_array') {
+        return `
+from typing import List
+from ${className} import ${className}
+
+class Solution:
+    def solve(self, strs: List[str]) -> List[str]:
+        codec = ${className}()
+        encoded = codec.encode(strs)
+        return codec.decode(encoded)
+`;
+    }
     if (params && params.length > 1 && params[1]?.type === 'string_array') {
         const ops = operations || ['addWord', 'insert', 'search', 'startsWith'];
         const branches = generatePythonBranches(ops, false);

@@ -1,0 +1,62 @@
+{
+  "id": "encode-and-decode-strings",
+  "title": "59. Encode and Decode Strings",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/encode-and-decode-strings/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "strs = [\"hello\",\"world\"]",
+      "output": "[\"hello\",\"world\"]",
+      "explanation": "The encoded string is decoded back to the original list."
+    },
+    {
+      "input": "strs = [\"\"]",
+      "output": "[\"\"]",
+      "explanation": "A list containing an empty string is preserved."
+    },
+    {
+      "input": "strs = []",
+      "output": "[]",
+      "explanation": "An empty list remains empty after encoding and decoding."
+    }
+  ],
+  "classProblem": {
+    "userClassName": "Codec"
+  },
+  "starterCode": {
+    "java": "import java.util.*;\n\npublic class Codec {\n    // Encodes a list of strings to a single string.\n    public String encode(String[] strs) {\n        \n    }\n\n    // Decodes a single string to a list of strings.\n    public List<String> decode(String s) {\n        \n    }\n}",
+    "python": "from typing import List\n\nclass Codec:\n    def encode(self, strs: List[str]) -> str:\n        \n\n    def decode(self, s: str) -> List[str]:\n        ",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Codec {\npublic:\n    string encode(vector<string>& strs) {\n        \n    }\n\n    vector<string> decode(string s) {\n        \n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Codec {\n    public string Encode(string[] strs) {\n        \n    }\n\n    public List<string> Decode(string s) {\n        \n    }\n}",
+    "rust": "pub struct Codec;\n\nimpl Codec {\n    pub fn new() -> Self {\n        Codec\n    }\n\n    pub fn encode(&self, strs: Vec<String>) -> String {\n        String::new()\n    }\n\n    pub fn decode(&self, s: String) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\ntype Codec struct {\n    \n}\n\nfunc (c *Codec) Encode(strs []string) string {\n    return \"\"\n}\n\nfunc (c *Codec) Decode(s string) []string {\n    return []string{}\n}"
+  },
+  "testCases": [
+    {
+      "strs": "[\"hello\",\"world\"]"
+    },
+    {
+      "strs": "[\"\"]"
+    },
+    {
+      "strs": "[]"
+    },
+    {
+      "strs": "[\"a\",\"b\",\"c\"]"
+    }
+  ],
+  "functionName": "solve",
+  "params": [
+    {
+      "name": "strs",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Think of a way to delimit each string so that decoding is unambiguous.",
+    "A common approach is to prefix each string with its length followed by a delimiter like '#'.",
+    "During decoding, read the length until the delimiter, then read that many characters as the next string."
+  ]
+}

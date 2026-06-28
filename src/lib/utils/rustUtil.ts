@@ -59,8 +59,67 @@ impl CojudgeDisplay for String {
     fn to_cojudge_string(&self) -> String { self.clone() }
 }
 
-impl<T: std::fmt::Debug> CojudgeDisplay for Vec<T> {
-    fn to_cojudge_string(&self) -> String { format!("{:?}", self) }
+impl CojudgeDisplay for Vec<String> {
+    fn to_cojudge_string(&self) -> String {
+        let mut res = String::from("[");
+        for (i, s) in self.iter().enumerate() {
+            if i > 0 { res.push(','); }
+            res.push('"');
+            res.push_str(s);
+            res.push('"');
+        }
+        res.push(']');
+        res
+    }
+}
+
+impl CojudgeDisplay for Vec<Vec<String>> {
+    fn to_cojudge_string(&self) -> String {
+        let mut res = String::from("[");
+        for (i, v) in self.iter().enumerate() {
+            if i > 0 { res.push(','); }
+            res.push_str(&v.to_cojudge_string());
+        }
+        res.push(']');
+        res
+    }
+}
+
+impl CojudgeDisplay for Vec<i32> {
+    fn to_cojudge_string(&self) -> String {
+        let mut res = String::from("[");
+        for (i, n) in self.iter().enumerate() {
+            if i > 0 { res.push(','); }
+            res.push_str(&n.to_string());
+        }
+        res.push(']');
+        res
+    }
+}
+
+impl CojudgeDisplay for Vec<Vec<i32>> {
+    fn to_cojudge_string(&self) -> String {
+        let mut res = String::from("[");
+        for (i, v) in self.iter().enumerate() {
+            if i > 0 { res.push(','); }
+            res.push_str(&v.to_cojudge_string());
+        }
+        res.push(']');
+        res
+    }
+}
+
+impl CojudgeDisplay for Vec<Vec<char>> {
+    fn to_cojudge_string(&self) -> String {
+        let mut res = String::from("[");
+        for (i, v) in self.iter().enumerate() {
+            if i > 0 { res.push(','); }
+            let inner: String = v.iter().collect();
+            res.push_str(&inner);
+        }
+        res.push(']');
+        res
+    }
 }
 
 impl CojudgeDisplay for Option<Box<ListNode>> {
@@ -387,6 +446,19 @@ impl Solution {
         let ser = ${className}::new();
         let deser = ${className}::new();
         deser.deserialize(ser.serialize(root))
+    }
+}
+`;
+  }
+  if (params && params.length === 1 && params[0]?.type === 'string_array') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(strs: Vec<String>) -> Vec<String> {
+        let codec = ${className}::new();
+        let encoded = codec.encode(strs);
+        codec.decode(encoded)
     }
 }
 `;

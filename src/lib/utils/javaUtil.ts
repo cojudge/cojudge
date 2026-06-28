@@ -498,6 +498,17 @@ class Solution {
     }
 }`;
     }
+    if (params && params.length === 1 && params[0]?.type === 'string_array') {
+        return `
+import java.util.*;
+class Solution {
+    public List<String> solve(String[] strs) {
+        ${className} codec = new ${className}();
+        String encoded = codec.encode(strs);
+        return codec.decode(encoded);
+    }
+}`;
+    }
     if (params && params.length > 1 && params[1]?.type === 'string_array') {
         const ops = operations || ['addWord', 'insert', 'search', 'startsWith'];
         const branches = generateJavaClassSolutionBranches(ops);

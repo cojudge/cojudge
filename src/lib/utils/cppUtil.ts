@@ -584,6 +584,23 @@ public:
 };
 `;
     }
+    if (params && params.length === 1 && params[0]?.type === 'string_array') {
+        return `#include <string>
+#include <vector>
+#include <sstream>
+#include "${className}.cpp"
+using namespace std;
+
+class Solution {
+public:
+    vector<string> solve(vector<string>& strs) {
+        ${className} codec;
+        string encoded = codec.encode(strs);
+        return codec.decode(encoded);
+    }
+};
+`;
+    }
     if (params && params.length > 1 && params[1]?.type === 'string_array') {
         const ops = operations || ['addWord', 'insert', 'search', 'startsWith'];
         const branches = generateCppBranches(ops, false);

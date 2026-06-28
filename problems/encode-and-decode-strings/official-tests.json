@@ -1,0 +1,38 @@
+[
+    {
+        "strs": "[\"hello\",\"world\"]"
+    },
+    {
+        "strs": "[\"\"]"
+    },
+    {
+        "strs": "[]"
+    },
+    {
+        "strs": "[\"a\",\"b\",\"c\"]"
+    },
+    {
+        "strs": "[\"leet\",\"code\",\"love\",\"you\"]"
+    },
+    {
+        "strs": "[\"\",\"\",\"\"]"
+    },
+    {
+        "strs": "[\" \",\"  \",\"   \"]"
+    },
+    {
+        "strs": "[\"\\\\#\",\"##\",\"#\\\\#\"]"
+    },
+    {
+        "strs": "@javascript:JSON.stringify([\"verylongstring\"+\"x\".repeat(190),\"short\"])"
+    },
+    {
+        "strs": "[\"special\\ncharacters\\there\",\"unicode✓✓✓\"]"
+    },
+    {
+        "strs": "[\"a\"]"
+    },
+    {
+        "strs": "[\"你好\",\"世界\"]"
+    }
+]
