@@ -4,15 +4,18 @@ This guide explains how to add a new problem to CoJudge, with examples for both 
 
 ## Overview
 
-Each problem lives in its own folder under `problems/<slug>/` and requires four files:
+Each problem lives in its own folder under `problems/<slug>/` with the following files:
 
 ```
 problems/<slug>/
 ├── statement.md        # Problem description (Markdown)
 ├── metadata.json       # Metadata, starter code, sample tests, hints
 ├── official-tests.json # Comprehensive test cases for submission
-└── Marker.java         # Reference solution + validation logic
+├── Marker.java         # Reference solution + validation logic
+└── solution.md         # Optional — Approach, complexity, and Python solution
 ```
+
+Only `statement.md`, `metadata.json`, `official-tests.json`, and `Marker.java` are required. `solution.md` is optional — if present, a "Reference Solution" button appears in the UI.
 
 After creating the problem files, register it in `courses/blind75/courseinfo.json`.
 
@@ -260,7 +263,35 @@ class Marker {
 
 ---
 
-## 5. Class-Based Problems (Design Problems)
+## 5. `solution.md` (Optional)
+
+A Markdown file with a walkthrough of the solution approach. When present, the UI shows a "Reference Solution" button on the problem page. It should follow this format:
+
+````markdown
+## Approach
+
+[2-4 sentences explaining the algorithm]
+
+## Complexity Analysis
+
+- **Time Complexity:** O(?)
+- **Space Complexity:** O(?)
+
+## Implementation
+
+```python
+from typing import List
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        ...
+```
+````
+
+The implementation should be **Python** and must pass all official tests (`cojudge submit`).
+
+---
+
+## 6. Class-Based Problems (Design Problems)
 
 For problems like **295. Find Median from Data Stream** where the user implements a class with multiple methods (not a single function), add a `classProblem` field to `metadata.json`:
 
@@ -354,7 +385,7 @@ class Marker {
 
 ---
 
-## 6. Registering in a Course
+## 7. Registering in a Course
 
 Add the problem slug to `courses/blind75/courseinfo.json` under the appropriate category:
 
@@ -379,7 +410,7 @@ You can also add problems to categories that don't exist yet:
 
 ---
 
-## 7. Verification
+## 8. Verification
 
 ### 7.1 Initialize starter code
 

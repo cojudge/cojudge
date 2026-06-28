@@ -12,6 +12,7 @@ When asked to add a new problem, follow the detailed guide in [`docs/ADD_PROBLEM
    - `metadata.json` - Problem metadata and function signature
    - `official-tests.json` - Test inputs
    - `Marker.java` - Solution and validation logic
+   - `solution.md` - Optional solution walkthrough (see `docs/ADD_PROBLEMS.md`)
 3. Update `courses/blind75/courseinfo.json`
 4. Use the `cojudge` CLI to verify the problems
 
