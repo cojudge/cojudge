@@ -81,6 +81,18 @@ async function executeRun(problemId: string, language: string, code: string, tes
             const finalResponse: RunSuccess = rawResults.map((chunk, index) => {
                 try {
                     const lines = (chunk || '').split('\n');
+                    const errorLine = lines.find((l) => l.startsWith(':::ERROR:::'));
+                    if (errorLine) {
+                        const errMsg = errorLine.slice(':::ERROR:::'.length).trim();
+                        return {
+                            ...(testCases[index] || {}),
+                            output: errMsg,
+                            logs: errMsg,
+                            isCorrect: false,
+                            correctAnswer: '',
+                            error: errMsg
+                        };
+                    }
                     const resultLine = lines.find((l) => l.startsWith(':::RESULT:::'));
                     const verdictLine = lines.find((l) => l.startsWith(':::VERDICT:::'));
                     const answerLine = lines.find((l) => l.startsWith(':::ANSWER:::'));
@@ -124,6 +136,11 @@ async function executeRun(problemId: string, language: string, code: string, tes
             const parsed = rawResults.map((chunk) => {
                 try {
                     const lines = (chunk || '').split('\n');
+                    const errorLine = lines.find((l) => l.startsWith(':::ERROR:::'));
+                    if (errorLine) {
+                        const errMsg = errorLine.slice(':::ERROR:::'.length).trim();
+                        return { output: errMsg, logs: errMsg, error: true };
+                    }
                     const idx = lines.findIndex((l) => l.startsWith(':::RESULT:::'));
                     if (idx === -1) {
                         return { output: (chunk || '').trim(), logs: '' };
@@ -141,22 +158,39 @@ async function executeRun(problemId: string, language: string, code: string, tes
 
             const onlyOutputs = parsed.map((p) => p.output);
             job.status = 'judging';
-            const markerResponses = await getMarkerResponses(
-                problemId,
-                problemData.functionName,
-                problemData.params,
-                testCases,
-                onlyOutputs,
-                problemData.outputType
-            );
+            // For error cases, use the input adjList as placeholder output to get correctAnswer from marker
+            const markerOutputs = onlyOutputs.map((o, i) => {
+                if (parsed[i]?.error) {
+                    const tc = testCases[i];
+                    return tc.adjList || tc.input || '[]';
+                }
+                return o;
+            });
+            let markerResponses: any[];
+            try {
+                markerResponses = await getMarkerResponses(
+                    problemId,
+                    problemData.functionName,
+                    problemData.params,
+                    testCases,
+                    markerOutputs,
+                    problemData.outputType
+                );
+            } catch {
+                markerResponses = testCases.map(() => ({
+                    actualAnswer: '',
+                    correctAnswer: '',
+                    isCorrect: false
+                }));
+            }
 
             const finalResponse: RunSuccess = testCases.map((tc: any, index: number) => ({
                 ...tc,
                 output: parsed[index]?.output ?? 'No output',
                 logs: parsed[index]?.logs ?? '',
-                isCorrect: markerResponses[index].isCorrect,
+                isCorrect: parsed[index]?.error ? false : markerResponses[index].isCorrect,
                 correctAnswer: markerResponses[index].correctAnswer,
-                error: null
+                error: parsed[index]?.error ? 'invalid clone - same object' : null
             }));
 
             job.results = finalResponse;

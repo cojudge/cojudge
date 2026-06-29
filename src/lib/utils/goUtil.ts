@@ -570,11 +570,38 @@ export function generateGoRunner(
     testCases: any[],
     outputType: string,
     className?: string,
+    checkGraphClone?: boolean,
 ): string {
     const fnName = className ? "Solve" : goFunctionName(functionName);
+    const hasGraphNode = checkGraphClone && params.some(p => p.type === 'graph_node');
 
     const calls = testCases
         .map((tc, caseIndex) => {
+            if (hasGraphNode) {
+                const decls: string[] = [];
+                const args: string[] = [];
+                params.forEach((p, i) => {
+                    const val = tc[p.name];
+                    const varName = `p${caseIndex}_${i}`;
+                    if (p.type === 'graph_node') {
+                        decls.push(`${varName} := toGraphNode(${goEscapeStringLiteral(String(val ?? "[]"))})`);
+                        args.push(varName);
+                    } else {
+                        args.push(goGetFullParam([p], tc));
+                    }
+                });
+                const graphNodeArg = args.find((_, i) => params[i]?.type === 'graph_node')!;
+                return `{
+        ${decls.join('\n        ')}
+        res := ${fnName}(${args.join(', ')})
+        if ${graphNodeArg} != nil && res == ${graphNodeArg} {
+            fmt.Println(":::ERROR:::invalid clone - same object")
+        } else {
+            fmt.Println(":::RESULT:::" + displayOutput(res))
+        }
+        fmt.Println("---")
+    }`;
+            }
             const args = goGetFullParam(params, tc);
             return `{
         res := ${fnName}(${args})

@@ -23,7 +23,7 @@ export class PythonRunner extends ProgramRunner {
             const problemPath = path.resolve('problems', this.problemId, 'metadata.json');
             const problemContent = await fs.readFile(problemPath, 'utf-8');
             const problemData = JSON.parse(problemContent);
-            const runnerCode = generatePythonRunner(problemData.functionName, problemData.params, this.testCases);
+            const runnerCode = generatePythonRunner(problemData.functionName, problemData.params, this.testCases, problemData.checkGraphClone);
 
             this.container = await ContainerPool.acquire(pythonImage);
             if (!this.container) {

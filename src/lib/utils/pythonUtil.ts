@@ -301,10 +301,34 @@ ${branches}
 `;
 }
 
-export function generatePythonRunner(functionName: string, params: Param[], testCases: any[]): string {
-    const calls = testCases.map(tc => {
+export function generatePythonRunner(functionName: string, params: Param[], testCases: any[], checkGraphClone?: boolean): string {
+    const hasGraphNode = checkGraphClone && params.some(p => p.type === 'graph_node');
+    const calls = testCases.map((tc, idx) => {
         const fullParam = pyGetFullParam(params, tc);
-        // Capture final result separately to avoid mixing with user prints
+        if (hasGraphNode) {
+            const decls: string[] = [];
+            const args: string[] = [];
+            params.forEach((p, i) => {
+                if (p.type === 'graph_node') {
+                    const val = tc[p.name];
+                    const escaped = String(val ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+                    const varName = `__input${idx}_${i}`;
+                    decls.push(`${varName} = read_graph_node('${escaped}')`);
+                    args.push(varName);
+                } else {
+                    args.push(pyGetFullParam([p], tc));
+                }
+            });
+            return [
+                ...decls,
+                `__res = sol.${functionName}(${args.join(', ')})`,
+                `if ${args[0]} is not None and __res is ${args[0]}:`,
+                `    print(':::ERROR:::invalid clone - same object')`,
+                `else:`,
+                `    print(':::RESULT:::' + display_output(__res))`,
+                `print('---')`
+            ].join('\n');
+        }
         return `__res = sol.${functionName}(${fullParam})\nprint(':::RESULT:::' + display_output(__res))\nprint('---')`;
     }).join('\n');
 

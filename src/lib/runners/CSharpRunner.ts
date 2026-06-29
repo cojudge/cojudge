@@ -23,7 +23,7 @@ export class CSharpRunner extends ProgramRunner {
             const problemPath = path.resolve('problems', this.problemId, 'metadata.json');
             const problemContent = await fs.readFile(problemPath, 'utf-8');
             const problemData = JSON.parse(problemContent);
-            const runnerCode = generateCSharpRunner(problemData.functionName, problemData.params, this.testCases, problemData.outputType);
+            const runnerCode = generateCSharpRunner(problemData.functionName, problemData.params, this.testCases, problemData.outputType, problemData.checkGraphClone);
 
             this.container = await ContainerPool.acquire(csharpImage);
             if (!this.container) {

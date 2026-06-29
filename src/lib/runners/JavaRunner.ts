@@ -35,11 +35,11 @@ export class JavaRunner extends ProgramRunner {
             if (hasMarker) {
                 this.useMarker = true;
                 runnerCode = generateJavaRunnerWithMarker(
-                    problemData.functionName, problemData.params, this.testCases, problemData.outputType
+                    problemData.functionName, problemData.params, this.testCases, problemData.outputType, problemData.checkGraphClone
                 );
             } else {
                 runnerCode = generateJavaRunner(
-                    problemData.functionName, problemData.params, this.testCases, problemData.outputType
+                    problemData.functionName, problemData.params, this.testCases, problemData.outputType, problemData.checkGraphClone
                 );
             }
 

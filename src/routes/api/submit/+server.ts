@@ -133,30 +133,49 @@ async function executeSubmit(problemId: string, language: string, code: string, 
             rawResults[0].includes(':::VERDICT:::');
 
         let markerResponses: any[];
+        const parsed: any[] = [];
         if (hasMergedMarker) {
             markerResponses = rawResults.map((chunk) => {
                 const lines = (chunk || '').split('\n');
+                const errorLine = lines.find((l) => l.startsWith(':::ERROR:::'));
+                if (errorLine) {
+                    const errMsg = errorLine.slice(':::ERROR:::'.length).trim();
+                    parsed.push({ output: errMsg, error: true });
+                    return {
+                        actualAnswer: errMsg,
+                        isCorrect: false,
+                        correctAnswer: '',
+                        logs: errMsg
+                    };
+                }
                 const resultLine = lines.find((l) => l.startsWith(':::RESULT:::'));
                 const verdictLine = lines.find((l) => l.startsWith(':::VERDICT:::'));
                 const answerLine = lines.find((l) => l.startsWith(':::ANSWER:::'));
+                parsed.push({ output: resultLine?.slice(':::RESULT:::'.length).trim() ?? '', error: false });
                 return {
-                    output: resultLine ? resultLine.slice(':::RESULT:::'.length).trim() : '',
+                    actualAnswer: resultLine ? resultLine.slice(':::RESULT:::'.length).trim() : '',
                     isCorrect: verdictLine ? verdictLine.slice(':::VERDICT:::'.length).trim() === 'true' : false,
                     correctAnswer: answerLine ? answerLine.slice(':::ANSWER:::'.length).trim() : '',
                     logs: lines
                         .filter((l) =>
                             !l.startsWith(':::RESULT:::') &&
                             !l.startsWith(':::VERDICT:::') &&
-                            !l.startsWith(':::ANSWER:::')
+                            !l.startsWith(':::ANSWER:::') &&
+                            !l.startsWith(':::ERROR:::')
                         )
                         .filter((l) => l.trim().length > 0)
                         .join('\n')
                 };
             });
         } else {
-            const parsed = rawResults.map((chunk) => {
+            const parsedResults = rawResults.map((chunk) => {
                 try {
                     const lines = (chunk || '').split('\n');
+                    const errorLine = lines.find((l) => l.startsWith(':::ERROR:::'));
+                    if (errorLine) {
+                        const errMsg = errorLine.slice(':::ERROR:::'.length).trim();
+                        return { output: errMsg, logs: errMsg, error: true };
+                    }
                     const idx = lines.findIndex((l) => l.startsWith(':::RESULT:::'));
                     if (idx === -1) {
                         return { output: (chunk || '').trim(), logs: '' };
@@ -171,24 +190,42 @@ async function executeSubmit(problemId: string, language: string, code: string, 
                     return { output: (chunk || '').trim(), logs: '' };
                 }
             });
+            parsed.push(...parsedResults);
             const onlyOutputs = parsed.map((p) => p.output);
-            markerResponses = await getMarkerResponses(
-                problemId,
-                problemData.functionName,
-                problemData.params,
-                testCases,
-                onlyOutputs,
-                problemData.outputType
-            );
+            const markerOutputs = onlyOutputs.map((o, i) => {
+                if (parsed[i]?.error) {
+                    const tc = testCases[i];
+                    return tc.adjList || tc.input || '[]';
+                }
+                return o;
+            });
+            try {
+                markerResponses = await getMarkerResponses(
+                    problemId,
+                    problemData.functionName,
+                    problemData.params,
+                    testCases,
+                    markerOutputs,
+                    problemData.outputType
+                );
+            } catch {
+                markerResponses = testCases.map(() => ({
+                    actualAnswer: '',
+                    correctAnswer: '',
+                    isCorrect: false,
+                    logs: ''
+                }));
+            }
             markerResponses = markerResponses.map((mr, i) => ({
                 ...mr,
+                isCorrect: parsed[i]?.error ? false : mr.isCorrect,
                 logs: parsed[i]?.logs ?? ''
             }));
         }
 
         const finalResponse = testCases.map((tc, index) => ({
             ...tc,
-            output: markerResponses[index]?.output ?? 'No output',
+            output: parsed[index]?.error ? parsed[index].output : ((markerResponses[index] as any)?.actualAnswer ?? markerResponses[index]?.output ?? 'No output'),
             logs: markerResponses[index]?.logs ?? '',
             isCorrect: markerResponses[index].isCorrect,
             correctAnswer: markerResponses[index].correctAnswer,

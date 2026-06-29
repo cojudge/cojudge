@@ -23,7 +23,7 @@ export class CppRunner extends ProgramRunner {
             const problemPath = path.resolve('problems', this.problemId, 'metadata.json');
             const problemContent = await fs.readFile(problemPath, 'utf-8');
             const problemData = JSON.parse(problemContent);
-            const runnerCode = generateCppRunner(problemData.functionName, problemData.params, this.testCases);
+            const runnerCode = generateCppRunner(problemData.functionName, problemData.params, this.testCases, problemData.checkGraphClone);
 
             this.container = await ContainerPool.acquire(cppImage);
             if (!this.container) {

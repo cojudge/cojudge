@@ -24,7 +24,7 @@ export class GoRunner extends ProgramRunner {
             const problemData = JSON.parse(problemContent);
 
             const className = problemData.classProblem?.userClassName;
-            const runnerCode = generateGoRunner(problemData.functionName, problemData.params, this.testCases, problemData.outputType, className);
+            const runnerCode = generateGoRunner(problemData.functionName, problemData.params, this.testCases, problemData.outputType, className, problemData.checkGraphClone);
 
             this.container = await ContainerPool.acquire(goImage);
             if (!this.container) {

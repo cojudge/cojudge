@@ -513,14 +513,50 @@ export function generateRustRunner(
   testCases: any[],
   code: string,
   className?: string,
+  checkGraphClone?: boolean,
 ): string {
   const snakedFunctionName = functionName
     .replace(/([A-Z])/g, "_$1")
     .toLowerCase()
     .replace(/^_/, "");
 
+  const hasGraphNode = checkGraphClone && params.some(p => p.type === 'graph_node');
+
   const calls = testCases
     .map((tc, caseIndex) => {
+      if (hasGraphNode) {
+        const decls: string[] = [];
+        const args: string[] = [];
+        params.forEach((p, i) => {
+          const val = tc[p.name];
+          const varName = `__input${caseIndex}_${i}`;
+          if (p.type === 'graph_node') {
+            const escaped = String(val ?? '[]').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+            decls.push(`let ${varName} = to_graph_node("${escaped}");`);
+            args.push(`${varName}.clone()`);
+          } else {
+            args.push(rustGetFullParam([p], tc));
+          }
+        });
+        const graphNodeVar = args.find((_, i) => params[i]?.type === 'graph_node');
+        if (graphNodeVar) {
+          const inputVar = graphNodeVar.replace('.clone()', '');
+          return `{
+        ${decls.join('\n        ')}
+        let res = Solution::${snakedFunctionName}(${args.join(', ')});
+        let same_ref = match (&${inputVar}, &res) {
+            (Some(a), Some(b)) => Rc::ptr_eq(a, b),
+            _ => false,
+        };
+        if same_ref {
+            println!(":::ERROR:::invalid clone - same object");
+        } else {
+            println!(":::RESULT:::{}", res.to_cojudge_string());
+        }
+        println!("---");
+    }`;
+        }
+      }
       const args = rustGetFullParam(params, tc);
       return `{
         let res = Solution::${snakedFunctionName}(${args});

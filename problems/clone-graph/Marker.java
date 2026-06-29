@@ -21,8 +21,40 @@ class Marker {
 
     public boolean isCorrect(GraphNode node, GraphNode output) {
         if (node == null) return output == null;
+        if (node == output) return false;
+        if (!sharesNoNodes(node, output)) return false;
         GraphNode expected = cloneGraph(node);
         return adjListEquals(getAdjList(expected), getAdjList(output));
+    }
+
+    private boolean sharesNoNodes(GraphNode a, GraphNode b) {
+        Set<GraphNode> visitedA = new HashSet<>();
+        Queue<GraphNode> q = new LinkedList<>();
+        q.add(a);
+        visitedA.add(a);
+        while (!q.isEmpty()) {
+            GraphNode cur = q.poll();
+            for (GraphNode n : cur.neighbors) {
+                if (!visitedA.contains(n)) {
+                    visitedA.add(n);
+                    q.add(n);
+                }
+            }
+        }
+        Set<GraphNode> visitedB = new HashSet<>();
+        q.add(b);
+        visitedB.add(b);
+        while (!q.isEmpty()) {
+            GraphNode cur = q.poll();
+            if (visitedA.contains(cur)) return false;
+            for (GraphNode n : cur.neighbors) {
+                if (!visitedB.contains(n)) {
+                    visitedB.add(n);
+                    q.add(n);
+                }
+            }
+        }
+        return true;
     }
 
     private Map<Integer, List<Integer>> getAdjList(GraphNode start) {

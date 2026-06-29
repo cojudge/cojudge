@@ -592,13 +592,38 @@ ${branches}
 }`;
 }
 
-export function generateCSharpRunner(functionName: string, params: Param[], testCases: any[], outputType: string): string {
+export function generateCSharpRunner(functionName: string, params: Param[], testCases: any[], outputType: string, checkGraphClone?: boolean): string {
     // Convert camelCase to PascalCase for C#
     const csharpFunctionName = functionName.charAt(0).toUpperCase() + functionName.slice(1);
-    
+    const hasGraphNode = checkGraphClone && params.some(p => p.type === 'graph_node');
+
     const testCalls = testCases
         .map((tc, idx) => {
             let fullParam = csharpGetFullParam(params, tc);
+            if (hasGraphNode) {
+                const decls: string[] = [];
+                const args: string[] = [];
+                params.forEach((p, i) => {
+                    const val = tc[p.name];
+                    const varName = `__in${idx}_${i}`;
+                    if (p.type === 'graph_node') {
+                        decls.push(`GraphNode ${varName} = CSharpHelper.ToGraphNode(${formatAndSplitCSharpString(val ?? '[]')});`);
+                        args.push(varName);
+                    } else {
+                        args.push(csharpGetFullParam([p], tc));
+                    }
+                });
+                return [
+                    ...decls,
+                    `var __res${idx} = sol.${csharpFunctionName}(${args.join(', ')});`,
+                    `if (${args[0]} != null && __res${idx} == ${args[0]}) {`,
+                    `    Console.WriteLine(":::ERROR:::invalid clone - same object");`,
+                    `} else {`,
+                    `    Console.WriteLine(":::RESULT:::" + ${getDisplayFuncName(outputType)}(__res${idx}));`,
+                    `}`,
+                    `Console.WriteLine("---");`
+                ].join('\n        ');
+            }
             return `var __res${idx} = sol.${csharpFunctionName}(${fullParam});\nConsole.WriteLine(":::RESULT:::" + ${getDisplayFuncName(outputType)}(__res${idx}));\nConsole.WriteLine("---");`;
         })
         .join('\n        ');

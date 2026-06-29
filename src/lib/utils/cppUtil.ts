@@ -659,7 +659,7 @@ ${branches}
 `;
 }
 
-export function generateCppRunner(functionName: string, params: Param[], testCases: any[]): string {
+export function generateCppRunner(functionName: string, params: Param[], testCases: any[], checkGraphClone?: boolean): string {
     const calls = testCases
         .map((tc, caseIndex) => {
             const decls: string[] = [];
@@ -766,6 +766,20 @@ export function generateCppRunner(functionName: string, params: Param[], testCas
                     args.push(vname);
                 }
             });
+            const hasGraphNode = checkGraphClone && params.some(p => p.type === 'graph_node');
+            const graphNodeVar = hasGraphNode ? args.find((_, i) => params[i]?.type === 'graph_node') : null;
+            if (hasGraphNode && graphNodeVar) {
+                return `{
+        ${decls.join('\n        ')}
+        auto __res = sol.${functionName}(${args.join(', ')});
+        if (${graphNodeVar} != nullptr && __res == ${graphNodeVar}) {
+            cout << ":::ERROR:::invalid clone - same object" << "\\n";
+        } else {
+            cout << ":::RESULT:::" << display_output(__res) << "\\n";
+        }
+        cout << "---\\n";
+    }`;
+            }
             return `{
         ${decls.join('\n        ')}
         // Capture final result in a variable to avoid mixing with user prints

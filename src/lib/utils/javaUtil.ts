@@ -559,10 +559,35 @@ ${branches}
 }`;
 }
 
-export function generateJavaRunner(functionName: string, params: Param[], testCases: any[], outputType: string): string {
+export function generateJavaRunner(functionName: string, params: Param[], testCases: any[], outputType: string, checkGraphClone?: boolean): string {
+    const hasGraphNode = checkGraphClone && params.some(p => p.type === 'graph_node');
     const testCalls = testCases
         .map((tc, idx) => {
             let fullParam = javaGetFullParam(params, tc);
+            if (hasGraphNode) {
+                const decls: string[] = [];
+                const args: string[] = [];
+                params.forEach((p, i) => {
+                    if (p.type === 'graph_node') {
+                        const val = tc[p.name];
+                        const varName = `__in${idx}_${i}`;
+                        decls.push(`GraphNode ${varName} = to_graph_node(${formatAndSplitJavaString(val ?? '[]')});`);
+                        args.push(varName);
+                    } else {
+                        args.push(javaGetFullParam([p], tc));
+                    }
+                });
+                return [
+                    ...decls,
+                    `var __res${idx} = sol.${functionName}(${args.join(', ')});`,
+                    `if (${args[0]} != null && __res${idx} == ${args[0]}) {`,
+                    `    System.out.println(":::ERROR:::invalid clone - same object");`,
+                    `} else {`,
+                    `    System.out.println(":::RESULT:::" + ${getDisplayFuncName(outputType)}(__res${idx}));`,
+                    `}`,
+                    `System.out.println("---");`
+                ].join('\n        ');
+            }
             return `var __res${idx} = sol.${functionName}(${fullParam});\nSystem.out.println(":::RESULT:::" + ${getDisplayFuncName(outputType)}(__res${idx}));\nSystem.out.println("---");`;
         })
         .join('\n        ');
@@ -578,11 +603,34 @@ public class Main {
 }`;
 }
 
-export function generateJavaRunnerWithMarker(functionName: string, params: Param[], testCases: any[], outputType: string): string {
+export function generateJavaRunnerWithMarker(functionName: string, params: Param[], testCases: any[], outputType: string, checkGraphClone?: boolean): string {
     const displayFunc = getDisplayFuncName(outputType);
+    const hasGraphNode = checkGraphClone && params.some(p => p.type === 'graph_node');
     const testCalls = testCases
         .map((tc, idx) => {
             let fullParam = javaGetFullParam(params, tc);
+            if (hasGraphNode) {
+                const decls: string[] = [];
+                const args: string[] = [];
+                params.forEach((p, i) => {
+                    if (p.type === 'graph_node') {
+                        const val = tc[p.name];
+                        const varName = `__in${idx}_${i}`;
+                        decls.push(`GraphNode ${varName} = to_graph_node(${formatAndSplitJavaString(val ?? '[]')});`);
+                        args.push(varName);
+                    } else {
+                        args.push(javaGetFullParam([p], tc));
+                    }
+                });
+                return [
+                    ...decls,
+                    `var __res${idx} = sol.${functionName}(${args.join(', ')});`,
+                    `System.out.println(":::RESULT:::" + ${displayFunc}(__res${idx}));`,
+                    `System.out.println(":::VERDICT:::" + marker.isCorrect(${args.join(', ')}, __res${idx}));`,
+                    `System.out.println(":::ANSWER:::" + ${displayFunc}(marker.${functionName}(${args.join(', ')})));`,
+                    `System.out.println("---");`
+                ].join('\n        ');
+            }
             return [
                 `var __res${idx} = sol.${functionName}(${fullParam});`,
                 `System.out.println(":::RESULT:::" + ${displayFunc}(__res${idx}));`,

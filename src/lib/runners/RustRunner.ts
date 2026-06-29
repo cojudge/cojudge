@@ -24,7 +24,7 @@ export class RustRunner extends ProgramRunner {
             const problemData = JSON.parse(problemContent);
             
             const className = problemData.classProblem?.userClassName;
-            const runnerCode = generateRustRunner(problemData.functionName, problemData.params, this.testCases, this.code, className);
+            const runnerCode = generateRustRunner(problemData.functionName, problemData.params, this.testCases, this.code, className, problemData.checkGraphClone);
 
             this.container = await ContainerPool.acquire(rustImage);
             if (!this.container) {

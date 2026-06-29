@@ -59,6 +59,7 @@
     }
   ],
   "outputType": "graph_node",
+  "checkGraphClone": true,
   "hints": [
     "Use a HashMap to map original nodes to their clones.",
     "Traverse the graph using DFS or BFS. For each node visited, create a clone if not already created, then recursively/breadth-first clone its neighbors.",
