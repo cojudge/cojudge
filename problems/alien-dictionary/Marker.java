@@ -39,6 +39,7 @@ class Marker {
     }
 
     public boolean isCorrect(String[] words, String output) {
+        if (output == null) return false;
         // Validate that output is a valid topological order for the constraints derived from words
         // Build precedence constraints
         Map<Character, Set<Character>> edges = new HashMap<>();
