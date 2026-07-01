@@ -162,7 +162,7 @@ export async function handleRun(argsToUse, PORT) {
     }
 
     if (!results) {
-      throw new Error("Execution timed out after 60 seconds");
+      throw new Error("Execution timed out after 12 seconds");
     }
 
     results.forEach((res, index) => {
