@@ -184,7 +184,7 @@ export class PlaygroundCppRunner extends PlaygroundRunner {
         await this.container.putArchive(pack as any, { path: '/app' });
 
         const exec = await this.container.exec({
-            Cmd: ['/bin/sh', '-c', 'g++ -o main main.cpp'],
+            Cmd: ['/bin/sh', '-c', 'g++ -std=c++17 -O2 -pipe -g -rdynamic -o main main.cpp'],
             AttachStdout: true,
             AttachStderr: true
         });

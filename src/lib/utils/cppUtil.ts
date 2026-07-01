@@ -39,8 +39,11 @@ struct GraphNode {
 // Helper methods in C++ to normalize IO and parsing
 export const cppHelperMethods = `
 #include <bits/stdc++.h>
-#include "Solution.cpp"
+#include "ListNode.cpp"
+#include "TreeNode.cpp"
+#include "GraphNode.cpp"
 using namespace std;
+#include "Solution.cpp"
 
 static string display_output(ListNode* head) {
     string s;
@@ -790,12 +793,40 @@ export function generateCppRunner(functionName: string, params: Param[], testCas
         })
         .join('\n    ');
 
-    return `${cppHelperMethods}
+    const crashHandlerCode = `
+#include <signal.h>
+#include <execinfo.h>
+#include <iostream>
+
+static void crash_handler(int sig) {
+    std::cerr << "Crash: signal " << sig;
+    if (sig == SIGSEGV) std::cerr << " (SIGSEGV - null pointer or invalid access)";
+    else if (sig == SIGFPE) std::cerr << " (SIGFPE - divide by zero or arithmetic error)";
+    else if (sig == SIGABRT) std::cerr << " (SIGABRT - abort)";
+    std::cerr << std::endl;
+    void* array[16];
+    size_t size = backtrace(array, 16);
+    std::cerr << "Backtrace:" << std::endl;
+    backtrace_symbols_fd(array, size, STDERR_FILENO);
+    _exit(1);
+}
+`;
+
+    return `${crashHandlerCode}
+${cppHelperMethods}
 int main() {
+    signal(SIGSEGV, crash_handler);
+    signal(SIGFPE, crash_handler);
+    signal(SIGABRT, crash_handler);
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    try {
     Solution sol;
     ${calls}
+    } catch (const std::exception &e) {
+        std::cerr << "Unhandled exception: " << e.what() << std::endl;
+        throw;
+    }
     return 0;
 }
 `;

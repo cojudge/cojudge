@@ -46,12 +46,10 @@ export class PythonRunner extends ProgramRunner {
                 const className = problemData.classProblem.userClassName || 'MedianFinder';
                 const operations = extractOperations(this.testCases, className);
                 const wrapperCode = generatePythonClassSolution(className, problemData.params, problemData.outputType, operations);
-                const userCode = `from ListNode import ListNode\nfrom TreeNode import TreeNode\nfrom GraphNode import GraphNode\n${this.code}`;
-                pack.entry({ name: `${className}.py` }, Buffer.from(userCode));
+                pack.entry({ name: `${className}.py` }, Buffer.from(this.code));
                 pack.entry({ name: 'Solution.py' }, Buffer.from(wrapperCode));
             } else {
-                const solutionCode = `from ListNode import ListNode\nfrom TreeNode import TreeNode\nfrom GraphNode import GraphNode\n${this.code}`;
-                pack.entry({ name: 'Solution.py' }, Buffer.from(solutionCode));
+                pack.entry({ name: 'Solution.py' }, Buffer.from(this.code));
             }
             pack.entry({ name: 'main.py' }, Buffer.from(runnerCode));
             pack.finalize();

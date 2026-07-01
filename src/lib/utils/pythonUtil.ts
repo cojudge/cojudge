@@ -332,5 +332,5 @@ export function generatePythonRunner(functionName: string, params: Param[], test
         return `__res = sol.${functionName}(${fullParam})\nprint(':::RESULT:::' + display_output(__res))\nprint('---')`;
     }).join('\n');
 
-    return `from typing import List, Optional, Any\n\n${pythonListNodeClass}\n${pythonTreeNodeClass}\n${pythonGraphNodeClass}\n\n${pythonHelperMethods}\nif __name__ == '__main__':\n    from Solution import Solution\n    sol = Solution()\n    ${calls}\n`;
+    return `from typing import List, Optional, Any\n\n${pythonListNodeClass}\n${pythonTreeNodeClass}\n${pythonGraphNodeClass}\n\n${pythonHelperMethods}\nif __name__ == '__main__':\n    import builtins\n    builtins.ListNode = ListNode\n    builtins.TreeNode = TreeNode\n    builtins.GraphNode = GraphNode\n    from Solution import Solution\n    sol = Solution()\n    ${calls}\n`;
 }

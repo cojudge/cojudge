@@ -46,11 +46,11 @@ export class CppRunner extends ProgramRunner {
                 const className = problemData.classProblem.userClassName || 'MedianFinder';
                 const operations = extractOperations(this.testCases, className);
                 const wrapperCode = generateCppClassSolution(className, problemData.params, problemData.outputType, operations);
-                const userCode = `#include "ListNode.cpp"\n#include "TreeNode.cpp"\n#include "GraphNode.cpp"\n${this.code}`;
+                const userCode = this.code;
                 pack.entry({ name: `${className}.cpp` }, Buffer.from(userCode));
                 pack.entry({ name: 'Solution.cpp' }, Buffer.from(wrapperCode));
             } else {
-                const solutionCode = `#include "ListNode.cpp"\n#include "TreeNode.cpp"\n#include "GraphNode.cpp"\n${this.code}`;
+                const solutionCode = this.code;
                 pack.entry({ name: 'Solution.cpp' }, Buffer.from(solutionCode));
             }
             pack.entry({ name: 'Main.cpp' }, Buffer.from(runnerCode));
@@ -58,7 +58,7 @@ export class CppRunner extends ProgramRunner {
             await this.container.putArchive(pack as any, { path: '/app' });
 
             const exec = await this.container.exec({
-                Cmd: ['/bin/sh', '-c', 'g++ -std=c++17 -O2 -pipe -s -o main Main.cpp'],
+                Cmd: ['/bin/sh', '-c', 'g++ -std=c++17 -O2 -pipe -g -rdynamic -o main Main.cpp'],
                 AttachStdout: true,
                 AttachStderr: true
             });
