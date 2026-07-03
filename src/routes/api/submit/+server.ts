@@ -208,12 +208,12 @@ async function executeSubmit(problemId: string, language: string, code: string, 
                     markerOutputs,
                     problemData.outputType
                 );
-            } catch {
-                markerResponses = testCases.map(() => ({
-                    actualAnswer: '',
-                    correctAnswer: '',
+            } catch (e) {
+                markerResponses = testCases.map((_, i) => ({
+                    actualAnswer: parsed[i]?.output ?? '',
+                    correctAnswer: parsed[i]?.output ?? '',
                     isCorrect: false,
-                    logs: ''
+                    logs: String(e?.message || e)
                 }));
             }
             markerResponses = markerResponses.map((mr, i) => ({

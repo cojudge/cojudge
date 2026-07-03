@@ -18,10 +18,16 @@ export async function getMarkerResponses(problemId: string, functionName: string
     const testCalls = testCases
     .map((tc: any, i: number) => {
         let fullParam = javaGetFullParam(params, tc);
-        const out = formatAndSplitJavaString(outputs[i].trim());
+        const out = formatAndSplitJavaString(outputs[i]?.trim() ?? '');
         const toFunc = `to_${outputType}`;
-        return `System.out.println(marker.isCorrect(${fullParam}, ${toFunc}(${out})));
-            System.out.println(${getDisplayFuncName(outputType)}(marker.${functionName}(${fullParam})));\n                    System.out.println("---");`;
+        const displayFunc = getDisplayFuncName(outputType);
+        return `try {
+            System.out.println(marker.isCorrect(${fullParam}, ${toFunc}(${out})));
+        } catch (Exception __e) {
+            System.out.println("false");
+        }
+        System.out.println(${displayFunc}(marker.${functionName}(${fullParam})));
+        System.out.println("---");`;
     })
     .join('\n        ');
 
