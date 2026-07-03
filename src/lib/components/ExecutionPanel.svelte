@@ -26,6 +26,7 @@
         "testcase";
     let activeTestCaseIndex = 0;
     let isLoading = false;
+    let isMac = false;
     let isResizing = false;
     let panelElement: HTMLElement;
     let hasRunOnce = false;
@@ -148,6 +149,7 @@
 
     // Register a global keyboard shortcut: Ctrl + ' to run tests
     onMount(() => {
+        isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
         const keyHandler = (e: KeyboardEvent) => {
             if (
                 (e.ctrlKey || e.metaKey) &&
@@ -1040,7 +1042,7 @@
                 <SaveStatus />
             </div>
             <!-- Show/Hide panel button -->
-            <Tooltip text={"Ctrl + J"}>
+            <Tooltip text={isMac ? "Cmd + J" : "Ctrl + J"}>
                 <button
                     class="icon-btn"
                     aria-label={$execPaneHeightStore > minExecPanelHeight
@@ -1264,7 +1266,7 @@
                         {statusToString(status)}
                     {/if}
                 </span>
-                <Tooltip text={"Ctrl + '"}>
+                <Tooltip text={isMac ? "Cmd + '" : "Ctrl + '"}>
                     <button
                         class="btn btn-secondary"
                         on:click={handleRun}
@@ -1273,7 +1275,7 @@
                         Run
                     </button>
                 </Tooltip>
-                <Tooltip text={"Ctrl + Shift + '"}>
+                <Tooltip text={isMac ? "Cmd + Shift + '" : "Ctrl + Shift + '"}>
                     <button
                         class="btn btn-primary"
                         on:click={handleSubmit}

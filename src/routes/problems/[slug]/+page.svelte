@@ -19,6 +19,7 @@
 
     export let data;
     const problemId = data.problem.id;
+    let isMac = false;
     let CodeEditor: any = null;
     let language: ProgrammingLanguage = $userSettingsStorage.preferredLanguage ?? 'java';
     const fileKey = () => `${problemId}`;
@@ -389,6 +390,7 @@
     });
 
     onMount(() => {
+        isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
         const handleDocClick = (e: MouseEvent) => {
             if (showSettings && settingsContainer && !settingsContainer.contains(e.target as Node)) {
                 showSettings = false;
@@ -597,7 +599,7 @@
                     </a>
                 {/if}
             </Tooltip>
-            <Tooltip text="Ctrl + B" pos="bottom">
+            <Tooltip text={isMac ? "Cmd + B" : "Ctrl + B"} pos="bottom">
                 <button
                     class="back-button"
                     aria-label={($leftPaneWidthStore === null ? 50 : $leftPaneWidthStore) > 5 ? 'Hide problem pane' : 'Show problem pane'}
