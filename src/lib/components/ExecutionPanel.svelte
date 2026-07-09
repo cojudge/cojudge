@@ -1363,6 +1363,7 @@
     }
     .case-btn {
         padding-right: calc(var(--spacing-4) + 8px);
+        white-space: nowrap;
     }
     .case-remove {
         opacity: 0;
