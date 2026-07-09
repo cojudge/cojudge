@@ -3,5 +3,7 @@
   { "s": "226" },
   { "s": "06" },
   { "s": "11106" },
-  { "s": "@javascript: '1'.repeat(25000) + '0'", "_isLargeTest": true }
+  { "s": "11107" },
+  { "s": "11107234" },
+  { "s": "@javascript: '0'.repeat(99) + '1'", "_isLargeTest": true }
 ]
