@@ -34,7 +34,11 @@
     let groupStats: Record<string, { done: number; total: number }> = {};
 
     // Track which groups are open
-    let openGroups = new Set<string>();
+    const OPEN_GROUPS_KEY = 'open-groups';
+    let openGroups = new Set<string>(
+        browser ? JSON.parse(localStorage.getItem(OPEN_GROUPS_KEY) || '[]') : []
+    );
+    $: if (browser) localStorage.setItem(OPEN_GROUPS_KEY, JSON.stringify([...openGroups]));
 
     // Per-group sort state
     type SortKey = "title" | "difficulty";
