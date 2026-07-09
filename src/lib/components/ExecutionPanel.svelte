@@ -375,6 +375,26 @@
         status = "no-status";
     }
 
+    function useFailedTestCase() {
+        if (!submissionFailure?.testCase) return;
+        const newCase: any = {};
+        const template = submissionFailure.testCase;
+        Object.entries(template).forEach(([k, v]) => {
+            if (
+                k !== "output" &&
+                k !== "error" &&
+                k !== "logs" &&
+                k !== "correctAnswer" &&
+                k !== "isCorrect"
+            )
+                newCase[k] = v;
+        });
+        const pushed = { ...newCase, output: null, logs: "", error: null };
+        testCaseResults = [...testCaseResults, pushed];
+        activeTestCaseIndex = testCaseResults.length - 1;
+        activeMainTab = "testcase";
+    }
+
     function removeTestCase(index: number) {
         // Remove the case
         const next = testCaseResults.filter((_: any, i: number) => i !== index);
@@ -1032,6 +1052,11 @@
                         </div>
                     {/if}
                 </div>
+                <div class="use-case-action">
+                    <button class="btn use-case-btn" on:click={useFailedTestCase}>
+                        Use Test Case
+                    </button>
+                </div>
             </div>
         {/if}
     </div>
@@ -1430,6 +1455,15 @@
     .kv-row {
         font-weight: 200;
         font-style: italic;
+    }
+    .use-case-action {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: var(--spacing-2);
+    }
+    .use-case-btn {
+        background-color: var(--color-primary);
+        color: var(--color-primary-text);
     }
 
     /* Actions Footer */
