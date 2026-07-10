@@ -183,6 +183,16 @@ Some Docker environments on macOS (like Colima) use a non-default Docker socket 
 HOST_DOCKER_SOCKET="/Users/your-user/.colima/default/docker.sock" ./docker.sh
 ```
 
+### Docker Not Found on macOS with Orbstack
+
+If you're using [Orbstack](https://orbstack.dev) instead of Docker Desktop, you may need to set the `DOCKER_HOST` environment variable so the app can locate the Docker socket:
+
+```bash
+export DOCKER_HOST="unix://$HOME/.orbstack/run/docker.sock"
+```
+
+Add this line to your `~/.zshrc` (or `~/.bashrc`) to make it permanent:
+
 ## Contact
 
 Feel free to use the [Issue page](https://github.com/cojudge/cojudge/issues) or [Discussion page](https://github.com/cojudge/cojudge/discussions) for any issues, feedback, comments, feature requests, or anything else related to cojudge. If you would rather reach out privately, contact me [here](https://waiyip.life/#contact); I'll respond as soon as I can.
