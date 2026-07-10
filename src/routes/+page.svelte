@@ -13,6 +13,9 @@
     let fileInputEl: HTMLInputElement | null = null;
     let checkMap: Record<string, boolean> = {};
     let showGamePopup = false;
+    $: if (browser) {
+        document.body.style.overflow = showGamePopup ? 'hidden' : '';
+    }
     let gameResultData: Record<string, GameResult[]> = {};
     let historyProblem: { id: string; title: string } | null = null;
 
