@@ -7,8 +7,10 @@
     import userSettingsStorage from '$lib/stores/userSettingsStorage';
     import userStore from "$lib/stores/userStore";
     import { getDifficultyClass } from "$lib/utils/util.js";
+    import GameModePopup from "$lib/components/GameModePopup.svelte";
     let fileInputEl: HTMLInputElement | null = null;
     let checkMap: Record<string, boolean> = {};
+    let showGamePopup = false;
 
     // Keep a local copy of the store for easy access in the template
     const unsubscribe = userStore.subscribe((value) => {
@@ -293,6 +295,11 @@
         <Tooltip text="Code playground" pos={"bottom"}>
             <button onclick={() => window.location.href = "playground"} class="btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
                 Playground
+            </button>
+        </Tooltip>
+        <Tooltip text="Random problem game mode" pos={"bottom"}>
+            <button onclick={() => showGamePopup = true} class="btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                Game
                 <span class="span-badge">NEW</span>
             </button>
         </Tooltip>
@@ -323,6 +330,14 @@
         </div>
         {@html renderMarkdown(courseDescription)}
     </div>
+
+    {#if showGamePopup}
+        <GameModePopup
+            problems={data.problems}
+            solvedSet={checkMap}
+            on:close={() => showGamePopup = false}
+        />
+    {/if}
 
     {#each Object.keys(grouped).toSorted((a, b) => {
         const ra = orderMap[a] ?? Number.POSITIVE_INFINITY;

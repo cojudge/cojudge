@@ -1,15 +1,21 @@
 <script lang="ts">
-    import { onMount } from "svelte";
+    import { onMount, createEventDispatcher } from "svelte";
     import { execPaneHeightStore } from "$lib/stores/layoutStore";
     import testCaseStore from "$lib/stores/testCaseStore";
     import Tooltip from "./Tooltip.svelte";
     import Visualization from "./Visualization.svelte";
     import SaveStatus from "./SaveStatus.svelte";
+    import GameModeTimer from "./GameModeTimer.svelte";
     import userStore from "$lib/stores/userStore";
     import type { ProgrammingLanguage } from "$lib/utils/util";
     export let problem: any;
     export let code: string;
     export let language: ProgrammingLanguage = "java";
+    export let gameMode = false;
+    export let gameStartTime = 0;
+    let gameRunCount = 0;
+    let gameSubmitCount = 0;
+    const dispatch = createEventDispatcher();
     type StatusType =
         | "no-status"
         | "sample-tests-passed"
@@ -468,6 +474,7 @@
 
     async function handleRun() {
         isLoading = true;
+        if (gameMode) gameRunCount++;
         runningMessage = "";
         submissionFailure = null; // clear previous submission failure display when running samples
         activeMainTab = "output"; // Switch to output tab on run
@@ -603,6 +610,8 @@
 
     async function handleSubmit() {
         isLoading = true;
+        const submitTime = Date.now();
+        if (gameMode) gameSubmitCount++;
         runningMessage = "";
         status = "running";
         submissionFailure = null; // reset previous submission view
@@ -717,6 +726,10 @@
                             ...prev,
                             [problem.id]: true,
                         }));
+                        if (gameMode) {
+                            const timeSpent = Math.floor((submitTime - gameStartTime) / 1000);
+                            dispatch('gameSubmitSuccess', { runCount: gameRunCount, submitCount: gameSubmitCount, timeSpent });
+                        }
                         break;
                     }
                     if (!body.accepted) {
@@ -1064,6 +1077,9 @@
     <div class="actions">
         <div class="buttons">
             <div style="display: flex; align-items: center; margin-right: 8px;">
+                {#if gameMode && gameStartTime > 0}
+                    <GameModeTimer startTime={gameStartTime} />
+                {/if}
                 <SaveStatus />
             </div>
             <!-- Show/Hide panel button -->

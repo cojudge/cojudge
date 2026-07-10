@@ -3,6 +3,7 @@
     import { page } from '$app/stores';
     import ExecutionPanel from '$lib/components/ExecutionPanel.svelte';
     import ShareModal from '$lib/components/ShareModal.svelte';
+    import GameResultPopup from '$lib/components/GameResultPopup.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
     import { initFirebase, ensureAuthenticated } from '$lib/firebase';
     import codeStore from '$lib/stores/codeStore.js';
@@ -20,6 +21,10 @@
     export let data;
     const problemId = data.problem.id;
     let isMac = false;
+    let isGameMode = false;
+    let gameStartTime = 0;
+    let showGameResult = false;
+    let gameResultStats: { runCount: number; submitCount: number; timeSpent: number } | null = null;
     let CodeEditor: any = null;
     let language: ProgrammingLanguage = $userSettingsStorage.preferredLanguage ?? 'java';
     const fileKey = () => `${problemId}`;
@@ -350,8 +355,20 @@
         const fb = initFirebase();
         if (fb) isFirebaseAvailable = true;
 
-        // Check for tabs in URL params (sent by CLI)
+        // Check for tabs and game mode in URL params
         const urlParams = new URLSearchParams(window.location.search);
+
+        // Check for game mode
+        if (urlParams.get('gameMode') === '1') {
+            isGameMode = true;
+            gameStartTime = Date.now();
+            // Force fresh starter code, ignore saved
+            suppressSave = true;
+            code = data.problem.starterCode?.[language] ?? '';
+            await tick();
+            suppressSave = false;
+        }
+
         const tabsParam = urlParams.get('tabs');
         if (tabsParam) {
             try {
@@ -623,7 +640,7 @@
             </Tooltip>
             <div class="title-row">
                 <h1>{data.problem.title}</h1>
-                {#if $userStore && $userStore[fileKey()]}
+                {#if !isGameMode && $userStore && $userStore[fileKey()]}
                     <span class="solved-pill" title="You've solved this problem" aria-label="Solved" role="status">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -875,7 +892,17 @@
                 Loading...
             {/if}
         </div>
-        <ExecutionPanel problem={data.problem} {code} {language} />
+        <ExecutionPanel
+            problem={data.problem}
+            {code}
+            {language}
+            gameMode={isGameMode}
+            gameStartTime={gameStartTime}
+            on:gameSubmitSuccess={(e) => {
+                gameResultStats = e.detail;
+                showGameResult = true;
+            }}
+        />
     </div>
 
     {#if showShareModal}
@@ -884,6 +911,14 @@
             {qrCodeDataUrl} 
             {code}
             on:close={() => showShareModal = false} 
+        />
+    {/if}
+
+    {#if showGameResult && gameResultStats}
+        <GameResultPopup
+            runCount={gameResultStats.runCount}
+            submitCount={gameResultStats.submitCount}
+            timeSpent={gameResultStats.timeSpent}
         />
     {/if}
 </div>
