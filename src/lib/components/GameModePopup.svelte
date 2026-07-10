@@ -4,12 +4,17 @@
 
     export let problems: { id: string; title: string; difficulty: string; link?: string; category?: string }[] = [];
     export let solvedSet: Record<string, boolean> = {};
+    export let currentProblemId: string | null = null;
 
     const dispatch = createEventDispatcher();
 
     let includeSolved = false;
 
     function startGame() {
+        if (currentProblemId) {
+            window.location.href = `/problems/${currentProblemId}?gameMode=1`;
+            return;
+        }
         let pool = problems;
         if (!includeSolved) {
             pool = problems.filter(p => !solvedSet[p.id]);
@@ -35,7 +40,7 @@
         <button class="close-btn" on:click={() => dispatch('close')} aria-label="Close">&times;</button>
         <h2>Game Mode</h2>
         <div class="rules">
-            <p>A random problem will be selected for you to solve under time pressure.</p>
+            <p>{currentProblemId ? 'Play this problem in game mode.' : 'A random problem will be selected for you to solve under time pressure.'}</p>
             <ul>
                 <li>A timer starts as soon as the problem loads.</li>
                 <li>Your previous solution (if any) will be hidden — you start fresh.</li>
@@ -59,10 +64,12 @@
             </table>
             <p class="rank-info">Final rank: <strong>S</strong> (best) → <strong>A</strong> → <strong>B</strong> → <strong>C</strong></p>
         </div>
-        <label class="toggle-label">
-            <input type="checkbox" bind:checked={includeSolved} />
-            Include already solved problems
-        </label>
+        {#if !currentProblemId}
+            <label class="toggle-label">
+                <input type="checkbox" bind:checked={includeSolved} />
+                Include already solved problems
+            </label>
+        {/if}
         <button class="start-btn" on:click={startGame}>Start</button>
     </div>
 </div>

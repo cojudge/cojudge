@@ -8,9 +8,33 @@
     import userStore from "$lib/stores/userStore";
     import { getDifficultyClass } from "$lib/utils/util.js";
     import GameModePopup from "$lib/components/GameModePopup.svelte";
+    import GameHistoryPopup from "$lib/components/GameHistoryPopup.svelte";
+    import gameResultsStore, { type GameResult } from '$lib/stores/gameResultsStore';
     let fileInputEl: HTMLInputElement | null = null;
     let checkMap: Record<string, boolean> = {};
     let showGamePopup = false;
+    let gameResultData: Record<string, GameResult[]> = {};
+    let historyProblem: { id: string; title: string } | null = null;
+
+    const unsubResults = gameResultsStore.subscribe((v) => {
+        gameResultData = v || {};
+    });
+    onDestroy(() => unsubResults());
+
+    $: bestRanks = (() => {
+        const map: Record<string, string> = {};
+        const rankOrder: Record<string, number> = { S: 4, A: 3, B: 2, C: 1 };
+        for (const [slug, arr] of Object.entries(gameResultData)) {
+            let best = '';
+            let bestVal = 0;
+            for (const r of arr) {
+                const v = rankOrder[r.rank] ?? 0;
+                if (v > bestVal) { bestVal = v; best = r.rank; }
+            }
+            if (best) map[slug] = best;
+        }
+        return map;
+    })();
 
     // Keep a local copy of the store for easy access in the template
     const unsubscribe = userStore.subscribe((value) => {
@@ -227,7 +251,7 @@
     import { saveStatus } from '$lib/stores/saveStatus';
     function importLocalStorageObject(obj: Record<string, unknown>) {
         saveStatus.set('saving');
-        const KNOWN_KEYS = new Set(['solutions', 'user-checkboxes', 'files', 'user-settings']);
+        const KNOWN_KEYS = new Set(['solutions', 'user-checkboxes', 'files', 'user-settings', 'game-results']);
         if ('solutions' in obj && obj['solutions'] && typeof obj['solutions'] === 'object') {
             codeStore.set(obj['solutions'] as Record<string, string>);
         }
@@ -239,6 +263,9 @@
         }
         if ('user-settings' in obj && obj['user-settings'] && typeof obj['user-settings'] === 'object') {
             userSettingsStorage.set(obj['user-settings'] as any);
+        }
+        if ('game-results' in obj && obj['game-results'] && typeof obj['game-results'] === 'object') {
+            gameResultsStore.set(obj['game-results'] as Record<string, any[]>);
         }
         if (browser) {
             for (const [k, v] of Object.entries(obj)) {
@@ -336,6 +363,14 @@
             problems={data.problems}
             solvedSet={checkMap}
             on:close={() => showGamePopup = false}
+        />
+    {/if}
+
+    {#if historyProblem}
+        <GameHistoryPopup
+            problemTitle={historyProblem.title}
+            results={gameResultData[historyProblem.id] || []}
+            on:close={() => historyProblem = null}
         />
     {/if}
 
@@ -456,6 +491,19 @@
                                                     rel="noopener noreferrer"
                                                     class="external-link">↗</a
                                                 >
+                                            {/if}
+                                            {#if bestRanks[problem.id]}
+                                                <button
+                                                    class="game-rank-badge"
+                                                    class:rank-s={bestRanks[problem.id] === 'S'}
+                                                    class:rank-a={bestRanks[problem.id] === 'A'}
+                                                    class:rank-b={bestRanks[problem.id] === 'B'}
+                                                    class:rank-c={bestRanks[problem.id] === 'C'}
+                                                    onclick={(e) => { e.stopPropagation(); historyProblem = { id: problem.id, title: problem.title }; }}
+                                                    title="View game history"
+                                                >
+                                                    {bestRanks[problem.id]}
+                                                </button>
                                             {/if}
                                         </td>
                                         <td>
@@ -784,5 +832,40 @@
         font-weight: 800;
         letter-spacing: 0.5px;
         text-transform: uppercase;
+    }
+
+    .game-rank-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        margin-left: 6px;
+        vertical-align: middle;
+        transition: transform 0.15s, box-shadow 0.15s;
+        line-height: 1;
+        padding: 0;
+    }
+    .game-rank-badge:hover {
+        transform: scale(1.2);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    .game-rank-badge.rank-s {
+        background: linear-gradient(135deg, #ffd700, #f59e0b);
+    }
+    .game-rank-badge.rank-a {
+        background: linear-gradient(135deg, #34d399, #059669);
+    }
+    .game-rank-badge.rank-b {
+        background: linear-gradient(135deg, #60a5fa, #2563eb);
+    }
+    .game-rank-badge.rank-c {
+        background: linear-gradient(135deg, #9ca3af, #4b5563);
     }
 </style>

@@ -4,6 +4,8 @@
     import ExecutionPanel from '$lib/components/ExecutionPanel.svelte';
     import ShareModal from '$lib/components/ShareModal.svelte';
     import GameResultPopup from '$lib/components/GameResultPopup.svelte';
+    import GameHistoryPopup from '$lib/components/GameHistoryPopup.svelte';
+    import GameModePopup from '$lib/components/GameModePopup.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
     import { initFirebase, ensureAuthenticated } from '$lib/firebase';
     import codeStore from '$lib/stores/codeStore.js';
@@ -17,6 +19,7 @@
     import QRCode from 'qrcode';
     import { onMount, tick } from 'svelte';
     import { v4 as uuidv4 } from 'uuid';
+    import gameResultsStore, { computeGameResult } from '$lib/stores/gameResultsStore';
 
     export let data;
     const problemId = data.problem.id;
@@ -25,6 +28,20 @@
     let gameStartTime = 0;
     let showGameResult = false;
     let gameResultStats: { runCount: number; submitCount: number; timeSpent: number } | null = null;
+    let showGameHistory = false;
+    let showGameStartPopup = false;
+
+    $: problemResults = $gameResultsStore?.[problemId] || [];
+    $: bestRank = (() => {
+        const rankOrder: Record<string, number> = { S: 4, A: 3, B: 2, C: 1 };
+        let best = '';
+        let bestVal = 0;
+        for (const r of problemResults) {
+            const v = rankOrder[r.rank] ?? 0;
+            if (v > bestVal) { bestVal = v; best = r.rank; }
+        }
+        return best;
+    })();
     let CodeEditor: any = null;
     let language: ProgrammingLanguage = $userSettingsStorage.preferredLanguage ?? 'java';
     const fileKey = () => `${problemId}`;
@@ -647,6 +664,19 @@
                         </svg>
                         Solved
                     </span>
+                    {#if bestRank}
+                        <button
+                            class="game-rank-badge"
+                            class:rank-s={bestRank === 'S'}
+                            class:rank-a={bestRank === 'A'}
+                            class:rank-b={bestRank === 'B'}
+                            class:rank-c={bestRank === 'C'}
+                            on:click={() => (showGameHistory = true)}
+                            title="View game history"
+                        >
+                            {bestRank}
+                        </button>
+                    {/if}
                 {/if}
             </div>
             <span class="badge {getDifficultyClass(data.problem.difficulty)}">
@@ -811,6 +841,15 @@
                 </div>
             </div>
             <div style="display:flex;align-items:center;gap:var(--spacing-2);">
+                {#if !isGameMode}
+                    <Tooltip text={"Start Game"} pos={"bottom"}>
+                        <button class="icon-button game-start-btn" on:click={() => showGameStartPopup = true} title="Start Game">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 4l13 8-13 8V4z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </Tooltip>
+                {/if}
                 <Tooltip text={"Share Code"} pos={"bottom"}>
                     <button class="icon-button" on:click={handleShare} title="Share Code">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -899,7 +938,13 @@
             gameMode={isGameMode}
             gameStartTime={gameStartTime}
             on:gameSubmitSuccess={(e) => {
-                gameResultStats = e.detail;
+                const { runCount, submitCount, timeSpent } = e.detail;
+                const result = computeGameResult(runCount, submitCount, timeSpent, code, language);
+                gameResultsStore.update((prev) => ({
+                    ...prev,
+                    [problemId]: [...(prev[problemId] || []), result],
+                }));
+                gameResultStats = { runCount, submitCount, timeSpent };
                 showGameResult = true;
             }}
         />
@@ -914,11 +959,26 @@
         />
     {/if}
 
+    {#if showGameStartPopup}
+        <GameModePopup
+            currentProblemId={problemId}
+            on:close={() => showGameStartPopup = false}
+        />
+    {/if}
+
     {#if showGameResult && gameResultStats}
         <GameResultPopup
             runCount={gameResultStats.runCount}
             submitCount={gameResultStats.submitCount}
             timeSpent={gameResultStats.timeSpent}
+        />
+    {/if}
+
+    {#if showGameHistory}
+        <GameHistoryPopup
+            problemTitle={data.problem.title}
+            results={$gameResultsStore?.[problemId] || []}
+            on:close={() => showGameHistory = false}
         />
     {/if}
 </div>
@@ -1168,6 +1228,42 @@
         flex: 0 0 auto;
     }
 
+    .game-rank-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        margin-left: 6px;
+        margin-bottom: var(--spacing-2);
+        vertical-align: middle;
+        transition: transform 0.15s, box-shadow 0.15s;
+        line-height: 1;
+        padding: 0;
+    }
+    .game-rank-badge:hover {
+        transform: scale(1.2);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    .game-rank-badge.rank-s {
+        background: linear-gradient(135deg, #ffd700, #f59e0b);
+    }
+    .game-rank-badge.rank-a {
+        background: linear-gradient(135deg, #34d399, #059669);
+    }
+    .game-rank-badge.rank-b {
+        background: linear-gradient(135deg, #60a5fa, #2563eb);
+    }
+    .game-rank-badge.rank-c {
+        background: linear-gradient(135deg, #9ca3af, #4b5563);
+    }
+
     .external-link {
         color: var(--color-text-secondary);
         font-size: 0.8em;
@@ -1242,6 +1338,11 @@
 
     .icon-button:hover {
         transform: translateY(-2px);
+    }
+
+    .game-start-btn:hover {
+        color: var(--color-text);
+        background: rgba(255, 255, 255, 0.05);
     }
 
     .modal-backdrop {
