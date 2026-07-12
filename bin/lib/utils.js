@@ -63,6 +63,8 @@ export function getLangFromExt(ext) {
       return "csharp";
     case ".go":
       return "go";
+    case ".ts":
+      return "typescript";
     default:
       return "plaintext";
   }

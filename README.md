@@ -18,8 +18,8 @@
 - Docker sandboxes: consistent, isolated runs across machines
 - LeetCode-style problem packs with statements and tests
 - Simple & fast web UI (SvelteKit) with in-browser editor and light/dark mode support
-- Multiple languages support (Java/Python/C++/Rust/C#/Go)
-- Code Playground: Run code snippets in Java, Python, C++, Rust, C# or Go without a problem context
+- Multiple languages support (Java/C++/Python/Typescript/Rust/C#/Go)
+- Code Playground: Run code snippets in Java, C++, Python, Typescript, Rust, C# or Go without a problem context
 - Extensible: add new problems by dropping folders in `problems/`
 - Persistent Code & Progress Tracking via Local Storage
 - Browser-like tabs to organize your local solutions

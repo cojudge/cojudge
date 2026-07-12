@@ -20,7 +20,8 @@
     "cpp": "class Solution {\npublic:\n    int hammingWeight(uint32_t n) {\n        return 0;\n    }\n};",
     "csharp": "public class Solution \n{\n    public int HammingWeight(int n) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn hamming_weight(n: i32) -> i32 {\n        \n    }\n}",
-    "go": "package main\n\nfunc HammingWeight(n int) int {\n    \n}"
+    "go": "package main\n\nfunc HammingWeight(n int) int {\n    \n}",
+    "typescript": "export function hammingWeight(n: number): number {\n    \n}"
   },
   "testCases": [
     {

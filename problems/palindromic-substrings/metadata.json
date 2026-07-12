@@ -20,7 +20,8 @@
     "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int countSubstrings(string s) {\n        return 0;\n    }\n};",
     "csharp": "public class Solution \n{\n    public int CountSubstrings(string s) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_substrings(s: String) -> i32 {\n        \n    }\n}",
-    "go": "package main\n\nfunc CountSubstrings(s string) int {\n    \n}"
+    "go": "package main\n\nfunc CountSubstrings(s string) int {\n    \n}",
+    "typescript": "export function countSubstrings(s: string): number {\n    \n}"
   },
   "testCases": [
     {

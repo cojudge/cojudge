@@ -20,7 +20,8 @@
     "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool isPalindrome(string s) {\n        return false;\n    }\n};",
     "csharp": "public class Solution \n{\n    public bool IsPalindrome(string s) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_palindrome(s: String) -> bool {\n        \n    }\n}",
-    "go": "package main\n\nfunc IsPalindrome(s string) bool {\n    \n}"
+    "go": "package main\n\nfunc IsPalindrome(s string) bool {\n    \n}",
+    "typescript": "export function isPalindrome(s: string): boolean {\n    \n}"
   },
   "testCases": [
     {

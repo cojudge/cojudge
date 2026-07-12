@@ -20,7 +20,8 @@
     "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> merge(vector<vector<int>>& intervals) {\n        return {};\n    }\n};",
     "csharp": "public class Solution \n{\n    public int[][] Merge(int[][] intervals) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn merge(intervals: String) -> String {\n        \n    }\n}",
-    "go": "package main\n\nfunc Merge(intervals [][]int) [][]int {\n    \n}"
+    "go": "package main\n\nfunc Merge(intervals [][]int) [][]int {\n    \n}",
+    "typescript": "export function merge(intervals: number[][]): number[][] {\n    \n}"
   },
   "testCases": [
     {
@@ -87,6 +88,6 @@
     "Sort intervals by start time first.",
     "Maintain a current merged interval [s, e]; for each interval [a, b], if a <= e, merge by setting e = max(e, b), otherwise push [s, e] and start a new one.",
     "The sort dominates the complexity: O(n log n).",
-    "Watch out for touching intervals like [1,4] and [4,5] — they should be merged."
+    "Watch out for touching intervals like [1,4] and [4,5] \u2014 they should be merged."
   ]
 }

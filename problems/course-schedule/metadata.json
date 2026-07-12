@@ -20,7 +20,8 @@
     "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {\n        return false;\n    }\n};",
     "csharp": "public class Solution \n{\n    public bool CanFinish(int numCourses, int[][] prerequisites) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_finish(num_courses: i32, prerequisites: String) -> bool {\n        \n    }\n}",
-    "go": "package main\n\nfunc CanFinish(numCourses int, prerequisites [][]int) bool {\n    \n}"
+    "go": "package main\n\nfunc CanFinish(numCourses int, prerequisites [][]int) bool {\n    \n}",
+    "typescript": "export function canFinish(numCourses: number, prerequisites: number[][]): boolean {\n    \n}"
   },
   "testCases": [
     {

@@ -20,7 +20,8 @@
     "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int characterReplacement(string s, int k) {\n        return 0;\n    }\n};",
     "csharp": "public class Solution \n{\n    public int CharacterReplacement(string s, int k) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn character_replacement(s: String, k: i32) -> i32 {\n        \n    }\n}",
-    "go": "package main\n\nfunc CharacterReplacement(s string, k int) int {\n    \n}"
+    "go": "package main\n\nfunc CharacterReplacement(s string, k int) int {\n    \n}",
+    "typescript": "export function characterReplacement(s: string, k: number): number {\n    \n}"
   },
   "testCases": [
     {

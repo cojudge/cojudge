@@ -20,7 +20,8 @@
     "cpp": "class Solution {\npublic:\n    int climbStairs(int n) {\n        return 0;\n    }\n};",
     "csharp": "public class Solution \n{\n    public int ClimbStairs(int n) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn climb_stairs(n: i32) -> i32 {\n        \n    }\n}",
-    "go": "package main\n\nfunc ClimbStairs(n int) int {\n    \n}"
+    "go": "package main\n\nfunc ClimbStairs(n int) int {\n    \n}",
+    "typescript": "export function climbStairs(n: number): number {\n    \n}"
   },
   "testCases": [
     {

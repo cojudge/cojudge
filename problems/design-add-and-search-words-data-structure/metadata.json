@@ -25,7 +25,8 @@
     "cpp": "#include <string>\nusing namespace std;\n\nclass WordDictionary {\npublic:\n    WordDictionary() {\n        \n    }\n    \n    void addWord(string word) {\n        \n    }\n    \n    bool search(string word) {\n        return false;\n    }\n};",
     "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class WordDictionary {\n    public WordDictionary() {\n        \n    }\n    \n    public void AddWord(string word) {\n        \n    }\n    \n    public bool Search(string word) {\n        return false;\n    }\n}",
     "rust": "pub struct WordDictionary {\n    \n}\n\nimpl WordDictionary {\n    pub fn new() -> Self {\n        WordDictionary {}\n    }\n    \n    pub fn add_word(&mut self, word: String) {\n        \n    }\n    \n    pub fn search(&self, word: String) -> bool {\n        false\n    }\n}",
-    "go": "package main\n\ntype WordDictionary struct {\n    \n}\n\nfunc Constructor() WordDictionary {\n    return WordDictionary{}\n}\n\nfunc (this *WordDictionary) AddWord(word string) {\n    \n}\n\nfunc (this *WordDictionary) Search(word string) bool {\n    return false\n}"
+    "go": "package main\n\ntype WordDictionary struct {\n    \n}\n\nfunc Constructor() WordDictionary {\n    return WordDictionary{}\n}\n\nfunc (this *WordDictionary) AddWord(word string) {\n    \n}\n\nfunc (this *WordDictionary) Search(word string) bool {\n    return false\n}",
+    "typescript": "export class WordDictionary {\n    constructor() {\n        \n    }\n\n    addWord(word: string): void {\n        \n    }\n\n    search(word: string): boolean {\n        return false;\n    }\n}"
   },
   "testCases": [
     {

@@ -53,11 +53,12 @@ class Program
 func main() {
     // your code goes here
 }`,
+        typescript: `// your code goes here`,
         plaintext: ``,
         markdown: `# Write your markdown here.
 `
     };
-    const programmingLanguages: ProgrammingLanguage[] = ['java', 'python', 'cpp', 'csharp', 'rust', 'go', 'plaintext', 'markdown'];
+    const programmingLanguages: ProgrammingLanguage[] = ['java', 'cpp', 'python', 'typescript', 'csharp', 'rust', 'go', 'plaintext', 'markdown'];
 
     // Tabs are grouped by fileId (language-agnostic)
     type TabMeta = { fileId: string; fileName: string; isOpen: boolean; lastUpdated?: number; type?: 'editor' | 'preview'; sourceFileId?: string };
@@ -1583,8 +1584,9 @@ func main() {
                         on:blur={() => (suppressSave = false)}
                     >
                         <option value="java">Java</option>
-                        <option value="python">Python</option>
                         <option value="cpp">C++</option>
+                        <option value="python">Python</option>
+                        <option value="typescript">TypeScript</option>
                         <option value="csharp">C#</option>
                         <option value="rust">Rust</option>
                         <option value="go">Go</option>

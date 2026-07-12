@@ -16,7 +16,8 @@
     "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int combinationSum4(vector<int>& nums, int target) {\n        return 0;\n    }\n};",
     "csharp": "public class Solution \n{\n    public int CombinationSum4(int[] nums, int target) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn combination_sum4(nums: Vec<i32>, target: i32) -> i32 {\n        \n    }\n}",
-    "go": "package main\n\nfunc CombinationSum4(nums []int, target int) int {\n    \n}"
+    "go": "package main\n\nfunc CombinationSum4(nums []int, target int) int {\n    \n}",
+    "typescript": "export function combinationSum4(nums: number[], target: number): number {\n    \n}"
   },
   "testCases": [
     {

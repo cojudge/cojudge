@@ -24,7 +24,8 @@
     "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool containsDuplicate(vector<int>& nums) {\n        return false;\n    }\n};",
     "csharp": "public class Solution \n{\n    public bool ContainsDuplicate(int[] nums) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn contains_duplicate(nums: Vec<i32>) -> bool {\n        \n    }\n}",
-    "go": "package main\n\nfunc ContainsDuplicate(nums []int) bool {\n    \n}"
+    "go": "package main\n\nfunc ContainsDuplicate(nums []int) bool {\n    \n}",
+    "typescript": "export function containsDuplicate(nums: number[]): boolean {\n    \n}"
   },
   "testCases": [
     {

@@ -20,7 +20,8 @@
     "cpp": "class Solution {\npublic:\n    uint32_t reverseBits(uint32_t n) {\n        return 0;\n    }\n};",
     "csharp": "public class Solution \n{\n    public int ReverseBits(int n) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reverse_bits(n: i32) -> i32 {\n        \n    }\n}",
-    "go": "package main\n\nfunc ReverseBits(n int) int {\n    \n}"
+    "go": "package main\n\nfunc ReverseBits(n int) int {\n    \n}",
+    "typescript": "export function reverseBits(n: number): number {\n    \n}"
   },
   "testCases": [
     {

@@ -16,7 +16,8 @@
     "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {\n        return {};\n    }\n};",
     "csharp": "public class Solution \n{\n    public int[][] PacificAtlantic(int[][] heights) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn pacific_atlantic(heights: String) -> String {\n        \n    }\n}",
-    "go": "package main\n\nfunc PacificAtlantic(heights [][]int) [][]int {\n    \n}"
+    "go": "package main\n\nfunc PacificAtlantic(heights [][]int) [][]int {\n    \n}",
+    "typescript": "export function pacificAtlantic(heights: number[][]): number[][] {\n    \n}"
   },
   "testCases": [
     {

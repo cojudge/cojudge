@@ -20,7 +20,8 @@
     "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int countComponents(int n, vector<vector<int>>& edges) {\n        return 0;\n    }\n};",
     "csharp": "public class Solution \n{\n    public int CountComponents(int n, int[][] edges) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_components(n: i32, edges: String) -> i32 {\n        \n    }\n}",
-    "go": "package main\n\nfunc CountComponents(n int, edges [][]int) int {\n    \n}"
+    "go": "package main\n\nfunc CountComponents(n int, edges [][]int) int {\n    \n}",
+    "typescript": "export function countComponents(n: number, edges: number[][]): number {\n    \n}"
   },
   "testCases": [
     {

@@ -24,7 +24,8 @@
     "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> threeSum(vector<int>& nums) {\n        return {};\n    }\n};",
     "csharp": "public class Solution \n{\n    public int[][] ThreeSum(int[] nums) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn three_sum(nums: Vec<i32>) -> String {\n        \n    }\n}",
-    "go": "package main\n\nfunc ThreeSum(nums []int) [][]int {\n    \n}"
+    "go": "package main\n\nfunc ThreeSum(nums []int) [][]int {\n    \n}",
+    "typescript": "export function threeSum(nums: number[]): number[][] {\n    \n}"
   },
   "testCases": [
     {

@@ -20,7 +20,8 @@
     "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool validTree(int n, vector<vector<int>>& edges) {\n        return false;\n    }\n};",
     "csharp": "public class Solution \n{\n    public bool ValidTree(int n, int[][] edges) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn valid_tree(n: i32, edges: String) -> bool {\n        \n    }\n}",
-    "go": "package main\n\nfunc ValidTree(n int, edges [][]int) bool {\n    \n}"
+    "go": "package main\n\nfunc ValidTree(n int, edges [][]int) bool {\n    \n}",
+    "typescript": "export function validTree(n: number, edges: number[][]): boolean {\n    \n}"
   },
   "testCases": [
     {

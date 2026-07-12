@@ -20,7 +20,8 @@
     "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string minWindow(string s, string t) {\n        return \"\";\n    }\n};",
     "csharp": "public class Solution \n{\n    public string MinWindow(string s, string t) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_window(s: String, t: String) -> String {\n        \n    }\n}",
-    "go": "package main\n\nfunc MinWindow(s string, t string) string {\n    \n}"
+    "go": "package main\n\nfunc MinWindow(s string, t string) string {\n    \n}",
+    "typescript": "export function minWindow(s: string, t: string): string {\n    \n}"
   },
   "testCases": [
     {

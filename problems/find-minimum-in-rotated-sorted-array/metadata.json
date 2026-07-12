@@ -20,7 +20,8 @@
     "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int findMin(vector<int>& nums) {\n        return 0;\n    }\n};",
     "csharp": "public class Solution \n{\n    public int FindMin(int[] nums) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_min(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
-    "go": "package main\n\nfunc FindMin(nums []int) int {\n    \n}"
+    "go": "package main\n\nfunc FindMin(nums []int) int {\n    \n}",
+    "typescript": "export function findMin(nums: number[]): number {\n    \n}"
   },
   "testCases": [
     {

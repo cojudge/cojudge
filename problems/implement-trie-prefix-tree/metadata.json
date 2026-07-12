@@ -25,7 +25,8 @@
     "cpp": "#include <string>\nusing namespace std;\n\nclass Trie {\npublic:\n    Trie() {\n        \n    }\n    \n    void insert(string word) {\n        \n    }\n    \n    bool search(string word) {\n        return false;\n    }\n    \n    bool startsWith(string prefix) {\n        return false;\n    }\n};",
     "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Trie {\n    public Trie() {\n        \n    }\n    \n    public void Insert(string word) {\n        \n    }\n    \n    public bool Search(string word) {\n        return false;\n    }\n    \n    public bool StartsWith(string prefix) {\n        return false;\n    }\n}",
     "rust": "pub struct Trie {\n    \n}\n\nimpl Trie {\n    pub fn new() -> Self {\n        Trie {}\n    }\n    \n    pub fn insert(&mut self, word: String) {\n        \n    }\n    \n    pub fn search(&self, word: String) -> bool {\n        false\n    }\n    \n    pub fn starts_with(&self, prefix: String) -> bool {\n        false\n    }\n}",
-    "go": "package main\n\ntype Trie struct {\n    \n}\n\nfunc Constructor() Trie {\n    return Trie{}\n}\n\nfunc (this *Trie) Insert(word string) {\n    \n}\n\nfunc (this *Trie) Search(word string) bool {\n    return false\n}\n\nfunc (this *Trie) StartsWith(prefix string) bool {\n    return false\n}"
+    "go": "package main\n\ntype Trie struct {\n    \n}\n\nfunc Constructor() Trie {\n    return Trie{}\n}\n\nfunc (this *Trie) Insert(word string) {\n    \n}\n\nfunc (this *Trie) Search(word string) bool {\n    return false\n}\n\nfunc (this *Trie) StartsWith(prefix string) bool {\n    return false\n}",
+    "typescript": "export class Trie {\n    constructor() {\n        \n    }\n\n    insert(word: string): void {\n        \n    }\n\n    search(word: string): boolean {\n        return false;\n    }\n\n    startsWith(prefix: string): boolean {\n        return false;\n    }\n}"
   },
   "testCases": [
     {

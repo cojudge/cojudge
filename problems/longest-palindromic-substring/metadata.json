@@ -20,7 +20,8 @@
     "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string longestPalindrome(string s) {\n        return \"\";\n    }\n};",
     "csharp": "public class Solution \n{\n    public string LongestPalindrome(string s) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn longest_palindrome(s: String) -> String {\n        \n    }\n}",
-    "go": "package main\n\nfunc LongestPalindrome(s string) string {\n    \n}"
+    "go": "package main\n\nfunc LongestPalindrome(s string) string {\n    \n}",
+    "typescript": "export function longestPalindrome(s: string): string {\n    \n}"
   },
   "testCases": [
     {

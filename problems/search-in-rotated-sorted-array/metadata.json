@@ -20,7 +20,8 @@
     "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int search(vector<int>& nums, int target) {\n        return -1;\n    }\n};",
     "csharp": "public class Solution \n{\n    public int Search(int[] nums, int target) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn search(nums: Vec<i32>, target: i32) -> i32 {\n        \n    }\n}",
-    "go": "package main\n\nfunc Search(nums []int, target int) int {\n    \n}"
+    "go": "package main\n\nfunc Search(nums []int, target int) int {\n    \n}",
+    "typescript": "export function search(nums: number[], target: number): number {\n    \n}"
   },
   "testCases": [
     {

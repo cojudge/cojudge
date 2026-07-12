@@ -4,6 +4,7 @@ import { goImage } from '$lib/utils/goUtil';
 import { rustImage } from '$lib/utils/rustUtil';
 import { javaImage } from '$lib/utils/javaUtil';
 import { pythonImage } from '$lib/utils/pythonUtil';
+import { tsImage } from '$lib/utils/tsUtil';
 import { getPullStatus } from '$lib/server/imagePuller';
 import { json } from '@sveltejs/kit';
 import Dockerode from 'dockerode';
@@ -18,6 +19,7 @@ function imageForLanguage(language: string) {
     if (language === 'csharp') return { image: csharpImage, language };
     if (language === 'rust') return { image: rustImage, language };
     if (language === 'go') return { image: goImage, language };
+    if (language === 'typescript') return { image: tsImage, language };
     return null;
 }
 

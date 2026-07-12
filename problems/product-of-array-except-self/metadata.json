@@ -20,7 +20,8 @@
     "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> productExceptSelf(vector<int>& nums) {\n        return {};\n    }\n};",
     "csharp": "public class Solution \n{\n    public int[] ProductExceptSelf(int[] nums) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
-    "go": "package main\n\nfunc ProductExceptSelf(nums []int) []int {\n    \n}"
+    "go": "package main\n\nfunc ProductExceptSelf(nums []int) []int {\n    \n}",
+    "typescript": "export function productExceptSelf(nums: number[]): number[] {\n    \n}"
   },
   "testCases": [
     {

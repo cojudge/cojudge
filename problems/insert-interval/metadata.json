@@ -24,7 +24,8 @@
     "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {\n        return {};\n    }\n};",
     "csharp": "public class Solution \n{\n    public int[][] Insert(int[][] intervals, int[] newInterval) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn insert(intervals: String, new_interval: Vec<i32>) -> String {\n        \n    }\n}",
-    "go": "package main\n\nfunc Insert(intervals [][]int, newInterval []int) [][]int {\n    \n}"
+    "go": "package main\n\nfunc Insert(intervals [][]int, newInterval []int) [][]int {\n    \n}",
+    "typescript": "export function insert(intervals: number[][], newInterval: number[]): number[][] {\n    \n}"
   },
   "testCases": [
     {

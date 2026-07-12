@@ -20,7 +20,8 @@
     "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int minMeetingRooms(vector<vector<int>>& intervals) {\n        return 0;\n    }\n};",
     "csharp": "public class Solution \n{\n    public int MinMeetingRooms(int[][] intervals) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_meeting_rooms(intervals: String) -> i32 {\n        \n    }\n}",
-    "go": "package main\n\nfunc MinMeetingRooms(intervals [][]int) int {\n    \n}"
+    "go": "package main\n\nfunc MinMeetingRooms(intervals [][]int) int {\n    \n}",
+    "typescript": "export function minMeetingRooms(intervals: number[][]): number {\n    \n}"
   },
   "testCases": [
     {

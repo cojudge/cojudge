@@ -26,7 +26,8 @@
     "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int maxProfit(vector<int>& prices) {\n        return 0;\n    }\n};",
     "csharp": "public class Solution \n{\n    public int MaxProfit(int[] prices) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_profit(prices: Vec<i32>) -> i32 {\n        \n    }\n}",
-    "go": "package main\n\nfunc MaxProfit(prices []int) int {\n    \n}"
+    "go": "package main\n\nfunc MaxProfit(prices []int) int {\n    \n}",
+    "typescript": "export function maxProfit(prices: number[]): number {\n    \n}"
   },
   "testCases": [
     {

@@ -42,11 +42,12 @@ export function handleInit(argsToUse) {
     rust: ".rs",
     csharp: ".cs",
     go: ".go",
+    typescript: ".ts",
   };
 
   const extension = extMap[lang] || ".txt";
   let defaultFilename = `solution${extension}`;
-  if (["java", "cpp", "csharp", "go"].includes(lang)) {
+  if (["java", "cpp", "csharp", "go", "typescript"].includes(lang)) {
     defaultFilename = `Solution${extension}`;
   }
   const outputFilename = getParam(argsToUse, "--output") || defaultFilename;

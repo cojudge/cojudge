@@ -20,7 +20,8 @@
     "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool wordBreak(string s, vector<string>& wordDict) {\n        return false;\n    }\n};",
     "csharp": "public class Solution \n{\n    public bool WordBreak(string s, IList<string> wordDict) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn word_break(s: String, word_dict: Vec<String>) -> bool {\n        \n    }\n}",
-    "go": "package main\n\nfunc WordBreak(s string, wordDict []string) bool {\n    \n}"
+    "go": "package main\n\nfunc WordBreak(s string, wordDict []string) bool {\n    \n}",
+    "typescript": "export function wordBreak(s: string, wordDict: string[]): boolean {\n    \n}"
   },
   "testCases": [
     {

@@ -16,7 +16,8 @@
     "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {\n        return {};\n    }\n};",
     "csharp": "public class Solution \n{\n    public IList<string> FindWords(char[][] board, string[] words) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_words(board: String, words: Vec<String>) -> String {\n        \n    }\n}",
-    "go": "package main\n\nfunc FindWords(board [][]byte, words []string) []string {\n    \n}"
+    "go": "package main\n\nfunc FindWords(board [][]byte, words []string) []string {\n    \n}",
+    "typescript": "export function findWords(board: string[][], words: string[]): string[] {\n    \n}"
   },
   "testCases": [
     {

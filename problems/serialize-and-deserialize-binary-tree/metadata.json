@@ -25,7 +25,8 @@
     "cpp": "class Codec {\npublic:\n    // Encodes a tree to a single string.\n    string serialize(TreeNode* root) {\n        \n    }\n\n    // Decodes your encoded data to tree.\n    TreeNode* deserialize(string data) {\n        \n    }\n};",
     "csharp": "public class Codec {\n    // Encodes a tree to a single string.\n    public string serialize(TreeNode root) {\n        \n    }\n\n    // Decodes your encoded data to tree.\n    public TreeNode deserialize(string data) {\n        \n    }\n}",
     "rust": "use std::rc::Rc;\nuse std::cell::RefCell;\n\npub struct Codec;\n\nimpl Codec {\n    pub fn new() -> Self {\n        Codec\n    }\n    \n    pub fn serialize(&self, root: Option<Rc<RefCell<TreeNode>>>) -> String {\n        String::new()\n    }\n    \n    pub fn deserialize(&self, data: String) -> Option<Rc<RefCell<TreeNode>>> {\n        None\n    }\n}",
-    "go": "package main\n\ntype Codec struct {\n    \n}\n\nfunc (c *Codec) Serialize(root *TreeNode) string {\n    \n}\n\nfunc (c *Codec) Deserialize(data string) *TreeNode {\n    \n}"
+    "go": "package main\n\ntype Codec struct {\n    \n}\n\nfunc (c *Codec) Serialize(root *TreeNode) string {\n    \n}\n\nfunc (c *Codec) Deserialize(data string) *TreeNode {\n    \n}",
+    "typescript": "import { TreeNode } from './TreeNode';\nexport class Codec {\n    serialize(root: TreeNode | null): string {\n        \n    }\n\n    deserialize(data: string): TreeNode | null {\n        \n    }\n}"
   },
   "testCases": [
     {

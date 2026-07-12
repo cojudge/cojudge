@@ -114,7 +114,7 @@ function mapLcType(type) {
   return map[type] || "string";
 }
 
-const COJUDGE_LANGS = ["java", "python3", "cpp", "csharp", "golang", "rust"];
+const COJUDGE_LANGS = ["java", "python3", "cpp", "csharp", "golang", "rust", "typescript"];
 const LANG_ALIAS = {
   python3: "python",
 };

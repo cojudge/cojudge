@@ -20,7 +20,8 @@
     "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> setZeroes(vector<vector<int>>& matrix) {\n        return {};\n    }\n};",
     "csharp": "public class Solution \n{\n    public int[][] SetZeroes(int[][] matrix) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn set_zeroes(matrix: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
-    "go": "package main\n\nfunc SetZeroes(matrix [][]int) [][]int {\n    \n}"
+    "go": "package main\n\nfunc SetZeroes(matrix [][]int) [][]int {\n    \n}",
+    "typescript": "export function setZeroes(matrix: number[][]): number[][] {\n    \n}"
   },
   "testCases": [
     {

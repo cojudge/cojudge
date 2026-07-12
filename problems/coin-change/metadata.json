@@ -21,7 +21,8 @@
     "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int coinChange(vector<int>& coins, int amount) {\n        return -1;\n    }\n};",
     "csharp": "public class Solution \n{\n    public int CoinChange(int[] coins, int amount) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn coin_change(coins: Vec<i32>, amount: i32) -> i32 {\n        \n    }\n}",
-    "go": "package main\n\nfunc CoinChange(coins []int, amount int) int {\n    \n}"
+    "go": "package main\n\nfunc CoinChange(coins []int, amount int) int {\n    \n}",
+    "typescript": "export function coinChange(coins: number[], amount: number): number {\n    \n}"
   },
   "testCases": [
     {

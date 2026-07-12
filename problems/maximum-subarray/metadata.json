@@ -25,7 +25,8 @@
     "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int maxSubArray(vector<int>& nums) {\n        return 0;\n    }\n};",
     "csharp": "public class Solution \n{\n    public int MaxSubArray(int[] nums) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_sub_array(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
-    "go": "package main\n\nfunc MaxSubArray(nums []int) int {\n    \n}"
+    "go": "package main\n\nfunc MaxSubArray(nums []int) int {\n    \n}",
+    "typescript": "export function maxSubArray(nums: number[]): number {\n    \n}"
   },
   "testCases": [
     {

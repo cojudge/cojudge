@@ -24,7 +24,8 @@
     "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool exist(vector<vector<char>>& board, string word) {\n        return false;\n    }\n};",
     "csharp": "public class Solution \n{\n    public bool Exist(char[][] board, string word) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn exist(board: String, word: String) -> bool {\n        \n    }\n}",
-    "go": "package main\n\nfunc Exist(board [][]byte, word string) bool {\n    \n}"
+    "go": "package main\n\nfunc Exist(board [][]byte, word string) bool {\n    \n}",
+    "typescript": "export function exist(board: string[][], word: string): boolean {\n    \n}"
   },
   "testCases": [
     {

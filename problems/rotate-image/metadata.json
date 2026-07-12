@@ -20,7 +20,8 @@
     "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> rotate(vector<vector<int>>& matrix) {\n        return {};\n    }\n};",
     "csharp": "public class Solution \n{\n    public int[][] Rotate(int[][] matrix) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn rotate(matrix: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
-    "go": "package main\n\nfunc Rotate(matrix [][]int) [][]int {\n    \n}"
+    "go": "package main\n\nfunc Rotate(matrix [][]int) [][]int {\n    \n}",
+    "typescript": "export function rotate(matrix: number[][]): number[][] {\n    \n}"
   },
   "testCases": [
     {
