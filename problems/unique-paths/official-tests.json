@@ -3,5 +3,5 @@
   { "m": 3, "n": 2 },
   { "m": 7, "n": 3 },
   { "m": 3, "n": 3 },
-  { "m": 50, "n": 50, "_isLargeTest": true }
+  { "m": 100, "n": 7, "_isLargeTest": true }
 ]
