@@ -28,6 +28,7 @@ type SubmitJob = {
     timeout?: boolean;
     timeoutTestCase?: any;
     error?: string;
+    errorTestCase?: any;
 };
 
 const jobs: Map<string, SubmitJob> = new Map();
@@ -241,6 +242,7 @@ async function executeSubmit(problemId: string, language: string, code: string, 
             job.status = 'completed';
         } else {
             job.error = `Submission failed: details: ${error.message || error}`;
+            job.errorTestCase = timeoutTestcase;
             job.status = 'error';
         }
     }
@@ -266,7 +268,7 @@ export const GET: RequestHandler = async ({ url }) => {
         return json({ ready: true, timeout: true, timeoutTestCase: job.timeoutTestCase });
     }
     if (job.status === 'error') {
-        return json({ ready: true, error: job.error || 'Submission failed' }, { status: 400 });
+        return json({ ready: true, error: job.error || 'Submission failed', errorTestCase: job.errorTestCase }, { status: 400 });
     }
     return json({ ready: true, ...(job.result || {}) });
 };

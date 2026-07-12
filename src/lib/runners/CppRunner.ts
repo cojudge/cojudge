@@ -114,8 +114,6 @@ export class CppRunner extends ProgramRunner {
             if (inspect.ExitCode !== 0) throw new Error(stderr || stdout);
             const results = stdout.split('---\n').filter((res) => res.trim() !== '');
             return results;
-        } catch (error: any) {
-            throw new Error(`${error}`);
         } finally {
             if (this.container) {
                 await ContainerPool.release(cppImage, this.container);
