@@ -92,7 +92,8 @@
   "params": [
     {
       "name": "grid",
-      "type": "int_array_2d"
+      "type": "int_array_2d",
+      "visualizeType": "matrix"
     }
   ],
   "outputType": "int",
