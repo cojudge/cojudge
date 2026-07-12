@@ -5,6 +5,7 @@ import { cppImage } from '$lib/utils/cppUtil';
 import { csharpImage } from '$lib/utils/csharpUtil';
 import { rustImage } from '$lib/utils/rustUtil';
 import { goImage } from '$lib/utils/goUtil';
+import { tsImage } from '$lib/utils/tsUtil';
 
 const docker = new Dockerode();
 
@@ -24,6 +25,7 @@ function imageForLanguage(language: string) {
     if (language === 'csharp') return csharpImage;
     if (language === 'rust') return rustImage;
     if (language === 'go') return goImage;
+    if (language === 'typescript') return tsImage;
     return null;
 }
 
