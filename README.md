@@ -67,6 +67,8 @@ cojudge
 | `cojudge init <slug> [--lang <lang>] [--output <filename>]` | Initialize a problem file with starter code with filename. Fall back to, for example `solution.rs`, if `filename` is not provided |
 | `cojudge run <slug> <file>` | Run sample tests for a problem from CLI (require running Docker) |
 | `cojudge submit <slug> <file>`| Submit code for a problem from CLI (require running Docker) |
+| `cojudge scrape -n <number>` | Scrape problem data from LeetCode (by number) |
+| `cojudge scrape -s <slug>` | Scrape problem data from LeetCode (by slug) |
 | `cojudge run <file>` | Run a playground file from CLI (require running Docker) |
 | `cojudge list` | List all available problem slugs |
 | `cojudge mark <slug>` | Mark a problem as solved |

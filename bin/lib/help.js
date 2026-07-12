@@ -14,6 +14,8 @@ Usage:
   cojudge unmark <slug>          Unmark a problem as solved
   cojudge init <slug>           Initialize a problem file with starter code
                                  (Options: --lang java|python|cpp|rust|csharp|go)
+  cojudge scrape -n <number>    Scrape problem data from LeetCode by number
+  cojudge scrape -s <slug>      Scrape problem data from LeetCode by slug
   cojudge -p, --port <number>    Specify port (default: 5375)
   cojudge -v, --version          Show current version and date
   cojudge -u, --update           Update cojudge to the latest version
@@ -28,5 +30,7 @@ Examples:
   cojudge init two-sum --lang rust --output solver.rs
   cojudge start playground my-script.py
   cojudge mark two-sum
+  cojudge scrape -n 1
+  cojudge scrape -s valid-parentheses
 `);
 }

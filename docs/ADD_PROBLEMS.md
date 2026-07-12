@@ -21,6 +21,53 @@ After creating the problem files, register it in `courses/blind75/courseinfo.jso
 
 ---
 
+## Using `cojudge scrape` to Bootstrap a New Problem
+
+Instead of writing problem files from scratch, use `cojudge scrape` to fetch canonical data directly from LeetCode's public GraphQL API. This eliminates agent hallucination risk on problem statements, examples, constraints, function signatures, and starter code.
+
+### Usage
+
+```bash
+cojudge scrape -n 1            # Fetch problem #1 (Two Sum)
+cojudge scrape -s two-sum      # Fetch by slug
+cojudge scrape -s valid-parentheses > problems/valid-parentheses/scraped.txt  # Save to file
+```
+
+### Output
+
+The command prints:
+
+- **Problem metadata**: number, title, difficulty, topics (→ `metadata.json` fields)
+- **Function signature**: method name, parameter names/types, return type (mapped to Cojudge types)
+- **Description**: cleaned problem text (→ `statement.md`)
+- **Examples**: formatted with input, output, and optional explanation
+- **Constraints**: parsed from the LeetCode HTML
+- **Hints**: from LeetCode (→ `metadata.json` hints)
+- **Example test inputs**: raw input data only, no expected outputs (→ `official-tests.json`)
+- **Starter code**: for all 6 Cojudge-supported languages (→ `metadata.json` starterCode)
+- **Cojudge metadata suggestions**: ready-to-use JSON snippets for `metadata.json`
+
+### What you still create manually
+
+Even with scraping, the following files require manual authoring:
+
+| File | Purpose |
+|---|---|
+| `Marker.java` | Reference solution + `isCorrect` validator (the only hallucination-risk artifact) |
+| `official-tests.json` | Additional test inputs beyond examples (still no expected outputs needed) |
+| `statement.md` | Can copy from scrape output; reformat as needed |
+| `solution.md` | Optional walkthrough (not scraped) |
+
+### Benefits for Agent-Assisted Problem Creation
+
+1. **No hallucinated problem text**: statements, examples, constraints come from LeetCode
+2. **No hallucinated expected outputs**: Cojudge's `Marker.java` computes them at runtime
+3. **No hallucinated function signatures**: parameter names, types come from LeetCode metadata
+4. **No hallucinated starter code**: canonical snippets for Java, Python, C++, C#, Go, Rust
+5. **Self-validating**: run `cojudge submit` immediately — if the reference solution is wrong, you know instantly
+
+---
+
 ## 1. `statement.md`
 
 Write the problem description in Markdown. Include examples and constraints.

@@ -11,6 +11,7 @@ import { handleRun } from "./lib/commands/run.js";
 import { handleSubmit } from "./lib/commands/submit.js";
 import { handleInit } from "./lib/commands/init.js";
 import { listProblems } from "./lib/commands/list.js";
+import { handleScrape } from "./lib/commands/scrape.js";
 
 const args = process.argv.slice(2);
 const PORT = getPort(args);
@@ -60,6 +61,11 @@ async function main() {
       return;
     }
     markProblem(slug, false);
+    return;
+  }
+
+  if (action === "scrape") {
+    await handleScrape(args);
     return;
   }
 
