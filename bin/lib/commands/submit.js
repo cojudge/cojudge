@@ -113,12 +113,31 @@ export async function handleSubmit(argsToUse, PORT) {
         );
         const data = await pollResponse.json();
 
-        if (!pollResponse.ok) {
-          throw new Error(data.error || pollResponse.statusText);
+        if (!pollResponse.ok || data.error) {
+          if (data.errorTestCase) {
+            const inputStr = Object.entries(data.errorTestCase)
+              .filter(([key]) =>
+                !["output", "logs", "isCorrect", "correctAnswer", "error"].includes(key)
+              )
+              .map(([key, value]) => `${key} = ${value}`)
+              .join(", ");
+            console.log(`\n\x1b[31mFAILED\x1b[0m at Test Case ${startTcNo + 1}`);
+            console.log(`INPUT: ${inputStr}`);
+          }
+          let msg = data.error || pollResponse.statusText;
+          msg = msg.replace(/^Submission failed: details: /i, "");
+          msg = msg.replace(/^Error: /i, "");
+          if (msg.includes('SIGSEGV')) {
+            console.error('\x1b[33mHint: Segmentation fault — check for out-of-bounds array access or null pointer dereference.\x1b[0m');
+          } else if (msg.includes('SIGFPE')) {
+            console.error('\x1b[33mHint: Floating point exception — check for division by zero or arithmetic overflow.\x1b[0m');
+          } else if (msg.includes('SIGABRT')) {
+            console.error('\x1b[33mHint: Abort — check for assertion failures or unhandled exceptions.\x1b[0m');
+          }
+          throw new Error(msg);
         }
 
         if (data.ready) {
-          if (data.error) throw new Error(data.error);
           if (data.timeout) throw new Error("Time Limit Exceeded");
           jobResult = data;
         } else {
@@ -193,7 +212,6 @@ export async function handleSubmit(argsToUse, PORT) {
   } catch (e) {
     let msg = e.message;
     msg = msg.replace(/^Submission failed: details: /i, "");
-    msg = msg.replace(/^Error: /i, "");
     msg = msg.replace(/^Error: /i, "");
     console.error(`\x1b[31m${msg}\x1b[0m`);
     process.exit(1);

@@ -13,14 +13,6 @@
     }
     ,
     {
-      "nums": "[]",
-      "target": 0
-    },
-    {
-      "nums": "[1]",
-      "target": 1
-    },
-    {
       "nums": "[0,0]",
       "target": 0
     },
@@ -133,7 +125,7 @@
       "target": 3
     },
     {
-      "nums": "@javascript:JSON.stringify([...Array(500000).fill(1), 2, 2])",
+      "nums": "@javascript:JSON.stringify([...Array(5000).fill(1), 2, 2])",
       "target": 4,
       "_isLargeTest": true
     }

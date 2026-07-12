@@ -685,7 +685,7 @@
                             submissionFailure = {
                                 type: "failed",
                                 index: tcNo,
-                                testCase: null,
+                                testCase: body?.errorTestCase || null,
                                 yourAnswer: null,
                                 expectedAnswer: null,
                                 error: body?.error || "Submission failed",
@@ -786,6 +786,14 @@
             }
         }
         isLoading = false;
+    }
+
+    function getCrashHint(error: string | null): string | null {
+        if (!error) return null;
+        if (error.includes('SIGSEGV')) return 'Your code crashed (Segmentation Fault). This usually means you accessed invalid memory — check for out-of-bounds array access or null pointer dereference.';
+        if (error.includes('SIGFPE')) return 'Your code crashed (Floating Point Exception). This usually means a division by zero or arithmetic overflow.';
+        if (error.includes('SIGABRT')) return 'Your code crashed (Abort). This usually means an assertion failed or an unhandled exception.';
+        return null;
     }
 </script>
 
@@ -1050,6 +1058,9 @@
                             <span class="result-title">Your Answer</span>
                             {#if submissionFailure.error}
                                 <span class="result-status error">Error</span>
+                                {#if getCrashHint(submissionFailure.error)}
+                                    <pre class="result-output hint">{getCrashHint(submissionFailure.error)}</pre>
+                                {/if}
                                 <pre
                                     class="result-output error">{submissionFailure.error}</pre>
                             {:else}
@@ -1452,6 +1463,12 @@
     }
     .result-output.error {
         color: var(--color-incorrect);
+    }
+    .result-output.hint {
+        color: var(--color-warning);
+        font-size: 0.9em;
+        border-left: 3px solid var(--color-warning);
+        padding-left: var(--spacing-2);
     }
 
     /* Submission View */
