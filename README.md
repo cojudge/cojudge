@@ -197,4 +197,4 @@ Add this line to your `~/.zshrc` (or `~/.bashrc`) to make it permanent:
 
 ## Contact
 
-Feel free to use the [Issue page](https://github.com/cojudge/cojudge/issues) or [Discussion page](https://github.com/cojudge/cojudge/discussions) for any issues, feedback, comments, feature requests, or anything else related to cojudge. If you would rather reach out privately, contact me [here](https://waiyip.life/#contact); I'll respond as soon as I can.
+Feel free to use the [Issue page](https://github.com/cojudge/cojudge/issues) or [Discussion page](https://github.com/cojudge/cojudge/discussions) for any issues, feedback, comments, feature requests, or anything else related to cojudge.
