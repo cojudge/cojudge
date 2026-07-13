@@ -89,7 +89,8 @@ export class CSharpRunner extends ProgramRunner {
                 throw new Error(TIMEOUT_MESSAGE);
             }
             if (inspect.ExitCode !== 0) {
-                throw new Error(stderr || stdout);
+                const combined = (stdout + '\n' + stderr).trim();
+                throw new Error(combined || 'Build failed');
             }
             this.compiled = true;
         } catch (e) {

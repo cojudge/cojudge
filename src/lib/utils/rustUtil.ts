@@ -19,6 +19,24 @@ impl ListNode {
     }
   }
 }
+
+impl Drop for ListNode {
+    fn drop(&mut self) {
+        let self_ptr = self as *const ListNode as usize;
+        let mut curr = self.next.take();
+        let mut visited: std::collections::HashSet<usize> = std::collections::HashSet::new();
+        visited.insert(self_ptr);
+        while let Some(mut node) = curr {
+            let ptr = node.as_ref() as *const ListNode as usize;
+            if visited.contains(&ptr) {
+                std::mem::forget(node);
+                break;
+            }
+            visited.insert(ptr);
+            curr = node.next.take();
+        }
+    }
+}
 `;
 
 export const rustTreeNodeClass = `
@@ -217,17 +235,41 @@ pub fn to_list_node(s: &str) -> Option<Box<ListNode>> {
     let s = s.trim();
     if s == "[]" || s.is_empty() { return None; }
     let s = s.strip_prefix('[').unwrap_or(s).strip_suffix(']').unwrap_or(s);
+    let values: Vec<i32> = s.split(',')
+        .filter_map(|part| part.trim().parse::<i32>().ok())
+        .collect();
+    if values.is_empty() { return None; }
     let mut dummy = Box::new(ListNode::new(0));
-    let mut curr = &mut dummy;
-    for part in s.split(',') {
-        let part = part.trim();
-        if part.is_empty() { continue; }
-        if let Ok(val) = part.parse::<i32>() {
-            curr.next = Some(Box::new(ListNode::new(val)));
-            curr = curr.next.as_mut().unwrap();
-        }
+    let mut curr: &mut ListNode = &mut dummy;
+    for &v in &values {
+        curr.next = Some(Box::new(ListNode::new(v)));
+        curr = curr.next.as_mut().unwrap();
     }
-    dummy.next
+    dummy.next.take()
+}
+
+pub fn add_cycle(head: Option<Box<ListNode>>, pos: i32) -> Option<Box<ListNode>> {
+    if pos < 0 { return head; }
+    
+    let mut raw: Vec<*mut ListNode> = Vec::new();
+    let mut curr = head;
+    while let Some(mut node) = curr {
+        let next = node.next.take();
+        raw.push(Box::into_raw(node));
+        curr = next;
+    }
+    
+    let n = raw.len();
+    let p = pos as usize;
+    if n == 0 || p >= n { return None; }
+    
+    unsafe {
+        for i in 0..n-1 {
+            (*raw[i]).next = Some(Box::from_raw(raw[i+1]));
+        }
+        (*raw[n-1]).next = Some(Box::from_raw(raw[p]));
+        Some(Box::from_raw(raw[0]))
+    }
 }
 
 pub fn to_tree_node(s: &str) -> Option<Rc<RefCell<TreeNode>>> {
@@ -391,7 +433,7 @@ export function rustGetFullParam(params: Param[], tc: any): string {
       parts.push(`to_int_array_2d(${rustEscapeStringLiteral(strVal)})`);
     } else if (p.type === "list_node") {
       parts.push(
-        `to_list_node(${rustEscapeStringLiteral(String(val ?? "[]"))})`,
+        `add_cycle(to_list_node(${rustEscapeStringLiteral(String(val ?? "[]"))}), ${tc.pos !== undefined ? tc.pos : -1})`,
       );
     } else if (p.type === "tree_node") {
       parts.push(

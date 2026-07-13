@@ -69,13 +69,13 @@ describe('formatAndSplitJavaString', () => {
     const params = [ { name: 'wordDict', type: 'string_array' } ];
     const tc = { wordDict: ['leet', 'code'] } as any;
     const res = javaGetFullParam(params as any, tc);
-    expect(res.startsWith('to_string_list(')).toBe(true);
+    expect(res.startsWith('to_string_array(')).toBe(true);
   });
 
   it('formats params for string_array from raw string', () => {
     const params = [ { name: 'wordDict', type: 'string_array' } ];
     const tc = { wordDict: "['apple','pen']" } as any;
     const res = javaGetFullParam(params as any, tc);
-    expect(res.startsWith('to_string_list(')).toBe(true);
+    expect(res.startsWith('to_string_array(')).toBe(true);
   });
 });

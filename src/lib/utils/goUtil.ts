@@ -322,6 +322,29 @@ func toListNode(s string) *ListNode {
     return dummy.Next
 }
 
+func addCycle(head *ListNode, pos int) *ListNode {
+    if pos < 0 || head == nil {
+        return head
+    }
+    cur := head
+    var cycleNode *ListNode
+    i := 0
+    for cur != nil {
+        if i == pos {
+            cycleNode = cur
+        }
+        if cur.Next == nil {
+            break
+        }
+        cur = cur.Next
+        i++
+    }
+    if cycleNode != nil {
+        cur.Next = cycleNode
+    }
+    return head
+}
+
 func toListNodeArray(s string) []*ListNode {
     strArr := toStringArray(s)
     res := make([]*ListNode, len(strArr))
@@ -472,7 +495,7 @@ export function goGetFullParam(params: Param[], tc: any): string {
             }
             parts.push(`toByteArray2d(${goEscapeStringLiteral(strVal)})`);
         } else if (p.type === "list_node") {
-            parts.push(`toListNode(${goEscapeStringLiteral(String(val ?? "[]"))})`);
+            parts.push(`addCycle(toListNode(${goEscapeStringLiteral(String(val ?? "[]"))}), ${tc.pos !== undefined ? tc.pos : -1})`);
         } else if (p.type === "list_node_array") {
             parts.push(`toListNodeArray(${goEscapeStringLiteral(String(val ?? "[]"))})`);
         } else if (p.type === "tree_node") {

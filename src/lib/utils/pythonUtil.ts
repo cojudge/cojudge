@@ -110,10 +110,27 @@ def to_list_node(x: str) -> Optional[ListNode]:
     int_list = literal_eval(x)
     dummy = ListNode(-1)
     cur = dummy
-    for x in int_list:
-        cur.next = ListNode(x)
+    for v in int_list:
+        cur.next = ListNode(v)
         cur = cur.next
     return dummy.next
+
+def add_cycle(head: Optional[ListNode], pos: int) -> Optional[ListNode]:
+    if pos < 0 or head is None:
+        return head
+    cur = head
+    cycle_node = None
+    i = 0
+    while cur:
+        if i == pos:
+            cycle_node = cur
+        if cur.next is None:
+            break
+        cur = cur.next
+        i += 1
+    if cycle_node is not None:
+        cur.next = cycle_node
+    return head
 
 def read_graph_node(x: str) -> Optional['GraphNode']:
     if not x or x.strip() == '[]':
@@ -180,7 +197,7 @@ export function pyGetFullParam(params: Param[], tc: any): string {
             parts.push(String(val) === 'true' ? 'True' : 'False');
         } else if (param.type === 'list_node') {
             const escaped = String(val ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-            parts.push(`to_list_node('${escaped}')`);
+            parts.push(`add_cycle(to_list_node('${escaped}'), ${tc.pos !== undefined ? tc.pos : -1})`);
         } else if (param.type === 'list_node_array') {
             const escaped = String(val ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
             parts.push(`to_list_node_array('${escaped}')`);

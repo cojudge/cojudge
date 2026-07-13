@@ -336,6 +336,23 @@ static ListNode* to_list_node(const string &s) {
     return head;
 }
 
+static ListNode* add_cycle(ListNode* head, int pos) {
+    if (pos < 0 || head == nullptr) return head;
+    ListNode* cur = head;
+    ListNode* cycleNode = nullptr;
+    int i = 0;
+    while (cur != nullptr) {
+        if (i == pos) cycleNode = cur;
+        if (cur->next == nullptr) break;
+        cur = cur->next;
+        i++;
+    }
+    if (cycleNode != nullptr) {
+        cur->next = cycleNode;
+    }
+    return head;
+}
+
 static vector<ListNode*> to_list_node_array(const string &s) {
     vector<string> sarr = to_string_array(s);
     vector<ListNode*> ans(sarr.size());
@@ -526,7 +543,7 @@ export function cppGetFullParam(params: Param[], tc: any): string {
         } else if (p.type === 'boolean') {
             parts.push(String(val) === 'true' ? 'true' : 'false');
         } else if (p.type === 'list_node') {
-            parts.push(`to_list_node(${cppEscapeStringLiteral(val ?? '[]')})`);
+            parts.push(`add_cycle(to_list_node(${cppEscapeStringLiteral(val ?? '[]')}), ${tc.pos !== undefined ? tc.pos : -1})`);
         } else if (p.type === 'list_node_array') {
             parts.push(`to_list_node_array(${cppEscapeStringLiteral(val ?? '[]')})`);
         } else if (p.type === 'tree_node') {
@@ -735,6 +752,9 @@ export function generateCppRunner(functionName: string, params: Param[], testCas
                         strVal = String(raw ?? '[]');
                     }
                     decls.push(`ListNode* ${vname} = to_list_node(${cppEscapeStringLiteral(strVal)});`);
+                    if (tc.pos !== undefined && tc.pos >= 0) {
+                        decls.push(`add_cycle(${vname}, ${tc.pos});`);
+                    }
                     args.push(vname);
                 } else if (p.type === 'list_node_array') {
                     let strVal: string;

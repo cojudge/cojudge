@@ -133,11 +133,28 @@ function toListNode(s: any): ListNode | null {
     if (!arr || arr.length === 0) return null;
     const dummy = new ListNode(0);
     let cur: ListNode = dummy;
-    for (const v of arr) {
-        cur.next = new ListNode(v);
+    for (let i = 0; i < arr.length; i++) {
+        cur.next = new ListNode(arr[i]);
         cur = cur.next;
     }
     return dummy.next;
+}
+
+function addCycle(head: ListNode | null, pos: number): ListNode | null {
+    if (pos < 0 || head === null) return head;
+    let cur: ListNode | null = head;
+    let cycleNode: ListNode | null = null;
+    let i = 0;
+    while (cur !== null) {
+        if (i === pos) cycleNode = cur;
+        if (cur.next === null) break;
+        cur = cur.next;
+        i++;
+    }
+    if (cycleNode !== null && cur !== null) {
+        cur.next = cycleNode;
+    }
+    return head;
 }
 
 function toListNodeArray(s: any): (ListNode | null)[] {
@@ -248,7 +265,7 @@ export function tsGetFullParam(params: Param[], tc: any): string {
             } else {
                 strVal = String(val ?? '[]');
             }
-            parts.push(`toListNode(${strVal})`);
+            parts.push(`addCycle(toListNode(${strVal}), ${tc.pos !== undefined ? tc.pos : -1})`);
         } else if (p.type === 'list_node_array') {
             let strVal: string;
             if (Array.isArray(val)) {

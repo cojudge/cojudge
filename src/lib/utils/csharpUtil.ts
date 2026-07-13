@@ -47,11 +47,30 @@ public static class CSharpHelper {
     
     public static ListNode ToListNode(string s) {
         int[] arr = ToIntArray(s);
-        if (arr.Length == 0) return null;
         ListNode dummy = new ListNode(0);
         ListNode cur = dummy;
-        foreach (int x in arr) { cur.next = new ListNode(x); cur = cur.next; }
+        for (int i = 0; i < arr.Length; i++) {
+            cur.next = new ListNode(arr[i]);
+            cur = cur.next;
+        }
         return dummy.next;
+    }
+    
+    public static ListNode AddCycle(ListNode head, int pos) {
+        if (pos < 0 || head == null) return head;
+        ListNode cur = head;
+        ListNode cycleNode = null;
+        int i = 0;
+        while (cur != null) {
+            if (i == pos) cycleNode = cur;
+            if (cur.next == null) break;
+            cur = cur.next;
+            i++;
+        }
+        if (cycleNode != null) {
+            cur.next = cycleNode;
+        }
+        return head;
     }
     
     public static string DisplayOutput(ListNode head) {
@@ -108,7 +127,7 @@ public static class CSharpHelper {
         sb.Append("]");
         return sb.ToString();
     }
-    public static string DisplayOutput(bool val) { return val.ToString(); }
+    public static string DisplayOutput(bool val) { return val.ToString().ToLower(); }
     public static string DisplayOutputStringList(List<string> lst) {
         StringBuilder sb = new StringBuilder();
         sb.Append("[");
@@ -449,7 +468,7 @@ export function csharpGetFullParam(params: Param[], tc: any): string {
         if (param.type === 'string') {
             fullParam += formatAndSplitCSharpString(val);
         } else if ((param.type as any) === 'list_node') {
-            fullParam += `CSharpHelper.ToListNode(${formatAndSplitCSharpString(val)})`;
+            fullParam += `CSharpHelper.AddCycle(CSharpHelper.ToListNode(${formatAndSplitCSharpString(val)}), ${tc.pos !== undefined ? tc.pos : -1})`;
         } else if ((param.type as any) === 'tree_node') {
             fullParam += `CSharpHelper.ToTreeNode(${formatAndSplitCSharpString(val)})`;
         } else if ((param.type as any) === 'graph_node') {

@@ -28,15 +28,32 @@
     "typescript": "import { ListNode } from './ListNode';\nexport function hasCycle(head: ListNode | null): boolean {\n    \n}"
   },
   "testCases": [
-    {
-      "head": "[]"
-    },
-    {
-      "head": "[1]"
-    },
-    {
-      "head": "[1,2,3,4,5]"
-    }
+    { "head": "[]", "pos": -1 },
+    { "head": "[1]", "pos": -1 },
+    { "head": "[1]", "pos": 0 },
+    { "head": "[1,2]", "pos": -1 },
+    { "head": "[1,2]", "pos": 0 },
+    { "head": "[1,2]", "pos": 1 },
+    { "head": "[3,2,0,-4]", "pos": 1 },
+    { "head": "[3,2,0,-4]", "pos": -1 },
+    { "head": "[1,2,3]", "pos": -1 },
+    { "head": "[1,2,3]", "pos": 1 },
+    { "head": "[1,2,3]", "pos": 2 },
+    { "head": "[1,2,3,4,5]", "pos": -1 },
+    { "head": "[1,2,3,4,5]", "pos": 0 },
+    { "head": "[1,2,3,4,5]", "pos": 2 },
+    { "head": "[1,2,3,4,5]", "pos": 4 },
+    { "head": "[-5,10,100,-1000]", "pos": -1 },
+    { "head": "[-5,10,100,-1000]", "pos": 0 },
+    { "head": "[-5,10,100,-1000]", "pos": 3 },
+    { "head": "[10,20,30,40,50,60]", "pos": -1 },
+    { "head": "[10,20,30,40,50,60]", "pos": 3 },
+    { "head": "[0]", "pos": -1 },
+    { "head": "[0]", "pos": 0 },
+    { "head": "[100000]", "pos": 0 },
+    { "head": "[-100000]", "pos": 0 },
+    { "head": "[1,1,1,1,1]", "pos": -1 },
+    { "head": "[1,1,1,1,1]", "pos": 2 }
   ],
   "functionName": "hasCycle",
   "params": [

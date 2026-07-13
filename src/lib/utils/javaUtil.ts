@@ -47,8 +47,27 @@ export const javaHelperMethods = `
         int[] arr = to_int_array(s);
         ListNode dummy = new ListNode(0);
         ListNode cur = dummy;
-        for (int x : arr) { cur.next = new ListNode(x); cur = cur.next; }
+        for (int i = 0; i < arr.length; i++) {
+            cur.next = new ListNode(arr[i]);
+            cur = cur.next;
+        }
         return dummy.next;
+    }
+    private static ListNode add_cycle(ListNode head, int pos) throws Exception {
+        if (pos < 0 || head == null) return head;
+        ListNode cur = head;
+        ListNode cycleNode = null;
+        int i = 0;
+        while (cur != null) {
+            if (i == pos) cycleNode = cur;
+            if (cur.next == null) break;
+            cur = cur.next;
+            i++;
+        }
+        if (cycleNode != null) {
+            cur.next = cycleNode;
+        }
+        return head;
     }
     private static String displayOutput(ListNode head) {
         StringBuilder sb = new StringBuilder();
@@ -420,7 +439,7 @@ export function javaGetFullParam(params: Param[], tc: any): string {
             fullParam += formatAndSplitJavaString(val);
         } else if ((param.type as any) === 'list_node') {
             // Parse string like "[1,2,3]" into a linked list using user's ListNode
-            fullParam += `to_list_node(${formatAndSplitJavaString(val)})`;
+            fullParam += `add_cycle(to_list_node(${formatAndSplitJavaString(val)}), ${tc.pos !== undefined ? tc.pos : -1})`;
         } else if ((param.type as any) === 'tree_node') {
             fullParam += `to_tree_node(${formatAndSplitJavaString(val)})`;
         } else if ((param.type as any) === 'graph_node') {
