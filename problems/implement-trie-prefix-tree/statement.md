@@ -7,35 +7,6 @@ Implement the Trie class:
 - `boolean search(String word)` Returns `true` if the string `word` is in the trie (i.e., was inserted before), and `false` otherwise.
 - `boolean startsWith(String prefix)` Returns `true` if there is a previously inserted string `word` that has the prefix `prefix`, and `false` otherwise.
 
-**Example 1:**
-
-```
-Input
-operations = ["Trie","insert","search","search","startsWith","insert","search"]
-values = ["","apple","apple","app","app","app","app"]
-Output
-[null,null,true,false,true,null,true]
-
-Explanation
-Trie trie = new Trie();
-trie.insert("apple");
-trie.search("apple");   // return True
-trie.search("app");     // return False
-trie.startsWith("app"); // return True
-trie.insert("app");
-trie.search("app");     // return True
-```
-
-**Example 2:**
-
-```
-Input
-operations = ["Trie","insert","search","startsWith"]
-values = ["","hello","hello","hell"]
-Output
-[null,null,true,true]
-```
-
 **Constraints:**
 
 - `1 <= word.length, prefix.length <= 2000`

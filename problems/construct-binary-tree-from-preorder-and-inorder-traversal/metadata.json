@@ -29,10 +29,6 @@
       "inorder": "[9,3,15,20,7]"
     },
     {
-      "preorder": "[]",
-      "inorder": "[]"
-    },
-    {
       "preorder": "[1,2]",
       "inorder": "[2,1]"
     },

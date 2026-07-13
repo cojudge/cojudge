@@ -1,1 +1,6 @@
 You are given an array `prices` where prices[i] is the price of a given stock on the i-th day. Find the maximum profit you can achieve. You may complete at most one transaction (i.e., buy one and sell one share of the stock). Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+
+**Constraints:**
+
+- 1 ≤ prices.length ≤ 10^5
+- 0 ≤ prices[i] ≤ 10^4

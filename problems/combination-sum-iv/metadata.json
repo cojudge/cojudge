@@ -33,10 +33,6 @@
       "target": 5
     },
     {
-      "nums": "[]",
-      "target": 5
-    },
-    {
       "nums": "[1,2]",
       "target": 5
     },

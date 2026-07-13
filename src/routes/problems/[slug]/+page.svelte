@@ -24,6 +24,20 @@
     export let data;
     const problemId = data.problem.id;
     let isMac = false;
+    let description = '';
+    let constraints = '';
+
+    $: {
+        const text = data.problem.statement;
+        const idx = text.search(/\n\*\*Constraints?\s*:/);
+        if (idx === -1) {
+            description = text;
+            constraints = '';
+        } else {
+            description = text.slice(0, idx);
+            constraints = text.slice(idx);
+        }
+    }
     let isGameMode = false;
     let gameStartTime = 0;
     let showGameResult = false;
@@ -690,8 +704,9 @@
                 </div>
             {:else}
                 <!-- Statement content is sourced from problems/[slug]/statement.md (attached on server as problem.statement) -->
+                <!-- Render description (everything before constraints), then examples, then constraints -->
                 <div class="markdown-body">
-                    {@html renderMarkdown(data.problem.statement)}
+                    {@html renderMarkdown(description)}
                 </div>
                 {#each data.problem.examples as example}
                     <div class="example">
@@ -704,6 +719,11 @@
                         {/if}
                     </div>
                 {/each}
+                {#if constraints}
+                    <div class="markdown-body constraints-section">
+                        {@html renderMarkdown(constraints)}
+                    </div>
+                {/if}
 
                 {#if data.problem.hints && data.problem.hints.length}
                     {#each data.problem.hints as hint, i}
@@ -1476,5 +1496,9 @@
         align-items: center;
         flex: 1;
         min-width: 0;
+    }
+
+    .constraints-section {
+        margin-bottom: var(--spacing-5);
     }
 </style>
