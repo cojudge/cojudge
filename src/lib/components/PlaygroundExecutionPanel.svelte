@@ -758,11 +758,11 @@
                 </span>
                 <div style="display:flex;align-items:center;gap:8px;margin-right:20px;">
                     {#if isDebugSupported(language)}
-                        <Tooltip text={"Run in Debug mode"}>
+                        <Tooltip text={debugBreakpoints.length === 0 ? "No breakpoint selected" : "Run in Debug mode"}>
                             <button
                                 class="btn btn-debug"
                                 on:click={handleDebugRun}
-                                disabled={isLoading || !!debugJobId}
+                                disabled={isLoading || !!debugJobId || debugBreakpoints.length === 0}
                                 aria-label="Debug"
                             >
                                 Debug
@@ -983,6 +983,16 @@
     .btn-debug:hover {
         border-color: var(--color-highlight);
         color: var(--color-highlight);
+    }
+    .btn-debug:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        border-color: var(--color-border);
+        color: var(--color-text-secondary);
+    }
+    .btn-debug:disabled:hover {
+        border-color: var(--color-border);
+        color: var(--color-text-secondary);
     }
     .btn-debug.active {
         background-color: rgba(229, 62, 62, 0.15);

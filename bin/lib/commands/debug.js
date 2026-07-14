@@ -82,8 +82,19 @@ async function debugAction(PORT, action, jobId) {
     }
 }
 
+function cleanDebugOutput(output) {
+    return output
+        .split('\n')
+        .filter((l) => l.trim() !== '---' && !l.startsWith(':::'))
+        .join('\n');
+}
+
 function printState(data, jobId) {
     console.log(`\n\x1b[1mDebug Session: ${jobId}\x1b[0m`);
+
+    if (data.testCase) {
+        console.log(`Test:    \x1b[35mcase ${data.testCase}${data.totalTestCases ? '/' + data.totalTestCases : ''}\x1b[0m`);
+    }
 
     if (data.status === 'running') {
         console.log('Status:  \x1b[33mRunning\x1b[0m (waiting to hit a breakpoint)');
@@ -101,21 +112,25 @@ function printState(data, jobId) {
             }
         }
 
-        if (data.output && data.output.trim()) {
-            console.log('Output so far:');
-            const lines = data.output.trim().split('\n');
-            for (const line of lines) {
-                console.log(`  \x1b[90m${line}\x1b[0m`);
+        if (data.output) {
+            const cleaned = cleanDebugOutput(data.output).trim();
+            if (cleaned) {
+                console.log('Output so far:');
+                for (const line of cleaned.split('\n')) {
+                    console.log(`  \x1b[90m${line}\x1b[0m`);
+                }
             }
         }
     } else if (data.status === 'completed') {
         console.log('Status:  \x1b[32mCompleted\x1b[0m');
 
-        if (data.output && data.output.trim()) {
-            console.log('Output:');
-            const lines = data.output.trim().split('\n');
-            for (const line of lines) {
-                console.log(`  ${line}`);
+        if (data.output) {
+            const cleaned = cleanDebugOutput(data.output).trim();
+            if (cleaned) {
+                console.log('Output:');
+                for (const line of cleaned.split('\n')) {
+                    console.log(`  ${line}`);
+                }
             }
         }
     } else if (data.status === 'error') {

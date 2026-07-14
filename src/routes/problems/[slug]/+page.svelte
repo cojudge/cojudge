@@ -161,6 +161,8 @@
     let code: string;
     let currentViewState: string | null = null;
     let editorComponent: any;
+    let debugBreakpoints: number[] = [];
+    let activeDebugLine: number | null = null;
     let isResizing = false;
     let workspaceElement: HTMLElement;
     let openedHints = new Set<number>([]);
@@ -949,6 +951,8 @@
                     {theme} 
                     {vimMode} 
                     viewState={currentViewState}
+                    bind:breakpoints={debugBreakpoints}
+                    {activeDebugLine}
                 />
             {:else}
                 Loading...
@@ -960,6 +964,8 @@
             {language}
             gameMode={isGameMode}
             gameStartTime={gameStartTime}
+            debugBreakpoints={debugBreakpoints}
+            bind:activeDebugLine={activeDebugLine}
             on:gameSubmitSuccess={(e) => {
                 const { runCount, submitCount, timeSpent } = e.detail;
                 const result = computeGameResult(runCount, submitCount, timeSpent, code, language);

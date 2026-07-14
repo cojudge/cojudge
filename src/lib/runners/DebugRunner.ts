@@ -1,7 +1,10 @@
-import { javaImage } from "$lib/utils/javaUtil";
-import { pythonImage } from "$lib/utils/pythonUtil";
-import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, TIMEOUT_MESSAGE } from "$lib/utils/util";
+import { generateJavaClassSolution, generateJavaRunner, javaGraphNodeClass, javaImage, javaListNodeClass, javaTreeNodeClass } from "$lib/utils/javaUtil";
+import { generatePythonClassSolution, generatePythonRunner, pythonGraphNodeClass, pythonImage, pythonListNodeClass, pythonTreeNodeClass } from "$lib/utils/pythonUtil";
+import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, extractOperations, TIMEOUT_MESSAGE } from "$lib/utils/util";
+import { getMarkerResponses } from "../markerRunner";
 import Dockerode from "dockerode";
+import fs from 'fs/promises';
+import path from 'path';
 import tar from 'tar-stream';
 import ContainerPool from "./ContainerPool";
 import { JAVA_DEBUG_DRIVER } from "./JavaDebugDriver";
@@ -17,6 +20,9 @@ export type DebugState = {
     vars?: Record<string, string>;
     output?: string;
     error?: string;
+    testCase?: number;
+    totalTestCases?: number;
+    results?: any[];
 };
 
 export type DebugSession = {
@@ -28,7 +34,12 @@ export type DebugSession = {
     state: 'idle' | 'running' | 'paused' | 'completed' | 'error';
     stateData?: DebugState;
     runCmd: string[];
+    mode: 'playground' | 'problem';
+    totalTestCases?: number;
     createdAt: number;
+    problemId?: string;
+    testCases?: any[];
+    resultsCache?: any[];
 };
 
 const debugSessions: Map<string, DebugSession> = new Map();
@@ -43,7 +54,7 @@ function genId(): string {
     return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 }
 
-function generatePythonDebugWrapper(code: string, breakpoints: number[]): string {
+function generatePythonDebugWrapper(breakpoints: number[], entryFile: string, sourceFile: string): string {
     const bpSet = new Set(breakpoints);
     const bpStr = `{${[...bpSet].join(', ')}}`;
 
@@ -53,7 +64,8 @@ import sys, os, json, time, types, io
 _COJUDGE_BREAKPOINTS = ${bpStr}
 _COJUDGE_STATE_FILE = '${DEBUG_STATE_FILE}'
 _COJUDGE_CMD_FILE = '${DEBUG_CMD_FILE}'
-_COJUDGE_SOURCE_FILE = '/app/user_code.py'
+_COJUDGE_SOURCE_FILE = '${sourceFile}'
+_COJUDGE_ENTRY_FILE = '${entryFile}'
 
 _next_line_only = False
 _capture_buffer = io.StringIO()
@@ -150,7 +162,7 @@ _write_state('running')
 sys.settrace(_cojudge_trace)
 
 try:
-    exec(compile(open(_COJUDGE_SOURCE_FILE).read(), _COJUDGE_SOURCE_FILE, 'exec'), {'__name__': '__main__'})
+    exec(compile(open(_COJUDGE_ENTRY_FILE).read(), _COJUDGE_ENTRY_FILE, 'exec'), {'__name__': '__main__'})
     _write_state('completed')
 except SystemExit:
     pass
@@ -247,15 +259,7 @@ async function runExec(container: Dockerode.Container, cmd: string[]): Promise<{
     return { stdout, stderr, exitCode: inspect.ExitCode };
 }
 
-export async function startDebugSession(language: string, code: string, debugLines: number[]): Promise<string> {
-    const jobId = genId();
-
-    const image = SUPPORTED_DEBUG_LANGUAGES[language];
-    if (!image) {
-        const supported = Object.keys(SUPPORTED_DEBUG_LANGUAGES).join(', ');
-        throw new Error(`Debugging is not yet supported for ${language}. Currently supported: ${supported}.`);
-    }
-
+async function acquireDebugContainer(image: string): Promise<Dockerode.Container> {
     let container: Dockerode.Container | null = await ContainerPool.acquire(image);
     if (!container) {
         await ensureImageAvailable(docker, image);
@@ -269,11 +273,123 @@ export async function startDebugSession(language: string, code: string, debugLin
         await container.start();
         ContainerPool.acquirePermanent(image, container);
     }
+    // Clear stale state from a previous debug session on a pooled container
+    await runExec(container, ['sh', '-c', `rm -f ${DEBUG_STATE_FILE} ${DEBUG_CMD_FILE}`]);
+    return container;
+}
+
+function countCompletedCases(output?: string): number {
+    if (!output) return 0;
+    return output.split('\n').filter(l => l.trim() === '---').length;
+}
+
+function decorateState(session: DebugSession, state: DebugState): DebugState {
+    if (session.mode === 'problem' && session.totalTestCases) {
+        state.totalTestCases = session.totalTestCases;
+        if (state.status === 'paused' || state.status === 'running') {
+            state.testCase = Math.min(countCompletedCases(state.output) + 1, session.totalTestCases);
+        } else if (state.status === 'completed') {
+            state.testCase = session.totalTestCases;
+        }
+    }
+    return state;
+}
+
+function parseDebugOutputToChunks(output: string, totalCount: number): string[] {
+    const rawChunks = output.split(/---\r?\n/);
+    const chunks = rawChunks.map(c => c.trim());
+    if (chunks.length > totalCount && chunks[chunks.length - 1] === '') {
+        chunks.pop();
+    }
+    while (chunks.length < totalCount) {
+        chunks.push('');
+    }
+    return chunks.slice(0, totalCount);
+}
+
+async function evaluateCompletedResults(session: DebugSession, state: DebugState): Promise<DebugState> {
+    if (session.mode === 'problem' && session.problemId && session.testCases) {
+        if (session.resultsCache) {
+            state.results = session.resultsCache;
+            return state;
+        }
+        try {
+            const chunks = parseDebugOutputToChunks(state.output || '', session.totalTestCases || session.testCases.length);
+            const parsed = chunks.map((chunk) => {
+                const lines = chunk.split('\n');
+                const idx = lines.findIndex((l) => l.startsWith(':::RESULT:::'));
+                const output = idx !== -1 ? lines[idx].slice(':::RESULT:::'.length).trim() : '';
+                const logs = lines
+                    .filter((l) =>
+                        !l.startsWith(':::RESULT:::') &&
+                        !l.startsWith(':::VERDICT:::') &&
+                        !l.startsWith(':::ANSWER:::') &&
+                        !l.startsWith(':::ERROR:::')
+                    )
+                    .filter((l) => l.trim().length > 0)
+                    .join('\n');
+                return { output, logs };
+            });
+
+            const onlyOutputs = parsed.map((p) => p.output);
+            const markerOutputs = onlyOutputs.map((o, i) => {
+                if (!o) {
+                    const tc = session.testCases![i];
+                    return tc.adjList || tc.input || '[]';
+                }
+                return o;
+            });
+
+            const problemPath = path.resolve('problems', session.problemId, 'metadata.json');
+            const problemContent = await fs.readFile(problemPath, 'utf-8');
+            const problemData = JSON.parse(problemContent);
+
+            const markerResponses = await getMarkerResponses(
+                session.problemId,
+                problemData.functionName,
+                problemData.params,
+                session.testCases,
+                markerOutputs,
+                problemData.outputType
+            );
+
+            state.results = session.testCases.map((tc: any, index: number) => ({
+                ...tc,
+                output: parsed[index]?.output ?? '',
+                logs: parsed[index]?.logs ?? '',
+                isCorrect: markerResponses[index].isCorrect,
+                correctAnswer: markerResponses[index].correctAnswer,
+                error: null
+            }));
+            session.resultsCache = state.results;
+        } catch (err) {
+            console.error('Failed to evaluate debug results with marker:', err);
+        }
+    }
+    return state;
+}
+
+function registerSession(session: DebugSession): string {
+    debugSessions.set(session.jobId, session);
+    executeDebugRun(session);
+    return session.jobId;
+}
+
+export async function startDebugSession(language: string, code: string, debugLines: number[]): Promise<string> {
+    const jobId = genId();
+
+    const image = SUPPORTED_DEBUG_LANGUAGES[language];
+    if (!image) {
+        const supported = Object.keys(SUPPORTED_DEBUG_LANGUAGES).join(', ');
+        throw new Error(`Debugging is not yet supported for ${language}. Currently supported: ${supported}.`);
+    }
+
+    const container = await acquireDebugContainer(image);
 
     let runCmd: string[];
 
     if (language === 'python') {
-        const debugWrapper = generatePythonDebugWrapper(code, debugLines);
+        const debugWrapper = generatePythonDebugWrapper(debugLines, '/app/user_code.py', '/app/user_code.py');
         const pack = tar.pack();
         pack.entry({ name: 'debug_main.py' }, Buffer.from(debugWrapper));
         pack.entry({ name: 'user_code.py' }, Buffer.from(code));
@@ -297,7 +413,7 @@ export async function startDebugSession(language: string, code: string, debugLin
         runCmd = ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', `java DebugDriver "${bps}"`];
     }
 
-    const session: DebugSession = {
+    return registerSession({
         jobId,
         container,
         language,
@@ -306,13 +422,103 @@ export async function startDebugSession(language: string, code: string, debugLin
         state: 'running',
         stateData: { status: 'running' },
         runCmd,
+        mode: 'playground',
         createdAt: Date.now()
-    };
-    debugSessions.set(jobId, session);
+    });
+}
 
-    executeDebugRun(session);
+export async function startProblemDebugSession(problemId: string, language: string, code: string, testCases: any[], debugLines: number[]): Promise<string> {
+    const jobId = genId();
 
-    return jobId;
+    const image = SUPPORTED_DEBUG_LANGUAGES[language];
+    if (!image) {
+        const supported = Object.keys(SUPPORTED_DEBUG_LANGUAGES).join(', ');
+        throw new Error(`Debugging is not yet supported for ${language}. Currently supported: ${supported}.`);
+    }
+    if (!problemId) throw new Error('Missing problemId for problem debug session');
+    if (!Array.isArray(testCases) || testCases.length === 0) {
+        throw new Error(`No test cases available for problem '${problemId}'`);
+    }
+
+    const problemPath = path.resolve('problems', problemId, 'metadata.json');
+    const problemContent = await fs.readFile(problemPath, 'utf-8');
+    const problemData = JSON.parse(problemContent);
+
+    const container = await acquireDebugContainer(image);
+
+    let runCmd: string[];
+
+    if (language === 'python') {
+        const runnerCode = generatePythonRunner(problemData.functionName, problemData.params, testCases, problemData.checkGraphClone);
+        let sourceFile = '/app/Solution.py';
+
+        const pack = tar.pack();
+        pack.entry({ name: 'ListNode.py' }, Buffer.from(pythonListNodeClass));
+        pack.entry({ name: 'TreeNode.py' }, Buffer.from(pythonTreeNodeClass));
+        pack.entry({ name: 'GraphNode.py' }, Buffer.from(pythonGraphNodeClass));
+        if (problemData.classProblem) {
+            const className = problemData.classProblem.userClassName || 'MedianFinder';
+            const operations = extractOperations(testCases, className);
+            const wrapperCode = generatePythonClassSolution(className, problemData.params, problemData.outputType, operations);
+            pack.entry({ name: `${className}.py` }, Buffer.from(code));
+            pack.entry({ name: 'Solution.py' }, Buffer.from(wrapperCode));
+            sourceFile = `/app/${className}.py`;
+        } else {
+            pack.entry({ name: 'Solution.py' }, Buffer.from(code));
+        }
+        pack.entry({ name: 'main.py' }, Buffer.from(runnerCode));
+        pack.entry({ name: 'debug_main.py' }, Buffer.from(generatePythonDebugWrapper(debugLines, '/app/main.py', sourceFile)));
+        pack.finalize();
+        await container.putArchive(pack as any, { path: '/app' });
+        runCmd = ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'python3 -B debug_main.py'];
+    } else {
+        // java
+        const runnerCode = generateJavaRunner(problemData.functionName, problemData.params, testCases, problemData.outputType, problemData.checkGraphClone);
+        let sourceFile = 'Solution.java';
+
+        const pack = tar.pack();
+        pack.entry({ name: 'ListNode.java' }, Buffer.from(javaListNodeClass));
+        pack.entry({ name: 'TreeNode.java' }, Buffer.from(javaTreeNodeClass));
+        pack.entry({ name: 'GraphNode.java' }, Buffer.from(javaGraphNodeClass));
+        if (problemData.classProblem) {
+            const className = problemData.classProblem.userClassName || 'MedianFinder';
+            const operations = extractOperations(testCases, className);
+            const wrapperCode = generateJavaClassSolution(className, problemData.params, problemData.outputType, operations);
+            pack.entry({ name: `${className}.java` }, Buffer.from(code));
+            pack.entry({ name: 'Solution.java' }, Buffer.from(wrapperCode));
+            sourceFile = `${className}.java`;
+        } else {
+            pack.entry({ name: 'Solution.java' }, Buffer.from(code));
+        }
+        pack.entry({ name: 'Main.java' }, Buffer.from(runnerCode));
+        pack.entry({ name: 'DebugDriver.java' }, Buffer.from(JAVA_DEBUG_DRIVER));
+        pack.finalize();
+        await container.putArchive(pack as any, { path: '/app' });
+
+        const compile = await runExec(container, ['/bin/sh', '-c', 'javac -g *.java']);
+        if (compile.exitCode !== 0) {
+            await ContainerPool.markForCleanup(container);
+            throw new Error(`Compilation failed:\n${compile.stderr || compile.stdout}`);
+        }
+        const bps = debugLines.join(',');
+        runCmd = ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', `java DebugDriver "${bps}" Main "${sourceFile}"`];
+    }
+
+    return registerSession({
+        jobId,
+        container,
+        language,
+        code,
+        breakpoints: debugLines,
+        state: 'running',
+        stateData: { status: 'running' },
+        runCmd,
+        mode: 'problem',
+        problemId,
+        testCases,
+        totalTestCases: testCases.length,
+        createdAt: Date.now()
+    });
 }
 
 async function executeDebugRun(session: DebugSession) {
@@ -352,7 +558,10 @@ async function executeDebugRun(session: DebugSession) {
 
         session.state = state.status === 'paused' ? 'paused' :
                        state.status === 'completed' ? 'completed' : 'error';
-        session.stateData = state;
+        session.stateData = decorateState(session, state);
+        if (state.status === 'completed') {
+            await evaluateCompletedResults(session, session.stateData);
+        }
 
     } catch (e: any) {
         session.state = 'error';
@@ -365,7 +574,6 @@ export async function getDebugState(jobId: string): Promise<DebugState> {
     if (!session) throw new Error(`Debug session '${jobId}' not found`);
 
     const state = await readDebugState(session.container);
-    session.stateData = state;
 
     if (state.status === 'paused') {
         session.state = 'paused';
@@ -375,7 +583,11 @@ export async function getDebugState(jobId: string): Promise<DebugState> {
         session.state = 'error';
     }
 
-    return state;
+    session.stateData = decorateState(session, state);
+    if (state.status === 'completed') {
+        await evaluateCompletedResults(session, session.stateData);
+    }
+    return session.stateData;
 }
 
 export async function debugContinue(jobId: string): Promise<DebugState> {
@@ -384,7 +596,6 @@ export async function debugContinue(jobId: string): Promise<DebugState> {
 
     await writeDebugCmd(session.container, 'continue');
     const state = await waitForPause(session.container);
-    session.stateData = state;
 
     if (state.status === 'paused') {
         session.state = 'paused';
@@ -394,7 +605,11 @@ export async function debugContinue(jobId: string): Promise<DebugState> {
         session.state = 'error';
     }
 
-    return state;
+    session.stateData = decorateState(session, state);
+    if (state.status === 'completed') {
+        await evaluateCompletedResults(session, session.stateData);
+    }
+    return session.stateData;
 }
 
 export async function debugStep(jobId: string): Promise<DebugState> {
@@ -403,7 +618,6 @@ export async function debugStep(jobId: string): Promise<DebugState> {
 
     await writeDebugCmd(session.container, 'step');
     const state = await waitForPause(session.container);
-    session.stateData = state;
 
     if (state.status === 'paused') {
         session.state = 'paused';
@@ -413,7 +627,11 @@ export async function debugStep(jobId: string): Promise<DebugState> {
         session.state = 'error';
     }
 
-    return state;
+    session.stateData = decorateState(session, state);
+    if (state.status === 'completed') {
+        await evaluateCompletedResults(session, session.stateData);
+    }
+    return session.stateData;
 }
 
 export async function debugStop(jobId: string): Promise<void> {

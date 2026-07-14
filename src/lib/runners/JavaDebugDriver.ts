@@ -12,8 +12,8 @@ import java.util.*;
 public class DebugDriver {
     static final String STATE_FILE = "/tmp/cojudge_debug_state.json";
     static final String CMD_FILE = "/tmp/cojudge_debug_cmd.json";
-    static final String MAIN_CLASS = "Main";
-    static final String SOURCE_FILE = "Main.java";
+    static String MAIN_CLASS = "Main";
+    static String SOURCE_FILE = "Main.java";
 
     static Set<Integer> breakpoints = new LinkedHashSet<>();
     static final StringBuffer outputBuffer = new StringBuffer();
@@ -33,6 +33,8 @@ public class DebugDriver {
                 }
             }
         }
+        if (args.length > 1 && !args[1].isEmpty()) MAIN_CLASS = args[1];
+        if (args.length > 2 && !args[2].isEmpty()) SOURCE_FILE = args[2];
 
         writeState("running", -1, null, null);
 
@@ -84,6 +86,13 @@ public class DebugDriver {
     }
 
     static void trySetBreakpoints(ReferenceType rt) {
+        try {
+            if (!SOURCE_FILE.equals(rt.sourceName())) return;
+        } catch (AbsentInformationException e) {
+            return;
+        } catch (Exception e) {
+            return;
+        }
         for (int line : breakpoints) {
             if (resolved.contains(line)) continue;
             try {
@@ -206,6 +215,9 @@ public class DebugDriver {
                         if (bps instanceof List) {
                             breakpoints.clear();
                             resolved.clear();
+                            for (BreakpointRequest br : erm.breakpointRequests()) {
+                                try { erm.deleteEventRequest(br); } catch (Exception ignore) {}
+                            }
                             for (Object o : (List<?>) bps) {
                                 try { breakpoints.add(Integer.parseInt(String.valueOf(o).trim())); } catch (Exception ignore) {}
                             }

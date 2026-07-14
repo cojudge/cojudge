@@ -146,13 +146,7 @@ export async function handleRun(argsToUse, PORT) {
       : { problemId: slug, language: lang, code: code, testCases: testCases };
 
     if (debugLines) {
-      if (!isPlayground) {
-        console.log(
-          `\x1b[33mNote: debugging runs '${filename}' standalone, not against the '${slug}' test harness.\x1b[0m`,
-        );
-      }
-      apiEndpoint = "/api/playground/run";
-      body = { language: lang, code: code, debugLines };
+      body.debugLines = debugLines;
     }
 
     const response = await fetch(`http://localhost:${PORT}${apiEndpoint}`, {
@@ -162,7 +156,12 @@ export async function handleRun(argsToUse, PORT) {
     });
 
     if (!response.ok) {
-      throw new Error(`API error: ${response.statusText}`);
+      let message = response.statusText;
+      try {
+        const errData = await response.json();
+        if (errData && errData.error) message = errData.error;
+      } catch (e) {}
+      throw new Error(message);
     }
 
     const responseData = await response.json();
@@ -276,11 +275,24 @@ export async function handleRun(argsToUse, PORT) {
   }
 }
 
+function cleanDebugOutput(output) {
+  return output
+    .split('\n')
+    .filter((l) => l.trim() !== '---' && !l.startsWith(':::'))
+    .join('\n');
+}
+
 function printDebugState(data, jobId) {
   if (data.status === 'running') {
     console.log('Status:  \x1b[33mRunning\x1b[0m (waiting to hit a breakpoint)');
+    if (data.testCase) {
+      console.log(`Test:    \x1b[35mcase ${data.testCase}${data.totalTestCases ? '/' + data.totalTestCases : ''}\x1b[0m`);
+    }
   } else if (data.status === 'paused') {
     console.log('Status:  \x1b[36mPaused\x1b[0m');
+    if (data.testCase) {
+      console.log(`Test:    \x1b[35mcase ${data.testCase}${data.totalTestCases ? '/' + data.totalTestCases : ''}\x1b[0m`);
+    }
     console.log(`Line:    \x1b[33m${data.line}\x1b[0m`);
 
     if (data.vars && Object.keys(data.vars).length > 0) {
@@ -293,20 +305,24 @@ function printDebugState(data, jobId) {
       }
     }
 
-    if (data.output && data.output.trim()) {
-      console.log('Output so far:');
-      const lines = data.output.trim().split('\n');
-      for (const line of lines) {
-        console.log(`  \x1b[90m${line}\x1b[0m`);
+    if (data.output) {
+      const cleaned = cleanDebugOutput(data.output).trim();
+      if (cleaned) {
+        console.log('Output so far:');
+        for (const line of cleaned.split('\n')) {
+          console.log(`  \x1b[90m${line}\x1b[0m`);
+        }
       }
     }
   } else if (data.status === 'completed') {
     console.log('Status:  \x1b[32mCompleted\x1b[0m');
-    if (data.output && data.output.trim()) {
-      console.log('Output:');
-      const lines = data.output.trim().split('\n');
-      for (const line of lines) {
-        console.log(`  ${line}`);
+    if (data.output) {
+      const cleaned = cleanDebugOutput(data.output).trim();
+      if (cleaned) {
+        console.log('Output:');
+        for (const line of cleaned.split('\n')) {
+          console.log(`  ${line}`);
+        }
       }
     }
   }
@@ -320,16 +336,18 @@ cojudge run - Execute code against sample test cases
 Usage:
   cojudge run <slug> <file>        Run sample tests for a problem
   cojudge run <file>               Run a standalone playground file
-  cojudge run <file> --debug-lines <lines>  Debug with breakpoints
+  cojudge run <slug> <file> --debug-lines <lines>  Debug a solution against a problem's test cases
+  cojudge run <file> --debug-lines <lines>         Debug a playground file
 
 Options:
   --debug-lines <lines>   Comma-separated line numbers to set breakpoints
                           (e.g. --debug-lines 5,10,15)
-                          The file is run standalone in debug mode.
+                          Breakpoints refer to line numbers in your file.
 
 Examples:
   cojudge run two-sum Solution.py
   cojudge run my-script.py
+  cojudge run two-sum Solution.java --debug-lines 4,7
   cojudge run my-script.rs --debug-lines 3,8,12
 `);
 }
