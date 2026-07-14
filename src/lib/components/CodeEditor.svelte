@@ -9,17 +9,72 @@
     export let vimMode: 'off' | 'on' = 'off';
     export let readOnly: boolean = false;
     export let viewState: string | null = null;
+    export let breakpoints: number[] = [];
+    export let activeDebugLine: number | null = null;
 
     let editor: Monaco.editor.IStandaloneCodeEditor | null = null;
     let editorElement: HTMLDivElement;
     let monacoRef: any;
     let vimModeInstance: any = null;
     let vimStatusElement: HTMLDivElement;
+    let bpDecos: string[] = [];
+    let activeLineDecos: string[] = [];
 
     export function getViewState() {
         if (!editor) return null;
         const state = editor.saveViewState();
         return state ? JSON.stringify(state) : null;
+    }
+
+    function updateBreakpointDecorations() {
+        if (!editor || !monacoRef) return;
+        const model = editor.getModel();
+        if (!model) return;
+        const decos = breakpoints.map(line => ({
+            range: new monacoRef.Range(line, 1, line, 1),
+            options: {
+                glyphMarginClassName: 'cojudge-breakpoint',
+                glyphMarginHoverMessage: { value: 'Breakpoint' },
+            }
+        }));
+        bpDecos = model.deltaDecorations(bpDecos, decos);
+    }
+
+    $: if (editor && monacoRef && breakpoints) {
+        if (language === 'python') {
+            updateBreakpointDecorations();
+        } else {
+            if (bpDecos.length > 0 && editor) {
+                const model = editor.getModel();
+                if (model) bpDecos = model.deltaDecorations(bpDecos, []);
+            }
+        }
+    }
+
+    function updateActiveDebugLineDecoration() {
+        if (!editor || !monacoRef) return;
+        const model = editor.getModel();
+        if (!model) return;
+        const decos: any[] = [];
+        if (activeDebugLine && activeDebugLine > 0) {
+            decos.push({
+                range: new monacoRef.Range(activeDebugLine, 1, activeDebugLine, 1),
+                options: {
+                    isWholeLine: true,
+                    className: 'cojudge-debug-active-line-bg',
+                    glyphMarginClassName: 'cojudge-debug-active-line-glyph',
+                    glyphMarginHoverMessage: { value: 'Paused here' }
+                }
+            });
+        }
+        activeLineDecos = model.deltaDecorations(activeLineDecos, decos);
+        if (activeDebugLine && activeDebugLine > 0) {
+            editor.revealLineInCenterIfOutsideViewport(activeDebugLine);
+        }
+    }
+
+    $: if (editor && monacoRef && activeDebugLine !== undefined) {
+        updateActiveDebugLineDecoration();
     }
 
     onMount(() => {
@@ -85,8 +140,28 @@
                 fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
                 fontSize,
                 readOnly,
+                glyphMargin: true,
                 minimap: {
                     enabled: false
+                }
+            });
+
+            editor.onMouseDown((e: any) => {
+                if (language !== 'python') return;
+                if (e.target.type === monaco.editor.MouseTargetType.GUTTER_GLYPH_MARGIN
+                    || e.target.type === monaco.editor.MouseTargetType.GUTTER_LINE_NUMBERS) {
+                    const prevSelection = editor.getSelection();
+                    const line = e.target.position.lineNumber;
+                    const idx = breakpoints.indexOf(line);
+                    if (idx >= 0) {
+                        breakpoints = breakpoints.filter(l => l !== line);
+                    } else {
+                        breakpoints = [...breakpoints, line].sort((a, b) => a - b);
+                    }
+                    updateBreakpointDecorations();
+                    requestAnimationFrame(() => {
+                        if (prevSelection && editor) editor.setSelection(prevSelection);
+                    });
                 }
             });
 
@@ -189,7 +264,7 @@
 </script>
 
 <div class="editor-container">
-    <div class="code-editor" bind:this={editorElement}></div>
+    <div class="code-editor" bind:this={editorElement} data-language={language}></div>
     <div class="vim-status" class:hidden={vimMode !== 'on'} bind:this={vimStatusElement}></div>
 </div>
 
@@ -222,5 +297,59 @@
     }
     .hidden {
         display: none;
+    }
+    :global(.cojudge-breakpoint) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+    :global(.cojudge-breakpoint::after) {
+        content: '';
+        background: #ef4444;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        box-shadow: 0 0 4px rgba(239, 68, 68, 0.6);
+        transition: transform 0.1s ease-in-out;
+    }
+    :global(.cojudge-breakpoint:hover::after) {
+        transform: scale(1.25);
+        background: #f87171;
+    }
+    :global(.cojudge-debug-active-line-bg) {
+        background: rgba(234, 179, 8, 0.18) !important;
+        border-top: 1px solid rgba(234, 179, 8, 0.35);
+        border-bottom: 1px solid rgba(234, 179, 8, 0.35);
+    }
+    :global(.cojudge-debug-active-line-glyph) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    :global(.cojudge-debug-active-line-glyph::after) {
+        content: '';
+        width: 11px;
+        height: 11px;
+        background-color: #f59e0b;
+        clip-path: polygon(15% 15%, 85% 50%, 15% 85%);
+        box-shadow: 0 0 5px rgba(245, 158, 11, 0.8);
+    }
+    :global([data-language="python"] .monaco-editor .margin-view-overlays),
+    :global([data-language="python"] .monaco-editor .margin-view-overlays *) {
+        cursor: pointer !important;
+    }
+    :global([data-language="python"] .monaco-editor .margin-view-overlays > div:hover:not(.cojudge-breakpoint):not(.cojudge-debug-active-line-glyph))::after {
+        content: '';
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 10px;
+        height: 10px;
+        background-color: #ef4444;
+        border-radius: 50%;
+        opacity: 0.5;
+        pointer-events: none;
     }
 </style>

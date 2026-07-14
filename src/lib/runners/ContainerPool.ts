@@ -35,6 +35,18 @@ class ContainerPool {
         return entry.container;
     }
 
+    static acquirePermanent(image: string, container: Dockerode.Container): void {
+        const entries = this.pools.get(image) || [];
+        entries.push({
+            container,
+            image,
+            createdAt: Date.now(),
+            lastUsed: Date.now(),
+            inUse: true
+        });
+        this.pools.set(image, entries);
+    }
+
     static async release(image: string, container: Dockerode.Container): Promise<void> {
         const entries = this.pools.get(image) || [];
         const existing = entries.find(e => e.container.id === container.id);

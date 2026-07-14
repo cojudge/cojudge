@@ -20,8 +20,31 @@ export async function handleSubmit(argsToUse, PORT) {
   const slug = argsToUse[1];
   const filename = argsToUse[2];
 
+  if (slug === '-h' || slug === '--help') {
+    console.log(`
+cojudge submit - Submit code against official test cases
+
+Usage:
+  cojudge submit <slug> <file>   Submit code for a problem
+
+Examples:
+  cojudge submit two-sum Solution.py
+  cojudge submit valid-parens stack.cpp
+`);
+    return;
+  }
+
   if (!slug || !filename) {
-    console.error("Usage: cojudge submit <slug> <file>");
+    console.log(`
+cojudge submit - Submit code against official test cases
+
+Usage:
+  cojudge submit <slug> <file>   Submit code for a problem
+
+Examples:
+  cojudge submit two-sum Solution.py
+  cojudge submit valid-parens stack.cpp
+`);
     process.exit(1);
   }
 

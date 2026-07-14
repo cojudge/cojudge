@@ -8,7 +8,32 @@ import {
 } from "../utils.js";
 import { startServer } from "../server.js";
 
+function parseDebugLines(args) {
+  const debugIdx = args.findIndex(a => a === '--debug-lines');
+  if (debugIdx === -1) return null;
+  const val = args[debugIdx + 1];
+  if (!val) return null;
+  return val.split(',').map(Number).filter(n => !isNaN(n) && n > 0);
+}
+
+function stripDebugArgs(args) {
+  const result = [];
+  let i = 0;
+  while (i < args.length) {
+    if (args[i] === '--debug-lines') {
+      i += 2;
+    } else {
+      result.push(args[i]);
+      i++;
+    }
+  }
+  return result;
+}
+
 export async function handleRun(argsToUse, PORT) {
+  const debugLines = parseDebugLines(argsToUse);
+  const cleanedArgs = debugLines ? stripDebugArgs(argsToUse) : argsToUse;
+
   if (!isDockerRunning()) {
     console.error(
       "\x1b[31mError: Docker engine not detected. Please ensure Docker is running.\x1b[0m",
@@ -16,8 +41,13 @@ export async function handleRun(argsToUse, PORT) {
     process.exit(1);
   }
 
-  let slug = argsToUse[1];
-  let filename = argsToUse[2];
+  let slug = cleanedArgs[1];
+  let filename = cleanedArgs[2];
+
+  if (slug === '-h' || slug === '--help') {
+    showRunHelp();
+    return;
+  }
 
   if (
     slug &&
@@ -30,7 +60,7 @@ export async function handleRun(argsToUse, PORT) {
   }
 
   if (!slug || !filename) {
-    console.error("Usage: cojudge run <slug> <file> OR cojudge run <file>");
+    showRunHelp();
     process.exit(1);
   }
 
@@ -115,6 +145,10 @@ export async function handleRun(argsToUse, PORT) {
       ? { language: lang, code: code }
       : { problemId: slug, language: lang, code: code, testCases: testCases };
 
+    if (debugLines) {
+      body.debugLines = debugLines;
+    }
+
     const response = await fetch(`http://localhost:${PORT}${apiEndpoint}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -125,7 +159,26 @@ export async function handleRun(argsToUse, PORT) {
       throw new Error(`API error: ${response.statusText}`);
     }
 
-    const { jobId } = await response.json();
+    const responseData = await response.json();
+
+    if (responseData.debug) {
+      console.log(`\n\x1b[36mDebug session started.\x1b[0m`);
+      console.log(`Job ID: \x1b[33m${responseData.jobId}\x1b[0m`);
+      console.log("");
+      console.log("Commands:");
+      console.log(`  cojudge debug ${responseData.jobId}          Show current state`);
+      console.log(`  cojudge debug continue ${responseData.jobId}  Continue execution`);
+      console.log(`  cojudge debug step ${responseData.jobId}      Step to next line`);
+      console.log(`  cojudge debug stop ${responseData.jobId}      Stop debugging`);
+      console.log("");
+
+      if (responseData.state) {
+        printDebugState(responseData.state, responseData.jobId);
+      }
+      return;
+    }
+
+    const { jobId } = responseData;
 
     let results = null;
     let attempts = 0;
@@ -215,4 +268,62 @@ export async function handleRun(argsToUse, PORT) {
     console.error(`\x1b[31m${msg}\x1b[0m`);
     process.exit(1);
   }
+}
+
+function printDebugState(data, jobId) {
+  if (data.status === 'running') {
+    console.log('Status:  \x1b[33mRunning\x1b[0m (waiting to hit a breakpoint)');
+  } else if (data.status === 'paused') {
+    console.log('Status:  \x1b[36mPaused\x1b[0m');
+    console.log(`Line:    \x1b[33m${data.line}\x1b[0m`);
+
+    if (data.vars && Object.keys(data.vars).length > 0) {
+      console.log('Variables:');
+      for (const [key, value] of Object.entries(data.vars)) {
+        const truncated = String(value).length > 120
+          ? String(value).slice(0, 120) + '...'
+          : value;
+        console.log(`  \x1b[32m${key}\x1b[0m = ${truncated}`);
+      }
+    }
+
+    if (data.output && data.output.trim()) {
+      console.log('Output so far:');
+      const lines = data.output.trim().split('\n');
+      for (const line of lines) {
+        console.log(`  \x1b[90m${line}\x1b[0m`);
+      }
+    }
+  } else if (data.status === 'completed') {
+    console.log('Status:  \x1b[32mCompleted\x1b[0m');
+    if (data.output && data.output.trim()) {
+      console.log('Output:');
+      const lines = data.output.trim().split('\n');
+      for (const line of lines) {
+        console.log(`  ${line}`);
+      }
+    }
+  }
+  console.log('');
+}
+
+function showRunHelp() {
+  console.log(`
+cojudge run - Execute code against sample test cases
+
+Usage:
+  cojudge run <slug> <file>        Run sample tests for a problem
+  cojudge run <file>               Run a standalone playground file
+  cojudge run <file> --debug-lines <lines>  Debug with breakpoints
+
+Options:
+  --debug-lines <lines>   Comma-separated line numbers to set breakpoints
+                          (e.g. --debug-lines 5,10,15)
+                          Currently supports Python only.
+
+Examples:
+  cojudge run two-sum Solution.py
+  cojudge run my-script.py
+  cojudge run my-script.py --debug-lines 3,8,12
+`);
 }
