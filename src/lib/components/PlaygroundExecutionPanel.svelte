@@ -1,6 +1,6 @@
 <script lang="ts">
     import { execPaneHeightStore } from "$lib/stores/layoutStore";
-    import type { ProgrammingLanguage } from "$lib/utils/util";
+    import { isDebugSupported, type ProgrammingLanguage } from "$lib/utils/util";
     import { onMount, onDestroy } from "svelte";
     import Tooltip from "./Tooltip.svelte";
     import SaveStatus from "./SaveStatus.svelte";
@@ -757,7 +757,7 @@
                     {runningMessage}
                 </span>
                 <div style="display:flex;align-items:center;gap:8px;margin-right:20px;">
-                    {#if language === 'python'}
+                    {#if isDebugSupported(language)}
                         <Tooltip text={"Run in Debug mode"}>
                             <button
                                 class="btn btn-debug"

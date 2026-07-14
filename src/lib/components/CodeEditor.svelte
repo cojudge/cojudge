@@ -1,6 +1,7 @@
 <script lang="ts">
     import type * as Monaco from 'monaco-editor';
     import { configureMonacoVim } from '$lib/utils/vimMode';
+    import { isDebugSupported } from '$lib/utils/util';
     import { onMount } from 'svelte';
     export let value = '';
     export let language = 'javascript';
@@ -41,7 +42,7 @@
     }
 
     $: if (editor && monacoRef && breakpoints) {
-        if (language === 'python') {
+        if (isDebugSupported(language)) {
             updateBreakpointDecorations();
         } else {
             if (bpDecos.length > 0 && editor) {
@@ -147,7 +148,7 @@
             });
 
             editor.onMouseDown((e: any) => {
-                if (language !== 'python') return;
+                if (!isDebugSupported(language)) return;
                 if (e.target.type === monaco.editor.MouseTargetType.GUTTER_GLYPH_MARGIN
                     || e.target.type === monaco.editor.MouseTargetType.GUTTER_LINE_NUMBERS) {
                     const prevSelection = editor.getSelection();
@@ -264,7 +265,7 @@
 </script>
 
 <div class="editor-container">
-    <div class="code-editor" bind:this={editorElement} data-language={language}></div>
+    <div class="code-editor" bind:this={editorElement} data-language={language} data-debug={isDebugSupported(language)}></div>
     <div class="vim-status" class:hidden={vimMode !== 'on'} bind:this={vimStatusElement}></div>
 </div>
 
@@ -335,11 +336,11 @@
         clip-path: polygon(15% 15%, 85% 50%, 15% 85%);
         box-shadow: 0 0 5px rgba(245, 158, 11, 0.8);
     }
-    :global([data-language="python"] .monaco-editor .margin-view-overlays),
-    :global([data-language="python"] .monaco-editor .margin-view-overlays *) {
+    :global([data-debug="true"] .monaco-editor .margin-view-overlays),
+    :global([data-debug="true"] .monaco-editor .margin-view-overlays *) {
         cursor: pointer !important;
     }
-    :global([data-language="python"] .monaco-editor .margin-view-overlays > div:hover:not(.cojudge-breakpoint):not(.cojudge-debug-active-line-glyph))::after {
+    :global([data-debug="true"] .monaco-editor .margin-view-overlays > div:hover:not(.cojudge-breakpoint):not(.cojudge-debug-active-line-glyph))::after {
         content: '';
         position: absolute;
         left: 5px;

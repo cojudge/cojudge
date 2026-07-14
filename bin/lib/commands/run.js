@@ -140,13 +140,19 @@ export async function handleRun(argsToUse, PORT) {
   }
 
   try {
-    const apiEndpoint = isPlayground ? "/api/playground/run" : "/api/run";
-    const body = isPlayground
+    let apiEndpoint = isPlayground ? "/api/playground/run" : "/api/run";
+    let body = isPlayground
       ? { language: lang, code: code }
       : { problemId: slug, language: lang, code: code, testCases: testCases };
 
     if (debugLines) {
-      body.debugLines = debugLines;
+      if (!isPlayground) {
+        console.log(
+          `\x1b[33mNote: debugging runs '${filename}' standalone, not against the '${slug}' test harness.\x1b[0m`,
+        );
+      }
+      apiEndpoint = "/api/playground/run";
+      body = { language: lang, code: code, debugLines };
     }
 
     const response = await fetch(`http://localhost:${PORT}${apiEndpoint}`, {
@@ -319,11 +325,11 @@ Usage:
 Options:
   --debug-lines <lines>   Comma-separated line numbers to set breakpoints
                           (e.g. --debug-lines 5,10,15)
-                          Currently supports Python only.
+                          The file is run standalone in debug mode.
 
 Examples:
   cojudge run two-sum Solution.py
   cojudge run my-script.py
-  cojudge run my-script.py --debug-lines 3,8,12
+  cojudge run my-script.rs --debug-lines 3,8,12
 `);
 }

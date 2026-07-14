@@ -14,6 +14,12 @@ export type Param = {
 
 export type ProgrammingLanguage = 'java' | 'python' | 'cpp' | 'csharp' | 'rust' | 'go' | 'typescript' | 'plaintext' | 'markdown';
 
+export const DEBUG_SUPPORTED_LANGUAGES: ProgrammingLanguage[] = ['python', 'java'];
+
+export function isDebugSupported(language: string): boolean {
+    return DEBUG_SUPPORTED_LANGUAGES.includes(language as ProgrammingLanguage);
+}
+
 export const LINUX_TIMEOUT_CODE = 124;
 
 export const EXECUTION_TIMEOUT_SECONDS = '30';

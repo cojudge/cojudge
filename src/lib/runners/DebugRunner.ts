@@ -1,8 +1,10 @@
+import { javaImage } from "$lib/utils/javaUtil";
 import { pythonImage } from "$lib/utils/pythonUtil";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import tar from 'tar-stream';
 import ContainerPool from "./ContainerPool";
+import { JAVA_DEBUG_DRIVER } from "./JavaDebugDriver";
 
 const docker = new Dockerode();
 
@@ -25,6 +27,7 @@ export type DebugSession = {
     breakpoints: number[];
     state: 'idle' | 'running' | 'paused' | 'completed' | 'error';
     stateData?: DebugState;
+    runCmd: string[];
     createdAt: number;
 };
 
@@ -217,34 +220,82 @@ async function waitForPause(container: Dockerode.Container, timeoutMs: number = 
     return { status: 'running' };
 }
 
+const SUPPORTED_DEBUG_LANGUAGES: Record<string, string> = {
+    python: pythonImage,
+    java: javaImage,
+};
+
+async function runExec(container: Dockerode.Container, cmd: string[]): Promise<{ stdout: string; stderr: string; exitCode: number | null }> {
+    const exec = await container.exec({
+        Cmd: cmd,
+        AttachStdout: true,
+        AttachStderr: true
+    });
+    const stream: any = await exec.start({ hijack: true, stdin: false });
+    let stdout = '';
+    let stderr = '';
+    await new Promise<void>((resolve) => {
+        (container as any).modem.demuxStream(
+            stream,
+            { write: (chunk: any) => (stdout += chunk.toString()) },
+            { write: (chunk: any) => (stderr += chunk.toString()) }
+        );
+        stream.on('end', resolve);
+        stream.on('error', resolve);
+    });
+    const inspect = await exec.inspect();
+    return { stdout, stderr, exitCode: inspect.ExitCode };
+}
+
 export async function startDebugSession(language: string, code: string, debugLines: number[]): Promise<string> {
     const jobId = genId();
 
-    if (language !== 'python') {
-        throw new Error(`Debugging is not yet supported for ${language}. Currently only Python is supported.`);
+    const image = SUPPORTED_DEBUG_LANGUAGES[language];
+    if (!image) {
+        const supported = Object.keys(SUPPORTED_DEBUG_LANGUAGES).join(', ');
+        throw new Error(`Debugging is not yet supported for ${language}. Currently supported: ${supported}.`);
     }
 
-    let container: Dockerode.Container | null = await ContainerPool.acquire(pythonImage);
+    let container: Dockerode.Container | null = await ContainerPool.acquire(image);
     if (!container) {
-        await ensureImageAvailable(docker, pythonImage);
+        await ensureImageAvailable(docker, image);
         container = await docker.createContainer({
-            Image: pythonImage,
+            Image: image,
             Cmd: ['sh', '-lc', 'tail -f /dev/null'],
             WorkingDir: '/app',
             Tty: false,
             Labels: { 'cojudge.created': 'true', 'cojudge.debug': 'true' }
         });
         await container.start();
-        ContainerPool.acquirePermanent(pythonImage, container);
+        ContainerPool.acquirePermanent(image, container);
     }
 
-    const debugWrapper = generatePythonDebugWrapper(code, debugLines);
+    let runCmd: string[];
 
-    const pack = tar.pack();
-    pack.entry({ name: 'debug_main.py' }, Buffer.from(debugWrapper));
-    pack.entry({ name: 'user_code.py' }, Buffer.from(code));
-    pack.finalize();
-    await container.putArchive(pack as any, { path: '/app' });
+    if (language === 'python') {
+        const debugWrapper = generatePythonDebugWrapper(code, debugLines);
+        const pack = tar.pack();
+        pack.entry({ name: 'debug_main.py' }, Buffer.from(debugWrapper));
+        pack.entry({ name: 'user_code.py' }, Buffer.from(code));
+        pack.finalize();
+        await container.putArchive(pack as any, { path: '/app' });
+        runCmd = ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'python3 debug_main.py'];
+    } else {
+        // java
+        const pack = tar.pack();
+        pack.entry({ name: 'Main.java' }, Buffer.from(code));
+        pack.entry({ name: 'DebugDriver.java' }, Buffer.from(JAVA_DEBUG_DRIVER));
+        pack.finalize();
+        await container.putArchive(pack as any, { path: '/app' });
+
+        const compile = await runExec(container, ['/bin/sh', '-c', 'javac -g Main.java DebugDriver.java']);
+        if (compile.exitCode !== 0) {
+            await ContainerPool.markForCleanup(container);
+            throw new Error(`Compilation failed:\n${compile.stderr || compile.stdout}`);
+        }
+        const bps = debugLines.join(',');
+        runCmd = ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', `java DebugDriver "${bps}"`];
+    }
 
     const session: DebugSession = {
         jobId,
@@ -254,6 +305,7 @@ export async function startDebugSession(language: string, code: string, debugLin
         breakpoints: debugLines,
         state: 'running',
         stateData: { status: 'running' },
+        runCmd,
         createdAt: Date.now()
     };
     debugSessions.set(jobId, session);
@@ -267,7 +319,7 @@ async function executeDebugRun(session: DebugSession) {
     const { container } = session;
     try {
         const exec = await container.exec({
-            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'python3 debug_main.py'],
+            Cmd: session.runCmd,
             AttachStdout: true,
             AttachStderr: true
         });
