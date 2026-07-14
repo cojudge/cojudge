@@ -46,8 +46,24 @@
 // When this component is destroyed, unsubscribe
     import Tooltip from "$lib/components/Tooltip.svelte";
     import { marked } from "marked";
-    import { onDestroy } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     onDestroy(() => unsubscribe());
+
+    let showDropdown = false;
+    let dropdownRef: HTMLDivElement | null = null;
+
+    function handleClickOutside(event: MouseEvent) {
+        if (showDropdown && dropdownRef && !dropdownRef.contains(event.target as Node)) {
+            showDropdown = false;
+        }
+    }
+
+    onMount(() => {
+        window.addEventListener("click", handleClickOutside);
+        return () => {
+            window.removeEventListener("click", handleClickOutside);
+        };
+    });
 
     // Types for problems from the loader
     type Problem = {
@@ -316,23 +332,123 @@
 
 <div class="container">
     <div class="backup-toolbar">
-        <Tooltip text="Export all progress data (solved problems, settings, code, etc.) to a JSON file" pos={"bottom"}>
-            <button class="btn" onclick={exportLocalStorage} disabled={!browser} title="Export all progress (settings, code, etc.) to a JSON file">Export progress</button>
-        </Tooltip>
-        <Tooltip text="Import progress data (solved problems, settings, code, etc.) from a JSON backup" pos={"bottom"}>
-            <button class="btn" onclick={triggerImport} disabled={!browser} title="Import progress (settings, code, etc.) from a JSON backup">Import progress</button>
-        </Tooltip>
-        <Tooltip text="Code playground" pos={"bottom"}>
-            <button onclick={() => window.location.href = "playground"} class="btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-                Playground
+        <div class="dropdown-container" bind:this={dropdownRef}>
+            <button
+                class="btn dropdown-trigger"
+                onclick={() => showDropdown = !showDropdown}
+                aria-expanded={showDropdown}
+                aria-haspopup="true"
+                aria-label="Toggle menu"
+            >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
             </button>
-        </Tooltip>
-        <Tooltip text="Random problem game mode" pos={"bottom"}>
-            <button onclick={() => showGamePopup = true} class="btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-                Game
-                <span class="span-badge">NEW</span>
-            </button>
-        </Tooltip>
+            {#if showDropdown}
+                <div class="dropdown-menu" role="menu">
+                    <button
+                        class="dropdown-item"
+                        role="menuitem"
+                        onclick={() => { exportLocalStorage(); showDropdown = false; }}
+                        disabled={!browser}
+                        title="Export all progress (settings, code, etc.) to a JSON file"
+                    >
+                        <span class="dropdown-item-content">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Export progress
+                        </span>
+                    </button>
+                    <button
+                        class="dropdown-item"
+                        role="menuitem"
+                        onclick={() => { triggerImport(); showDropdown = false; }}
+                        disabled={!browser}
+                        title="Import progress (settings, code, etc.) from a JSON backup"
+                    >
+                        <span class="dropdown-item-content">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17 8 12 3 7 8"></polyline>
+                                <line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                            Import progress
+                        </span>
+                    </button>
+                    <button
+                        class="dropdown-item"
+                        role="menuitem"
+                        onclick={() => { window.location.href = "playground"; showDropdown = false; }}
+                        title="Code playground"
+                    >
+                        <span class="dropdown-item-content">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="16 18 22 12 16 6"></polyline>
+                                <polyline points="8 6 2 12 8 18"></polyline>
+                            </svg>
+                            Playground
+                        </span>
+                    </button>
+                    <button
+                        class="dropdown-item"
+                        role="menuitem"
+                        onclick={() => { showGamePopup = true; showDropdown = false; }}
+                        title="Random problem game mode"
+                    >
+                        <span class="dropdown-item-content">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="6" y1="12" x2="10" y2="12"></line>
+                                <line x1="8" y1="10" x2="8" y2="14"></line>
+                                <line x1="15" y1="13" x2="15.01" y2="13"></line>
+                                <line x1="18" y1="11" x2="18.01" y2="11"></line>
+                                <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                            </svg>
+                            Game
+                            <span class="span-badge">NEW</span>
+                        </span>
+                    </button>
+                    <button
+                        class="dropdown-item"
+                        role="menuitem"
+                        onclick={() => {
+                            userSettingsStorage.update(s => ({ ...s, theme: s.theme === 'dark' ? 'light' : 'dark' }));
+                            showDropdown = false;
+                        }}
+                        title="Toggle theme"
+                    >
+                        <span class="dropdown-item-content">
+                            {#if browser && $userSettingsStorage.theme === 'dark'}
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                </svg>
+                                Light theme
+                            {:else}
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                </svg>
+                                Dark theme
+                            {/if}
+                        </span>
+                    </button>
+                </div>
+            {/if}
+        </div>
         <input bind:this={fileInputEl} type="file" accept="application/json" class="hidden-file-input" onchange={onImportFileSelected} />
     </div>
     <!-- Simple tab-style header using the course title from JSON -->
@@ -612,9 +728,65 @@
         justify-content: flex-end;
         margin-bottom: var(--spacing-2);
     }
+    .dropdown-container {
+        position: relative;
+        display: inline-block;
+    }
+    .dropdown-trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.35rem 0.5rem;
+    }
+    .dropdown-menu {
+        position: absolute;
+        top: calc(100% + 4px);
+        right: 0;
+        border: 1px solid var(--color-border);
+        background-color: var(--color-bg);
+        border-radius: var(--border-radius-md);
+        padding: var(--spacing-1) 0;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+        z-index: 50;
+        min-width: 170px;
+        display: flex;
+        flex-direction: column;
+    }
+    .dropdown-item {
+        background: transparent;
+        border: none;
+        padding: 0.55rem 1rem;
+        text-align: left;
+        font-size: 0.9rem;
+        color: var(--color-text);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        width: 100%;
+        transition: background-color 0.15s ease;
+    }
+    .dropdown-item:hover:not(:disabled) {
+        background-color: var(--color-surface-hover);
+    }
+    .dropdown-item:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    .dropdown-separator {
+        height: 1px;
+        background-color: var(--color-border);
+        margin: var(--spacing-1) 0;
+    }
+    .dropdown-item-content {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
     .btn {
         appearance: none;
-        border: 1px solid var(--color-text);
+        border: 1px solid var(--color-border);
         padding: 0.35rem 0.75rem;
         border-radius: 0.375rem;
         background: var(--color-btn);
