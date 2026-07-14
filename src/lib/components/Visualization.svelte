@@ -2,7 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
 
   // Public props
-  export let visualType: 'tree_node' | 'undirected_edges' | 'matrix' | 'other' = 'tree_node';
+  export let visualType: 'tree_node' | 'undirected_edges' | 'matrix' | 'adjacency_list' | 'other' = 'tree_node';
   export let data: string = '';
   export let numNodes: number | null = null;
 
@@ -246,8 +246,10 @@
     // Collect nodes and build adjacency for components
     const nodesSet = new Set<string | number>();
     for (const [a, b] of edges) { nodesSet.add(a); nodesSet.add(b); }
-    // Include isolated nodes if numNodes provided (0..numNodes-1)
-    if (typeof numNodes === 'number' && Number.isFinite(numNodes) && numNodes > 0) {
+    // Include isolated nodes
+    if (options.nodeValues) {
+      for (const v of options.nodeValues) nodesSet.add(v);
+    } else if (typeof numNodes === 'number' && Number.isFinite(numNodes) && numNodes > 0) {
       for (let i = 0; i < numNodes; i++) nodesSet.add(i);
     }
     const nodes = Array.from(nodesSet);
@@ -523,6 +525,56 @@
         componentGap: 40,
         ...colors
       });
+    } else if (visualType === 'adjacency_list') {
+      const colors = themeColors();
+      let adjList: any[] = [];
+      try {
+        const parsed = JSON.parse(data.replace(/'/g, '"'));
+        if (Array.isArray(parsed)) adjList = parsed;
+      } catch {}
+
+      if (adjList.length === 0) {
+        const dpi = (typeof window !== 'undefined' ? window.devicePixelRatio : 1) || 1;
+        const width = canvasEl.parentElement ? canvasEl.parentElement.clientWidth : 800;
+        canvasEl.style.width = width + 'px';
+        canvasEl.style.height = 80 + 'px';
+        canvasEl.width = Math.max(1, Math.floor(width * dpi));
+        canvasEl.height = Math.max(1, Math.floor(80 * dpi));
+        const ctx = canvasEl.getContext('2d')!;
+        ctx.setTransform(1,0,0,1,0,0);
+        ctx.scale(dpi, dpi);
+        ctx.clearRect(0, 0, width, 80);
+        return;
+      }
+
+      const seen = new Set<string>();
+      const edges: any[] = [];
+      for (let i = 0; i < adjList.length; i++) {
+        const u = i + 1;
+        const neighbors = Array.isArray(adjList[i]) ? adjList[i] : [];
+        for (const v of neighbors) {
+          const nv = typeof v === 'number' ? v : Number(v);
+          if (!Number.isFinite(nv)) continue;
+          const key = Math.min(u, nv) + ',' + Math.max(u, nv);
+          if (!seen.has(key)) {
+            seen.add(key);
+            edges.push([u, nv]);
+          }
+        }
+      }
+
+      const edgeInput = JSON.stringify(edges);
+      const nodeValues: number[] = [];
+      for (let i = 1; i <= adjList.length; i++) nodeValues.push(i);
+
+      drawUndirectedGraphOnCanvas(edgeInput, canvasEl, {
+        nodeRadius: 18,
+        marginX: 30,
+        marginY: 16,
+        componentGap: 40,
+        nodeValues,
+        ...colors
+      });
     } else if (visualType === 'matrix') {
       const colors = themeColors();
       drawMatrixOnCanvas(data, canvasEl, {
@@ -578,11 +630,11 @@
     };
   });
 
-  $: if (visualType === 'tree_node' || visualType === 'undirected_edges' || visualType === 'matrix') { scheduleDraw(); }
+  $: if (visualType === 'tree_node' || visualType === 'undirected_edges' || visualType === 'matrix' || visualType === 'adjacency_list') { scheduleDraw(); }
   $: if (data != null) { scheduleDraw(); }
 </script>
 
-{#if visualType === 'tree_node' || visualType === 'undirected_edges' || visualType === 'matrix'}
+{#if visualType === 'tree_node' || visualType === 'undirected_edges' || visualType === 'matrix' || visualType === 'adjacency_list'}
   <div class="canvas-container" bind:this={containerEl}>
     <canvas bind:this={canvasEl}></canvas>
   </div>

@@ -56,7 +56,8 @@
   "params": [
     {
       "name": "adjList",
-      "type": "graph_node"
+      "type": "graph_node",
+      "visualizeType": "adjacency_list"
     }
   ],
   "outputType": "graph_node",
