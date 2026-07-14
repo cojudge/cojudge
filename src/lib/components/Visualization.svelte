@@ -13,6 +13,45 @@
   let themeObserver: MutationObserver | null = null;
   let lastObserved = { width: 0, height: 0 };
 
+  let zoomScale = 1;
+  let panOffsetX = 0;
+  let panOffsetY = 0;
+  let isPanning = false;
+  let panStartX = 0;
+  let panStartY = 0;
+  let panStartOffX = 0;
+  let panStartOffY = 0;
+
+  function handleMouseDown(e: MouseEvent) {
+    if (e.button === 0 && (visualType === 'undirected_edges' || visualType === 'adjacency_list')) {
+      isPanning = true;
+      panStartX = e.clientX;
+      panStartY = e.clientY;
+      panStartOffX = panOffsetX;
+      panStartOffY = panOffsetY;
+      canvasEl.style.cursor = 'grabbing';
+    }
+  }
+
+  function handleMouseMove(e: MouseEvent) {
+    if (isPanning) {
+      panOffsetX = panStartOffX + (e.clientX - panStartX);
+      panOffsetY = panStartOffY + (e.clientY - panStartY);
+      drawNow();
+    }
+  }
+
+  function handleMouseUp() {
+    if (isPanning) {
+      isPanning = false;
+      canvasEl.style.cursor = 'grab';
+    }
+  }
+
+  function zoomIn() { zoomScale = Math.min(5, zoomScale + 0.25);  drawNow(); }
+  function zoomOut() { zoomScale = Math.max(0.1, zoomScale - 0.25); drawNow(); }
+  function resetZoom() { zoomScale = 1; panOffsetX = 0; panOffsetY = 0; drawNow(); }
+
   // Utilities
   function parseLeetCodeArray(s: string): Array<number|string|null> {
     if (!s) return [];
@@ -240,6 +279,7 @@
     const marginX = options.marginX ?? 30;
     const marginY = options.marginY ?? 30;
     const compGap = options.componentGap ?? 60;
+    const spacingMult = options.spacingMultiplier ?? 2.2;
 
     const width = canvas.parentElement ? canvas.parentElement.clientWidth : 800;
 
@@ -285,7 +325,7 @@
     const compRadii: number[] = [];
     for (const comp of comps) {
       const count = comp.length || 1;
-      const desiredSpacing = nodeRadius * 2.2; // arc spacing between centers
+      const desiredSpacing = nodeRadius * spacingMult; // arc spacing between centers
       const minR = Math.max(40, nodeRadius * 3);
       const maxR = Math.max(minR, (width - 2 * marginX) / 2 - nodeRadius);
       const R = Math.min(maxR, Math.max(minR, (count * desiredSpacing) / (2 * Math.PI)));
@@ -296,14 +336,18 @@
   const requiredHeight = Math.max(120, totalHeight);
 
     // Prepare canvas
+    const zoom = options.zoom ?? 1;
+    const panX = options.panX ?? 0;
+    const panY = options.panY ?? 0;
     canvas.style.width = width + 'px';
     canvas.style.height = requiredHeight + 'px';
     canvas.width = Math.max(1, Math.floor(width * dpi));
     canvas.height = Math.max(1, Math.floor(requiredHeight * dpi));
     const ctx = canvas.getContext('2d')!;
     ctx.setTransform(1,0,0,1,0,0);
-    ctx.scale(dpi, dpi);
-    ctx.clearRect(0, 0, width, requiredHeight);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.translate(panX * dpi, panY * dpi);
+    ctx.scale(zoom * dpi, zoom * dpi);
 
     if (nodes.length === 0) return;
 
@@ -519,10 +563,14 @@
     } else if (visualType === 'undirected_edges') {
       const colors = themeColors();
       drawUndirectedGraphOnCanvas(data, canvasEl, {
-        nodeRadius: 18,
-        marginX: 30,
-        marginY: 16,
-        componentGap: 40,
+        nodeRadius: 26,
+        marginX: 24,
+        marginY: 20,
+        componentGap: 50,
+        spacingMultiplier: 3.0,
+        zoom: zoomScale,
+        panX: panOffsetX,
+        panY: panOffsetY,
         ...colors
       });
     } else if (visualType === 'adjacency_list') {
@@ -536,14 +584,18 @@
       if (adjList.length === 0) {
         const dpi = (typeof window !== 'undefined' ? window.devicePixelRatio : 1) || 1;
         const width = canvasEl.parentElement ? canvasEl.parentElement.clientWidth : 800;
+        const zoom = zoomScale;
+        const panX = panOffsetX;
+        const panY = panOffsetY;
         canvasEl.style.width = width + 'px';
         canvasEl.style.height = 80 + 'px';
         canvasEl.width = Math.max(1, Math.floor(width * dpi));
         canvasEl.height = Math.max(1, Math.floor(80 * dpi));
         const ctx = canvasEl.getContext('2d')!;
         ctx.setTransform(1,0,0,1,0,0);
-        ctx.scale(dpi, dpi);
-        ctx.clearRect(0, 0, width, 80);
+        ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
+        ctx.translate(panX * dpi, panY * dpi);
+        ctx.scale(zoom * dpi, zoom * dpi);
         return;
       }
 
@@ -568,11 +620,15 @@
       for (let i = 1; i <= adjList.length; i++) nodeValues.push(i);
 
       drawUndirectedGraphOnCanvas(edgeInput, canvasEl, {
-        nodeRadius: 18,
-        marginX: 30,
-        marginY: 16,
-        componentGap: 40,
+        nodeRadius: 26,
+        marginX: 24,
+        marginY: 20,
+        componentGap: 50,
+        spacingMultiplier: 3.0,
         nodeValues,
+        zoom: zoomScale,
+        panX: panOffsetX,
+        panY: panOffsetY,
         ...colors
       });
     } else if (visualType === 'matrix') {
@@ -622,8 +678,13 @@
       themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     }
 
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+
     return () => {
       window.removeEventListener('resize', onResize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
       if (ro) { ro.disconnect(); ro = null; }
       if (resizeTimer) { clearTimeout(resizeTimer); }
       if (themeObserver) { themeObserver.disconnect(); themeObserver = null; }
@@ -636,7 +697,19 @@
 
 {#if visualType === 'tree_node' || visualType === 'undirected_edges' || visualType === 'matrix' || visualType === 'adjacency_list'}
   <div class="canvas-container" bind:this={containerEl}>
-    <canvas bind:this={canvasEl}></canvas>
+    <canvas
+      bind:this={canvasEl}
+      on:mousedown={handleMouseDown}
+      class:zoomable={visualType === 'undirected_edges' || visualType === 'adjacency_list'}
+    ></canvas>
+    {#if visualType === 'undirected_edges' || visualType === 'adjacency_list'}
+      <div class="zoom-controls">
+        <button on:click={zoomIn} title="Zoom in">+</button>
+        <span class="zoom-level">{Math.round(zoomScale * 100)}%</span>
+        <button on:click={zoomOut} title="Zoom out">−</button>
+        <button on:click={resetZoom} title="Reset zoom">⟲</button>
+      </div>
+    {/if}
   </div>
 {:else}
   <div class="other">
@@ -681,11 +754,62 @@
     box-shadow: var(--visual-shadow);
   }
 
+  canvas.zoomable { cursor: grab; }
+
   canvas {
     display: block;
     width: 100%;
     height: auto;
     background: transparent;
+    touch-action: none;
+  }
+
+  .canvas-container:has(canvas) {
+    position: relative;
+  }
+
+  .zoom-controls {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--visual-surface);
+    border: 1px solid var(--visual-border);
+    border-radius: 8px;
+    padding: 4px 6px;
+    box-shadow: var(--visual-shadow);
+    z-index: 10;
+  }
+
+  .zoom-controls button {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--visual-border);
+    border-radius: 6px;
+    background: var(--visual-surface-2);
+    color: var(--visual-text);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+  }
+
+  .zoom-controls button:hover {
+    background: var(--visual-accent);
+    color: var(--visual-bg);
+  }
+
+  .zoom-level {
+    font-size: 11px;
+    color: var(--visual-text-dim);
+    min-width: 36px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
   }
 
   .other {
