@@ -2,6 +2,7 @@ import { generateJavaClassSolution, generateJavaRunner, javaGraphNodeClass, java
 import { generatePythonClassSolution, generatePythonRunner, pythonGraphNodeClass, pythonImage, pythonListNodeClass, pythonTreeNodeClass } from "$lib/utils/pythonUtil";
 import { cppImage, cppListNodeClass, cppTreeNodeClass, cppGraphNodeClass, generateCppRunner, generateCppClassSolution } from "$lib/utils/cppUtil";
 import { generateGoRunner, goImage } from "$lib/utils/goUtil";
+import { csharpImage, generateCSharpRunner, generateCSharpClassSolution, csharpListNodeClass, csharpTreeNodeClass, csharpGraphNodeClass } from "$lib/utils/csharpUtil";
 import { ensureImageAvailable, extractOperations } from "$lib/utils/util";
 import { getMarkerResponses } from "../markerRunner";
 import Dockerode from "dockerode";
@@ -12,6 +13,7 @@ import ContainerPool from "./ContainerPool";
 import { JAVA_DEBUG_DRIVER } from "./JavaDebugDriver";
 import { CPP_DEBUG_DRIVER } from "./CppDebugDriver";
 import { GO_DEBUG_DRIVER } from "./GoDebugDriver";
+import { CSHARP_DEBUG_SUPPORT, generateCsharpDebugWrapper } from "./CsharpDebugDriver";
 
 const docker = new Dockerode();
 
@@ -242,6 +244,7 @@ const SUPPORTED_DEBUG_LANGUAGES: Record<string, string> = {
     java: javaImage,
     cpp: cppImage,
     go: goImage,
+    csharp: csharpImage,
 };
 
 async function runExec(container: Dockerode.Container, cmd: string[]): Promise<{ stdout: string; stderr: string; exitCode: number | null }> {
@@ -512,6 +515,21 @@ export async function startDebugSession(language: string, code: string, debugLin
         }
         const bps = debugLines.join(',');
         runCmd = ['/bin/sh', '-c', `./go_debug_driver /app/main.go "${bps}" ./main`];
+    } else if (language === 'csharp') {
+        await runExec(container, ['/bin/sh', '-c', 'test -f cojudge.csproj || dotnet new console --force > /dev/null 2>&1']);
+        const instrumentedCode = generateCsharpDebugWrapper(code, debugLines, true, debugLines.join(','));
+        const pack = tar.pack();
+        pack.entry({ name: 'Program.cs' }, Buffer.from(instrumentedCode));
+        pack.entry({ name: 'DebugSupport.cs' }, Buffer.from(CSHARP_DEBUG_SUPPORT));
+        pack.finalize();
+        await container.putArchive(pack as any, { path: '/app' });
+
+        const compile = await runExec(container, ['/bin/sh', '-c', 'dotnet build -v q 2>&1']);
+        if (compile.exitCode !== 0) {
+            await ContainerPool.markForCleanup(container);
+            throw new Error(`Compilation failed:\n${compile.stderr || compile.stdout}`);
+        }
+        runCmd = ['/bin/sh', '-c', 'dotnet run --no-build'];
     } else {
         // java
         const pack = tar.pack();
@@ -619,6 +637,42 @@ export async function startProblemDebugSession(problemId: string, language: stri
         }
         const bps = debugLines.join(',');
         runCmd = ['/bin/sh', '-c', `java DebugDriver "${bps}" Main "${sourceFile}"`];
+    } else if (language === 'csharp') {
+        const runnerCode = generateCSharpRunner(problemData.functionName, problemData.params, testCases, problemData.outputType, problemData.checkGraphClone);
+        let sourceFile = 'Solution.cs';
+
+        const pack = tar.pack();
+        pack.entry({ name: 'ListNode.cs' }, Buffer.from(csharpListNodeClass));
+        pack.entry({ name: 'TreeNode.cs' }, Buffer.from(csharpTreeNodeClass));
+        pack.entry({ name: 'GraphNode.cs' }, Buffer.from(csharpGraphNodeClass));
+        if (problemData.classProblem) {
+            const className = problemData.classProblem.userClassName || 'MedianFinder';
+            const operations = extractOperations(testCases, className);
+            const wrapperCode = generateCSharpClassSolution(className, problemData.params, problemData.outputType, operations);
+            pack.entry({ name: `${className}.cs` }, Buffer.from(code));
+            pack.entry({ name: 'Solution.cs' }, Buffer.from(wrapperCode));
+            sourceFile = `${className}.cs`;
+        } else {
+            pack.entry({ name: 'Solution.cs' }, Buffer.from(code));
+        }
+        const instrumentedRunner = generateCsharpDebugWrapper(runnerCode, debugLines, true, debugLines.join(','));
+        pack.entry({ name: 'Program.cs' }, Buffer.from(instrumentedRunner));
+        pack.entry({ name: 'DebugSupport.cs' }, Buffer.from(CSHARP_DEBUG_SUPPORT));
+        if (!problemData.classProblem) {
+            const instrumentedSolution = generateCsharpDebugWrapper(code, debugLines, false);
+            pack.entry({ name: 'Solution.cs' }, Buffer.from(instrumentedSolution));
+        }
+        pack.finalize();
+
+        await runExec(container, ['/bin/sh', '-c', 'test -f cojudge.csproj || dotnet new console --force > /dev/null 2>&1']);
+        await container.putArchive(pack as any, { path: '/app' });
+
+        const compile = await runExec(container, ['/bin/sh', '-c', 'dotnet build -v q 2>&1']);
+        if (compile.exitCode !== 0) {
+            await ContainerPool.markForCleanup(container);
+            throw new Error(`Compilation failed:\n${compile.stderr || compile.stdout}`);
+        }
+        runCmd = ['/bin/sh', '-c', 'dotnet run --no-build'];
     } else if (language === 'cpp') {
         const runnerCode = generateCppRunner(problemData.functionName, problemData.params, testCases, problemData.checkGraphClone);
         let sourceFile = 'Solution.cpp';
