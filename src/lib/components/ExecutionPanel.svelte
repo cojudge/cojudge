@@ -1647,7 +1647,7 @@
                     <button
                         class="btn btn-secondary"
                         on:click={handleRun}
-                        disabled={isLoading}
+                        disabled={isLoading || !!debugJobId}
                     >
                         Run
                     </button>
@@ -1656,7 +1656,7 @@
                     <button
                         class="btn btn-primary"
                         on:click={handleSubmit}
-                        disabled={isLoading}>Submit</button
+                        disabled={isLoading || !!debugJobId}>Submit</button
                     >
                 </Tooltip>
             {/if}
