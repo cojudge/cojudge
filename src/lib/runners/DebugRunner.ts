@@ -718,6 +718,8 @@ export async function getDebugState(jobId: string): Promise<DebugState> {
 
     const state = await readDebugState(session.container);
 
+    const wasTerminal = session.state === 'completed' || session.state === 'error';
+
     if (state.status === 'paused') {
         session.state = 'paused';
     } else if (state.status === 'completed') {
@@ -730,6 +732,11 @@ export async function getDebugState(jobId: string): Promise<DebugState> {
     if (state.status === 'completed') {
         await evaluateCompletedResults(session, session.stateData);
     }
+
+    if (!wasTerminal && (state.status === 'completed' || state.status === 'error' || state.status === 'stopped')) {
+        try { await ContainerPool.release(session.imageUsed, session.container); } catch {}
+    }
+
     return session.stateData;
 }
 
@@ -762,6 +769,9 @@ export async function debugContinue(jobId: string): Promise<DebugState> {
     if (state.status === 'completed') {
         await evaluateCompletedResults(session, session.stateData);
     }
+    if (state.status === 'completed' || state.status === 'error') {
+        try { await ContainerPool.release(session.imageUsed, session.container); } catch {}
+    }
     return session.stateData;
 }
 
@@ -776,6 +786,7 @@ export async function debugStep(jobId: string): Promise<DebugState> {
         if (currentState.status === 'completed') {
             await evaluateCompletedResults(session, session.stateData);
         }
+        try { await ContainerPool.release(session.imageUsed, session.container); } catch {}
         return session.stateData;
     }
 
@@ -793,6 +804,9 @@ export async function debugStep(jobId: string): Promise<DebugState> {
     session.stateData = decorateState(session, state);
     if (state.status === 'completed') {
         await evaluateCompletedResults(session, session.stateData);
+    }
+    if (state.status === 'completed' || state.status === 'error') {
+        try { await ContainerPool.release(session.imageUsed, session.container); } catch {}
     }
     return session.stateData;
 }
