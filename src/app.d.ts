@@ -10,4 +10,9 @@ declare global {
 	}
 }
 
+declare module '*.go?raw' {
+	const content: string;
+	export default content;
+}
+
 export {};

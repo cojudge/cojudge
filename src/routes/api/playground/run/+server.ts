@@ -1,4 +1,5 @@
 import { PlaygroundCppRunner, PlaygroundCSharpRunner, PlaygroundGoRunner, PlaygroundJavaRunner, PlaygroundPythonRunner, PlaygroundRustRunner, PlaygroundTypeScriptRunner } from '$lib/runners/PlaygroundRunners';
+import { startDebugSession, getDebugState } from '$lib/runners/DebugRunner';
 import { TIMEOUT_MESSAGE, type JobStatus } from '$lib/utils/util';
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
@@ -71,12 +72,23 @@ async function executeRun(language: string, code: string, job: RunJob) {
 }
 
 export const POST: RequestHandler = async ({ request }) => {
-    const { language, code } = await request.json();
+    const { language, code, debugLines } = await request.json();
+
+    if (debugLines && Array.isArray(debugLines) && debugLines.length > 0) {
+        try {
+            const jobId = await startDebugSession(language, code, debugLines.map(Number));
+            const state = await getDebugState(jobId);
+            return json({ jobId, debug: true, state });
+        } catch (e: any) {
+            return json({ error: e.message || 'Failed to start debug session' }, { status: 400 });
+        }
+    }
+
     const id = genId();
     const job: RunJob = { id, status: 'pending', createdAt: Date.now() };
     jobs.set(id, job);
     executeRun(language, code, job);
-    return json({ jobId: id });
+    return json({ jobId: id, debug: false });
 };
 
 export const GET: RequestHandler = async ({ url }) => {

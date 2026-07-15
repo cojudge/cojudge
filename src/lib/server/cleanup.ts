@@ -13,6 +13,9 @@ export function startCleanupCron() {
 
 async function cleanupContainers() {
     try {
+        console.log(`[cleanup] running at ${new Date().toISOString()}`);
+        console.log(`[cleanup] pool stats: ${JSON.stringify(ContainerPool.getStats())}`);
+
         // Clean stale containers from the pool (idle > 5 minutes)
         await ContainerPool.cleanupStale(300000);
 
@@ -28,8 +31,13 @@ async function cleanupContainers() {
         for (const containerInfo of containers) {
             const createdTime = containerInfo.Created * 1000;
             const age = now - createdTime;
+            const inPool = ContainerPool.hasContainer(containerInfo.Id);
+            const isDebug = containerInfo.Labels && containerInfo.Labels['cojudge.debug'] === 'true';
+            console.log(`[cleanup] container ${containerInfo.Id.substring(0, 12)} age=${age}ms inPool=${inPool} debug=${isDebug} image=${containerInfo.Image}`);
 
-            if (age > TIMEOUT_MS && !ContainerPool.hasContainer(containerInfo.Id)) {
+            if (isDebug) continue;
+
+            if (age > TIMEOUT_MS && !inPool) {
                 const container = docker.getContainer(containerInfo.Id);
                 try {
                     console.log(`Cleaning up orphaned container ${containerInfo.Id.substring(0, 12)} (age: ${age}ms)`);

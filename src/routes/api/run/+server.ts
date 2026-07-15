@@ -11,6 +11,7 @@ import { CSharpRunner } from '$lib/runners/CSharpRunner';
 import { RustRunner } from '$lib/runners/RustRunner';
 import { GoRunner } from '$lib/runners/GoRunner';
 import { TypeScriptRunner } from '$lib/runners/TypeScriptRunner';
+import { startProblemDebugSession, getDebugState } from '$lib/runners/DebugRunner';
 import { TIMEOUT_MESSAGE, type JobStatus } from '$lib/utils/util';
 
 type RunSuccess = Array<{
@@ -211,7 +212,18 @@ async function executeRun(problemId: string, language: string, code: string, tes
 }
 
 export const POST: RequestHandler = async ({ request }) => {
-    const { problemId, language, code, testCases } = await request.json();
+    const { problemId, language, code, testCases, debugLines } = await request.json();
+
+    if (debugLines && Array.isArray(debugLines) && debugLines.length > 0) {
+        try {
+            const jobId = await startProblemDebugSession(problemId, language, code, testCases, debugLines.map(Number));
+            const state = await getDebugState(jobId);
+            return json({ jobId, debug: true, state });
+        } catch (e: any) {
+            return json({ error: e.message || 'Failed to start debug session' }, { status: 400 });
+        }
+    }
+
     const id = genId();
     const job: RunJob = { id, status: 'pending', createdAt: Date.now() };
     jobs.set(id, job);

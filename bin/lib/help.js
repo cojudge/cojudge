@@ -8,9 +8,13 @@ Usage:
   cojudge [file]                 Same as 'cojudge playground [file]'
   cojudge list                   List all available problem slugs
   cojudge run <slug> <file>     Run sample tests for a problem
-  cojudge run <file>             Run a playground file
-  cojudge submit <slug> <file>  Submit code for a problem
-  cojudge mark <slug>            Mark a problem as solved
+  cojudge run <file>              Run a playground file
+  cojudge submit <slug> <file>   Submit code for a problem
+  cojudge debug <jobId>           Show debug session state
+  cojudge debug continue <jobId>  Continue a debug session
+  cojudge debug step <jobId>      Step over in a debug session
+  cojudge debug stop <jobId>      Stop a debug session
+  cojudge mark <slug>             Mark a problem as solved
   cojudge unmark <slug>          Unmark a problem as solved
   cojudge init <slug>           Initialize a problem file with starter code
                                  (Options: --lang java|python|cpp|rust|csharp|go)
@@ -29,6 +33,9 @@ Examples:
   cojudge run two-sum Solution.java
   cojudge init two-sum --lang rust --output solver.rs
   cojudge start playground my-script.py
+  cojudge run my-script.py --debug-lines 5,10,15
+  cojudge debug abc123
+  cojudge debug step abc123
   cojudge mark two-sum
   cojudge scrape -n 1
   cojudge scrape -s valid-parentheses

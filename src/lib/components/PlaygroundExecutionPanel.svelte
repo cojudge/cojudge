@@ -1,7 +1,7 @@
 <script lang="ts">
     import { execPaneHeightStore } from "$lib/stores/layoutStore";
-    import type { ProgrammingLanguage } from "$lib/utils/util";
-    import { onMount } from "svelte";
+    import { isDebugSupported, type ProgrammingLanguage } from "$lib/utils/util";
+    import { onMount, onDestroy } from "svelte";
     import Tooltip from "./Tooltip.svelte";
     import SaveStatus from "./SaveStatus.svelte";
 
@@ -11,6 +11,8 @@
     export let logs: string = "";
     export let isMac: boolean;
     export let readOnly: boolean = false;
+    export let debugBreakpoints: number[] = [];
+    export let activeDebugLine: number | null = null;
 
     let isLoading = false;
     let isResizing = false;
@@ -18,6 +20,23 @@
     let error: string | null = null;
     let hasRunOnce = readOnly;
     let runningMessage = "";
+
+    let debugJobId: string | null = null;
+    let debugState: any = null;
+    let isDebugRunning = false;
+    let debugPollInterval: any = null;
+    let lastSyncedBreakpoints: string = '[]';
+
+    $: activeDebugLine = (debugState && debugState.status === 'paused') ? debugState.line : null;
+
+    $: if (debugJobId && debugBreakpoints && JSON.stringify(debugBreakpoints) !== lastSyncedBreakpoints) {
+        lastSyncedBreakpoints = JSON.stringify(debugBreakpoints);
+        fetch("/api/debug", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ jobId: debugJobId, action: "setBreakpoints", breakpoints: debugBreakpoints }),
+        }).catch(() => {});
+    }
 
     // Docker image status for the selected language
     let imageStatus: "unknown" | "present" | "absent" = "unknown";
@@ -217,6 +236,9 @@
     }
 
     async function handleRun() {
+        if (debugJobId) stopDebugging();
+        debugState = null;
+
         isLoading = true;
         runningMessage = "Running...";
         output = "";
@@ -281,6 +303,134 @@
         }
     }
 
+    async function handleDebugRun() {
+        if ($execPaneHeightStore <= minExecPanelHeight) {
+            $execPaneHeightStore = Math.max(12, Math.min(90, lastNonMinHeight || 35));
+        }
+        if (!debugBreakpoints || debugBreakpoints.length === 0) {
+            debugState = { status: "error", error: "No breakpoints set. Click line numbers in the editor to add breakpoints." };
+            return;
+        }
+        isDebugRunning = true;
+        isLoading = true;
+        output = "";
+        logs = "";
+        error = null;
+        hasRunOnce = true;
+        debugState = { status: 'running' };
+        runningMessage = "Debug starting...";
+        lastSyncedBreakpoints = JSON.stringify(debugBreakpoints);
+
+        try {
+            if (imageStatus === "absent" || imageStatus === "unknown") {
+                await refreshImageStatus();
+                if (imageStatus === "absent" || imageStatus === "unknown") {
+                    await pullRuntimeImage();
+                }
+            }
+
+            const res = await fetch("/api/playground/run", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ language, code, debugLines: debugBreakpoints }),
+            });
+            const body = await res.json();
+            if (!res.ok || !body.jobId) {
+                debugState = {
+                    status: "error",
+                    error: body?.error || "Failed to start debug session",
+                };
+                isDebugRunning = false;
+                return;
+            }
+
+            debugJobId = body.jobId;
+            if (body.state) debugState = body.state;
+            runningMessage = "";
+            startDebugPolling();
+        } catch (err: any) {
+            debugState = { status: "error", error: err.message || "Debug failed" };
+        } finally {
+            isLoading = false;
+            isDebugRunning = false;
+            runningMessage = "";
+        }
+    }
+
+    async function debugAction(action: string) {
+        if (!debugJobId) return;
+        isDebugRunning = true;
+        try {
+            const res = await fetch("/api/debug", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ jobId: debugJobId, action }),
+            });
+            const body = await res.json();
+            if (!res.ok) {
+                error = body?.error || "Debug action failed";
+                isDebugRunning = false;
+                return;
+            }
+            debugState = body;
+            if (body.status === 'completed' || body.status === 'error' || body.status === 'stopped') {
+                stopDebugPolling();
+                debugJobId = null;
+            }
+        } catch (err: any) {
+            error = err.message || "Debug action failed";
+        } finally {
+            isDebugRunning = false;
+        }
+    }
+
+    function startDebugPolling() {
+        stopDebugPolling();
+        let pollCount = 0;
+        debugPollInterval = setInterval(async () => {
+            if (!debugJobId) return;
+            pollCount++;
+            try {
+                const res = await fetch(`/api/debug?jobId=${encodeURIComponent(debugJobId)}`);
+                const body = await res.json();
+                if (res.ok) {
+                    debugState = body;
+                    if (body.status === 'completed' || body.status === 'error') {
+                        console.warn(`[debug] session reached terminal state: ${body.status}`, body.error || '');
+                        stopDebugPolling();
+                        debugJobId = null;
+                    }
+                } else if (pollCount <= 3) {
+                    console.warn('[debug] poll error:', body.error || res.statusText);
+                }
+            } catch (err: any) {
+                if (pollCount <= 3) console.warn('[debug] poll failed:', err.message || err);
+            }
+        }, 500);
+    }
+
+    function stopDebugPolling() {
+        if (debugPollInterval) {
+            clearInterval(debugPollInterval);
+            debugPollInterval = null;
+        }
+    }
+
+    function stopDebugging() {
+        if (debugJobId) {
+            fetch("/api/debug", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ jobId: debugJobId, action: "stop" }),
+            }).catch(() => {});
+            debugJobId = null;
+        }
+        debugState = null;
+        stopDebugPolling();
+    }
+
+    onDestroy(stopDebugPolling);
+
     onMount(() => {
         const keyHandler = (e: KeyboardEvent) => {
             if ((e.ctrlKey || e.metaKey) && e.key === "'") {
@@ -317,7 +467,69 @@
         class="content"
         class:hide={$execPaneHeightStore <= minExecPanelHeight}
     >
-        {#if hasRunOnce || output || logs || error}
+        {#if debugState}
+            <div class="debug-view">
+                <div class="debug-header">
+                    <span class="debug-status">
+                        {#if debugState.status === 'running'}
+                            <span class="debug-dot running"></span> Running
+                        {:else if debugState.status === 'paused'}
+                            <span class="debug-dot paused"></span> Paused at line {debugState.line}
+                        {:else if debugState.status === 'completed'}
+                            <span class="debug-dot completed"></span> Completed
+                        {:else if debugState.status === 'error'}
+                            <span class="debug-dot error"></span> Error
+                        {/if}
+                    </span>
+                    {#if debugJobId && (debugState.status === 'paused' || debugState.status === 'running')}
+                        <div class="debug-actions">
+                            <button class="btn btn-debug-action" on:click={() => debugAction('step')} disabled={isDebugRunning}>
+                                Step Over
+                            </button>
+                            <button class="btn btn-debug-action" on:click={() => debugAction('continue')} disabled={isDebugRunning}>
+                                Continue
+                            </button>
+                            <button class="btn btn-debug-action" on:click={() => debugAction('stop')} disabled={isDebugRunning}>
+                                Stop
+                            </button>
+                        </div>
+                    {/if}
+                </div>
+                {#if debugState.status === 'paused'}
+                    <div class="debug-variables">
+                        <div class="debug-section-title">Variables</div>
+                        {#if debugState.vars && Object.keys(debugState.vars).length > 0}
+                            <table class="debug-vars-table">
+                                <tbody>
+                                {#each Object.entries(debugState.vars) as [key, value]}
+                                    <tr>
+                                        <td class="var-name">{key}</td>
+                                        <td class="var-value">{value}</td>
+                                    </tr>
+                                {/each}
+                                </tbody>
+                            </table>
+                        {:else}
+                            <div class="debug-placeholder">No local variables at this point.</div>
+                        {/if}
+                    </div>
+                {/if}
+                <div class="debug-variables">
+                    <div class="debug-section-title">Output</div>
+                    {#if debugState.output && debugState.output.trim()}
+                        <pre class="debug-output">{debugState.output}</pre>
+                    {:else}
+                        <div class="debug-placeholder">No output yet.</div>
+                    {/if}
+                </div>
+                {#if debugState.error}
+                    <div class="result-item">
+                        <span class="result-status error">Error</span>
+                        <pre class="result-output error">{debugState.error}</pre>
+                    </div>
+                {/if}
+            </div>
+        {:else if hasRunOnce || output || logs || error}
             <div class="output-view">
                 {#if error}
                     <div class="result-item">
@@ -559,12 +771,24 @@
                 <span class="status">
                     {runningMessage}
                 </span>
-                <div style="margin-right: 20px">
+                <div style="display:flex;align-items:center;gap:8px;margin-right:20px;">
+                    {#if isDebugSupported(language)}
+                        <Tooltip text={debugBreakpoints.length === 0 ? "No breakpoint selected" : "Run in Debug mode"}>
+                            <button
+                                class="btn btn-debug"
+                                on:click={handleDebugRun}
+                                disabled={isLoading || !!debugJobId || debugBreakpoints.length === 0}
+                                aria-label="Debug"
+                            >
+                                Debug
+                            </button>
+                        </Tooltip>
+                    {/if}
                     <Tooltip text={`${isMac ? "CMD" : "CONTROL"} + '`}>
                         <button
                             class="btn btn-secondary"
                             on:click={handleRun}
-                            disabled={isLoading}
+                            disabled={isLoading || !!debugJobId}
                         >
                             Run
                         </button>
@@ -762,5 +986,131 @@
     }
     .non-button-hover {
         cursor: default;
+    }
+    .btn-debug {
+        background-color: transparent;
+        border: 1px solid var(--color-border);
+        padding: 4px 8px;
+        border-radius: 4px;
+        color: var(--color-text-secondary);
+        transition: all 0.15s;
+    }
+    .btn-debug:hover {
+        border-color: var(--color-highlight);
+        color: var(--color-highlight);
+    }
+    .btn-debug:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        border-color: var(--color-border);
+        color: var(--color-text-secondary);
+    }
+    .btn-debug:disabled:hover {
+        border-color: var(--color-border);
+        color: var(--color-text-secondary);
+    }
+    .btn-debug.active {
+        background-color: rgba(229, 62, 62, 0.15);
+        border-color: #e53e3e;
+        color: #e53e3e;
+    }
+    .debug-view {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-3);
+    }
+    .debug-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--spacing-2);
+        flex-wrap: wrap;
+    }
+    .debug-status {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+    .debug-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    .debug-dot.running { background: #d69e2e; animation: pulse 1s infinite; }
+    .debug-dot.paused { background: #3182ce; }
+    .debug-dot.completed { background: #38a169; }
+    .debug-dot.error { background: #e53e3e; }
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.4; }
+    }
+    .debug-actions {
+        display: flex;
+        gap: 6px;
+    }
+    .btn-debug-action {
+        background: var(--color-second-bg);
+        border: 1px solid var(--color-border);
+        color: var(--color-text);
+        padding: 4px 12px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.15s;
+    }
+    .btn-debug-action:hover {
+        background: var(--color-third-bg);
+        border-color: var(--color-highlight);
+    }
+    .btn-debug-action:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+    .debug-variables {
+        background: var(--color-bg);
+        border-radius: var(--border-radius);
+        padding: var(--spacing-2);
+    }
+    .debug-section-title {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--color-text-secondary);
+        margin-bottom: var(--spacing-1);
+    }
+    .debug-vars-table {
+        width: 100%;
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        border-collapse: collapse;
+    }
+    .debug-vars-table td {
+        padding: 2px 8px;
+        border-bottom: 1px solid var(--color-border);
+    }
+    .var-name {
+        color: var(--color-highlight);
+        width: 1%;
+        white-space: nowrap;
+        vertical-align: top;
+    }
+    .var-value {
+        color: var(--color-text);
+        word-break: break-all;
+    }
+    .debug-output {
+        margin: 0;
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        color: var(--color-text);
+        white-space: pre-wrap;
+    }
+    .debug-placeholder {
+        font-size: 0.8rem;
+        color: var(--color-text-secondary);
+        font-style: italic;
+        padding: var(--spacing-1) var(--spacing-2);
     }
 </style>

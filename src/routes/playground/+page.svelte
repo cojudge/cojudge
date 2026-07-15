@@ -215,6 +215,8 @@ func main() {
     let lastSharedContent: string | undefined;
     let showSettings = false;
     let settingsContainer: HTMLElement | null = null;
+    let debugBreakpoints: number[] = [];
+    let activeDebugLine: number | null = null;
     const fontSizes: number[] = Array.from({ length: 24 }, (_, i) => 12 + i); // 12..35
     let fontSize: number = $userSettingsStorage.editorFontSize ?? 14;
     let theme: ThemeChoice = $userSettingsStorage.theme ?? 'light';
@@ -493,6 +495,7 @@ func main() {
     }
 
     $: if (language) {
+        debugBreakpoints = [];
         loadOrInitFile(language);
     }
 
@@ -1701,13 +1704,15 @@ func main() {
                     {theme} 
                     {vimMode} 
                     viewState={currentViewState}
+                    bind:breakpoints={debugBreakpoints}
+                    {activeDebugLine}
                 />
             {:else}
                 Loading...
             {/if}
         </div>
         {#if language !== 'plaintext' && language !== 'markdown' && activeTab?.type !== 'preview'}
-            <PlaygroundExecutionPanel {code} {language} {isMac} bind:output bind:logs />
+            <PlaygroundExecutionPanel {code} {language} {isMac} bind:output bind:logs debugBreakpoints={debugBreakpoints} bind:activeDebugLine={activeDebugLine} />
         {/if}
         {:else}
         <div class="empty-state">

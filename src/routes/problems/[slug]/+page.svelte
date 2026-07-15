@@ -161,6 +161,8 @@
     let code: string;
     let currentViewState: string | null = null;
     let editorComponent: any;
+    let debugBreakpoints: number[] = [];
+    let activeDebugLine: number | null = null;
     let isResizing = false;
     let workspaceElement: HTMLElement;
     let openedHints = new Set<number>([]);
@@ -330,6 +332,7 @@
     }
 
     $: if (language) {
+        debugBreakpoints = [];
         loadOrInitFile(language);
     }
 
@@ -492,6 +495,7 @@
         if (idx === -1) return;
         saveCurrentViewState();
         activeTabId = idx;
+        debugBreakpoints = [];
         await loadOrInitFile(language);
     }
 
@@ -949,6 +953,8 @@
                     {theme} 
                     {vimMode} 
                     viewState={currentViewState}
+                    bind:breakpoints={debugBreakpoints}
+                    {activeDebugLine}
                 />
             {:else}
                 Loading...
@@ -960,6 +966,8 @@
             {language}
             gameMode={isGameMode}
             gameStartTime={gameStartTime}
+            debugBreakpoints={debugBreakpoints}
+            bind:activeDebugLine={activeDebugLine}
             on:gameSubmitSuccess={(e) => {
                 const { runCount, submitCount, timeSpent } = e.detail;
                 const result = computeGameResult(runCount, submitCount, timeSpent, code, language);
