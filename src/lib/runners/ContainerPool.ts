@@ -84,7 +84,14 @@ class ContainerPool {
         const now = Date.now();
         for (const [key, entries] of this.pools.entries()) {
             const active = entries.filter(e => {
-                if (e.inUse) return true;
+                if (e.inUse) {
+                    if (now - e.createdAt > maxAgeMs) {
+                        console.log(`[cleanupStale] destroying in-use container ${e.container.id.substring(0, 12)} (image: ${key}, age: ${now - e.createdAt}ms)`);
+                        ContainerPool.destroyContainer(e.container);
+                        return false;
+                    }
+                    return true;
+                }
                 if (now - e.lastUsed > maxAgeMs) {
                     console.log(`[cleanupStale] destroying container ${e.container.id.substring(0, 12)} (image: ${key}, idle: ${now - e.lastUsed}ms)`);
                     ContainerPool.destroyContainer(e.container);
