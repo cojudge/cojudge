@@ -1,7 +1,7 @@
 import type { Param } from './util';
+import { env } from '$env/dynamic/private';
 
-// Use official GCC image with g++ available
-export const cppImage = 'gcc:13';
+export const cppImage = env.COJUDGE_CPP_IMAGE || 'gcc:13';
 
 export const cppListNodeClass = `
 struct ListNode {

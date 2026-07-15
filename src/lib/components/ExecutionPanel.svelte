@@ -949,25 +949,33 @@
 
     function startDebugPolling() {
         stopDebugPolling();
+        let pollCount = 0;
         debugPollInterval = setInterval(async () => {
             if (!debugJobId) return;
+            pollCount++;
             try {
                 const res = await fetch(`/api/debug?jobId=${encodeURIComponent(debugJobId)}`);
                 const body = await res.json();
                 if (res.ok) {
                     debugState = body;
                     if (body.results) {
+                        console.log('[debug] session completed with results');
                         stopDebugPolling();
                         debugJobId = null;
                         applyDebugResults(body.results);
                         debugState = null;
                     } else if (body.status === "completed" || body.status === "error") {
+                        console.warn(`[debug] session reached terminal state: ${body.status}`, body.error || '');
                         stopDebugPolling();
                         debugJobId = null;
                         debugState = null;
                     }
+                } else if (pollCount <= 3) {
+                    console.warn('[debug] poll error:', body.error || res.statusText);
                 }
-            } catch {}
+            } catch (err: any) {
+                if (pollCount <= 3) console.warn('[debug] poll failed:', err.message || err);
+            }
         }, 500);
     }
 

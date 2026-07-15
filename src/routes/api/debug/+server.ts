@@ -9,8 +9,12 @@ export const GET: RequestHandler = async ({ url }) => {
     }
     try {
         const state = await getDebugState(jobId);
+        if (state.status === 'completed' || state.status === 'error') {
+            console.log(`[debug] session ${jobId} reached terminal state: ${state.status}`);
+        }
         return json(state);
     } catch (e: any) {
+        console.error(`[debug] session ${jobId} error: ${e.message}`);
         return json({ error: e.message || 'Failed to get debug state' }, { status: 404 });
     }
 };

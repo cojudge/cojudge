@@ -1,6 +1,7 @@
 import { generateJavaClassSolution, generateJavaRunner, javaGraphNodeClass, javaImage, javaListNodeClass, javaTreeNodeClass } from "$lib/utils/javaUtil";
 import { generatePythonClassSolution, generatePythonRunner, pythonGraphNodeClass, pythonImage, pythonListNodeClass, pythonTreeNodeClass } from "$lib/utils/pythonUtil";
-import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, extractOperations, TIMEOUT_MESSAGE } from "$lib/utils/util";
+import { cppImage, cppListNodeClass, cppTreeNodeClass, cppGraphNodeClass, generateCppRunner, generateCppClassSolution } from "$lib/utils/cppUtil";
+import { ensureImageAvailable, extractOperations } from "$lib/utils/util";
 import { getMarkerResponses } from "../markerRunner";
 import Dockerode from "dockerode";
 import fs from 'fs/promises';
@@ -8,6 +9,7 @@ import path from 'path';
 import tar from 'tar-stream';
 import ContainerPool from "./ContainerPool";
 import { JAVA_DEBUG_DRIVER } from "./JavaDebugDriver";
+import { CPP_DEBUG_DRIVER } from "./CppDebugDriver";
 
 const docker = new Dockerode();
 
@@ -29,6 +31,7 @@ export type DebugSession = {
     jobId: string;
     container: Dockerode.Container;
     language: string;
+    imageUsed: string;
     code: string;
     breakpoints: number[];
     state: 'idle' | 'running' | 'paused' | 'completed' | 'error';
@@ -235,6 +238,7 @@ async function waitForPause(container: Dockerode.Container, timeoutMs: number = 
 const SUPPORTED_DEBUG_LANGUAGES: Record<string, string> = {
     python: pythonImage,
     java: javaImage,
+    cpp: cppImage,
 };
 
 async function runExec(container: Dockerode.Container, cmd: string[]): Promise<{ stdout: string; stderr: string; exitCode: number | null }> {
@@ -259,23 +263,59 @@ async function runExec(container: Dockerode.Container, cmd: string[]): Promise<{
     return { stdout, stderr, exitCode: inspect.ExitCode };
 }
 
-async function acquireDebugContainer(image: string): Promise<Dockerode.Container> {
-    let container: Dockerode.Container | null = await ContainerPool.acquire(image);
+async function acquireDebugContainer(image: string): Promise<{ container: Dockerode.Container; image: string }> {
+    let resolvedImage = image;
+
+    if (image === cppImage && !process.env.COJUDGE_CPP_IMAGE) {
+        const debugImage = 'cojudge-debugger-cpp:latest';
+        try {
+            await docker.getImage(debugImage).inspect();
+            resolvedImage = debugImage;
+            console.log(`[debug] using pre-built image: ${debugImage}`);
+        } catch {
+            console.log(`[debug] image ${debugImage} not found, will attempt auto-build`);
+            try {
+                const dockerfileContent = await fs.readFile(path.resolve('docker/cpp/Dockerfile'));
+                const pack = tar.pack();
+                pack.entry({ name: 'Dockerfile' }, dockerfileContent);
+                pack.finalize();
+                await new Promise<void>((resolve, reject) => {
+                    docker.buildImage(pack as any, { t: debugImage }, (err: any, stream: any) => {
+                        if (err) return reject(err);
+                        docker.modem.followProgress(stream, (err: any) => err ? reject(err) : resolve(), () => {});
+                    });
+                });
+                resolvedImage = debugImage;
+                console.log(`[debug] auto-built image: ${debugImage}`);
+            } catch (buildErr: any) {
+                console.warn(`Failed to build ${debugImage}, falling back to ${cppImage} with runtime GDB install: ${buildErr.message}`);
+            }
+        }
+    }
+
+    let container: Dockerode.Container | null = await ContainerPool.acquire(resolvedImage);
     if (!container) {
-        await ensureImageAvailable(docker, image);
+        await ensureImageAvailable(docker, resolvedImage);
         container = await docker.createContainer({
-            Image: image,
-            Cmd: ['sh', '-lc', 'tail -f /dev/null'],
+            Image: resolvedImage,
+            Cmd: ['sleep', 'infinity'],
             WorkingDir: '/app',
             Tty: false,
             Labels: { 'cojudge.created': 'true', 'cojudge.debug': 'true' }
         });
         await container.start();
-        ContainerPool.acquirePermanent(image, container);
+        ContainerPool.acquirePermanent(resolvedImage, container);
+    }
+    if (resolvedImage === cppImage) {
+        const checkGdb = await runExec(container, ['sh', '-c', 'test -f /usr/bin/gdb || { apt-get update -qq && apt-get install -y -qq gdb; }']);
+        if (checkGdb.exitCode !== 0) {
+            const msg = checkGdb.stderr || checkGdb.stdout || 'unknown error';
+            throw new Error(`Failed to install GDB: ${msg.trim()}`);
+        }
     }
     // Clear stale state from a previous debug session on a pooled container
     await runExec(container, ['sh', '-c', `rm -f ${DEBUG_STATE_FILE} ${DEBUG_CMD_FILE}`]);
-    return container;
+    return { container, image: resolvedImage };
 }
 
 function countCompletedCases(output?: string): number {
@@ -384,7 +424,7 @@ export async function startDebugSession(language: string, code: string, debugLin
         throw new Error(`Debugging is not yet supported for ${language}. Currently supported: ${supported}.`);
     }
 
-    const container = await acquireDebugContainer(image);
+    const { container, image: imageUsed } = await acquireDebugContainer(image);
 
     let runCmd: string[];
 
@@ -395,7 +435,21 @@ export async function startDebugSession(language: string, code: string, debugLin
         pack.entry({ name: 'user_code.py' }, Buffer.from(code));
         pack.finalize();
         await container.putArchive(pack as any, { path: '/app' });
-        runCmd = ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'python3 debug_main.py'];
+        runCmd = ['/bin/sh', '-c', 'python3 debug_main.py'];
+    } else if (language === 'cpp') {
+        const pack = tar.pack();
+        pack.entry({ name: 'main.cpp' }, Buffer.from(code));
+        pack.entry({ name: 'cpp_debug_driver.py' }, Buffer.from(CPP_DEBUG_DRIVER));
+        pack.finalize();
+        await container.putArchive(pack as any, { path: '/app' });
+
+        const compile = await runExec(container, ['/bin/sh', '-c', 'g++ -std=c++17 -g -rdynamic -o main main.cpp']);
+        if (compile.exitCode !== 0) {
+            await ContainerPool.markForCleanup(container);
+            throw new Error(`Compilation failed:\n${compile.stderr || compile.stdout}`);
+        }
+        const bps = debugLines.join(',');
+        runCmd = ['/bin/sh', '-c', `python3 cpp_debug_driver.py main.cpp "${bps}"`];
     } else {
         // java
         const pack = tar.pack();
@@ -410,12 +464,13 @@ export async function startDebugSession(language: string, code: string, debugLin
             throw new Error(`Compilation failed:\n${compile.stderr || compile.stdout}`);
         }
         const bps = debugLines.join(',');
-        runCmd = ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', `java DebugDriver "${bps}"`];
+        runCmd = ['/bin/sh', '-c', `java DebugDriver "${bps}"`];
     }
 
     return registerSession({
         jobId,
         container,
+        imageUsed,
         language,
         code,
         breakpoints: debugLines,
@@ -444,7 +499,7 @@ export async function startProblemDebugSession(problemId: string, language: stri
     const problemContent = await fs.readFile(problemPath, 'utf-8');
     const problemData = JSON.parse(problemContent);
 
-    const container = await acquireDebugContainer(image);
+    const { container, image: imageUsed } = await acquireDebugContainer(image);
 
     let runCmd: string[];
 
@@ -470,8 +525,8 @@ export async function startProblemDebugSession(problemId: string, language: stri
         pack.entry({ name: 'debug_main.py' }, Buffer.from(generatePythonDebugWrapper(debugLines, '/app/main.py', sourceFile)));
         pack.finalize();
         await container.putArchive(pack as any, { path: '/app' });
-        runCmd = ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'python3 -B debug_main.py'];
-    } else {
+        runCmd = ['/bin/sh', '-c', 'python3 -B debug_main.py'];
+    } else if (language === 'java') {
         // java
         const runnerCode = generateJavaRunner(problemData.functionName, problemData.params, testCases, problemData.outputType, problemData.checkGraphClone);
         let sourceFile = 'Solution.java';
@@ -501,12 +556,45 @@ export async function startProblemDebugSession(problemId: string, language: stri
             throw new Error(`Compilation failed:\n${compile.stderr || compile.stdout}`);
         }
         const bps = debugLines.join(',');
-        runCmd = ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', `java DebugDriver "${bps}" Main "${sourceFile}"`];
+        runCmd = ['/bin/sh', '-c', `java DebugDriver "${bps}" Main "${sourceFile}"`];
+    } else if (language === 'cpp') {
+        const runnerCode = generateCppRunner(problemData.functionName, problemData.params, testCases, problemData.checkGraphClone);
+        let sourceFile = 'Solution.cpp';
+
+        const pack = tar.pack();
+        pack.entry({ name: 'ListNode.cpp' }, Buffer.from(cppListNodeClass));
+        pack.entry({ name: 'TreeNode.cpp' }, Buffer.from(cppTreeNodeClass));
+        pack.entry({ name: 'GraphNode.cpp' }, Buffer.from(cppGraphNodeClass));
+        if (problemData.classProblem) {
+            const className = problemData.classProblem.userClassName || 'MedianFinder';
+            const operations = extractOperations(testCases, className);
+            const wrapperCode = generateCppClassSolution(className, problemData.params, problemData.outputType, operations);
+            pack.entry({ name: `${className}.cpp` }, Buffer.from(code));
+            pack.entry({ name: 'Solution.cpp' }, Buffer.from(wrapperCode));
+            sourceFile = `${className}.cpp`;
+        } else {
+            pack.entry({ name: 'Solution.cpp' }, Buffer.from(code));
+        }
+        pack.entry({ name: 'Main.cpp' }, Buffer.from(runnerCode));
+        pack.entry({ name: 'cpp_debug_driver.py' }, Buffer.from(CPP_DEBUG_DRIVER));
+        pack.finalize();
+        await container.putArchive(pack as any, { path: '/app' });
+
+        const compile = await runExec(container, ['/bin/sh', '-c', 'g++ -std=c++17 -g -rdynamic -o main *.cpp']);
+        if (compile.exitCode !== 0) {
+            await ContainerPool.markForCleanup(container);
+            throw new Error(`Compilation failed:\n${compile.stderr || compile.stdout}`);
+        }
+        const bps = debugLines.join(',');
+        runCmd = ['/bin/sh', '-c', `python3 cpp_debug_driver.py "${sourceFile}" "${bps}"`];
+    } else {
+        throw new Error(`Debugging is not yet supported for ${language}.`);
     }
 
     return registerSession({
         jobId,
         container,
+        imageUsed,
         language,
         code,
         breakpoints: debugLines,
@@ -526,43 +614,10 @@ async function executeDebugRun(session: DebugSession) {
     try {
         const exec = await container.exec({
             Cmd: session.runCmd,
-            AttachStdout: true,
-            AttachStderr: true
+            AttachStdout: false,
+            AttachStderr: false
         });
-        const stream: any = await exec.start({ hijack: true, stdin: false });
-        let stderr = '';
-
-        await new Promise<void>((resolve) => {
-            (container as any).modem.demuxStream(
-                stream,
-                { write: () => {} },
-                { write: (chunk: any) => (stderr += chunk.toString()) }
-            );
-            stream.on('end', resolve);
-            stream.on('error', resolve);
-        });
-
-        const state = await readDebugState(container);
-        if (state.status === 'running') {
-            const inspect = await exec.inspect();
-            if (inspect.ExitCode === 124) {
-                state.status = 'error';
-                state.error = TIMEOUT_MESSAGE;
-            } else if (stderr.trim()) {
-                state.status = 'error';
-                state.error = stderr.trim();
-            } else {
-                state.status = 'completed';
-            }
-        }
-
-        session.state = state.status === 'paused' ? 'paused' :
-                       state.status === 'completed' ? 'completed' : 'error';
-        session.stateData = decorateState(session, state);
-        if (state.status === 'completed') {
-            await evaluateCompletedResults(session, session.stateData);
-        }
-
+        await exec.start({ Detach: true });
     } catch (e: any) {
         session.state = 'error';
         session.stateData = { status: 'error', error: `Execution failed: ${e}` };
@@ -638,12 +693,15 @@ export async function debugStop(jobId: string): Promise<void> {
     const session = debugSessions.get(jobId);
     if (!session) throw new Error(`Debug session '${jobId}' not found`);
 
+    console.log(`[debugStop] stopping session ${jobId} (lang: ${session.language}, mode: ${session.mode})`);
+    console.log(`[debugStop] stack: ${new Error().stack?.split('\n').slice(2, 5).join(' <- ')}`);
+
     try {
         await writeDebugCmd(session.container, 'stop');
     } catch {}
 
     try {
-        await ContainerPool.markForCleanup(session.container);
+        await ContainerPool.release(session.imageUsed, session.container);
     } catch {}
 
     debugSessions.delete(jobId);

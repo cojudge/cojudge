@@ -86,6 +86,7 @@ class ContainerPool {
             const active = entries.filter(e => {
                 if (e.inUse) return true;
                 if (now - e.lastUsed > maxAgeMs) {
+                    console.log(`[cleanupStale] destroying container ${e.container.id.substring(0, 12)} (image: ${key}, idle: ${now - e.lastUsed}ms)`);
                     ContainerPool.destroyContainer(e.container);
                     return false;
                 }
