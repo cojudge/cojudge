@@ -1,6 +1,7 @@
 import { generateJavaClassSolution, generateJavaRunner, javaGraphNodeClass, javaImage, javaListNodeClass, javaTreeNodeClass } from "$lib/utils/javaUtil";
 import { generatePythonClassSolution, generatePythonRunner, pythonGraphNodeClass, pythonImage, pythonListNodeClass, pythonTreeNodeClass } from "$lib/utils/pythonUtil";
 import { cppImage, cppListNodeClass, cppTreeNodeClass, cppGraphNodeClass, generateCppRunner, generateCppClassSolution } from "$lib/utils/cppUtil";
+import { generateGoRunner, goImage } from "$lib/utils/goUtil";
 import { ensureImageAvailable, extractOperations } from "$lib/utils/util";
 import { getMarkerResponses } from "../markerRunner";
 import Dockerode from "dockerode";
@@ -10,6 +11,7 @@ import tar from 'tar-stream';
 import ContainerPool from "./ContainerPool";
 import { JAVA_DEBUG_DRIVER } from "./JavaDebugDriver";
 import { CPP_DEBUG_DRIVER } from "./CppDebugDriver";
+import { GO_DEBUG_DRIVER } from "./GoDebugDriver";
 
 const docker = new Dockerode();
 
@@ -239,6 +241,7 @@ const SUPPORTED_DEBUG_LANGUAGES: Record<string, string> = {
     python: pythonImage,
     java: javaImage,
     cpp: cppImage,
+    go: goImage,
 };
 
 async function runExec(container: Dockerode.Container, cmd: string[]): Promise<{ stdout: string; stderr: string; exitCode: number | null }> {
@@ -293,6 +296,33 @@ async function acquireDebugContainer(image: string): Promise<{ container: Docker
         }
     }
 
+    if (image === goImage && !process.env.COJUDGE_GO_IMAGE) {
+        const debugImage = 'cojudge-debugger-go:latest';
+        try {
+            await docker.getImage(debugImage).inspect();
+            resolvedImage = debugImage;
+            console.log(`[debug] using pre-built image: ${debugImage}`);
+        } catch {
+            console.log(`[debug] image ${debugImage} not found, will attempt auto-build`);
+            try {
+                const dockerfileContent = await fs.readFile(path.resolve('docker/go/Dockerfile'));
+                const pack = tar.pack();
+                pack.entry({ name: 'Dockerfile' }, dockerfileContent);
+                pack.finalize();
+                await new Promise<void>((resolve, reject) => {
+                    docker.buildImage(pack as any, { t: debugImage }, (err: any, stream: any) => {
+                        if (err) return reject(err);
+                        docker.modem.followProgress(stream, (err: any) => err ? reject(err) : resolve(), () => {});
+                    });
+                });
+                resolvedImage = debugImage;
+                console.log(`[debug] auto-built image: ${debugImage}`);
+            } catch (buildErr: any) {
+                console.warn(`Failed to build ${debugImage}, falling back to ${goImage} with runtime dlv install: ${buildErr.message}`);
+            }
+        }
+    }
+
     let container: Dockerode.Container | null = await ContainerPool.acquire(resolvedImage);
     if (!container) {
         await ensureImageAvailable(docker, resolvedImage);
@@ -313,8 +343,18 @@ async function acquireDebugContainer(image: string): Promise<{ container: Docker
             throw new Error(`Failed to install GDB: ${msg.trim()}`);
         }
     }
+    if (resolvedImage === goImage) {
+        const checkDlv = await runExec(container, ['sh', '-c', 'test -x /go/bin/dlv || { go install github.com/go-delve/delve/cmd/dlv@v1.22.1 2>/dev/null; }; test -x /go/bin/dlv']);
+        if (checkDlv.exitCode !== 0) {
+            const msg = checkDlv.stderr || checkDlv.stdout || 'unknown error';
+            throw new Error(`Failed to install dlv: ${msg.trim()}`);
+        }
+    }
     // Clear stale state from a previous debug session on a pooled container
     await runExec(container, ['sh', '-c', `rm -f ${DEBUG_STATE_FILE} ${DEBUG_CMD_FILE}`]);
+    if (image === goImage) {
+        await runExec(container, ['sh', '-c', 'pkill -f "dlv exec" 2>/dev/null; sleep 0.5; true']);
+    }
     return { container, image: resolvedImage };
 }
 
@@ -450,6 +490,28 @@ export async function startDebugSession(language: string, code: string, debugLin
         }
         const bps = debugLines.join(',');
         runCmd = ['/bin/sh', '-c', `python3 cpp_debug_driver.py main.cpp "${bps}"`];
+    } else if (language === 'go') {
+        const pack = tar.pack();
+        pack.entry({ name: 'main.go' }, Buffer.from(code));
+        pack.entry({ name: 'go_debug_driver.go' }, Buffer.from(GO_DEBUG_DRIVER));
+        pack.finalize();
+        await container.putArchive(pack as any, { path: '/app' });
+
+        await runExec(container, ['/bin/sh', '-c', 'test -f go.mod || go mod init cojudge']);
+
+        const compileDriver = await runExec(container, ['/bin/sh', '-c', 'go build -o go_debug_driver go_debug_driver.go']);
+        if (compileDriver.exitCode !== 0) {
+            await ContainerPool.markForCleanup(container);
+            throw new Error(`Failed to compile debug driver:\n${compileDriver.stderr || compileDriver.stdout}`);
+        }
+
+        const compile = await runExec(container, ['/bin/sh', '-c', 'go build -gcflags="all=-N -l" -o main main.go']);
+        if (compile.exitCode !== 0) {
+            await ContainerPool.markForCleanup(container);
+            throw new Error(`Compilation failed:\n${compile.stderr || compile.stdout}`);
+        }
+        const bps = debugLines.join(',');
+        runCmd = ['/bin/sh', '-c', `./go_debug_driver /app/main.go "${bps}" ./main`];
     } else {
         // java
         const pack = tar.pack();
@@ -587,6 +649,32 @@ export async function startProblemDebugSession(problemId: string, language: stri
         }
         const bps = debugLines.join(',');
         runCmd = ['/bin/sh', '-c', `python3 cpp_debug_driver.py "${sourceFile}" "${bps}"`];
+    } else if (language === 'go') {
+        const className = problemData.classProblem?.userClassName;
+        const runnerCode = generateGoRunner(problemData.functionName, problemData.params, testCases, problemData.outputType, className, problemData.checkGraphClone);
+
+        const pack = tar.pack();
+        pack.entry({ name: 'main.go' }, Buffer.from(runnerCode));
+        pack.entry({ name: 'solution.go' }, Buffer.from(code));
+        pack.entry({ name: 'go_debug_driver.go' }, Buffer.from(GO_DEBUG_DRIVER));
+        pack.finalize();
+        await container.putArchive(pack as any, { path: '/app' });
+
+        await runExec(container, ['/bin/sh', '-c', 'test -f go.mod || go mod init cojudge']);
+
+        const compileDriver = await runExec(container, ['/bin/sh', '-c', 'go build -o go_debug_driver go_debug_driver.go']);
+        if (compileDriver.exitCode !== 0) {
+            await ContainerPool.markForCleanup(container);
+            throw new Error(`Failed to compile debug driver:\n${compileDriver.stderr || compileDriver.stdout}`);
+        }
+
+        const compile = await runExec(container, ['/bin/sh', '-c', 'go build -gcflags="all=-N -l" -o main main.go solution.go']);
+        if (compile.exitCode !== 0) {
+            await ContainerPool.markForCleanup(container);
+            throw new Error(`Compilation failed:\n${compile.stderr || compile.stdout}`);
+        }
+        const bps = debugLines.join(',');
+        runCmd = ['/bin/sh', '-c', `./go_debug_driver /app/solution.go "${bps}" ./main`];
     } else {
         throw new Error(`Debugging is not yet supported for ${language}.`);
     }
@@ -649,6 +737,16 @@ export async function debugContinue(jobId: string): Promise<DebugState> {
     const session = debugSessions.get(jobId);
     if (!session) throw new Error(`Debug session '${jobId}' not found`);
 
+    const currentState = await readDebugState(session.container);
+    if (currentState.status === 'completed' || currentState.status === 'error' || currentState.status === 'stopped') {
+        session.state = currentState.status as any;
+        session.stateData = decorateState(session, currentState);
+        if (currentState.status === 'completed') {
+            await evaluateCompletedResults(session, session.stateData);
+        }
+        return session.stateData;
+    }
+
     await writeDebugCmd(session.container, 'continue');
     const state = await waitForPause(session.container);
 
@@ -670,6 +768,16 @@ export async function debugContinue(jobId: string): Promise<DebugState> {
 export async function debugStep(jobId: string): Promise<DebugState> {
     const session = debugSessions.get(jobId);
     if (!session) throw new Error(`Debug session '${jobId}' not found`);
+
+    const currentState = await readDebugState(session.container);
+    if (currentState.status === 'completed' || currentState.status === 'error' || currentState.status === 'stopped') {
+        session.state = currentState.status as any;
+        session.stateData = decorateState(session, currentState);
+        if (currentState.status === 'completed') {
+            await evaluateCompletedResults(session, session.stateData);
+        }
+        return session.stateData;
+    }
 
     await writeDebugCmd(session.container, 'step');
     const state = await waitForPause(session.container);

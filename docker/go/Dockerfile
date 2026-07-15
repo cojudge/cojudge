@@ -26,9 +26,19 @@
 #   3) Or retag as golang:1.22-alpine (no env var needed, but masks the original):
 #      docker tag cojudge-go:latest golang:1.22-alpine
 
+# Cojudge Go Debugger Runner Image
+#
+# WHY: The default golang:1.22-alpine lacks Delve (dlv), which is needed
+# for the debugger. This image pre-installs dlv during build.
+#
+# USAGE: Build and point cojudge to it via COJUDGE_GO_IMAGE env var.
+# See docker/go/Dockerfile for full instructions.
+
 FROM golang:1.22-alpine
 
 # go install std compiles every standard library package and stores the
 # results in $GOPATH/pkg/<os>_<arch> and $GOCACHE. Subsequent go build
 # commands find these pre-compiled artifacts and skip recompilation.
 RUN go install std
+
+RUN go install github.com/go-delve/delve/cmd/dlv@v1.22.1
