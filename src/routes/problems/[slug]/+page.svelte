@@ -332,6 +332,7 @@
     }
 
     $: if (language) {
+        debugBreakpoints = [];
         loadOrInitFile(language);
     }
 
@@ -494,6 +495,7 @@
         if (idx === -1) return;
         saveCurrentViewState();
         activeTabId = idx;
+        debugBreakpoints = [];
         await loadOrInitFile(language);
     }
 

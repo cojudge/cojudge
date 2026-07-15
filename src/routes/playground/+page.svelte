@@ -495,6 +495,7 @@ func main() {
     }
 
     $: if (language) {
+        debugBreakpoints = [];
         loadOrInitFile(language);
     }
 
