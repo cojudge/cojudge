@@ -307,6 +307,10 @@
         if ($execPaneHeightStore <= minExecPanelHeight) {
             $execPaneHeightStore = Math.max(12, Math.min(90, lastNonMinHeight || 35));
         }
+        if (!debugBreakpoints || debugBreakpoints.length === 0) {
+            debugState = { status: "error", error: "No breakpoints set. Click line numbers in the editor to add breakpoints." };
+            return;
+        }
         isDebugRunning = true;
         isLoading = true;
         output = "";
@@ -332,7 +336,10 @@
             });
             const body = await res.json();
             if (!res.ok || !body.jobId) {
-                error = body?.error || "Failed to start debug";
+                debugState = {
+                    status: "error",
+                    error: body?.error || "Failed to start debug session",
+                };
                 isDebugRunning = false;
                 return;
             }
@@ -342,10 +349,11 @@
             runningMessage = "";
             startDebugPolling();
         } catch (err: any) {
-            error = err.message || "Debug failed";
+            debugState = { status: "error", error: err.message || "Debug failed" };
         } finally {
             isLoading = false;
             isDebugRunning = false;
+            runningMessage = "";
         }
     }
 
