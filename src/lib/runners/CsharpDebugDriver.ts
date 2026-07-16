@@ -479,6 +479,7 @@ export function generateCsharpDebugWrapper(
     let paramNames: string[] = [];
     let isMainMethod = false;
     let recentLines: string[] = [];
+    let allVarNames: string[] = [];
     const V = '__cs_vars';
 
     for (let i = 0; i < lines.length; i++) {
@@ -546,6 +547,7 @@ export function generateCsharpDebugWrapper(
             inMethod = false;
             varsInited = false;
             paramNames = [];
+            allVarNames = [];
             isMainMethod = false;
         }
 
@@ -566,10 +568,14 @@ export function generateCsharpDebugWrapper(
                 mainInited = true;
             }
             varsInited = true;
+            allVarNames = [...paramNames];
         }
 
         if (inMethod && varsInited && shouldInstrument(trimmed)) {
             for (const vn of extractVarDeclarations(trimmed)) {
+                if (!allVarNames.includes(vn)) allVarNames.push(vn);
+            }
+            for (const vn of allVarNames) {
                 result.push(`${indent}${V}["${vn}"] = DebugSupport.RenderValue(${vn});`);
             }
         }
