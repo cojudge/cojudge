@@ -939,6 +939,11 @@
                 stopDebugPolling();
                 debugJobId = null;
                 debugState = null;
+                if (body.status === "completed") {
+                    activeMainTab = "output";
+                } else if (body.status === "stopped") {
+                    activeMainTab = "testcase";
+                }
             }
         } catch (err: any) {
             debugState = { ...(debugState || {}), error: err.message || "Debug action failed" };
@@ -969,6 +974,9 @@
                         stopDebugPolling();
                         debugJobId = null;
                         debugState = null;
+                        if (body.status === "completed") {
+                            activeMainTab = "output";
+                        }
                     }
                 } else if (pollCount <= 3) {
                     console.warn('[debug] poll error:', body.error || res.statusText);
