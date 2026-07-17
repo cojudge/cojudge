@@ -14,7 +14,7 @@ export type Param = {
 
 export type ProgrammingLanguage = 'java' | 'python' | 'cpp' | 'csharp' | 'rust' | 'go' | 'typescript' | 'plaintext' | 'markdown';
 
-export const DEBUG_SUPPORTED_LANGUAGES: ProgrammingLanguage[] = ['python', 'java', 'cpp', 'go', 'csharp'];
+export const DEBUG_SUPPORTED_LANGUAGES: ProgrammingLanguage[] = ['python', 'java', 'cpp', 'go', 'csharp', 'rust'];
 
 export function isDebugSupported(language: string): boolean {
     return DEBUG_SUPPORTED_LANGUAGES.includes(language as ProgrammingLanguage);

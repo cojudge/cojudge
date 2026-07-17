@@ -549,6 +549,179 @@ ${branches}
 `;
 }
 
+export function generateRustDebugRunner(
+  functionName: string,
+  params: Param[],
+  testCases: any[],
+  className?: string,
+  checkGraphClone?: boolean,
+): string {
+  const snakedFunctionName = functionName
+    .replace(/([A-Z])/g, "_$1")
+    .toLowerCase()
+    .replace(/^_/, "");
+
+  const prefix = className ? `solution::${className}` : 'solution::Solution';
+  const hasGraphNode = checkGraphClone && params.some(p => p.type === 'graph_node');
+
+  const calls = testCases
+    .map((tc, caseIndex) => {
+      if (hasGraphNode) {
+        const decls: string[] = [];
+        const args: string[] = [];
+        params.forEach((p, i) => {
+          const val = tc[p.name];
+          const varName = `__input${caseIndex}_${i}`;
+          if (p.type === 'graph_node') {
+            const escaped = String(val ?? '[]').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+            decls.push(`let ${varName} = to_graph_node("${escaped}");`);
+            args.push(`${varName}.clone()`);
+          } else {
+            args.push(rustGetFullParam([p], tc));
+          }
+        });
+        const graphNodeVar = args.find((_, i) => params[i]?.type === 'graph_node');
+        if (graphNodeVar) {
+          const inputVar = graphNodeVar.replace('.clone()', '');
+          return `{
+        ${decls.join('\n        ')}
+        let res = ${prefix}::${snakedFunctionName}(${args.join(', ')});
+        let same_ref = match (&${inputVar}, &res) {
+            (Some(a), Some(b)) => Rc::ptr_eq(a, b),
+            _ => false,
+        };
+        if same_ref {
+            println!(":::ERROR:::invalid clone - same object");
+        } else {
+            println!(":::RESULT:::{}", res.to_cojudge_string());
+        }
+        println!("---");
+    }`;
+        }
+      }
+      const args = rustGetFullParam(params, tc);
+      return `{
+        let res = ${prefix}::${snakedFunctionName}(${args});
+        println!(":::RESULT:::{}", res.to_cojudge_string());
+        println!("---");
+    }`;
+    })
+    .join("\n    ");
+
+  const operations = extractOperations(testCases, className || '');
+  const solutionCode = className ? generateRustClassSolutionDebug(className, params, undefined, operations) : '';
+
+  return `
+use std::rc::Rc;
+use std::cell::RefCell;
+use std::collections::VecDeque;
+
+mod solution;
+
+${rustListNodeClass}
+
+${rustTreeNodeClass}
+
+// GraphNode
+#[derive(Debug, PartialEq, Eq)]
+pub struct GraphNode {
+  pub val: i32,
+  pub neighbors: Vec<Option<Rc<RefCell<GraphNode>>>>,
+}
+
+impl GraphNode {
+  #[inline]
+  pub fn new(val: i32) -> Self {
+    GraphNode {
+      val,
+      neighbors: vec![]
+    }
+  }
+}
+
+// Solution wrapper
+${solutionCode}
+
+// Helper methods for display
+${rustHelperMethods}
+
+fn main() {
+    ${calls}
+}
+`;
+}
+
+function generateRustClassSolutionDebug(className: string, params?: Param[], outputType?: string, operations?: string[]): string {
+  if (params && params.length > 0 && params[0]?.type === 'tree_node') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
+        let ser = solution::${className}::new();
+        let deser = solution::${className}::new();
+        deser.deserialize(ser.serialize(root))
+    }
+}
+`;
+  }
+  if (params && params.length === 1 && params[0]?.type === 'string_array') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(strs: Vec<String>) -> Vec<String> {
+        let codec = solution::${className}::new();
+        let encoded = codec.encode(strs);
+        codec.decode(encoded)
+    }
+}
+`;
+  }
+  if (params && params.length > 1 && params[1]?.type === 'string_array') {
+    const ops = operations || ['addWord', 'insert', 'search', 'startsWith'];
+    const branches = generateRustBranches(ops, false);
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<String>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<solution::${className}> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "${className}" {
+                obj = Some(solution::${className}::new());
+                result.push("null".to_string());
+${branches}
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  const ops = operations || ['addNum', 'findMedian'];
+  const branches = generateRustBranches(ops, true);
+  return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<solution::${className}> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "${className}" {
+                obj = Some(solution::${className}::new());
+                result.push("null".to_string());
+${branches}
+            }
+        }
+        result
+    }
+}
+`;
+}
+
 export function generateRustRunner(
   functionName: string,
   params: Param[],

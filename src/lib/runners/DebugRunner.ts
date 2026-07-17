@@ -3,6 +3,7 @@ import { generatePythonClassSolution, generatePythonRunner, pythonGraphNodeClass
 import { cppImage, cppListNodeClass, cppTreeNodeClass, cppGraphNodeClass, generateCppRunner, generateCppClassSolution } from "$lib/utils/cppUtil";
 import { generateGoRunner, goImage } from "$lib/utils/goUtil";
 import { csharpImage, generateCSharpRunner, generateCSharpClassSolution, csharpListNodeClass, csharpTreeNodeClass, csharpGraphNodeClass } from "$lib/utils/csharpUtil";
+import { rustImage, generateRustRunner, generateRustDebugRunner } from "$lib/utils/rustUtil";
 import { ensureImageAvailable, extractOperations } from "$lib/utils/util";
 import { getMarkerResponses } from "../markerRunner";
 import Dockerode from "dockerode";
@@ -14,6 +15,7 @@ import { JAVA_DEBUG_DRIVER } from "./JavaDebugDriver";
 import { CPP_DEBUG_DRIVER } from "./CppDebugDriver";
 import { GO_DEBUG_DRIVER } from "./GoDebugDriver";
 import { CSHARP_DEBUG_SUPPORT, generateCsharpDebugWrapper } from "./CsharpDebugDriver";
+import { RUST_DEBUG_DRIVER } from "./RustDebugDriver";
 
 const docker = new Dockerode();
 
@@ -245,6 +247,7 @@ const SUPPORTED_DEBUG_LANGUAGES: Record<string, string> = {
     cpp: cppImage,
     go: goImage,
     csharp: csharpImage,
+    rust: rustImage,
 };
 
 async function runExec(container: Dockerode.Container, cmd: string[]): Promise<{ stdout: string; stderr: string; exitCode: number | null }> {
@@ -326,6 +329,33 @@ async function acquireDebugContainer(image: string): Promise<{ container: Docker
         }
     }
 
+    if (image === rustImage && !process.env.COJUDGE_RUST_IMAGE) {
+        const debugImage = 'cojudge-debugger-rust:latest';
+        try {
+            await docker.getImage(debugImage).inspect();
+            resolvedImage = debugImage;
+            console.log(`[debug] using pre-built image: ${debugImage}`);
+        } catch {
+            console.log(`[debug] image ${debugImage} not found, will attempt auto-build`);
+            try {
+                const dockerfileContent = await fs.readFile(path.resolve('docker/rust/Dockerfile'));
+                const pack = tar.pack();
+                pack.entry({ name: 'Dockerfile' }, dockerfileContent);
+                pack.finalize();
+                await new Promise<void>((resolve, reject) => {
+                    docker.buildImage(pack as any, { t: debugImage }, (err: any, stream: any) => {
+                        if (err) return reject(err);
+                        docker.modem.followProgress(stream, (err: any) => err ? reject(err) : resolve(), () => {});
+                    });
+                });
+                resolvedImage = debugImage;
+                console.log(`[debug] auto-built image: ${debugImage}`);
+            } catch (buildErr: any) {
+                console.warn(`Failed to build ${debugImage}, falling back to ${rustImage} with runtime GDB install: ${buildErr.message}`);
+            }
+        }
+    }
+
     let container: Dockerode.Container | null = await ContainerPool.acquire(resolvedImage);
     if (!container) {
         await ensureImageAvailable(docker, resolvedImage);
@@ -352,6 +382,14 @@ async function acquireDebugContainer(image: string): Promise<{ container: Docker
             const msg = checkDlv.stderr || checkDlv.stdout || 'unknown error';
             throw new Error(`Failed to install dlv: ${msg.trim()}`);
         }
+    }
+    if (resolvedImage === rustImage) {
+        const checkDeps = await runExec(container, ['sh', '-c', 'test -f /usr/bin/gdb && test -f /usr/bin/python3 || { apt-get update -qq && apt-get install -y -qq gdb python3; }']);
+        if (checkDeps.exitCode !== 0) {
+            const msg = checkDeps.stderr || checkDeps.stdout || 'unknown error';
+            throw new Error(`Failed to install GDB/Python3: ${msg.trim()}`);
+        }
+        await runExec(container, ['sh', '-c', 'rustup component add rust-gdb 2>/dev/null; test -f /usr/local/lib/python3.11/dist-packages/rust_dbg/gdb.py || test -f $(dirname $(which rustc))/../lib/rustlib/etc/gdb_rust_pretty_printing.py || true']);
     }
     // Clear stale state from a previous debug session on a pooled container
     await runExec(container, ['sh', '-c', `rm -f ${DEBUG_STATE_FILE} ${DEBUG_CMD_FILE}`]);
@@ -530,6 +568,20 @@ export async function startDebugSession(language: string, code: string, debugLin
             throw new Error(`Compilation failed:\n${compile.stderr || compile.stdout}`);
         }
         runCmd = ['/bin/sh', '-c', 'dotnet run --no-build'];
+    } else if (language === 'rust') {
+        const pack = tar.pack();
+        pack.entry({ name: 'main.rs' }, Buffer.from(code));
+        pack.entry({ name: 'rust_debug_driver.py' }, Buffer.from(RUST_DEBUG_DRIVER));
+        pack.finalize();
+        await container.putArchive(pack as any, { path: '/app' });
+
+        const compile = await runExec(container, ['/bin/sh', '-c', 'rustc --edition 2021 -g -C debuginfo=2 -o main main.rs']);
+        if (compile.exitCode !== 0) {
+            await ContainerPool.markForCleanup(container);
+            throw new Error(`Compilation failed:\n${compile.stderr || compile.stdout}`);
+        }
+        const bps = debugLines.join(',');
+        runCmd = ['/bin/sh', '-c', `python3 rust_debug_driver.py main.rs "${bps}" ./main 0`];
     } else {
         // java
         const pack = tar.pack();
@@ -729,6 +781,24 @@ export async function startProblemDebugSession(problemId: string, language: stri
         }
         const bps = debugLines.join(',');
         runCmd = ['/bin/sh', '-c', `./go_debug_driver /app/solution.go "${bps}" ./main`];
+    } else if (language === 'rust') {
+        const className = problemData.classProblem?.userClassName;
+        const runnerCode = generateRustDebugRunner(problemData.functionName, problemData.params, testCases, className, problemData.checkGraphClone);
+
+        const pack = tar.pack();
+        pack.entry({ name: 'main.rs' }, Buffer.from(runnerCode));
+        pack.entry({ name: 'solution.rs' }, Buffer.from(code));
+        pack.entry({ name: 'rust_debug_driver.py' }, Buffer.from(RUST_DEBUG_DRIVER));
+        pack.finalize();
+        await container.putArchive(pack as any, { path: '/app' });
+
+        const compile = await runExec(container, ['/bin/sh', '-c', 'rustc --edition 2021 -g -C debuginfo=2 -o main main.rs']);
+        if (compile.exitCode !== 0) {
+            await ContainerPool.markForCleanup(container);
+            throw new Error(`Compilation failed:\n${compile.stderr || compile.stdout}`);
+        }
+        const bps = debugLines.join(',');
+        runCmd = ['/bin/sh', '-c', `python3 rust_debug_driver.py solution.rs "${bps}" ./main 0`];
     } else {
         throw new Error(`Debugging is not yet supported for ${language}.`);
     }
