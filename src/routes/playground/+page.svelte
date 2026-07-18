@@ -408,6 +408,43 @@ func main() {
         startRename(nextId, fileName, source);
     }
 
+    async function duplicateFile(sourceFileId: string, sourceFileName: string) {
+        const files = getFiles();
+        const sourceEntries = files.filter(f => f.fileId === sourceFileId);
+        if (!sourceEntries.length) return;
+
+        const nextId = uuidv4();
+        const now = Date.now();
+        const match = sourceFileName.match(/^(.*\D)(\d+)$/);
+        const fileName = match ? `${match[1]}${parseInt(match[2], 10) + 1}` : `${sourceFileName}-1`;
+
+        tabs = [...tabs, { fileId: nextId, fileName, isOpen: true, lastUpdated: now }];
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            for (const entry of sourceEntries) {
+                files.push({
+                    ...entry,
+                    fileId: nextId,
+                    fileName,
+                    content: entry.content,
+                    output: '',
+                    logs: '',
+                    isActive: false,
+                    order: tabs.length - 1,
+                    isOpen: true,
+                    lastUpdated: now,
+                    viewState: null
+                });
+            }
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
+        activeTabId = tabs.length - 1;
+        await loadOrInitFile(language);
+        persistTabOrder();
+        startRename(nextId, fileName, 'sidebar');
+    }
+
     function persistTabOrder() {
         const fkey = fileKey();
         const orderById = new Map<string, number>();
@@ -1418,6 +1455,15 @@ func main() {
                                 {/if}
                                 
                                 <div class="file-actions">
+                                    <button
+                                        class="file-action-btn"
+                                        title="Duplicate"
+                                        on:click|stopPropagation={() => duplicateFile(t.fileId, t.fileName)}
+                                    >
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                            <path d="M8 16H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2m-6 12h8a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        </svg>
+                                    </button>
                                     <button
                                         class="file-action-btn"
                                         title="Rename"
