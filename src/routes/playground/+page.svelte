@@ -1860,7 +1860,17 @@ func main() {
                             }}
                             on:mouseenter={() => selectedIndex = i}
                         >
-                            <span class="search-file-name">{file.fileName}</span>
+                            <span class="search-file-info">
+                                {#if file.type === 'preview'}
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0;">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                {:else}
+                                    <LanguageIcon language={tabLanguages[file.fileId] ?? language} size={17} />
+                                {/if}
+                                <span class="search-file-name">{file.fileName}</span>
+                            </span>
                             {#if file.isOpen}
                                 <span class="search-file-badge">Open</span>
                             {/if}
@@ -2573,8 +2583,18 @@ func main() {
         color: var(--color-text);
     }
 
+    .search-file-info {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+    }
+
     .search-file-name {
         font-size: 0.95rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .search-file-badge {
