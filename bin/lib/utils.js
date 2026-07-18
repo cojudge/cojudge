@@ -127,12 +127,24 @@ export function printVersion(dir) {
 export function updateRepo(dir) {
   console.log("Updating cojudge...");
   try {
+    const before = execSync("git rev-parse HEAD", { cwd: dir })
+      .toString()
+      .trim();
     execSync("git pull", { cwd: dir, stdio: "inherit" });
+    const after = execSync("git rev-parse HEAD", { cwd: dir })
+      .toString()
+      .trim();
+    if (before === after) {
+      console.log("Already up to date.");
+      return false;
+    }
     console.log("Installing dependencies and building...");
     execSync("npm install", { cwd: dir, stdio: "inherit" });
     execSync("npm run build", { cwd: dir, stdio: "inherit" });
     console.log("Update complete.");
+    return true;
   } catch (e) {
     console.error("Update failed.");
+    return false;
   }
 }

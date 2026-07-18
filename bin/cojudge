@@ -4,7 +4,7 @@ import path from "path";
 import fs from "fs";
 import { rootDir, getPort, getPIDs, openBrowser, printVersion, updateRepo } from "./lib/utils.js";
 import { showHelp } from "./lib/help.js";
-import { startServer, streamLogs, killServer } from "./lib/server.js";
+import { startServer, streamLogs, killServer, restartServer } from "./lib/server.js";
 import { markProblem } from "./lib/progress.js";
 import { handleStart } from "./lib/commands/start.js";
 import { handleRun } from "./lib/commands/run.js";
@@ -89,7 +89,13 @@ async function main() {
   } else if (action === "-v" || action === "--version") {
     printVersion(rootDir);
   } else if (action === "-u" || action === "--update") {
-    updateRepo(rootDir);
+    const updated = updateRepo(rootDir);
+    if (updated && getPIDs(PORT).length > 0) {
+      console.log("Restarting server to apply update...");
+      restartServer(PORT);
+    }
+  } else if (action === "-r" || action === "--restart") {
+    restartServer(PORT);
   } else if (action === "-s" || action === "--status") {
     const pids = getPIDs(PORT);
     if (pids.length > 0) {

@@ -23,9 +23,11 @@ Usage:
   cojudge -p, --port <number>    Specify port (default: 5375)
   cojudge -v, --version          Show current version and date
   cojudge -u, --update           Update cojudge to the latest version
+                                 (restarts the server if it is running)
   cojudge -s, --status           Show if the server is running
   cojudge -l, --logs             Stream the server logs
   cojudge -k, --kill             Stop the server
+  cojudge -r, --restart          Restart the server
   cojudge -h, --help             Show this help message
 
 Examples:

@@ -134,3 +134,28 @@ export function killServer(PORT) {
     console.log(`cojudge is not running on port ${PORT}.`);
   }
 }
+
+export function restartServer(PORT, callback) {
+  if (getPIDs(PORT).length === 0) {
+    startServer(PORT, callback);
+    return;
+  }
+
+  killServer(PORT);
+
+  let attempts = 0;
+  const maxAttempts = 30;
+  const interval = setInterval(() => {
+    attempts++;
+    if (getPIDs(PORT).length === 0) {
+      clearInterval(interval);
+      startServer(PORT, callback);
+    } else if (attempts >= maxAttempts) {
+      clearInterval(interval);
+      console.error(
+        `Failed to stop the server on port ${PORT}. Try 'cojudge -k' manually.`,
+      );
+      process.exit(1);
+    }
+  }, 500);
+}
