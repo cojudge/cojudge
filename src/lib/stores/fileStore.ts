@@ -10,6 +10,7 @@ export type FileEntry = {
     fileName: string;
     content: string;
     language: string;
+    lastLanguage?: string;
     isActive: boolean;
     fileId: string; // uuid
     order?: number;

@@ -2,6 +2,7 @@
     import { replaceState } from '$app/navigation';
     import { page } from '$app/stores';
     import PlaygroundExecutionPanel from '$lib/components/PlaygroundExecutionPanel.svelte';
+    import LanguageIcon from '$lib/components/LanguageIcon.svelte';
     import ShareModal from '$lib/components/ShareModal.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
     import { ensureAuthenticated, initFirebase } from '$lib/firebase';
@@ -87,18 +88,46 @@ func main() {
     }
 
     function getLanguageForTab(fileId: string): ProgrammingLanguage {
-        const nonDefaultFiles = getFiles().filter((f): f is FileEntry & { language: ProgrammingLanguage } =>
-            f.fileId === fileId && hasNonDefaultContent(f)
-        );
-        if (nonDefaultFiles.length === 0) return language;
+        const tabFiles = getFiles().filter((f) => f.fileId === fileId);
 
-        const currentLanguageFile = nonDefaultFiles.find((f) => f.language === language);
-        if (currentLanguageFile) return language;
+        const stored = tabFiles.find((f) => f.lastLanguage && isProgrammingLanguage(f.lastLanguage));
+        if (stored) return stored.lastLanguage as ProgrammingLanguage;
 
-        const lastEditedFile = nonDefaultFiles.reduce((latest, candidate) =>
-            (candidate.lastUpdated ?? 0) >= (latest.lastUpdated ?? 0) ? candidate : latest
+        const nonDefaultFiles = tabFiles.filter(hasNonDefaultContent);
+        if (nonDefaultFiles.length > 0) {
+            const lastEditedFile = nonDefaultFiles.reduce((latest, candidate) =>
+                (candidate.lastUpdated ?? 0) >= (latest.lastUpdated ?? 0) ? candidate : latest
+            );
+            return lastEditedFile.language;
+        }
+
+        const languageFiles = tabFiles.filter((f): f is FileEntry & { language: ProgrammingLanguage } =>
+            isProgrammingLanguage(f.language)
         );
-        return lastEditedFile.language;
+        if (languageFiles.length > 0) {
+            const lastUsedFile = languageFiles.reduce((latest, candidate) =>
+                (candidate.lastUpdated ?? 0) >= (latest.lastUpdated ?? 0) ? candidate : latest
+            );
+            return lastUsedFile.language;
+        }
+
+        return language;
+    }
+
+    function setLastLanguage(fileId: string, lang: ProgrammingLanguage) {
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            const files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            let changed = false;
+            for (const f of files) {
+                if (f.fileId === fileId && f.lastLanguage !== lang) {
+                    f.lastLanguage = lang;
+                    changed = true;
+                }
+            }
+            if (!changed) return s;
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
     }
 
     function getInitialTabs(): TabMeta[] {
@@ -237,6 +266,12 @@ func main() {
         }
         return bestIdx !== -1 ? bestIdx : 0;
     })();
+    {
+        const initialTab = tabs[activeTabId];
+        if (initialTab && initialTab.type !== 'preview') {
+            language = getLanguageForTab(initialTab.fileId);
+        }
+    }
     let editingTabId: string | null = null;
     let editingName = '';
     let renameInputEl: HTMLInputElement | null = null;
@@ -354,6 +389,7 @@ func main() {
                     fileId: nextId,
                     fileName,
                     language: language,
+                    lastLanguage: language,
                     content: newCode,
                     viewState: null,
                     output: '',
@@ -621,6 +657,7 @@ func main() {
                     fileId: nextId,
                     fileName: customName,
                     language: customLang,
+                    lastLanguage: customLang,
                     content: newCode,
                     output: '',
                     logs: '',
@@ -701,6 +738,7 @@ func main() {
         if (tabs[idx].type === 'preview') return;
 
         const targetLanguage = preferredLang || getLanguageForTab(fileId);
+        setLastLanguage(fileId, targetLanguage);
         language = targetLanguage;
         await loadOrInitFile(targetLanguage);
     }
@@ -821,6 +859,7 @@ func main() {
                         fileId: nextId,
                         fileName: newTabName,
                         language: lang,
+                        lastLanguage: lang,
                         content: content,
                         viewState: viewState,
                         output: '',
@@ -871,6 +910,7 @@ func main() {
                                     fileId: nextId,
                                     fileName: newTabName,
                                     language: data.language,
+                                    lastLanguage: data.language,
                                     content: data.content,
                                     viewState: data.viewState,
                                     output: '',
@@ -1210,6 +1250,15 @@ func main() {
     $: activeTabName = tabs[activeTabId]?.fileName;
     $: activeTab = tabs[activeTabId];
     $: fileStoreValue = $fileStore;
+    $: tabLanguages = (() => {
+        fileStoreValue;
+        const map: Record<string, ProgrammingLanguage> = {};
+        for (const t of tabs) {
+            if (t.type === 'preview') continue;
+            map[t.fileId] = t.fileId === tabs[activeTabId]?.fileId ? language : getLanguageForTab(t.fileId);
+        }
+        return map;
+    })();
     $: previewHtml = (() => {
         if (!activeTab || activeTab.type !== 'preview' || !activeTab.sourceFileId) return '';
         const fkey = fileKey();
@@ -1362,6 +1411,9 @@ func main() {
                                         on:blur={applyRename}
                                     />
                                 {:else}
+                                    <span class="file-lang-icon">
+                                        <LanguageIcon language={tabLanguages[t.fileId] ?? language} size={17} />
+                                    </span>
                                     <span class="file-name">{t.fileName}</span>
                                 {/if}
                                 
@@ -1443,10 +1495,9 @@ func main() {
                                     <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                                 <div class="search-result-file-info" on:click|stopPropagation={() => activateTab(result.fileId)}>
-                                    <svg class="file-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M13 2v7h7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
+                                    <span class="file-icon">
+                                        <LanguageIcon language={tabLanguages[result.fileId] ?? result.language} size={17} />
+                                    </span>
                                     <span class="file-name">{@html highlightMatch(result.fileName, globalSearchQuery, globalSearchCaseSensitive, globalSearchRegex)}</span>
                                 </div>
                                 {#if result.matches.length > 0}
@@ -1520,6 +1571,10 @@ func main() {
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                         <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
+                                {:else}
+                                    <span class="tab-lang-icon">
+                                        <LanguageIcon language={tabLanguages[t.fileId] ?? language} size={17} />
+                                    </span>
                                 {/if}
                                 <span class="tab-title">{t.fileName}</span>
                             {/if}
@@ -1583,6 +1638,10 @@ func main() {
                         on:change={() => {
                             saveCurrentViewState();
                             userSettingsStorage.update((s) => ({ ...s, playgroundPreferredLanguage: language }));
+                            const currentTab = tabs[activeTabId];
+                            if (currentTab && currentTab.type !== 'preview') {
+                                setLastLanguage(currentTab.fileId, language);
+                            }
                         }}
                         on:blur={() => (suppressSave = false)}
                     >
@@ -1928,6 +1987,13 @@ func main() {
         -webkit-user-select: none;
     }
 
+    .file-lang-icon {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 6px;
+        flex-shrink: 0;
+    }
+
     .file-actions {
         display: none;
         align-items: center;
@@ -2088,8 +2154,8 @@ func main() {
     }
 
     .file-icon {
-        color: var(--color-text-secondary);
-        opacity: 0.8;
+        display: inline-flex;
+        align-items: center;
         flex-shrink: 0;
     }
 
@@ -2237,6 +2303,12 @@ func main() {
         max-width: 24ch;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+    .tab-lang-icon {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 6px;
+        flex-shrink: 0;
     }
     .tab:hover {
         background: rgba(255,255,255,0.06);

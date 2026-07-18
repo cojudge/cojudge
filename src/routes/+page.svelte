@@ -332,6 +332,14 @@
 
 <div class="container">
     <div class="backup-toolbar">
+        <Tooltip text={"Playground"} pos={"bottom"}>
+            <a href="playground" class="btn playground-btn" aria-label="Playground">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block; flex-shrink: 0;">
+                    <polyline points="16 18 22 12 16 6"></polyline>
+                    <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+            </a>
+        </Tooltip>
         <div class="dropdown-container" bind:this={dropdownRef}>
             <button
                 class="btn dropdown-trigger"
@@ -381,20 +389,6 @@
                                 <line x1="12" y1="3" x2="12" y2="15"></line>
                             </svg>
                             Import progress
-                        </span>
-                    </button>
-                    <button
-                        class="dropdown-item"
-                        role="menuitem"
-                        onclick={() => { window.location.href = "playground"; showDropdown = false; }}
-                        title="Code playground"
-                    >
-                        <span class="dropdown-item-content">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="16 18 22 12 16 6"></polyline>
-                                <polyline points="8 6 2 12 8 18"></polyline>
-                            </svg>
-                            Playground
                         </span>
                     </button>
                     <button
@@ -736,6 +730,15 @@
         display: inline-flex;
         align-items: center;
         gap: 0.25rem;
+        padding: 0.35rem 0.5rem;
+    }
+    .playground-btn.btn {
+        font-size: 0.5rem;
+    }
+    .playground-btn {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
         padding: 0.35rem 0.5rem;
     }
     .dropdown-menu {
