@@ -119,7 +119,7 @@ export class TypeScriptRunner extends ProgramRunner {
     }
 }
 
-function generateTypeScriptClassSolution(className: string, params?: Param[], outputType?: string): string {
+export function generateTypeScriptClassSolution(className: string, params?: Param[], outputType?: string): string {
     const importLine = `import { ${className} } from './${className}';`;
     if (params && params.length > 0 && params[0]?.type === 'tree_node') {
         return `

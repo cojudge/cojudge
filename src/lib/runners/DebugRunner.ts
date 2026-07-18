@@ -4,6 +4,7 @@ import { cppImage, cppListNodeClass, cppTreeNodeClass, cppGraphNodeClass, genera
 import { generateGoRunner, goImage } from "$lib/utils/goUtil";
 import { csharpImage, generateCSharpRunner, generateCSharpClassSolution, csharpListNodeClass, csharpTreeNodeClass, csharpGraphNodeClass } from "$lib/utils/csharpUtil";
 import { rustImage, generateRustRunner, generateRustDebugRunner } from "$lib/utils/rustUtil";
+import { tsImage, generateTypeScriptRunner, tsGetTypeImports, tsListNodeClass, tsTreeNodeClass, tsGraphNodeClass } from "$lib/utils/tsUtil";
 import { ensureImageAvailable, extractOperations } from "$lib/utils/util";
 import { getMarkerResponses } from "../markerRunner";
 import Dockerode from "dockerode";
@@ -16,6 +17,8 @@ import { CPP_DEBUG_DRIVER } from "./CppDebugDriver";
 import { GO_DEBUG_DRIVER } from "./GoDebugDriver";
 import { CSHARP_DEBUG_SUPPORT, generateCsharpDebugWrapper } from "./CsharpDebugDriver";
 import { RUST_DEBUG_DRIVER } from "./RustDebugDriver";
+import { generateTypeScriptDebugWrapper, rewriteTsImportsForNode, buildMissingTypeImports } from "./TypeScriptDebugDriver";
+import { generateTypeScriptClassSolution } from "./TypeScriptRunner";
 
 const docker = new Dockerode();
 
@@ -248,6 +251,7 @@ const SUPPORTED_DEBUG_LANGUAGES: Record<string, string> = {
     go: goImage,
     csharp: csharpImage,
     rust: rustImage,
+    typescript: tsImage,
 };
 
 async function runExec(container: Dockerode.Container, cmd: string[]): Promise<{ stdout: string; stderr: string; exitCode: number | null }> {
@@ -395,6 +399,9 @@ async function acquireDebugContainer(image: string): Promise<{ container: Docker
     await runExec(container, ['sh', '-c', `rm -f ${DEBUG_STATE_FILE} ${DEBUG_CMD_FILE}`]);
     if (image === goImage) {
         await runExec(container, ['sh', '-c', 'pkill -f "dlv exec" 2>/dev/null; sleep 0.5; true']);
+    }
+    if (image === tsImage) {
+        await runExec(container, ['sh', '-c', 'pkill -f "debug_main.mjs" 2>/dev/null; rm -f /tmp/cojudge_debug_output.txt; true']);
     }
     return { container, image: resolvedImage };
 }
@@ -582,6 +589,14 @@ export async function startDebugSession(language: string, code: string, debugLin
         }
         const bps = debugLines.join(',');
         runCmd = ['/bin/sh', '-c', `python3 rust_debug_driver.py main.rs "${bps}" ./main 0`];
+    } else if (language === 'typescript') {
+        const debugWrapper = generateTypeScriptDebugWrapper(debugLines, '/app/user_code.ts', 'user_code.ts', 0);
+        const pack = tar.pack();
+        pack.entry({ name: 'debug_main.mjs' }, Buffer.from(debugWrapper));
+        pack.entry({ name: 'user_code.ts' }, Buffer.from(code));
+        pack.finalize();
+        await container.putArchive(pack as any, { path: '/app' });
+        runCmd = ['/bin/sh', '-c', 'NODE_NO_WARNINGS=1 node --experimental-strip-types debug_main.mjs'];
     } else {
         // java
         const pack = tar.pack();
@@ -799,6 +814,33 @@ export async function startProblemDebugSession(problemId: string, language: stri
         }
         const bps = debugLines.join(',');
         runCmd = ['/bin/sh', '-c', `python3 rust_debug_driver.py solution.rs "${bps}" ./main 0`];
+    } else if (language === 'typescript') {
+        const runnerCode = generateTypeScriptRunner(problemData.functionName, problemData.params, testCases, problemData.outputType, problemData.checkGraphClone, problemData.classProblem?.userClassName);
+        const typeImports = tsGetTypeImports(problemData.params, problemData.outputType);
+        let sourceFile = 'Solution.ts';
+        let lineOffset = 0;
+
+        const pack = tar.pack();
+        pack.entry({ name: 'ListNode.ts' }, Buffer.from(tsListNodeClass));
+        pack.entry({ name: 'TreeNode.ts' }, Buffer.from(tsTreeNodeClass));
+        pack.entry({ name: 'GraphNode.ts' }, Buffer.from(tsGraphNodeClass));
+        const userPrefix = buildMissingTypeImports(typeImports, code);
+        lineOffset = userPrefix ? userPrefix.split('\n').length - 1 : 0;
+        if (problemData.classProblem) {
+            const className = problemData.classProblem.userClassName || 'MedianFinder';
+            pack.entry({ name: `${className}.ts` }, Buffer.from(rewriteTsImportsForNode(userPrefix + code)));
+            const wrapperCode = generateTypeScriptClassSolution(className, problemData.params, problemData.outputType);
+            const wrapperPrefix = buildMissingTypeImports(typeImports, wrapperCode);
+            pack.entry({ name: 'Solution.ts' }, Buffer.from(rewriteTsImportsForNode(wrapperPrefix + wrapperCode)));
+            sourceFile = `${className}.ts`;
+        } else {
+            pack.entry({ name: 'Solution.ts' }, Buffer.from(rewriteTsImportsForNode(userPrefix + code)));
+        }
+        pack.entry({ name: 'main.ts' }, Buffer.from(rewriteTsImportsForNode(runnerCode)));
+        pack.entry({ name: 'debug_main.mjs' }, Buffer.from(generateTypeScriptDebugWrapper(debugLines, '/app/main.ts', sourceFile, lineOffset)));
+        pack.finalize();
+        await container.putArchive(pack as any, { path: '/app' });
+        runCmd = ['/bin/sh', '-c', 'NODE_NO_WARNINGS=1 node --experimental-strip-types debug_main.mjs'];
     } else {
         throw new Error(`Debugging is not yet supported for ${language}.`);
     }
