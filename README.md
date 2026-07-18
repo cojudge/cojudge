@@ -1,12 +1,12 @@
 > Solve classic algorithmic problems without the internet or having to deal with installing runtimes. No discussion forum, no LLM assistant, not even the internet. Solve the curated list with just you, the problem and the judge.
 
-|![Web UI](/screenshots/lightmode.png) | ![CLI](/screenshots/cli.png) |
+|![Web UI](/screenshots/problem.png) | ![CLI](/screenshots/cli.png) |
 |:---:|:---:|
 | localhost web | CLI |
+|![Web UI](/screenshots/progresstracker.png) | ![CLI](/screenshots/debugger.png) |
+| Progress Tracker | Debugger |
 
-![Demo](./screenshots/ide.gif)
-
-![Progress Tracker](./screenshots/progresstracker.png)
+![Demo + Visualizer](./screenshots/ide.gif)
 
 ### Demo site: [https://cojudge.cloud](https://cojudge.cloud)
 
