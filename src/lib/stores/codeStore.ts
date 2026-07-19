@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 import { saveStatus } from './saveStatus';
+import { crossTabSync } from './crossTabSync';
 
 // The key we'll use to save the data in localStorage
 const STORAGE_KEY = 'solutions';
@@ -28,6 +29,8 @@ if (browser) {
             saveStatus.set('saved');
         }, 500);
     });
+
+    crossTabSync(codeStore, STORAGE_KEY);
 }
 
 export default codeStore;

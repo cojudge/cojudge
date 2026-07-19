@@ -9,7 +9,7 @@
     import Tooltip from '$lib/components/Tooltip.svelte';
     import { initFirebase, ensureAuthenticated } from '$lib/firebase';
     import codeStore from '$lib/stores/codeStore.js';
-    import fileStore, { type FileEntry } from '$lib/stores/fileStore.js';
+    import fileStore, { type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import { leftPaneWidthStore } from '$lib/stores/layoutStore';
     import userSettingsStorage, { type ThemeChoice } from '$lib/stores/userSettingsStorage';
     import userStore from '$lib/stores/userStore';
@@ -133,6 +133,7 @@
     }
 
     let suppressSave = false; // prevent save during programmatic loads
+    let skipNextSave = false; // prevent save when code was loaded from cross-tab sync
 
     let isFirebaseAvailable = false;
     let showShareModal = false;
@@ -305,35 +306,45 @@
         draggingId = null;
     }
     $: if (!suppressSave && code !== undefined) {
-        const fkey = fileKey();
-        const latestViewState = editorComponent?.getViewState?.() || currentViewState;
-        fileStore.update((s) => {
-            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
-            if (activeTabId < 0 || activeTabId >= tabs.length) return s;
-            const existingFile = files.find(x => 
-                x.fileId === tabs[activeTabId].fileId &&
-                x.language === language
-            );
-            if (existingFile) {
-                existingFile.content = code;
-                existingFile.viewState = latestViewState;
-            } else {
-                files = [...files, {
-                    fileId: tabs[activeTabId].fileId,
-                    fileName: tabs[activeTabId].fileName,
-                    language: language,
-                    content: code,
-                    viewState: latestViewState,
-                    isActive: false
-                } as FileEntry];
-            }
-            return {...s, [fkey]: JSON.stringify(files)};
-        });
+        if (!skipNextSave) {
+            const fkey = fileKey();
+            const latestViewState = editorComponent?.getViewState?.() || currentViewState;
+            fileStore.update((s) => {
+                let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+                if (activeTabId < 0 || activeTabId >= tabs.length) return s;
+                const existingFile = files.find(x => 
+                    x.fileId === tabs[activeTabId].fileId &&
+                    x.language === language
+                );
+                if (existingFile) {
+                    existingFile.content = code;
+                    existingFile.viewState = latestViewState;
+                } else {
+                    files = [...files, {
+                        fileId: tabs[activeTabId].fileId,
+                        fileName: tabs[activeTabId].fileName,
+                        language: language,
+                        content: code,
+                        viewState: latestViewState,
+                        isActive: false
+                    } as FileEntry];
+                }
+                return {...s, [fkey]: JSON.stringify(files)};
+            });
+        }
+        skipNextSave = false;
     }
 
     $: if (language) {
         debugBreakpoints = [];
         loadOrInitFile(language);
+    }
+
+    // Reload code when another browser tab changes the file store
+    $: if ($fileSyncVersion > 0 && activeTabId >= 0 && activeTabId < tabs.length && language) {
+        skipNextSave = true;
+        loadOrInitFile(language);
+        $fileSyncVersion;
     }
 
     function closeTab(fileId: string) {

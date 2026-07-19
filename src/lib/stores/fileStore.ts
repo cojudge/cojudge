@@ -1,6 +1,7 @@
 import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
 import { saveStatus } from './saveStatus';
+import { crossTabSync } from './crossTabSync';
 
 // The key we'll use to save the data in localStorage
 const STORAGE_KEY = 'files';
@@ -39,6 +40,10 @@ const initialValue: FileStoreShape = browser
 // Create a writable store mapping problem slugs to a JSON string of FileEntry[]
 const fileStore = writable<FileStoreShape>(initialValue);
 
+// Counter that increments when another tab changes the file store;
+// pages watch this to know when to reload code from the store.
+export const fileSyncVersion = writable(0);
+
 // Subscribe to changes and save the entire object back to localStorage
 let saveTimeout: any;
 if (browser) {
@@ -50,6 +55,10 @@ if (browser) {
         saveTimeout = setTimeout(() => {
             saveStatus.set('saved');
         }, 500);
+    });
+
+    crossTabSync(fileStore, STORAGE_KEY, () => {
+        fileSyncVersion.update((v) => v + 1);
     });
 }
 

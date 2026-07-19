@@ -7,7 +7,7 @@
     import Tooltip from '$lib/components/Tooltip.svelte';
     import { ensureAuthenticated, initFirebase } from '$lib/firebase';
     import codeStore from '$lib/stores/codeStore.js';
-    import fileStore, { type FileEntry } from '$lib/stores/fileStore.js';
+    import fileStore, { type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
     import { renderMarkdown } from '$lib/utils/markdown';
@@ -208,6 +208,7 @@ func main() {
     }
 
     let suppressSave = true; // prevent save during programmatic loads
+    let skipNextSave = false; // prevent save when code was loaded from cross-tab sync
 
     async function loadOrInitFile(lang: ProgrammingLanguage) {
         if (activeTabId < 0 || activeTabId >= tabs.length) return;
@@ -528,48 +529,58 @@ func main() {
         draggingId = null;
     }
     $: if (!suppressSave && tabs[activeTabId]?.type !== 'preview' && (code !== undefined || output !== undefined || logs !== undefined)) {
-        const fkey = fileKey();
-        const now = Date.now();
-        const latestViewState = editorComponent?.getViewState?.() || currentViewState;
+        if (!skipNextSave) {
+            const fkey = fileKey();
+            const now = Date.now();
+            const latestViewState = editorComponent?.getViewState?.() || currentViewState;
 
-        if (activeTabId >= 0 && activeTabId < tabs.length) {
-             tabs = tabs.map((t, i) => i === activeTabId ? { ...t, lastUpdated: now } : t);
-        }
-
-        fileStore.update((s) => {
-            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
-            if (activeTabId < 0 || activeTabId >= tabs.length) return s;
-            const existingFile = files.find(x => 
-                x.fileId === tabs[activeTabId].fileId &&
-                x.language === language
-            );
-            if (existingFile) {
-                existingFile.content = code;
-                existingFile.viewState = latestViewState;
-                existingFile.output = output;
-                existingFile.logs = logs;
-                existingFile.lastUpdated = now;
-            } else {
-                files = [...files, {
-                    fileId: tabs[activeTabId].fileId,
-                    fileName: tabs[activeTabId].fileName,
-                    language: language,
-                    content: code,
-                    viewState: latestViewState,
-                    output: output,
-                    logs: logs,
-                    isActive: false,
-                    isOpen: tabs[activeTabId].isOpen,
-                    lastUpdated: now
-                } as FileEntry];
+            if (activeTabId >= 0 && activeTabId < tabs.length) {
+                 tabs = tabs.map((t, i) => i === activeTabId ? { ...t, lastUpdated: now } : t);
             }
-            return {...s, [fkey]: JSON.stringify(files)};
-        });
+
+            fileStore.update((s) => {
+                let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+                if (activeTabId < 0 || activeTabId >= tabs.length) return s;
+                const existingFile = files.find(x => 
+                    x.fileId === tabs[activeTabId].fileId &&
+                    x.language === language
+                );
+                if (existingFile) {
+                    existingFile.content = code;
+                    existingFile.viewState = latestViewState;
+                    existingFile.output = output;
+                    existingFile.logs = logs;
+                    existingFile.lastUpdated = now;
+                } else {
+                    files = [...files, {
+                        fileId: tabs[activeTabId].fileId,
+                        fileName: tabs[activeTabId].fileName,
+                        language: language,
+                        content: code,
+                        viewState: latestViewState,
+                        output: output,
+                        logs: logs,
+                        isActive: false,
+                        isOpen: tabs[activeTabId].isOpen,
+                        lastUpdated: now
+                    } as FileEntry];
+                }
+                return {...s, [fkey]: JSON.stringify(files)};
+            });
+        }
+        skipNextSave = false;
     }
 
     $: if (language) {
         debugBreakpoints = [];
         loadOrInitFile(language);
+    }
+
+    // Reload code when another browser tab changes the file store
+    $: if ($fileSyncVersion > 0 && activeTabId >= 0 && activeTabId < tabs.length && tabs[activeTabId]?.type !== 'preview' && language) {
+        skipNextSave = true;
+        loadOrInitFile(language);
+        $fileSyncVersion;
     }
 
     function closeTab(fileId: string) {
