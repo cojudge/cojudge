@@ -8,7 +8,7 @@
 
     const icons: Record<ProgrammingLanguage, IconDef> = {
         java: { label: 'J', bg: '#e76f00', fontSize: 9.5 },
-        python: { label: 'Py', bg: '#3776ab', fontSize: 8 },
+        python: { label: 'Py', bg: '#eebb62', fontSize: 8 },
         cpp: { label: 'C++', bg: '#9b4f96', fontSize: 6.2 },
         csharp: { label: 'C#', bg: '#68217a', fontSize: 8 },
         rust: { label: 'Rs', bg: '#ce422b', fontSize: 8 },
