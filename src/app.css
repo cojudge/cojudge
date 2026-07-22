@@ -113,6 +113,16 @@
 
 .markdown-body p { margin-top: 0; margin-bottom: 16px; }
 
+.markdown-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--color-border);
+  margin-top: 16px;
+  margin-bottom: 16px;
+  display: block;
+}
+
 .markdown-body pre {
   background-color: var(--color-code-bg);
   border: 1px solid var(--color-border);
