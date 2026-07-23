@@ -1764,6 +1764,11 @@
         border: 1px solid var(--color-border-active);
         font-family: var(--font-mono);
         resize: vertical;
+        background: var(--color-bg);
+        color: var(--color-text);
+    }
+    .case-inputs textarea::-webkit-resizer {
+        color: var(--color-surface);
     }
     .hide {
         display: none;
