@@ -30,6 +30,8 @@ type RunJob = {
     results?: RunSuccess;
     timeout?: boolean;
     error?: string;
+    executionTimeMs?: number;
+    memoryKB?: number;
 };
 
 const jobs: Map<string, RunJob> = new Map();
@@ -74,6 +76,10 @@ async function executeRun(problemId: string, language: string, code: string, tes
         await programRunner.compile();
         job.status = 'running';
         const rawResults = await programRunner.run();
+        if (programRunner.lastRunMetrics) {
+            job.executionTimeMs = programRunner.lastRunMetrics.executionTimeMs;
+            job.memoryKB = programRunner.lastRunMetrics.memoryKB;
+        }
 
         // Check if this is a merged marker result (Java with Marker.java)
         const hasMergedMarker = isJavaLanguage(language) &&
@@ -246,5 +252,10 @@ export const GET: RequestHandler = async ({ url }) => {
     if (job.status === 'error') {
         return json({ ready: true, error: job.error || 'Execution failed' }, { status: 400 });
     }
-    return json({ ready: true, results: job.results || [] });
+    return json({
+        ready: true,
+        results: job.results || [],
+        executionTimeMs: job.executionTimeMs,
+        memoryKB: job.memoryKB,
+    });
 };

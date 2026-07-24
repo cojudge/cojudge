@@ -756,9 +756,12 @@ export function generateRustRunner(
         const graphNodeVar = args.find((_, i) => params[i]?.type === 'graph_node');
         if (graphNodeVar) {
           const inputVar = graphNodeVar.replace('.clone()', '');
-          return `{
+                return `{
         ${decls.join('\n        ')}
+        let __t0 = std::time::Instant::now();
         let res = Solution::${snakedFunctionName}(${args.join(', ')});
+        let __dt = __t0.elapsed().as_nanos();
+        println!(":::TIME:::{}", __dt);
         let same_ref = match (&${inputVar}, &res) {
             (Some(a), Some(b)) => Rc::ptr_eq(a, b),
             _ => false,
@@ -774,7 +777,10 @@ export function generateRustRunner(
       }
       const args = rustGetFullParam(params, tc);
       return `{
+        let __t0 = std::time::Instant::now();
         let res = Solution::${snakedFunctionName}(${args});
+        let __dt = __t0.elapsed().as_nanos();
+        println!(":::TIME:::{}", __dt);
         println!(":::RESULT:::{}", res.to_cojudge_string());
         println!("---");
     }`;

@@ -57,6 +57,8 @@ export class CppRunner extends ProgramRunner {
             pack.finalize();
             await this.container.putArchive(pack as any, { path: '/app' });
 
+            await ProgramRunner.ensureTimeInstalled(this.container);
+
             const exec = await this.container.exec({
                 Cmd: ['/bin/sh', '-c', 'g++ -std=c++17 -O2 -pipe -g -rdynamic -o main Main.cpp'],
                 AttachStdout: true,
@@ -93,7 +95,7 @@ export class CppRunner extends ProgramRunner {
         }
         try {
             const exec = await this.container.exec({
-                Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', './main'],
+                Cmd: ['/bin/sh', '-c', ProgramRunner.wrapWithMetrics('./main')],
                 AttachStdout: true,
                 AttachStderr: true
             });
@@ -110,8 +112,10 @@ export class CppRunner extends ProgramRunner {
                 stream.on('error', reject);
             });
             const inspect = await exec.inspect();
+            const cleanedStderr = this.parseMetricsFromStderr(stderr);
             if (inspect.ExitCode === LINUX_TIMEOUT_CODE) throw new Error(TIMEOUT_MESSAGE);
-            if (inspect.ExitCode !== 0) throw new Error(stderr || stdout);
+            if (inspect.ExitCode !== 0) throw new Error(cleanedStderr || stdout);
+            stdout = this.parseInternalTiming(stdout);
             const results = stdout.split('---\n').filter((res) => res.trim() !== '');
             return results;
         } finally {

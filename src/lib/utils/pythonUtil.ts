@@ -338,7 +338,10 @@ export function generatePythonRunner(functionName: string, params: Param[], test
             });
             return [
                 ...decls,
+                `__t0 = time.perf_counter_ns()`,
                 `__res = sol.${functionName}(${args.join(', ')})`,
+                `__dt = time.perf_counter_ns() - __t0`,
+                `print(':::TIME:::' + str(__dt))`,
                 `if ${args[0]} is not None and __res is ${args[0]}:`,
                 `    print(':::ERROR:::invalid clone - same object')`,
                 `else:`,
@@ -346,8 +349,8 @@ export function generatePythonRunner(functionName: string, params: Param[], test
                 `print('---')`
             ].join('\n');
         }
-        return `__res = sol.${functionName}(${fullParam})\nprint(':::RESULT:::' + display_output(__res))\nprint('---')`;
+        return `__t0 = time.perf_counter_ns()\n__res = sol.${functionName}(${fullParam})\n__dt = time.perf_counter_ns() - __t0\nprint(':::TIME:::' + str(__dt))\nprint(':::RESULT:::' + display_output(__res))\nprint('---')`;
     }).join('\n');
 
-    return `from typing import List, Optional, Any\n\n${pythonListNodeClass}\n${pythonTreeNodeClass}\n${pythonGraphNodeClass}\n\n${pythonHelperMethods}\nif __name__ == '__main__':\n    import builtins\n    builtins.ListNode = ListNode\n    builtins.TreeNode = TreeNode\n    builtins.GraphNode = GraphNode\n    from Solution import Solution\n    sol = Solution()\n    ${calls}\n`;
+    return `from typing import List, Optional, Any\nimport time\n\n${pythonListNodeClass}\n${pythonTreeNodeClass}\n${pythonGraphNodeClass}\n\n${pythonHelperMethods}\nif __name__ == '__main__':\n    import builtins\n    builtins.ListNode = ListNode\n    builtins.TreeNode = TreeNode\n    builtins.GraphNode = GraphNode\n    from Solution import Solution\n    sol = Solution()\n    ${calls}\n`;
 }

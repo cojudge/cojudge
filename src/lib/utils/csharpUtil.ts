@@ -634,7 +634,10 @@ export function generateCSharpRunner(functionName: string, params: Param[], test
                 });
                 return [
                     ...decls,
+                    `var __sw${idx} = System.Diagnostics.Stopwatch.StartNew();`,
                     `var __res${idx} = sol.${csharpFunctionName}(${args.join(', ')});`,
+                    `__sw${idx}.Stop();`,
+                    `Console.WriteLine(":::TIME:::" + (__sw${idx}.ElapsedTicks * 1000000000L / System.Diagnostics.Stopwatch.Frequency));`,
                     `if (${args[0]} != null && __res${idx} == ${args[0]}) {`,
                     `    Console.WriteLine(":::ERROR:::invalid clone - same object");`,
                     `} else {`,
@@ -643,12 +646,13 @@ export function generateCSharpRunner(functionName: string, params: Param[], test
                     `Console.WriteLine("---");`
                 ].join('\n        ');
             }
-            return `var __res${idx} = sol.${csharpFunctionName}(${fullParam});\nConsole.WriteLine(":::RESULT:::" + ${getDisplayFuncName(outputType)}(__res${idx}));\nConsole.WriteLine("---");`;
+            return `var __sw${idx} = System.Diagnostics.Stopwatch.StartNew();\nvar __res${idx} = sol.${csharpFunctionName}(${fullParam});\n__sw${idx}.Stop();\nConsole.WriteLine(":::TIME:::" + (__sw${idx}.ElapsedTicks * 1000000000L / System.Diagnostics.Stopwatch.Frequency));\nConsole.WriteLine(":::RESULT:::" + ${getDisplayFuncName(outputType)}(__res${idx}));\nConsole.WriteLine("---");`;
         })
         .join('\n        ');
 
     return `
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Text;
 

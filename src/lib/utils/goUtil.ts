@@ -34,6 +34,7 @@ import (
     "fmt"
     "strconv"
     "strings"
+    "time"
 )
 `;
 
@@ -616,7 +617,10 @@ export function generateGoRunner(
                 const graphNodeArg = args.find((_, i) => params[i]?.type === 'graph_node')!;
                 return `{
         ${decls.join('\n        ')}
+        __t0 := time.Now()
         res := ${fnName}(${args.join(', ')})
+        __dt := time.Since(__t0).Nanoseconds()
+        fmt.Println(":::TIME:::" + strconv.FormatInt(__dt, 10))
         if ${graphNodeArg} != nil && res == ${graphNodeArg} {
             fmt.Println(":::ERROR:::invalid clone - same object")
         } else {
@@ -627,7 +631,10 @@ export function generateGoRunner(
             }
             const args = goGetFullParam(params, tc);
             return `{
+        __t0 := time.Now()
         res := ${fnName}(${args})
+        __dt := time.Since(__t0).Nanoseconds()
+        fmt.Println(":::TIME:::" + strconv.FormatInt(__dt, 10))
         fmt.Println(":::RESULT:::" + displayOutput(res))
         fmt.Println("---")
     }`;

@@ -598,7 +598,10 @@ export function generateJavaRunner(functionName: string, params: Param[], testCa
                 });
                 return [
                     ...decls,
+                    `long __t${idx} = System.nanoTime();`,
                     `var __res${idx} = sol.${functionName}(${args.join(', ')});`,
+                    `long __time${idx} = System.nanoTime() - __t${idx};`,
+                    `System.out.println(":::TIME:::" + __time${idx});`,
                     `if (${args[0]} != null && __res${idx} == ${args[0]}) {`,
                     `    System.out.println(":::ERROR:::invalid clone - same object");`,
                     `} else {`,
@@ -607,7 +610,7 @@ export function generateJavaRunner(functionName: string, params: Param[], testCa
                     `System.out.println("---");`
                 ].join('\n        ');
             }
-            return `var __res${idx} = sol.${functionName}(${fullParam});\nSystem.out.println(":::RESULT:::" + ${getDisplayFuncName(outputType)}(__res${idx}));\nSystem.out.println("---");`;
+            return `long __t${idx} = System.nanoTime();\nvar __res${idx} = sol.${functionName}(${fullParam});\nlong __time${idx} = System.nanoTime() - __t${idx};\nSystem.out.println(":::TIME:::" + __time${idx});\nSystem.out.println(":::RESULT:::" + ${getDisplayFuncName(outputType)}(__res${idx}));\nSystem.out.println("---");`;
         })
         .join('\n        ');
 
@@ -643,7 +646,10 @@ export function generateJavaRunnerWithMarker(functionName: string, params: Param
                 });
                 return [
                     ...decls,
+                    `long __t${idx} = System.nanoTime();`,
                     `var __res${idx} = sol.${functionName}(${args.join(', ')});`,
+                    `long __time${idx} = System.nanoTime() - __t${idx};`,
+                    `System.out.println(":::TIME:::" + __time${idx});`,
                     `System.out.println(":::RESULT:::" + ${displayFunc}(__res${idx}));`,
                     `System.out.println(":::VERDICT:::" + marker.isCorrect(${args.join(', ')}, __res${idx}));`,
                     `System.out.println(":::ANSWER:::" + ${displayFunc}(marker.${functionName}(${args.join(', ')})));`,
@@ -651,7 +657,10 @@ export function generateJavaRunnerWithMarker(functionName: string, params: Param
                 ].join('\n        ');
             }
             return [
+                `long __t${idx} = System.nanoTime();`,
                 `var __res${idx} = sol.${functionName}(${fullParam});`,
+                `long __time${idx} = System.nanoTime() - __t${idx};`,
+                `System.out.println(":::TIME:::" + __time${idx});`,
                 `System.out.println(":::RESULT:::" + ${displayFunc}(__res${idx}));`,
                 `System.out.println(":::VERDICT:::" + marker.isCorrect(${fullParam}, __res${idx}));`,
                 `System.out.println(":::ANSWER:::" + ${displayFunc}(marker.${functionName}(${fullParam})));`,

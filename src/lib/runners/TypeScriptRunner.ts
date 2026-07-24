@@ -72,6 +72,7 @@ export class TypeScriptRunner extends ProgramRunner {
             pack.finalize();
             await this.container.putArchive(pack as any, { path: '/app' });
 
+            await ProgramRunner.ensureTimeInstalled(this.container);
             this.prepared = true;
         } catch (e) {
             if (this.container) {
@@ -86,7 +87,7 @@ export class TypeScriptRunner extends ProgramRunner {
         if (!this.prepared || !this.container) throw new Error('TypeScriptRunner: not prepared. Call compile() first.');
         try {
             const exec = await this.container.exec({
-                Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'npx --yes tsx main.ts'],
+                Cmd: ['/bin/sh', '-c', ProgramRunner.wrapWithMetrics('npx --yes tsx main.ts')],
                 AttachStdout: true,
                 AttachStderr: true
             });
@@ -103,8 +104,10 @@ export class TypeScriptRunner extends ProgramRunner {
                 stream.on('error', reject);
             });
             const inspect = await exec.inspect();
+            const cleanedStderr = this.parseMetricsFromStderr(stderr);
             if (inspect.ExitCode === LINUX_TIMEOUT_CODE) throw new Error(TIMEOUT_MESSAGE);
-            if (inspect.ExitCode !== 0) throw new Error(stderr || stdout);
+            if (inspect.ExitCode !== 0) throw new Error(cleanedStderr || stdout);
+            stdout = this.parseInternalTiming(stdout);
             const results = stdout.split('---\n').filter((res) => res.trim() !== '');
             return results;
         } catch (error: any) {

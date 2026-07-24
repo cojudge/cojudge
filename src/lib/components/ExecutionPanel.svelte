@@ -317,6 +317,8 @@
 
     // Initialize results state from the problem data or saved store
     let testCaseResults: any[] = [];
+    let executionTimeMs: number | null = null;
+    let memoryKB: number | null = null;
 
     // Try to load saved testcases for this problem from the store (if any), else use problem.testCases
     $: (() => {
@@ -479,6 +481,8 @@
         isLoading = true;
         if (gameMode) gameRunCount++;
         runningMessage = "";
+        executionTimeMs = null;
+        memoryKB = null;
         submissionFailure = null; // clear previous submission failure display when running samples
         activeMainTab = "output"; // Switch to output tab on run
         testCaseResults = testCaseResults.map((tc: any) => ({
@@ -722,6 +726,12 @@
                     }
                     if (body.totalTc) {
                         totalTc = body.totalTc;
+                    }
+                    if (body.executionTimeMs != null) {
+                        executionTimeMs = (executionTimeMs || 0) + body.executionTimeMs;
+                    }
+                    if (body.memoryKB != null) {
+                        memoryKB = Math.max(memoryKB || 0, body.memoryKB);
                     }
                     if (body.allAccepted) {
                         status = "accepted";
@@ -1639,6 +1649,20 @@
                         {statusToString(status)}
                     {/if}
                 </span>
+                {#if status === "accepted" && (executionTimeMs != null || memoryKB != null)}
+                    <span class="metrics">
+                        {#if executionTimeMs != null}
+                            <Tooltip text="Runtime">
+                                <span class="metric">{executionTimeMs.toFixed(2)} ms</span>
+                            </Tooltip>
+                        {/if}
+                        {#if memoryKB != null}
+                            <Tooltip text="Memory usage">
+                                <span class="metric">{(memoryKB / 1024).toFixed(1)} MB</span>
+                            </Tooltip>
+                        {/if}
+                    </span>
+                {/if}
                 {#if isDebugSupported(language)}
                     <Tooltip text={debugBreakpoints.length === 0 ? "No breakpoint selected" : "Run in Debug mode"}>
                         <button
@@ -1842,6 +1866,7 @@
 
     .buttons {
         display: flex;
+        align-items: center;
         gap: var(--spacing-2);
     }
     .actions {
@@ -1928,7 +1953,18 @@
         color: var(--color-correct);
     }
     .status {
-        margin-top: 5px;
+    }
+    .metrics {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        margin-left: 12px;
+        font-size: 0.8rem;
+        color: var(--color-text-secondary);
+        opacity: 0.8;
+    }
+    .metric {
+        white-space: nowrap;
     }
     .runtime-status-container {
         display: flex;

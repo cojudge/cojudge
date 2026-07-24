@@ -335,7 +335,10 @@ export function generateTypeScriptRunner(functionName: string, params: Param[], 
                 const graphNodeArg = args.find((_, i) => params[i]?.type === 'graph_node')!;
                 return [
                     ...decls,
+                    `const __t0${idx} = process.hrtime.bigint();`,
                     `const __res${idx} = sol.solve(${args.join(', ')});`,
+                    `const __t1${idx} = process.hrtime.bigint();`,
+                    `console.log(':::TIME:::' + (__t1${idx} - __t0${idx}).toString());`,
                     `if (${graphNodeArg} !== null && __res${idx} === ${graphNodeArg}) {`,
                     `    console.log(':::ERROR:::invalid clone - same object');`,
                     `} else {`,
@@ -345,7 +348,7 @@ export function generateTypeScriptRunner(functionName: string, params: Param[], 
                 ].join('\n        ');
             }
             const fullParam = tsGetFullParam(params, tc);
-            return `const __res${idx} = sol.solve(${fullParam});\nconsole.log(':::RESULT:::' + displayOutput(__res${idx}));\nconsole.log('---');`;
+            return `const __t0${idx} = process.hrtime.bigint();\nconst __res${idx} = sol.solve(${fullParam});\nconst __t1${idx} = process.hrtime.bigint();\nconsole.log(':::TIME:::' + (__t1${idx} - __t0${idx}).toString());\nconsole.log(':::RESULT:::' + displayOutput(__res${idx}));\nconsole.log('---');`;
         }).join('\n        ');
 
         return `${imports}
@@ -375,7 +378,10 @@ ${calls}
             const graphNodeArg = args.find((_, i) => params[i]?.type === 'graph_node')!;
             return [
                 ...decls,
+                `const __t0${idx} = process.hrtime.bigint();`,
                 `const __res${idx} = ${functionName}(${args.join(', ')});`,
+                `const __t1${idx} = process.hrtime.bigint();`,
+                `console.log(':::TIME:::' + (__t1${idx} - __t0${idx}).toString());`,
                 `if (${graphNodeArg} !== null && __res${idx} === ${graphNodeArg}) {`,
                 `    console.log(':::ERROR:::invalid clone - same object');`,
                 `} else {`,
@@ -385,7 +391,7 @@ ${calls}
             ].join('\n        ');
         }
         const fullParam = tsGetFullParam(params, tc);
-        return `const __res${idx} = ${functionName}(${fullParam});\nconsole.log(':::RESULT:::' + displayOutput(__res${idx}));\nconsole.log('---');`;
+        return `const __t0${idx} = process.hrtime.bigint();\nconst __res${idx} = ${functionName}(${fullParam});\nconst __t1${idx} = process.hrtime.bigint();\nconsole.log(':::TIME:::' + (__t1${idx} - __t0${idx}).toString());\nconsole.log(':::RESULT:::' + displayOutput(__res${idx}));\nconsole.log('---');`;
     }).join('\n        ');
 
     return `${imports}

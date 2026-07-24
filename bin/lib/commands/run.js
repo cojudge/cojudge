@@ -186,6 +186,8 @@ export async function handleRun(argsToUse, PORT) {
     const { jobId } = responseData;
 
     let results = null;
+    let executionTimeMs = null;
+    let memoryKB = null;
     let attempts = 0;
     const maxPolls = 120;
     while (!results && attempts < maxPolls) {
@@ -214,6 +216,8 @@ export async function handleRun(argsToUse, PORT) {
         } else {
           results = polledData.results;
         }
+        executionTimeMs = polledData.executionTimeMs;
+        memoryKB = polledData.memoryKB;
       } else {
         await new Promise((r) => setTimeout(r, 100));
       }
@@ -264,6 +268,13 @@ export async function handleRun(argsToUse, PORT) {
         }
       }
     });
+
+    if (executionTimeMs != null || memoryKB != null) {
+      const parts = [];
+      if (executionTimeMs != null) parts.push(`Time: ${executionTimeMs.toFixed(2)} ms`);
+      if (memoryKB != null) parts.push(`Memory: ${(memoryKB / 1024).toFixed(1)} MB`);
+      console.log(`\n\x1b[2m${parts.join("  |  ")}\x1b[0m`);
+    }
   } catch (e) {
     let msg = e.message;
     msg = msg.replace(/^Execution failed: details: /i, "");

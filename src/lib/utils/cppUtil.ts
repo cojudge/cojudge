@@ -794,7 +794,10 @@ export function generateCppRunner(functionName: string, params: Param[], testCas
             if (hasGraphNode && graphNodeVar) {
                 return `{
         ${decls.join('\n        ')}
+        auto __t0 = std::chrono::high_resolution_clock::now();
         auto __res = sol.${functionName}(${args.join(', ')});
+        auto __t1 = std::chrono::high_resolution_clock::now();
+        cout << ":::TIME:::" << std::chrono::duration_cast<std::chrono::nanoseconds>(__t1 - __t0).count() << "\\n";
         if (${graphNodeVar} != nullptr && __res == ${graphNodeVar}) {
             cout << ":::ERROR:::invalid clone - same object" << "\\n";
         } else {
@@ -805,8 +808,10 @@ export function generateCppRunner(functionName: string, params: Param[], testCas
             }
             return `{
         ${decls.join('\n        ')}
-        // Capture final result in a variable to avoid mixing with user prints
+        auto __t0 = std::chrono::high_resolution_clock::now();
         auto __res = sol.${functionName}(${args.join(', ')});
+        auto __t1 = std::chrono::high_resolution_clock::now();
+        cout << ":::TIME:::" << std::chrono::duration_cast<std::chrono::nanoseconds>(__t1 - __t0).count() << "\\n";
         cout << ":::RESULT:::" << display_output(__res) << "\\n";
         cout << "---\\n";
     }`;
@@ -817,6 +822,7 @@ export function generateCppRunner(functionName: string, params: Param[], testCas
 #include <signal.h>
 #include <execinfo.h>
 #include <iostream>
+#include <chrono>
 
 static void crash_handler(int sig) {
     std::cerr << "Crash: signal " << sig;

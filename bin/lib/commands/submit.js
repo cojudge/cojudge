@@ -106,6 +106,8 @@ Examples:
     let totalTcCount = 0;
     let passedTcCount = 0;
     let keepRunning = true;
+    let accumulatedTimeMs = null;
+    let maxMemoryKB = null;
 
     while (keepRunning) {
       const response = await fetch(`http://localhost:${PORT}/api/submit`, {
@@ -170,6 +172,13 @@ Examples:
 
       if (!jobResult) throw new Error("Submission timed out");
 
+      if (jobResult.executionTimeMs != null) {
+        accumulatedTimeMs = (accumulatedTimeMs || 0) + jobResult.executionTimeMs;
+      }
+      if (jobResult.memoryKB != null) {
+        maxMemoryKB = Math.max(maxMemoryKB || 0, jobResult.memoryKB);
+      }
+
       totalTcCount = jobResult.totalTc || totalTcCount;
 
       const firstFailed = (jobResult.results || []).find((r) => !r.isCorrect);
@@ -212,6 +221,12 @@ Examples:
         console.log(
           `\nSummary: ${passedTcCount}/${totalTcCount} test cases passed.`,
         );
+
+        const metricsParts = [];
+        if (accumulatedTimeMs != null) metricsParts.push(`Time: ${accumulatedTimeMs.toFixed(2)} ms`);
+        if (maxMemoryKB != null) metricsParts.push(`Memory: ${(maxMemoryKB / 1024).toFixed(1)} MB`);
+        if (metricsParts.length > 0) console.log(`\x1b[2m${metricsParts.join("  |  ")}\x1b[0m`);
+
         process.exit(1);
       }
 
@@ -224,6 +239,11 @@ Examples:
         console.log(
           `Summary: ${passedTcCount}/${totalTcCount} test cases passed.`,
         );
+
+        const metricsParts = [];
+        if (accumulatedTimeMs != null) metricsParts.push(`Time: ${accumulatedTimeMs.toFixed(2)} ms`);
+        if (maxMemoryKB != null) metricsParts.push(`Memory: ${(maxMemoryKB / 1024).toFixed(1)} MB`);
+        if (metricsParts.length > 0) console.log(`\x1b[2m${metricsParts.join("  |  ")}\x1b[0m`);
 
         markProblem(slug, true);
       } else {

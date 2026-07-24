@@ -30,6 +30,8 @@ type SubmitJob = {
     timeoutTestCase?: any;
     error?: string;
     errorTestCase?: any;
+    executionTimeMs?: number;
+    memoryKB?: number;
 };
 
 const jobs: Map<string, SubmitJob> = new Map();
@@ -131,6 +133,10 @@ async function executeSubmit(problemId: string, language: string, code: string, 
         }
         await programRunner.compile();
         const rawResults = await programRunner.run();
+        if (programRunner.lastRunMetrics) {
+            job.executionTimeMs = programRunner.lastRunMetrics.executionTimeMs;
+            job.memoryKB = programRunner.lastRunMetrics.memoryKB;
+        }
 
         const hasMergedMarker = isJavaLanguage(language) &&
             rawResults.length > 0 &&
@@ -273,5 +279,10 @@ export const GET: RequestHandler = async ({ url }) => {
     if (job.status === 'error') {
         return json({ ready: true, error: job.error || 'Submission failed', errorTestCase: job.errorTestCase }, { status: 400 });
     }
-    return json({ ready: true, ...(job.result || {}) });
+    return json({
+        ready: true,
+        ...(job.result || {}),
+        executionTimeMs: job.executionTimeMs,
+        memoryKB: job.memoryKB,
+    });
 };
