@@ -13,6 +13,7 @@
     export let language: ProgrammingLanguage = "java";
     export let gameMode = false;
     export let gameStartTime = 0;
+    export let gameFinished = false;
     export let debugBreakpoints: number[] = [];
     export let activeDebugLine: number | null = null;
     let gameRunCount = 0;
@@ -740,7 +741,7 @@
                             ...prev,
                             [problem.id]: true,
                         }));
-                        if (gameMode) {
+                        if (gameMode && !gameFinished) {
                             const timeSpent = Math.floor((submitTime - gameStartTime) / 1000);
                             dispatch('gameSubmitSuccess', { runCount: gameRunCount, submitCount: gameSubmitCount, timeSpent });
                         }
@@ -1420,7 +1421,7 @@
         <div class="buttons">
             <div style="display: flex; align-items: center; margin-right: 8px;">
                 {#if gameMode && gameStartTime > 0}
-                    <GameModeTimer startTime={gameStartTime} />
+                    <GameModeTimer startTime={gameStartTime} stopped={gameFinished} />
                 {/if}
                 <SaveStatus />
             </div>
