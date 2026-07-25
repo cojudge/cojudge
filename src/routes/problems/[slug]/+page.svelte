@@ -40,6 +40,7 @@
     }
     let isGameMode = false;
     let gameStartTime = 0;
+    let gameFinished = false;
     let showGameResult = false;
     let gameResultStats: { runCount: number; submitCount: number; timeSpent: number } | null = null;
     let showGameHistory = false;
@@ -977,6 +978,7 @@
             {language}
             gameMode={isGameMode}
             gameStartTime={gameStartTime}
+            {gameFinished}
             debugBreakpoints={debugBreakpoints}
             bind:activeDebugLine={activeDebugLine}
             on:gameSubmitSuccess={(e) => {
@@ -1013,6 +1015,7 @@
             runCount={gameResultStats.runCount}
             submitCount={gameResultStats.submitCount}
             timeSpent={gameResultStats.timeSpent}
+            on:close={() => { showGameResult = false; gameFinished = true; }}
         />
     {/if}
 

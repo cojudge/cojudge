@@ -1,5 +1,8 @@
 <script lang="ts">
+    import { createEventDispatcher } from 'svelte';
     import { fade, scale } from 'svelte/transition';
+
+    const dispatch = createEventDispatcher();
 
     export let runCount: number;
     export let submitCount: number;
@@ -26,14 +29,18 @@
 
     function handleBackdropClick(e: MouseEvent) {
         if (e.target === e.currentTarget) {
-            goHome();
+            dispatch('close');
         }
+    }
+
+    function handleKeydown(e: KeyboardEvent) {
+        if (e.key === 'Escape') dispatch('close');
     }
 </script>
 
-<div class="modal-backdrop" on:click={handleBackdropClick} on:keydown={(e) => { if (e.key === 'Escape') goHome(); }} role="dialog" aria-modal="true" tabindex="-1" transition:fade={{ duration: 200 }}>
+<div class="modal-backdrop" on:click={handleBackdropClick} on:keydown={handleKeydown} role="dialog" aria-modal="true" tabindex="-1" transition:fade={{ duration: 200 }}>
     <div class="modal" transition:scale={{ start: 0.95, duration: 200 }}>
-        <button class="close-btn" on:click={goHome} aria-label="Close">&times;</button>
+        <button class="close-btn" on:click={() => dispatch('close')} aria-label="Close">&times;</button>
         <h2>Game Over</h2>
 
         <div class="rank-circle" class:rank-s={rank === 'S'} class:rank-a={rank === 'A'} class:rank-b={rank === 'B'} class:rank-c={rank === 'C'}>

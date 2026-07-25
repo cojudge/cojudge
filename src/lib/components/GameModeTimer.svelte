@@ -2,6 +2,7 @@
     import { onDestroy } from 'svelte';
 
     export let startTime: number;
+    export let stopped = false;
 
     let elapsed = 0;
     let interval: ReturnType<typeof setInterval>;
@@ -13,8 +14,13 @@
     tick();
     interval = setInterval(tick, 1000);
 
-    onDestroy(() => {
+    $: if (stopped && interval) {
         clearInterval(interval);
+        interval = null as any;
+    }
+
+    onDestroy(() => {
+        if (interval) clearInterval(interval);
     });
 
     $: minutes = Math.floor(elapsed / 60);
