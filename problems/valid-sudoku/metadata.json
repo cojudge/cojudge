@@ -1,0 +1,54 @@
+{
+  "id": "valid-sudoku",
+  "title": "76. Valid Sudoku",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/valid-sudoku/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "board = [\"53..7....\",\"6..195...\",\".98....6.\",\"8...6...3\",\"4..8.3..1\",\"7...2...6\",\".6....28.\",\"...419..5\",\"....8..79\"]",
+      "output": "true"
+    },
+    {
+      "input": "board = [\"83..7....\",\"6..195...\",\".98....6.\",\"8...6...3\",\"4..8.3..1\",\"7...2...6\",\".6....28.\",\"...419..5\",\"....8..79\"]",
+      "output": "false",
+      "explanation": "The top-left 3 x 3 box contains two 8s."
+    },
+    {
+      "input": "board = [\".........\",\".........\",\".........\",\".........\",\".........\",\".........\",\".........\",\".........\",\".........\"]",
+      "output": "true"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isValidSudoku(String[] board) {\n        return false;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def isValidSudoku(self, board: List[str]) -> bool:\n        return False\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool isValidSudoku(vector<string>& board) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool IsValidSudoku(string[] board)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_valid_sudoku(board: Vec<String>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc IsValidSudoku(board []string) bool {\n    return false\n}",
+    "typescript": "export function isValidSudoku(board: string[]): boolean {\n    return false;\n}\n"
+  },
+  "testCases": [
+    {
+      "board": "[\"53..7....\",\"6..195...\",\".98....6.\",\"8...6...3\",\"4..8.3..1\",\"7...2...6\",\".6....28.\",\"...419..5\",\"....8..79\"]"
+    },
+    {
+      "board": "[\"83..7....\",\"6..195...\",\".98....6.\",\"8...6...3\",\"4..8.3..1\",\"7...2...6\",\".6....28.\",\"...419..5\",\"....8..79\"]"
+    },
+    {
+      "board": "[\".........\",\".........\",\".........\",\".........\",\".........\",\".........\",\".........\",\".........\",\".........\"]"
+    }
+  ],
+  "functionName": "isValidSudoku",
+  "params": [
+    {
+      "name": "board",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Track the digits already seen in each row, column, and 3 x 3 box.",
+    "A 9-bit mask can represent the used digits for one unit."
+  ]
+}

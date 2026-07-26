@@ -1,0 +1,53 @@
+{
+  "id": "letter-combinations-of-a-phone-number",
+  "title": "113. Letter Combinations of a Phone Number",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "digits = \"23\"",
+      "output": "[\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]"
+    },
+    {
+      "input": "digits = \"7\"",
+      "output": "[\"p\",\"q\",\"r\",\"s\"]"
+    },
+    {
+      "input": "digits = \"2\"",
+      "output": "[\"a\",\"b\",\"c\"]"
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\n\nclass Solution {\n    public List<String> letterCombinations(String digits) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def letterCombinations(self, digits: str) -> List[str]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> letterCombinations(string digits) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\n\npublic class Solution {\n    public List<string> LetterCombinations(string digits) {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn letter_combinations(digits: String) -> Vec<String> {\n        Vec::new()\n    }\n}\n",
+    "go": "package main\n\nfunc LetterCombinations(digits string) []string {\n    return []string{}\n}\n",
+    "typescript": "export function letterCombinations(digits: string): string[] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "digits": "23"
+    },
+    {
+      "digits": "7"
+    },
+    {
+      "digits": "2"
+    }
+  ],
+  "functionName": "letterCombinations",
+  "params": [
+    {
+      "name": "digits",
+      "type": "string"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Associate each digit with its keypad letters.",
+    "Backtrack through the digits, appending one mapped letter at each position."
+  ]
+}

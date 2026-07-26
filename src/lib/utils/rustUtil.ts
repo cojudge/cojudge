@@ -614,7 +614,6 @@ export function generateRustDebugRunner(
   return `
 use std::rc::Rc;
 use std::cell::RefCell;
-use std::collections::VecDeque;
 
 mod solution;
 
@@ -787,14 +786,10 @@ export function generateRustRunner(
     })
     .join("\n    ");
 
-  // Remove common imports from user code to avoid "defined multiple times" errors
+  // Remove node-helper imports supplied by the generated runner.
   const cleanedCode = (code || "")
     .replace(/use std::rc::Rc;/g, "// use std::rc::Rc;")
-    .replace(/use std::cell::RefCell;/g, "// use std::cell::RefCell;")
-    .replace(
-      /use std::collections::VecDeque;/g,
-      "// use std::collections::VecDeque;",
-    );
+    .replace(/use std::cell::RefCell;/g, "// use std::cell::RefCell;");
 
   const operations = extractOperations(testCases, className || '');
   const solutionCode = className ? generateRustClassSolution(className, params, undefined, operations) : '';
@@ -802,7 +797,6 @@ export function generateRustRunner(
   return `
 use std::rc::Rc;
 use std::cell::RefCell;
-use std::collections::VecDeque;
 
 ${rustListNodeClass}
 

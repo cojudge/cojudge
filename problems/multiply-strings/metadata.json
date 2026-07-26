@@ -1,0 +1,69 @@
+{
+  "id": "multiply-strings",
+  "title": "148. Multiply Strings",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/multiply-strings/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "num1 = \"2\", num2 = \"3\"",
+      "output": "\"6\""
+    },
+    {
+      "input": "num1 = \"123\", num2 = \"456\"",
+      "output": "\"56088\""
+    },
+    {
+      "input": "num1 = \"0\", num2 = \"987654321\"",
+      "output": "\"0\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String multiply(String num1, String num2) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def multiply(self, num1: str, num2: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string multiply(string num1, string num2) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string Multiply(string num1, string num2)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn multiply(num1: String, num2: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc Multiply(num1 string, num2 string) string {\n    return \"\"\n}",
+    "typescript": "export function multiply(num1: string, num2: string): string {\n    return \"\";\n}"
+  },
+  "testCases": [
+    {
+      "num1": "2",
+      "num2": "3"
+    },
+    {
+      "num1": "123",
+      "num2": "456"
+    },
+    {
+      "num1": "0",
+      "num2": "987654321"
+    },
+    {
+      "num1": "999",
+      "num2": "999"
+    },
+    {
+      "num1": "100000000000000000000",
+      "num2": "100000000000000000000"
+    }
+  ],
+  "functionName": "multiply",
+  "params": [
+    {
+      "name": "num1",
+      "type": "string"
+    },
+    {
+      "name": "num2",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Allocate an integer array with num1.length + num2.length positions for the product digits.",
+    "The product of digits at indices i and j contributes to positions i + j and i + j + 1.",
+    "Propagate each carry while accumulating products, then skip at most one leading zero when building the result."
+  ]
+}

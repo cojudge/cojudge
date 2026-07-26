@@ -1,0 +1,58 @@
+{
+  "id": "combination-sum-ii",
+  "title": "109. Combination Sum II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/combination-sum-ii/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "candidates = [10,1,2,7,6,1,5], target = 8",
+      "output": "[[1,1,6],[1,2,5],[1,7],[2,6]]"
+    },
+    {
+      "input": "candidates = [2,5,2,1,2], target = 5",
+      "output": "[[1,2,2],[5]]",
+      "explanation": "Each array position can be used once, and duplicate combinations are removed."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] combinationSum2(int[] candidates, int target) {\n        throw new UnsupportedOperationException();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:\n        raise NotImplementedError\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[][] CombinationSum2(int[] candidates, int target)\n    {\n        throw new System.NotImplementedException();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn combination_sum2(candidates: Vec<i32>, target: i32) -> Vec<Vec<i32>> {\n        todo!()\n    }\n}",
+    "go": "package main\n\nfunc CombinationSum2(candidates []int, target int) [][]int {\n    panic(\"TODO\")\n}",
+    "typescript": "export function combinationSum2(candidates: number[], target: number): number[][] {\n    throw new Error('Not implemented');\n}"
+  },
+  "testCases": [
+    {
+      "candidates": "[10,1,2,7,6,1,5]",
+      "target": 8
+    },
+    {
+      "candidates": "[2,5,2,1,2]",
+      "target": 5
+    },
+    {
+      "candidates": "[1,1,1,2,2]",
+      "target": 4
+    }
+  ],
+  "functionName": "combinationSum2",
+  "params": [
+    {
+      "name": "candidates",
+      "type": "int_array"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Sort the candidates before backtracking.",
+    "After choosing position i, recurse from i + 1 so that input element cannot be reused.",
+    "At one recursion depth, skip a value when it equals the previous candidate considered at that same depth."
+  ]
+}

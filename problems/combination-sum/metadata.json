@@ -1,0 +1,58 @@
+{
+  "id": "combination-sum",
+  "title": "108. Combination Sum",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/combination-sum/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "candidates = [2,3,6,7], target = 7",
+      "output": "[[2,2,3],[7]]"
+    },
+    {
+      "input": "candidates = [2,3,5], target = 8",
+      "output": "[[2,2,2,2],[2,3,3],[3,5]]",
+      "explanation": "Candidates may be reused any number of times."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] combinationSum(int[] candidates, int target) {\n        throw new UnsupportedOperationException();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:\n        raise NotImplementedError\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[][] CombinationSum(int[] candidates, int target)\n    {\n        throw new System.NotImplementedException();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn combination_sum(candidates: Vec<i32>, target: i32) -> Vec<Vec<i32>> {\n        todo!()\n    }\n}",
+    "go": "package main\n\nfunc CombinationSum(candidates []int, target int) [][]int {\n    panic(\"TODO\")\n}",
+    "typescript": "export function combinationSum(candidates: number[], target: number): number[][] {\n    throw new Error('Not implemented');\n}"
+  },
+  "testCases": [
+    {
+      "candidates": "[2,3,6,7]",
+      "target": 7
+    },
+    {
+      "candidates": "[2,3,5]",
+      "target": 8
+    },
+    {
+      "candidates": "[2,4]",
+      "target": 7
+    }
+  ],
+  "functionName": "combinationSum",
+  "params": [
+    {
+      "name": "candidates",
+      "type": "int_array"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Sort the candidates so a branch can stop once the next value exceeds the remaining target.",
+    "Backtrack with a start index to avoid generating permutations of the same combination.",
+    "When choosing a candidate, recurse with the same index because that value may be reused."
+  ]
+}

@@ -416,15 +416,25 @@ export function formatAndSplitJavaString(str: string, chunkSize = 3000, funcName
     if (typeof str !== 'string') {
         str = JSON.stringify(str);
     }
-    const escapedStr = str.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+    const escapeChunk = (value: string) => value.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+    const escapedStr = escapeChunk(str);
     if (escapedStr.length <= chunkSize) {
         return `"${escapedStr}"`;
     }
     const chunks: string[] = [];
-    for (let i = 0; i < escapedStr.length; i += chunkSize) {
-        const chunk = escapedStr.substring(i, i + chunkSize);
-        chunks.push(`"${chunk}"`);
+    let chunk = '';
+    let escapedLength = 0;
+    for (const char of str) {
+        const escapedChar = escapeChunk(char);
+        if (chunk && escapedLength + escapedChar.length > chunkSize) {
+            chunks.push(`"${escapeChunk(chunk)}"`);
+            chunk = '';
+            escapedLength = 0;
+        }
+        chunk += char;
+        escapedLength += escapedChar.length;
     }
+    if (chunk) chunks.push(`"${escapeChunk(chunk)}"`);
     const res = chunks.join(' ,\n');
     if (!funcName || funcName.length === 0) return res;
     return `${funcName}(new String[]{${res}})`;

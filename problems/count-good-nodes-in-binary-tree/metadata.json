@@ -1,0 +1,59 @@
+{
+  "id": "count-good-nodes-in-binary-tree",
+  "title": "100. Count Good Nodes in Binary Tree",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/count-good-nodes-in-binary-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [3,1,4,3,null,1,5]",
+      "output": "4",
+      "explanation": "The root 3, the left grandchild 3, node 4, and node 5 are good."
+    },
+    {
+      "input": "root = [3,3,null,4,2]",
+      "output": "3"
+    },
+    {
+      "input": "root = [1]",
+      "output": "1"
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public int goodNodes(TreeNode root) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\nclass Solution:\n    def goodNodes(self, root) -> int:\n        pass\n",
+    "cpp": "/*\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n};\n*/\nclass Solution {\npublic:\n    int goodNodes(TreeNode* root) {\n        return 0;\n    }\n};",
+    "csharp": "/*\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\npublic class Solution\n{\n    public int GoodNodes(TreeNode root)\n    {\n        return 0;\n    }\n}",
+    "rust": "use std::cell::RefCell;\nuse std::rc::Rc;\n\npub struct Solution;\n\nimpl Solution {\n    pub fn good_nodes(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {\n        todo!()\n    }\n}",
+    "go": "package main\n\nfunc GoodNodes(root *TreeNode) int {\n    return 0\n}",
+    "typescript": "export function goodNodes(root: TreeNode | null): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "root": "[3,1,4,3,null,1,5]"
+    },
+    {
+      "root": "[3,3,null,4,2]"
+    },
+    {
+      "root": "[1]"
+    },
+    {
+      "root": "[-1,-2,-3]"
+    }
+  ],
+  "functionName": "goodNodes",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Carry the maximum value seen on the path from the root during a DFS or BFS.",
+    "A node is good exactly when its value is at least that path maximum.",
+    "Pass `max(pathMaximum, node.val)` to each child."
+  ]
+}

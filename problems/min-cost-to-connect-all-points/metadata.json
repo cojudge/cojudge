@@ -1,0 +1,51 @@
+{
+  "id": "min-cost-to-connect-all-points",
+  "title": "123. Min Cost to Connect All Points",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/min-cost-to-connect-all-points/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "points = [[0,0],[2,2],[3,10],[5,2],[7,0]]",
+      "output": "20"
+    },
+    {
+      "input": "points = [[3,12],[-2,5],[-4,1]]",
+      "output": "18"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minCostConnectPoints(int[][] points) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def minCostConnectPoints(self, points: List[List[int]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minCostConnectPoints(vector<vector<int>>& points) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinCostConnectPoints(int[][] points)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_cost_connect_points(points: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}\n",
+    "go": "package main\n\nfunc MinCostConnectPoints(points [][]int) int {\n    return 0\n}\n",
+    "typescript": "export function minCostConnectPoints(points: number[][]): number {\n    return 0;\n}\n"
+  },
+  "testCases": [
+    {
+      "points": "[[0,0],[2,2],[3,10],[5,2],[7,0]]"
+    },
+    {
+      "points": "[[3,12],[-2,5],[-4,1]]"
+    },
+    {
+      "points": "[[0,0]]"
+    }
+  ],
+  "functionName": "minCostConnectPoints",
+  "params": [
+    {
+      "name": "points",
+      "type": "int_array_2d",
+      "visualizeType": "points"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "This is a minimum spanning tree problem on a complete graph whose edge weights are Manhattan distances.",
+    "Prim's algorithm can update each unvisited point's cheapest connection without explicitly storing all O(n^2) edges.",
+    "An O(n^2) implementation of Prim's algorithm uses O(n) auxiliary space and is sufficient for the constraints."
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "id": "time-based-key-value-store",
+  "title": "90. Time Based Key-Value Store",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/time-based-key-value-store/",
+  "category": "binary-search",
+  "examples": [
+    {
+      "input": "operations = [\"set\",\"get\",\"get\",\"set\",\"get\",\"get\"], keys = [\"foo\",\"foo\",\"foo\",\"foo\",\"foo\",\"foo\"], values = [\"bar\",\"\",\"\",\"bar2\",\"\",\"\"], timestamps = [1,1,3,4,4,5]",
+      "output": "[\"bar\",\"bar\",\"bar2\",\"bar2\"]"
+    },
+    {
+      "input": "operations = [\"set\",\"set\",\"get\",\"get\",\"get\"], keys = [\"love\",\"love\",\"love\",\"love\",\"love\"], values = [\"high\",\"low\",\"\",\"\",\"\"], timestamps = [10,20,5,10,15]",
+      "output": "[\"\",\"high\",\"high\"]"
+    },
+    {
+      "input": "operations = [\"get\",\"set\",\"get\"], keys = [\"a\",\"a\",\"a\"], values = [\"ignored\",\"first\",\"ignored\"], timestamps = [10,1,10]",
+      "output": "[\"\",\"first\"]",
+      "explanation": "Operations are processed in order, and values paired with get operations are ignored."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\n\nclass Solution {\n    public List<String> runTimeMap(String[] operations, String[] keys, String[] values, int[] timestamps) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def runTimeMap(self, operations: List[str], keys: List[str], values: List[str], timestamps: List[int]) -> List[str]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> runTimeMap(vector<string>& operations, vector<string>& keys, vector<string>& values, vector<int>& timestamps) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\n\npublic class Solution\n{\n    public List<string> RunTimeMap(string[] operations, string[] keys, string[] values, int[] timestamps)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_time_map(operations: Vec<String>, keys: Vec<String>, values: Vec<String>, timestamps: Vec<i32>) -> Vec<String> {\n        Vec::new()\n    }\n}",
+    "go": "package main\n\nfunc RunTimeMap(operations []string, keys []string, values []string, timestamps []int) []string {\n    return []string{}\n}",
+    "typescript": "export function runTimeMap(operations: string[], keys: string[], values: string[], timestamps: number[]): string[] {\n    return [];\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"set\",\"get\",\"get\",\"set\",\"get\",\"get\"]",
+      "keys": "[\"foo\",\"foo\",\"foo\",\"foo\",\"foo\",\"foo\"]",
+      "values": "[\"bar\",\"\",\"\",\"bar2\",\"\",\"\"]",
+      "timestamps": "[1,1,3,4,4,5]"
+    },
+    {
+      "operations": "[\"set\",\"set\",\"get\",\"get\",\"get\"]",
+      "keys": "[\"love\",\"love\",\"love\",\"love\",\"love\"]",
+      "values": "[\"high\",\"low\",\"\",\"\",\"\"]",
+      "timestamps": "[10,20,5,10,15]"
+    },
+    {
+      "operations": "[\"get\",\"set\",\"get\"]",
+      "keys": "[\"a\",\"a\",\"a\"]",
+      "values": "[\"ignored\",\"first\",\"ignored\"]",
+      "timestamps": "[10,1,10]"
+    }
+  ],
+  "functionName": "runTimeMap",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "keys",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "string_array"
+    },
+    {
+      "name": "timestamps",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Store a timestamped sequence independently for each key.",
+    "The strictly increasing set timestamps mean each new pair can be appended.",
+    "For get, binary-search for the rightmost timestamp that is less than or equal to the query timestamp."
+  ]
+}

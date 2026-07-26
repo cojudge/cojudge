@@ -1,0 +1,55 @@
+{
+  "id": "rotting-oranges",
+  "title": "117. Rotting Oranges",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/rotting-oranges/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "grid = [[2,1,1],[1,1,0],[0,1,1]]",
+      "output": "4"
+    },
+    {
+      "input": "grid = [[2,1,1],[0,1,1],[1,0,1]]",
+      "output": "-1",
+      "explanation": "The fresh orange in the lower-left corner cannot be reached."
+    },
+    {
+      "input": "grid = [[0,2]]",
+      "output": "0"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int orangesRotting(int[][] grid) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def orangesRotting(self, grid: List[List[int]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int orangesRotting(vector<vector<int>>& grid) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution {\n    public int OrangesRotting(int[][] grid) {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn oranges_rotting(grid: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}\n",
+    "go": "package main\n\nfunc OrangesRotting(grid [][]int) int {\n    return 0\n}\n",
+    "typescript": "export function orangesRotting(grid: number[][]): number {\n    return 0;\n}\n"
+  },
+  "testCases": [
+    {
+      "grid": "[[2,1,1],[1,1,0],[0,1,1]]"
+    },
+    {
+      "grid": "[[2,1,1],[0,1,1],[1,0,1]]"
+    },
+    {
+      "grid": "[[0,2]]"
+    }
+  ],
+  "functionName": "orangesRotting",
+  "params": [
+    {
+      "name": "grid",
+      "type": "int_array_2d",
+      "visualizeType": "matrix"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use all initially rotten oranges as the first layer of a breadth-first search.",
+    "Count fresh oranges and reduce the count whenever a BFS layer rots one."
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "id": "gas-station",
+  "title": "140. Gas Station",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/gas-station/",
+  "category": "greedy",
+  "examples": [
+    {
+      "input": "gas = [1,2,3,4,5], cost = [3,4,5,1,2]",
+      "output": "3",
+      "explanation": "Starting at station 3 allows a complete circuit without running out of fuel."
+    },
+    {
+      "input": "gas = [2,3,4], cost = [3,4,3]",
+      "output": "-1"
+    },
+    {
+      "input": "gas = [5], cost = [4]",
+      "output": "0"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int canCompleteCircuit(int[] gas, int[] cost) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {\n        return -1;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int CanCompleteCircuit(int[] gas, int[] cost)\n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_complete_circuit(gas: Vec<i32>, cost: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc CanCompleteCircuit(gas []int, cost []int) int {\n    \n}",
+    "typescript": "export function canCompleteCircuit(gas: number[], cost: number[]): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "gas": "[1,2,3,4,5]",
+      "cost": "[3,4,5,1,2]"
+    },
+    {
+      "gas": "[2,3,4]",
+      "cost": "[3,4,3]"
+    },
+    {
+      "gas": "[5]",
+      "cost": "[4]"
+    },
+    {
+      "gas": "[0,1]",
+      "cost": "[1,0]"
+    }
+  ],
+  "functionName": "canCompleteCircuit",
+  "params": [
+    {
+      "name": "gas",
+      "type": "int_array"
+    },
+    {
+      "name": "cost",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "A circuit is impossible when total gas is less than total cost.",
+    "Track the running fuel balance from a candidate start while scanning the stations once.",
+    "If the balance becomes negative at station i, no station from the current candidate through i can be a valid start, so try i + 1."
+  ]
+}

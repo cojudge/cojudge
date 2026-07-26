@@ -1,0 +1,56 @@
+{
+  "id": "daily-temperatures",
+  "title": "82. Daily Temperatures",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/daily-temperatures/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "temperatures = [73,74,75,71,69,72,76,73]",
+      "output": "[1,1,4,2,1,1,0,0]"
+    },
+    {
+      "input": "temperatures = [30,40,50,60]",
+      "output": "[1,1,1,0]"
+    },
+    {
+      "input": "temperatures = [30,60,90]",
+      "output": "[1,1,0]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] dailyTemperatures(int[] temperatures) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> dailyTemperatures(vector<int>& temperatures) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] DailyTemperatures(int[] temperatures)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn daily_temperatures(temperatures: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc DailyTemperatures(temperatures []int) []int {\n    return []int{}\n}",
+    "typescript": "export function dailyTemperatures(temperatures: number[]): number[] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "temperatures": "[73,74,75,71,69,72,76,73]"
+    },
+    {
+      "temperatures": "[30,40,50,60]"
+    },
+    {
+      "temperatures": "[30,60,90]"
+    },
+    {
+      "temperatures": "[90,80,70,60]"
+    }
+  ],
+  "functionName": "dailyTemperatures",
+  "params": [
+    {
+      "name": "temperatures",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Keep indices of unresolved days in a monotonic decreasing stack.",
+    "When a warmer day arrives, pop every colder day and fill its waiting distance."
+  ]
+}

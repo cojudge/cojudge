@@ -1,0 +1,51 @@
+{
+  "id": "max-area-of-island",
+  "title": "115. Max Area of Island",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/max-area-of-island/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "grid = [[0,0,1,0],[1,1,1,0],[0,1,0,1]]",
+      "output": "5",
+      "explanation": "The five connected land cells form the largest island."
+    },
+    {
+      "input": "grid = [[0,0],[0,0]]",
+      "output": "0"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxAreaOfIsland(int[][] grid) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int maxAreaOfIsland(vector<vector<int>>& grid) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution {\n    public int MaxAreaOfIsland(int[][] grid) {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_area_of_island(grid: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}\n",
+    "go": "package main\n\nfunc MaxAreaOfIsland(grid [][]int) int {\n    return 0\n}\n",
+    "typescript": "export function maxAreaOfIsland(grid: number[][]): number {\n    return 0;\n}\n"
+  },
+  "testCases": [
+    {
+      "grid": "[[0,0,1,0],[1,1,1,0],[0,1,0,1]]"
+    },
+    {
+      "grid": "[[0,0],[0,0]]"
+    },
+    {
+      "grid": "[[1]]"
+    }
+  ],
+  "functionName": "maxAreaOfIsland",
+  "params": [
+    {
+      "name": "grid",
+      "type": "int_array_2d",
+      "visualizeType": "matrix"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Start a flood fill from each unvisited land cell.",
+    "Count the cells reached by each flood fill and keep the largest count."
+  ]
+}

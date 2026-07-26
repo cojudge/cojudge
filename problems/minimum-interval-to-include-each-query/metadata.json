@@ -1,0 +1,66 @@
+{
+  "id": "minimum-interval-to-include-each-query",
+  "title": "138. Minimum Interval to Include Each Query",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/minimum-interval-to-include-each-query/",
+  "category": "interval",
+  "examples": [
+    {
+      "input": "intervals = [[1,4],[2,4],[3,6],[4,4]], queries = [2,3,4,5]",
+      "output": "[3,3,1,4]",
+      "explanation": "The smallest covering intervals are [2,4], [2,4], [4,4], and [3,6]."
+    },
+    {
+      "input": "intervals = [[2,3],[2,5],[1,8],[20,25]], queries = [2,19,5,22]",
+      "output": "[2,-1,4,6]"
+    },
+    {
+      "input": "intervals = [[1,1]], queries = [1,2]",
+      "output": "[1,-1]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] minInterval(int[][] intervals, int[] queries) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minInterval(self, intervals: List[List[int]], queries: List[int]) -> List[int]:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> minInterval(vector<vector<int>>& intervals, vector<int>& queries) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] MinInterval(int[][] intervals, int[] queries)\n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_interval(intervals: Vec<Vec<i32>>, queries: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc MinInterval(intervals [][]int, queries []int) []int {\n    \n}",
+    "typescript": "export function minInterval(intervals: number[][], queries: number[]): number[] {\n    \n}"
+  },
+  "testCases": [
+    {
+      "intervals": "[[1,4],[2,4],[3,6],[4,4]]",
+      "queries": "[2,3,4,5]"
+    },
+    {
+      "intervals": "[[2,3],[2,5],[1,8],[20,25]]",
+      "queries": "[2,19,5,22]"
+    },
+    {
+      "intervals": "[[1,1]]",
+      "queries": "[1,2]"
+    },
+    {
+      "intervals": "[[5,10]]",
+      "queries": "[5,10,7,4,11]"
+    }
+  ],
+  "functionName": "minInterval",
+  "params": [
+    {
+      "name": "intervals",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "queries",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Process queries in sorted order while separately preserving each query's original index.",
+    "Before answering query q, add every interval whose left endpoint is at most q to a min-heap ordered by interval size.",
+    "Remove heap entries whose right endpoint is less than q; the remaining smallest entry gives the answer."
+  ]
+}

@@ -1,0 +1,209 @@
+{
+    "title": "NeetCode 150",
+    "description": "NeetCode 150 is a curated list of 150 LeetCode questions designed to cover all the important patterns for coding interviews [(Source)](https://neetcode.io/). This course also includes problems already available in CoJudge. Please open an issue in the [repo](https://github.com/cojudge/cojudge) if you notice anything wrong (e.g. missing test cases or incorrect grading)",
+    "category-order": [
+        "array",
+        "two-pointer",
+        "stack",
+        "sliding-window",
+        "binary-search",
+        "linked-list",
+        "tree",
+        "trie",
+        "heap",
+        "backtracking",
+        "graph",
+        "dp-1d",
+        "dp-2d",
+        "interval",
+        "greedy",
+        "math",
+        "binary"
+    ],
+    "problems-of-category": {
+        "array": [
+            "contains-duplicate",
+            "valid-anagram",
+            "two-sum",
+            "group-anagrams",
+            "top-k-frequent-elements",
+            "product-of-array-except-self",
+            "valid-sudoku",
+            "encode-and-decode-strings",
+            "longest-consecutive-sequence"
+        ],
+        "two-pointer": [
+            "valid-palindrome",
+            "two-sum-ii-input-array-is-sorted",
+            "3sum",
+            "container-with-most-water",
+            "trapping-rain-water"
+        ],
+        "stack": [
+            "valid-parentheses",
+            "min-stack",
+            "evaluate-reverse-polish-notation",
+            "generate-parentheses",
+            "daily-temperatures",
+            "car-fleet",
+            "largest-rectangle-in-histogram"
+        ],
+        "sliding-window": [
+            "best-time-to-buy-and-sell-stock",
+            "longest-substring-without-repeating-characters",
+            "longest-repeating-character-replacement",
+            "permutation-in-string",
+            "minimum-window-substring",
+            "sliding-window-maximum"
+        ],
+        "binary-search": [
+            "binary-search",
+            "search-a-2d-matrix",
+            "koko-eating-bananas",
+            "find-minimum-in-rotated-sorted-array",
+            "search-in-rotated-sorted-array",
+            "time-based-key-value-store",
+            "median-of-two-sorted-arrays"
+        ],
+        "linked-list": [
+            "reverse-linked-list",
+            "merge-two-sorted-lists",
+            "linked-list-cycle",
+            "reorder-list",
+            "remove-nth-node-from-end-of-list",
+            "copy-list-with-random-pointer",
+            "add-two-numbers",
+            "find-the-duplicate-number",
+            "lru-cache",
+            "merge-k-sorted-lists",
+            "reverse-nodes-in-k-group"
+        ],
+        "tree": [
+            "invert-binary-tree",
+            "maximum-depth-of-binary-tree",
+            "diameter-of-binary-tree",
+            "balanced-binary-tree",
+            "same-tree",
+            "subtree-of-another-tree",
+            "lowest-common-ancestor-of-a-binary-search-tree",
+            "binary-tree-level-order-traversal",
+            "binary-tree-right-side-view",
+            "count-good-nodes-in-binary-tree",
+            "validate-binary-search-tree",
+            "kth-smallest-element-in-a-bst",
+            "construct-binary-tree-from-preorder-and-inorder-traversal",
+            "binary-tree-maximum-path-sum",
+            "serialize-and-deserialize-binary-tree"
+        ],
+        "trie": [
+            "implement-trie-prefix-tree",
+            "design-add-and-search-words-data-structure",
+            "word-search-ii"
+        ],
+        "heap": [
+            "kth-largest-element-in-a-stream",
+            "last-stone-weight",
+            "k-closest-points-to-origin",
+            "kth-largest-element-in-an-array",
+            "task-scheduler",
+            "design-twitter",
+            "find-median-from-data-stream"
+        ],
+        "backtracking": [
+            "subsets",
+            "combination-sum",
+            "combination-sum-ii",
+            "permutations",
+            "subsets-ii",
+            "word-search",
+            "palindrome-partitioning",
+            "letter-combinations-of-a-phone-number",
+            "n-queens"
+        ],
+        "graph": [
+            "number-of-islands",
+            "max-area-of-island",
+            "clone-graph",
+            "walls-and-gates",
+            "rotting-oranges",
+            "pacific-atlantic-water-flow",
+            "surrounded-regions",
+            "course-schedule",
+            "course-schedule-ii",
+            "graph-valid-tree",
+            "number-of-connected-components-in-an-undirected-graph",
+            "redundant-connection",
+            "word-ladder",
+            "reconstruct-itinerary",
+            "min-cost-to-connect-all-points",
+            "network-delay-time",
+            "swim-in-rising-water",
+            "alien-dictionary",
+            "cheapest-flights-within-k-stops"
+        ],
+        "dp-1d": [
+            "climbing-stairs",
+            "min-cost-climbing-stairs",
+            "house-robber",
+            "house-robber-ii",
+            "longest-palindromic-substring",
+            "palindromic-substrings",
+            "decode-ways",
+            "coin-change",
+            "maximum-product-subarray",
+            "word-break",
+            "longest-increasing-subsequence",
+            "partition-equal-subset-sum"
+        ],
+        "dp-2d": [
+            "unique-paths",
+            "longest-common-subsequence",
+            "best-time-to-buy-and-sell-stock-with-cooldown",
+            "coin-change-ii",
+            "target-sum",
+            "interleaving-string",
+            "longest-increasing-path-in-a-matrix",
+            "distinct-subsequences",
+            "edit-distance",
+            "burst-balloons",
+            "regular-expression-matching"
+        ],
+        "interval": [
+            "meeting-rooms",
+            "meeting-rooms-ii",
+            "insert-interval",
+            "merge-intervals",
+            "non-overlapping-intervals",
+            "minimum-interval-to-include-each-query"
+        ],
+        "greedy": [
+            "maximum-subarray",
+            "jump-game",
+            "jump-game-ii",
+            "gas-station",
+            "hand-of-straights",
+            "merge-triplets-to-form-target-triplet",
+            "partition-labels",
+            "valid-parenthesis-string"
+        ],
+        "math": [
+            "rotate-image",
+            "spiral-matrix",
+            "set-matrix-zeroes",
+            "happy-number",
+            "plus-one",
+            "powx-n",
+            "multiply-strings",
+            "detect-squares"
+        ],
+        "binary": [
+            "single-number",
+            "number-of-1-bits",
+            "counting-bits",
+            "reverse-bits",
+            "missing-number",
+            "sum-of-two-integers",
+            "reverse-integer"
+        ]
+    }
+}

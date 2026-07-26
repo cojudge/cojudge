@@ -1,0 +1,66 @@
+{
+  "id": "word-ladder",
+  "title": "121. Word Ladder",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/word-ladder/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]",
+      "output": "5",
+      "explanation": "One shortest sequence is hit -> hot -> dot -> dog -> cog."
+    },
+    {
+      "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\"]",
+      "output": "0",
+      "explanation": "The end word is not in the list."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int ladderLength(String beginWord, String endWord, String[] wordList) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:\n        return 0\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int LadderLength(string beginWord, string endWord, string[] wordList)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn ladder_length(begin_word: String, end_word: String, word_list: Vec<String>) -> i32 {\n        0\n    }\n}\n",
+    "go": "package main\n\nfunc LadderLength(beginWord string, endWord string, wordList []string) int {\n    return 0\n}\n",
+    "typescript": "export function ladderLength(beginWord: string, endWord: string, wordList: string[]): number {\n    return 0;\n}\n"
+  },
+  "testCases": [
+    {
+      "beginWord": "hit",
+      "endWord": "cog",
+      "wordList": "[\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]"
+    },
+    {
+      "beginWord": "hit",
+      "endWord": "cog",
+      "wordList": "[\"hot\",\"dot\",\"dog\",\"lot\",\"log\"]"
+    },
+    {
+      "beginWord": "a",
+      "endWord": "c",
+      "wordList": "[\"a\",\"b\",\"c\"]"
+    }
+  ],
+  "functionName": "ladderLength",
+  "params": [
+    {
+      "name": "beginWord",
+      "type": "string"
+    },
+    {
+      "name": "endWord",
+      "type": "string"
+    },
+    {
+      "name": "wordList",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Words are graph nodes; two words share an edge when they differ in exactly one position.",
+    "Generate neighbors by replacing each character with every lowercase letter instead of comparing every pair of words.",
+    "Bidirectional BFS from beginWord and endWord can substantially reduce the explored search space."
+  ]
+}

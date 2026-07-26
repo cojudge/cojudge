@@ -1,0 +1,62 @@
+{
+  "id": "course-schedule-ii",
+  "title": "119. Course Schedule II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/course-schedule-ii/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "numCourses = 2, prerequisites = [[1,0]]",
+      "output": "[0,1]"
+    },
+    {
+      "input": "numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]",
+      "output": "[0,2,1,3]",
+      "explanation": "[0,1,2,3] is another valid ordering."
+    },
+    {
+      "input": "numCourses = 2, prerequisites = [[1,0],[0,1]]",
+      "output": "[]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] findOrder(int numCourses, int[][] prerequisites) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] FindOrder(int numCourses, int[][] prerequisites)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_order(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> Vec<i32> {\n        Vec::new()\n    }\n}\n",
+    "go": "package main\n\nfunc FindOrder(numCourses int, prerequisites [][]int) []int {\n    return nil\n}\n",
+    "typescript": "export function findOrder(numCourses: number, prerequisites: number[][]): number[] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "numCourses": 2,
+      "prerequisites": "[[1,0]]"
+    },
+    {
+      "numCourses": 4,
+      "prerequisites": "[[1,0],[2,0],[3,1],[3,2]]"
+    },
+    {
+      "numCourses": 2,
+      "prerequisites": "[[1,0],[0,1]]"
+    }
+  ],
+  "functionName": "findOrder",
+  "params": [
+    {
+      "name": "numCourses",
+      "type": "int"
+    },
+    {
+      "name": "prerequisites",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Treat each prerequisite as a directed edge from the prerequisite to the course.",
+    "Kahn's algorithm repeatedly takes a course with indegree zero. If fewer than numCourses courses are taken, a cycle exists.",
+    "The returned order need not match a particular example; every prerequisite only needs to appear before its dependent course."
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": "min-stack",
+  "title": "79. Min Stack",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/min-stack/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "operations = [\"push\",\"push\",\"push\",\"getMin\",\"pop\",\"top\",\"getMin\"], values = [-2,0,-3,0,0,0,0]",
+      "output": "[-3,0,-2]"
+    },
+    {
+      "input": "operations = [\"push\",\"push\",\"getMin\",\"top\",\"pop\",\"getMin\"], values = [5,5,0,0,0,0]",
+      "output": "[5,5,5]"
+    },
+    {
+      "input": "operations = [\"push\",\"top\",\"getMin\"], values = [7,0,0]",
+      "output": "[7,7]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runMinStack(String[] operations, int[] values) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def runMinStack(self, operations: List[str], values: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runMinStack(vector<string>& operations, vector<int>& values) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunMinStack(string[] operations, int[] values)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_min_stack(operations: Vec<String>, values: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunMinStack(operations []string, values []int) []int {\n    return []int{}\n}",
+    "typescript": "export function runMinStack(operations: string[], values: number[]): number[] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "operations": "[\"push\",\"push\",\"push\",\"getMin\",\"pop\",\"top\",\"getMin\"]",
+      "values": "[-2,0,-3,0,0,0,0]"
+    },
+    {
+      "operations": "[\"push\",\"push\",\"getMin\",\"top\",\"pop\",\"getMin\"]",
+      "values": "[5,5,0,0,0,0]"
+    },
+    {
+      "operations": "[\"push\",\"top\",\"getMin\"]",
+      "values": "[7,0,0]"
+    }
+  ],
+  "functionName": "runMinStack",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Keep a normal stack and a second stack containing the minimum at each relevant depth.",
+    "Push to the minimum stack when a value is less than or equal to its current top so duplicate minima are handled correctly."
+  ]
+}

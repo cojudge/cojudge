@@ -1,0 +1,53 @@
+{
+  "id": "min-cost-climbing-stairs",
+  "title": "127. Min Cost Climbing Stairs",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/min-cost-climbing-stairs/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "cost = [10,15,20]",
+      "output": "15",
+      "explanation": "Start on stair 1 and climb two stairs to the top."
+    },
+    {
+      "input": "cost = [1,100,1,1,1,100,1,1,100,1]",
+      "output": "6"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minCostClimbingStairs(int[] cost) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def minCostClimbingStairs(self, cost: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minCostClimbingStairs(vector<int>& cost) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinCostClimbingStairs(int[] cost)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_cost_climbing_stairs(cost: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinCostClimbingStairs(cost []int) int {\n    return 0\n}",
+    "typescript": "export function minCostClimbingStairs(cost: number[]): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "cost": "[10,15,20]"
+    },
+    {
+      "cost": "[1,100,1,1,1,100,1,1,100,1]"
+    },
+    {
+      "cost": "[0,0]"
+    },
+    {
+      "cost": "[5,6,2,4]"
+    }
+  ],
+  "functionName": "minCostClimbingStairs",
+  "params": [
+    {
+      "name": "cost",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Let the cost to reach a stair depend only on the two preceding stairs.",
+    "The answer is the smaller accumulated cost at either of the final two stairs."
+  ]
+}

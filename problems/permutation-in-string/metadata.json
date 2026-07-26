@@ -1,0 +1,67 @@
+{
+  "id": "permutation-in-string",
+  "title": "85. Permutation in String",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/permutation-in-string/",
+  "category": "sliding-window",
+  "examples": [
+    {
+      "input": "s1 = \"ab\", s2 = \"eidbaooo\"",
+      "output": "true",
+      "explanation": "The substring \"ba\" is a permutation of \"ab\"."
+    },
+    {
+      "input": "s1 = \"ab\", s2 = \"eidboaoo\"",
+      "output": "false"
+    },
+    {
+      "input": "s1 = \"adc\", s2 = \"dcda\"",
+      "output": "true",
+      "explanation": "The substring \"cda\" has the same character frequencies as \"adc\"."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean checkInclusion(String s1, String s2) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def checkInclusion(self, s1: str, s2: str) -> bool:\n        return False\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool checkInclusion(string s1, string s2) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool CheckInclusion(string s1, string s2)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn check_inclusion(s1: String, s2: String) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc CheckInclusion(s1 string, s2 string) bool {\n    return false\n}",
+    "typescript": "export function checkInclusion(s1: string, s2: string): boolean {\n    return false;\n}"
+  },
+  "testCases": [
+    {
+      "s1": "ab",
+      "s2": "eidbaooo"
+    },
+    {
+      "s1": "ab",
+      "s2": "eidboaoo"
+    },
+    {
+      "s1": "adc",
+      "s2": "dcda"
+    },
+    {
+      "s1": "aab",
+      "s2": "eidbaaoo"
+    }
+  ],
+  "functionName": "checkInclusion",
+  "params": [
+    {
+      "name": "s1",
+      "type": "string"
+    },
+    {
+      "name": "s2",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "A permutation is determined by character frequencies, not character order.",
+    "Maintain a window in s2 whose length is exactly s1.length.",
+    "Update only the counts for the character entering and leaving the window."
+  ]
+}

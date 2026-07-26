@@ -1,0 +1,51 @@
+{
+  "id": "redundant-connection",
+  "title": "120. Redundant Connection",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/redundant-connection/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "edges = [[1,2],[1,3],[2,3]]",
+      "output": "[2,3]"
+    },
+    {
+      "input": "edges = [[1,2],[2,3],[3,4],[1,4],[1,5]]",
+      "output": "[1,4]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] findRedundantConnection(int[][] edges) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> findRedundantConnection(vector<vector<int>>& edges) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] FindRedundantConnection(int[][] edges)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_redundant_connection(edges: Vec<Vec<i32>>) -> Vec<i32> {\n        Vec::new()\n    }\n}\n",
+    "go": "package main\n\nfunc FindRedundantConnection(edges [][]int) []int {\n    return nil\n}\n",
+    "typescript": "export function findRedundantConnection(edges: number[][]): number[] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "edges": "[[1,2],[1,3],[2,3]]"
+    },
+    {
+      "edges": "[[1,2],[2,3],[3,4],[1,4],[1,5]]"
+    },
+    {
+      "edges": "[[1,2],[2,3],[1,3]]"
+    }
+  ],
+  "functionName": "findRedundantConnection",
+  "params": [
+    {
+      "name": "edges",
+      "type": "int_array_2d",
+      "visualizeType": "undirected_edges"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Process edges in input order while maintaining connected components with Union-Find.",
+    "An edge is redundant exactly when its endpoints already have the same representative.",
+    "Union by size or rank together with path compression makes each operation nearly constant time."
+  ]
+}

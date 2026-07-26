@@ -1,0 +1,58 @@
+{
+  "id": "partition-labels",
+  "title": "143. Partition Labels",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/partition-labels/",
+  "category": "greedy",
+  "examples": [
+    {
+      "input": "s = \"ababcbacadefegdehijhklij\"",
+      "output": "[9,7,8]",
+      "explanation": "The maximal split is ababcbaca, defegde, hijhklij."
+    },
+    {
+      "input": "s = \"eccbbbbdec\"",
+      "output": "[10]"
+    },
+    {
+      "input": "s = \"abc\"",
+      "output": "[1,1,1]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] partitionLabels(String s) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def partitionLabels(self, s: str) -> List[int]:\n        pass\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> partitionLabels(string s) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] PartitionLabels(string s)\n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn partition_labels(s: String) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc PartitionLabels(s string) []int {\n    \n}",
+    "typescript": "export function partitionLabels(s: string): number[] {\n    \n}"
+  },
+  "testCases": [
+    {
+      "s": "ababcbacadefegdehijhklij"
+    },
+    {
+      "s": "eccbbbbdec"
+    },
+    {
+      "s": "abc"
+    },
+    {
+      "s": "abac"
+    }
+  ],
+  "functionName": "partitionLabels",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Record the last index where each letter occurs.",
+    "Scan from left to right while extending the current part's end to the latest final occurrence seen so far.",
+    "When the scan reaches that end, close the part immediately to maximize the total number of parts."
+  ]
+}

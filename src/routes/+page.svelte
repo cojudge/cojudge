@@ -74,6 +74,11 @@
         category?: string;
     };
 
+    type CourseSummary = {
+        id: string;
+        title: string;
+    };
+
     // Group problems by category
     let grouped: Record<string, Problem[]> = {};
     let groupStats: Record<string, { done: number; total: number }> = {};
@@ -109,13 +114,17 @@
         return '';
     }
 
-    // Course title, description and category order from server data
-    const courseTitle: string =
-        (data?.courseInfo as any)?.title ?? "Problem Set";
-    const courseDescription: string =
-        (data?.courseInfo as any)?.description ?? "";
-    const categoryOrder: string[] =
-        (data?.courseInfo as any)?.["category-order"] ?? [];
+    // Selected course data from the server loader
+    let courses: CourseSummary[] = [];
+    let selectedCourseId: string | null = null;
+    let selectedCourseProblems: Problem[] = [];
+    let courseDescription = "";
+    let categoryOrder: string[] = [];
+    $: courses = (data?.courses ?? []) as CourseSummary[];
+    $: selectedCourseId = data?.selectedCourseId ?? null;
+    $: selectedCourseProblems = (data?.problems ?? []) as Problem[];
+    $: courseDescription = data?.selectedCourseInfo?.description ?? "";
+    $: categoryOrder = data?.selectedCourseInfo?.["category-order"] ?? [];
     // Map for fast lookup of category rank
     let orderMap: Record<string, number> = {};
     $: (function buildOrderMap() {
@@ -128,9 +137,8 @@
 
     // Build groups reactively when data/checkMap changes
     $: (function buildGroups() {
-        const problems: Problem[] = (data?.problems ?? []) as Problem[];
         const map: Record<string, Problem[]> = {};
-        for (const p of problems) {
+        for (const p of selectedCourseProblems) {
             const key =
                 p.category && p.category.trim() ? p.category : "uncategorized";
             if (!map[key]) map[key] = [];
@@ -217,10 +225,9 @@
     let totalProblems = 0;
     let solvedCount = 0;
     $: (function computeOverall() {
-        const problems: Problem[] = (data?.problems ?? []) as Problem[];
-        totalProblems = problems.length;
+        totalProblems = selectedCourseProblems.length;
         let done = 0;
-        for (const p of problems) {
+        for (const p of selectedCourseProblems) {
             if (checkMap[p.id]) done++;
         }
         solvedCount = done;
@@ -445,9 +452,15 @@
         </div>
         <input bind:this={fileInputEl} type="file" accept="application/json" class="hidden-file-input" onchange={onImportFileSelected} />
     </div>
-    <!-- Simple tab-style header using the course title from JSON -->
     <nav class="tabs" aria-label="Course">
-        <span class="tab active" aria-current="page">{courseTitle}</span>
+        {#each courses as course}
+            <a
+                class="tab"
+                class:active={course.id === selectedCourseId}
+                href={`/?course=${encodeURIComponent(course.id)}`}
+                aria-current={course.id === selectedCourseId ? "page" : undefined}
+            >{course.title}</a>
+        {/each}
     </nav>
     <div class="intro">
         <!-- Overall progress at top of intro -->
@@ -473,7 +486,7 @@
 
     {#if showGamePopup}
         <GameModePopup
-            problems={data.problems}
+            problems={selectedCourseProblems}
             solvedSet={checkMap}
             on:close={() => showGamePopup = false}
         />
@@ -655,6 +668,7 @@
         border-bottom: 1px solid var(--color-border, #e5e7eb);
         margin-bottom: var(--spacing-4);
         padding-top: var(--spacing-2);
+        overflow-x: auto;
     }
     /* Intro card */
     .intro {
@@ -815,6 +829,8 @@
         margin-bottom: -1px; /* sit on top of the bar's bottom border */
         background: transparent;
         color: var(--color-text-secondary);
+        flex: 0 0 auto;
+        text-decoration: none;
         user-select: none;
         transition:
             background-color 0.15s ease,

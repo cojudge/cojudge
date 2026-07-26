@@ -1,0 +1,50 @@
+{
+  "id": "walls-and-gates",
+  "title": "116. Walls and Gates",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/walls-and-gates/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "rooms = [[2147483647,-1,0,2147483647],[2147483647,2147483647,2147483647,-1],[2147483647,-1,2147483647,-1],[0,-1,2147483647,2147483647]]",
+      "output": "[[3,-1,0,1],[2,2,1,-1],[1,-1,2,-1],[0,-1,3,4]]"
+    },
+    {
+      "input": "rooms = [[-1,2147483647],[0,2147483647]]",
+      "output": "[[-1,2],[0,1]]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] wallsAndGates(int[][] rooms) {\n        return new int[0][];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def wallsAndGates(self, rooms: List[List[int]]) -> List[List[int]]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> wallsAndGates(vector<vector<int>>& rooms) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution {\n    public int[][] WallsAndGates(int[][] rooms) {\n        return new int[0][];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn walls_and_gates(rooms: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        Vec::new()\n    }\n}\n",
+    "go": "package main\n\nfunc WallsAndGates(rooms [][]int) [][]int {\n    return [][]int{}\n}\n",
+    "typescript": "export function wallsAndGates(rooms: number[][]): number[][] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "rooms": "[[2147483647,-1,0,2147483647],[2147483647,2147483647,2147483647,-1],[2147483647,-1,2147483647,-1],[0,-1,2147483647,2147483647]]"
+    },
+    {
+      "rooms": "[[-1,2147483647],[0,2147483647]]"
+    },
+    {
+      "rooms": "[[2147483647]]"
+    }
+  ],
+  "functionName": "wallsAndGates",
+  "params": [
+    {
+      "name": "rooms",
+      "type": "int_array_2d",
+      "visualizeType": "matrix"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Start a breadth-first search from all gates at the same time.",
+    "The first time an empty room is reached is through its nearest gate."
+  ]
+}

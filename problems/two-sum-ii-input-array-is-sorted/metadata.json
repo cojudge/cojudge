@@ -1,0 +1,65 @@
+{
+  "id": "two-sum-ii-input-array-is-sorted",
+  "title": "77. Two Sum II - Input Array Is Sorted",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/",
+  "category": "two-pointer",
+  "examples": [
+    {
+      "input": "numbers = [2,7,11,15], target = 9",
+      "output": "[1,2]",
+      "explanation": "The values at 1-based indices 1 and 2 sum to 9."
+    },
+    {
+      "input": "numbers = [2,3,4], target = 6",
+      "output": "[1,3]"
+    },
+    {
+      "input": "numbers = [-1,0], target = -1",
+      "output": "[1,2]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] twoSum(int[] numbers, int target) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def twoSum(self, numbers: List[int], target: int) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> twoSum(vector<int>& numbers, int target) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] TwoSum(int[] numbers, int target)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn two_sum(numbers: Vec<i32>, target: i32) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc TwoSum(numbers []int, target int) []int {\n    return []int{}\n}",
+    "typescript": "export function twoSum(numbers: number[], target: number): number[] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "numbers": "[2,7,11,15]",
+      "target": 9
+    },
+    {
+      "numbers": "[2,3,4]",
+      "target": 6
+    },
+    {
+      "numbers": "[-1,0]",
+      "target": -1
+    },
+    {
+      "numbers": "[0,0,3,4]",
+      "target": 0
+    }
+  ],
+  "functionName": "twoSum",
+  "params": [
+    {
+      "name": "numbers",
+      "type": "int_array"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Place one pointer at each end of the sorted array.",
+    "Move the left pointer when the sum is too small and the right pointer when it is too large."
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "id": "regular-expression-matching",
+  "title": "137. Regular Expression Matching",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/regular-expression-matching/",
+  "category": "dp-2d",
+  "examples": [
+    {
+      "input": "s = \"aa\", p = \"a\"",
+      "output": "false"
+    },
+    {
+      "input": "s = \"aa\", p = \"a*\"",
+      "output": "true"
+    },
+    {
+      "input": "s = \"aab\", p = \"c*a*b\"",
+      "output": "true",
+      "explanation": "c* matches zero characters, a* matches both a characters, and b matches the final character."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isMatch(String s, String p) {\n        \n    }\n}",
+    "python": "class Solution:\n    def isMatch(self, s: str, p: str) -> bool:\n        pass\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool isMatch(string s, string p) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool IsMatch(string s, string p)\n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_match(s: String, p: String) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc IsMatch(s string, p string) bool {\n    \n}",
+    "typescript": "export function isMatch(s: string, p: string): boolean {\n    \n}"
+  },
+  "testCases": [
+    {
+      "s": "aa",
+      "p": "a"
+    },
+    {
+      "s": "aa",
+      "p": "a*"
+    },
+    {
+      "s": "ab",
+      "p": ".*"
+    },
+    {
+      "s": "aab",
+      "p": "c*a*b"
+    },
+    {
+      "s": "mississippi",
+      "p": "mis*is*p*."
+    }
+  ],
+  "functionName": "isMatch",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "p",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Let dp[i][j] indicate whether the first i characters of s match the first j characters of p.",
+    "A normal character or '.' extends a match from dp[i - 1][j - 1].",
+    "For x*, either skip both pattern characters or consume one matching character while staying at the same pattern position."
+  ]
+}
