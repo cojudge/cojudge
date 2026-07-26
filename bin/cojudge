@@ -11,6 +11,7 @@ import { handleRun } from "./lib/commands/run.js";
 import { handleSubmit } from "./lib/commands/submit.js";
 import { handleInit } from "./lib/commands/init.js";
 import { listProblems } from "./lib/commands/list.js";
+import { handleSearch } from "./lib/commands/search.js";
 import { handleScrape } from "./lib/commands/scrape.js";
 import { handleDebug } from "./lib/commands/debug.js";
 
@@ -42,6 +43,11 @@ async function main() {
 
   if (action === "list") {
     listProblems();
+    return;
+  }
+
+  if (action === "search") {
+    handleSearch(args);
     return;
   }
 
@@ -122,7 +128,7 @@ async function main() {
         handleStart(["start", "playground", action], PORT);
       } else if (!isProblemSlug) {
         console.error(
-          `Error: '${action}' is neither a valid file nor problem slug. Check 'cojudge list' for the problem set or make sure the file exists`,
+          `Error: '${action}' is neither a valid file nor problem slug. Check 'cojudge -h' for usage`,
         );
       } else {
         handleStart(["start", ...args], PORT);
