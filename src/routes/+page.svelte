@@ -1,6 +1,8 @@
 <script lang="ts">
     export let data;
     import { browser } from '$app/environment';
+    import { goto } from '$app/navigation';
+    import { page } from '$app/stores';
     import SortIcon from "$lib/components/SortIcon.svelte";
     import codeStore from '$lib/stores/codeStore';
     import fileStore from '$lib/stores/fileStore';
@@ -60,6 +62,16 @@
 
     onMount(() => {
         window.addEventListener("click", handleClickOutside);
+
+        // Restore last selected course from localStorage if no course param in URL
+        const url = new URL(window.location.href);
+        if (!url.searchParams.has('course')) {
+            const saved = localStorage.getItem(COURSE_STORAGE_KEY);
+            if (saved && courses.some(c => c.id === saved)) {
+                goto(`/?course=${encodeURIComponent(saved)}`, { replaceState: true });
+            }
+        }
+
         return () => {
             window.removeEventListener("click", handleClickOutside);
         };
@@ -112,6 +124,13 @@
         if (typeof rendered === 'string') return rendered;
         console.warn('Unexpected async markdown parse - returning empty string');
         return '';
+    }
+
+    const COURSE_STORAGE_KEY = 'selected-course';
+
+    // Persist course selection to localStorage
+    function selectCourse(courseId: string) {
+        if (browser) localStorage.setItem(COURSE_STORAGE_KEY, courseId);
     }
 
     // Selected course data from the server loader
@@ -459,6 +478,7 @@
                 class:active={course.id === selectedCourseId}
                 href={`/?course=${encodeURIComponent(course.id)}`}
                 aria-current={course.id === selectedCourseId ? "page" : undefined}
+                onclick={() => selectCourse(course.id)}
             >{course.title}</a>
         {/each}
     </nav>
