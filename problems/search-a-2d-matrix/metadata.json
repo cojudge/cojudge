@@ -1,0 +1,65 @@
+{
+  "id": "search-a-2d-matrix",
+  "title": "88. Search a 2D Matrix",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/search-a-2d-matrix/",
+  "category": "binary-search",
+  "examples": [
+    {
+      "input": "matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3",
+      "output": "true"
+    },
+    {
+      "input": "matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13",
+      "output": "false"
+    },
+    {
+      "input": "matrix = [[1]], target = 1",
+      "output": "true"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean searchMatrix(int[][] matrix, int target) {\n        return false;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:\n        return False\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool searchMatrix(vector<vector<int>>& matrix, int target) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool SearchMatrix(int[][] matrix, int target)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn search_matrix(matrix: Vec<Vec<i32>>, target: i32) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc SearchMatrix(matrix [][]int, target int) bool {\n    return false\n}",
+    "typescript": "export function searchMatrix(matrix: number[][], target: number): boolean {\n    return false;\n}"
+  },
+  "testCases": [
+    {
+      "matrix": "[[1,3,5,7],[10,11,16,20],[23,30,34,60]]",
+      "target": 3
+    },
+    {
+      "matrix": "[[1,3,5,7],[10,11,16,20],[23,30,34,60]]",
+      "target": 13
+    },
+    {
+      "matrix": "[[1]]",
+      "target": 1
+    },
+    {
+      "matrix": "[[-5,-2,0,4]]",
+      "target": -2
+    }
+  ],
+  "functionName": "searchMatrix",
+  "params": [
+    {
+      "name": "matrix",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "The ordering is the same as if all rows were concatenated into one sorted array.",
+    "Binary-search a virtual one-dimensional index range from 0 to rows * columns - 1.",
+    "Map a virtual index i to matrix[i / columns][i % columns]."
+  ]
+}

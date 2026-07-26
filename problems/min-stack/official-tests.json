@@ -1,0 +1,251 @@
+[
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"getMin\",\"pop\",\"top\",\"getMin\"]",
+    "values": "[-2,0,-3,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"getMin\",\"top\",\"pop\",\"getMin\"]",
+    "values": "[5,5,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"getMin\",\"top\",\"pop\",\"top\"]",
+    "values": "[-2147483648,2147483647,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"pop\"]",
+    "values": "[7,0]"
+  },
+  {
+    "operations": "[\"push\",\"top\",\"getMin\"]",
+    "values": "[7,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"top\",\"getMin\",\"top\",\"push\",\"pop\",\"pop\",\"push\",\"pop\",\"getMin\",\"push\",\"push\",\"pop\",\"pop\",\"push\",\"top\",\"top\",\"getMin\",\"push\",\"push\",\"push\",\"pop\",\"getMin\",\"getMin\",\"push\",\"push\",\"pop\",\"push\",\"getMin\",\"push\",\"push\",\"top\",\"push\",\"getMin\",\"pop\",\"push\",\"top\"]",
+    "values": "[316,-988,0,0,0,-911,0,0,887,0,0,921,-698,0,0,867,0,0,0,-830,-690,-576,0,0,0,962,8,0,-220,0,-132,698,0,-242,0,0,-950,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"getMin\",\"push\",\"getMin\",\"push\",\"push\",\"pop\",\"getMin\",\"getMin\",\"push\",\"push\",\"push\",\"getMin\",\"top\",\"push\",\"push\",\"top\",\"pop\",\"top\",\"push\",\"push\",\"pop\",\"getMin\",\"getMin\",\"push\",\"top\",\"push\",\"getMin\",\"pop\",\"pop\",\"push\",\"pop\",\"getMin\",\"getMin\",\"push\",\"getMin\",\"push\",\"pop\",\"pop\"]",
+    "values": "[-398,352,0,-939,0,977,-700,0,0,0,-999,-416,308,0,0,-525,780,0,0,0,-242,160,0,0,0,415,0,976,0,0,0,-261,0,0,0,-806,0,-616,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"push\",\"getMin\",\"top\",\"pop\",\"top\",\"getMin\",\"top\",\"push\",\"push\",\"pop\",\"top\",\"getMin\",\"pop\",\"pop\",\"push\"]",
+    "values": "[26,-962,468,470,0,0,0,0,0,0,-343,819,0,0,0,0,0,-159]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"pop\",\"push\",\"getMin\",\"pop\",\"push\",\"pop\",\"push\",\"top\",\"getMin\",\"pop\",\"push\",\"push\",\"pop\",\"getMin\",\"pop\",\"push\",\"pop\",\"top\",\"push\",\"pop\",\"pop\",\"push\",\"pop\",\"push\",\"push\",\"push\",\"push\",\"push\",\"top\",\"push\",\"push\",\"push\",\"pop\",\"push\",\"push\",\"pop\",\"push\",\"push\"]",
+    "values": "[491,-548,0,-234,0,0,-343,0,-495,0,0,0,-955,-204,0,0,0,731,0,0,148,0,0,351,0,779,835,-486,-351,-276,0,-648,-535,-846,0,235,146,0,518,-516]"
+  },
+  {
+    "operations": "[\"push\",\"pop\",\"push\",\"push\",\"push\",\"push\",\"pop\",\"top\",\"pop\",\"getMin\",\"push\",\"top\",\"push\",\"top\",\"push\",\"push\",\"push\",\"top\",\"push\",\"pop\",\"pop\"]",
+    "values": "[-281,0,636,-475,-146,-869,0,0,0,0,-981,0,-966,0,802,-241,835,0,93,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"getMin\",\"getMin\",\"push\",\"push\",\"top\",\"pop\",\"pop\",\"pop\",\"push\",\"push\",\"push\",\"top\",\"push\",\"pop\",\"getMin\",\"push\",\"push\",\"push\",\"push\",\"push\",\"push\",\"top\",\"getMin\",\"getMin\",\"top\",\"pop\",\"push\",\"push\",\"pop\",\"getMin\",\"push\",\"push\",\"push\",\"push\",\"getMin\",\"push\",\"pop\",\"pop\",\"push\",\"push\",\"push\",\"push\",\"top\",\"push\",\"pop\",\"push\"]",
+    "values": "[-907,0,0,-963,-918,0,0,0,0,46,788,999,0,-256,0,0,72,529,83,-988,-170,-537,0,0,0,0,0,238,-714,0,0,607,171,-941,-896,0,237,0,0,-368,-605,-555,44,0,490,0,31]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"getMin\",\"top\",\"push\",\"top\",\"push\",\"push\",\"top\",\"push\",\"push\",\"push\",\"top\",\"push\",\"pop\",\"push\",\"push\",\"top\",\"getMin\",\"pop\",\"push\",\"push\",\"top\",\"push\",\"push\",\"push\",\"top\",\"top\",\"push\",\"pop\",\"push\",\"push\",\"getMin\",\"push\",\"pop\",\"pop\",\"push\",\"top\",\"push\",\"top\",\"pop\",\"getMin\",\"push\",\"pop\",\"top\",\"pop\",\"push\",\"getMin\",\"pop\",\"getMin\",\"getMin\"]",
+    "values": "[-350,728,0,0,-793,0,427,91,0,823,212,-704,0,-482,0,-660,-254,0,0,0,-501,-537,0,-896,740,-381,0,0,517,0,-986,159,0,-749,0,0,572,0,87,0,0,0,-502,0,0,0,-334,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"getMin\",\"top\",\"pop\",\"push\",\"getMin\",\"push\",\"top\",\"push\",\"getMin\",\"push\",\"pop\",\"push\",\"pop\",\"top\",\"pop\",\"top\",\"getMin\",\"getMin\",\"pop\",\"push\",\"pop\",\"push\",\"pop\",\"pop\",\"push\",\"getMin\",\"push\"]",
+    "values": "[-528,0,0,0,366,0,178,0,305,0,191,0,708,0,0,0,0,0,0,0,908,0,-499,0,0,781,0,941]"
+  },
+  {
+    "operations": "[\"push\",\"pop\",\"push\",\"push\",\"push\",\"top\",\"push\",\"push\",\"pop\",\"pop\",\"push\",\"pop\",\"top\",\"getMin\",\"pop\",\"top\",\"top\",\"pop\",\"push\",\"push\",\"push\",\"top\",\"pop\",\"top\",\"push\",\"push\",\"push\",\"top\",\"push\",\"pop\",\"push\",\"push\",\"pop\"]",
+    "values": "[-850,0,870,889,-904,0,-390,337,0,0,946,0,0,0,0,0,0,0,224,-487,473,0,0,0,-926,759,122,0,-265,0,400,-726,0]"
+  },
+  {
+    "operations": "[\"push\",\"pop\",\"push\",\"push\",\"pop\",\"push\",\"push\",\"pop\",\"push\",\"top\"]",
+    "values": "[-611,0,-414,449,0,-586,99,0,-486,0]"
+  },
+  {
+    "operations": "[\"push\",\"getMin\",\"top\",\"pop\",\"push\",\"push\",\"push\",\"top\",\"pop\",\"pop\",\"push\",\"push\",\"getMin\",\"push\",\"pop\",\"getMin\",\"getMin\",\"pop\",\"pop\",\"getMin\",\"push\",\"push\",\"push\",\"getMin\",\"getMin\",\"push\",\"getMin\",\"push\",\"push\",\"push\",\"push\",\"getMin\",\"push\",\"push\",\"pop\",\"top\",\"push\",\"pop\",\"getMin\",\"push\",\"push\",\"pop\",\"top\",\"pop\",\"push\",\"push\",\"push\",\"push\"]",
+    "values": "[517,0,0,0,-958,-654,924,0,0,0,-519,651,0,294,0,0,0,0,0,0,118,-569,-937,0,0,-419,0,-105,205,568,358,0,-271,210,0,0,-409,0,0,891,-277,0,0,0,-95,156,-214,117]"
+  },
+  {
+    "operations": "[\"push\",\"top\",\"push\",\"getMin\",\"top\",\"push\",\"push\",\"push\",\"pop\",\"push\",\"push\",\"getMin\",\"top\",\"getMin\",\"pop\",\"push\",\"getMin\",\"push\",\"getMin\",\"push\",\"getMin\",\"push\",\"pop\",\"push\",\"pop\",\"push\",\"top\",\"getMin\",\"push\",\"pop\",\"push\",\"push\",\"push\"]",
+    "values": "[-793,0,-705,0,0,890,-14,613,0,349,689,0,0,0,0,-243,0,-281,0,382,0,933,0,680,0,156,0,0,529,0,129,941,-57]"
+  },
+  {
+    "operations": "[\"push\",\"top\",\"pop\",\"push\",\"top\",\"pop\",\"push\",\"push\",\"push\",\"push\",\"push\",\"getMin\",\"push\",\"pop\",\"top\",\"push\",\"top\",\"push\",\"top\",\"top\",\"top\",\"push\",\"getMin\",\"push\",\"push\",\"getMin\",\"push\",\"pop\",\"push\",\"getMin\",\"push\",\"push\",\"push\",\"push\",\"push\",\"push\",\"push\",\"push\",\"getMin\",\"pop\",\"push\",\"push\",\"top\",\"pop\",\"top\",\"push\",\"top\",\"pop\"]",
+    "values": "[265,0,0,-65,0,0,94,162,583,-118,716,0,-419,0,0,638,0,-762,0,0,0,-574,0,-898,-967,0,803,0,-410,0,-222,497,549,353,512,676,-12,-237,0,0,430,-77,0,0,0,531,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"getMin\",\"push\",\"pop\",\"pop\",\"top\",\"top\",\"push\",\"top\",\"push\",\"pop\",\"push\",\"push\",\"push\",\"top\",\"pop\",\"getMin\",\"pop\",\"top\",\"pop\",\"push\",\"pop\",\"pop\",\"pop\",\"push\",\"push\",\"push\",\"pop\",\"push\",\"push\",\"push\",\"pop\",\"push\",\"getMin\",\"push\",\"getMin\",\"getMin\",\"top\",\"pop\",\"top\",\"getMin\",\"pop\",\"push\",\"pop\",\"pop\",\"getMin\",\"push\",\"push\",\"top\",\"push\"]",
+    "values": "[-766,815,0,807,0,0,0,0,503,0,-273,0,-536,783,-731,0,0,0,0,0,0,808,0,0,0,-24,438,786,0,609,-524,816,0,14,0,-306,0,0,0,0,0,0,0,919,0,0,0,851,-803,0,527]"
+  },
+  {
+    "operations": "[\"push\",\"getMin\",\"push\",\"getMin\",\"push\",\"getMin\",\"pop\",\"push\",\"push\",\"push\",\"push\",\"pop\",\"top\",\"push\",\"push\",\"push\",\"getMin\",\"push\",\"push\",\"pop\",\"push\",\"top\",\"push\",\"pop\",\"getMin\",\"pop\",\"getMin\",\"top\",\"getMin\",\"push\",\"push\",\"pop\",\"getMin\",\"push\",\"push\",\"getMin\",\"push\",\"push\"]",
+    "values": "[817,0,268,0,485,0,0,-95,-15,57,767,0,0,9,219,101,0,23,894,0,316,0,997,0,0,0,0,0,0,370,-703,0,0,208,383,0,-241,415]"
+  },
+  {
+    "operations": "[\"push\",\"top\",\"top\",\"push\",\"pop\",\"pop\",\"push\",\"top\",\"top\",\"getMin\",\"getMin\",\"getMin\",\"push\",\"push\",\"top\",\"top\",\"getMin\",\"getMin\",\"push\",\"pop\",\"top\",\"top\",\"pop\",\"pop\",\"push\",\"push\",\"pop\",\"push\",\"getMin\",\"push\",\"top\",\"push\",\"push\",\"push\",\"pop\",\"push\"]",
+    "values": "[-502,0,0,36,0,0,-905,0,0,0,0,0,-896,-55,0,0,0,0,-901,0,0,0,0,0,673,422,0,-494,0,-246,0,91,-637,-94,0,218]"
+  },
+  {
+    "operations": "[\"push\",\"getMin\",\"push\",\"push\",\"getMin\",\"push\",\"pop\",\"getMin\",\"push\",\"push\",\"push\",\"pop\",\"push\",\"getMin\",\"push\",\"top\",\"push\",\"push\",\"push\",\"push\",\"push\"]",
+    "values": "[883,0,-775,-578,0,-389,0,0,-633,-146,44,0,462,0,555,0,-905,342,-682,-219,-50]"
+  },
+  {
+    "operations": "[\"push\",\"top\",\"pop\",\"push\",\"push\",\"push\",\"getMin\",\"push\",\"pop\",\"top\",\"push\",\"pop\",\"top\",\"push\",\"push\",\"push\",\"push\",\"top\",\"push\",\"top\",\"pop\",\"getMin\",\"getMin\",\"push\",\"pop\",\"getMin\",\"push\",\"getMin\",\"push\",\"getMin\",\"pop\",\"pop\",\"push\"]",
+    "values": "[619,0,0,750,125,97,0,556,0,0,49,0,0,-179,-999,603,745,0,985,0,0,0,0,771,0,0,-74,0,-691,0,0,0,-69]"
+  },
+  {
+    "operations": "[\"push\",\"top\",\"push\",\"push\",\"push\",\"getMin\",\"push\",\"push\",\"getMin\",\"push\",\"push\",\"getMin\",\"push\",\"push\",\"pop\",\"push\",\"getMin\",\"getMin\",\"push\",\"top\",\"push\",\"pop\",\"pop\",\"push\",\"top\",\"push\",\"push\",\"getMin\",\"push\",\"getMin\",\"getMin\",\"pop\",\"push\",\"top\",\"push\",\"getMin\",\"pop\",\"push\",\"top\",\"push\",\"getMin\",\"push\",\"getMin\",\"push\"]",
+    "values": "[-161,0,-591,744,310,0,-717,745,0,392,-750,0,943,437,0,-844,0,0,722,0,774,0,0,-606,0,808,-708,0,-151,0,0,0,75,0,-799,0,0,-347,0,-868,0,-69,0,-79]"
+  },
+  {
+    "operations": "[\"push\",\"pop\",\"push\",\"push\",\"pop\",\"getMin\",\"push\",\"getMin\",\"push\",\"pop\",\"pop\",\"push\",\"push\",\"push\",\"top\",\"pop\",\"pop\",\"top\",\"push\"]",
+    "values": "[25,0,100,668,0,0,264,0,113,0,0,501,878,207,0,0,0,0,863]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"pop\",\"pop\",\"push\",\"push\",\"push\",\"push\",\"pop\",\"getMin\",\"getMin\",\"pop\",\"getMin\",\"push\",\"top\",\"pop\",\"top\",\"top\",\"push\",\"getMin\",\"top\",\"getMin\",\"push\",\"push\",\"pop\"]",
+    "values": "[-362,-452,0,0,434,-159,-195,-797,0,0,0,0,0,955,0,0,0,0,868,0,0,0,896,-487,0]"
+  },
+  {
+    "operations": "[\"push\",\"top\",\"getMin\",\"top\",\"push\",\"top\",\"push\",\"push\",\"getMin\",\"top\",\"getMin\",\"push\",\"getMin\",\"push\",\"push\",\"getMin\",\"top\",\"pop\",\"getMin\",\"top\",\"top\",\"top\",\"pop\",\"push\",\"push\",\"pop\",\"pop\",\"pop\",\"push\",\"push\",\"push\",\"top\",\"top\",\"push\",\"push\",\"top\",\"top\",\"top\",\"getMin\",\"pop\",\"getMin\",\"push\",\"push\",\"getMin\",\"top\",\"getMin\",\"top\",\"push\",\"pop\",\"pop\",\"push\",\"pop\"]",
+    "values": "[-184,0,0,0,647,0,-185,344,0,0,0,-20,0,837,777,0,0,0,0,0,0,0,0,816,-878,0,0,0,742,-855,-599,0,0,750,-160,0,0,0,0,0,0,170,-59,0,0,0,0,-514,0,0,798,0]"
+  },
+  {
+    "operations": "[\"push\",\"top\",\"push\",\"pop\",\"pop\",\"push\",\"getMin\",\"push\"]",
+    "values": "[123,0,941,0,0,277,0,468]"
+  },
+  {
+    "operations": "[\"push\",\"top\",\"getMin\",\"top\",\"top\",\"pop\",\"push\",\"push\",\"getMin\",\"pop\",\"push\",\"getMin\",\"getMin\",\"pop\",\"push\",\"push\",\"push\",\"pop\",\"push\",\"push\",\"getMin\",\"getMin\",\"getMin\",\"push\",\"push\",\"getMin\",\"pop\",\"push\",\"push\",\"push\",\"pop\",\"pop\",\"top\",\"push\",\"top\",\"top\",\"getMin\",\"getMin\",\"push\",\"getMin\",\"push\",\"getMin\"]",
+    "values": "[-247,0,0,0,0,0,-660,-152,0,0,751,0,0,0,935,-371,231,0,-955,-597,0,0,0,-902,421,0,0,424,544,947,0,0,0,794,0,0,0,0,-257,0,635,0]"
+  },
+  {
+    "operations": "[\"push\",\"getMin\",\"pop\",\"push\",\"getMin\",\"getMin\",\"top\",\"getMin\",\"push\",\"push\",\"top\",\"push\",\"push\",\"pop\",\"push\",\"top\",\"push\",\"push\",\"top\",\"top\",\"push\",\"push\",\"top\",\"push\",\"pop\",\"push\"]",
+    "values": "[-387,0,0,263,0,0,0,0,901,472,0,82,323,0,360,0,-396,-964,0,0,-462,-704,0,140,0,-245]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"push\",\"push\",\"push\",\"pop\",\"push\",\"push\",\"push\",\"getMin\",\"top\",\"push\",\"push\"]",
+    "values": "[140,514,-297,435,-58,648,0,678,198,763,0,0,-439,999]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"push\",\"top\",\"pop\",\"push\",\"top\",\"push\",\"pop\",\"getMin\",\"top\",\"getMin\",\"pop\",\"getMin\",\"top\",\"getMin\",\"pop\",\"top\",\"getMin\",\"push\",\"push\",\"push\",\"push\",\"push\",\"push\",\"top\",\"top\",\"getMin\",\"push\",\"push\",\"push\",\"push\",\"push\"]",
+    "values": "[-184,850,-30,-710,0,0,570,0,-707,0,0,0,0,0,0,0,0,0,0,0,376,-150,-822,631,49,-392,0,0,0,981,-695,-322,538,-121]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"getMin\",\"top\",\"push\",\"pop\",\"pop\",\"pop\",\"push\",\"push\",\"getMin\",\"pop\",\"push\",\"push\",\"pop\",\"push\",\"push\",\"push\",\"top\",\"top\",\"pop\"]",
+    "values": "[-67,-55,0,0,781,0,0,0,438,-181,0,0,246,-353,0,847,542,-880,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"getMin\",\"push\",\"push\",\"push\",\"push\",\"getMin\",\"push\",\"getMin\",\"top\",\"push\",\"top\",\"push\",\"push\",\"pop\",\"getMin\",\"getMin\",\"getMin\",\"push\",\"pop\",\"push\",\"push\",\"getMin\",\"getMin\",\"push\",\"pop\"]",
+    "values": "[-904,721,675,0,108,161,-248,-730,0,-440,0,0,367,0,152,596,0,0,0,0,-867,0,-290,705,0,0,-966,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"getMin\",\"top\",\"pop\",\"pop\",\"push\",\"push\",\"pop\",\"pop\",\"push\",\"push\",\"push\",\"push\",\"push\",\"top\",\"top\",\"pop\",\"push\",\"top\",\"top\",\"push\",\"top\",\"pop\",\"push\"]",
+    "values": "[-167,536,0,0,0,0,707,-173,0,0,353,572,-424,880,-32,0,0,0,-51,0,0,714,0,0,-755]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"pop\",\"getMin\",\"pop\",\"push\",\"pop\",\"push\",\"getMin\",\"push\",\"getMin\",\"push\",\"push\",\"getMin\",\"push\",\"getMin\",\"getMin\",\"top\",\"push\",\"getMin\",\"push\",\"pop\"]",
+    "values": "[960,-277,0,0,0,-434,0,-419,0,-628,0,104,-65,0,720,0,0,0,541,0,-532,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"top\",\"push\",\"push\",\"top\",\"top\",\"push\",\"push\",\"push\",\"push\",\"push\",\"pop\",\"getMin\",\"top\",\"top\",\"getMin\",\"getMin\",\"getMin\",\"getMin\",\"push\",\"push\",\"push\",\"top\",\"push\",\"push\",\"getMin\",\"push\",\"push\",\"push\",\"top\",\"top\"]",
+    "values": "[487,-903,0,490,-67,0,0,-342,581,940,-49,93,0,0,0,0,0,0,0,0,800,-92,683,0,604,769,0,-704,-896,486,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"pop\",\"push\",\"push\",\"push\",\"pop\",\"pop\",\"top\",\"pop\",\"pop\",\"push\",\"pop\",\"push\",\"push\",\"getMin\",\"pop\",\"push\",\"push\",\"getMin\",\"top\",\"top\",\"pop\",\"pop\",\"pop\",\"push\",\"getMin\",\"push\",\"push\",\"pop\",\"getMin\",\"push\",\"push\",\"top\",\"push\",\"push\",\"top\",\"push\",\"getMin\",\"push\",\"top\",\"getMin\",\"pop\",\"push\",\"push\",\"top\",\"top\"]",
+    "values": "[73,211,0,646,385,-869,0,0,0,0,0,-604,0,-497,-13,0,0,-625,304,0,0,0,0,0,0,24,0,-458,-82,0,0,655,-909,0,-536,-497,0,-487,0,854,0,0,0,-434,983,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"getMin\",\"top\",\"top\",\"pop\",\"push\",\"top\",\"push\",\"getMin\",\"top\"]",
+    "values": "[966,0,0,0,0,633,0,-592,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"push\",\"top\",\"pop\",\"pop\",\"pop\",\"push\",\"getMin\",\"top\",\"pop\"]",
+    "values": "[-367,-795,-728,913,0,0,0,0,-96,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"getMin\",\"top\",\"push\",\"top\",\"getMin\",\"getMin\",\"push\",\"getMin\",\"push\",\"push\",\"push\",\"top\",\"pop\",\"push\",\"push\",\"pop\",\"getMin\",\"push\",\"push\",\"push\",\"pop\",\"push\",\"top\",\"getMin\",\"push\",\"getMin\",\"top\",\"push\",\"push\",\"pop\",\"pop\",\"push\",\"top\",\"top\",\"top\",\"push\",\"top\",\"push\",\"push\",\"push\",\"push\",\"push\",\"pop\",\"top\",\"push\",\"pop\"]",
+    "values": "[923,600,0,0,-277,0,0,0,994,0,589,227,-197,0,0,-172,675,0,0,134,-115,-163,0,-203,0,0,251,0,0,233,-723,0,0,680,0,0,0,-89,0,41,973,-82,-651,77,0,0,847,0]"
+  },
+  {
+    "operations": "[\"push\",\"top\",\"top\",\"top\",\"push\",\"push\",\"push\",\"pop\",\"pop\",\"push\",\"push\",\"top\",\"push\",\"push\",\"top\",\"push\",\"pop\",\"top\",\"push\",\"push\",\"pop\",\"pop\",\"getMin\",\"push\",\"push\",\"push\",\"getMin\",\"pop\",\"pop\",\"pop\",\"getMin\",\"top\",\"top\",\"getMin\",\"push\",\"getMin\",\"push\",\"getMin\",\"pop\",\"push\",\"top\",\"pop\",\"pop\",\"pop\"]",
+    "values": "[-894,0,0,0,-235,-624,822,0,0,-766,-464,0,305,822,0,-26,0,0,-525,-99,0,0,0,-13,-792,-285,0,0,0,0,0,0,0,0,590,0,-453,0,0,795,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"pop\",\"push\",\"push\",\"top\",\"push\",\"push\",\"push\",\"pop\",\"push\",\"push\",\"pop\",\"getMin\",\"push\",\"getMin\",\"getMin\",\"push\",\"push\",\"getMin\",\"top\",\"push\",\"pop\"]",
+    "values": "[-266,0,-981,462,0,-910,138,839,0,496,782,0,0,-4,0,0,426,982,0,0,884,0]"
+  },
+  {
+    "operations": "[\"push\",\"getMin\",\"getMin\",\"push\",\"top\",\"pop\",\"push\",\"top\",\"pop\",\"push\",\"pop\",\"push\",\"pop\",\"getMin\",\"top\",\"getMin\",\"push\",\"top\",\"push\",\"top\",\"getMin\",\"push\",\"push\",\"push\",\"push\",\"getMin\",\"getMin\",\"top\",\"pop\",\"getMin\",\"top\",\"pop\",\"getMin\",\"push\",\"push\",\"top\",\"push\",\"getMin\",\"getMin\"]",
+    "values": "[218,0,0,700,0,0,-347,0,0,-552,0,772,0,0,0,0,957,0,-389,0,0,-895,-611,-911,901,0,0,0,0,0,0,0,0,556,472,0,134,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"getMin\",\"push\",\"pop\",\"getMin\",\"push\",\"push\",\"push\",\"getMin\",\"push\",\"push\",\"pop\",\"top\",\"push\",\"getMin\",\"getMin\"]",
+    "values": "[349,0,98,0,0,-223,196,55,0,724,683,0,0,-610,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"getMin\",\"push\",\"getMin\",\"push\",\"top\",\"top\",\"pop\",\"top\",\"top\",\"top\",\"getMin\",\"pop\",\"push\",\"pop\",\"push\",\"pop\",\"push\",\"push\"]",
+    "values": "[448,0,14,0,462,0,0,0,0,0,0,0,0,601,0,-316,0,650,-885]"
+  },
+  {
+    "operations": "[\"push\",\"getMin\",\"getMin\",\"top\",\"getMin\",\"pop\",\"push\",\"top\",\"pop\",\"push\",\"getMin\"]",
+    "values": "[756,0,0,0,0,0,-793,0,0,826,0]"
+  },
+  {
+    "operations": "[\"push\",\"pop\",\"push\",\"top\",\"pop\",\"push\",\"push\",\"push\",\"push\",\"pop\",\"push\",\"push\",\"pop\",\"top\",\"getMin\",\"getMin\",\"push\",\"top\",\"push\",\"getMin\",\"getMin\",\"getMin\",\"top\",\"pop\",\"push\",\"top\",\"push\",\"getMin\",\"top\",\"getMin\",\"top\"]",
+    "values": "[367,0,-340,0,0,10,-311,357,-84,0,-614,-880,0,0,0,0,-51,0,430,0,0,0,0,0,289,0,-148,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"pop\",\"push\",\"getMin\",\"top\",\"push\",\"getMin\",\"push\",\"push\",\"pop\",\"getMin\",\"push\",\"push\",\"getMin\",\"pop\",\"getMin\",\"getMin\",\"getMin\",\"push\",\"top\",\"push\",\"top\",\"pop\",\"pop\",\"pop\",\"push\",\"pop\",\"top\",\"push\",\"getMin\",\"pop\",\"pop\",\"push\",\"push\",\"push\",\"getMin\",\"push\",\"pop\"]",
+    "values": "[-420,0,501,0,0,266,0,64,-879,0,0,697,118,0,0,0,0,0,305,0,512,0,0,0,0,-617,0,0,-526,0,0,0,516,744,885,0,-635,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"pop\",\"pop\",\"push\",\"top\",\"pop\",\"push\",\"getMin\",\"getMin\",\"getMin\",\"top\",\"top\",\"push\",\"pop\",\"push\",\"push\",\"pop\",\"getMin\",\"top\",\"pop\",\"push\",\"push\",\"getMin\",\"pop\",\"pop\",\"top\",\"top\",\"push\",\"push\",\"pop\",\"pop\",\"push\",\"getMin\",\"push\",\"top\",\"getMin\",\"pop\",\"pop\",\"push\",\"push\",\"push\",\"top\",\"pop\"]",
+    "values": "[376,447,0,0,-749,0,0,-881,0,0,0,0,0,-90,0,704,-96,0,0,0,0,263,-56,0,0,0,0,0,114,-100,0,0,-848,0,-312,0,0,0,0,-368,491,-535,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"push\",\"getMin\",\"pop\",\"push\",\"pop\",\"getMin\",\"push\",\"push\",\"push\",\"push\",\"top\",\"getMin\",\"pop\",\"push\",\"push\"]",
+    "values": "[711,-767,934,822,0,0,-206,0,0,565,539,722,-774,0,0,0,805,-41]"
+  },
+  {
+    "operations": "[\"push\",\"top\",\"push\",\"push\",\"top\",\"top\",\"pop\",\"push\",\"top\",\"push\",\"getMin\",\"push\",\"getMin\",\"pop\",\"top\",\"pop\",\"push\",\"push\",\"getMin\",\"push\",\"top\",\"getMin\",\"pop\",\"top\",\"push\",\"top\",\"top\",\"pop\",\"pop\",\"top\"]",
+    "values": "[-593,0,-944,-563,0,0,0,-241,0,-91,0,-28,0,0,0,0,157,428,0,-591,0,0,0,0,-444,0,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"top\",\"pop\",\"push\",\"top\",\"push\",\"pop\",\"push\",\"push\",\"getMin\",\"getMin\",\"pop\",\"top\",\"push\",\"push\",\"top\",\"top\",\"pop\",\"push\",\"pop\",\"top\",\"top\",\"push\",\"getMin\",\"getMin\",\"pop\",\"push\",\"push\",\"push\",\"top\",\"push\",\"push\",\"push\",\"pop\",\"top\",\"push\",\"top\",\"getMin\",\"top\",\"push\",\"getMin\",\"push\",\"top\"]",
+    "values": "[946,0,0,-165,0,523,0,206,-643,0,0,0,0,-821,195,0,0,0,-588,0,0,0,-327,0,0,0,-645,846,-637,0,698,-100,-154,0,0,385,0,0,0,533,0,587,0]"
+  },
+  {
+    "operations": "[\"push\",\"pop\",\"push\",\"top\",\"pop\",\"push\",\"push\",\"getMin\",\"pop\",\"getMin\",\"top\",\"push\",\"top\",\"top\",\"push\",\"getMin\",\"push\",\"pop\",\"push\",\"push\",\"push\",\"push\",\"getMin\",\"getMin\",\"top\",\"getMin\",\"push\",\"top\",\"getMin\",\"push\",\"push\",\"top\"]",
+    "values": "[301,0,870,0,0,431,295,0,0,0,0,70,0,0,687,0,-915,0,-919,251,56,703,0,0,0,0,940,0,0,231,-631,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"getMin\",\"getMin\",\"getMin\",\"pop\",\"push\",\"push\",\"top\",\"getMin\",\"getMin\",\"push\",\"push\",\"top\",\"pop\",\"push\",\"pop\",\"push\",\"getMin\",\"top\",\"top\",\"push\",\"getMin\",\"push\",\"push\",\"push\",\"getMin\",\"top\",\"push\",\"getMin\",\"top\",\"pop\",\"push\",\"pop\",\"push\",\"push\",\"push\",\"push\",\"pop\",\"push\",\"getMin\",\"push\",\"top\",\"push\",\"push\",\"pop\",\"push\",\"push\",\"push\",\"pop\",\"push\"]",
+    "values": "[-296,-253,343,0,0,0,0,866,647,0,0,0,-709,-156,0,0,-489,0,-375,0,0,0,-407,0,-17,-119,-686,0,0,888,0,0,0,987,0,-730,-854,-832,729,0,-42,0,-820,0,955,57,0,701,266,-509,0,563]"
+  },
+  {
+    "operations": "[\"push\",\"getMin\",\"getMin\",\"pop\",\"push\",\"pop\",\"push\",\"top\",\"pop\",\"push\",\"getMin\",\"push\",\"pop\",\"push\"]",
+    "values": "[260,0,0,0,828,0,459,0,0,-421,0,-217,0,-86]"
+  },
+  {
+    "operations": "[\"push\",\"pop\",\"push\",\"pop\",\"push\",\"push\",\"top\",\"top\",\"pop\",\"push\",\"getMin\"]",
+    "values": "[407,0,-549,0,-257,-70,0,0,0,23,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"top\",\"push\",\"push\",\"getMin\",\"top\",\"getMin\",\"top\",\"getMin\",\"pop\",\"push\",\"pop\",\"getMin\",\"push\",\"pop\",\"push\"]",
+    "values": "[-655,-763,0,182,161,0,0,0,0,0,0,-754,0,0,-94,0,310]"
+  },
+  {
+    "operations": "[\"push\",\"pop\",\"push\",\"pop\",\"push\",\"pop\",\"push\",\"getMin\",\"push\",\"push\",\"getMin\",\"push\",\"push\",\"push\",\"pop\",\"pop\",\"push\",\"pop\",\"pop\",\"push\",\"getMin\",\"push\",\"pop\",\"top\",\"getMin\",\"top\",\"push\",\"getMin\",\"getMin\",\"top\",\"push\",\"push\",\"push\",\"pop\",\"push\",\"push\",\"pop\",\"pop\",\"top\",\"push\",\"top\",\"push\",\"push\",\"push\",\"getMin\",\"getMin\"]",
+    "values": "[-978,0,741,0,-225,0,707,0,-959,408,0,207,-597,-625,0,0,934,0,0,710,0,-862,0,0,0,0,64,0,0,0,-196,643,-199,0,-637,243,0,0,0,160,0,-39,-323,-510,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"getMin\",\"pop\",\"push\",\"top\",\"push\",\"push\",\"getMin\",\"pop\",\"push\",\"top\",\"push\",\"push\",\"top\",\"push\",\"getMin\",\"push\",\"push\",\"push\",\"getMin\",\"pop\",\"pop\",\"top\",\"top\"]",
+    "values": "[-648,0,0,720,0,-11,616,0,0,-96,0,765,680,0,-469,0,-682,-513,-206,0,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\"]",
+    "values": "[-2147483648]"
+  },
+  {
+    "operations": "@javascript:JSON.stringify([...Array(15000).fill('push'),...Array(14999).fill('pop'),'getMin'])",
+    "values": "@javascript:JSON.stringify([...Array.from({length:15000},(_,i)=>i===0?-2147483648:i===14999?2147483647:i),...Array(15000).fill(0)])",
+    "_isLargeTest": true
+  }
+]

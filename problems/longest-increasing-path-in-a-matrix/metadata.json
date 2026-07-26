@@ -1,0 +1,58 @@
+{
+  "id": "longest-increasing-path-in-a-matrix",
+  "title": "133. Longest Increasing Path in a Matrix",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/longest-increasing-path-in-a-matrix/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "matrix = [[9,9,4],[6,6,8],[2,1,1]]",
+      "output": "4",
+      "explanation": "One longest path is 1 -> 2 -> 6 -> 9."
+    },
+    {
+      "input": "matrix = [[3,4,5],[3,2,6],[2,2,1]]",
+      "output": "4"
+    },
+    {
+      "input": "matrix = [[1]]",
+      "output": "1"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int longestIncreasingPath(int[][] matrix) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def longestIncreasingPath(self, matrix: List[List[int]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int longestIncreasingPath(vector<vector<int>>& matrix) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int LongestIncreasingPath(int[][] matrix)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn longest_increasing_path(matrix: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc LongestIncreasingPath(matrix [][]int) int {\n    return 0\n}",
+    "typescript": "export function longestIncreasingPath(matrix: number[][]): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "matrix": "[[9,9,4],[6,6,8],[2,1,1]]"
+    },
+    {
+      "matrix": "[[3,4,5],[3,2,6],[2,2,1]]"
+    },
+    {
+      "matrix": "[[1]]"
+    },
+    {
+      "matrix": "[[1,2,3,4]]"
+    }
+  ],
+  "functionName": "longestIncreasingPath",
+  "params": [
+    {
+      "name": "matrix",
+      "type": "int_array_2d",
+      "visualizeType": "matrix"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Treat each move from a lower value to a higher value as an edge in a directed acyclic graph.",
+    "Memoized DFS or a layer-by-layer topological traversal visits each cell only a constant number of times."
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "id": "interleaving-string",
+  "title": "132. Interleaving String",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/interleaving-string/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbcbcac\"",
+      "output": "true"
+    },
+    {
+      "input": "s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbbaccc\"",
+      "output": "false"
+    },
+    {
+      "input": "s1 = \"\", s2 = \"\", s3 = \"\"",
+      "output": "true"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isInterleave(String s1, String s2, String s3) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:\n        return False\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool isInterleave(string s1, string s2, string s3) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool IsInterleave(string s1, string s2, string s3)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_interleave(s1: String, s2: String, s3: String) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc IsInterleave(s1 string, s2 string, s3 string) bool {\n    return false\n}",
+    "typescript": "export function isInterleave(s1: string, s2: string, s3: string): boolean {\n    return false;\n}"
+  },
+  "testCases": [
+    {
+      "s1": "aabcc",
+      "s2": "dbbca",
+      "s3": "aadbbcbcac"
+    },
+    {
+      "s1": "aabcc",
+      "s2": "dbbca",
+      "s3": "aadbbbaccc"
+    },
+    {
+      "s1": "",
+      "s2": "",
+      "s3": ""
+    },
+    {
+      "s1": "abc",
+      "s2": "def",
+      "s3": "adbcef"
+    }
+  ],
+  "functionName": "isInterleave",
+  "params": [
+    {
+      "name": "s1",
+      "type": "string"
+    },
+    {
+      "name": "s2",
+      "type": "string"
+    },
+    {
+      "name": "s3",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "First reject inputs whose lengths do not add up.",
+    "Use dp[j] to represent whether prefixes of s1 and s2 can form the corresponding prefix of s3."
+  ]
+}

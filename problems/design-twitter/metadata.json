@@ -1,0 +1,59 @@
+{
+  "id": "design-twitter",
+  "title": "106. Design Twitter",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/design-twitter/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "operations = [\"Twitter\",\"postTweet\",\"getNewsFeed\",\"follow\",\"postTweet\",\"getNewsFeed\",\"unfollow\",\"getNewsFeed\"], args = [[],[1,5],[1],[1,2],[2,6],[1],[1,2],[1]]",
+      "output": "[[5],[6,5],[5]]",
+      "explanation": "Only news-feed calls contribute rows to the result."
+    },
+    {
+      "input": "operations = [\"Twitter\",\"postTweet\",\"postTweet\",\"getNewsFeed\"], args = [[],[1,10],[1,11],[1]]",
+      "output": "[[11,10]]",
+      "explanation": "Feeds are ordered from newest to oldest."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] runTwitter(String[] operations, int[][] args) {\n        throw new UnsupportedOperationException();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def runTwitter(self, operations: List[str], args: List[List[int]]) -> List[List[int]]:\n        raise NotImplementedError\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> runTwitter(vector<string>& operations, vector<vector<int>>& args) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[][] RunTwitter(string[] operations, int[][] args)\n    {\n        throw new System.NotImplementedException();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_twitter(operations: Vec<String>, args: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        todo!()\n    }\n}",
+    "go": "package main\n\nfunc RunTwitter(operations []string, args [][]int) [][]int {\n    panic(\"TODO\")\n}",
+    "typescript": "export function runTwitter(operations: string[], args: number[][]): number[][] {\n    throw new Error('Not implemented');\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"Twitter\",\"postTweet\",\"getNewsFeed\",\"follow\",\"postTweet\",\"getNewsFeed\",\"unfollow\",\"getNewsFeed\"]",
+      "args": "[[],[1,5],[1],[1,2],[2,6],[1],[1,2],[1]]"
+    },
+    {
+      "operations": "[\"Twitter\",\"postTweet\",\"postTweet\",\"getNewsFeed\"]",
+      "args": "[[],[1,10],[1,11],[1]]"
+    },
+    {
+      "operations": "[\"Twitter\",\"getNewsFeed\",\"follow\",\"getNewsFeed\"]",
+      "args": "[[],[3],[3,4],[3]]"
+    }
+  ],
+  "functionName": "runTwitter",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "args",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Assign each posted tweet an increasing timestamp and store tweets by author.",
+    "For a feed, consider the user's own tweet list together with each followed user's list.",
+    "Use a max-heap to merge those already time-ordered lists and stop after 10 tweets."
+  ]
+}

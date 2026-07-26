@@ -1,0 +1,60 @@
+{
+  "id": "distinct-subsequences",
+  "title": "134. Distinct Subsequences",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/distinct-subsequences/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "s = \"rabbbit\", t = \"rabbit\"",
+      "output": "3"
+    },
+    {
+      "input": "s = \"babgbag\", t = \"bag\"",
+      "output": "5"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numDistinct(String s, String t) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def numDistinct(self, s: str, t: str) -> int:\n        return 0\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int numDistinct(string s, string t) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int NumDistinct(string s, string t)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_distinct(s: String, t: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumDistinct(s string, t string) int {\n    return 0\n}",
+    "typescript": "export function numDistinct(s: string, t: string): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "s": "rabbbit",
+      "t": "rabbit"
+    },
+    {
+      "s": "babgbag",
+      "t": "bag"
+    },
+    {
+      "s": "abc",
+      "t": "abc"
+    },
+    {
+      "s": "abc",
+      "t": "abcd"
+    }
+  ],
+  "functionName": "numDistinct",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "t",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "For each source character, either skip it or use it to match the next target character.",
+    "Update target-prefix counts from right to left so one source character is not reused."
+  ]
+}

@@ -1,0 +1,240 @@
+[
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\",\"count\"]",
+    "points": "[[0,0],[3,10],[11,2],[3,2],[11,10],[14,8]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\",\"add\",\"count\"]",
+    "points": "[[0,0],[3,10],[11,2],[3,2],[11,10],[11,2],[11,10]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"count\"]",
+    "points": "[[0,0],[5,5]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[0,0],[1,0],[0,1],[1,1]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[5,5],[7,5],[5,3],[7,3]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[8,8],[5,8],[8,5],[5,5]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[1,1],[4,1],[1,3],[4,3]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[2,2],[4,2],[6,2],[8,2]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[1,0],[1,0],[0,1],[0,1],[1,1],[1,1],[0,0]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[6,5],[5,6],[6,6],[7,5],[5,7],[7,7],[5,5]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[12,10],[10,12],[12,12],[10,8],[12,8],[10,10]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"count\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[3,3],[4,3],[3,4],[4,4],[3,3]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[2,4],[7,4],[2,4]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[2,1],[2,1],[1,2],[2,2],[1,1]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[6,5],[5,6],[5,6],[6,6],[5,5]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[11,10],[10,11],[11,11],[11,11],[10,10]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[100,100],[101,100],[100,101],[50,70],[999,1],[1,999],[101,101]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[0,0],[2,0],[0,2],[2,2]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[999,1000],[1000,999],[999,999],[1000,1000]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"count\",\"add\",\"add\",\"add\",\"count\",\"count\"]",
+    "points": "[[0,0],[20,20],[21,20],[20,21],[21,21],[20,20],[21,21]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[11,10],[10,11],[11,11],[10,10]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[22,20],[20,22],[22,22],[20,20]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[33,30],[30,33],[33,33],[30,30]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[44,40],[40,44],[44,44],[40,40]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[55,50],[50,55],[55,55],[50,50]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[66,60],[60,66],[66,66],[60,60]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[77,70],[70,77],[77,77],[70,70]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[88,80],[80,88],[88,88],[80,80]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[99,90],[90,99],[99,99],[90,90]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[110,100],[100,110],[110,110],[100,100]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[125,120],[120,115],[125,115],[120,120]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[136,130],[130,124],[136,124],[130,130]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[147,140],[140,133],[147,133],[140,140]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[158,150],[150,142],[158,142],[150,150]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[169,160],[160,151],[169,151],[160,160]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[180,170],[170,160],[180,160],[170,170]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[191,180],[180,169],[191,169],[180,180]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[202,190],[190,178],[202,178],[190,190]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[213,200],[200,187],[213,187],[200,200]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[224,210],[210,196],[224,196],[210,210]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[235,220],[220,205],[235,205],[220,220]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[246,230],[230,214],[246,214],[230,230]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[257,240],[240,223],[257,223],[240,240]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[268,250],[250,232],[268,232],[250,250]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[279,260],[260,241],[279,241],[260,260]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[290,270],[270,250],[290,250],[270,270]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[301,280],[280,259],[301,259],[280,280]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[312,290],[290,268],[312,268],[290,290]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[323,300],[300,277],[323,277],[300,300]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[334,310],[310,286],[334,286],[310,310]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[345,320],[320,295],[345,295],[320,320]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[356,330],[330,304],[356,304],[330,330]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[367,340],[340,313],[367,313],[340,340]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[378,350],[350,322],[378,322],[350,350]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[389,360],[360,331],[389,331],[360,360]]"
+  },
+  {
+    "operations": "[\"DetectSquares\"]",
+    "points": "[[0,0]]"
+  },
+  {
+    "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+    "points": "[[0,0],[0,0],[1000,0],[0,1000],[1000,1000]]"
+  },
+  {
+    "operations": "@javascript:JSON.stringify([\"DetectSquares\",...Array(497).fill(\"add\"),\"count\"])",
+    "points": "@javascript:JSON.stringify([[0,0],...Array.from({length:497},(_,i)=>[i%1001,Math.floor(i/1001)]),[1000,1000]])",
+    "_isLargeTest": true
+  },
+  {
+    "operations": "@javascript:JSON.stringify([\"DetectSquares\",...Array(499).fill(\"count\")])",
+    "points": "@javascript:JSON.stringify([[0,0],...Array.from({length:499},()=>[1000,1000])])",
+    "_isLargeTest": true
+  }
+]

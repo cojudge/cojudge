@@ -729,8 +729,11 @@
                         <pre class="example-input">{example.input}</pre>
                         <pre class="example-output">{example.output}</pre>
                         {#if example.explanation}
-                            <div class="markdown-body">
-                                {@html renderMarkdown(example.explanation)}
+                            <div class="example-explanation">
+                                <strong>Explanation:</strong>
+                                <div class="markdown-body">
+                                    {@html renderMarkdown(example.explanation)}
+                                </div>
                             </div>
                         {/if}
                     </div>
@@ -1365,6 +1368,20 @@
 
     .example-input::before { content: 'Input: '; font-weight: 700; }
     .example-output::before { content: 'Output: '; font-weight: 700; }
+
+    .example-explanation {
+        margin-top: var(--spacing-2);
+        color: var(--color-text-secondary);
+    }
+
+    .example-explanation .markdown-body {
+        display: inline;
+    }
+
+    .example-explanation .markdown-body :global(p) {
+        display: inline;
+        margin: 0;
+    }
 
     /* Small, subtle icon button */
     .icon-button {

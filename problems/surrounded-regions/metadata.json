@@ -1,0 +1,51 @@
+{
+  "id": "surrounded-regions",
+  "title": "118. Surrounded Regions",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/surrounded-regions/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "board = [\"XXXX\",\"XOOX\",\"XXOX\",\"XOXX\"]",
+      "output": "[\"XXXX\",\"XXXX\",\"XXXX\",\"XOXX\"]",
+      "explanation": "The lower-left `O` touches the boundary; the other `O` cells are captured."
+    },
+    {
+      "input": "board = [\"X\"]",
+      "output": "[\"X\"]"
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\n\nclass Solution {\n    public List<String> solve(String[] board) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def solve(self, board: List[str]) -> List[str]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> solve(vector<string>& board) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\n\npublic class Solution {\n    public List<string> Solve(string[] board) {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn solve(board: Vec<String>) -> Vec<String> {\n        Vec::new()\n    }\n}\n",
+    "go": "package main\n\nfunc Solve(board []string) []string {\n    return []string{}\n}\n",
+    "typescript": "export function solve(board: string[]): string[] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "board": "[\"XXXX\",\"XOOX\",\"XXOX\",\"XOXX\"]"
+    },
+    {
+      "board": "[\"X\"]"
+    },
+    {
+      "board": "[\"OO\",\"OO\"]"
+    }
+  ],
+  "functionName": "solve",
+  "params": [
+    {
+      "name": "board",
+      "type": "string_array",
+      "visualizeType": "matrix"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Start from boundary `O` cells and mark every `O` reachable from them.",
+    "After the traversal, capture only unmarked `O` cells and restore the marked cells."
+  ]
+}

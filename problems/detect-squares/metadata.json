@@ -1,0 +1,68 @@
+{
+  "id": "detect-squares",
+  "title": "149. Detect Squares",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/detect-squares/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "operations = [\"DetectSquares\",\"add\",\"add\",\"add\",\"count\",\"count\"]\npoints = [[0,0],[3,10],[11,2],[3,2],[11,10],[14,8]]",
+      "output": "[1,0]",
+      "explanation": "Only count operations contribute entries to the returned array."
+    },
+    {
+      "input": "operations = [\"DetectSquares\",\"add\",\"add\",\"add\",\"count\",\"add\",\"count\"]\npoints = [[0,0],[3,10],[11,2],[3,2],[11,10],[11,2],[11,10]]",
+      "output": "[1,2]",
+      "explanation": "The duplicate [11,2] is a distinct choice and doubles the second count."
+    },
+    {
+      "input": "operations = [\"DetectSquares\",\"count\"]\npoints = [[0,0],[5,5]]",
+      "output": "[0]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runDetectSquares(String[] operations, int[][] points) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def runDetectSquares(self, operations: List[str], points: List[List[int]]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runDetectSquares(vector<string>& operations, vector<vector<int>>& points) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunDetectSquares(string[] operations, int[][] points)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_detect_squares(operations: Vec<String>, points: Vec<Vec<i32>>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunDetectSquares(operations []string, points [][]int) []int {\n    return []int{}\n}",
+    "typescript": "export function runDetectSquares(operations: string[], points: number[][]): number[] {\n    return [];\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\",\"count\"]",
+      "points": "[[0,0],[3,10],[11,2],[3,2],[11,10],[14,8]]"
+    },
+    {
+      "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\",\"add\",\"count\"]",
+      "points": "[[0,0],[3,10],[11,2],[3,2],[11,10],[11,2],[11,10]]"
+    },
+    {
+      "operations": "[\"DetectSquares\",\"count\"]",
+      "points": "[[0,0],[5,5]]"
+    },
+    {
+      "operations": "[\"DetectSquares\",\"add\",\"add\",\"add\",\"count\"]",
+      "points": "[[0,0],[0,0],[1,0],[0,1],[1,1]]"
+    }
+  ],
+  "functionName": "runDetectSquares",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "points",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "This is a function adaptation, not a class problem: skip the first constructor row and append results only for count operations.",
+    "Store the multiplicity of every added point; duplicate points must multiply the number of square choices.",
+    "For a query [x,y], enumerate stored points [otherX,y] on the same row. Their horizontal distance determines the only two possible opposite rows.",
+    "Multiply the frequencies of the three required stored corners for each possible square."
+  ]
+}

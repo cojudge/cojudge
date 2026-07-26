@@ -1,0 +1,50 @@
+{
+  "id": "subsets-ii",
+  "title": "111. Subsets II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/subsets-ii/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "nums = [1,2,2]",
+      "output": "[[],[1],[1,2],[1,2,2],[2],[2,2]]",
+      "explanation": "Repeated choices that would create the same subset are included only once."
+    },
+    {
+      "input": "nums = [0]",
+      "output": "[[],[0]]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] subsetsWithDup(int[] nums) {\n        return new int[0][];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> subsetsWithDup(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution {\n    public int[][] SubsetsWithDup(int[] nums) {\n        return new int[0][];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn subsets_with_dup(nums: Vec<i32>) -> Vec<Vec<i32>> {\n        Vec::new()\n    }\n}\n",
+    "go": "package main\n\nfunc SubsetsWithDup(nums []int) [][]int {\n    return [][]int{}\n}\n",
+    "typescript": "export function subsetsWithDup(nums: number[]): number[][] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,2]"
+    },
+    {
+      "nums": "[0]"
+    },
+    {
+      "nums": "[1,1,1]"
+    }
+  ],
+  "functionName": "subsetsWithDup",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Sort the values first so equal choices are adjacent.",
+    "At one recursion depth, skip a value when it is equal to the previous candidate at that same depth."
+  ]
+}

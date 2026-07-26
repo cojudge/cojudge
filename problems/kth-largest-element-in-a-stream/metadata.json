@@ -1,0 +1,66 @@
+{
+  "id": "kth-largest-element-in-a-stream",
+  "title": "101. Kth Largest Element in a Stream",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/kth-largest-element-in-a-stream/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "k = 3, nums = [4,5,8,2], additions = [3,5,10,9,4]",
+      "output": "[4,5,5,8,8]",
+      "explanation": "The function returns the third largest value after each insertion."
+    },
+    {
+      "input": "k = 1, nums = [], additions = [-3,-2,-4,0,4]",
+      "output": "[-3,-2,-2,0,4]",
+      "explanation": "With k = 1, each answer is the maximum value seen so far."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] kthLargestStream(int k, int[] nums, int[] additions) {\n        throw new UnsupportedOperationException();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def kthLargestStream(self, k: int, nums: List[int], additions: List[int]) -> List[int]:\n        raise NotImplementedError\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> kthLargestStream(int k, vector<int>& nums, vector<int>& additions) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] KthLargestStream(int k, int[] nums, int[] additions)\n    {\n        throw new System.NotImplementedException();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn kth_largest_stream(k: i32, nums: Vec<i32>, additions: Vec<i32>) -> Vec<i32> {\n        todo!()\n    }\n}",
+    "go": "package main\n\nfunc KthLargestStream(k int, nums []int, additions []int) []int {\n    panic(\"TODO\")\n}",
+    "typescript": "export function kthLargestStream(k: number, nums: number[], additions: number[]): number[] {\n    throw new Error('Not implemented');\n}"
+  },
+  "testCases": [
+    {
+      "k": 3,
+      "nums": "[4,5,8,2]",
+      "additions": "[3,5,10,9,4]"
+    },
+    {
+      "k": 1,
+      "nums": "[]",
+      "additions": "[-3,-2,-4,0,4]"
+    },
+    {
+      "k": 4,
+      "nums": "[7,7,7,7,8,3]",
+      "additions": "[2,10,9,9]"
+    }
+  ],
+  "functionName": "kthLargestStream",
+  "params": [
+    {
+      "name": "k",
+      "type": "int"
+    },
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "additions",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Keep only the k largest values seen so far.",
+    "A min-heap of size k exposes the current kth largest value at its root.",
+    "Insert each value, remove the heap minimum when its size exceeds k, and record the root after every addition."
+  ]
+}

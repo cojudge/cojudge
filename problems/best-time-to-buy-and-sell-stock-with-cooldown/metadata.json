@@ -1,0 +1,53 @@
+{
+  "id": "best-time-to-buy-and-sell-stock-with-cooldown",
+  "title": "129. Best Time to Buy and Sell Stock with Cooldown",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "prices = [1,2,3,0,2]",
+      "output": "3",
+      "explanation": "Buy on day 0, sell on day 1, cooldown, then buy on day 3 and sell on day 4."
+    },
+    {
+      "input": "prices = [1]",
+      "output": "0"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxProfit(int[] prices) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def maxProfit(self, prices: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int maxProfit(vector<int>& prices) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MaxProfit(int[] prices)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_profit(prices: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MaxProfit(prices []int) int {\n    return 0\n}",
+    "typescript": "export function maxProfit(prices: number[]): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "prices": "[1,2,3,0,2]"
+    },
+    {
+      "prices": "[1]"
+    },
+    {
+      "prices": "[2,1,4]"
+    },
+    {
+      "prices": "[6,1,3,2,4,7]"
+    }
+  ],
+  "functionName": "maxProfit",
+  "params": [
+    {
+      "name": "prices",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Track the best value after each day in three states: holding, just sold, and resting.",
+    "A buy transition can only come from a resting state, not from the previous day's sold state."
+  ]
+}

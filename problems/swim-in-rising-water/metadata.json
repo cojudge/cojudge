@@ -1,0 +1,51 @@
+{
+  "id": "swim-in-rising-water",
+  "title": "125. Swim in Rising Water",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/swim-in-rising-water/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "grid = [[0,2],[1,3]]",
+      "output": "3"
+    },
+    {
+      "input": "grid = [[0,1,2,3,4],[24,23,22,21,5],[12,13,14,15,16],[11,17,18,19,20],[10,9,8,7,6]]",
+      "output": "16"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int swimInWater(int[][] grid) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def swimInWater(self, grid: List[List[int]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int swimInWater(vector<vector<int>>& grid) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int SwimInWater(int[][] grid)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn swim_in_water(grid: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}\n",
+    "go": "package main\n\nfunc SwimInWater(grid [][]int) int {\n    return 0\n}\n",
+    "typescript": "export function swimInWater(grid: number[][]): number {\n    return 0;\n}\n"
+  },
+  "testCases": [
+    {
+      "grid": "[[0,2],[1,3]]"
+    },
+    {
+      "grid": "[[0,1,2,3,4],[24,23,22,21,5],[12,13,14,15,16],[11,17,18,19,20],[10,9,8,7,6]]"
+    },
+    {
+      "grid": "[[0]]"
+    }
+  ],
+  "functionName": "swimInWater",
+  "params": [
+    {
+      "name": "grid",
+      "type": "int_array_2d",
+      "visualizeType": "matrix"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "A path's required time is the maximum elevation on that path; minimize that maximum.",
+    "Use Dijkstra's algorithm where entering a neighbor changes the path cost to max(currentCost, neighborElevation).",
+    "An alternative is binary search on time and a flood-fill reachability check."
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "id": "happy-number",
+  "title": "145. Happy Number",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/happy-number/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 19",
+      "output": "true",
+      "explanation": "The digit-square sequence reaches 1."
+    },
+    {
+      "input": "n = 2",
+      "output": "false",
+      "explanation": "The sequence enters a cycle that does not contain 1."
+    },
+    {
+      "input": "n = 1",
+      "output": "true"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isHappy(int n) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def isHappy(self, n: int) -> bool:\n        return False\n",
+    "cpp": "class Solution {\npublic:\n    bool isHappy(int n) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool IsHappy(int n)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_happy(n: i32) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc IsHappy(n int) bool {\n    return false\n}",
+    "typescript": "export function isHappy(n: number): boolean {\n    return false;\n}"
+  },
+  "testCases": [
+    {
+      "n": 19
+    },
+    {
+      "n": 2
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 7
+    },
+    {
+      "n": 116
+    }
+  ],
+  "functionName": "isHappy",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Write a helper that computes the sum of the squares of an integer's digits.",
+    "A non-happy sequence must eventually repeat because digit-square sums are bounded.",
+    "Use a set to detect repetition, or use Floyd's slow-and-fast pointer cycle detection for constant extra space."
+  ]
+}

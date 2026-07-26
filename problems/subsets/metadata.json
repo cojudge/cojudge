@@ -1,0 +1,51 @@
+{
+  "id": "subsets",
+  "title": "107. Subsets",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/subsets/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "nums = [1,2,3]",
+      "output": "[[],[1],[2],[3],[1,2],[1,3],[2,3],[1,2,3]]",
+      "explanation": "Any ordering of the same eight subsets is accepted."
+    },
+    {
+      "input": "nums = [0]",
+      "output": "[[],[0]]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] subsets(int[] nums) {\n        throw new UnsupportedOperationException();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def subsets(self, nums: List[int]) -> List[List[int]]:\n        raise NotImplementedError\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> subsets(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[][] Subsets(int[] nums)\n    {\n        throw new System.NotImplementedException();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn subsets(nums: Vec<i32>) -> Vec<Vec<i32>> {\n        todo!()\n    }\n}",
+    "go": "package main\n\nfunc Subsets(nums []int) [][]int {\n    panic(\"TODO\")\n}",
+    "typescript": "export function subsets(nums: number[]): number[][] {\n    throw new Error('Not implemented');\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3]"
+    },
+    {
+      "nums": "[0]"
+    },
+    {
+      "nums": "[-1,2]"
+    }
+  ],
+  "functionName": "subsets",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "At each position, choose whether to include the current value.",
+    "A backtracking path represents one partial subset; record it at every recursion level.",
+    "There are exactly `2^nums.length` subsets."
+  ]
+}

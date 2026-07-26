@@ -1,0 +1,59 @@
+{
+  "id": "task-scheduler",
+  "title": "105. Task Scheduler",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/task-scheduler/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "tasks = \"AAABBB\", n = 2",
+      "output": "8",
+      "explanation": "A, B, idle, A, B, idle, A, B is optimal."
+    },
+    {
+      "input": "tasks = \"AAABBB\", n = 0",
+      "output": "6",
+      "explanation": "No idle time is required when the cooldown is zero."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int leastInterval(String tasks, int n) {\n        throw new UnsupportedOperationException();\n    }\n}",
+    "python": "class Solution:\n    def leastInterval(self, tasks: str, n: int) -> int:\n        raise NotImplementedError\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int leastInterval(string tasks, int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int LeastInterval(string tasks, int n)\n    {\n        throw new System.NotImplementedException();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn least_interval(tasks: String, n: i32) -> i32 {\n        todo!()\n    }\n}",
+    "go": "package main\n\nfunc LeastInterval(tasks string, n int) int {\n    panic(\"TODO\")\n}",
+    "typescript": "export function leastInterval(tasks: string, n: number): number {\n    throw new Error('Not implemented');\n}"
+  },
+  "testCases": [
+    {
+      "tasks": "AAABBB",
+      "n": 2
+    },
+    {
+      "tasks": "AAABBB",
+      "n": 0
+    },
+    {
+      "tasks": "AAAAAABCDEFG",
+      "n": 2
+    }
+  ],
+  "functionName": "leastInterval",
+  "params": [
+    {
+      "name": "tasks",
+      "type": "string"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Count the frequency of each of the 26 task types.",
+    "Arrange the most frequent task into blocks separated by n slots.",
+    "If the maximum frequency is `f` and `m` task types have that frequency, compare `tasks.length` with `(f - 1) * (n + 1) + m`."
+  ]
+}

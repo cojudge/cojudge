@@ -1,0 +1,57 @@
+{
+  "id": "reconstruct-itinerary",
+  "title": "122. Reconstruct Itinerary",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/reconstruct-itinerary/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "from = [\"MUC\",\"JFK\",\"SFO\",\"LHR\"], to = [\"LHR\",\"MUC\",\"SJC\",\"SFO\"]",
+      "output": "[\"JFK\",\"MUC\",\"LHR\",\"SFO\",\"SJC\"]"
+    },
+    {
+      "input": "from = [\"JFK\",\"JFK\",\"SFO\",\"ATL\",\"ATL\"], to = [\"SFO\",\"ATL\",\"ATL\",\"JFK\",\"SFO\"]",
+      "output": "[\"JFK\",\"ATL\",\"JFK\",\"SFO\",\"ATL\",\"SFO\"]"
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\n\nclass Solution {\n    public List<String> findItinerary(String[] from, String[] to) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def findItinerary(self, from_: List[str], to: List[str]) -> List[str]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> findItinerary(vector<string>& from, vector<string>& to) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\n\npublic class Solution\n{\n    public List<string> FindItinerary(string[] from, string[] to)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_itinerary(from: Vec<String>, to: Vec<String>) -> Vec<String> {\n        Vec::new()\n    }\n}\n",
+    "go": "package main\n\nfunc FindItinerary(from []string, to []string) []string {\n    return nil\n}\n",
+    "typescript": "export function findItinerary(from: string[], to: string[]): string[] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "from": "[\"MUC\",\"JFK\",\"SFO\",\"LHR\"]",
+      "to": "[\"LHR\",\"MUC\",\"SJC\",\"SFO\"]"
+    },
+    {
+      "from": "[\"JFK\",\"JFK\",\"SFO\",\"ATL\",\"ATL\"]",
+      "to": "[\"SFO\",\"ATL\",\"ATL\",\"JFK\",\"SFO\"]"
+    },
+    {
+      "from": "[\"JFK\",\"JFK\",\"NRT\"]",
+      "to": "[\"KUL\",\"NRT\",\"JFK\"]"
+    }
+  ],
+  "functionName": "findItinerary",
+  "params": [
+    {
+      "name": "from",
+      "type": "string_array"
+    },
+    {
+      "name": "to",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "View tickets as directed edges and the requested itinerary as an Eulerian trail from JFK.",
+    "Always consume the smallest available destination, but append an airport only after all of its outgoing tickets have been consumed.",
+    "Hierholzer's algorithm with a min-heap per departure airport produces the lexical minimum in O(E log E) time."
+  ]
+}

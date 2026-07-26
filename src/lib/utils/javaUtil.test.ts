@@ -26,6 +26,14 @@ describe('formatAndSplitJavaString', () => {
     expect(joinedContent.length).toBe(long.length);
   });
 
+  it('does not split an escaped quote or backslash across literals', () => {
+    const value = '["a\\b","c\\d","e"]';
+    const result = formatAndSplitJavaString(value, 5, '');
+    const parts = result.split(' ,\n').map((part) => part.trim());
+
+    expect(parts.map((part) => JSON.parse(part)).join('')).toBe(value);
+  });
+
   it('formats params for javaGetFullParam correctly', () => {
     const params = [
       { name: 's', type: 'string' },

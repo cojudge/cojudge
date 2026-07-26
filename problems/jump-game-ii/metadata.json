@@ -1,0 +1,58 @@
+{
+  "id": "jump-game-ii",
+  "title": "139. Jump Game II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/jump-game-ii/",
+  "category": "greedy",
+  "examples": [
+    {
+      "input": "nums = [2,3,1,1,4]",
+      "output": "2",
+      "explanation": "Jump from index 0 to index 1, then to the last index."
+    },
+    {
+      "input": "nums = [2,3,0,1,4]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [0]",
+      "output": "0"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int jump(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def jump(self, nums: List[int]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int jump(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int Jump(int[] nums)\n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn jump(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc Jump(nums []int) int {\n    \n}",
+    "typescript": "export function jump(nums: number[]): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "nums": "[2,3,1,1,4]"
+    },
+    {
+      "nums": "[2,3,0,1,4]"
+    },
+    {
+      "nums": "[0]"
+    },
+    {
+      "nums": "[1,1,1,1]"
+    }
+  ],
+  "functionName": "jump",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Treat all indices reachable with the current number of jumps as one breadth-first-search layer.",
+    "While scanning a layer, track the farthest index any position in that layer can reach.",
+    "When the scan reaches the current layer's end, take one jump and make the farthest reach the next layer's end."
+  ]
+}

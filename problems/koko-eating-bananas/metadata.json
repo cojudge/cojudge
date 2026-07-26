@@ -1,0 +1,65 @@
+{
+  "id": "koko-eating-bananas",
+  "title": "89. Koko Eating Bananas",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/koko-eating-bananas/",
+  "category": "binary-search",
+  "examples": [
+    {
+      "input": "piles = [3,6,7,11], h = 8",
+      "output": "4"
+    },
+    {
+      "input": "piles = [30,11,23,4,20], h = 5",
+      "output": "30"
+    },
+    {
+      "input": "piles = [30,11,23,4,20], h = 6",
+      "output": "23"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minEatingSpeed(int[] piles, int h) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def minEatingSpeed(self, piles: List[int], h: int) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minEatingSpeed(vector<int>& piles, int h) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinEatingSpeed(int[] piles, int h)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_eating_speed(piles: Vec<i32>, h: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinEatingSpeed(piles []int, h int) int {\n    return 0\n}",
+    "typescript": "export function minEatingSpeed(piles: number[], h: number): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "piles": "[3,6,7,11]",
+      "h": 8
+    },
+    {
+      "piles": "[30,11,23,4,20]",
+      "h": 5
+    },
+    {
+      "piles": "[30,11,23,4,20]",
+      "h": 6
+    },
+    {
+      "piles": "[1]",
+      "h": 1
+    }
+  ],
+  "functionName": "minEatingSpeed",
+  "params": [
+    {
+      "name": "piles",
+      "type": "int_array"
+    },
+    {
+      "name": "h",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "For a fixed speed k, one pile of size p takes ceil(p / k) hours.",
+    "If a speed is fast enough, every larger speed is also fast enough.",
+    "Binary-search speeds from 1 through the largest pile and accumulate hours in a wide integer type."
+  ]
+}

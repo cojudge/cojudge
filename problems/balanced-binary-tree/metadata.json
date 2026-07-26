@@ -1,0 +1,58 @@
+{
+  "id": "balanced-binary-tree",
+  "title": "98. Balanced Binary Tree",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/balanced-binary-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [3,9,20,null,null,15,7]",
+      "output": "true"
+    },
+    {
+      "input": "root = [1,2,2,3,3,null,null,4,4]",
+      "output": "false"
+    },
+    {
+      "input": "root = []",
+      "output": "true"
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public boolean isBalanced(TreeNode root) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\nclass Solution:\n    def isBalanced(self, root) -> bool:\n        pass\n",
+    "cpp": "/*\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n};\n*/\nclass Solution {\npublic:\n    bool isBalanced(TreeNode* root) {\n        return false;\n    }\n};",
+    "csharp": "/*\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\npublic class Solution\n{\n    public bool IsBalanced(TreeNode root)\n    {\n        return false;\n    }\n}",
+    "rust": "use std::cell::RefCell;\nuse std::rc::Rc;\n\npub struct Solution;\n\nimpl Solution {\n    pub fn is_balanced(root: Option<Rc<RefCell<TreeNode>>>) -> bool {\n        todo!()\n    }\n}",
+    "go": "package main\n\nfunc IsBalanced(root *TreeNode) bool {\n    return false\n}",
+    "typescript": "export function isBalanced(root: TreeNode | null): boolean {\n    return false;\n}"
+  },
+  "testCases": [
+    {
+      "root": "[3,9,20,null,null,15,7]"
+    },
+    {
+      "root": "[1,2,2,3,3,null,null,4,4]"
+    },
+    {
+      "root": "[]"
+    },
+    {
+      "root": "[1,null,2,null,3]"
+    }
+  ],
+  "functionName": "isBalanced",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Compute subtree heights from the leaves upward rather than recomputing each height for every ancestor.",
+    "If either child subtree is already unbalanced, or their heights differ by more than one, the whole tree is unbalanced.",
+    "An empty subtree has height zero and is balanced."
+  ]
+}

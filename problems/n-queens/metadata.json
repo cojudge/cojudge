@@ -1,0 +1,49 @@
+{
+  "id": "n-queens",
+  "title": "114. N-Queens",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/n-queens/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "n = 4",
+      "output": "[[\".Q..\",\"...Q\",\"Q...\",\"..Q.\"],[\"..Q.\",\"Q...\",\"...Q\",\".Q..\"]]"
+    },
+    {
+      "input": "n = 1",
+      "output": "[[\"Q\"]]"
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\n\nclass Solution {\n    public List<List<String>> solveNQueens(int n) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def solveNQueens(self, n: int) -> List[List[str]]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<string>> solveNQueens(int n) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\n\npublic class Solution {\n    public List<List<string>> SolveNQueens(int n) {\n        return new List<List<string>>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn solve_n_queens(n: i32) -> Vec<Vec<String>> {\n        Vec::new()\n    }\n}\n",
+    "go": "package main\n\nfunc SolveNQueens(n int) [][]string {\n    return [][]string{}\n}\n",
+    "typescript": "export function solveNQueens(n: number): string[][] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "n": 4
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 5
+    }
+  ],
+  "functionName": "solveNQueens",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "string_list_2d",
+  "hints": [
+    "Place one queen per row and backtrack when a column or diagonal is already occupied.",
+    "The two diagonal families can be identified by `row - col` and `row + col`."
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "id": "lru-cache",
+  "title": "95. LRU Cache",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/lru-cache/",
+  "category": "linked-list",
+  "examples": [
+    {
+      "input": "operations = [\"LRUCache\",\"put\",\"put\",\"get\",\"put\",\"get\",\"put\",\"get\",\"get\",\"get\"], args = [[2],[1,1],[2,2],[1],[3,3],[2],[4,4],[1],[3],[4]]",
+      "output": "[1,-1,-1,3,4]",
+      "explanation": "Reads refresh recency; inserting keys 3 and 4 evicts keys 2 and 1 respectively."
+    },
+    {
+      "input": "operations = [\"LRUCache\",\"put\",\"get\",\"put\",\"get\",\"get\"], args = [[1],[2,1],[2],[3,2],[2],[3]]",
+      "output": "[1,-1,2]"
+    },
+    {
+      "input": "operations = [\"LRUCache\",\"put\",\"put\",\"get\",\"get\"], args = [[2],[1,1],[1,9],[1],[2]]",
+      "output": "[9,-1]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runLruCache(String[] operations, int[][] args) {\n        \n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def runLruCache(self, operations: List[str], args: List[List[int]]) -> List[int]:\n        pass\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runLruCache(vector<string>& operations, vector<vector<int>>& args) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunLruCache(string[] operations, int[][] args)\n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_lru_cache(operations: Vec<String>, args: Vec<Vec<i32>>) -> Vec<i32> {\n        todo!()\n    }\n}",
+    "go": "package main\n\nfunc RunLruCache(operations []string, args [][]int) []int {\n    return nil\n}",
+    "typescript": "export function runLruCache(operations: string[], args: number[][]): number[] {\n    return [];\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"LRUCache\",\"put\",\"put\",\"get\",\"put\",\"get\",\"put\",\"get\",\"get\",\"get\"]",
+      "args": "[[2],[1,1],[2,2],[1],[3,3],[2],[4,4],[1],[3],[4]]"
+    },
+    {
+      "operations": "[\"LRUCache\",\"put\",\"get\",\"put\",\"get\",\"get\"]",
+      "args": "[[1],[2,1],[2],[3,2],[2],[3]]"
+    },
+    {
+      "operations": "[\"LRUCache\",\"put\",\"put\",\"get\",\"get\"]",
+      "args": "[[2],[1,1],[1,9],[1],[2]]"
+    },
+    {
+      "operations": "[\"LRUCache\",\"get\"]",
+      "args": "[[3],[7]]"
+    }
+  ],
+  "functionName": "runLruCache",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "args",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Combine a hash map for key lookup with a doubly linked recency list.",
+    "Move an existing key to the most-recent end after a successful `get` or an updating `put`.",
+    "When a new insertion exceeds capacity, remove the least-recent node from both the list and the map."
+  ]
+}

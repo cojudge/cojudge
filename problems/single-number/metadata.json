@@ -1,0 +1,59 @@
+{
+  "id": "single-number",
+  "title": "150. Single Number",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/single-number/",
+  "category": "binary",
+  "examples": [
+    {
+      "input": "nums = [2,2,1]",
+      "output": "1"
+    },
+    {
+      "input": "nums = [4,1,2,1,2]",
+      "output": "4"
+    },
+    {
+      "input": "nums = [1]",
+      "output": "1"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int singleNumber(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def singleNumber(self, nums: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int singleNumber(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int SingleNumber(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn single_number(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc SingleNumber(nums []int) int {\n    return 0\n}",
+    "typescript": "export function singleNumber(nums: number[]): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[2,2,1]"
+    },
+    {
+      "nums": "[4,1,2,1,2]"
+    },
+    {
+      "nums": "[1]"
+    },
+    {
+      "nums": "[-1,0,-1]"
+    },
+    {
+      "nums": "[2147483647,-2147483648,7,7,-2147483648]"
+    }
+  ],
+  "functionName": "singleNumber",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "XOR is associative and commutative, and a value XOR itself is zero.",
+    "XOR every array element together; each pair cancels and the unpaired value remains."
+  ]
+}

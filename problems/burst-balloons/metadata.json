@@ -1,0 +1,58 @@
+{
+  "id": "burst-balloons",
+  "title": "136. Burst Balloons",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/burst-balloons/",
+  "category": "dp-2d",
+  "examples": [
+    {
+      "input": "nums = [3,1,5,8]",
+      "output": "167",
+      "explanation": "One optimal order is 1, 5, 3, 8, which yields 167 coins."
+    },
+    {
+      "input": "nums = [1,5]",
+      "output": "10"
+    },
+    {
+      "input": "nums = [7]",
+      "output": "7"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxCoins(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxCoins(self, nums: List[int]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int maxCoins(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MaxCoins(int[] nums)\n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_coins(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MaxCoins(nums []int) int {\n    \n}",
+    "typescript": "export function maxCoins(nums: number[]): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "nums": "[3,1,5,8]"
+    },
+    {
+      "nums": "[1,5]"
+    },
+    {
+      "nums": "[7]"
+    },
+    {
+      "nums": "[2,1,2]"
+    }
+  ],
+  "functionName": "maxCoins",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Choosing the first balloon is awkward because its future neighbors are unknown; instead, choose the last balloon burst in an interval.",
+    "Pad the array with a value of 1 at each end and let dp[left][right] be the best result for that closed interval.",
+    "Try every index as the last balloon in each interval, building answers from shorter intervals to longer ones."
+  ]
+}

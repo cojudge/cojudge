@@ -1,0 +1,56 @@
+{
+  "id": "trapping-rain-water",
+  "title": "78. Trapping Rain Water",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/trapping-rain-water/",
+  "category": "two-pointer",
+  "examples": [
+    {
+      "input": "height = [0,1,0,2,1,0,1,3,2,1,2,1]",
+      "output": "6"
+    },
+    {
+      "input": "height = [4,2,0,3,2,5]",
+      "output": "9"
+    },
+    {
+      "input": "height = [1,2,3,4]",
+      "output": "0"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int trap(int[] height) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def trap(self, height: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int trap(vector<int>& height) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int Trap(int[] height)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn trap(height: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc Trap(height []int) int {\n    return 0\n}",
+    "typescript": "export function trap(height: number[]): number {\n    return 0;\n}\n"
+  },
+  "testCases": [
+    {
+      "height": "[0,1,0,2,1,0,1,3,2,1,2,1]"
+    },
+    {
+      "height": "[4,2,0,3,2,5]"
+    },
+    {
+      "height": "[1,2,3,4]"
+    },
+    {
+      "height": "[5,0,5]"
+    }
+  ],
+  "functionName": "trap",
+  "params": [
+    {
+      "name": "height",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Water above a bar is limited by the smaller maximum boundary on its left and right.",
+    "With two pointers, the side with the lower current boundary can be finalized immediately."
+  ]
+}

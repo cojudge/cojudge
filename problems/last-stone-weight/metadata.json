@@ -1,0 +1,52 @@
+{
+  "id": "last-stone-weight",
+  "title": "102. Last Stone Weight",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/last-stone-weight/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "stones = [2,7,4,1,8,1]",
+      "output": "1",
+      "explanation": "Repeatedly smashing the two heaviest stones leaves one stone of weight 1."
+    },
+    {
+      "input": "stones = [2,2]",
+      "output": "0",
+      "explanation": "Equal stones destroy each other."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int lastStoneWeight(int[] stones) {\n        throw new UnsupportedOperationException();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def lastStoneWeight(self, stones: List[int]) -> int:\n        raise NotImplementedError\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int lastStoneWeight(vector<int>& stones) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int LastStoneWeight(int[] stones)\n    {\n        throw new System.NotImplementedException();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn last_stone_weight(stones: Vec<i32>) -> i32 {\n        todo!()\n    }\n}",
+    "go": "package main\n\nfunc LastStoneWeight(stones []int) int {\n    panic(\"TODO\")\n}",
+    "typescript": "export function lastStoneWeight(stones: number[]): number {\n    throw new Error('Not implemented');\n}"
+  },
+  "testCases": [
+    {
+      "stones": "[2,7,4,1,8,1]"
+    },
+    {
+      "stones": "[2,2]"
+    },
+    {
+      "stones": "[1]"
+    }
+  ],
+  "functionName": "lastStoneWeight",
+  "params": [
+    {
+      "name": "stones",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The next operation always needs the two largest remaining weights.",
+    "Use a max-heap so both stones can be removed in logarithmic time.",
+    "Insert `y - x` back into the heap only when the two weights differ."
+  ]
+}

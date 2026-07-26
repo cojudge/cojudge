@@ -1,0 +1,66 @@
+{
+  "id": "hand-of-straights",
+  "title": "141. Hand of Straights",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/hand-of-straights/",
+  "category": "greedy",
+  "examples": [
+    {
+      "input": "hand = [1,2,3,6,2,3,4,7,8], groupSize = 3",
+      "output": "true",
+      "explanation": "The groups can be [1,2,3], [2,3,4], and [6,7,8]."
+    },
+    {
+      "input": "hand = [1,2,3,4,5], groupSize = 4",
+      "output": "false"
+    },
+    {
+      "input": "hand = [1,2,3,4,5], groupSize = 1",
+      "output": "true"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isNStraightHand(int[] hand, int groupSize) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool isNStraightHand(vector<int>& hand, int groupSize) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool IsNStraightHand(int[] hand, int groupSize)\n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_n_straight_hand(hand: Vec<i32>, group_size: i32) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc IsNStraightHand(hand []int, groupSize int) bool {\n    \n}",
+    "typescript": "export function isNStraightHand(hand: number[], groupSize: number): boolean {\n    \n}"
+  },
+  "testCases": [
+    {
+      "hand": "[1,2,3,6,2,3,4,7,8]",
+      "groupSize": 3
+    },
+    {
+      "hand": "[1,2,3,4,5]",
+      "groupSize": 4
+    },
+    {
+      "hand": "[1,2,3,4,5]",
+      "groupSize": 1
+    },
+    {
+      "hand": "[1,1,2,2,3,3]",
+      "groupSize": 3
+    }
+  ],
+  "functionName": "isNStraightHand",
+  "params": [
+    {
+      "name": "hand",
+      "type": "int_array"
+    },
+    {
+      "name": "groupSize",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "The number of cards must be divisible by groupSize.",
+    "Count each rank in sorted order. The smallest remaining rank must begin a group because nothing smaller can precede it.",
+    "Use a sorted map to consume the required counts for each consecutive rank and detect a missing card immediately."
+  ]
+}

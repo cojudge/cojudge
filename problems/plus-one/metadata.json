@@ -1,0 +1,61 @@
+{
+  "id": "plus-one",
+  "title": "146. Plus One",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/plus-one/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "digits = [1,2,3]",
+      "output": "[1,2,4]"
+    },
+    {
+      "input": "digits = [4,3,2,1]",
+      "output": "[4,3,2,2]"
+    },
+    {
+      "input": "digits = [9,9]",
+      "output": "[1,0,0]",
+      "explanation": "The carry creates a new most significant digit."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] plusOne(int[] digits) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def plusOne(self, digits: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> plusOne(vector<int>& digits) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] PlusOne(int[] digits)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn plus_one(digits: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc PlusOne(digits []int) []int {\n    return []int{}\n}",
+    "typescript": "export function plusOne(digits: number[]): number[] {\n    return [];\n}"
+  },
+  "testCases": [
+    {
+      "digits": "[1,2,3]"
+    },
+    {
+      "digits": "[4,3,2,1]"
+    },
+    {
+      "digits": "[9,9]"
+    },
+    {
+      "digits": "[0]"
+    },
+    {
+      "digits": "[8,9,9,9]"
+    }
+  ],
+  "functionName": "plusOne",
+  "params": [
+    {
+      "name": "digits",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Process the digits from right to left, just as in elementary addition.",
+    "Stop as soon as a digit is smaller than 9; otherwise turn each trailing 9 into 0.",
+    "If every digit was 9, return a new array one element longer with a leading 1."
+  ]
+}

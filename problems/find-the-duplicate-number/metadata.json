@@ -1,0 +1,58 @@
+{
+  "id": "find-the-duplicate-number",
+  "title": "94. Find the Duplicate Number",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/find-the-duplicate-number/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,3,4,2,2]",
+      "output": "2"
+    },
+    {
+      "input": "nums = [3,1,3,4,2]",
+      "output": "3"
+    },
+    {
+      "input": "nums = [3,3,3,3,3]",
+      "output": "3",
+      "explanation": "The duplicate may occur more than twice."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findDuplicate(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def findDuplicate(self, nums: List[int]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int findDuplicate(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int FindDuplicate(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_duplicate(nums: Vec<i32>) -> i32 {\n        todo!()\n    }\n}",
+    "go": "package main\n\nfunc FindDuplicate(nums []int) int {\n    return 0\n}",
+    "typescript": "export function findDuplicate(nums: number[]): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,3,4,2,2]"
+    },
+    {
+      "nums": "[3,1,3,4,2]"
+    },
+    {
+      "nums": "[3,3,3,3,3]"
+    },
+    {
+      "nums": "[1,1]"
+    }
+  ],
+  "functionName": "findDuplicate",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Interpret each array value as the next index in a linked structure; a duplicate creates a cycle.",
+    "Use slow and fast pointers to find a meeting point inside that cycle.",
+    "Reset one pointer to `nums[0]` and advance both one step at a time; their next meeting point is the duplicate."
+  ]
+}

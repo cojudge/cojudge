@@ -1,0 +1,65 @@
+{
+  "id": "median-of-two-sorted-arrays",
+  "title": "91. Median of Two Sorted Arrays",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/median-of-two-sorted-arrays/",
+  "category": "binary-search",
+  "examples": [
+    {
+      "input": "nums1 = [1,3], nums2 = [2]",
+      "output": "\"2.0\""
+    },
+    {
+      "input": "nums1 = [1,2], nums2 = [3,4]",
+      "output": "\"2.5\""
+    },
+    {
+      "input": "nums1 = [], nums2 = [1]",
+      "output": "\"1.0\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String findMedianSortedArrays(int[] nums1, int[] nums2) {\n        return \"0.0\";\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> str:\n        return \"0.0\"\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    string findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {\n        return \"0.0\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string FindMedianSortedArrays(int[] nums1, int[] nums2)\n    {\n        return \"0.0\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_median_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> String {\n        \"0.0\".to_string()\n    }\n}",
+    "go": "package main\n\nfunc FindMedianSortedArrays(nums1 []int, nums2 []int) string {\n    return \"0.0\"\n}",
+    "typescript": "export function findMedianSortedArrays(nums1: number[], nums2: number[]): string {\n    return \"0.0\";\n}"
+  },
+  "testCases": [
+    {
+      "nums1": "[1,3]",
+      "nums2": "[2]"
+    },
+    {
+      "nums1": "[1,2]",
+      "nums2": "[3,4]"
+    },
+    {
+      "nums1": "[]",
+      "nums2": "[1]"
+    },
+    {
+      "nums1": "[-1]",
+      "nums2": "[1]"
+    }
+  ],
+  "functionName": "findMedianSortedArrays",
+  "params": [
+    {
+      "name": "nums1",
+      "type": "int_array"
+    },
+    {
+      "name": "nums2",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Binary-search a partition in the shorter array and infer the matching partition in the longer array.",
+    "A partition is valid when every value on the left is no greater than every value on the right.",
+    "Use wide integer arithmetic before averaging the two middle values to avoid overflow."
+  ]
+}

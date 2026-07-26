@@ -1,0 +1,50 @@
+{
+  "id": "permutations",
+  "title": "110. Permutations",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/permutations/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "nums = [1,2,3]",
+      "output": "[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]",
+      "explanation": "There are six ways to order three distinct values."
+    },
+    {
+      "input": "nums = [0,1]",
+      "output": "[[0,1],[1,0]]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] permute(int[] nums) {\n        return new int[0][];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def permute(self, nums: List[int]) -> List[List[int]]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> permute(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution {\n    public int[][] Permute(int[] nums) {\n        return new int[0][];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn permute(nums: Vec<i32>) -> Vec<Vec<i32>> {\n        Vec::new()\n    }\n}\n",
+    "go": "package main\n\nfunc Permute(nums []int) [][]int {\n    return [][]int{}\n}\n",
+    "typescript": "export function permute(nums: number[]): number[][] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3]"
+    },
+    {
+      "nums": "[0,1]"
+    },
+    {
+      "nums": "[1]"
+    }
+  ],
+  "functionName": "permute",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Build one position at a time and track which input positions are already used.",
+    "When the current permutation has the same length as `nums`, add a copy to the result."
+  ]
+}

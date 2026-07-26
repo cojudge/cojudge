@@ -39,6 +39,18 @@ export const load: PageServerLoad = async ({ params }) => {
             problem.hints = [];
         }
 
+        problem.examples = Array.isArray(problem.examples)
+            ? problem.examples
+                .filter((example: unknown) => example !== null && typeof example === 'object')
+                .map((example: Record<string, unknown>) => ({
+                    input: String(example.input ?? ''),
+                    output: String(example.output ?? ''),
+                    explanation: typeof example.explanation === 'string'
+                        ? example.explanation.trim()
+                        : ''
+                }))
+            : [];
+
         return { problem };
     } catch (e) {
         throw error(404, 'Problem not found');

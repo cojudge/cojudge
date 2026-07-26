@@ -1,0 +1,70 @@
+{
+  "id": "powx-n",
+  "title": "147. Pow(x, n)",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/powx-n/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "x = \"2.0\", n = 10",
+      "output": "\"1024.0\""
+    },
+    {
+      "input": "x = \"2.1\", n = 3",
+      "output": "\"9.261\""
+    },
+    {
+      "input": "x = \"2.0\", n = -2",
+      "output": "\"0.25\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String myPow(String x, int n) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def myPow(self, x: str, n: int) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string myPow(string x, int n) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string MyPow(string x, int n)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn my_pow(x: String, n: i32) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc MyPow(x string, n int) string {\n    return \"\"\n}",
+    "typescript": "export function myPow(x: string, n: number): string {\n    return \"\";\n}"
+  },
+  "testCases": [
+    {
+      "x": "2.0",
+      "n": 10
+    },
+    {
+      "x": "2.1",
+      "n": 3
+    },
+    {
+      "x": "2.0",
+      "n": -2
+    },
+    {
+      "x": "-2.0",
+      "n": 5
+    },
+    {
+      "x": "1.0001",
+      "n": 10000
+    }
+  ],
+  "functionName": "myPow",
+  "params": [
+    {
+      "name": "x",
+      "type": "string"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "This is a portable adaptation: parse the input string as a double and return a finite, double-parseable decimal string.",
+    "Use exponentiation by squaring, halving the exponent at each step.",
+    "Store the exponent in a wider signed integer before negating it so the minimum 32-bit exponent is handled safely.",
+    "For a negative exponent, invert the base and use the positive magnitude of the exponent."
+  ]
+}

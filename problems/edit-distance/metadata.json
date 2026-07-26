@@ -1,0 +1,61 @@
+{
+  "id": "edit-distance",
+  "title": "135. Edit Distance",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/edit-distance/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "word1 = \"horse\", word2 = \"ros\"",
+      "output": "3",
+      "explanation": "One optimal sequence uses one replacement and two deletions."
+    },
+    {
+      "input": "word1 = \"intention\", word2 = \"execution\"",
+      "output": "5"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minDistance(String word1, String word2) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def minDistance(self, word1: str, word2: str) -> int:\n        return 0\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minDistance(string word1, string word2) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinDistance(string word1, string word2)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_distance(word1: String, word2: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinDistance(word1 string, word2 string) int {\n    return 0\n}",
+    "typescript": "export function minDistance(word1: string, word2: string): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "word1": "horse",
+      "word2": "ros"
+    },
+    {
+      "word1": "intention",
+      "word2": "execution"
+    },
+    {
+      "word1": "",
+      "word2": "abc"
+    },
+    {
+      "word1": "same",
+      "word2": "same"
+    }
+  ],
+  "functionName": "minDistance",
+  "params": [
+    {
+      "name": "word1",
+      "type": "string"
+    },
+    {
+      "name": "word2",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Define a state for converting a prefix of word1 into a prefix of word2.",
+    "When the final characters differ, take one plus the best of insert, delete, and replace."
+  ]
+}

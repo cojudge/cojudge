@@ -1,0 +1,65 @@
+{
+  "id": "coin-change-ii",
+  "title": "130. Coin Change II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/coin-change-ii/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "amount = 5, coins = [1,2,5]",
+      "output": "4",
+      "explanation": "There are four order-independent combinations."
+    },
+    {
+      "input": "amount = 3, coins = [2]",
+      "output": "0"
+    },
+    {
+      "input": "amount = 10, coins = [10]",
+      "output": "1"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int change(int amount, int[] coins) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def change(self, amount: int, coins: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int change(int amount, vector<int>& coins) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int Change(int amount, int[] coins)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn change(amount: i32, coins: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc Change(amount int, coins []int) int {\n    return 0\n}",
+    "typescript": "export function change(amount: number, coins: number[]): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "amount": 5,
+      "coins": "[1,2,5]"
+    },
+    {
+      "amount": 3,
+      "coins": "[2]"
+    },
+    {
+      "amount": 10,
+      "coins": "[10]"
+    },
+    {
+      "amount": 0,
+      "coins": "[2,3]"
+    }
+  ],
+  "functionName": "change",
+  "params": [
+    {
+      "name": "amount",
+      "type": "int"
+    },
+    {
+      "name": "coins",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use one-dimensional dynamic programming where dp[value] counts combinations for that value.",
+    "Process coins in the outer loop so permutations of one combination are not counted again."
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "id": "target-sum",
+  "title": "131. Target Sum",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/target-sum/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "nums = [1,1,1,1,1], target = 3",
+      "output": "5",
+      "explanation": "Exactly five sign assignments evaluate to 3."
+    },
+    {
+      "input": "nums = [1], target = 1",
+      "output": "1"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findTargetSumWays(int[] nums, int target) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def findTargetSumWays(self, nums: List[int], target: int) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int findTargetSumWays(vector<int>& nums, int target) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int FindTargetSumWays(int[] nums, int target)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_target_sum_ways(nums: Vec<i32>, target: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FindTargetSumWays(nums []int, target int) int {\n    return 0\n}",
+    "typescript": "export function findTargetSumWays(nums: number[], target: number): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,1,1,1,1]",
+      "target": 3
+    },
+    {
+      "nums": "[1]",
+      "target": 1
+    },
+    {
+      "nums": "[1]",
+      "target": 2
+    },
+    {
+      "nums": "[0,0,1]",
+      "target": 1
+    }
+  ],
+  "functionName": "findTargetSumWays",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "After each number, track how many assignments reach every sum from -sum(nums) to sum(nums).",
+    "A zero still has two sign choices, so both transitions must be counted."
+  ]
+}

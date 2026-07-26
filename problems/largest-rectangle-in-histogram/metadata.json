@@ -1,0 +1,57 @@
+{
+  "id": "largest-rectangle-in-histogram",
+  "title": "84. Largest Rectangle in Histogram",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/largest-rectangle-in-histogram/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "heights = [2,1,5,6,2,3]",
+      "output": "10",
+      "explanation": "The adjacent bars of heights 5 and 6 form an area of 10."
+    },
+    {
+      "input": "heights = [2,4]",
+      "output": "4"
+    },
+    {
+      "input": "heights = [2,2,2]",
+      "output": "6"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int largestRectangleArea(int[] heights) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def largestRectangleArea(self, heights: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int largestRectangleArea(vector<int>& heights) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int LargestRectangleArea(int[] heights)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn largest_rectangle_area(heights: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc LargestRectangleArea(heights []int) int {\n    return 0\n}",
+    "typescript": "export function largestRectangleArea(heights: number[]): number {\n    return 0;\n}\n"
+  },
+  "testCases": [
+    {
+      "heights": "[2,1,5,6,2,3]"
+    },
+    {
+      "heights": "[2,4]"
+    },
+    {
+      "heights": "[2,2,2]"
+    },
+    {
+      "heights": "[6,5,4,3,2,1]"
+    }
+  ],
+  "functionName": "largestRectangleArea",
+  "params": [
+    {
+      "name": "heights",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Keep indices of bars in non-decreasing height order on a stack.",
+    "When a shorter bar appears, pop taller bars; the current index determines their right boundary and the new stack top determines their left boundary."
+  ]
+}

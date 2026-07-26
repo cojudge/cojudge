@@ -1,0 +1,58 @@
+{
+  "id": "kth-largest-element-in-an-array",
+  "title": "104. Kth Largest Element in an Array",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/kth-largest-element-in-an-array/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "nums = [3,2,1,5,6,4], k = 2",
+      "output": "5"
+    },
+    {
+      "input": "nums = [3,2,3,1,2,4,5,5,6], k = 4",
+      "output": "4",
+      "explanation": "The kth position counts duplicate values."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findKthLargest(int[] nums, int k) {\n        throw new UnsupportedOperationException();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def findKthLargest(self, nums: List[int], k: int) -> int:\n        raise NotImplementedError\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int findKthLargest(vector<int>& nums, int k) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int FindKthLargest(int[] nums, int k)\n    {\n        throw new System.NotImplementedException();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_kth_largest(nums: Vec<i32>, k: i32) -> i32 {\n        todo!()\n    }\n}",
+    "go": "package main\n\nfunc FindKthLargest(nums []int, k int) int {\n    panic(\"TODO\")\n}",
+    "typescript": "export function findKthLargest(nums: number[], k: number): number {\n    throw new Error('Not implemented');\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[3,2,1,5,6,4]",
+      "k": 2
+    },
+    {
+      "nums": "[3,2,3,1,2,4,5,5,6]",
+      "k": 4
+    },
+    {
+      "nums": "[-1,-1]",
+      "k": 2
+    }
+  ],
+  "functionName": "findKthLargest",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "A full sort works, but it does more ordering than the problem requires.",
+    "Keep a min-heap of the k largest values seen so far; its root is the answer.",
+    "Quickselect can achieve expected linear time by partitioning around a pivot."
+  ]
+}
