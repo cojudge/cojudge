@@ -21,6 +21,43 @@
     let gameResultData: Record<string, GameResult[]> = {};
     let historyProblem: { id: string; title: string } | null = null;
 
+    let searchQuery = "";
+    let searchCollapsedGroups = new Set<string>();
+
+    $: if (!searchQuery.trim()) {
+        searchCollapsedGroups.clear();
+        searchCollapsedGroups = new Set();
+    }
+
+    let filteredProblems: Problem[] = [];
+    $: {
+        if (!searchQuery.trim()) {
+            filteredProblems = selectedCourseProblems;
+        } else {
+            const query = searchQuery.toLowerCase().trim();
+            filteredProblems = selectedCourseProblems.filter((p) => {
+                const titleMatch = (p.title || "").toLowerCase().includes(query);
+                const slugMatch = (p.id || "").toLowerCase().includes(query);
+                const statementMatch = (p.statement || "").toLowerCase().includes(query);
+                return titleMatch || slugMatch || statementMatch;
+            });
+        }
+    }
+
+    let isGroupOpenMap: Record<string, boolean> = {};
+    $: {
+        const map: Record<string, boolean> = {};
+        const keys = Object.keys(grouped);
+        for (const key of keys) {
+            if (searchQuery.trim()) {
+                map[key] = !searchCollapsedGroups.has(key);
+            } else {
+                map[key] = openGroups.has(key);
+            }
+        }
+        isGroupOpenMap = map;
+    }
+
     const unsubResults = gameResultsStore.subscribe((v) => {
         gameResultData = v || {};
     });
@@ -84,6 +121,7 @@
         difficulty: string;
         link?: string;
         category?: string;
+        statement?: string;
     };
 
     type CourseSummary = {
@@ -157,7 +195,7 @@
     // Build groups reactively when data/checkMap changes
     $: (function buildGroups() {
         const map: Record<string, Problem[]> = {};
-        for (const p of selectedCourseProblems) {
+        for (const p of filteredProblems) {
             const key =
                 p.category && p.category.trim() ? p.category : "uncategorized";
             if (!map[key]) map[key] = [];
@@ -180,10 +218,15 @@
     })();
 
     function toggleGroup(key: string) {
-        if (openGroups.has(key)) openGroups.delete(key);
-        else openGroups.add(key);
-        // reassign to trigger reactivity
-        openGroups = new Set(openGroups);
+        if (searchQuery.trim()) {
+            if (searchCollapsedGroups.has(key)) searchCollapsedGroups.delete(key);
+            else searchCollapsedGroups.add(key);
+            searchCollapsedGroups = new Set(searchCollapsedGroups);
+        } else {
+            if (openGroups.has(key)) openGroups.delete(key);
+            else openGroups.add(key);
+            openGroups = new Set(openGroups);
+        }
     }
 
     // Sorting helpers
@@ -504,6 +547,32 @@
         {@html renderMarkdown(courseDescription)}
     </div>
 
+    <div class="search-container">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input
+            type="text"
+            class="search-input"
+            placeholder="Search problems..."
+            bind:value={searchQuery}
+            aria-label="Search problems"
+        />
+        {#if searchQuery}
+            <button
+                class="search-clear"
+                onclick={() => searchQuery = ""}
+                aria-label="Clear search"
+            >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        {/if}
+    </div>
+
     {#if showGamePopup}
         <GameModePopup
             problems={selectedCourseProblems}
@@ -529,13 +598,13 @@
     }) as key}
         <div class="group">
             <button
-                class="group-header {openGroups.has(key) ? 'open' : ''}"
+                class="group-header {isGroupOpenMap[key] ? 'open' : ''}"
                 onclick={() => toggleGroup(key)}
-                aria-expanded={openGroups.has(key)}
+                aria-expanded={isGroupOpenMap[key]}
             >
                 <div class="group-left">
                     <span class="chevron"
-                        >{openGroups.has(key) ? "▾" : "▸"}</span
+                        >{isGroupOpenMap[key] ? "▾" : "▸"}</span
                     >
                     <span class="group-title">{pretty(key)}</span>
                 </div>
@@ -555,7 +624,7 @@
                 </div>
             </button>
 
-            {#if openGroups.has(key)}
+            {#if isGroupOpenMap[key]}
                 <div class="table-container">
                     <table class="problem-table">
                         <thead>
@@ -1081,5 +1150,55 @@
     }
     .game-rank-badge.rank-c {
         background: linear-gradient(135deg, #9ca3af, #4b5563);
+    }
+
+    .search-container {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        width: 100%;
+        margin-bottom: var(--spacing-4);
+    }
+    .search-input {
+        width: 100%;
+        padding: 0.55rem 2.25rem 0.55rem 2.5rem;
+        font-size: 0.95rem;
+        font-family: var(--font-sans);
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius-sm);
+        background: var(--color-surface);
+        color: var(--color-text);
+        outline: none;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .search-input:focus {
+        border-color: var(--color-primary, #42c882);
+        box-shadow: 0 0 0 2px rgba(66, 200, 130, 0.15);
+    }
+    .search-icon {
+        position: absolute;
+        left: 0.85rem;
+        color: var(--color-text-secondary);
+        pointer-events: none;
+        opacity: 0.7;
+    }
+    .search-clear {
+        position: absolute;
+        right: 0.65rem;
+        background: transparent;
+        border: none;
+        padding: 0.15rem;
+        cursor: pointer;
+        color: var(--color-text-secondary);
+        display: flex;
+        align-items: center;
+        border-radius: 50%;
+        opacity: 0.7;
+        transition: opacity 0.15s ease, background-color 0.15s ease;
+    }
+    .search-clear:hover {
+        background-color: var(--color-surface-hover);
+        color: var(--color-text);
+        opacity: 1;
     }
 </style>

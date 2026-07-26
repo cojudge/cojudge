@@ -19,6 +19,7 @@ export type ProblemSummary = {
     difficulty: string;
     link?: string;
     category?: string;
+    statement?: string;
 };
 
 const COURSE_ID_PATTERN = /^[a-z0-9][a-z0-9_-]*$/i;
@@ -125,12 +126,19 @@ export async function loadProblemSummaries(problemsDir: string): Promise<Problem
                     if (!isRecord(metadata) || typeof metadata.id !== 'string' || typeof metadata.title !== 'string' || typeof metadata.difficulty !== 'string') {
                         return null;
                     }
+                    let statement: string | undefined = undefined;
+                    try {
+                        statement = await fs.readFile(path.join(problemsDir, entry.name, 'statement.md'), 'utf-8');
+                    } catch {
+                        // ignore
+                    }
                     return {
                         id: metadata.id,
                         title: metadata.title,
                         difficulty: metadata.difficulty,
                         link: typeof metadata.link === 'string' ? metadata.link : undefined,
-                        category: typeof metadata.category === 'string' ? metadata.category : undefined
+                        category: typeof metadata.category === 'string' ? metadata.category : undefined,
+                        statement
                     };
                 } catch {
                     return null;

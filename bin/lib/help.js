@@ -7,6 +7,7 @@ Usage:
   cojudge start <slug> <file>    Open a specific problem or playground with a file
   cojudge [file]                 Same as 'cojudge playground [file]'
   cojudge list                   List all available problem slugs
+  cojudge search <keyword>       Search problems by keyword (in title, slug, and statement)
   cojudge run <slug> <file>     Run sample tests for a problem
   cojudge run <file>              Run a playground file
   cojudge submit <slug> <file>   Submit code for a problem
