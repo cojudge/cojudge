@@ -122,7 +122,7 @@ async function main() {
         handleStart(["start", "playground", action], PORT);
       } else if (!isProblemSlug) {
         console.error(
-          `Error: '${action}' is neither a valid file nor problem slug. Check 'cojudge list' for the problem set or make sure the file exists`,
+          `Error: '${action}' is neither a valid file nor problem slug. Check 'cojudge -h' for usage`,
         );
       } else {
         handleStart(["start", ...args], PORT);
