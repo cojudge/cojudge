@@ -1,3 +1,7 @@
+[![CI](https://github.com/cojudge/cojudge/actions/workflows/test.yml/badge.svg)](https://github.com/cojudge/cojudge/actions/workflows/test.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub Stars](https://img.shields.io/github/stars/cojudge/cojudge?style=social)](https://github.com/cojudge/cojudge)
+
 > Solve classic algorithmic problems without the internet or having to deal with installing runtimes. No discussion forum, no LLM assistant, not even the internet. Solve the curated list with just you, the problem and the judge.
 
 |![Web UI](/screenshots/problem.png) | ![CLI](/screenshots/cli.png) |
