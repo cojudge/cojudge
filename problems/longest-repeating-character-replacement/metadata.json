@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "s=\"ABAB\", k=2",
-      "output": "4"
+      "output": "4",
+      "explanation": "Replace the two 'B's with 'A' (or the two 'A's with 'B') to get \"AAAA\" (\"BBBB\"), a substring of 4 identical characters."
     },
     {
       "input": "s=\"AABABBA\", k=1",
-      "output": "4"
+      "output": "4",
+      "explanation": "Replace the 'B' at index 3 with 'A' to get \"AAAABBA\", giving a \"AAAA\" substring of length 4. Alternatively, replace the 'A' at index 4 with 'B' to get \"AABBBBA\", giving a \"BBBB\" substring."
     }
   ],
   "starterCode": {

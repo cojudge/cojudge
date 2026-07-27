@@ -4,5 +4,19 @@
   { "s": "AAAA", "k": 2 },
   { "s": "BAAAB", "k": 2 },
   { "s": "ABCDE", "k": 1 },
-  { "s": "", "k": 3 }
+  { "s": "A", "k": 0 },
+  { "s": "A", "k": 1 },
+  { "s": "AB", "k": 0 },
+  { "s": "AB", "k": 1 },
+  { "s": "ABBB", "k": 2 },
+  { "s": "AAAAAA", "k": 0 },
+  { "s": "AAAAAA", "k": 10 },
+  { "s": "ABCDEF", "k": 3 },
+  { "s": "AABBBBCC", "k": 0 },
+  { "s": "ABABABAB", "k": 3 },
+  { "s": "AAABAA", "k": 2 },
+  { "s": "ABAA", "k": 0 },
+  { "s": "BAAABABB", "k": 2 },
+  { "s": "KRSCDCS", "k": 2 },
+  { "s": "ABCDEEDCBA", "k": 1 }
 ]
