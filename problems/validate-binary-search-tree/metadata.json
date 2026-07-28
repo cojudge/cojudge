@@ -13,7 +13,7 @@
     {
       "input": "root = [5,1,4,null,null,3,6]",
       "output": "false",
-      "explanation": "Some node violates the BST property (left >= node or right <= node)."
+      "explanation": "Node 4 is in the right subtree of Node 5 but has a smaller value, violating the BST property."
     },
     {
       "input": "root = []",
