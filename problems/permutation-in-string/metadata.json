@@ -12,12 +12,13 @@
     },
     {
       "input": "s1 = \"ab\", s2 = \"eidboaoo\"",
-      "output": "false"
+      "output": "false",
+      "explanation": "No permutation of \"ab\" appears as a contiguous substring in \"eidboaoo\"."
     },
     {
       "input": "s1 = \"adc\", s2 = \"dcda\"",
       "output": "true",
-      "explanation": "The substring \"cda\" has the same character frequencies as \"adc\"."
+      "explanation": "The substring \"cda\" is a permutation of \"adc\"."
     }
   ],
   "starterCode": {

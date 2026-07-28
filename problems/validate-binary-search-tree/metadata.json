@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "root = [2,1,3]",
-      "output": "true"
+      "output": "true",
+      "explanation": "Every node satisfies the BST property: all left descendants < node.val < all right descendants."
     },
     {
       "input": "root = [5,1,4,null,null,3,6]",
-      "output": "false"
+      "output": "false",
+      "explanation": "Some node violates the BST property (left >= node or right <= node)."
     },
     {
       "input": "root = []",
-      "output": "true"
+      "output": "true",
+      "explanation": "Every node satisfies the BST property: all left descendants < node.val < all right descendants."
     }
   ],
   "starterCode": {

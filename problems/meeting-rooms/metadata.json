@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "intervals = [[0,30],[5,10],[15,20]]",
-      "output": "false"
+      "output": "false",
+      "explanation": "Intervals [0,30] overlaps with [5,10] and [15,20], so not all meetings can fit in one room."
     },
     {
       "input": "intervals = [[7,10],[2,4]]",
-      "output": "true"
+      "output": "true",
+      "explanation": "Intervals [7,10] and [2,4] do not overlap, so one room suffices."
     }
   ],
   "starterCode": {

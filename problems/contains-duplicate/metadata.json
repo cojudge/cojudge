@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "nums = [1,2,3,1]",
-      "output": true
+      "output": true,
+      "explanation": "Value 1 appears at indices 0 and 3, so there is a duplicate."
     },
     {
       "input": "nums = [1,2,3,4]",
-      "output": false
+      "output": false,
+      "explanation": "All values are unique, no duplicates found."
     },
     {
       "input": "nums = [1,1,1,3,3,4,3,2,4,2]",
-      "output": true
+      "output": true,
+      "explanation": "Value 1 appears at indices 0 and 1, so there is a duplicate."
     }
   ],
   "starterCode": {

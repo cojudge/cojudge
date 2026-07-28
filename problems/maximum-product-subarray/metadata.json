@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "nums = [2,3,-2,4]",
-      "output": "6"
+      "output": "6",
+      "explanation": "The subarray [2, 3] yields the maximum product 6."
     },
     {
       "input": "nums = [-2,0,-1]",
-      "output": "0"
+      "output": "0",
+      "explanation": "The subarray [0] yields the maximum product 0, since any non-zero product would be negative."
     }
   ],
   "starterCode": {

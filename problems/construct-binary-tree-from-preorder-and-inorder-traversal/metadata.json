@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]",
-      "output": "[3,9,20,null,null,15,7]"
+      "output": "[3,9,20,null,null,15,7]",
+      "explanation": "The first element of preorder (3) is the root. It splits inorder into left ([9]) and right ([15, 20, 7]) subtrees. Repeating recursively builds the tree [3,9,20,null,null,15,7]."
     },
     {
       "input": "preorder = [-1], inorder = [-1]",
-      "output": "[-1]"
+      "output": "[-1]",
+      "explanation": "The first element of preorder (-1) is the root. It splits inorder into left ([]) and right ([]) subtrees. Repeating recursively builds the tree [-1]."
     }
   ],
   "starterCode": {

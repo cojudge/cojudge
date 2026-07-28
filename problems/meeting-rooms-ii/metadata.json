@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "intervals = [[0,30],[5,10],[15,20]]",
-      "output": "2"
+      "output": "2",
+      "explanation": "Intervals [5,10] and [15,20] both overlap within [0,30], so 2 rooms are needed."
     },
     {
       "input": "intervals = [[7,10],[2,4]]",
-      "output": "1"
+      "output": "1",
+      "explanation": "Intervals [7,10] and [2,4] do not overlap, so 1 room suffices."
     }
   ],
   "starterCode": {

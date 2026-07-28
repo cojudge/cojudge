@@ -12,7 +12,8 @@
     },
     {
       "input": "grid = [[0,0],[0,0]]",
-      "output": "0"
+      "output": "0",
+      "explanation": "The 2x2 grid contains no land cells, so the maximum island area is 0."
     }
   ],
   "starterCode": {

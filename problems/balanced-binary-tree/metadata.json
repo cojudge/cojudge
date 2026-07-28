@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "root = [3,9,20,null,null,15,7]",
-      "output": "true"
+      "output": "true",
+      "explanation": "At every node, the heights of the left and right subtrees differ by at most 1."
     },
     {
       "input": "root = [1,2,2,3,3,null,null,4,4]",
-      "output": "false"
+      "output": "false",
+      "explanation": "Some node has left and right subtree heights differing by more than 1."
     },
     {
       "input": "root = []",
-      "output": "true"
+      "output": "true",
+      "explanation": "At every node, the heights of the left and right subtrees differ by at most 1."
     }
   ],
   "starterCode": {

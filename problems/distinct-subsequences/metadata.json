@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "s = \"rabbbit\", t = \"rabbit\"",
-      "output": "3"
+      "output": "3",
+      "explanation": "The number of distinct subsequences of \"rabbbit\" equalling \"rabbit\" is 3."
     },
     {
       "input": "s = \"babgbag\", t = \"bag\"",
-      "output": "5"
+      "output": "5",
+      "explanation": "The number of distinct subsequences of \"babgbag\" equalling \"bag\" is 5."
     }
   ],
   "starterCode": {

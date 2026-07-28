@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "n = 2",
-      "output": "[0,1,1]"
+      "output": "[0,1,1]",
+      "explanation": "For numbers 0 through 2, the counts of 1-bits in their binary representations are [0, 1, 1]."
     },
     {
       "input": "n = 5",
-      "output": "[0,1,1,2,1,2]"
+      "output": "[0,1,1,2,1,2]",
+      "explanation": "For numbers 0 through 5, the counts of 1-bits in their binary representations are [0, 1, 1, 2, 1, 2]."
     }
   ],
   "starterCode": {

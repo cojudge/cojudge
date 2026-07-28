@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "digits = \"23\"",
-      "output": "[\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]"
+      "output": "[\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]",
+      "explanation": "Digits '2' and '3' map to ['abc', 'def'] respectively. There are 9 total letter combinations: [\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]."
     },
     {
       "input": "digits = \"7\"",
-      "output": "[\"p\",\"q\",\"r\",\"s\"]"
+      "output": "[\"p\",\"q\",\"r\",\"s\"]",
+      "explanation": "Each digit \"7\" maps to ['pqrs']. There are 4 total letter combinations: [\"p\",\"q\",\"r\",\"s\"]."
     },
     {
       "input": "digits = \"2\"",
-      "output": "[\"a\",\"b\",\"c\"]"
+      "output": "[\"a\",\"b\",\"c\"]",
+      "explanation": "Each digit \"2\" maps to ['abc']. There are 3 total letter combinations: [\"a\",\"b\",\"c\"]."
     }
   ],
   "starterCode": {

@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "nums = [10,9,2,5,3,7,101,18]",
-      "output": "4"
+      "output": "4",
+      "explanation": "The longest increasing subsequence in [10, 9, 2, 5, 3, 7, 101, 18] is [2, 3, 7, 101] or [2, 3, 7, 18], both of length 4."
     },
     {
       "input": "nums = [0,1,0,3,2,3]",
-      "output": "4"
+      "output": "4",
+      "explanation": "The longest increasing subsequence in [0, 1, 0, 3, 2, 3] is [0, 1, 2, 3], of length 4."
     }
   ],
   "starterCode": {

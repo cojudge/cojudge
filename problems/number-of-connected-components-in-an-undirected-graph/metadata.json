@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "n=5, edges=[[0,1],[1,2],[3,4]]",
-      "output": "2"
+      "output": "2",
+      "explanation": "The 5 nodes with 3 edges form 2 connected components."
     },
     {
       "input": "n=5, edges=[[0,1],[1,2],[2,3],[3,4]]",
-      "output": "1"
+      "output": "1",
+      "explanation": "The 5 nodes with 4 edges form 1 connected component."
     }
   ],
   "starterCode": {

@@ -12,11 +12,13 @@
     },
     {
       "input": "gas = [2,3,4], cost = [3,4,3]",
-      "output": "-1"
+      "output": "-1",
+      "explanation": "No starting station can complete the circuit (total gas < total cost)."
     },
     {
       "input": "gas = [5], cost = [4]",
-      "output": "0"
+      "output": "0",
+      "explanation": "Starting at station 0, there is enough gas (5) to cover the cost (4) and complete the circuit."
     }
   ],
   "starterCode": {

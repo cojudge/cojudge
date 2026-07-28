@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "head = [1,2,3,4,5]",
-      "output": "[5,4,3,2,1]"
+      "output": "[5,4,3,2,1]",
+      "explanation": "Reversing the linked list [1,2,3,4,5] gives the reversed order [5,4,3,2,1]."
     },
     {
       "input": "head = [1,2]",
-      "output": "[2,1]"
+      "output": "[2,1]",
+      "explanation": "Reversing the linked list [1,2] gives the reversed order [2,1]."
     },
     {
       "input": "head = []",
-      "output": "[]"
+      "output": "[]",
+      "explanation": "The list is empty, so the reversed list is also empty."
     }
   ],
   "starterCode": {

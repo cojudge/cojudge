@@ -12,7 +12,8 @@
     },
     {
       "input": "nums = [1], target = 1",
-      "output": "1"
+      "output": "1",
+      "explanation": "There is 1 way to assign +/- to [1] such that the sum equals 1."
     }
   ],
   "starterCode": {

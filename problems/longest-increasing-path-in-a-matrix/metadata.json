@@ -12,11 +12,13 @@
     },
     {
       "input": "matrix = [[3,4,5],[3,2,6],[2,2,1]]",
-      "output": "4"
+      "output": "4",
+      "explanation": "One longest increasing path is 3 -> 4 -> 5 -> 6, which has length 4."
     },
     {
       "input": "matrix = [[1]]",
-      "output": "1"
+      "output": "1",
+      "explanation": "The only cell is 1, so the longest increasing path length is 1."
     }
   ],
   "starterCode": {

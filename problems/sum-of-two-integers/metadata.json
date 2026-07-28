@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "a = 1, b = 2",
-      "output": "3"
+      "output": "3",
+      "explanation": "1 + 2 = 3."
     },
     {
       "input": "a = 2, b = 3",
-      "output": "5"
+      "output": "5",
+      "explanation": "2 + 3 = 5."
     }
   ],
   "starterCode": {

@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "s = \"aa\", p = \"a\"",
-      "output": "false"
+      "output": "false",
+      "explanation": "The pattern \"a\" does not match the string \"aa\"."
     },
     {
       "input": "s = \"aa\", p = \"a*\"",
-      "output": "true"
+      "output": "true",
+      "explanation": "The pattern \"a*\" means zero or more 'a' characters, so it matches \"aa\"."
     },
     {
       "input": "s = \"aab\", p = \"c*a*b\"",

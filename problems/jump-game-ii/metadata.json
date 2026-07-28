@@ -12,11 +12,13 @@
     },
     {
       "input": "nums = [2,3,0,1,4]",
-      "output": "2"
+      "output": "2",
+      "explanation": "Jump from index 0 to index 1, then to the last index."
     },
     {
       "input": "nums = [0]",
-      "output": "0"
+      "output": "0",
+      "explanation": "Already at the last index, so 0 jumps are needed."
     }
   ],
   "starterCode": {

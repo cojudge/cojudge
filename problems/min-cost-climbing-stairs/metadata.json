@@ -12,7 +12,8 @@
     },
     {
       "input": "cost = [1,100,1,1,1,100,1,1,100,1]",
-      "output": "6"
+      "output": "6",
+      "explanation": "The minimum cost to reach the top with cost array [1,100,1,1,1,100,1,1,100,1] is 6."
     }
   ],
   "starterCode": {

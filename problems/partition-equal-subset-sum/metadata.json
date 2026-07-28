@@ -12,7 +12,8 @@
     },
     {
       "input": "nums = [1,2,3,5]",
-      "output": "false"
+      "output": "false",
+      "explanation": "The total sum is 11 (odd), so the array cannot be split into two equal-sum subsets."
     }
   ],
   "starterCode": {

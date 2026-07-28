@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2",
-      "output": "2"
+      "output": "2",
+      "explanation": "From node 2, the signal reaches all 4 nodes; the longest travel time is 2."
     },
     {
       "input": "times = [[1,2,1]], n = 2, k = 2",
-      "output": "-1"
+      "output": "-1",
+      "explanation": "Node 2 has no outgoing edges, so it cannot reach node 1. Since not all nodes receive the signal, the answer is -1."
     }
   ],
   "starterCode": {

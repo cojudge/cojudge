@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "s=\"anagram\", t=\"nagaram\"",
-      "output": "true"
+      "output": "true",
+      "explanation": "Both \"anagram\" and \"nagaram\" contain the same characters with identical frequencies, so they are anagrams."
     },
     {
       "input": "s=\"rat\", t=\"car\"",
-      "output": "false"
+      "output": "false",
+      "explanation": "Character frequency counts differ between \"rat\" and \"car\", so they are not anagrams."
     }
   ],
   "starterCode": {

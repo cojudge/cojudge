@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "x = 123",
-      "output": "321"
+      "output": "321",
+      "explanation": "Reversing the digits of 123 gives 321."
     },
     {
       "input": "x = -123",
-      "output": "-321"
+      "output": "-321",
+      "explanation": "Reversing the digits of -123 gives -321."
     },
     {
       "input": "x = 120",
-      "output": "21"
+      "output": "21",
+      "explanation": "Reversing the digits of 120 gives 21."
     },
     {
       "input": "x = 1534236469",

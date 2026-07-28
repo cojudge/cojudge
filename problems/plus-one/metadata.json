@@ -7,16 +7,18 @@
   "examples": [
     {
       "input": "digits = [1,2,3]",
-      "output": "[1,2,4]"
+      "output": "[1,2,4]",
+      "explanation": "Adding 1 to [1, 2, 3] gives [1, 2, 4]."
     },
     {
       "input": "digits = [4,3,2,1]",
-      "output": "[4,3,2,2]"
+      "output": "[4,3,2,2]",
+      "explanation": "Adding 1 to [4, 3, 2, 1] gives [4, 3, 2, 2]."
     },
     {
       "input": "digits = [9,9]",
       "output": "[1,0,0]",
-      "explanation": "The carry creates a new most significant digit."
+      "explanation": "Adding 1 to 99 produces 100."
     }
   ],
   "starterCode": {

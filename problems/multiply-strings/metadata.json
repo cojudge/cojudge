@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "num1 = \"2\", num2 = \"3\"",
-      "output": "\"6\""
+      "output": "\"6\"",
+      "explanation": "\"2\" * \"3\" = \"6\"."
     },
     {
       "input": "num1 = \"123\", num2 = \"456\"",
-      "output": "\"56088\""
+      "output": "\"56088\"",
+      "explanation": "\"123\" * \"456\" = \"56088\"."
     },
     {
       "input": "num1 = \"0\", num2 = \"987654321\"",
-      "output": "\"0\""
+      "output": "\"0\"",
+      "explanation": "\"0\" * \"987654321\" = \"0\"."
     }
   ],
   "starterCode": {

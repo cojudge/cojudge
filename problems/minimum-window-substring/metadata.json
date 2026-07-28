@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "s=\"ADOBECODEBANC\", t=\"ABC\"",
-      "output": "\"BANC\""
+      "output": "\"BANC\"",
+      "explanation": "The minimum window in \"ADOBECODEBANC\" containing all chars of \"ABC\" is \"BANC\"."
     },
     {
       "input": "s=\"a\", t=\"a\"",
-      "output": "\"a\""
+      "output": "\"a\"",
+      "explanation": "The minimum window in \"a\" containing all chars of \"a\" is \"a\"."
     }
   ],
   "starterCode": {

@@ -7,7 +7,8 @@
   "examples": [
     {
       "input": "numCourses = 2, prerequisites = [[1,0]]",
-      "output": "[0,1]"
+      "output": "[0,1]",
+      "explanation": "Course 0 has no prerequisites, and course 1 requires course 0, so a valid ordering is [0,1]."
     },
     {
       "input": "numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]",
@@ -16,7 +17,8 @@
     },
     {
       "input": "numCourses = 2, prerequisites = [[1,0],[0,1]]",
-      "output": "[]"
+      "output": "[]",
+      "explanation": "A cycle exists in the prerequisites, so no valid ordering of 2 courses exists."
     }
   ],
   "starterCode": {

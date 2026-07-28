@@ -17,7 +17,8 @@
     },
     {
       "input": "prices = [1,2]",
-      "output": 1
+      "output": 1,
+      "explanation": "Buy at 1 and sell at 2 for a profit of 2 - 1 = 1."
     }
   ],
   "starterCode": {

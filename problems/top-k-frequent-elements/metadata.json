@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "nums = [1,1,1,2,2,3], k = 2",
-      "output": "[1,2]"
+      "output": "[1,2]",
+      "explanation": "The frequency counts are {1:3, 2:2, 3:1}. The top 2 most frequent elements are [1, 2]."
     },
     {
       "input": "nums = [1], k = 1",
-      "output": "[1]"
+      "output": "[1]",
+      "explanation": "The frequency count is {1:1}. The top 1 most frequent element is [1]."
     }
   ],
   "starterCode": {

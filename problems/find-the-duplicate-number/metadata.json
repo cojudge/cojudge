@@ -7,16 +7,18 @@
   "examples": [
     {
       "input": "nums = [1,3,4,2,2]",
-      "output": "2"
+      "output": "2",
+      "explanation": "The repeated number in [1, 3, 4, 2, 2] is 2."
     },
     {
       "input": "nums = [3,1,3,4,2]",
-      "output": "3"
+      "output": "3",
+      "explanation": "The repeated number in [3, 1, 3, 4, 2] is 3."
     },
     {
       "input": "nums = [3,3,3,3,3]",
       "output": "3",
-      "explanation": "The duplicate may occur more than twice."
+      "explanation": "The number 3 is the duplicate, appearing 5 times."
     }
   ],
   "starterCode": {

@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "temperatures = [73,74,75,71,69,72,76,73]",
-      "output": "[1,1,4,2,1,1,0,0]"
+      "output": "[1,1,4,2,1,1,0,0]",
+      "explanation": "The days until a warmer temperature for each day are [1, 1, 4, 2, 1, 1, 0, 0]."
     },
     {
       "input": "temperatures = [30,40,50,60]",
-      "output": "[1,1,1,0]"
+      "output": "[1,1,1,0]",
+      "explanation": "The days until a warmer temperature for each day are [1, 1, 1, 0]."
     },
     {
       "input": "temperatures = [30,60,90]",
-      "output": "[1,1,0]"
+      "output": "[1,1,0]",
+      "explanation": "The days until a warmer temperature for each day are [1, 1, 0]."
     }
   ],
   "starterCode": {

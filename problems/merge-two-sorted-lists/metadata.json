@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "list1 = [1,2,4], list2 = [1,3,4]",
-      "output": "[1,1,2,3,4,4]"
+      "output": "[1,1,2,3,4,4]",
+      "explanation": "Merging the sorted lists [1,2,4] and [1,3,4] produces the sorted list [1,1,2,3,4,4]."
     },
     {
       "input": "list1 = [], list2 = []",
-      "output": "[]"
+      "output": "[]",
+      "explanation": "Merging the sorted lists [] and [] produces the sorted list []."
     },
     {
       "input": "list1 = [], list2 = [0]",
-      "output": "[0]"
+      "output": "[0]",
+      "explanation": "Merging the sorted lists [] and [0] produces the sorted list [0]."
     }
   ],
   "starterCode": {

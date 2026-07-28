@@ -12,7 +12,8 @@
     },
     {
       "input": "nums = [0]",
-      "output": "[[],[0]]"
+      "output": "[[],[0]]",
+      "explanation": "The unique subsets of [0] are [[],[0]]."
     }
   ],
   "starterCode": {

@@ -17,7 +17,8 @@
     },
     {
       "input": "n = 1",
-      "output": "true"
+      "output": "true",
+      "explanation": "1 is already 1, so its digit-square sequence stays at 1."
     }
   ],
   "starterCode": {

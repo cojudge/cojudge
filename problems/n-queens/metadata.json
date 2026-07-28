@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "n = 4",
-      "output": "[[\".Q..\",\"...Q\",\"Q...\",\"..Q.\"],[\"..Q.\",\"Q...\",\"...Q\",\".Q..\"]]"
+      "output": "[[\".Q..\",\"...Q\",\"Q...\",\"..Q.\"],[\"..Q.\",\"Q...\",\"...Q\",\".Q..\"]]",
+      "explanation": "All 2 distinct solutions for the 4-queens problem."
     },
     {
       "input": "n = 1",
-      "output": "[[\"Q\"]]"
+      "output": "[[\"Q\"]]",
+      "explanation": "The only solution for the 1-queens problem."
     }
   ],
   "starterCode": {

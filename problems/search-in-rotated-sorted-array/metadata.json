@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "nums = [4,5,6,7,0,1,2], target = 0",
-      "output": "4"
+      "output": "4",
+      "explanation": "Target 0 is at index 4 in the rotated array."
     },
     {
       "input": "nums = [4,5,6,7,0,1,2], target = 3",
-      "output": "-1"
+      "output": "-1",
+      "explanation": "Target 3 is not present in the rotated array."
     }
   ],
   "starterCode": {

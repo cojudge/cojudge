@@ -12,11 +12,13 @@
     },
     {
       "input": "intervals = [[2,3],[2,5],[1,8],[20,25]], queries = [2,19,5,22]",
-      "output": "[2,-1,4,6]"
+      "output": "[2,-1,4,6]",
+      "explanation": "Query 2 is covered by [2,3] (size 2), [2,5] (size 4), and [1,8] (size 8) — smallest is [2,3] size 2. Query 19 has no covering interval, so -1. Query 5 is covered by [2,5] (size 4) and [1,8] (size 8) — smallest is [2,5] size 4. Query 22 is covered only by [20,25] (size 6)."
     },
     {
       "input": "intervals = [[1,1]], queries = [1,2]",
-      "output": "[1,-1]"
+      "output": "[1,-1]",
+      "explanation": "Query 1 is covered by [1,1] (size 1). Query 2 has no covering interval, so -1."
     }
   ],
   "starterCode": {

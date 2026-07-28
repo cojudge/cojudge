@@ -12,11 +12,13 @@
     },
     {
       "input": "nodes = [[1,1],[2,1]]",
-      "output": "[[1,1],[2,1]]"
+      "output": "[[1,1],[2,1]]",
+      "explanation": "A deep copy of the linked list preserves all node values and random pointer targets: [[1,1],[2,1]]."
     },
     {
       "input": "nodes = []",
-      "output": "[]"
+      "output": "[]",
+      "explanation": "A deep copy of the empty list is also empty: []."
     }
   ],
   "starterCode": {

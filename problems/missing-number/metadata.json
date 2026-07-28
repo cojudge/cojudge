@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "nums = [3,0,1]",
-      "output": "2"
+      "output": "2",
+      "explanation": "The expected sum of [0,3] is 6, but the given numbers sum to 4. The missing number is 6 - 4 = 2."
     },
     {
       "input": "nums = [0,1]",
-      "output": "2"
+      "output": "2",
+      "explanation": "The expected sum of [0,2] is 3, but the given numbers sum to 1. The missing number is 3 - 1 = 2."
     },
     {
       "input": "nums = [9,6,4,2,3,5,7,0,1]",
-      "output": "8"
+      "output": "8",
+      "explanation": "The expected sum of [0,9] is 45, but the given numbers sum to 37. The missing number is 45 - 37 = 8."
     }
   ],
   "starterCode": {

@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "nums = [1,2,3,4]",
-      "output": "[24,12,8,6]"
+      "output": "[24,12,8,6]",
+      "explanation": "Each output element is the product of every other element in [1,2,3,4]: 2\u00b73\u00b74=24, 1\u00b73\u00b74=12, 1\u00b72\u00b74=8, 1\u00b72\u00b73=6."
     },
     {
       "input": "nums = [-1,1,0,-3,3]",
-      "output": "[0,0,9,0,0]"
+      "output": "[0,0,9,0,0]",
+      "explanation": "The single zero at index 2 makes all other output positions zero; at index 2 the output is the product of the remaining elements: (\u22121)\u00b71\u00b7(\u22123)\u00b73 = 9."
     }
   ],
   "starterCode": {

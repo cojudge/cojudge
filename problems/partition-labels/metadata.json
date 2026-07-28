@@ -12,11 +12,13 @@
     },
     {
       "input": "s = \"eccbbbbdec\"",
-      "output": "[10]"
+      "output": "[10]",
+      "explanation": "All characters in the string appear within a single contiguous segment, so the partition is [10]."
     },
     {
       "input": "s = \"abc\"",
-      "output": "[1,1,1]"
+      "output": "[1,1,1]",
+      "explanation": "Each character appears in its own contiguous segment, so the partition is [1,1,1]."
     }
   ],
   "starterCode": {

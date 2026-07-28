@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "root = [3,9,20,null,null,15,7]",
-      "output": "[[3],[9,20],[15,7]]"
+      "output": "[[3],[9,20],[15,7]]",
+      "explanation": "The level-order traversal groups are [[3],[9,20],[15,7]]."
     },
     {
       "input": "root = [1]",
-      "output": "[[1]]"
+      "output": "[[1]]",
+      "explanation": "The level-order traversal groups are [[1]]."
     },
     {
       "input": "root = []",
-      "output": "[]"
+      "output": "[]",
+      "explanation": "The level-order traversal groups are []."
     }
   ],
   "starterCode": {

@@ -12,11 +12,13 @@
     },
     {
       "input": "nums = [1,5]",
-      "output": "10"
+      "output": "10",
+      "explanation": "Max coins from [1, 5] is 10."
     },
     {
       "input": "nums = [7]",
-      "output": "7"
+      "output": "7",
+      "explanation": "Max coins from [7] is 7."
     }
   ],
   "starterCode": {

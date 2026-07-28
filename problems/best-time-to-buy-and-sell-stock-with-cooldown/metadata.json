@@ -12,7 +12,8 @@
     },
     {
       "input": "prices = [1]",
-      "output": "0"
+      "output": "0",
+      "explanation": "With only one price, no transaction can be made, so the maximum profit is 0."
     }
   ],
   "starterCode": {

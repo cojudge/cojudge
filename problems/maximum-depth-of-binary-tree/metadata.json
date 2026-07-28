@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "root = [3,9,20,null,null,15,7]",
-      "output": "3"
+      "output": "3",
+      "explanation": "The maximum depth (root-to-leaf longest path) is 3."
     },
     {
       "input": "root = [1,null,2]",
-      "output": "2"
+      "output": "2",
+      "explanation": "The maximum depth (root-to-leaf longest path) is 2."
     },
     {
       "input": "root = []",
-      "output": "0"
+      "output": "0",
+      "explanation": "The maximum depth (root-to-leaf longest path) is 0."
     }
   ],
   "starterCode": {

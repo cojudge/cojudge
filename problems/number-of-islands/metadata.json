@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "grid = [[1,1,1,1,0],[1,1,0,1,0],[1,1,0,0,0],[0,0,0,0,0]]",
-      "output": "1"
+      "output": "1",
+      "explanation": "There is 1 island in the 4x5 grid."
     },
     {
       "input": "grid = [[1,1,0,0,0],[1,1,0,0,0],[0,0,1,0,0],[0,0,0,1,1]]",
-      "output": "3"
+      "output": "3",
+      "explanation": "There are 3 islands in the 4x5 grid."
     }
   ],
   "starterCode": {

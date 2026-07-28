@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "head = [3,2,0,-4], pos = 1",
-      "output": "true"
+      "output": "true",
+      "explanation": "The linked list has a cycle (tail connects to a previous node), so the output is true."
     },
     {
       "input": "head = [1,2], pos = 0",
-      "output": "true"
+      "output": "true",
+      "explanation": "The linked list has a cycle (tail connects to a previous node), so the output is true."
     },
     {
       "input": "head = [1], pos = -1",
-      "output": "false"
+      "output": "false",
+      "explanation": "The linked list [1] has no cycle (pos=-1 means no connection), so the output is false."
     }
   ],
   "starterCode": {
@@ -28,32 +31,110 @@
     "typescript": "import { ListNode } from './ListNode';\nexport function hasCycle(head: ListNode | null): boolean {\n    \n}"
   },
   "testCases": [
-    { "head": "[]", "pos": -1 },
-    { "head": "[1]", "pos": -1 },
-    { "head": "[1]", "pos": 0 },
-    { "head": "[1,2]", "pos": -1 },
-    { "head": "[1,2]", "pos": 0 },
-    { "head": "[1,2]", "pos": 1 },
-    { "head": "[3,2,0,-4]", "pos": 1 },
-    { "head": "[3,2,0,-4]", "pos": -1 },
-    { "head": "[1,2,3]", "pos": -1 },
-    { "head": "[1,2,3]", "pos": 1 },
-    { "head": "[1,2,3]", "pos": 2 },
-    { "head": "[1,2,3,4,5]", "pos": -1 },
-    { "head": "[1,2,3,4,5]", "pos": 0 },
-    { "head": "[1,2,3,4,5]", "pos": 2 },
-    { "head": "[1,2,3,4,5]", "pos": 4 },
-    { "head": "[-5,10,100,-1000]", "pos": -1 },
-    { "head": "[-5,10,100,-1000]", "pos": 0 },
-    { "head": "[-5,10,100,-1000]", "pos": 3 },
-    { "head": "[10,20,30,40,50,60]", "pos": -1 },
-    { "head": "[10,20,30,40,50,60]", "pos": 3 },
-    { "head": "[0]", "pos": -1 },
-    { "head": "[0]", "pos": 0 },
-    { "head": "[100000]", "pos": 0 },
-    { "head": "[-100000]", "pos": 0 },
-    { "head": "[1,1,1,1,1]", "pos": -1 },
-    { "head": "[1,1,1,1,1]", "pos": 2 }
+    {
+      "head": "[]",
+      "pos": -1
+    },
+    {
+      "head": "[1]",
+      "pos": -1
+    },
+    {
+      "head": "[1]",
+      "pos": 0
+    },
+    {
+      "head": "[1,2]",
+      "pos": -1
+    },
+    {
+      "head": "[1,2]",
+      "pos": 0
+    },
+    {
+      "head": "[1,2]",
+      "pos": 1
+    },
+    {
+      "head": "[3,2,0,-4]",
+      "pos": 1
+    },
+    {
+      "head": "[3,2,0,-4]",
+      "pos": -1
+    },
+    {
+      "head": "[1,2,3]",
+      "pos": -1
+    },
+    {
+      "head": "[1,2,3]",
+      "pos": 1
+    },
+    {
+      "head": "[1,2,3]",
+      "pos": 2
+    },
+    {
+      "head": "[1,2,3,4,5]",
+      "pos": -1
+    },
+    {
+      "head": "[1,2,3,4,5]",
+      "pos": 0
+    },
+    {
+      "head": "[1,2,3,4,5]",
+      "pos": 2
+    },
+    {
+      "head": "[1,2,3,4,5]",
+      "pos": 4
+    },
+    {
+      "head": "[-5,10,100,-1000]",
+      "pos": -1
+    },
+    {
+      "head": "[-5,10,100,-1000]",
+      "pos": 0
+    },
+    {
+      "head": "[-5,10,100,-1000]",
+      "pos": 3
+    },
+    {
+      "head": "[10,20,30,40,50,60]",
+      "pos": -1
+    },
+    {
+      "head": "[10,20,30,40,50,60]",
+      "pos": 3
+    },
+    {
+      "head": "[0]",
+      "pos": -1
+    },
+    {
+      "head": "[0]",
+      "pos": 0
+    },
+    {
+      "head": "[100000]",
+      "pos": 0
+    },
+    {
+      "head": "[-100000]",
+      "pos": 0
+    },
+    {
+      "head": "[1,1,1,1,1]",
+      "pos": -1
+    },
+    {
+      "head": "[1,1,1,1,1]",
+      "pos": 2
+    }
   ],
   "functionName": "hasCycle",
   "params": [

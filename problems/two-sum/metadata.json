@@ -12,11 +12,13 @@
     },
     {
       "input": "nums = [3,2,4], target = 6",
-      "output": "[1,2]"
+      "output": "[1,2]",
+      "explanation": "nums[1] + nums[2] = 2 + 4 = 6. Since nums[1] + nums[2] == target, we return [1,2]."
     },
     {
       "input": "nums = [3,3], target = 6",
-      "output": "[0,1]"
+      "output": "[0,1]",
+      "explanation": "nums[0] + nums[1] = 3 + 3 = 6. Since nums[0] + nums[1] == target, we return [0,1]."
     }
   ],
   "starterCode": {

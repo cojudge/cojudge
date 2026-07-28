@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "root = [6,2,8,0,4,7,9,null,null,3,5], p = [2,0,4,null,null,3,5], q = [8,7,9]",
-      "output": "6"
+      "output": "6",
+      "explanation": "Nodes 2 and 8 are in opposite subtrees of node 6, so 6 is the lowest common ancestor."
     },
     {
       "input": "root = [6,2,8,0,4,7,9,null,null,3,5], p = [2,0,4,null,null,3,5], q = [4,3,5]",
-      "output": "2"
+      "output": "2",
+      "explanation": "Node 4 is in the right subtree of node 2, and p=2 is the root of that subtree, so 2 is the lowest common ancestor."
     },
     {
       "input": "root = [2,1], p = 2, q = 1",
-      "output": "2"
+      "output": "2",
+      "explanation": "Node 1 is in the left subtree of node 2, and p=2 is the root, so 2 is the lowest common ancestor."
     }
   ],
   "starterCode": {

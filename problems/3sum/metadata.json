@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "nums = [-1,0,1,2,-1,-4]",
-      "output": "[[-1,-1,2],[-1,0,1]]"
+      "output": "[[-1,-1,2],[-1,0,1]]",
+      "explanation": "The triplets [-1,-1,2] and [-1,0,1] each sum to 0."
     },
     {
       "input": "nums = [0,1,1]",
-      "output": "[]"
+      "output": "[]",
+      "explanation": "No three numbers sum to 0. The only possible triplets are (0,1,1) which sums to 2."
     },
     {
       "input": "nums = [0,0,0]",
-      "output": "[[0,0,0]]"
+      "output": "[[0,0,0]]",
+      "explanation": "All three zeros sum to 0: [[0,0,0]]."
     }
   ],
   "starterCode": {

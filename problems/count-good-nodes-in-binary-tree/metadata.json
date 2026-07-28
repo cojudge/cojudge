@@ -12,11 +12,13 @@
     },
     {
       "input": "root = [3,3,null,4,2]",
-      "output": "3"
+      "output": "3",
+      "explanation": "There are 3 good nodes (nodes where all ancestors have <= node.val)."
     },
     {
       "input": "root = [1]",
-      "output": "1"
+      "output": "1",
+      "explanation": "There are 1 good nodes (nodes where all ancestors have <= node.val)."
     }
   ],
   "starterCode": {
