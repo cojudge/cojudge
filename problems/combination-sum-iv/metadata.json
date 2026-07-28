@@ -7,7 +7,8 @@
   "examples": [
     {
       "input": "nums=[1,2,3], target=4",
-      "output": "7"
+      "output": "7",
+      "explanation": "The number of ways to form 4 is 7."
     }
   ],
   "starterCode": {

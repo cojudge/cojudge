@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "words = [\"wrt\",\"wrf\",\"er\",\"ett\",\"rftt\"]",
-      "output": "\"wertf\" (one valid order)"
+      "output": "\"wertf\" (one valid order)",
+      "explanation": "The valid character order derived from the given words is \"wertf\"."
     },
     {
       "input": "words = [\"z\",\"x\"]",
-      "output": "\"zx\""
+      "output": "\"zx\"",
+      "explanation": "The valid character order derived from the given words is \"zx\"."
     }
   ],
   "starterCode": {

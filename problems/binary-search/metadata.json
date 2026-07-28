@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "nums = [-1,0,3,5,9,12], target = 9",
-      "output": "4"
+      "output": "4",
+      "explanation": "Target 9 is found at index 4 in the sorted array."
     },
     {
       "input": "nums = [-1,0,3,5,9,12], target = 2",
-      "output": "-1"
+      "output": "-1",
+      "explanation": "Target 2 is not present in the array."
     },
     {
       "input": "nums = [5], target = 5",
-      "output": "0"
+      "output": "0",
+      "explanation": "Target 5 is found at index 0 in the sorted array."
     }
   ],
   "starterCode": {

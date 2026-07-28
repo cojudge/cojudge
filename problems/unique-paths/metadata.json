@@ -7,7 +7,8 @@
   "examples": [
     {
       "input": "m=3, n=7",
-      "output": "28"
+      "output": "28",
+      "explanation": "There are 28 unique paths on a 3x7 grid."
     }
   ],
   "starterCode": {

@@ -12,11 +12,13 @@
     },
     {
       "input": "l1 = [0], l2 = [0]",
-      "output": "[0]"
+      "output": "[0]",
+      "explanation": "0 + 0 = 0. Stored in reversed order as [0]."
     },
     {
       "input": "l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]",
-      "output": "[8,9,9,9,0,0,0,1]"
+      "output": "[8,9,9,9,0,0,0,1]",
+      "explanation": "9999999 + 9999 = 10009998. Stored in reversed order as [8, 9, 9, 9, 0, 0, 0, 1]."
     }
   ],
   "starterCode": {

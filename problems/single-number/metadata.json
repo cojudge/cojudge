@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "nums = [2,2,1]",
-      "output": "1"
+      "output": "1",
+      "explanation": "Every number in [2, 2, 1] appears twice except 1, so 1 is the single number."
     },
     {
       "input": "nums = [4,1,2,1,2]",
-      "output": "4"
+      "output": "4",
+      "explanation": "Every number in [4, 1, 2, 1, 2] appears twice except 4, so 4 is the single number."
     },
     {
       "input": "nums = [1]",
-      "output": "1"
+      "output": "1",
+      "explanation": "The only number in [1] is 1, which appears once, so 1 is the single number."
     }
   ],
   "starterCode": {

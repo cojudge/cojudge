@@ -12,7 +12,8 @@
     },
     {
       "input": "coins = [2], amount = 3",
-      "output": "-1"
+      "output": "-1",
+      "explanation": "Amount 3 cannot be formed by any combination of [2], so -1 is returned."
     }
   ],
   "starterCode": {

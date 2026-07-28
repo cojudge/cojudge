@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "head = [1,2,3,4,5], k = 2",
-      "output": "[2,1,4,3,5]"
+      "output": "[2,1,4,3,5]",
+      "explanation": "Reversing every 2 nodes in the linked list [1,2,3,4,5] gives [2,1,4,3,5]."
     },
     {
       "input": "head = [1,2,3,4,5], k = 3",
-      "output": "[3,2,1,4,5]"
+      "output": "[3,2,1,4,5]",
+      "explanation": "Reversing every 3 nodes in the linked list [1,2,3,4,5] gives [3,2,1,4,5]."
     },
     {
       "input": "head = [1,2], k = 2",
-      "output": "[2,1]"
+      "output": "[2,1]",
+      "explanation": "Reversing every 2 nodes in the linked list [1,2] gives [2,1]."
     }
   ],
   "starterCode": {

@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "s=\"leetcode\", wordDict=[\"leet\",\"code\"]",
-      "output": "true"
+      "output": "true",
+      "explanation": "\"leetcode\" can be segmented into \"leet\" and \"code\", both in the dictionary."
     },
     {
       "input": "s=\"applepenapple\", wordDict=[\"apple\",\"pen\"]",
-      "output": "true"
+      "output": "true",
+      "explanation": "\"applepenapple\" can be segmented into \"apple\", \"pen\", and \"apple\", all in the dictionary."
     }
   ],
   "starterCode": {

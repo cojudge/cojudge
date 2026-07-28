@@ -12,11 +12,13 @@
     },
     {
       "input": "hand = [1,2,3,4,5], groupSize = 4",
-      "output": "false"
+      "output": "false",
+      "explanation": "The cards cannot be divided into groups of 4 consecutive cards."
     },
     {
       "input": "hand = [1,2,3,4,5], groupSize = 1",
-      "output": "true"
+      "output": "true",
+      "explanation": "The cards can be grouped into consecutive sequences of 1."
     }
   ],
   "starterCode": {

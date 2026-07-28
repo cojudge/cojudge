@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "operations = [\"push\",\"push\",\"push\",\"getMin\",\"pop\",\"top\",\"getMin\"], values = [-2,0,-3,0,0,0,0]",
-      "output": "[-3,0,-2]"
+      "output": "[-3,0,-2]",
+      "explanation": "After pushing -2, 0, and -3, getMin returns -3. Pop removes -3, then top returns 0, and getMin returns -2."
     },
     {
       "input": "operations = [\"push\",\"push\",\"getMin\",\"top\",\"pop\",\"getMin\"], values = [5,5,0,0,0,0]",
-      "output": "[5,5,5]"
+      "output": "[5,5,5]",
+      "explanation": "After pushing 5 twice, getMin returns 5 and top returns 5. Pop removes one 5, then getMin returns 5."
     },
     {
       "input": "operations = [\"push\",\"top\",\"getMin\"], values = [7,0,0]",
-      "output": "[7,7]"
+      "output": "[7,7]",
+      "explanation": "After pushing 7, top returns 7 and getMin returns 7."
     }
   ],
   "starterCode": {

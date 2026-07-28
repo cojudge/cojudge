@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "root = [1,2,3,null,5,null,4]",
-      "output": "[1,3,4]"
+      "output": "[1,3,4]",
+      "explanation": "From the right side, you see the root (1), then the rightmost node at level 2 (3), then the rightmost node at level 3 (4)."
     },
     {
       "input": "root = [1,2,3,4,null,null,null,5]",
-      "output": "[1,3,4,5]"
+      "output": "[1,3,4,5]",
+      "explanation": "From the right side, you see the root (1), then 3 at level 2, then 4 at level 3, then 5 at level 4."
     },
     {
       "input": "root = []",
-      "output": "[]"
+      "output": "[]",
+      "explanation": "An empty tree has no visible nodes."
     }
   ],
   "starterCode": {

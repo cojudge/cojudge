@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "s=\"12\"",
-      "output": "2"
+      "output": "2",
+      "explanation": "\"12\" can be decoded in 2 ways (as \"1,2\" or \"12\")."
     },
     {
       "input": "s=\"226\"",
-      "output": "3"
+      "output": "3",
+      "explanation": "\"226\" can be decoded in 3 ways (as \"2,26\", \"22,6\", or \"2,2,6\")."
     }
   ],
   "starterCode": {

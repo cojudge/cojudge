@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "n = 2",
-      "output": "2"
+      "output": "2",
+      "explanation": "There are 2 ways: 1 step + 1 step, or 2 steps."
     },
     {
       "input": "n = 3",
-      "output": "3"
+      "output": "3",
+      "explanation": "There are 3 ways: 1+1+1, 1+2, 2+1."
     }
   ],
   "starterCode": {

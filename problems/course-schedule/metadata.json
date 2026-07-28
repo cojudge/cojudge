@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "numCourses = 2, prerequisites = [[1,0]]",
-      "output": "true"
+      "output": "true",
+      "explanation": "All 2 courses can be completed (no prerequisite cycle)."
     },
     {
       "input": "numCourses = 2, prerequisites = [[1,0],[0,1]]",
-      "output": "false"
+      "output": "false",
+      "explanation": "A cycle is detected in the prerequisite graph, so all 2 courses cannot be completed."
     }
   ],
   "starterCode": {

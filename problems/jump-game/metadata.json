@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "nums=[2,3,1,1,4]",
-      "output": "true"
+      "output": "true",
+      "explanation": "From index 0 you can reach index 4 via index 1."
     },
     {
       "input": "nums=[3,2,1,0,4]",
-      "output": "false"
+      "output": "false",
+      "explanation": "Every path from index 0 ends at index 3; index 4 is unreachable."
     }
   ],
   "starterCode": {

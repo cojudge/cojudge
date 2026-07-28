@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "n = 11 (0b1011)",
-      "output": "3"
+      "output": "3",
+      "explanation": "The binary representation of 11 is 0b1011, which contains 3 bits set to 1."
     },
     {
       "input": "n = 128 (0b10000000)",
-      "output": "1"
+      "output": "1",
+      "explanation": "The binary representation of 128 is 0b10000000, which contains 1 bit set to 1."
     }
   ],
   "starterCode": {

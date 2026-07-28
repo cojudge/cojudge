@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "head = [1,2,3,4]",
-      "output": "[1,4,2,3]"
+      "output": "[1,4,2,3]",
+      "explanation": "The list [1,2,3,4] reordered as first-last-first-last becomes [1,4,2,3]."
     },
     {
       "input": "head = [1,2,3,4,5]",
-      "output": "[1,5,2,4,3]"
+      "output": "[1,5,2,4,3]",
+      "explanation": "The list [1,2,3,4,5] reordered as first-last-first-last becomes [1,5,2,4,3]."
     }
   ],
   "starterCode": {

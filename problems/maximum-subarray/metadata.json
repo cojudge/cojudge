@@ -12,11 +12,13 @@
     },
     {
       "input": "nums = [1]",
-      "output": "1"
+      "output": "1",
+      "explanation": "The array has only one element, so the maximum subarray sum is 1."
     },
     {
       "input": "nums = [5,4,-1,7,8]",
-      "output": "23"
+      "output": "23",
+      "explanation": "The sum of the entire array [5,4,-1,7,8] = 23, which is the maximum subarray sum."
     }
   ],
   "starterCode": {

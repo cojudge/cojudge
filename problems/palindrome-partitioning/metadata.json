@@ -12,7 +12,8 @@
     },
     {
       "input": "s = \"a\"",
-      "output": "[[\"a\"]]"
+      "output": "[[\"a\"]]",
+      "explanation": "The only way to partition \"a\" such that every substring is a palindrome is [[\"a\"]]."
     }
   ],
   "starterCode": {

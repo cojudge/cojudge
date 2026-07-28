@@ -12,7 +12,8 @@
     },
     {
       "input": "word1 = \"intention\", word2 = \"execution\"",
-      "output": "5"
+      "output": "5",
+      "explanation": "One optimal sequence replaces the first five characters ('i','n','t','e','n') with ('e','x','e','c','u'), using five replacements."
     }
   ],
   "starterCode": {

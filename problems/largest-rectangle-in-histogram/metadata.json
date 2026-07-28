@@ -12,11 +12,13 @@
     },
     {
       "input": "heights = [2,4]",
-      "output": "4"
+      "output": "4",
+      "explanation": "In [2, 4], the bar of height 4 alone covers the largest area of 4."
     },
     {
       "input": "heights = [2,2,2]",
-      "output": "6"
+      "output": "6",
+      "explanation": "In [2, 2, 2], all three bars can form a rectangle of width 3 and height 2, giving area 6."
     }
   ],
   "starterCode": {

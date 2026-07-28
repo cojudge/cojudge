@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "text1 = \"abcde\", text2 = \"ace\"",
-      "output": "3"
+      "output": "3",
+      "explanation": "The longest subsequence common to both \"abcde\" and \"ace\" is \"ace\", which has length 3."
     },
     {
       "input": "text1 = \"abc\", text2 = \"abc\"",
-      "output": "3"
+      "output": "3",
+      "explanation": "The strings \"abc\" and \"abc\" are identical, so the longest common subsequence is \"abc\" with length 3."
     }
   ],
   "starterCode": {

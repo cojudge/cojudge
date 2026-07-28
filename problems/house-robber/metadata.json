@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "nums=[1,2,3,1]",
-      "output": "4"
+      "output": "4",
+      "explanation": "Robbing houses 0 (1) and 2 (3) without triggering adjacent alarms yields 4."
     },
     {
       "input": "nums=[2,7,9,3,1]",
-      "output": "12"
+      "output": "12",
+      "explanation": "Robbing houses 0 (2), 2 (9), and 4 (1) without triggering adjacent alarms yields 12."
     }
   ],
   "starterCode": {

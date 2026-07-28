@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "s=\"abc\"",
-      "output": "3"
+      "output": "3",
+      "explanation": "The palindromic substrings in \"abc\" are \"a\", \"b\", and \"c\", for a total of 3."
     },
     {
       "input": "s=\"aaa\"",
-      "output": "6"
+      "output": "6",
+      "explanation": "The palindromic substrings in \"aaa\" are \"a\" (×3), \"aa\" (×2), and \"aaa\" (×1), for a total of 6."
     }
   ],
   "starterCode": {

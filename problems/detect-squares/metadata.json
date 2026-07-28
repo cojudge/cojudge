@@ -17,7 +17,8 @@
     },
     {
       "input": "operations = [\"DetectSquares\",\"count\"]\npoints = [[0,0],[5,5]]",
-      "output": "[0]"
+      "output": "[0]",
+      "explanation": "The count of squares for the query is [0]."
     }
   ],
   "starterCode": {

@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "intervals = [[1,2],[2,3],[3,4],[1,3]]",
-      "output": "1"
+      "output": "1",
+      "explanation": "There is 1 overlapping interval that must be removed to eliminate all overlaps."
     },
     {
       "input": "intervals = [[1,2],[1,2],[1,2]]",
-      "output": "2"
+      "output": "2",
+      "explanation": "There are 2 overlapping intervals that must be removed to eliminate all overlaps."
     },
     {
       "input": "intervals = [[1,2],[2,3]]",
-      "output": "0"
+      "output": "0",
+      "explanation": "No intervals overlap, so 0 removals are needed."
     }
   ],
   "starterCode": {

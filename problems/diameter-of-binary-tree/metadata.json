@@ -12,11 +12,13 @@
     },
     {
       "input": "root = [1,2]",
-      "output": "1"
+      "output": "1",
+      "explanation": "The diameter (longest path between any two nodes) has length 1."
     },
     {
       "input": "root = [1]",
-      "output": "0"
+      "output": "0",
+      "explanation": "The diameter (longest path between any two nodes) has length 0."
     }
   ],
   "starterCode": {

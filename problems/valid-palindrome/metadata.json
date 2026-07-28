@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "s=\"A man, a plan, a canal: Panama\"",
-      "output": "true"
+      "output": "true",
+      "explanation": "\"A man, a plan, a canal: Panama\" reads the same forwards and backwards when only alphanumeric characters are compared case-insensitively."
     },
     {
       "input": "s=\"race a car\"",
-      "output": "false"
+      "output": "false",
+      "explanation": "\"race a car\" reads \"raceacar\" forwards but \"racaecar\" backwards when only alphanumeric characters are considered, so it is not a palindrome."
     }
   ],
   "starterCode": {

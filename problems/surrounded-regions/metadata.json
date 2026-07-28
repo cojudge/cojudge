@@ -12,7 +12,8 @@
     },
     {
       "input": "board = [\"X\"]",
-      "output": "[\"X\"]"
+      "output": "[\"X\"]",
+      "explanation": "There are no 'O's to flip, so the board remains [\"X\"]."
     }
   ],
   "starterCode": {

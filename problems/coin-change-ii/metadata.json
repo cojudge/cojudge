@@ -12,11 +12,13 @@
     },
     {
       "input": "amount = 3, coins = [2]",
-      "output": "0"
+      "output": "0",
+      "explanation": "The number of combinations to make 3 is 0."
     },
     {
       "input": "amount = 10, coins = [10]",
-      "output": "1"
+      "output": "1",
+      "explanation": "The number of combinations to make 10 is 1."
     }
   ],
   "starterCode": {

@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "matrix = [[1,2,3],[4,5,6],[7,8,9]]",
-      "output": "[1,2,3,6,9,8,7,4,5]"
+      "output": "[1,2,3,6,9,8,7,4,5]",
+      "explanation": "Reading the 3×3 matrix in clockwise spiral order gives [1,2,3,6,9,8,7,4,5]."
     },
     {
       "input": "matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]",
-      "output": "[1,2,3,4,8,12,11,10,9,5,6,7]"
+      "output": "[1,2,3,4,8,12,11,10,9,5,6,7]",
+      "explanation": "Reading the 3×4 matrix in clockwise spiral order gives [1,2,3,4,8,12,11,10,9,5,6,7]."
     }
   ],
   "starterCode": {

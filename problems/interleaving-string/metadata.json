@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbcbcac\"",
-      "output": "true"
+      "output": "true",
+      "explanation": "\"aadbbcbcac\" can be formed by interleaving the characters of \"aabcc\" and \"dbbca\" in order."
     },
     {
       "input": "s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbbaccc\"",
-      "output": "false"
+      "output": "false",
+      "explanation": "\"aadbbbaccc\" cannot be formed by interleaving \"aabcc\" and \"dbbca\"."
     },
     {
       "input": "s1 = \"\", s2 = \"\", s3 = \"\"",
-      "output": "true"
+      "output": "true",
+      "explanation": "Empty strings can always be interleaved to form an empty string."
     }
   ],
   "starterCode": {

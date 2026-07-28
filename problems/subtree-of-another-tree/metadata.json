@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "root = [3,4,5,1,2], subRoot = [4,1,2]",
-      "output": "true"
+      "output": "true",
+      "explanation": "The second tree (subRoot) matches a node and all its descendants within the first tree (root)."
     },
     {
       "input": "root = [3,4,5,1,2,null,null,null,null,0], subRoot = [4,1,2]",
-      "output": "false"
+      "output": "false",
+      "explanation": "The second tree is not present as a subtree in the first."
     },
     {
       "input": "root = [], subRoot = []",
-      "output": "true"
+      "output": "true",
+      "explanation": "Both trees are empty, so the second tree is trivially a subtree of the first."
     }
   ],
   "starterCode": {

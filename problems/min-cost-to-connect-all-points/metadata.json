@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "points = [[0,0],[2,2],[3,10],[5,2],[7,0]]",
-      "output": "20"
+      "output": "20",
+      "explanation": "The minimum Manhattan distance to connect all 5 points is 20."
     },
     {
       "input": "points = [[3,12],[-2,5],[-4,1]]",
-      "output": "18"
+      "output": "18",
+      "explanation": "The minimum Manhattan distance to connect all 3 points is 18."
     }
   ],
   "starterCode": {

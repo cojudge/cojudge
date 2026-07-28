@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "n = 3",
-      "output": "[\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]"
+      "output": "[\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]",
+      "explanation": "Each string uses 3 pairs of parentheses arranged so that every opening bracket is properly closed before the string ends."
     },
     {
       "input": "n = 1",
-      "output": "[\"()\"]"
+      "output": "[\"()\"]",
+      "explanation": "With only one pair, the only valid way to arrange them is \"()\"."
     },
     {
       "input": "n = 2",
-      "output": "[\"(())\",\"()()\"]"
+      "output": "[\"(())\",\"()()\"]",
+      "explanation": "\"(())\" nests the two pairs, while \"()()\" places them consecutively."
     }
   ],
   "starterCode": {

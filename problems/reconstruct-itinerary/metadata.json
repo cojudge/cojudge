@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "from = [\"MUC\",\"JFK\",\"SFO\",\"LHR\"], to = [\"LHR\",\"MUC\",\"SJC\",\"SFO\"]",
-      "output": "[\"JFK\",\"MUC\",\"LHR\",\"SFO\",\"SJC\"]"
+      "output": "[\"JFK\",\"MUC\",\"LHR\",\"SFO\",\"SJC\"]",
+      "explanation": "Starting from JFK, the itinerary travels to MUC, then LHR, then SFO, and finally SJC, using each ticket exactly once."
     },
     {
       "input": "from = [\"JFK\",\"JFK\",\"SFO\",\"ATL\",\"ATL\"], to = [\"SFO\",\"ATL\",\"ATL\",\"JFK\",\"SFO\"]",
-      "output": "[\"JFK\",\"ATL\",\"JFK\",\"SFO\",\"ATL\",\"SFO\"]"
+      "output": "[\"JFK\",\"ATL\",\"JFK\",\"SFO\",\"ATL\",\"SFO\"]",
+      "explanation": "Starting from JFK, the itinerary travels to ATL, back to JFK, then to SFO, to ATL, and finally to SFO, using each ticket exactly once."
     }
   ],
   "starterCode": {

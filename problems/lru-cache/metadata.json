@@ -8,15 +8,17 @@
     {
       "input": "operations = [\"LRUCache\",\"put\",\"put\",\"get\",\"put\",\"get\",\"put\",\"get\",\"get\",\"get\"], args = [[2],[1,1],[2,2],[1],[3,3],[2],[4,4],[1],[3],[4]]",
       "output": "[1,-1,-1,3,4]",
-      "explanation": "Reads refresh recency; inserting keys 3 and 4 evicts keys 2 and 1 respectively."
+      "explanation": "Capacity is 2; after putting (1,1) and (2,2), key 1 is still cached so get(1) returns 1. Putting (3,3) evicts key 2, making get(2) return -1. Putting (4,4) evicts key 1, so get(1) returns -1, while keys 3 and 4 remain cached."
     },
     {
       "input": "operations = [\"LRUCache\",\"put\",\"get\",\"put\",\"get\",\"get\"], args = [[1],[2,1],[2],[3,2],[2],[3]]",
-      "output": "[1,-1,2]"
+      "output": "[1,-1,2]",
+      "explanation": "Capacity is 1; after putting (2,1), get(2) returns 1. Then put(3,2) evicts key 2, so get(2) returns -1, but get(3) returns 2."
     },
     {
       "input": "operations = [\"LRUCache\",\"put\",\"put\",\"get\",\"get\"], args = [[2],[1,1],[1,9],[1],[2]]",
-      "output": "[9,-1]"
+      "output": "[9,-1]",
+      "explanation": "Capacity is 2; put(1,1) then put(1,9) updates the value of key 1 to 9, so get(1) returns 9. Key 2 was never inserted, so get(2) returns -1."
     }
   ],
   "starterCode": {

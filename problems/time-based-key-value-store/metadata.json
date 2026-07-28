@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "operations = [\"set\",\"get\",\"get\",\"set\",\"get\",\"get\"], keys = [\"foo\",\"foo\",\"foo\",\"foo\",\"foo\",\"foo\"], values = [\"bar\",\"\",\"\",\"bar2\",\"\",\"\"], timestamps = [1,1,3,4,4,5]",
-      "output": "[\"bar\",\"bar\",\"bar2\",\"bar2\"]"
+      "output": "[\"bar\",\"bar\",\"bar2\",\"bar2\"]",
+      "explanation": "For each key, timestamps are stored sorted. get() returns the value at the largest timestamp <= given timestamp."
     },
     {
       "input": "operations = [\"set\",\"set\",\"get\",\"get\",\"get\"], keys = [\"love\",\"love\",\"love\",\"love\",\"love\"], values = [\"high\",\"low\",\"\",\"\",\"\"], timestamps = [10,20,5,10,15]",
-      "output": "[\"\",\"high\",\"high\"]"
+      "output": "[\"\",\"high\",\"high\"]",
+      "explanation": "For each key, timestamps are stored sorted. get() returns the value at the largest timestamp <= given timestamp."
     },
     {
       "input": "operations = [\"get\",\"set\",\"get\"], keys = [\"a\",\"a\",\"a\"], values = [\"ignored\",\"first\",\"ignored\"], timestamps = [10,1,10]",

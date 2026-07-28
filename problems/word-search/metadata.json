@@ -7,15 +7,18 @@
   "examples": [
     {
       "input": "board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"ABCCED\"",
-      "output": "true"
+      "output": "true",
+      "explanation": "The word \"ABCCED\" can be found in the board via adjacent cells."
     },
     {
       "input": "board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"SEE\"",
-      "output": "true"
+      "output": "true",
+      "explanation": "The word \"SEE\" can be found in the board via adjacent cells."
     },
     {
       "input": "board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"ABCB\"",
-      "output": "false"
+      "output": "false",
+      "explanation": "The word \"ABCB\" does not exist in the board."
     }
   ],
   "starterCode": {

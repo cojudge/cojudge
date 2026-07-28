@@ -7,11 +7,13 @@
   "examples": [
     {
       "input": "s=\"babad\"",
-      "output": "\"bab\" or \"aba\""
+      "output": "\"bab\" or \"aba\"",
+      "explanation": "The longest palindromic substring in \"babad\" is \"bab\" or \"aba\" (both length 3)."
     },
     {
       "input": "s=\"cbbd\"",
-      "output": "\"bb\""
+      "output": "\"bb\"",
+      "explanation": "The longest palindromic substring in \"cbbd\" is \"bb\" (length 2)."
     }
   ],
   "starterCode": {
