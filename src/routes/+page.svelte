@@ -463,6 +463,20 @@
                     <button
                         class="dropdown-item"
                         role="menuitem"
+                        onclick={() => { goto('/whiteboard'); showDropdown = false; }}
+                        title="Open the whiteboard"
+                    >
+                        <span class="dropdown-item-content">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                                <path d="m8 15 6-6 2 2-6 6H8v-2Z"></path>
+                            </svg>
+                            Whiteboard
+                        </span>
+                    </button>
+                    <button
+                        class="dropdown-item"
+                        role="menuitem"
                         onclick={() => { showGamePopup = true; showDropdown = false; }}
                         title="Random problem game mode"
                     >
