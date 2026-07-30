@@ -1,40 +1,37 @@
 ## Approach
 
-A graph is a valid tree if it has exactly n-1 edges and contains no cycles. Use Union-Find with path compression and union by rank to detect cycles efficiently.
+A graph is a valid tree if and only if it has exactly `n - 1` edges and is fully connected. If the number of edges is not `n - 1`, we immediately return `False`. Otherwise, we perform a Depth-First Search (DFS) starting from node 0 to check if we can reach all nodes. If the traversal visits all `n` nodes, then the graph is a valid tree.
 
 ## Complexity Analysis
 
-- **Time Complexity:** O(n * α(n)), where α is the inverse Ackermann function (near-constant).
-- **Space Complexity:** O(n) for the parent and rank arrays.
+- **Time Complexity:** O(n) to build the adjacency list and perform DFS.
+- **Space Complexity:** O(n) for the adjacency list and the recursion stack.
 
 ## Implementation
 
 ```python
 from typing import List
+
 class Solution:
     def validTree(self, n: int, edges: List[List[int]]) -> bool:
         if len(edges) != n - 1:
             return False
-        parent = list(range(n))
-        rank = [0] * n
-        def find(x):
-            if parent[x] != x:
-                parent[x] = find(parent[x])
-            return parent[x]
-        def union(x, y):
-            rx, ry = find(x), find(y)
-            if rx == ry:
-                return False
-            if rank[rx] < rank[ry]:
-                parent[rx] = ry
-            elif rank[rx] > rank[ry]:
-                parent[ry] = rx
-            else:
-                parent[ry] = rx
-                rank[rx] += 1
-            return True
+        
+        # Build adjacency list
+        adj = [[] for _ in range(n)]
         for u, v in edges:
-            if not union(u, v):
-                return False
-        return True
+            adj[u].append(v)
+            adj[v].append(u)
+        
+        visited = [False] * n
+        
+        # DFS to traverse and check connectivity
+        def dfs(node: int):
+            visited[node] = True
+            for neighbor in adj[node]:
+                if not visited[neighbor]:
+                    dfs(neighbor)
+        
+        dfs(0)
+        return all(visited)
 ```
