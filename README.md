@@ -1,4 +1,5 @@
 [![CI](https://github.com/cojudge/cojudge/actions/workflows/test.yml/badge.svg)](https://github.com/cojudge/cojudge/actions/workflows/test.yml)
+[![GitHub Release](https://img.shields.io/github/v/release/cojudge/cojudge?include_prereleases)](https://github.com/cojudge/cojudge/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub Stars](https://img.shields.io/github/stars/cojudge/cojudge?style=social)](https://github.com/cojudge/cojudge)
 
@@ -32,13 +33,18 @@
 
 ## Requirements
 
-- Node.js (v18+) and npm
+- Node.js (v18+) and npm for CLI or source installs; desktop releases bundle Node.js
 - Docker (installed and running, only required while judging)
 
 ## Quickstart
 
 ### 1. Installation
-The easiest way to install `cojudge` without dealing with NPM permission issues is to run our install script:
+
+#### Desktop app
+Download the latest installer for macOS, Windows, or Linux from [GitHub Releases](https://github.com/cojudge/cojudge/releases). Desktop builds bundle Node.js; Docker is only required when running, submitting, or debugging code.
+
+#### CLI
+The easiest way to install the `cojudge` CLI without dealing with NPM permission issues is to run our install script:
 
 #### Mac / Linux
 ```bash
@@ -59,7 +65,7 @@ cd cojudge
 This will install dependencies, build the app, and add a `cojudge` alias to your shell configuration.
 
 ### 2. Usage
-Simply run `cojudge` to start the server and open it in your browser:
+Open the installed desktop app, or run `cojudge` to start the server and open it in your browser:
 ```bash
 cojudge
 ```
