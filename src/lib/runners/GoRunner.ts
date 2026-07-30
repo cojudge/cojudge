@@ -6,6 +6,7 @@ import path from 'path';
 import tar from 'tar-stream';
 import { ProgramRunner } from "./ProgramRunner";
 import ContainerPool from "./ContainerPool";
+import { cojudgeContainerLabels } from "$lib/server/containerSession";
 
 const docker = new Dockerode();
 
@@ -34,7 +35,7 @@ export class GoRunner extends ProgramRunner {
                     Cmd: ['sh', '-lc', 'tail -f /dev/null'],
                     WorkingDir: '/app',
                     Tty: false,
-                    Labels: { 'cojudge.created': 'true' }
+                    Labels: cojudgeContainerLabels()
                 });
                 await this.container.start();
 

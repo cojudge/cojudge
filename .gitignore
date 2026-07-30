@@ -146,3 +146,10 @@ test-results/**/*
 .cojudge_progress.json
 
 build/**/*
+
+# Tauri desktop build output and generated runtime payload
+/src-tauri/target/
+/src-tauri/gen/schemas/
+/src-tauri/resources/backend/
+/src-tauri/binaries/node-*
+/src-tauri/binaries/cojudge-node-*

@@ -19,6 +19,7 @@ import { CSHARP_DEBUG_SUPPORT, generateCsharpDebugWrapper } from "./CsharpDebugD
 import { RUST_DEBUG_DRIVER } from "./RustDebugDriver";
 import { generateTypeScriptDebugWrapper, rewriteTsImportsForNode, buildMissingTypeImports } from "./TypeScriptDebugDriver";
 import { generateTypeScriptClassSolution } from "./TypeScriptRunner";
+import { cojudgeContainerLabels } from "$lib/server/containerSession";
 
 const docker = new Dockerode();
 
@@ -368,7 +369,7 @@ async function acquireDebugContainer(image: string): Promise<{ container: Docker
             Cmd: ['sleep', 'infinity'],
             WorkingDir: '/app',
             Tty: false,
-            Labels: { 'cojudge.created': 'true', 'cojudge.debug': 'true' }
+            Labels: cojudgeContainerLabels({ 'cojudge.debug': 'true' })
         });
         await container.start();
         ContainerPool.acquirePermanent(resolvedImage, container);

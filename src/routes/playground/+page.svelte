@@ -1,10 +1,11 @@
 <script lang="ts">
-    import { replaceState } from '$app/navigation';
     import { page } from '$app/stores';
     import PlaygroundExecutionPanel from '$lib/components/PlaygroundExecutionPanel.svelte';
     import LanguageIcon from '$lib/components/LanguageIcon.svelte';
     import ShareModal from '$lib/components/ShareModal.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
+    import { showAlert, showConfirm } from '$lib/dialogs';
+    import { consumeForkTransfer } from '$lib/forkTransfer';
     import { ensureAuthenticated, initFirebase } from '$lib/firebase';
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
@@ -636,8 +637,12 @@ func main() {
         }
     }
 
-    function deleteFile(fileId: string) {
-        if (!confirm("Are you sure you want to remove this file? This action cannot be undone")) return;
+    async function deleteFile(fileId: string) {
+        if (!await showConfirm('This file and any previews created from it will be permanently removed.', {
+            title: 'Remove file?',
+            confirmLabel: 'Remove file',
+            tone: 'danger'
+        })) return;
         
         const tabsToRemove = tabs.filter(t => t.fileId === fileId || t.sourceFileId === fileId);
         const activeTabWillBeRemoved = tabsToRemove.some(t => t.fileId === tabs[activeTabId]?.fileId);
@@ -819,8 +824,12 @@ func main() {
     }
 
     // Reset code for the current problem + language
-    function handleResetClick() {
-        const confirmed = confirm('Are you sure you want to reset the code for this file? This action cannot be undone.');
+    async function handleResetClick() {
+        const confirmed = await showConfirm('Your current code will be replaced with the starter code. This action cannot be undone.', {
+            title: 'Reset this file?',
+            confirmLabel: 'Reset code',
+            tone: 'danger'
+        });
         if (!confirmed) return;
         const fkey = fileKey();
         fileStore.update((s) => {
@@ -879,14 +888,15 @@ func main() {
     }
 
     onMount(async () => {
-        const fb = initFirebase();
+        const fb = await initFirebase();
         if (fb) {
             isFirebaseAvailable = true;
         }
 
-        const forkData = ($page.state as any).forkData as { content: string; language: ProgrammingLanguage; viewState?: string; fileName: string } | undefined;
+        const forkData = consumeForkTransfer();
         
         if (forkData) {
+            suppressSave = true;
             const { content, language: lang, viewState, fileName } = forkData;
             
             // Add as new tab
@@ -926,12 +936,9 @@ func main() {
             language = lang; 
             userSettingsStorage.update(s => ({ ...s, playgroundPreferredLanguage: language }));
             
-            await tick();
-            await loadOrInitFile(language);
+            await loadOrInitFile(lang);
             persistTabOrder();
             
-            // Clear state to prevent re-forking on reload
-            replaceState($page.url, {});
         }
 
         const forkId = $page.url.searchParams.get('forkId');
@@ -987,11 +994,17 @@ func main() {
                     newUrl.searchParams.delete('forkId');
                     window.history.replaceState({}, '', newUrl);
                 } else {
-                    alert('Shared solution not found.');
+                    await showAlert('No shared solution matches that code.', {
+                        title: 'Code does not exist',
+                        tone: 'danger'
+                    });
                 }
             } catch (e) {
                 console.error('Error loading shared solution:', e);
-                alert('Error loading shared solution.');
+                await showAlert('The shared solution could not be loaded. Check your Firebase connection and try again.', {
+                    title: 'Load failed',
+                    tone: 'danger'
+                });
             }
         }
     });
@@ -1008,7 +1021,7 @@ func main() {
     async function handleSave(silent = false): Promise<string | null> {
         if (!isFirebaseAvailable) return null;
         
-        const { db, auth } = initFirebase() || {};
+        const { db, auth } = (await initFirebase()) || {};
         if (!db || !auth) return null;
 
         try {
@@ -1051,11 +1064,20 @@ func main() {
                     });
                     lastSharedContent = content;
 
-                    if (!silent) alert('Saved successfully!');
+                    if (!silent) {
+                        await showAlert('Your existing share has been updated.', {
+                            title: 'Saved',
+                            tone: 'success'
+                        });
+                    }
                     return shareId;
                 } catch (e: any) {
                     if (e.code === 'permission-denied') {
-                        if (silent || confirm('You do not have permission to update this shared code. Create a new copy?')) {
+                        const createCopy = silent || await showConfirm('You do not own the existing share. A new link can be created for your copy.', {
+                            title: 'Create a new share?',
+                            confirmLabel: 'Create copy'
+                        });
+                        if (createCopy) {
                             shareId = undefined; // Force create new
                         } else {
                             return null;
@@ -1093,12 +1115,22 @@ func main() {
                 });
                 lastSharedContent = content;
                 
-                if (!silent) alert(`Saved! Share ID: ${shareId}`);
+                if (!silent) {
+                    await showAlert(`Your share code is ${shareId}.`, {
+                        title: 'Saved',
+                        tone: 'success'
+                    });
+                }
                 return shareId;
             }
         } catch (e) {
             console.error('Error saving:', e);
-            if (!silent) alert('Failed to save.');
+            if (!silent) {
+                await showAlert('The shared solution could not be saved. Check your Firebase connection and try again.', {
+                    title: 'Save failed',
+                    tone: 'danger'
+                });
+            }
             return null;
         }
         return null;

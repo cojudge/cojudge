@@ -1,12 +1,13 @@
 <script lang="ts">
     import SaveStatus from '$lib/components/SaveStatus.svelte';
-    import { page } from '$app/stores';
     import ExecutionPanel from '$lib/components/ExecutionPanel.svelte';
     import ShareModal from '$lib/components/ShareModal.svelte';
     import GameResultPopup from '$lib/components/GameResultPopup.svelte';
     import GameHistoryPopup from '$lib/components/GameHistoryPopup.svelte';
     import GameModePopup from '$lib/components/GameModePopup.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
+    import { showAlert, showConfirm } from '$lib/dialogs';
+    import { consumeForkTransfer } from '$lib/forkTransfer';
     import { initFirebase, ensureAuthenticated } from '$lib/firebase';
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
@@ -222,13 +223,14 @@
     }
 
     // New tab state (simple add button)
-    async function addNewTab(customName: string = '', customContent: string = '', customLang: ProgrammingLanguage | null = null, customViewState: string | null = null) {
+    async function addNewTab(customName: string = '', customContent?: string, customLang: ProgrammingLanguage | null = null, customViewState: string | null = null) {
+        suppressSave = true;
         const targetLang = customLang || language;
         const newTabName = customName || `Solution-${tabs.length + 1}`;
         const nextId = uuidv4();
         const fileName = newTabName;
         tabs = [...tabs, { fileId: nextId, fileName }];
-        const newCode = customContent || (data.problem.starterCode?.[targetLang] ?? '');
+        const newCode = customContent ?? (data.problem.starterCode?.[targetLang] ?? '');
         const fkey = fileKey();
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
@@ -247,8 +249,8 @@
             return { ...s, [fkey]: JSON.stringify(files) };
         });
         activeTabId = tabs.length - 1;
-        if (customLang) language = customLang;
-        await loadOrInitFile(language);
+        language = targetLang;
+        await loadOrInitFile(targetLang);
         persistTabOrder();
         if (!customName) {
             startRename(nextId, fileName);
@@ -348,9 +350,13 @@
         $fileSyncVersion;
     }
 
-    function closeTab(fileId: string) {
+    async function closeTab(fileId: string) {
         if (tabs.length <= 1) return;
-        if (!confirm("Are you sure you want to remove this file? This action cannot be undone")) return;
+        if (!await showConfirm('This file and all of its saved language versions will be permanently removed.', {
+            title: 'Remove file?',
+            confirmLabel: 'Remove file',
+            tone: 'danger'
+        })) return;
         const idx = tabs.findIndex((t) => t.fileId === fileId);
         if (idx === -1) return;
         if (activeTabId === idx) {
@@ -398,7 +404,7 @@
         const module = await import('$lib/components/CodeEditor.svelte');
         CodeEditor = module.default;
 
-        const fb = initFirebase();
+        const fb = await initFirebase();
         if (fb) isFirebaseAvailable = true;
 
         // Check for tabs and game mode in URL params
@@ -422,7 +428,7 @@
                 if (requestedTabs.length > 0) {
                     suppressSave = true;
                     for (const rt of requestedTabs) {
-                        await addNewTab(rt.name, rt.content || '', rt.lang);
+                        await addNewTab(rt.name, rt.content, rt.lang);
                     }
                     if (requestedTabs.length > 0) {
                         window.history.replaceState({}, '', window.location.pathname);
@@ -435,20 +441,15 @@
             }
         }
 
-        const forkData = ($page.state as any).forkData as { content: string; language: ProgrammingLanguage; viewState?: string; fileName: string } | undefined;
+        const forkData = consumeForkTransfer();
         
         if (forkData) {
-            if (forkData.language) {
-                language = forkData.language;
-                await tick();
-            }
-            
-            code = forkData.content;
-            currentViewState = forkData.viewState ?? null;
-            
-            if (forkData.fileName) {
-                addNewTab(`Fork of ${forkData.fileName}`, forkData.content, language, currentViewState);
-            }
+            await addNewTab(
+                forkData.fileName ? `Fork of ${forkData.fileName}` : 'Forked Solution',
+                forkData.content,
+                forkData.language || language,
+                forkData.viewState ?? null
+            );
         }
     });
 
@@ -554,8 +555,12 @@
     }
 
     // Reset code for the current problem + language
-    function handleResetClick() {
-        const confirmed = confirm('Are you sure you want to reset the code for this file? This action cannot be undone.');
+    async function handleResetClick() {
+        const confirmed = await showConfirm('Your current code will be replaced with the starter code. This action cannot be undone.', {
+            title: 'Reset this file?',
+            confirmLabel: 'Reset code',
+            tone: 'danger'
+        });
         if (!confirmed) return;
         const fkey = fileKey();
         fileStore.update((s) => {
@@ -567,6 +572,18 @@
             return {...s, [fkey]: JSON.stringify(files)};
         });
         code = data.problem.starterCode?.[language] ?? '';
+    }
+
+    async function openReferenceSolution() {
+        if ($userStore && $userStore[fileKey()]) {
+            viewMode = 'solution';
+            return;
+        }
+        const confirmed = await showConfirm('Try solving the problem yourself before opening the reference solution.', {
+            title: 'View reference solution?',
+            confirmLabel: 'View solution'
+        });
+        if (confirmed) viewMode = 'solution';
     }
 
     $: {
@@ -600,7 +617,7 @@
     }
 
     async function handleShare() {
-        const fb = initFirebase();
+        const fb = await initFirebase();
         if (!fb || !fb.db) return;
 
         const shareId = generateShortId(4);
@@ -631,7 +648,10 @@
             showShareModal = true;
         } catch (e) {
             console.error('Error sharing:', e);
-            alert('Failed to create share link');
+            await showAlert('The share link could not be created. Check your Firebase settings and try again.', {
+                title: 'Share failed',
+                tone: 'danger'
+            });
         }
     }
 </script>
@@ -772,13 +792,7 @@
                         <button
                             class="hint-header"
                             class:unsolved={!($userStore && $userStore[fileKey()])}
-                            on:click={() => {
-                                if ($userStore && $userStore[fileKey()]) {
-                                    viewMode = 'solution';
-                                } else if (confirm('Are you sure you want to view the solution? Try solving it yourself first!')) {
-                                    viewMode = 'solution';
-                                }
-                            }}
+                            on:click={openReferenceSolution}
                         >
                             <span>Reference Solution</span>
                             <span class="chevron">▸</span>
