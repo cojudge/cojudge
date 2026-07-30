@@ -13,6 +13,7 @@
     export let readOnly: boolean = false;
     export let debugBreakpoints: number[] = [];
     export let activeDebugLine: number | null = null;
+    export let debugJobId: string | null = null;
 
     let isLoading = false;
     let isResizing = false;
@@ -21,7 +22,6 @@
     let hasRunOnce = readOnly;
     let runningMessage = "";
 
-    let debugJobId: string | null = null;
     let debugState: any = null;
     let isDebugRunning = false;
     let debugPollInterval: any = null;

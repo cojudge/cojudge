@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { getDebugState, debugContinue, debugStep, debugStop, debugSetBreakpoints } from '$lib/runners/DebugRunner';
+import { getDebugState, debugContinue, debugStep, debugStop, debugSetBreakpoints, debugEval } from '$lib/runners/DebugRunner';
 
 export const GET: RequestHandler = async ({ url }) => {
     const jobId = url.searchParams.get('jobId') || '';
@@ -20,13 +20,13 @@ export const GET: RequestHandler = async ({ url }) => {
 };
 
 export const POST: RequestHandler = async ({ request }) => {
-    const { jobId, action, breakpoints } = await request.json();
+    const { jobId, action, breakpoints, variable } = await request.json();
 
     if (!jobId || !action) {
         return json({ error: 'Missing jobId or action' }, { status: 400 });
     }
 
-    const validActions = ['continue', 'step', 'stop', 'setBreakpoints'];
+    const validActions = ['continue', 'step', 'stop', 'setBreakpoints', 'eval'];
     if (!validActions.includes(action)) {
         return json({ error: `Invalid action '${action}'. Must be one of: ${validActions.join(', ')}` }, { status: 400 });
     }
@@ -47,6 +47,12 @@ export const POST: RequestHandler = async ({ request }) => {
             }
             await debugSetBreakpoints(jobId, breakpoints);
             return json({ status: 'ok' });
+        } else if (action === 'eval') {
+            if (!variable || typeof variable !== 'string') {
+                return json({ error: 'Missing variable name for eval action' }, { status: 400 });
+            }
+            const result = await debugEval(jobId, variable.trim());
+            return json(result);
         }
     } catch (e: any) {
         return json({ error: e.message || 'Debug action failed' }, { status: 400 });

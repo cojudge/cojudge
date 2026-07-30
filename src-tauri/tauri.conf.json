@@ -12,7 +12,13 @@
 	"app": {
 		"windows": [],
 		"security": {
-			"capabilities": []
+			"capabilities": [
+				{
+					"identifier": "default",
+					"windows": ["*"],
+					"permissions": ["allow-new-window"]
+				}
+			]
 		}
 	},
 	"bundle": {

@@ -166,6 +166,7 @@
     let editorComponent: any;
     let debugBreakpoints: number[] = [];
     let activeDebugLine: number | null = null;
+    let debugJobId: string | null = null;
     let isResizing = false;
     let workspaceElement: HTMLElement;
     let openedHints = new Set<number>([]);
@@ -984,6 +985,7 @@
                     viewState={currentViewState}
                     bind:breakpoints={debugBreakpoints}
                     {activeDebugLine}
+                    {debugJobId}
                 />
             {:else}
                 Loading...
@@ -998,6 +1000,7 @@
             {gameFinished}
             debugBreakpoints={debugBreakpoints}
             bind:activeDebugLine={activeDebugLine}
+            bind:debugJobId={debugJobId}
             on:gameSubmitSuccess={(e) => {
                 const { runCount, submitCount, timeSpent } = e.detail;
                 const result = computeGameResult(runCount, submitCount, timeSpent, code, language);

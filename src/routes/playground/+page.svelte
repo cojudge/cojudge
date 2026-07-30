@@ -248,6 +248,7 @@ func main() {
     let settingsContainer: HTMLElement | null = null;
     let debugBreakpoints: number[] = [];
     let activeDebugLine: number | null = null;
+    let debugJobId: string | null = null;
     const fontSizes: number[] = Array.from({ length: 24 }, (_, i) => 12 + i); // 12..35
     let fontSize: number = $userSettingsStorage.editorFontSize ?? 14;
     let theme: ThemeChoice = $userSettingsStorage.theme ?? 'light';
@@ -1854,13 +1855,14 @@ func main() {
                     viewState={currentViewState}
                     bind:breakpoints={debugBreakpoints}
                     {activeDebugLine}
+                    {debugJobId}
                 />
             {:else}
                 Loading...
             {/if}
         </div>
         {#if language !== 'plaintext' && language !== 'markdown' && activeTab?.type !== 'preview'}
-            <PlaygroundExecutionPanel {code} {language} {isMac} bind:output bind:logs debugBreakpoints={debugBreakpoints} bind:activeDebugLine={activeDebugLine} />
+            <PlaygroundExecutionPanel {code} {language} {isMac} bind:output bind:logs debugBreakpoints={debugBreakpoints} bind:activeDebugLine={activeDebugLine} bind:debugJobId={debugJobId} />
         {/if}
         {:else}
         <div class="empty-state">

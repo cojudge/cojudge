@@ -526,6 +526,19 @@
         dropdownToggleButton?.focus();
     }
 
+    async function openNewWindow() {
+        showDropdown = false;
+        if (!isDesktopMode) return;
+        const tauriInternals = (window as Window & {
+            __TAURI_INTERNALS__?: { invoke: (command: string, args?: Record<string, unknown>) => Promise<unknown> };
+        }).__TAURI_INTERNALS__;
+        try {
+            await tauriInternals?.invoke('new_window');
+        } catch (error) {
+            console.error('Failed to open a new window:', error);
+        }
+    }
+
     async function openFirebaseSettings() {
         firebaseForm = getFirebaseSettings();
         firebaseSettingsSaved = hasSavedFirebaseSettings();
@@ -829,6 +842,21 @@
                             </span>
                             <span class:configured={firebaseConfigured} class="firebase-menu-status">
                                 {firebaseConfigured ? 'On' : 'Off'}
+                            </span>
+                        </button>
+                        <button
+                            class="dropdown-item"
+                            role="menuitem"
+                            onclick={openNewWindow}
+                            title="Open a new window"
+                        >
+                            <span class="dropdown-item-content">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                                    <line x1="12" y1="9" x2="12" y2="15"></line>
+                                    <line x1="9" y1="12" x2="15" y2="12"></line>
+                                </svg>
+                                New Window
                             </span>
                         </button>
                     {/if}
@@ -1214,6 +1242,9 @@
     }
 
     /* Tabs header - browser-like tab bar */
+    nav.tabs {
+        overflow-x: unset;
+    }
     .tabs {
         position: relative;
         display: flex;

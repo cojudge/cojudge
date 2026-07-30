@@ -16,6 +16,7 @@
     export let gameFinished = false;
     export let debugBreakpoints: number[] = [];
     export let activeDebugLine: number | null = null;
+    export let debugJobId: string | null = null;
     let gameRunCount = 0;
     let gameSubmitCount = 0;
     const dispatch = createEventDispatcher();
@@ -812,7 +813,6 @@
     }
 
     // ----- Debugger -----
-    let debugJobId: string | null = null;
     let debugState: any = null;
     let isDebugRunning = false;
     let debugPollInterval: any = null;

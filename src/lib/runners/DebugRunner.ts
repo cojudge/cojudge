@@ -1003,3 +1003,24 @@ export async function debugSetBreakpoints(jobId: string, breakpoints: number[]):
     session.breakpoints = breakpoints;
     await writeDebugCmd(session.container, 'set_breakpoints', { breakpoints });
 }
+
+export async function debugEval(jobId: string, variable: string): Promise<{ variable: string; value: string; line?: number }> {
+    const session = debugSessions.get(jobId);
+    if (!session) throw new Error(`Debug session '${jobId}' not found`);
+
+    const state = await readDebugState(session.container);
+    if (state.status !== 'paused') {
+        throw new Error(`Cannot evaluate '${variable}': session is ${state.status} (must be paused at a breakpoint)`);
+    }
+
+    const vars = state.vars || {};
+    if (!(variable in vars)) {
+        const available = Object.keys(vars);
+        const hint = available.length > 0
+            ? `Available variables: ${available.join(', ')}`
+            : 'No variables in scope at this point';
+        throw new Error(`Variable '${variable}' not found. ${hint}`);
+    }
+
+    return { variable, value: vars[variable], line: state.line };
+}
