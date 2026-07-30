@@ -1,7 +1,7 @@
 {
 	"name": "cojudge",
 	"private": true,
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Offline-first LeetCode-style code judge with Docker sandboxing. Solve Blind 75 & NeetCode 150 in 7 languages.",
 	"keywords": [
 		"leetcode",

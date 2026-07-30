@@ -15,6 +15,8 @@ Usage:
   cojudge debug continue <jobId>  Continue a debug session
   cojudge debug step <jobId>      Step over in a debug session
   cojudge debug stop <jobId>      Stop a debug session
+  cojudge debug eval <jobId> <variable>
+                                 Show the value of a variable in the current runtime
   cojudge mark <slug>             Mark a problem as solved
   cojudge unmark <slug>          Unmark a problem as solved
   cojudge init <slug>           Initialize a problem file with starter code
@@ -39,6 +41,7 @@ Examples:
   cojudge run my-script.py --debug-lines 5,10,15
   cojudge debug abc123
   cojudge debug step abc123
+  cojudge debug eval abc123 nums
   cojudge mark two-sum
   cojudge scrape -n 1
   cojudge scrape -s valid-parentheses

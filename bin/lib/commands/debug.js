@@ -13,6 +13,7 @@ Usage:
   cojudge debug continue <jobId>          Continue execution (run until next breakpoint or end)
   cojudge debug step <jobId>              Step over to the next line
   cojudge debug stop <jobId>              Stop the debug session
+  cojudge debug eval <jobId> <variable>   Show the value of a variable in the current runtime
 
 Start a debug session with:
   cojudge run <file> --debug-lines 5,10,15
@@ -27,6 +28,22 @@ Start a debug session with:
             process.exit(1);
         }
         await debugAction(PORT, subAction, jobId);
+        return;
+    }
+
+    if (subAction === 'eval') {
+        const variable = args[3];
+        if (!jobId) {
+            console.error(`Error: Missing job ID for 'eval' action.`);
+            console.error(`Usage: cojudge debug eval <jobId> <variable>`);
+            process.exit(1);
+        }
+        if (!variable) {
+            console.error(`Error: Missing variable name for 'eval' action.`);
+            console.error(`Usage: cojudge debug eval <jobId> <variable>`);
+            process.exit(1);
+        }
+        await debugEval(PORT, jobId, variable);
         return;
     }
 
@@ -76,6 +93,30 @@ async function debugAction(PORT, action, jobId) {
         }
 
         printState(data, jobId);
+    } catch (e) {
+        console.error(`\x1b[31mFailed to connect to server: ${e.message}\x1b[0m`);
+        process.exit(1);
+    }
+}
+
+async function debugEval(PORT, jobId, variable) {
+    try {
+        const response = await fetch(
+            `http://localhost:${PORT}/api/debug`,
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ jobId, action: 'eval', variable }),
+            }
+        );
+        const data = await response.json();
+
+        if (!response.ok) {
+            console.error(`\x1b[31mError: ${data.error || response.statusText}\x1b[0m`);
+            process.exit(1);
+        }
+
+        console.log(`\x1b[32m${data.variable}\x1b[0m = ${data.value}`);
     } catch (e) {
         console.error(`\x1b[31mFailed to connect to server: ${e.message}\x1b[0m`);
         process.exit(1);

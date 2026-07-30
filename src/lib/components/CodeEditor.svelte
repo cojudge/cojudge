@@ -12,6 +12,7 @@
     export let viewState: string | null = null;
     export let breakpoints: number[] = [];
     export let activeDebugLine: number | null = null;
+    export let debugJobId: string | null = null;
 
     let editor: Monaco.editor.IStandaloneCodeEditor | null = null;
     let editorElement: HTMLDivElement;
@@ -20,6 +21,36 @@
     let vimStatusElement: HTMLDivElement;
     let bpDecos: string[] = [];
     let activeLineDecos: string[] = [];
+    let hoverDisposable: Monaco.IDisposable | null = null;
+
+    function registerDebugHoverProvider() {
+        if (!monacoRef || !language || !isDebugSupported(language)) return;
+        hoverDisposable?.dispose();
+        hoverDisposable = monacoRef.languages.registerHoverProvider(language, {
+            provideHover: async (model: Monaco.editor.ITextModel, position: Monaco.Position) => {
+                if (!debugJobId || !activeDebugLine) return null;
+                const word = model.getWordAtPosition(position);
+                if (!word) return null;
+                try {
+                    const res = await fetch('/api/debug', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ jobId: debugJobId, action: 'eval', variable: word.word }),
+                    });
+                    if (!res.ok) return null;
+                    const data = await res.json();
+                    return {
+                        range: new monacoRef.Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
+                        contents: [
+                            { value: '```text\n' + data.variable + ' = ' + data.value + '\n```' }
+                        ]
+                    };
+                } catch {
+                    return null;
+                }
+            }
+        });
+    }
 
     export function getViewState() {
         if (!editor) return null;
@@ -196,6 +227,7 @@
             if (vimModeInstance) {
                 vimModeInstance.dispose();
             }
+            hoverDisposable?.dispose();
             editor?.dispose();
         };
     });
@@ -206,6 +238,10 @@
         if (model) {
             monacoRef.editor.setModelLanguage(model, language);
         }
+    }
+
+    $: if (editor && monacoRef && language) {
+        registerDebugHoverProvider();
     }
 
     $: if (editor && typeof vimMode === 'string') {
