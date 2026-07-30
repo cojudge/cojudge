@@ -1,8 +1,12 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
+	import { isDesktopRuntime } from '$lib/firebaseSettings';
 	import WhiteboardIcon from '$lib/components/WhiteboardIcon.svelte';
 	import { showConfirm } from '$lib/dialogs';
 	import userSettingsStorage from '$lib/stores/userSettingsStorage';
 	import { onMount, tick } from 'svelte';
+
+	const isDesktopMode = browser && isDesktopRuntime();
 
 	type Tool =
 		| 'hand'
@@ -156,6 +160,7 @@
 	let activeStorageKey = STORAGE_KEY;
 	let saveState: 'saved' | 'saving' | 'error' = 'saved';
 	let toastMessage = '';
+	let toastFilePath = '';
 	let accessibilityMessage = '';
 	let copiedShareLink = false;
 	let shareLink = '';
@@ -400,12 +405,14 @@
 		}
 	}
 
-	function showToast(message: string): void {
+	function showToast(message: string, filePath = ''): void {
 		toastMessage = message;
+		toastFilePath = filePath;
 		if (toastTimer) clearTimeout(toastTimer);
 		toastTimer = setTimeout(() => {
 			toastMessage = '';
-		}, 2400);
+			toastFilePath = '';
+		}, filePath ? 6000 : 2400);
 	}
 
 	async function openShareDialog(): Promise<void> {
@@ -1532,7 +1539,48 @@
 		recordSnapshot(before);
 	}
 
-	function downloadBlob(blob: Blob, filename: string): void {
+	async function downloadBlob(blob: Blob, filename: string): Promise<void> {
+		if (isDesktopMode) {
+			try {
+				let response;
+				if (blob.type.startsWith('application/json')) {
+					const textData = await blob.text();
+					response = await fetch('/api/export-file', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({ textData, filename })
+					});
+				} else {
+					const arrayBuffer = await blob.arrayBuffer();
+					const bytes = new Uint8Array(arrayBuffer);
+					let binary = '';
+					for (let i = 0; i < bytes.byteLength; i++) {
+						binary += String.fromCharCode(bytes[i]);
+					}
+					const base64Data = btoa(binary);
+					response = await fetch('/api/export-file', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({ base64Data, filename })
+					});
+				}
+
+				const result = await response.json();
+				if (result.success) {
+					showToast(`Saved to ${result.filePath}`, result.filePath);
+				} else {
+					showToast(result.error || 'Failed to save file');
+				}
+			} catch (error: any) {
+				showToast(error.message || 'Failed to save file');
+			}
+			return;
+		}
+
 		const url = URL.createObjectURL(blob);
 		const anchor = document.createElement('a');
 		anchor.href = url;
@@ -1543,6 +1591,21 @@
 		setTimeout(() => URL.revokeObjectURL(url), 0);
 	}
 
+	async function revealFile(filePath: string): Promise<void> {
+		if (!filePath) return;
+		try {
+			await fetch('/api/reveal-file', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ filePath })
+			});
+		} catch (error) {
+			console.error('Failed to reveal file:', error);
+		}
+	}
+
 	function saveBoardFile(): void {
 		const data: StoredBoard = {
 			version: 1,
@@ -1550,12 +1613,14 @@
 			view: { panX, panY, zoom },
 			preferences: { grid: showGrid }
 		};
-		downloadBlob(
+		void downloadBlob(
 			new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }),
 			`whiteboard-${new Date().toISOString().slice(0, 10)}.json`
 		);
 		showMainMenu = false;
-		showToast('Whiteboard file saved');
+		if (!isDesktopMode) {
+			showToast('Whiteboard file saved');
+		}
 	}
 
 	function handleBoardFile(event: Event): void {
@@ -1608,8 +1673,10 @@
 			context.drawImage(image, 0, 0, canvas.width, canvas.height);
 			const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
 			if (!blob) throw new Error('Image export failed');
-			downloadBlob(blob, `whiteboard-${new Date().toISOString().slice(0, 10)}.png`);
-			showToast('PNG exported');
+			void downloadBlob(blob, `whiteboard-${new Date().toISOString().slice(0, 10)}.png`);
+			if (!isDesktopMode) {
+				showToast('PNG exported');
+			}
 		} catch {
 			showToast('The PNG could not be exported');
 		} finally {
@@ -2248,7 +2315,15 @@
 	{/if}
 
 	{#if toastMessage}
-		<div class="toast" role="status"><WhiteboardIcon name="check" size={17} />{toastMessage}</div>
+		<div class="toast" role="status">
+			<WhiteboardIcon name="check" size={17} />
+			<span>{toastMessage}</span>
+			{#if toastFilePath}
+				<button class="reveal-btn" onclick={() => revealFile(toastFilePath)}>
+					Show in Folder
+				</button>
+			{/if}
+		</div>
 	{/if}
 
 	<input
@@ -2984,6 +3059,23 @@
 	}
 
 	.toast :global(svg) { color: #2f9e44; }
+	.toast .reveal-btn {
+		background: none;
+		border: none;
+		color: var(--color-highlight, #3b82f6);
+		font-weight: 600;
+		cursor: pointer;
+		padding: 3px 6px;
+		font-size: 11px;
+		border-radius: 4px;
+		white-space: nowrap;
+		text-decoration: underline;
+		margin-left: 6px;
+	}
+	.toast .reveal-btn:hover {
+		background: rgba(255, 255, 255, 0.08);
+		text-decoration: none;
+	}
 	@keyframes toast-in {
 		from { opacity: 0; transform: translate(-50%, 6px); }
 		to { opacity: 1; transform: translate(-50%, 0); }
