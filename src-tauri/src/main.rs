@@ -7,7 +7,7 @@ use std::{
     io::Write as _,
     process::Child,
     sync::{
-        atomic::{AtomicBool, Ordering},
+        atomic::{AtomicBool, AtomicU32, Ordering},
         Mutex,
     },
     thread,
@@ -27,7 +27,10 @@ use std::{os::unix::net::UnixStream, path::PathBuf};
 #[cfg(all(not(debug_assertions), windows))]
 use std::os::windows::process::CommandExt;
 
-use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
+use tauri::{
+    menu::{Menu, MenuItemBuilder, MenuItemKind, PredefinedMenuItem, Submenu},
+    Manager, WebviewUrl, WebviewWindowBuilder,
+};
 use tauri_plugin_opener::OpenerExt;
 
 #[cfg(not(debug_assertions))]
@@ -35,9 +38,14 @@ const BACKEND_HOST: &str = "cojudge.localhost";
 #[cfg(not(debug_assertions))]
 const BACKEND_PORT: u16 = 5376;
 
+const NEW_WINDOW_MENU_ID: &str = "new-window";
+const WINDOW_LABEL_PREFIX: &str = "main";
+static WINDOW_COUNTER: AtomicU32 = AtomicU32::new(0);
+
 #[derive(Default)]
 struct Backend {
     child: Mutex<Option<Child>>,
+    window_url: Mutex<Option<tauri::Url>>,
     #[cfg(not(debug_assertions))]
     startup_resolved: AtomicBool,
     #[cfg(not(debug_assertions))]
@@ -57,11 +65,15 @@ fn create_window(app: &tauri::AppHandle, url: tauri::Url) -> tauri::Result<()> {
     let allowed_origin = url.origin().ascii_serialization();
     let navigation_app = app.clone();
     let new_window_app = app.clone();
+    let label = format!(
+        "{WINDOW_LABEL_PREFIX}-{}",
+        WINDOW_COUNTER.fetch_add(1, Ordering::Relaxed)
+    );
 
-    WebviewWindowBuilder::new(app, "main", WebviewUrl::External(url))
+    WebviewWindowBuilder::new(app, label, WebviewUrl::External(url))
         .title("Cojudge")
         .inner_size(1400.0, 900.0)
-        .min_inner_size(900.0, 600.0)
+        .min_inner_size(300.0, 300.0)
         .center()
         .on_navigation(move |url| {
             if url.origin().ascii_serialization() == allowed_origin {
@@ -78,6 +90,61 @@ fn create_window(app: &tauri::AppHandle, url: tauri::Url) -> tauri::Result<()> {
         .build()?;
 
     Ok(())
+}
+
+fn build_menu(app: &tauri::AppHandle) -> tauri::Result<()> {
+    let menu = Menu::default(app)?;
+    let new_window = MenuItemBuilder::with_id(NEW_WINDOW_MENU_ID, "New Window")
+        .accelerator("CmdOrCtrl+N")
+        .build(app)?;
+
+    let mut file_submenu = None;
+    for item in menu.items()? {
+        if let MenuItemKind::Submenu(submenu) = item {
+            if submenu.text()? == "File" {
+                file_submenu = Some(submenu);
+                break;
+            }
+        }
+    }
+
+    if let Some(file) = file_submenu {
+        file.insert(&new_window, 0)?;
+        #[cfg(not(target_os = "macos"))]
+        file.insert(&PredefinedMenuItem::separator(app)?, 1)?;
+    } else {
+        // Platforms whose default menu has no File submenu (e.g. Linux)
+        let file = Submenu::with_items(
+            app,
+            "File",
+            true,
+            &[
+                &new_window,
+                &PredefinedMenuItem::separator(app)?,
+                &PredefinedMenuItem::quit(app, None)?,
+            ],
+        )?;
+        menu.prepend(&file)?;
+    }
+
+    app.set_menu(menu)?;
+    Ok(())
+}
+
+fn open_new_window(app: &tauri::AppHandle) -> Result<(), String> {
+    let url = app
+        .state::<Backend>()
+        .window_url
+        .lock()
+        .unwrap()
+        .clone()
+        .ok_or_else(|| "the application is still starting up".to_string())?;
+    create_window(app, url).map_err(|error| error.to_string())
+}
+
+#[tauri::command]
+fn new_window(app: tauri::AppHandle) -> Result<(), String> {
+    open_new_window(&app)
 }
 
 #[cfg(not(debug_assertions))]
@@ -249,6 +316,7 @@ fn start_backend(app: &tauri::AppHandle) -> Result<(), Box<dyn std::error::Error
                 format!("http://{BACKEND_HOST}:{BACKEND_PORT}/__cojudge_bootstrap?token={token}")
                     .parse::<tauri::Url>()
                     .expect("desktop URL must be valid");
+            *stdout_app.state::<Backend>().window_url.lock().unwrap() = Some(url.clone());
             if let Err(error) = create_window(&stdout_app, url) {
                 eprintln!("failed to create the main window: {error}");
                 shutdown_backend(&stdout_app);
@@ -320,7 +388,17 @@ fn main() {
     let app = tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
         .manage(Backend::default())
+        .invoke_handler(tauri::generate_handler![new_window])
+        .on_menu_event(|app, event| {
+            if event.id().0.as_str() == NEW_WINDOW_MENU_ID {
+                if let Err(error) = open_new_window(app) {
+                    eprintln!("failed to open a new window: {error}");
+                }
+            }
+        })
         .setup(|app| {
+            build_menu(app.handle())?;
+
             #[cfg(debug_assertions)]
             {
                 let url = app
@@ -329,6 +407,7 @@ fn main() {
                     .dev_url
                     .clone()
                     .ok_or("build.devUrl is required in development")?;
+                *app.state::<Backend>().window_url.lock().unwrap() = Some(url.clone());
                 create_window(app.handle(), url)?;
             }
 
@@ -348,9 +427,25 @@ fn main() {
             label,
             event: tauri::WindowEvent::CloseRequested { .. },
             ..
-        } if label == "main" || label == "startup-error" => {
+        } if label == "startup-error" => {
             shutdown_backend(app);
             app.exit(0);
+        }
+        tauri::RunEvent::WindowEvent {
+            label,
+            event: tauri::WindowEvent::CloseRequested { .. },
+            ..
+        } if label.starts_with(WINDOW_LABEL_PREFIX) => {
+            // Shut down only when the last main window is closed
+            let remaining = app
+                .webview_windows()
+                .keys()
+                .filter(|key| key.starts_with(WINDOW_LABEL_PREFIX))
+                .count();
+            if remaining <= 1 {
+                shutdown_backend(app);
+                app.exit(0);
+            }
         }
         tauri::RunEvent::ExitRequested { .. } | tauri::RunEvent::Exit => shutdown_backend(app),
         _ => {}
