@@ -1,10 +1,14 @@
 <script lang="ts">
     export let data;
+    import { onDestroy, onMount, tick } from "svelte";
+    import { marked } from "marked";
     import { browser } from '$app/environment';
     import { goto } from '$app/navigation';
+    import Tooltip from "$lib/components/Tooltip.svelte";
     import SortIcon from "$lib/components/SortIcon.svelte";
     import codeStore from '$lib/stores/codeStore';
     import fileStore from '$lib/stores/fileStore';
+    import { saveStatus } from '$lib/stores/saveStatus';
     import userSettingsStorage from '$lib/stores/userSettingsStorage';
     import userStore from "$lib/stores/userStore";
     import { getDifficultyClass } from "$lib/utils/util.js";
@@ -111,9 +115,6 @@
         checkMap = value || {};
     });
 // When this component is destroyed, unsubscribe
-    import Tooltip from "$lib/components/Tooltip.svelte";
-    import { marked } from "marked";
-    import { onDestroy, onMount, tick } from "svelte";
     onDestroy(() => unsubscribe());
     onDestroy(() => {
         if (importNoticeTimer) clearTimeout(importNoticeTimer);
@@ -432,7 +433,6 @@
         return out;
     }
 
-    import { saveStatus } from '$lib/stores/saveStatus';
     function importLocalStorageObject(obj: Record<string, unknown>) {
         const previousStorage = new Map<string, string | null>();
         const previousStores = {
