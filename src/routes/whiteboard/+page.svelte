@@ -1,5 +1,6 @@
 <script lang="ts">
 	import WhiteboardIcon from '$lib/components/WhiteboardIcon.svelte';
+	import { showConfirm } from '$lib/dialogs';
 	import userSettingsStorage from '$lib/stores/userSettingsStorage';
 	import { onMount, tick } from 'svelte';
 
@@ -1515,8 +1516,12 @@
 		hasInteracted = true;
 	}
 
-	function newBoard(): void {
-		if (elements.length > 0 && !window.confirm('Clear this whiteboard and start over?')) return;
+	async function newBoard(): Promise<void> {
+		if (elements.length > 0 && !await showConfirm('Every element on this whiteboard will be removed. This action can still be undone until you leave the page.', {
+			title: 'Clear whiteboard?',
+			confirmLabel: 'Clear board',
+			tone: 'danger'
+		})) return;
 		const before = cloneElements();
 		elements = [];
 		selectedIds = [];

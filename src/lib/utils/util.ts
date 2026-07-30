@@ -42,15 +42,26 @@ export function extractOperations(testCases: any[], className: string): string[]
 }
 
 const availableImages = new Set<string>();
+let executionShutdown = false;
+
+export function beginExecutionShutdown() {
+    executionShutdown = true;
+}
+
+function assertExecutionActive() {
+    if (executionShutdown) throw new Error('Server is shutting down');
+}
 
 export function resetImageCache() {
     availableImages.clear();
 }
 
 export async function ensureImageAvailable(docker: Dockerode, image: string) {
+    assertExecutionActive();
     if (availableImages.has(image)) return;
     try {
         await docker.getImage(image).inspect();
+        assertExecutionActive();
         availableImages.add(image);
     } catch (err: any) {
         const notFound = err?.statusCode === 404 || /no such image/i.test(String(err?.message ?? ''));
@@ -65,6 +76,7 @@ export async function ensureImageAvailable(docker: Dockerode, image: string) {
                 );
             });
         });
+        assertExecutionActive();
         availableImages.add(image);
     }
 }

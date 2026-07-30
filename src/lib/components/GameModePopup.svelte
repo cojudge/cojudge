@@ -1,5 +1,6 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
+    import { showAlert } from '$lib/dialogs';
     import { fade, scale } from 'svelte/transition';
 
     export let problems: { id: string; title: string; difficulty: string; link?: string; category?: string }[] = [];
@@ -10,7 +11,7 @@
 
     let includeSolved = false;
 
-    function startGame() {
+    async function startGame() {
         if (currentProblemId) {
             window.location.href = `/problems/${currentProblemId}?gameMode=1`;
             return;
@@ -20,7 +21,9 @@
             pool = problems.filter(p => !solvedSet[p.id]);
         }
         if (pool.length === 0) {
-            alert('No problems available. Try enabling "Include solved problems".');
+            await showAlert('Try enabling "Include solved problems" to expand the available pool.', {
+                title: 'No problems available'
+            });
             return;
         }
         const randomIndex = Math.floor(Math.random() * pool.length);
@@ -35,10 +38,10 @@
     }
 </script>
 
-<div class="modal-backdrop" on:click={handleBackdropClick} on:keydown={(e) => { if (e.key === 'Escape') dispatch('close'); }} role="dialog" aria-modal="true" tabindex="-1" transition:fade={{ duration: 200 }}>
+<div class="modal-backdrop" on:click={handleBackdropClick} on:keydown={(e) => { if (e.key === 'Escape') dispatch('close'); }} role="dialog" aria-modal="true" aria-labelledby="game-mode-title" tabindex="-1" transition:fade={{ duration: 200 }}>
     <div class="modal" transition:scale={{ start: 0.95, duration: 200 }}>
         <button class="close-btn" on:click={() => dispatch('close')} aria-label="Close">&times;</button>
-        <h2>Game Mode</h2>
+        <h2 id="game-mode-title">Game Mode</h2>
         <div class="rules">
             <p>{currentProblemId ? 'Play this problem in game mode.' : 'A random problem will be selected for you to solve under time pressure.'}</p>
             <ul>

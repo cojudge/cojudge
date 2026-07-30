@@ -2,7 +2,6 @@
     export let data;
     import { browser } from '$app/environment';
     import { goto } from '$app/navigation';
-    import { page } from '$app/stores';
     import SortIcon from "$lib/components/SortIcon.svelte";
     import codeStore from '$lib/stores/codeStore';
     import fileStore from '$lib/stores/fileStore';
@@ -12,11 +11,40 @@
     import GameModePopup from "$lib/components/GameModePopup.svelte";
     import GameHistoryPopup from "$lib/components/GameHistoryPopup.svelte";
     import gameResultsStore, { type GameResult } from '$lib/stores/gameResultsStore';
+    import {
+        clearFirebaseSettings,
+        emptyFirebaseSettings,
+        getFirebaseSettings,
+        hasSavedFirebaseSettings,
+        isFirebaseConfigured,
+        isDesktopRuntime,
+        saveFirebaseSettings,
+        type FirebaseSettings
+    } from '$lib/firebaseSettings';
     let fileInputEl: HTMLInputElement | null = null;
+    let dropdownToggleButton: HTMLButtonElement | null = null;
+    let importConfirmButton: HTMLButtonElement | null = null;
+    let importModalCard: HTMLElement | null = null;
+    let firebaseModalCard: HTMLElement | null = null;
+    let firebaseApiKeyInput: HTMLInputElement | null = null;
+    let loadModalCard: HTMLElement | null = null;
+    let loadCodeInputs: HTMLInputElement[] = [];
+    let pendingImport: Record<string, unknown> | null = null;
+    let importNotice: { message: string; error: boolean } | null = null;
+    let importNoticeTimer: ReturnType<typeof setTimeout> | undefined;
+    let showFirebaseSettings = false;
+    let showLoadCode = false;
+    let firebaseForm: FirebaseSettings = emptyFirebaseSettings();
+    let firebaseSettingsError = '';
+    let firebaseSettingsSaved = browser && hasSavedFirebaseSettings();
+    let firebaseConfigured = browser && isFirebaseConfigured();
+    let loadCodeCharacters = ['', '', '', ''];
+    let loadCodeNavigating = false;
     let checkMap: Record<string, boolean> = {};
     let showGamePopup = false;
+    let isDesktopMode = browser && isDesktopRuntime();
     $: if (browser) {
-        document.body.style.overflow = showGamePopup ? 'hidden' : '';
+        document.body.style.overflow = showGamePopup || pendingImport || showFirebaseSettings || showLoadCode ? 'hidden' : '';
     }
     let gameResultData: Record<string, GameResult[]> = {};
     let historyProblem: { id: string; title: string } | null = null;
@@ -85,15 +113,61 @@
 // When this component is destroyed, unsubscribe
     import Tooltip from "$lib/components/Tooltip.svelte";
     import { marked } from "marked";
-    import { onDestroy, onMount } from "svelte";
+    import { onDestroy, onMount, tick } from "svelte";
     onDestroy(() => unsubscribe());
+    onDestroy(() => {
+        if (importNoticeTimer) clearTimeout(importNoticeTimer);
+        if (browser) document.body.style.overflow = '';
+    });
 
     let showDropdown = false;
     let dropdownRef: HTMLDivElement | null = null;
+    let dropdownMenu: HTMLDivElement | null = null;
 
     function handleClickOutside(event: MouseEvent) {
         if (showDropdown && dropdownRef && !dropdownRef.contains(event.target as Node)) {
             showDropdown = false;
+        }
+    }
+
+    function dropdownItems(): HTMLElement[] {
+        return dropdownMenu
+            ? Array.from(dropdownMenu.querySelectorAll<HTMLElement>('[role="menuitem"]:not(:disabled)'))
+            : [];
+    }
+
+    async function handleDropdownTriggerKeydown(event: KeyboardEvent) {
+        if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+        event.preventDefault();
+        showDropdown = true;
+        await tick();
+        const items = dropdownItems();
+        (event.key === 'ArrowDown' ? items[0] : items[items.length - 1])?.focus();
+    }
+
+    function handleDropdownKeydown(event: KeyboardEvent) {
+        const items = dropdownItems();
+        const index = items.indexOf(document.activeElement as HTMLElement);
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            showDropdown = false;
+            dropdownToggleButton?.focus();
+        } else if (event.key === 'ArrowDown' && items.length) {
+            event.preventDefault();
+            items[(index + 1 + items.length) % items.length].focus();
+        } else if (event.key === 'ArrowUp' && items.length) {
+            event.preventDefault();
+            items[(index - 1 + items.length) % items.length].focus();
+        } else if (event.key === 'Home' && items.length) {
+            event.preventDefault();
+            items[0].focus();
+        } else if (event.key === 'End' && items.length) {
+            event.preventDefault();
+            items[items.length - 1].focus();
+        } else if (event.key === 'Tab') {
+            setTimeout(() => {
+                if (dropdownMenu && !dropdownMenu.contains(document.activeElement)) showDropdown = false;
+            });
         }
     }
 
@@ -338,33 +412,69 @@
 
     import { saveStatus } from '$lib/stores/saveStatus';
     function importLocalStorageObject(obj: Record<string, unknown>) {
+        const previousStorage = new Map<string, string | null>();
+        const previousStores = {
+            solutions: $codeStore,
+            checkboxes: $userStore,
+            files: $fileStore,
+            settings: $userSettingsStorage,
+            gameResults: $gameResultsStore
+        };
+        if (browser) {
+            for (const key of Object.keys(obj)) previousStorage.set(key, localStorage.getItem(key));
+        }
+
         saveStatus.set('saving');
         const KNOWN_KEYS = new Set(['solutions', 'user-checkboxes', 'files', 'user-settings', 'game-results']);
-        if ('solutions' in obj && obj['solutions'] && typeof obj['solutions'] === 'object') {
-            codeStore.set(obj['solutions'] as Record<string, string>);
-        }
-        if ('user-checkboxes' in obj) {
-            userStore.set(sanitizeUserCheckboxes(obj['user-checkboxes']));
-        }
-        if ('files' in obj && obj['files'] && typeof obj['files'] === 'object') {
-            fileStore.set(obj['files'] as Record<string, string>);
-        }
-        if ('user-settings' in obj && obj['user-settings'] && typeof obj['user-settings'] === 'object') {
-            userSettingsStorage.set(obj['user-settings'] as any);
-        }
-        if ('game-results' in obj && obj['game-results'] && typeof obj['game-results'] === 'object') {
-            gameResultsStore.set(obj['game-results'] as Record<string, any[]>);
-        }
-        if (browser) {
-            for (const [k, v] of Object.entries(obj)) {
-                if (KNOWN_KEYS.has(k)) continue;
-                try {
-                    const toStore = typeof v === 'string' ? (v as string) : JSON.stringify(v);
+        const requireObject = (key: string) => {
+            const value = obj[key];
+            if (!value || typeof value !== 'object' || Array.isArray(value)) {
+                throw new Error(`${key} must contain an object.`);
+            }
+            return value as Record<string, unknown>;
+        };
+
+        try {
+            if ('solutions' in obj) {
+                codeStore.set(requireObject('solutions') as Record<string, string>);
+            }
+            if ('user-checkboxes' in obj) {
+                userStore.set(sanitizeUserCheckboxes(requireObject('user-checkboxes')));
+            }
+            if ('files' in obj) {
+                fileStore.set(requireObject('files') as Record<string, string>);
+            }
+            if ('user-settings' in obj) {
+                userSettingsStorage.set(requireObject('user-settings') as any);
+            }
+            if ('game-results' in obj) {
+                gameResultsStore.set(requireObject('game-results') as Record<string, any[]>);
+            }
+            if (browser) {
+                for (const [k, v] of Object.entries(obj)) {
+                    if (KNOWN_KEYS.has(k)) continue;
+                    const toStore = typeof v === 'string' ? v : JSON.stringify(v);
+                    if (toStore === undefined) throw new Error(`${k} cannot be stored.`);
                     localStorage.setItem(k, toStore);
-                } catch {
-                    /* ignore */
                 }
             }
+        } catch (error) {
+            if (browser) {
+                try {
+                    for (const key of previousStorage.keys()) localStorage.removeItem(key);
+                    for (const [key, value] of previousStorage) {
+                        if (value !== null) localStorage.setItem(key, value);
+                    }
+                    codeStore.set(previousStores.solutions);
+                    userStore.set(previousStores.checkboxes);
+                    fileStore.set(previousStores.files);
+                    userSettingsStorage.set(previousStores.settings);
+                    gameResultsStore.set(previousStores.gameResults);
+                } catch (rollbackError) {
+                    console.error('Failed to restore local data after an import error:', rollbackError);
+                }
+            }
+            throw error;
         }
         
         setTimeout(() => {
@@ -379,15 +489,203 @@
         try {
             const text = await file.text();
             const obj = JSON.parse(text);
-            if (!obj || typeof obj !== 'object') throw new Error('Invalid JSON structure.');
-            if (browser && !confirm('Importing will overwrite your current local data. Continue?')) return;
-            importLocalStorageObject(obj as Record<string, unknown>);
-            if (browser) alert('Import complete.');
+            if (!obj || typeof obj !== 'object' || Array.isArray(obj)) {
+                throw new Error('Invalid JSON structure.');
+            }
+            pendingImport = obj as Record<string, unknown>;
+            await tick();
+            importConfirmButton?.focus();
         } catch (err: any) {
-            if (browser) alert(`Failed to import: ${err?.message || String(err)}`);
+            showImportNotice(`Failed to import: ${err?.message || String(err)}`, true);
         } finally {
-            if (input) input.value = '';
+            input.value = '';
         }
+    }
+
+    function confirmImport() {
+        if (!pendingImport) return;
+        try {
+            importLocalStorageObject(pendingImport);
+            firebaseConfigured = isFirebaseConfigured();
+            firebaseSettingsSaved = hasSavedFirebaseSettings();
+            showImportNotice('Import complete.', false);
+        } catch (err: any) {
+            showImportNotice(`Failed to import: ${err?.message || String(err)}`, true);
+        } finally {
+            void closeImportDialog();
+        }
+    }
+
+    function cancelImport() {
+        void closeImportDialog();
+    }
+
+    async function closeImportDialog() {
+        pendingImport = null;
+        await tick();
+        dropdownToggleButton?.focus();
+    }
+
+    async function openFirebaseSettings() {
+        firebaseForm = getFirebaseSettings();
+        firebaseSettingsSaved = hasSavedFirebaseSettings();
+        firebaseSettingsError = '';
+        showDropdown = false;
+        showFirebaseSettings = true;
+        await tick();
+        firebaseApiKeyInput?.focus();
+    }
+
+    async function closeFirebaseSettings() {
+        showFirebaseSettings = false;
+        firebaseSettingsError = '';
+        await tick();
+        dropdownToggleButton?.focus();
+    }
+
+    function submitFirebaseSettings(event: SubmitEvent) {
+        event.preventDefault();
+        const settings: FirebaseSettings = {
+            apiKey: firebaseForm.apiKey.trim(),
+            authDomain: firebaseForm.authDomain.trim(),
+            projectId: firebaseForm.projectId.trim(),
+            storageBucket: firebaseForm.storageBucket.trim(),
+            messagingSenderId: firebaseForm.messagingSenderId.trim(),
+            appId: firebaseForm.appId.trim()
+        };
+        if (!isFirebaseConfigured(settings)) {
+            firebaseSettingsError = 'Complete all required Firebase fields.';
+            return;
+        }
+
+        try {
+            saveFirebaseSettings(settings);
+            firebaseConfigured = true;
+            firebaseSettingsSaved = true;
+            showImportNotice('Firebase settings saved.', false);
+            void closeFirebaseSettings();
+        } catch (err: any) {
+            firebaseSettingsError = err?.message || String(err);
+        }
+    }
+
+    function removeFirebaseSettings() {
+        try {
+            clearFirebaseSettings();
+            firebaseForm = getFirebaseSettings();
+            firebaseConfigured = isFirebaseConfigured();
+            firebaseSettingsSaved = false;
+            firebaseSettingsError = '';
+            showImportNotice('Saved Firebase settings removed.', false);
+        } catch (err: any) {
+            firebaseSettingsError = err?.message || String(err);
+        }
+    }
+
+    async function openLoadCode() {
+        loadCodeCharacters = ['', '', '', ''];
+        loadCodeNavigating = false;
+        showDropdown = false;
+        showLoadCode = true;
+        await tick();
+        loadCodeInputs[0]?.focus();
+    }
+
+    async function closeLoadCode() {
+        showLoadCode = false;
+        await tick();
+        dropdownToggleButton?.focus();
+    }
+
+    function updateLoadCode(index: number, event: Event) {
+        const input = event.currentTarget as HTMLInputElement;
+        const character = input.value.replace(/[^A-Za-z0-9]/g, '').slice(-1);
+        loadCodeCharacters[index] = character;
+        loadCodeCharacters = [...loadCodeCharacters];
+        input.value = character;
+        if (character && index < loadCodeInputs.length - 1) {
+            loadCodeInputs[index + 1]?.focus();
+        }
+        navigateToSharedCodeIfComplete();
+    }
+
+    function handleLoadCodeKeydown(index: number, event: KeyboardEvent) {
+        if (event.key === 'Backspace' && !loadCodeCharacters[index] && index > 0) {
+            loadCodeCharacters[index - 1] = '';
+            loadCodeCharacters = [...loadCodeCharacters];
+            loadCodeInputs[index - 1]?.focus();
+        } else if (event.key === 'ArrowLeft' && index > 0) {
+            event.preventDefault();
+            loadCodeInputs[index - 1]?.focus();
+        } else if (event.key === 'ArrowRight' && index < loadCodeInputs.length - 1) {
+            event.preventDefault();
+            loadCodeInputs[index + 1]?.focus();
+        }
+    }
+
+    async function handleLoadCodePaste(event: ClipboardEvent) {
+        const characters = event.clipboardData?.getData('text').replace(/[^A-Za-z0-9]/g, '').slice(0, 4);
+        if (!characters) return;
+        event.preventDefault();
+        loadCodeCharacters = Array.from({ length: 4 }, (_, index) => characters[index] ?? '');
+        if (characters.length === 4) {
+            navigateToSharedCodeIfComplete();
+            return;
+        }
+        await tick();
+        loadCodeInputs[Math.min(characters.length, 4) - 1]?.focus();
+    }
+
+    function navigateToSharedCodeIfComplete() {
+        const code = loadCodeCharacters.join('');
+        if (loadCodeNavigating || !/^[A-Za-z0-9]{4}$/.test(code)) return;
+        loadCodeNavigating = true;
+        showLoadCode = false;
+        void goto(`/p/${encodeURIComponent(code)}`);
+    }
+
+    function showImportNotice(message: string, error: boolean) {
+        importNotice = { message, error };
+        if (importNoticeTimer) clearTimeout(importNoticeTimer);
+        importNoticeTimer = setTimeout(() => {
+            importNotice = null;
+            importNoticeTimer = undefined;
+        }, 4000);
+    }
+
+    function trapModalFocus(event: KeyboardEvent, modal: HTMLElement) {
+        const focusable = Array.from(
+            modal.querySelectorAll<HTMLElement>('button:not(:disabled), input:not(:disabled)')
+        );
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
+    }
+
+    function handleModalKeydown(event: KeyboardEvent) {
+        const activeModal = pendingImport
+            ? importModalCard
+            : showFirebaseSettings
+                ? firebaseModalCard
+                : showLoadCode
+                    ? loadModalCard
+                    : null;
+        if (!activeModal) return;
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            if (pendingImport) cancelImport();
+            else if (showFirebaseSettings) void closeFirebaseSettings();
+            else void closeLoadCode();
+            return;
+        }
+        if (event.key === 'Tab') trapModalFocus(event, activeModal);
     }
 
     function triggerImport() {
@@ -398,6 +696,8 @@
 <svelte:head>
     <title>Home | Offline Code Judge for LeetCode-style problems - Cojudge</title>
 </svelte:head>
+
+<svelte:window onkeydown={handleModalKeydown} />
 
 <div class="container">
     <div class="backup-toolbar">
@@ -411,8 +711,10 @@
         </Tooltip>
         <div class="dropdown-container" bind:this={dropdownRef}>
             <button
+                bind:this={dropdownToggleButton}
                 class="btn dropdown-trigger"
                 onclick={() => showDropdown = !showDropdown}
+                onkeydown={handleDropdownTriggerKeydown}
                 aria-expanded={showDropdown}
                 aria-haspopup="true"
                 aria-label="Toggle menu"
@@ -427,7 +729,25 @@
                 </svg>
             </button>
             {#if showDropdown}
-                <div class="dropdown-menu" role="menu">
+                <div bind:this={dropdownMenu} class="dropdown-menu" role="menu" tabindex="-1" onkeydown={handleDropdownKeydown}>
+                    {#if isDesktopMode && firebaseConfigured}
+                        <button
+                            class="dropdown-item"
+                            role="menuitem"
+                            onclick={openLoadCode}
+                            title="Open a shared solution by its four-character code"
+                        >
+                            <span class="dropdown-item-content">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"></path>
+                                    <path d="m10 8 4 4-4 4"></path>
+                                </svg>
+                                Load
+                            </span>
+                        </button>
+                        <div class="dropdown-separator" role="separator"></div>
+                    {/if}
                     <button
                         class="dropdown-item"
                         role="menuitem"
@@ -492,6 +812,26 @@
                             <span class="span-badge">NEW</span>
                         </span>
                     </button>
+                    {#if isDesktopMode}
+                        <div class="dropdown-separator" role="separator"></div>
+                        <button
+                            class="dropdown-item"
+                            role="menuitem"
+                            onclick={openFirebaseSettings}
+                            title="Configure Firebase sharing for desktop mode"
+                        >
+                            <span class="dropdown-item-content">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2 4.5 20.3a.5.5 0 0 0 .7.6L12 17l6.8 3.9a.5.5 0 0 0 .7-.6L12 2Z"></path>
+                                    <path d="m8.5 11.2 7 0"></path>
+                                </svg>
+                                Firebase settings
+                            </span>
+                            <span class:configured={firebaseConfigured} class="firebase-menu-status">
+                                {firebaseConfigured ? 'On' : 'Off'}
+                            </span>
+                        </button>
+                    {/if}
                     <button
                         class="dropdown-item"
                         role="menuitem"
@@ -528,6 +868,117 @@
         </div>
         <input bind:this={fileInputEl} type="file" accept="application/json" class="hidden-file-input" onchange={onImportFileSelected} />
     </div>
+    {#if pendingImport}
+        <div class="home-modal-shell">
+            <button class="home-modal-backdrop" aria-label="Cancel import" tabindex="-1" onclick={cancelImport}></button>
+            <div bind:this={importModalCard} class="home-modal-card" role="dialog" aria-modal="true" aria-labelledby="import-dialog-title">
+                <h2 id="import-dialog-title">Import local data?</h2>
+                <p>Matching local solutions, files, settings, and progress will be overwritten by this backup.</p>
+                <div class="home-modal-actions">
+                    <button class="btn" type="button" onclick={cancelImport}>Cancel</button>
+                    <button bind:this={importConfirmButton} class="btn modal-primary-btn" type="button" onclick={confirmImport}>Import data</button>
+                </div>
+            </div>
+        </div>
+    {/if}
+    {#if showFirebaseSettings}
+        <div class="home-modal-shell">
+            <button class="home-modal-backdrop" aria-label="Close Firebase settings" tabindex="-1" onclick={closeFirebaseSettings}></button>
+            <div
+                bind:this={firebaseModalCard}
+                class="home-modal-card firebase-settings-card"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="firebase-settings-title"
+            >
+                <form onsubmit={submitFirebaseSettings}>
+                <div class="modal-heading-row">
+                    <div>
+                        <span class="modal-eyebrow">Desktop connection</span>
+                        <h2 id="firebase-settings-title">Firebase settings</h2>
+                    </div>
+                    <span class:configured={firebaseConfigured} class="firebase-status-pill">
+                        <span></span>{firebaseConfigured ? 'Configured' : 'Not configured'}
+                    </span>
+                </div>
+                <p>Connect this desktop app to the Firebase project used for shared solutions.</p>
+                <div class="firebase-fields">
+                    <label>
+                        <span>API key <code>VITE_FIREBASE_API_KEY</code></span>
+                        <input bind:this={firebaseApiKeyInput} bind:value={firebaseForm.apiKey} required autocomplete="off" spellcheck="false" />
+                    </label>
+                    <label>
+                        <span>Auth domain <code>VITE_FIREBASE_AUTH_DOMAIN</code></span>
+                        <input bind:value={firebaseForm.authDomain} required autocomplete="off" spellcheck="false" placeholder="project.firebaseapp.com" />
+                    </label>
+                    <label>
+                        <span>Project ID <code>VITE_FIREBASE_PROJECT_ID</code></span>
+                        <input bind:value={firebaseForm.projectId} required autocomplete="off" spellcheck="false" />
+                    </label>
+                    <label>
+                        <span>Messaging sender ID <code>VITE_FIREBASE_MESSAGING_SENDER_ID</code></span>
+                        <input bind:value={firebaseForm.messagingSenderId} required autocomplete="off" spellcheck="false" inputmode="numeric" />
+                    </label>
+                    <label class="firebase-field-wide">
+                        <span>App ID <code>VITE_FIREBASE_APP_ID</code></span>
+                        <input bind:value={firebaseForm.appId} required autocomplete="off" spellcheck="false" />
+                    </label>
+                    <label class="firebase-field-wide">
+                        <span>Storage bucket <small>optional</small> <code>VITE_FIREBASE_STORAGE_BUCKET</code></span>
+                        <input bind:value={firebaseForm.storageBucket} autocomplete="off" spellcheck="false" placeholder="project.firebasestorage.app" />
+                    </label>
+                </div>
+                <p class="firebase-settings-note">Stored only on this device. Firebase API keys identify a project but do not grant database access by themselves.</p>
+                {#if firebaseSettingsError}
+                    <p class="modal-error" role="alert">{firebaseSettingsError}</p>
+                {/if}
+                    <div class="home-modal-actions settings-actions">
+                        {#if firebaseSettingsSaved}
+                            <button class="btn remove-settings-btn" type="button" onclick={removeFirebaseSettings}>Remove saved</button>
+                        {/if}
+                        <span class="modal-action-spacer"></span>
+                        <button class="btn" type="button" onclick={closeFirebaseSettings}>Cancel</button>
+                        <button class="btn modal-primary-btn" type="submit">Save settings</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {/if}
+    {#if showLoadCode}
+        <div class="home-modal-shell">
+            <button class="home-modal-backdrop" aria-label="Close shared code loader" tabindex="-1" onclick={closeLoadCode}></button>
+            <div bind:this={loadModalCard} class="home-modal-card load-code-card" role="dialog" aria-modal="true" aria-labelledby="load-code-title">
+                <span class="modal-eyebrow">Shared solution</span>
+                <h2 id="load-code-title">Enter code</h2>
+                <p>Type or paste the four-character code from a Cojudge share link.</p>
+                <div class="load-code-inputs" aria-label="Four-character share code" onpaste={handleLoadCodePaste}>
+                    {#each loadCodeCharacters as character, index}
+                        <input
+                            bind:this={loadCodeInputs[index]}
+                            value={character}
+                            aria-label={`Code character ${index + 1}`}
+                            maxlength="1"
+                            autocomplete="off"
+                            autocapitalize="none"
+                            spellcheck="false"
+                            inputmode="text"
+                            oninput={(event) => updateLoadCode(index, event)}
+                            onkeydown={(event) => handleLoadCodeKeydown(index, event)}
+                        />
+                    {/each}
+                </div>
+                <p class="load-code-hint">Codes are case-sensitive and open automatically.</p>
+                <div class="home-modal-actions load-code-actions">
+                    <button class="btn" type="button" onclick={closeLoadCode}>Cancel</button>
+                </div>
+            </div>
+        </div>
+    {/if}
+    {#if importNotice}
+        <div class:error={importNotice.error} class="import-toast" role={importNotice.error ? 'alert' : 'status'}>
+            {importNotice.message}
+        </div>
+    {/if}
     <nav class="tabs" aria-label="Course">
         {#each courses as course}
             <a
@@ -904,6 +1355,20 @@
         align-items: center;
         gap: 0.5rem;
     }
+    .firebase-menu-status {
+        padding: 0.1rem 0.4rem;
+        border-radius: 999px;
+        background: var(--color-second-bg);
+        color: var(--color-text-secondary);
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+    .firebase-menu-status.configured {
+        background: color-mix(in srgb, var(--color-easy) 16%, transparent);
+        color: var(--color-easy);
+    }
     .btn {
         appearance: none;
         border: 1px solid var(--color-border);
@@ -919,6 +1384,245 @@
         cursor: not-allowed;
     }
     .hidden-file-input { display: none; }
+    .home-modal-shell {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: grid;
+        place-items: center;
+        padding: 1.25rem;
+        overflow-y: auto;
+    }
+    .home-modal-backdrop {
+        position: absolute;
+        inset: 0;
+        border: 0;
+        background: rgba(0, 0, 0, 0.52);
+        cursor: default;
+    }
+    .home-modal-card {
+        position: relative;
+        width: min(430px, 100%);
+        max-height: calc(100vh - 2.5rem);
+        max-height: calc(100dvh - 2.5rem);
+        overflow-y: auto;
+        padding: 1.5rem;
+        border: 1px solid var(--color-border);
+        border-radius: 0.875rem;
+        background: var(--color-bg);
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
+    }
+    .home-modal-card h2 {
+        margin: 0 0 0.75rem;
+        font-size: 1.25rem;
+    }
+    .home-modal-card p {
+        margin: 0;
+        color: var(--color-text-secondary);
+        line-height: 1.55;
+    }
+    .home-modal-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 0.625rem;
+        margin-top: 1.5rem;
+    }
+    .modal-primary-btn {
+        border-color: var(--color-highlight);
+        background: var(--color-highlight);
+        color: #fff;
+        font-weight: 650;
+    }
+    .modal-primary-btn:hover {
+        filter: brightness(1.05);
+    }
+    .modal-heading-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    .modal-heading-row h2 {
+        margin-bottom: 0;
+    }
+    .modal-eyebrow {
+        display: block;
+        margin-bottom: 0.35rem;
+        color: var(--color-highlight);
+        font-size: 0.7rem;
+        font-weight: 750;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+    .firebase-settings-card {
+        width: min(720px, 100%);
+    }
+    .firebase-status-pill {
+        display: inline-flex;
+        align-items: center;
+        flex: 0 0 auto;
+        gap: 0.4rem;
+        padding: 0.3rem 0.55rem;
+        border: 1px solid var(--color-border);
+        border-radius: 999px;
+        color: var(--color-text-secondary);
+        font-size: 0.72rem;
+        font-weight: 650;
+    }
+    .firebase-status-pill span {
+        width: 0.45rem;
+        height: 0.45rem;
+        border-radius: 50%;
+        background: var(--color-text-secondary);
+    }
+    .firebase-status-pill.configured {
+        color: var(--color-easy);
+    }
+    .firebase-status-pill.configured span {
+        background: var(--color-easy);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-easy) 16%, transparent);
+    }
+    .firebase-fields {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.9rem 1rem;
+        margin-top: 1.25rem;
+    }
+    .firebase-fields label {
+        display: grid;
+        gap: 0.4rem;
+        min-width: 0;
+        color: var(--color-text);
+        font-size: 0.82rem;
+        font-weight: 650;
+    }
+    .firebase-fields label > span {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.5rem;
+    }
+    .firebase-fields code {
+        overflow: hidden;
+        color: var(--color-text-secondary);
+        font-size: 0.62rem;
+        font-weight: 500;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .firebase-fields small {
+        color: var(--color-text-secondary);
+        font-size: 0.7rem;
+        font-weight: 500;
+    }
+    .firebase-fields input {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        padding: 0.65rem 0.7rem;
+        border: 1px solid var(--color-border);
+        border-radius: 0.5rem;
+        outline: none;
+        background: var(--color-surface);
+        color: var(--color-text);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+    }
+    .firebase-fields input:focus {
+        border-color: var(--color-highlight);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-highlight) 18%, transparent);
+    }
+    .firebase-field-wide {
+        grid-column: 1 / -1;
+    }
+    .home-modal-card .firebase-settings-note {
+        margin-top: 1rem;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        background: var(--color-second-bg);
+        font-size: 0.76rem;
+    }
+    .modal-error {
+        margin-top: 0.75rem !important;
+        color: var(--color-hard) !important;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    .settings-actions {
+        border-top: 1px solid var(--color-border);
+        padding-top: 1rem;
+    }
+    .modal-action-spacer {
+        flex: 1;
+    }
+    .remove-settings-btn {
+        color: var(--color-hard);
+    }
+    .load-code-card {
+        width: min(560px, 100%);
+        padding: 2.25rem;
+        text-align: center;
+    }
+    .load-code-card h2 {
+        margin-bottom: 0.5rem;
+        font-size: clamp(1.7rem, 5vw, 2.25rem);
+    }
+    .load-code-inputs {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: clamp(0.55rem, 2vw, 1rem);
+        width: min(410px, 100%);
+        margin: 2rem auto 0;
+    }
+    .load-code-inputs input {
+        width: 100%;
+        aspect-ratio: 0.9;
+        min-width: 0;
+        box-sizing: border-box;
+        border: 2px solid var(--color-border);
+        border-radius: 0.75rem;
+        outline: none;
+        background: var(--color-surface);
+        color: var(--color-text);
+        font-family: var(--font-mono);
+        font-size: clamp(1.55rem, 7vw, 2.25rem);
+        font-weight: 750;
+        text-align: center;
+        caret-color: var(--color-highlight);
+        transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+    }
+    .load-code-inputs input:focus {
+        border-color: var(--color-highlight);
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-highlight) 18%, transparent);
+        transform: translateY(-2px);
+    }
+    .home-modal-card .load-code-hint {
+        margin-top: 0.75rem;
+        font-size: 0.76rem;
+    }
+    .load-code-actions {
+        justify-content: center;
+        margin-top: 1.75rem;
+    }
+    .import-toast {
+        position: fixed;
+        right: 1.25rem;
+        bottom: 1.25rem;
+        z-index: 1001;
+        max-width: min(420px, calc(100vw - 2.5rem));
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--color-border);
+        border-left: 4px solid var(--color-easy);
+        border-radius: 0.625rem;
+        background: var(--color-surface);
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.22);
+    }
+    .import-toast.error {
+        border-left-color: var(--color-hard);
+    }
     .tab {
         position: relative;
         display: inline-flex;
@@ -1214,5 +1918,45 @@
         background-color: var(--color-surface-hover);
         color: var(--color-text);
         opacity: 1;
+    }
+    @media (max-width: 640px) {
+        .home-modal-shell {
+            align-items: end;
+            padding: 0.75rem;
+        }
+        .home-modal-card {
+            max-height: calc(100vh - 1.5rem);
+            max-height: calc(100dvh - 1.5rem);
+            padding: 1.25rem;
+            border-radius: 1rem;
+        }
+        .firebase-fields {
+            grid-template-columns: 1fr;
+        }
+        .firebase-field-wide {
+            grid-column: auto;
+        }
+        .firebase-fields label > span {
+            display: grid;
+            gap: 0.15rem;
+        }
+        .modal-heading-row {
+            display: grid;
+        }
+        .firebase-status-pill {
+            width: fit-content;
+        }
+        .settings-actions .remove-settings-btn {
+            width: 100%;
+        }
+        .modal-action-spacer {
+            display: none;
+        }
+        .load-code-card {
+            padding: 1.75rem 1.25rem;
+        }
+        .load-code-inputs {
+            margin-top: 1.5rem;
+        }
     }
 </style>

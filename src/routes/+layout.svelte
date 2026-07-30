@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import AppDialog from '$lib/components/AppDialog.svelte';
 	import favicon from '$lib/assets/favicon.svg';
 	import DemoBanner from '$lib/components/DemoBanner.svelte';
 	import '../app.css';
@@ -17,3 +18,4 @@
 {/if}
 
 {@render children?.()}
+<AppDialog />

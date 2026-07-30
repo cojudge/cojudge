@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schema.tauri.app/config/2",
+	"productName": "Cojudge",
+	"version": "../package.json",
+	"identifier": "cloud.cojudge.desktop",
+	"build": {
+		"beforeDevCommand": "npm run dev -- --host 127.0.0.1 --port 5173 --strictPort",
+		"devUrl": "http://127.0.0.1:5173",
+		"beforeBuildCommand": "npm run desktop:prepare",
+		"frontendDist": "frontend"
+	},
+	"app": {
+		"windows": [],
+		"security": {
+			"capabilities": []
+		}
+	},
+	"bundle": {
+		"active": true,
+		"icon": [
+			"icons/32x32.png",
+			"icons/128x128.png",
+			"icons/128x128@2x.png",
+			"icons/icon.icns",
+			"icons/icon.ico"
+		],
+		"resources": {
+			"resources/backend/": "backend/"
+		},
+		"externalBin": ["binaries/cojudge-node"],
+		"category": "Education",
+		"license": "MIT",
+		"shortDescription": "Offline-first code judge",
+		"longDescription": "Solve algorithmic problems locally using Docker-based language runtimes.",
+		"macOS": {
+			"minimumSystemVersion": "13.5",
+			"exceptionDomain": "localhost",
+			"entitlements": "Entitlements.plist",
+			"hardenedRuntime": true
+		}
+	}
+}

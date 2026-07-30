@@ -5,6 +5,7 @@ import tar from 'tar-stream';
 import { formatAndSplitJavaString, getDisplayFuncName, javaGetFullParam, javaHelperMethods, javaImage, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from './utils/javaUtil';
 import { ensureImageAvailable, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE, type Param } from './utils/util';
 import ContainerPool from './runners/ContainerPool';
+import { cojudgeContainerLabels } from './server/containerSession';
 
 const docker = new Dockerode();
 
@@ -52,7 +53,7 @@ export async function getMarkerResponses(problemId: string, functionName: string
                 Cmd: ['sh', '-lc', 'tail -f /dev/null'],
                 WorkingDir: '/app',
                 Tty: false,
-                Labels: { 'cojudge.created': 'true' }
+                Labels: cojudgeContainerLabels()
             });
             await container.start();
         }

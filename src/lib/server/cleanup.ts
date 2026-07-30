@@ -1,14 +1,50 @@
-import { EXECUTION_TIMEOUT_SECONDS } from '$lib/utils/util';
+import { beginExecutionShutdown, EXECUTION_TIMEOUT_SECONDS } from '$lib/utils/util';
+import { containerSessionId } from '$lib/server/containerSession';
 import Dockerode from 'dockerode';
 import ContainerPool from '$lib/runners/ContainerPool';
 
 const docker = new Dockerode();
 const TIMEOUT_MS = (parseInt(EXECUTION_TIMEOUT_SECONDS) + 10) * 1000;
+let cleanupTimer: ReturnType<typeof setInterval> | undefined;
+let shutdownPromise: Promise<void> | undefined;
 
 export function startCleanupCron() {
+    if (cleanupTimer) return;
     console.log('Starting container cleanup cron job...');
-    cleanupContainers();
-    setInterval(cleanupContainers, 60 * 1000);
+    void cleanupContainers();
+    cleanupTimer = setInterval(cleanupContainers, 60 * 1000);
+}
+
+export function stopCleanupCron(): Promise<void> {
+    shutdownPromise ??= shutdownContainers();
+    return shutdownPromise;
+}
+
+async function shutdownContainers() {
+    beginExecutionShutdown();
+    ContainerPool.beginShutdown();
+    if (cleanupTimer) {
+        clearInterval(cleanupTimer);
+        cleanupTimer = undefined;
+    }
+
+    await ContainerPool.destroyAll();
+    for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+            const containers = await docker.listContainers({
+                all: true,
+                filters: {
+                    label: ['cojudge.created=true', `cojudge.session=${containerSessionId}`]
+                }
+            });
+            await Promise.allSettled(
+                containers.map(({ Id }) => docker.getContainer(Id).remove({ force: true }))
+            );
+        } catch (err) {
+            console.error('Failed to remove containers during shutdown:', err);
+        }
+        if (attempt < 2) await new Promise((resolve) => setTimeout(resolve, 500));
+    }
 }
 
 async function cleanupContainers() {
@@ -23,6 +59,7 @@ async function cleanupContainers() {
         const containers = await docker.listContainers({
             all: true,
             filters: {
+                // Age checks below make cross-session cleanup safe and reclaim crash leftovers.
                 label: ['cojudge.created=true']
             }
         });

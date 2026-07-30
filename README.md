@@ -1,4 +1,5 @@
 [![CI](https://github.com/cojudge/cojudge/actions/workflows/test.yml/badge.svg)](https://github.com/cojudge/cojudge/actions/workflows/test.yml)
+[![GitHub Release](https://img.shields.io/github/v/release/cojudge/cojudge?include_prereleases)](https://github.com/cojudge/cojudge/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub Stars](https://img.shields.io/github/stars/cojudge/cojudge?style=social)](https://github.com/cojudge/cojudge)
 
@@ -32,13 +33,18 @@
 
 ## Requirements
 
-- Node.js (v18+) and npm
+- Node.js (v18+) and npm for CLI or source installs; desktop releases bundle Node.js
 - Docker (installed and running, only required while judging)
 
 ## Quickstart
 
 ### 1. Installation
-The easiest way to install `cojudge` without dealing with NPM permission issues is to run our install script:
+
+#### Desktop app
+Download the latest installer for macOS, Windows, or Linux from [GitHub Releases](https://github.com/cojudge/cojudge/releases). Desktop builds bundle Node.js; Docker is only required when running, submitting, or debugging code.
+
+#### CLI
+The easiest way to install the `cojudge` CLI without dealing with NPM permission issues is to run our install script:
 
 #### Mac / Linux
 ```bash
@@ -59,7 +65,7 @@ cd cojudge
 This will install dependencies, build the app, and add a `cojudge` alias to your shell configuration.
 
 ### 2. Usage
-Simply run `cojudge` to start the server and open it in your browser:
+Open the installed desktop app, or run `cojudge` to start the server and open it in your browser:
 ```bash
 cojudge
 ```
@@ -123,6 +129,12 @@ chmod +x docker.sh
 ```
 This builds a local image named `cojudge` and runs it, mapping the host Docker socket so the judge can spawn sibling containers.
 
+## Desktop Apps
+
+Cojudge can also run as a native Tauri application on macOS, Windows, and Linux. The application bundles its Node.js backend, problems, and courses, so users do not need to install Node.js. Docker is still required when running or debugging code.
+
+See [`docs/DESKTOP.md`](docs/DESKTOP.md) for development, DMG, signing, and notarization instructions.
+
 ## Development
 
 1) Add $USER to docker group (if using Docker)
@@ -160,13 +172,13 @@ Some test cases and reference marker solutions were AI‑assisted and human‑re
 
 ## Add a programming language
 
-This is a more complicated process but it is definitely doable. 
+This is a more complicated process but it is definitely doable.
 
 1. For starter you need to create a new class that extends class `ProgramRunner.ts` (e.g. `JavascriptRunner.ts`) and implement your own `abstract compile()` and `abstract run()`. It's expected that all runtimes will be executed via [Dockerode](https://github.com/apocas/dockerode)
 
 2. Implement all the `displayOutput({inputType})` and `to_{inputType}()` methods on your custom utilitiy class (e.g. `javascriptUtil.ts`)
 
-3. Add your new languages on `api/image/pull` and `api/image/status` 
+3. Add your new languages on `api/image/pull` and `api/image/status`
 
 4. Add `starterCode` to the problem you like to solve in your language. Just the starter code is needed for existing problems. No need for solution in the new language. Our codebase will handle the rest.
 
@@ -176,7 +188,7 @@ This is a more complicated process but it is definitely doable.
 
 7. Create a new class that extends `PlaygroundRunner` (e.g. `PlaygroundJavascriptRunner`) in `src/lib/runners/PlaygroundRunners.ts` and add the instantiation logic in `src/routes/api/playground/run/+server.ts`.
 
-Refer to `javaUtil.ts`, `JavaRunner.ts` and `problems/two-sum` for a detailed example. 
+Refer to `javaUtil.ts`, `JavaRunner.ts` and `problems/two-sum` for a detailed example.
 
 ## Troubleshooting
 

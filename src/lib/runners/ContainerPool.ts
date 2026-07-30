@@ -13,8 +13,14 @@ interface PoolEntry {
 class ContainerPool {
     private static pools: Map<string, PoolEntry[]> = new Map();
     private static MAX_IDLE = 2;
+    private static shuttingDown = false;
+
+    static beginShutdown(): void {
+        this.shuttingDown = true;
+    }
 
     static async acquire(image: string): Promise<Dockerode.Container | null> {
+        if (this.shuttingDown) return null;
         const entries = this.pools.get(image) || [];
         const idx = entries.findIndex(e => !e.inUse);
         if (idx === -1) return null;
@@ -36,6 +42,10 @@ class ContainerPool {
     }
 
     static acquirePermanent(image: string, container: Dockerode.Container): void {
+        if (this.shuttingDown) {
+            void this.destroyContainer(container);
+            return;
+        }
         const entries = this.pools.get(image) || [];
         entries.push({
             container,
@@ -48,6 +58,10 @@ class ContainerPool {
     }
 
     static async release(image: string, container: Dockerode.Container): Promise<void> {
+        if (this.shuttingDown) {
+            await ContainerPool.destroyContainer(container);
+            return;
+        }
         const entries = this.pools.get(image) || [];
         const existing = entries.find(e => e.container.id === container.id);
         if (existing) {
@@ -108,13 +122,13 @@ class ContainerPool {
     }
 
     static async destroyAll(): Promise<void> {
-        for (const [, entries] of this.pools.entries()) {
-            for (const e of entries) {
+        this.shuttingDown = true;
+        const entries = [...this.pools.values()].flat();
+        this.pools.clear();
+        await Promise.all(entries.map(async (e) => {
                 try { await e.container.stop({ t: 1 }); } catch {}
                 try { await e.container.remove({ force: true }); } catch {}
-            }
-        }
-        this.pools.clear();
+        }));
     }
 
     private static async cleanContainer(container: Dockerode.Container): Promise<void> {

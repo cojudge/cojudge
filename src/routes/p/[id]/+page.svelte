@@ -2,6 +2,7 @@
     import { goto } from '$app/navigation';
     import { page } from '$app/stores';
     import { initFirebase } from '$lib/firebase';
+    import { storeForkTransfer, type ForkTransfer } from '$lib/forkTransfer';
     import userSettingsStorage from '$lib/stores/userSettingsStorage';
     import { doc, getDoc } from 'firebase/firestore';
     import { onMount } from 'svelte';
@@ -30,7 +31,7 @@
         const panelModule = await import('$lib/components/PlaygroundExecutionPanel.svelte');
         PlaygroundExecutionPanel = panelModule.default;
 
-        const fb = initFirebase();
+        const fb = await initFirebase();
         if (!fb || !fb.db) {
             error = 'Firebase not configured';
             loading = false;
@@ -50,7 +51,7 @@
                 output = data.output || '';
                 logs = data.logs || '';
             } else {
-                error = 'Solution not found';
+                error = 'Code does not exist.';
             }
         } catch (e) {
             console.error(e);
@@ -61,28 +62,17 @@
     });
 
     function handleFork() {
+        const transfer: ForkTransfer = {
+            content: code,
+            language: language as ForkTransfer['language'],
+            viewState,
+            fileName
+        };
+        storeForkTransfer(transfer);
         if (problemId) {
-            goto(`/problems/${problemId}`, {
-                state: {
-                    forkData: {
-                        content: code,
-                        language: language,
-                        viewState: viewState,
-                        fileName: fileName
-                    }
-                }
-            });
+            void goto(`/problems/${problemId}`);
         } else {
-            goto('/playground', {
-                state: {
-                    forkData: {
-                        content: code,
-                        language: language,
-                        viewState: viewState,
-                        fileName: fileName
-                    }
-                }
-            });
+            void goto('/playground');
         }
     }
 
@@ -100,7 +90,26 @@
     {#if loading}
         <div class="center-msg">Loading...</div>
     {:else if error}
-        <div class="center-msg error">{error}</div>
+        <div class="center-msg error-state">
+            <div class="error-card">
+                <span class="error-eyebrow">Shared solution</span>
+                <h1>{error === 'Code does not exist.' ? 'Solution not found' : 'Unable to load solution'}</h1>
+                <p>
+                    {#if error === 'Code does not exist.'}
+                        Code <code>{id}</code> does not exist.
+                    {:else}
+                        {error}
+                    {/if}
+                </p>
+                <button class="action-btn home-btn" on:click={() => goto('/')}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m3 11 9-8 9 8"></path>
+                        <path d="M5 10v11h14V10"></path>
+                    </svg>
+                    Home
+                </button>
+            </div>
+        </div>
     {:else}
         <div class="header">
             <div class="title">
@@ -108,6 +117,13 @@
                 <span class="lang-badge">{fileName} ({language})</span>
             </div>
             <div class="actions">
+                <button class="action-btn" on:click={() => goto('/')}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m3 11 9-8 9 8"></path>
+                        <path d="M5 10v11h14V10"></path>
+                    </svg>
+                    Home
+                </button>
                 <button class="action-btn" on:click={copySourceCode}>
                     {#if sourceCopied}
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -173,8 +189,52 @@
         color: var(--color-text-secondary);
     }
 
-    .error {
-        color: #ff4d4f;
+    .error-state {
+        padding: 2rem;
+        box-sizing: border-box;
+    }
+
+    .error-card {
+        width: min(440px, 100%);
+        padding: 2rem;
+        box-sizing: border-box;
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius-lg, 16px);
+        background: var(--color-surface);
+        text-align: center;
+        box-shadow: 0 18px 60px rgba(0, 0, 0, 0.12);
+    }
+
+    .error-eyebrow {
+        color: var(--color-highlight);
+        font-size: 0.72rem;
+        font-weight: 750;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .error-card h1 {
+        margin: 0.5rem 0;
+        color: var(--color-text);
+        font-size: 1.6rem;
+    }
+
+    .error-card p {
+        margin: 0;
+        color: var(--color-text-secondary);
+        line-height: 1.55;
+    }
+
+    .error-card code {
+        padding: 0.1rem 0.35rem;
+        border-radius: 0.3rem;
+        background: var(--color-second-bg);
+        color: var(--color-text);
+        font-family: var(--font-mono);
+    }
+
+    .error-card .home-btn {
+        margin: 1.4rem auto 0;
     }
 
     .header {
@@ -230,5 +290,25 @@
         flex: 1;
         position: relative;
         overflow: hidden;
+    }
+
+    @media (max-width: 760px) {
+        .header {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding: 0.85rem 1rem;
+        }
+        .title {
+            flex-wrap: wrap;
+            gap: 0.45rem;
+        }
+        .actions {
+            width: 100%;
+            overflow-x: auto;
+        }
+        .action-btn {
+            flex: 0 0 auto;
+        }
     }
 </style>
