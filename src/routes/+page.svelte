@@ -1214,6 +1214,9 @@
     }
 
     /* Tabs header - browser-like tab bar */
+    nav.tabs {
+        overflow-x: unset;
+    }
     .tabs {
         position: relative;
         display: flex;
