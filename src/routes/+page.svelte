@@ -1,10 +1,14 @@
 <script lang="ts">
     export let data;
+    import { onDestroy, onMount, tick } from "svelte";
+    import { marked } from "marked";
     import { browser } from '$app/environment';
     import { goto } from '$app/navigation';
+    import Tooltip from "$lib/components/Tooltip.svelte";
     import SortIcon from "$lib/components/SortIcon.svelte";
     import codeStore from '$lib/stores/codeStore';
     import fileStore from '$lib/stores/fileStore';
+    import { saveStatus } from '$lib/stores/saveStatus';
     import userSettingsStorage from '$lib/stores/userSettingsStorage';
     import userStore from "$lib/stores/userStore";
     import { getDifficultyClass } from "$lib/utils/util.js";
@@ -30,7 +34,7 @@
     let loadModalCard: HTMLElement | null = null;
     let loadCodeInputs: HTMLInputElement[] = [];
     let pendingImport: Record<string, unknown> | null = null;
-    let importNotice: { message: string; error: boolean } | null = null;
+    let importNotice: { message: string; error: boolean; filePath?: string } | null = null;
     let importNoticeTimer: ReturnType<typeof setTimeout> | undefined;
     let showFirebaseSettings = false;
     let showLoadCode = false;
@@ -111,9 +115,6 @@
         checkMap = value || {};
     });
 // When this component is destroyed, unsubscribe
-    import Tooltip from "$lib/components/Tooltip.svelte";
-    import { marked } from "marked";
-    import { onDestroy, onMount, tick } from "svelte";
     onDestroy(() => unsubscribe());
     onDestroy(() => {
         if (importNoticeTimer) clearTimeout(importNoticeTimer);
@@ -379,7 +380,7 @@
         }
     }
 
-    function exportLocalStorage() {
+    async function exportLocalStorage() {
         if (!browser) return;
         const data: Record<string, unknown> = {};
         for (let i = 0; i < localStorage.length; i++) {
@@ -387,6 +388,28 @@
             if (!key) continue;
             data[key] = parseMaybe(localStorage.getItem(key));
         }
+
+        if (isDesktopMode) {
+            try {
+                const response = await fetch('/api/export', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ data })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    showImportNotice(`Exported to ${result.filePath}`, false, result.filePath);
+                } else {
+                    showImportNotice(result.error || 'Failed to export progress', true);
+                }
+            } catch (error: any) {
+                showImportNotice(error.message || 'Failed to export progress', true);
+            }
+            return;
+        }
+
         const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -410,7 +433,6 @@
         return out;
     }
 
-    import { saveStatus } from '$lib/stores/saveStatus';
     function importLocalStorageObject(obj: Record<string, unknown>) {
         const previousStorage = new Map<string, string | null>();
         const previousStores = {
@@ -657,13 +679,28 @@
         void goto(`/p/${encodeURIComponent(code)}`);
     }
 
-    function showImportNotice(message: string, error: boolean) {
-        importNotice = { message, error };
+    function showImportNotice(message: string, error: boolean, filePath?: string) {
+        importNotice = { message, error, filePath };
         if (importNoticeTimer) clearTimeout(importNoticeTimer);
         importNoticeTimer = setTimeout(() => {
             importNotice = null;
             importNoticeTimer = undefined;
-        }, 4000);
+        }, filePath ? 6000 : 4000);
+    }
+
+    async function revealFile(filePath: string | undefined) {
+        if (!filePath) return;
+        try {
+            await fetch('/api/reveal-file', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ filePath })
+            });
+        } catch (error) {
+            console.error('Failed to reveal file:', error);
+        }
     }
 
     function trapModalFocus(event: KeyboardEvent, modal: HTMLElement) {
@@ -1004,7 +1041,12 @@
     {/if}
     {#if importNotice}
         <div class:error={importNotice.error} class="import-toast" role={importNotice.error ? 'alert' : 'status'}>
-            {importNotice.message}
+            <span>{importNotice.message}</span>
+            {#if importNotice.filePath}
+                <button class="reveal-btn" onclick={() => revealFile(importNotice?.filePath)}>
+                    Show in Folder
+                </button>
+            {/if}
         </div>
     {/if}
     <nav class="tabs" aria-label="Course">
@@ -1650,6 +1692,26 @@
         border-radius: 0.625rem;
         background: var(--color-surface);
         box-shadow: 0 12px 36px rgba(0, 0, 0, 0.22);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+    }
+    .import-toast .reveal-btn {
+        background: none;
+        border: none;
+        color: var(--color-highlight);
+        font-weight: 500;
+        cursor: pointer;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+        border-radius: 4px;
+        white-space: nowrap;
+        text-decoration: underline;
+    }
+    .import-toast .reveal-btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+        text-decoration: none;
     }
     .import-toast.error {
         border-left-color: var(--color-hard);
