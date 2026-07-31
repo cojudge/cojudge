@@ -11,7 +11,7 @@
     import fileStore, { type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
-    import { renderMarkdown } from '$lib/utils/markdown';
+    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown } from '$lib/utils/markdown';
     import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
     import QRCode from 'qrcode';
     import { onMount, tick } from 'svelte';
@@ -850,16 +850,171 @@ func main() {
         const sourceFileName = sourceTab?.fileName || 'Solution';
         const nextId = uuidv4();
         const now = Date.now();
-        tabs = [...tabs, { 
-            fileId: nextId, 
-            fileName: `Preview: ${sourceFileName}`, 
-            isOpen: true, 
-            lastUpdated: now, 
-            type: 'preview', 
-            sourceFileId 
+        tabs = [...tabs, {
+            fileId: nextId,
+            fileName: `Preview: ${sourceFileName}`,
+            isOpen: true,
+            lastUpdated: now,
+            type: 'preview',
+            sourceFileId
         }];
         activeTabId = tabs.length - 1;
         persistTabOrder();
+    }
+
+    // Builds the markdown snippet inserted when an image is pasted into a
+    // markdown file (base64 data URL).
+    function markdownImageSnippet(dataUrl: string): string {
+        return `![image](${dataUrl})`;
+    }
+
+    // --- Markdown preview WYSIWYG editing ---
+    let previewEditMode = false;
+    let wysiwygEl: HTMLDivElement | null = null;
+    let wysiwygDebounce: ReturnType<typeof setTimeout> | null = null;
+    let wysiwygSourceFileId: string | null = null;
+    let lastActiveTabFileId: string | null = null;
+    let showLinkInput = false;
+    let linkUrl = '';
+    let linkInputEl: HTMLInputElement | null = null;
+    let savedLinkRange: Range | null = null;
+
+    function getActivePreviewSourceContent(): string {
+        if (!activeTab || activeTab.type !== 'preview' || !activeTab.sourceFileId) return '';
+        const files = getFiles();
+        const sourceEntry = files.find((f) => f.fileId === activeTab.sourceFileId && f.language === 'markdown');
+        return sourceEntry?.content ?? '';
+    }
+
+    async function togglePreviewEditMode() {
+        if (previewEditMode) {
+            commitWysiwygEdits();
+            previewEditMode = false;
+            wysiwygSourceFileId = null;
+            showLinkInput = false;
+            return;
+        }
+        if (!activeTab?.sourceFileId) return;
+        wysiwygSourceFileId = activeTab.sourceFileId;
+        previewEditMode = true;
+        await tick();
+        if (wysiwygEl) {
+            wysiwygEl.innerHTML = renderMarkdownPlain(getActivePreviewSourceContent());
+            wysiwygEl.focus();
+        }
+    }
+
+    function handleWysiwygInput() {
+        if (wysiwygDebounce) clearTimeout(wysiwygDebounce);
+        wysiwygDebounce = setTimeout(commitWysiwygEdits, 300);
+    }
+
+    function commitWysiwygEdits() {
+        if (wysiwygDebounce) {
+            clearTimeout(wysiwygDebounce);
+            wysiwygDebounce = null;
+        }
+        if (!previewEditMode || !wysiwygEl || !wysiwygSourceFileId) return;
+        const markdown = htmlToMarkdown(wysiwygEl.innerHTML);
+        const sourceFileId = wysiwygSourceFileId;
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            const files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            const sourceEntry = files.find((f) => f.fileId === sourceFileId && f.language === 'markdown');
+            if (sourceEntry && sourceEntry.content !== markdown) {
+                sourceEntry.content = markdown;
+                sourceEntry.lastUpdated = Date.now();
+            }
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
+    }
+
+    // Leave WYSIWYG mode (flushing pending edits) when switching tabs
+    $: if ((activeTab?.fileId ?? null) !== lastActiveTabFileId) {
+        if (previewEditMode) commitWysiwygEdits();
+        previewEditMode = false;
+        wysiwygSourceFileId = null;
+        showLinkInput = false;
+        lastActiveTabFileId = activeTab?.fileId ?? null;
+    }
+
+    // Paste images into the WYSIWYG area as base64 <img> elements
+    function handleWysiwygPaste(event: ClipboardEvent) {
+        const items = event.clipboardData?.items;
+        if (!items) return;
+        for (const item of items) {
+            if (item.kind !== 'file' || !item.type.startsWith('image/')) continue;
+            const file = item.getAsFile();
+            if (!file) continue;
+            event.preventDefault();
+            const reader = new FileReader();
+            reader.onload = () => {
+                document.execCommand('insertImage', false, reader.result as string);
+            };
+            reader.readAsDataURL(file);
+            break;
+        }
+    }
+
+    function applyWysiwygCommand(command: string, value?: string) {
+        if (!wysiwygEl) return;
+        wysiwygEl.focus();
+        document.execCommand(command, false, value);
+        handleWysiwygInput();
+    }
+
+    // Toolbar buttons run on mousedown (preventDefault) so the text selection
+    // inside the editable area is preserved.
+    function handleToolbarMouseDown(event: MouseEvent) {
+        const btn = (event.target as HTMLElement).closest('button[data-command]') as HTMLButtonElement | null;
+        if (!btn) return;
+        event.preventDefault();
+        const command = btn.dataset.command!;
+        if (command === 'link') {
+            openLinkInput();
+            return;
+        }
+        applyWysiwygCommand(command, btn.dataset.value);
+    }
+
+    // Keyboard-triggered clicks (Enter/Space) have detail === 0 and don't fire mousedown
+    function handleToolbarClick(event: MouseEvent) {
+        if (event.detail !== 0) return;
+        const btn = (event.target as HTMLElement).closest('button[data-command]') as HTMLButtonElement | null;
+        if (!btn) return;
+        const command = btn.dataset.command!;
+        if (command === 'link') {
+            openLinkInput();
+            return;
+        }
+        applyWysiwygCommand(command, btn.dataset.value);
+    }
+
+    function openLinkInput() {
+        if (!wysiwygEl) return;
+        const selection = window.getSelection();
+        savedLinkRange = selection && selection.rangeCount > 0 && wysiwygEl.contains(selection.anchorNode)
+            ? selection.getRangeAt(0).cloneRange()
+            : null;
+        showLinkInput = true;
+        tick().then(() => linkInputEl?.focus());
+    }
+
+    function applyLink() {
+        const url = linkUrl.trim();
+        if (url && wysiwygEl) {
+            wysiwygEl.focus();
+            if (savedLinkRange) {
+                const selection = window.getSelection();
+                selection?.removeAllRanges();
+                selection?.addRange(savedLinkRange);
+            }
+            document.execCommand('createLink', false, url);
+            handleWysiwygInput();
+        }
+        showLinkInput = false;
+        linkUrl = '';
+        savedLinkRange = null;
     }
 
     let isFirebaseAvailable = false;
@@ -1397,6 +1552,7 @@ func main() {
             }
         };
         const handleUnload = () => {
+            commitWysiwygEdits();
             saveCurrentViewState();
         };
         document.addEventListener('click', handleDocClick);
@@ -1703,6 +1859,26 @@ func main() {
                 {#if activeTab?.type === 'preview'}
                     <div style="display:flex;align-items:center;gap:var(--spacing-1);">
                         <span style="font-size:0.9rem;color:var(--color-text-secondary);">Markdown Preview</span>
+                        <Tooltip text={previewEditMode ? "Done editing" : "Edit (WYSIWYG)"} pos={"bottom"}>
+                            <button
+                                class="icon-button"
+                                class:active={previewEditMode}
+                                title={previewEditMode ? "Done editing" : "Edit (WYSIWYG)"}
+                                aria-label={previewEditMode ? "Done editing" : "Edit markdown (WYSIWYG)"}
+                                aria-pressed={previewEditMode}
+                                on:click={togglePreviewEditMode}
+                            >
+                                {#if previewEditMode}
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                {:else}
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                {/if}
+                            </button>
+                        </Tooltip>
                         <Tooltip text={"Source"} pos={"bottom"}>
                             <button
                                 class="icon-button"
@@ -1840,22 +2016,91 @@ func main() {
 
         <div class="editor-container">
             {#if activeTab?.type === 'preview'}
-                <div class="markdown-preview markdown-body">
-                    {@html previewHtml}
-                </div>
+                {#if previewEditMode}
+                    <div class="wysiwyg-container">
+                        <!-- svelte-ignore a11y-click-events-have-key-events -->
+                        <!-- svelte-ignore a11y-no-static-element-interactions -->
+                        <div class="wysiwyg-toolbar" on:mousedown={handleToolbarMouseDown} on:click={handleToolbarClick}>
+                            <button type="button" data-command="bold" title="Bold" aria-label="Bold">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/></svg>
+                            </button>
+                            <button type="button" data-command="italic" title="Italic" aria-label="Italic">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
+                            </button>
+                            <button type="button" data-command="strikeThrough" title="Strikethrough" aria-label="Strikethrough">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4H9a3 3 0 0 0-2.83 4"/><path d="M14 12a4 4 0 0 1 0 8H6"/><line x1="4" x2="20" y1="12" y2="12"/></svg>
+                            </button>
+                            <span class="wysiwyg-separator"></span>
+                            <button type="button" data-command="formatBlock" data-value="h1" title="Heading 1" aria-label="Heading 1"><span class="wysiwyg-text-btn">H1</span></button>
+                            <button type="button" data-command="formatBlock" data-value="h2" title="Heading 2" aria-label="Heading 2"><span class="wysiwyg-text-btn">H2</span></button>
+                            <button type="button" data-command="formatBlock" data-value="h3" title="Heading 3" aria-label="Heading 3"><span class="wysiwyg-text-btn">H3</span></button>
+                            <span class="wysiwyg-separator"></span>
+                            <button type="button" data-command="insertUnorderedList" title="Bulleted list" aria-label="Bulleted list">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                            </button>
+                            <button type="button" data-command="insertOrderedList" title="Numbered list" aria-label="Numbered list">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="10" x2="21" y1="6" y2="6"/><line x1="10" x2="21" y1="12" y2="12"/><line x1="10" x2="21" y1="18" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+                            </button>
+                            <button type="button" data-command="formatBlock" data-value="blockquote" title="Quote" aria-label="Quote">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1zm12 0c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+                            </button>
+                            <button type="button" data-command="formatBlock" data-value="pre" title="Code block" aria-label="Code block">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            </button>
+                            <span class="wysiwyg-separator"></span>
+                            <button type="button" data-command="link" title="Insert link" aria-label="Insert link">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                            </button>
+                            <button type="button" data-command="removeFormat" title="Clear formatting" aria-label="Clear formatting">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg>
+                            </button>
+                            {#if showLinkInput}
+                                <input
+                                    class="wysiwyg-link-input"
+                                    type="text"
+                                    placeholder="https://example.com"
+                                    aria-label="Link URL"
+                                    bind:value={linkUrl}
+                                    bind:this={linkInputEl}
+                                    on:keydown={(e) => {
+                                        if (e.key === 'Enter') { e.preventDefault(); applyLink(); }
+                                        else if (e.key === 'Escape') { e.preventDefault(); showLinkInput = false; linkUrl = ''; savedLinkRange = null; }
+                                    }}
+                                />
+                            {/if}
+                        </div>
+                        <div
+                            class="markdown-preview markdown-body wysiwyg-editing"
+                            contenteditable="true"
+                            role="textbox"
+                            aria-multiline="true"
+                            aria-label="Markdown editor (WYSIWYG)"
+                            tabindex="0"
+                            bind:this={wysiwygEl}
+                            on:input={handleWysiwygInput}
+                            on:paste={handleWysiwygPaste}
+                            on:blur={commitWysiwygEdits}
+                        ></div>
+                    </div>
+                {:else}
+                    <div class="markdown-preview markdown-body">
+                        {@html previewHtml}
+                    </div>
+                {/if}
             {:else if CodeEditor}
-                <svelte:component 
-                    this={CodeEditor} 
+                <svelte:component
+                    this={CodeEditor}
                     bind:this={editorComponent}
-                    bind:value={code} 
-                    {language} 
-                    {fontSize} 
-                    {theme} 
-                    {vimMode} 
+                    bind:value={code}
+                    {language}
+                    {fontSize}
+                    {theme}
+                    {vimMode}
                     viewState={currentViewState}
                     bind:breakpoints={debugBreakpoints}
                     {activeDebugLine}
                     {debugJobId}
+                    onPasteImage={language === 'markdown' ? markdownImageSnippet : undefined}
                 />
             {:else}
                 Loading...
@@ -2346,6 +2591,87 @@ func main() {
 
     .markdown-preview a:hover {
         text-decoration: underline;
+    }
+
+    /* WYSIWYG editing */
+    .wysiwyg-container {
+        flex-grow: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .wysiwyg-toolbar {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 2px;
+        padding: var(--spacing-1) var(--spacing-2);
+        border-bottom: 1px solid var(--color-border);
+        flex-shrink: 0;
+    }
+
+    .wysiwyg-toolbar button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 26px;
+        height: 26px;
+        padding: 0 4px;
+        border-radius: 6px;
+        background: transparent;
+        color: var(--color-text-secondary);
+        border: 1px solid transparent;
+        cursor: pointer;
+    }
+
+    .wysiwyg-toolbar button:hover {
+        background: var(--color-bg-tertiary, rgba(128, 128, 128, 0.15));
+        color: var(--color-text);
+    }
+
+    .wysiwyg-text-btn {
+        font-size: 0.72rem;
+        font-weight: 700;
+        font-family: inherit;
+    }
+
+    .wysiwyg-separator {
+        width: 1px;
+        height: 16px;
+        background: var(--color-border);
+        margin: 0 4px;
+    }
+
+    .wysiwyg-link-input {
+        margin-left: var(--spacing-1);
+        padding: 2px 8px;
+        font-size: 0.8rem;
+        border: 1px solid var(--color-border);
+        border-radius: 6px;
+        background: var(--color-bg);
+        color: var(--color-text);
+        min-width: 200px;
+    }
+
+    .wysiwyg-link-input:focus {
+        outline: 1px solid var(--color-highlight);
+        border-color: var(--color-highlight);
+    }
+
+    .wysiwyg-editing {
+        outline: none;
+        cursor: text;
+    }
+
+    .wysiwyg-editing:focus {
+        box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--color-highlight) 40%, transparent);
+        border-radius: var(--border-radius-md);
+    }
+
+    .icon-button.active {
+        color: var(--color-highlight);
+        background: color-mix(in srgb, var(--color-highlight) 15%, transparent);
     }
 
     /* --- Browser-like Tabs --- */

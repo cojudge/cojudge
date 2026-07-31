@@ -13,6 +13,9 @@
     export let breakpoints: number[] = [];
     export let activeDebugLine: number | null = null;
     export let debugJobId: string | null = null;
+    // When set, pasting an image from the clipboard is intercepted and the
+    // returned text (e.g. markdown image syntax) is inserted at the cursor.
+    export let onPasteImage: ((dataUrl: string, file: File) => string) | undefined = undefined;
 
     let editor: Monaco.editor.IStandaloneCodeEditor | null = null;
     let editorElement: HTMLDivElement;
@@ -56,6 +59,39 @@
         if (!editor) return null;
         const state = editor.saveViewState();
         return state ? JSON.stringify(state) : null;
+    }
+
+    function insertTextAtCursor(text: string) {
+        if (!editor) return;
+        const selections = editor.getSelections() ?? [];
+        if (selections.length === 0) return;
+        editor.executeEdits('paste-image', selections.map((range) => ({ range, text })));
+        editor.pushUndoStop();
+        editor.focus();
+    }
+
+    // Capture-phase paste handler: runs before Monaco's own paste handling so an
+    // image on the clipboard can be converted to text (e.g. base64 markdown).
+    function handlePasteCapture(event: ClipboardEvent) {
+        if (!onPasteImage || !editor || readOnly) return;
+        const items = event.clipboardData?.items;
+        if (!items) return;
+        for (const item of items) {
+            if (item.kind !== 'file' || !item.type.startsWith('image/')) continue;
+            const file = item.getAsFile();
+            if (!file) continue;
+            event.preventDefault();
+            event.stopPropagation();
+            const reader = new FileReader();
+            reader.onload = () => {
+                const dataUrl = reader.result as string;
+                if (!editor || !onPasteImage) return;
+                const text = onPasteImage(dataUrl, file);
+                if (text) insertTextAtCursor(text);
+            };
+            reader.readAsDataURL(file);
+            break;
+        }
     }
 
     function updateBreakpointDecorations() {
@@ -111,6 +147,7 @@
 
     onMount(() => {
         let disposed = false;
+        editorElement.addEventListener('paste', handlePasteCapture, true);
         Promise.all([
             import('monaco-editor'),
             import('monaco-vim')
@@ -224,6 +261,7 @@
 
         return () => {
             disposed = true;
+            editorElement.removeEventListener('paste', handlePasteCapture, true);
             if (vimModeInstance) {
                 vimModeInstance.dispose();
             }

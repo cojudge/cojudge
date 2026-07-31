@@ -1,4 +1,6 @@
 import { marked, Renderer } from 'marked';
+import TurndownService from 'turndown';
+import { gfm } from 'turndown-plugin-gfm';
 
 function simpleHash(str: string): string {
     let hash = 0;
@@ -162,4 +164,29 @@ export function getMarkdownRenderer() {
 export function renderMarkdown(content: string) {
     const renderer = getMarkdownRenderer();
     return marked.parse(content, { renderer });
+}
+
+// Plain GFM rendering without the interactive code-block wrapper.
+// Used as the source HTML for WYSIWYG editing so it can round-trip back to markdown.
+export function renderMarkdownPlain(content: string): string {
+    return marked.parse(content, { async: false });
+}
+
+let turndownService: TurndownService | null = null;
+
+function getTurndownService(): TurndownService {
+    if (!turndownService) {
+        turndownService = new TurndownService({
+            headingStyle: 'atx',
+            codeBlockStyle: 'fenced',
+            bulletListMarker: '-',
+            emDelimiter: '*'
+        });
+        turndownService.use(gfm);
+    }
+    return turndownService;
+}
+
+export function htmlToMarkdown(html: string): string {
+    return getTurndownService().turndown(html);
 }
