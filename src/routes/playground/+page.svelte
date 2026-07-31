@@ -11,7 +11,7 @@
     import fileStore, { type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
-    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown } from '$lib/utils/markdown';
+    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, wrapImageThumbnails, wrapCodeBlocksWithCopy, ensureTrailingEmptyLine, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS } from '$lib/utils/markdown';
     import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
     import QRCode from 'qrcode';
     import { onMount, tick } from 'svelte';
@@ -603,7 +603,10 @@ func main() {
                 if (nextOpenIdx !== -1) {
                     activeTabId = nextOpenIdx;
                     if (tabs[nextOpenIdx].type !== 'preview') {
-                        loadOrInitFile(language);
+                        const targetLanguage = getLanguageForTab(tabs[nextOpenIdx].fileId);
+                        setLastLanguage(tabs[nextOpenIdx].fileId, targetLanguage);
+                        language = targetLanguage;
+                        loadOrInitFile(targetLanguage);
                     }
                 }
             }
@@ -633,7 +636,12 @@ func main() {
             }
             if (nextOpenIdx !== -1) {
                 activeTabId = nextOpenIdx;
-                loadOrInitFile(language);
+                if (tabs[nextOpenIdx].type !== 'preview') {
+                    const targetLanguage = getLanguageForTab(tabs[nextOpenIdx].fileId);
+                    setLastLanguage(tabs[nextOpenIdx].fileId, targetLanguage);
+                    language = targetLanguage;
+                    loadOrInitFile(targetLanguage);
+                }
             }
         }
     }
@@ -868,6 +876,15 @@ func main() {
         return `![image](${dataUrl})`;
     }
 
+    // --- Image lightbox (full-size view opened from thumbnails) ---
+    let lightboxSrc: string | null = null;
+    function openLightbox(src: string) {
+        lightboxSrc = src;
+    }
+    function closeLightbox() {
+        lightboxSrc = null;
+    }
+
     // --- Markdown preview WYSIWYG editing ---
     let previewEditMode = false;
     let wysiwygEl: HTMLDivElement | null = null;
@@ -900,13 +917,201 @@ func main() {
         await tick();
         if (wysiwygEl) {
             wysiwygEl.innerHTML = renderMarkdownPlain(getActivePreviewSourceContent());
+            wrapImageThumbnails(wysiwygEl);
+            wrapCodeBlocksWithCopy(wysiwygEl);
+            ensureTrailingEmptyLine(wysiwygEl);
             wysiwygEl.focus();
         }
     }
 
     function handleWysiwygInput() {
+        maybeAutoCloseInlineCode();
         if (wysiwygDebounce) clearTimeout(wysiwygDebounce);
         wysiwygDebounce = setTimeout(commitWysiwygEdits, 300);
+    }
+
+    // When the user types a closing backtick, try to match it with a previous
+    // backtick in the same text node and form an inline code element. Runs on
+    // the input event, after the backtick has been typed, so a single ctrl+z
+    // (undo) cancels the auto-format and restores exactly what was typed.
+    // Chrome sanitizes <code> tags in execCommand HTML, so a marker span is
+    // inserted instead and converted back to inline code by htmlToMarkdown.
+    let applyingInlineCode = false;
+    function maybeAutoCloseInlineCode() {
+        if (applyingInlineCode || !wysiwygEl) return;
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return;
+        const range = selection.getRangeAt(0);
+        if (!range.collapsed) return;
+        const node = range.startContainer;
+        if (node.nodeType !== Node.TEXT_NODE || !wysiwygEl.contains(node)) return;
+        const parentEl = node.parentElement;
+        if (!parentEl || parentEl.closest('code') || parentEl.closest('pre')) return;
+        const text = node.textContent ?? '';
+        const offset = range.startOffset;
+        if (offset < 1 || text.charAt(offset - 1) !== '`') return;
+        const openIdx = text.slice(0, offset - 1).lastIndexOf('`');
+        if (openIdx === -1) return;
+        const codeText = text.slice(openIdx + 1, offset - 1);
+        if (!codeText || codeText !== codeText.trim()) return;
+        applyingInlineCode = true;
+        try {
+            const replaceRange = document.createRange();
+            replaceRange.setStart(node, openIdx);
+            replaceRange.setEnd(node, offset);
+            selection.removeAllRanges();
+            selection.addRange(replaceRange);
+            document.execCommand('insertHTML', false, inlineCodeSpanHtml(codeText));
+            // Rewrite the inserted span's background from the concrete color
+            // (which the sanitizer kept) to the theme-variable marker, so the
+            // code adapts to the active theme and round-trips back to backticks.
+            const inserted = wysiwygEl.querySelectorAll('span');
+            const markerSpan = inserted[inserted.length - 1];
+            if (markerSpan instanceof HTMLElement) markerSpan.style.backgroundColor = INLINE_CODE_STYLE_MARKER;
+        } finally {
+            applyingInlineCode = false;
+        }
+    }
+
+    // Toggle inline code on the current selection (or the word at the caret).
+    function toggleInlineCode() {
+        if (!wysiwygEl) return;
+        wysiwygEl.focus();
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return;
+        // If the caret/selection is inside an inline <code>, unwrap it
+        let node: Node | null = selection.anchorNode;
+        let existing: HTMLElement | null = null;
+        while (node && node !== wysiwygEl) {
+            if (node instanceof HTMLElement && node.tagName === 'CODE' && node.parentElement?.tagName !== 'PRE') {
+                existing = node;
+                break;
+            }
+            node = node.parentNode;
+        }
+        if (existing) {
+            const parent = existing.parentNode;
+            if (parent) {
+                while (existing.firstChild) parent.insertBefore(existing.firstChild, existing);
+                parent.removeChild(existing);
+                parent.normalize();
+            }
+            handleWysiwygInput();
+            return;
+        }
+        let range = selection.getRangeAt(0);
+        if (range.collapsed) {
+            // Expand to the word around the caret
+            const textNode = range.startContainer;
+            if (textNode.nodeType !== Node.TEXT_NODE) return;
+            const text = textNode.textContent ?? '';
+            let start = range.startOffset;
+            let end = range.startOffset;
+            while (start > 0 && !/\s/.test(text.charAt(start - 1))) start--;
+            while (end < text.length && !/\s/.test(text.charAt(end))) end++;
+            if (start === end) return;
+            range.setStart(textNode, start);
+            range.setEnd(textNode, end);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            range = selection.getRangeAt(0);
+        }
+        const frag = range.extractContents();
+        // If the selection spans block-level content (e.g. Ctrl+A over several
+        // paragraphs), wrapping everything in one inline <code> would nest block
+        // elements inside it and corrupt the stored markdown. Wrap each block's
+        // text in its own <code> instead.
+        const blocks = Array.from(frag.children).filter(
+            (el): el is HTMLElement => el instanceof HTMLElement && /^(P|DIV|LI|H[1-6]|PRE)$/.test(el.tagName)
+        );
+        const codeEl = document.createElement('code');
+        if (blocks.length > 0) {
+            for (const block of blocks) {
+                if (block.tagName === 'PRE' || !block.textContent?.trim()) continue;
+                const nestedCode = document.createElement('code');
+                while (block.firstChild) nestedCode.appendChild(block.firstChild);
+                block.appendChild(nestedCode);
+            }
+            range.insertNode(frag);
+            // Reselect the first wrapped block so toggling again unwraps it
+            const firstWrapped = blocks.find((b) => b.tagName !== 'PRE' && b.textContent?.trim());
+            if (firstWrapped?.firstElementChild) {
+                selection.removeAllRanges();
+                const newRange = document.createRange();
+                newRange.selectNodeContents(firstWrapped.firstElementChild);
+                selection.addRange(newRange);
+            }
+        } else {
+            codeEl.appendChild(frag);
+            range.insertNode(codeEl);
+            // Reselect the wrapped content so toggling again unwraps it
+            selection.removeAllRanges();
+            const newRange = document.createRange();
+            newRange.selectNodeContents(codeEl);
+            selection.addRange(newRange);
+        }
+        handleWysiwygInput();
+    }
+
+    // Click handling inside the WYSIWYG area: trash icon deletes the image,
+    // clicking the thumbnail opens the full-size lightbox.
+    function handleWysiwygClick(event: MouseEvent) {
+        const target = event.target as HTMLElement;
+        const deleteBtn = target.closest(`.${THUMB_DELETE_CLASS}`) as HTMLElement | null;
+        if (deleteBtn && wysiwygEl?.contains(deleteBtn)) {
+            event.preventDefault();
+            deleteBtn.closest(`.${THUMB_WRAPPER_CLASS}`)?.remove();
+            ensureTrailingEmptyLine(wysiwygEl);
+            commitWysiwygEdits();
+            return;
+        }
+        const img = target.closest(`.${THUMB_WRAPPER_CLASS} img`) as HTMLImageElement | null;
+        if (img && wysiwygEl?.contains(img)) {
+            event.preventDefault();
+            openLightbox(img.src);
+        }
+    }
+
+    // Click handling in the read-only markdown preview.
+    function handlePreviewClick(event: MouseEvent) {
+        const target = event.target as HTMLElement;
+        const container = event.currentTarget as HTMLElement;
+        const deleteBtn = target.closest(`.${THUMB_DELETE_CLASS}`) as HTMLElement | null;
+        if (deleteBtn && container.contains(deleteBtn)) {
+            event.preventDefault();
+            const img = deleteBtn.closest(`.${THUMB_WRAPPER_CLASS}`)?.querySelector('img');
+            const src = img?.getAttribute('src');
+            if (src) deletePreviewImage(src);
+            return;
+        }
+        const img = target.closest(`.${THUMB_WRAPPER_CLASS} img`) as HTMLImageElement | null;
+        if (img && container.contains(img)) {
+            event.preventDefault();
+            openLightbox(img.src);
+        }
+    }
+
+    // Removes the image with the given src from the preview's source markdown.
+    function deletePreviewImage(src: string) {
+        const sourceFileId = activeTab?.type === 'preview' ? activeTab.sourceFileId : null;
+        if (!sourceFileId) return;
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            const files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            const sourceEntry = files.find((f) => f.fileId === sourceFileId && f.language === 'markdown');
+            if (!sourceEntry) return s;
+            const escaped = src.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const pattern = new RegExp(`!\\[[^\\]]*\\]\\(\\s*${escaped}(?:\\s+"[^"]*")?\\s*\\)`, 'g');
+            const next = sourceEntry.content
+                .replace(pattern, '')
+                .replace(/[ \t]+\n/g, '\n')
+                .replace(/\n{3,}/g, '\n\n');
+            if (next !== sourceEntry.content) {
+                sourceEntry.content = next;
+                sourceEntry.lastUpdated = Date.now();
+            }
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
     }
 
     function commitWysiwygEdits() {
@@ -950,6 +1155,13 @@ func main() {
             const reader = new FileReader();
             reader.onload = () => {
                 document.execCommand('insertImage', false, reader.result as string);
+                if (wysiwygEl) {
+                    wrapImageThumbnails(wysiwygEl);
+                    wrapCodeBlocksWithCopy(wysiwygEl);
+                    // Keep an empty line after the pasted image so the caret
+                    // can move past the contenteditable="false" thumbnail
+                    ensureTrailingEmptyLine(wysiwygEl);
+                }
             };
             reader.readAsDataURL(file);
             break;
@@ -974,6 +1186,10 @@ func main() {
             openLinkInput();
             return;
         }
+        if (command === 'inlineCode') {
+            toggleInlineCode();
+            return;
+        }
         applyWysiwygCommand(command, btn.dataset.value);
     }
 
@@ -985,6 +1201,10 @@ func main() {
         const command = btn.dataset.command!;
         if (command === 'link') {
             openLinkInput();
+            return;
+        }
+        if (command === 'inlineCode') {
+            toggleInlineCode();
             return;
         }
         applyWysiwygCommand(command, btn.dataset.value);
@@ -1501,8 +1721,8 @@ func main() {
         const files = JSON.parse(fileStoreValue[fkey] || '[]') as FileEntry[];
         const sourceEntry = files.find((f: FileEntry) => f.fileId === activeTab.sourceFileId && f.language === 'markdown');
         const src = sourceEntry?.content ?? '';
-        
-        return renderMarkdown(src);
+
+        return renderMarkdown(src, { imageThumbnails: true });
     })();
     $: pageTitle = activeTabName ? `${activeTabName} - Playground - Cojudge` : 'Playground - Cojudge';
     let isMac = false;
@@ -1518,6 +1738,7 @@ func main() {
             if (e.key === 'Escape') {
                 showSettings = false;
                 closeSearch();
+                closeLightbox();
             }
             // Cmd+P or Ctrl+P
             if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'p') {
@@ -2047,6 +2268,9 @@ func main() {
                             <button type="button" data-command="formatBlock" data-value="pre" title="Code block" aria-label="Code block">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
                             </button>
+                            <button type="button" data-command="inlineCode" title="Inline code" aria-label="Inline code">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></svg>
+                            </button>
                             <span class="wysiwyg-separator"></span>
                             <button type="button" data-command="link" title="Insert link" aria-label="Insert link">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
@@ -2069,8 +2293,11 @@ func main() {
                                 />
                             {/if}
                         </div>
+                        <!-- svelte-ignore a11y-click-events-have-key-events -->
+                        <!-- svelte-ignore a11y-no-static-element-interactions -->
                         <div
                             class="markdown-preview markdown-body wysiwyg-editing"
+                            style="font-size: {fontSize}px;"
                             contenteditable="true"
                             role="textbox"
                             aria-multiline="true"
@@ -2079,11 +2306,14 @@ func main() {
                             bind:this={wysiwygEl}
                             on:input={handleWysiwygInput}
                             on:paste={handleWysiwygPaste}
+                            on:click={handleWysiwygClick}
                             on:blur={commitWysiwygEdits}
                         ></div>
                     </div>
                 {:else}
-                    <div class="markdown-preview markdown-body">
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <!-- svelte-ignore a11y-no-static-element-interactions -->
+                    <div class="markdown-preview markdown-body" on:click={handlePreviewClick}>
                         {@html previewHtml}
                     </div>
                 {/if}
@@ -2150,13 +2380,28 @@ func main() {
     </div>
 
     {#if showShareModal}
-        <ShareModal 
-            url={shareUrl} 
-            qrCodeDataUrl={qrCodeDataUrl} 
+        <ShareModal
+            url={shareUrl}
+            qrCodeDataUrl={qrCodeDataUrl}
             {code}
-            on:close={() => showShareModal = false} 
+            on:close={() => showShareModal = false}
             on:generateNew={handleGenerateNewLink}
         />
+    {/if}
+
+    {#if lightboxSrc}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div class="image-lightbox" role="dialog" aria-modal="true" aria-label="Full-size image" tabindex="-1" on:click={closeLightbox}>
+            <button type="button" class="lightbox-close" title="Close (Esc)" aria-label="Close image viewer" on:click|stopPropagation={closeLightbox}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+            <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+            <img src={lightboxSrc} alt="Full-size" on:click|stopPropagation={() => {}} />
+        </div>
     {/if}
 
     {#if showSearch}
@@ -2932,6 +3177,48 @@ func main() {
         text-align: center;
         box-shadow: 0 1px 0 var(--color-border);
         color: var(--color-text);
+    }
+
+    /* Image lightbox (full-size view) */
+    .image-lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 4000;
+        background: rgba(0, 0, 0, 0.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px;
+        cursor: zoom-out;
+    }
+
+    .image-lightbox img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: var(--border-radius-md);
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+        cursor: default;
+    }
+
+    .lightbox-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 36px;
+        height: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .lightbox-close:hover {
+        background: rgba(255, 255, 255, 0.25);
     }
 
     /* Search Overlay */

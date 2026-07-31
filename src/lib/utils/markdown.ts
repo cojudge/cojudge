@@ -63,6 +63,27 @@ function applyExpandedState(wrapper: HTMLElement, preEl: Element, expandLabel: E
 if (typeof document !== 'undefined') {
     document.addEventListener('click', (e: MouseEvent) => {
         const target = e.target as HTMLElement;
+
+        const copyBtn = target.closest('.copy-code-button') as HTMLElement | null;
+        if (copyBtn) {
+            e.preventDefault();
+            const wrapper = copyBtn.closest('.code-block-wrapper, .md-code-copy') as HTMLElement | null;
+            const codeEl = wrapper?.querySelector('code');
+            if (!codeEl) return;
+            const code = codeEl.innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                const originalInner = copyBtn.innerHTML;
+                const originalColor = copyBtn.style.color;
+                copyBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                copyBtn.style.color = 'var(--color-easy)';
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalInner;
+                    copyBtn.style.color = originalColor;
+                }, 2000);
+            }).catch(() => {});
+            return;
+        }
+
         const btn = target.closest('.collapse-code-button') as HTMLElement | null;
         if (!btn) return;
         e.preventDefault();
@@ -103,8 +124,120 @@ if (typeof document !== 'undefined') {
     observer.observe(document.body, { childList: true, subtree: true });
 }
 
-export function getMarkdownRenderer() {
+// Class names used for image thumbnails (small preview + delete button).
+export const THUMB_WRAPPER_CLASS = 'md-thumb';
+export const THUMB_DELETE_CLASS = 'md-thumb-delete';
+
+// Marker used for inline code created by the WYSIWYG backtick auto-matching.
+// Chrome sanitizes <code> elements inserted via execCommand into styled spans
+// and drops inline styles that reference CSS variables, so the span is first
+// inserted with a concrete background color and then rewritten to this marker
+// (a theme variable) by the caller right after insertion. htmlToMarkdown
+// converts spans carrying this marker back to inline code markdown, and the
+// WYSIWYG CSS styles them like code using the theme variable, so the marker
+// adapts to every theme.
+export const INLINE_CODE_STYLE_MARKER = 'var(--color-second-bg)';
+
+export function inlineCodeSpanHtml(text: string): string {
+    const escaped = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    // Concrete color: Chrome's execCommand sanitizer preserves background-color
+    // only when it is a concrete value, not a var() reference.
+    return `<span style="background-color: rgb(255, 254, 253);">${escaped}</span>`;
+}
+
+const TRASH_ICON_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>';
+
+function escapeHtmlAttr(value: string): string {
+    return value
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+}
+
+// Renders an image as a small thumbnail with a delete button, instead of the
+// full-size image. Click handling (lightbox / delete) is done via event
+// delegation by the caller. contenteditable="false" makes the thumbnail an
+// atomic unit inside the WYSIWYG editor.
+export function imageThumbnailHtml(href: string, alt: string, title?: string | null): string {
+    const titleAttr = title ? ` title="${escapeHtmlAttr(title)}"` : '';
+    return `<span class="${THUMB_WRAPPER_CLASS}" contenteditable="false"><img src="${escapeHtmlAttr(href)}" alt="${escapeHtmlAttr(alt)}"${titleAttr}><button type="button" class="${THUMB_DELETE_CLASS}" title="Delete image" aria-label="Delete image">${TRASH_ICON_SVG}</button></span>`;
+}
+
+// Wraps every <img> under root in a thumbnail container with a delete button.
+// Used by the WYSIWYG editor, where images start out as plain <img> elements
+// (initial render and image paste).
+export function wrapImageThumbnails(root: HTMLElement) {
+    const imgs = Array.from(root.querySelectorAll('img'));
+    for (const img of imgs) {
+        if (img.closest(`.${THUMB_WRAPPER_CLASS}`)) continue;
+        const wrapper = document.createElement('span');
+        wrapper.className = THUMB_WRAPPER_CLASS;
+        wrapper.setAttribute('contenteditable', 'false');
+        img.replaceWith(wrapper);
+        wrapper.appendChild(img);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = THUMB_DELETE_CLASS;
+        btn.title = 'Delete image';
+        btn.setAttribute('aria-label', 'Delete image');
+        btn.innerHTML = TRASH_ICON_SVG;
+        wrapper.appendChild(btn);
+    }
+}
+
+// Class name of the wrapper added around code blocks in the WYSIWYG editor so
+// they get a copy button (see wrapCodeBlocksWithCopy). Stripped again by
+// htmlToMarkdown so only the <pre> round-trips back to markdown.
+export const CODE_COPY_WRAPPER_CLASS = 'md-code-copy';
+
+// Appends an empty line at the end of the WYSIWYG editor when it does not
+// already end with one. A contenteditable="false" thumbnail at the very end of
+// the document would trap the caret, so an empty <p> is always kept after it
+// (and after the last paragraph in general), letting the user move past a
+// pasted image and keep typing. htmlToMarkdown trims the empty line away.
+export function ensureTrailingEmptyLine(root: HTMLElement) {
+    const last = root.lastElementChild as HTMLElement | null;
+    if (last) {
+        const children = Array.from(last.children);
+        const onlyBr = children.length === 0 || (children.length === 1 && children[0].tagName === 'BR');
+        if (last.tagName === 'P' && onlyBr && !last.textContent?.trim()) return;
+    }
+    const p = document.createElement('p');
+    p.innerHTML = '<br>';
+    root.appendChild(p);
+}
+
+// Wraps every <pre> under root with a copy button. The button is
+// contenteditable="false" so it stays out of the editable content; the <pre>
+// itself remains editable.
+export function wrapCodeBlocksWithCopy(root: HTMLElement) {
+    const preElements = Array.from(root.querySelectorAll('pre'));
+    for (const pre of preElements) {
+        if (pre.closest(`.${CODE_COPY_WRAPPER_CLASS}`)) continue;
+        const wrapper = document.createElement('div');
+        wrapper.className = `code-block-wrapper ${CODE_COPY_WRAPPER_CLASS}`;
+        pre.replaceWith(wrapper);
+        wrapper.appendChild(pre);
+        const actions = document.createElement('div');
+        actions.className = 'code-block-actions';
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'copy-code-button';
+        btn.title = 'Copy code';
+        btn.setAttribute('aria-label', 'Copy code');
+        btn.setAttribute('contenteditable', 'false');
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+        actions.appendChild(btn);
+        wrapper.appendChild(actions);
+    }
+}
+
+export function getMarkdownRenderer(options?: { imageThumbnails?: boolean }) {
     const renderer = new Renderer();
+    if (options?.imageThumbnails) {
+        renderer.image = (token: any) => imageThumbnailHtml(token.href ?? '', token.text ?? '', token.title);
+    }
     renderer.code = (token: any) => {
         const text = token.text;
         const lang = (token.lang || '').split(/\s+/)[0];
@@ -137,18 +270,7 @@ export function getMarkdownRenderer() {
                         <polyline points="18 15 12 9 6 15"></polyline>
                     </svg>
                 </button>
-                <button class="copy-code-button" title="Copy code" onclick="
-                    const code = this.closest('.code-block-wrapper').querySelector('code').innerText; 
-                    navigator.clipboard.writeText(code); 
-                    const button = this;
-                    const originalInner = button.innerHTML;
-                    button.innerHTML = '<svg width=\\'16\\' height=\\'16\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'2\\' stroke-linecap=\\'round\\' stroke-linejoin=\\'round\\'><polyline points=\\'20 6 9 17 4 12\\'></polyline></svg>';
-                    button.style.color = 'var(--color-easy)';
-                    setTimeout(() => { 
-                        button.innerHTML = originalInner;
-                        button.style.color = '';
-                    }, 2000);
-                ">
+                <button class="copy-code-button" title="Copy code" aria-label="Copy code">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
@@ -161,8 +283,8 @@ export function getMarkdownRenderer() {
     return renderer;
 }
 
-export function renderMarkdown(content: string) {
-    const renderer = getMarkdownRenderer();
+export function renderMarkdown(content: string, options?: { imageThumbnails?: boolean }) {
+    const renderer = getMarkdownRenderer(options);
     return marked.parse(content, { renderer });
 }
 
@@ -183,10 +305,44 @@ function getTurndownService(): TurndownService {
             emDelimiter: '*'
         });
         turndownService.use(gfm);
+        // Inline code created by the WYSIWYG backtick auto-matching (see
+        // inlineCodeSpanHtml) round-trips back to inline code markdown.
+        turndownService.addRule('wysiwygInlineCode', {
+            filter: (node: HTMLElement) =>
+                node.nodeName === 'SPAN' && (node.getAttribute('style') || '').includes(INLINE_CODE_STYLE_MARKER),
+            replacement: (content: string) => {
+                if (!content) return '';
+                content = content.replace(/\r?\n|\r/g, ' ');
+                let delimiter = '`';
+                while (content.includes(delimiter)) delimiter += '`';
+                const extraSpace = /^`|^ .*?[^ ].* $|`$/.test(content) ? ' ' : '';
+                return delimiter + extraSpace + content + extraSpace + delimiter;
+            }
+        });
     }
     return turndownService;
 }
 
 export function htmlToMarkdown(html: string): string {
-    return getTurndownService().turndown(html);
+    // Strip interactive wrappers (thumbnail delete buttons, code-block copy
+    // buttons, contenteditable markers) so only the plain content round-trips
+    // back to markdown.
+    if (typeof DOMParser !== 'undefined' && (html.includes(THUMB_WRAPPER_CLASS) || html.includes(CODE_COPY_WRAPPER_CLASS))) {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        doc.querySelectorAll(`.${THUMB_DELETE_CLASS}`).forEach((el) => el.remove());
+        doc.querySelectorAll(`.${THUMB_WRAPPER_CLASS}`).forEach((el) => {
+            const img = el.querySelector('img');
+            if (img) el.replaceWith(img);
+            else el.remove();
+        });
+        doc.querySelectorAll(`.${CODE_COPY_WRAPPER_CLASS}`).forEach((el) => {
+            el.querySelector('.code-block-actions')?.remove();
+            el.replaceWith(...Array.from(el.childNodes));
+        });
+        html = doc.body.innerHTML;
+    }
+    // Trailing whitespace (e.g. the empty line kept by
+    // ensureTrailingEmptyLine) is insignificant in markdown, so drop it to
+    // keep repeated WYSIWYG round-trips stable.
+    return getTurndownService().turndown(html).replace(/\s+$/, '');
 }

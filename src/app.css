@@ -123,6 +123,64 @@
   display: block;
 }
 
+/* Image thumbnails: pasted images render small; click opens a full-size view */
+.markdown-body .md-thumb {
+  position: relative;
+  display: inline-block;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body .md-thumb img {
+  max-width: 240px;
+  max-height: 160px;
+  width: auto;
+  height: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  cursor: zoom-in;
+}
+
+.markdown-body .md-thumb-delete {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.markdown-body .md-thumb-delete:hover {
+  opacity: 1;
+  background: var(--color-hard);
+}
+
+/*
+ * Inline code created by the WYSIWYG backtick auto-matching. The auto-matched
+ * code is a span whose inline background is the theme variable
+ * --color-second-bg (see INLINE_CODE_STYLE_MARKER in markdown.ts; the span is
+ * inserted with a concrete color because Chrome's execCommand sanitizer drops
+ * var() references, then rewritten). This global rule styles it like code.
+ * Must stay in app.css: the span is created at runtime, so Svelte drops the
+ * rule from component styles as "unused".
+ */
+.wysiwyg-editing span[style*="var(--color-second-bg)"] {
+  font-family: var(--font-mono);
+  font-size: 85%;
+  background-color: var(--color-second-bg);
+  border-radius: 6px;
+  padding: 0.2em 0.4em;
+}
+
 .markdown-body pre {
   background-color: var(--color-code-bg);
   border: 1px solid var(--color-border);
