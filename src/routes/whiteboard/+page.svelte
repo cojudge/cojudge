@@ -1089,7 +1089,7 @@
 			if (!rect) return;
 			const local = { x: event.clientX - rect.left, y: event.clientY - rect.top };
 			const world = { x: (local.x - panX) / zoom, y: (local.y - panY) / zoom };
-			const nextZoom = clamp(zoom * Math.exp(-deltaY * 0.002), MIN_ZOOM, MAX_ZOOM);
+			const nextZoom = clamp(zoom * Math.exp(-deltaY * 0.005), MIN_ZOOM, MAX_ZOOM);
 			panX = local.x - world.x * nextZoom;
 			panY = local.y - world.y * nextZoom;
 			zoom = nextZoom;
