@@ -467,7 +467,7 @@ dependencies = [
 
 [[package]]
 name = "cojudge-desktop"
-version = "0.0.6"
+version = "0.0.7"
 dependencies = [
  "getrandom 0.3.4",
  "tauri",
