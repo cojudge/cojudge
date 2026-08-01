@@ -98,6 +98,11 @@ describe('markdown utils', () => {
         expect(back).toBe(md);
     });
 
+    it('round-trips horizontal rules as three hyphens', () => {
+        expect(renderMarkdownPlain('---')).toContain('<hr>');
+        expect(htmlToMarkdown('<p>before</p><hr><p>after</p>')).toBe('before\n\n---\n\nafter');
+    });
+
     it('trailing empty lines are trimmed so WYSIWYG round-trips stay stable', () => {
         // The WYSIWYG editor keeps an empty line at the end of the document
         // (ensureTrailingEmptyLine); converting it back must not grow the
