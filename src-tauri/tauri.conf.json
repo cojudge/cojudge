@@ -16,7 +16,7 @@
 				{
 					"identifier": "default",
 					"windows": ["*"],
-					"permissions": ["allow-new-window"]
+					"permissions": ["allow-new-window", "opener:default"]
 				}
 			]
 		}
