@@ -16,7 +16,10 @@
 				{
 					"identifier": "default",
 					"windows": ["*"],
-					"permissions": ["allow-new-window", "opener:default"]
+					"permissions": ["allow-new-window", "opener:default"],
+					"remote": {
+						"urls": ["http://cojudge.localhost:5376/*"]
+					}
 				}
 			]
 		}
