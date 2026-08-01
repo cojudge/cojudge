@@ -852,7 +852,7 @@ func main() {
         code = starterCode[language] ?? '';
     }
 
-    function openMarkdownPreview() {
+    async function openMarkdownPreview() {
         const sourceTab = tabs[activeTabId];
         const sourceFileId = sourceTab?.fileId;
         const sourceFileName = sourceTab?.fileName || 'Solution';
@@ -868,6 +868,8 @@ func main() {
         }];
         activeTabId = tabs.length - 1;
         persistTabOrder();
+        await tick();
+        await enterPreviewEditMode();
     }
 
     // Builds the markdown snippet inserted when an image is pasted into a
@@ -903,14 +905,7 @@ func main() {
         return sourceEntry?.content ?? '';
     }
 
-    async function togglePreviewEditMode() {
-        if (previewEditMode) {
-            commitWysiwygEdits();
-            previewEditMode = false;
-            wysiwygSourceFileId = null;
-            showLinkInput = false;
-            return;
-        }
+    async function enterPreviewEditMode() {
         if (!activeTab?.sourceFileId) return;
         wysiwygSourceFileId = activeTab.sourceFileId;
         previewEditMode = true;
@@ -924,10 +919,86 @@ func main() {
         }
     }
 
+    async function togglePreviewEditMode() {
+        if (previewEditMode) {
+            commitWysiwygEdits();
+            previewEditMode = false;
+            wysiwygSourceFileId = null;
+            showLinkInput = false;
+            return;
+        }
+        await enterPreviewEditMode();
+    }
+
     function handleWysiwygInput() {
+        maybeAutoInsertHorizontalRule();
         maybeAutoCloseInlineCode();
         if (wysiwygDebounce) clearTimeout(wysiwygDebounce);
         wysiwygDebounce = setTimeout(commitWysiwygEdits, 300);
+    }
+
+    let applyingHorizontalRule = false;
+    function maybeAutoInsertHorizontalRule() {
+        if (applyingHorizontalRule || !wysiwygEl) return;
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return;
+        const range = selection.getRangeAt(0);
+        if (!range.collapsed || !wysiwygEl.contains(range.startContainer)) return;
+
+        const parent = range.startContainer.nodeType === Node.ELEMENT_NODE
+            ? range.startContainer as HTMLElement
+            : range.startContainer.parentElement;
+        if (!parent || parent.closest('pre, code')) return;
+
+        let line: HTMLElement | null = parent;
+        while (line && line.parentElement !== wysiwygEl) line = line.parentElement;
+        if (!line || line.parentElement !== wysiwygEl || !/^(P|DIV)$/.test(line.tagName)) return;
+        if (line.childNodes.length !== 1 || line.firstChild?.nodeType !== Node.TEXT_NODE || line.textContent !== '---') return;
+
+        insertWysiwygHorizontalRule(line);
+    }
+
+    function insertWysiwygHorizontalRule(lineToReplace?: HTMLElement) {
+        if (!wysiwygEl) return false;
+        wysiwygEl.focus();
+        const selection = window.getSelection();
+        if (!selection) return false;
+        const selectedRange = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
+        if (!lineToReplace && selectedRange && Array.from(wysiwygEl.querySelectorAll('table')).some((table) => selectedRange.intersectsNode(table))) return false;
+        if (lineToReplace) {
+            const lineRange = document.createRange();
+            lineRange.selectNodeContents(lineToReplace);
+            selection.removeAllRanges();
+            selection.addRange(lineRange);
+        } else if (selection.rangeCount === 0 || !wysiwygEl.contains(selection.anchorNode)) {
+            return false;
+        }
+
+        const existingRules = new Set(wysiwygEl.querySelectorAll('hr'));
+        applyingHorizontalRule = true;
+        try {
+            document.execCommand('insertHorizontalRule');
+        } finally {
+            applyingHorizontalRule = false;
+        }
+
+        const insertedRule = Array.from(wysiwygEl.querySelectorAll('hr')).find((rule) => !existingRules.has(rule));
+        if (!insertedRule) return false;
+
+        let next = insertedRule.nextSibling;
+        if (!next || (next instanceof HTMLElement && (next.tagName === 'HR' || next.contentEditable === 'false'))) {
+            const paragraph = document.createElement('p');
+            paragraph.innerHTML = '<br>';
+            insertedRule.after(paragraph);
+            next = paragraph;
+        }
+
+        const nextRange = document.createRange();
+        nextRange.selectNodeContents(next);
+        nextRange.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(nextRange);
+        return true;
     }
 
     // When the user types a closing backtick, try to match it with a previous
@@ -1190,6 +1261,10 @@ func main() {
             toggleInlineCode();
             return;
         }
+        if (command === 'insertHorizontalRule') {
+            if (insertWysiwygHorizontalRule()) handleWysiwygInput();
+            return;
+        }
         applyWysiwygCommand(command, btn.dataset.value);
     }
 
@@ -1205,6 +1280,10 @@ func main() {
         }
         if (command === 'inlineCode') {
             toggleInlineCode();
+            return;
+        }
+        if (command === 'insertHorizontalRule') {
+            if (insertWysiwygHorizontalRule()) handleWysiwygInput();
             return;
         }
         applyWysiwygCommand(command, btn.dataset.value);
@@ -2270,6 +2349,9 @@ func main() {
                             </button>
                             <button type="button" data-command="inlineCode" title="Inline code" aria-label="Inline code">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></svg>
+                            </button>
+                            <button type="button" data-command="insertHorizontalRule" title="Horizontal rule" aria-label="Horizontal rule">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12"/></svg>
                             </button>
                             <span class="wysiwyg-separator"></span>
                             <button type="button" data-command="link" title="Insert link" aria-label="Insert link">

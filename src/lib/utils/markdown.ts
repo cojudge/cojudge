@@ -302,7 +302,8 @@ function getTurndownService(): TurndownService {
             headingStyle: 'atx',
             codeBlockStyle: 'fenced',
             bulletListMarker: '-',
-            emDelimiter: '*'
+            emDelimiter: '*',
+            hr: '---'
         });
         turndownService.use(gfm);
         // Inline code created by the WYSIWYG backtick auto-matching (see
