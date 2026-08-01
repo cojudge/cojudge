@@ -371,7 +371,7 @@
 						? (item.strokeStyle as StrokeStyle)
 						: 'solid',
 					opacity: clamp(Number(item.opacity) || 100, 10, 100),
-					fontSize: clamp(Number(item.fontSize) || 24, 10, 96),
+					fontSize: Math.round(clamp(Number(item.fontSize) || 24, 10, 96)),
 					rotation: Number.isFinite(item.rotation) ? normalizeDeg(Number(item.rotation)) : undefined
 				}
 			];
@@ -1034,7 +1034,7 @@
 				height: endY - startY,
 				points: original.points?.map((item) => ({ x: item.x * scaleX, y: item.y * scaleY })),
 				fontSize: original.type === 'text'
-					? clamp(original.fontSize * Math.min(scaleX, scaleY), 10, 160)
+					? Math.round(clamp(original.fontSize * Math.min(scaleX, scaleY), 10, 160))
 					: original.fontSize
 			};
 		});
@@ -1077,17 +1077,25 @@
 		return elements.find((element) => element.id === editor.elementId)?.fontSize ?? drawingStyle.fontSize;
 	}
 
-	function textEditorPlacement(editor: TextEditor): { x: number; y: number; width: number; fontSize: number } {
+	function textEditorPlacement(editor: TextEditor): { x: number; y: number; width: number; height: number; fontSize: number } {
+		const element = editor.elementId ? elements.find((item) => item.id === editor.elementId) : undefined;
+		const fontSize = textEditorFontSize(editor);
 		const screen = worldToScreen({ x: editor.x, y: editor.y });
 		const viewportWidth = canvasElement?.clientWidth ?? 360;
 		const viewportHeight = canvasElement?.clientHeight ?? 640;
-		const width = Math.min(320, Math.max(120, viewportWidth - 24));
-		const fontSize = textEditorFontSize(editor) * zoom;
+		const worldDimensions = element
+			? { width: element.width, height: element.height }
+			: textDimensions(editor.value, fontSize);
+		let width = Math.max(120, worldDimensions.width * zoom);
+		let height = Math.max(48, worldDimensions.height * zoom);
+		width = Math.min(width, viewportWidth - 24);
+		height = Math.min(height, Math.max(96, viewportHeight - 96));
 		return {
 			x: clamp(screen.x, 12, Math.max(12, viewportWidth - width - 12)),
-			y: clamp(screen.y, 12, Math.max(12, viewportHeight - Math.max(70, fontSize * 1.6) - 12)),
+			y: clamp(screen.y, 12, Math.max(12, viewportHeight - height - 12)),
 			width,
-			fontSize
+			height,
+			fontSize: fontSize * zoom
 		};
 	}
 
@@ -1171,8 +1179,8 @@
 		return undefined;
 	}
 
-	function resolvedStroke(stroke: string): string {
-		if (isDark && stroke === '#1b1b1f') return '#f1f3f5';
+	function resolvedStroke(stroke: string, dark: boolean): string {
+		if (dark && stroke === '#1b1b1f') return '#f1f3f5';
 		return stroke;
 	}
 
@@ -1261,10 +1269,6 @@
 			return updated;
 		});
 		recordSnapshot(before);
-	}
-
-	function getActiveStyle<Key extends keyof StyleState>(key: Key): StyleState[Key] {
-		return selectedElement?.[key] ?? drawingStyle[key];
 	}
 
 	function deleteSelected(): void {
@@ -1909,7 +1913,7 @@
 								height={bounds.height}
 								rx="3"
 								fill={element.fill === 'transparent' ? 'none' : element.fill}
-								stroke={resolvedStroke(element.stroke)}
+								stroke={resolvedStroke(element.stroke, isDark)}
 								stroke-width={element.strokeWidth}
 								stroke-dasharray={dashArray(element)}
 							/>
@@ -1917,7 +1921,7 @@
 							<polygon
 								points={diamondPoints(element)}
 								fill={element.fill === 'transparent' ? 'none' : element.fill}
-								stroke={resolvedStroke(element.stroke)}
+								stroke={resolvedStroke(element.stroke, isDark)}
 								stroke-width={element.strokeWidth}
 								stroke-dasharray={dashArray(element)}
 							/>
@@ -1929,7 +1933,7 @@
 								rx={bounds.width / 2}
 								ry={bounds.height / 2}
 								fill={element.fill === 'transparent' ? 'none' : element.fill}
-								stroke={resolvedStroke(element.stroke)}
+								stroke={resolvedStroke(element.stroke, isDark)}
 								stroke-width={element.strokeWidth}
 								stroke-dasharray={dashArray(element)}
 							/>
@@ -1937,7 +1941,7 @@
 							<path
 								d={`M ${element.x} ${element.y} L ${element.x + element.width} ${element.y + element.height}`}
 								fill="none"
-								stroke={resolvedStroke(element.stroke)}
+								stroke={resolvedStroke(element.stroke, isDark)}
 								stroke-width={element.strokeWidth}
 								stroke-dasharray={dashArray(element)}
 							/>
@@ -1945,7 +1949,7 @@
 								<path
 									d={arrowHeadPath(element)}
 									fill="none"
-									stroke={resolvedStroke(element.stroke)}
+									stroke={resolvedStroke(element.stroke, isDark)}
 									stroke-width={element.strokeWidth}
 								/>
 							{/if}
@@ -1954,13 +1958,13 @@
 								d={pointsToPath(element.points)}
 								transform={`translate(${element.x} ${element.y})`}
 								fill="none"
-								stroke={resolvedStroke(element.stroke)}
+								stroke={resolvedStroke(element.stroke, isDark)}
 								stroke-width={element.strokeWidth}
 								stroke-dasharray={dashArray(element)}
 							/>
 						{:else if element.type === 'text'}
 							<text
-								fill={resolvedStroke(element.stroke)}
+								fill={resolvedStroke(element.stroke, isDark)}
 								font-size={element.fontSize}
 								font-family="'Comic Sans MS', 'Bradley Hand', cursive"
 							>
@@ -2140,7 +2144,7 @@
 			class="text-editor"
 			aria-label="Whiteboard text"
 			placeholder="Type something..."
-			style={`left: ${editorPosition.x}px; top: ${editorPosition.y}px; width: ${editorPosition.width}px; font-size: ${editorPosition.fontSize}px; line-height: 1.25;`}
+			style={`left: ${editorPosition.x}px; top: ${editorPosition.y}px; width: ${editorPosition.width}px; height: ${editorPosition.height}px; font-size: ${editorPosition.fontSize}px; line-height: 1.25;`}
 			onkeydown={handleTextKeyDown}
 			onblur={() => finishTextEditor(true)}
 		></textarea>
@@ -2276,7 +2280,7 @@
 				<div class="color-row">
 					{#each strokeColors as color}
 						<button
-							class:selected={getActiveStyle('stroke') === color}
+							class:selected={(selectedElement?.stroke ?? drawingStyle.stroke) === color}
 							class="color-swatch"
 							style={`--swatch: ${color}`}
 							title={color}
@@ -2293,7 +2297,7 @@
 					<div class="color-row">
 						{#each fillColors as color}
 							<button
-								class:selected={getActiveStyle('fill') === color}
+								class:selected={(selectedElement?.fill ?? drawingStyle.fill) === color}
 								class:transparent={color === 'transparent'}
 								class="color-swatch"
 								style={`--swatch: ${color === 'transparent' ? 'var(--panel-bg)' : color}`}
@@ -2312,7 +2316,7 @@
 					<div class="segmented-control">
 						{#each [1, 2, 4] as width}
 							<button
-								class:active={getActiveStyle('strokeWidth') === width}
+								class:active={(selectedElement?.strokeWidth ?? drawingStyle.strokeWidth) === width}
 								aria-label={`Stroke width ${width}`}
 								onclick={() => setStyle('strokeWidth', width)}
 							><span style={`height: ${width}px`}></span></button>
@@ -2324,7 +2328,7 @@
 					<div class="segmented-control">
 						{#each ['solid', 'dashed', 'dotted'] as style}
 							<button
-								class:active={getActiveStyle('strokeStyle') === style}
+								class:active={(selectedElement?.strokeStyle ?? drawingStyle.strokeStyle) === style}
 								aria-label={`${style} stroke`}
 								onclick={() => setStyle('strokeStyle', style as StrokeStyle)}
 							><span class={`line-${style}`}></span></button>
@@ -2335,28 +2339,28 @@
 
 			{#if activeTool === 'text' || selectedElement?.type === 'text'}
 				<div class="panel-section">
-					<label class="range-label" for="font-size"><span>Font size</span><output>{getActiveStyle('fontSize')}</output></label>
+					<label class="range-label" for="font-size"><span>Font size</span><output>{selectedElement?.fontSize ?? drawingStyle.fontSize}</output></label>
 					<input
 						id="font-size"
 						type="range"
 						min="12"
 						max="64"
 						step="2"
-						value={getActiveStyle('fontSize')}
+						value={selectedElement?.fontSize ?? drawingStyle.fontSize}
 						oninput={(event) => setStyle('fontSize', Number(event.currentTarget.value))}
 					/>
 				</div>
 			{/if}
 
 			<div class="panel-section">
-				<label class="range-label" for="opacity"><span>Opacity</span><output>{getActiveStyle('opacity')}%</output></label>
+				<label class="range-label" for="opacity"><span>Opacity</span><output>{selectedElement?.opacity ?? drawingStyle.opacity}%</output></label>
 				<input
 					id="opacity"
 					type="range"
 					min="10"
 					max="100"
 					step="10"
-					value={getActiveStyle('opacity')}
+					value={selectedElement?.opacity ?? drawingStyle.opacity}
 					oninput={(event) => setStyle('opacity', Number(event.currentTarget.value))}
 				/>
 			</div>
