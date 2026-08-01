@@ -1078,16 +1078,13 @@
 	}
 
 	function textEditorPlacement(editor: TextEditor): { x: number; y: number; width: number; height: number; fontSize: number } {
-		const element = editor.elementId ? elements.find((item) => item.id === editor.elementId) : undefined;
 		const fontSize = textEditorFontSize(editor);
 		const screen = worldToScreen({ x: editor.x, y: editor.y });
 		const viewportWidth = canvasElement?.clientWidth ?? 360;
 		const viewportHeight = canvasElement?.clientHeight ?? 640;
-		const worldDimensions = element
-			? { width: element.width, height: element.height }
-			: textDimensions(editor.value, fontSize);
-		let width = Math.max(120, worldDimensions.width * zoom);
-		let height = Math.max(48, worldDimensions.height * zoom);
+		const worldDimensions = textDimensions(editor.value, fontSize);
+		let width = Math.max(400, worldDimensions.width * zoom);
+		let height = Math.max(100, worldDimensions.height * zoom);
 		width = Math.min(width, viewportWidth - 24);
 		height = Math.min(height, Math.max(96, viewportHeight - 96));
 		return {
@@ -3116,6 +3113,8 @@
 		font-family: 'Comic Sans MS', 'Bradley Hand', cursive !important;
 		resize: none;
 		user-select: text;
+		white-space: pre;
+		overflow-wrap: normal;
 	}
 
 	.hidden-input { display: none; }
