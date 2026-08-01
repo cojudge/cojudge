@@ -53,10 +53,6 @@ test('playground markdown preview has a WYSIWYG editing mode', async ({ page }) 
   await expect.poll(() => getMarkdownContent(page)).toBe('# Hello\n\nsome text');
 
   await page.getByRole('button', { name: 'Preview Markdown' }).click();
-  const preview = page.locator('.markdown-preview:not(.wysiwyg-editing)');
-  await expect(preview.locator('h1')).toHaveText('Hello');
-
-  await page.getByRole('button', { name: 'Edit markdown (WYSIWYG)' }).click();
   const editable = page.locator('.wysiwyg-editing');
   await expect(editable).toBeVisible();
   await expect(editable.locator('h1')).toHaveText('Hello');
@@ -67,7 +63,56 @@ test('playground markdown preview has a WYSIWYG editing mode', async ({ page }) 
   await expect.poll(() => getMarkdownContent(page)).toContain('**some text**');
 
   await page.getByRole('button', { name: 'Done editing' }).click();
+  const preview = page.locator('.markdown-preview:not(.wysiwyg-editing)');
   await expect(preview.locator('strong')).toHaveText('some text');
+});
+
+test('WYSIWYG turns an exact three-hyphen line into a horizontal rule', async ({ page }) => {
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('before');
+  await expect.poll(() => getMarkdownContent(page)).toBe('before');
+
+  await page.getByRole('button', { name: 'Preview Markdown' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  await expect(editable).toBeVisible();
+
+  await editable.locator('> p:last-child').click();
+  await page.keyboard.type('not---');
+  await expect(editable.locator('hr')).toHaveCount(0);
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('-');
+  await page.keyboard.press('Shift+Enter');
+  await page.keyboard.type('--');
+  await expect(editable.locator('hr')).toHaveCount(0);
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('---');
+  await expect(editable.locator('hr')).toHaveCount(1);
+  await expect.poll(async () => (await getMarkdownContent(page))?.match(/^---$/gm)?.length ?? 0).toBe(1);
+
+  await page.getByRole('button', { name: 'Horizontal rule' }).click();
+  await expect(editable.locator('hr')).toHaveCount(2);
+  await expect.poll(async () => (await getMarkdownContent(page))?.match(/^---$/gm)?.length ?? 0).toBe(2);
+});
+
+test('horizontal rule toolbar preserves Markdown tables', async ({ page }) => {
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('| A | B |\n| - | - |\n| 1 | 2 |');
+  await expect.poll(() => getMarkdownContent(page)).toContain('| 1 | 2 |');
+
+  await page.getByRole('button', { name: 'Preview Markdown' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  await editable.locator('td').first().click();
+  await page.getByRole('button', { name: 'Horizontal rule' }).click();
+
+  await expect(editable.locator('table')).toHaveCount(1);
+  await expect(editable.locator('hr')).toHaveCount(0);
+  await expect.poll(() => getMarkdownContent(page)).toContain('| 1 | 2 |');
 });
 
 async function writeImageToClipboard(page: Page, width = 800, height = 600) {
@@ -99,6 +144,7 @@ test('pasted images render as thumbnails with lightbox and delete in the preview
   await pasteImageIntoEditor(page);
 
   await page.getByRole('button', { name: 'Preview Markdown' }).click();
+  await page.getByRole('button', { name: 'Done editing' }).click();
   const preview = page.locator('.markdown-preview:not(.wysiwyg-editing)');
   const thumbnail = preview.locator('.md-thumb');
   await expect(thumbnail).toBeVisible();
@@ -142,7 +188,6 @@ test('WYSIWYG keeps an empty line at the end so typing continues after a pasted 
   await expect.poll(() => getMarkdownContent(page)).toBe('hello');
 
   await page.getByRole('button', { name: 'Preview Markdown' }).click();
-  await page.getByRole('button', { name: 'Edit markdown (WYSIWYG)' }).click();
   const editable = page.locator('.wysiwyg-editing');
   await expect(editable).toBeVisible();
 
@@ -188,7 +233,6 @@ test('WYSIWYG toolbar wraps the selection in inline code', async ({ page }) => {
   await expect.poll(() => getMarkdownContent(page)).toBe('hello world');
 
   await page.getByRole('button', { name: 'Preview Markdown' }).click();
-  await page.getByRole('button', { name: 'Edit markdown (WYSIWYG)' }).click();
   const editable = page.locator('.wysiwyg-editing');
   await expect(editable).toBeVisible();
 
@@ -214,7 +258,6 @@ test('WYSIWYG auto-matches backticks into inline code and undo cancels it', asyn
   await expect.poll(() => getMarkdownContent(page)).toBe('hello');
 
   await page.getByRole('button', { name: 'Preview Markdown' }).click();
-  await page.getByRole('button', { name: 'Edit markdown (WYSIWYG)' }).click();
   const editable = page.locator('.wysiwyg-editing');
   await expect(editable).toBeVisible();
 
@@ -256,7 +299,6 @@ test('WYSIWYG code blocks have a working copy button', async ({ page }) => {
   await expect.poll(() => getMarkdownContent(page)).toContain('```js');
 
   await page.getByRole('button', { name: 'Preview Markdown' }).click();
-  await page.getByRole('button', { name: 'Edit markdown (WYSIWYG)' }).click();
   const editable = page.locator('.wysiwyg-editing');
   const copyButton = editable.locator('.md-code-copy .copy-code-button');
   await expect(copyButton).toBeVisible();
