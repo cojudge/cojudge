@@ -1,5 +1,7 @@
 Return the minimum number of intervals to remove to make the rest non-overlapping.
 
+Note that intervals which only touch at a point are non-overlapping. For example, `[1, 2]` and `[2, 3]` are non-overlapping.
+
 **Constraints:**
 
 - 1 ≤ intervals.length ≤ 10^5
