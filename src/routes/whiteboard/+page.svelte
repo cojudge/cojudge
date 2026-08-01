@@ -43,6 +43,7 @@
 		strokeStyle: StrokeStyle;
 		opacity: number;
 		fontSize: number;
+		rotation?: number;
 	};
 
 	type StyleState = Pick<
@@ -83,6 +84,15 @@
 				before: BoardElement[];
 				originals: BoardElement[];
 				bounds: Bounds;
+				moved: boolean;
+		  }
+		| {
+				kind: 'rotate';
+				center: Point;
+				before: BoardElement[];
+				originals: BoardElement[];
+				startAngle: number;
+				currentAngle: number;
 				moved: boolean;
 		  }
 		| {
@@ -244,6 +254,19 @@
 		return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
 	}
 
+	function normalizeDeg(degrees: number): number {
+		return (((degrees + 180) % 360) + 360) % 360 - 180;
+	}
+
+	function rotatePoint(point: Point, center: Point, degrees: number): Point {
+		const radians = (degrees * Math.PI) / 180;
+		const cos = Math.cos(radians);
+		const sin = Math.sin(radians);
+		const dx = point.x - center.x;
+		const dy = point.y - center.y;
+		return { x: center.x + dx * cos - dy * sin, y: center.y + dx * sin + dy * cos };
+	}
+
 	function storageKeyForShare(value: string): string {
 		let hash = 2166136261;
 		for (let index = 0; index < value.length; index += 1) {
@@ -348,7 +371,8 @@
 						? (item.strokeStyle as StrokeStyle)
 						: 'solid',
 					opacity: clamp(Number(item.opacity) || 100, 10, 100),
-					fontSize: clamp(Number(item.fontSize) || 24, 10, 96)
+					fontSize: Math.round(clamp(Number(item.fontSize) || 24, 10, 96)),
+					rotation: Number.isFinite(item.rotation) ? normalizeDeg(Number(item.rotation)) : undefined
 				}
 			];
 		});
@@ -524,9 +548,29 @@
 		};
 	}
 
+	function getRotatedBounds(element: BoardElement): Bounds {
+		const bounds = getBounds(element);
+		if (!element.rotation) return bounds;
+		const center = {
+			x: bounds.x + bounds.width / 2,
+			y: bounds.y + bounds.height / 2
+		};
+		const corners = [
+			{ x: bounds.x, y: bounds.y },
+			{ x: bounds.x + bounds.width, y: bounds.y },
+			{ x: bounds.x + bounds.width, y: bounds.y + bounds.height },
+			{ x: bounds.x, y: bounds.y + bounds.height }
+		].map((point) => rotatePoint(point, center, element.rotation));
+		const left = Math.min(...corners.map((point) => point.x));
+		const top = Math.min(...corners.map((point) => point.y));
+		const right = Math.max(...corners.map((point) => point.x));
+		const bottom = Math.max(...corners.map((point) => point.y));
+		return { x: left, y: top, width: Math.max(1, right - left), height: Math.max(1, bottom - top) };
+	}
+
 	function getUnionBounds(items: BoardElement[]): Bounds | null {
 		if (items.length === 0) return null;
-		const bounds = items.map(getBounds);
+		const bounds = items.map(getRotatedBounds);
 		const left = Math.min(...bounds.map((item) => item.x));
 		const top = Math.min(...bounds.map((item) => item.y));
 		const right = Math.max(...bounds.map((item) => item.x + item.width));
@@ -566,6 +610,13 @@
 
 	function hitTest(element: BoardElement, point: Point): boolean {
 		const tolerance = 9 / zoom;
+		if (element.rotation) {
+			const bounds = getBounds(element);
+			point = rotatePoint(point, {
+				x: bounds.x + bounds.width / 2,
+				y: bounds.y + bounds.height / 2
+			}, -element.rotation);
+		}
 		if (element.type === 'line' || element.type === 'arrow') {
 			return (
 				distanceToSegment(
@@ -653,18 +704,41 @@
 
 		if (activeTool === 'selection') {
 			const additiveSelection = event.shiftKey || event.metaKey || event.ctrlKey;
+			const rotateHit =
+				(event.target as SVGElement | null)?.dataset?.rotateHandle !== undefined;
+			if (rotateHit && selectionBounds && selectedIds.length === 1) {
+				event.preventDefault();
+				canvasElement?.setPointerCapture(event.pointerId);
+				const center = {
+					x: selectionBounds.x + selectionBounds.width / 2,
+					y: selectionBounds.y + selectionBounds.height / 2
+				};
+				const selected = elements.find((item) => item.id === selectedIds[0]);
+				gesture = {
+					kind: 'rotate',
+					center,
+					before: cloneElements(),
+					originals: cloneElements(elements.filter((item) => selectedIds.includes(item.id))),
+					startAngle: (Math.atan2(point.y - center.y, point.x - center.x) * 180) / Math.PI,
+					currentAngle: normalizeDeg(selected?.rotation ?? 0),
+					moved: false
+				};
+				return;
+			}
 			const handle = (event.target as SVGElement | null)?.dataset?.resizeHandle as
 				| ResizeHandle
 				| undefined;
 			if (handle && selectionBounds) {
 				event.preventDefault();
 				canvasElement?.setPointerCapture(event.pointerId);
+				const originals = cloneElements(elements.filter((item) => selectedIds.includes(item.id)));
+				const singleRotated = originals.length === 1 && originals[0].rotation ? originals[0] : undefined;
 				gesture = {
 					kind: 'resize',
 					handle,
 					before: cloneElements(),
-					originals: cloneElements(elements.filter((item) => selectedIds.includes(item.id))),
-					bounds: { ...selectionBounds },
+					originals,
+					bounds: singleRotated ? getBounds(singleRotated) : { ...selectionBounds },
 					moved: false
 				};
 				return;
@@ -800,6 +874,27 @@
 			return;
 		}
 
+		if (gesture.kind === 'rotate') {
+			const currentGesture = gesture;
+			const rawDelta =
+				((Math.atan2(point.y - currentGesture.center.y, point.x - currentGesture.center.x) * 180) / Math.PI) -
+				currentGesture.startAngle;
+			const delta = event.shiftKey ? Math.round(rawDelta / 15) * 15 : rawDelta;
+			const originalsById = new Map(currentGesture.originals.map((item) => [item.id, item]));
+			elements = elements.map((element) => {
+				const original = originalsById.get(element.id);
+				return original
+					? { ...element, rotation: normalizeDeg((original.rotation ?? 0) + delta) }
+					: element;
+			});
+			gesture = {
+				...gesture,
+				currentAngle: normalizeDeg((currentGesture.originals[0]?.rotation ?? 0) + delta),
+				moved: Math.abs(delta) > 0.1
+			};
+			return;
+		}
+
 		if (gesture.kind === 'marquee') {
 			const marquee = normalizeBounds(gesture.start, point);
 			const found = elements
@@ -847,7 +942,11 @@
 			if (!toolLocked) activeTool = 'selection';
 		}
 
-		if (completedGesture.kind === 'move' || completedGesture.kind === 'resize') {
+		if (
+			completedGesture.kind === 'move'
+			|| completedGesture.kind === 'resize'
+			|| completedGesture.kind === 'rotate'
+		) {
 			if (completedGesture.moved) recordSnapshot(completedGesture.before);
 		}
 
@@ -878,15 +977,25 @@
 
 	function resizeSelection(currentGesture: Extract<Gesture, { kind: 'resize' }>, point: Point, lockRatio: boolean): void {
 		const originalBounds = currentGesture.bounds;
+		let localPoint = point;
+		if (currentGesture.originals.length === 1) {
+			const single = currentGesture.originals[0];
+			if (single.rotation) {
+				localPoint = rotatePoint(point, {
+					x: originalBounds.x + originalBounds.width / 2,
+					y: originalBounds.y + originalBounds.height / 2
+				}, -single.rotation);
+			}
+		}
 		let left = originalBounds.x;
 		let top = originalBounds.y;
 		let right = originalBounds.x + originalBounds.width;
 		let bottom = originalBounds.y + originalBounds.height;
 
-		if (currentGesture.handle.includes('w')) left = Math.min(point.x, right - 2 / zoom);
-		if (currentGesture.handle.includes('e')) right = Math.max(point.x, left + 2 / zoom);
-		if (currentGesture.handle.includes('n')) top = Math.min(point.y, bottom - 2 / zoom);
-		if (currentGesture.handle.includes('s')) bottom = Math.max(point.y, top + 2 / zoom);
+		if (currentGesture.handle.includes('w')) left = Math.min(localPoint.x, right - 2 / zoom);
+		if (currentGesture.handle.includes('e')) right = Math.max(localPoint.x, left + 2 / zoom);
+		if (currentGesture.handle.includes('n')) top = Math.min(localPoint.y, bottom - 2 / zoom);
+		if (currentGesture.handle.includes('s')) bottom = Math.max(localPoint.y, top + 2 / zoom);
 
 		if (lockRatio && originalBounds.height > 0) {
 			const ratio = originalBounds.width / originalBounds.height;
@@ -925,7 +1034,7 @@
 				height: endY - startY,
 				points: original.points?.map((item) => ({ x: item.x * scaleX, y: item.y * scaleY })),
 				fontSize: original.type === 'text'
-					? clamp(original.fontSize * Math.min(scaleX, scaleY), 10, 160)
+					? Math.round(clamp(original.fontSize * Math.min(scaleX, scaleY), 10, 160))
 					: original.fontSize
 			};
 		});
@@ -968,17 +1077,25 @@
 		return elements.find((element) => element.id === editor.elementId)?.fontSize ?? drawingStyle.fontSize;
 	}
 
-	function textEditorPlacement(editor: TextEditor): { x: number; y: number; width: number; fontSize: number } {
+	function textEditorPlacement(editor: TextEditor): { x: number; y: number; width: number; height: number; fontSize: number } {
+		const element = editor.elementId ? elements.find((item) => item.id === editor.elementId) : undefined;
+		const fontSize = textEditorFontSize(editor);
 		const screen = worldToScreen({ x: editor.x, y: editor.y });
 		const viewportWidth = canvasElement?.clientWidth ?? 360;
 		const viewportHeight = canvasElement?.clientHeight ?? 640;
-		const width = Math.min(320, Math.max(120, viewportWidth - 24));
-		const fontSize = textEditorFontSize(editor) * zoom;
+		const worldDimensions = element
+			? { width: element.width, height: element.height }
+			: textDimensions(editor.value, fontSize);
+		let width = Math.max(120, worldDimensions.width * zoom);
+		let height = Math.max(48, worldDimensions.height * zoom);
+		width = Math.min(width, viewportWidth - 24);
+		height = Math.min(height, Math.max(96, viewportHeight - 96));
 		return {
 			x: clamp(screen.x, 12, Math.max(12, viewportWidth - width - 12)),
-			y: clamp(screen.y, 12, Math.max(12, viewportHeight - Math.max(70, fontSize * 1.6) - 12)),
+			y: clamp(screen.y, 12, Math.max(12, viewportHeight - height - 12)),
 			width,
-			fontSize
+			height,
+			fontSize: fontSize * zoom
 		};
 	}
 
@@ -1062,9 +1179,15 @@
 		return undefined;
 	}
 
-	function resolvedStroke(stroke: string): string {
-		if (isDark && stroke === '#1b1b1f') return '#f1f3f5';
+	function resolvedStroke(stroke: string, dark: boolean): string {
+		if (dark && stroke === '#1b1b1f') return '#f1f3f5';
 		return stroke;
+	}
+
+	function rotationTransform(element: BoardElement): string | undefined {
+		if (!element.rotation) return undefined;
+		const bounds = getBounds(element);
+		return `rotate(${element.rotation} ${bounds.x + bounds.width / 2} ${bounds.y + bounds.height / 2})`;
 	}
 
 	function handleWheel(event: WheelEvent): void {
@@ -1089,7 +1212,7 @@
 			if (!rect) return;
 			const local = { x: event.clientX - rect.left, y: event.clientY - rect.top };
 			const world = { x: (local.x - panX) / zoom, y: (local.y - panY) / zoom };
-			const nextZoom = clamp(zoom * Math.exp(-deltaY * 0.002), MIN_ZOOM, MAX_ZOOM);
+			const nextZoom = clamp(zoom * Math.exp(-deltaY * 0.005), MIN_ZOOM, MAX_ZOOM);
 			panX = local.x - world.x * nextZoom;
 			panY = local.y - world.y * nextZoom;
 			zoom = nextZoom;
@@ -1146,10 +1269,6 @@
 			return updated;
 		});
 		recordSnapshot(before);
-	}
-
-	function getActiveStyle<Key extends keyof StyleState>(key: Key): StyleState[Key] {
-		return selectedElement?.[key] ?? drawingStyle[key];
 	}
 
 	function deleteSelected(): void {
@@ -1783,6 +1902,7 @@
 					<g
 						opacity={element.opacity / 100}
 						class:hidden-element={textEditor?.elementId === element.id}
+						transform={rotationTransform(element)}
 					>
 						{#if element.type === 'rectangle'}
 							{@const bounds = getBounds(element)}
@@ -1793,7 +1913,7 @@
 								height={bounds.height}
 								rx="3"
 								fill={element.fill === 'transparent' ? 'none' : element.fill}
-								stroke={resolvedStroke(element.stroke)}
+								stroke={resolvedStroke(element.stroke, isDark)}
 								stroke-width={element.strokeWidth}
 								stroke-dasharray={dashArray(element)}
 							/>
@@ -1801,7 +1921,7 @@
 							<polygon
 								points={diamondPoints(element)}
 								fill={element.fill === 'transparent' ? 'none' : element.fill}
-								stroke={resolvedStroke(element.stroke)}
+								stroke={resolvedStroke(element.stroke, isDark)}
 								stroke-width={element.strokeWidth}
 								stroke-dasharray={dashArray(element)}
 							/>
@@ -1813,7 +1933,7 @@
 								rx={bounds.width / 2}
 								ry={bounds.height / 2}
 								fill={element.fill === 'transparent' ? 'none' : element.fill}
-								stroke={resolvedStroke(element.stroke)}
+								stroke={resolvedStroke(element.stroke, isDark)}
 								stroke-width={element.strokeWidth}
 								stroke-dasharray={dashArray(element)}
 							/>
@@ -1821,7 +1941,7 @@
 							<path
 								d={`M ${element.x} ${element.y} L ${element.x + element.width} ${element.y + element.height}`}
 								fill="none"
-								stroke={resolvedStroke(element.stroke)}
+								stroke={resolvedStroke(element.stroke, isDark)}
 								stroke-width={element.strokeWidth}
 								stroke-dasharray={dashArray(element)}
 							/>
@@ -1829,7 +1949,7 @@
 								<path
 									d={arrowHeadPath(element)}
 									fill="none"
-									stroke={resolvedStroke(element.stroke)}
+									stroke={resolvedStroke(element.stroke, isDark)}
 									stroke-width={element.strokeWidth}
 								/>
 							{/if}
@@ -1838,13 +1958,13 @@
 								d={pointsToPath(element.points)}
 								transform={`translate(${element.x} ${element.y})`}
 								fill="none"
-								stroke={resolvedStroke(element.stroke)}
+								stroke={resolvedStroke(element.stroke, isDark)}
 								stroke-width={element.strokeWidth}
 								stroke-dasharray={dashArray(element)}
 							/>
 						{:else if element.type === 'text'}
 							<text
-								fill={resolvedStroke(element.stroke)}
+								fill={resolvedStroke(element.stroke, isDark)}
 								font-size={element.fontSize}
 								font-family="'Comic Sans MS', 'Bradley Hand', cursive"
 							>
@@ -1888,6 +2008,85 @@
 							/>
 						{/each}
 					{/if}
+				{#if selectedIds.length === 1}
+					{@const single = elements.find((element) => element.id === selectedIds[0])}
+					{#if single}
+						{@const b = getBounds(single)}
+						{@const pad = 5 / zoom}
+						{@const center = { x: b.x + b.width / 2, y: b.y + b.height / 2 }}
+						{@const rotation = single.rotation ?? 0}
+						{@const localCorners = [
+							{ x: b.x - pad, y: b.y - pad },
+							{ x: b.x + b.width + pad, y: b.y - pad },
+							{ x: b.x + b.width + pad, y: b.y + b.height + pad },
+							{ x: b.x - pad, y: b.y + b.height + pad }
+						]}
+						{@const frameCorners = localCorners.map((point) => rotatePoint(point, center, rotation))}
+						{@const frameTop = rotatePoint({ x: center.x, y: b.y - pad }, center, rotation)}
+						{@const rotationHandle = rotatePoint(
+							{ x: center.x, y: b.y - pad - 23 / zoom },
+							center,
+							rotation
+						)}
+						<polygon
+							class="group-selection"
+							points={frameCorners.map((point) => `${point.x},${point.y}`).join(' ')}
+							fill="none"
+							stroke="#6965db"
+							stroke-width={1.25 / zoom}
+							stroke-dasharray={`${4 / zoom} ${3 / zoom}`}
+						/>
+						{#each [
+							{ handle: 'nw', x: frameCorners[0].x, y: frameCorners[0].y },
+							{ handle: 'ne', x: frameCorners[1].x, y: frameCorners[1].y },
+							{ handle: 'se', x: frameCorners[2].x, y: frameCorners[2].y },
+							{ handle: 'sw', x: frameCorners[3].x, y: frameCorners[3].y }
+						] as item}
+							<rect
+								x={item.x - 4.5 / zoom}
+								y={item.y - 4.5 / zoom}
+								width={9 / zoom}
+								height={9 / zoom}
+								rx={1.5 / zoom}
+								fill="white"
+								stroke="#6965db"
+								stroke-width={1.25 / zoom}
+								data-resize-handle={item.handle}
+								class="resize-handle"
+							/>
+						{/each}
+						<line
+							x1={frameTop.x}
+							y1={frameTop.y}
+							x2={rotationHandle.x}
+							y2={rotationHandle.y}
+							stroke="#6965db"
+							stroke-width={1.25 / zoom}
+						/>
+						<circle
+							cx={rotationHandle.x}
+							cy={rotationHandle.y}
+							r={5 / zoom}
+							fill="white"
+							stroke="#6965db"
+							stroke-width={1.5 / zoom}
+							data-rotate-handle="true"
+							class="rotation-handle"
+						/>
+						{#if gesture?.kind === 'rotate'}
+							<text
+								x={rotationHandle.x}
+								y={rotationHandle.y - 14 / zoom}
+								text-anchor="middle"
+								fill="#6965db"
+								font-size={11 / zoom}
+								font-weight="600"
+								style="stroke: var(--panel-bg); stroke-width: 4px; paint-order: stroke;"
+							>{Math.round(gesture.currentAngle)}°</text
+							>
+						{/if}
+					{/if}
+				{:else}
 					<rect
 						class="group-selection"
 						x={selectionBounds.x - 5 / zoom}
@@ -1918,6 +2117,7 @@
 							class="resize-handle"
 						/>
 					{/each}
+				{/if}
 				</g>
 			{/if}
 
@@ -1944,7 +2144,7 @@
 			class="text-editor"
 			aria-label="Whiteboard text"
 			placeholder="Type something..."
-			style={`left: ${editorPosition.x}px; top: ${editorPosition.y}px; width: ${editorPosition.width}px; font-size: ${editorPosition.fontSize}px; line-height: 1.25;`}
+			style={`left: ${editorPosition.x}px; top: ${editorPosition.y}px; width: ${editorPosition.width}px; height: ${editorPosition.height}px; font-size: ${editorPosition.fontSize}px; line-height: 1.25;`}
 			onkeydown={handleTextKeyDown}
 			onblur={() => finishTextEditor(true)}
 		></textarea>
@@ -2080,7 +2280,7 @@
 				<div class="color-row">
 					{#each strokeColors as color}
 						<button
-							class:selected={getActiveStyle('stroke') === color}
+							class:selected={(selectedElement?.stroke ?? drawingStyle.stroke) === color}
 							class="color-swatch"
 							style={`--swatch: ${color}`}
 							title={color}
@@ -2097,7 +2297,7 @@
 					<div class="color-row">
 						{#each fillColors as color}
 							<button
-								class:selected={getActiveStyle('fill') === color}
+								class:selected={(selectedElement?.fill ?? drawingStyle.fill) === color}
 								class:transparent={color === 'transparent'}
 								class="color-swatch"
 								style={`--swatch: ${color === 'transparent' ? 'var(--panel-bg)' : color}`}
@@ -2116,7 +2316,7 @@
 					<div class="segmented-control">
 						{#each [1, 2, 4] as width}
 							<button
-								class:active={getActiveStyle('strokeWidth') === width}
+								class:active={(selectedElement?.strokeWidth ?? drawingStyle.strokeWidth) === width}
 								aria-label={`Stroke width ${width}`}
 								onclick={() => setStyle('strokeWidth', width)}
 							><span style={`height: ${width}px`}></span></button>
@@ -2128,7 +2328,7 @@
 					<div class="segmented-control">
 						{#each ['solid', 'dashed', 'dotted'] as style}
 							<button
-								class:active={getActiveStyle('strokeStyle') === style}
+								class:active={(selectedElement?.strokeStyle ?? drawingStyle.strokeStyle) === style}
 								aria-label={`${style} stroke`}
 								onclick={() => setStyle('strokeStyle', style as StrokeStyle)}
 							><span class={`line-${style}`}></span></button>
@@ -2139,28 +2339,28 @@
 
 			{#if activeTool === 'text' || selectedElement?.type === 'text'}
 				<div class="panel-section">
-					<label class="range-label" for="font-size"><span>Font size</span><output>{getActiveStyle('fontSize')}</output></label>
+					<label class="range-label" for="font-size"><span>Font size</span><output>{selectedElement?.fontSize ?? drawingStyle.fontSize}</output></label>
 					<input
 						id="font-size"
 						type="range"
 						min="12"
 						max="64"
 						step="2"
-						value={getActiveStyle('fontSize')}
+						value={selectedElement?.fontSize ?? drawingStyle.fontSize}
 						oninput={(event) => setStyle('fontSize', Number(event.currentTarget.value))}
 					/>
 				</div>
 			{/if}
 
 			<div class="panel-section">
-				<label class="range-label" for="opacity"><span>Opacity</span><output>{getActiveStyle('opacity')}%</output></label>
+				<label class="range-label" for="opacity"><span>Opacity</span><output>{selectedElement?.opacity ?? drawingStyle.opacity}%</output></label>
 				<input
 					id="opacity"
 					type="range"
 					min="10"
 					max="100"
 					step="10"
-					value={getActiveStyle('opacity')}
+					value={selectedElement?.opacity ?? drawingStyle.opacity}
 					oninput={(event) => setStyle('opacity', Number(event.currentTarget.value))}
 				/>
 			</div>
@@ -2443,6 +2643,8 @@
 	.resize-handle[data-resize-handle='se'] { cursor: nwse-resize; }
 	.resize-handle[data-resize-handle='ne'],
 	.resize-handle[data-resize-handle='sw'] { cursor: nesw-resize; }
+	.rotation-handle { pointer-events: all; cursor: crosshair; }
+	.rotation-handle:hover { fill: #e7e6fb; }
 
 	.marquee {
 		fill: rgba(105, 101, 219, 0.08);
@@ -3108,7 +3310,34 @@
 		.lock-button,
 		.toolbar-separator { display: none; }
 		.canvas-hint { top: 82px; width: calc(100% - 40px); text-align: center; white-space: normal; }
-		.style-panel { top: 76px; max-height: calc(100% - 238px); overflow: auto; }
+		.style-panel {
+			top: auto;
+			bottom: 148px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: calc(100% - 24px);
+			max-width: 560px;
+			max-height: calc(100dvh - 208px);
+			display: flex;
+			flex-direction: row;
+			align-items: flex-start;
+			gap: 18px;
+			padding: 12px;
+			overflow: auto;
+			overscroll-behavior-x: contain;
+			scrollbar-width: thin;
+		}
+		.style-panel .panel-section,
+		.style-panel .panel-columns,
+		.style-panel .panel-actions { flex: 0 0 auto; margin-bottom: 0; }
+		.style-panel .panel-columns { grid-template-columns: auto auto; }
+		.style-panel .panel-section:has(input[type='range']) { width: 150px; }
+		.style-panel .panel-section input[type='range'] { width: 100%; }
+		.style-panel .panel-actions {
+			padding: 0 0 0 14px;
+			border-top: 0;
+			border-left: 1px solid var(--border);
+		}
 		.library-panel { top: 74px; bottom: 140px; }
 		.bottom-left { bottom: 16px; }
 		.bottom-right { bottom: 16px; }
@@ -3120,7 +3349,6 @@
 		.top-left { top: 12px; left: 12px; }
 		.top-actions { top: 12px; right: 12px; gap: 7px; }
 		.share-button { height: 44px; padding: 0 14px; }
-		.style-panel { left: 12px; width: 218px; }
 		.library-panel { top: 66px; right: 10px; bottom: 138px; width: calc(100% - 20px); }
 		.saved-indicator { display: none; }
 		.bottom-right .square-button { display: none; }

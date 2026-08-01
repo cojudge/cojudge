@@ -8,7 +8,7 @@
     {
       "input": "intervals = [[1,2],[2,3],[3,4],[1,3]]",
       "output": "1",
-      "explanation": "There is 1 overlapping interval that must be removed to eliminate all overlaps."
+      "explanation": "Remove [1,3] and the remaining intervals [[1,2],[2,3],[3,4]] have no overlaps, so 1 removal is enough. Intervals that only touch (one ends exactly when another starts) are not considered overlapping."
     },
     {
       "input": "intervals = [[1,2],[1,2],[1,2]]",
