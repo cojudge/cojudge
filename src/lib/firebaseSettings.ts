@@ -5,6 +5,8 @@ export type FirebaseSettings = {
 	storageBucket: string;
 	messagingSenderId: string;
 	appId: string;
+	googleDesktopClientId: string;
+	googleDesktopClientSecret: string;
 };
 
 export const FIREBASE_SETTINGS_STORAGE_KEY = 'cojudge-firebase-settings';
@@ -16,7 +18,9 @@ const environmentSettings: FirebaseSettings = {
 	projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID ?? '',
 	storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET ?? '',
 	messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID ?? '',
-	appId: import.meta.env.VITE_FIREBASE_APP_ID ?? ''
+	appId: import.meta.env.VITE_FIREBASE_APP_ID ?? '',
+	googleDesktopClientId: import.meta.env.VITE_GOOGLE_DESKTOP_CLIENT_ID ?? '',
+	googleDesktopClientSecret: import.meta.env.VITE_GOOGLE_DESKTOP_CLIENT_SECRET ?? ''
 };
 
 function normalizeSettings(value: unknown): Partial<FirebaseSettings> {
@@ -37,8 +41,26 @@ export function emptyFirebaseSettings(): FirebaseSettings {
 		projectId: '',
 		storageBucket: '',
 		messagingSenderId: '',
-		appId: ''
+		appId: '',
+		googleDesktopClientId: '',
+		googleDesktopClientSecret: ''
 	};
+}
+
+export function firebaseSettingsFromSaved(
+	value: unknown,
+	environment: FirebaseSettings = environmentSettings
+): FirebaseSettings {
+	const saved = { ...emptyFirebaseSettings(), ...normalizeSettings(value) };
+	if (saved.projectId && saved.projectId === environment.projectId) {
+		if (!saved.googleDesktopClientId) {
+			saved.googleDesktopClientId = environment.googleDesktopClientId;
+		}
+		if (!saved.googleDesktopClientSecret) {
+			saved.googleDesktopClientSecret = environment.googleDesktopClientSecret;
+		}
+	}
+	return saved;
 }
 
 export function isDesktopRuntime(): boolean {
@@ -52,7 +74,7 @@ export function getFirebaseSettings(): FirebaseSettings {
 		try {
 			const saved = localStorage.getItem(FIREBASE_SETTINGS_STORAGE_KEY);
 			if (saved) {
-				const savedSettings = { ...emptyFirebaseSettings(), ...normalizeSettings(JSON.parse(saved)) };
+				const savedSettings = firebaseSettingsFromSaved(JSON.parse(saved));
 				if (isFirebaseConfigured(savedSettings)) return savedSettings;
 			}
 		} catch (error) {

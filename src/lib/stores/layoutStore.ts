@@ -3,12 +3,22 @@ import { browser } from '$app/environment';
 
 const LEFT_PANEL_WIDTH_STORAGE_KEY = 'pane-width';
 const defaultLeftPanelWidth = 50;
-const initialLeftPanelWidth = browser ? (JSON.parse(localStorage.getItem(LEFT_PANEL_WIDTH_STORAGE_KEY))) : defaultLeftPanelWidth;
+function storedNumber(key: string, fallback: number): number {
+    if (!browser) return fallback;
+    try {
+        const value = JSON.parse(localStorage.getItem(key) || 'null');
+        return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
+    } catch {
+        return fallback;
+    }
+}
+
+const initialLeftPanelWidth = storedNumber(LEFT_PANEL_WIDTH_STORAGE_KEY, defaultLeftPanelWidth);
 export const leftPaneWidthStore = writable<number>(initialLeftPanelWidth);
 
 const EXEC_PANEL_HEIGHT_STORAGE_KEY = 'exec-pane-height';
 const defaultExecPanelHeight = 50;
-const initialExecPanelHeight = browser ? (JSON.parse(localStorage.getItem(EXEC_PANEL_HEIGHT_STORAGE_KEY)) || defaultExecPanelHeight) : defaultExecPanelHeight;
+const initialExecPanelHeight = storedNumber(EXEC_PANEL_HEIGHT_STORAGE_KEY, defaultExecPanelHeight);
 export const execPaneHeightStore = writable<number>(initialExecPanelHeight);
 
 if (browser) {

@@ -7,6 +7,7 @@
     import { showAlert, showConfirm } from '$lib/dialogs';
     import { consumeForkTransfer } from '$lib/forkTransfer';
     import { ensureAuthenticated, initFirebase } from '$lib/firebase';
+    import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress } from '$lib/progressBackup';
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
@@ -1852,16 +1853,24 @@ func main() {
             }
         };
         const handleUnload = () => {
+            if (isCloudRestoreInProgress()) return;
+            commitWysiwygEdits();
+            saveCurrentViewState();
+        };
+        const handleCloudFlush = () => {
+            if (isCloudRestoreInProgress()) return;
             commitWysiwygEdits();
             saveCurrentViewState();
         };
         document.addEventListener('click', handleDocClick);
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('beforeunload', handleUnload);
+        window.addEventListener(CLOUD_FLUSH_EVENT, handleCloudFlush);
         return () => {
             document.removeEventListener('click', handleDocClick);
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('beforeunload', handleUnload);
+            window.removeEventListener(CLOUD_FLUSH_EVENT, handleCloudFlush);
         };
     });
 </script>

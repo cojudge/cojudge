@@ -6,15 +6,24 @@
     import { goto } from '$app/navigation';
     import Tooltip from "$lib/components/Tooltip.svelte";
     import SortIcon from "$lib/components/SortIcon.svelte";
-    import codeStore from '$lib/stores/codeStore';
-    import fileStore from '$lib/stores/fileStore';
-    import { saveStatus } from '$lib/stores/saveStatus';
     import userSettingsStorage from '$lib/stores/userSettingsStorage';
     import userStore from "$lib/stores/userStore";
     import { getDifficultyClass } from "$lib/utils/util.js";
     import GameModePopup from "$lib/components/GameModePopup.svelte";
     import GameHistoryPopup from "$lib/components/GameHistoryPopup.svelte";
     import gameResultsStore, { type GameResult } from '$lib/stores/gameResultsStore';
+    import {
+        cloudSyncState,
+        connectCloud,
+        disconnectCloud,
+        downloadCloudBackup,
+        refreshCloudBackup,
+        restartCloudSync,
+        uploadCloudBackup
+    } from '$lib/cloudSync';
+    import { showConfirm } from '$lib/dialogs';
+    import { collectProgressData } from '$lib/progressBackup';
+    import { applyProgressData } from '$lib/progressBackupClient';
     import {
         clearFirebaseSettings,
         emptyFirebaseSettings,
@@ -29,6 +38,8 @@
     let dropdownToggleButton: HTMLButtonElement | null = null;
     let importConfirmButton: HTMLButtonElement | null = null;
     let importModalCard: HTMLElement | null = null;
+    let cloudModalCard: HTMLElement | null = null;
+    let cloudPrimaryButton: HTMLButtonElement | null = null;
     let firebaseModalCard: HTMLElement | null = null;
     let firebaseApiKeyInput: HTMLInputElement | null = null;
     let loadModalCard: HTMLElement | null = null;
@@ -37,18 +48,20 @@
     let importNotice: { message: string; error: boolean; filePath?: string } | null = null;
     let importNoticeTimer: ReturnType<typeof setTimeout> | undefined;
     let showFirebaseSettings = false;
+    let showCloudSettings = false;
     let showLoadCode = false;
     let firebaseForm: FirebaseSettings = emptyFirebaseSettings();
     let firebaseSettingsError = '';
     let firebaseSettingsSaved = browser && hasSavedFirebaseSettings();
     let firebaseConfigured = browser && isFirebaseConfigured();
+    let cloudActionPending = false;
     let loadCodeCharacters = ['', '', '', ''];
     let loadCodeNavigating = false;
     let checkMap: Record<string, boolean> = {};
     let showGamePopup = false;
     let isDesktopMode = browser && isDesktopRuntime();
     $: if (browser) {
-        document.body.style.overflow = showGamePopup || pendingImport || showFirebaseSettings || showLoadCode ? 'hidden' : '';
+        document.body.style.overflow = showGamePopup || pendingImport || showCloudSettings || showFirebaseSettings || showLoadCode ? 'hidden' : '';
     }
     let gameResultData: Record<string, GameResult[]> = {};
     let historyProblem: { id: string; title: string } | null = null;
@@ -144,6 +157,10 @@
         await tick();
         const items = dropdownItems();
         (event.key === 'ArrowDown' ? items[0] : items[items.length - 1])?.focus();
+    }
+
+    function toggleDropdown() {
+        showDropdown = !showDropdown;
     }
 
     function handleDropdownKeydown(event: KeyboardEvent) {
@@ -370,24 +387,9 @@
         solvedCount = done;
     })();
 
-    // ==== Export / Import Helpers (moved from layout) ====
-    function parseMaybe(str: string | null) {
-        if (str == null) return null;
-        try {
-            return JSON.parse(str);
-        } catch {
-            return str;
-        }
-    }
-
     async function exportLocalStorage() {
         if (!browser) return;
-        const data: Record<string, unknown> = {};
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            if (!key) continue;
-            data[key] = parseMaybe(localStorage.getItem(key));
-        }
+        const data = collectProgressData(localStorage);
 
         if (isDesktopMode) {
             try {
@@ -424,86 +426,6 @@
         }, 0);
     }
 
-    function sanitizeUserCheckboxes(input: unknown): Record<string, boolean> {
-        const out: Record<string, boolean> = {};
-        if (!input || typeof input !== 'object') return out;
-        for (const [k, v] of Object.entries(input as Record<string, unknown>)) {
-            out[k] = v === true || v === 'true';
-        }
-        return out;
-    }
-
-    function importLocalStorageObject(obj: Record<string, unknown>) {
-        const previousStorage = new Map<string, string | null>();
-        const previousStores = {
-            solutions: $codeStore,
-            checkboxes: $userStore,
-            files: $fileStore,
-            settings: $userSettingsStorage,
-            gameResults: $gameResultsStore
-        };
-        if (browser) {
-            for (const key of Object.keys(obj)) previousStorage.set(key, localStorage.getItem(key));
-        }
-
-        saveStatus.set('saving');
-        const KNOWN_KEYS = new Set(['solutions', 'user-checkboxes', 'files', 'user-settings', 'game-results']);
-        const requireObject = (key: string) => {
-            const value = obj[key];
-            if (!value || typeof value !== 'object' || Array.isArray(value)) {
-                throw new Error(`${key} must contain an object.`);
-            }
-            return value as Record<string, unknown>;
-        };
-
-        try {
-            if ('solutions' in obj) {
-                codeStore.set(requireObject('solutions') as Record<string, string>);
-            }
-            if ('user-checkboxes' in obj) {
-                userStore.set(sanitizeUserCheckboxes(requireObject('user-checkboxes')));
-            }
-            if ('files' in obj) {
-                fileStore.set(requireObject('files') as Record<string, string>);
-            }
-            if ('user-settings' in obj) {
-                userSettingsStorage.set(requireObject('user-settings') as any);
-            }
-            if ('game-results' in obj) {
-                gameResultsStore.set(requireObject('game-results') as Record<string, any[]>);
-            }
-            if (browser) {
-                for (const [k, v] of Object.entries(obj)) {
-                    if (KNOWN_KEYS.has(k)) continue;
-                    const toStore = typeof v === 'string' ? v : JSON.stringify(v);
-                    if (toStore === undefined) throw new Error(`${k} cannot be stored.`);
-                    localStorage.setItem(k, toStore);
-                }
-            }
-        } catch (error) {
-            if (browser) {
-                try {
-                    for (const key of previousStorage.keys()) localStorage.removeItem(key);
-                    for (const [key, value] of previousStorage) {
-                        if (value !== null) localStorage.setItem(key, value);
-                    }
-                    codeStore.set(previousStores.solutions);
-                    userStore.set(previousStores.checkboxes);
-                    fileStore.set(previousStores.files);
-                    userSettingsStorage.set(previousStores.settings);
-                    gameResultsStore.set(previousStores.gameResults);
-                } catch (rollbackError) {
-                    console.error('Failed to restore local data after an import error:', rollbackError);
-                }
-            }
-            throw error;
-        }
-        
-        setTimeout(() => {
-            saveStatus.set('saved');
-        }, 500);
-    }
-
     async function onImportFileSelected(e: Event) {
         const input = e.currentTarget as HTMLInputElement;
         const file = input.files?.[0];
@@ -527,7 +449,7 @@
     function confirmImport() {
         if (!pendingImport) return;
         try {
-            importLocalStorageObject(pendingImport);
+            applyProgressData(pendingImport);
             firebaseConfigured = isFirebaseConfigured();
             firebaseSettingsSaved = hasSavedFirebaseSettings();
             showImportNotice('Import complete.', false);
@@ -561,6 +483,125 @@
         }
     }
 
+    function cloudMenuStatus() {
+        if ($cloudSyncState.authStatus === 'unavailable') return 'Off';
+        if ($cloudSyncState.authStatus !== 'signed-in') return 'Sign in';
+        if ($cloudSyncState.syncStatus === 'checking') return 'Checking';
+        if ($cloudSyncState.syncStatus === 'uploading') return 'Uploading';
+        if ($cloudSyncState.syncStatus === 'downloading') return 'Downloading';
+        if ($cloudSyncState.syncStatus === 'offline') return 'Offline';
+        if ($cloudSyncState.syncStatus === 'error') return 'Error';
+        return $cloudSyncState.backup ? 'Backup ready' : 'No backup';
+    }
+
+    function cloudBusy() {
+        return cloudActionPending
+            || $cloudSyncState.syncStatus === 'checking'
+            || $cloudSyncState.syncStatus === 'uploading'
+            || $cloudSyncState.syncStatus === 'downloading';
+    }
+
+    function formatCloudBackup(value: number): string {
+        return new Intl.DateTimeFormat(undefined, {
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit'
+        }).format(new Date(value));
+    }
+
+    function formatCloudBackupSize(value: number): string {
+        if (value < 1024) return `${value} B`;
+        return `${Math.ceil(value / 1024)} KB`;
+    }
+
+    async function openCloudSettings() {
+        showDropdown = false;
+        showCloudSettings = true;
+        if ($cloudSyncState.authStatus === 'signed-in') {
+            try {
+                await refreshCloudBackup();
+            } catch {
+                // The shared cloud state renders the actionable error.
+            }
+        }
+        await tick();
+        cloudPrimaryButton?.focus();
+    }
+
+    async function closeCloudSettings() {
+        showCloudSettings = false;
+        await tick();
+        dropdownToggleButton?.focus();
+    }
+
+    async function signInToCloud() {
+        cloudActionPending = true;
+        try {
+            await connectCloud();
+        } catch {
+            // The shared cloud state renders the actionable error.
+        } finally {
+            cloudActionPending = false;
+        }
+    }
+
+    async function checkCloudBackup() {
+        cloudActionPending = true;
+        try {
+            await refreshCloudBackup();
+        } catch {
+            // The shared cloud state renders the actionable error.
+        } finally {
+            cloudActionPending = false;
+        }
+    }
+
+    async function uploadCloud() {
+        cloudActionPending = true;
+        try {
+            const uid = $cloudSyncState.user?.uid;
+            if (!uid) return;
+            if ($cloudSyncState.backup && !await showConfirm(
+                'This replaces the current cloud backup with the progress saved on this device. Your local progress will not change.',
+                { title: 'Replace cloud backup?', confirmLabel: 'Upload backup' }
+            )) return;
+            await uploadCloudBackup(uid);
+        } catch {
+            // The shared cloud state renders the actionable error.
+        } finally {
+            cloudActionPending = false;
+        }
+    }
+
+    async function downloadCloud() {
+        cloudActionPending = true;
+        try {
+            const uid = $cloudSyncState.user?.uid;
+            if (!uid) return;
+            if (!await showConfirm(
+                'This replaces local solutions, files, progress, settings, test cases, and whiteboards with the cloud backup.',
+                { title: 'Download cloud backup?', confirmLabel: 'Download and replace' }
+            )) return;
+            await downloadCloudBackup(uid);
+        } catch {
+            // The shared cloud state renders the actionable error.
+        } finally {
+            cloudActionPending = false;
+        }
+    }
+
+    async function signOutOfCloud() {
+        cloudActionPending = true;
+        try {
+            await disconnectCloud();
+        } catch {
+            // The shared cloud state renders the actionable error.
+        } finally {
+            cloudActionPending = false;
+        }
+    }
+
     async function openFirebaseSettings() {
         firebaseForm = getFirebaseSettings();
         firebaseSettingsSaved = hasSavedFirebaseSettings();
@@ -586,7 +627,9 @@
             projectId: firebaseForm.projectId.trim(),
             storageBucket: firebaseForm.storageBucket.trim(),
             messagingSenderId: firebaseForm.messagingSenderId.trim(),
-            appId: firebaseForm.appId.trim()
+            appId: firebaseForm.appId.trim(),
+            googleDesktopClientId: firebaseForm.googleDesktopClientId.trim(),
+            googleDesktopClientSecret: firebaseForm.googleDesktopClientSecret.trim()
         };
         if (!isFirebaseConfigured(settings)) {
             firebaseSettingsError = 'Complete all required Firebase fields.';
@@ -598,6 +641,7 @@
             firebaseConfigured = true;
             firebaseSettingsSaved = true;
             showImportNotice('Firebase settings saved.', false);
+            void restartCloudSync();
             void closeFirebaseSettings();
         } catch (err: any) {
             firebaseSettingsError = err?.message || String(err);
@@ -612,6 +656,7 @@
             firebaseSettingsSaved = false;
             firebaseSettingsError = '';
             showImportNotice('Saved Firebase settings removed.', false);
+            void restartCloudSync();
         } catch (err: any) {
             firebaseSettingsError = err?.message || String(err);
         }
@@ -722,15 +767,18 @@
     function handleModalKeydown(event: KeyboardEvent) {
         const activeModal = pendingImport
             ? importModalCard
-            : showFirebaseSettings
-                ? firebaseModalCard
-                : showLoadCode
-                    ? loadModalCard
-                    : null;
+            : showCloudSettings
+                ? cloudModalCard
+                : showFirebaseSettings
+                    ? firebaseModalCard
+                    : showLoadCode
+                        ? loadModalCard
+                        : null;
         if (!activeModal) return;
         if (event.key === 'Escape') {
             event.preventDefault();
             if (pendingImport) cancelImport();
+            else if (showCloudSettings) void closeCloudSettings();
             else if (showFirebaseSettings) void closeFirebaseSettings();
             else void closeLoadCode();
             return;
@@ -763,7 +811,7 @@
             <button
                 bind:this={dropdownToggleButton}
                 class="btn dropdown-trigger"
-                onclick={() => showDropdown = !showDropdown}
+                onclick={toggleDropdown}
                 onkeydown={handleDropdownTriggerKeydown}
                 aria-expanded={showDropdown}
                 aria-haspopup="true"
@@ -780,24 +828,28 @@
             </button>
             {#if showDropdown}
                 <div bind:this={dropdownMenu} class="dropdown-menu" role="menu" tabindex="-1" onkeydown={handleDropdownKeydown}>
-                    {#if isDesktopMode && firebaseConfigured}
-                        <button
-                            class="dropdown-item"
-                            role="menuitem"
-                            onclick={openLoadCode}
-                            title="Open a shared solution by its four-character code"
+                    <button
+                        class="dropdown-item"
+                        role="menuitem"
+                        onclick={openCloudSettings}
+                        title="Sign in to upload or download a Cojudge Cloud backup"
+                    >
+                        <span class="dropdown-item-content">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17.5 19H7a5 5 0 1 1 1.5-9.8A7 7 0 0 1 22 12a4 4 0 0 1-4.5 7Z"></path>
+                                <path d="m9 15 3 3 3-3"></path>
+                                <path d="M12 12v6"></path>
+                            </svg>
+                            Cojudge Cloud
+                        </span>
+                        <span
+                            class:configured={$cloudSyncState.authStatus === 'signed-in'}
+                            class="firebase-menu-status"
                         >
-                            <span class="dropdown-item-content">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"></path>
-                                    <path d="m10 8 4 4-4 4"></path>
-                                </svg>
-                                Load
-                            </span>
-                        </button>
-                        <div class="dropdown-separator" role="separator"></div>
-                    {/if}
+                            {cloudMenuStatus()}
+                        </span>
+                    </button>
+                    <div class="dropdown-separator" role="separator"></div>
                     <button
                         class="dropdown-item"
                         role="menuitem"
@@ -881,6 +933,24 @@
                                 {firebaseConfigured ? 'On' : 'Off'}
                             </span>
                         </button>
+                        {#if firebaseConfigured}
+                            <button
+                                class="dropdown-item"
+                                role="menuitem"
+                                onclick={openLoadCode}
+                                title="Open a shared solution by its four-character code"
+                            >
+                                <span class="dropdown-item-content">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"></path>
+                                        <path d="m10 8 4 4-4 4"></path>
+                                    </svg>
+                                    Load
+                                </span>
+                            </button>
+                        {/if}
+                        <div class="dropdown-separator" role="separator"></div>
                         <button
                             class="dropdown-item"
                             role="menuitem"
@@ -946,6 +1016,100 @@
             </div>
         </div>
     {/if}
+    {#if showCloudSettings}
+        <div class="home-modal-shell">
+            <button class="home-modal-backdrop" aria-label="Close Cojudge Cloud" tabindex="-1" onclick={closeCloudSettings}></button>
+            <div
+                bind:this={cloudModalCard}
+                class="home-modal-card cloud-settings-card"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="cloud-settings-title"
+            >
+                <div class="modal-heading-row">
+                    <div>
+                        <span class="modal-eyebrow">Manual cloud backup</span>
+                        <h2 id="cloud-settings-title">Cojudge Cloud</h2>
+                    </div>
+                    <span class:configured={$cloudSyncState.authStatus === 'signed-in'} class="firebase-status-pill">
+                        <span></span>{$cloudSyncState.authStatus === 'signed-in' ? 'Connected' : 'Local only'}
+                    </span>
+                </div>
+
+                {#if $cloudSyncState.authStatus === 'unavailable'}
+                    <p>Cloud backup is not configured in this build. Everything remains available locally.</p>
+                {:else if $cloudSyncState.authStatus === 'signed-in' && $cloudSyncState.user}
+                    <div class="cloud-account">
+                        {#if $cloudSyncState.user.photoURL}
+                            <img src={$cloudSyncState.user.photoURL} alt="" referrerpolicy="no-referrer" />
+                        {:else}
+                            <span class="cloud-avatar">{($cloudSyncState.user.displayName || $cloudSyncState.user.email || 'C').slice(0, 1).toUpperCase()}</span>
+                        {/if}
+                        <div>
+                            <strong>{$cloudSyncState.user.displayName || 'Google account'}</strong>
+                            <span>{$cloudSyncState.user.email}</span>
+                        </div>
+                    </div>
+                    <div class="cloud-sync-summary">
+                        <span class:offline={$cloudSyncState.syncStatus === 'offline'} class:error={$cloudSyncState.syncStatus === 'error'} class="cloud-sync-dot"></span>
+                        <div>
+                            <strong>
+                                {$cloudSyncState.syncStatus === 'checking'
+                                    ? 'Checking for a backup…'
+                                    : $cloudSyncState.syncStatus === 'uploading'
+                                        ? 'Uploading this device…'
+                                        : $cloudSyncState.syncStatus === 'downloading'
+                                            ? 'Downloading cloud backup…'
+                                    : $cloudSyncState.syncStatus === 'offline'
+                                        ? 'Waiting for a connection'
+                                        : $cloudSyncState.backup
+                                            ? `Backup from ${formatCloudBackup($cloudSyncState.backup.updatedAt)}`
+                                            : 'No cloud backup yet'}
+                            </strong>
+                            <span>
+                                {$cloudSyncState.backup
+                                    ? `${formatCloudBackupSize($cloudSyncState.backup.totalBytes)} stored for this account.`
+                                    : 'Upload this device when you want to create one.'}
+                            </span>
+                        </div>
+                    </div>
+                {:else}
+                    <p>Sign in with Google to manually upload or download one private progress backup.</p>
+                {/if}
+
+                <p class="cloud-offline-note">Nothing syncs automatically. Local saves and judging never wait for the cloud.</p>
+                {#if $cloudSyncState.error}
+                    <p class="modal-error" role="alert">{$cloudSyncState.error}</p>
+                {/if}
+
+                <div class="home-modal-actions settings-actions">
+                    {#if $cloudSyncState.authStatus === 'signed-in'}
+                        <button class="btn remove-settings-btn" type="button" onclick={signOutOfCloud} disabled={cloudBusy()}>Sign out</button>
+                        <span class="modal-action-spacer"></span>
+                        <button class="btn" type="button" onclick={closeCloudSettings}>Close</button>
+                        {#if $cloudSyncState.syncStatus === 'error' || $cloudSyncState.syncStatus === 'offline'}
+                            <button class="btn" type="button" onclick={checkCloudBackup} disabled={cloudBusy()}>Check again</button>
+                        {/if}
+                        <button class="btn" type="button" onclick={downloadCloud} disabled={cloudBusy() || !$cloudSyncState.backup}>Download backup</button>
+                        <button bind:this={cloudPrimaryButton} class="btn modal-primary-btn" type="button" onclick={uploadCloud} disabled={cloudBusy()}>
+                            {$cloudSyncState.syncStatus === 'uploading' ? 'Uploading…' : 'Upload backup'}
+                        </button>
+                    {:else if $cloudSyncState.authStatus === 'unavailable'}
+                        <button bind:this={cloudPrimaryButton} class="btn" type="button" onclick={closeCloudSettings}>Close</button>
+                    {:else}
+                        <button class="btn" type="button" onclick={closeCloudSettings}>Not now</button>
+                        <button bind:this={cloudPrimaryButton} class="btn modal-primary-btn" type="button" onclick={signInToCloud} disabled={cloudActionPending || $cloudSyncState.authStatus === 'initializing' || $cloudSyncState.authStatus === 'signing-in'}>
+                            {$cloudSyncState.authStatus === 'initializing'
+                                ? 'Initializing…'
+                                : $cloudSyncState.authStatus === 'signing-in'
+                                    ? 'Opening Google…'
+                                    : 'Continue with Google'}
+                        </button>
+                    {/if}
+                </div>
+            </div>
+        </div>
+    {/if}
     {#if showFirebaseSettings}
         <div class="home-modal-shell">
             <button class="home-modal-backdrop" aria-label="Close Firebase settings" tabindex="-1" onclick={closeFirebaseSettings}></button>
@@ -966,7 +1130,7 @@
                         <span></span>{firebaseConfigured ? 'Configured' : 'Not configured'}
                     </span>
                 </div>
-                <p>Connect this desktop app to the Firebase project used for shared solutions.</p>
+                <p>Connect this desktop app to the Firebase project used for shared solutions and Cojudge Cloud.</p>
                 <div class="firebase-fields">
                     <label>
                         <span>API key <code>VITE_FIREBASE_API_KEY</code></span>
@@ -992,8 +1156,16 @@
                         <span>Storage bucket <small>optional</small> <code>VITE_FIREBASE_STORAGE_BUCKET</code></span>
                         <input bind:value={firebaseForm.storageBucket} autocomplete="off" spellcheck="false" placeholder="project.firebasestorage.app" />
                     </label>
+                    <label class="firebase-field-wide">
+                        <span>Google desktop client ID <small>required for Cloud sign-in</small> <code>VITE_GOOGLE_DESKTOP_CLIENT_ID</code></span>
+                        <input bind:value={firebaseForm.googleDesktopClientId} autocomplete="off" spellcheck="false" placeholder="000000000000-example.apps.googleusercontent.com" />
+                    </label>
+                    <label class="firebase-field-wide">
+                        <span>Google desktop client secret <small>required for local/custom builds</small> <code>VITE_GOOGLE_DESKTOP_CLIENT_SECRET</code></span>
+                        <input type="password" bind:value={firebaseForm.googleDesktopClientSecret} autocomplete="off" spellcheck="false" placeholder="GOCSPX-…" />
+                    </label>
                 </div>
-                <p class="firebase-settings-note">Stored only on this device. Firebase API keys identify a project but do not grant database access by themselves.</p>
+                <p class="firebase-settings-note">Stored only on this device. Desktop OAuth credentials cannot be confidential in an installed app; PKCE protects each sign-in exchange.</p>
                 {#if firebaseSettingsError}
                     <p class="modal-error" role="alert">{firebaseSettingsError}</p>
                 {/if}
@@ -1392,7 +1564,8 @@
         padding: var(--spacing-1) 0;
         box-shadow: 0 8px 24px rgba(0,0,0,0.25);
         z-index: 50;
-        min-width: 170px;
+        width: min(240px, calc(100vw - 1.5rem));
+        min-width: 220px;
         display: flex;
         flex-direction: column;
     }
@@ -1427,8 +1600,11 @@
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
+        min-width: 0;
+        white-space: nowrap;
     }
     .firebase-menu-status {
+        flex: 0 0 auto;
         padding: 0.1rem 0.4rem;
         border-radius: 999px;
         background: var(--color-second-bg);
@@ -1532,6 +1708,90 @@
     }
     .firebase-settings-card {
         width: min(720px, 100%);
+    }
+    .cloud-settings-card {
+        width: min(560px, 100%);
+    }
+    .cloud-account {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-top: 1.25rem;
+        padding: 0.9rem;
+        border: 1px solid var(--color-border);
+        border-radius: 0.65rem;
+        background: var(--color-surface);
+    }
+    .cloud-account img,
+    .cloud-avatar {
+        width: 2.5rem;
+        height: 2.5rem;
+        flex: 0 0 auto;
+        border-radius: 50%;
+    }
+    .cloud-account img {
+        object-fit: cover;
+    }
+    .cloud-avatar {
+        display: grid;
+        place-items: center;
+        background: color-mix(in srgb, var(--color-highlight) 20%, var(--color-surface));
+        color: var(--color-highlight);
+        font-weight: 750;
+    }
+    .cloud-account div,
+    .cloud-sync-summary div {
+        display: grid;
+        min-width: 0;
+        gap: 0.2rem;
+    }
+    .cloud-account strong,
+    .cloud-sync-summary strong {
+        overflow: hidden;
+        color: var(--color-text);
+        font-size: 0.9rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .cloud-account div > span,
+    .cloud-sync-summary div > span {
+        overflow: hidden;
+        color: var(--color-text-secondary);
+        font-size: 0.76rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .cloud-sync-summary {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: 0.75rem;
+        padding: 0.8rem 0.9rem;
+        border-radius: 0.65rem;
+        background: var(--color-second-bg);
+    }
+    .cloud-sync-dot {
+        width: 0.55rem;
+        height: 0.55rem;
+        flex: 0 0 auto;
+        border-radius: 50%;
+        background: var(--color-easy);
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-easy) 16%, transparent);
+    }
+    .cloud-sync-dot.offline {
+        background: var(--color-text-secondary);
+        box-shadow: none;
+    }
+    .cloud-sync-dot.error {
+        background: var(--color-hard);
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-hard) 16%, transparent);
+    }
+    .home-modal-card .cloud-offline-note {
+        margin-top: 1rem;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        background: var(--color-second-bg);
+        font-size: 0.76rem;
     }
     .firebase-status-pill {
         display: inline-flex;

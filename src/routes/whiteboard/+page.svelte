@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { isDesktopRuntime } from '$lib/firebaseSettings';
+	import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress } from '$lib/progressBackup';
 	import WhiteboardIcon from '$lib/components/WhiteboardIcon.svelte';
 	import { showConfirm } from '$lib/dialogs';
 	import userSettingsStorage from '$lib/stores/userSettingsStorage';
@@ -220,6 +221,7 @@
 		window.addEventListener('keyup', handleKeyUp);
 		window.addEventListener('hashchange', handleHashChange);
 		window.addEventListener('pagehide', saveBoardNow);
+		window.addEventListener(CLOUD_FLUSH_EVENT, saveBoardNow);
 		window.addEventListener('paste', handlePaste);
 		wheelTarget?.addEventListener('wheel', handleWheel, { capture: true, passive: false });
 		document.addEventListener('pointerdown', closeMenusOnOutsideClick);
@@ -232,6 +234,7 @@
 			window.removeEventListener('keyup', handleKeyUp);
 			window.removeEventListener('hashchange', handleHashChange);
 			window.removeEventListener('pagehide', saveBoardNow);
+			window.removeEventListener(CLOUD_FLUSH_EVENT, saveBoardNow);
 			window.removeEventListener('paste', handlePaste);
 			wheelTarget?.removeEventListener('wheel', handleWheel, { capture: true });
 			document.removeEventListener('pointerdown', closeMenusOnOutsideClick);
@@ -412,6 +415,7 @@
 
 	function saveBoardNow(): void {
 		if (!mounted) return;
+		if (isCloudRestoreInProgress()) return;
 		if (saveTimer) clearTimeout(saveTimer);
 		saveTimer = undefined;
 		const board: StoredBoard = {

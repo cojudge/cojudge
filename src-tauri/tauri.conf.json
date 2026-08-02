@@ -15,10 +15,10 @@
 			"capabilities": [
 				{
 					"identifier": "default",
-					"windows": ["*"],
-					"permissions": ["allow-new-window", "opener:default"],
+					"windows": ["main-*"],
+					"permissions": ["allow-new-window", "allow-google-oauth-access-token", "opener:default"],
 					"remote": {
-						"urls": ["http://cojudge.localhost:5376/*"]
+						"urls": ["http://127.0.0.1:5173/*", "http://cojudge.localhost:5376/*"]
 					}
 				}
 			]

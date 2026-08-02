@@ -28,6 +28,7 @@
 - Code Playground: Run code snippets in Java, C++, Python, Typescript, Rust, C# or Go without a problem context
 - Extensible: add new problems by dropping folders in `problems/`
 - Persistent Code & Progress Tracking via Local Storage
+- Optional manual Cojudge Cloud backups through Google sign-in; local storage remains the source of truth
 - Browser-like tabs to organize your local solutions
 - Extensive problems: includes all 75 problems with sample test cases, hidden test cases and reference solutions from Blind 75
 
@@ -132,6 +133,12 @@ This builds a local image named `cojudge` and runs it, mapping the host Docker s
 Cojudge can also run as a native Tauri application on macOS, Windows, and Linux. The application bundles its Node.js backend, problems, and courses, so users do not need to install Node.js. Docker is still required when running or debugging code.
 
 See [`docs/DESKTOP.md`](docs/DESKTOP.md) for development, DMG, signing, and notarization instructions.
+
+## Cojudge Cloud
+
+Cojudge Cloud stores one private progress backup per Google account. **Upload backup** replaces that cloud copy with this device's solutions, files, checkboxes, settings, game results, test cases, course selection, and whiteboards. **Download backup** replaces the corresponding local progress after confirmation. Nothing uploads or downloads automatically.
+
+Cloud access is never required to browse problems, edit solutions, use the whiteboard, or run the local judge. Every change is saved locally first, and failed or unavailable backups do not block the application.
 
 ## Development
 

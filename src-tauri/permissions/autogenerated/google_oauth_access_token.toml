@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-google-oauth-access-token"
+description = "Enables the google_oauth_access_token command without any pre-configured scope."
+commands.allow = ["google_oauth_access_token"]
+
+[[permission]]
+identifier = "deny-google-oauth-access-token"
+description = "Denies the google_oauth_access_token command without any pre-configured scope."
+commands.deny = ["google_oauth_access_token"]

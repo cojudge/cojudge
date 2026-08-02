@@ -3,8 +3,198 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /shares/{shareId} {
       allow read: if true;
-      allow create: if request.resource.data.ownerId == request.auth.uid;
-      allow update: if resource.data.ownerId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.ownerId == request.auth.uid;
+      allow update: if request.auth != null && resource.data.ownerId == request.auth.uid;
+    }
+
+    function isCloudUser(userId) {
+      return request.auth != null
+        && request.auth.uid == userId
+        && request.auth.token.firebase.sign_in_provider != 'anonymous';
+    }
+
+    function canReadLegacyBackup(userId) {
+      return isCloudUser(userId)
+        && !get(/databases/$(database)/documents/users/$(userId)/cloud/latest).data.keys().hasAll(['mode']);
+    }
+
+    function isSnapshotSlot(snapshotId) {
+      return snapshotId.matches('^slot-[0-4]$');
+    }
+
+    function isRevisionId(revisionId) {
+      return revisionId is string && revisionId.matches('^[A-Za-z0-9-]{8,100}$');
+    }
+
+    function isParentRevisionId(revisionId) {
+      return revisionId == null || isRevisionId(revisionId);
+    }
+
+    function isSnapshotPart(partId, index) {
+      return (partId == '0000' && index == 0)
+        || (partId == '0001' && index == 1)
+        || (partId == '0002' && index == 2)
+        || (partId == '0003' && index == 3)
+        || (partId == '0004' && index == 4)
+        || (partId == '0005' && index == 5)
+        || (partId == '0006' && index == 6)
+        || (partId == '0007' && index == 7)
+        || (partId == '0008' && index == 8)
+        || (partId == '0009' && index == 9)
+        || (partId == '0010' && index == 10)
+        || (partId == '0011' && index == 11);
+    }
+
+    function storedRevisionId(data) {
+      return data.keys().hasAll(['revisionId']) ? data.revisionId : data.snapshotId;
+    }
+
+    function isNextSnapshotSlot(previousSnapshotId, nextSnapshotId) {
+      return (!previousSnapshotId.matches('^slot-[0-4]$') && nextSnapshotId == 'slot-0')
+        || (previousSnapshotId == 'slot-0' && nextSnapshotId == 'slot-1')
+        || (previousSnapshotId == 'slot-1' && nextSnapshotId == 'slot-2')
+        || (previousSnapshotId == 'slot-2' && nextSnapshotId == 'slot-3')
+        || (previousSnapshotId == 'slot-3' && nextSnapshotId == 'slot-4')
+        || (previousSnapshotId == 'slot-4' && nextSnapshotId == 'slot-0');
+    }
+
+    function isValidLatestWrite(userId) {
+      return isCloudUser(userId)
+        && request.resource.data.keys().hasAll([
+          'schemaVersion', 'snapshotId', 'revisionId', 'parentRevisionId', 'checksum',
+          'partCount', 'totalBytes', 'storageUsed', 'meaningful', 'updatedAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'schemaVersion', 'snapshotId', 'revisionId', 'parentRevisionId', 'checksum',
+          'partCount', 'totalBytes', 'storageUsed', 'meaningful', 'updatedAt'
+        ])
+        && request.resource.data.schemaVersion == 1
+        && request.resource.data.snapshotId is string
+        && isSnapshotSlot(request.resource.data.snapshotId)
+        && isRevisionId(request.resource.data.revisionId)
+        && isParentRevisionId(request.resource.data.parentRevisionId)
+        && request.resource.data.checksum is string
+        && request.resource.data.checksum.matches('^[a-f0-9]{64}$')
+        && request.resource.data.partCount is int
+        && request.resource.data.partCount >= 1
+        && request.resource.data.partCount <= 12
+        && request.resource.data.totalBytes is int
+        && request.resource.data.totalBytes >= 0
+        && request.resource.data.totalBytes <= 6291456
+        && request.resource.data.storageUsed == request.resource.data.totalBytes
+        && request.resource.data.meaningful is bool
+        && request.resource.data.updatedAt == request.time
+        && getAfter(/databases/$(database)/documents/users/$(userId)/snapshots/$(request.resource.data.snapshotId)).data.status == 'ready'
+        && getAfter(/databases/$(database)/documents/users/$(userId)/snapshots/$(request.resource.data.snapshotId)).data.revisionId == request.resource.data.revisionId
+        && getAfter(/databases/$(database)/documents/users/$(userId)/snapshots/$(request.resource.data.snapshotId)).data.parentRevisionId == request.resource.data.parentRevisionId
+        && getAfter(/databases/$(database)/documents/users/$(userId)/snapshots/$(request.resource.data.snapshotId)).data.checksum == request.resource.data.checksum
+        && getAfter(/databases/$(database)/documents/users/$(userId)/snapshots/$(request.resource.data.snapshotId)).data.partCount == request.resource.data.partCount
+        && getAfter(/databases/$(database)/documents/users/$(userId)/snapshots/$(request.resource.data.snapshotId)).data.totalBytes == request.resource.data.totalBytes
+        && getAfter(/databases/$(database)/documents/users/$(userId)/snapshots/$(request.resource.data.snapshotId)).data.meaningful == request.resource.data.meaningful;
+    }
+
+    function isValidSingleBackupWrite(userId) {
+      return isCloudUser(userId)
+        && request.resource.data.keys().hasAll([
+          'schemaVersion', 'mode', 'checksum', 'partCount', 'totalBytes', 'updatedAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'schemaVersion', 'mode', 'checksum', 'partCount', 'totalBytes', 'updatedAt'
+        ])
+        && request.resource.data.schemaVersion == 1
+        && request.resource.data.mode == 'single'
+        && request.resource.data.checksum is string
+        && request.resource.data.checksum.matches('^[a-f0-9]{64}$')
+        && request.resource.data.partCount is int
+        && request.resource.data.partCount >= 1
+        && request.resource.data.partCount <= 12
+        && request.resource.data.totalBytes is int
+        && request.resource.data.totalBytes >= 0
+        && request.resource.data.totalBytes <= 6291456
+        && request.resource.data.updatedAt == request.time;
+    }
+
+    // storageUsed tracks the current revision; fixed slots bound retained history to five revisions.
+    match /users/{userId}/cloud/latest {
+      allow read: if isCloudUser(userId);
+      allow create: if isValidSingleBackupWrite(userId)
+        || (isValidLatestWrite(userId) && request.resource.data.parentRevisionId == null);
+      allow update: if isValidSingleBackupWrite(userId)
+        || (isValidLatestWrite(userId)
+          && request.resource.data.parentRevisionId == storedRevisionId(resource.data)
+          && request.resource.data.revisionId != storedRevisionId(resource.data)
+          && isNextSnapshotSlot(resource.data.snapshotId, request.resource.data.snapshotId));
+
+      match /parts/{partId} {
+        allow read: if isCloudUser(userId);
+        allow create, update: if isCloudUser(userId)
+          && request.resource.data.keys().hasOnly(['index', 'data'])
+          && request.resource.data.index is int
+          && isSnapshotPart(partId, request.resource.data.index)
+          && request.resource.data.data is string
+          && request.resource.data.data.size() <= 819200
+          && getAfter(/databases/$(database)/documents/users/$(userId)/cloud/latest).data.mode == 'single'
+          && getAfter(/databases/$(database)/documents/users/$(userId)/cloud/latest).data.partCount > request.resource.data.index;
+        allow delete: if isCloudUser(userId)
+          && resource.data.index is int
+          && isSnapshotPart(partId, resource.data.index)
+          && getAfter(/databases/$(database)/documents/users/$(userId)/cloud/latest).data.mode == 'single'
+          && getAfter(/databases/$(database)/documents/users/$(userId)/cloud/latest).data.partCount <= resource.data.index;
+      }
+    }
+
+    match /users/{userId}/snapshots/{snapshotId} {
+      allow read: if canReadLegacyBackup(userId);
+      allow create, update: if isCloudUser(userId)
+        && isSnapshotSlot(snapshotId)
+        && request.resource.data.keys().hasAll([
+          'schemaVersion', 'status', 'revisionId', 'parentRevisionId', 'checksum',
+          'partCount', 'totalBytes', 'meaningful', 'createdAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'schemaVersion', 'status', 'revisionId', 'parentRevisionId', 'checksum',
+          'partCount', 'totalBytes', 'meaningful', 'createdAt'
+        ])
+        && request.resource.data.schemaVersion == 1
+        && request.resource.data.status == 'ready'
+        && isRevisionId(request.resource.data.revisionId)
+        && isParentRevisionId(request.resource.data.parentRevisionId)
+        && request.resource.data.checksum is string
+        && request.resource.data.checksum.matches('^[a-f0-9]{64}$')
+        && request.resource.data.partCount is int
+        && request.resource.data.partCount >= 1
+        && request.resource.data.partCount <= 12
+        && request.resource.data.totalBytes is int
+        && request.resource.data.totalBytes >= 0
+        && request.resource.data.totalBytes <= 6291456
+        && request.resource.data.meaningful is bool
+        && request.resource.data.createdAt == request.time
+        && getAfter(/databases/$(database)/documents/users/$(userId)/cloud/latest).data.snapshotId == snapshotId
+        && getAfter(/databases/$(database)/documents/users/$(userId)/cloud/latest).data.revisionId == request.resource.data.revisionId
+        && getAfter(/databases/$(database)/documents/users/$(userId)/cloud/latest).data.updatedAt == request.time;
+
+      match /parts/{partId} {
+        allow read: if canReadLegacyBackup(userId);
+        allow delete: if isCloudUser(userId)
+          && isSnapshotSlot(snapshotId)
+          && resource.data.index is int
+          && isSnapshotPart(partId, resource.data.index)
+          && resource.data.index >= getAfter(/databases/$(database)/documents/users/$(userId)/cloud/latest).data.partCount
+          && getAfter(/databases/$(database)/documents/users/$(userId)/cloud/latest).data.snapshotId == snapshotId
+          && getAfter(/databases/$(database)/documents/users/$(userId)/snapshots/$(snapshotId)).data.revisionId == getAfter(/databases/$(database)/documents/users/$(userId)/cloud/latest).data.revisionId
+          && getAfter(/databases/$(database)/documents/users/$(userId)/snapshots/$(snapshotId)).data.createdAt == request.time;
+        allow create, update: if isCloudUser(userId)
+          && isSnapshotSlot(snapshotId)
+          && request.resource.data.keys().hasOnly(['index', 'data'])
+          && request.resource.data.index is int
+          && isSnapshotPart(partId, request.resource.data.index)
+          && request.resource.data.data is string
+          && request.resource.data.data.size() <= 819200
+          && getAfter(/databases/$(database)/documents/users/$(userId)/cloud/latest).data.snapshotId == snapshotId
+          && getAfter(/databases/$(database)/documents/users/$(userId)/cloud/latest).data.partCount > request.resource.data.index
+          && getAfter(/databases/$(database)/documents/users/$(userId)/snapshots/$(snapshotId)).data.revisionId == getAfter(/databases/$(database)/documents/users/$(userId)/cloud/latest).data.revisionId
+          && getAfter(/databases/$(database)/documents/users/$(userId)/snapshots/$(snapshotId)).data.createdAt == request.time;
+      }
     }
   }
 }
