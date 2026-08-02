@@ -1278,6 +1278,14 @@
                             </span>
                         </div>
                     </div>
+                    {#if $cloudSyncState.progress}
+                        <div class="cloud-progress" role="progressbar" aria-label={$cloudSyncState.progress.label} aria-valuenow={$cloudSyncState.progress.value ?? undefined} aria-valuemin={0} aria-valuemax={100}>
+                            <span class="cloud-progress-label">{$cloudSyncState.progress.label}</span>
+                            <div class="cloud-progress-track">
+                                <div class="cloud-progress-fill" class:indeterminate={$cloudSyncState.progress.value === null} style={$cloudSyncState.progress.value === null ? '' : `width: ${$cloudSyncState.progress.value}%`}></div>
+                            </div>
+                        </div>
+                    {/if}
                     {#if $cloudSyncState.resolution === 'local-changes'}
                         <div class="cloud-file-changes">
                             <div class="cloud-file-changes-heading">
@@ -2103,6 +2111,39 @@
     .cloud-sync-dot.pending {
         background: var(--color-medium);
         box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-medium) 16%, transparent);
+    }
+    .cloud-progress {
+        display: grid;
+        gap: 0.35rem;
+        margin-top: 0.5rem;
+    }
+    .cloud-progress-label {
+        color: var(--color-text-secondary);
+        font-size: 0.72rem;
+    }
+    .cloud-progress-track {
+        height: 0.4rem;
+        overflow: hidden;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--color-text) 14%, transparent);
+    }
+    .cloud-progress-fill {
+        height: 100%;
+        border-radius: 999px;
+        background: var(--color-highlight);
+        transition: width 0.25s ease;
+    }
+    .cloud-progress-fill.indeterminate {
+        width: 35%;
+        animation: cloud-progress-slide 1.1s ease-in-out infinite;
+    }
+    @keyframes cloud-progress-slide {
+        0% {
+            transform: translateX(-110%);
+        }
+        100% {
+            transform: translateX(310%);
+        }
     }
     .cloud-file-changes {
         display: grid;
