@@ -15,9 +15,9 @@ A bundled Node.js sidecar runs the existing SvelteKit server on the loopback int
 
 `DOCKER_HOST` takes precedence when provided. Otherwise the app checks the standard Docker endpoints for its operating system.
 
-## Firebase Sharing
+## Firebase And Cojudge Cloud
 
-Firebase is optional and is only needed to save or open shared solutions. In a packaged desktop app, open the homepage menu and select **Firebase settings**, then enter the web-app values from the Firebase console:
+Firebase is optional and is only needed for shared solutions and Cojudge Cloud. Official release builds receive the project configuration from GitHub Actions. For a custom project, open the homepage menu and select **Firebase settings**, then enter the web-app values from the Firebase console:
 
 - API key
 - Auth domain
@@ -25,8 +25,23 @@ Firebase is optional and is only needed to save or open shared solutions. In a p
 - Messaging sender ID
 - App ID
 - Storage bucket (optional)
+- Google desktop OAuth client ID (required for Cojudge Cloud sign-in)
+- Google desktop OAuth client secret (required when Google enforces it for token exchange)
 
-The values are stored locally on that device and are ignored by the hosted web app, including when they arrive in an imported backup. After the five required fields are configured, the homepage menu shows **Load**. Entering or pasting the fourth character automatically opens `/p/<code>`; no submit action is required. The Firebase project must have anonymous authentication enabled and Firestore rules that permit the app's `shares` operations.
+The values are stored locally on that device and are ignored by the hosted web app. They are excluded from progress backups and Cojudge Cloud snapshots. After the five Firebase web-app fields are configured, the homepage menu shows **Load**. Entering or pasting the fourth character automatically opens `/p/<code>`; no submit action is required.
+
+For a custom Firebase project:
+
+1. Enable Anonymous and Google providers in Firebase Authentication.
+2. Add the hosted domain to Authentication's authorized domains.
+3. Put the Google provider's Web OAuth client ID in `VITE_GOOGLE_WEB_CLIENT_ID`. Add each browser origin that hosts Cojudge to that client's authorized JavaScript origins.
+4. Create a Google OAuth client with application type **Desktop app**. Put its client ID in `VITE_GOOGLE_DESKTOP_CLIENT_ID` and its generated client secret in `VITE_GOOGLE_DESKTOP_CLIENT_SECRET` for local/custom builds.
+5. If Identity Platform asks for external Google client IDs, add the desktop client ID there as well.
+6. Deploy the private per-user and sharing rules with `npx firebase-tools deploy --only firestore:rules --project <project-id>`.
+
+Desktop Google sign-in opens the system browser, listens temporarily on a random `127.0.0.1` port, uses OAuth PKCE, and then closes the local listener. No hosted callback server or VPS is involved. Google calls the native credential a client secret, but installed apps cannot keep embedded values confidential; PKCE and callback validation provide the security boundary.
+
+Cojudge Cloud follows a Git-like synchronization model: login, reconnect, and periodic checks fetch cloud metadata and pull only onto an unchanged local working copy. Local edits and deletions are never pushed by those background checks. **Sync now** explicitly creates a cloud revision, and the five most recent revisions remain available for local restore.
 
 ## Development
 
@@ -78,6 +93,18 @@ The workflow builds all platforms before publishing anything. When every build s
 - `Cojudge_<version>_universal.dmg`
 - `Cojudge_<version>_x64-setup.exe`
 - `Cojudge_<version>_amd64.deb`
+
+Before running a release, configure these GitHub Actions repository secrets. Vite embeds the public project identifiers and desktop client ID in each installer; the workflow compiles the desktop client secret into the native binary rather than the web bundle:
+
+- `FIREBASE_API_KEY`
+- `FIREBASE_AUTH_DOMAIN`
+- `FIREBASE_PROJECT_ID`
+- `FIREBASE_STORAGE_BUCKET`
+- `FIREBASE_MESSAGING_SENDER_ID`
+- `FIREBASE_APP_ID`
+- `GOOGLE_WEB_CLIENT_ID`
+- `GOOGLE_DESKTOP_CLIENT_ID`
+- `GOOGLE_DESKTOP_CLIENT_SECRET`
 
 The generated release notes automatically include this required command for the ad-hoc-signed macOS build:
 

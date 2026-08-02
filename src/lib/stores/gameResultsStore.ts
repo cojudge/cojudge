@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 import type { ProgrammingLanguage } from '$lib/utils/util';
+import { writeProgressStorageItem } from '$lib/progressBackup';
 
 export type GameResult = {
     runCount: number;
@@ -51,7 +52,7 @@ const gameResultsStore = writable<GameResults>(initial);
 
 if (browser) {
     gameResultsStore.subscribe((value) => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+        writeProgressStorageItem(localStorage, STORAGE_KEY, JSON.stringify(value));
     });
 }
 

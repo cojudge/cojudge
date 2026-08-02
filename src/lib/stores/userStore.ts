@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
+import { writeProgressStorageItem } from '$lib/progressBackup';
 
 // The key we'll use to save the checkbox data in localStorage
 const STORAGE_KEY = 'user-checkboxes';
@@ -36,7 +37,7 @@ const userStore = writable<Record<string, boolean>>(initialValue);
 
 if (browser) {
     userStore.subscribe((value) => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+        writeProgressStorageItem(localStorage, STORAGE_KEY, JSON.stringify(value));
     });
 }
 

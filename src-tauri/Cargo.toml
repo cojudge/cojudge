@@ -1,6 +1,6 @@
 [package]
 name = "cojudge-desktop"
-version = "0.0.11"
+version = "0.1.0"
 description = "Cojudge desktop application"
 edition = "2021"
 license = "MIT"
@@ -10,5 +10,7 @@ tauri-build = { version = "=2.6.3", features = [] }
 
 [dependencies]
 getrandom = "=0.3.4"
+oauth2 = { version = "=5.0.0", default-features = false, features = ["reqwest-blocking", "rustls-tls", "timing-resistant-secret-traits"] }
 tauri = { version = "=2.11.5", features = [] }
 tauri-plugin-opener = "=2.5.4"
+tiny_http = "=0.12.0"
