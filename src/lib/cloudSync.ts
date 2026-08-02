@@ -1,0 +1,1437 @@
+import { browser } from '$app/environment';
+import { get, writable } from 'svelte/store';
+import { onIdTokenChanged, type Auth, type Unsubscribe, type User } from 'firebase/auth';
+import {
+	collection,
+	doc,
+	getDocFromServer,
+	getDocsFromServer,
+	orderBy,
+	query,
+	runTransaction,
+	serverTimestamp,
+	type Firestore
+} from 'firebase/firestore';
+import { initFirebase, signInWithGoogle, signOutFirebase } from '$lib/firebase';
+import {
+	CLOUD_HISTORY_LIMIT,
+	isSameCloudOperation,
+	needsCloudAccountConfirmation,
+	needsSignOutDataChoice,
+	nextCloudSnapshotSlot,
+	resolveSyncDirection,
+	type SyncIntent
+} from '$lib/cloudSyncPolicy';
+import {
+	clearProgressStorage,
+	collectProgressData,
+	extractDotFilesData,
+	mergeDotFilesData,
+	CLOUD_FLUSH_EVENT,
+	CLOUD_RESTORE_COMPLETE_KEY,
+	CLOUD_RESTORE_LOCK_KEY,
+	CLOUD_RESTORE_SESSION_KEY,
+	CLOUD_SNAPSHOT_VERSION,
+	decodeProgressParts,
+	encodeProgressParts,
+	hashProgress,
+	initializeCloudRestoreContext,
+	isCloudRestoreInProgress,
+	isMeaningfulProgress,
+	resumeProgressStorageWrites,
+	serializeProgressData,
+	type ProgressData
+} from '$lib/progressBackup';
+import { applyProgressData } from '$lib/progressBackupClient';
+import { FORK_TRANSFER_STORAGE_KEY } from '$lib/forkTransfer';
+import fileStore, { fileSyncVersion } from '$lib/stores/fileStore';
+import {
+	computeFileChanges,
+	computeWhiteboardChange,
+	discardFile,
+	WHITEBOARD_BOARD_KEY,
+	WHITEBOARD_FILE_ID,
+	WHITEBOARD_RESTORED_EVENT,
+	type FileChange,
+	type FileStore
+} from '$lib/cloudFileChange';
+
+const DEVICE_META_KEY = 'cojudge-cloud-sync-meta';
+const LOCAL_CLEAR_COMPLETE_KEY = 'cojudge-cloud-local-clear-complete';
+const SYNC_INTERVAL_MS = 5 * 60 * 1000;
+const MAX_SNAPSHOT_BYTES = 6 * 1024 * 1024;
+const MAX_SNAPSHOT_PARTS = 12;
+const CLOUD_RESTORE_WEB_LOCK = 'cojudge-cloud-restore';
+
+type CloudAuthStatus = 'initializing' | 'unavailable' | 'signed-out' | 'signing-in' | 'signed-in';
+type CloudOperationStatus = 'idle' | 'syncing' | 'offline' | 'error';
+export type CloudRemoteStatus = 'unknown' | 'loading' | 'absent' | 'present' | 'error';
+export type CloudResolution = 'account' | 'local-changes' | 'conflict';
+export type CloudSignOutCheck = 'matching' | 'unsynced' | 'unknown';
+export type CloudDisconnectResult = 'signed-out' | Exclude<CloudSignOutCheck, 'matching'>;
+
+export type CloudRevision = {
+	revisionId: string;
+	createdAt: number;
+	current: boolean;
+	totalBytes: number;
+};
+
+export type CloudUser = {
+	uid: string;
+	displayName: string | null;
+	email: string | null;
+	photoURL: string | null;
+};
+
+export type CloudSyncState = {
+	authStatus: CloudAuthStatus;
+	syncStatus: CloudOperationStatus;
+	user: CloudUser | null;
+	lastSyncedAt: number | null;
+	resolution: CloudResolution | null;
+	remoteStatus: CloudRemoteStatus;
+	history: CloudRevision[];
+	error: string | null;
+};
+
+type DeviceUserMeta = {
+	lastSyncedHash: string | null;
+	lastSyncedAt: number | null;
+};
+
+type DeviceMeta = {
+	version: 2;
+	workspaceId: string | null;
+	users: Record<string, DeviceUserMeta>;
+};
+
+type LocalSnapshot = {
+	data: ProgressData;
+	serialized: string;
+	checksum: string;
+	meaningful: boolean;
+	meta: DeviceUserMeta;
+};
+
+type RemoteSnapshotMeta = {
+	snapshotId: string;
+	revisionId: string;
+	parentRevisionId: string | null;
+	checksum: string;
+	partCount: number;
+	totalBytes: number;
+	updatedAt: number;
+	meaningful: boolean;
+};
+
+type SyncMode = SyncIntent | 'force-upload' | 'force-download';
+
+type OperationContext = {
+	auth: Auth;
+	db: Firestore;
+	projectId: string;
+	uid: string;
+	authEpoch: number;
+	generation: number;
+};
+
+type LockManager = {
+	request<T>(
+		name: string,
+		options: { mode: 'exclusive'; ifAvailable: true },
+		callback: (lock: object | null) => Promise<T>
+	): Promise<T>;
+};
+
+type CoordinationAction = 'flush' | 'prepare' | 'clear';
+
+const initialState: CloudSyncState = {
+	authStatus: 'initializing',
+	syncStatus: 'idle',
+	user: null,
+	lastSyncedAt: null,
+	resolution: null,
+	remoteStatus: 'unknown',
+	history: [],
+	error: null
+};
+
+export const cloudSyncState = writable<CloudSyncState>(initialState);
+
+let activeAuth: Auth | null = null;
+let activeDb: Firestore | null = null;
+let authUnsubscribe: Unsubscribe | null = null;
+let syncInterval: ReturnType<typeof setInterval> | null = null;
+let onlineListener: (() => void) | null = null;
+let storageListener: ((event: StorageEvent) => void) | null = null;
+let coordinationChannel: BroadcastChannel | null = null;
+let restoreReloadScheduled = false;
+let coordinationContextId = '';
+let startPromise: Promise<void> | null = null;
+let syncPromise: Promise<void> | null = null;
+let syncContext: OperationContext | null = null;
+let authEpoch = 0;
+let generation = 0;
+let observedAuthIdentity = '';
+
+function userView(user: User): CloudUser {
+	return {
+		uid: user.uid,
+		displayName: user.displayName,
+		email: user.email,
+		photoURL: user.photoURL
+	};
+}
+
+function errorMessage(error: unknown): string {
+	if (typeof error === 'string' && error.trim()) return error;
+	if (error instanceof Error && error.message) return error.message;
+	if (error && typeof error === 'object' && 'message' in error) return String(error.message);
+	return 'Cloud sync failed.';
+}
+
+function captureOperationContext(): OperationContext | null {
+	const auth = activeAuth;
+	const db = activeDb;
+	const user = auth?.currentUser;
+	const projectId = db?.app.options.projectId;
+	if (!auth || !db || !projectId || !user || user.isAnonymous) return null;
+	return { auth, db, projectId, uid: user.uid, authEpoch, generation };
+}
+
+function isOperationCurrent(context: OperationContext): boolean {
+	const currentUser = context.auth.currentUser;
+	if (!currentUser) return false;
+	return isSameCloudOperation(
+			{
+				projectId: context.projectId,
+				uid: context.uid,
+				authEpoch: context.authEpoch,
+				generation: context.generation
+			},
+			{
+				projectId: context.db.app.options.projectId ?? '',
+				uid: currentUser.uid,
+				authEpoch,
+				generation
+			}
+		)
+		&& activeAuth === context.auth
+		&& activeDb === context.db
+		&& currentUser.isAnonymous === false;
+}
+
+function defaultUserMeta(): DeviceUserMeta {
+	return {
+		lastSyncedHash: null,
+		lastSyncedAt: null
+	};
+}
+
+function cloudAccountId(projectId: string, uid: string): string {
+	return JSON.stringify([projectId, uid]);
+}
+
+function readDeviceMeta(): DeviceMeta {
+	if (!browser) return { version: 2, workspaceId: null, users: {} };
+	try {
+		const parsed = JSON.parse(localStorage.getItem(DEVICE_META_KEY) || 'null');
+		if (parsed?.version === 2 && parsed.users && typeof parsed.users === 'object') {
+			return {
+				version: 2,
+				workspaceId: typeof parsed.workspaceId === 'string' ? parsed.workspaceId : null,
+				users: parsed.users
+			};
+		}
+	} catch (error) {
+		console.warn('Ignoring invalid Cojudge Cloud metadata:', error);
+	}
+	return { version: 2, workspaceId: null, users: {} };
+}
+
+function writeDeviceMeta(meta: DeviceMeta): void {
+	localStorage.setItem(DEVICE_META_KEY, JSON.stringify(meta));
+}
+
+function saveUserMeta(context: OperationContext, userMeta: DeviceUserMeta): void {
+	const meta = readDeviceMeta();
+	meta.users[cloudAccountId(context.projectId, context.uid)] = userMeta;
+	writeDeviceMeta(meta);
+}
+
+async function readLocalSnapshot(context: OperationContext): Promise<LocalSnapshot> {
+	window.dispatchEvent(new Event(CLOUD_FLUSH_EVENT));
+	const data = collectProgressData(localStorage, { cloud: true });
+	const serialized = serializeProgressData(data);
+	const checksum = await hashProgress(serialized);
+	const meaningful = isMeaningfulProgress(data);
+	const device = readDeviceMeta();
+	const meta = {
+		...defaultUserMeta(),
+		...device.users[cloudAccountId(context.projectId, context.uid)]
+	};
+
+	return { data, serialized, checksum, meaningful, meta };
+}
+
+function reloadForCloudRestore(): void {
+	if (restoreReloadScheduled) return;
+	restoreReloadScheduled = true;
+	sessionStorage.setItem(CLOUD_RESTORE_SESSION_KEY, '1');
+	setTimeout(() => window.location.reload(), 0);
+}
+
+function announceCloudRestore(localDataCleared = false): void {
+	const completedAt = Date.now().toString();
+	try {
+		if (localDataCleared) localStorage.setItem(LOCAL_CLEAR_COMPLETE_KEY, completedAt);
+		localStorage.setItem(CLOUD_RESTORE_COMPLETE_KEY, completedAt);
+		coordinationChannel?.postMessage({ type: 'restore', completedAt, localDataCleared });
+	} catch (error) {
+		console.warn('Cojudge Cloud could not notify another open window:', error);
+	}
+	reloadForCloudRestore();
+}
+
+function startCoordination(): void {
+	if (typeof BroadcastChannel !== 'undefined') {
+		coordinationContextId = crypto.randomUUID();
+		coordinationChannel = new BroadcastChannel('cojudge-cloud-sync');
+		coordinationChannel.addEventListener('message', (event) => {
+			const message = event.data;
+			if (!message || message.from === coordinationContextId) return;
+			if (message.type === 'probe') {
+				coordinationChannel?.postMessage({
+					type: 'probe-ack',
+					requestId: message.requestId,
+					from: coordinationContextId
+				});
+			} else if (message.type === 'flush' || message.type === 'prepare' || message.type === 'clear') {
+				window.dispatchEvent(new Event(CLOUD_FLUSH_EVENT));
+				if (message.type !== 'flush') {
+					sessionStorage.setItem(CLOUD_RESTORE_SESSION_KEY, '1');
+					setTimeout(() => {
+						if (!localStorage.getItem(CLOUD_RESTORE_LOCK_KEY)) {
+							resumeProgressStorageWrites();
+						}
+					}, 10_000);
+				}
+				coordinationChannel?.postMessage({
+					type: `${message.type}-ack`,
+					requestId: message.requestId,
+					from: coordinationContextId
+				});
+			} else if (message.type === 'resume') {
+				resumeProgressStorageWrites();
+			} else if (message.type === 'restore') {
+				if (message.localDataCleared) sessionStorage.removeItem(FORK_TRANSFER_STORAGE_KEY);
+				reloadForCloudRestore();
+			}
+		});
+	}
+
+	storageListener = (event) => {
+		if (event.key === CLOUD_RESTORE_LOCK_KEY && event.newValue) {
+			sessionStorage.setItem(CLOUD_RESTORE_SESSION_KEY, '1');
+		} else if (event.key === LOCAL_CLEAR_COMPLETE_KEY && event.newValue) {
+			sessionStorage.removeItem(FORK_TRANSFER_STORAGE_KEY);
+			reloadForCloudRestore();
+		} else if (event.key === CLOUD_RESTORE_COMPLETE_KEY && event.newValue) {
+			reloadForCloudRestore();
+		}
+	};
+	window.addEventListener('storage', storageListener);
+}
+
+function stopCoordination(): void {
+	coordinationChannel?.close();
+	coordinationChannel = null;
+	if (storageListener) window.removeEventListener('storage', storageListener);
+	storageListener = null;
+	restoreReloadScheduled = false;
+	coordinationContextId = '';
+}
+
+function wait(milliseconds: number): Promise<void> {
+	return new Promise((resolve) => setTimeout(resolve, milliseconds));
+}
+
+function resumeAfterCloudMutation(): void {
+	localStorage.removeItem(CLOUD_RESTORE_LOCK_KEY);
+	resumeProgressStorageWrites();
+	coordinationChannel?.postMessage({ type: 'resume', from: coordinationContextId });
+}
+
+async function coordinateOtherContexts(type: CoordinationAction): Promise<void> {
+	const channel = coordinationChannel;
+	if (!channel) return;
+
+	const requestId = crypto.randomUUID();
+	const peers = new Set<string>();
+	const handleProbe = (event: MessageEvent) => {
+		if (event.data?.type === 'probe-ack' && event.data.requestId === requestId) {
+			peers.add(String(event.data.from));
+		}
+	};
+	channel.addEventListener('message', handleProbe);
+	channel.postMessage({ type: 'probe', requestId, from: coordinationContextId });
+	await wait(150);
+	channel.removeEventListener('message', handleProbe);
+	if (peers.size === 0) return;
+
+	const acknowledgements = new Set<string>();
+	const handleAck = (event: MessageEvent) => {
+		if (event.data?.type === `${type}-ack` && event.data.requestId === requestId) {
+			acknowledgements.add(String(event.data.from));
+		}
+	};
+	channel.addEventListener('message', handleAck);
+	channel.postMessage({ type, requestId, from: coordinationContextId });
+	const deadline = Date.now() + 1_000;
+	while (acknowledgements.size < peers.size && Date.now() < deadline) await wait(20);
+	channel.removeEventListener('message', handleAck);
+	if ([...peers].some((peer) => !acknowledgements.has(peer))) {
+		if (type !== 'flush') channel.postMessage({ type: 'resume', from: coordinationContextId });
+		throw new Error('Another Cojudge window is busy. Close it or try syncing again.');
+	}
+}
+
+function latestRef(db: Firestore, uid: string) {
+	return doc(db, 'users', uid, 'cloud', 'latest');
+}
+
+function snapshotRef(db: Firestore, uid: string, snapshotId: string) {
+	return doc(db, 'users', uid, 'snapshots', snapshotId);
+}
+
+function partsRef(db: Firestore, uid: string, snapshotId: string) {
+	return collection(db, 'users', uid, 'snapshots', snapshotId, 'parts');
+}
+
+function integer(value: unknown, minimum: number, maximum: number, label: string): number {
+	if (!Number.isSafeInteger(value) || (value as number) < minimum || (value as number) > maximum) {
+		throw new Error(`Cloud snapshot has an invalid ${label}.`);
+	}
+	return value as number;
+}
+
+function timestampMillis(data: Record<string, unknown>, key: string): number {
+	const value = data[key] as { toMillis?: () => number } | undefined;
+	const timestamp = value?.toMillis?.() ?? 0;
+	if (!Number.isFinite(timestamp) || timestamp <= 0) {
+		throw new Error('Cloud snapshot has no valid update time.');
+	}
+	return timestamp;
+}
+
+function validSnapshotId(value: string): boolean {
+	return /^slot-[0-4]$/.test(value) || /^[a-z0-9-]{8,100}$/i.test(value);
+}
+
+function validRevisionId(value: string): boolean {
+	return /^[a-z0-9-]{8,100}$/i.test(value);
+}
+
+function parseRemoteMeta(data: Record<string, unknown>): RemoteSnapshotMeta {
+	const snapshotId = typeof data.snapshotId === 'string' ? data.snapshotId : '';
+	const revisionId = typeof data.revisionId === 'string' ? data.revisionId : snapshotId;
+	const parentRevisionId = typeof data.parentRevisionId === 'string' ? data.parentRevisionId : null;
+	const checksum = typeof data.checksum === 'string' ? data.checksum : '';
+	if (
+		data.schemaVersion !== CLOUD_SNAPSHOT_VERSION ||
+		!validSnapshotId(snapshotId) ||
+		!validRevisionId(revisionId) ||
+		(parentRevisionId !== null && !validRevisionId(parentRevisionId)) ||
+		!/^[a-f0-9]{64}$/.test(checksum)
+	) {
+		throw new Error('Cloud snapshot metadata is invalid.');
+	}
+
+	return {
+		snapshotId,
+		revisionId,
+		parentRevisionId,
+		checksum,
+		partCount: integer(data.partCount, 1, MAX_SNAPSHOT_PARTS, 'part count'),
+		totalBytes: integer(data.totalBytes, 0, MAX_SNAPSHOT_BYTES, 'size'),
+		updatedAt: timestampMillis(data, 'updatedAt'),
+		meaningful: data.meaningful === true
+	};
+}
+
+function parseHistoryMeta(snapshotId: string, data: Record<string, unknown>): RemoteSnapshotMeta | null {
+	try {
+		const revisionId = typeof data.revisionId === 'string' ? data.revisionId : '';
+		const parentRevisionId = typeof data.parentRevisionId === 'string' ? data.parentRevisionId : null;
+		const checksum = typeof data.checksum === 'string' ? data.checksum : '';
+		if (
+			data.schemaVersion !== CLOUD_SNAPSHOT_VERSION ||
+			data.status !== 'ready' ||
+			!validSnapshotId(snapshotId) ||
+			!validRevisionId(revisionId) ||
+			(parentRevisionId !== null && !validRevisionId(parentRevisionId)) ||
+			!/^[a-f0-9]{64}$/.test(checksum)
+		) {
+			return null;
+		}
+		return {
+			snapshotId,
+			revisionId,
+			parentRevisionId,
+			checksum,
+			partCount: integer(data.partCount, 1, MAX_SNAPSHOT_PARTS, 'part count'),
+			totalBytes: integer(data.totalBytes, 0, MAX_SNAPSHOT_BYTES, 'size'),
+			updatedAt: timestampMillis(data, 'createdAt'),
+			meaningful: data.meaningful === true
+		};
+	} catch {
+		return null;
+	}
+}
+
+async function readRemoteMeta(db: Firestore, uid: string): Promise<RemoteSnapshotMeta | null> {
+	const result = await getDocFromServer(latestRef(db, uid));
+	return result.exists() ? parseRemoteMeta(result.data()) : null;
+}
+
+async function readRemoteHistory(
+	db: Firestore,
+	uid: string,
+	current: RemoteSnapshotMeta | null
+): Promise<RemoteSnapshotMeta[]> {
+	const result = await getDocsFromServer(
+		query(collection(db, 'users', uid, 'snapshots'), orderBy('createdAt', 'desc'))
+	);
+	const history = result.docs
+		.map((snapshot) => parseHistoryMeta(snapshot.id, snapshot.data()))
+		.filter((snapshot): snapshot is RemoteSnapshotMeta => snapshot !== null);
+	if (current && !history.some((snapshot) => snapshot.revisionId === current.revisionId)) {
+		history.unshift(current);
+	}
+	return history.slice(0, CLOUD_HISTORY_LIMIT);
+}
+
+function publishHistory(history: RemoteSnapshotMeta[], currentRevisionId: string | null): void {
+	cloudSyncState.update((state) => ({
+		...state,
+		remoteStatus: currentRevisionId === null ? 'absent' : 'present',
+		history: history.map((revision) => ({
+			revisionId: revision.revisionId,
+			createdAt: revision.updatedAt,
+			current: revision.revisionId === currentRevisionId,
+			totalBytes: revision.totalBytes
+		}))
+	}));
+}
+
+function makeRevisionId(): string {
+	const random = crypto.randomUUID?.() ?? `${Math.random().toString(36).slice(2)}${Date.now().toString(36)}`;
+	return `${Date.now().toString(36)}-${random.replaceAll('-', '')}`;
+}
+
+async function uploadSnapshot(
+	db: Firestore,
+	uid: string,
+	local: LocalSnapshot,
+	previous: RemoteSnapshotMeta | null
+): Promise<RemoteSnapshotMeta> {
+	const { parts, totalBytes } = encodeProgressParts(local.serialized);
+	if (totalBytes > MAX_SNAPSHOT_BYTES || parts.length > MAX_SNAPSHOT_PARTS) {
+		throw new Error('This progress snapshot is too large for Cojudge Cloud.');
+	}
+
+	const snapshotId = nextCloudSnapshotSlot(previous?.snapshotId ?? null);
+	const revisionId = makeRevisionId();
+	const parentRevisionId = previous?.revisionId ?? null;
+	const manifest = snapshotRef(db, uid, snapshotId);
+	await runTransaction(db, async (transaction) => {
+		const reference = latestRef(db, uid);
+		const current = await transaction.get(reference);
+		const previousManifest = await transaction.get(manifest);
+		const previousPartCount = previousManifest.exists()
+			? integer(previousManifest.data().partCount, 1, MAX_SNAPSHOT_PARTS, 'part count')
+			: 0;
+		const currentData = current.exists() ? current.data() : null;
+		const currentSnapshotId = typeof currentData?.snapshotId === 'string' ? currentData.snapshotId : null;
+		const currentRevisionId = typeof currentData?.revisionId === 'string'
+			? currentData.revisionId
+			: currentSnapshotId;
+		if (currentRevisionId !== parentRevisionId) {
+			throw new Error('Cloud progress changed on another device. Sync again.');
+		}
+
+		transaction.set(manifest, {
+			schemaVersion: CLOUD_SNAPSHOT_VERSION,
+			status: 'ready',
+			revisionId,
+			parentRevisionId,
+			checksum: local.checksum,
+			partCount: parts.length,
+			totalBytes,
+			meaningful: local.meaningful,
+			createdAt: serverTimestamp()
+		});
+		for (let index = 0; index < MAX_SNAPSHOT_PARTS; index++) {
+			const part = doc(partsRef(db, uid, snapshotId), index.toString().padStart(4, '0'));
+			if (index < parts.length) transaction.set(part, { index, data: parts[index] });
+			else if (index < previousPartCount) transaction.delete(part);
+		}
+		transaction.set(reference, {
+			schemaVersion: CLOUD_SNAPSHOT_VERSION,
+			snapshotId,
+			revisionId,
+			parentRevisionId,
+			checksum: local.checksum,
+			partCount: parts.length,
+			totalBytes,
+			storageUsed: totalBytes,
+			meaningful: local.meaningful,
+			updatedAt: serverTimestamp()
+		});
+	});
+
+	const confirmed = await readRemoteMeta(db, uid);
+	if (!confirmed || confirmed.revisionId !== revisionId) {
+		throw new Error('Cojudge Cloud could not confirm the uploaded snapshot.');
+	}
+	return confirmed;
+}
+
+async function downloadSnapshot(
+	db: Firestore,
+	uid: string,
+	meta: RemoteSnapshotMeta
+): Promise<ProgressData> {
+	const result = await getDocsFromServer(query(partsRef(db, uid, meta.snapshotId), orderBy('index')));
+	if (result.size !== meta.partCount) throw new Error('Cloud snapshot is incomplete.');
+
+	const parts = result.docs.map((part, index) => {
+		const data = part.data();
+		if (data.index !== index || typeof data.data !== 'string') {
+			throw new Error('Cloud snapshot contains an invalid part.');
+		}
+		return data.data;
+	});
+	const serialized = decodeProgressParts(parts, meta.totalBytes);
+	if ((await hashProgress(serialized)) !== meta.checksum) {
+		throw new Error('Cloud snapshot failed its integrity check.');
+	}
+
+	const parsed = JSON.parse(serialized);
+	if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+		throw new Error('Cloud snapshot has an invalid format.');
+	}
+	return parsed as ProgressData;
+}
+
+function markSynced(
+	context: OperationContext,
+	baseHash: string,
+	resolution: CloudResolution | null = null
+): boolean {
+	if (!isOperationCurrent(context)) return false;
+	const meta: DeviceUserMeta = {
+		lastSyncedHash: baseHash,
+		lastSyncedAt: Date.now()
+	};
+	saveUserMeta(context, meta);
+	cloudSyncState.update((state) => ({
+		...state,
+		syncStatus: 'idle',
+		lastSyncedAt: meta.lastSyncedAt,
+		resolution,
+		error: null
+	}));
+	return true;
+}
+
+async function finalizeCloudRevision(context: OperationContext, baseHash: string): Promise<void> {
+	const currentLocal = await readLocalSnapshot(context);
+	if (!isOperationCurrent(context)) return;
+	markSynced(
+		context,
+		baseHash,
+		currentLocal.checksum === baseHash ? null : 'local-changes'
+	);
+}
+
+async function applyDownloadedSnapshot(
+	context: OperationContext,
+	downloaded: ProgressData,
+	expectedLocal: LocalSnapshot,
+	baseHash: string
+): Promise<void> {
+	const lockManager = (navigator as Navigator & { locks?: LockManager }).locks;
+	if (!lockManager) {
+		throw new Error('This browser cannot safely coordinate a cloud restore. Update it and try again.');
+	}
+
+	await lockManager.request(
+		CLOUD_RESTORE_WEB_LOCK,
+		{ mode: 'exclusive', ifAvailable: true },
+		async (lock) => {
+			if (!lock) throw new Error('Another Cojudge window is restoring progress. Try again shortly.');
+			await coordinateOtherContexts('prepare');
+			let applied = false;
+			let announced = false;
+			try {
+				if (!isOperationCurrent(context)) return;
+				const latestLocal = await readLocalSnapshot(context);
+				if (!isOperationCurrent(context)) return;
+				window.dispatchEvent(new Event(CLOUD_FLUSH_EVENT));
+				const finalSerialized = serializeProgressData(
+					collectProgressData(localStorage, { cloud: true })
+				);
+				if (
+					latestLocal.checksum !== expectedLocal.checksum
+					|| finalSerialized !== latestLocal.serialized
+				) {
+					throw new Error('Local progress changed during sync. Sync again to reconcile it safely.');
+				}
+				if (!isOperationCurrent(context)) return;
+
+				const localDotFiles = extractDotFilesData(localStorage);
+				localStorage.setItem(CLOUD_RESTORE_LOCK_KEY, Date.now().toString());
+				sessionStorage.setItem(CLOUD_RESTORE_SESSION_KEY, '1');
+				applyProgressData(downloaded, { replace: true });
+				if (localDotFiles !== null) {
+					localStorage.setItem('files', mergeDotFilesData(localStorage.getItem('files'), localDotFiles));
+				}
+				applied = true;
+				markSynced(context, baseHash);
+				announceCloudRestore();
+				announced = true;
+			} catch (error) {
+				if (applied) {
+					announceCloudRestore();
+					announced = true;
+				}
+				throw error;
+			} finally {
+				if (!announced) {
+					resumeAfterCloudMutation();
+				}
+			}
+		}
+	);
+}
+
+async function refreshRemoteState(
+	db: Firestore,
+	uid: string
+): Promise<{ remote: RemoteSnapshotMeta | null; history: RemoteSnapshotMeta[] }> {
+	const remote = await readRemoteMeta(db, uid);
+	const history = await readRemoteHistory(db, uid, remote);
+	return { remote, history };
+}
+
+async function runSync(mode: SyncMode, context: OperationContext): Promise<void> {
+	if (!browser || !isOperationCurrent(context)) return;
+	if (isCloudRestoreInProgress()) return;
+	if (!navigator.onLine) {
+		if (isOperationCurrent(context)) {
+			cloudSyncState.update((state) => ({ ...state, syncStatus: 'offline', error: null }));
+		}
+		if (mode !== 'fetch') throw new Error('Connect to the internet before updating cloud progress.');
+		return;
+	}
+
+	cloudSyncState.update((state) => ({
+		...state,
+		syncStatus: 'syncing',
+		remoteStatus: 'loading',
+		error: null
+	}));
+	try {
+		await coordinateOtherContexts('flush');
+		if (!isOperationCurrent(context)) return;
+		const local = await readLocalSnapshot(context);
+		if (!isOperationCurrent(context)) return;
+		const device = readDeviceMeta();
+		const accountId = cloudAccountId(context.projectId, context.uid);
+		const accountNeedsConfirmation = needsCloudAccountConfirmation(device.workspaceId, accountId);
+		const { remote, history } = await refreshRemoteState(context.db, context.uid);
+		if (!isOperationCurrent(context)) return;
+		publishHistory(history, remote?.revisionId ?? null);
+
+		if (accountNeedsConfirmation) {
+			cloudSyncState.update((state) => ({
+				...state,
+				resolution: 'account',
+				syncStatus: 'idle',
+				error: null
+			}));
+			return;
+		}
+		if (!device.workspaceId) {
+			device.workspaceId = accountId;
+			writeDeviceMeta(device);
+		}
+
+		const direction = mode === 'force-upload'
+			? 'upload'
+			: mode === 'force-download'
+				? 'download'
+				: resolveSyncDirection(
+						{
+							checksum: local.checksum,
+							meaningful: local.meaningful,
+							lastSyncedHash: local.meta.lastSyncedHash
+						},
+						remote,
+						mode
+					);
+		if (direction === 'none') {
+			if (remote) await finalizeCloudRevision(context, remote.checksum);
+			else {
+				if (!isOperationCurrent(context)) return;
+				cloudSyncState.update((state) => ({
+					...state,
+					syncStatus: 'idle',
+					resolution: null,
+					error: null
+				}));
+			}
+			return;
+		}
+		if (direction === 'pending-upload') {
+			if (!isOperationCurrent(context)) return;
+			cloudSyncState.update((state) => ({
+				...state,
+				resolution: 'local-changes',
+				syncStatus: 'idle',
+				error: null
+			}));
+			return;
+		}
+		if (direction === 'conflict') {
+			if (!isOperationCurrent(context)) return;
+			cloudSyncState.update((state) => ({
+				...state,
+				resolution: 'conflict',
+				syncStatus: 'idle',
+				error: null
+			}));
+			return;
+		}
+		if (direction === 'upload') {
+			const uploaded = await uploadSnapshot(context.db, context.uid, local, remote);
+			if (!isOperationCurrent(context)) return;
+			const updatedHistory = await readRemoteHistory(context.db, context.uid, uploaded);
+			if (!isOperationCurrent(context)) return;
+			publishHistory(updatedHistory, uploaded.revisionId);
+			await finalizeCloudRevision(context, uploaded.checksum);
+			return;
+		}
+		if (!remote) {
+			throw new Error('No Cojudge Cloud snapshot exists for this account yet.');
+		}
+
+		const downloaded = await downloadSnapshot(context.db, context.uid, remote);
+		if (!isOperationCurrent(context)) return;
+		const latest = await readRemoteMeta(context.db, context.uid);
+		if (!isOperationCurrent(context)) return;
+		if (!latest || latest.revisionId !== remote.revisionId) {
+			throw new Error('Cloud progress changed while downloading. Try again.');
+		}
+		await applyDownloadedSnapshot(context, downloaded, local, latest.checksum);
+	} catch (error) {
+		if (!isOperationCurrent(context)) return;
+		const offline = !navigator.onLine;
+		cloudSyncState.update((state) => ({
+			...state,
+			syncStatus: offline ? 'offline' : 'error',
+			remoteStatus: offline ? state.remoteStatus : 'error',
+			error: offline ? null : errorMessage(error)
+		}));
+		throw error;
+	}
+}
+
+function queueSync(
+	mode: SyncMode,
+	requestedContext: OperationContext | null = captureOperationContext()
+): Promise<void> {
+	if (!requestedContext || !isOperationCurrent(requestedContext)) return Promise.resolve();
+	if (syncPromise) {
+		if (
+			mode === 'fetch'
+			&& syncContext?.uid === requestedContext.uid
+			&& syncContext.authEpoch === requestedContext.authEpoch
+		) {
+			return syncPromise;
+		}
+		return syncPromise.catch(() => undefined).then(() => {
+			if (!isOperationCurrent(requestedContext)) return;
+			return queueSync(mode, requestedContext);
+		});
+	}
+	const pending = runSync(mode, requestedContext).finally(() => {
+		if (syncPromise === pending) {
+			syncPromise = null;
+			syncContext = null;
+		}
+	});
+	syncPromise = pending;
+	syncContext = requestedContext;
+	return syncPromise;
+}
+
+export function checkCloudNow(): Promise<void> {
+	return queueSync('fetch');
+}
+
+export function syncCloudNow(): Promise<void> {
+	return queueSync('push');
+}
+
+export async function refreshCloudLocalState(): Promise<boolean> {
+	const context = captureOperationContext();
+	if (!browser || !context || isCloudRestoreInProgress()) return false;
+	const local = await readLocalSnapshot(context);
+	if (!isOperationCurrent(context)) return false;
+	const dirty = local.meta.lastSyncedHash
+		? local.checksum !== local.meta.lastSyncedHash
+		: local.meaningful;
+	cloudSyncState.update((state) => {
+		if (state.resolution === 'account' || state.resolution === 'conflict') return state;
+		return { ...state, resolution: dirty ? 'local-changes' : null };
+	});
+	return dirty;
+}
+
+function readLocalFilesStore(): FileStore {
+	try {
+		const raw = localStorage.getItem('files');
+		const parsed = raw ? JSON.parse(raw) : {};
+		return parsed && typeof parsed === 'object' && !Array.isArray(parsed)
+			? (parsed as FileStore)
+			: {};
+	} catch {
+		return {};
+	}
+}
+
+export async function fetchCloudFileChanges(): Promise<FileChange[]> {
+	const context = captureOperationContext();
+	if (!browser || !context || isCloudRestoreInProgress()) return [];
+	const local = await readLocalSnapshot(context);
+	if (!isOperationCurrent(context)) return [];
+	const remote = await readRemoteMeta(context.db, context.uid);
+	if (!isOperationCurrent(context)) return [];
+	const localFiles = (local.data.files as FileStore | undefined) ?? {};
+	const localBoard = local.data[WHITEBOARD_BOARD_KEY];
+
+	const changes: FileChange[] = computeFileChanges(localFiles, {});
+	const localBoardChange = computeWhiteboardChange(localBoard, null);
+	if (localBoardChange) changes.push(localBoardChange);
+	if (!remote) return changes;
+
+	const downloaded = await downloadSnapshot(context.db, context.uid, remote);
+	if (!isOperationCurrent(context)) return [];
+	const cloudFiles = (downloaded.files as FileStore | undefined) ?? {};
+	const cloudBoard = downloaded[WHITEBOARD_BOARD_KEY];
+
+	const mergedChanges: FileChange[] = computeFileChanges(localFiles, cloudFiles);
+	const whiteboardChange = computeWhiteboardChange(localBoard, cloudBoard);
+	if (whiteboardChange) mergedChanges.push(whiteboardChange);
+	return mergedChanges;
+}
+
+export async function discardLocalFileChange(fileId: string): Promise<void> {
+	const context = captureOperationContext();
+	if (!browser || !context || isCloudRestoreInProgress()) return;
+	if (!navigator.onLine) {
+		throw new Error('Connect to the internet to restore the change from the cloud.');
+	}
+	const remote = await readRemoteMeta(context.db, context.uid);
+	if (!isOperationCurrent(context)) return;
+	if (!remote) {
+		throw new Error('No Cojudge Cloud snapshot exists for this account yet.');
+	}
+	const downloaded = await downloadSnapshot(context.db, context.uid, remote);
+	if (!isOperationCurrent(context)) return;
+
+	if (fileId === WHITEBOARD_FILE_ID) {
+		const cloudBoard = downloaded[WHITEBOARD_BOARD_KEY];
+		if (cloudBoard === undefined) {
+			localStorage.removeItem(WHITEBOARD_BOARD_KEY);
+		} else {
+			localStorage.setItem(WHITEBOARD_BOARD_KEY, JSON.stringify(cloudBoard));
+		}
+		window.dispatchEvent(new CustomEvent(WHITEBOARD_RESTORED_EVENT));
+	} else {
+		const cloudFiles = (downloaded.files ?? {}) as FileStore;
+		const localStore = readLocalFilesStore();
+		const updated = discardFile(localStore, fileId, cloudFiles);
+		localStorage.setItem('files', JSON.stringify(updated));
+		fileStore.set(updated);
+		fileSyncVersion.update((version) => version + 1);
+	}
+	await refreshCloudLocalState();
+}
+
+async function inspectCloudSignOut(context: OperationContext): Promise<CloudSignOutCheck> {
+	if (!navigator.onLine || !isOperationCurrent(context)) return 'unknown';
+	const local = await readLocalSnapshot(context);
+	if (!isOperationCurrent(context)) return 'unknown';
+	const remote = await readRemoteMeta(context.db, context.uid);
+	if (!isOperationCurrent(context)) return 'unknown';
+	const finalLocal = await readLocalSnapshot(context);
+	if (!isOperationCurrent(context)) return 'unknown';
+	if (local.checksum !== finalLocal.checksum) return 'unsynced';
+	return needsSignOutDataChoice(finalLocal, remote) ? 'unsynced' : 'matching';
+}
+
+export async function checkCloudSignOut(): Promise<CloudSignOutCheck> {
+	if (!browser) return 'unknown';
+	const context = captureOperationContext();
+	const lockManager = (navigator as Navigator & { locks?: LockManager }).locks;
+	if (!context || isCloudRestoreInProgress() || !lockManager || syncPromise) return 'unknown';
+
+	try {
+		await coordinateOtherContexts('flush');
+		return await inspectCloudSignOut(context);
+	} catch {
+		return 'unknown';
+	}
+}
+
+async function runRevisionRestore(
+	revisionId: string,
+	context: OperationContext
+): Promise<void> {
+	if (!browser || !isOperationCurrent(context)) return;
+	cloudSyncState.update((state) => ({ ...state, syncStatus: 'syncing', error: null }));
+	try {
+		if (!navigator.onLine) throw new Error('Connect to the internet before restoring cloud progress.');
+		if (get(cloudSyncState).resolution === 'account') {
+			throw new Error('Choose the account workspace before restoring revision history.');
+		}
+		await coordinateOtherContexts('flush');
+		if (!isOperationCurrent(context)) return;
+		const local = await readLocalSnapshot(context);
+		if (!isOperationCurrent(context)) return;
+		const { remote, history } = await refreshRemoteState(context.db, context.uid);
+		if (!isOperationCurrent(context)) return;
+		publishHistory(history, remote?.revisionId ?? null);
+		if (!remote) throw new Error('No Cojudge Cloud snapshot exists for this account yet.');
+		const cached = history.find((revision) => revision.revisionId === revisionId);
+		if (!cached) throw new Error('That cloud revision is no longer retained.');
+
+		let selected = cached;
+		if (cached.revisionId !== remote.revisionId) {
+			const result = await getDocFromServer(
+				snapshotRef(context.db, context.uid, cached.snapshotId)
+			);
+			if (!isOperationCurrent(context)) return;
+			const currentSlot = result.exists() ? parseHistoryMeta(result.id, result.data()) : null;
+			if (!currentSlot || currentSlot.revisionId !== revisionId) {
+				throw new Error('That cloud revision is no longer retained.');
+			}
+			selected = currentSlot;
+		}
+
+		const downloaded = await downloadSnapshot(context.db, context.uid, selected);
+		if (!isOperationCurrent(context)) return;
+		const latest = await readRemoteMeta(context.db, context.uid);
+		if (!latest || latest.revisionId !== remote.revisionId) {
+			throw new Error('Cloud progress changed while restoring. Try again.');
+		}
+		if (!isOperationCurrent(context)) return;
+		await applyDownloadedSnapshot(context, downloaded, local, latest.checksum);
+	} catch (error) {
+		if (!isOperationCurrent(context)) return;
+		cloudSyncState.update((state) => ({
+			...state,
+			syncStatus: navigator.onLine ? 'error' : 'offline',
+			remoteStatus: navigator.onLine ? 'error' : state.remoteStatus,
+			error: navigator.onLine ? errorMessage(error) : null
+		}));
+		throw error;
+	}
+}
+
+export function restoreCloudRevision(revisionId: string): Promise<void> {
+	const requestedContext = captureOperationContext();
+	if (!requestedContext) return Promise.resolve();
+	if (syncPromise) {
+		return syncPromise.catch(() => undefined).then(() => {
+			if (!isOperationCurrent(requestedContext)) return;
+			return restoreCloudRevision(revisionId);
+		});
+	}
+	const pending = runRevisionRestore(revisionId, requestedContext).finally(() => {
+		if (syncPromise === pending) {
+			syncPromise = null;
+			syncContext = null;
+		}
+	});
+	syncPromise = pending;
+	syncContext = requestedContext;
+	return pending;
+}
+
+async function runRevisionDelete(
+	revisionId: string,
+	context: OperationContext
+): Promise<void> {
+	if (!browser || !isOperationCurrent(context)) return;
+	cloudSyncState.update((state) => ({ ...state, syncStatus: 'syncing', error: null }));
+	try {
+		if (!navigator.onLine) throw new Error('Connect to the internet before deleting a cloud backup.');
+		if (get(cloudSyncState).resolution === 'account') {
+			throw new Error('Choose the account workspace before deleting revision history.');
+		}
+
+		const { remote, history } = await refreshRemoteState(context.db, context.uid);
+		if (!isOperationCurrent(context)) return;
+		publishHistory(history, remote?.revisionId ?? null);
+		const selected = history.find((revision) => revision.revisionId === revisionId);
+		if (!selected) throw new Error('That cloud revision is no longer retained.');
+		if (selected.revisionId === remote?.revisionId) {
+			throw new Error('The latest cloud revision cannot be deleted.');
+		}
+
+		await runTransaction(context.db, async (transaction) => {
+			const reference = latestRef(context.db, context.uid);
+			const manifest = snapshotRef(context.db, context.uid, selected.snapshotId);
+			const latestResult = await transaction.get(reference);
+			const manifestResult = await transaction.get(manifest);
+			if (!latestResult.exists()) throw new Error('No current cloud snapshot exists.');
+			const latest = parseRemoteMeta(latestResult.data());
+			const currentSlot = manifestResult.exists()
+				? parseHistoryMeta(manifestResult.id, manifestResult.data())
+				: null;
+			if (!currentSlot || currentSlot.revisionId !== revisionId) {
+				throw new Error('That cloud revision is no longer retained.');
+			}
+			if (
+				latest.revisionId === currentSlot.revisionId
+				|| latest.snapshotId === currentSlot.snapshotId
+			) {
+				throw new Error('The latest cloud revision cannot be deleted.');
+			}
+
+			for (let index = 0; index < currentSlot.partCount; index++) {
+				transaction.delete(
+					doc(partsRef(context.db, context.uid, currentSlot.snapshotId), index.toString().padStart(4, '0'))
+				);
+			}
+			transaction.delete(manifest);
+		});
+		if (!isOperationCurrent(context)) return;
+		const updated = await refreshRemoteState(context.db, context.uid);
+		if (!isOperationCurrent(context)) return;
+		publishHistory(updated.history, updated.remote?.revisionId ?? null);
+		cloudSyncState.update((state) => ({ ...state, syncStatus: 'idle', error: null }));
+	} catch (error) {
+		if (!isOperationCurrent(context)) return;
+		cloudSyncState.update((state) => ({
+			...state,
+			syncStatus: navigator.onLine ? 'error' : 'offline',
+			error: navigator.onLine ? errorMessage(error) : null
+		}));
+		throw error;
+	}
+}
+
+export function deleteCloudRevision(revisionId: string): Promise<void> {
+	const requestedContext = captureOperationContext();
+	if (!requestedContext) return Promise.resolve();
+	if (syncPromise) {
+		return syncPromise.catch(() => undefined).then(() => {
+			if (!isOperationCurrent(requestedContext)) return;
+			return deleteCloudRevision(revisionId);
+		});
+	}
+	const pending = runRevisionDelete(revisionId, requestedContext).finally(() => {
+		if (syncPromise === pending) {
+			syncPromise = null;
+			syncContext = null;
+		}
+	});
+	syncPromise = pending;
+	syncContext = requestedContext;
+	return pending;
+}
+
+function handleAuthUser(user: User | null, currentGeneration: number): void {
+	if (generation !== currentGeneration) return;
+	const identity = user ? `${user.uid}:${user.isAnonymous ? 'anonymous' : 'authenticated'}` : 'signed-out';
+	if (identity === observedAuthIdentity) {
+		if (user && !user.isAnonymous) {
+			cloudSyncState.update((state) => ({ ...state, user: userView(user) }));
+		}
+		return;
+	}
+	observedAuthIdentity = identity;
+	authEpoch++;
+	if (!user || user.isAnonymous) {
+		cloudSyncState.set({
+			authStatus: 'signed-out',
+			syncStatus: 'idle',
+			user: null,
+			lastSyncedAt: null,
+			resolution: null,
+			remoteStatus: 'unknown',
+			history: [],
+			error: null
+		});
+		return;
+	}
+
+	const device = readDeviceMeta();
+	const projectId = activeDb?.app.options.projectId;
+	if (!projectId) return;
+	const accountId = cloudAccountId(projectId, user.uid);
+	const accountNeedsConfirmation = needsCloudAccountConfirmation(device.workspaceId, accountId);
+	const localMeta = device.users[accountId];
+	cloudSyncState.set({
+		authStatus: 'signed-in',
+		syncStatus: 'idle',
+		user: userView(user),
+		lastSyncedAt: localMeta?.lastSyncedAt ?? null,
+		resolution: accountNeedsConfirmation ? 'account' : null,
+		remoteStatus: 'unknown',
+		history: [],
+		error: null
+	});
+	void checkCloudNow().catch(() => undefined);
+}
+
+export function startCloudSync(): Promise<void> {
+	if (!browser) return Promise.resolve();
+	if (startPromise) return startPromise;
+	initializeCloudRestoreContext();
+	startCoordination();
+	const currentGeneration = ++generation;
+	cloudSyncState.update((state) => ({ ...state, authStatus: 'initializing', error: null }));
+
+	startPromise = (async () => {
+		try {
+			const initialized = await initFirebase();
+			if (generation !== currentGeneration) return;
+			if (!initialized) {
+				cloudSyncState.set({ ...initialState, authStatus: 'unavailable' });
+				return;
+			}
+
+			activeAuth = initialized.auth;
+			activeDb = initialized.db;
+			authUnsubscribe = onIdTokenChanged(activeAuth, (user) =>
+				handleAuthUser(user, currentGeneration)
+			);
+			syncInterval = setInterval(() => {
+				void checkCloudNow().catch(() => undefined);
+			}, SYNC_INTERVAL_MS);
+			onlineListener = () => void checkCloudNow().catch(() => undefined);
+			window.addEventListener('online', onlineListener);
+		} catch (error) {
+			if (generation === currentGeneration) {
+				cloudSyncState.set({
+					...initialState,
+					authStatus: 'unavailable',
+					syncStatus: 'error',
+					error: errorMessage(error)
+				});
+			}
+		}
+	})();
+	return startPromise;
+}
+
+export function stopCloudSync(): void {
+	generation++;
+	authEpoch++;
+	authUnsubscribe?.();
+	authUnsubscribe = null;
+	if (syncInterval) clearInterval(syncInterval);
+	syncInterval = null;
+	if (onlineListener) window.removeEventListener('online', onlineListener);
+	onlineListener = null;
+	stopCoordination();
+	activeAuth = null;
+	activeDb = null;
+	startPromise = null;
+	syncPromise = null;
+	syncContext = null;
+	observedAuthIdentity = '';
+	cloudSyncState.set(initialState);
+}
+
+export async function restartCloudSync(): Promise<void> {
+	stopCloudSync();
+	await startCloudSync();
+}
+
+export async function connectCloud(): Promise<void> {
+	cloudSyncState.update((state) => ({
+		...state,
+		authStatus: 'signing-in',
+		error: null
+	}));
+	try {
+		await signInWithGoogle();
+	} catch (error) {
+		cloudSyncState.update((state) => {
+			if (state.authStatus !== 'signing-in') return { ...state, error: errorMessage(error) };
+			const currentUser = activeAuth?.currentUser;
+			if (currentUser && !currentUser.isAnonymous) {
+				return {
+					...state,
+					authStatus: 'signed-in',
+					user: userView(currentUser),
+					error: errorMessage(error)
+				};
+			}
+			return { ...state, authStatus: 'signed-out', user: null, error: errorMessage(error) };
+		});
+		throw error;
+	}
+}
+
+async function clearLocalDataAndSignOut(
+	context: OperationContext,
+	requireCloudMatch: boolean,
+	keepDotFiles = false
+): Promise<CloudDisconnectResult> {
+	const lockManager = (navigator as Navigator & { locks?: LockManager }).locks;
+	if (!lockManager) {
+		throw new Error('This browser cannot safely clear local data. Update it and try again.');
+	}
+
+	return lockManager.request(
+		CLOUD_RESTORE_WEB_LOCK,
+		{ mode: 'exclusive', ifAvailable: true },
+		async (lock) => {
+			if (!lock) throw new Error('Another Cojudge window is updating local data. Try again shortly.');
+			if (requireCloudMatch) {
+				await coordinateOtherContexts('flush');
+				try {
+					const initialCheck = await inspectCloudSignOut(context);
+					if (initialCheck !== 'matching') return initialCheck;
+				} catch {
+					return 'unknown';
+				}
+			}
+
+			await coordinateOtherContexts('clear');
+			const dotFilesSnapshot = keepDotFiles ? extractDotFilesData(localStorage) : null;
+			let mutationStarted = false;
+			let announced = false;
+			try {
+				if (!isOperationCurrent(context)) return 'unknown';
+				localStorage.setItem(CLOUD_RESTORE_LOCK_KEY, Date.now().toString());
+				if (requireCloudMatch) {
+					try {
+						const finalCheck = await inspectCloudSignOut(context);
+						if (finalCheck !== 'matching') return finalCheck;
+					} catch {
+						return 'unknown';
+					}
+				}
+				sessionStorage.setItem(CLOUD_RESTORE_SESSION_KEY, '1');
+				await signOutFirebase();
+
+				mutationStarted = true;
+				applyProgressData({}, { replace: true });
+				clearProgressStorage(localStorage);
+				if (dotFilesSnapshot !== null) {
+					localStorage.setItem('files', dotFilesSnapshot);
+				}
+				sessionStorage.removeItem(FORK_TRANSFER_STORAGE_KEY);
+				saveUserMeta(context, {
+					lastSyncedHash: null,
+					lastSyncedAt: null
+				});
+				announceCloudRestore(true);
+				announced = true;
+				return 'signed-out';
+			} catch (error) {
+				if (mutationStarted) {
+					announceCloudRestore(true);
+					announced = true;
+				}
+				throw error;
+			} finally {
+				if (!announced) {
+					resumeAfterCloudMutation();
+				}
+			}
+		}
+	);
+}
+
+export async function disconnectCloud(
+	options: { clearLocalData?: boolean; requireCloudMatch?: boolean; keepDotFiles?: boolean } = {}
+): Promise<CloudDisconnectResult> {
+	try {
+		if (!options.clearLocalData) {
+			await signOutFirebase();
+			return 'signed-out';
+		}
+		const context = captureOperationContext();
+		if (!context) throw new Error('The signed-in account changed. Try again.');
+		return await clearLocalDataAndSignOut(context, options.requireCloudMatch === true, options.keepDotFiles === true);
+	} catch (error) {
+		cloudSyncState.update((state) => state.authStatus === 'signed-in'
+			? { ...state, syncStatus: 'error', error: errorMessage(error) }
+			: state
+		);
+		throw error;
+	}
+}
+
+export async function resolveCloudProgress(preference: 'local' | 'cloud'): Promise<void> {
+	let context = captureOperationContext();
+	if (!context) return;
+	let state = get(cloudSyncState);
+	if (state.remoteStatus === 'unknown' || state.remoteStatus === 'loading' || state.remoteStatus === 'error') {
+		await queueSync('fetch', context);
+		if (!isOperationCurrent(context)) return;
+		state = get(cloudSyncState);
+	}
+	if (state.remoteStatus !== 'present' && state.remoteStatus !== 'absent') {
+		throw new Error('Cojudge Cloud could not confirm the remote workspace. Try again.');
+	}
+	if (preference === 'cloud' && state.remoteStatus !== 'present') {
+		throw new Error('No Cojudge Cloud snapshot exists for this account yet.');
+	}
+	const resolution = state.resolution;
+	const device = readDeviceMeta();
+	const accountId = cloudAccountId(context.projectId, context.uid);
+	const previousWorkspaceId = device.workspaceId;
+	device.workspaceId = accountId;
+	writeDeviceMeta(device);
+	cloudSyncState.update((state) => ({
+		...state,
+		resolution: null,
+		error: null
+	}));
+	try {
+		const mode: SyncMode = preference === 'cloud'
+			? 'force-download'
+			: resolution === 'local-changes'
+				? 'push'
+				: 'force-upload';
+		context = captureOperationContext();
+		if (!context) return;
+		const operationContext = context;
+		await queueSync(mode, operationContext);
+	} catch (error) {
+		const operationContext = context;
+		if (!operationContext || !isOperationCurrent(operationContext)) return;
+		const current = readDeviceMeta();
+		if (current.workspaceId === cloudAccountId(operationContext.projectId, operationContext.uid)) {
+			current.workspaceId = previousWorkspaceId;
+			writeDeviceMeta(current);
+		}
+		cloudSyncState.update((state) => ({
+			...state,
+			resolution: resolution ?? 'account'
+		}));
+		throw error;
+	}
+}

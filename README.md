@@ -28,6 +28,7 @@
 - Code Playground: Run code snippets in Java, C++, Python, Typescript, Rust, C# or Go without a problem context
 - Extensible: add new problems by dropping folders in `problems/`
 - Persistent Code & Progress Tracking via Local Storage
+- Optional Cojudge Cloud sync through Google sign-in; local storage remains the source of truth offline
 - Browser-like tabs to organize your local solutions
 - Extensive problems: includes all 75 problems with sample test cases, hidden test cases and reference solutions from Blind 75
 

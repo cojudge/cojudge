@@ -1,6 +1,6 @@
 import { get } from 'svelte/store';
 import { describe, expect, it } from 'vitest';
-import { activeDialog, settleDialog, showAlert, showConfirm } from './dialogs';
+import { activeDialog, settleDialog, showAlert, showChoice, showConfirm } from './dialogs';
 
 describe('app dialogs', () => {
 	it('queues dialogs and resolves their results in order', async () => {
@@ -16,5 +16,15 @@ describe('app dialogs', () => {
 		settleDialog(false);
 		await alert;
 		expect(get(activeDialog)).toBeNull();
+	});
+
+	it('distinguishes dismissing a choice from selecting its secondary action', async () => {
+		const dismissed = showChoice('Clear local data?');
+		settleDialog(null);
+		expect(await dismissed).toBeNull();
+
+		const secondary = showChoice('Clear local data?');
+		settleDialog(false);
+		expect(await secondary).toBe(false);
 	});
 });

@@ -1,6 +1,7 @@
 import { browser } from '$app/environment';
 import type { ProgrammingLanguage } from '$lib/utils/util';
 import { writable } from 'svelte/store';
+import { writeProgressStorageItem } from '$lib/progressBackup';
 
 export type ThemeChoice = 'dark' | 'light';
 
@@ -18,7 +19,7 @@ export interface UserSettings {
 
 const STORAGE_KEY = 'user-settings';
 
-const defaultSettings: UserSettings = {
+export const defaultUserSettings: UserSettings = {
     preferredLanguage: 'java',
     playgroundPreferredLanguage: 'java',
     editorFontSize: 14,
@@ -28,25 +29,25 @@ const defaultSettings: UserSettings = {
     activePanel: 'explorer',
 };
 
-function normalizeSettings(input: any): UserSettings {
-    const preferredLanguage = (input?.preferredLanguage ?? defaultSettings.preferredLanguage) as ProgrammingLanguage;
-    const playgroundPreferredLanguage = (input?.playgroundPreferredLanguage ?? defaultSettings.playgroundPreferredLanguage) as ProgrammingLanguage;
+export function normalizeUserSettings(input: any): UserSettings {
+    const preferredLanguage = (input?.preferredLanguage ?? defaultUserSettings.preferredLanguage) as ProgrammingLanguage;
+    const playgroundPreferredLanguage = (input?.playgroundPreferredLanguage ?? defaultUserSettings.playgroundPreferredLanguage) as ProgrammingLanguage;
     const rawSize = input?.editorFontSize;
-    const size = typeof rawSize === 'number' ? rawSize : defaultSettings.editorFontSize;
+    const size = typeof rawSize === 'number' ? rawSize : defaultUserSettings.editorFontSize;
     const editorFontSize = Math.min(24, Math.max(12, size));
-    const rawTheme = (input?.theme ?? defaultSettings.theme) as ThemeChoice;
+    const rawTheme = (input?.theme ?? defaultUserSettings.theme) as ThemeChoice;
     const theme: ThemeChoice = rawTheme === 'dark' ? 'dark' : 'light';
     const vimMode = input?.vimMode === 'on' ? 'on' : 'off';
-    const isSidebarOpen = typeof input?.isSidebarOpen === 'boolean' ? input.isSidebarOpen : defaultSettings.isSidebarOpen;
+    const isSidebarOpen = typeof input?.isSidebarOpen === 'boolean' ? input.isSidebarOpen : defaultUserSettings.isSidebarOpen;
     const validPanels: ActivePanel[] = ['explorer', 'search', null];
-    const activePanel = validPanels.includes(input?.activePanel as ActivePanel) ? input.activePanel as ActivePanel : defaultSettings.activePanel;
+    const activePanel = validPanels.includes(input?.activePanel as ActivePanel) ? input.activePanel as ActivePanel : defaultUserSettings.activePanel;
     return { preferredLanguage, playgroundPreferredLanguage, editorFontSize, theme, vimMode, isSidebarOpen, activePanel };
 }
 
 // Load initial settings from localStorage if available
 const initialSettings: UserSettings = browser
-    ? normalizeSettings(JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'))
-    : defaultSettings;
+    ? normalizeUserSettings(JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'))
+    : defaultUserSettings;
 
 const userSettingsStorage = writable<UserSettings>(initialSettings);
 
@@ -59,7 +60,7 @@ function applyTheme(theme: ThemeChoice) {
 if (browser) {
     applyTheme(initialSettings.theme);
     userSettingsStorage.subscribe((value) => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+        if (!writeProgressStorageItem(localStorage, STORAGE_KEY, JSON.stringify(value))) return;
         applyTheme(value.theme);
     });
 }
