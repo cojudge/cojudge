@@ -9,7 +9,7 @@
     import { ensureAuthenticated, initFirebase } from '$lib/firebase';
     import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress } from '$lib/progressBackup';
     import codeStore from '$lib/stores/codeStore.js';
-    import fileStore, { type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
+    import fileStore, { isDotFileName, type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
     import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, wrapImageThumbnails, wrapCodeBlocksWithCopy, ensureTrailingEmptyLine, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS } from '$lib/utils/markdown';
@@ -447,6 +447,25 @@ func main() {
         await loadOrInitFile(language);
         persistTabOrder();
         startRename(nextId, fileName, 'sidebar');
+    }
+
+    function toggleCloudVisibility(fileId: string, currentName: string) {
+        if (currentName === '.' || currentName === '..') return;
+        const nextName = isDotFileName(currentName) ? currentName.slice(1) : `.${currentName}`;
+        if (nextName === currentName) return;
+        const now = Date.now();
+        tabs = tabs.map(t => t.fileId === fileId ? { ...t, fileName: nextName, lastUpdated: now } : t);
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            for (const f of files) {
+                if (f.fileId === fileId) {
+                    f.fileName = nextName;
+                    f.lastUpdated = now;
+                }
+            }
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
     }
 
     function persistTabOrder() {
@@ -1931,7 +1950,7 @@ func main() {
                         <div class="file-group-header">{group}</div>
                         {#each groupedTabs[group] as t}
                             <div
-                                class="file-item {hasOpenTabs && t.fileId === tabs[activeTabId].fileId ? 'active' : ''}"
+                                class="file-item {isDotFileName(t.fileName) ? 'dotfile' : ''} {hasOpenTabs && t.fileId === tabs[activeTabId].fileId ? 'active' : ''}"
                                 on:click={() => activateTab(t.fileId)}
                                 draggable={true}
                                 on:dragstart={(e) => handleDragStart(e, t.fileId)}
@@ -1964,6 +1983,27 @@ func main() {
                                 {/if}
                                 
                                 <div class="file-actions">
+                                    <button
+                                        class="file-action-btn"
+                                        title={isDotFileName(t.fileName) ? 'Show this file in cloud backups' : 'Hide this file from cloud backups'}
+                                        aria-label={isDotFileName(t.fileName) ? 'Show this file in cloud backups' : 'Hide this file from cloud backups'}
+                                        on:click|stopPropagation={() => toggleCloudVisibility(t.fileId, t.fileName)}
+                                    >
+                                        {#if isDotFileName(t.fileName)}
+                                            <!-- Eye-off icon (hidden from cloud) -->
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+                                                <path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                            </svg>
+                                        {:else}
+                                            <!-- Eye icon (visible to cloud) -->
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+                                            </svg>
+                                        {/if}
+                                    </button>
                                     <button
                                         class="file-action-btn"
                                         title="Duplicate"
@@ -2088,7 +2128,7 @@ func main() {
                     {#each tabs as t}
                         {#if t.isOpen}
                         <div
-                            class="tab {t.fileId === tabs[activeTabId].fileId ? 'active' : ''}"
+                            class="tab {isDotFileName(t.fileName) ? 'dotfile' : ''} {t.fileId === tabs[activeTabId].fileId ? 'active' : ''}"
                             role="tab"
                             aria-selected={t.fileId === tabs[activeTabId].fileId}
                             tabindex={t.fileId === tabs[activeTabId].fileId ? 0 : -1}
@@ -2660,6 +2700,11 @@ func main() {
         color: var(--color-text);
     }
 
+    .file-item.dotfile {
+        opacity: 0.6;
+    }
+ 
+
     .file-name {
         white-space: nowrap;
         overflow: hidden;
@@ -3060,6 +3105,12 @@ func main() {
         background-color: var(--color-surface);
         border-bottom-color: var(--color-highlight);
         box-shadow: 0 -1px 0 var(--color-surface), 0 1px 0 var(--color-surface);
+    }
+    .tab.dotfile {
+        opacity: 0.5;
+    }
+    .tab.dotfile.active {
+        opacity: 0.5;
     }
     .tab-title {
         white-space: nowrap;

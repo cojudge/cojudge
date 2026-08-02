@@ -38,15 +38,16 @@
 		}
 	}
 
-	function close(confirmed: boolean): void {
-		settleDialog(confirmed);
+	function close(result: boolean | null): void {
+		settleDialog(result);
 	}
 
 	function handleKeydown(event: KeyboardEvent): void {
 		if (!$activeDialog) return;
 		if (event.key === 'Escape') {
 			event.preventDefault();
-			close(false);
+			event.stopImmediatePropagation();
+			close(null);
 			return;
 		}
 		if (event.key !== 'Tab' || !dialogCard) return;
@@ -81,7 +82,7 @@
 			class="dialog-backdrop"
 			aria-label={$activeDialog.kind === 'confirm' ? 'Cancel' : 'Close'}
 			tabindex="-1"
-			onclick={() => close(false)}
+			onclick={() => close(null)}
 		></button>
 		<div
 			bind:this={dialogCard}

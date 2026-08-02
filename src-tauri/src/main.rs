@@ -178,7 +178,7 @@ fn google_oauth_header(name: &[u8], value: &[u8]) -> HttpHeader {
 }
 
 fn respond_to_google_oauth(request: HttpRequest, status: u16, body: &str) {
-    let response = HttpResponse::from_string(body.to_owned())
+    let response = HttpResponse::from_string(google_oauth_page(status, body))
         .with_status_code(HttpStatusCode(status))
         .with_header(google_oauth_header(
             b"Content-Type",
@@ -193,10 +193,95 @@ fn respond_to_google_oauth(request: HttpRequest, status: u16, body: &str) {
         .with_header(google_oauth_header(b"X-Content-Type-Options", b"nosniff"))
         .with_header(google_oauth_header(
             b"Content-Security-Policy",
-            b"default-src 'none'; base-uri 'none'; form-action 'none'",
+            b"default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'",
         ));
 
     let _ = request.respond(response);
+}
+
+fn google_oauth_page(status: u16, message: &str) -> String {
+    let escaped_message = message
+        .replace('&', "&amp;")
+        .replace('<', "&lt;")
+        .replace('>', "&gt;")
+        .replace('"', "&quot;")
+        .replace('\'', "&#39;");
+    let bg = if status == 200 { "#f0f7ef" } else { "#fdf1ef" };
+    format!(
+        r#"<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in &middot; Cojudge</title>
+</head>
+<body>
+<main>
+  <p class="badge">Cojudge</p>
+  <h1>One moment&hellip;</h1>
+  <p class="message">{escaped_message}</p>
+  <p id="hint" class="hint" hidden>Your browser blocked auto-closing this window. You can close it manually now.</p>
+</main>
+<script>
+  function tryClose() {{
+    try {{ window.close(); }} catch (_) {{}}
+  }}
+  tryClose();
+  setTimeout(function () {{
+    tryClose();
+    document.getElementById("hint").classList.add("show");
+  }}, 800);
+</script>
+<style>
+  :root {{ color-scheme: light dark; }}
+  * {{ box-sizing: border-box; }}
+  body {{
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: {bg};
+    color: #1d1d1f;
+  }}
+  main {{
+    background: #fff;
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
+  }}
+  .badge {{
+    display: inline-block;
+    margin: 0 0 12px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: #e8f3fb;
+    color: #0b5c8a;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }}
+  h1 {{ margin: 0 0 8px; font-size: 22px; }}
+  .message {{ margin: 0; font-size: 15px; line-height: 1.5; }}
+  .hint {{
+    visibility: hidden;
+    margin: 16px 0 0;
+    font-size: 13px;
+    color: #6b6b70;
+  }}
+  .hint.show {{ visibility: visible; }}
+  @media (prefers-color-scheme: dark) {{
+    main {{ background: #1f1f23; }}
+    .message {{ color: #e8e8ed; }}
+    .badge {{ background: #16324a; color: #7cc4ea; }}
+  }}
+</style>
+</body>
+</html>"#
+    )
 }
 
 fn google_oauth_callback_parameters(

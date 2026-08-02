@@ -41,7 +41,7 @@ For a custom Firebase project:
 
 Desktop Google sign-in opens the system browser, listens temporarily on a random `127.0.0.1` port, uses OAuth PKCE, and then closes the local listener. No hosted callback server or VPS is involved. Google calls the native credential a client secret, but installed apps cannot keep embedded values confidential; PKCE and callback validation provide the security boundary.
 
-Cojudge Cloud is manual: **Upload backup** replaces the account's single cloud backup, while **Download backup** replaces local progress after confirmation. Signing in never uploads or downloads progress automatically.
+Cojudge Cloud follows a Git-like synchronization model: login, reconnect, and periodic checks fetch cloud metadata and pull only onto an unchanged local working copy. Local edits and deletions are never pushed by those background checks. **Sync now** explicitly creates a cloud revision, and the five most recent revisions remain available for local restore.
 
 ## Development
 

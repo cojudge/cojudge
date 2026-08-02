@@ -2,6 +2,7 @@
 	import { browser } from '$app/environment';
 	import { isDesktopRuntime } from '$lib/firebaseSettings';
 	import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress } from '$lib/progressBackup';
+	import { WHITEBOARD_RESTORED_EVENT } from '$lib/cloudFileChange';
 	import WhiteboardIcon from '$lib/components/WhiteboardIcon.svelte';
 	import { showConfirm } from '$lib/dialogs';
 	import userSettingsStorage from '$lib/stores/userSettingsStorage';
@@ -222,6 +223,8 @@
 		window.addEventListener('hashchange', handleHashChange);
 		window.addEventListener('pagehide', saveBoardNow);
 		window.addEventListener(CLOUD_FLUSH_EVENT, saveBoardNow);
+		window.addEventListener('storage', reloadBoardFromStorage);
+		window.addEventListener(WHITEBOARD_RESTORED_EVENT, reloadBoardFromStorage);
 		window.addEventListener('paste', handlePaste);
 		wheelTarget?.addEventListener('wheel', handleWheel, { capture: true, passive: false });
 		document.addEventListener('pointerdown', closeMenusOnOutsideClick);
@@ -235,6 +238,8 @@
 			window.removeEventListener('hashchange', handleHashChange);
 			window.removeEventListener('pagehide', saveBoardNow);
 			window.removeEventListener(CLOUD_FLUSH_EVENT, saveBoardNow);
+			window.removeEventListener('storage', reloadBoardFromStorage);
+			window.removeEventListener(WHITEBOARD_RESTORED_EVENT, reloadBoardFromStorage);
 			window.removeEventListener('paste', handlePaste);
 			wheelTarget?.removeEventListener('wheel', handleWheel, { capture: true });
 			document.removeEventListener('pointerdown', closeMenusOnOutsideClick);
@@ -290,6 +295,19 @@
 		redoStack = [];
 		textEditor = null;
 		saveState = 'saved';
+	}
+
+	function reloadBoardFromStorage(event?: Event): void {
+		if (event instanceof StorageEvent) {
+			if (event.storageArea !== localStorage) return;
+			if (event.key !== null && event.key !== activeStorageKey) return;
+		}
+		try {
+			const stored = localStorage.getItem(activeStorageKey);
+			if (stored) applyStoredBoard(JSON.parse(stored) as StoredBoard);
+		} catch {
+			// Ignore a corrupt board; keep whatever is on screen.
+		}
 	}
 
 	function loadBoardFromLocation(showFeedback = false): void {

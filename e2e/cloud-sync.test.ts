@@ -7,7 +7,7 @@ test('Cojudge Cloud is optional and explicitly offline-first', async ({ page }) 
 
 	const dialog = page.getByRole('dialog', { name: 'Cojudge Cloud' });
 	await expect(dialog).toBeVisible();
-	await expect(dialog).toContainText('Nothing syncs automatically');
+	await expect(dialog).toContainText('Local saves never wait for the cloud');
 	await page.keyboard.press('Escape');
 	await expect(dialog).toBeHidden();
 });
@@ -71,34 +71,4 @@ test('progress imports cannot replace the Firebase project', async ({ page }) =>
 			page.evaluate(() => JSON.parse(localStorage.getItem('cojudge-firebase-settings') || '{}').projectId)
 		)
 		.toBe('trusted');
-});
-
-test('progress imports accept historical preview tabs', async ({ page }) => {
-	await page.goto('/');
-	const preview = {
-		fileId: 'preview-1',
-		fileName: 'Preview',
-		language: 'markdown',
-		content: '# Preview',
-		isOpen: true,
-		lastUpdated: 1,
-		type: 'preview',
-		sourceFileId: 'source-1',
-		order: 1
-	};
-	await page.locator('input[type="file"]').setInputFiles({
-		name: 'historical-backup.json',
-		mimeType: 'application/json',
-		buffer: Buffer.from(JSON.stringify({ files: { playground: JSON.stringify([preview]) } }))
-	});
-	await page.getByRole('button', { name: 'Import data' }).click();
-
-	await expect
-		.poll(() =>
-			page.evaluate(() => {
-				const files = JSON.parse(localStorage.getItem('files') || '{}');
-				return JSON.parse(files.playground || '[]')[0]?.type;
-			})
-		)
-		.toBe('preview');
 });

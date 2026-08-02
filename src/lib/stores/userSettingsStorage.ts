@@ -1,6 +1,7 @@
 import { browser } from '$app/environment';
 import type { ProgrammingLanguage } from '$lib/utils/util';
 import { writable } from 'svelte/store';
+import { writeProgressStorageItem } from '$lib/progressBackup';
 
 export type ThemeChoice = 'dark' | 'light';
 
@@ -59,7 +60,7 @@ function applyTheme(theme: ThemeChoice) {
 if (browser) {
     applyTheme(initialSettings.theme);
     userSettingsStorage.subscribe((value) => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+        if (!writeProgressStorageItem(localStorage, STORAGE_KEY, JSON.stringify(value))) return;
         applyTheme(value.theme);
     });
 }

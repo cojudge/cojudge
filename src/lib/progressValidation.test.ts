@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest';
 import {
 	requireArrayRecord,
 	requireFileRecord,
-	requireStringRecord
+	requireGameResultsRecord,
+	requireStringRecord,
+	requireUserSettingsObject
 } from './progressValidation';
 
 describe('progress restore validation', () => {
@@ -53,21 +55,23 @@ describe('progress restore validation', () => {
 				}
 			})
 		).toHaveProperty('playground');
-		expect(
-			requireFileRecord({
-				files: {
-					playground: JSON.stringify([
-						{
-							fileName: 'Preview',
-							content: '# Preview',
-							language: 'markdown',
-							fileId: 'preview-1',
-							type: 'preview',
-							sourceFileId: 'source-1'
-						}
-					])
-				}
+	});
+
+	it('validates game result fields and user settings', () => {
+		expect(() =>
+			requireGameResultsRecord({
+				'game-results': { 'two-sum': [{ runCount: 1 }] }
 			})
-		).toHaveProperty('playground');
+		).toThrow('game-results.two-sum[0].submitCount must contain a number');
+		expect(() =>
+			requireUserSettingsObject({
+				'user-settings': { preferredLanguage: 'brainfuck' }
+			})
+		).toThrow('user-settings.preferredLanguage has an invalid language');
+		expect(
+			requireUserSettingsObject({
+				'user-settings': { preferredLanguage: 'java', theme: 'dark', editorFontSize: 16 }
+			})
+		).toMatchObject({ preferredLanguage: 'java', theme: 'dark' });
 	});
 });

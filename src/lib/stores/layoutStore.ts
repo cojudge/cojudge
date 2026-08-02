@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
+import { writeProgressStorageItem } from '$lib/progressBackup';
 
 const LEFT_PANEL_WIDTH_STORAGE_KEY = 'pane-width';
 const defaultLeftPanelWidth = 50;
@@ -23,10 +24,10 @@ export const execPaneHeightStore = writable<number>(initialExecPanelHeight);
 
 if (browser) {
     leftPaneWidthStore.subscribe((value) => {
-        localStorage.setItem(LEFT_PANEL_WIDTH_STORAGE_KEY, JSON.stringify(value));
+        writeProgressStorageItem(localStorage, LEFT_PANEL_WIDTH_STORAGE_KEY, JSON.stringify(value));
     });
 
     execPaneHeightStore.subscribe((value) => {
-        localStorage.setItem(EXEC_PANEL_HEIGHT_STORAGE_KEY, JSON.stringify(value));
+        writeProgressStorageItem(localStorage, EXEC_PANEL_HEIGHT_STORAGE_KEY, JSON.stringify(value));
     });
 }

@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
+import { writeProgressStorageItem } from '$lib/progressBackup';
 
 // Key for localStorage
 const STORAGE_KEY = 'testcases';
@@ -11,7 +12,7 @@ const testCaseStore = writable<Record<string, any[]>>(initialValue);
 
 if (browser) {
     testCaseStore.subscribe((value) => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+        writeProgressStorageItem(localStorage, STORAGE_KEY, JSON.stringify(value));
     });
 }
 

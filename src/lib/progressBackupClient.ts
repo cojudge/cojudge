@@ -14,8 +14,10 @@ import { isProgressStorageKey, type ProgressData } from '$lib/progressBackup';
 import {
 	requireArrayRecord,
 	requireFileRecord,
+	requireGameResultsRecord,
 	requireProgressObject,
-	requireStringRecord
+	requireStringRecord,
+	requireUserSettingsObject
 } from '$lib/progressValidation';
 
 type ApplyProgressOptions = {
@@ -79,13 +81,17 @@ export function applyProgressData(
 
 	// Validate store-backed values before mutating localStorage.
 	const solutions = 'solutions' in data ? requireStringRecord(data, 'solutions') : {};
-	if ('user-checkboxes' in data) requireObject(data, 'user-checkboxes');
+	const checkboxes = 'user-checkboxes' in data
+		? sanitizeUserCheckboxes(requireObject(data, 'user-checkboxes'))
+		: {};
 	const files = 'files' in data ? requireFileRecord(data) : {};
-	if ('user-settings' in data) requireObject(data, 'user-settings');
-	const gameResults = 'game-results' in data ? requireArrayRecord(data, 'game-results') : {};
+	const settings = 'user-settings' in data
+		? normalizeUserSettings(requireUserSettingsObject(data))
+		: { ...defaultUserSettings };
+	const gameResults = 'game-results' in data ? requireGameResultsRecord(data) : {};
 	const testcases = 'testcases' in data ? requireArrayRecord(data, 'testcases') : {};
-	finiteNumber(data, 'pane-width', 50);
-	finiteNumber(data, 'exec-pane-height', 50);
+	const paneWidth = finiteNumber(data, 'pane-width', 50);
+	const execPaneHeight = finiteNumber(data, 'exec-pane-height', 50);
 
 	const affectedKeys = new Set(incoming.keys());
 	for (const key of STORE_KEYS) {
@@ -119,23 +125,32 @@ export function applyProgressData(
 			}
 		}
 		for (const [key, value] of incoming) storage.setItem(key, value);
+		const storeValues: Record<string, unknown> = {
+			solutions,
+			'user-checkboxes': checkboxes,
+			files,
+			'user-settings': settings,
+			'game-results': gameResults,
+			testcases,
+			'pane-width': paneWidth,
+			'exec-pane-height': execPaneHeight
+		};
+		for (const [key, value] of Object.entries(storeValues)) {
+			if (shouldApplyStore(key)) storage.setItem(key, JSON.stringify(value));
+		}
 
 		if (shouldApplyStore('solutions')) {
 			codeStore.set(solutions);
 		}
 		if (shouldApplyStore('user-checkboxes')) {
-			userStore.set(data['user-checkboxes'] ? sanitizeUserCheckboxes(requireObject(data, 'user-checkboxes')) : {});
+			userStore.set(checkboxes);
 		}
 		if (shouldApplyStore('files')) {
 			fileStore.set(files);
 			fileSyncVersion.update((version) => version + 1);
 		}
 		if (shouldApplyStore('user-settings')) {
-			userSettingsStorage.set(
-				data['user-settings']
-					? normalizeUserSettings(requireObject(data, 'user-settings'))
-					: { ...defaultUserSettings }
-			);
+			userSettingsStorage.set(settings);
 		}
 		if (shouldApplyStore('game-results')) {
 			gameResultsStore.set(gameResults as Record<string, never[]>);
@@ -144,10 +159,10 @@ export function applyProgressData(
 			testCaseStore.set(testcases as Record<string, never[]>);
 		}
 		if (shouldApplyStore('pane-width')) {
-			leftPaneWidthStore.set(finiteNumber(data, 'pane-width', 50));
+			leftPaneWidthStore.set(paneWidth);
 		}
 		if (shouldApplyStore('exec-pane-height')) {
-			execPaneHeightStore.set(finiteNumber(data, 'exec-pane-height', 50));
+			execPaneHeightStore.set(execPaneHeight);
 		}
 	} catch (error) {
 		try {
