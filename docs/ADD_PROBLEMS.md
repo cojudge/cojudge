@@ -499,8 +499,8 @@ cojudge submit <slug> /tmp/solution.java
 
 ### Verification Checklist
 
-- [ ] `cojudge init` produces correct starter code for all 5 languages
-- [ ] `cojudge run` passes for a correct solution in all 5 languages
+- [ ] `cojudge init` produces correct starter code for all 7 languages
+- [ ] `cojudge run` passes for a correct solution in all 7 languages
 - [ ] `cojudge run` fails for an incorrect solution
 - [ ] `cojudge submit` passes (official tests)
 - [ ] Problem appears in the web UI under the correct category
