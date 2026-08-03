@@ -136,15 +136,14 @@ function sanitizeCloudFiles(data: ProgressData): ProgressData {
 			filtered[slug] = entries;
 			continue;
 		}
-		if (entries.length === 0) {
-			filtered[slug] = JSON.stringify(entries);
-			continue;
-		}
+		// Empty file lists carry no restorable data; drop them so an untouched
+		// playground does not count as meaningful cloud state.
 		const cleaned = entries
 			.filter((entry) => {
 				if (!entry || typeof entry !== 'object' || Array.isArray(entry)) return true;
-				const name = (entry as { fileName?: unknown }).fileName;
-				return typeof name !== 'string' || !isDotFileName(name);
+				const meta = entry as { fileName?: unknown; type?: unknown };
+				if (meta.type === 'preview') return false;
+				return typeof meta.fileName !== 'string' || !isDotFileName(meta.fileName);
 			})
 			.map(cloudFileEntry);
 		if (cleaned.length > 0) filtered[slug] = JSON.stringify(cleaned);

@@ -180,6 +180,8 @@ let authUnsubscribe: Unsubscribe | null = null;
 let syncInterval: ReturnType<typeof setInterval> | null = null;
 let onlineListener: (() => void) | null = null;
 let storageListener: ((event: StorageEvent) => void) | null = null;
+let fileStoreUnsubscribe: (() => void) | null = null;
+let dirtyRefreshTimer: ReturnType<typeof setTimeout> | null = null;
 let coordinationChannel: BroadcastChannel | null = null;
 let restoreReloadScheduled = false;
 let coordinationContextId = '';
@@ -1255,6 +1257,16 @@ export function startCloudSync(): Promise<void> {
 	const currentGeneration = ++generation;
 	cloudSyncState.update((state) => ({ ...state, authStatus: 'initializing', error: null }));
 
+	// Re-evaluate the local-changes resolution shortly after any local file
+	// save, so cloud indicators (e.g. the playground legend) stay current.
+	fileStoreUnsubscribe = fileStore.subscribe(() => {
+		if (dirtyRefreshTimer) clearTimeout(dirtyRefreshTimer);
+		dirtyRefreshTimer = setTimeout(() => {
+			dirtyRefreshTimer = null;
+			void refreshCloudLocalState().catch(() => undefined);
+		}, 500);
+	});
+
 	startPromise = (async () => {
 		try {
 			const initialized = await initFirebase();
@@ -1297,6 +1309,10 @@ export function stopCloudSync(): void {
 	syncInterval = null;
 	if (onlineListener) window.removeEventListener('online', onlineListener);
 	onlineListener = null;
+	fileStoreUnsubscribe?.();
+	fileStoreUnsubscribe = null;
+	if (dirtyRefreshTimer) clearTimeout(dirtyRefreshTimer);
+	dirtyRefreshTimer = null;
 	stopCoordination();
 	activeAuth = null;
 	activeDb = null;
