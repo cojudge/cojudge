@@ -155,6 +155,38 @@ function escapeHtmlAttr(value: string): string {
         .replace(/>/g, '&gt;');
 }
 
+// True when the entire string is a single URL-like token (no whitespace).
+// Accepts http(s)://... and www....
+export function isUrlLike(text: string): boolean {
+    const trimmed = text.trim();
+    if (!trimmed || /\s/.test(trimmed)) return false;
+    try {
+        if (/^https?:\/\//i.test(trimmed)) {
+            const url = new URL(trimmed);
+            return url.protocol === 'http:' || url.protocol === 'https:';
+        }
+        if (/^www\./i.test(trimmed)) {
+            new URL('http://' + trimmed);
+            return true;
+        }
+        return false;
+    } catch {
+        return false;
+    }
+}
+
+export function normalizeUrl(text: string): string {
+    const trimmed = text.trim();
+    if (/^https?:\/\//i.test(trimmed)) return trimmed;
+    if (/^www\./i.test(trimmed)) return 'http://' + trimmed;
+    return trimmed;
+}
+
+// HTML for a link that opens in a new tab (used by WYSIWYG paste / insert).
+export function linkHtml(href: string, text: string): string {
+    return `<a href="${escapeHtmlAttr(href)}" target="_blank" rel="noopener noreferrer">${escapeHtmlAttr(text)}</a>`;
+}
+
 // Renders an image as a small thumbnail with a delete button, instead of the
 // full-size image. Click handling (lightbox / delete) is done via event
 // delegation by the caller. contenteditable="false" makes the thumbnail an
@@ -233,8 +265,18 @@ export function wrapCodeBlocksWithCopy(root: HTMLElement) {
     }
 }
 
+function openLinksInNewTab(renderer: Renderer) {
+    const originalLink = renderer.link.bind(renderer);
+    renderer.link = (token: any) => {
+        const html = originalLink(token);
+        if (typeof html !== 'string' || !html.startsWith('<a ')) return html;
+        return html.replace(/^<a /, '<a target="_blank" rel="noopener noreferrer" ');
+    };
+}
+
 export function getMarkdownRenderer(options?: { imageThumbnails?: boolean }) {
     const renderer = new Renderer();
+    openLinksInNewTab(renderer);
     if (options?.imageThumbnails) {
         renderer.image = (token: any) => imageThumbnailHtml(token.href ?? '', token.text ?? '', token.title);
     }
@@ -291,7 +333,9 @@ export function renderMarkdown(content: string, options?: { imageThumbnails?: bo
 // Plain GFM rendering without the interactive code-block wrapper.
 // Used as the source HTML for WYSIWYG editing so it can round-trip back to markdown.
 export function renderMarkdownPlain(content: string): string {
-    return marked.parse(content, { async: false });
+    const renderer = new Renderer();
+    openLinksInNewTab(renderer);
+    return marked.parse(content, { async: false, renderer });
 }
 
 let turndownService: TurndownService | null = null;

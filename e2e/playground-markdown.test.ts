@@ -44,6 +44,32 @@ test('playground markdown editor pastes clipboard images as base64 markdown', as
   await expect.poll(() => getMarkdownContent(page)).toMatch(/^!\[image\]\(data:image\/png;base64,/);
 });
 
+test('WYSIWYG paste turns a URL string into a link', async ({ page }) => {
+  await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('before');
+  await expect.poll(() => getMarkdownContent(page)).toBe('before');
+
+  await page.getByRole('button', { name: 'Preview Markdown' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  await expect(editable).toBeVisible();
+
+  await editable.locator('> p:last-child').click();
+  await page.keyboard.press('End');
+  await page.keyboard.press('Enter');
+
+  await page.evaluate(async () => {
+    await navigator.clipboard.writeText('https://example.com/path');
+  });
+  await page.keyboard.press('ControlOrMeta+v');
+
+  await expect(editable.locator('a[href="https://example.com/path"]')).toHaveAttribute('target', '_blank');
+  await expect.poll(() => getMarkdownContent(page)).toContain('[https://example.com/path](https://example.com/path)');
+});
+
 test('playground markdown preview has a WYSIWYG editing mode', async ({ page }) => {
   await openMarkdownPlayground(page);
 
