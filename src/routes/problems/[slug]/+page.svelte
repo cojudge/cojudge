@@ -503,6 +503,7 @@
                 x.language === language
             );
             if (existingFile) {
+                if (existingFile.viewState === state) return s;
                 existingFile.viewState = state;
             }
             return {...s, [fkey]: JSON.stringify(files)};

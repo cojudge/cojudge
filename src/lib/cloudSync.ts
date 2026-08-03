@@ -277,8 +277,11 @@ function saveUserMeta(context: OperationContext, userMeta: DeviceUserMeta): void
 	writeDeviceMeta(meta);
 }
 
-async function readLocalSnapshot(context: OperationContext): Promise<LocalSnapshot> {
-	window.dispatchEvent(new Event(CLOUD_FLUSH_EVENT));
+async function readLocalSnapshot(
+	context: OperationContext,
+	options: { flush?: boolean } = {}
+): Promise<LocalSnapshot> {
+	if (options.flush !== false) window.dispatchEvent(new Event(CLOUD_FLUSH_EVENT));
 	const data = collectProgressData(localStorage, { cloud: true });
 	const serialized = serializeProgressData(data);
 	const checksum = await hashProgress(serialized);
@@ -917,10 +920,10 @@ export function syncCloudNow(): Promise<void> {
 	return queueSync('push');
 }
 
-export async function refreshCloudLocalState(): Promise<boolean> {
+export async function refreshCloudLocalState(options: { flush?: boolean } = {}): Promise<boolean> {
 	const context = captureOperationContext();
 	if (!browser || !context || isCloudRestoreInProgress()) return false;
-	const local = await readLocalSnapshot(context);
+	const local = await readLocalSnapshot(context, options);
 	if (!isOperationCurrent(context)) return false;
 	const dirty = local.meta.lastSyncedHash
 		? local.checksum !== local.meta.lastSyncedHash
@@ -1259,11 +1262,14 @@ export function startCloudSync(): Promise<void> {
 
 	// Re-evaluate the local-changes resolution shortly after any local file
 	// save, so cloud indicators (e.g. the playground legend) stay current.
+	// The flush is skipped because this refresh is itself triggered by a file
+	// store save; flushing again would make flush handlers write to the store
+	// and retrigger this debounce in a self-sustaining loop.
 	fileStoreUnsubscribe = fileStore.subscribe(() => {
 		if (dirtyRefreshTimer) clearTimeout(dirtyRefreshTimer);
 		dirtyRefreshTimer = setTimeout(() => {
 			dirtyRefreshTimer = null;
-			void refreshCloudLocalState().catch(() => undefined);
+			void refreshCloudLocalState({ flush: false }).catch(() => undefined);
 		}, 500);
 	});
 

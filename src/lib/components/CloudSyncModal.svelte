@@ -94,8 +94,19 @@
 
     $: if (open) void openModal();
 
-    $: if (open && $cloudSyncState.resolution === 'local-changes') {
-        void loadCloudFileChanges();
+    // Load the file changes only when entering the local-changes state, not on
+    // every cloudSyncState emission. The store emits a new object for unrelated
+    // updates (e.g. dirty checks after local saves), and refetching on each one
+    // makes this section flicker between the diff and "Comparing with the cloud…".
+    let fileChangesLoadArmed = false;
+    $: {
+        const shouldLoadFileChanges = open && $cloudSyncState.resolution === 'local-changes';
+        if (shouldLoadFileChanges && !fileChangesLoadArmed) {
+            fileChangesLoadArmed = true;
+            void loadCloudFileChanges();
+        } else if (!shouldLoadFileChanges) {
+            fileChangesLoadArmed = false;
+        }
     }
 
     $: if (browser) {
@@ -111,6 +122,7 @@
     });
 
     async function loadCloudFileChanges() {
+        if (cloudFileChangesLoading) return;
         if ($cloudSyncState.authStatus !== 'signed-in' || $cloudSyncState.resolution !== 'local-changes') {
             cloudFileChanges = [];
             cloudFileChangesError = '';
