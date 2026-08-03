@@ -47,13 +47,20 @@ import { FORK_TRANSFER_STORAGE_KEY } from '$lib/forkTransfer';
 import fileStore, { fileSyncVersion } from '$lib/stores/fileStore';
 import {
 	computeFileChanges,
+	computeOtherChanges,
 	computeWhiteboardChange,
+	computeWorkspaceChanges,
+	discardChange,
 	discardFile,
+	OTHER_CHANGE_FILE_ID_PREFIXES,
+	CHECKBOXES_FILE_ID,
+	USER_SETTINGS_FILE_ID,
 	WHITEBOARD_BOARD_KEY,
 	WHITEBOARD_FILE_ID,
 	WHITEBOARD_RESTORED_EVENT,
 	type FileChange,
-	type FileStore
+	type FileStore,
+	type ProgressStore
 } from '$lib/cloudFileChange';
 
 const DEVICE_META_KEY = 'cojudge-cloud-sync-meta';
@@ -957,10 +964,14 @@ export async function fetchCloudFileChanges(): Promise<FileChange[]> {
 	const localFiles = (local.data.files as FileStore | undefined) ?? {};
 	const localBoard = local.data[WHITEBOARD_BOARD_KEY];
 
-	const changes: FileChange[] = computeFileChanges(localFiles, {});
-	const localBoardChange = computeWhiteboardChange(localBoard, null);
-	if (localBoardChange) changes.push(localBoardChange);
-	if (!remote) return changes;
+	if (!remote) {
+		const changes: FileChange[] = computeFileChanges(localFiles, {});
+		const localBoardChange = computeWhiteboardChange(localBoard, null);
+		if (localBoardChange) changes.push(localBoardChange);
+		changes.push(...computeOtherChanges(local.data, {}));
+		changes.push(...computeWorkspaceChanges(local.data, {}, new Set(changes.map((change) => change.slug))));
+		return changes;
+	}
 
 	const downloaded = await downloadSnapshot(context.db, context.uid, remote);
 	if (!isOperationCurrent(context)) return [];
@@ -970,6 +981,10 @@ export async function fetchCloudFileChanges(): Promise<FileChange[]> {
 	const mergedChanges: FileChange[] = computeFileChanges(localFiles, cloudFiles);
 	const whiteboardChange = computeWhiteboardChange(localBoard, cloudBoard);
 	if (whiteboardChange) mergedChanges.push(whiteboardChange);
+	mergedChanges.push(...computeOtherChanges(local.data, downloaded));
+	mergedChanges.push(
+		...computeWorkspaceChanges(local.data, downloaded, new Set(mergedChanges.map((change) => change.slug)))
+	);
 	return mergedChanges;
 }
 
@@ -995,6 +1010,11 @@ export async function discardLocalFileChange(fileId: string): Promise<void> {
 			localStorage.setItem(WHITEBOARD_BOARD_KEY, JSON.stringify(cloudBoard));
 		}
 		window.dispatchEvent(new CustomEvent(WHITEBOARD_RESTORED_EVENT));
+	} else if (isOtherChangeFileId(fileId)) {
+		const contextSnapshot = await readLocalSnapshot(context);
+		if (!isOperationCurrent(context)) return;
+		const updated = discardChange(contextSnapshot.data as ProgressStore, fileId, downloaded);
+		applyProgressData(updated, { replace: true });
 	} else {
 		const cloudFiles = (downloaded.files ?? {}) as FileStore;
 		const localStore = readLocalFilesStore();
@@ -1004,6 +1024,14 @@ export async function discardLocalFileChange(fileId: string): Promise<void> {
 		fileSyncVersion.update((version) => version + 1);
 	}
 	await refreshCloudLocalState();
+}
+
+function isOtherChangeFileId(fileId: string): boolean {
+	return (
+		fileId === CHECKBOXES_FILE_ID
+		|| fileId === USER_SETTINGS_FILE_ID
+		|| OTHER_CHANGE_FILE_ID_PREFIXES.some((prefix) => fileId.startsWith(prefix))
+	);
 }
 
 async function inspectCloudSignOut(context: OperationContext): Promise<CloudSignOutCheck> {

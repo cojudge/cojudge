@@ -451,7 +451,7 @@
                 {#if $cloudSyncState.resolution === 'local-changes'}
                     <div class="cloud-file-changes">
                         <div class="cloud-file-changes-heading">
-                            <strong>Local file changes</strong>
+                            <strong>Local changes</strong>
                             <button class="btn cloud-file-reload" type="button" onclick={loadCloudFileChanges} disabled={cloudActionPending}>{cloudFileChangesLoading ? 'Comparing…' : 'Refresh'}</button>
                         </div>
                         {#if cloudFileChangesError}
@@ -459,7 +459,7 @@
                         {:else if cloudFileChangesLoading}
                             <p class="cloud-file-changes-empty">Comparing with the cloud…</p>
                         {:else if cloudFileChanges.length === 0}
-                            <p class="cloud-file-changes-empty">No file content differs. There may still be changes in solutions, test cases, whiteboard drawings or settings.</p>
+                            <p class="cloud-file-changes-empty">No differences found. Local data matches the latest cloud version.</p>
                         {:else}
                             {#each cloudFileChanges as change}
                                 <div class="cloud-file-change">
