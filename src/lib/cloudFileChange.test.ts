@@ -155,6 +155,47 @@ describe('discardFile', () => {
 		expect(entries[0].lastUpdated).toBe(200);
 	});
 
+	it('restores cloud order instead of keeping the local order field', () => {
+		const localStore: FileStore = {
+			playground: JSON.stringify([
+				{ fileId: '1', fileName: 'Solution', language: 'python', content: 'print(2)', order: 5, isOpen: true }
+			])
+		};
+		const cloudStore: FileStore = {
+			playground: JSON.stringify([
+				{ fileId: '1', fileName: 'Solution', language: 'python', content: 'print(1)', order: 1 }
+			])
+		};
+
+		const updated = discardFile(localStore, '1', cloudStore);
+		const entries = JSON.parse(updated.playground) as Array<Record<string, unknown>>;
+		expect(entries[0].content).toBe('print(1)');
+		expect(entries[0].order).toBe(1);
+		expect(entries[0].isOpen).toBe(true);
+	});
+
+	it('replaces a file in place so sibling order (and local-only files) stay put', () => {
+		const localStore: FileStore = {
+			playground: JSON.stringify([
+				{ fileId: '1', fileName: 'A', language: 'python', content: 'local-a' },
+				{ fileId: 'dot', fileName: '.env', language: 'text', content: 'SECRET=1' },
+				{ fileId: '2', fileName: 'B', language: 'python', content: 'b' }
+			])
+		};
+		const cloudStore: FileStore = {
+			playground: JSON.stringify([
+				{ fileId: '1', fileName: 'A', language: 'python', content: 'cloud-a' },
+				{ fileId: '2', fileName: 'B', language: 'python', content: 'b' }
+			])
+		};
+
+		const updated = discardFile(localStore, '1', cloudStore);
+		const entries = JSON.parse(updated.playground) as Array<Record<string, unknown>>;
+		expect(entries.map((entry) => entry.fileId)).toEqual(['1', 'dot', '2']);
+		expect(entries[0].content).toBe('cloud-a');
+		expect(entries[1].fileName).toBe('.env');
+	});
+
 	it('removes a local-only file when discarded', () => {
 		const localStore: FileStore = {
 			playground: JSON.stringify([
@@ -320,5 +361,31 @@ describe('discardChange', () => {
 		const cloud: ProgressStore = { files: { playground: JSON.stringify([{ fileId: '1', fileName: 'Original' }]) } };
 		const updated = discardChange(local, `${WORKSPACE_FILE_ID_PREFIX}playground`, cloud);
 		expect(JSON.parse((updated.files as Record<string, string>).playground)[0].fileName).toBe('Original');
+	});
+});
+
+describe('discard residual workspace noise', () => {
+	it('does not leave a workspace change after discarding matching content in place', () => {
+		// Mirrors cloud-sanitized entries (no editor-only fields). Previously,
+		// discardFile appended restored entries and kept local `order`, which
+		// made a phantom "Files (names or order)" change appear after discard.
+		const localStore: FileStore = {
+			playground: JSON.stringify([
+				{ fileId: '1', fileName: 'A', language: 'python', content: 'local', order: 2 },
+				{ fileId: '2', fileName: 'B', language: 'python', content: 'b', order: 1 }
+			])
+		};
+		const cloudStore: FileStore = {
+			playground: JSON.stringify([
+				{ fileId: '1', fileName: 'A', language: 'python', content: 'cloud', order: 0 },
+				{ fileId: '2', fileName: 'B', language: 'python', content: 'b', order: 1 }
+			])
+		};
+
+		const updated = discardFile(localStore, '1', cloudStore);
+		expect(computeFileChanges(updated, cloudStore)).toEqual([]);
+		expect(
+			computeWorkspaceChanges({ files: updated }, { files: cloudStore }, new Set())
+		).toEqual([]);
 	});
 });

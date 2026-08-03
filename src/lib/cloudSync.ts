@@ -64,6 +64,7 @@ import {
 } from '$lib/cloudFileChange';
 
 const DEVICE_META_KEY = 'cojudge-cloud-sync-meta';
+const CLOUD_CLONE_KEY = 'cojudge-cloud-clone';
 const LOCAL_CLEAR_COMPLETE_KEY = 'cojudge-cloud-local-clear-complete';
 const SYNC_INTERVAL_MS = 5 * 60 * 1000;
 const MAX_SNAPSHOT_BYTES = 6 * 1024 * 1024;
@@ -138,6 +139,18 @@ type RemoteSnapshotMeta = {
 	meaningful: boolean;
 };
 
+type CloudCloneRecord = {
+	accountId: string;
+	checksum: string;
+	revisionId: string | null;
+	serialized: string;
+};
+
+type DownloadedSnapshot = {
+	data: ProgressData;
+	serialized: string;
+};
+
 type SyncMode = SyncIntent | 'force-upload' | 'force-download';
 
 type OperationContext = {
@@ -198,6 +211,7 @@ let syncContext: OperationContext | null = null;
 let authEpoch = 0;
 let generation = 0;
 let observedAuthIdentity = '';
+let memoryCloudClone: CloudCloneRecord | null = null;
 
 function userView(user: User): CloudUser {
 	return {
@@ -282,6 +296,70 @@ function saveUserMeta(context: OperationContext, userMeta: DeviceUserMeta): void
 	const meta = readDeviceMeta();
 	meta.users[cloudAccountId(context.projectId, context.uid)] = userMeta;
 	writeDeviceMeta(meta);
+}
+
+function parseCloudCloneRecord(raw: string | null): CloudCloneRecord | null {
+	if (!raw) return null;
+	try {
+		const parsed = JSON.parse(raw) as Partial<CloudCloneRecord>;
+		if (
+			typeof parsed.accountId !== 'string'
+			|| typeof parsed.checksum !== 'string'
+			|| typeof parsed.serialized !== 'string'
+			|| (parsed.revisionId !== null && typeof parsed.revisionId !== 'string' && parsed.revisionId !== undefined)
+		) {
+			return null;
+		}
+		return {
+			accountId: parsed.accountId,
+			checksum: parsed.checksum,
+			revisionId: typeof parsed.revisionId === 'string' ? parsed.revisionId : null,
+			serialized: parsed.serialized
+		};
+	} catch {
+		return null;
+	}
+}
+
+function readCloudClone(accountId: string): { checksum: string; revisionId: string | null; data: ProgressData } | null {
+	const record =
+		memoryCloudClone?.accountId === accountId
+			? memoryCloudClone
+			: parseCloudCloneRecord(browser ? localStorage.getItem(CLOUD_CLONE_KEY) : null);
+	if (!record || record.accountId !== accountId) return null;
+	if (memoryCloudClone?.accountId !== accountId) memoryCloudClone = record;
+	try {
+		const parsed = JSON.parse(record.serialized);
+		if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return null;
+		return {
+			checksum: record.checksum,
+			revisionId: record.revisionId,
+			data: parsed as ProgressData
+		};
+	} catch {
+		return null;
+	}
+}
+
+function writeCloudClone(
+	accountId: string,
+	checksum: string,
+	serialized: string,
+	revisionId: string | null = null
+): void {
+	const record: CloudCloneRecord = { accountId, checksum, revisionId, serialized };
+	memoryCloudClone = record;
+	if (!browser) return;
+	try {
+		localStorage.setItem(CLOUD_CLONE_KEY, JSON.stringify(record));
+	} catch (error) {
+		console.warn('Cojudge Cloud could not persist the local cloud clone:', error);
+	}
+}
+
+function clearCloudClone(): void {
+	memoryCloudClone = null;
+	if (browser) localStorage.removeItem(CLOUD_CLONE_KEY);
 }
 
 async function readLocalSnapshot(
@@ -629,7 +707,7 @@ async function downloadSnapshot(
 	db: Firestore,
 	uid: string,
 	meta: RemoteSnapshotMeta
-): Promise<ProgressData> {
+): Promise<DownloadedSnapshot> {
 	const result = await getDocsFromServer(query(partsRef(db, uid, meta.snapshotId), orderBy('index')));
 	if (result.size !== meta.partCount) throw new Error('Cloud snapshot is incomplete.');
 
@@ -649,7 +727,21 @@ async function downloadSnapshot(
 	if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
 		throw new Error('Cloud snapshot has an invalid format.');
 	}
-	return parsed as ProgressData;
+	return { data: parsed as ProgressData, serialized };
+}
+
+async function ensureCloudClone(
+	context: OperationContext,
+	remote: RemoteSnapshotMeta
+): Promise<ProgressData> {
+	const accountId = cloudAccountId(context.projectId, context.uid);
+	const cached = readCloudClone(accountId);
+	if (cached && cached.checksum === remote.checksum) return cached.data;
+
+	const downloaded = await downloadSnapshot(context.db, context.uid, remote);
+	if (!isOperationCurrent(context)) return downloaded.data;
+	writeCloudClone(accountId, remote.checksum, downloaded.serialized, remote.revisionId);
+	return downloaded.data;
 }
 
 function markSynced(
@@ -814,8 +906,17 @@ async function runSync(mode: SyncMode, context: OperationContext): Promise<void>
 						mode
 					);
 		if (direction === 'none') {
-			if (remote) await finalizeCloudRevision(context, remote.checksum);
-			else {
+			if (remote) {
+				if (local.checksum === remote.checksum) {
+					writeCloudClone(
+						cloudAccountId(context.projectId, context.uid),
+						remote.checksum,
+						local.serialized,
+						remote.revisionId
+					);
+				}
+				await finalizeCloudRevision(context, remote.checksum);
+			} else {
 				if (!isOperationCurrent(context)) return;
 				cloudSyncState.update((state) => ({
 					...state,
@@ -828,7 +929,15 @@ async function runSync(mode: SyncMode, context: OperationContext): Promise<void>
 			return;
 		}
 		if (direction === 'pending-upload') {
-			if (!isOperationCurrent(context)) return;
+			if (remote) {
+				setCloudProgress('Caching cloud copy…', 70);
+				try {
+					await ensureCloudClone(context, remote);
+				} catch {
+					// Compare can still fall back to a live download later.
+				}
+				if (!isOperationCurrent(context)) return;
+			}
 			cloudSyncState.update((state) => ({
 				...state,
 				resolution: 'local-changes',
@@ -839,7 +948,15 @@ async function runSync(mode: SyncMode, context: OperationContext): Promise<void>
 			return;
 		}
 		if (direction === 'conflict') {
-			if (!isOperationCurrent(context)) return;
+			if (remote) {
+				setCloudProgress('Caching cloud copy…', 70);
+				try {
+					await ensureCloudClone(context, remote);
+				} catch {
+					// Compare can still fall back to a live download later.
+				}
+				if (!isOperationCurrent(context)) return;
+			}
 			cloudSyncState.update((state) => ({
 				...state,
 				resolution: 'conflict',
@@ -853,6 +970,12 @@ async function runSync(mode: SyncMode, context: OperationContext): Promise<void>
 			setCloudProgress('Uploading progress…', 55);
 			const uploaded = await uploadSnapshot(context.db, context.uid, local, remote);
 			if (!isOperationCurrent(context)) return;
+			writeCloudClone(
+				cloudAccountId(context.projectId, context.uid),
+				uploaded.checksum,
+				local.serialized,
+				uploaded.revisionId
+			);
 			setCloudProgress('Finalizing…', 85);
 			const updatedHistory = await readRemoteHistory(context.db, context.uid, uploaded);
 			if (!isOperationCurrent(context)) return;
@@ -868,13 +991,19 @@ async function runSync(mode: SyncMode, context: OperationContext): Promise<void>
 		setCloudProgress('Downloading from cloud…', 55);
 		const downloaded = await downloadSnapshot(context.db, context.uid, remote);
 		if (!isOperationCurrent(context)) return;
+		writeCloudClone(
+			cloudAccountId(context.projectId, context.uid),
+			remote.checksum,
+			downloaded.serialized,
+			remote.revisionId
+		);
 		setCloudProgress('Applying cloud data…', 85);
 		const latest = await readRemoteMeta(context.db, context.uid);
 		if (!isOperationCurrent(context)) return;
 		if (!latest || latest.revisionId !== remote.revisionId) {
 			throw new Error('Cloud progress changed while downloading. Try again.');
 		}
-		await applyDownloadedSnapshot(context, downloaded, local, latest.checksum);
+		await applyDownloadedSnapshot(context, downloaded.data, local, latest.checksum);
 		clearCloudProgress();
 	} catch (error) {
 		if (!isOperationCurrent(context)) return;
@@ -954,15 +1083,40 @@ function readLocalFilesStore(): FileStore {
 	}
 }
 
+function fileChangesAgainstCloud(local: ProgressData, cloud: ProgressData): FileChange[] {
+	const localFiles = (local.files as FileStore | undefined) ?? {};
+	const cloudFiles = (cloud.files as FileStore | undefined) ?? {};
+	const localBoard = local[WHITEBOARD_BOARD_KEY];
+	const cloudBoard = cloud[WHITEBOARD_BOARD_KEY];
+
+	const mergedChanges: FileChange[] = computeFileChanges(localFiles, cloudFiles);
+	const whiteboardChange = computeWhiteboardChange(localBoard, cloudBoard);
+	if (whiteboardChange) mergedChanges.push(whiteboardChange);
+	mergedChanges.push(...computeOtherChanges(local, cloud));
+	mergedChanges.push(
+		...computeWorkspaceChanges(local, cloud, new Set(mergedChanges.map((change) => change.slug)))
+	);
+	return mergedChanges;
+}
+
 export async function fetchCloudFileChanges(): Promise<FileChange[]> {
 	const context = captureOperationContext();
 	if (!browser || !context || isCloudRestoreInProgress()) return [];
 	const local = await readLocalSnapshot(context);
 	if (!isOperationCurrent(context)) return [];
-	const remote = await readRemoteMeta(context.db, context.uid);
-	if (!isOperationCurrent(context)) return [];
+	const accountId = cloudAccountId(context.projectId, context.uid);
 	const localFiles = (local.data.files as FileStore | undefined) ?? {};
 	const localBoard = local.data[WHITEBOARD_BOARD_KEY];
+
+	// Prefer the local cloud clone so diffs never wait on the network when the
+	// last-synced cloud copy is already cached (the common local-changes case).
+	const cached = readCloudClone(accountId);
+	if (cached && local.meta.lastSyncedHash && cached.checksum === local.meta.lastSyncedHash) {
+		return fileChangesAgainstCloud(local.data, cached.data);
+	}
+
+	const remote = await readRemoteMeta(context.db, context.uid);
+	if (!isOperationCurrent(context)) return [];
 
 	if (!remote) {
 		const changes: FileChange[] = computeFileChanges(localFiles, {});
@@ -973,19 +1127,9 @@ export async function fetchCloudFileChanges(): Promise<FileChange[]> {
 		return changes;
 	}
 
-	const downloaded = await downloadSnapshot(context.db, context.uid, remote);
+	const cloudData = await ensureCloudClone(context, remote);
 	if (!isOperationCurrent(context)) return [];
-	const cloudFiles = (downloaded.files as FileStore | undefined) ?? {};
-	const cloudBoard = downloaded[WHITEBOARD_BOARD_KEY];
-
-	const mergedChanges: FileChange[] = computeFileChanges(localFiles, cloudFiles);
-	const whiteboardChange = computeWhiteboardChange(localBoard, cloudBoard);
-	if (whiteboardChange) mergedChanges.push(whiteboardChange);
-	mergedChanges.push(...computeOtherChanges(local.data, downloaded));
-	mergedChanges.push(
-		...computeWorkspaceChanges(local.data, downloaded, new Set(mergedChanges.map((change) => change.slug)))
-	);
-	return mergedChanges;
+	return fileChangesAgainstCloud(local.data, cloudData);
 }
 
 export async function discardLocalFileChange(fileId: string): Promise<void> {
@@ -999,8 +1143,13 @@ export async function discardLocalFileChange(fileId: string): Promise<void> {
 	if (!remote) {
 		throw new Error('No Cojudge Cloud snapshot exists for this account yet.');
 	}
-	const downloaded = await downloadSnapshot(context.db, context.uid, remote);
+	const downloaded = await ensureCloudClone(context, remote);
 	if (!isOperationCurrent(context)) return;
+
+	// Dotfiles are local-only and stripped from cloud snapshots. Capture them
+	// before any discard path that rewrites `files` so secrets like `.env` are
+	// never wiped when restoring cloud content.
+	const localDotFiles = extractDotFilesData(localStorage);
 
 	if (fileId === WHITEBOARD_FILE_ID) {
 		const cloudBoard = downloaded[WHITEBOARD_BOARD_KEY];
@@ -1023,6 +1172,21 @@ export async function discardLocalFileChange(fileId: string): Promise<void> {
 		fileStore.set(updated);
 		fileSyncVersion.update((version) => version + 1);
 	}
+
+	if (localDotFiles !== null) {
+		const merged = mergeDotFilesData(localStorage.getItem('files'), localDotFiles);
+		localStorage.setItem('files', merged);
+		try {
+			const parsed = JSON.parse(merged) as FileStore;
+			if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+				fileStore.set(parsed);
+				fileSyncVersion.update((version) => version + 1);
+			}
+		} catch {
+			// keep whatever apply wrote if the merge payload is malformed
+		}
+	}
+
 	await refreshCloudLocalState();
 }
 
@@ -1103,13 +1267,21 @@ async function runRevisionRestore(
 		setCloudProgress('Downloading backup…', 65);
 		const downloaded = await downloadSnapshot(context.db, context.uid, selected);
 		if (!isOperationCurrent(context)) return;
+		if (selected.revisionId === remote.revisionId) {
+			writeCloudClone(
+				cloudAccountId(context.projectId, context.uid),
+				selected.checksum,
+				downloaded.serialized,
+				selected.revisionId
+			);
+		}
 		setCloudProgress('Applying backup…', 85);
 		const latest = await readRemoteMeta(context.db, context.uid);
 		if (!latest || latest.revisionId !== remote.revisionId) {
 			throw new Error('Cloud progress changed while restoring. Try again.');
 		}
 		if (!isOperationCurrent(context)) return;
-		await applyDownloadedSnapshot(context, downloaded, local, latest.checksum);
+		await applyDownloadedSnapshot(context, downloaded.data, local, latest.checksum);
 		clearCloudProgress();
 	} catch (error) {
 		if (!isOperationCurrent(context)) return;
