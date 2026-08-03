@@ -10,17 +10,12 @@
 		"frontendDist": "frontend"
 	},
 	"app": {
-		"windows": [
-  		{
-        "label": "main",
-    		"zoomHotkeysEnabled": true
-  		}
-		],
+		"windows": [],
 		"security": {
 			"capabilities": [
 				{
 					"identifier": "default",
-					"windows": ["main", "main-*"],
+					"windows": ["main-*"],
 					"permissions": ["allow-new-window", "allow-google-oauth-access-token", "opener:default", "core:webview:allow-set-webview-zoom"],
 					"remote": {
 						"urls": ["http://127.0.0.1:5173/*", "http://cojudge.localhost:5376/*"]
