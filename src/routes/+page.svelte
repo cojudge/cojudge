@@ -776,7 +776,7 @@
                         title="Sign in and sync progress with Cojudge Cloud"
                     >
                         <span class="dropdown-item-content">
-                            Cojudge Cloud
+                            Cloud Sync
                         </span>
                         <span
                             class:configured={$cloudSyncState.authStatus === 'signed-in' && !$cloudSyncState.resolution && $cloudSyncState.syncStatus !== 'syncing' && $cloudSyncState.remoteStatus !== 'loading'}
