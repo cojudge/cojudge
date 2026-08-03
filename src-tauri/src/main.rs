@@ -93,6 +93,7 @@ fn create_window(app: &tauri::AppHandle, url: tauri::Url) -> tauri::Result<()> {
         .inner_size(1400.0, 900.0)
         .min_inner_size(300.0, 300.0)
         .center()
+        .zoom_hotkeys_enabled(true)
         .on_navigation(move |url| {
             if url.origin().ascii_serialization() == allowed_origin {
                 true
