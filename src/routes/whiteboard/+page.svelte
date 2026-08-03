@@ -169,6 +169,7 @@
 	let clipboardElements: BoardElement[] = [];
 	let mounted = false;
 	let saveTimer: ReturnType<typeof setTimeout> | undefined;
+	let dirtyRefreshTimer: ReturnType<typeof setTimeout> | undefined;
 	let toastTimer: ReturnType<typeof setTimeout> | undefined;
 	let activeStorageKey = STORAGE_KEY;
 	let saveState: 'saved' | 'saving' | 'error' = 'saved';
@@ -245,6 +246,7 @@
 			wheelTarget?.removeEventListener('wheel', handleWheel, { capture: true });
 			document.removeEventListener('pointerdown', closeMenusOnOutsideClick);
 			if (toastTimer) clearTimeout(toastTimer);
+			if (dirtyRefreshTimer) clearTimeout(dirtyRefreshTimer);
 		};
 	});
 
@@ -446,7 +448,13 @@
 		try {
 			localStorage.setItem(activeStorageKey, JSON.stringify(board));
 			saveState = 'saved';
-			void refreshCloudLocalState();
+			// Skip flush: this save is itself the flush handler for CLOUD_FLUSH_EVENT.
+			// Flushing again would re-enter saveBoardNow in a synchronous loop when signed in.
+			if (dirtyRefreshTimer) clearTimeout(dirtyRefreshTimer);
+			dirtyRefreshTimer = setTimeout(() => {
+				dirtyRefreshTimer = undefined;
+				void refreshCloudLocalState({ flush: false }).catch(() => undefined);
+			}, 500);
 		} catch {
 			saveState = 'error';
 			showToast('The board is too large to save locally');

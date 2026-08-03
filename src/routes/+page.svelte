@@ -197,8 +197,47 @@
             }
         }
 
+        let zoom = 1;
+    
+        const handleZoomShortcut = async (event: KeyboardEvent) => {
+          if (!event.metaKey || event.ctrlKey || event.altKey) return;
+    
+          const zoomIn =
+            event.key === '+' ||
+            event.key === '=' ||
+            event.code === 'Equal';
+    
+          const zoomOut =
+            event.key === '-' ||
+            event.code === 'Minus';
+    
+          const resetZoom = event.key === '0' || event.code === 'Digit0';
+    
+          if (!zoomIn && !zoomOut && !resetZoom) return;
+    
+          event.preventDefault();
+          event.stopPropagation();
+    
+          if (resetZoom) {
+            zoom = 1;
+          } else if (zoomIn) {
+            zoom = Math.min(10, zoom + 0.2);
+          } else {
+            zoom = Math.max(0.2, zoom - 0.2);
+          }
+    
+          const { getCurrentWebview } =
+            await import('@tauri-apps/api/webview');
+    
+          await getCurrentWebview().setZoom(zoom);
+        };
+    
+        // Capture phase helps when editors/components intercept the shortcut.
+        window.addEventListener('keydown', handleZoomShortcut, true);
+
         return () => {
             window.removeEventListener("click", handleClickOutside);
+            window.removeEventListener('keydown', handleZoomShortcut, true);
         };
     });
 
@@ -482,9 +521,9 @@
     function cloudMenuStatus() {
         if ($cloudSyncState.authStatus === 'unavailable') return 'Off';
         if ($cloudSyncState.authStatus !== 'signed-in') return 'Sign in';
+        if ($cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading') return 'Syncing';
         if ($cloudSyncState.resolution === 'local-changes') return '* Unsynced';
         if ($cloudSyncState.resolution) return '* Review';
-        if ($cloudSyncState.syncStatus === 'syncing') return 'Syncing';
         if ($cloudSyncState.syncStatus === 'offline') return 'Offline';
         if ($cloudSyncState.syncStatus === 'error') return 'Error';
         if ($cloudSyncState.remoteStatus === 'unknown') return 'Checking';
@@ -719,7 +758,9 @@
                     <line x1="3" y1="6" x2="21" y2="6"></line>
                     <line x1="3" y1="18" x2="21" y2="18"></line>
                 </svg>
-                {#if $cloudSyncState.authStatus === 'signed-in' && $cloudSyncState.resolution}
+                {#if $cloudSyncState.authStatus === 'signed-in' && ($cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading')}
+                    <span class="dropdown-cloud-loading" title="Syncing with Cojudge Cloud" aria-hidden="true"></span>
+                {:else if $cloudSyncState.authStatus === 'signed-in' && $cloudSyncState.resolution}
                     <span class="dropdown-cloud-dirty" title="Local or conflicting cloud changes need attention" aria-hidden="true">*</span>
                 {/if}
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
@@ -738,10 +779,15 @@
                             Cojudge Cloud
                         </span>
                         <span
-                            class:configured={$cloudSyncState.authStatus === 'signed-in'}
-                            class:pending={Boolean($cloudSyncState.resolution)}
+                            class:configured={$cloudSyncState.authStatus === 'signed-in' && !$cloudSyncState.resolution && $cloudSyncState.syncStatus !== 'syncing' && $cloudSyncState.remoteStatus !== 'loading'}
+                            class:pending={Boolean($cloudSyncState.resolution) && $cloudSyncState.syncStatus !== 'syncing' && $cloudSyncState.remoteStatus !== 'loading'}
+                            class:syncing={$cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading'}
                             class="firebase-menu-status"
-                            title={$cloudSyncState.resolution === 'local-changes' ? 'Local changes have not been pushed to Cojudge Cloud' : undefined}
+                            title={$cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading'
+                                ? 'Syncing with Cojudge Cloud'
+                                : $cloudSyncState.resolution === 'local-changes'
+                                    ? 'Local changes have not been pushed to Cojudge Cloud'
+                                    : undefined}
                         >
                             {cloudMenuStatus()}
                         </span>
@@ -1354,6 +1400,20 @@
         font-weight: 800;
         line-height: 1;
     }
+    .dropdown-cloud-loading {
+        width: 0.65rem;
+        height: 0.65rem;
+        border-radius: 50%;
+        border: 1.5px solid var(--color-text-secondary);
+        border-top-color: var(--color-highlight, var(--color-text));
+        animation: dropdown-cloud-spin 0.7s linear infinite;
+        flex-shrink: 0;
+    }
+    @keyframes dropdown-cloud-spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
     .playground-btn.btn {
         font-size: 0.5rem;
     }
@@ -1430,6 +1490,10 @@
     .firebase-menu-status.pending {
         background: color-mix(in srgb, var(--color-medium) 18%, transparent);
         color: var(--color-medium);
+    }
+    .firebase-menu-status.syncing {
+        background: color-mix(in srgb, var(--color-highlight, var(--color-text)) 14%, transparent);
+        color: var(--color-text);
     }
     .btn {
         appearance: none;

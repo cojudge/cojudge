@@ -59,6 +59,9 @@ export const OTHER_CHANGE_FILE_ID_PREFIXES = [
 
 // UI/runtime fields that belong to the editor, not to the file itself. They are
 // carried over when a local file is discarded back to its cloud version.
+// Note: `order` is intentionally excluded — it is a cloud-synced field, so
+// discarding must restore the cloud order or a residual "Files (names or order)"
+// change appears after every content discard.
 const UI_FIELDS = [
 	'isOpen',
 	'isActive',
@@ -66,8 +69,7 @@ const UI_FIELDS = [
 	'viewState',
 	'output',
 	'logs',
-	'lastSharedContent',
-	'order'
+	'lastSharedContent'
 ] as const;
 
 function parseEntries(store: FileStore, slug: string): Array<Record<string, unknown>> {
@@ -536,7 +538,9 @@ export function computeWhiteboardChange(localBoard: unknown, cloudBoard: unknown
 
 // Reverts a single file to its cloud version: locals that only exist locally are
 // removed, and entries the file still owns in the cloud are restored while
-// carrying over editor UI state.
+// carrying over editor UI state. Restored entries replace matching local slots
+// in place so sibling files (and array order) stay put — otherwise discarding
+// content leaves a residual "Files (names or order)" workspace change.
 export function discardFile(
 	localStore: FileStore,
 	fileId: string,
@@ -550,26 +554,45 @@ export function discardFile(
 		const cloudEntries = parseEntries(cloudStore, slug).filter((entry) => entry['fileId'] === fileId);
 		if (localEntries.length === 0 && cloudEntries.length === 0) continue;
 
-		const kept = entries.filter((entry) => entry['fileId'] !== fileId);
 		if (cloudEntries.length === 0) {
-			result[slug] = JSON.stringify(kept);
+			result[slug] = JSON.stringify(entries.filter((entry) => entry['fileId'] !== fileId));
 			continue;
 		}
 
-		const restored = cloudEntries.map((cloudEntry) => {
-			const localEntry = localEntries.find(
-				(entry) => entry['language'] === cloudEntry['language']
-			);
+		const restoredByLanguage = new Map<string, Record<string, unknown>>();
+		for (const cloudEntry of cloudEntries) {
+			const language = cloudEntry['language'];
+			const langKey = typeof language === 'string' ? language : '';
+			const localEntry = localEntries.find((entry) => entry['language'] === cloudEntry['language']);
 			const merged = { ...cloudEntry };
 			if (localEntry) {
 				for (const field of UI_FIELDS) {
 					if (localEntry[field] !== undefined) merged[field] = localEntry[field];
 				}
 			}
-			return merged;
-		});
+			restoredByLanguage.set(langKey, merged);
+		}
 
-		result[slug] = JSON.stringify([...kept, ...restored]);
+		const usedLanguages = new Set<string>();
+		const next: Array<Record<string, unknown>> = [];
+		for (const entry of entries) {
+			if (entry['fileId'] !== fileId) {
+				next.push(entry);
+				continue;
+			}
+			const language = entry['language'];
+			const langKey = typeof language === 'string' ? language : '';
+			const restored = restoredByLanguage.get(langKey);
+			if (restored) {
+				next.push(restored);
+				usedLanguages.add(langKey);
+			}
+		}
+		for (const [langKey, restored] of restoredByLanguage) {
+			if (!usedLanguages.has(langKey)) next.push(restored);
+		}
+
+		result[slug] = JSON.stringify(next);
 	}
 	return result;
 }
