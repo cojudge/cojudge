@@ -12,24 +12,14 @@
     import GameModePopup from "$lib/components/GameModePopup.svelte";
     import GameHistoryPopup from "$lib/components/GameHistoryPopup.svelte";
     import gameResultsStore, { type GameResult } from '$lib/stores/gameResultsStore';
+    import CloudSyncModal from "$lib/components/CloudSyncModal.svelte";
     import {
-        checkCloudNow,
-        checkCloudSignOut,
         cloudSyncState,
-        connectCloud,
-        deleteCloudRevision,
-        disconnectCloud,
-        discardLocalFileChange,
-        fetchCloudFileChanges,
         refreshCloudLocalState,
-        resolveCloudProgress,
-        restartCloudSync,
-        restoreCloudRevision,
-        syncCloudNow
+        restartCloudSync
     } from '$lib/cloudSync';
-    import type { FileChange } from '$lib/cloudFileChange';
-    import { activeDialog, showChoice, showConfirm } from '$lib/dialogs';
-    import { collectProgressData, hasDotFiles, listDotFiles, writeProgressStorageItem } from '$lib/progressBackup';
+    import { activeDialog } from '$lib/dialogs';
+    import { collectProgressData, writeProgressStorageItem } from '$lib/progressBackup';
     import { applyProgressData } from '$lib/progressBackupClient';
     import {
         clearFirebaseSettings,
@@ -45,8 +35,6 @@
     let dropdownToggleButton: HTMLButtonElement | null = null;
     let importConfirmButton: HTMLButtonElement | null = null;
     let importModalCard: HTMLElement | null = null;
-    let cloudModalCard: HTMLElement | null = null;
-    let cloudPrimaryButton: HTMLButtonElement | null = null;
     let firebaseModalCard: HTMLElement | null = null;
     let firebaseApiKeyInput: HTMLInputElement | null = null;
     let loadModalCard: HTMLElement | null = null;
@@ -61,36 +49,13 @@
     let firebaseSettingsError = '';
     let firebaseSettingsSaved = browser && hasSavedFirebaseSettings();
     let firebaseConfigured = browser && isFirebaseConfigured();
-    let cloudActionPending = false;
-    let showAllCloudHistory = false;
-    let cloudFileChanges: FileChange[] = [];
-    let cloudFileChangesLoading = false;
-    let cloudFileChangesError = '';
-    let expandedDiffs = new Set<string>();
-    function toggleDiff(key: string) {
-        const next = new Set(expandedDiffs);
-        if (next.has(key)) {
-            next.delete(key);
-        } else {
-            next.add(key);
-        }
-        expandedDiffs = next;
-    }
-    function diffKey(fileId: string, language: string): string {
-        return `${fileId}:${language}`;
-    }
-    const DIFF_LINE_LIMIT = 240;
-    function shortenDiffLine(text: string): string {
-        if (text.length <= DIFF_LINE_LIMIT) return text;
-        return `${text.slice(0, DIFF_LINE_LIMIT)}…`;
-    }
     let loadCodeCharacters = ['', '', '', ''];
     let loadCodeNavigating = false;
     let checkMap: Record<string, boolean> = {};
     let showGamePopup = false;
     let isDesktopMode = browser && isDesktopRuntime();
     $: if (browser) {
-        document.body.style.overflow = showGamePopup || pendingImport || showCloudSettings || showFirebaseSettings || showLoadCode ? 'hidden' : '';
+        document.body.style.overflow = showGamePopup || pendingImport || showFirebaseSettings || showLoadCode ? 'hidden' : '';
     }
     let gameResultData: Record<string, GameResult[]> = {};
     let historyProblem: { id: string; title: string } | null = null;
@@ -526,281 +491,14 @@
         return 'Synced';
     }
 
-    function formatLastSynced(value: number | null): string {
-        if (!value) return 'Not synced yet';
-        return `Synced ${formatAgo(value)}`;
-    }
-
-    function formatAgo(value: number, long = false): string {
-        const elapsed = Math.max(0, Date.now() - value);
-        if (elapsed < 60_000) return 'just now';
-        const minutes = Math.floor(elapsed / 60_000);
-        if (minutes < 60)
-            return long
-                ? `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`
-                : `${minutes}m ago`;
-        const hours = Math.floor(minutes / 60);
-        if (hours < 24)
-            return long
-                ? `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`
-                : `${hours}h ago`;
-        const days = Math.floor(hours / 24);
-        return long
-            ? `${days} ${days === 1 ? 'day' : 'days'} ago`
-            : `${days}d ago`;
-    }
-
-    function formatCloudRevision(value: number): string {
-        return formatAgo(value, true);
-    }
-
-    function formatCloudRevisionSize(value: number): string {
-        if (value < 1024) return `${value} B`;
-        return `${Math.ceil(value / 1024)} KB`;
-    }
-
-    async function openCloudSettings() {
+    function openCloudSettings() {
         showDropdown = false;
-        showAllCloudHistory = false;
         showCloudSettings = true;
-        await refreshCloudLocalState();
-        await tick();
-        cloudPrimaryButton?.focus();
     }
 
-    async function closeCloudSettings() {
+    function closeCloudSettings() {
         showCloudSettings = false;
-        await tick();
-        dropdownToggleButton?.focus();
-    }
-
-    async function loadCloudFileChanges() {
-        if ($cloudSyncState.authStatus !== 'signed-in' || $cloudSyncState.resolution !== 'local-changes') {
-            cloudFileChanges = [];
-            cloudFileChangesError = '';
-            return;
-        }
-        cloudFileChangesLoading = true;
-        cloudFileChangesError = '';
-        try {
-            cloudFileChanges = await fetchCloudFileChanges();
-        } catch {
-            cloudFileChangesError = 'Could not compare with the cloud. Check your connection and try again.';
-            cloudFileChanges = [];
-        } finally {
-            cloudFileChangesLoading = false;
-        }
-    }
-
-    async function discardCloudFile(fileId: string) {
-        const change = cloudFileChanges.find((c) => c.fileId === fileId);
-        const confirmed = await showConfirm(
-            `Discard the local changes to "${change?.fileName ?? 'this file'}"? The file will be restored to its cloud version, which cannot be undone.`,
-            {
-                title: 'Discard file changes',
-                confirmLabel: 'Discard changes',
-                tone: 'danger'
-            }
-        );
-        if (!confirmed) return;
-
-        cloudActionPending = true;
-        try {
-            await discardLocalFileChange(fileId);
-            await loadCloudFileChanges();
-        } catch {
-            // The shared cloud state renders the actionable error.
-        } finally {
-            cloudActionPending = false;
-        }
-    }
-
-    $: if (showCloudSettings && $cloudSyncState.resolution === 'local-changes') {
-        void loadCloudFileChanges();
-    }
-
-    async function signInToCloud() {
-        cloudActionPending = true;
-        try {
-            await connectCloud();
-        } catch {
-            // The shared cloud state renders the actionable error.
-        } finally {
-            cloudActionPending = false;
-        }
-    }
-
-    async function syncCloud() {
-        cloudActionPending = true;
-        try {
-            await syncCloudNow();
-        } catch {
-            // The shared cloud state renders the actionable error.
-        } finally {
-            cloudActionPending = false;
-        }
-    }
-
-    async function checkCloud() {
-        cloudActionPending = true;
-        try {
-            await checkCloudNow();
-        } catch {
-            // The shared cloud state renders the actionable error.
-        } finally {
-            cloudActionPending = false;
-        }
-    }
-
-    function chooseSignOutCleanup(check: 'unsynced' | 'unknown'): Promise<boolean | null> {
-        return showChoice(
-            check === 'unsynced'
-                ? 'This device has local data that does not match the latest cloud version. Clear it from this device when signing out? Your cloud versions will not be deleted.'
-                : 'Cojudge could not confirm whether this device matches the latest cloud version. Clear its local data when signing out?',
-            {
-                title: check === 'unsynced' ? 'Unsynced local data' : 'Cloud status unavailable',
-                confirmLabel: 'Clear and sign out',
-                cancelLabel: 'Keep and sign out',
-                tone: 'danger'
-            }
-        );
-    }
-
-    async function decideDotFileCleanup(): Promise<'remove' | 'keep' | null> {
-        if (!hasDotFiles(localStorage)) return Promise.resolve('remove');
-        const choice = await showChoice(
-            'This device has hidden files (names starting with `.`, like `.env`). They are not backed up to the cloud, so clearing the device would delete them permanently. Remove them too, or keep them on this device?',
-            {
-                title: 'Hidden files',
-                confirmLabel: 'Remove hidden files',
-                cancelLabel: 'Keep them',
-                tone: 'danger'
-            }
-        );
-        if (choice === null) return null;
-        if (choice === false) return 'keep';
-        const names = listDotFiles(localStorage);
-        const files = names.length > 0 ? names.join('\n') : 'hidden files';
-        const confirmed = await showConfirm(
-            `${files}\n\nThese hidden files exist only on this device and are not saved to the cloud, so they will be permanently deleted.`,
-            {
-                title: 'Permanently delete these files?',
-                confirmLabel: 'Delete hidden files',
-                tone: 'danger'
-            }
-        );
-        return confirmed ? 'remove' : null;
-    }
-
-    async function signOutOfCloud() {
-        cloudActionPending = true;
-        try {
-            const check = await checkCloudSignOut();
-            let clearLocalData = check === 'matching';
-            let requireCloudMatch = check === 'matching';
-            let keepDotFiles = false;
-            if (check !== 'matching') {
-                const choice = await chooseSignOutCleanup(check);
-                if (choice === null) return;
-                clearLocalData = choice;
-            }
-            if (clearLocalData) {
-                const hidden = await decideDotFileCleanup();
-                if (hidden === null) return;
-                keepDotFiles = hidden === 'keep';
-            }
-            const result = await disconnectCloud({ clearLocalData, requireCloudMatch, keepDotFiles });
-            if (result !== 'signed-out') {
-                const choice = await chooseSignOutCleanup(result);
-                if (choice === null) return;
-                requireCloudMatch = false;
-                await disconnectCloud({ clearLocalData: choice, requireCloudMatch, keepDotFiles: choice ? keepDotFiles : false });
-            }
-        } catch {
-            // The shared cloud state renders the actionable error.
-        } finally {
-            cloudActionPending = false;
-        }
-    }
-
-    async function confirmLocalOverwriteRestore(): Promise<'push-first' | 'restore' | 'cancel'> {
-        const dirty = await refreshCloudLocalState();
-        if (!dirty) return 'restore';
-        const choice = await showChoice(
-            'Restoring a cloud version will replace your current local progress. Any local changes that have not been pushed to the cloud will be lost. Push them to the cloud first to keep them?',
-            {
-                title: 'Local changes will be lost',
-                confirmLabel: 'Push changes first',
-                cancelLabel: 'Discard and restore',
-                tone: 'danger'
-            }
-        );
-        if (choice === null) return 'cancel';
-        return choice ? 'push-first' : 'restore';
-    }
-
-    async function resolveCloudCopy(preference: 'local' | 'cloud') {
-        if (preference === 'cloud') {
-            const decision = await confirmLocalOverwriteRestore();
-            if (decision === 'cancel') return;
-            if (decision === 'push-first') {
-                cloudActionPending = true;
-                try {
-                    await resolveCloudProgress('local');
-                } catch {
-                    // The shared cloud state renders the actionable error.
-                } finally {
-                    cloudActionPending = false;
-                }
-                return;
-            }
-        }
-        cloudActionPending = true;
-        try {
-            await resolveCloudProgress(preference);
-        } catch {
-            // The shared cloud state renders the actionable error.
-        } finally {
-            cloudActionPending = false;
-        }
-    }
-
-    async function restoreRevision(revisionId: string) {
-        const decision = await confirmLocalOverwriteRestore();
-        if (decision === 'cancel') return;
-        cloudActionPending = true;
-        try {
-            if (decision === 'push-first') {
-                await resolveCloudProgress('local');
-            }
-            await restoreCloudRevision(revisionId);
-        } catch {
-            // The shared cloud state renders the actionable error.
-        } finally {
-            cloudActionPending = false;
-        }
-    }
-
-    async function deleteRevision(revisionId: string, createdAt: number) {
-        const confirmed = await showConfirm(
-            `The cloud backup from ${formatCloudRevision(createdAt)} will be permanently deleted.`,
-            {
-                title: 'Delete cloud backup?',
-                confirmLabel: 'Delete backup',
-                tone: 'danger'
-            }
-        );
-        if (!confirmed) return;
-
-        cloudActionPending = true;
-        try {
-            await deleteCloudRevision(revisionId);
-            if ($cloudSyncState.history.length <= 3) showAllCloudHistory = false;
-        } catch {
-            // The shared cloud state renders the actionable error.
-        } finally {
-            cloudActionPending = false;
-        }
+        void tick().then(() => dropdownToggleButton?.focus());
     }
 
     async function openFirebaseSettings() {
@@ -969,18 +667,15 @@
         if ($activeDialog) return;
         const activeModal = pendingImport
             ? importModalCard
-            : showCloudSettings
-                ? cloudModalCard
-                : showFirebaseSettings
-                    ? firebaseModalCard
-                    : showLoadCode
-                        ? loadModalCard
-                        : null;
+            : showFirebaseSettings
+                ? firebaseModalCard
+                : showLoadCode
+                    ? loadModalCard
+                    : null;
         if (!activeModal) return;
         if (event.key === 'Escape') {
             event.preventDefault();
             if (pendingImport) cancelImport();
-            else if (showCloudSettings) void closeCloudSettings();
             else if (showFirebaseSettings) void closeFirebaseSettings();
             else void closeLoadCode();
             return;
@@ -1217,203 +912,7 @@
             </div>
         </div>
     {/if}
-    {#if showCloudSettings}
-        <div class="home-modal-shell" inert={Boolean($activeDialog)}>
-            <button class="home-modal-backdrop" aria-label="Close Cojudge Cloud" tabindex="-1" onclick={closeCloudSettings}></button>
-            <div
-                bind:this={cloudModalCard}
-                class="home-modal-card cloud-settings-card"
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="cloud-settings-title"
-                aria-hidden={$activeDialog ? 'true' : undefined}
-            >
-                <div class="modal-heading-row">
-                    <div>
-                        <span class="modal-eyebrow">Cojudge Cloud</span>
-                    </div>
-                    <span class:configured={$cloudSyncState.authStatus === 'signed-in'} class="firebase-status-pill">
-                        <span></span>{$cloudSyncState.authStatus === 'signed-in' ? 'Connected' : 'Local only'}
-                    </span>
-                </div>
-
-                {#if $cloudSyncState.authStatus === 'unavailable'}
-                    <p>Cloud sync is not configured in this build. Everything remains available locally.</p>
-                {:else if $cloudSyncState.authStatus === 'signed-in' && $cloudSyncState.user}
-                    <div class="cloud-account">
-                        {#if $cloudSyncState.user.photoURL}
-                            <img src={$cloudSyncState.user.photoURL} alt="" referrerpolicy="no-referrer" />
-                        {:else}
-                            <span class="cloud-avatar">{($cloudSyncState.user.displayName || $cloudSyncState.user.email || 'C').slice(0, 1).toUpperCase()}</span>
-                        {/if}
-                        <div>
-                            <strong>{$cloudSyncState.user.displayName || 'Google account'}</strong>
-                            <span>{$cloudSyncState.user.email}</span>
-                        </div>
-                    </div>
-                    <div class="cloud-sync-summary">
-                        <span class:offline={$cloudSyncState.syncStatus === 'offline'} class:error={$cloudSyncState.syncStatus === 'error'} class:pending={Boolean($cloudSyncState.resolution)} class="cloud-sync-dot"></span>
-                        <div>
-                            <strong>
-                                {$cloudSyncState.resolution === 'account'
-                                    ? 'Choose the starting copy'
-                                    : $cloudSyncState.resolution === 'local-changes'
-                                        ? 'Local changes not pushed'
-                                        : $cloudSyncState.resolution === 'conflict'
-                                            ? 'Local and cloud both changed'
-                                    : $cloudSyncState.syncStatus === 'syncing'
-                                    ? 'Syncing progress…'
-                                    : $cloudSyncState.syncStatus === 'offline'
-                                        ? 'Waiting for a connection'
-                                        : formatLastSynced($cloudSyncState.lastSyncedAt)}
-                            </strong>
-                            <span>
-                                {$cloudSyncState.resolution === 'account'
-                                    ? "Push this workspace or restore this account's cloud snapshot."
-                                    : $cloudSyncState.resolution === 'local-changes'
-                                        ? 'Push explicitly, or discard these changes by restoring cloud.'
-                                        : $cloudSyncState.resolution === 'conflict'
-                                            ? 'Choose which complete snapshot should become the working copy.'
-                                            : 'Cloud updates pull automatically; local changes push only when requested.'}
-                            </span>
-                        </div>
-                    </div>
-                    {#if $cloudSyncState.resolution === 'local-changes'}
-                        <div class="cloud-file-changes">
-                            <div class="cloud-file-changes-heading">
-                                <strong>Local file changes</strong>
-                                <button class="btn cloud-file-reload" type="button" onclick={loadCloudFileChanges} disabled={cloudActionPending}>{cloudFileChangesLoading ? 'Comparing…' : 'Refresh'}</button>
-                            </div>
-                            {#if cloudFileChangesError}
-                                <p class="modal-error" role="alert">{cloudFileChangesError}</p>
-                            {:else if cloudFileChangesLoading}
-                                <p class="cloud-file-changes-empty">Comparing with the cloud…</p>
-                            {:else if cloudFileChanges.length === 0}
-                                <p class="cloud-file-changes-empty">No file content differs. There may still be changes in solutions, test cases, whiteboard drawings or settings.</p>
-                            {:else}
-                                {#each cloudFileChanges as change}
-                                    <div class="cloud-file-change">
-                                        <div class="cloud-file-change-row">
-                                            <span class="cloud-file-change-name" title={change.fileName ? `${change.slug}/${change.fileName}` : change.slug}><span class="cloud-file-change-slug">{change.slug}</span>{change.fileName ? `/${change.fileName}` : ''}</span>
-                                            <button class="btn cloud-file-discard" type="button" onclick={() => discardCloudFile(change.fileId)} disabled={cloudActionPending}>Discard changes</button>
-                                        </div>
-                                        {#each change.languages as lang}
-                                            {@const diffKeyValue = diffKey(change.fileId, lang.language)}
-                                            {#if lang.blob}
-                                                <div class="cloud-file-blob-note">
-                                                    <span class="cloud-file-lang-label">
-                                                        {lang.language}{lang.local && !lang.cloud ? ' (new locally)' : !lang.local && lang.cloud ? ' (deleted locally)' : ''}
-                                                    </span>
-                                                    <span>Binary or generated content — diff hidden.</span>
-                                                </div>
-                                            {:else}
-                                                <div class="cloud-file-diff">
-                                                    <button class="cloud-file-diff-heading" type="button" onclick={() => toggleDiff(diffKeyValue)} aria-expanded={expandedDiffs.has(diffKeyValue)}>
-                                                        <span class="diff-caret" aria-hidden="true">▾</span>
-                                                        <span class="cloud-file-lang-label">
-                                                            {lang.language}{lang.local && !lang.cloud ? ' (new locally)' : !lang.local && lang.cloud ? ' (deleted locally)' : ''}
-                                                        </span>
-                                                    </button>
-                                                    {#if expandedDiffs.has(diffKeyValue)}
-                                                        <div class="cloud-file-diff-body">
-                                                            {#each lang.lines as line}
-                                                                <div class="diff-line {line.type}">
-                                                                    <span class="diff-marker">{line.type === 'add' ? '+' : line.type === 'remove' ? '-' : ' '}</span>
-                                                                    <code title={line.text.length > DIFF_LINE_LIMIT ? line.text : undefined}>{shortenDiffLine(line.text)}</code>
-                                                                </div>
-                                                            {/each}
-                                                        </div>
-                                                    {/if}
-                                                </div>
-                                            {/if}
-                                        {/each}
-                                    </div>
-                                {/each}
-                            {/if}
-                        </div>
-                    {/if}
-                {:else}
-                    <p>Sign in with Google to keep solutions, progress, test cases, and whiteboards in sync across your devices.</p>
-                {/if}
-
-                <p class="cloud-offline-note">Cojudge stays offline-first. Local saves never wait for the cloud, and judging works without signing in or connecting to the internet. Files that start with `.` (e.g. `.env`) are left out of cloud backups and appear faded as hidden files in the playground file tabs</p>
-                {#if $cloudSyncState.authStatus === 'signed-in' && $cloudSyncState.resolution !== 'account' && $cloudSyncState.history.length > 0}
-                    <div class="cloud-history">
-                        <div class="cloud-history-heading">
-                            <strong>Recent cloud versions</strong>
-                            <span>Restore locally, then push to make it current.</span>
-                        </div>
-                        <div class:expanded={showAllCloudHistory} class="cloud-history-list">
-                            {#each (showAllCloudHistory ? $cloudSyncState.history : $cloudSyncState.history.slice(0, 3)) as revision}
-                                <div class="cloud-history-row">
-                                    <div class="cloud-history-details">
-                                        <strong>{formatCloudRevision(revision.createdAt)}</strong>
-                                        <span>{formatCloudRevisionSize(revision.totalBytes)}</span>
-                                    </div>
-                                    {#if revision.current}
-                                        <span class="cloud-current-version">Cloud Latest</span>
-                                    {:else}
-                                        <div class="cloud-history-actions">
-                                            <button class="btn cloud-restore-version" type="button" onclick={() => restoreRevision(revision.revisionId)} disabled={cloudActionPending}>Restore locally</button>
-                                            <button class="btn cloud-delete-version" type="button" onclick={() => deleteRevision(revision.revisionId, revision.createdAt)} disabled={cloudActionPending}>Delete</button>
-                                        </div>
-                                    {/if}
-                                </div>
-                            {/each}
-                        </div>
-                        {#if $cloudSyncState.history.length > 3}
-                            <button
-                                class="cloud-history-toggle"
-                                type="button"
-                                aria-expanded={showAllCloudHistory}
-                                onclick={() => showAllCloudHistory = !showAllCloudHistory}
-                            >
-                                {showAllCloudHistory ? 'Show less' : 'Show more'}
-                            </button>
-                        {/if}
-                    </div>
-                {/if}
-                {#if $cloudSyncState.error}
-                    <p class="modal-error" role="alert">{$cloudSyncState.error}</p>
-                {/if}
-
-                <div class="home-modal-actions settings-actions">
-                    {#if $cloudSyncState.authStatus === 'signed-in'}
-                        <button class="btn remove-settings-btn" type="button" onclick={signOutOfCloud} disabled={cloudActionPending || $cloudSyncState.syncStatus === 'syncing'}>Sign out</button>
-                        <span class="modal-action-spacer"></span>
-                        <button class="btn" type="button" onclick={closeCloudSettings}>Close</button>
-                        {#if $cloudSyncState.resolution && $cloudSyncState.remoteStatus === 'present'}
-                            <button class="btn" type="button" onclick={() => resolveCloudCopy('cloud')} disabled={cloudActionPending}>Restore cloud latest</button>
-                        {/if}
-                        <button bind:this={cloudPrimaryButton} class="btn modal-primary-btn" type="button" onclick={$cloudSyncState.remoteStatus === 'error' ? checkCloud : $cloudSyncState.resolution ? () => resolveCloudCopy('local') : syncCloud} disabled={cloudActionPending || $cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading' || ($cloudSyncState.remoteStatus === 'unknown' && Boolean($cloudSyncState.resolution))}>
-                            {$cloudSyncState.remoteStatus === 'error'
-                                ? 'Retry cloud check'
-                                : $cloudSyncState.resolution === 'account'
-                                ? 'Push this workspace'
-                                : $cloudSyncState.resolution === 'local-changes'
-                                    ? 'Push local changes'
-                                    : $cloudSyncState.resolution === 'conflict'
-                                        ? 'Use local progress'
-                                : $cloudSyncState.syncStatus === 'syncing'
-                                    ? 'Syncing…'
-                                    : 'Sync now'}
-                        </button>
-                    {:else if $cloudSyncState.authStatus === 'unavailable'}
-                        <button bind:this={cloudPrimaryButton} class="btn" type="button" onclick={closeCloudSettings}>Close</button>
-                    {:else}
-                        <button class="btn" type="button" onclick={closeCloudSettings}>Not now</button>
-                        <button bind:this={cloudPrimaryButton} class="btn modal-primary-btn" type="button" onclick={signInToCloud} disabled={cloudActionPending || $cloudSyncState.authStatus === 'initializing' || $cloudSyncState.authStatus === 'signing-in'}>
-                            {$cloudSyncState.authStatus === 'initializing'
-                                ? 'Initializing…'
-                                : $cloudSyncState.authStatus === 'signing-in'
-                                    ? 'Opening Google…'
-                                    : 'Continue with Google'}
-                        </button>
-                    {/if}
-                </div>
-            </div>
-        </div>
-    {/if}
+    <CloudSyncModal open={showCloudSettings} onClose={closeCloudSettings} />
     {#if showFirebaseSettings}
         <div class="home-modal-shell">
             <button class="home-modal-backdrop" aria-label="Close Firebase settings" tabindex="-1" onclick={closeFirebaseSettings}></button>
@@ -2103,6 +1602,39 @@
     .cloud-sync-dot.pending {
         background: var(--color-medium);
         box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-medium) 16%, transparent);
+    }
+    .cloud-progress {
+        display: grid;
+        gap: 0.35rem;
+        margin-top: 0.5rem;
+    }
+    .cloud-progress-label {
+        color: var(--color-text-secondary);
+        font-size: 0.72rem;
+    }
+    .cloud-progress-track {
+        height: 0.4rem;
+        overflow: hidden;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--color-text) 14%, transparent);
+    }
+    .cloud-progress-fill {
+        height: 100%;
+        border-radius: 999px;
+        background: var(--color-highlight);
+        transition: width 0.25s ease;
+    }
+    .cloud-progress-fill.indeterminate {
+        width: 35%;
+        animation: cloud-progress-slide 1.1s ease-in-out infinite;
+    }
+    @keyframes cloud-progress-slide {
+        0% {
+            transform: translateX(-110%);
+        }
+        100% {
+            transform: translateX(310%);
+        }
     }
     .cloud-file-changes {
         display: grid;

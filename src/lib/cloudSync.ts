@@ -84,6 +84,11 @@ export type CloudUser = {
 	photoURL: string | null;
 };
 
+export type CloudProgress = {
+	label: string;
+	value: number | null;
+};
+
 export type CloudSyncState = {
 	authStatus: CloudAuthStatus;
 	syncStatus: CloudOperationStatus;
@@ -93,6 +98,7 @@ export type CloudSyncState = {
 	remoteStatus: CloudRemoteStatus;
 	history: CloudRevision[];
 	error: string | null;
+	progress: CloudProgress | null;
 };
 
 type DeviceUserMeta = {
@@ -154,10 +160,19 @@ const initialState: CloudSyncState = {
 	resolution: null,
 	remoteStatus: 'unknown',
 	history: [],
-	error: null
+	error: null,
+	progress: null
 };
 
 export const cloudSyncState = writable<CloudSyncState>(initialState);
+
+function setCloudProgress(label: string, value: number | null): void {
+	cloudSyncState.update((state) => ({ ...state, progress: { label, value } }));
+}
+
+function clearCloudProgress(): void {
+	cloudSyncState.update((state) => (state.progress ? { ...state, progress: null } : state));
+}
 
 let activeAuth: Auth | null = null;
 let activeDb: Firestore | null = null;
@@ -165,6 +180,8 @@ let authUnsubscribe: Unsubscribe | null = null;
 let syncInterval: ReturnType<typeof setInterval> | null = null;
 let onlineListener: (() => void) | null = null;
 let storageListener: ((event: StorageEvent) => void) | null = null;
+let fileStoreUnsubscribe: (() => void) | null = null;
+let dirtyRefreshTimer: ReturnType<typeof setTimeout> | null = null;
 let coordinationChannel: BroadcastChannel | null = null;
 let restoreReloadScheduled = false;
 let coordinationContextId = '';
@@ -260,8 +277,11 @@ function saveUserMeta(context: OperationContext, userMeta: DeviceUserMeta): void
 	writeDeviceMeta(meta);
 }
 
-async function readLocalSnapshot(context: OperationContext): Promise<LocalSnapshot> {
-	window.dispatchEvent(new Event(CLOUD_FLUSH_EVENT));
+async function readLocalSnapshot(
+	context: OperationContext,
+	options: { flush?: boolean } = {}
+): Promise<LocalSnapshot> {
+	if (options.flush !== false) window.dispatchEvent(new Event(CLOUD_FLUSH_EVENT));
 	const data = collectProgressData(localStorage, { cloud: true });
 	const serialized = serializeProgressData(data);
 	const checksum = await hashProgress(serialized);
@@ -641,7 +661,8 @@ function markSynced(
 		syncStatus: 'idle',
 		lastSyncedAt: meta.lastSyncedAt,
 		resolution,
-		error: null
+		error: null,
+		progress: null
 	}));
 	return true;
 }
@@ -731,7 +752,7 @@ async function runSync(mode: SyncMode, context: OperationContext): Promise<void>
 	if (isCloudRestoreInProgress()) return;
 	if (!navigator.onLine) {
 		if (isOperationCurrent(context)) {
-			cloudSyncState.update((state) => ({ ...state, syncStatus: 'offline', error: null }));
+			cloudSyncState.update((state) => ({ ...state, syncStatus: 'offline', error: null, progress: null }));
 		}
 		if (mode !== 'fetch') throw new Error('Connect to the internet before updating cloud progress.');
 		return;
@@ -741,13 +762,15 @@ async function runSync(mode: SyncMode, context: OperationContext): Promise<void>
 		...state,
 		syncStatus: 'syncing',
 		remoteStatus: 'loading',
-		error: null
+		error: null,
+		progress: { label: 'Preparing progress…', value: 10 }
 	}));
 	try {
 		await coordinateOtherContexts('flush');
 		if (!isOperationCurrent(context)) return;
 		const local = await readLocalSnapshot(context);
 		if (!isOperationCurrent(context)) return;
+		setCloudProgress('Reading cloud state…', 35);
 		const device = readDeviceMeta();
 		const accountId = cloudAccountId(context.projectId, context.uid);
 		const accountNeedsConfirmation = needsCloudAccountConfirmation(device.workspaceId, accountId);
@@ -760,7 +783,8 @@ async function runSync(mode: SyncMode, context: OperationContext): Promise<void>
 				...state,
 				resolution: 'account',
 				syncStatus: 'idle',
-				error: null
+				error: null,
+				progress: null
 			}));
 			return;
 		}
@@ -790,7 +814,8 @@ async function runSync(mode: SyncMode, context: OperationContext): Promise<void>
 					...state,
 					syncStatus: 'idle',
 					resolution: null,
-					error: null
+					error: null,
+					progress: null
 				}));
 			}
 			return;
@@ -801,7 +826,8 @@ async function runSync(mode: SyncMode, context: OperationContext): Promise<void>
 				...state,
 				resolution: 'local-changes',
 				syncStatus: 'idle',
-				error: null
+				error: null,
+				progress: null
 			}));
 			return;
 		}
@@ -811,15 +837,19 @@ async function runSync(mode: SyncMode, context: OperationContext): Promise<void>
 				...state,
 				resolution: 'conflict',
 				syncStatus: 'idle',
-				error: null
+				error: null,
+				progress: null
 			}));
 			return;
 		}
 		if (direction === 'upload') {
+			setCloudProgress('Uploading progress…', 55);
 			const uploaded = await uploadSnapshot(context.db, context.uid, local, remote);
 			if (!isOperationCurrent(context)) return;
+			setCloudProgress('Finalizing…', 85);
 			const updatedHistory = await readRemoteHistory(context.db, context.uid, uploaded);
 			if (!isOperationCurrent(context)) return;
+			setCloudProgress('Finalizing…', 95);
 			publishHistory(updatedHistory, uploaded.revisionId);
 			await finalizeCloudRevision(context, uploaded.checksum);
 			return;
@@ -828,14 +858,17 @@ async function runSync(mode: SyncMode, context: OperationContext): Promise<void>
 			throw new Error('No Cojudge Cloud snapshot exists for this account yet.');
 		}
 
+		setCloudProgress('Downloading from cloud…', 55);
 		const downloaded = await downloadSnapshot(context.db, context.uid, remote);
 		if (!isOperationCurrent(context)) return;
+		setCloudProgress('Applying cloud data…', 85);
 		const latest = await readRemoteMeta(context.db, context.uid);
 		if (!isOperationCurrent(context)) return;
 		if (!latest || latest.revisionId !== remote.revisionId) {
 			throw new Error('Cloud progress changed while downloading. Try again.');
 		}
 		await applyDownloadedSnapshot(context, downloaded, local, latest.checksum);
+		clearCloudProgress();
 	} catch (error) {
 		if (!isOperationCurrent(context)) return;
 		const offline = !navigator.onLine;
@@ -843,7 +876,8 @@ async function runSync(mode: SyncMode, context: OperationContext): Promise<void>
 			...state,
 			syncStatus: offline ? 'offline' : 'error',
 			remoteStatus: offline ? state.remoteStatus : 'error',
-			error: offline ? null : errorMessage(error)
+			error: offline ? null : errorMessage(error),
+			progress: null
 		}));
 		throw error;
 	}
@@ -886,10 +920,10 @@ export function syncCloudNow(): Promise<void> {
 	return queueSync('push');
 }
 
-export async function refreshCloudLocalState(): Promise<boolean> {
+export async function refreshCloudLocalState(options: { flush?: boolean } = {}): Promise<boolean> {
 	const context = captureOperationContext();
 	if (!browser || !context || isCloudRestoreInProgress()) return false;
-	const local = await readLocalSnapshot(context);
+	const local = await readLocalSnapshot(context, options);
 	if (!isOperationCurrent(context)) return false;
 	const dirty = local.meta.lastSyncedHash
 		? local.checksum !== local.meta.lastSyncedHash
@@ -1003,7 +1037,12 @@ async function runRevisionRestore(
 	context: OperationContext
 ): Promise<void> {
 	if (!browser || !isOperationCurrent(context)) return;
-	cloudSyncState.update((state) => ({ ...state, syncStatus: 'syncing', error: null }));
+	cloudSyncState.update((state) => ({
+		...state,
+		syncStatus: 'syncing',
+		error: null,
+		progress: { label: 'Restoring backup…', value: 35 }
+	}));
 	try {
 		if (!navigator.onLine) throw new Error('Connect to the internet before restoring cloud progress.');
 		if (get(cloudSyncState).resolution === 'account') {
@@ -1033,21 +1072,25 @@ async function runRevisionRestore(
 			selected = currentSlot;
 		}
 
+		setCloudProgress('Downloading backup…', 65);
 		const downloaded = await downloadSnapshot(context.db, context.uid, selected);
 		if (!isOperationCurrent(context)) return;
+		setCloudProgress('Applying backup…', 85);
 		const latest = await readRemoteMeta(context.db, context.uid);
 		if (!latest || latest.revisionId !== remote.revisionId) {
 			throw new Error('Cloud progress changed while restoring. Try again.');
 		}
 		if (!isOperationCurrent(context)) return;
 		await applyDownloadedSnapshot(context, downloaded, local, latest.checksum);
+		clearCloudProgress();
 	} catch (error) {
 		if (!isOperationCurrent(context)) return;
 		cloudSyncState.update((state) => ({
 			...state,
 			syncStatus: navigator.onLine ? 'error' : 'offline',
 			remoteStatus: navigator.onLine ? 'error' : state.remoteStatus,
-			error: navigator.onLine ? errorMessage(error) : null
+			error: navigator.onLine ? errorMessage(error) : null,
+			progress: null
 		}));
 		throw error;
 	}
@@ -1078,7 +1121,12 @@ async function runRevisionDelete(
 	context: OperationContext
 ): Promise<void> {
 	if (!browser || !isOperationCurrent(context)) return;
-	cloudSyncState.update((state) => ({ ...state, syncStatus: 'syncing', error: null }));
+	cloudSyncState.update((state) => ({
+		...state,
+		syncStatus: 'syncing',
+		error: null,
+		progress: { label: 'Deleting backup…', value: null }
+	}));
 	try {
 		if (!navigator.onLine) throw new Error('Connect to the internet before deleting a cloud backup.');
 		if (get(cloudSyncState).resolution === 'account') {
@@ -1125,13 +1173,14 @@ async function runRevisionDelete(
 		const updated = await refreshRemoteState(context.db, context.uid);
 		if (!isOperationCurrent(context)) return;
 		publishHistory(updated.history, updated.remote?.revisionId ?? null);
-		cloudSyncState.update((state) => ({ ...state, syncStatus: 'idle', error: null }));
+		cloudSyncState.update((state) => ({ ...state, syncStatus: 'idle', error: null, progress: null }));
 	} catch (error) {
 		if (!isOperationCurrent(context)) return;
 		cloudSyncState.update((state) => ({
 			...state,
 			syncStatus: navigator.onLine ? 'error' : 'offline',
-			error: navigator.onLine ? errorMessage(error) : null
+			error: navigator.onLine ? errorMessage(error) : null,
+			progress: null
 		}));
 		throw error;
 	}
@@ -1177,7 +1226,8 @@ function handleAuthUser(user: User | null, currentGeneration: number): void {
 			resolution: null,
 			remoteStatus: 'unknown',
 			history: [],
-			error: null
+			error: null,
+			progress: null
 		});
 		return;
 	}
@@ -1196,7 +1246,8 @@ function handleAuthUser(user: User | null, currentGeneration: number): void {
 		resolution: accountNeedsConfirmation ? 'account' : null,
 		remoteStatus: 'unknown',
 		history: [],
-		error: null
+		error: null,
+		progress: null
 	});
 	void checkCloudNow().catch(() => undefined);
 }
@@ -1208,6 +1259,19 @@ export function startCloudSync(): Promise<void> {
 	startCoordination();
 	const currentGeneration = ++generation;
 	cloudSyncState.update((state) => ({ ...state, authStatus: 'initializing', error: null }));
+
+	// Re-evaluate the local-changes resolution shortly after any local file
+	// save, so cloud indicators (e.g. the playground legend) stay current.
+	// The flush is skipped because this refresh is itself triggered by a file
+	// store save; flushing again would make flush handlers write to the store
+	// and retrigger this debounce in a self-sustaining loop.
+	fileStoreUnsubscribe = fileStore.subscribe(() => {
+		if (dirtyRefreshTimer) clearTimeout(dirtyRefreshTimer);
+		dirtyRefreshTimer = setTimeout(() => {
+			dirtyRefreshTimer = null;
+			void refreshCloudLocalState({ flush: false }).catch(() => undefined);
+		}, 500);
+	});
 
 	startPromise = (async () => {
 		try {
@@ -1251,6 +1315,10 @@ export function stopCloudSync(): void {
 	syncInterval = null;
 	if (onlineListener) window.removeEventListener('online', onlineListener);
 	onlineListener = null;
+	fileStoreUnsubscribe?.();
+	fileStoreUnsubscribe = null;
+	if (dirtyRefreshTimer) clearTimeout(dirtyRefreshTimer);
+	dirtyRefreshTimer = null;
 	stopCoordination();
 	activeAuth = null;
 	activeDb = null;
@@ -1307,12 +1375,17 @@ async function clearLocalDataAndSignOut(
 		{ mode: 'exclusive', ifAvailable: true },
 		async (lock) => {
 			if (!lock) throw new Error('Another Cojudge window is updating local data. Try again shortly.');
+			setCloudProgress('Checking cloud backup…', null);
 			if (requireCloudMatch) {
 				await coordinateOtherContexts('flush');
 				try {
 					const initialCheck = await inspectCloudSignOut(context);
-					if (initialCheck !== 'matching') return initialCheck;
+					if (initialCheck !== 'matching') {
+						clearCloudProgress();
+						return initialCheck;
+					}
 				} catch {
+					clearCloudProgress();
 					return 'unknown';
 				}
 			}
@@ -1323,6 +1396,7 @@ async function clearLocalDataAndSignOut(
 			let announced = false;
 			try {
 				if (!isOperationCurrent(context)) return 'unknown';
+				setCloudProgress('Deleting local data…', 55);
 				localStorage.setItem(CLOUD_RESTORE_LOCK_KEY, Date.now().toString());
 				if (requireCloudMatch) {
 					try {
@@ -1336,6 +1410,7 @@ async function clearLocalDataAndSignOut(
 				await signOutFirebase();
 
 				mutationStarted = true;
+				setCloudProgress('Finalizing…', 85);
 				applyProgressData({}, { replace: true });
 				clearProgressStorage(localStorage);
 				if (dotFilesSnapshot !== null) {
@@ -1356,6 +1431,7 @@ async function clearLocalDataAndSignOut(
 				}
 				throw error;
 			} finally {
+				clearCloudProgress();
 				if (!announced) {
 					resumeAfterCloudMutation();
 				}

@@ -30,7 +30,7 @@
 - Persistent Code & Progress Tracking via Local Storage
 - Optional Cojudge Cloud sync through Google sign-in; local storage remains the source of truth offline
 - Browser-like tabs to organize your local solutions
-- Extensive problems: includes all 75 problems with sample test cases, hidden test cases and reference solutions from Blind 75
+- Extensive problems: includes all problems with sample test cases, hidden test cases and reference solutions from Blind 75 and NeetCode 150
 
 ## Requirements
 
@@ -158,7 +158,7 @@ See [`docs/ADD_PROBLEMS.md`](docs/ADD_PROBLEMS.md) for a comprehensive guide cov
 - Required files (`statement.md`, `metadata.json`, `official-tests.json`, `Marker.java`)
 - Standard function-based problems vs class-based design problems
 - Supported parameter/output types
-- Starter code conventions for all 5 languages (Java, Python, C++, C#, Rust)
+- Starter code conventions for all 7 languages (Java, Python, C++, C#, Rust, Go, Typescript)
 - How to write `Marker.java` with the reference solution and `isCorrect` validator
 - Registration in `courses/blind75/courseinfo.json`
 - Verification checklist (`cojudge init`/`run`/`submit`)
