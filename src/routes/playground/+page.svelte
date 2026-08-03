@@ -1,12 +1,14 @@
 <script lang="ts">
     import { page } from '$app/stores';
     import PlaygroundExecutionPanel from '$lib/components/PlaygroundExecutionPanel.svelte';
+    import CloudSyncModal from '$lib/components/CloudSyncModal.svelte';
     import LanguageIcon from '$lib/components/LanguageIcon.svelte';
     import ShareModal from '$lib/components/ShareModal.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
     import { showAlert, showConfirm } from '$lib/dialogs';
     import { consumeForkTransfer } from '$lib/forkTransfer';
     import { ensureAuthenticated, initFirebase } from '$lib/firebase';
+    import { cloudSyncState } from '$lib/cloudSync';
     import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress } from '$lib/progressBackup';
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { isDotFileName, type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
@@ -24,6 +26,18 @@
     let language: ProgrammingLanguage = $userSettingsStorage.playgroundPreferredLanguage ?? 'java';
     const fileKey = () => `${problemId}`;
     const codeKey = () => `${problemId}:${language}`;
+    let showCloudSettings = false;
+    let cloudActivityButton: HTMLButtonElement | null = null;
+
+    function openCloudSettings() {
+        showCloudSettings = true;
+    }
+
+    async function closeCloudSettings() {
+        showCloudSettings = false;
+        await tick();
+        cloudActivityButton?.focus();
+    }
 
     const starterCode = {
         java: `public class Main {
@@ -89,6 +103,17 @@ func main() {
         return content !== '' && content !== normalizeContent(starterCode[entry.language] ?? '');
     }
 
+    // True while the active tab exists only in memory with untouched starter
+    // content. Such tabs stay unpersisted so that merely opening the
+    // playground does not create local data (e.g. for cloud sync).
+    function isPristineStarterTab(): boolean {
+        const tab = tabs[activeTabId];
+        if (!tab || tab.type === 'preview') return false;
+        const persisted = getFiles().some((x) => x.fileId === tab.fileId && x.language === language);
+        if (persisted) return false;
+        return normalizeContent(code) === normalizeContent(starterCode[language] ?? '');
+    }
+
     function getLanguageForTab(fileId: string): ProgrammingLanguage {
         const tabFiles = getFiles().filter((f) => f.fileId === fileId);
 
@@ -143,7 +168,7 @@ func main() {
             const existing = groups.get(f.fileId);
             const orderVal = (typeof f.order === 'number') ? f.order : null;
             const lv = f.lastUpdated || (f as any).lastViewed || 0;
-            const open = f.isOpen !== false;
+            const open = f.isOpen === true;
             if (!existing) {
                 groups.set(f.fileId, {
                     fileId: f.fileId,
@@ -180,35 +205,6 @@ func main() {
         return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName, isOpen: g.isOpen, lastUpdated: g.lastUpdated, type: g.type, sourceFileId: g.sourceFileId }));
     }
 
-    // Ensure an entry exists for current tab+language, optionally with initial content
-    function ensureEntry(fileId: string, lang: ProgrammingLanguage, initialContent: string) {
-        const fkey = fileKey();
-        fileStore.update((s) => {
-            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
-            const existing = files.find((x) => x.fileId === fileId && x.language === lang);
-            if (!existing) {
-                const tabIndex = tabs.findIndex((t) => t.fileId === fileId);
-                const tab = tabs.find((t) => t.fileId === fileId);
-                files = [
-                    ...files,
-                    {
-                        fileId,
-                        fileName: tab?.fileName || 'Solution',
-                        language: lang,
-                        content: initialContent,
-                        viewState: null,
-                        output: '',
-                        logs: '',
-                        isActive: false,
-                        order: tabIndex >= 0 ? tabIndex : undefined,
-                        isOpen: tab ? tab.isOpen : true
-                    } as FileEntry
-                ];
-            }
-            return { ...s, [fkey]: JSON.stringify(files) };
-        });
-    }
-
     let suppressSave = true; // prevent save during programmatic loads
     let skipNextSave = false; // prevent save when code was loaded from cross-tab sync
 
@@ -225,6 +221,8 @@ func main() {
             logs = entry.logs || '';
             lastSharedContent = entry.lastSharedContent;
         } else {
+            // Keep untouched starter content in memory only; it is persisted
+            // on the first real edit (see isPristineStarterTab).
             const cStore = get(codeStore);
             const starter = cStore[codeKey()] ?? starterCode[lang] ?? '';
             code = starter;
@@ -232,7 +230,6 @@ func main() {
             output = '';
             logs = '';
             lastSharedContent = undefined;
-            ensureEntry(currentId, lang, starter);
         }
         
         await tick();
@@ -551,7 +548,7 @@ func main() {
         draggingId = null;
     }
     $: if (!suppressSave && tabs[activeTabId]?.type !== 'preview' && (code !== undefined || output !== undefined || logs !== undefined)) {
-        if (!skipNextSave) {
+        if (!skipNextSave && !isPristineStarterTab()) {
             const fkey = fileKey();
             const now = Date.now();
             const latestViewState = editorComponent?.getViewState?.() || currentViewState;
@@ -1929,6 +1926,28 @@ func main() {
                 <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </button>
+        <button
+            class="activity-icon"
+            on:click={openCloudSettings}
+            title={$cloudSyncState.authStatus === 'signed-in' ? 'Cojudge Cloud' : 'Cojudge Cloud — Local only'}
+            bind:this={cloudActivityButton}
+        >
+            {#if $cloudSyncState.authStatus === 'signed-in'}
+                <!-- Cloud Icon -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                {#if $cloudSyncState.resolution}
+                    <span class="cloud-icon-legend" title="Local or conflicting cloud changes need attention" aria-hidden="true"></span>
+                {/if}
+            {:else}
+                <!-- Offline Cloud Icon -->
+                <svg class="cloud-icon-offline" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="5" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            {/if}
+        </button>
     </div>
 
     <!-- Left Sidebar -->
@@ -2597,6 +2616,8 @@ func main() {
     {/if}
 </div>
 
+<CloudSyncModal open={showCloudSettings} onClose={closeCloudSettings} />
+
 <style>
     .workspace {
         display: flex;
@@ -2648,6 +2669,21 @@ func main() {
     .activity-icon.active {
         color: var(--color-text);
         border-left: 2px solid var(--color-highlight); /* Visual indicator */
+    }
+
+    .cloud-icon-legend {
+        position: absolute;
+        top: 5px;
+        right: 6px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--color-medium);
+        box-shadow: 0 0 0 2px var(--color-bg);
+    }
+
+    .cloud-icon-offline {
+        opacity: 0.5;
     }
 
     /* Sidebar Styles */

@@ -3,6 +3,7 @@
 	import { isDesktopRuntime } from '$lib/firebaseSettings';
 	import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress } from '$lib/progressBackup';
 	import { WHITEBOARD_RESTORED_EVENT } from '$lib/cloudFileChange';
+	import { refreshCloudLocalState } from '$lib/cloudSync';
 	import WhiteboardIcon from '$lib/components/WhiteboardIcon.svelte';
 	import { showConfirm } from '$lib/dialogs';
 	import userSettingsStorage from '$lib/stores/userSettingsStorage';
@@ -445,6 +446,7 @@
 		try {
 			localStorage.setItem(activeStorageKey, JSON.stringify(board));
 			saveState = 'saved';
+			void refreshCloudLocalState();
 		} catch {
 			saveState = 'error';
 			showToast('The board is too large to save locally');

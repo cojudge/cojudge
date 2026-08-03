@@ -139,6 +139,45 @@ describe('progress backups', () => {
 		expect(cloudFiles.playground).not.toContain('.env');
 	});
 
+	it('keeps markdown preview tabs locally but leaves them out of cloud snapshots', () => {
+		const storage = new MemoryStorage();
+		storage.setItem(
+			'files',
+			JSON.stringify({
+				playground: JSON.stringify([
+					{
+						fileId: '1',
+						fileName: 'README',
+						language: 'markdown',
+						content: '# Hello',
+						type: 'editor',
+						sourceFileId: null
+					},
+					{
+						fileId: '2',
+						fileName: 'Preview: README',
+						language: 'markdown',
+						content: '<h1>Hello</h1>',
+						type: 'preview',
+						sourceFileId: '1'
+					}
+				])
+			})
+		);
+
+		const local = collectProgressData(storage);
+		const cloud = collectProgressData(storage, { cloud: true });
+
+		const localFiles = local.files as Record<string, string>;
+		const cloudFiles = cloud.files as Record<string, string>;
+
+		const localEntries = JSON.parse(localFiles.playground) as Array<{ type?: string }>;
+		const cloudEntries = JSON.parse(cloudFiles.playground) as Array<{ type?: string }>;
+		expect(localEntries.some((entry) => entry.type === 'preview')).toBe(true);
+		expect(cloudEntries.some((entry) => entry.type === 'preview')).toBe(false);
+		expect(cloudEntries.some((entry) => entry.type === 'editor')).toBe(true);
+	});
+
 	it('extracts only dotfile entries for a sign-out "keep" decision', () => {
 		const storage = new MemoryStorage();
 		expect(hasDotFiles(storage)).toBe(false);
@@ -219,6 +258,15 @@ describe('progress backups', () => {
 		expect(parsed.playground).toContain('.env');
 		expect(parsed.playground).toContain('Solution');
 		expect(parsed.playground).toContain('Notes');
+	});
+
+	it('treats empty file lists as empty for cloud sync', () => {
+		const storage = new MemoryStorage();
+		storage.setItem('files', JSON.stringify({ playground: JSON.stringify([]) }));
+
+		const cloud = collectProgressData(storage, { cloud: true });
+		expect(cloud.files).toEqual({});
+		expect(isMeaningfulProgress(cloud)).toBe(false);
 	});
 
 	it('treats dotfile-only file lists as empty for cloud sync', () => {
