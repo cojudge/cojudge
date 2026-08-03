@@ -2,11 +2,21 @@ import { describe, expect, it } from 'vitest';
 import {
 	computeFileChanges,
 	computeLineDiff,
+	computeOtherChanges,
 	computeWhiteboardChange,
+	computeWorkspaceChanges,
+	discardChange,
 	discardFile,
 	isBlobContent,
+	CHECKBOXES_FILE_ID,
+	GAME_RESULT_FILE_ID_PREFIX,
+	SOLUTION_FILE_ID_PREFIX,
+	TESTCASES_FILE_ID_PREFIX,
+	USER_SETTINGS_FILE_ID,
 	WHITEBOARD_FILE_ID,
-	type FileStore
+	WORKSPACE_FILE_ID_PREFIX,
+	type FileStore,
+	type ProgressStore
 } from './cloudFileChange';
 
 function store(files: Array<{ fileId: string; fileName?: string; language: string; content: string }>): FileStore {
@@ -173,5 +183,142 @@ describe('discardFile', () => {
 		const entries = JSON.parse(updated.playground) as Array<Record<string, unknown>>;
 		expect(entries).toHaveLength(2);
 		expect(entries.map((entry) => entry.fileId).sort()).toEqual(['1', '2']);
+	});
+});
+
+describe('computeOtherChanges', () => {
+	it('detects a modified solution with a line diff', () => {
+		const local: ProgressStore = { solutions: { 'two-sum': 'return 2;' } };
+		const cloud: ProgressStore = { solutions: { 'two-sum': 'return 1;' } };
+		const changes = computeOtherChanges(local, cloud);
+		expect(changes).toHaveLength(1);
+		expect(changes[0].fileId).toBe(`${SOLUTION_FILE_ID_PREFIX}two-sum`);
+		expect(changes[0].fileName).toBe('Solution');
+		expect(changes[0].languages[0].lines).toContainEqual({ type: 'add', text: 'return 2;' });
+		expect(changes[0].languages[0].lines).toContainEqual({ type: 'remove', text: 'return 1;' });
+	});
+
+	it('detects test cases that only exist locally', () => {
+		const local: ProgressStore = { testcases: { 'two-sum': [{ input: '[2,7]' }] } };
+		const changes = computeOtherChanges(local, {});
+		expect(changes).toHaveLength(1);
+		expect(changes[0].fileId).toBe(`${TESTCASES_FILE_ID_PREFIX}two-sum`);
+		expect(changes[0].languages[0].local).toBe(true);
+		expect(changes[0].languages[0].cloud).toBe(false);
+	});
+
+	it('ignores test cases that match the cloud', () => {
+		const cases = { 'two-sum': [{ input: '[2,7]' }] };
+		expect(computeOtherChanges({ testcases: cases }, { testcases: cases })).toEqual([]);
+	});
+
+	it('detects game results differences', () => {
+		const local: ProgressStore = { 'game-results': { 'two-sum': [{ totalScore: 90 }] } };
+		const cloud: ProgressStore = { 'game-results': { 'two-sum': [] } };
+		const changes = computeOtherChanges(local, cloud);
+		expect(changes).toHaveLength(1);
+		expect(changes[0].fileId).toBe(`${GAME_RESULT_FILE_ID_PREFIX}two-sum`);
+	});
+
+	it('aggregates checkbox flips into one change', () => {
+		const local: ProgressStore = { 'user-checkboxes': { 'two-sum': true } };
+		const cloud: ProgressStore = { 'user-checkboxes': { 'two-sum': false, 'add-two-numbers': true } };
+		const changes = computeOtherChanges(local, cloud);
+		const checkbox = changes.find((change) => change.fileId === CHECKBOXES_FILE_ID);
+		expect(checkbox).toBeDefined();
+		const texts = checkbox!.languages[0].lines.map((line) => line.text);
+		expect(texts).toContain('two-sum: unchecked → checked');
+		expect(texts).toContain('add-two-numbers: checked → unchecked');
+	});
+
+	it('detects shared whiteboard keys', () => {
+		const local: ProgressStore = { 'cojudge-whiteboard-v1:share:abc': { elements: [{}] } };
+		const changes = computeOtherChanges(local, {});
+		expect(changes).toHaveLength(1);
+		expect(changes[0].fileId).toBe('storage:cojudge-whiteboard-v1:share:abc');
+		expect(changes[0].fileName).toContain('Shared whiteboard');
+	});
+
+	it('detects settings field changes with a readable diff', () => {
+		const local: ProgressStore = { 'user-settings': { theme: 'dark', fontSize: 14 } };
+		const cloud: ProgressStore = { 'user-settings': { theme: 'light', fontSize: 14 } };
+		const changes = computeOtherChanges(local, cloud);
+		const settings = changes.find((change) => change.fileId === USER_SETTINGS_FILE_ID);
+		expect(settings).toBeDefined();
+		const lines = settings!.languages[0].lines;
+		expect(lines).toContainEqual({ type: 'remove', text: 'theme: "light"' });
+		expect(lines).toContainEqual({ type: 'add', text: 'theme: "dark"' });
+		expect(lines.some((line) => String(line.text).startsWith('fontSize'))).toBe(false);
+	});
+});
+
+describe('computeWorkspaceChanges', () => {
+	it('flags a rename that produces no content diff', () => {
+		const local: ProgressStore = {
+			files: { playground: JSON.stringify([{ fileId: '1', fileName: 'Renamed', language: 'python', content: 'x=1' }]) }
+		};
+		const cloud: ProgressStore = {
+			files: { playground: JSON.stringify([{ fileId: '1', fileName: 'Original', language: 'python', content: 'x=1' }]) }
+		};
+		const changes = computeWorkspaceChanges(local, cloud, new Set());
+		expect(changes).toHaveLength(1);
+		expect(changes[0].fileId).toBe(`${WORKSPACE_FILE_ID_PREFIX}playground`);
+	});
+
+	it('skips workspaces already covered by a content change', () => {
+		const local: ProgressStore = {
+			files: { playground: JSON.stringify([{ fileId: '1', fileName: 'Renamed', language: 'python', content: 'x=1' }]) }
+		};
+		const cloud: ProgressStore = {
+			files: { playground: JSON.stringify([{ fileId: '1', fileName: 'Original', language: 'python', content: 'x=1' }]) }
+		};
+		expect(computeWorkspaceChanges(local, cloud, new Set(['playground']))).toEqual([]);
+	});
+
+	it('ignores identical workspaces', () => {
+		const files = { playground: JSON.stringify([{ fileId: '1', fileName: 'A', language: 'python', content: 'x=1' }]) };
+		expect(computeWorkspaceChanges({ files }, { files }, new Set())).toEqual([]);
+	});
+});
+
+describe('discardChange', () => {
+	it('restores a solution from the cloud', () => {
+		const local: ProgressStore = { solutions: { 'two-sum': 'return 2;' } };
+		const cloud: ProgressStore = { solutions: { 'two-sum': 'return 1;' } };
+		const updated = discardChange(local, `${SOLUTION_FILE_ID_PREFIX}two-sum`, cloud);
+		expect(updated.solutions).toEqual({ 'two-sum': 'return 1;' });
+	});
+
+	it('removes a solution that does not exist in the cloud', () => {
+		const local: ProgressStore = { solutions: { 'two-sum': 'return 2;', other: 'x' } };
+		const updated = discardChange(local, `${SOLUTION_FILE_ID_PREFIX}two-sum`, {});
+		expect(updated.solutions).toEqual({ other: 'x' });
+	});
+
+	it('restores test cases from the cloud', () => {
+		const local: ProgressStore = { testcases: { 'two-sum': [{ input: 'local' }] } };
+		const cloud: ProgressStore = { testcases: { 'two-sum': [{ input: 'cloud' }] } };
+		const updated = discardChange(local, `${TESTCASES_FILE_ID_PREFIX}two-sum`, cloud);
+		expect(updated.testcases).toEqual({ 'two-sum': [{ input: 'cloud' }] });
+	});
+
+	it('restores the checkboxes map wholesale', () => {
+		const local: ProgressStore = { 'user-checkboxes': { a: true } };
+		const cloud: ProgressStore = { 'user-checkboxes': { b: true } };
+		const updated = discardChange(local, CHECKBOXES_FILE_ID, cloud);
+		expect(updated['user-checkboxes']).toEqual({ b: true });
+	});
+
+	it('removes a shared whiteboard that does not exist in the cloud', () => {
+		const local: ProgressStore = { 'cojudge-whiteboard-v1:share:abc': { elements: [{}] } };
+		const updated = discardChange(local, 'storage:cojudge-whiteboard-v1:share:abc', {});
+		expect(updated['cojudge-whiteboard-v1:share:abc']).toBeUndefined();
+	});
+
+	it('restores a workspace files list from the cloud', () => {
+		const local: ProgressStore = { files: { playground: JSON.stringify([{ fileId: '1', fileName: 'Renamed' }]) } };
+		const cloud: ProgressStore = { files: { playground: JSON.stringify([{ fileId: '1', fileName: 'Original' }]) } };
+		const updated = discardChange(local, `${WORKSPACE_FILE_ID_PREFIX}playground`, cloud);
+		expect(JSON.parse((updated.files as Record<string, string>).playground)[0].fileName).toBe('Original');
 	});
 });
