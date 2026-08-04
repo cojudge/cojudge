@@ -1009,17 +1009,88 @@ func main() {
         });
     }
 
-    function moveTab(sourceId: string, targetId: string) {
-        if (sourceId === targetId) return;
-        const from = tabs.findIndex((t) => t.fileId === sourceId);
-        const to = tabs.findIndex((t) => t.fileId === targetId);
-        if (from < 0 || to < 0) return;
+    // --- Tab drag-and-drop reordering ---
+    // HTML5 drag events are suppressed in Chromium by the tab's mousedown
+    // preventDefault (which keeps focus in the editor), so tabs are reordered
+    // with pointer events, same as the file explorer.
+    type TabPointerDrag = { fileId: string; startX: number; startY: number; active: boolean; pointerId: number };
+    let tabPointerDrag: TabPointerDrag | null = null;
+    let tabDidDrag = false;
+    /** Insertion index among visible tabs, -1 when not dragging */
+    let tabDragInsertIndex = -1;
+
+    function handleTabPointerDown(e: PointerEvent, fileId: string) {
+        if (e.button !== 0) return;
+        const target = e.target as HTMLElement | null;
+        if (target?.closest('button, input, a')) return;
+        tabDidDrag = false;
+        tabPointerDrag = { fileId, startX: e.clientX, startY: e.clientY, active: false, pointerId: e.pointerId };
+        window.addEventListener('pointermove', onTabPointerMove);
+        window.addEventListener('pointerup', onTabPointerUp);
+        window.addEventListener('pointercancel', onTabPointerUp);
+    }
+
+    function onTabPointerMove(e: PointerEvent) {
+        if (!tabPointerDrag || e.pointerId !== tabPointerDrag.pointerId) return;
+        const dx = e.clientX - tabPointerDrag.startX;
+        const dy = e.clientY - tabPointerDrag.startY;
+        if (!tabPointerDrag.active) {
+            if (Math.hypot(dx, dy) < 6) return;
+            tabPointerDrag = { ...tabPointerDrag, active: true };
+            tabDidDrag = true;
+            document.body.classList.add('tab-dragging');
+        }
+        e.preventDefault();
+        tabDragInsertIndex = computeTabInsertIndex(e.clientX);
+    }
+
+    function onTabPointerUp(e: PointerEvent) {
+        if (!tabPointerDrag || e.pointerId !== tabPointerDrag.pointerId) return;
+        const drag = tabPointerDrag;
+        const wasActive = drag.active;
+        const insertIndex = tabDragInsertIndex;
+        window.removeEventListener('pointermove', onTabPointerMove);
+        window.removeEventListener('pointerup', onTabPointerUp);
+        window.removeEventListener('pointercancel', onTabPointerUp);
+        document.body.classList.remove('tab-dragging');
+        tabPointerDrag = null;
+        tabDragInsertIndex = -1;
+        if (!wasActive) {
+            tabDidDrag = false;
+            return;
+        }
+        e.preventDefault();
+        if (insertIndex >= 0) {
+            const fromIdx = tabs.findIndex((t) => t.fileId === drag.fileId);
+            if (fromIdx >= 0 && fromIdx !== (fromIdx < insertIndex ? insertIndex - 1 : insertIndex)) {
+                moveTabToIndex(drag.fileId, insertIndex);
+            }
+        }
+        // Suppress the click that follows the drag
+        setTimeout(() => { tabDidDrag = false; }, 0);
+    }
+
+    function computeTabInsertIndex(clientX: number): number {
+        const els = Array.from(document.querySelectorAll<HTMLElement>('.editor-header .tab'));
+        if (!els.length) return 0;
+        for (let i = 0; i < els.length; i++) {
+            const rect = els[i].getBoundingClientRect();
+            if (clientX < rect.left + rect.width / 2) return i;
+        }
+        return els.length;
+    }
+
+    function moveTabToIndex(sourceFileId: string, insertIndex: number) {
+        const fromIdx = tabs.findIndex((t) => t.fileId === sourceFileId);
+        if (fromIdx < 0) return;
+        const openCount = tabs.filter((t) => t.isOpen).length;
+        insertIndex = Math.max(0, Math.min(insertIndex, openCount));
         const activeFileId = tabs[activeTabId]?.fileId;
         const updated = [...tabs];
-        const [moved] = updated.splice(from, 1);
-        updated.splice(to, 0, moved);
+        const [moved] = updated.splice(fromIdx, 1);
+        const adjusted = fromIdx < insertIndex ? insertIndex - 1 : insertIndex;
+        updated.splice(adjusted, 0, moved);
         tabs = updated;
-        // Recompute activeTabId by locating current active fileId
         if (activeFileId) {
             const newIdx = tabs.findIndex((t) => t.fileId === activeFileId);
             if (newIdx !== -1) activeTabId = newIdx;
@@ -1027,25 +1098,34 @@ func main() {
         persistTabOrder();
     }
 
-    let draggingId: string | null = null;
-    function handleDragStart(e: DragEvent, fileId: string) {
-        draggingId = fileId;
-        try { e.dataTransfer?.setData('text/plain', fileId); } catch {}
-        if (e.dataTransfer) e.dataTransfer.effectAllowed = 'move';
+    function handleTabClick(t: TabMeta) {
+        if (tabDidDrag) {
+            tabDidDrag = false;
+            return;
+        }
+        activateTab(t.fileId);
     }
-    function handleDragOver(e: DragEvent, _fileId: string) {
-        e.preventDefault();
-        if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
-    }
-    function handleDrop(e: DragEvent, targetId: string) {
-        e.preventDefault();
-        const source = draggingId || e.dataTransfer?.getData('text/plain') || '';
-        if (source) moveTab(source, targetId);
-        draggingId = null;
-    }
-    function handleDragEnd() {
-        draggingId = null;
-    }
+
+    $: tabDropIndicatorStyle = (() => {
+        if (tabDragInsertIndex < 0) return null;
+        const bar = document.querySelector<HTMLElement>('.editor-header .tab-bar');
+        if (!bar) return null;
+        const barRect = bar.getBoundingClientRect();
+        const els = Array.from(document.querySelectorAll<HTMLElement>('.editor-header .tab'));
+        let left: number;
+        if (!els.length) {
+            left = 0;
+        } else if (tabDragInsertIndex === 0) {
+            left = els[0].getBoundingClientRect().left - barRect.left - 4;
+        } else if (tabDragInsertIndex >= els.length) {
+            left = els[els.length - 1].getBoundingClientRect().right - barRect.left + 4;
+        } else {
+            const prev = els[tabDragInsertIndex - 1].getBoundingClientRect();
+            const next = els[tabDragInsertIndex].getBoundingClientRect();
+            left = (prev.right + next.left) / 2 - barRect.left;
+        }
+        return `left: ${left}px`;
+    })();
 
     // Pointer-based explorer drag (HTML5 DnD is flaky with nested tree rows)
     type ExplorerDropKind = 'file' | 'folder' | 'root';
@@ -1544,7 +1624,10 @@ func main() {
 
         activeTabId = idx;
 
-        if (tabs[idx].type === 'preview') return;
+        if (tabs[idx].type === 'preview') {
+            await enterPreviewEditMode();
+            return;
+        }
 
         const targetLanguage = preferredLang || getLanguageForTab(fileId);
         setLastLanguage(fileId, targetLanguage);
@@ -1652,8 +1735,11 @@ func main() {
         return sourceEntry?.content ?? '';
     }
 
-    async function enterPreviewEditMode() {
+    async function enterPreviewEditMode(force = false) {
         if (!activeTab?.sourceFileId) return;
+        if (!force && previewEditMode && wysiwygSourceFileId === activeTab.sourceFileId && wysiwygEl) {
+            return;
+        }
         wysiwygSourceFileId = activeTab.sourceFileId;
         previewEditMode = true;
         await tick();
@@ -1674,7 +1760,7 @@ func main() {
             showLinkInput = false;
             return;
         }
-        await enterPreviewEditMode();
+        await enterPreviewEditMode(true);
     }
 
     function handleWysiwygInput() {
@@ -1952,13 +2038,17 @@ func main() {
         });
     }
 
-    // Leave WYSIWYG mode (flushing pending edits) when switching tabs
+    // Switch WYSIWYG mode when changing tabs
     $: if ((activeTab?.fileId ?? null) !== lastActiveTabFileId) {
         if (previewEditMode) commitWysiwygEdits();
-        previewEditMode = false;
         wysiwygSourceFileId = null;
         showLinkInput = false;
         lastActiveTabFileId = activeTab?.fileId ?? null;
+        if (activeTab?.type === 'preview') {
+            enterPreviewEditMode();
+        } else {
+            previewEditMode = false;
+        }
     }
 
     // Paste images into the WYSIWYG area as base64 <img> elements.
@@ -2022,6 +2112,57 @@ func main() {
         wysiwygEl.focus();
         document.execCommand(command, false, value);
         handleWysiwygInput();
+    }
+
+    // Keyboard shortcuts while editing the WYSIWYG area: Ctrl/Cmd+B bold,
+    // Ctrl/Cmd+I italic, Ctrl/Cmd+Shift+X strikethrough, Ctrl/Cmd+E inline
+    // code, Ctrl/Cmd+K insert link.
+    function handleWysiwygKeydown(e: KeyboardEvent) {
+        if (!e.metaKey && !e.ctrlKey) return;
+        const key = e.key.toLowerCase();
+        if (key === 'b' && !e.shiftKey && !e.altKey) {
+            e.preventDefault();
+            applyWysiwygCommand('bold');
+        } else if (key === 'i' && !e.shiftKey && !e.altKey) {
+            e.preventDefault();
+            applyWysiwygCommand('italic');
+        } else if (key === 'x' && e.shiftKey && !e.altKey) {
+            e.preventDefault();
+            applyWysiwygCommand('strikeThrough');
+        } else if (key === 'e' && !e.shiftKey && !e.altKey) {
+            e.preventDefault();
+            toggleInlineCode();
+        } else if (key === 'k' && !e.shiftKey && !e.altKey) {
+            e.preventDefault();
+            openLinkInput();
+        }
+    }
+
+    // Desktop-only shortcuts: Ctrl/Cmd+W closes the active tab and Ctrl/Cmd+1-9
+    // activates the nth open tab (left to right). In the browser these keys are
+    // reserved by the browser itself, so they only apply in desktop mode.
+    function handleGlobalKeydown(e: KeyboardEvent) {
+        if (e.defaultPrevented) return;
+        if (!isDesktopMode) return;
+        if (!e.metaKey && !e.ctrlKey) return;
+        if (e.altKey) return;
+        const key = e.key.toLowerCase();
+        if (key === 'w' && !e.shiftKey) {
+            const active = tabs[activeTabId];
+            if (active) {
+                e.preventDefault();
+                closeTab(active.fileId);
+            }
+            return;
+        }
+        if (/^[1-9]$/.test(key)) {
+            const openTabs = tabs.filter((t) => t.isOpen);
+            const target = openTabs[parseInt(key, 10) - 1];
+            if (target) {
+                e.preventDefault();
+                activateTab(target.fileId);
+            }
+        }
     }
 
     // Toolbar buttons run on mousedown (preventDefault) so the text selection
@@ -2600,6 +2741,7 @@ func main() {
             }
         };
         const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.defaultPrevented) return;
             if (e.key === 'Escape') {
                 showSettings = false;
                 closeSearch();
@@ -2664,6 +2806,8 @@ func main() {
     <title>{pageTitle}</title>
 </svelte:head>
 
+<svelte:window on:keydown={handleGlobalKeydown} />
+
 <div class="workspace">
     <!-- Activity Bar -->
     <div class="activity-bar">
@@ -2673,28 +2817,32 @@ func main() {
                 <path d="M9 22V12h6v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </a>
-        <button 
-            class="activity-icon {activePanel === 'explorer' ? 'active' : ''}" 
-            on:click={() => activatePanel('explorer')}
-            title="Explorer"
-        >
-            <!-- Explorer Icon (Files) -->
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M13 2v7h7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
-        <button 
-            class="activity-icon {activePanel === 'search' ? 'active' : ''}" 
-            on:click={() => activatePanel('search')}
-            title="Search"
-        >
-            <!-- Search Icon -->
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
-                <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
+        <Tooltip text={isMac ? "Explorer (Cmd+B)" : "Explorer (Ctrl+B)"} pos="bottom">
+            <button 
+                class="activity-icon {activePanel === 'explorer' ? 'active' : ''}" 
+                on:click={() => activatePanel('explorer')}
+                aria-label="Explorer"
+            >
+                <!-- Explorer Icon (Files) -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M13 2v7h7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </Tooltip>
+        <Tooltip text={isMac ? "Search (Cmd+Shift+F)" : "Search (Ctrl+Shift+F)"} pos="bottom">
+            <button 
+                class="activity-icon {activePanel === 'search' ? 'active' : ''}" 
+                on:click={() => activatePanel('search')}
+                aria-label="Search"
+            >
+                <!-- Search Icon -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                    <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </Tooltip>
         <button
             class="activity-icon"
             on:click={openCloudSettings}
@@ -3018,17 +3166,14 @@ func main() {
                     {#each tabs as t}
                         {#if t.isOpen}
                         <div
-                            class="tab {isDotFileName(t.fileName) ? 'dotfile' : ''} {t.fileId === tabs[activeTabId].fileId ? 'active' : ''}"
+                            class="tab {isDotFileName(t.fileName) ? 'dotfile' : ''} {t.fileId === tabs[activeTabId].fileId ? 'active' : ''} {tabPointerDrag?.active && tabPointerDrag.fileId === t.fileId ? 'is-dragging' : ''}"
                             role="tab"
                             aria-selected={t.fileId === tabs[activeTabId].fileId}
                             tabindex={t.fileId === tabs[activeTabId].fileId ? 0 : -1}
-                            on:click={() => activateTab(t.fileId)}
+                            data-file-id={t.fileId}
+                            on:click={() => handleTabClick(t)}
                             on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateTab(t.fileId); } }}
-                            draggable={true}
-                            on:dragstart={(e) => handleDragStart(e, t.fileId)}
-                            on:dragover={(e) => handleDragOver(e, t.fileId)}
-                            on:drop={(e) => handleDrop(e, t.fileId)}
-                            on:dragend={handleDragEnd}
+                            on:pointerdown={(e) => handleTabPointerDown(e, t.fileId)}
                             on:mousedown={(e) => { 
                                 e.preventDefault();
                                 e.stopPropagation();
@@ -3091,7 +3236,12 @@ func main() {
                         </div>
                         {/if}
                     {/each}
-                    <button class="tab-add" aria-label="New tab" title="New tab" on:click={() => addNewTab('tab')}>+</button>
+                    {#if tabDropIndicatorStyle}
+                        <div class="tab-drop-indicator" style={tabDropIndicatorStyle} aria-hidden="true"></div>
+                    {/if}
+                    <Tooltip text={isMac ? "New tab (Cmd+Alt+N)" : "New tab (Ctrl+Alt+N)"} pos="bottom">
+                        <button class="tab-add" aria-label="New tab" on:click={() => addNewTab('tab')}>+</button>
+                    </Tooltip>
                 </div>
             </div>
             <div style="display:flex;align-items:center;gap:var(--spacing-2);">
@@ -3260,15 +3410,21 @@ func main() {
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <!-- svelte-ignore a11y-no-static-element-interactions -->
                         <div class="wysiwyg-toolbar" on:mousedown={handleToolbarMouseDown} on:click={handleToolbarClick}>
-                            <button type="button" data-command="bold" title="Bold" aria-label="Bold">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/></svg>
-                            </button>
-                            <button type="button" data-command="italic" title="Italic" aria-label="Italic">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
-                            </button>
-                            <button type="button" data-command="strikeThrough" title="Strikethrough" aria-label="Strikethrough">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4H9a3 3 0 0 0-2.83 4"/><path d="M14 12a4 4 0 0 1 0 8H6"/><line x1="4" x2="20" y1="12" y2="12"/></svg>
-                            </button>
+                            <Tooltip text={isMac ? "Cmd+B" : "Ctrl+B"} pos="bottom">
+                                <button type="button" data-command="bold" aria-label="Bold">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/></svg>
+                                </button>
+                            </Tooltip>
+                            <Tooltip text={isMac ? "Cmd+I" : "Ctrl+I"} pos="bottom">
+                                <button type="button" data-command="italic" aria-label="Italic">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
+                                </button>
+                            </Tooltip>
+                            <Tooltip text={isMac ? "Cmd+Shift+X" : "Ctrl+Shift+X"} pos="bottom">
+                                <button type="button" data-command="strikeThrough" aria-label="Strikethrough">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4H9a3 3 0 0 0-2.83 4"/><path d="M14 12a4 4 0 0 1 0 8H6"/><line x1="4" x2="20" y1="12" y2="12"/></svg>
+                                </button>
+                            </Tooltip>
                             <span class="wysiwyg-separator"></span>
                             <button type="button" data-command="formatBlock" data-value="h1" title="Heading 1" aria-label="Heading 1"><span class="wysiwyg-text-btn">H1</span></button>
                             <button type="button" data-command="formatBlock" data-value="h2" title="Heading 2" aria-label="Heading 2"><span class="wysiwyg-text-btn">H2</span></button>
@@ -3286,16 +3442,20 @@ func main() {
                             <button type="button" data-command="formatBlock" data-value="pre" title="Code block" aria-label="Code block">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
                             </button>
-                            <button type="button" data-command="inlineCode" title="Inline code" aria-label="Inline code">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></svg>
-                            </button>
+                            <Tooltip text={isMac ? "Cmd+E" : "Ctrl+E"} pos="bottom">
+                                <button type="button" data-command="inlineCode" aria-label="Inline code">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></svg>
+                                </button>
+                            </Tooltip>
                             <button type="button" data-command="insertHorizontalRule" title="Horizontal rule" aria-label="Horizontal rule">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12"/></svg>
                             </button>
                             <span class="wysiwyg-separator"></span>
-                            <button type="button" data-command="link" title="Insert link" aria-label="Insert link">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                            </button>
+                            <Tooltip text={isMac ? "Cmd+K" : "Ctrl+K"} pos="bottom">
+                                <button type="button" data-command="link" aria-label="Insert link">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                                </button>
+                            </Tooltip>
                             <button type="button" data-command="removeFormat" title="Clear formatting" aria-label="Clear formatting">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg>
                             </button>
@@ -3326,6 +3486,7 @@ func main() {
                             tabindex="0"
                             bind:this={wysiwygEl}
                             on:input={handleWysiwygInput}
+                            on:keydown={handleWysiwygKeydown}
                             on:paste={handleWysiwygPaste}
                             on:click={handleWysiwygClick}
                             on:blur={commitWysiwygEdits}
@@ -4111,6 +4272,7 @@ func main() {
         flex: 1;
         min-width: 0;
         flex-wrap: nowrap;
+        position: relative;
     }
     /* Compact the tab bar when shown inside the header */
     .editor-header .tab-bar {
@@ -4145,6 +4307,29 @@ func main() {
         font-size: 0.85rem;
         line-height: 1;
         user-select: none;
+        -webkit-user-select: none;
+        cursor: grab;
+        touch-action: none;
+    }
+    .tab.is-dragging {
+        opacity: 0.45;
+    }
+    .tab-drop-indicator {
+        position: absolute;
+        top: 4px;
+        bottom: 4px;
+        width: 2px;
+        border-radius: 1px;
+        background: var(--color-highlight);
+        pointer-events: none;
+        z-index: 5;
+    }
+    :global(body.tab-dragging) {
+        cursor: grabbing !important;
+        user-select: none !important;
+    }
+    :global(body.tab-dragging .tab) {
+        cursor: grabbing;
     }
     .tab.active {
         background-color: var(--color-surface);
