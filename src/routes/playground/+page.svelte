@@ -115,6 +115,33 @@ func main() {
         return entry?.parentId ?? null;
     }
 
+    function getFilePath(fileId: string): string {
+        const files = getFiles();
+        const entry = files.find((f) => f.fileId === fileId);
+        if (!entry) return '/';
+
+        const targetId = entry.type === 'preview' && entry.sourceFileId ? entry.sourceFileId : fileId;
+        const targetEntry = files.find((f) => f.fileId === targetId) ?? entry;
+
+        const pathSegments: string[] = [];
+        let currentParentId = targetEntry.parentId;
+        const seen = new Set<string>();
+
+        while (currentParentId && !seen.has(currentParentId)) {
+            seen.add(currentParentId);
+            const parentFolder = files.find((f) => f.fileId === currentParentId && isFolderEntry(f));
+            if (parentFolder && parentFolder.fileName) {
+                pathSegments.unshift(parentFolder.fileName);
+            }
+            currentParentId = parentFolder?.parentId ?? null;
+        }
+
+        if (pathSegments.length === 0) {
+            return '/';
+        }
+        return '/' + pathSegments.join('/') + '/';
+    }
+
     function isFolderEntry(f: FileEntry): boolean {
         return f.type === 'folder';
     }
@@ -2552,6 +2579,11 @@ func main() {
         ? tabs.filter(t => t.fileName.toLowerCase().includes(searchQuery.toLowerCase()))
         : tabs.slice().sort((a, b) => (b.lastUpdated || 0) - (a.lastUpdated || 0));
 
+    $: recentFiles = tabs
+        .slice()
+        .sort((a, b) => (b.lastUpdated || 0) - (a.lastUpdated || 0))
+        .slice(0, 9);
+
     $: if (searchQuery !== undefined) selectedIndex = 0;
 
     function openSearch() {
@@ -2817,7 +2849,7 @@ func main() {
                 <path d="M9 22V12h6v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </a>
-        <Tooltip text={isMac ? "Explorer (Cmd+B)" : "Explorer (Ctrl+B)"} pos="bottom">
+        <Tooltip text={isMac ? "Explorer (Cmd+B)" : "Explorer (Ctrl+B)"} pos="right">
             <button 
                 class="activity-icon {activePanel === 'explorer' ? 'active' : ''}" 
                 on:click={() => activatePanel('explorer')}
@@ -2830,7 +2862,7 @@ func main() {
                 </svg>
             </button>
         </Tooltip>
-        <Tooltip text={isMac ? "Search (Cmd+Shift+F)" : "Search (Ctrl+Shift+F)"} pos="bottom">
+        <Tooltip text={isMac ? "Search (Cmd+Shift+F)" : "Search (Ctrl+Shift+F)"} pos="right">
             <button 
                 class="activity-icon {activePanel === 'search' ? 'active' : ''}" 
                 on:click={() => activatePanel('search')}
@@ -3524,6 +3556,43 @@ func main() {
         {:else}
         <div class="empty-state">
             <div class="empty-state-content">
+                {#if recentFiles.length > 0}
+                    <div class="empty-section">
+                        <div class="empty-section-title">Recent Files</div>
+                        <div class="recent-files-grid">
+                            {#each recentFiles as file}
+                                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                                <div
+                                    class="recent-file-card"
+                                    role="button"
+                                    tabindex="0"
+                                    on:click={() => activateTab(file.fileId)}
+                                    on:keydown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            activateTab(file.fileId);
+                                        }
+                                    }}
+                                >
+                                    <div class="recent-file-card-header">
+                                        {#if file.type === 'preview'}
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0;">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        {:else}
+                                            <LanguageIcon language={tabLanguages[file.fileId] ?? language} size={17} />
+                                        {/if}
+                                        <span class="recent-file-card-title">{file.fileName}</span>
+                                    </div>
+                                    {#if getFilePath(file.fileId) != '/'}
+                                      <span class="recent-file-card-path">{getFilePath(file.fileId)}</span>
+                                    {/if}
+                                </div>
+                            {/each}
+                        </div>
+                    </div>
+                {/if}
                 <div class="empty-shortcuts">
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -4519,7 +4588,68 @@ func main() {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
-        min-width: 300px;
+        width: 100%;
+        max-width: 540px;
+    }
+    .empty-section {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+        max-width: 540px;
+    }
+    .empty-section-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--color-text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 0 2px;
+    }
+    .recent-files-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        width: 100%;
+    }
+    .recent-file-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+        padding: 10px 12px;
+        background-color: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.15s, border-color 0.15s;
+        text-align: left;
+        min-width: 0;
+    }
+    .recent-file-card:hover {
+        background-color: rgba(255, 255, 255, 0.06);
+        border-color: var(--color-text-secondary);
+    }
+    .recent-file-card-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+    }
+    .recent-file-card-title {
+        font-size: 0.88rem;
+        font-weight: 500;
+        color: var(--color-text);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .recent-file-card-path {
+        font-size: 0.75rem;
+        color: var(--color-text-secondary);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     .shortcut-row {
         display: flex;
@@ -4533,7 +4663,7 @@ func main() {
     }
 
     .shortcut-row:hover {
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: var(--color-surface);
     }
     .shortcut-keys {
         display: flex;
