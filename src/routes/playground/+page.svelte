@@ -239,9 +239,13 @@ func main() {
             const entryType: 'editor' | 'preview' | 'whiteboard' =
                 f.type === 'preview' ? 'preview' : f.type === 'whiteboard' ? 'whiteboard' : 'editor';
             if (!existing) {
+                let name = entryType === 'whiteboard' ? 'Whiteboard' : (f.fileName || 'Solution');
+                if (entryType === 'preview' && name.startsWith('Preview: ')) {
+                    name = name.slice('Preview: '.length) || 'Solution';
+                }
                 groups.set(f.fileId, {
                     fileId: f.fileId,
-                    fileName: entryType === 'whiteboard' ? 'Whiteboard' : (f.fileName || 'Solution'),
+                    fileName: name,
                     order: orderVal,
                     firstIndex: idx,
                     lastUpdated: lv,
@@ -255,7 +259,12 @@ func main() {
                 }
                 if (lv > existing.lastUpdated) existing.lastUpdated = lv;
                 if (f.isOpen !== undefined) existing.isOpen = f.isOpen;
-                if (f.type === 'preview') existing.type = 'preview';
+                if (f.type === 'preview') {
+                    existing.type = 'preview';
+                    if (existing.fileName.startsWith('Preview: ')) {
+                        existing.fileName = existing.fileName.slice('Preview: '.length) || 'Solution';
+                    }
+                }
                 if (f.type === 'whiteboard') {
                     existing.type = 'whiteboard';
                     existing.fileName = 'Whiteboard';
@@ -304,7 +313,7 @@ func main() {
             logs = '';
             lastSharedContent = undefined;
         }
-        
+
         await tick();
         suppressSave = false;
     }
@@ -364,6 +373,20 @@ func main() {
         ? (JSON.parse(localStorage.getItem(COLLAPSED_FOLDERS_KEY) || '{}') || {})
         : {};
     $: if (browser) writeProgressStorageItem(localStorage, COLLAPSED_FOLDERS_KEY, JSON.stringify(collapsedFolders));
+
+    // Last markdown view mode is device-local only (not in CLOUD_KEYS).
+    type MarkdownViewMode = 'wysiwyg' | 'preview' | 'source';
+    const MARKDOWN_MODE_KEY = 'playground-markdown-mode';
+    function readMarkdownMode(): MarkdownViewMode {
+        if (!browser) return 'wysiwyg';
+        const value = localStorage.getItem(MARKDOWN_MODE_KEY);
+        return value === 'wysiwyg' || value === 'preview' || value === 'source' ? value : 'wysiwyg';
+    }
+    let lastMarkdownMode: MarkdownViewMode = readMarkdownMode();
+    function persistMarkdownMode(mode: MarkdownViewMode) {
+        lastMarkdownMode = mode;
+        if (browser) writeProgressStorageItem(localStorage, MARKDOWN_MODE_KEY, mode);
+    }
     let explorerDragOverId: string | null = null;
     let explorerDragOverRoot = false;
 
@@ -1017,7 +1040,7 @@ func main() {
         tabs.forEach((t, idx) => orderById.set(t.fileId, idx));
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
-            
+
             // Remove special tabs (preview/whiteboard) that are no longer in tabs
             files = files.filter(f => !isSpecialTabType(f.type) || orderById.has(f.fileId));
 
@@ -1405,7 +1428,7 @@ func main() {
             fileStore.update((s) => {
                 let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
                 if (activeTabId < 0 || activeTabId >= tabs.length) return s;
-                const existingFile = files.find(x => 
+                const existingFile = files.find(x =>
                     x.fileId === tabs[activeTabId].fileId &&
                     x.language === language
                 );
@@ -1451,11 +1474,15 @@ func main() {
     }
 
     function loadTabContent(tab: TabMeta) {
+        if (tab.type === 'preview') {
+            applyPreferredVisualMode();
+            return;
+        }
         if (isSpecialTabType(tab.type)) return;
         const targetLanguage = getLanguageForTab(tab.fileId);
         setLastLanguage(tab.fileId, targetLanguage);
         language = targetLanguage;
-        loadOrInitFile(targetLanguage);
+        loadOrInitFile(targetLanguage).then(() => maybeOpenPreferredMarkdownMode());
     }
 
     function closeTab(fileId: string) {
@@ -1483,14 +1510,14 @@ func main() {
         }
 
         tabs = tabs.map(t => t.fileId === fileId ? { ...t, isOpen: false } : t);
-        
+
         const fkey = fileKey();
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
             files = files.map(f => f.fileId === fileId ? { ...f, isOpen: false } : f);
             return { ...s, [fkey]: JSON.stringify(files) };
         });
-        
+
         const currentTab = tabs[activeTabId];
         if (currentTab.fileId === fileId) {
             let nextOpenIdx = -1;
@@ -1662,11 +1689,11 @@ func main() {
         if (!editorComponent || activeTabId < 0 || activeTabId >= tabs.length) return;
         const state = editorComponent.getViewState();
         if (!state) return;
-        
+
         const fkey = fileKey();
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
-            const existingFile = files.find(x => 
+            const existingFile = files.find(x =>
                 x.fileId === tabs[activeTabId].fileId &&
                 x.language === language
             );
@@ -1689,7 +1716,7 @@ func main() {
 
         const now = Date.now();
         tabs = tabs.map((t, i) => i === idx ? { ...t, isOpen: true, lastUpdated: now } : t);
-        
+
         const fkey = fileKey();
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
@@ -1700,7 +1727,7 @@ func main() {
         activeTabId = idx;
 
         if (tabs[idx].type === 'preview') {
-            await enterPreviewEditMode();
+            await applyPreferredVisualMode();
             return;
         }
         if (tabs[idx].type === 'whiteboard') {
@@ -1711,6 +1738,7 @@ func main() {
         setLastLanguage(fileId, targetLanguage);
         language = targetLanguage;
         await loadOrInitFile(targetLanguage);
+        await maybeOpenPreferredMarkdownMode();
     }
 
     async function openWhiteboard() {
@@ -1764,6 +1792,14 @@ func main() {
     }
 
     // Reset code for the current problem + language
+    function getActiveContentTarget(): { fileId: string; language: ProgrammingLanguage; fileName: string } {
+        const tab = tabs[activeTabId];
+        if (tab?.type === 'preview' && tab.sourceFileId) {
+            return { fileId: tab.sourceFileId, language: 'markdown', fileName: tab.fileName || 'Solution' };
+        }
+        return { fileId: tab.fileId, language, fileName: tab.fileName || 'Solution' };
+    }
+
     async function handleResetClick() {
         const confirmed = await showConfirm('Your current code will be replaced with the starter code. This action cannot be undone.', {
             title: 'Reset this file?',
@@ -1771,36 +1807,174 @@ func main() {
             tone: 'danger'
         });
         if (!confirmed) return;
+        const target = getActiveContentTarget();
+        const nextContent = starterCode[target.language] ?? '';
         const fkey = fileKey();
         fileStore.update((s) => {
             const files = JSON.parse(s[fkey] || '[]') as FileEntry[];
-            const existingFile = files.find(x => x.fileId === tabs[activeTabId].fileId && x.language === language); 
+            const existingFile = files.find(x => x.fileId === target.fileId && x.language === target.language);
             if (existingFile) {
-                existingFile.content = starterCode[language] ?? '';
+                existingFile.content = nextContent;
             }
             return {...s, [fkey]: JSON.stringify(files)};
         });
-        code = starterCode[language] ?? '';
+        if (activeTab?.type === 'preview') {
+            if (previewEditMode) {
+                await enterPreviewEditMode(true);
+            }
+        } else {
+            code = nextContent;
+        }
     }
 
-    async function openMarkdownPreview() {
+    async function openMarkdownPreview(mode: 'wysiwyg' | 'preview' = 'wysiwyg') {
         const sourceTab = tabs[activeTabId];
-        const sourceFileId = sourceTab?.fileId;
-        const sourceFileName = sourceTab?.fileName || 'Solution';
-        const nextId = uuidv4();
+        if (!sourceTab || isSpecialTabType(sourceTab.type)) return;
+        const sourceFileId = sourceTab.fileId;
+        const sourceFileName = sourceTab.fileName || 'Solution';
+        const sourceIdx = activeTabId;
         const now = Date.now();
-        tabs = [...tabs, {
-            fileId: nextId,
-            fileName: `Preview: ${sourceFileName}`,
-            isOpen: true,
-            lastUpdated: now,
-            type: 'preview',
-            sourceFileId
-        }];
-        activeTabId = tabs.length - 1;
+
+        saveCurrentViewState();
+
+        const existingPreviewIdx = tabs.findIndex(
+            (t) => t.type === 'preview' && t.sourceFileId === sourceFileId
+        );
+
+        let updated = [...tabs];
+        updated[sourceIdx] = { ...updated[sourceIdx], isOpen: false };
+
+        if (existingPreviewIdx !== -1) {
+            const [previewTab] = updated.splice(existingPreviewIdx, 1);
+            const insertIdx = existingPreviewIdx < sourceIdx ? sourceIdx - 1 : sourceIdx;
+            updated.splice(insertIdx, 0, {
+                ...previewTab,
+                isOpen: true,
+                lastUpdated: now,
+                fileName: sourceFileName
+            });
+            activeTabId = insertIdx;
+        } else {
+            updated.splice(sourceIdx, 0, {
+                fileId: uuidv4(),
+                fileName: sourceFileName,
+                isOpen: true,
+                lastUpdated: now,
+                type: 'preview',
+                sourceFileId
+            });
+            activeTabId = sourceIdx;
+        }
+
+        tabs = updated;
+
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            files = files.map((f) => f.fileId === sourceFileId ? { ...f, isOpen: false } : f);
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
+
         persistTabOrder();
         await tick();
-        await enterPreviewEditMode();
+        if (mode === 'wysiwyg') {
+            await enterPreviewEditMode();
+        } else {
+            exitPreviewEditMode();
+        }
+    }
+
+    function exitPreviewEditMode() {
+        if (previewEditMode) {
+            commitWysiwygEdits();
+        }
+        previewEditMode = false;
+        wysiwygSourceFileId = null;
+        showLinkInput = false;
+    }
+
+    async function applyPreferredVisualMode() {
+        if (lastMarkdownMode === 'preview') {
+            exitPreviewEditMode();
+        } else {
+            await enterPreviewEditMode();
+        }
+    }
+
+    async function maybeOpenPreferredMarkdownMode() {
+        if (lastMarkdownMode !== 'wysiwyg' && lastMarkdownMode !== 'preview') return;
+        const tab = tabs[activeTabId];
+        if (!tab || isSpecialTabType(tab.type)) return;
+        if (language !== 'markdown') return;
+        await openMarkdownPreview(lastMarkdownMode);
+    }
+
+    async function setMarkdownMode(mode: MarkdownViewMode) {
+        persistMarkdownMode(mode);
+        const isPreviewTab = activeTab?.type === 'preview';
+        if (mode === 'source') {
+            if (isPreviewTab) await openMarkdownSource();
+            return;
+        }
+        if (isPreviewTab) {
+            if (mode === 'wysiwyg') {
+                await enterPreviewEditMode(true);
+            } else {
+                exitPreviewEditMode();
+            }
+            return;
+        }
+        if (language === 'markdown') {
+            await openMarkdownPreview(mode);
+        }
+    }
+
+    async function openMarkdownSource() {
+        const previewTab = tabs[activeTabId];
+        if (!previewTab || previewTab.type !== 'preview' || !previewTab.sourceFileId) return;
+
+        const sourceFileId = previewTab.sourceFileId;
+        const previewIdx = activeTabId;
+        const sourceIdx = tabs.findIndex((t) => t.fileId === sourceFileId);
+        if (sourceIdx === -1) return;
+        const now = Date.now();
+
+        if (previewEditMode) {
+            commitWysiwygEdits();
+            previewEditMode = false;
+            wysiwygSourceFileId = null;
+            showLinkInput = false;
+        }
+
+        const updated = [...tabs];
+        const source = { ...updated[sourceIdx], isOpen: true, lastUpdated: now };
+
+        if (previewIdx > sourceIdx) {
+            updated.splice(previewIdx, 1);
+            updated.splice(sourceIdx, 1);
+        } else {
+            updated.splice(sourceIdx, 1);
+            updated.splice(previewIdx, 1);
+        }
+
+        const insertIdx = sourceIdx < previewIdx ? previewIdx - 1 : previewIdx;
+        updated.splice(insertIdx, 0, source);
+        tabs = updated;
+        activeTabId = insertIdx;
+
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            files = files.map((f) => f.fileId === sourceFileId ? { ...f, isOpen: true, lastUpdated: now } : f);
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
+
+        persistTabOrder();
+
+        const targetLanguage = getLanguageForTab(sourceFileId);
+        setLastLanguage(sourceFileId, targetLanguage);
+        language = targetLanguage;
+        await loadOrInitFile(targetLanguage);
     }
 
     // Builds the markdown snippet inserted when an image is pasted into a
@@ -1855,10 +2029,7 @@ func main() {
 
     async function togglePreviewEditMode() {
         if (previewEditMode) {
-            commitWysiwygEdits();
-            previewEditMode = false;
-            wysiwygSourceFileId = null;
-            showLinkInput = false;
+            exitPreviewEditMode();
             return;
         }
         await enterPreviewEditMode(true);
@@ -2146,7 +2317,7 @@ func main() {
         showLinkInput = false;
         lastActiveTabFileId = activeTab?.fileId ?? null;
         if (activeTab?.type === 'preview') {
-            enterPreviewEditMode();
+            applyPreferredVisualMode();
         } else {
             previewEditMode = false;
         }
@@ -2377,19 +2548,19 @@ func main() {
         }
 
         const forkData = consumeForkTransfer();
-        
+
         if (forkData) {
             suppressSave = true;
             const { content, language: lang, viewState, fileName } = forkData;
-            
+
             // Add as new tab
             const newTabName = fileName ? `Fork of ${fileName}` : `Forked Solution`;
             const nextId = uuidv4();
             const now = Date.now();
-            
+
             // Update tabs
             tabs = [...tabs, { fileId: nextId, fileName: newTabName, isOpen: true, lastUpdated: now }];
-            
+
             // Update file store
             const fkey = fileKey();
             fileStore.update((s) => {
@@ -2413,15 +2584,15 @@ func main() {
                 ];
                 return { ...s, [fkey]: JSON.stringify(files) };
             });
-            
+
             // Switch to new tab
             activeTabId = tabs.length - 1;
-            language = lang; 
+            language = lang;
             userSettingsStorage.update(s => ({ ...s, playgroundPreferredLanguage: language }));
-            
+
             await loadOrInitFile(lang);
             persistTabOrder();
-            
+
         }
 
         const forkId = $page.url.searchParams.get('forkId');
@@ -2430,13 +2601,13 @@ func main() {
                 const snap = await getDoc(doc(fb.db, 'shares', forkId));
                 if (snap.exists()) {
                     const data = snap.data();
-                    
+
                     if (data.content && data.language) {
                         // Add as new tab
                         const newTabName = data.fileName ? `Fork of ${data.fileName}` : `Forked Solution`;
                         const nextId = uuidv4();
                         const now = Date.now();
-                        
+
             // Update tabs
             tabs = [...tabs, { fileId: nextId, fileName: newTabName, isOpen: true, lastUpdated: now }];                        // Update file store
                         const fkey = fileKey();
@@ -2461,17 +2632,17 @@ func main() {
                             ];
                             return { ...s, [fkey]: JSON.stringify(files) };
                         });
-                        
+
                         // Switch to new tab
                         activeTabId = tabs.length - 1;
                         language = data.language; // Switch language to match forked code
                         userSettingsStorage.update(s => ({ ...s, playgroundPreferredLanguage: language }));
-                        
+
                         await tick();
                         await loadOrInitFile(language);
                         persistTabOrder();
                     }
-                    
+
                     // Clean URL
                     const newUrl = new URL($page.url);
                     newUrl.searchParams.delete('forkId');
@@ -2503,7 +2674,7 @@ func main() {
 
     async function handleSave(silent = false): Promise<string | null> {
         if (!isFirebaseAvailable) return null;
-        
+
         const { db, auth } = (await initFirebase()) || {};
         if (!db || !auth) return null;
 
@@ -2511,24 +2682,24 @@ func main() {
             const user = await ensureAuthenticated();
             if (!user) throw new Error('Authentication failed');
 
-            const currentTab = tabs[activeTabId];
+            const target = getActiveContentTarget();
             const files = getFiles();
-            const currentFile = files.find(f => f.fileId === currentTab.fileId && f.language === language);
-            const content = currentFile ? currentFile.content : (starterCode[language] ?? '');
-            const viewState = currentFile ? currentFile.viewState : (editorComponent?.getViewState() || null);
+            const currentFile = files.find(f => f.fileId === target.fileId && f.language === target.language);
+            const content = currentFile ? currentFile.content : (starterCode[target.language] ?? '');
+            const viewState = currentFile ? currentFile.viewState : (activeTab?.type === 'preview' ? null : (editorComponent?.getViewState() || null));
             const fileOutput = currentFile ? (currentFile.output || '') : '';
             const fileLogs = currentFile ? (currentFile.logs || '') : '';
-            
+
             let shareId = currentFile?.shareId;
-            
+
             if (shareId) {
                 // Try to update existing
                 try {
                     await updateDoc(doc(db, 'shares', shareId), {
                         content,
-                        language,
+                        language: target.language,
                         viewState,
-                        fileName: currentTab.fileName,
+                        fileName: target.fileName,
                         output: fileOutput,
                         logs: fileLogs,
                         updatedAt: new Date().toISOString(),
@@ -2539,7 +2710,7 @@ func main() {
                     const fkey = fileKey();
                     fileStore.update((s) => {
                         let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
-                        const idx = files.findIndex(f => f.fileId === currentTab.fileId && f.language === language);
+                        const idx = files.findIndex(f => f.fileId === target.fileId && f.language === target.language);
                         if (idx >= 0) {
                             files[idx].lastSharedContent = content;
                         }
@@ -2570,26 +2741,26 @@ func main() {
                     }
                 }
             }
-            
+
             if (!shareId) {
                 // Create new
                 shareId = generateShortId(4);
                 await setDoc(doc(db, 'shares', shareId), {
                     content,
-                    language,
+                    language: target.language,
                     viewState,
-                    fileName: currentTab.fileName,
+                    fileName: target.fileName,
                     output: fileOutput,
                     logs: fileLogs,
                     createdAt: new Date().toISOString(),
                     ownerId: user.uid
                 });
-                
+
                 // Update local file with shareId
                 const fkey = fileKey();
                 fileStore.update((s) => {
                     let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
-                    const idx = files.findIndex(f => f.fileId === currentTab.fileId && f.language === language);
+                    const idx = files.findIndex(f => f.fileId === target.fileId && f.language === target.language);
                     if (idx >= 0) {
                         files[idx].shareId = shareId;
                         files[idx].lastSharedContent = content;
@@ -2597,7 +2768,7 @@ func main() {
                     return { ...s, [fkey]: JSON.stringify(files) };
                 });
                 lastSharedContent = content;
-                
+
                 if (!silent) {
                     await showAlert(`Your share code is ${shareId}.`, {
                         title: 'Saved',
@@ -2630,17 +2801,17 @@ func main() {
 
     async function handleGenerateNewLink() {
         // Clear shareId for current file to force creation of new share
-        const currentTab = tabs[activeTabId];
+        const target = getActiveContentTarget();
         const fkey = fileKey();
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
-            const idx = files.findIndex(f => f.fileId === currentTab.fileId && f.language === language);
+            const idx = files.findIndex(f => f.fileId === target.fileId && f.language === target.language);
             if (idx >= 0) {
                 delete files[idx].shareId;
             }
             return { ...s, [fkey]: JSON.stringify(files) };
         });
-        
+
         await handleShare();
     }
 
@@ -2648,8 +2819,8 @@ func main() {
     let searchQuery = '';
     let searchInputEl: HTMLInputElement | null = null;
     let selectedIndex = 0;
-    
-    $: filteredFiles = searchQuery 
+
+    $: filteredFiles = searchQuery
         ? tabs.filter(t => t.fileName.toLowerCase().includes(searchQuery.toLowerCase()))
         : tabs.slice().sort((a, b) => (b.lastUpdated || 0) - (a.lastUpdated || 0));
 
@@ -2836,11 +3007,26 @@ func main() {
 
         return renderMarkdown(src, { imageThumbnails: true });
     })();
+    $: shareDirty = (() => {
+        if (activeTab?.type === 'preview' && activeTab.sourceFileId) {
+            const fkey = fileKey();
+            const files = JSON.parse(fileStoreValue[fkey] || '[]') as FileEntry[];
+            const sourceEntry = files.find((f: FileEntry) => f.fileId === activeTab.sourceFileId && f.language === 'markdown');
+            return sourceEntry?.lastSharedContent === undefined || sourceEntry.content !== sourceEntry.lastSharedContent;
+        }
+        return lastSharedContent === undefined || code !== lastSharedContent;
+    })();
     $: pageTitle = activeTabName ? `${activeTabName} - Playground - Cojudge` : 'Playground - Cojudge';
     let isMac = false;
 
     onMount(() => {
         isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+        // Restore last markdown view mode for the initially active tab.
+        if (activeTab?.type === 'preview') {
+            applyPreferredVisualMode();
+        } else {
+            maybeOpenPreferredMarkdownMode();
+        }
         const handleDocClick = (e: MouseEvent) => {
             if (showSettings && settingsContainer && !settingsContainer.contains(e.target as Node)) {
                 showSettings = false;
@@ -2924,8 +3110,8 @@ func main() {
             </svg>
         </a>
         <Tooltip text={isMac ? "Explorer (Cmd+B)" : "Explorer (Ctrl+B)"} pos="right">
-            <button 
-                class="activity-icon {activePanel === 'explorer' ? 'active' : ''}" 
+            <button
+                class="activity-icon {activePanel === 'explorer' ? 'active' : ''}"
                 on:click={() => activatePanel('explorer')}
                 aria-label="Explorer"
             >
@@ -2937,8 +3123,8 @@ func main() {
             </button>
         </Tooltip>
         <Tooltip text={isMac ? "Search (Cmd+Shift+F)" : "Search (Ctrl+Shift+F)"} pos="right">
-            <button 
-                class="activity-icon {activePanel === 'search' ? 'active' : ''}" 
+            <button
+                class="activity-icon {activePanel === 'search' ? 'active' : ''}"
                 on:click={() => activatePanel('search')}
                 aria-label="Search"
             >
@@ -3298,7 +3484,7 @@ func main() {
                             on:click={() => handleTabClick(t)}
                             on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateTab(t.fileId); } }}
                             on:pointerdown={(e) => handleTabPointerDown(e, t.fileId)}
-                            on:mousedown={(e) => { 
+                            on:mousedown={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 if (e.which === 2) {
@@ -3322,8 +3508,7 @@ func main() {
                             {:else}
                                 {#if t.type === 'preview'}
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="margin-right:2px;flex-shrink:0;">
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 {:else if t.type === 'whiteboard'}
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:2px;flex-shrink:0;">
@@ -3337,7 +3522,7 @@ func main() {
                                 {/if}
                                 <span class="tab-title">{t.fileName}</span>
                             {/if}
-                            
+
                             {#if !isSpecialTabType(t.type)}
                                 <button
                                     class="tab-rename"
@@ -3375,40 +3560,48 @@ func main() {
             </div>
             <div style="display:flex;align-items:center;gap:var(--spacing-2);">
                 {#if activeTab?.type === 'preview'}
-                    <div style="display:flex;align-items:center;gap:var(--spacing-1);">
-                        <span style="font-size:0.9rem;color:var(--color-text-secondary);">Markdown Preview</span>
-                        <Tooltip text={previewEditMode ? "Done editing" : "Edit (WYSIWYG)"} pos={"bottom"}>
-                            <button
-                                class="icon-button"
-                                class:active={previewEditMode}
-                                title={previewEditMode ? "Done editing" : "Edit (WYSIWYG)"}
-                                aria-label={previewEditMode ? "Done editing" : "Edit markdown (WYSIWYG)"}
-                                aria-pressed={previewEditMode}
-                                on:click={togglePreviewEditMode}
-                            >
-                                {#if previewEditMode}
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                        <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                {:else}
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                {/if}
-                            </button>
-                        </Tooltip>
-                        <Tooltip text={"Source"} pos={"bottom"}>
-                            <button
-                                class="icon-button"
-                                title="Source"
-                                aria-label="Source"
-                                on:click={() => activateTab(activeTab?.sourceFileId)}
-                            >
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                    <path d="M16 18l6-6-6-6M8 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                        </Tooltip>
+                    <div class="markdown-mode-switch" role="group" aria-label="Markdown view mode">
+                        <button
+                            class="markdown-mode-btn"
+                            class:active={previewEditMode}
+                            title="WYSIWYG"
+                            aria-label="WYSIWYG"
+                            aria-pressed={previewEditMode}
+                            on:click={() => setMarkdownMode('wysiwyg')}
+                        >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M12 3l1.09 3.34L16.5 7.5l-3.41 1.16L12 12l-1.09-3.34L7.5 7.5l3.41-1.16L12 3z" fill="currentColor"/>
+                                <path d="M18.5 13l.7 2.15L21.5 16l-2.3.78L18.5 19l-.7-2.22L15.5 16l2.3-.85L18.5 13z" fill="currentColor"/>
+                                <path d="M6.5 14l.55 1.68L8.8 16.3l-1.75.6L6.5 18.6l-.55-1.7L4.2 16.3l1.75-.62L6.5 14z" fill="currentColor"/>
+                            </svg>
+                            WYSIWYG
+                        </button>
+                        <button
+                            class="markdown-mode-btn"
+                            class:active={!previewEditMode}
+                            title="Preview"
+                            aria-label="Preview"
+                            aria-pressed={!previewEditMode}
+                            on:click={() => setMarkdownMode('preview')}
+                        >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Preview
+                        </button>
+                        <button
+                            class="markdown-mode-btn"
+                            title="Source"
+                            aria-label="Source"
+                            aria-pressed={false}
+                            on:click={() => setMarkdownMode('source')}
+                        >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M16 18l6-6-6-6M8 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Source
+                        </button>
                     </div>
                 {:else if activeTab?.type === 'whiteboard'}
                     <span style="font-size:0.9rem;color:var(--color-text-secondary);">Whiteboard</span>
@@ -3443,22 +3636,49 @@ func main() {
                     </select>
                 </div>
                 {#if language === 'markdown'}
-                    <Tooltip text={"Preview"} pos={"bottom"}>
+                    <div class="markdown-mode-switch" role="group" aria-label="Markdown view mode">
                         <button
-                            class="icon-button"
-                            title="Preview Markdown"
-                            aria-label="Preview Markdown"
-                            on:click={openMarkdownPreview}
+                            class="markdown-mode-btn"
+                            title="WYSIWYG"
+                            aria-label="WYSIWYG"
+                            aria-pressed={false}
+                            on:click={() => setMarkdownMode('wysiwyg')}
                         >
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M12 3l1.09 3.34L16.5 7.5l-3.41 1.16L12 12l-1.09-3.34L7.5 7.5l3.41-1.16L12 3z" fill="currentColor"/>
+                                <path d="M18.5 13l.7 2.15L21.5 16l-2.3.78L18.5 19l-.7-2.22L15.5 16l2.3-.85L18.5 13z" fill="currentColor"/>
+                                <path d="M6.5 14l.55 1.68L8.8 16.3l-1.75.6L6.5 18.6l-.55-1.7L4.2 16.3l1.75-.62L6.5 14z" fill="currentColor"/>
+                            </svg>
+                            WYSIWYG
+                        </button>
+                        <button
+                            class="markdown-mode-btn"
+                            title="Preview"
+                            aria-label="Preview"
+                            aria-pressed={false}
+                            on:click={() => setMarkdownMode('preview')}
+                        >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
+                            Preview
                         </button>
-                    </Tooltip>
+                        <button
+                            class="markdown-mode-btn active"
+                            title="Source"
+                            aria-label="Source"
+                            aria-pressed={true}
+                        >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M16 18l6-6-6-6M8 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Source
+                        </button>
+                    </div>
                 {/if}
                 {/if}
-                {#if isFirebaseAvailable && !isSpecialTabType(tabs[activeTabId]?.type)}
+                {#if isFirebaseAvailable && (activeTab?.type === 'preview' || !isSpecialTabType(tabs[activeTabId]?.type))}
                     <Tooltip text={"Share"} pos={"bottom"}>
                         <button
                             class="icon-button"
@@ -3473,13 +3693,13 @@ func main() {
                                 <path d="M16 6l-4-4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M12 2v13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            {#if lastSharedContent == undefined || code !== lastSharedContent}
+                            {#if shareDirty}
                                 <div class="unsaved-dot"></div>
                             {/if}
                         </button>
                     </Tooltip>
                 {/if}
-                {#if !isSpecialTabType(activeTab?.type)}
+                {#if activeTab?.type === 'preview' || !isSpecialTabType(activeTab?.type)}
                 <Tooltip text={"Reset Code"} pos={"bottom"}>
                     <button
                         class="icon-button"
@@ -3506,7 +3726,7 @@ func main() {
                         >
                             <!-- Cog icon -->
                             <svg width="16px" height="16px" viewBox="0 0 32 32" id="Lager_100" data-name="Lager 100" xmlns="http://www.w3.org/2000/svg">
-                                <path id="Path_78" data-name="Path 78" d="M30.329,13.721l-2.65-.441a11.922,11.922,0,0,0-1.524-3.653l1.476-2.066a1.983,1.983,0,0,0-.211-2.553l-.428-.428a1.983,1.983,0,0,0-2.553-.211L22.373,5.845A11.922,11.922,0,0,0,18.72,4.321l-.441-2.65A2,2,0,0,0,16.306,0h-.612a2,2,0,0,0-1.973,1.671l-.441,2.65A11.922,11.922,0,0,0,9.627,5.845L7.561,4.369a1.983,1.983,0,0,0-2.553.211l-.428.428a1.983,1.983,0,0,0-.211,2.553L5.845,9.627A11.922,11.922,0,0,0,4.321,13.28l-2.65.441A2,2,0,0,0,0,15.694v.612a2,2,0,0,0,1.671,1.973l2.65.441a11.922,11.922,0,0,0,1.524,3.653L4.369,24.439a1.983,1.983,0,0,0,.211,2.553l.428.428a1.983,1.983,0,0,0,2.553.211l2.066-1.476a11.922,11.922,0,0,0,3.653,1.524l.441,2.65A2,2,0,0,0,15.694,32h.612a2,2,0,0,0,1.973-1.671l.441-2.65a11.922,11.922,0,0,0,3.653-1.524l2.066,1.476a1.983,1.983,0,0,0,2.553-.211l.428-.428a1.983,1.983,0,0,0,.211-2.553l-1.476-2.066a11.922,11.922,0,0,0,1.524-3.653l2.65-.441A2,2,0,0,0,32,16.306v-.612A2,2,0,0,0,30.329,13.721ZM16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Z" 
+                                <path id="Path_78" data-name="Path 78" d="M30.329,13.721l-2.65-.441a11.922,11.922,0,0,0-1.524-3.653l1.476-2.066a1.983,1.983,0,0,0-.211-2.553l-.428-.428a1.983,1.983,0,0,0-2.553-.211L22.373,5.845A11.922,11.922,0,0,0,18.72,4.321l-.441-2.65A2,2,0,0,0,16.306,0h-.612a2,2,0,0,0-1.973,1.671l-.441,2.65A11.922,11.922,0,0,0,9.627,5.845L7.561,4.369a1.983,1.983,0,0,0-2.553.211l-.428.428a1.983,1.983,0,0,0-.211,2.553L5.845,9.627A11.922,11.922,0,0,0,4.321,13.28l-2.65.441A2,2,0,0,0,0,15.694v.612a2,2,0,0,0,1.671,1.973l2.65.441a11.922,11.922,0,0,0,1.524,3.653L4.369,24.439a1.983,1.983,0,0,0,.211,2.553l.428.428a1.983,1.983,0,0,0,2.553.211l2.066-1.476a11.922,11.922,0,0,0,3.653,1.524l.441,2.65A2,2,0,0,0,15.694,32h.612a2,2,0,0,0,1.973-1.671l.441-2.65a11.922,11.922,0,0,0,3.653-1.524l2.066,1.476a1.983,1.983,0,0,0,2.553-.211l.428-.428a1.983,1.983,0,0,0,.211-2.553l-1.476-2.066a11.922,11.922,0,0,0,1.524-3.653l2.65-.441A2,2,0,0,0,32,16.306v-.612A2,2,0,0,0,30.329,13.721ZM16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Z"
                                     fill="currentColor"/>
                             </svg>
                         </button>
@@ -3682,8 +3902,7 @@ func main() {
                                     <div class="recent-file-card-header">
                                         {#if file.type === 'preview'}
                                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0;">
-                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
                                         {:else}
                                             <LanguageIcon language={tabLanguages[file.fileId] ?? language} size={17} />
@@ -3765,7 +3984,7 @@ func main() {
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div class="search-overlay" on:click={closeSearch}>
             <div class="search-modal" on:click|stopPropagation>
-                <input 
+                <input
                     bind:this={searchInputEl}
                     bind:value={searchQuery}
                     placeholder="Search files by name..."
@@ -3789,7 +4008,7 @@ func main() {
                 <div class="search-results">
                     {#each filteredFiles as file, i}
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
-                        <div 
+                        <div
                             class="search-result-item {i === selectedIndex ? 'selected' : ''}"
                             on:click={() => {
                                 activateTab(file.fileId);
@@ -3800,8 +4019,7 @@ func main() {
                             <span class="search-file-info">
                                 {#if file.type === 'preview'}
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0;">
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 {:else}
                                     <LanguageIcon language={tabLanguages[file.fileId] ?? language} size={17} />
@@ -4178,7 +4396,7 @@ func main() {
         background-color: rgba(255,255,255,0.1);
         color: var(--color-text);
     }
-    
+
     .file-rename-input {
         background: var(--color-bg);
         border: 1px solid var(--color-highlight);
@@ -4499,6 +4717,54 @@ func main() {
         background: color-mix(in srgb, var(--color-highlight) 15%, transparent);
     }
 
+    .markdown-mode-switch {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+        padding: 3px;
+        border-radius: 999px;
+        background: var(--color-second-bg);
+    }
+
+    .markdown-mode-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 999px;
+        background: transparent;
+        color: var(--color-text-secondary);
+        font-size: 0.8rem;
+        font-weight: 500;
+        line-height: 1;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+    .markdown-mode-btn:hover {
+        color: var(--color-text);
+    }
+
+    .markdown-mode-btn.active {
+        background: var(--color-surface);
+        color: var(--color-highlight);
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+    }
+
+    .markdown-mode-btn.active:hover {
+        color: var(--color-highlight);
+    }
+
+    :global(:root[data-theme='dark']) .markdown-mode-btn.active {
+        background: #1c1917;
+        box-shadow: none;
+    }
+
+    :global(:root[data-theme='dark']) .markdown-mode-btn.active:hover {
+        background: #1c1917;
+    }
+
     /* --- Browser-like Tabs --- */
     .tab-bar {
         display: flex;
@@ -4662,7 +4928,7 @@ func main() {
         font-size: 0.85rem;
         max-width: 18ch;
     }
-    
+
     .tabs-container {
         display: flex;
         gap: var(--spacing-2);
