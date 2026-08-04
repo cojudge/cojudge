@@ -17,7 +17,7 @@
     import fileStore, { isDotFileName, type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
-    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, wrapImageThumbnails, wrapCodeBlocksWithCopy, ensureTrailingEmptyLine, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, isUrlLike, normalizeUrl, linkHtml } from '$lib/utils/markdown';
+    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, wrapImageThumbnails, wrapCodeBlocksWithCopy, ensureTrailingEmptyLine, ensureFileMentionCarets, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref, fileMentionHtml, FILE_MENTION_CLASS } from '$lib/utils/markdown';
     import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
     import QRCode from 'qrcode';
     import { browser } from '$app/environment';
@@ -102,10 +102,10 @@ func main() {
         | (ExplorerNode & { depth: number; kind: 'file' | 'folder' })
         | { kind: 'empty'; fileId: string; depth: number };
 
-    /** Portable folder/file tree for download/import (no fileIds). */
+    /** Portable folder/file tree for download/import. fileId is kept when possible. */
     type ExportNode =
-        | { type: 'folder'; name: string; children: ExportNode[] }
-        | { type: 'file'; name: string; languages: Array<{ language: string; content: string; lastLanguage?: string }> };
+        | { type: 'folder'; name: string; fileId?: string; children: ExportNode[] }
+        | { type: 'file'; name: string; fileId?: string; languages: Array<{ language: string; content: string; lastLanguage?: string }> };
 
     function getFiles(): FileEntry[] {
         try {
@@ -766,11 +766,12 @@ func main() {
                 const node = buildExportNode(c.id, files);
                 if (node) children.push(node);
             }
-            return { type: 'folder', name: entry.fileName, children };
+            return { type: 'folder', fileId: entry.fileId, name: entry.fileName, children };
         }
         const langEntries = files.filter((f) => f.fileId === fileId && !isFolderEntry(f) && !isSpecialTabType(f.type));
         return {
             type: 'file',
+            fileId: entry.fileId,
             name: entry.fileName,
             languages: langEntries.map((f) => ({
                 language: f.language,
@@ -834,6 +835,7 @@ func main() {
     function isExportNode(value: unknown): value is ExportNode {
         if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
         const v = value as Record<string, unknown>;
+        if (v.fileId !== undefined && typeof v.fileId !== 'string') return false;
         if (v.type === 'folder') {
             return typeof v.name === 'string' && Array.isArray(v.children);
         }
@@ -843,10 +845,53 @@ func main() {
         return false;
     }
 
-    function importExportNode(node: ExportNode, parentId: string | null, files: FileEntry[]): FileEntry[] {
+    // Reuse exported fileId when free; otherwise mint a new one. Records old→new in idMap.
+    function resolveImportFileId(
+        preferred: string | undefined,
+        usedIds: Set<string>,
+        idMap: Map<string, string>
+    ): string {
+        if (preferred && !usedIds.has(preferred)) {
+            usedIds.add(preferred);
+            return preferred;
+        }
+        let id = uuidv4();
+        while (usedIds.has(id)) id = uuidv4();
+        usedIds.add(id);
+        if (preferred) idMap.set(preferred, id);
+        return id;
+    }
+
+    // Rewrite playground file mention links when import had to remap fileIds.
+    function rewritePlaygroundFileIdsInContent(content: string, idMap: Map<string, string>): string {
+        if (!content || idMap.size === 0) return content;
+        return content.replace(
+            /(\/playground\?(?:[^)\s#]*&)?)fileId=([^)\s&#]+)/g,
+            (match, prefix: string, rawId: string) => {
+                let oldId = rawId;
+                try {
+                    oldId = decodeURIComponent(rawId);
+                } catch {
+                    /* keep raw */
+                }
+                const nextId = idMap.get(oldId);
+                if (!nextId) return match;
+                return `${prefix}fileId=${encodeURIComponent(nextId)}`;
+            }
+        );
+    }
+
+    function importExportNode(
+        node: ExportNode,
+        parentId: string | null,
+        files: FileEntry[],
+        usedIds: Set<string>,
+        idMap: Map<string, string>
+    ): FileEntry[] {
         const now = Date.now();
+        const preferred = typeof node.fileId === 'string' && node.fileId.trim() ? node.fileId.trim() : undefined;
         if (node.type === 'folder') {
-            const folderId = uuidv4();
+            const folderId = resolveImportFileId(preferred, usedIds, idMap);
             files.push({
                 fileId: folderId,
                 fileName: node.name || 'Folder',
@@ -859,11 +904,11 @@ func main() {
                 lastUpdated: now
             } as FileEntry);
             for (const child of node.children) {
-                if (isExportNode(child)) importExportNode(child, folderId, files);
+                if (isExportNode(child)) importExportNode(child, folderId, files, usedIds, idMap);
             }
             return files;
         }
-        const fileId = uuidv4();
+        const fileId = resolveImportFileId(preferred, usedIds, idMap);
         const langs = node.languages?.length
             ? node.languages
             : [{ language: 'plaintext', content: '' }];
@@ -906,7 +951,17 @@ func main() {
                 fileStore.update((s) => {
                     let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
                     const before = new Set(files.map((f) => f.fileId));
-                    importExportNode(parsed, null, files);
+                    const usedIds = new Set(files.map((f) => f.fileId));
+                    const idMap = new Map<string, string>();
+                    importExportNode(parsed, null, files, usedIds, idMap);
+                    // If any ids were remapped due to conflicts, rewrite mention links in imported content.
+                    if (idMap.size > 0) {
+                        for (const f of files) {
+                            if (before.has(f.fileId)) continue;
+                            if (typeof f.content !== 'string' || !f.content.includes('fileId=')) continue;
+                            f.content = rewritePlaygroundFileIdsInContent(f.content, idMap);
+                        }
+                    }
                     for (const f of files) {
                         if (!before.has(f.fileId) && !isFolderEntry(f) && !isSpecialTabType(f.type)) {
                             createdFileIds.push(f.fileId);
@@ -1891,6 +1946,7 @@ func main() {
         previewEditMode = false;
         wysiwygSourceFileId = null;
         showLinkInput = false;
+        closeMentionPopup();
     }
 
     async function applyPreferredVisualMode() {
@@ -1944,6 +2000,7 @@ func main() {
             previewEditMode = false;
             wysiwygSourceFileId = null;
             showLinkInput = false;
+            closeMentionPopup();
         }
 
         const updated = [...tabs];
@@ -2003,6 +2060,27 @@ func main() {
     let linkInputEl: HTMLInputElement | null = null;
     let savedLinkRange: Range | null = null;
 
+    // @-mention file picker in the WYSIWYG editor
+    let showMentionPopup = false;
+    let mentionQuery = '';
+    let mentionSelectedIndex = 0;
+    let savedMentionRange: Range | null = null;
+    let mentionPopupStyle = '';
+    let mentionResultsEl: HTMLDivElement | null = null;
+
+    $: mentionFilteredFiles = (() => {
+        const currentFileId =
+            wysiwygSourceFileId ??
+            (activeTab?.type === 'preview' ? activeTab.sourceFileId : activeTab?.fileId) ??
+            null;
+        const files = tabs.filter((t) => t.type !== 'preview' && t.fileId !== currentFileId);
+        return mentionQuery
+            ? files.filter((t) => t.fileName.toLowerCase().includes(mentionQuery.toLowerCase()))
+            : files.slice().sort((a, b) => (b.lastUpdated || 0) - (a.lastUpdated || 0));
+    })();
+
+    $: if (mentionQuery !== undefined) mentionSelectedIndex = 0;
+
     function getActivePreviewSourceContent(): string {
         if (!activeTab || activeTab.type !== 'preview' || !activeTab.sourceFileId) return '';
         const files = getFiles();
@@ -2019,9 +2097,12 @@ func main() {
         previewEditMode = true;
         await tick();
         if (wysiwygEl) {
-            wysiwygEl.innerHTML = renderMarkdownPlain(getActivePreviewSourceContent());
+            wysiwygEl.innerHTML = renderMarkdownPlain(getActivePreviewSourceContent(), {
+                resolveFileLanguage: (fileId) => getLanguageForTab(fileId)
+            });
             wrapImageThumbnails(wysiwygEl);
             wrapCodeBlocksWithCopy(wysiwygEl);
+            ensureFileMentionCarets(wysiwygEl);
             ensureTrailingEmptyLine(wysiwygEl);
             wysiwygEl.focus();
         }
@@ -2038,6 +2119,7 @@ func main() {
     function handleWysiwygInput() {
         maybeAutoInsertHorizontalRule();
         maybeAutoCloseInlineCode();
+        updateMentionPopup();
         if (wysiwygDebounce) clearTimeout(wysiwygDebounce);
         wysiwygDebounce = setTimeout(commitWysiwygEdits, 300);
     }
@@ -2229,9 +2311,24 @@ func main() {
         handleWysiwygInput();
     }
 
+    // If the click target is a playground file link, switch to that tab in-app.
+    function tryOpenPlaygroundFileLink(event: MouseEvent, container: HTMLElement | null): boolean {
+        if (!container) return false;
+        const anchor = (event.target as HTMLElement).closest('a[href]') as HTMLAnchorElement | null;
+        if (!anchor || !container.contains(anchor)) return false;
+        const fileId = parsePlaygroundFileId(anchor.getAttribute('href') || '');
+        if (!fileId) return false;
+        event.preventDefault();
+        event.stopPropagation();
+        closeMentionPopup();
+        activateTab(fileId);
+        return true;
+    }
+
     // Click handling inside the WYSIWYG area: trash icon deletes the image,
     // clicking the thumbnail opens the full-size lightbox.
     function handleWysiwygClick(event: MouseEvent) {
+        if (tryOpenPlaygroundFileLink(event, wysiwygEl)) return;
         const target = event.target as HTMLElement;
         const deleteBtn = target.closest(`.${THUMB_DELETE_CLASS}`) as HTMLElement | null;
         if (deleteBtn && wysiwygEl?.contains(deleteBtn)) {
@@ -2250,8 +2347,9 @@ func main() {
 
     // Click handling in the read-only markdown preview.
     function handlePreviewClick(event: MouseEvent) {
-        const target = event.target as HTMLElement;
         const container = event.currentTarget as HTMLElement;
+        if (tryOpenPlaygroundFileLink(event, container)) return;
+        const target = event.target as HTMLElement;
         const deleteBtn = target.closest(`.${THUMB_DELETE_CLASS}`) as HTMLElement | null;
         if (deleteBtn && container.contains(deleteBtn)) {
             event.preventDefault();
@@ -2315,6 +2413,7 @@ func main() {
         if (previewEditMode) commitWysiwygEdits();
         wysiwygSourceFileId = null;
         showLinkInput = false;
+        closeMentionPopup();
         lastActiveTabFileId = activeTab?.fileId ?? null;
         if (activeTab?.type === 'preview') {
             applyPreferredVisualMode();
@@ -2373,10 +2472,161 @@ func main() {
 
     function ensureWysiwygLinksOpenInNewTab() {
         if (!wysiwygEl) return;
-        for (const a of wysiwygEl.querySelectorAll('a[href]')) {
+        for (const a of Array.from(wysiwygEl.querySelectorAll('a[href]'))) {
+            const href = a.getAttribute('href') || '';
+            const fileId = parsePlaygroundFileId(href);
+            if (fileId) {
+                // Upgrade plain playground links (e.g. from createLink) into mention chips.
+                if (!a.classList.contains(FILE_MENTION_CLASS)) {
+                    const label = (a.textContent || href).trim();
+                    a.outerHTML = fileMentionHtml(href, label, getLanguageForTab(fileId));
+                } else {
+                    a.removeAttribute('target');
+                    a.removeAttribute('rel');
+                    a.setAttribute('contenteditable', 'false');
+                }
+                continue;
+            }
             a.setAttribute('target', '_blank');
             a.setAttribute('rel', 'noopener noreferrer');
         }
+        ensureFileMentionCarets(wysiwygEl);
+    }
+
+    function closeMentionPopup() {
+        showMentionPopup = false;
+        mentionQuery = '';
+        mentionSelectedIndex = 0;
+        savedMentionRange = null;
+        mentionPopupStyle = '';
+    }
+
+    function scrollSelectedMentionIntoView() {
+        tick().then(() => {
+            const el = mentionResultsEl?.querySelector('.mention-result-item.selected') as HTMLElement | null;
+            el?.scrollIntoView({ block: 'nearest' });
+        });
+    }
+
+    // Detect an in-progress @mention immediately before the caret.
+    function getMentionMatch(): { query: string; range: Range } | null {
+        if (!wysiwygEl) return null;
+        const selection = window.getSelection();
+        if (!selection || !selection.isCollapsed || selection.rangeCount === 0) return null;
+        const caretRange = selection.getRangeAt(0);
+        if (!wysiwygEl.contains(caretRange.startContainer)) return null;
+        if (caretRange.startContainer.nodeType !== Node.TEXT_NODE) return null;
+        const textNode = caretRange.startContainer as Text;
+        const offset = caretRange.startOffset;
+        const textBefore = textNode.textContent?.slice(0, offset) ?? '';
+        const match = textBefore.match(/@([^\s@]*)$/);
+        if (!match) return null;
+        const atIndex = offset - match[0].length;
+        if (atIndex > 0) {
+            const charBefore = textBefore[atIndex - 1];
+            // Avoid triggering inside emails like user@domain
+            if (charBefore && /[\w.]/.test(charBefore)) return null;
+        }
+        const range = document.createRange();
+        range.setStart(textNode, atIndex);
+        range.setEnd(textNode, offset);
+        return { query: match[1], range };
+    }
+
+    function updateMentionPopup() {
+        if (!previewEditMode || !wysiwygEl) {
+            if (showMentionPopup) closeMentionPopup();
+            return;
+        }
+        const mention = getMentionMatch();
+        if (!mention) {
+            if (showMentionPopup) closeMentionPopup();
+            return;
+        }
+        savedMentionRange = mention.range.cloneRange();
+        mentionQuery = mention.query;
+        showMentionPopup = true;
+        const rect = mention.range.getBoundingClientRect();
+        const top = Math.min(rect.bottom + 4, window.innerHeight - 240);
+        const left = Math.min(Math.max(8, rect.left), window.innerWidth - 328);
+        mentionPopupStyle = `top:${Math.max(8, top)}px;left:${left}px;`;
+    }
+
+    // Inline tags that should not wrap a file mention (looks wrong + breaks markdown).
+    function isInlineFormatElement(el: Element): boolean {
+        const tag = el.tagName;
+        if (tag === 'B' || tag === 'STRONG' || tag === 'I' || tag === 'EM' || tag === 'U' ||
+            tag === 'S' || tag === 'STRIKE' || tag === 'DEL' || tag === 'CODE') {
+            return true;
+        }
+        // WYSIWYG auto-matched inline code spans
+        if (tag === 'SPAN' && (el.getAttribute('style') || '').includes(INLINE_CODE_STYLE_MARKER)) {
+            return true;
+        }
+        return false;
+    }
+
+    // Lift node out of bold/italic/etc. so the mention is unformatted.
+    function liftOutOfInlineFormatting(node: Node, root: HTMLElement) {
+        while (node.parentElement && node.parentElement !== root && isInlineFormatElement(node.parentElement)) {
+            const parent = node.parentElement;
+            const grand = parent.parentNode;
+            if (!grand) break;
+
+            const afterParent = parent.cloneNode(false) as HTMLElement;
+            let sibling = node.nextSibling;
+            while (sibling) {
+                const next = sibling.nextSibling;
+                afterParent.appendChild(sibling);
+                sibling = next;
+            }
+
+            grand.insertBefore(node, parent.nextSibling);
+            if (afterParent.childNodes.length > 0) {
+                grand.insertBefore(afterParent, node.nextSibling);
+            }
+            if (!parent.hasChildNodes()) parent.remove();
+        }
+    }
+
+    function insertFileMention(file: TabMeta) {
+        if (!wysiwygEl || !savedMentionRange) return;
+        // Prefer the underlying source file so the link stays valid if a preview tab is closed.
+        const targetId = file.type === 'preview' && file.sourceFileId ? file.sourceFileId : file.fileId;
+        const href = playgroundFileHref(targetId);
+        const html = fileMentionHtml(href, file.fileName, getLanguageForTab(targetId));
+        const range = savedMentionRange.cloneRange();
+        closeMentionPopup();
+        wysiwygEl.focus();
+
+        // DOM insert (not execCommand) so we can place the caret immediately after the
+        // contenteditable=false mention. Browsers otherwise park it at the end of the block.
+        range.deleteContents();
+        const template = document.createElement('template');
+        template.innerHTML = html;
+        const mentionNode = template.content.firstElementChild;
+        if (!mentionNode) return;
+        range.insertNode(mentionNode);
+        // Don't keep bold/italic/code wrappers around the mention.
+        liftOutOfInlineFormatting(mentionNode, wysiwygEl);
+
+        // Zero-width space gives the caret a text node to sit in after the atomic mention.
+        const zwsp = document.createTextNode('\u200B');
+        mentionNode.after(zwsp);
+        const selection = window.getSelection();
+        const caret = document.createRange();
+        caret.setStart(zwsp, 1);
+        caret.collapse(true);
+        selection?.removeAllRanges();
+        selection?.addRange(caret);
+
+        handleWysiwygInput();
+    }
+
+    function selectMentionByIndex(index: number) {
+        if (mentionFilteredFiles.length === 0) return;
+        const file = mentionFilteredFiles[index];
+        if (file) insertFileMention(file);
     }
 
     function applyWysiwygCommand(command: string, value?: string) {
@@ -2386,10 +2636,178 @@ func main() {
         handleWysiwygInput();
     }
 
+    function isFileMentionEl(node: Node | null | undefined): node is HTMLElement {
+        return !!node && node.nodeType === Node.ELEMENT_NODE && (node as HTMLElement).classList?.contains(FILE_MENTION_CLASS);
+    }
+
+    function isZwspOnlyText(node: Node | null | undefined): boolean {
+        return !!node && node.nodeType === Node.TEXT_NODE && /^[\u200B]*$/.test(node.textContent || '');
+    }
+
+    function removeFileMention(mention: HTMLElement) {
+        if (!wysiwygEl) return;
+        // Drop caret-anchor ZWSPs next to the mention
+        const prev = mention.previousSibling;
+        const next = mention.nextSibling;
+        if (isZwspOnlyText(prev)) prev?.parentNode?.removeChild(prev);
+        if (isZwspOnlyText(next)) next?.parentNode?.removeChild(next);
+
+        const parent = mention.parentNode;
+        const anchor = document.createTextNode('\u200B');
+        parent?.insertBefore(anchor, mention);
+        mention.remove();
+
+        const selection = window.getSelection();
+        const caret = document.createRange();
+        caret.setStart(anchor, 0);
+        caret.collapse(true);
+        selection?.removeAllRanges();
+        selection?.addRange(caret);
+        handleWysiwygInput();
+    }
+
+    // Mention immediately before a collapsed caret (skipping ZWSP anchors).
+    function fileMentionBeforeCaret(): HTMLElement | null {
+        const selection = window.getSelection();
+        if (!selection || !selection.isCollapsed || selection.rangeCount === 0 || !wysiwygEl) return null;
+        const range = selection.getRangeAt(0);
+        if (!wysiwygEl.contains(range.startContainer)) return null;
+
+        const node = range.startContainer;
+        const offset = range.startOffset;
+
+        if (node.nodeType === Node.TEXT_NODE) {
+            const before = (node.textContent || '').slice(0, offset);
+            // Real characters before the caret → not adjacent to a mention
+            if (before.replace(/\u200B/g, '').length > 0) return null;
+            let prev: Node | null = offset === 0 || /^[\u200B]*$/.test(before) ? node.previousSibling : null;
+            // Caret inside a ZWSP-only text node after a mention
+            if (!prev && /^[\u200B]*$/.test(before)) prev = node.previousSibling;
+            while (prev && isZwspOnlyText(prev)) prev = prev.previousSibling;
+            if (isFileMentionEl(prev)) return prev;
+            return null;
+        }
+
+        if (node.nodeType === Node.ELEMENT_NODE) {
+            let i = offset - 1;
+            while (i >= 0) {
+                const child = node.childNodes[i];
+                if (isZwspOnlyText(child)) { i--; continue; }
+                if (isFileMentionEl(child)) return child;
+                break;
+            }
+        }
+        return null;
+    }
+
+    // Mention immediately after a collapsed caret (skipping ZWSP anchors).
+    function fileMentionAfterCaret(): HTMLElement | null {
+        const selection = window.getSelection();
+        if (!selection || !selection.isCollapsed || selection.rangeCount === 0 || !wysiwygEl) return null;
+        const range = selection.getRangeAt(0);
+        if (!wysiwygEl.contains(range.startContainer)) return null;
+
+        const node = range.startContainer;
+        const offset = range.startOffset;
+
+        if (node.nodeType === Node.TEXT_NODE) {
+            const after = (node.textContent || '').slice(offset);
+            if (after.replace(/\u200B/g, '').length > 0) return null;
+            let next: Node | null = node.nextSibling;
+            while (next && isZwspOnlyText(next)) next = next.nextSibling;
+            if (isFileMentionEl(next)) return next;
+            return null;
+        }
+
+        if (node.nodeType === Node.ELEMENT_NODE) {
+            let i = offset;
+            while (i < node.childNodes.length) {
+                const child = node.childNodes[i];
+                if (isZwspOnlyText(child)) { i++; continue; }
+                if (isFileMentionEl(child)) return child;
+                break;
+            }
+        }
+        return null;
+    }
+
     // Keyboard shortcuts while editing the WYSIWYG area: Ctrl/Cmd+B bold,
     // Ctrl/Cmd+I italic, Ctrl/Cmd+Shift+X strikethrough, Ctrl/Cmd+E inline
-    // code, Ctrl/Cmd+K insert link.
+    // code, Ctrl/Cmd+K insert link. Also navigates the @-mention popup and
+    // deletes file mentions atomically on Backspace/Delete.
     function handleWysiwygKeydown(e: KeyboardEvent) {
+        if (showMentionPopup) {
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (mentionFilteredFiles.length === 0) return;
+                mentionSelectedIndex = (mentionSelectedIndex + 1) % mentionFilteredFiles.length;
+                scrollSelectedMentionIntoView();
+                return;
+            }
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (mentionFilteredFiles.length === 0) return;
+                mentionSelectedIndex = (mentionSelectedIndex - 1 + mentionFilteredFiles.length) % mentionFilteredFiles.length;
+                scrollSelectedMentionIntoView();
+                return;
+            }
+            if (e.key === 'Enter' || e.key === 'Tab') {
+                if (mentionFilteredFiles.length > 0) {
+                    e.preventDefault();
+                    selectMentionByIndex(mentionSelectedIndex);
+                    return;
+                }
+            }
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                closeMentionPopup();
+                return;
+            }
+        }
+
+        // One Backspace/Delete removes the whole mention (not just the ZWSP caret anchor,
+        // and not the browser's intermediate "select the atom" step).
+        if (!e.metaKey && !e.ctrlKey && !e.altKey && !e.shiftKey && (e.key === 'Backspace' || e.key === 'Delete')) {
+            const selection = window.getSelection();
+            // Browser may already have selected the atomic mention
+            if (selection && !selection.isCollapsed && selection.rangeCount > 0) {
+                const range = selection.getRangeAt(0);
+                const frag = range.cloneContents();
+                const nodes = Array.from(frag.childNodes).filter(
+                    (n) => !(n.nodeType === Node.TEXT_NODE && /^[\u200B]*$/.test(n.textContent || ''))
+                );
+                if (nodes.length === 1 && isFileMentionEl(nodes[0])) {
+                    // Resolve the live node from the selection range
+                    let live: HTMLElement | null = null;
+                    if (isFileMentionEl(range.startContainer)) {
+                        live = range.startContainer;
+                    } else if (range.startContainer.nodeType === Node.ELEMENT_NODE) {
+                        for (let i = range.startOffset; i < range.startContainer.childNodes.length; i++) {
+                            const c = range.startContainer.childNodes[i];
+                            if (isZwspOnlyText(c)) continue;
+                            if (isFileMentionEl(c)) { live = c; break; }
+                            break;
+                        }
+                    }
+                    if (!live) {
+                        live = (range.commonAncestorContainer as Element).closest?.(`.${FILE_MENTION_CLASS}`) as HTMLElement | null;
+                    }
+                    if (live && wysiwygEl?.contains(live)) {
+                        e.preventDefault();
+                        removeFileMention(live);
+                        return;
+                    }
+                }
+            }
+
+            const mention = e.key === 'Backspace' ? fileMentionBeforeCaret() : fileMentionAfterCaret();
+            if (mention) {
+                e.preventDefault();
+                removeFileMention(mention);
+                return;
+            }
+        }
+
         if (!e.metaKey && !e.ctrlKey) return;
         const key = e.key.toLowerCase();
         if (key === 'b' && !e.shiftKey && !e.altKey) {
@@ -2828,9 +3246,12 @@ func main() {
         });
     }
 
-    $: filteredFiles = searchQuery
-        ? tabs.filter(t => t.fileName.toLowerCase().includes(searchQuery.toLowerCase()))
-        : tabs.slice().sort((a, b) => (b.lastUpdated || 0) - (a.lastUpdated || 0));
+    $: filteredFiles = (() => {
+        const files = tabs.filter((t) => t.type !== 'preview');
+        return searchQuery
+            ? files.filter((t) => t.fileName.toLowerCase().includes(searchQuery.toLowerCase()))
+            : files.slice().sort((a, b) => (b.lastUpdated || 0) - (a.lastUpdated || 0));
+    })();
 
     $: recentFiles = tabs
         .slice()
@@ -3013,7 +3434,10 @@ func main() {
         const sourceEntry = files.find((f: FileEntry) => f.fileId === activeTab.sourceFileId && f.language === 'markdown');
         const src = sourceEntry?.content ?? '';
 
-        return renderMarkdown(src, { imageThumbnails: true });
+        return renderMarkdown(src, {
+            imageThumbnails: true,
+            resolveFileLanguage: (fileId) => getLanguageForTab(fileId)
+        });
     })();
     $: shareDirty = (() => {
         if (activeTab?.type === 'preview' && activeTab.sourceFileId) {
@@ -3029,8 +3453,12 @@ func main() {
 
     onMount(() => {
         isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-        // Restore last markdown view mode for the initially active tab.
-        if (activeTab?.type === 'preview') {
+        // Open file from /playground?fileId=... deep links
+        const fileIdParam = new URLSearchParams(window.location.search).get('fileId');
+        if (fileIdParam) {
+            activateTab(fileIdParam);
+        } else if (activeTab?.type === 'preview') {
+            // Restore last markdown view mode for the initially active tab.
             applyPreferredVisualMode();
         } else {
             maybeOpenPreferredMarkdownMode();
@@ -3039,6 +3467,12 @@ func main() {
             if (showSettings && settingsContainer && !settingsContainer.contains(e.target as Node)) {
                 showSettings = false;
             }
+            if (showMentionPopup) {
+                const target = e.target as HTMLElement;
+                if (!target.closest('.mention-popup') && !wysiwygEl?.contains(target)) {
+                    closeMentionPopup();
+                }
+            }
         };
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.defaultPrevented) return;
@@ -3046,6 +3480,7 @@ func main() {
                 showSettings = false;
                 closeSearch();
                 closeLightbox();
+                closeMentionPopup();
             }
             // Cmd+P or Ctrl+P
             if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'p') {
@@ -3561,9 +3996,7 @@ func main() {
                     {#if tabDropIndicatorStyle}
                         <div class="tab-drop-indicator" style={tabDropIndicatorStyle} aria-hidden="true"></div>
                     {/if}
-                    <Tooltip text={isMac ? "New tab (Cmd+Alt+N)" : "New tab (Ctrl+Alt+N)"} pos="bottom">
-                        <button class="tab-add" aria-label="New tab" on:click={() => addNewTab('tab')}>+</button>
-                    </Tooltip>
+                    <button class="tab-add" aria-label="New tab" on:click={() => addNewTab('tab')}>+</button>
                 </div>
             </div>
             <div style="display:flex;align-items:center;gap:var(--spacing-2);">
@@ -4050,6 +4483,43 @@ func main() {
                         <div class="search-no-results">No matching files</div>
                     {/if}
                 </div>
+            </div>
+        </div>
+    {/if}
+
+    {#if showMentionPopup}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div class="mention-popup" style={mentionPopupStyle} on:mousedown|preventDefault>
+            <div class="mention-popup-header">Search files by name...</div>
+            <div class="mention-results" bind:this={mentionResultsEl}>
+                {#each mentionFilteredFiles as file, i}
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <div
+                        class="mention-result-item {i === mentionSelectedIndex ? 'selected' : ''}"
+                        on:click={() => insertFileMention(file)}
+                        on:mouseenter={() => mentionSelectedIndex = i}
+                    >
+                        <span class="search-file-info">
+                            {#if file.type === 'preview'}
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0;">
+                                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            {:else}
+                                <LanguageIcon language={tabLanguages[file.fileId] ?? language} size={17} />
+                            {/if}
+                            <span class="search-file-name">{file.fileName}</span>
+                        </span>
+                        <span class="search-file-meta">
+                            {#if getFilePath(file.fileId) !== '/'}
+                                <span class="search-file-path">{getFilePath(file.fileId).replace(/^\/|\/$/g, '')}</span>
+                            {/if}
+                        </span>
+                    </div>
+                {/each}
+                {#if mentionFilteredFiles.length === 0}
+                    <div class="search-no-results">No matching files</div>
+                {/if}
             </div>
         </div>
     {/if}
@@ -5176,6 +5646,45 @@ func main() {
 
     .lightbox-close:hover {
         background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* @-mention file picker (WYSIWYG) */
+    .mention-popup {
+        position: fixed;
+        z-index: 1100;
+        width: 320px;
+        max-width: calc(100vw - 16px);
+        background: var(--color-bg);
+        border: 1px solid var(--color-border);
+        border-radius: 6px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+        overflow: hidden;
+    }
+
+    .mention-popup-header {
+        padding: 8px 12px;
+        font-size: 0.75rem;
+        color: var(--color-text-secondary);
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .mention-results {
+        max-height: 240px;
+        overflow-y: auto;
+    }
+
+    .mention-result-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 12px;
+        cursor: pointer;
+        color: var(--color-text-secondary);
+    }
+
+    .mention-result-item.selected {
+        background: var(--color-highlight);
+        color: var(--color-text);
     }
 
     /* Search Overlay */
