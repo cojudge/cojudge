@@ -10,7 +10,7 @@
     import { ensureAuthenticated, initFirebase } from '$lib/firebase';
     import { isDesktopRuntime } from '$lib/firebaseSettings';
     import { cloudSyncState } from '$lib/cloudSync';
-    import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress } from '$lib/progressBackup';
+    import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress, writeProgressStorageItem } from '$lib/progressBackup';
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { isDotFileName, type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
@@ -344,8 +344,14 @@ func main() {
     let importInputEl: HTMLInputElement | null = null;
     let contextMenu: { x: number; y: number; parentId: string | null } | null = null;
     let contextMenuEl: HTMLElement | null = null;
+    // Collapse state is device-local UI preference: it is kept in localStorage
+    // but not in CLOUD_KEYS, so cloud sync never collects or restores it.
+    const COLLAPSED_FOLDERS_KEY = 'playground-collapsed-folders';
     /** folderId -> expanded; missing means expanded by default */
-    let collapsedFolders: Record<string, boolean> = {};
+    let collapsedFolders: Record<string, boolean> = browser
+        ? (JSON.parse(localStorage.getItem(COLLAPSED_FOLDERS_KEY) || '{}') || {})
+        : {};
+    $: if (browser) writeProgressStorageItem(localStorage, COLLAPSED_FOLDERS_KEY, JSON.stringify(collapsedFolders));
     let explorerDragOverId: string | null = null;
     let explorerDragOverRoot = false;
 
