@@ -14,7 +14,7 @@
     import fileStore, { isDotFileName, type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
-    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, wrapImageThumbnails, wrapCodeBlocksWithCopy, ensureTrailingEmptyLine, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS } from '$lib/utils/markdown';
+    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, wrapImageThumbnails, wrapCodeBlocksWithCopy, ensureTrailingEmptyLine, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, isUrlLike, normalizeUrl, linkHtml } from '$lib/utils/markdown';
     import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
     import QRCode from 'qrcode';
     import { onMount, tick } from 'svelte';
@@ -1232,28 +1232,59 @@ func main() {
         lastActiveTabFileId = activeTab?.fileId ?? null;
     }
 
-    // Paste images into the WYSIWYG area as base64 <img> elements
+    // Paste images into the WYSIWYG area as base64 <img> elements.
+    // Plain URL strings are inserted as clickable links (new tab).
     function handleWysiwygPaste(event: ClipboardEvent) {
         const items = event.clipboardData?.items;
-        if (!items) return;
-        for (const item of items) {
-            if (item.kind !== 'file' || !item.type.startsWith('image/')) continue;
-            const file = item.getAsFile();
-            if (!file) continue;
-            event.preventDefault();
-            const reader = new FileReader();
-            reader.onload = () => {
-                document.execCommand('insertImage', false, reader.result as string);
-                if (wysiwygEl) {
-                    wrapImageThumbnails(wysiwygEl);
-                    wrapCodeBlocksWithCopy(wysiwygEl);
-                    // Keep an empty line after the pasted image so the caret
-                    // can move past the contenteditable="false" thumbnail
-                    ensureTrailingEmptyLine(wysiwygEl);
-                }
-            };
-            reader.readAsDataURL(file);
-            break;
+        if (items) {
+            for (const item of items) {
+                if (item.kind !== 'file' || !item.type.startsWith('image/')) continue;
+                const file = item.getAsFile();
+                if (!file) continue;
+                event.preventDefault();
+                const reader = new FileReader();
+                reader.onload = () => {
+                    document.execCommand('insertImage', false, reader.result as string);
+                    if (wysiwygEl) {
+                        wrapImageThumbnails(wysiwygEl);
+                        wrapCodeBlocksWithCopy(wysiwygEl);
+                        // Keep an empty line after the pasted image so the caret
+                        // can move past the contenteditable="false" thumbnail
+                        ensureTrailingEmptyLine(wysiwygEl);
+                    }
+                };
+                reader.readAsDataURL(file);
+                return;
+            }
+        }
+
+        const pasted = event.clipboardData?.getData('text/plain') ?? '';
+        if (!isUrlLike(pasted)) return;
+
+        event.preventDefault();
+        const href = normalizeUrl(pasted);
+        const selection = window.getSelection();
+        const hasSelection =
+            !!selection &&
+            !selection.isCollapsed &&
+            !!wysiwygEl &&
+            !!selection.anchorNode &&
+            wysiwygEl.contains(selection.anchorNode);
+
+        if (hasSelection) {
+            document.execCommand('createLink', false, href);
+            ensureWysiwygLinksOpenInNewTab();
+        } else {
+            document.execCommand('insertHTML', false, linkHtml(href, pasted.trim()));
+        }
+        handleWysiwygInput();
+    }
+
+    function ensureWysiwygLinksOpenInNewTab() {
+        if (!wysiwygEl) return;
+        for (const a of wysiwygEl.querySelectorAll('a[href]')) {
+            a.setAttribute('target', '_blank');
+            a.setAttribute('rel', 'noopener noreferrer');
         }
     }
 
@@ -1326,7 +1357,15 @@ func main() {
                 selection?.removeAllRanges();
                 selection?.addRange(savedLinkRange);
             }
-            document.execCommand('createLink', false, url);
+            const href = isUrlLike(url) ? normalizeUrl(url) : url;
+            const selection = window.getSelection();
+            const hasSelection = !!selection && !selection.isCollapsed;
+            if (hasSelection) {
+                document.execCommand('createLink', false, href);
+            } else {
+                document.execCommand('insertHTML', false, linkHtml(href, url));
+            }
+            ensureWysiwygLinksOpenInNewTab();
             handleWysiwygInput();
         }
         showLinkInput = false;

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown } from './markdown';
+import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, isUrlLike, normalizeUrl, linkHtml } from './markdown';
 
 describe('markdown utils', () => {
     it('renders markdown with the interactive code-block renderer', () => {
@@ -12,6 +12,31 @@ describe('markdown utils', () => {
         const html = renderMarkdownPlain('# Title\n\nSome **bold** text');
         expect(html).toContain('<h1>Title</h1>');
         expect(html).toContain('<strong>bold</strong>');
+    });
+
+    it('opens links in a new tab', () => {
+        const html = renderMarkdown('[link](https://example.com)') as string;
+        expect(html).toContain('href="https://example.com"');
+        expect(html).toContain('target="_blank"');
+        expect(html).toContain('rel="noopener noreferrer"');
+
+        const plain = renderMarkdownPlain('[link](https://example.com)') as string;
+        expect(plain).toContain('target="_blank"');
+        expect(plain).toContain('rel="noopener noreferrer"');
+    });
+
+    it('detects URL-like paste strings', () => {
+        expect(isUrlLike('https://example.com')).toBe(true);
+        expect(isUrlLike('http://example.com/path?q=1')).toBe(true);
+        expect(isUrlLike('www.example.com')).toBe(true);
+        expect(isUrlLike('  https://example.com  ')).toBe(true);
+        expect(isUrlLike('not a url')).toBe(false);
+        expect(isUrlLike('https://example.com and more')).toBe(false);
+        expect(isUrlLike('ftp://example.com')).toBe(false);
+        expect(normalizeUrl('www.example.com')).toBe('http://www.example.com');
+        expect(normalizeUrl('https://example.com')).toBe('https://example.com');
+        expect(linkHtml('https://example.com', 'https://example.com')).toContain('target="_blank"');
+        expect(linkHtml('https://example.com', 'click')).toContain('>click</a>');
     });
 
     it('round-trips markdown through HTML and back', () => {
