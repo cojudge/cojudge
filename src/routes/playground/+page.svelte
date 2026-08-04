@@ -1348,6 +1348,22 @@ func main() {
         window.removeEventListener('pointercancel', onExplorerPointerUp);
         document.body.classList.remove('explorer-dragging');
     });
+
+    let showSyncSuccess = false;
+    let syncSuccessTimer: ReturnType<typeof setTimeout> | null = null;
+    let prevCloudLoading = false;
+    onDestroy(() => {
+        if (syncSuccessTimer) clearTimeout(syncSuccessTimer);
+    });
+    $: {
+        const loading = $cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading';
+        if (prevCloudLoading && !loading && $cloudSyncState.syncStatus === 'idle') {
+            showSyncSuccess = true;
+            if (syncSuccessTimer) clearTimeout(syncSuccessTimer);
+            syncSuccessTimer = setTimeout(() => { showSyncSuccess = false; }, 1000);
+        }
+        prevCloudLoading = loading;
+    }
     $: if (!suppressSave && tabs[activeTabId]?.type !== 'preview' && (code !== undefined || output !== undefined || logs !== undefined)) {
         if (!skipNextSave && !isPristineStarterTab()) {
             const fkey = fileKey();
@@ -2892,8 +2908,12 @@ func main() {
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                {#if $cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading'}
+                {#if $cloudSyncState.syncStatus === 'error' || $cloudSyncState.syncStatus === 'offline'}
+                    <span class="cloud-icon-legend error" title="Sync with Cojudge Cloud failed" aria-hidden="true"></span>
+                {:else if $cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading'}
                     <span class="cloud-icon-legend loading" title="Syncing with Cojudge Cloud" aria-hidden="true"></span>
+                {:else if showSyncSuccess}
+                    <span class="cloud-icon-legend success" title="Progress synced with Cojudge Cloud" aria-hidden="true"></span>
                 {:else if $cloudSyncState.resolution}
                     <span class="cloud-icon-legend" title="Local or conflicting cloud changes need attention" aria-hidden="true"></span>
                 {/if}
@@ -3795,6 +3815,58 @@ func main() {
         border-top-color: var(--color-highlight, var(--color-text));
         box-shadow: 0 0 0 1px var(--color-bg);
         animation: cloud-icon-spin 0.7s linear infinite;
+    }
+
+    .cloud-icon-legend.success,
+    .cloud-icon-legend.error {
+        background: transparent;
+        border: none;
+        box-shadow: 0 0 0 1px var(--color-bg);
+        width: 12px;
+        height: 12px;
+    }
+
+    .cloud-icon-legend.success::after {
+        content: '';
+        position: absolute;
+        left: 6px;
+        top: 0;
+        width: 5px;
+        height: 8px;
+        border: solid #2ecc71;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        animation: cloud-icon-success-pop 0.25s ease-out;
+    }
+
+    .cloud-icon-legend.error::before,
+    .cloud-icon-legend.error::after {
+        content: '';
+        position: absolute;
+        left: 6px;
+        top: 2px;
+        width: 8px;
+        height: 2px;
+        background: #e74c3c;
+    }
+
+    .cloud-icon-legend.error::before {
+        transform: rotate(45deg);
+    }
+
+    .cloud-icon-legend.error::after {
+        transform: rotate(-45deg);
+    }
+
+    @keyframes cloud-icon-success-pop {
+        from {
+            transform: rotate(45deg) scale(0.4);
+            opacity: 0;
+        }
+        to {
+            transform: rotate(45deg) scale(1);
+            opacity: 1;
+        }
     }
 
     @keyframes cloud-icon-spin {
