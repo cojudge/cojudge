@@ -91,6 +91,23 @@ test('playground markdown preview has a WYSIWYG editing mode', async ({ page }) 
   await page.getByRole('button', { name: 'Done editing' }).click();
   const preview = page.locator('.markdown-preview:not(.wysiwyg-editing)');
   await expect(preview.locator('strong')).toHaveText('some text');
+
+  // Switch to markdown file tab, then click the preview tab
+  await page.locator('.tab-bar .tab', { hasText: 'Solution-1' }).click();
+  await expect(page.locator('.monaco-editor')).toBeVisible();
+
+  await page.locator('.tab-bar .tab', { hasText: 'Preview: Solution-1' }).click();
+  await expect(editable).toBeVisible();
+
+  // Click "Done editing" to view read-only mode while on preview tab
+  await page.getByRole('button', { name: 'Done editing' }).click();
+  await expect(preview).toBeVisible();
+
+  // Click away to markdown file tab and click back to preview tab
+  await page.locator('.tab-bar .tab', { hasText: 'Solution-1' }).click();
+  await page.locator('.tab-bar .tab', { hasText: 'Preview: Solution-1' }).click();
+  // By default, clicking the preview tab opens the WYSIWYG editor
+  await expect(editable).toBeVisible();
 });
 
 test('WYSIWYG turns an exact three-hyphen line into a horizontal rule', async ({ page }) => {
