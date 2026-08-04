@@ -28,6 +28,7 @@
     xmlns="http://www.w3.org/2000/svg"
     aria-hidden="true"
     focusable="false"
+    style="flex-shrink: 0;"
 >
     <rect x="0.5" y="0.5" width="15" height="15" rx="3.5" fill={icon.bg} />
     {#if language === 'plaintext' || !icon.label}

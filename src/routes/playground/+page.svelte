@@ -4812,6 +4812,7 @@ func main() {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        min-width: 0;
     }
     .recent-file-card-path {
         font-size: 0.75rem;
