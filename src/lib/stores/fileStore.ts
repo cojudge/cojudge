@@ -25,7 +25,7 @@ export type FileEntry = {
     lastSharedContent?: string;
     isOpen?: boolean;
     viewState?: string | null;
-    type?: 'editor' | 'preview' | 'folder';
+    type?: 'editor' | 'preview' | 'folder' | 'whiteboard';
     sourceFileId?: string;
     /** Parent folder fileId; null/undefined = root level (playground only). */
     parentId?: string | null;

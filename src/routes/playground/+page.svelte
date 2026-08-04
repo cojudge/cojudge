@@ -5,11 +5,13 @@
     import LanguageIcon from '$lib/components/LanguageIcon.svelte';
     import ShareModal from '$lib/components/ShareModal.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
+    import Whiteboard from '$lib/components/Whiteboard.svelte';
     import { showAlert, showConfirm } from '$lib/dialogs';
     import { consumeForkTransfer } from '$lib/forkTransfer';
     import { ensureAuthenticated, initFirebase } from '$lib/firebase';
     import { isDesktopRuntime } from '$lib/firebaseSettings';
     import { cloudSyncState } from '$lib/cloudSync';
+    import { WHITEBOARD_FILE_ID } from '$lib/cloudFileChange';
     import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress, writeProgressStorageItem } from '$lib/progressBackup';
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { isDotFileName, type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
@@ -81,7 +83,11 @@ func main() {
     const programmingLanguages: ProgrammingLanguage[] = ['java', 'cpp', 'python', 'typescript', 'csharp', 'rust', 'go', 'plaintext', 'markdown'];
 
     // Tabs are grouped by fileId (language-agnostic). Folders are not tabs.
-    type TabMeta = { fileId: string; fileName: string; isOpen: boolean; lastUpdated?: number; type?: 'editor' | 'preview'; sourceFileId?: string };
+    type TabMeta = { fileId: string; fileName: string; isOpen: boolean; lastUpdated?: number; type?: 'editor' | 'preview' | 'whiteboard'; sourceFileId?: string };
+
+    function isSpecialTabType(type?: string): type is 'preview' | 'whiteboard' {
+        return type === 'preview' || type === 'whiteboard';
+    }
 
     type ExplorerNode = {
         fileId: string;
@@ -165,7 +171,7 @@ func main() {
     // playground does not create local data (e.g. for cloud sync).
     function isPristineStarterTab(): boolean {
         const tab = tabs[activeTabId];
-        if (!tab || tab.type === 'preview') return false;
+        if (!tab || isSpecialTabType(tab.type)) return false;
         const persisted = getFiles().some((x) => x.fileId === tab.fileId && x.language === language);
         if (persisted) return false;
         return normalizeContent(code) === normalizeContent(starterCode[language] ?? '');
@@ -204,7 +210,7 @@ func main() {
             const files = JSON.parse(s[fkey] || '[]') as FileEntry[];
             let changed = false;
             for (const f of files) {
-                if (f.fileId === fileId && !isFolderEntry(f) && f.type !== 'preview' && f.lastLanguage !== lang) {
+                if (f.fileId === fileId && !isFolderEntry(f) && !isSpecialTabType(f.type) && f.lastLanguage !== lang) {
                     f.lastLanguage = lang;
                     changed = true;
                 }
@@ -224,21 +230,23 @@ func main() {
         if (!nonFolderFiles.length) {
             return [];
         }
-        const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number; lastUpdated: number; isOpen: boolean; type?: 'editor' | 'preview'; sourceFileId?: string }>();
+        const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number; lastUpdated: number; isOpen: boolean; type?: 'editor' | 'preview' | 'whiteboard'; sourceFileId?: string }>();
         nonFolderFiles.forEach((f, idx) => {
             const existing = groups.get(f.fileId);
             const orderVal = (typeof f.order === 'number') ? f.order : null;
             const lv = f.lastUpdated || (f as any).lastViewed || 0;
             const open = f.isOpen === true;
+            const entryType: 'editor' | 'preview' | 'whiteboard' =
+                f.type === 'preview' ? 'preview' : f.type === 'whiteboard' ? 'whiteboard' : 'editor';
             if (!existing) {
                 groups.set(f.fileId, {
                     fileId: f.fileId,
-                    fileName: f.fileName || 'Solution',
+                    fileName: entryType === 'whiteboard' ? 'Whiteboard' : (f.fileName || 'Solution'),
                     order: orderVal,
                     firstIndex: idx,
                     lastUpdated: lv,
                     isOpen: open,
-                    type: f.type === 'preview' ? 'preview' : 'editor',
+                    type: entryType,
                     sourceFileId: f.sourceFileId
                 });
             } else {
@@ -248,6 +256,10 @@ func main() {
                 if (lv > existing.lastUpdated) existing.lastUpdated = lv;
                 if (f.isOpen !== undefined) existing.isOpen = f.isOpen;
                 if (f.type === 'preview') existing.type = 'preview';
+                if (f.type === 'whiteboard') {
+                    existing.type = 'whiteboard';
+                    existing.fileName = 'Whiteboard';
+                }
                 if (f.sourceFileId) existing.sourceFileId = f.sourceFileId;
             }
         });
@@ -330,7 +342,7 @@ func main() {
     })();
     {
         const initialTab = tabs[activeTabId];
-        if (initialTab && initialTab.type !== 'preview') {
+        if (initialTab && !isSpecialTabType(initialTab.type)) {
             language = getLanguageForTab(initialTab.fileId);
         }
     }
@@ -422,7 +434,7 @@ func main() {
         const items = new Map<string, Item>();
 
         files.forEach((f, idx) => {
-            if (f.type === 'preview') return;
+            if (isSpecialTabType(f.type)) return;
             if (isFolderEntry(f)) {
                 const orderVal = typeof f.order === 'number' ? f.order : idx;
                 items.set(f.fileId, {
@@ -459,7 +471,7 @@ func main() {
 
         // Include pristine in-memory tabs not yet in the store
         tabs.forEach((t, idx) => {
-            if (t.type === 'preview') return;
+            if (isSpecialTabType(t.type)) return;
             if (items.has(t.fileId)) {
                 const it = items.get(t.fileId)!;
                 it.fileName = t.fileName;
@@ -552,6 +564,8 @@ func main() {
     }
 
     function startRename(fileId: string, currentName: string, source: 'sidebar' | 'tab') {
+        const tab = tabs.find((t) => t.fileId === fileId);
+        if (isSpecialTabType(tab?.type)) return;
         editingTabId = fileId;
         editingName = currentName;
         renamingSource = source;
@@ -601,7 +615,7 @@ func main() {
 
     // New tab state (simple add button)
     async function addNewTab(source: 'sidebar' | 'tab' = 'tab', parentId: string | null = null) {
-        const newTabName = `Solution-${tabs.filter(t => t.type !== 'preview').length + 1}`;
+        const newTabName = `Solution-${tabs.filter(t => !isSpecialTabType(t.type)).length + 1}`;
         const nextId = uuidv4();
         const fileName = newTabName;
         const now = Date.now();
@@ -731,7 +745,7 @@ func main() {
             }
             return { type: 'folder', name: entry.fileName, children };
         }
-        const langEntries = files.filter((f) => f.fileId === fileId && !isFolderEntry(f) && f.type !== 'preview');
+        const langEntries = files.filter((f) => f.fileId === fileId && !isFolderEntry(f) && !isSpecialTabType(f.type));
         return {
             type: 'file',
             name: entry.fileName,
@@ -871,7 +885,7 @@ func main() {
                     const before = new Set(files.map((f) => f.fileId));
                     importExportNode(parsed, null, files);
                     for (const f of files) {
-                        if (!before.has(f.fileId) && !isFolderEntry(f) && f.type !== 'preview') {
+                        if (!before.has(f.fileId) && !isFolderEntry(f) && !isSpecialTabType(f.type)) {
                             createdFileIds.push(f.fileId);
                         }
                     }
@@ -883,7 +897,7 @@ func main() {
                 const additions: TabMeta[] = [];
                 const seen = new Set<string>();
                 for (const f of files) {
-                    if (isFolderEntry(f) || f.type === 'preview') continue;
+                    if (isFolderEntry(f) || isSpecialTabType(f.type)) continue;
                     if (existingIds.has(f.fileId) || seen.has(f.fileId)) continue;
                     if (!createdFileIds.includes(f.fileId)) continue;
                     seen.add(f.fileId);
@@ -1004,8 +1018,8 @@ func main() {
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
             
-            // Remove entries that are not in tabs AND are preview tabs
-            files = files.filter(f => f.type !== 'preview' || orderById.has(f.fileId));
+            // Remove special tabs (preview/whiteboard) that are no longer in tabs
+            files = files.filter(f => !isSpecialTabType(f.type) || orderById.has(f.fileId));
 
             // Update order and properties for existing files
             for (const f of files) {
@@ -1017,11 +1031,14 @@ func main() {
                     if (tab.type === 'preview') {
                         f.type = 'preview';
                         f.sourceFileId = tab.sourceFileId;
+                    } else if (tab.type === 'whiteboard') {
+                        f.type = 'whiteboard';
+                        f.fileName = 'Whiteboard';
                     }
                 }
             }
 
-            // Add missing preview tabs
+            // Add missing special tabs
             tabs.forEach((t, idx) => {
                 if (t.type === 'preview' && !files.find(f => f.fileId === t.fileId)) {
                     files.push({
@@ -1033,6 +1050,17 @@ func main() {
                         lastUpdated: t.lastUpdated,
                         type: 'preview',
                         sourceFileId: t.sourceFileId,
+                        order: idx
+                    } as FileEntry);
+                } else if (t.type === 'whiteboard' && !files.find(f => f.fileId === t.fileId)) {
+                    files.push({
+                        fileId: t.fileId,
+                        fileName: 'Whiteboard',
+                        language: 'plaintext',
+                        content: '',
+                        isOpen: t.isOpen,
+                        lastUpdated: t.lastUpdated,
+                        type: 'whiteboard',
                         order: idx
                     } as FileEntry);
                 }
@@ -1364,7 +1392,7 @@ func main() {
         }
         prevCloudLoading = loading;
     }
-    $: if (!suppressSave && tabs[activeTabId]?.type !== 'preview' && (code !== undefined || output !== undefined || logs !== undefined)) {
+    $: if (!suppressSave && !isSpecialTabType(tabs[activeTabId]?.type) && (code !== undefined || output !== undefined || logs !== undefined)) {
         if (!skipNextSave && !isPristineStarterTab()) {
             const fkey = fileKey();
             const now = Date.now();
@@ -1416,15 +1444,23 @@ func main() {
     }
 
     // Reload code when another browser tab changes the file store
-    $: if ($fileSyncVersion > 0 && activeTabId >= 0 && activeTabId < tabs.length && tabs[activeTabId]?.type !== 'preview' && language) {
+    $: if ($fileSyncVersion > 0 && activeTabId >= 0 && activeTabId < tabs.length && !isSpecialTabType(tabs[activeTabId]?.type) && language) {
         skipNextSave = true;
         loadOrInitFile(language);
         $fileSyncVersion;
     }
 
+    function loadTabContent(tab: TabMeta) {
+        if (isSpecialTabType(tab.type)) return;
+        const targetLanguage = getLanguageForTab(tab.fileId);
+        setLastLanguage(tab.fileId, targetLanguage);
+        language = targetLanguage;
+        loadOrInitFile(targetLanguage);
+    }
+
     function closeTab(fileId: string) {
         const tabToClose = tabs.find(t => t.fileId === fileId);
-        if (tabToClose?.type === 'preview') {
+        if (isSpecialTabType(tabToClose?.type)) {
             const closedIdx = tabs.findIndex(t => t.fileId === fileId);
             tabs = tabs.filter(t => t.fileId !== fileId);
             if (tabs[activeTabId]?.fileId === fileId || activeTabId >= tabs.length) {
@@ -1439,12 +1475,7 @@ func main() {
                 }
                 if (nextOpenIdx !== -1) {
                     activeTabId = nextOpenIdx;
-                    if (tabs[nextOpenIdx].type !== 'preview') {
-                        const targetLanguage = getLanguageForTab(tabs[nextOpenIdx].fileId);
-                        setLastLanguage(tabs[nextOpenIdx].fileId, targetLanguage);
-                        language = targetLanguage;
-                        loadOrInitFile(targetLanguage);
-                    }
+                    loadTabContent(tabs[nextOpenIdx]);
                 }
             }
             persistTabOrder();
@@ -1473,12 +1504,7 @@ func main() {
             }
             if (nextOpenIdx !== -1) {
                 activeTabId = nextOpenIdx;
-                if (tabs[nextOpenIdx].type !== 'preview') {
-                    const targetLanguage = getLanguageForTab(tabs[nextOpenIdx].fileId);
-                    setLastLanguage(tabs[nextOpenIdx].fileId, targetLanguage);
-                    language = targetLanguage;
-                    loadOrInitFile(targetLanguage);
-                }
+                loadTabContent(tabs[nextOpenIdx]);
             }
         }
     }
@@ -1677,11 +1703,37 @@ func main() {
             await enterPreviewEditMode();
             return;
         }
+        if (tabs[idx].type === 'whiteboard') {
+            return;
+        }
 
         const targetLanguage = preferredLang || getLanguageForTab(fileId);
         setLastLanguage(fileId, targetLanguage);
         language = targetLanguage;
         await loadOrInitFile(targetLanguage);
+    }
+
+    async function openWhiteboard() {
+        const existing = tabs.find((t) => t.type === 'whiteboard' || t.fileId === WHITEBOARD_FILE_ID);
+        if (existing) {
+            if (existing.isOpen && tabs[activeTabId]?.fileId === existing.fileId) {
+                closeTab(existing.fileId);
+                return;
+            }
+            await activateTab(existing.fileId);
+            return;
+        }
+        const now = Date.now();
+        tabs = [...tabs, {
+            fileId: WHITEBOARD_FILE_ID,
+            fileName: 'Whiteboard',
+            isOpen: true,
+            lastUpdated: now,
+            type: 'whiteboard'
+        }];
+        activeTabId = tabs.length - 1;
+        persistTabOrder();
+        await tick();
     }
 
     // Runtime image name (like in ExecutionPanel)
@@ -2770,7 +2822,7 @@ func main() {
         fileStoreValue;
         const map: Record<string, ProgrammingLanguage> = {};
         for (const t of tabs) {
-            if (t.type === 'preview') continue;
+            if (isSpecialTabType(t.type)) continue;
             map[t.fileId] = t.fileId === tabs[activeTabId]?.fileId ? language : getLanguageForTab(t.fileId);
         }
         return map;
@@ -2897,34 +2949,48 @@ func main() {
                 </svg>
             </button>
         </Tooltip>
-        <button
-            class="activity-icon"
-            on:click={openCloudSettings}
-            title={$cloudSyncState.authStatus === 'signed-in' ? 'Cojudge Cloud' : 'Cojudge Cloud — Local only'}
-            bind:this={cloudActivityButton}
-        >
-            {#if $cloudSyncState.authStatus === 'signed-in'}
-                <!-- Cloud Icon -->
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <Tooltip text="Whiteboard" pos="right">
+            <button
+                class="activity-icon {activeTab?.type === 'whiteboard' ? 'active' : ''}"
+                on:click={openWhiteboard}
+                aria-label="Whiteboard"
+            >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                    <path d="m8 15 6-6 2 2-6 6H8v-2Z"></path>
                 </svg>
-                {#if $cloudSyncState.syncStatus === 'error' || $cloudSyncState.syncStatus === 'offline'}
-                    <span class="cloud-icon-legend error" title="Sync with Cojudge Cloud failed" aria-hidden="true"></span>
-                {:else if $cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading'}
-                    <span class="cloud-icon-legend loading" title="Syncing with Cojudge Cloud" aria-hidden="true"></span>
-                {:else if showSyncSuccess}
-                    <span class="cloud-icon-legend success" title="Progress synced with Cojudge Cloud" aria-hidden="true"></span>
-                {:else if $cloudSyncState.resolution}
-                    <span class="cloud-icon-legend" title="Local or conflicting cloud changes need attention" aria-hidden="true"></span>
+            </button>
+        </Tooltip>
+        <Tooltip text={"Cloud Sync"} pos="right">
+            <button
+                class="activity-icon"
+                on:click={openCloudSettings}
+                title={$cloudSyncState.authStatus === 'signed-in' ? 'Cojudge Cloud' : 'Cojudge Cloud — Local only'}
+                bind:this={cloudActivityButton}
+            >
+                {#if $cloudSyncState.authStatus === 'signed-in'}
+                    <!-- Cloud Icon -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {#if $cloudSyncState.syncStatus === 'error' || $cloudSyncState.syncStatus === 'offline'}
+                        <span class="cloud-icon-legend error" title="Sync with Cojudge Cloud failed" aria-hidden="true"></span>
+                    {:else if $cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading'}
+                        <span class="cloud-icon-legend loading" title="Syncing with Cojudge Cloud" aria-hidden="true"></span>
+                    {:else if showSyncSuccess}
+                        <span class="cloud-icon-legend success" title="Progress synced with Cojudge Cloud" aria-hidden="true"></span>
+                    {:else if $cloudSyncState.resolution}
+                        <span class="cloud-icon-legend" title="Local or conflicting cloud changes need attention" aria-hidden="true"></span>
+                    {/if}
+                {:else}
+                    <!-- Offline Cloud Icon -->
+                    <svg class="cloud-icon-offline" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="5" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
                 {/if}
-            {:else}
-                <!-- Offline Cloud Icon -->
-                <svg class="cloud-icon-offline" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <line x1="5" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-            {/if}
-        </button>
+            </button>
+        </Tooltip>
     </div>
 
     <!-- Left Sidebar -->
@@ -3259,6 +3325,11 @@ func main() {
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                         <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
+                                {:else if t.type === 'whiteboard'}
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:2px;flex-shrink:0;">
+                                        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                                        <path d="m8 15 6-6 2 2-6 6H8v-2Z"></path>
+                                    </svg>
                                 {:else}
                                     <span class="tab-lang-icon">
                                         <LanguageIcon language={tabLanguages[t.fileId] ?? language} size={17} />
@@ -3267,7 +3338,7 @@ func main() {
                                 <span class="tab-title">{t.fileName}</span>
                             {/if}
                             
-                            {#if t.type !== 'preview'}
+                            {#if !isSpecialTabType(t.type)}
                                 <button
                                     class="tab-rename"
                                     aria-label="Rename tab"
@@ -3339,6 +3410,8 @@ func main() {
                             </button>
                         </Tooltip>
                     </div>
+                {:else if activeTab?.type === 'whiteboard'}
+                    <span style="font-size:0.9rem;color:var(--color-text-secondary);">Whiteboard</span>
                 {:else}
                 <div style="display:flex;align-items:center;gap:var(--spacing-1);">
                     <label for="language-select" style="font-size:0.9rem;color:var(--color-text-secondary);margin-right:4px;">Language</label>
@@ -3352,7 +3425,7 @@ func main() {
                             saveCurrentViewState();
                             userSettingsStorage.update((s) => ({ ...s, playgroundPreferredLanguage: language }));
                             const currentTab = tabs[activeTabId];
-                            if (currentTab && currentTab.type !== 'preview') {
+                            if (currentTab && !isSpecialTabType(currentTab.type)) {
                                 setLastLanguage(currentTab.fileId, language);
                             }
                         }}
@@ -3385,7 +3458,7 @@ func main() {
                     </Tooltip>
                 {/if}
                 {/if}
-                {#if isFirebaseAvailable && tabs[activeTabId]?.type !== 'preview'}
+                {#if isFirebaseAvailable && !isSpecialTabType(tabs[activeTabId]?.type)}
                     <Tooltip text={"Share"} pos={"bottom"}>
                         <button
                             class="icon-button"
@@ -3406,6 +3479,7 @@ func main() {
                         </button>
                     </Tooltip>
                 {/if}
+                {#if !isSpecialTabType(activeTab?.type)}
                 <Tooltip text={"Reset Code"} pos={"bottom"}>
                     <button
                         class="icon-button"
@@ -3458,11 +3532,16 @@ func main() {
                         </div>
                     {/if}
                 </div>
+                {/if}
             </div>
         </div>
 
-        <div class="editor-container">
-            {#if activeTab?.type === 'preview'}
+        <div class="editor-container" class:whiteboard-active={activeTab?.type === 'whiteboard'}>
+            {#if activeTab?.type === 'whiteboard'}
+                <div class="whiteboard-host">
+                    <Whiteboard embedded active={true} />
+                </div>
+            {:else if activeTab?.type === 'preview'}
                 {#if previewEditMode}
                     <div class="wysiwyg-container">
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -3576,7 +3655,7 @@ func main() {
                 Loading...
             {/if}
         </div>
-        {#if language !== 'plaintext' && language !== 'markdown' && activeTab?.type !== 'preview'}
+        {#if language !== 'plaintext' && language !== 'markdown' && !isSpecialTabType(activeTab?.type)}
             <PlaygroundExecutionPanel {code} {language} {isMac} bind:output bind:logs debugBreakpoints={debugBreakpoints} bind:activeDebugLine={activeDebugLine} bind:debugJobId={debugJobId} />
         {/if}
         {:else}
@@ -4302,6 +4381,18 @@ func main() {
         padding: var(--spacing-1);
         display: flex;
         flex-direction: column;
+    }
+
+    .editor-container.whiteboard-active {
+        padding: 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .whiteboard-host {
+        position: absolute;
+        inset: 0;
+        min-height: 0;
     }
 
     .markdown-preview {
