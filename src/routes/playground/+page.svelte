@@ -2818,7 +2818,15 @@ func main() {
     let showSearch = false;
     let searchQuery = '';
     let searchInputEl: HTMLInputElement | null = null;
+    let searchResultsEl: HTMLDivElement | null = null;
     let selectedIndex = 0;
+
+    function scrollSelectedSearchResultIntoView() {
+        tick().then(() => {
+            const el = searchResultsEl?.querySelector('.search-result-item.selected') as HTMLElement | null;
+            el?.scrollIntoView({ block: 'nearest' });
+        });
+    }
 
     $: filteredFiles = searchQuery
         ? tabs.filter(t => t.fileName.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -3994,10 +4002,12 @@ func main() {
                         if (e.key === 'ArrowDown') {
                             e.preventDefault();
                             selectedIndex = (selectedIndex + 1) % filteredFiles.length;
+                            scrollSelectedSearchResultIntoView();
                         }
                         if (e.key === 'ArrowUp') {
                             e.preventDefault();
                             selectedIndex = (selectedIndex - 1 + filteredFiles.length) % filteredFiles.length;
+                            scrollSelectedSearchResultIntoView();
                         }
                         if (e.key === 'Enter' && filteredFiles.length > 0) {
                             activateTab(filteredFiles[selectedIndex].fileId);
@@ -4005,7 +4015,7 @@ func main() {
                         }
                     }}
                 />
-                <div class="search-results">
+                <div class="search-results" bind:this={searchResultsEl}>
                     {#each filteredFiles as file, i}
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <div
@@ -4026,9 +4036,14 @@ func main() {
                                 {/if}
                                 <span class="search-file-name">{file.fileName}</span>
                             </span>
-                            {#if file.isOpen}
-                                <span class="search-file-badge">Open</span>
-                            {/if}
+                            <span class="search-file-meta">
+                                {#if file.isOpen}
+                                    <span class="search-file-badge">Open</span>
+                                {/if}
+                                {#if getFilePath(file.fileId) !== '/'}
+                                    <span class="search-file-path">{getFilePath(file.fileId).replace(/^\/|\/$/g, '')}</span>
+                                {/if}
+                            </span>
                         </div>
                     {/each}
                     {#if filteredFiles.length === 0}
@@ -5220,7 +5235,7 @@ func main() {
         color: var(--color-text-secondary);
     }
 
-    .search-result-item:hover, .search-result-item.selected {
+    .search-result-item.selected {
         background: var(--color-highlight);
         color: var(--color-text);
     }
@@ -5230,6 +5245,8 @@ func main() {
         align-items: center;
         gap: 8px;
         min-width: 0;
+        flex: 1;
+        overflow: hidden;
     }
 
     .search-file-name {
@@ -5239,12 +5256,36 @@ func main() {
         text-overflow: ellipsis;
     }
 
+    .search-file-meta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+        margin-left: 12px;
+    }
+
+    .search-file-path {
+        font-size: 0.8rem;
+        color: var(--color-text-secondary);
+        white-space: nowrap;
+        max-width: 180px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        opacity: 0.85;
+    }
+
+    .search-result-item.selected .search-file-path {
+        color: var(--color-text);
+        opacity: 0.75;
+    }
+
     .search-file-badge {
         font-size: 0.75rem;
         padding: 2px 6px;
         background: var(--color-bg);
         border-radius: 4px;
         color: var(--color-text-secondary);
+        flex-shrink: 0;
     }
 
     .search-no-results {
