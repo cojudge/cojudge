@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
 
   export let text = '';
-  export let pos: 'top' | 'bottom' = 'top';
+  export let pos: 'top' | 'bottom' | 'left' | 'right' = 'top';
   let show = false;
   let element: any;
 
@@ -19,6 +19,8 @@
     <div class="tooltip-box"
       class:showtop={pos === 'top'}
       class:showbottom={pos === 'bottom'}
+      class:showleft={pos === 'left'}
+      class:showright={pos === 'right'}
     >{text}</div>
   {/if}
 </div>
@@ -30,14 +32,26 @@
   }
   .tooltip-box.showtop {
     bottom: 125%; /* Position above the element */
+    left: 50%;
+    transform: translateX(-50%);
   }
   .tooltip-box.showbottom {
     top: 125%; /* Position below the element */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .tooltip-box.showleft {
+    right: 125%; /* Position to the left of the element */
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .tooltip-box.showright {
+    left: 125%; /* Position to the right of the element */
+    top: 50%;
+    transform: translateY(-50%);
   }
   .tooltip-box {
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     background-color: #333;
     color: white;
     padding: 6px 12px;

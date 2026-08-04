@@ -106,7 +106,7 @@ function parseStoredValue(value: string): unknown {
 // Only these FileEntry fields represent the file itself. Editor/runtime state
 // like the open/active tab, cursors, run output, or touch timestamps must not
 // affect the cloud data or its change checksum.
-const CLOUD_FILE_FIELDS = ['fileName', 'content', 'language', 'fileId', 'order', 'type', 'sourceFileId', 'shareId'];
+const CLOUD_FILE_FIELDS = ['fileName', 'content', 'language', 'fileId', 'order', 'type', 'sourceFileId', 'shareId', 'parentId'];
 
 function cloudFileEntry(entry: unknown): unknown {
 	if (!entry || typeof entry !== 'object' || Array.isArray(entry)) return entry;

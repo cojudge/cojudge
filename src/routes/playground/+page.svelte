@@ -5,11 +5,14 @@
     import LanguageIcon from '$lib/components/LanguageIcon.svelte';
     import ShareModal from '$lib/components/ShareModal.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
+    import Whiteboard from '$lib/components/Whiteboard.svelte';
     import { showAlert, showConfirm } from '$lib/dialogs';
     import { consumeForkTransfer } from '$lib/forkTransfer';
     import { ensureAuthenticated, initFirebase } from '$lib/firebase';
+    import { isDesktopRuntime } from '$lib/firebaseSettings';
     import { cloudSyncState } from '$lib/cloudSync';
-    import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress } from '$lib/progressBackup';
+    import { WHITEBOARD_FILE_ID } from '$lib/cloudFileChange';
+    import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress, writeProgressStorageItem } from '$lib/progressBackup';
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { isDotFileName, type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
@@ -17,11 +20,13 @@
     import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, wrapImageThumbnails, wrapCodeBlocksWithCopy, ensureTrailingEmptyLine, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, isUrlLike, normalizeUrl, linkHtml } from '$lib/utils/markdown';
     import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
     import QRCode from 'qrcode';
-    import { onMount, tick } from 'svelte';
+    import { browser } from '$app/environment';
+    import { onMount, tick, onDestroy } from 'svelte';
     import { get } from 'svelte/store';
     import { v4 as uuidv4 } from 'uuid';
 
     const problemId = 'playground';
+    const isDesktopMode = browser && isDesktopRuntime();
     let CodeEditor: any = null;
     let language: ProgrammingLanguage = $userSettingsStorage.playgroundPreferredLanguage ?? 'java';
     const fileKey = () => `${problemId}`;
@@ -77,8 +82,30 @@ func main() {
     };
     const programmingLanguages: ProgrammingLanguage[] = ['java', 'cpp', 'python', 'typescript', 'csharp', 'rust', 'go', 'plaintext', 'markdown'];
 
-    // Tabs are grouped by fileId (language-agnostic)
-    type TabMeta = { fileId: string; fileName: string; isOpen: boolean; lastUpdated?: number; type?: 'editor' | 'preview'; sourceFileId?: string };
+    // Tabs are grouped by fileId (language-agnostic). Folders are not tabs.
+    type TabMeta = { fileId: string; fileName: string; isOpen: boolean; lastUpdated?: number; type?: 'editor' | 'preview' | 'whiteboard'; sourceFileId?: string };
+
+    function isSpecialTabType(type?: string): type is 'preview' | 'whiteboard' {
+        return type === 'preview' || type === 'whiteboard';
+    }
+
+    type ExplorerNode = {
+        fileId: string;
+        fileName: string;
+        kind: 'file' | 'folder';
+        lastUpdated?: number;
+        order: number;
+        children: ExplorerNode[];
+    };
+
+    type FlatExplorerItem =
+        | (ExplorerNode & { depth: number; kind: 'file' | 'folder' })
+        | { kind: 'empty'; fileId: string; depth: number };
+
+    /** Portable folder/file tree for download/import (no fileIds). */
+    type ExportNode =
+        | { type: 'folder'; name: string; children: ExportNode[] }
+        | { type: 'file'; name: string; languages: Array<{ language: string; content: string; lastLanguage?: string }> };
 
     function getFiles(): FileEntry[] {
         try {
@@ -87,6 +114,42 @@ func main() {
         } catch (err) {
             return [];
         }
+    }
+
+    function getParentId(fileId: string): string | null {
+        const entry = getFiles().find((f) => f.fileId === fileId);
+        return entry?.parentId ?? null;
+    }
+
+    function getFilePath(fileId: string): string {
+        const files = getFiles();
+        const entry = files.find((f) => f.fileId === fileId);
+        if (!entry) return '/';
+
+        const targetId = entry.type === 'preview' && entry.sourceFileId ? entry.sourceFileId : fileId;
+        const targetEntry = files.find((f) => f.fileId === targetId) ?? entry;
+
+        const pathSegments: string[] = [];
+        let currentParentId = targetEntry.parentId;
+        const seen = new Set<string>();
+
+        while (currentParentId && !seen.has(currentParentId)) {
+            seen.add(currentParentId);
+            const parentFolder = files.find((f) => f.fileId === currentParentId && isFolderEntry(f));
+            if (parentFolder && parentFolder.fileName) {
+                pathSegments.unshift(parentFolder.fileName);
+            }
+            currentParentId = parentFolder?.parentId ?? null;
+        }
+
+        if (pathSegments.length === 0) {
+            return '/';
+        }
+        return '/' + pathSegments.join('/') + '/';
+    }
+
+    function isFolderEntry(f: FileEntry): boolean {
+        return f.type === 'folder';
     }
 
     function isProgrammingLanguage(value: string): value is ProgrammingLanguage {
@@ -108,7 +171,7 @@ func main() {
     // playground does not create local data (e.g. for cloud sync).
     function isPristineStarterTab(): boolean {
         const tab = tabs[activeTabId];
-        if (!tab || tab.type === 'preview') return false;
+        if (!tab || isSpecialTabType(tab.type)) return false;
         const persisted = getFiles().some((x) => x.fileId === tab.fileId && x.language === language);
         if (persisted) return false;
         return normalizeContent(code) === normalizeContent(starterCode[language] ?? '');
@@ -147,7 +210,7 @@ func main() {
             const files = JSON.parse(s[fkey] || '[]') as FileEntry[];
             let changed = false;
             for (const f of files) {
-                if (f.fileId === fileId && f.lastLanguage !== lang) {
+                if (f.fileId === fileId && !isFolderEntry(f) && !isSpecialTabType(f.type) && f.lastLanguage !== lang) {
                     f.lastLanguage = lang;
                     changed = true;
                 }
@@ -159,25 +222,31 @@ func main() {
 
     function getInitialTabs(): TabMeta[] {
         const files = getFiles();
-        if (!files.length) {
+        const nonFolderFiles = files.filter((f) => !isFolderEntry(f));
+        if (!nonFolderFiles.length && !files.some(isFolderEntry)) {
             // Create a default tab; the language-specific entry will be created lazily
             return [{ fileId: uuidv4(), fileName: 'Solution', isOpen: true, lastUpdated: Date.now() }];
         }
-        const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number; lastUpdated: number; isOpen: boolean; type?: 'editor' | 'preview'; sourceFileId?: string }>();
-        files.forEach((f, idx) => {
+        if (!nonFolderFiles.length) {
+            return [];
+        }
+        const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number; lastUpdated: number; isOpen: boolean; type?: 'editor' | 'preview' | 'whiteboard'; sourceFileId?: string }>();
+        nonFolderFiles.forEach((f, idx) => {
             const existing = groups.get(f.fileId);
             const orderVal = (typeof f.order === 'number') ? f.order : null;
             const lv = f.lastUpdated || (f as any).lastViewed || 0;
             const open = f.isOpen === true;
+            const entryType: 'editor' | 'preview' | 'whiteboard' =
+                f.type === 'preview' ? 'preview' : f.type === 'whiteboard' ? 'whiteboard' : 'editor';
             if (!existing) {
                 groups.set(f.fileId, {
                     fileId: f.fileId,
-                    fileName: f.fileName || 'Solution',
+                    fileName: entryType === 'whiteboard' ? 'Whiteboard' : (f.fileName || 'Solution'),
                     order: orderVal,
                     firstIndex: idx,
                     lastUpdated: lv,
                     isOpen: open,
-                    type: f.type,
+                    type: entryType,
                     sourceFileId: f.sourceFileId
                 });
             } else {
@@ -186,7 +255,11 @@ func main() {
                 }
                 if (lv > existing.lastUpdated) existing.lastUpdated = lv;
                 if (f.isOpen !== undefined) existing.isOpen = f.isOpen;
-                if (f.type) existing.type = f.type;
+                if (f.type === 'preview') existing.type = 'preview';
+                if (f.type === 'whiteboard') {
+                    existing.type = 'whiteboard';
+                    existing.fileName = 'Whiteboard';
+                }
                 if (f.sourceFileId) existing.sourceFileId = f.sourceFileId;
             }
         });
@@ -199,8 +272,8 @@ func main() {
             // Fallback to first appearance order in stored array
             return a.firstIndex - b.firstIndex;
         });
-        if (files.find(x => x.language === language)) {
-            code = files.find(x => x.language === language)!.content;
+        if (nonFolderFiles.find(x => x.language === language)) {
+            code = nonFolderFiles.find(x => x.language === language)!.content;
         }
         return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName, isOpen: g.isOpen, lastUpdated: g.lastUpdated, type: g.type, sourceFileId: g.sourceFileId }));
     }
@@ -269,7 +342,7 @@ func main() {
     })();
     {
         const initialTab = tabs[activeTabId];
-        if (initialTab && initialTab.type !== 'preview') {
+        if (initialTab && !isSpecialTabType(initialTab.type)) {
             language = getLanguageForTab(initialTab.fileId);
         }
     }
@@ -278,57 +351,221 @@ func main() {
     let renameInputEl: HTMLInputElement | null = null;
 
     let renamingSource: 'sidebar' | 'tab' | null = null;
+    let showAddMenu = false;
+    let addMenuContainer: HTMLElement | null = null;
+    let importInputEl: HTMLInputElement | null = null;
+    let contextMenu: { x: number; y: number; parentId: string | null } | null = null;
+    let contextMenuEl: HTMLElement | null = null;
+    // Collapse state is device-local UI preference: it is kept in localStorage
+    // but not in CLOUD_KEYS, so cloud sync never collects or restores it.
+    const COLLAPSED_FOLDERS_KEY = 'playground-collapsed-folders';
+    /** folderId -> expanded; missing means expanded by default */
+    let collapsedFolders: Record<string, boolean> = browser
+        ? (JSON.parse(localStorage.getItem(COLLAPSED_FOLDERS_KEY) || '{}') || {})
+        : {};
+    $: if (browser) writeProgressStorageItem(localStorage, COLLAPSED_FOLDERS_KEY, JSON.stringify(collapsedFolders));
+    let explorerDragOverId: string | null = null;
+    let explorerDragOverRoot = false;
 
-    function getDateLabel(timestamp?: number): string {
-        if (!timestamp) return 'Older';
-        const date = new Date(timestamp);
-        const now = new Date();
-        const diffTime = now.getTime() - date.getTime();
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-        
-        // Check if it is today (ignoring time)
-        const isToday = date.getDate() === now.getDate() &&
-                        date.getMonth() === now.getMonth() &&
-                        date.getFullYear() === now.getFullYear();
-                        
-        if (isToday) return 'Today';
-        
-        const yesterday = new Date(now);
-        yesterday.setDate(yesterday.getDate() - 1);
-        const isYesterday = date.getDate() === yesterday.getDate() &&
-                            date.getMonth() === yesterday.getMonth() &&
-                            date.getFullYear() === yesterday.getFullYear();
-                            
-        if (isYesterday) return 'Yesterday';
-        
-        if (diffDays <= 7) return 'Previous 7 days';
-        if (diffDays <= 30) return 'Previous 30 days';
-        
-        return 'Older';
+    function isFolderExpanded(folderId: string): boolean {
+        return !collapsedFolders[folderId];
     }
 
-    $: groupedTabs = (() => {
-        const groups: Record<string, TabMeta[]> = {
-            'Today': [],
-            'Yesterday': [],
-            'Previous 7 days': [],
-            'Previous 30 days': [],
-            'Older': []
+    function toggleFolderExpanded(folderId: string) {
+        collapsedFolders = { ...collapsedFolders, [folderId]: !collapsedFolders[folderId] };
+    }
+
+    function nextOrder(files: FileEntry[]): number {
+        let max = -1;
+        for (const f of files) {
+            if (typeof f.order === 'number' && f.order > max) max = f.order;
+        }
+        return max + 1;
+    }
+
+    function uniqueName(base: string, existing: string[]): string {
+        if (!existing.includes(base)) return base;
+        let n = 1;
+        while (existing.includes(`${base}-${n}`)) n++;
+        return `${base}-${n}`;
+    }
+
+    function collectDescendantIds(rootId: string, files: FileEntry[]): Set<string> {
+        const ids = new Set<string>([rootId]);
+        let changed = true;
+        while (changed) {
+            changed = false;
+            for (const f of files) {
+                if (f.parentId && ids.has(f.parentId) && !ids.has(f.fileId)) {
+                    ids.add(f.fileId);
+                    changed = true;
+                }
+            }
+        }
+        return ids;
+    }
+
+    function isDescendantOf(ancestorId: string, maybeDescendantId: string): boolean {
+        const files = getFiles();
+        let current: string | null | undefined = maybeDescendantId;
+        const seen = new Set<string>();
+        while (current) {
+            if (current === ancestorId) return true;
+            if (seen.has(current)) break;
+            seen.add(current);
+            current = files.find((f) => f.fileId === current)?.parentId;
+        }
+        return false;
+    }
+
+    $: explorerTree = (() => {
+        // Depend on fileStore + tabs so renames and moves refresh the tree
+        void $fileStore;
+        const files = getFiles();
+        type Item = {
+            fileId: string;
+            fileName: string;
+            kind: 'file' | 'folder';
+            parentId: string | null;
+            order: number;
+            lastUpdated?: number;
+            firstIndex: number;
         };
-        
-        tabs.forEach(t => {
-            if (t.type === 'preview') return;
-            const label = getDateLabel(t.lastUpdated);
-            if (!groups[label]) groups[label] = [];
-            groups[label].push(t);
+        const items = new Map<string, Item>();
+
+        files.forEach((f, idx) => {
+            if (isSpecialTabType(f.type)) return;
+            if (isFolderEntry(f)) {
+                const orderVal = typeof f.order === 'number' ? f.order : idx;
+                items.set(f.fileId, {
+                    fileId: f.fileId,
+                    fileName: f.fileName || 'Folder',
+                    kind: 'folder',
+                    parentId: f.parentId ?? null,
+                    order: orderVal,
+                    lastUpdated: f.lastUpdated,
+                    firstIndex: idx
+                });
+                return;
+            }
+            const existing = items.get(f.fileId);
+            const orderVal = typeof f.order === 'number' ? f.order : idx;
+            const lv = f.lastUpdated || 0;
+            if (!existing) {
+                items.set(f.fileId, {
+                    fileId: f.fileId,
+                    fileName: f.fileName || 'Solution',
+                    kind: 'file',
+                    parentId: f.parentId ?? null,
+                    order: orderVal,
+                    lastUpdated: lv,
+                    firstIndex: idx
+                });
+            } else {
+                if (orderVal < existing.order) existing.order = orderVal;
+                if (lv > (existing.lastUpdated ?? 0)) existing.lastUpdated = lv;
+                if (f.parentId !== undefined) existing.parentId = f.parentId ?? null;
+                if (f.fileName) existing.fileName = f.fileName;
+            }
         });
-        
-        return groups;
+
+        // Include pristine in-memory tabs not yet in the store
+        tabs.forEach((t, idx) => {
+            if (isSpecialTabType(t.type)) return;
+            if (items.has(t.fileId)) {
+                const it = items.get(t.fileId)!;
+                it.fileName = t.fileName;
+                if ((t.lastUpdated ?? 0) > (it.lastUpdated ?? 0)) it.lastUpdated = t.lastUpdated;
+                return;
+            }
+            items.set(t.fileId, {
+                fileId: t.fileId,
+                fileName: t.fileName,
+                kind: 'file',
+                parentId: null,
+                order: idx,
+                lastUpdated: t.lastUpdated,
+                firstIndex: 100000 + idx
+            });
+        });
+
+        const nodeMap = new Map<string, ExplorerNode>();
+        for (const it of items.values()) {
+            nodeMap.set(it.fileId, {
+                fileId: it.fileId,
+                fileName: it.fileName,
+                kind: it.kind,
+                lastUpdated: it.lastUpdated,
+                order: it.order,
+                children: []
+            });
+        }
+
+        const roots: ExplorerNode[] = [];
+        for (const it of items.values()) {
+            const node = nodeMap.get(it.fileId)!;
+            if (it.parentId && nodeMap.has(it.parentId) && nodeMap.get(it.parentId)!.kind === 'folder') {
+                nodeMap.get(it.parentId)!.children.push(node);
+            } else {
+                roots.push(node);
+            }
+        }
+
+        const sortRec = (nodes: ExplorerNode[]) => {
+            nodes.sort((a, b) => {
+                if (a.kind !== b.kind) return a.kind === 'folder' ? -1 : 1;
+                if (a.order !== b.order) return a.order - b.order;
+                return a.fileName.localeCompare(b.fileName);
+            });
+            for (const n of nodes) sortRec(n.children);
+        };
+        sortRec(roots);
+        return roots;
     })();
-    
-    const groupOrder = ['Today', 'Yesterday', 'Previous 7 days', 'Previous 30 days', 'Older'];
+
+    function flattenExplorer(
+        nodes: ExplorerNode[],
+        collapsed: Record<string, boolean> = collapsedFolders,
+        depth = 0
+    ): FlatExplorerItem[] {
+        const result: FlatExplorerItem[] = [];
+        for (const n of nodes) {
+            result.push({ ...n, depth });
+            if (n.kind === 'folder' && !collapsed[n.fileId]) {
+                if (n.children.length === 0) {
+                    result.push({ kind: 'empty', fileId: `${n.fileId}__empty`, depth: depth + 1 });
+                } else {
+                    result.push(...flattenExplorer(n.children, collapsed, depth + 1));
+                }
+            }
+        }
+        return result;
+    }
+
+    // Explicit collapsedFolders dep so expand/collapse always refreshes the tree
+    $: flatExplorer = flattenExplorer(explorerTree, collapsedFolders);
+
+    function expandAncestorFolders(fileId: string) {
+        const files = getFiles();
+        let parentId: string | null | undefined = files.find((f) => f.fileId === fileId)?.parentId ?? null;
+        if (!parentId) return;
+        let next = { ...collapsedFolders };
+        let changed = false;
+        const seen = new Set<string>();
+        while (parentId && !seen.has(parentId)) {
+            seen.add(parentId);
+            if (next[parentId]) {
+                next[parentId] = false;
+                changed = true;
+            }
+            parentId = files.find((f) => f.fileId === parentId)?.parentId ?? null;
+        }
+        if (changed) collapsedFolders = next;
+    }
 
     function startRename(fileId: string, currentName: string, source: 'sidebar' | 'tab') {
+        const tab = tabs.find((t) => t.fileId === fileId);
+        if (isSpecialTabType(tab?.type)) return;
         editingTabId = fileId;
         editingName = currentName;
         renamingSource = source;
@@ -343,7 +580,10 @@ func main() {
         if (!editingTabId) return;
         const newName = editingName.trim();
         const targetId = editingTabId;
-        const oldName = tabs.find(t => t.fileId === targetId)?.fileName || 'Solution';
+        const oldName =
+            tabs.find(t => t.fileId === targetId)?.fileName ||
+            getFiles().find(f => f.fileId === targetId)?.fileName ||
+            'Solution';
         const finalName = newName || oldName;
         // Update tabs
         const now = Date.now();
@@ -374,8 +614,8 @@ func main() {
     }
 
     // New tab state (simple add button)
-    async function addNewTab(source: 'sidebar' | 'tab' = 'tab') {
-        const newTabName = `Solution-${tabs.length + 1}`;
+    async function addNewTab(source: 'sidebar' | 'tab' = 'tab', parentId: string | null = null) {
+        const newTabName = `Solution-${tabs.filter(t => !isSpecialTabType(t.type)).length + 1}`;
         const nextId = uuidv4();
         const fileName = newTabName;
         const now = Date.now();
@@ -396,28 +636,62 @@ func main() {
                     output: '',
                     logs: '',
                     isActive: false,
-                    order: tabs.length - 1,
+                    order: nextOrder(files),
                     isOpen: true,
-                    lastUpdated: now
+                    lastUpdated: now,
+                    parentId: parentId
                 } as FileEntry
             ];
             return { ...s, [fkey]: JSON.stringify(files) };
         });
+        if (parentId) collapsedFolders = { ...collapsedFolders, [parentId]: false };
         activeTabId = tabs.length - 1;
         await loadOrInitFile(language);
         persistTabOrder();
         startRename(nextId, fileName, source);
     }
 
+    function addNewFolder(parentId: string | null = null) {
+        const files = getFiles();
+        const siblingNames = files
+            .filter((f) => (f.parentId ?? null) === parentId && isFolderEntry(f))
+            .map((f) => f.fileName);
+        const fileName = uniqueName('Folder', siblingNames);
+        const nextId = uuidv4();
+        const now = Date.now();
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            let list = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            list = [
+                ...list,
+                {
+                    fileId: nextId,
+                    fileName,
+                    content: '',
+                    language: 'plaintext',
+                    isActive: false,
+                    type: 'folder',
+                    parentId,
+                    order: nextOrder(list),
+                    lastUpdated: now
+                } as FileEntry
+            ];
+            return { ...s, [fkey]: JSON.stringify(list) };
+        });
+        if (parentId) collapsedFolders = { ...collapsedFolders, [parentId]: false };
+        startRename(nextId, fileName, 'sidebar');
+    }
+
     async function duplicateFile(sourceFileId: string, sourceFileName: string) {
         const files = getFiles();
-        const sourceEntries = files.filter(f => f.fileId === sourceFileId);
+        const sourceEntries = files.filter(f => f.fileId === sourceFileId && !isFolderEntry(f));
         if (!sourceEntries.length) return;
 
         const nextId = uuidv4();
         const now = Date.now();
         const match = sourceFileName.match(/^(.*\D)(\d+)$/);
         const fileName = match ? `${match[1]}${parseInt(match[2], 10) + 1}` : `${sourceFileName}-1`;
+        const parentId = sourceEntries[0].parentId ?? null;
 
         tabs = [...tabs, { fileId: nextId, fileName, isOpen: true, lastUpdated: now }];
         const fkey = fileKey();
@@ -432,10 +706,13 @@ func main() {
                     output: '',
                     logs: '',
                     isActive: false,
-                    order: tabs.length - 1,
+                    order: nextOrder(files),
                     isOpen: true,
                     lastUpdated: now,
-                    viewState: null
+                    viewState: null,
+                    parentId,
+                    shareId: undefined,
+                    lastSharedContent: undefined
                 });
             }
             return { ...s, [fkey]: JSON.stringify(files) };
@@ -444,6 +721,275 @@ func main() {
         await loadOrInitFile(language);
         persistTabOrder();
         startRename(nextId, fileName, 'sidebar');
+    }
+
+    function buildExportNode(fileId: string, files: FileEntry[]): ExportNode | null {
+        const entry = files.find((f) => f.fileId === fileId);
+        if (!entry) return null;
+        if (isFolderEntry(entry)) {
+            const childIds = new Set<string>();
+            for (const f of files) {
+                if ((f.parentId ?? null) === fileId) childIds.add(f.fileId);
+            }
+            // Stable order: folders first then by order
+            const childList = Array.from(childIds)
+                .map((id) => {
+                    const e = files.find((f) => f.fileId === id)!;
+                    return { id, order: typeof e.order === 'number' ? e.order : 0, kind: isFolderEntry(e) ? 0 : 1, name: e.fileName };
+                })
+                .sort((a, b) => a.kind - b.kind || a.order - b.order || a.name.localeCompare(b.name));
+            const children: ExportNode[] = [];
+            for (const c of childList) {
+                const node = buildExportNode(c.id, files);
+                if (node) children.push(node);
+            }
+            return { type: 'folder', name: entry.fileName, children };
+        }
+        const langEntries = files.filter((f) => f.fileId === fileId && !isFolderEntry(f) && !isSpecialTabType(f.type));
+        return {
+            type: 'file',
+            name: entry.fileName,
+            languages: langEntries.map((f) => ({
+                language: f.language,
+                content: f.content ?? '',
+                ...(f.lastLanguage ? { lastLanguage: f.lastLanguage } : {})
+            }))
+        };
+    }
+
+    async function revealExportedFile(filePath: string | undefined) {
+        if (!filePath) return;
+        try {
+            await fetch('/api/reveal-file', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ filePath })
+            });
+        } catch (error) {
+            console.error('Failed to reveal file:', error);
+        }
+    }
+
+    async function downloadFolder(folderId: string) {
+        const files = getFiles();
+        const node = buildExportNode(folderId, files);
+        if (!node || node.type !== 'folder') return;
+        const textData = JSON.stringify(node, null, 2);
+        const filename = `${node.name || 'folder'}.json`;
+
+        if (isDesktopMode) {
+            try {
+                const response = await fetch('/api/export-file', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ textData, filename })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    void revealExportedFile(result.filePath);
+                    await showAlert(`Saved to ${result.filePath}`, { title: 'Folder downloaded' });
+                } else {
+                    await showAlert(result.error || 'Failed to save file', { title: 'Download failed' });
+                }
+            } catch (error: any) {
+                await showAlert(error?.message || 'Failed to save file', { title: 'Download failed' });
+            }
+            return;
+        }
+
+        const blob = new Blob([textData], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 0);
+    }
+
+    function isExportNode(value: unknown): value is ExportNode {
+        if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+        const v = value as Record<string, unknown>;
+        if (v.type === 'folder') {
+            return typeof v.name === 'string' && Array.isArray(v.children);
+        }
+        if (v.type === 'file') {
+            return typeof v.name === 'string' && Array.isArray(v.languages);
+        }
+        return false;
+    }
+
+    function importExportNode(node: ExportNode, parentId: string | null, files: FileEntry[]): FileEntry[] {
+        const now = Date.now();
+        if (node.type === 'folder') {
+            const folderId = uuidv4();
+            files.push({
+                fileId: folderId,
+                fileName: node.name || 'Folder',
+                content: '',
+                language: 'plaintext',
+                isActive: false,
+                type: 'folder',
+                parentId,
+                order: nextOrder(files),
+                lastUpdated: now
+            } as FileEntry);
+            for (const child of node.children) {
+                if (isExportNode(child)) importExportNode(child, folderId, files);
+            }
+            return files;
+        }
+        const fileId = uuidv4();
+        const langs = node.languages?.length
+            ? node.languages
+            : [{ language: 'plaintext', content: '' }];
+        for (const lang of langs) {
+            if (!lang || typeof lang.language !== 'string') continue;
+            files.push({
+                fileId,
+                fileName: node.name || 'Solution',
+                language: lang.language,
+                lastLanguage: typeof lang.lastLanguage === 'string' ? lang.lastLanguage : lang.language,
+                content: typeof lang.content === 'string' ? lang.content : '',
+                isActive: false,
+                order: nextOrder(files),
+                isOpen: false,
+                lastUpdated: now,
+                parentId,
+                output: '',
+                logs: '',
+                viewState: null
+            } as FileEntry);
+        }
+        return files;
+    }
+
+    function handleImportFile(e: Event) {
+        const input = e.target as HTMLInputElement;
+        const file = input.files?.[0];
+        input.value = '';
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+            try {
+                const parsed = JSON.parse(String(reader.result || ''));
+                if (!isExportNode(parsed)) {
+                    showAlert('Invalid folder export file.', { title: 'Import failed' });
+                    return;
+                }
+                const fkey = fileKey();
+                const createdFileIds: string[] = [];
+                fileStore.update((s) => {
+                    let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+                    const before = new Set(files.map((f) => f.fileId));
+                    importExportNode(parsed, null, files);
+                    for (const f of files) {
+                        if (!before.has(f.fileId) && !isFolderEntry(f) && !isSpecialTabType(f.type)) {
+                            createdFileIds.push(f.fileId);
+                        }
+                    }
+                    return { ...s, [fkey]: JSON.stringify(files) };
+                });
+                // Refresh tabs for newly imported files
+                const files = getFiles();
+                const existingIds = new Set(tabs.map((t) => t.fileId));
+                const additions: TabMeta[] = [];
+                const seen = new Set<string>();
+                for (const f of files) {
+                    if (isFolderEntry(f) || isSpecialTabType(f.type)) continue;
+                    if (existingIds.has(f.fileId) || seen.has(f.fileId)) continue;
+                    if (!createdFileIds.includes(f.fileId)) continue;
+                    seen.add(f.fileId);
+                    additions.push({
+                        fileId: f.fileId,
+                        fileName: f.fileName,
+                        isOpen: false,
+                        lastUpdated: f.lastUpdated
+                    });
+                }
+                if (additions.length) tabs = [...tabs, ...additions];
+            } catch {
+                showAlert('Could not parse the selected JSON file.', { title: 'Import failed' });
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    function moveEntryToParent(sourceId: string, newParentId: string | null, beforeSiblingId?: string | null) {
+        if (sourceId === newParentId) return;
+        if (newParentId && isDescendantOf(sourceId, newParentId)) return;
+
+        const files = getFiles();
+        const source = files.find((f) => f.fileId === sourceId);
+        if (!source) {
+            // pristine tab only in memory
+            if (!tabs.some((t) => t.fileId === sourceId)) return;
+        } else if (newParentId) {
+            const parent = files.find((f) => f.fileId === newParentId);
+            if (!parent || !isFolderEntry(parent)) return;
+        }
+
+        const fkey = fileKey();
+        const now = Date.now();
+        fileStore.update((s) => {
+            let list = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            // Ensure pristine tab gets a store row when moved into a folder
+            if (!list.some((f) => f.fileId === sourceId)) {
+                const tab = tabs.find((t) => t.fileId === sourceId);
+                if (tab) {
+                    list.push({
+                        fileId: sourceId,
+                        fileName: tab.fileName,
+                        language,
+                        lastLanguage: language,
+                        content: code,
+                        isActive: false,
+                        order: nextOrder(list),
+                        isOpen: tab.isOpen,
+                        lastUpdated: now,
+                        parentId: newParentId
+                    } as FileEntry);
+                }
+            }
+
+            const siblings = list.filter(
+                (f) => (f.parentId ?? null) === newParentId && f.fileId !== sourceId
+            );
+            // Unique by fileId for ordering
+            const siblingOrderIds: string[] = [];
+            for (const f of siblings) {
+                if (!siblingOrderIds.includes(f.fileId)) siblingOrderIds.push(f.fileId);
+            }
+            siblingOrderIds.sort((a, b) => {
+                const ao = list.find((f) => f.fileId === a)?.order ?? 0;
+                const bo = list.find((f) => f.fileId === b)?.order ?? 0;
+                return ao - bo;
+            });
+
+            if (beforeSiblingId && siblingOrderIds.includes(beforeSiblingId)) {
+                const idx = siblingOrderIds.indexOf(beforeSiblingId);
+                siblingOrderIds.splice(idx, 0, sourceId);
+            } else {
+                siblingOrderIds.push(sourceId);
+            }
+
+            const orderMap = new Map<string, number>();
+            siblingOrderIds.forEach((id, i) => orderMap.set(id, i));
+
+            for (const f of list) {
+                if (f.fileId === sourceId) {
+                    f.parentId = newParentId;
+                    f.lastUpdated = now;
+                    const o = orderMap.get(sourceId);
+                    if (o !== undefined) f.order = o;
+                } else if ((f.parentId ?? null) === newParentId && orderMap.has(f.fileId)) {
+                    f.order = orderMap.get(f.fileId)!;
+                }
+            }
+            return { ...s, [fkey]: JSON.stringify(list) };
+        });
+        if (newParentId) collapsedFolders = { ...collapsedFolders, [newParentId]: false };
     }
 
     function toggleCloudVisibility(fileId: string, currentName: string) {
@@ -472,8 +1018,8 @@ func main() {
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
             
-            // Remove entries that are not in tabs AND are preview tabs
-            files = files.filter(f => f.type !== 'preview' || orderById.has(f.fileId));
+            // Remove special tabs (preview/whiteboard) that are no longer in tabs
+            files = files.filter(f => !isSpecialTabType(f.type) || orderById.has(f.fileId));
 
             // Update order and properties for existing files
             for (const f of files) {
@@ -485,11 +1031,14 @@ func main() {
                     if (tab.type === 'preview') {
                         f.type = 'preview';
                         f.sourceFileId = tab.sourceFileId;
+                    } else if (tab.type === 'whiteboard') {
+                        f.type = 'whiteboard';
+                        f.fileName = 'Whiteboard';
                     }
                 }
             }
 
-            // Add missing preview tabs
+            // Add missing special tabs
             tabs.forEach((t, idx) => {
                 if (t.type === 'preview' && !files.find(f => f.fileId === t.fileId)) {
                     files.push({
@@ -503,6 +1052,17 @@ func main() {
                         sourceFileId: t.sourceFileId,
                         order: idx
                     } as FileEntry);
+                } else if (t.type === 'whiteboard' && !files.find(f => f.fileId === t.fileId)) {
+                    files.push({
+                        fileId: t.fileId,
+                        fileName: 'Whiteboard',
+                        language: 'plaintext',
+                        content: '',
+                        isOpen: t.isOpen,
+                        lastUpdated: t.lastUpdated,
+                        type: 'whiteboard',
+                        order: idx
+                    } as FileEntry);
                 }
             });
 
@@ -510,17 +1070,88 @@ func main() {
         });
     }
 
-    function moveTab(sourceId: string, targetId: string) {
-        if (sourceId === targetId) return;
-        const from = tabs.findIndex((t) => t.fileId === sourceId);
-        const to = tabs.findIndex((t) => t.fileId === targetId);
-        if (from < 0 || to < 0) return;
+    // --- Tab drag-and-drop reordering ---
+    // HTML5 drag events are suppressed in Chromium by the tab's mousedown
+    // preventDefault (which keeps focus in the editor), so tabs are reordered
+    // with pointer events, same as the file explorer.
+    type TabPointerDrag = { fileId: string; startX: number; startY: number; active: boolean; pointerId: number };
+    let tabPointerDrag: TabPointerDrag | null = null;
+    let tabDidDrag = false;
+    /** Insertion index among visible tabs, -1 when not dragging */
+    let tabDragInsertIndex = -1;
+
+    function handleTabPointerDown(e: PointerEvent, fileId: string) {
+        if (e.button !== 0) return;
+        const target = e.target as HTMLElement | null;
+        if (target?.closest('button, input, a')) return;
+        tabDidDrag = false;
+        tabPointerDrag = { fileId, startX: e.clientX, startY: e.clientY, active: false, pointerId: e.pointerId };
+        window.addEventListener('pointermove', onTabPointerMove);
+        window.addEventListener('pointerup', onTabPointerUp);
+        window.addEventListener('pointercancel', onTabPointerUp);
+    }
+
+    function onTabPointerMove(e: PointerEvent) {
+        if (!tabPointerDrag || e.pointerId !== tabPointerDrag.pointerId) return;
+        const dx = e.clientX - tabPointerDrag.startX;
+        const dy = e.clientY - tabPointerDrag.startY;
+        if (!tabPointerDrag.active) {
+            if (Math.hypot(dx, dy) < 6) return;
+            tabPointerDrag = { ...tabPointerDrag, active: true };
+            tabDidDrag = true;
+            document.body.classList.add('tab-dragging');
+        }
+        e.preventDefault();
+        tabDragInsertIndex = computeTabInsertIndex(e.clientX);
+    }
+
+    function onTabPointerUp(e: PointerEvent) {
+        if (!tabPointerDrag || e.pointerId !== tabPointerDrag.pointerId) return;
+        const drag = tabPointerDrag;
+        const wasActive = drag.active;
+        const insertIndex = tabDragInsertIndex;
+        window.removeEventListener('pointermove', onTabPointerMove);
+        window.removeEventListener('pointerup', onTabPointerUp);
+        window.removeEventListener('pointercancel', onTabPointerUp);
+        document.body.classList.remove('tab-dragging');
+        tabPointerDrag = null;
+        tabDragInsertIndex = -1;
+        if (!wasActive) {
+            tabDidDrag = false;
+            return;
+        }
+        e.preventDefault();
+        if (insertIndex >= 0) {
+            const fromIdx = tabs.findIndex((t) => t.fileId === drag.fileId);
+            if (fromIdx >= 0 && fromIdx !== (fromIdx < insertIndex ? insertIndex - 1 : insertIndex)) {
+                moveTabToIndex(drag.fileId, insertIndex);
+            }
+        }
+        // Suppress the click that follows the drag
+        setTimeout(() => { tabDidDrag = false; }, 0);
+    }
+
+    function computeTabInsertIndex(clientX: number): number {
+        const els = Array.from(document.querySelectorAll<HTMLElement>('.editor-header .tab'));
+        if (!els.length) return 0;
+        for (let i = 0; i < els.length; i++) {
+            const rect = els[i].getBoundingClientRect();
+            if (clientX < rect.left + rect.width / 2) return i;
+        }
+        return els.length;
+    }
+
+    function moveTabToIndex(sourceFileId: string, insertIndex: number) {
+        const fromIdx = tabs.findIndex((t) => t.fileId === sourceFileId);
+        if (fromIdx < 0) return;
+        const openCount = tabs.filter((t) => t.isOpen).length;
+        insertIndex = Math.max(0, Math.min(insertIndex, openCount));
         const activeFileId = tabs[activeTabId]?.fileId;
         const updated = [...tabs];
-        const [moved] = updated.splice(from, 1);
-        updated.splice(to, 0, moved);
+        const [moved] = updated.splice(fromIdx, 1);
+        const adjusted = fromIdx < insertIndex ? insertIndex - 1 : insertIndex;
+        updated.splice(adjusted, 0, moved);
         tabs = updated;
-        // Recompute activeTabId by locating current active fileId
         if (activeFileId) {
             const newIdx = tabs.findIndex((t) => t.fileId === activeFileId);
             if (newIdx !== -1) activeTabId = newIdx;
@@ -528,26 +1159,240 @@ func main() {
         persistTabOrder();
     }
 
-    let draggingId: string | null = null;
-    function handleDragStart(e: DragEvent, fileId: string) {
-        draggingId = fileId;
-        try { e.dataTransfer?.setData('text/plain', fileId); } catch {}
-        if (e.dataTransfer) e.dataTransfer.effectAllowed = 'move';
+    function handleTabClick(t: TabMeta) {
+        if (tabDidDrag) {
+            tabDidDrag = false;
+            return;
+        }
+        activateTab(t.fileId);
     }
-    function handleDragOver(e: DragEvent, _fileId: string) {
+
+    $: tabDropIndicatorStyle = (() => {
+        if (tabDragInsertIndex < 0) return null;
+        const bar = document.querySelector<HTMLElement>('.editor-header .tab-bar');
+        if (!bar) return null;
+        const barRect = bar.getBoundingClientRect();
+        const els = Array.from(document.querySelectorAll<HTMLElement>('.editor-header .tab'));
+        let left: number;
+        if (!els.length) {
+            left = 0;
+        } else if (tabDragInsertIndex === 0) {
+            left = els[0].getBoundingClientRect().left - barRect.left - 4;
+        } else if (tabDragInsertIndex >= els.length) {
+            left = els[els.length - 1].getBoundingClientRect().right - barRect.left + 4;
+        } else {
+            const prev = els[tabDragInsertIndex - 1].getBoundingClientRect();
+            const next = els[tabDragInsertIndex].getBoundingClientRect();
+            left = (prev.right + next.left) / 2 - barRect.left;
+        }
+        return `left: ${left}px`;
+    })();
+
+    // Pointer-based explorer drag (HTML5 DnD is flaky with nested tree rows)
+    type ExplorerDropKind = 'file' | 'folder' | 'root';
+    let explorerPointerDrag: {
+        id: string;
+        startX: number;
+        startY: number;
+        active: boolean;
+        pointerId: number;
+    } | null = null;
+    let explorerDidDrag = false;
+
+    function setExplorerDropHighlight(id: string | null, kind: ExplorerDropKind) {
+        const nextFolderId = kind === 'folder' ? id : null;
+        const nextRoot = kind === 'root';
+        if (explorerDragOverId !== nextFolderId) explorerDragOverId = nextFolderId;
+        if (explorerDragOverRoot !== nextRoot) explorerDragOverRoot = nextRoot;
+    }
+
+    function clearExplorerDropHighlight() {
+        if (explorerDragOverId !== null) explorerDragOverId = null;
+        if (explorerDragOverRoot) explorerDragOverRoot = false;
+    }
+
+    function resolveExplorerDropTarget(clientX: number, clientY: number): { id: string | null; kind: ExplorerDropKind } {
+        const el = document.elementFromPoint(clientX, clientY);
+        if (!el) return { id: null, kind: 'root' };
+        const item = el.closest('[data-explorer-id]') as HTMLElement | null;
+        if (item) {
+            const id = item.dataset.explorerId || null;
+            const kind = (item.dataset.explorerKind as ExplorerDropKind) || 'file';
+            return { id, kind };
+        }
+        if (el.closest('.file-list')) return { id: null, kind: 'root' };
+        return { id: null, kind: 'root' };
+    }
+
+    function applyExplorerDrop(sourceId: string, targetId: string | null, kind: ExplorerDropKind) {
+        if (!sourceId) return;
+        if (kind === 'folder' && targetId) {
+            if (sourceId === targetId) return;
+            moveEntryToParent(sourceId, targetId);
+            return;
+        }
+        if (kind === 'file' && targetId) {
+            if (sourceId === targetId) return;
+            const targetParent = getParentId(targetId);
+            moveEntryToParent(sourceId, targetParent, targetId);
+            return;
+        }
+        if (kind === 'root') {
+            moveEntryToParent(sourceId, null);
+        }
+    }
+
+    function onExplorerPointerMove(e: PointerEvent) {
+        if (!explorerPointerDrag || e.pointerId !== explorerPointerDrag.pointerId) return;
+        const dx = e.clientX - explorerPointerDrag.startX;
+        const dy = e.clientY - explorerPointerDrag.startY;
+        if (!explorerPointerDrag.active) {
+            if (Math.hypot(dx, dy) < 6) return;
+            explorerPointerDrag = { ...explorerPointerDrag, active: true };
+            explorerDidDrag = true;
+            document.body.classList.add('explorer-dragging');
+        }
         e.preventDefault();
-        if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+        const target = resolveExplorerDropTarget(e.clientX, e.clientY);
+        // Don't highlight the item being dragged
+        if (target.id === explorerPointerDrag.id) {
+            clearExplorerDropHighlight();
+            return;
+        }
+        setExplorerDropHighlight(target.id, target.kind);
     }
-    function handleDrop(e: DragEvent, targetId: string) {
+
+    function onExplorerPointerUp(e: PointerEvent) {
+        if (!explorerPointerDrag || e.pointerId !== explorerPointerDrag.pointerId) return;
+        const drag = explorerPointerDrag;
+        const wasActive = drag.active;
+        window.removeEventListener('pointermove', onExplorerPointerMove);
+        window.removeEventListener('pointerup', onExplorerPointerUp);
+        window.removeEventListener('pointercancel', onExplorerPointerUp);
+        document.body.classList.remove('explorer-dragging');
+        explorerPointerDrag = null;
+        clearExplorerDropHighlight();
+        if (!wasActive) {
+            explorerDidDrag = false;
+            return;
+        }
         e.preventDefault();
-        const source = draggingId || e.dataTransfer?.getData('text/plain') || '';
-        if (source) moveTab(source, targetId);
-        draggingId = null;
+        const target = resolveExplorerDropTarget(e.clientX, e.clientY);
+        if (target.id !== drag.id) {
+            applyExplorerDrop(drag.id, target.id, target.kind);
+        }
+        // Suppress the click that follows pointerup after a drag
+        setTimeout(() => { explorerDidDrag = false; }, 0);
     }
-    function handleDragEnd() {
-        draggingId = null;
+
+    function handleExplorerPointerDown(e: PointerEvent, fileId: string) {
+        if (e.button !== 0) return;
+        const target = e.target as HTMLElement | null;
+        if (target?.closest('button, input, a, .file-actions')) return;
+        explorerDidDrag = false;
+        explorerPointerDrag = {
+            id: fileId,
+            startX: e.clientX,
+            startY: e.clientY,
+            active: false,
+            pointerId: e.pointerId
+        };
+        window.addEventListener('pointermove', onExplorerPointerMove);
+        window.addEventListener('pointerup', onExplorerPointerUp);
+        window.addEventListener('pointercancel', onExplorerPointerUp);
     }
-    $: if (!suppressSave && tabs[activeTabId]?.type !== 'preview' && (code !== undefined || output !== undefined || logs !== undefined)) {
+
+    function handleExplorerItemClick(node: FlatExplorerItem) {
+        if (node.kind === 'empty') return;
+        if (explorerDidDrag) {
+            explorerDidDrag = false;
+            return;
+        }
+        if (node.kind === 'folder') toggleFolderExpanded(node.fileId);
+        else activateTab(node.fileId);
+    }
+
+    function closeContextMenu() {
+        contextMenu = null;
+        contextMenuEl = null;
+    }
+
+    function openExplorerContextMenu(e: MouseEvent, node: FlatExplorerItem) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (node.kind === 'empty') return;
+        // Cancel any pending explorer drag started by the right-click mousedown
+        if (explorerPointerDrag) {
+            window.removeEventListener('pointermove', onExplorerPointerMove);
+            window.removeEventListener('pointerup', onExplorerPointerUp);
+            window.removeEventListener('pointercancel', onExplorerPointerUp);
+            document.body.classList.remove('explorer-dragging');
+            explorerPointerDrag = null;
+            explorerDidDrag = false;
+            clearExplorerDropHighlight();
+        }
+        showAddMenu = false;
+        const parentId = node.kind === 'folder' ? node.fileId : getParentId(node.fileId);
+        // Position within viewport
+        const menuW = 150;
+        const menuH = 80;
+        const x = Math.min(e.clientX, window.innerWidth - menuW - 8);
+        const y = Math.min(e.clientY, window.innerHeight - menuH - 8);
+        contextMenu = { x: Math.max(8, x), y: Math.max(8, y), parentId };
+        tick().then(() => {
+            // Re-clamp using actual menu size if available
+            if (!contextMenuEl || !contextMenu) return;
+            const rect = contextMenuEl.getBoundingClientRect();
+            const nx = Math.min(contextMenu.x, window.innerWidth - rect.width - 8);
+            const ny = Math.min(contextMenu.y, window.innerHeight - rect.height - 8);
+            if (nx !== contextMenu.x || ny !== contextMenu.y) {
+                contextMenu = { ...contextMenu, x: Math.max(8, nx), y: Math.max(8, ny) };
+            }
+        });
+    }
+
+    function contextCreateFile() {
+        const parentId = contextMenu?.parentId ?? null;
+        closeContextMenu();
+        if (parentId) {
+            collapsedFolders = { ...collapsedFolders, [parentId]: false };
+        }
+        void addNewTab('sidebar', parentId);
+    }
+
+    function contextCreateFolder() {
+        const parentId = contextMenu?.parentId ?? null;
+        closeContextMenu();
+        if (parentId) {
+            collapsedFolders = { ...collapsedFolders, [parentId]: false };
+        }
+        addNewFolder(parentId);
+    }
+
+    onDestroy(() => {
+        if (!browser) return;
+        window.removeEventListener('pointermove', onExplorerPointerMove);
+        window.removeEventListener('pointerup', onExplorerPointerUp);
+        window.removeEventListener('pointercancel', onExplorerPointerUp);
+        document.body.classList.remove('explorer-dragging');
+    });
+
+    let showSyncSuccess = false;
+    let syncSuccessTimer: ReturnType<typeof setTimeout> | null = null;
+    let prevCloudLoading = false;
+    onDestroy(() => {
+        if (syncSuccessTimer) clearTimeout(syncSuccessTimer);
+    });
+    $: {
+        const loading = $cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading';
+        if (prevCloudLoading && !loading && $cloudSyncState.syncStatus === 'idle') {
+            showSyncSuccess = true;
+            if (syncSuccessTimer) clearTimeout(syncSuccessTimer);
+            syncSuccessTimer = setTimeout(() => { showSyncSuccess = false; }, 1000);
+        }
+        prevCloudLoading = loading;
+    }
+    $: if (!suppressSave && !isSpecialTabType(tabs[activeTabId]?.type) && (code !== undefined || output !== undefined || logs !== undefined)) {
         if (!skipNextSave && !isPristineStarterTab()) {
             const fkey = fileKey();
             const now = Date.now();
@@ -571,6 +1416,7 @@ func main() {
                     existingFile.logs = logs;
                     existingFile.lastUpdated = now;
                 } else {
+                    const sibling = files.find((x) => x.fileId === tabs[activeTabId].fileId);
                     files = [...files, {
                         fileId: tabs[activeTabId].fileId,
                         fileName: tabs[activeTabId].fileName,
@@ -581,7 +1427,9 @@ func main() {
                         logs: logs,
                         isActive: false,
                         isOpen: tabs[activeTabId].isOpen,
-                        lastUpdated: now
+                        lastUpdated: now,
+                        parentId: sibling?.parentId ?? null,
+                        order: sibling?.order
                     } as FileEntry];
                 }
                 return {...s, [fkey]: JSON.stringify(files)};
@@ -596,15 +1444,23 @@ func main() {
     }
 
     // Reload code when another browser tab changes the file store
-    $: if ($fileSyncVersion > 0 && activeTabId >= 0 && activeTabId < tabs.length && tabs[activeTabId]?.type !== 'preview' && language) {
+    $: if ($fileSyncVersion > 0 && activeTabId >= 0 && activeTabId < tabs.length && !isSpecialTabType(tabs[activeTabId]?.type) && language) {
         skipNextSave = true;
         loadOrInitFile(language);
         $fileSyncVersion;
     }
 
+    function loadTabContent(tab: TabMeta) {
+        if (isSpecialTabType(tab.type)) return;
+        const targetLanguage = getLanguageForTab(tab.fileId);
+        setLastLanguage(tab.fileId, targetLanguage);
+        language = targetLanguage;
+        loadOrInitFile(targetLanguage);
+    }
+
     function closeTab(fileId: string) {
         const tabToClose = tabs.find(t => t.fileId === fileId);
-        if (tabToClose?.type === 'preview') {
+        if (isSpecialTabType(tabToClose?.type)) {
             const closedIdx = tabs.findIndex(t => t.fileId === fileId);
             tabs = tabs.filter(t => t.fileId !== fileId);
             if (tabs[activeTabId]?.fileId === fileId || activeTabId >= tabs.length) {
@@ -619,12 +1475,7 @@ func main() {
                 }
                 if (nextOpenIdx !== -1) {
                     activeTabId = nextOpenIdx;
-                    if (tabs[nextOpenIdx].type !== 'preview') {
-                        const targetLanguage = getLanguageForTab(tabs[nextOpenIdx].fileId);
-                        setLastLanguage(tabs[nextOpenIdx].fileId, targetLanguage);
-                        language = targetLanguage;
-                        loadOrInitFile(targetLanguage);
-                    }
+                    loadTabContent(tabs[nextOpenIdx]);
                 }
             }
             persistTabOrder();
@@ -653,24 +1504,30 @@ func main() {
             }
             if (nextOpenIdx !== -1) {
                 activeTabId = nextOpenIdx;
-                if (tabs[nextOpenIdx].type !== 'preview') {
-                    const targetLanguage = getLanguageForTab(tabs[nextOpenIdx].fileId);
-                    setLastLanguage(tabs[nextOpenIdx].fileId, targetLanguage);
-                    language = targetLanguage;
-                    loadOrInitFile(targetLanguage);
-                }
+                loadTabContent(tabs[nextOpenIdx]);
             }
         }
     }
 
     async function deleteFile(fileId: string) {
-        if (!await showConfirm('This file and any previews created from it will be permanently removed.', {
-            title: 'Remove file?',
-            confirmLabel: 'Remove file',
-            tone: 'danger'
-        })) return;
-        
-        const tabsToRemove = tabs.filter(t => t.fileId === fileId || t.sourceFileId === fileId);
+        const files = getFiles();
+        const isFolder = files.some((f) => f.fileId === fileId && isFolderEntry(f));
+        const removeIds = isFolder ? collectDescendantIds(fileId, files) : new Set([fileId]);
+
+        if (!await showConfirm(
+            isFolder
+                ? 'This folder and everything inside it will be permanently removed.'
+                : 'This file and any previews created from it will be permanently removed.',
+            {
+                title: isFolder ? 'Remove folder?' : 'Remove file?',
+                confirmLabel: isFolder ? 'Remove folder' : 'Remove file',
+                tone: 'danger'
+            }
+        )) return;
+
+        const tabsToRemove = tabs.filter(
+            (t) => removeIds.has(t.fileId) || (t.sourceFileId ? removeIds.has(t.sourceFileId) : false)
+        );
         const activeTabWillBeRemoved = tabsToRemove.some(t => t.fileId === tabs[activeTabId]?.fileId);
 
         if (activeTabWillBeRemoved) {
@@ -682,9 +1539,11 @@ func main() {
 
         const fkey = fileKey();
         fileStore.update((s) => {
-            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
-            files = files.filter((f) => f.fileId !== fileId && f.sourceFileId !== fileId);
-            return { ...s, [fkey]: JSON.stringify(files) };
+            let list = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            list = list.filter(
+                (f) => !removeIds.has(f.fileId) && !(f.sourceFileId && removeIds.has(f.sourceFileId))
+            );
+            return { ...s, [fkey]: JSON.stringify(list) };
         });
 
         tabs = tabs.filter((t) => !tabsToRemove.includes(t));
@@ -761,17 +1620,41 @@ func main() {
             if (showSettings && settingsContainer && !settingsContainer.contains(e.target as Node)) {
                 showSettings = false;
             }
+            if (showAddMenu && addMenuContainer && !addMenuContainer.contains(e.target as Node)) {
+                showAddMenu = false;
+            }
+            if (contextMenu && contextMenuEl && !contextMenuEl.contains(e.target as Node)) {
+                closeContextMenu();
+            }
+        };
+        const handleDocContextMenu = (e: MouseEvent) => {
+            if (contextMenu && contextMenuEl && !contextMenuEl.contains(e.target as Node)) {
+                // Allow other context menus; just close ours if click is outside
+                const target = e.target as HTMLElement | null;
+                if (!target?.closest('[data-explorer-id]')) closeContextMenu();
+            }
         };
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
                 showSettings = false;
+                showAddMenu = false;
+                closeContextMenu();
             }
         };
+        const handleScroll = () => {
+            if (contextMenu) closeContextMenu();
+        };
         document.addEventListener('click', handleDocClick);
+        document.addEventListener('contextmenu', handleDocContextMenu);
         document.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('resize', handleScroll);
+        document.addEventListener('scroll', handleScroll, true);
         return () => {
             document.removeEventListener('click', handleDocClick);
+            document.removeEventListener('contextmenu', handleDocContextMenu);
             document.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('resize', handleScroll);
+            document.removeEventListener('scroll', handleScroll, true);
         };
     });
 
@@ -800,6 +1683,7 @@ func main() {
         if (!fileId) return;
         const idx = tabs.findIndex((t) => t.fileId === fileId);
         if (idx === -1) return;
+        expandAncestorFolders(fileId);
 
         saveCurrentViewState();
 
@@ -815,12 +1699,41 @@ func main() {
 
         activeTabId = idx;
 
-        if (tabs[idx].type === 'preview') return;
+        if (tabs[idx].type === 'preview') {
+            await enterPreviewEditMode();
+            return;
+        }
+        if (tabs[idx].type === 'whiteboard') {
+            return;
+        }
 
         const targetLanguage = preferredLang || getLanguageForTab(fileId);
         setLastLanguage(fileId, targetLanguage);
         language = targetLanguage;
         await loadOrInitFile(targetLanguage);
+    }
+
+    async function openWhiteboard() {
+        const existing = tabs.find((t) => t.type === 'whiteboard' || t.fileId === WHITEBOARD_FILE_ID);
+        if (existing) {
+            if (existing.isOpen && tabs[activeTabId]?.fileId === existing.fileId) {
+                closeTab(existing.fileId);
+                return;
+            }
+            await activateTab(existing.fileId);
+            return;
+        }
+        const now = Date.now();
+        tabs = [...tabs, {
+            fileId: WHITEBOARD_FILE_ID,
+            fileName: 'Whiteboard',
+            isOpen: true,
+            lastUpdated: now,
+            type: 'whiteboard'
+        }];
+        activeTabId = tabs.length - 1;
+        persistTabOrder();
+        await tick();
     }
 
     // Runtime image name (like in ExecutionPanel)
@@ -923,8 +1836,11 @@ func main() {
         return sourceEntry?.content ?? '';
     }
 
-    async function enterPreviewEditMode() {
+    async function enterPreviewEditMode(force = false) {
         if (!activeTab?.sourceFileId) return;
+        if (!force && previewEditMode && wysiwygSourceFileId === activeTab.sourceFileId && wysiwygEl) {
+            return;
+        }
         wysiwygSourceFileId = activeTab.sourceFileId;
         previewEditMode = true;
         await tick();
@@ -945,7 +1861,7 @@ func main() {
             showLinkInput = false;
             return;
         }
-        await enterPreviewEditMode();
+        await enterPreviewEditMode(true);
     }
 
     function handleWysiwygInput() {
@@ -1223,13 +2139,17 @@ func main() {
         });
     }
 
-    // Leave WYSIWYG mode (flushing pending edits) when switching tabs
+    // Switch WYSIWYG mode when changing tabs
     $: if ((activeTab?.fileId ?? null) !== lastActiveTabFileId) {
         if (previewEditMode) commitWysiwygEdits();
-        previewEditMode = false;
         wysiwygSourceFileId = null;
         showLinkInput = false;
         lastActiveTabFileId = activeTab?.fileId ?? null;
+        if (activeTab?.type === 'preview') {
+            enterPreviewEditMode();
+        } else {
+            previewEditMode = false;
+        }
     }
 
     // Paste images into the WYSIWYG area as base64 <img> elements.
@@ -1293,6 +2213,57 @@ func main() {
         wysiwygEl.focus();
         document.execCommand(command, false, value);
         handleWysiwygInput();
+    }
+
+    // Keyboard shortcuts while editing the WYSIWYG area: Ctrl/Cmd+B bold,
+    // Ctrl/Cmd+I italic, Ctrl/Cmd+Shift+X strikethrough, Ctrl/Cmd+E inline
+    // code, Ctrl/Cmd+K insert link.
+    function handleWysiwygKeydown(e: KeyboardEvent) {
+        if (!e.metaKey && !e.ctrlKey) return;
+        const key = e.key.toLowerCase();
+        if (key === 'b' && !e.shiftKey && !e.altKey) {
+            e.preventDefault();
+            applyWysiwygCommand('bold');
+        } else if (key === 'i' && !e.shiftKey && !e.altKey) {
+            e.preventDefault();
+            applyWysiwygCommand('italic');
+        } else if (key === 'x' && e.shiftKey && !e.altKey) {
+            e.preventDefault();
+            applyWysiwygCommand('strikeThrough');
+        } else if (key === 'e' && !e.shiftKey && !e.altKey) {
+            e.preventDefault();
+            toggleInlineCode();
+        } else if (key === 'k' && !e.shiftKey && !e.altKey) {
+            e.preventDefault();
+            openLinkInput();
+        }
+    }
+
+    // Desktop-only shortcuts: Ctrl/Cmd+W closes the active tab and Ctrl/Cmd+1-9
+    // activates the nth open tab (left to right). In the browser these keys are
+    // reserved by the browser itself, so they only apply in desktop mode.
+    function handleGlobalKeydown(e: KeyboardEvent) {
+        if (e.defaultPrevented) return;
+        if (!isDesktopMode) return;
+        if (!e.metaKey && !e.ctrlKey) return;
+        if (e.altKey) return;
+        const key = e.key.toLowerCase();
+        if (key === 'w' && !e.shiftKey) {
+            const active = tabs[activeTabId];
+            if (active) {
+                e.preventDefault();
+                closeTab(active.fileId);
+            }
+            return;
+        }
+        if (/^[1-9]$/.test(key)) {
+            const openTabs = tabs.filter((t) => t.isOpen);
+            const target = openTabs[parseInt(key, 10) - 1];
+            if (target) {
+                e.preventDefault();
+                activateTab(target.fileId);
+            }
+        }
     }
 
     // Toolbar buttons run on mousedown (preventDefault) so the text selection
@@ -1682,6 +2653,11 @@ func main() {
         ? tabs.filter(t => t.fileName.toLowerCase().includes(searchQuery.toLowerCase()))
         : tabs.slice().sort((a, b) => (b.lastUpdated || 0) - (a.lastUpdated || 0));
 
+    $: recentFiles = tabs
+        .slice()
+        .sort((a, b) => (b.lastUpdated || 0) - (a.lastUpdated || 0))
+        .slice(0, 9);
+
     $: if (searchQuery !== undefined) selectedIndex = 0;
 
     function openSearch() {
@@ -1846,7 +2822,7 @@ func main() {
         fileStoreValue;
         const map: Record<string, ProgrammingLanguage> = {};
         for (const t of tabs) {
-            if (t.type === 'preview') continue;
+            if (isSpecialTabType(t.type)) continue;
             map[t.fileId] = t.fileId === tabs[activeTabId]?.fileId ? language : getLanguageForTab(t.fileId);
         }
         return map;
@@ -1871,6 +2847,7 @@ func main() {
             }
         };
         const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.defaultPrevented) return;
             if (e.key === 'Escape') {
                 showSettings = false;
                 closeSearch();
@@ -1935,6 +2912,8 @@ func main() {
     <title>{pageTitle}</title>
 </svelte:head>
 
+<svelte:window on:keydown={handleGlobalKeydown} />
+
 <div class="workspace">
     <!-- Activity Bar -->
     <div class="activity-bar">
@@ -1944,52 +2923,74 @@ func main() {
                 <path d="M9 22V12h6v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </a>
-        <button 
-            class="activity-icon {activePanel === 'explorer' ? 'active' : ''}" 
-            on:click={() => activatePanel('explorer')}
-            title="Explorer"
-        >
-            <!-- Explorer Icon (Files) -->
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M13 2v7h7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
-        <button 
-            class="activity-icon {activePanel === 'search' ? 'active' : ''}" 
-            on:click={() => activatePanel('search')}
-            title="Search"
-        >
-            <!-- Search Icon -->
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
-                <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
-        <button
-            class="activity-icon"
-            on:click={openCloudSettings}
-            title={$cloudSyncState.authStatus === 'signed-in' ? 'Cojudge Cloud' : 'Cojudge Cloud — Local only'}
-            bind:this={cloudActivityButton}
-        >
-            {#if $cloudSyncState.authStatus === 'signed-in'}
-                <!-- Cloud Icon -->
+        <Tooltip text={isMac ? "Explorer (Cmd+B)" : "Explorer (Ctrl+B)"} pos="right">
+            <button 
+                class="activity-icon {activePanel === 'explorer' ? 'active' : ''}" 
+                on:click={() => activatePanel('explorer')}
+                aria-label="Explorer"
+            >
+                <!-- Explorer Icon (Files) -->
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M13 2v7h7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                {#if $cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading'}
-                    <span class="cloud-icon-legend loading" title="Syncing with Cojudge Cloud" aria-hidden="true"></span>
-                {:else if $cloudSyncState.resolution}
-                    <span class="cloud-icon-legend" title="Local or conflicting cloud changes need attention" aria-hidden="true"></span>
+            </button>
+        </Tooltip>
+        <Tooltip text={isMac ? "Search (Cmd+Shift+F)" : "Search (Ctrl+Shift+F)"} pos="right">
+            <button 
+                class="activity-icon {activePanel === 'search' ? 'active' : ''}" 
+                on:click={() => activatePanel('search')}
+                aria-label="Search"
+            >
+                <!-- Search Icon -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                    <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </Tooltip>
+        <Tooltip text="Whiteboard" pos="right">
+            <button
+                class="activity-icon {activeTab?.type === 'whiteboard' ? 'active' : ''}"
+                on:click={openWhiteboard}
+                aria-label="Whiteboard"
+            >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                    <path d="m8 15 6-6 2 2-6 6H8v-2Z"></path>
+                </svg>
+            </button>
+        </Tooltip>
+        <Tooltip text={"Cloud Sync"} pos="right">
+            <button
+                class="activity-icon"
+                on:click={openCloudSettings}
+                title={$cloudSyncState.authStatus === 'signed-in' ? 'Cojudge Cloud' : 'Cojudge Cloud — Local only'}
+                bind:this={cloudActivityButton}
+            >
+                {#if $cloudSyncState.authStatus === 'signed-in'}
+                    <!-- Cloud Icon -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {#if $cloudSyncState.syncStatus === 'error' || $cloudSyncState.syncStatus === 'offline'}
+                        <span class="cloud-icon-legend error" title="Sync with Cojudge Cloud failed" aria-hidden="true"></span>
+                    {:else if $cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading'}
+                        <span class="cloud-icon-legend loading" title="Syncing with Cojudge Cloud" aria-hidden="true"></span>
+                    {:else if showSyncSuccess}
+                        <span class="cloud-icon-legend success" title="Progress synced with Cojudge Cloud" aria-hidden="true"></span>
+                    {:else if $cloudSyncState.resolution}
+                        <span class="cloud-icon-legend" title="Local or conflicting cloud changes need attention" aria-hidden="true"></span>
+                    {/if}
+                {:else}
+                    <!-- Offline Cloud Icon -->
+                    <svg class="cloud-icon-offline" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="5" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
                 {/if}
-            {:else}
-                <!-- Offline Cloud Icon -->
-                <svg class="cloud-icon-offline" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <line x1="5" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-            {/if}
-        </button>
+            </button>
+        </Tooltip>
     </div>
 
     <!-- Left Sidebar -->
@@ -1998,110 +2999,210 @@ func main() {
         {#if activePanel === 'explorer'}
         <div class="sidebar-header">
             <span>EXPLORER</span>
-            <button class="icon-button" on:click={() => addNewTab('sidebar')} title="New File">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
+            <div class="sidebar-header-actions">
+                <input
+                    type="file"
+                    accept="application/json,.json"
+                    class="import-file-input"
+                    bind:this={importInputEl}
+                    on:change={handleImportFile}
+                />
+                <button
+                    class="icon-button"
+                    title="Import folder"
+                    aria-label="Import folder"
+                    on:click={() => importInputEl?.click()}
+                >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M17 8l-5-5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="add-menu-wrapper" bind:this={addMenuContainer}>
+                    <button
+                        class="icon-button"
+                        title="New"
+                        aria-label="New file or folder"
+                        aria-haspopup="menu"
+                        aria-expanded={showAddMenu}
+                        on:click|stopPropagation={() => { closeContextMenu(); showAddMenu = !showAddMenu; }}
+                    >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    {#if showAddMenu}
+                        <div class="add-menu" role="menu">
+                            <button
+                                class="add-menu-item"
+                                role="menuitem"
+                                on:click={() => { showAddMenu = false; addNewTab('sidebar'); }}
+                            >New File</button>
+                            <button
+                                class="add-menu-item"
+                                role="menuitem"
+                                on:click={() => { showAddMenu = false; addNewFolder(); }}
+                            >New Folder</button>
+                        </div>
+                    {/if}
+                </div>
+            </div>
         </div>
-        <div class="file-list">
-            {#each groupOrder as group}
-                {#if groupedTabs[group] && groupedTabs[group].length > 0}
-                    <div class="file-group">
-                        <div class="file-group-header">{group}</div>
-                        {#each groupedTabs[group] as t}
-                            <div
-                                class="file-item {isDotFileName(t.fileName) ? 'dotfile' : ''} {hasOpenTabs && t.fileId === tabs[activeTabId].fileId ? 'active' : ''}"
-                                on:click={() => activateTab(t.fileId)}
-                                draggable={true}
-                                on:dragstart={(e) => handleDragStart(e, t.fileId)}
-                                on:dragover={(e) => handleDragOver(e, t.fileId)}
-                                on:drop={(e) => handleDrop(e, t.fileId)}
-                                on:dragend={handleDragEnd}
-                                on:contextmenu|preventDefault={(e) => { /* maybe context menu later */ }}
-                                role="button"
-                                tabindex="0"
-                                on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateTab(t.fileId); } }}
+        <div
+            class="file-list {explorerDragOverRoot ? 'drag-over-root' : ''}"
+            data-explorer-root="true"
+            role="tree"
+        >
+            {#each flatExplorer as t (t.fileId)}
+                {#if t.kind === 'empty'}
+                    <div
+                        class="file-item empty-folder-label"
+                        style="padding-left: {8 + t.depth * 14}px"
+                        aria-hidden="true"
+                    >
+                        <span class="file-name">(empty)</span>
+                    </div>
+                {:else}
+                    <div
+                        class="file-item {t.kind === 'folder' ? 'folder-item' : ''} {isDotFileName(t.fileName) ? 'dotfile' : ''} {t.kind === 'file' && hasOpenTabs && t.fileId === tabs[activeTabId]?.fileId ? 'active' : ''} {explorerDragOverId === t.fileId ? 'drag-over-folder' : ''} {explorerPointerDrag?.active && explorerPointerDrag.id === t.fileId ? 'is-dragging' : ''}"
+                        style="padding-left: {8 + t.depth * 14}px"
+                        data-explorer-id={t.fileId}
+                        data-explorer-kind={t.kind}
+                        on:click={() => handleExplorerItemClick(t)}
+                        on:pointerdown={(e) => handleExplorerPointerDown(e, t.fileId)}
+                        on:contextmenu={(e) => openExplorerContextMenu(e, t)}
+                        role="treeitem"
+                        aria-expanded={t.kind === 'folder' ? isFolderExpanded(t.fileId) : undefined}
+                        tabindex="0"
+                        on:keydown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                handleExplorerItemClick(t);
+                            }
+                        }}
+                    >
+                        {#if t.kind === 'folder'}
+                            <button
+                                type="button"
+                                class="folder-chevron"
+                                title={isFolderExpanded(t.fileId) ? 'Collapse folder' : 'Expand folder'}
+                                aria-label={isFolderExpanded(t.fileId) ? 'Collapse folder' : 'Expand folder'}
+                                aria-expanded={isFolderExpanded(t.fileId)}
+                                on:pointerdown|stopPropagation
+                                on:click|stopPropagation={() => toggleFolderExpanded(t.fileId)}
                             >
-                                {#if editingTabId === t.fileId && renamingSource === 'sidebar'}
-                                     <input
-                                        class="file-rename-input"
-                                        type="text"
-                                        bind:value={editingName}
-                                        bind:this={renameInputEl}
-                                        on:click|stopPropagation
-                                        on:keydown|stopPropagation={(e) => {
-                                            if (e.key === 'Enter') { e.preventDefault(); applyRename(); }
-                                            else if (e.key === 'Escape') { e.preventDefault(); cancelRename(); }
-                                        }}
-                                        on:blur={applyRename}
-                                    />
-                                {:else}
-                                    <span class="file-lang-icon">
-                                        <LanguageIcon language={tabLanguages[t.fileId] ?? language} size={17} />
-                                    </span>
-                                    <span class="file-name">{t.fileName}</span>
-                                {/if}
-                                
-                                <div class="file-actions">
-                                    <button
-                                        class="file-action-btn"
-                                        title={isDotFileName(t.fileName) ? 'Show this file in cloud backups' : 'Hide this file from cloud backups'}
-                                        aria-label={isDotFileName(t.fileName) ? 'Show this file in cloud backups' : 'Hide this file from cloud backups'}
-                                        on:click|stopPropagation={() => toggleCloudVisibility(t.fileId, t.fileName)}
-                                    >
-                                        {#if isDotFileName(t.fileName)}
-                                            <!-- Eye-off icon (hidden from cloud) -->
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="2" fill="none"/>
-                                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
-                                                <path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                            </svg>
-                                        {:else}
-                                            <!-- Eye icon (visible to cloud) -->
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="2" fill="none"/>
-                                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
-                                            </svg>
-                                        {/if}
-                                    </button>
-                                    <button
-                                        class="file-action-btn"
-                                        title="Duplicate"
-                                        on:click|stopPropagation={() => duplicateFile(t.fileId, t.fileName)}
-                                    >
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: rotate({isFolderExpanded(t.fileId) ? '90deg' : '0deg'});">
+                                    <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <span class="file-lang-icon folder-icon" aria-hidden="true">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                        {/if}
+                        {#if editingTabId === t.fileId && renamingSource === 'sidebar'}
+                             <input
+                                class="file-rename-input"
+                                type="text"
+                                bind:value={editingName}
+                                bind:this={renameInputEl}
+                                on:click|stopPropagation
+                                on:keydown|stopPropagation={(e) => {
+                                    if (e.key === 'Enter') { e.preventDefault(); applyRename(); }
+                                    else if (e.key === 'Escape') { e.preventDefault(); cancelRename(); }
+                                }}
+                                on:blur={applyRename}
+                            />
+                        {:else}
+                            {#if t.kind === 'file'}
+                                <span class="file-lang-icon">
+                                    <LanguageIcon language={tabLanguages[t.fileId] ?? language} size={17} />
+                                </span>
+                            {/if}
+                            <span class="file-name">{t.fileName}</span>
+                        {/if}
+
+                        <div class="file-actions">
+                            {#if t.kind === 'file'}
+                                <button
+                                    class="file-action-btn"
+                                    title={isDotFileName(t.fileName) ? 'Show this file in cloud backups' : 'Hide this file from cloud backups'}
+                                    aria-label={isDotFileName(t.fileName) ? 'Show this file in cloud backups' : 'Hide this file from cloud backups'}
+                                    on:click|stopPropagation={() => toggleCloudVisibility(t.fileId, t.fileName)}
+                                >
+                                    {#if isDotFileName(t.fileName)}
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                            <path d="M8 16H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2m-6 12h8a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+                                            <path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                         </svg>
-                                    </button>
-                                    <button
-                                        class="file-action-btn"
-                                        title="Rename"
-                                        on:click|stopPropagation={() => startRename(t.fileId, t.fileName, 'sidebar')}
-                                    >
+                                    {:else}
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                                            <path d="M14.06 6.19l3.75 3.75 1.69-1.69a1.5 1.5 0 000-2.12L17.87 4.5a1.5 1.5 0 00-2.12 0l-1.69 1.69z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
                                         </svg>
-                                    </button>
-                                    {#if tabs.length >= 1}
-                                        <button
-                                            class="file-action-btn"
-                                            title="Delete"
-                                            on:click|stopPropagation={() => deleteFile(t.fileId)}
-                                        >
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </svg>
-                                        </button>
                                     {/if}
-                                </div>
-                            </div>
-                        {/each}
+                                </button>
+                                <button
+                                    class="file-action-btn"
+                                    title="Duplicate"
+                                    on:click|stopPropagation={() => duplicateFile(t.fileId, t.fileName)}
+                                >
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M8 16H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2m-6 12h8a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    </svg>
+                                </button>
+                            {:else}
+                                <button
+                                    class="file-action-btn"
+                                    title="Download folder"
+                                    on:click|stopPropagation={() => downloadFolder(t.fileId)}
+                                >
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            {/if}
+                            <button
+                                class="file-action-btn"
+                                title="Rename"
+                                on:click|stopPropagation={() => startRename(t.fileId, t.fileName, 'sidebar')}
+                            >
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    <path d="M14.06 6.19l3.75 3.75 1.69-1.69a1.5 1.5 0 000-2.12L17.87 4.5a1.5 1.5 0 00-2.12 0l-1.69 1.69z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                </svg>
+                            </button>
+                            <button
+                                class="file-action-btn"
+                                title="Delete"
+                                on:click|stopPropagation={() => deleteFile(t.fileId)}
+                            >
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 {/if}
             {/each}
         </div>
+        {#if contextMenu}
+            <div
+                class="explorer-context-menu"
+                role="menu"
+                bind:this={contextMenuEl}
+                style="left: {contextMenu.x}px; top: {contextMenu.y}px;"
+                on:contextmenu|preventDefault
+            >
+                <button class="add-menu-item" role="menuitem" on:click={contextCreateFile}>New File</button>
+                <button class="add-menu-item" role="menuitem" on:click={contextCreateFolder}>New Folder</button>
+            </div>
+        {/if}
         {:else if activePanel === 'search'}
         <div class="sidebar-header">
             <span>SEARCH</span>
@@ -2189,17 +3290,14 @@ func main() {
                     {#each tabs as t}
                         {#if t.isOpen}
                         <div
-                            class="tab {isDotFileName(t.fileName) ? 'dotfile' : ''} {t.fileId === tabs[activeTabId].fileId ? 'active' : ''}"
+                            class="tab {isDotFileName(t.fileName) ? 'dotfile' : ''} {t.fileId === tabs[activeTabId].fileId ? 'active' : ''} {tabPointerDrag?.active && tabPointerDrag.fileId === t.fileId ? 'is-dragging' : ''}"
                             role="tab"
                             aria-selected={t.fileId === tabs[activeTabId].fileId}
                             tabindex={t.fileId === tabs[activeTabId].fileId ? 0 : -1}
-                            on:click={() => activateTab(t.fileId)}
+                            data-file-id={t.fileId}
+                            on:click={() => handleTabClick(t)}
                             on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateTab(t.fileId); } }}
-                            draggable={true}
-                            on:dragstart={(e) => handleDragStart(e, t.fileId)}
-                            on:dragover={(e) => handleDragOver(e, t.fileId)}
-                            on:drop={(e) => handleDrop(e, t.fileId)}
-                            on:dragend={handleDragEnd}
+                            on:pointerdown={(e) => handleTabPointerDown(e, t.fileId)}
                             on:mousedown={(e) => { 
                                 e.preventDefault();
                                 e.stopPropagation();
@@ -2227,6 +3325,11 @@ func main() {
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                         <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
+                                {:else if t.type === 'whiteboard'}
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:2px;flex-shrink:0;">
+                                        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                                        <path d="m8 15 6-6 2 2-6 6H8v-2Z"></path>
+                                    </svg>
                                 {:else}
                                     <span class="tab-lang-icon">
                                         <LanguageIcon language={tabLanguages[t.fileId] ?? language} size={17} />
@@ -2235,7 +3338,7 @@ func main() {
                                 <span class="tab-title">{t.fileName}</span>
                             {/if}
                             
-                            {#if t.type !== 'preview'}
+                            {#if !isSpecialTabType(t.type)}
                                 <button
                                     class="tab-rename"
                                     aria-label="Rename tab"
@@ -2262,7 +3365,12 @@ func main() {
                         </div>
                         {/if}
                     {/each}
-                    <button class="tab-add" aria-label="New tab" title="New tab" on:click={() => addNewTab('tab')}>+</button>
+                    {#if tabDropIndicatorStyle}
+                        <div class="tab-drop-indicator" style={tabDropIndicatorStyle} aria-hidden="true"></div>
+                    {/if}
+                    <Tooltip text={isMac ? "New tab (Cmd+Alt+N)" : "New tab (Ctrl+Alt+N)"} pos="bottom">
+                        <button class="tab-add" aria-label="New tab" on:click={() => addNewTab('tab')}>+</button>
+                    </Tooltip>
                 </div>
             </div>
             <div style="display:flex;align-items:center;gap:var(--spacing-2);">
@@ -2302,6 +3410,8 @@ func main() {
                             </button>
                         </Tooltip>
                     </div>
+                {:else if activeTab?.type === 'whiteboard'}
+                    <span style="font-size:0.9rem;color:var(--color-text-secondary);">Whiteboard</span>
                 {:else}
                 <div style="display:flex;align-items:center;gap:var(--spacing-1);">
                     <label for="language-select" style="font-size:0.9rem;color:var(--color-text-secondary);margin-right:4px;">Language</label>
@@ -2315,7 +3425,7 @@ func main() {
                             saveCurrentViewState();
                             userSettingsStorage.update((s) => ({ ...s, playgroundPreferredLanguage: language }));
                             const currentTab = tabs[activeTabId];
-                            if (currentTab && currentTab.type !== 'preview') {
+                            if (currentTab && !isSpecialTabType(currentTab.type)) {
                                 setLastLanguage(currentTab.fileId, language);
                             }
                         }}
@@ -2348,7 +3458,7 @@ func main() {
                     </Tooltip>
                 {/if}
                 {/if}
-                {#if isFirebaseAvailable && tabs[activeTabId]?.type !== 'preview'}
+                {#if isFirebaseAvailable && !isSpecialTabType(tabs[activeTabId]?.type)}
                     <Tooltip text={"Share"} pos={"bottom"}>
                         <button
                             class="icon-button"
@@ -2369,6 +3479,7 @@ func main() {
                         </button>
                     </Tooltip>
                 {/if}
+                {#if !isSpecialTabType(activeTab?.type)}
                 <Tooltip text={"Reset Code"} pos={"bottom"}>
                     <button
                         class="icon-button"
@@ -2421,25 +3532,36 @@ func main() {
                         </div>
                     {/if}
                 </div>
+                {/if}
             </div>
         </div>
 
-        <div class="editor-container">
-            {#if activeTab?.type === 'preview'}
+        <div class="editor-container" class:whiteboard-active={activeTab?.type === 'whiteboard'}>
+            {#if activeTab?.type === 'whiteboard'}
+                <div class="whiteboard-host">
+                    <Whiteboard embedded active={true} />
+                </div>
+            {:else if activeTab?.type === 'preview'}
                 {#if previewEditMode}
                     <div class="wysiwyg-container">
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <!-- svelte-ignore a11y-no-static-element-interactions -->
                         <div class="wysiwyg-toolbar" on:mousedown={handleToolbarMouseDown} on:click={handleToolbarClick}>
-                            <button type="button" data-command="bold" title="Bold" aria-label="Bold">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/></svg>
-                            </button>
-                            <button type="button" data-command="italic" title="Italic" aria-label="Italic">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
-                            </button>
-                            <button type="button" data-command="strikeThrough" title="Strikethrough" aria-label="Strikethrough">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4H9a3 3 0 0 0-2.83 4"/><path d="M14 12a4 4 0 0 1 0 8H6"/><line x1="4" x2="20" y1="12" y2="12"/></svg>
-                            </button>
+                            <Tooltip text={isMac ? "Cmd+B" : "Ctrl+B"} pos="bottom">
+                                <button type="button" data-command="bold" aria-label="Bold">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/></svg>
+                                </button>
+                            </Tooltip>
+                            <Tooltip text={isMac ? "Cmd+I" : "Ctrl+I"} pos="bottom">
+                                <button type="button" data-command="italic" aria-label="Italic">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
+                                </button>
+                            </Tooltip>
+                            <Tooltip text={isMac ? "Cmd+Shift+X" : "Ctrl+Shift+X"} pos="bottom">
+                                <button type="button" data-command="strikeThrough" aria-label="Strikethrough">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4H9a3 3 0 0 0-2.83 4"/><path d="M14 12a4 4 0 0 1 0 8H6"/><line x1="4" x2="20" y1="12" y2="12"/></svg>
+                                </button>
+                            </Tooltip>
                             <span class="wysiwyg-separator"></span>
                             <button type="button" data-command="formatBlock" data-value="h1" title="Heading 1" aria-label="Heading 1"><span class="wysiwyg-text-btn">H1</span></button>
                             <button type="button" data-command="formatBlock" data-value="h2" title="Heading 2" aria-label="Heading 2"><span class="wysiwyg-text-btn">H2</span></button>
@@ -2457,16 +3579,20 @@ func main() {
                             <button type="button" data-command="formatBlock" data-value="pre" title="Code block" aria-label="Code block">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
                             </button>
-                            <button type="button" data-command="inlineCode" title="Inline code" aria-label="Inline code">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></svg>
-                            </button>
+                            <Tooltip text={isMac ? "Cmd+E" : "Ctrl+E"} pos="bottom">
+                                <button type="button" data-command="inlineCode" aria-label="Inline code">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></svg>
+                                </button>
+                            </Tooltip>
                             <button type="button" data-command="insertHorizontalRule" title="Horizontal rule" aria-label="Horizontal rule">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12"/></svg>
                             </button>
                             <span class="wysiwyg-separator"></span>
-                            <button type="button" data-command="link" title="Insert link" aria-label="Insert link">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                            </button>
+                            <Tooltip text={isMac ? "Cmd+K" : "Ctrl+K"} pos="bottom">
+                                <button type="button" data-command="link" aria-label="Insert link">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                                </button>
+                            </Tooltip>
                             <button type="button" data-command="removeFormat" title="Clear formatting" aria-label="Clear formatting">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg>
                             </button>
@@ -2497,6 +3623,7 @@ func main() {
                             tabindex="0"
                             bind:this={wysiwygEl}
                             on:input={handleWysiwygInput}
+                            on:keydown={handleWysiwygKeydown}
                             on:paste={handleWysiwygPaste}
                             on:click={handleWysiwygClick}
                             on:blur={commitWysiwygEdits}
@@ -2528,12 +3655,49 @@ func main() {
                 Loading...
             {/if}
         </div>
-        {#if language !== 'plaintext' && language !== 'markdown' && activeTab?.type !== 'preview'}
+        {#if language !== 'plaintext' && language !== 'markdown' && !isSpecialTabType(activeTab?.type)}
             <PlaygroundExecutionPanel {code} {language} {isMac} bind:output bind:logs debugBreakpoints={debugBreakpoints} bind:activeDebugLine={activeDebugLine} bind:debugJobId={debugJobId} />
         {/if}
         {:else}
         <div class="empty-state">
             <div class="empty-state-content">
+                {#if recentFiles.length > 0}
+                    <div class="empty-section">
+                        <div class="empty-section-title">Recent Files</div>
+                        <div class="recent-files-grid">
+                            {#each recentFiles as file}
+                                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                                <div
+                                    class="recent-file-card"
+                                    role="button"
+                                    tabindex="0"
+                                    on:click={() => activateTab(file.fileId)}
+                                    on:keydown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            activateTab(file.fileId);
+                                        }
+                                    }}
+                                >
+                                    <div class="recent-file-card-header">
+                                        {#if file.type === 'preview'}
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0;">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        {:else}
+                                            <LanguageIcon language={tabLanguages[file.fileId] ?? language} size={17} />
+                                        {/if}
+                                        <span class="recent-file-card-title">{file.fileName}</span>
+                                    </div>
+                                    {#if getFilePath(file.fileId) != '/'}
+                                      <span class="recent-file-card-path">{getFilePath(file.fileId)}</span>
+                                    {/if}
+                                </div>
+                            {/each}
+                        </div>
+                    </div>
+                {/if}
                 <div class="empty-shortcuts">
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -2732,6 +3896,58 @@ func main() {
         animation: cloud-icon-spin 0.7s linear infinite;
     }
 
+    .cloud-icon-legend.success,
+    .cloud-icon-legend.error {
+        background: transparent;
+        border: none;
+        box-shadow: 0 0 0 1px var(--color-bg);
+        width: 12px;
+        height: 12px;
+    }
+
+    .cloud-icon-legend.success::after {
+        content: '';
+        position: absolute;
+        left: 6px;
+        top: 0;
+        width: 5px;
+        height: 8px;
+        border: solid #2ecc71;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        animation: cloud-icon-success-pop 0.25s ease-out;
+    }
+
+    .cloud-icon-legend.error::before,
+    .cloud-icon-legend.error::after {
+        content: '';
+        position: absolute;
+        left: 6px;
+        top: 2px;
+        width: 8px;
+        height: 2px;
+        background: #e74c3c;
+    }
+
+    .cloud-icon-legend.error::before {
+        transform: rotate(45deg);
+    }
+
+    .cloud-icon-legend.error::after {
+        transform: rotate(-45deg);
+    }
+
+    @keyframes cloud-icon-success-pop {
+        from {
+            transform: rotate(45deg) scale(0.4);
+            opacity: 0;
+        }
+        to {
+            transform: rotate(45deg) scale(1);
+            opacity: 1;
+        }
+    }
+
     @keyframes cloud-icon-spin {
         to {
             transform: rotate(360deg);
@@ -2765,10 +3981,73 @@ func main() {
         letter-spacing: 0.05em;
     }
 
+    .sidebar-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+    }
+
+    .import-file-input {
+        display: none;
+    }
+
+    .add-menu-wrapper {
+        position: relative;
+    }
+
+    .add-menu {
+        position: absolute;
+        top: 32px;
+        right: 0;
+        min-width: 140px;
+        border: 1px solid var(--color-border);
+        background-color: var(--color-bg);
+        border-radius: 6px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+        z-index: 20;
+        padding: 4px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .add-menu-item {
+        background: transparent;
+        border: none;
+        color: var(--color-text);
+        text-align: left;
+        padding: 8px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
+
+    .add-menu-item:hover {
+        background-color: var(--color-second-bg);
+    }
+
+    .explorer-context-menu {
+        position: fixed;
+        min-width: 140px;
+        border: 1px solid var(--color-border);
+        background-color: var(--color-bg);
+        border-radius: 6px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+        z-index: 1000;
+        padding: 4px;
+        display: flex;
+        flex-direction: column;
+    }
+
     .file-list {
         flex: 1;
         overflow-y: auto;
         padding: var(--spacing-1) 0;
+        min-height: 0;
+    }
+
+    .file-list.drag-over-root {
+        box-shadow: inset 0 0 0 1px var(--color-highlight);
     }
 
     .file-item {
@@ -2780,6 +4059,32 @@ func main() {
         color: var(--color-text-secondary);
         font-size: 0.9rem;
         user-select: none;
+        touch-action: none;
+    }
+
+    .file-item.is-dragging {
+        opacity: 0.45;
+    }
+
+    .file-item.empty-folder-label {
+        cursor: default;
+        opacity: 0.5;
+        font-style: italic;
+        pointer-events: none;
+    }
+
+    .file-item.empty-folder-label:hover {
+        background-color: transparent;
+        color: var(--color-text-secondary);
+    }
+
+    :global(body.explorer-dragging) {
+        cursor: grabbing !important;
+        user-select: none !important;
+    }
+
+    :global(body.explorer-dragging .file-item) {
+        cursor: grabbing;
     }
 
     .file-item:hover {
@@ -2795,7 +4100,40 @@ func main() {
     .file-item.dotfile {
         opacity: 0.6;
     }
- 
+
+    .file-item.drag-over-folder {
+        background-color: var(--color-third-bg);
+        box-shadow: inset 0 0 0 1px var(--color-highlight);
+    }
+
+    .folder-chevron {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 2px;
+        flex-shrink: 0;
+        color: var(--color-text-secondary);
+        background: transparent;
+        border: none;
+        padding: 2px;
+        border-radius: 4px;
+        cursor: pointer;
+        touch-action: manipulation;
+    }
+
+    .folder-chevron:hover {
+        background-color: rgba(255, 255, 255, 0.08);
+        color: var(--color-text);
+    }
+
+    .folder-chevron svg {
+        transition: transform 0.12s ease;
+        display: block;
+    }
+
+    .folder-icon {
+        color: var(--color-text-secondary);
+    }
 
     .file-name {
         white-space: nowrap;
@@ -2817,6 +4155,7 @@ func main() {
         display: none;
         align-items: center;
         gap: 4px;
+        flex-shrink: 0;
     }
 
     .file-item:hover .file-actions {
@@ -2848,6 +4187,7 @@ func main() {
         padding: 2px 4px;
         font-size: 0.9rem;
         width: 100%;
+        min-width: 0;
     }
 
     /* Search Panel Styles */
@@ -3043,6 +4383,18 @@ func main() {
         flex-direction: column;
     }
 
+    .editor-container.whiteboard-active {
+        padding: 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .whiteboard-host {
+        position: absolute;
+        inset: 0;
+        min-height: 0;
+    }
+
     .markdown-preview {
         flex-grow: 1;
         min-height: 0;
@@ -3158,6 +4510,7 @@ func main() {
         flex: 1;
         min-width: 0;
         flex-wrap: nowrap;
+        position: relative;
     }
     /* Compact the tab bar when shown inside the header */
     .editor-header .tab-bar {
@@ -3192,6 +4545,29 @@ func main() {
         font-size: 0.85rem;
         line-height: 1;
         user-select: none;
+        -webkit-user-select: none;
+        cursor: grab;
+        touch-action: none;
+    }
+    .tab.is-dragging {
+        opacity: 0.45;
+    }
+    .tab-drop-indicator {
+        position: absolute;
+        top: 4px;
+        bottom: 4px;
+        width: 2px;
+        border-radius: 1px;
+        background: var(--color-highlight);
+        pointer-events: none;
+        z-index: 5;
+    }
+    :global(body.tab-dragging) {
+        cursor: grabbing !important;
+        user-select: none !important;
+    }
+    :global(body.tab-dragging .tab) {
+        cursor: grabbing;
     }
     .tab.active {
         background-color: var(--color-surface);
@@ -3381,7 +4757,68 @@ func main() {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
-        min-width: 300px;
+        width: 100%;
+        max-width: 540px;
+    }
+    .empty-section {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+        max-width: 540px;
+    }
+    .empty-section-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--color-text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 0 2px;
+    }
+    .recent-files-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        width: 100%;
+    }
+    .recent-file-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+        padding: 10px 12px;
+        background-color: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.15s, border-color 0.15s;
+        text-align: left;
+        min-width: 0;
+    }
+    .recent-file-card:hover {
+        background-color: rgba(255, 255, 255, 0.06);
+        border-color: var(--color-text-secondary);
+    }
+    .recent-file-card-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+    }
+    .recent-file-card-title {
+        font-size: 0.88rem;
+        font-weight: 500;
+        color: var(--color-text);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .recent-file-card-path {
+        font-size: 0.75rem;
+        color: var(--color-text-secondary);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     .shortcut-row {
         display: flex;
@@ -3395,7 +4832,7 @@ func main() {
     }
 
     .shortcut-row:hover {
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: var(--color-surface);
     }
     .shortcut-keys {
         display: flex;
