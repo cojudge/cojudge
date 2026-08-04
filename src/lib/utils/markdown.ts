@@ -1,6 +1,7 @@
 import { marked, Renderer } from 'marked';
 import TurndownService from 'turndown';
 import { gfm } from 'turndown-plugin-gfm';
+import { languageIconSvg } from './languageIcon';
 
 function simpleHash(str: string): string {
     let hash = 0;
@@ -182,8 +183,67 @@ export function normalizeUrl(text: string): string {
     return trimmed;
 }
 
-// HTML for a link that opens in a new tab (used by WYSIWYG paste / insert).
-export function linkHtml(href: string, text: string): string {
+// True when href points at a playground file (relative or absolute).
+// e.g. /playground?fileId=abc, https://host/playground?fileId=abc
+export function parsePlaygroundFileId(href: string): string | null {
+    if (!href) return null;
+    try {
+        const url = new URL(href, 'http://local.invalid');
+        const path = url.pathname.replace(/\/+$/, '') || '/';
+        if (path !== '/playground') return null;
+        const fileId = url.searchParams.get('fileId');
+        return fileId && fileId.length > 0 ? fileId : null;
+    } catch {
+        return null;
+    }
+}
+
+export function playgroundFileHref(fileId: string): string {
+    return `/playground?fileId=${encodeURIComponent(fileId)}`;
+}
+
+// Notion-style inline file mention (icon + underlined label). contenteditable=false
+// makes it an atomic unit in the WYSIWYG editor.
+export const FILE_MENTION_CLASS = 'md-file-mention';
+export const FILE_MENTION_LABEL_CLASS = 'md-file-mention-label';
+
+export type MarkdownRenderOptions = {
+    imageThumbnails?: boolean;
+    /** Resolve a playground fileId to a language so mentions can show the right icon. */
+    resolveFileLanguage?: (fileId: string) => string | null | undefined;
+};
+
+export function fileMentionHtml(href: string, text: string, language?: string | null): string {
+    const label = text || href;
+    return (
+        `<a href="${escapeHtmlAttr(href)}" class="${FILE_MENTION_CLASS}" contenteditable="false">` +
+        languageIconSvg(language, 14) +
+        `<span class="${FILE_MENTION_LABEL_CLASS}">${escapeHtmlAttr(label)}</span>` +
+        `</a>`
+    );
+}
+
+// After rendering markdown into the WYSIWYG editor, ensure each file mention is an
+// atomic unit with a ZWSP caret anchor after it. Without the anchor, browsers park
+// the caret at the end of the block (far right) and Backspace needs two presses.
+export function ensureFileMentionCarets(root: HTMLElement) {
+    const mentions = Array.from(root.querySelectorAll(`.${FILE_MENTION_CLASS}`));
+    for (const mention of mentions) {
+        mention.setAttribute('contenteditable', 'false');
+        const next = mention.nextSibling;
+        if (next && next.nodeType === Node.TEXT_NODE && (next.textContent || '').startsWith('\u200B')) {
+            continue;
+        }
+        mention.after(document.createTextNode('\u200B'));
+    }
+}
+
+// HTML for a link. External links open in a new tab; playground file links are
+// rendered as Notion-style file mentions (in-app navigation).
+export function linkHtml(href: string, text: string, language?: string | null): string {
+    if (parsePlaygroundFileId(href)) {
+        return fileMentionHtml(href, text, language);
+    }
     return `<a href="${escapeHtmlAttr(href)}" target="_blank" rel="noopener noreferrer">${escapeHtmlAttr(text)}</a>`;
 }
 
@@ -265,18 +325,25 @@ export function wrapCodeBlocksWithCopy(root: HTMLElement) {
     }
 }
 
-function openLinksInNewTab(renderer: Renderer) {
+function configureLinks(renderer: Renderer, options?: MarkdownRenderOptions) {
     const originalLink = renderer.link.bind(renderer);
     renderer.link = (token: any) => {
+        const href = token.href ?? '';
+        const fileId = parsePlaygroundFileId(href);
+        // Playground file refs render as Notion-style mentions and navigate in-app.
+        if (fileId) {
+            const language = options?.resolveFileLanguage?.(fileId);
+            return fileMentionHtml(href, token.text ?? href, language);
+        }
         const html = originalLink(token);
         if (typeof html !== 'string' || !html.startsWith('<a ')) return html;
         return html.replace(/^<a /, '<a target="_blank" rel="noopener noreferrer" ');
     };
 }
 
-export function getMarkdownRenderer(options?: { imageThumbnails?: boolean }) {
+export function getMarkdownRenderer(options?: MarkdownRenderOptions) {
     const renderer = new Renderer();
-    openLinksInNewTab(renderer);
+    configureLinks(renderer, options);
     if (options?.imageThumbnails) {
         renderer.image = (token: any) => imageThumbnailHtml(token.href ?? '', token.text ?? '', token.title);
     }
@@ -325,16 +392,16 @@ export function getMarkdownRenderer(options?: { imageThumbnails?: boolean }) {
     return renderer;
 }
 
-export function renderMarkdown(content: string, options?: { imageThumbnails?: boolean }) {
+export function renderMarkdown(content: string, options?: MarkdownRenderOptions) {
     const renderer = getMarkdownRenderer(options);
     return marked.parse(content, { renderer });
 }
 
 // Plain GFM rendering without the interactive code-block wrapper.
 // Used as the source HTML for WYSIWYG editing so it can round-trip back to markdown.
-export function renderMarkdownPlain(content: string): string {
+export function renderMarkdownPlain(content: string, options?: MarkdownRenderOptions): string {
     const renderer = new Renderer();
-    openLinksInNewTab(renderer);
+    configureLinks(renderer, options);
     return marked.parse(content, { async: false, renderer });
 }
 
@@ -364,6 +431,17 @@ function getTurndownService(): TurndownService {
                 return delimiter + extraSpace + content + extraSpace + delimiter;
             }
         });
+        // Notion-style file mentions round-trip to [label](/playground?fileId=...).
+        turndownService.addRule('fileMention', {
+            filter: (node: HTMLElement) =>
+                node.nodeName === 'A' && node.classList.contains(FILE_MENTION_CLASS),
+            replacement: (_content: string, node: HTMLElement) => {
+                const href = node.getAttribute('href') || '';
+                const labelEl = node.querySelector(`.${FILE_MENTION_LABEL_CLASS}`);
+                const label = (labelEl?.textContent || node.textContent || href).trim();
+                return `[${label}](${href})`;
+            }
+        });
     }
     return turndownService;
 }
@@ -388,6 +466,7 @@ export function htmlToMarkdown(html: string): string {
     }
     // Trailing whitespace (e.g. the empty line kept by
     // ensureTrailingEmptyLine) is insignificant in markdown, so drop it to
-    // keep repeated WYSIWYG round-trips stable.
-    return getTurndownService().turndown(html).replace(/\s+$/, '');
+    // keep repeated WYSIWYG round-trips stable. Also strip ZWSP caret anchors
+    // inserted after contenteditable=false file mentions.
+    return getTurndownService().turndown(html).replace(/\u200B/g, '').replace(/\s+$/, '');
 }

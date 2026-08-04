@@ -353,3 +353,72 @@ test('WYSIWYG code blocks have a working copy button', async ({ page }) => {
   await page.getByRole('button', { name: 'Preview' }).click();
   await expect.poll(() => getMarkdownContent(page)).toContain('```js');
 });
+
+test('WYSIWYG @ mention inserts a playground file link and click switches tab', async ({ page }) => {
+  const noteId = 'note-file-id-001';
+  const targetId = 'target-file-id-002';
+  await page.goto('/playground');
+  await page.evaluate(({ noteId, targetId }) => {
+    localStorage.setItem('user-settings', JSON.stringify({ playgroundPreferredLanguage: 'markdown' }));
+    localStorage.setItem('playground-markdown-mode', 'wysiwyg');
+    localStorage.setItem('files', JSON.stringify({
+      playground: JSON.stringify([
+        {
+          fileId: noteId,
+          fileName: 'Notes',
+          language: 'markdown',
+          content: 'hello',
+          isOpen: true,
+          order: 0,
+          lastUpdated: Date.now(),
+        },
+        {
+          fileId: targetId,
+          fileName: 'TargetDoc',
+          language: 'markdown',
+          content: '# target',
+          isOpen: true,
+          order: 1,
+          lastUpdated: Date.now() - 1000,
+        },
+      ]),
+    }));
+  }, { noteId, targetId });
+  await page.reload();
+
+  // Notes is most recently updated, so it should be active; open WYSIWYG
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  await expect(editable).toBeVisible({ timeout: 15000 });
+
+  await editable.locator('> p:last-child').click();
+  await page.keyboard.press('End');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('@Target');
+
+  const mentionPopup = page.locator('.mention-popup');
+  await expect(mentionPopup).toBeVisible();
+  await expect(mentionPopup.locator('.mention-result-item')).toContainText('TargetDoc');
+  await page.keyboard.press('Enter');
+  await expect(mentionPopup).toBeHidden();
+
+  const link = editable.locator(`a.md-file-mention[href="/playground?fileId=${targetId}"]`);
+  await expect(link).toBeVisible();
+  await expect(link.locator('.md-file-mention-label')).toHaveText('TargetDoc');
+  await expect(link.locator('.md-file-mention-icon')).toBeVisible();
+  // Markdown files use the MD language icon
+  await expect(link.locator('.md-file-mention-icon text')).toHaveText('MD');
+  await expect(link).not.toHaveAttribute('target', '_blank');
+  await expect.poll(async () => {
+    return page.evaluate((id) => {
+      const allFiles = JSON.parse(localStorage.getItem('files') || '{}');
+      const files = JSON.parse(allFiles['playground'] || '[]') as { fileId: string; content: string }[];
+      return files.find((f) => f.fileId === id)?.content ?? '';
+    }, noteId);
+  }).toContain(`[TargetDoc](/playground?fileId=${targetId})`);
+
+  // Clicking the in-app link switches tab without leaving playground
+  await link.click();
+  await expect(page).toHaveURL(/\/playground/);
+  await expect(page.locator('.tab.active')).toContainText('TargetDoc');
+});
