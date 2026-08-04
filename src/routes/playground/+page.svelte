@@ -3918,7 +3918,7 @@ func main() {
                                         <span class="recent-file-card-title">{file.fileName}</span>
                                     </div>
                                     {#if getFilePath(file.fileId) != '/'}
-                                      <span class="recent-file-card-path">{getFilePath(file.fileId)}</span>
+                                      <span class="recent-file-card-path">{getFilePath(file.fileId).replace(/^\/|\/$/g, '')}</span>
                                     {/if}
                                 </div>
                             {/each}
@@ -4720,6 +4720,10 @@ func main() {
     .wysiwyg-editing {
         outline: none;
         cursor: text;
+    }
+
+    .wysiwyg-editing :global(a) {
+        cursor: pointer;
     }
 
     .wysiwyg-editing:focus {
