@@ -155,7 +155,7 @@ describe('progress backups', () => {
 					},
 					{
 						fileId: '2',
-						fileName: 'Preview: README',
+						fileName: 'README',
 						language: 'markdown',
 						content: '<h1>Hello</h1>',
 						type: 'preview',
