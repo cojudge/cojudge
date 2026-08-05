@@ -588,7 +588,7 @@ func main() {
 
     function startRename(fileId: string, currentName: string, source: 'sidebar' | 'tab') {
         const tab = tabs.find((t) => t.fileId === fileId);
-        if (isSpecialTabType(tab?.type)) return;
+        if (tab?.type === 'whiteboard') return;
         editingTabId = fileId;
         editingName = currentName;
         renamingSource = source;
@@ -603,20 +603,32 @@ func main() {
         if (!editingTabId) return;
         const newName = editingName.trim();
         const targetId = editingTabId;
+        const targetTab = tabs.find(t => t.fileId === targetId);
         const oldName =
-            tabs.find(t => t.fileId === targetId)?.fileName ||
+            targetTab?.fileName ||
             getFiles().find(f => f.fileId === targetId)?.fileName ||
             'Solution';
         const finalName = newName || oldName;
+        // Preview tabs share a display name with their source markdown file.
+        const linkedIds = new Set<string>([targetId]);
+        if (targetTab?.type === 'preview' && targetTab.sourceFileId) {
+            linkedIds.add(targetTab.sourceFileId);
+        } else {
+            for (const t of tabs) {
+                if (t.type === 'preview' && t.sourceFileId === targetId) linkedIds.add(t.fileId);
+            }
+        }
         // Update tabs
         const now = Date.now();
-        tabs = tabs.map(t => t.fileId === targetId ? { ...t, fileName: finalName, lastUpdated: now } : t);
+        tabs = tabs.map(t => linkedIds.has(t.fileId) || (t.type === 'preview' && t.sourceFileId && linkedIds.has(t.sourceFileId))
+            ? { ...t, fileName: finalName, lastUpdated: now }
+            : t);
         // Update all store entries for this fileId
         const fkey = fileKey();
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
             for (const f of files) {
-                if (f.fileId === targetId) {
+                if (linkedIds.has(f.fileId) || (f.type === 'preview' && f.sourceFileId && linkedIds.has(f.sourceFileId))) {
                     f.fileName = finalName;
                     f.lastUpdated = now;
                 }
@@ -1610,12 +1622,27 @@ func main() {
         const tabsToRemove = tabs.filter(
             (t) => removeIds.has(t.fileId) || (t.sourceFileId ? removeIds.has(t.sourceFileId) : false)
         );
-        const activeTabWillBeRemoved = tabsToRemove.some(t => t.fileId === tabs[activeTabId]?.fileId);
+        const activeFileId = tabs[activeTabId]?.fileId;
+        const activeTabWillBeRemoved = tabsToRemove.some(t => t.fileId === activeFileId);
 
+        // If the active tab is removed, prefer another already-open tab. Do not
+        // reopen a closed file — with no open tabs left, show the empty state.
+        let nextOpenFileId: string | undefined;
         if (activeTabWillBeRemoved) {
-            const nextTab = tabs.find(t => !tabsToRemove.includes(t));
-            if (nextTab) {
-                activateTab(nextTab.fileId);
+            const activeIdx = activeTabId;
+            for (let i = activeIdx + 1; i < tabs.length; i++) {
+                if (!tabsToRemove.includes(tabs[i]) && tabs[i].isOpen) {
+                    nextOpenFileId = tabs[i].fileId;
+                    break;
+                }
+            }
+            if (!nextOpenFileId) {
+                for (let i = activeIdx - 1; i >= 0; i--) {
+                    if (!tabsToRemove.includes(tabs[i]) && tabs[i].isOpen) {
+                        nextOpenFileId = tabs[i].fileId;
+                        break;
+                    }
+                }
             }
         }
 
@@ -1631,11 +1658,21 @@ func main() {
         tabs = tabs.filter((t) => !tabsToRemove.includes(t));
         persistTabOrder();
 
-        if (tabs.length > 0) {
-            activeTabId = Math.max(0, Math.min(activeTabId, tabs.length - 1));
-        } else {
+        if (activeTabWillBeRemoved) {
+            if (nextOpenFileId) {
+                const idx = tabs.findIndex((t) => t.fileId === nextOpenFileId);
+                if (idx !== -1) {
+                    activeTabId = idx;
+                    loadTabContent(tabs[idx]);
+                    return;
+                }
+            }
             activeTabId = 0;
+            return;
         }
+
+        const idx = tabs.findIndex((t) => t.fileId === activeFileId);
+        activeTabId = idx !== -1 ? idx : 0;
     }
 
     onMount(async () => {
@@ -3955,9 +3992,9 @@ func main() {
                                 />
                             {:else}
                                 {#if t.type === 'preview'}
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="margin-right:2px;flex-shrink:0;">
-                                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
+                                    <span class="tab-lang-icon">
+                                        <LanguageIcon language="markdown" size={17} />
+                                    </span>
                                 {:else if t.type === 'whiteboard'}
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:2px;flex-shrink:0;">
                                         <rect x="3" y="4" width="18" height="16" rx="2"></rect>
@@ -3971,7 +4008,7 @@ func main() {
                                 <span class="tab-title">{t.fileName}</span>
                             {/if}
 
-                            {#if !isSpecialTabType(t.type)}
+                            {#if t.type !== 'whiteboard'}
                                 <button
                                     class="tab-rename"
                                     aria-label="Rename tab"
@@ -4347,9 +4384,7 @@ func main() {
                                 >
                                     <div class="recent-file-card-header">
                                         {#if file.type === 'preview'}
-                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0;">
-                                                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </svg>
+                                            <LanguageIcon language="markdown" size={17} />
                                         {:else}
                                             <LanguageIcon language={tabLanguages[file.fileId] ?? language} size={17} />
                                         {/if}
@@ -4466,9 +4501,7 @@ func main() {
                         >
                             <span class="search-file-info">
                                 {#if file.type === 'preview'}
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0;">
-                                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
+                                    <LanguageIcon language="markdown" size={17} />
                                 {:else}
                                     <LanguageIcon language={tabLanguages[file.fileId] ?? language} size={17} />
                                 {/if}
@@ -4507,9 +4540,7 @@ func main() {
                     >
                         <span class="search-file-info">
                             {#if file.type === 'preview'}
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0;">
-                                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
+                                <LanguageIcon language="markdown" size={17} />
                             {:else}
                                 <LanguageIcon language={tabLanguages[file.fileId] ?? language} size={17} />
                             {/if}
