@@ -53,7 +53,7 @@ test('WYSIWYG paste turns a URL string into a link', async ({ page }) => {
   await page.keyboard.type('before');
   await expect.poll(() => getMarkdownContent(page)).toBe('before');
 
-  await page.getByRole('button', { name: 'Preview Markdown' }).click();
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
   const editable = page.locator('.wysiwyg-editing');
   await expect(editable).toBeVisible();
 
@@ -78,7 +78,7 @@ test('playground markdown preview has a WYSIWYG editing mode', async ({ page }) 
   await page.keyboard.type('# Hello\n\nsome text');
   await expect.poll(() => getMarkdownContent(page)).toBe('# Hello\n\nsome text');
 
-  await page.getByRole('button', { name: 'Preview Markdown' }).click();
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
   const editable = page.locator('.wysiwyg-editing');
   await expect(editable).toBeVisible();
   await expect(editable.locator('h1')).toHaveText('Hello');
@@ -88,25 +88,25 @@ test('playground markdown preview has a WYSIWYG editing mode', async ({ page }) 
   await page.getByRole('button', { name: 'Bold', exact: true }).click();
   await expect.poll(() => getMarkdownContent(page)).toContain('**some text**');
 
-  await page.getByRole('button', { name: 'Done editing' }).click();
+  await page.getByRole('button', { name: 'Preview' }).click();
   const preview = page.locator('.markdown-preview:not(.wysiwyg-editing)');
   await expect(preview.locator('strong')).toHaveText('some text');
 
-  // Switch to markdown file tab, then click the preview tab
-  await page.locator('.tab-bar .tab', { hasText: 'Solution-1' }).click();
+  // Switch to source via Source button, then back to preview
+  await page.getByRole('button', { name: 'Source' }).click();
   await expect(page.locator('.monaco-editor')).toBeVisible();
 
-  await page.locator('.tab-bar .tab', { hasText: 'Preview: Solution-1' }).click();
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
   await expect(editable).toBeVisible();
 
-  // Click "Done editing" to view read-only mode while on preview tab
-  await page.getByRole('button', { name: 'Done editing' }).click();
+  // Click "Preview" to view read-only mode while on preview tab
+  await page.getByRole('button', { name: 'Preview' }).click();
   await expect(preview).toBeVisible();
 
-  // Click away to markdown file tab and click back to preview tab
-  await page.locator('.tab-bar .tab', { hasText: 'Solution-1' }).click();
-  await page.locator('.tab-bar .tab', { hasText: 'Preview: Solution-1' }).click();
-  // By default, clicking the preview tab opens the WYSIWYG editor
+  // Switch to source and back to preview (mode switch replaces the tab in place)
+  await page.getByRole('button', { name: 'Source' }).click();
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  // By default, opening preview opens the WYSIWYG editor
   await expect(editable).toBeVisible();
 });
 
@@ -118,7 +118,7 @@ test('WYSIWYG turns an exact three-hyphen line into a horizontal rule', async ({
   await page.keyboard.type('before');
   await expect.poll(() => getMarkdownContent(page)).toBe('before');
 
-  await page.getByRole('button', { name: 'Preview Markdown' }).click();
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
   const editable = page.locator('.wysiwyg-editing');
   await expect(editable).toBeVisible();
 
@@ -148,7 +148,7 @@ test('horizontal rule toolbar preserves Markdown tables', async ({ page }) => {
   await page.keyboard.type('| A | B |\n| - | - |\n| 1 | 2 |');
   await expect.poll(() => getMarkdownContent(page)).toContain('| 1 | 2 |');
 
-  await page.getByRole('button', { name: 'Preview Markdown' }).click();
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
   const editable = page.locator('.wysiwyg-editing');
   await editable.locator('td').first().click();
   await page.getByRole('button', { name: 'Horizontal rule' }).click();
@@ -186,8 +186,8 @@ test('pasted images render as thumbnails with lightbox and delete in the preview
   await openMarkdownPlayground(page);
   await pasteImageIntoEditor(page);
 
-  await page.getByRole('button', { name: 'Preview Markdown' }).click();
-  await page.getByRole('button', { name: 'Done editing' }).click();
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  await page.getByRole('button', { name: 'Preview' }).click();
   const preview = page.locator('.markdown-preview:not(.wysiwyg-editing)');
   const thumbnail = preview.locator('.md-thumb');
   await expect(thumbnail).toBeVisible();
@@ -230,7 +230,7 @@ test('WYSIWYG keeps an empty line at the end so typing continues after a pasted 
   await page.keyboard.type('hello');
   await expect.poll(() => getMarkdownContent(page)).toBe('hello');
 
-  await page.getByRole('button', { name: 'Preview Markdown' }).click();
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
   const editable = page.locator('.wysiwyg-editing');
   await expect(editable).toBeVisible();
 
@@ -259,11 +259,11 @@ test('WYSIWYG keeps an empty line at the end so typing continues after a pasted 
   // typing on the trailing empty line adds exactly one blank line plus the
   // typed line, never more
   const stable = await getMarkdownContent(page);
-  await page.getByRole('button', { name: 'Done editing' }).click();
-  await page.getByRole('button', { name: 'Edit markdown (WYSIWYG)' }).click();
+  await page.getByRole('button', { name: 'Preview' }).click();
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
   await editable.locator('p').last().click();
   await page.keyboard.type('x');
-  await page.getByRole('button', { name: 'Done editing' }).click();
+  await page.getByRole('button', { name: 'Preview' }).click();
   await expect.poll(() => getMarkdownContent(page)).toBe(`${stable}\n\nx`);
 });
 
@@ -275,7 +275,7 @@ test('WYSIWYG toolbar wraps the selection in inline code', async ({ page }) => {
   await page.keyboard.type('hello world');
   await expect.poll(() => getMarkdownContent(page)).toBe('hello world');
 
-  await page.getByRole('button', { name: 'Preview Markdown' }).click();
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
   const editable = page.locator('.wysiwyg-editing');
   await expect(editable).toBeVisible();
 
@@ -287,7 +287,7 @@ test('WYSIWYG toolbar wraps the selection in inline code', async ({ page }) => {
   await expect(editable.locator('code')).toHaveText('hello world');
   await expect.poll(() => getMarkdownContent(page)).toContain('`hello world`');
 
-  await page.getByRole('button', { name: 'Done editing' }).click();
+  await page.getByRole('button', { name: 'Preview' }).click();
   const preview = page.locator('.markdown-preview:not(.wysiwyg-editing)');
   await expect(preview.locator('code')).toHaveText('hello world');
 });
@@ -300,7 +300,7 @@ test('WYSIWYG auto-matches backticks into inline code and undo cancels it', asyn
   await page.keyboard.type('hello');
   await expect.poll(() => getMarkdownContent(page)).toBe('hello');
 
-  await page.getByRole('button', { name: 'Preview Markdown' }).click();
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
   const editable = page.locator('.wysiwyg-editing');
   await expect(editable).toBeVisible();
 
@@ -326,7 +326,7 @@ test('WYSIWYG auto-matches backticks into inline code and undo cancels it', asyn
 
   // The undone state stores the literal backticks (escaped in markdown), so
   // the preview shows them as plain text, not inline code
-  await page.getByRole('button', { name: 'Done editing' }).click();
+  await page.getByRole('button', { name: 'Preview' }).click();
   const preview = page.locator('.markdown-preview:not(.wysiwyg-editing)');
   await expect(preview.locator('p')).toContainText('`code`');
   await expect(preview.locator('code')).toHaveCount(0);
@@ -341,7 +341,7 @@ test('WYSIWYG code blocks have a working copy button', async ({ page }) => {
   await page.keyboard.type('```js\nconst a = 1;\n```');
   await expect.poll(() => getMarkdownContent(page)).toContain('```js');
 
-  await page.getByRole('button', { name: 'Preview Markdown' }).click();
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
   const editable = page.locator('.wysiwyg-editing');
   const copyButton = editable.locator('.md-code-copy .copy-code-button');
   await expect(copyButton).toBeVisible();
@@ -350,6 +350,75 @@ test('WYSIWYG code blocks have a working copy button', async ({ page }) => {
   await copyButton.click();
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe('const a = 1;\n');
 
-  await page.getByRole('button', { name: 'Done editing' }).click();
+  await page.getByRole('button', { name: 'Preview' }).click();
   await expect.poll(() => getMarkdownContent(page)).toContain('```js');
+});
+
+test('WYSIWYG @ mention inserts a playground file link and click switches tab', async ({ page }) => {
+  const noteId = 'note-file-id-001';
+  const targetId = 'target-file-id-002';
+  await page.goto('/playground');
+  await page.evaluate(({ noteId, targetId }) => {
+    localStorage.setItem('user-settings', JSON.stringify({ playgroundPreferredLanguage: 'markdown' }));
+    localStorage.setItem('playground-markdown-mode', 'wysiwyg');
+    localStorage.setItem('files', JSON.stringify({
+      playground: JSON.stringify([
+        {
+          fileId: noteId,
+          fileName: 'Notes',
+          language: 'markdown',
+          content: 'hello',
+          isOpen: true,
+          order: 0,
+          lastUpdated: Date.now(),
+        },
+        {
+          fileId: targetId,
+          fileName: 'TargetDoc',
+          language: 'markdown',
+          content: '# target',
+          isOpen: true,
+          order: 1,
+          lastUpdated: Date.now() - 1000,
+        },
+      ]),
+    }));
+  }, { noteId, targetId });
+  await page.reload();
+
+  // Notes is most recently updated, so it should be active; open WYSIWYG
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  await expect(editable).toBeVisible({ timeout: 15000 });
+
+  await editable.locator('> p:last-child').click();
+  await page.keyboard.press('End');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('@Target');
+
+  const mentionPopup = page.locator('.mention-popup');
+  await expect(mentionPopup).toBeVisible();
+  await expect(mentionPopup.locator('.mention-result-item')).toContainText('TargetDoc');
+  await page.keyboard.press('Enter');
+  await expect(mentionPopup).toBeHidden();
+
+  const link = editable.locator(`a.md-file-mention[href="/playground?fileId=${targetId}"]`);
+  await expect(link).toBeVisible();
+  await expect(link.locator('.md-file-mention-label')).toHaveText('TargetDoc');
+  await expect(link.locator('.md-file-mention-icon')).toBeVisible();
+  // Markdown files use the MD language icon
+  await expect(link.locator('.md-file-mention-icon text')).toHaveText('MD');
+  await expect(link).not.toHaveAttribute('target', '_blank');
+  await expect.poll(async () => {
+    return page.evaluate((id) => {
+      const allFiles = JSON.parse(localStorage.getItem('files') || '{}');
+      const files = JSON.parse(allFiles['playground'] || '[]') as { fileId: string; content: string }[];
+      return files.find((f) => f.fileId === id)?.content ?? '';
+    }, noteId);
+  }).toContain(`[TargetDoc](/playground?fileId=${targetId})`);
+
+  // Clicking the in-app link switches tab without leaving playground
+  await link.click();
+  await expect(page).toHaveURL(/\/playground/);
+  await expect(page.locator('.tab.active')).toContainText('TargetDoc');
 });

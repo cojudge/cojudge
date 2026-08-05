@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, isUrlLike, normalizeUrl, linkHtml } from './markdown';
+import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref } from './markdown';
 
 describe('markdown utils', () => {
     it('renders markdown with the interactive code-block renderer', () => {
@@ -23,6 +23,38 @@ describe('markdown utils', () => {
         const plain = renderMarkdownPlain('[link](https://example.com)') as string;
         expect(plain).toContain('target="_blank"');
         expect(plain).toContain('rel="noopener noreferrer"');
+    });
+
+    it('parses playground file links and renders them as file mentions', () => {
+        expect(parsePlaygroundFileId('/playground?fileId=abc-123')).toBe('abc-123');
+        expect(parsePlaygroundFileId('https://example.com/playground?fileId=xyz')).toBe('xyz');
+        expect(parsePlaygroundFileId('/playground?fileId=abc&x=1')).toBe('abc');
+        expect(parsePlaygroundFileId('/playground')).toBe(null);
+        expect(parsePlaygroundFileId('https://example.com/other?fileId=abc')).toBe(null);
+        expect(playgroundFileHref('abc-123')).toBe('/playground?fileId=abc-123');
+
+        const href = playgroundFileHref('file-1');
+        const html = renderMarkdown(`[Notes](${href})`, {
+            resolveFileLanguage: () => 'go'
+        }) as string;
+        expect(html).toContain(`href="${href}"`);
+        expect(html).toContain('md-file-mention');
+        expect(html).toContain('md-file-mention-label');
+        expect(html).toContain('md-file-mention-icon');
+        expect(html).toContain('>Go</text>');
+        expect(html).toContain('>Notes</span>');
+        expect(html).not.toContain('target="_blank"');
+
+        const plain = renderMarkdownPlain(`[Notes](${href})`, {
+            resolveFileLanguage: () => 'markdown'
+        }) as string;
+        expect(plain).toContain('md-file-mention');
+        expect(plain).toContain('>MD</text>');
+        expect(plain).not.toContain('target="_blank"');
+        expect(linkHtml(href, 'Notes', 'java')).toContain('>J</text>');
+        expect(htmlToMarkdown(plain)).toContain(`[Notes](${href})`);
+        // Round-trip stays stable
+        expect(htmlToMarkdown(renderMarkdownPlain(htmlToMarkdown(plain)))).toContain(`[Notes](${href})`);
     });
 
     it('detects URL-like paste strings', () => {

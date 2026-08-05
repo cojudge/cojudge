@@ -164,6 +164,58 @@
   background: var(--color-hard);
 }
 
+/* Notion-style playground file mentions (icon + underlined label).
+   Always body-weight/size so bold/heading parents don't restyle them. */
+.markdown-body a.md-file-mention {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  vertical-align: baseline;
+  color: var(--color-text);
+  text-decoration: none;
+  border-radius: 3px;
+  padding: 0 0.15em;
+  margin: 0 -0.15em;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-transform: none;
+  background: transparent;
+}
+
+.markdown-body a.md-file-mention:hover {
+  background: color-mix(in srgb, var(--color-text) 8%, transparent);
+  text-decoration: none;
+}
+
+.markdown-body a.md-file-mention .md-file-mention-icon {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+.markdown-body a.md-file-mention .md-file-mention-label {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: color-mix(in srgb, var(--color-text) 35%, transparent);
+  color: var(--color-text);
+  font-weight: 400;
+  font-style: normal;
+  font-size: inherit;
+  line-height: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.markdown-body a.md-file-mention:hover .md-file-mention-label {
+  text-decoration-color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
+
 /*
  * Inline code created by the WYSIWYG backtick auto-matching. The auto-matched
  * code is a span whose inline background is the theme variable
