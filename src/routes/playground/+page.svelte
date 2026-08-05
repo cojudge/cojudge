@@ -3417,6 +3417,11 @@ func main() {
     $: hasOpenTabs = tabs.some(t => t.isOpen);
     $: activeTabName = tabs[activeTabId]?.fileName;
     $: activeTab = tabs[activeTabId];
+    // Preview tabs use a distinct fileId; explorer should highlight the source file.
+    $: activeExplorerFileId =
+        activeTab?.type === 'preview' && activeTab.sourceFileId
+            ? activeTab.sourceFileId
+            : activeTab?.fileId;
     $: fileStoreValue = $fileStore;
     $: tabLanguages = (() => {
         fileStoreValue;
@@ -3694,7 +3699,7 @@ func main() {
                     </div>
                 {:else}
                     <div
-                        class="file-item {t.kind === 'folder' ? 'folder-item' : ''} {isDotFileName(t.fileName) ? 'dotfile' : ''} {t.kind === 'file' && hasOpenTabs && t.fileId === tabs[activeTabId]?.fileId ? 'active' : ''} {explorerDragOverId === t.fileId ? 'drag-over-folder' : ''} {explorerPointerDrag?.active && explorerPointerDrag.id === t.fileId ? 'is-dragging' : ''}"
+                        class="file-item {t.kind === 'folder' ? 'folder-item' : ''} {isDotFileName(t.fileName) ? 'dotfile' : ''} {t.kind === 'file' && hasOpenTabs && t.fileId === activeExplorerFileId ? 'active' : ''} {explorerDragOverId === t.fileId ? 'drag-over-folder' : ''} {explorerPointerDrag?.active && explorerPointerDrag.id === t.fileId ? 'is-dragging' : ''}"
                         style="padding-left: {8 + t.depth * 14}px"
                         data-explorer-id={t.fileId}
                         data-explorer-kind={t.kind}
