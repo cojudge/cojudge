@@ -77,8 +77,7 @@ func main() {
 }`,
         typescript: `// your code goes here`,
         plaintext: ``,
-        markdown: `# Write your markdown here.
-`
+        markdown: ``
     };
     const programmingLanguages: ProgrammingLanguage[] = ['java', 'cpp', 'python', 'typescript', 'csharp', 'rust', 'go', 'plaintext', 'markdown'];
 
@@ -225,7 +224,7 @@ func main() {
         const nonFolderFiles = files.filter((f) => !isFolderEntry(f));
         if (!nonFolderFiles.length && !files.some(isFolderEntry)) {
             // Create a default tab; the language-specific entry will be created lazily
-            return [{ fileId: uuidv4(), fileName: 'Solution', isOpen: true, lastUpdated: Date.now() }];
+            return [{ fileId: uuidv4(), fileName: 'New File', isOpen: true, lastUpdated: Date.now() }];
         }
         if (!nonFolderFiles.length) {
             return [];
@@ -650,9 +649,12 @@ func main() {
 
     // New tab state (simple add button)
     async function addNewTab(source: 'sidebar' | 'tab' = 'tab', parentId: string | null = null) {
-        const newTabName = `Solution-${tabs.filter(t => !isSpecialTabType(t.type)).length + 1}`;
+        const files = getFiles();
+        const siblingNames = files
+            .filter((f) => (f.parentId ?? null) === parentId && !isFolderEntry(f))
+            .map((f) => f.fileName);
+        const fileName = uniqueName('New File', siblingNames);
         const nextId = uuidv4();
-        const fileName = newTabName;
         const now = Date.now();
         tabs = [...tabs, { fileId: nextId, fileName, isOpen: true, lastUpdated: now }];
         const newCode = starterCode[language] ?? '';
@@ -3662,6 +3664,42 @@ func main() {
                 {/if}
             </button>
         </Tooltip>
+        <div class="settings-wrapper activity-settings" bind:this={settingsContainer}>
+            <Tooltip text={"Settings"} pos="right">
+                <button
+                    class="activity-icon"
+                    title="Editor Settings"
+                    aria-label="Editor Settings"
+                    on:click={() => (showSettings = !showSettings)}
+                >
+                    <!-- Cog icon -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </Tooltip>
+            {#if showSettings}
+                <div class="settings-dropdown" role="dialog" aria-label="Editor settings">
+                    <label for="font-size-select">Font size</label>
+                    <select id="font-size-select" bind:value={fontSize}>
+                        {#each fontSizes as size}
+                            <option value={size}>{size}px</option>
+                        {/each}
+                    </select>
+                    <label for="theme-select">Theme</label>
+                    <select id="theme-select" bind:value={theme}>
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
+                    </select>
+                    <label for="vim-mode-select">Key Bindings</label>
+                    <select id="vim-mode-select" bind:value={vimMode}>
+                        <option value="off">Standard</option>
+                        <option value="on">Vim</option>
+                    </select>
+                </div>
+            {/if}
+        </div>
     </div>
 
     <!-- Left Sidebar -->
@@ -4183,7 +4221,7 @@ func main() {
                     </Tooltip>
                 {/if}
                 {#if activeTab?.type === 'preview' || !isSpecialTabType(activeTab?.type)}
-                <Tooltip text={"Reset Code"} pos={"bottom"}>
+                <Tooltip text={"Reset Code"} pos={"left"}>
                     <button
                         class="icon-button"
                         title="Reset Code"
@@ -4199,42 +4237,6 @@ func main() {
                         </svg>
                     </button>
                 </Tooltip>
-                <div class="settings-wrapper" bind:this={settingsContainer}>
-                    <Tooltip text={"Settings"} pos={"bottom"}>
-                        <button
-                            class="icon-button"
-                            title="Editor Settings"
-                            aria-label="Editor Settings"
-                            on:click={() => (showSettings = !showSettings)}
-                        >
-                            <!-- Cog icon -->
-                            <svg width="16px" height="16px" viewBox="0 0 32 32" id="Lager_100" data-name="Lager 100" xmlns="http://www.w3.org/2000/svg">
-                                <path id="Path_78" data-name="Path 78" d="M30.329,13.721l-2.65-.441a11.922,11.922,0,0,0-1.524-3.653l1.476-2.066a1.983,1.983,0,0,0-.211-2.553l-.428-.428a1.983,1.983,0,0,0-2.553-.211L22.373,5.845A11.922,11.922,0,0,0,18.72,4.321l-.441-2.65A2,2,0,0,0,16.306,0h-.612a2,2,0,0,0-1.973,1.671l-.441,2.65A11.922,11.922,0,0,0,9.627,5.845L7.561,4.369a1.983,1.983,0,0,0-2.553.211l-.428.428a1.983,1.983,0,0,0-.211,2.553L5.845,9.627A11.922,11.922,0,0,0,4.321,13.28l-2.65.441A2,2,0,0,0,0,15.694v.612a2,2,0,0,0,1.671,1.973l2.65.441a11.922,11.922,0,0,0,1.524,3.653L4.369,24.439a1.983,1.983,0,0,0,.211,2.553l.428.428a1.983,1.983,0,0,0,2.553.211l2.066-1.476a11.922,11.922,0,0,0,3.653,1.524l.441,2.65A2,2,0,0,0,15.694,32h.612a2,2,0,0,0,1.973-1.671l.441-2.65a11.922,11.922,0,0,0,3.653-1.524l2.066,1.476a1.983,1.983,0,0,0,2.553-.211l.428-.428a1.983,1.983,0,0,0,.211-2.553l-1.476-2.066a11.922,11.922,0,0,0,1.524-3.653l2.65-.441A2,2,0,0,0,32,16.306v-.612A2,2,0,0,0,30.329,13.721ZM16,22a6,6,0,1,1,6-6A6,6,0,0,1,16,22Z"
-                                    fill="currentColor"/>
-                            </svg>
-                        </button>
-                    </Tooltip>
-                    {#if showSettings}
-                        <div class="settings-dropdown" role="dialog" aria-label="Editor settings">
-                            <label for="font-size-select">Font size</label>
-                            <select id="font-size-select" bind:value={fontSize}>
-                                {#each fontSizes as size}
-                                    <option value={size}>{size}px</option>
-                                {/each}
-                            </select>
-                            <label for="theme-select">Theme</label>
-                            <select id="theme-select" bind:value={theme}>
-                                <option value="dark">Dark</option>
-                                <option value="light">Light</option>
-                            </select>
-                            <label for="vim-mode-select">Key Bindings</label>
-                            <select id="vim-mode-select" bind:value={vimMode}>
-                                <option value="off">Standard</option>
-                                <option value="on">Vim</option>
-                            </select>
-                        </div>
-                    {/if}
-                </div>
                 {/if}
             </div>
         </div>
@@ -5482,21 +5484,27 @@ func main() {
         transform: translateY(-2px);
     }
 
-    /* Settings dropdown */
+    /* Settings dropdown (activity bar — opens to the right) */
     .settings-wrapper {
         position: relative;
         display: inline-block;
     }
+    .settings-wrapper.activity-settings {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
     .settings-dropdown {
         position: absolute;
-        top: 36px;
-        right: 0;
+        top: 0;
+        left: calc(100% + 4px);
+        right: auto;
         border: 1px solid var(--color-border);
         background-color: var(--color-bg);
         border-radius: var(--border-radius-md);
         padding: var(--spacing-2);
         box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-        z-index: 20;
+        z-index: 30;
         min-width: 170px;
         display: grid;
         gap: var(--spacing-1);
