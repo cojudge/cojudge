@@ -1581,7 +1581,7 @@ func main() {
         if (isSpecialTabType(tabToClose?.type)) {
             const closedIdx = tabs.findIndex(t => t.fileId === fileId);
             tabs = tabs.filter(t => t.fileId !== fileId);
-            if (tabs[activeTabId]?.fileId === fileId || activeTabId >= tabs.length) {
+            if (!tabs[activeTabId]?.isOpen) {
                 let nextOpenIdx = -1;
                 for (let i = Math.min(closedIdx, tabs.length - 1); i >= 0; i--) {
                     if (tabs[i].isOpen) { nextOpenIdx = i; break; }
