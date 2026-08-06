@@ -148,6 +148,25 @@ describe('markdown utils', () => {
         expect(plain).toContain('world');
     });
 
+    it('preserves checklist checkboxes when round-tripping with text or loose paragraphs', () => {
+        const md = '- [ ] sdf\n\nabc\n\n- [ ] adsf\n- [ ] adfsa';
+        const html = renderMarkdownPlain(md);
+        expect(html).toContain('type="checkbox"');
+        
+        const back = htmlToMarkdown(html);
+        expect(back).toMatch(/\[\s\]\s+sdf/);
+        expect(back).toMatch(/\[\s\]\s+adsf/);
+        expect(back).toMatch(/\[\s\]\s+adfsa/);
+
+        // Loose list with <p> around <input>
+        const looseHtml = '<ul><li><p><input type="checkbox"> sdf</p></li></ul>';
+        expect(htmlToMarkdown(looseHtml)).toMatch(/\[\s\]\s+sdf/);
+
+        // Div wrapped <input>
+        const divHtml = '<ul><li><div><input type="checkbox"> sdf</div></li></ul>';
+        expect(htmlToMarkdown(divHtml)).toMatch(/\[\s\]\s+sdf/);
+    });
+
     it('WYSIWYG inline code spans round-trip stably', () => {
         const md = 'hello `code`';
         const html = renderMarkdownPlain(md);
@@ -168,5 +187,25 @@ describe('markdown utils', () => {
         expect(htmlToMarkdown('<p>hello</p><p>more</p><p><br></p>')).toBe('hello\n\nmore');
         // No growth when round-tripping twice
         expect(htmlToMarkdown(renderMarkdownPlain(htmlToMarkdown('<p>hello</p><p><br></p>')))).toBe('hello');
+    });
+
+    it('round-trips GFM task list checkboxes', () => {
+        const md = '- [ ] todo\n- [x] done';
+        const html = renderMarkdownPlain(md);
+        expect(html).toContain('type="checkbox"');
+        expect(html).toContain('checked');
+        const back = htmlToMarkdown(html);
+        expect(back).toMatch(/\[\s\]\s+todo/);
+        expect(back).toMatch(/\[x\]\s+done/i);
+        const again = htmlToMarkdown(renderMarkdownPlain(back));
+        expect(again).toMatch(/\[\s\]\s+todo/);
+        expect(again).toMatch(/\[x\]\s+done/i);
+    });
+
+    it('serializes live checkbox toggles from HTML attributes', () => {
+        const unchecked = htmlToMarkdown('<ul><li><input type="checkbox"> item</li></ul>');
+        const checked = htmlToMarkdown('<ul><li><input type="checkbox" checked=""> item</li></ul>');
+        expect(unchecked).toMatch(/\[\s\]\s+item/);
+        expect(checked).toMatch(/\[x\]\s+item/i);
     });
 });

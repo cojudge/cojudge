@@ -273,6 +273,69 @@
   margin-bottom: 16px;
 }
 
+.markdown-body li:has(> input[type="checkbox"]) {
+  list-style-type: none;
+}
+
+.markdown-body li:has(> input[type="checkbox"]:checked) {
+  text-decoration: line-through;
+  opacity: 0.65;
+}
+
+.markdown-body li:has(> input[type="checkbox"]:checked) ul,
+.markdown-body li:has(> input[type="checkbox"]:checked) ol {
+  text-decoration: none;
+  opacity: 1;
+}
+
+.markdown-body ul:has(> li > input[type="checkbox"]) {
+  padding-left: 0.4em;
+}
+
+.markdown-body li > input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1rem;
+  height: 1rem;
+  margin: 0 0.5rem 0 0;
+  vertical-align: -0.15em;
+  border: 1.5px solid var(--color-text-secondary);
+  border-radius: 3px;
+  background-color: transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.markdown-body li > input[type="checkbox"]:hover {
+  border-color: var(--color-highlight);
+  background-color: var(--color-surface-hover);
+}
+
+.markdown-body li > input[type="checkbox"]:checked {
+  background-color: var(--color-highlight);
+  border-color: var(--color-highlight);
+  opacity: 1;
+}
+
+.markdown-body li > input[type="checkbox"]:checked::after {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 16px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translate(-0.5px, -0.5px);
+}
+
+.markdown-body.wysiwyg-editing li > input[type="checkbox"] {
+  pointer-events: auto;
+}
+
 .markdown-body table {
   border-collapse: collapse;
   width: 100%;

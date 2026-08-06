@@ -3,10 +3,17 @@ import { expect, test, type Page } from '@playwright/test';
 async function openMarkdownPlayground(page: Page) {
   await page.goto('/playground');
   await page.evaluate(() => {
-    localStorage.removeItem('files');
     localStorage.setItem('user-settings', JSON.stringify({ playgroundPreferredLanguage: 'markdown' }));
+    localStorage.setItem('playground-markdown-mode', 'source');
+    localStorage.setItem('files', JSON.stringify({
+      playground: JSON.stringify([
+        { fileId: 'n1', fileName: 'Notes', language: 'markdown', content: '# Write your markdown here.', isOpen: true, order: 0, lastUpdated: Date.now() }
+      ])
+    }));
   });
   await page.reload();
+  const dismiss = page.getByRole('button', { name: 'Dismiss' });
+  if (await dismiss.isVisible().catch(() => false)) await dismiss.click();
   await expect(page.locator('.monaco-editor')).toBeVisible();
   await expect.poll(() => getMarkdownContent(page)).toContain('# Write your markdown here.');
 }
@@ -422,3 +429,79 @@ test('WYSIWYG @ mention inserts a playground file link and click switches tab', 
   await expect(page).toHaveURL(/\/playground/);
   await expect(page.locator('.tab.active')).toContainText('TargetDoc');
 });
+
+test('WYSIWYG checklists toggle, continue on Enter, and break out when empty', async ({ page }) => {
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('- [ ] first item');
+  await expect.poll(() => getMarkdownContent(page)).toContain('- [ ] first item');
+
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  await expect(editable).toBeVisible();
+
+  const checkbox = editable.locator('li input[type="checkbox"]').first();
+  await expect(checkbox).toBeEnabled();
+  await expect(checkbox).not.toBeChecked();
+  await checkbox.click();
+  await expect(checkbox).toBeChecked();
+  await expect.poll(() => getMarkdownContent(page)).toMatch(/\[x\]\s+first item/i);
+
+  // Enter on a filled checklist item creates another checkbox item
+  await editable.locator('li').first().click();
+  await page.keyboard.press('End');
+  await page.keyboard.press('Enter');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(2);
+  await page.keyboard.type('second');
+  await expect.poll(() => getMarkdownContent(page)).toMatch(/\[\s\]\s+second/);
+
+  // Enter on an empty checklist item breaks out of the list
+  await page.keyboard.press('Enter');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(3);
+  await page.keyboard.press('Enter');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(2);
+  await page.keyboard.type('after list');
+  await expect.poll(() => getMarkdownContent(page)).toContain('after list');
+  await expect.poll(async () => {
+    const md = await getMarkdownContent(page);
+    return md?.includes('after list') && !md.match(/\[\s\]\s+after list/);
+  }).toBeTruthy();
+});
+
+test('WYSIWYG checklist item merges keep checkboxes intact', async ({ page }) => {
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('- [ ] one\n- [ ] two');
+  await expect.poll(() => getMarkdownContent(page)).toMatch(/\[\s\]\s+two/);
+
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  await expect(editable).toBeVisible();
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(2);
+
+  // Delete at the end of the first item merges it with the second; the merged
+  // item must keep exactly one checkbox (no "one[ ] two" corruption).
+  await editable.locator('li').first().click();
+  await page.keyboard.press('End');
+  await page.keyboard.press('Delete');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(1);
+  await expect.poll(() => getMarkdownContent(page)).toMatch(/\[\s\]\s+one\s+two/);
+
+  // Backspace at the very start of a checklist item merges into the item above
+  await editable.locator('> p:last-child').click();
+  await page.getByRole('button', { name: 'Checklist' }).click();
+  await page.keyboard.type('three');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('four');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(3);
+  await editable.locator('li').nth(2).click();
+  await page.keyboard.press('Home');
+  await page.keyboard.press('Backspace');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(2);
+  await expect.poll(() => getMarkdownContent(page)).toMatch(/three\s+four/);
+});
+

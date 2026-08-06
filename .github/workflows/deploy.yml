@@ -1,0 +1,108 @@
+name: Update Server
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }}
+            VITE_FIREBASE_AUTH_DOMAIN=${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+            VITE_FIREBASE_PROJECT_ID=${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+            VITE_FIREBASE_STORAGE_BUCKET=${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+            VITE_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+            VITE_FIREBASE_APP_ID=${{ secrets.VITE_FIREBASE_APP_ID }}
+            VITE_GOOGLE_WEB_CLIENT_ID=${{ secrets.VITE_GOOGLE_WEB_CLIENT_ID }}
+            IS_DEMO_SITE=${{ secrets.IS_DEMO_SITE }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Deploy to Server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: GITHUB_TOKEN,GITHUB_ACTOR,REGISTRY,IMAGE_NAME
+          command_timeout: 20m
+          script: |
+            # Exit immediately if a command exits with a non-zero status.
+            set -e
+
+            # Define variables for maintainability
+            APP_DIR=./cojudge.cloud
+            # GHCR images are always lowercase
+            LOWER_IMAGE_NAME=$(echo "$IMAGE_NAME" | tr '[:upper:]' '[:lower:]')
+            FULL_IMAGE_NAME="${REGISTRY}/${LOWER_IMAGE_NAME}:latest"
+
+            # Check if the application directory exists.
+            if [ -d "$APP_DIR" ]; then
+              echo "Application directory exists. Pulling latest changes..."
+              cd "$APP_DIR"
+              git fetch origin main
+              git reset --hard origin/main
+              git pull origin main
+            else
+              echo "Application directory not found. Cloning repository..."
+              git clone "https://github.com/${IMAGE_NAME}.git" "$APP_DIR"
+              cd "$APP_DIR"
+            fi
+
+            # Login to registry on server
+            echo "$GITHUB_TOKEN" | docker login "$REGISTRY" -u "$GITHUB_ACTOR" --password-stdin
+
+            # Pull the latest image
+            echo "Pulling latest image: $FULL_IMAGE_NAME"
+            docker pull "$FULL_IMAGE_NAME"
+
+            # Ensure docker.sh is executable
+            chmod +x docker.sh
+
+            echo "Running deployment script..."
+            IMAGE="$FULL_IMAGE_NAME" SKIP_BUILD=true ./docker.sh
+
+            echo "Deployment successful!"

@@ -17,7 +17,7 @@
     import fileStore, { isDotFileName, type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
-    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, wrapImageThumbnails, wrapCodeBlocksWithCopy, ensureTrailingEmptyLine, ensureFileMentionCarets, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref, fileMentionHtml, FILE_MENTION_CLASS } from '$lib/utils/markdown';
+    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, wrapImageThumbnails, wrapCodeBlocksWithCopy, ensureTrailingEmptyLine, ensureFileMentionCarets, prepareTaskListCheckboxes, isTaskListItem, isEmptyTaskListItem, createTaskCheckbox, ensureTaskCheckbox, ensureTaskItemCaretAnchor, removeTaskCheckbox, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref, fileMentionHtml, FILE_MENTION_CLASS } from '$lib/utils/markdown';
     import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
     import QRCode from 'qrcode';
     import { browser } from '$app/environment';
@@ -2142,6 +2142,7 @@ func main() {
             wrapImageThumbnails(wysiwygEl);
             wrapCodeBlocksWithCopy(wysiwygEl);
             ensureFileMentionCarets(wysiwygEl);
+            prepareTaskListCheckboxes(wysiwygEl);
             ensureTrailingEmptyLine(wysiwygEl);
             wysiwygEl.focus();
         }
@@ -2156,6 +2157,10 @@ func main() {
     }
 
     function handleWysiwygInput() {
+        healTaskListStructure();
+        if (wysiwygEl?.querySelector('li input[type="checkbox"][disabled]')) {
+            prepareTaskListCheckboxes(wysiwygEl);
+        }
         maybeAutoInsertHorizontalRule();
         maybeAutoCloseInlineCode();
         updateMentionPopup();
@@ -2364,11 +2369,453 @@ func main() {
         return true;
     }
 
+    // Keep checkbox HTML attributes in sync after native toggle so innerHTML
+    // (and turndown) sees the current checked state.
+    function handleWysiwygChange(event: Event) {
+        const target = event.target;
+        if (!(target instanceof HTMLInputElement) || target.type !== 'checkbox') return;
+        if (!wysiwygEl?.contains(target)) return;
+        if (target.checked) target.setAttribute('checked', '');
+        else target.removeAttribute('checked');
+        handleWysiwygInput();
+    }
+
+    function getListItemFromSelection(): HTMLLIElement | null {
+        if (!wysiwygEl) return null;
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return null;
+        let node: Node | null = selection.getRangeAt(0).startContainer;
+        if (node.nodeType === Node.TEXT_NODE) node = node.parentElement;
+        while (node && node !== wysiwygEl) {
+            if (node instanceof HTMLLIElement) return node;
+            node = node.parentElement;
+        }
+        return null;
+    }
+
+    function placeCaretInTaskItem(li: HTMLElement, atStart = true) {
+        const selection = window.getSelection();
+        if (!selection) return;
+        wysiwygEl?.focus();
+        const anchor = ensureTaskItemCaretAnchor(li);
+        const range = document.createRange();
+        if (atStart && anchor) {
+            // Offset 1 sits after the ZWSP, so the caret paints to the right of
+            // the checkbox instead of the left (browser default for <input>).
+            range.setStart(anchor, Math.min(1, anchor.length));
+            range.collapse(true);
+        } else if (!atStart) {
+            range.selectNodeContents(li);
+            range.collapse(false);
+        } else {
+            range.selectNodeContents(li);
+            range.collapse(false);
+        }
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+
+    function breakOutOfListItem(li: HTMLLIElement) {
+        const list = li.parentElement;
+        if (!list || !/^(UL|OL)$/.test(list.tagName)) return;
+        const p = document.createElement('p');
+        p.innerHTML = '<br>';
+        const hasPrev = !!li.previousElementSibling;
+        const hasNext = !!li.nextElementSibling;
+        let nodeAfter = li.nextSibling;
+        li.remove();
+        if (!hasPrev && !hasNext) {
+            list.replaceWith(p);
+        } else if (!hasNext) {
+            list.after(p);
+        } else if (!hasPrev) {
+            list.before(p);
+        } else {
+            const newList = document.createElement(list.tagName);
+            while (nodeAfter) {
+                const nextNode = nodeAfter.nextSibling;
+                newList.appendChild(nodeAfter);
+                nodeAfter = nextNode;
+            }
+            list.after(p);
+            p.after(newList);
+        }
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.setStart(p, 0);
+        range.collapse(true);
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+    }
+
+    // Enter in a checklist item continues the checklist; empty item breaks out.
+    function handleTaskListEnter(li: HTMLLIElement): boolean {
+        const selection = window.getSelection();
+        if (!selection || !selection.isCollapsed || selection.rangeCount === 0) return false;
+
+        if (isEmptyTaskListItem(li)) {
+            breakOutOfListItem(li);
+            return true;
+        }
+
+        const range = selection.getRangeAt(0);
+        const afterRange = document.createRange();
+        afterRange.selectNodeContents(li);
+        afterRange.setStart(range.startContainer, range.startOffset);
+        const fragment = afterRange.extractContents();
+
+        ensureTaskCheckbox(li);
+        if (isEmptyTaskListItem(li) && !li.querySelector('br')) {
+            li.appendChild(document.createElement('br'));
+        }
+
+        const newLi = document.createElement('li');
+        newLi.appendChild(createTaskCheckbox());
+        newLi.appendChild(document.createTextNode('\u200B'));
+        while (fragment.firstChild) {
+            const child = fragment.firstChild;
+            if (
+                child.nodeType === Node.ELEMENT_NODE &&
+                (child as HTMLElement).tagName === 'INPUT' &&
+                (child as HTMLInputElement).type === 'checkbox'
+            ) {
+                fragment.removeChild(child);
+                continue;
+            }
+            // Drop a leading ZWSP/space from the split fragment; the new item
+            // already has its own caret anchor.
+            if (
+                child.nodeType === Node.TEXT_NODE &&
+                newLi.childNodes.length === 2 &&
+                /^[\u200B\s]/.test(child.textContent || '')
+            ) {
+                child.textContent = (child.textContent || '').replace(/^[\u200B\s]+/, '');
+                if (!child.textContent) {
+                    fragment.removeChild(child);
+                    continue;
+                }
+            }
+            newLi.appendChild(child);
+        }
+        if (isEmptyTaskListItem(newLi)) {
+            // Keep a trailing <br> so the empty item has a line box, but the
+            // caret still lives in the ZWSP after the checkbox.
+            if (![...newLi.childNodes].some((n) => n.nodeType === Node.ELEMENT_NODE && (n as HTMLElement).tagName === 'BR')) {
+                newLi.appendChild(document.createElement('br'));
+            }
+        }
+        ensureTaskItemCaretAnchor(newLi);
+        li.after(newLi);
+        placeCaretInTaskItem(newLi, true);
+        return true;
+    }
+
+    function insertOrToggleTaskList() {
+        if (!wysiwygEl) return;
+        wysiwygEl.focus();
+        const li = getListItemFromSelection();
+        if (li && isTaskListItem(li)) {
+            removeTaskCheckbox(li);
+            handleWysiwygInput();
+            return;
+        }
+        if (li) {
+            ensureTaskCheckbox(li);
+            placeCaretInTaskItem(li, false);
+            handleWysiwygInput();
+            return;
+        }
+        document.execCommand(
+            'insertHTML',
+            false,
+            '<ul><li><input type="checkbox" contenteditable="false">\u200B<br></li></ul>'
+        );
+        prepareTaskListCheckboxes(wysiwygEl);
+        const created = getListItemFromSelection();
+        if (created) placeCaretInTaskItem(created, true);
+        handleWysiwygInput();
+    }
+
+    // True when the collapsed caret sits at the very start of a task item,
+    // i.e. nothing editable between the checkbox and the caret.
+    function isCaretAtTaskItemStart(li: HTMLElement): boolean {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return false;
+        const range = selection.getRangeAt(0);
+        if (!range.collapsed) return false;
+        const node = range.startContainer;
+        if (node === li) {
+            const offset = range.startOffset;
+            for (let i = 0; i < offset; i++) {
+                if (!isZwspOnlyText(li.childNodes[i])) return false;
+            }
+            return true;
+        }
+        if (node.nodeType === Node.TEXT_NODE) {
+            const before = (node.textContent || '').slice(0, range.startOffset);
+            if (before.replace(/\u200B/g, '').length > 0) return false;
+            let prev: Node | null = node.previousSibling;
+            while (prev && isZwspOnlyText(prev)) prev = prev.previousSibling;
+            return !!prev && prev instanceof HTMLInputElement && prev.type === 'checkbox';
+        }
+        return false;
+    }
+
+    // Backspace at the very start of a task item: with a previous item, merge
+    // (standard list behavior); otherwise remove the checkbox so the item
+    // becomes a plain bullet.
+    function handleTaskListBackspace(): boolean {
+        const li = getListItemFromSelection();
+        if (!li || !isTaskListItem(li)) return false;
+        if (!isCaretAtTaskItemStart(li)) return false;
+        const prev = li.previousElementSibling;
+        if (prev && prev.tagName === 'LI') {
+            appendListItemContent(prev as HTMLElement, li);
+            placeCaretAtLiEnd(prev as HTMLElement);
+            handleWysiwygInput();
+            return true;
+        }
+        removeTaskCheckbox(li);
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(li);
+        range.collapse(true);
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+        handleWysiwygInput();
+        return true;
+    }
+
+    // True when the collapsed caret is at the very start of an li, with only
+    // whitespace/ZWSP/br between the li's beginning and the caret.
+    function isCaretAtLiStart(li: HTMLElement): boolean {
+        const selection = window.getSelection();
+        if (!selection || !selection.isCollapsed || selection.rangeCount === 0) return false;
+        const range = selection.getRangeAt(0);
+        const node = range.startContainer;
+        const beforeIsStructural = (n: Node | null): boolean =>
+            !!n && ((n.nodeType === Node.TEXT_NODE && /^[\u200B\s]*$/.test(n.textContent || '')) ||
+                (n.nodeType === Node.ELEMENT_NODE && n.nodeName === 'BR'));
+        if (node === li) {
+            for (let i = 0; i < range.startOffset; i++) {
+                if (!beforeIsStructural(li.childNodes[i])) return false;
+            }
+            return true;
+        }
+        if (node.nodeType === Node.TEXT_NODE) {
+            if (!/^[\u200B\s]*$/.test((node.textContent || '').slice(0, range.startOffset))) return false;
+            let prev: Node | null = node.previousSibling;
+            while (prev && beforeIsStructural(prev)) prev = prev.previousSibling;
+            return !prev;
+        }
+        return false;
+    }
+
+    // True when the collapsed caret is at the very end of an li, with only
+    // whitespace/ZWSP/br between the caret and the li's end.
+    function isCaretAtLiEnd(li: HTMLElement): boolean {
+        const selection = window.getSelection();
+        if (!selection || !selection.isCollapsed || selection.rangeCount === 0) return false;
+        const range = selection.getRangeAt(0);
+        const node = range.startContainer;
+        const afterIsStructural = (n: Node | null): boolean =>
+            !!n && ((n.nodeType === Node.TEXT_NODE && /^[\u200B\s]*$/.test(n.textContent || '')) ||
+                (n.nodeType === Node.ELEMENT_NODE && n.nodeName === 'BR'));
+        if (node === li) {
+            for (let i = range.startOffset; i < li.childNodes.length; i++) {
+                if (!afterIsStructural(li.childNodes[i])) return false;
+            }
+            return true;
+        }
+        if (node.nodeType === Node.TEXT_NODE) {
+            if (!/^[\u200B\s]*$/.test((node.textContent || '').slice(range.startOffset))) return false;
+            let next: Node | null = node.nextSibling;
+            while (next && afterIsStructural(next)) next = next.nextSibling;
+            return !next;
+        }
+        return false;
+    }
+
+    function placeCaretAtLiEnd(li: HTMLElement) {
+        const selection = window.getSelection();
+        if (!selection) return;
+        wysiwygEl?.focus();
+        const range = document.createRange();
+        if (isTaskListItem(li)) {
+            const anchor = ensureTaskItemCaretAnchor(li);
+            if (anchor) {
+                range.setStart(anchor, anchor.length);
+                range.collapse(true);
+            } else {
+                range.selectNodeContents(li);
+                range.collapse(false);
+            }
+        } else {
+            range.selectNodeContents(li);
+            range.collapse(false);
+        }
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+
+    function placeCaretAtBlockStart(el: HTMLElement) {
+        const selection = window.getSelection();
+        if (!selection) return;
+        wysiwygEl?.focus();
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        range.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+
+    // Merges the content of `source` li into the end of `target` li, dropping
+    // the source's checkbox and structural whitespace. Manual DOM merge so the
+    // browser never rebuilds the <li> (Chrome drops the checkbox inputs when
+    // it natively merges list items).
+    function appendListItemContent(target: HTMLElement, source: HTMLElement) {
+        const frag = document.createDocumentFragment();
+        for (const child of Array.from(source.childNodes)) {
+            if (
+                child.nodeType === Node.ELEMENT_NODE &&
+                (child as HTMLElement).tagName === 'INPUT' &&
+                (child as HTMLInputElement).type === 'checkbox'
+            ) {
+                continue;
+            }
+            frag.appendChild(child);
+        }
+        while (frag.firstChild && frag.firstChild.nodeType === Node.TEXT_NODE && /^[\u200B\s]*$/.test(frag.firstChild.textContent || '')) {
+            frag.removeChild(frag.firstChild);
+        }
+        while (frag.lastChild && frag.lastChild.nodeType === Node.ELEMENT_NODE && (frag.lastChild as HTMLElement).tagName === 'BR') {
+            frag.removeChild(frag.lastChild);
+        }
+        const lastTarget = target.lastChild;
+        if (
+            lastTarget && lastTarget.nodeType === Node.TEXT_NODE &&
+            frag.firstChild && frag.firstChild.nodeType === Node.TEXT_NODE
+        ) {
+            target.appendChild(document.createTextNode(' '));
+        }
+        if (frag.childNodes.length > 0) target.appendChild(frag);
+        const list = source.parentElement;
+        source.remove();
+        if (list && !list.querySelector('li')) list.remove();
+        if (![...target.childNodes].some((n) => n.nodeType === Node.ELEMENT_NODE && (n as HTMLElement).tagName === 'BR')) {
+            if (!target.textContent?.replace(/\u200B/g, '').trim()) target.appendChild(document.createElement('br'));
+        }
+        ensureTaskItemCaretAnchor(target);
+    }
+
+    // Delete at a task-list boundary: never let the browser natively merge
+    // list items, because Chrome rebuilds the <li> elements and drops the
+    // checkbox inputs (turning "- [ ] A" into "-  A" or corrupting the list).
+    function handleTaskBoundaryDelete(): boolean {
+        const li = getListItemFromSelection();
+        if (!li || !wysiwygEl?.contains(li)) return false;
+        const selection = window.getSelection();
+        if (!selection || !selection.isCollapsed || selection.rangeCount === 0) return false;
+        const isTask = isTaskListItem(li);
+        const next = li.nextElementSibling;
+        const prev = li.previousElementSibling;
+        const nextIsLi = !!next && next.tagName === 'LI';
+        const prevIsLi = !!prev && prev.tagName === 'LI';
+        const nextIsTask = nextIsLi && isTaskListItem(next as HTMLElement);
+        const prevIsTask = prevIsLi && isTaskListItem(prev as HTMLElement);
+
+        if (isCaretAtLiEnd(li)) {
+            // Delete at the end merges the following item into this one.
+            if (isTask || nextIsTask) {
+                if (nextIsLi) {
+                    appendListItemContent(li, next as HTMLElement);
+                    placeCaretAtLiEnd(li);
+                } else if (next) {
+                    // A block follows: move the caret into it instead of
+                    // letting Chrome absorb the list item into the block.
+                    placeCaretAtBlockStart(next as HTMLElement);
+                } else {
+                    return false;
+                }
+                handleWysiwygInput();
+                return true;
+            }
+            return false;
+        }
+
+        if (isCaretAtLiStart(li)) {
+            // Delete at the very start of an empty item merges the previous
+            // item into it.
+            if ((isTask || prevIsTask) && !li.textContent?.replace(/\u200B/g, '').trim()) {
+                if (prevIsLi) {
+                    const frag = document.createDocumentFragment();
+                    while (prev.firstChild) frag.appendChild(prev.firstChild);
+                    li.insertBefore(frag, li.firstChild);
+                    if (prevIsTask) ensureTaskItemCaretAnchor(li);
+                    placeCaretAtLiEnd(li);
+                    handleWysiwygInput();
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
+        return false;
+    }
+
+    // Backspace at the start of a plain item whose previous item is a task
+    // item would let Chrome merge and rebuild the task <li>. Merge manually.
+    function handlePlainItemBackspaceIntoTask(): boolean {
+        const li = getListItemFromSelection();
+        if (!li || isTaskListItem(li) || !wysiwygEl?.contains(li)) return false;
+        if (!isCaretAtLiStart(li)) return false;
+        const prev = li.previousElementSibling;
+        if (!prev || prev.tagName !== 'LI' || !isTaskListItem(prev as HTMLElement)) return false;
+        appendListItemContent(prev as HTMLElement, li);
+        placeCaretAtLiEnd(prev as HTMLElement);
+        handleWysiwygInput();
+        return true;
+    }
+
+    // Repairs DOMs the browser already corrupted (e.g. a native merge put
+    // several checkboxes into one <li>): split them back into separate items.
+    function healTaskListStructure() {
+        if (!wysiwygEl) return;
+        wysiwygEl.querySelectorAll('li').forEach((li) => {
+            const boxes = Array.from(li.children).filter(
+                (c): c is HTMLInputElement => c instanceof HTMLInputElement && c.type === 'checkbox'
+            );
+            for (let i = 1; i < boxes.length; i++) {
+                const box = boxes[i];
+                const newLi = document.createElement('li');
+                let node: Node | null = box;
+                while (node) {
+                    const nextNode = node.nextSibling;
+                    newLi.appendChild(node);
+                    node = nextNode;
+                }
+                if (
+                    ![...newLi.childNodes].some((n) => n.nodeType === Node.ELEMENT_NODE && (n as HTMLElement).tagName === 'BR') &&
+                    isEmptyTaskListItem(newLi)
+                ) {
+                    newLi.appendChild(document.createElement('br'));
+                }
+                li.after(newLi);
+            }
+        });
+        prepareTaskListCheckboxes(wysiwygEl);
+    }
+
     // Click handling inside the WYSIWYG area: trash icon deletes the image,
-    // clicking the thumbnail opens the full-size lightbox.
+    // clicking the thumbnail opens the full-size lightbox. Checkboxes toggle
+    // via the native control + change handler.
     function handleWysiwygClick(event: MouseEvent) {
         if (tryOpenPlaygroundFileLink(event, wysiwygEl)) return;
         const target = event.target as HTMLElement;
+        if (target instanceof HTMLInputElement && target.type === 'checkbox' && wysiwygEl?.contains(target)) {
+            // Let the native checkbox toggle; change handler syncs markdown.
+            return;
+        }
         const deleteBtn = target.closest(`.${THUMB_DELETE_CLASS}`) as HTMLElement | null;
         if (deleteBtn && wysiwygEl?.contains(deleteBtn)) {
             event.preventDefault();
@@ -2433,6 +2880,8 @@ func main() {
             wysiwygDebounce = null;
         }
         if (!previewEditMode || !wysiwygEl || !wysiwygSourceFileId) return;
+        healTaskListStructure();
+        prepareTaskListCheckboxes(wysiwygEl);
         const markdown = htmlToMarkdown(wysiwygEl.innerHTML);
         const sourceFileId = wysiwygSourceFileId;
         const fkey = fileKey();
@@ -2804,6 +3253,37 @@ func main() {
             }
         }
 
+        // Checklist: Enter continues with a new checkbox; empty item breaks out.
+        if (e.key === 'Enter' && !e.shiftKey && !e.metaKey && !e.ctrlKey && !e.altKey) {
+            const taskItem = getListItemFromSelection();
+            if (taskItem && isTaskListItem(taskItem)) {
+                e.preventDefault();
+                if (handleTaskListEnter(taskItem)) handleWysiwygInput();
+                return;
+            }
+        }
+
+        // Backspace at the start of a task item removes the checkbox.
+        if (e.key === 'Backspace' && !e.shiftKey && !e.metaKey && !e.ctrlKey && !e.altKey) {
+            if (handleTaskListBackspace()) {
+                e.preventDefault();
+                return;
+            }
+            if (handlePlainItemBackspaceIntoTask()) {
+                e.preventDefault();
+                return;
+            }
+        }
+
+        // Delete at a task-list boundary: merge manually so the browser never
+        // rebuilds the <li> (which drops the checkbox inputs).
+        if (e.key === 'Delete' && !e.shiftKey && !e.metaKey && !e.ctrlKey && !e.altKey) {
+            if (handleTaskBoundaryDelete()) {
+                e.preventDefault();
+                return;
+            }
+        }
+
         // One Backspace/Delete removes the whole mention (not just the ZWSP caret anchor,
         // and not the browser's intermediate "select the atom" step).
         if (!e.metaKey && !e.ctrlKey && !e.altKey && !e.shiftKey && (e.key === 'Backspace' || e.key === 'Delete')) {
@@ -2913,6 +3393,10 @@ func main() {
             if (insertWysiwygHorizontalRule()) handleWysiwygInput();
             return;
         }
+        if (command === 'insertTaskList') {
+            insertOrToggleTaskList();
+            return;
+        }
         applyWysiwygCommand(command, btn.dataset.value);
     }
 
@@ -2932,6 +3416,10 @@ func main() {
         }
         if (command === 'insertHorizontalRule') {
             if (insertWysiwygHorizontalRule()) handleWysiwygInput();
+            return;
+        }
+        if (command === 'insertTaskList') {
+            insertOrToggleTaskList();
             return;
         }
         applyWysiwygCommand(command, btn.dataset.value);
@@ -4278,6 +4766,9 @@ func main() {
                             <button type="button" data-command="insertOrderedList" title="Numbered list" aria-label="Numbered list">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="10" x2="21" y1="6" y2="6"/><line x1="10" x2="21" y1="12" y2="12"/><line x1="10" x2="21" y1="18" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
                             </button>
+                            <button type="button" data-command="insertTaskList" title="Checklist" aria-label="Checklist">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="6" height="6" rx="1"/><path d="m4 8 1.5 1.5L9 6"/><line x1="13" y1="8" x2="21" y2="8"/><rect x="3" y="13" width="6" height="6" rx="1"/><line x1="13" y1="16" x2="21" y2="16"/></svg>
+                            </button>
                             <button type="button" data-command="formatBlock" data-value="blockquote" title="Quote" aria-label="Quote">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1zm12 0c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
                             </button>
@@ -4331,6 +4822,7 @@ func main() {
                             on:keydown={handleWysiwygKeydown}
                             on:paste={handleWysiwygPaste}
                             on:click={handleWysiwygClick}
+                            on:change={handleWysiwygChange}
                             on:blur={commitWysiwygEdits}
                         ></div>
                     </div>
