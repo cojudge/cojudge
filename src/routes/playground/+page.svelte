@@ -367,10 +367,15 @@ func main() {
     // Collapse state is device-local UI preference: it is kept in localStorage
     // but not in CLOUD_KEYS, so cloud sync never collects or restores it.
     const COLLAPSED_FOLDERS_KEY = 'playground-collapsed-folders';
+    // Devices that have never stored a preference get all folders collapsed on
+    // first load instead of everything expanded; the seeded state is then
+    // persisted like any other toggle. Existing preferences keep working.
+    const hasCollapsedPreference = browser && localStorage.getItem(COLLAPSED_FOLDERS_KEY) !== null;
     /** folderId -> expanded; missing means expanded by default */
     let collapsedFolders: Record<string, boolean> = browser
         ? (JSON.parse(localStorage.getItem(COLLAPSED_FOLDERS_KEY) || '{}') || {})
         : {};
+    let collapsePrefSeeded = hasCollapsedPreference;
     $: if (browser) writeProgressStorageItem(localStorage, COLLAPSED_FOLDERS_KEY, JSON.stringify(collapsedFolders));
 
     // Last markdown view mode is device-local only (not in CLOUD_KEYS).
@@ -566,6 +571,23 @@ func main() {
 
     // Explicit collapsedFolders dep so expand/collapse always refreshes the tree
     $: flatExplorer = flattenExplorer(explorerTree, collapsedFolders);
+
+    // Seed the collapsed state once when the first files appear on a fresh
+    // device (e.g. after sign-in), so the tree starts collapsed.
+    $: if (browser && !collapsePrefSeeded && explorerTree.length > 0) {
+        const seed: Record<string, boolean> = {};
+        const markCollapsed = (nodes: ExplorerNode[]) => {
+            for (const n of nodes) {
+                if (n.kind === 'folder') {
+                    seed[n.fileId] = true;
+                    markCollapsed(n.children);
+                }
+            }
+        };
+        markCollapsed(explorerTree);
+        collapsedFolders = seed;
+        collapsePrefSeeded = true;
+    }
 
     function expandAncestorFolders(fileId: string) {
         const files = getFiles();
