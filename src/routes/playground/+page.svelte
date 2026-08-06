@@ -4014,6 +4014,11 @@ func main() {
                 closeLightbox();
                 closeMentionPopup();
             }
+            // Cmd+S or Ctrl+S — open cloud sync
+            if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 's') {
+                e.preventDefault();
+                openCloudSettings();
+            }
             // Cmd+P or Ctrl+P
             if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'p') {
                 e.preventDefault();
@@ -4122,7 +4127,7 @@ func main() {
                 </svg>
             </button>
         </Tooltip>
-        <Tooltip text={"Cloud Sync"} pos="right">
+        <Tooltip text={isMac ? "Cloud Sync (Cmd+S)" : "Cloud Sync (Ctrl+S)"} pos="right">
             <button
                 class="activity-icon"
                 on:click={openCloudSettings}
