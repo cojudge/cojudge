@@ -43,6 +43,14 @@ import {
 	type ProgressData
 } from '$lib/progressBackup';
 import { applyProgressData } from '$lib/progressBackupClient';
+import {
+	PASTED_IMAGES_KEY,
+	parsePastedImageLink,
+	findPastedImageLinks,
+	getAllPastedImages,
+	importPastedImages,
+	extractPastedImages
+} from '$lib/utils/imageStore';
 import { FORK_TRANSFER_STORAGE_KEY } from '$lib/forkTransfer';
 import fileStore, { fileSyncVersion } from '$lib/stores/fileStore';
 import {
@@ -123,6 +131,9 @@ type DeviceMeta = {
 type LocalSnapshot = {
 	data: ProgressData;
 	serialized: string;
+	// localStorage-only serialization (no pasted-images key), used by the
+	// pre-apply integrity check that compares against a fresh re-read.
+	storageSerialized: string;
 	checksum: string;
 	meaningful: boolean;
 	meta: DeviceUserMeta;
@@ -362,12 +373,51 @@ function clearCloudClone(): void {
 	if (browser) localStorage.removeItem(CLOUD_CLONE_KEY);
 }
 
+// Collects the IndexedDB-backed pasted images referenced by markdown file
+// contents, as { [id]: dataUrl }. Returns null when none are referenced so the
+// snapshot stays image-free (and checksums unchanged) for image-less documents.
+async function collectReferencedPastedImages(filesValue: unknown): Promise<Record<string, string> | null> {
+	const links = new Set<string>();
+	if (filesValue && typeof filesValue === 'object' && !Array.isArray(filesValue)) {
+		for (const serialized of Object.values(filesValue)) {
+			if (typeof serialized !== 'string') continue;
+			let entries: unknown;
+			try {
+				entries = JSON.parse(serialized);
+			} catch {
+				continue;
+			}
+			if (!Array.isArray(entries)) continue;
+			for (const entry of entries) {
+				if (!entry || typeof entry !== 'object' || Array.isArray(entry)) continue;
+				const file = entry as Record<string, unknown>;
+				if (file.language !== 'markdown' || typeof file.content !== 'string') continue;
+				for (const link of findPastedImageLinks(file.content)) links.add(link);
+			}
+		}
+	}
+	if (links.size === 0) return null;
+
+	const all = await getAllPastedImages();
+	const record: Record<string, string> = {};
+	for (const link of links) {
+		const id = parsePastedImageLink(link);
+		if (!id) continue;
+		const dataUrl = all[id];
+		if (dataUrl) record[id] = dataUrl;
+	}
+	return Object.keys(record).length > 0 ? record : null;
+}
+
 async function readLocalSnapshot(
 	context: OperationContext,
 	options: { flush?: boolean } = {}
 ): Promise<LocalSnapshot> {
 	if (options.flush !== false) window.dispatchEvent(new Event(CLOUD_FLUSH_EVENT));
 	const data = collectProgressData(localStorage, { cloud: true });
+	const storageSerialized = serializeProgressData(data);
+	const pastedImages = await collectReferencedPastedImages(data.files);
+	if (pastedImages) data[PASTED_IMAGES_KEY] = pastedImages;
 	const serialized = serializeProgressData(data);
 	const checksum = await hashProgress(serialized);
 	const meaningful = isMeaningfulProgress(data);
@@ -377,7 +427,7 @@ async function readLocalSnapshot(
 		...device.users[cloudAccountId(context.projectId, context.uid)]
 	};
 
-	return { data, serialized, checksum, meaningful, meta };
+	return { data, serialized, storageSerialized, checksum, meaningful, meta };
 }
 
 function reloadForCloudRestore(): void {
@@ -803,9 +853,12 @@ async function applyDownloadedSnapshot(
 				const finalSerialized = serializeProgressData(
 					collectProgressData(localStorage, { cloud: true })
 				);
+				// The re-read snapshot includes IndexedDB pasted images, so the
+				// "did anything change" check compares the localStorage-only
+				// serialization against the fresh localStorage read.
 				if (
 					latestLocal.checksum !== expectedLocal.checksum
-					|| finalSerialized !== latestLocal.serialized
+					|| finalSerialized !== latestLocal.storageSerialized
 				) {
 					throw new Error('Local progress changed during sync. Sync again to reconcile it safely.');
 				}
@@ -818,6 +871,10 @@ async function applyDownloadedSnapshot(
 				if (localDotFiles !== null) {
 					localStorage.setItem('files', mergeDotFilesData(localStorage.getItem('files'), localDotFiles));
 				}
+				// The markdown files may reference pasted images; write the payloads
+				// back into IndexedDB before the reload so previews can resolve them.
+				const pastedImages = extractPastedImages(downloaded);
+				if (pastedImages) await importPastedImages(pastedImages);
 				applied = true;
 				markSynced(context, baseHash);
 				announceCloudRestore();
@@ -1145,6 +1202,11 @@ export async function discardLocalFileChange(fileId: string): Promise<void> {
 	}
 	const downloaded = await ensureCloudClone(context, remote);
 	if (!isOperationCurrent(context)) return;
+
+	// Reverted markdown may reference pasted images; make sure the payloads are
+	// available locally before the cloud content is applied.
+	const pastedImages = extractPastedImages(downloaded);
+	if (pastedImages) await importPastedImages(pastedImages);
 
 	// Dotfiles are local-only and stripped from cloud snapshots. Capture them
 	// before any discard path that rewrites `files` so secrets like `.env` are

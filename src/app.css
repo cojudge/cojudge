@@ -131,6 +131,12 @@
   margin-bottom: 16px;
 }
 
+/* Pasted images reference IndexedDB via a fake link (cojudge://image/<id>);
+   hide them until the payload is resolved into src (resolvePastedImages). */
+.markdown-body img[src^="cojudge://image/"] {
+  visibility: hidden;
+}
+
 .markdown-body .md-thumb img {
   max-width: 240px;
   max-height: 160px;
