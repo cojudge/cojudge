@@ -505,3 +505,74 @@ test('WYSIWYG checklist item merges keep checkboxes intact', async ({ page }) =>
   await expect.poll(() => getMarkdownContent(page)).toMatch(/three\s+four/);
 });
 
+test('WYSIWYG Tab indents list items and Shift+Tab outdents them', async ({ page }) => {
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('- one\n- two\n- three');
+  await expect.poll(() => getMarkdownContent(page)).toContain('three');
+
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  await expect(editable).toBeVisible();
+
+  const indentOf = async (text: string) => {
+    const md = await getMarkdownContent(page);
+    const line = md?.split('\n').find((l) => l.includes(text));
+    return line ? (line.match(/^\s*/)?.[0].length ?? 0) : -1;
+  };
+
+  // Tab on the second item nests it under the first
+  await editable.locator('li').nth(1).click();
+  await page.keyboard.press('Tab');
+  await expect.poll(() => indentOf('two')).toBeGreaterThan(0);
+  await expect.poll(() => indentOf('three')).toBe(0);
+
+  // Tab on the third item joins the first item's nested list (same level as two)
+  await editable.locator('li').nth(2).click();
+  await page.keyboard.press('Tab');
+  const twoIndent = await indentOf('two');
+  await expect.poll(() => indentOf('three')).toBe(twoIndent);
+
+  // Tab again nests it under the second item
+  await page.keyboard.press('Tab');
+  await expect.poll(() => indentOf('three')).toBeGreaterThan(twoIndent);
+
+  // Shift+Tab moves it back one level
+  await page.keyboard.press('Shift+Tab');
+  await expect.poll(() => indentOf('three')).toBe(twoIndent);
+
+  // Shift+Tab again moves it back to the top level
+  await page.keyboard.press('Shift+Tab');
+  await expect.poll(() => indentOf('three')).toBe(0);
+});
+
+test('WYSIWYG Tab/Shift+Tab on checklists keeps checkboxes intact', async ({ page }) => {
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('- [ ] one\n- [x] two');
+  await expect.poll(() => getMarkdownContent(page)).toMatch(/\[\s\]\s+one/);
+
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  await expect(editable).toBeVisible();
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(2);
+
+  // Tab nests the second checklist item under the first; checkbox states survive
+  await editable.locator('li').nth(1).click();
+  await page.keyboard.press('Tab');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(2);
+  await expect(editable.locator('li').nth(1).locator('input[type="checkbox"]')).toBeChecked();
+  await expect.poll(() => getMarkdownContent(page)).toMatch(/- +\[ \] +one\s*\n\s+- +\[x\] +two/);
+
+  // Shift+Tab returns it to the top level
+  await page.keyboard.press('Shift+Tab');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(2);
+  await expect(editable.locator('li').nth(1).locator('input[type="checkbox"]')).toBeChecked();
+  await expect.poll(() => getMarkdownContent(page)).toMatch(/- +\[ \] +one\s*\n- +\[x\] +two/);
+});
+
+
