@@ -27,6 +27,34 @@ function getMarkdownContent(page: Page): Promise<string | null> {
   });
 }
 
+test('closing the active WYSIWYG tab keeps the other markdown tab in WYSIWYG mode', async ({ page }) => {
+  await page.goto('/playground');
+  await page.evaluate(() => {
+    localStorage.setItem('user-settings', JSON.stringify({ playgroundPreferredLanguage: 'markdown' }));
+    localStorage.setItem('playground-markdown-mode', 'wysiwyg');
+    localStorage.setItem('files', JSON.stringify({
+      playground: JSON.stringify([
+        { fileId: 'n1', fileName: 'Notes', language: 'markdown', content: '# Notes', isOpen: false, order: 0, lastUpdated: Date.now() },
+        { fileId: 'n2', fileName: 'Tasks', language: 'markdown', content: '# Tasks', isOpen: false, order: 1, lastUpdated: Date.now() }
+      ])
+    }));
+  });
+  await page.reload();
+  const dismiss = page.getByRole('button', { name: 'Dismiss' });
+  if (await dismiss.isVisible().catch(() => false)) await dismiss.click();
+
+  // Open both files in WYSIWYG mode
+  await page.locator('.file-item', { hasText: 'Notes' }).click();
+  await expect(page.locator('.wysiwyg-editing h1')).toHaveText('Notes');
+  await page.locator('.file-item', { hasText: 'Tasks' }).click();
+  await expect(page.locator('.wysiwyg-editing h1')).toHaveText('Tasks');
+
+  // Close the active (Tasks) tab — the remaining Notes tab should stay in WYSIWYG
+  await page.locator('.tab:has-text("Tasks") .tab-close').click();
+  await expect(page.locator('.wysiwyg-editing')).toBeVisible();
+  await expect(page.locator('.wysiwyg-editing h1')).toHaveText('Notes');
+});
+
 test('playground markdown editor pastes clipboard images as base64 markdown', async ({ page }) => {
   await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
   await openMarkdownPlayground(page);
