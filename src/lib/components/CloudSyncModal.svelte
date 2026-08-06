@@ -22,6 +22,11 @@
     export let open = false;
     export let onClose: () => void = () => {};
 
+    let isMac = false;
+    if (browser) {
+        isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+    }
+
     let cloudModalCard: HTMLElement | null = null;
     let cloudPrimaryButton: HTMLButtonElement | null = null;
     let cloudActionPending = false;
@@ -368,12 +373,20 @@
         if (!open) return;
         const activeModal = cloudModalCard;
         if (!activeModal) return;
+        if (event.defaultPrevented) return;
         if (event.key === 'Escape') {
             event.preventDefault();
             close();
             return;
         }
         if (event.key === 'Tab') trapModalFocus(event, activeModal);
+        // Cmd+Enter or Ctrl+Enter — trigger the primary action (e.g. push local changes)
+        if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) {
+            event.preventDefault();
+            if (cloudPrimaryButton && !cloudPrimaryButton.disabled) {
+                cloudPrimaryButton.click();
+            }
+        }
     }
 </script>
 
@@ -394,9 +407,17 @@
                 <div>
                     <span class="modal-eyebrow">Cojudge Cloud</span>
                 </div>
-                <span class:configured={$cloudSyncState.authStatus === 'signed-in'} class="firebase-status-pill">
-                    <span></span>{$cloudSyncState.authStatus === 'signed-in' ? 'Connected' : 'Local only'}
-                </span>
+                <div class="modal-heading-right">
+                    <span class:configured={$cloudSyncState.authStatus === 'signed-in'} class="firebase-status-pill">
+                        <span></span>{$cloudSyncState.authStatus === 'signed-in' ? 'Connected' : 'Local only'}
+                    </span>
+                    <button class="modal-close-btn" type="button" onclick={close} aria-label="Close">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
             </div>
 
             {#if $cloudSyncState.authStatus === 'unavailable'}
@@ -550,35 +571,43 @@
             <div class="home-modal-actions settings-actions">
                 {#if $cloudSyncState.authStatus === 'signed-in'}
                     <button class="btn remove-settings-btn" type="button" onclick={signOutOfCloud} disabled={cloudActionPending || $cloudSyncState.syncStatus === 'syncing'}>Sign out</button>
-                    <span class="modal-action-spacer"></span>
-                    <button class="btn" type="button" onclick={close}>Close</button>
-                    {#if $cloudSyncState.resolution && $cloudSyncState.remoteStatus === 'present'}
-                        <button class="btn" type="button" onclick={() => resolveCloudCopy('cloud')} disabled={cloudActionPending}>Restore cloud latest</button>
-                    {/if}
-                    <button bind:this={cloudPrimaryButton} class="btn modal-primary-btn" type="button" onclick={$cloudSyncState.remoteStatus === 'error' ? checkCloud : $cloudSyncState.resolution ? () => resolveCloudCopy('local') : syncCloud} disabled={cloudActionPending || $cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading' || ($cloudSyncState.remoteStatus === 'unknown' && Boolean($cloudSyncState.resolution))}>
-                        {$cloudSyncState.remoteStatus === 'error'
-                            ? 'Retry cloud check'
-                            : $cloudSyncState.resolution === 'account'
-                            ? 'Push this workspace'
-                            : $cloudSyncState.resolution === 'local-changes'
-                                ? 'Push local changes'
-                                : $cloudSyncState.resolution === 'conflict'
-                                    ? 'Use local progress'
-                            : $cloudSyncState.syncStatus === 'syncing'
-                                ? 'Syncing…'
-                                : 'Sync now'}
-                    </button>
+                    <div class="modal-actions-right">
+                        <button class="btn" type="button" onclick={close}>Close</button>
+                        {#if $cloudSyncState.resolution && $cloudSyncState.remoteStatus === 'present'}
+                            <button class="btn" type="button" onclick={() => resolveCloudCopy('cloud')} disabled={cloudActionPending}>Restore cloud</button>
+                        {/if}
+                        <button bind:this={cloudPrimaryButton} class="btn modal-primary-btn" type="button" onclick={$cloudSyncState.remoteStatus === 'error' ? checkCloud : $cloudSyncState.resolution ? () => resolveCloudCopy('local') : syncCloud} disabled={cloudActionPending || $cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading' || ($cloudSyncState.remoteStatus === 'unknown' && Boolean($cloudSyncState.resolution))}>
+                            <span>
+                                {$cloudSyncState.remoteStatus === 'error'
+                                    ? 'Retry cloud check'
+                                    : $cloudSyncState.resolution === 'account'
+                                    ? 'Push this workspace'
+                                    : $cloudSyncState.resolution === 'local-changes'
+                                        ? 'Push local changes'
+                                        : $cloudSyncState.resolution === 'conflict'
+                                            ? 'Use local progress'
+                                    : $cloudSyncState.syncStatus === 'syncing'
+                                        ? 'Syncing…'
+                                        : 'Sync now'}
+                            </span>
+                            <kbd class="modal-btn-kbd">{isMac ? '⌘Enter' : 'Ctrl+Enter'}</kbd>
+                        </button>
+                    </div>
                 {:else if $cloudSyncState.authStatus === 'unavailable'}
-                    <button bind:this={cloudPrimaryButton} class="btn" type="button" onclick={close}>Close</button>
+                    <div class="modal-actions-right">
+                        <button bind:this={cloudPrimaryButton} class="btn" type="button" onclick={close}>Close</button>
+                    </div>
                 {:else}
-                    <button class="btn" type="button" onclick={close}>Not now</button>
-                    <button bind:this={cloudPrimaryButton} class="btn modal-primary-btn" type="button" onclick={signInToCloud} disabled={cloudActionPending || $cloudSyncState.authStatus === 'initializing' || $cloudSyncState.authStatus === 'signing-in'}>
-                        {$cloudSyncState.authStatus === 'initializing'
-                            ? 'Initializing…'
-                            : $cloudSyncState.authStatus === 'signing-in'
-                                ? 'Opening Google…'
-                                : 'Continue with Google'}
-                    </button>
+                    <div class="modal-actions-right">
+                        <button class="btn" type="button" onclick={close}>Not now</button>
+                        <button bind:this={cloudPrimaryButton} class="btn modal-primary-btn" type="button" onclick={signInToCloud} disabled={cloudActionPending || $cloudSyncState.authStatus === 'initializing' || $cloudSyncState.authStatus === 'signing-in'}>
+                            {$cloudSyncState.authStatus === 'initializing'
+                                ? 'Initializing…'
+                                : $cloudSyncState.authStatus === 'signing-in'
+                                    ? 'Opening Google…'
+                                    : 'Continue with Google'}
+                        </button>
+                    </div>
                 {/if}
             </div>
         </div>
@@ -633,14 +662,24 @@
         color: var(--color-text-secondary);
         line-height: 1.55;
     }
-    .home-modal-actions {        display: flex;
+    .home-modal-actions {
+        display: flex;
         align-items: center;
-        justify-content: flex-end;
-        flex-wrap: wrap;
-        gap: 0.625rem;
+        justify-content: space-between;
+        gap: 0.5rem;
         margin-top: 1.5rem;
+        flex-wrap: wrap;
+    }
+    .modal-actions-right {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-left: auto;
     }
     .modal-primary-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
         border-color: var(--color-highlight);
         background: var(--color-highlight);
         color: #fff;
@@ -649,12 +688,46 @@
     .modal-primary-btn:hover {
         filter: brightness(1.05);
     }
+    .modal-btn-kbd {
+        display: inline-flex;
+        align-items: center;
+        font-family: inherit;
+        font-size: 0.72rem;
+        font-weight: 600;
+        line-height: 1;
+        padding: 0.15rem 0.35rem;
+        border-radius: 0.25rem;
+        background: rgba(255, 255, 255, 0.22);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.32);
+        letter-spacing: -0.01em;
+    }
     .modal-heading-row {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         justify-content: space-between;
         gap: 1rem;
         margin-bottom: 0.5rem;
+    }
+    .modal-heading-right {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+    .modal-close-btn {
+        background: none;
+        border: none;
+        padding: 0.25rem;
+        cursor: pointer;
+        color: var(--color-text-secondary);
+        display: grid;
+        place-items: center;
+        border-radius: 0.375rem;
+        transition: background 0.15s ease, color 0.15s ease;
+    }
+    .modal-close-btn:hover {
+        background: var(--color-surface, rgba(255, 255, 255, 0.08));
+        color: var(--color-text);
     }
     .modal-eyebrow {
         display: block;
@@ -1075,9 +1148,6 @@
     .settings-actions {
         border-top: 1px solid var(--color-border);
         padding-top: 1rem;
-    }
-    .modal-action-spacer {
-        flex: 1;
     }
     .remove-settings-btn {
         color: var(--color-hard);
