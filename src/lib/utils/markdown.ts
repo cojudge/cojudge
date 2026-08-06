@@ -283,6 +283,148 @@ export function wrapImageThumbnails(root: HTMLElement) {
 // htmlToMarkdown so only the <pre> round-trips back to markdown.
 export const CODE_COPY_WRAPPER_CLASS = 'md-code-copy';
 
+// GFM task-list checkboxes are rendered disabled by marked. In the WYSIWYG
+// editor we enable them so users can click to toggle, and mark them non-editable
+// so the caret cannot land inside the control. A ZWSP caret anchor is kept
+// immediately after each checkbox so the caret paints to the right of it
+// (contenteditable otherwise often draws it on the left of replaced elements).
+export function prepareTaskListCheckboxes(root: HTMLElement) {
+    root.querySelectorAll('li').forEach((node) => {
+        const li = node as HTMLElement;
+        // Unwrap <p> or <div> wrapper inside <li> if it contains a task checkbox
+        // (marked produces loose <li><p><input ...></p></li> for lists with line breaks).
+        const nestedInput = li.querySelector('input[type="checkbox"]');
+        if (nestedInput && nestedInput.parentElement !== li) {
+            li.insertBefore(nestedInput, li.firstChild);
+        }
+        const p = li.querySelector(':scope > p');
+        if (p && li.querySelectorAll(':scope > p').length === 1) {
+            p.replaceWith(...Array.from(p.childNodes));
+        }
+
+        if (!isTaskListItem(li)) return;
+        const input = li.querySelector(':scope > input[type="checkbox"]') as HTMLInputElement | null;
+        if (!input) return;
+        input.disabled = false;
+        input.removeAttribute('disabled');
+        input.setAttribute('contenteditable', 'false');
+        // Keep the HTML attribute in sync with the live property so innerHTML
+        // serialization (and turndown) sees the current checked state.
+        if (input.checked) input.setAttribute('checked', '');
+        else input.removeAttribute('checked');
+        ensureTaskItemCaretAnchor(li);
+    });
+}
+
+export function isTaskListItem(li: HTMLElement): boolean {
+    for (let i = 0; i < li.childNodes.length; i++) {
+        const child = li.childNodes[i];
+        if (child.nodeType === Node.TEXT_NODE && !(child.textContent || '').replace(/\u200B/g, '').trim()) {
+            continue;
+        }
+        if (
+            child.nodeType === Node.ELEMENT_NODE &&
+            (child as HTMLElement).tagName === 'INPUT' &&
+            (child as HTMLInputElement).type === 'checkbox'
+        ) {
+            return true;
+        }
+        return false;
+    }
+    return false;
+}
+
+export function isEmptyTaskListItem(li: HTMLElement): boolean {
+    const clone = li.cloneNode(true) as HTMLElement;
+    clone.querySelectorAll('input').forEach((el) => el.remove());
+    return !(clone.textContent || '').replace(/\u200B/g, '').trim();
+}
+
+export function createTaskCheckbox(): HTMLInputElement {
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.setAttribute('contenteditable', 'false');
+    return input;
+}
+
+// Returns the text node immediately after the checkbox, starting with ZWSP.
+export function ensureTaskItemCaretAnchor(li: HTMLElement): Text | null {
+    let checkbox: HTMLInputElement | null = null;
+    for (let i = 0; i < li.childNodes.length; i++) {
+        const child = li.childNodes[i];
+        if (child.nodeType === Node.TEXT_NODE && !(child.textContent || '').replace(/\u200B/g, '').trim()) {
+            continue;
+        }
+        if (
+            child.nodeType === Node.ELEMENT_NODE &&
+            (child as HTMLElement).tagName === 'INPUT' &&
+            (child as HTMLInputElement).type === 'checkbox'
+        ) {
+            checkbox = child as HTMLInputElement;
+            break;
+        }
+        return null;
+    }
+    if (!checkbox) return null;
+
+    const next = checkbox.nextSibling;
+    if (next && next.nodeType === Node.TEXT_NODE) {
+        const text = next as Text;
+        if (!(text.textContent || '').startsWith('\u200B')) {
+            text.textContent = '\u200B' + (text.textContent || '').replace(/^\u200B+/, '');
+        }
+        return text;
+    }
+    const zwsp = document.createTextNode('\u200B');
+    checkbox.after(zwsp);
+    return zwsp;
+}
+
+export function ensureTaskCheckbox(li: HTMLElement): HTMLInputElement {
+    for (let i = 0; i < li.childNodes.length; i++) {
+        const child = li.childNodes[i];
+        if (child.nodeType === Node.TEXT_NODE && !(child.textContent || '').replace(/\u200B/g, '').trim()) {
+            continue;
+        }
+        if (
+            child.nodeType === Node.ELEMENT_NODE &&
+            (child as HTMLElement).tagName === 'INPUT' &&
+            (child as HTMLInputElement).type === 'checkbox'
+        ) {
+            const input = child as HTMLInputElement;
+            input.disabled = false;
+            input.removeAttribute('disabled');
+            input.setAttribute('contenteditable', 'false');
+            ensureTaskItemCaretAnchor(li);
+            return input;
+        }
+        break;
+    }
+    const input = createTaskCheckbox();
+    li.insertBefore(input, li.firstChild);
+    ensureTaskItemCaretAnchor(li);
+    return input;
+}
+
+export function removeTaskCheckbox(li: HTMLElement) {
+    const nodes = Array.from(li.childNodes);
+    for (const child of nodes) {
+        if (
+            child.nodeType === Node.ELEMENT_NODE &&
+            (child as HTMLElement).tagName === 'INPUT' &&
+            (child as HTMLInputElement).type === 'checkbox'
+        ) {
+            const next = child.nextSibling;
+            child.remove();
+            if (next && next.nodeType === Node.TEXT_NODE) {
+                next.textContent = (next.textContent || '').replace(/^\u200B+/, '').replace(/^ /, '');
+                if (!next.textContent) next.parentNode?.removeChild(next);
+            }
+            return;
+        }
+    }
+}
+
 // Appends an empty line at the end of the WYSIWYG editor when it does not
 // already end with one. A contenteditable="false" thumbnail at the very end of
 // the document would trap the caret, so an empty <p> is always kept after it
@@ -442,25 +584,46 @@ function getTurndownService(): TurndownService {
                 return `[${label}](${href})`;
             }
         });
+        // Custom taskListItems rule that matches ANY checkbox input, even if
+        // wrapped inside a <p>, <div>, or <span> inside <li> (which marked produces
+        // for loose list items).
+        turndownService.addRule('taskListItems', {
+            filter: (node: HTMLElement) =>
+                node.nodeName === 'INPUT' && (node as HTMLInputElement).type === 'checkbox',
+            replacement: (_content: string, node: HTMLElement) => {
+                const input = node as HTMLInputElement;
+                const checked = input.checked || input.hasAttribute('checked');
+                return (checked ? '[x]' : '[ ]') + ' ';
+            }
+        });
     }
     return turndownService;
 }
 
 export function htmlToMarkdown(html: string): string {
     // Strip interactive wrappers (thumbnail delete buttons, code-block copy
-    // buttons, contenteditable markers) so only the plain content round-trips
-    // back to markdown.
-    if (typeof DOMParser !== 'undefined' && (html.includes(THUMB_WRAPPER_CLASS) || html.includes(CODE_COPY_WRAPPER_CLASS))) {
+    // buttons, contenteditable markers) and normalize task-list checkboxes so
+    // that checkboxes inside loose list items (<p><input ...></p>) or nested
+    // elements round-trip back to markdown instead of being dropped by turndown.
+    if (typeof DOMParser !== 'undefined') {
         const doc = new DOMParser().parseFromString(html, 'text/html');
-        doc.querySelectorAll(`.${THUMB_DELETE_CLASS}`).forEach((el) => el.remove());
-        doc.querySelectorAll(`.${THUMB_WRAPPER_CLASS}`).forEach((el) => {
-            const img = el.querySelector('img');
-            if (img) el.replaceWith(img);
-            else el.remove();
-        });
-        doc.querySelectorAll(`.${CODE_COPY_WRAPPER_CLASS}`).forEach((el) => {
-            el.querySelector('.code-block-actions')?.remove();
-            el.replaceWith(...Array.from(el.childNodes));
+        if (html.includes(THUMB_WRAPPER_CLASS) || html.includes(CODE_COPY_WRAPPER_CLASS)) {
+            doc.querySelectorAll(`.${THUMB_DELETE_CLASS}`).forEach((el) => el.remove());
+            doc.querySelectorAll(`.${THUMB_WRAPPER_CLASS}`).forEach((el) => {
+                const img = el.querySelector('img');
+                if (img) el.replaceWith(img);
+                else el.remove();
+            });
+            doc.querySelectorAll(`.${CODE_COPY_WRAPPER_CLASS}`).forEach((el) => {
+                el.querySelector('.code-block-actions')?.remove();
+                el.replaceWith(...Array.from(el.childNodes));
+            });
+        }
+        doc.querySelectorAll('li').forEach((li) => {
+            const input = li.querySelector('input[type="checkbox"]');
+            if (input && input.parentElement !== li) {
+                li.insertBefore(input, li.firstChild);
+            }
         });
         html = doc.body.innerHTML;
     }
