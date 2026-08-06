@@ -20,7 +20,14 @@
     } from '$lib/cloudSync';
     import { activeDialog } from '$lib/dialogs';
     import { collectProgressData, writeProgressStorageItem } from '$lib/progressBackup';
+
     import { applyProgressData } from '$lib/progressBackupClient';
+    import {
+        PASTED_IMAGES_KEY,
+        getAllPastedImages,
+        importPastedImages,
+        extractPastedImages
+    } from '$lib/utils/imageStore';
     import {
         clearFirebaseSettings,
         emptyFirebaseSettings,
@@ -425,6 +432,10 @@
     async function exportLocalStorage() {
         if (!browser) return;
         const data = collectProgressData(localStorage);
+        // Pasted images live in IndexedDB, outside localStorage; carry them in
+        // the backup so a restore keeps markdown images working.
+        const pastedImages = await getAllPastedImages();
+        if (Object.keys(pastedImages).length > 0) data[PASTED_IMAGES_KEY] = pastedImages;
 
         if (isDesktopMode) {
             try {
@@ -481,9 +492,16 @@
         }
     }
 
-    function confirmImport() {
+    async function confirmImport() {
         if (!pendingImport) return;
         try {
+            const pastedImages = extractPastedImages(pendingImport);
+            if (pastedImages) {
+                // Images are stored in IndexedDB, not localStorage; write them
+                // there and keep the key out of the localStorage payload.
+                await importPastedImages(pastedImages);
+                delete pendingImport[PASTED_IMAGES_KEY];
+            }
             applyProgressData(pendingImport);
             firebaseConfigured = isFirebaseConfigured();
             firebaseSettingsSaved = hasSavedFirebaseSettings();

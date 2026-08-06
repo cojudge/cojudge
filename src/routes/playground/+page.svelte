@@ -17,7 +17,8 @@
     import fileStore, { isDotFileName, type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
-    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, wrapImageThumbnails, wrapCodeBlocksWithCopy, ensureTrailingEmptyLine, ensureFileMentionCarets, prepareTaskListCheckboxes, isTaskListItem, isEmptyTaskListItem, createTaskCheckbox, ensureTaskCheckbox, ensureTaskItemCaretAnchor, removeTaskCheckbox, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref, fileMentionHtml, FILE_MENTION_CLASS } from '$lib/utils/markdown';
+    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, wrapImageThumbnails, wrapCodeBlocksWithCopy, ensureTrailingEmptyLine, ensureFileMentionCarets, prepareTaskListCheckboxes, isTaskListItem, isEmptyTaskListItem, createTaskCheckbox, ensureTaskCheckbox, ensureTaskItemCaretAnchor, removeTaskCheckbox, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, resolvePastedImages, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref, fileMentionHtml, FILE_MENTION_CLASS } from '$lib/utils/markdown';
+    import { storePastedImage, deletePastedImage, inlinePastedImageLinks } from '$lib/utils/imageStore';
     import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
     import QRCode from 'qrcode';
     import { browser } from '$app/environment';
@@ -830,11 +831,27 @@ func main() {
         }
     }
 
+    // Replaces IndexedDB fake image links in markdown with their data URLs so
+    // downloaded folders are self-contained outside the app.
+    async function inlineExportNodeImages(node: ExportNode): Promise<ExportNode> {
+        if (node.type === 'folder') {
+            return { ...node, children: await Promise.all(node.children.map(inlineExportNodeImages)) };
+        }
+        const languages = await Promise.all(
+            node.languages.map(async (lang) =>
+                lang.language === 'markdown'
+                    ? { ...lang, content: await inlinePastedImageLinks(lang.content) }
+                    : lang
+            )
+        );
+        return { ...node, languages };
+    }
+
     async function downloadFolder(folderId: string) {
         const files = getFiles();
         const node = buildExportNode(folderId, files);
         if (!node || node.type !== 'folder') return;
-        const textData = JSON.stringify(node, null, 2);
+        const textData = JSON.stringify(await inlineExportNodeImages(node), null, 2);
         const filename = `${node.name || 'folder'}.json`;
 
         if (isDesktopMode) {
@@ -2096,9 +2113,12 @@ func main() {
     }
 
     // Builds the markdown snippet inserted when an image is pasted into a
-    // markdown file (base64 data URL).
-    function markdownImageSnippet(dataUrl: string): string {
-        return `![image](${dataUrl})`;
+    // markdown file. The base64 payload is stored in IndexedDB and the source
+    // gets a fake link (cojudge://image/<id>) that previews resolve back to
+    // the payload (see resolvePastedImages).
+    async function markdownImageSnippet(dataUrl: string): Promise<string> {
+        const link = await storePastedImage(dataUrl);
+        return `![image](${link})`;
     }
 
     // --- Image lightbox (full-size view opened from thumbnails) ---
@@ -2166,6 +2186,7 @@ func main() {
             ensureFileMentionCarets(wysiwygEl);
             prepareTaskListCheckboxes(wysiwygEl);
             ensureTrailingEmptyLine(wysiwygEl);
+            resolvePastedImages(wysiwygEl);
             wysiwygEl.focus();
         }
     }
@@ -2923,6 +2944,9 @@ func main() {
         const deleteBtn = target.closest(`.${THUMB_DELETE_CLASS}`) as HTMLElement | null;
         if (deleteBtn && wysiwygEl?.contains(deleteBtn)) {
             event.preventDefault();
+            const img = deleteBtn.closest(`.${THUMB_WRAPPER_CLASS}`)?.querySelector('img');
+            const fakeLink = img?.dataset.cojudgeImg;
+            if (fakeLink) deletePastedImage(fakeLink);
             deleteBtn.closest(`.${THUMB_WRAPPER_CLASS}`)?.remove();
             ensureTrailingEmptyLine(wysiwygEl);
             commitWysiwygEdits();
@@ -2944,8 +2968,11 @@ func main() {
         if (deleteBtn && container.contains(deleteBtn)) {
             event.preventDefault();
             const img = deleteBtn.closest(`.${THUMB_WRAPPER_CLASS}`)?.querySelector('img');
-            const src = img?.getAttribute('src');
-            if (src) deletePreviewImage(src);
+            const fakeLink = img?.dataset.cojudgeImg;
+            const src = fakeLink || img?.getAttribute('src');
+            if (!src) return;
+            if (fakeLink) deletePastedImage(fakeLink);
+            deletePreviewImage(src);
             return;
         }
         const img = target.closest(`.${THUMB_WRAPPER_CLASS} img`) as HTMLImageElement | null;
@@ -3014,8 +3041,10 @@ func main() {
         }
     }
 
-    // Paste images into the WYSIWYG area as base64 <img> elements.
-    // Plain URL strings are inserted as clickable links (new tab).
+    // Paste images into the WYSIWYG area as <img> elements backed by IndexedDB
+    // (the source keeps a fake cojudge://image/<id> link; resolvePastedImages
+    // swaps it for the payload). Plain URL strings are inserted as clickable
+    // links (new tab).
     function handleWysiwygPaste(event: ClipboardEvent) {
         const items = event.clipboardData?.items;
         if (items) {
@@ -3025,14 +3054,16 @@ func main() {
                 if (!file) continue;
                 event.preventDefault();
                 const reader = new FileReader();
-                reader.onload = () => {
-                    document.execCommand('insertImage', false, reader.result as string);
+                reader.onload = async () => {
+                    const link = await storePastedImage(reader.result as string);
+                    document.execCommand('insertImage', false, link);
                     if (wysiwygEl) {
                         wrapImageThumbnails(wysiwygEl);
                         wrapCodeBlocksWithCopy(wysiwygEl);
                         // Keep an empty line after the pasted image so the caret
                         // can move past the contenteditable="false" thumbnail
                         ensureTrailingEmptyLine(wysiwygEl);
+                        resolvePastedImages(wysiwygEl);
                     }
                 };
                 reader.readAsDataURL(file);
@@ -4083,6 +4114,14 @@ func main() {
             resolveFileLanguage: (fileId) => getLanguageForTab(fileId)
         });
     })();
+    let previewEl: HTMLDivElement | null = null;
+    // Pasted images render as fake links (cojudge://image/<id>); swap them for
+    // the IndexedDB payload once the HTML has been painted.
+    $: if (previewHtml) {
+        tick().then(() => {
+            if (previewEl) resolvePastedImages(previewEl);
+        });
+    }
     $: shareDirty = (() => {
         if (activeTab?.type === 'preview' && activeTab.sourceFileId) {
             const fkey = fileKey();
@@ -4946,7 +4985,7 @@ func main() {
                 {:else}
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <!-- svelte-ignore a11y-no-static-element-interactions -->
-                    <div class="markdown-preview markdown-body" on:click={handlePreviewClick}>
+                    <div class="markdown-preview markdown-body" bind:this={previewEl} on:click={handlePreviewClick}>
                         {@html previewHtml}
                     </div>
                 {/if}

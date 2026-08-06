@@ -15,7 +15,8 @@
     export let debugJobId: string | null = null;
     // When set, pasting an image from the clipboard is intercepted and the
     // returned text (e.g. markdown image syntax) is inserted at the cursor.
-    export let onPasteImage: ((dataUrl: string, file: File) => string) | undefined = undefined;
+    // May return a Promise (e.g. when the image is stored asynchronously).
+    export let onPasteImage: ((dataUrl: string, file: File) => string | Promise<string>) | undefined = undefined;
 
     let editor: Monaco.editor.IStandaloneCodeEditor | null = null;
     let editorElement: HTMLDivElement;
@@ -86,8 +87,9 @@
             reader.onload = () => {
                 const dataUrl = reader.result as string;
                 if (!editor || !onPasteImage) return;
-                const text = onPasteImage(dataUrl, file);
-                if (text) insertTextAtCursor(text);
+                Promise.resolve(onPasteImage(dataUrl, file)).then((text) => {
+                    if (text) insertTextAtCursor(text);
+                });
             };
             reader.readAsDataURL(file);
             break;

@@ -2,6 +2,7 @@ import { marked, Renderer } from 'marked';
 import TurndownService from 'turndown';
 import { gfm } from 'turndown-plugin-gfm';
 import { languageIconSvg } from './languageIcon';
+import { PASTED_IMAGE_SCHEME, parsePastedImageLink, getPastedImage } from './imageStore';
 
 function simpleHash(str: string): string {
     let hash = 0;
@@ -282,6 +283,24 @@ export function wrapImageThumbnails(root: HTMLElement) {
 // they get a copy button (see wrapCodeBlocksWithCopy). Stripped again by
 // htmlToMarkdown so only the <pre> round-trips back to markdown.
 export const CODE_COPY_WRAPPER_CLASS = 'md-code-copy';
+
+// Images pasted into markdown documents are stored in IndexedDB and referenced
+// by a fake link (cojudge://image/<id>). While the payload is being resolved,
+// <img> elements whose src is still the fake link stay hidden (see app.css).
+// Once resolved, the data URL lives in src and the fake link is kept in the
+// data-cojudge-img attribute so htmlToMarkdown round-trips it back to the fake
+// link instead of the (potentially huge) base64 payload.
+export async function resolvePastedImages(root: HTMLElement): Promise<void> {
+    if (typeof indexedDB === 'undefined') return;
+    const imgs = Array.from(root.querySelectorAll('img'));
+    for (const img of imgs) {
+        const fakeLink = img.getAttribute('data-cojudge-img') || img.getAttribute('src') || '';
+        if (!parsePastedImageLink(fakeLink)) continue;
+        img.dataset.cojudgeImg = fakeLink;
+        const dataUrl = await getPastedImage(fakeLink);
+        if (dataUrl && img.isConnected) img.src = dataUrl;
+    }
+}
 
 // GFM task-list checkboxes are rendered disabled by marked. In the WYSIWYG
 // editor we enable them so users can click to toggle, and mark them non-editable
@@ -582,6 +601,19 @@ function getTurndownService(): TurndownService {
                 const labelEl = node.querySelector(`.${FILE_MENTION_LABEL_CLASS}`);
                 const label = (labelEl?.textContent || node.textContent || href).trim();
                 return `[${label}](${href})`;
+            }
+        });
+        // Pasted images resolve to a data URL in src but keep the IndexedDB
+        // fake link in data-cojudge-img; serialize the fake link back to
+        // markdown so the document stays small and stable.
+        turndownService.addRule('pastedImage', {
+            filter: (node: HTMLElement) =>
+                node.nodeName === 'IMG' &&
+                (node.getAttribute('data-cojudge-img') || node.getAttribute('src') || '').startsWith(PASTED_IMAGE_SCHEME),
+            replacement: (_content: string, node: HTMLElement) => {
+                const fakeLink = node.getAttribute('data-cojudge-img') || node.getAttribute('src') || '';
+                const alt = (node.getAttribute('alt') || '').replace(/(\n+\s*)+/g, '\n').replace(/[[\]]/g, '\\$&');
+                return `![${alt}](${fakeLink})`;
             }
         });
         // Custom taskListItems rule that matches ANY checkbox input, even if

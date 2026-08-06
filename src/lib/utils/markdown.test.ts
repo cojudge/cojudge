@@ -118,6 +118,23 @@ describe('markdown utils', () => {
         expect(htmlToMarkdown(html)).toContain(`![image](${dataUrl})`);
     });
 
+    it('round-trips pasted-image fake links (IndexedDB) back to markdown', () => {
+        const fake = 'cojudge://image/abc-123';
+        const html = renderMarkdownPlain(`![image](${fake})`);
+        expect(html).toContain(`src="${fake}"`);
+        expect(htmlToMarkdown(html)).toBe(`![image](${fake})`);
+        // Round-trip stays stable
+        expect(htmlToMarkdown(renderMarkdownPlain(`![image](${fake})`))).toBe(`![image](${fake})`);
+    });
+
+    it('resolved pasted images serialize back to the fake link, not the payload', () => {
+        const dataUrl = 'data:image/png;base64,iVBORw0KGgo=';
+        const fake = 'cojudge://image/abc-123';
+        const html = `<p><img src="${dataUrl}" alt="image" data-cojudge-img="${fake}"></p>`;
+        expect(htmlToMarkdown(html)).toBe(`![image](${fake})`);
+        expect(htmlToMarkdown(html)).not.toContain(dataUrl);
+    });
+
     it('renders images as thumbnails with a delete button when imageThumbnails is enabled', () => {
         const dataUrl = 'data:image/png;base64,iVBORw0KGgo=';
         const html = renderMarkdown(`![image](${dataUrl})`, { imageThumbnails: true }) as string;
