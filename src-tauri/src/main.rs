@@ -22,7 +22,10 @@ use std::{
 };
 
 #[cfg(all(not(debug_assertions), unix))]
-use std::{os::unix::net::UnixStream, path::PathBuf};
+use std::os::unix::net::UnixStream;
+
+#[cfg(not(debug_assertions))]
+use std::path::PathBuf;
 
 #[cfg(all(not(debug_assertions), windows))]
 use std::os::windows::process::CommandExt;
@@ -552,6 +555,27 @@ async fn google_oauth_access_token(
         .map_err(|_| "Google sign-in stopped unexpectedly.".to_string())?
 }
 
+/**
+ * Generate a new desktop MCP token, persist it, and restart the backend so
+ * the new token takes effect. The webview re-bootstraps with the returned
+ * token to keep its session cookie valid. Errors in debug builds: rotation
+ * only exists in the packaged desktop app.
+ */
+#[tauri::command]
+async fn rotate_desktop_token(app: tauri::AppHandle) -> Result<String, String> {
+    #[cfg(not(debug_assertions))]
+    {
+        tauri::async_runtime::spawn_blocking(move || rotate_desktop_token_blocking(&app))
+            .await
+            .map_err(|_| "Token rotation stopped unexpectedly.".to_string())?
+    }
+    #[cfg(debug_assertions)]
+    {
+        let _ = app;
+        Err("Token rotation is only available in the packaged desktop app.".to_string())
+    }
+}
+
 #[cfg(not(debug_assertions))]
 fn show_startup_error(app: &tauri::AppHandle) {
     if app
@@ -583,6 +607,61 @@ fn random_token() -> std::io::Result<String> {
     let mut token = String::with_capacity(bytes.len() * 2);
     for byte in bytes {
         write!(token, "{byte:02x}").unwrap();
+    }
+    Ok(token)
+}
+
+#[cfg(not(debug_assertions))]
+fn desktop_token_path(app: &tauri::AppHandle) -> std::io::Result<PathBuf> {
+    let dir = app
+        .path()
+        .app_data_dir()
+        .map_err(|error| std::io::Error::other(error.to_string()))?;
+    std::fs::create_dir_all(&dir)?;
+    Ok(dir.join("desktop-mcp-token"))
+}
+
+#[cfg(not(debug_assertions))]
+fn write_desktop_token(path: &PathBuf, token: &str) -> std::io::Result<()> {
+    let mut options = std::fs::OpenOptions::new();
+    options.write(true).create(true).truncate(true);
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::OpenOptionsExt;
+        options.mode(0o600);
+    }
+    let mut file = options.open(path)?;
+    file.write_all(token.as_bytes())
+}
+
+/**
+ * The desktop MCP token persists across restarts so the URL users copy into
+ * their agent configuration stays valid. The first launch writes a fresh
+ * 64-hex token to the app data directory; later launches reuse it.
+ */
+#[cfg(not(debug_assertions))]
+fn load_or_create_desktop_token(app: &tauri::AppHandle) -> std::io::Result<String> {
+    let path = desktop_token_path(app)?;
+    if let Ok(existing) = std::fs::read_to_string(&path) {
+        let existing = existing.trim();
+        if existing.len() == 64 && existing.chars().all(|c| c.is_ascii_hexdigit()) {
+            return Ok(existing.to_owned());
+        }
+    }
+    let token = random_token()?;
+    write_desktop_token(&path, &token)?;
+    Ok(token)
+}
+
+#[cfg(not(debug_assertions))]
+fn rotate_desktop_token_blocking(app: &tauri::AppHandle) -> Result<String, String> {
+    let token = random_token().map_err(|error| error.to_string())?;
+    let path = desktop_token_path(app).map_err(|error| error.to_string())?;
+    write_desktop_token(&path, &token).map_err(|error| error.to_string())?;
+    stop_backend_child(app);
+    if let Err(error) = start_backend(app) {
+        show_startup_error(app);
+        return Err(format!("Failed to restart the backend: {error}"));
     }
     Ok(token)
 }
@@ -653,7 +732,7 @@ fn start_backend(app: &tauri::AppHandle) -> Result<(), Box<dyn std::error::Error
         .parent()
         .ok_or("application executable has no parent directory")?
         .join(format!("cojudge-node{}", std::env::consts::EXE_SUFFIX));
-    let token = random_token()?;
+    let token = load_or_create_desktop_token(app)?;
     let session_id = random_token()?;
 
     let mut command = Command::new(node);
@@ -762,11 +841,8 @@ fn start_backend(app: &tauri::AppHandle) -> Result<(), Box<dyn std::error::Error
     Ok(())
 }
 
-fn shutdown_backend(app: &tauri::AppHandle) {
+fn stop_backend_child(app: &tauri::AppHandle) {
     let state = app.state::<Backend>();
-    if state.shutting_down.swap(true, Ordering::AcqRel) {
-        return;
-    }
 
     let Some(mut child) = state.child.lock().unwrap().take() else {
         return;
@@ -789,13 +865,22 @@ fn shutdown_backend(app: &tauri::AppHandle) {
     let _ = child.wait();
 }
 
+fn shutdown_backend(app: &tauri::AppHandle) {
+    let state = app.state::<Backend>();
+    if state.shutting_down.swap(true, Ordering::AcqRel) {
+        return;
+    }
+    stop_backend_child(app);
+}
+
 fn main() {
     let app = tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
         .manage(Backend::default())
         .invoke_handler(tauri::generate_handler![
             new_window,
-            google_oauth_access_token
+            google_oauth_access_token,
+            rotate_desktop_token
         ])
         .on_menu_event(|app, event| {
             if event.id().0.as_str() == NEW_WINDOW_MENU_ID {

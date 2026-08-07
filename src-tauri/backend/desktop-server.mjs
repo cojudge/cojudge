@@ -49,9 +49,12 @@ const server = createServer((request, response) => {
 		return;
 	}
 
-	const authenticated = (request.headers.cookie ?? '')
-		.split(';')
-		.some((value) => value.trim() === cookie);
+	const authenticated =
+		(request.headers.cookie ?? '')
+			.split(';')
+			.some((value) => value.trim() === cookie) ||
+		request.headers.authorization === `Bearer ${token}` ||
+		requestUrl.searchParams.get('token') === token;
 	if (!authenticated) {
 		response.writeHead(403, { connection: 'close', 'content-type': 'text/plain' });
 		response.end('Forbidden');
@@ -120,7 +123,7 @@ async function main() {
 	});
 
 	process.env.ORIGIN = origin;
-	process.env.BODY_SIZE_LIMIT = '10M';
+	process.env.BODY_SIZE_LIMIT = '100M';
 	delete process.env.PROTOCOL_HEADER;
 	delete process.env.HOST_HEADER;
 	delete process.env.PORT_HEADER;
