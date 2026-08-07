@@ -1595,7 +1595,7 @@ func main() {
 
     function closeTab(fileId: string) {
         const tabToClose = tabs.find(t => t.fileId === fileId);
-        if (isSpecialTabType(tabToClose?.type)) {
+        if (tabToClose?.type === 'preview') {
             const closedIdx = tabs.findIndex(t => t.fileId === fileId);
             tabs = tabs.filter(t => t.fileId !== fileId);
             if (!tabs[activeTabId]?.isOpen) {
@@ -1617,6 +1617,9 @@ func main() {
             return;
         }
 
+        // Editor and whiteboard tabs close the same way: the entry stays in the
+        // workspace and only the open/active state (local-only) changes, so
+        // closing a tab never becomes a cloud change.
         tabs = tabs.map(t => t.fileId === fileId ? { ...t, isOpen: false } : t);
 
         const fkey = fileKey();

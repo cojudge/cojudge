@@ -39,6 +39,7 @@ import {
 	isCloudRestoreInProgress,
 	isMeaningfulProgress,
 	resumeProgressStorageWrites,
+	sanitizeCloudFiles,
 	serializeProgressData,
 	type ProgressData
 } from '$lib/progressBackup';
@@ -1142,7 +1143,10 @@ function readLocalFilesStore(): FileStore {
 
 function fileChangesAgainstCloud(local: ProgressData, cloud: ProgressData): FileChange[] {
 	const localFiles = (local.files as FileStore | undefined) ?? {};
-	const cloudFiles = (cloud.files as FileStore | undefined) ?? {};
+	// Re-sanitize the cloud side: snapshots uploaded by older builds may still
+	// carry fields that are local-only today (e.g. `order`), which would
+	// otherwise surface as phantom "Files (names or order)" changes.
+	const cloudFiles = (sanitizeCloudFiles(cloud).files as FileStore | undefined) ?? {};
 	const localBoard = local[WHITEBOARD_BOARD_KEY];
 	const cloudBoard = cloud[WHITEBOARD_BOARD_KEY];
 

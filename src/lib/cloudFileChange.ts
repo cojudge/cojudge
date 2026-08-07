@@ -59,9 +59,8 @@ export const OTHER_CHANGE_FILE_ID_PREFIXES = [
 
 // UI/runtime fields that belong to the editor, not to the file itself. They are
 // carried over when a local file is discarded back to its cloud version.
-// Note: `order` is intentionally excluded — it is a cloud-synced field, so
-// discarding must restore the cloud order or a residual "Files (names or order)"
-// change appears after every content discard.
+// `order` is tab-list placement: local-only UI state, so discarding must keep
+// the local order or the tab arrangement jumps after every content discard.
 const UI_FIELDS = [
 	'isOpen',
 	'isActive',
@@ -69,7 +68,8 @@ const UI_FIELDS = [
 	'viewState',
 	'output',
 	'logs',
-	'lastSharedContent'
+	'lastSharedContent',
+	'order'
 ] as const;
 
 function parseEntries(store: FileStore, slug: string): Array<Record<string, unknown>> {
@@ -417,8 +417,8 @@ export function computeOtherChanges(localData: ProgressStore, cloudData: Progres
 }
 
 // Catch-all for `files` store differences that produce no content diff (file
-// renames, reorders, or other metadata edits): one blob change per workspace
-// slug, skipped when a content-level change already covers that workspace.
+// renames or other metadata edits): one blob change per workspace slug, skipped
+// when a content-level change already covers that workspace.
 export function computeWorkspaceChanges(
 	localData: ProgressStore,
 	cloudData: ProgressStore,
@@ -538,9 +538,10 @@ export function computeWhiteboardChange(localBoard: unknown, cloudBoard: unknown
 
 // Reverts a single file to its cloud version: locals that only exist locally are
 // removed, and entries the file still owns in the cloud are restored while
-// carrying over editor UI state. Restored entries replace matching local slots
-// in place so sibling files (and array order) stay put — otherwise discarding
-// content leaves a residual "Files (names or order)" workspace change.
+// carrying over editor UI state (including the local tab order). Restored
+// entries replace matching local slots in place so sibling files (and array
+// order) stay put — otherwise discarding content leaves a residual "Files
+// (names or order)" workspace change.
 export function discardFile(
 	localStore: FileStore,
 	fileId: string,

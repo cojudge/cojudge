@@ -18,6 +18,24 @@ import {
 	type FileStore,
 	type ProgressStore
 } from './cloudFileChange';
+import { collectProgressData, type ProgressData } from './progressBackup';
+
+// Mirrors production: local and cloud data are cloud-sanitized (editor-only
+// fields like `order` stripped) before any workspace-level comparison, see
+// fileChangesAgainstCloud in cloudSync.ts.
+function sanitized(data: ProgressStore): ProgressData {
+	const keys = Object.keys(data);
+	const storage = {
+		length: keys.length,
+		key: (index: number) => keys[index] ?? null,
+		getItem: (key: string) => {
+			if (!(key in data)) return null;
+			const value = data[key];
+			return typeof value === 'string' ? value : JSON.stringify(value);
+		}
+	};
+	return collectProgressData(storage, { cloud: true });
+}
 
 function store(files: Array<{ fileId: string; fileName?: string; language: string; content: string }>): FileStore {
 	return {
@@ -155,7 +173,7 @@ describe('discardFile', () => {
 		expect(entries[0].lastUpdated).toBe(200);
 	});
 
-	it('restores cloud order instead of keeping the local order field', () => {
+	it('keeps the local order field when discarding', () => {
 		const localStore: FileStore = {
 			playground: JSON.stringify([
 				{ fileId: '1', fileName: 'Solution', language: 'python', content: 'print(2)', order: 5, isOpen: true }
@@ -170,7 +188,7 @@ describe('discardFile', () => {
 		const updated = discardFile(localStore, '1', cloudStore);
 		const entries = JSON.parse(updated.playground) as Array<Record<string, unknown>>;
 		expect(entries[0].content).toBe('print(1)');
-		expect(entries[0].order).toBe(1);
+		expect(entries[0].order).toBe(5);
 		expect(entries[0].isOpen).toBe(true);
 	});
 
@@ -301,7 +319,7 @@ describe('computeWorkspaceChanges', () => {
 		const cloud: ProgressStore = {
 			files: { playground: JSON.stringify([{ fileId: '1', fileName: 'Original', language: 'python', content: 'x=1' }]) }
 		};
-		const changes = computeWorkspaceChanges(local, cloud, new Set());
+		const changes = computeWorkspaceChanges(sanitized(local), sanitized(cloud), new Set());
 		expect(changes).toHaveLength(1);
 		expect(changes[0].fileId).toBe(`${WORKSPACE_FILE_ID_PREFIX}playground`);
 	});
@@ -313,12 +331,33 @@ describe('computeWorkspaceChanges', () => {
 		const cloud: ProgressStore = {
 			files: { playground: JSON.stringify([{ fileId: '1', fileName: 'Original', language: 'python', content: 'x=1' }]) }
 		};
-		expect(computeWorkspaceChanges(local, cloud, new Set(['playground']))).toEqual([]);
+		expect(computeWorkspaceChanges(sanitized(local), sanitized(cloud), new Set(['playground']))).toEqual([]);
 	});
 
 	it('ignores identical workspaces', () => {
 		const files = { playground: JSON.stringify([{ fileId: '1', fileName: 'A', language: 'python', content: 'x=1' }]) };
-		expect(computeWorkspaceChanges({ files }, { files }, new Set())).toEqual([]);
+		expect(computeWorkspaceChanges(sanitized({ files }), sanitized({ files }), new Set())).toEqual([]);
+	});
+
+	it('ignores order-only differences (tab reorder/close is not a cloud change)', () => {
+		const local: ProgressStore = {
+			files: {
+				playground: JSON.stringify([
+					{ fileId: '1', fileName: 'A', language: 'python', content: 'x', order: 0 },
+					{ fileId: '2', fileName: 'B', language: 'python', content: 'y', order: 1 }
+				])
+			}
+		};
+		const cloud: ProgressStore = {
+			files: {
+				playground: JSON.stringify([
+					{ fileId: '1', fileName: 'A', language: 'python', content: 'x', order: 1 },
+					{ fileId: '2', fileName: 'B', language: 'python', content: 'y', order: 0 }
+				])
+			}
+		};
+		expect(computeWorkspaceChanges(sanitized(local), sanitized(cloud), new Set())).toEqual([]);
+		expect(computeFileChanges(local.files as FileStore, cloud.files as FileStore)).toEqual([]);
 	});
 });
 
@@ -366,9 +405,11 @@ describe('discardChange', () => {
 
 describe('discard residual workspace noise', () => {
 	it('does not leave a workspace change after discarding matching content in place', () => {
-		// Mirrors cloud-sanitized entries (no editor-only fields). Previously,
-		// discardFile appended restored entries and kept local `order`, which
-		// made a phantom "Files (names or order)" change appear after discard.
+		// Mirrors cloud-sanitized comparison (production sanitizes before
+		// comparing). Previously, discardFile appended restored entries and kept
+		// local `order`, which made a phantom "Files (names or order)" change
+		// appear after discard. `order` is local-only UI state now, so the
+		// sanitized comparison must stay clean.
 		const localStore: FileStore = {
 			playground: JSON.stringify([
 				{ fileId: '1', fileName: 'A', language: 'python', content: 'local', order: 2 },
@@ -385,7 +426,11 @@ describe('discard residual workspace noise', () => {
 		const updated = discardFile(localStore, '1', cloudStore);
 		expect(computeFileChanges(updated, cloudStore)).toEqual([]);
 		expect(
-			computeWorkspaceChanges({ files: updated }, { files: cloudStore }, new Set())
+			computeWorkspaceChanges(
+				sanitized({ files: updated }),
+				sanitized({ files: cloudStore }),
+				new Set()
+			)
 		).toEqual([]);
 	});
 });
