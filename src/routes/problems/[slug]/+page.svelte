@@ -6,6 +6,8 @@
     import GameHistoryPopup from '$lib/components/GameHistoryPopup.svelte';
     import GameModePopup from '$lib/components/GameModePopup.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
+    import Whiteboard from '$lib/components/Whiteboard.svelte';
+    import { WHITEBOARD_FILE_ID } from '$lib/cloudFileChange';
     import { showAlert, showConfirm } from '$lib/dialogs';
     import { consumeForkTransfer } from '$lib/forkTransfer';
     import { initFirebase, ensureAuthenticated } from '$lib/firebase';
@@ -65,7 +67,7 @@
     const codeKey = () => `${problemId}:${language}`;
 
     // Tabs are grouped by fileId (language-agnostic)
-    type TabMeta = { fileId: string; fileName: string };
+    type TabMeta = { fileId: string; fileName: string; type?: 'editor' | 'whiteboard' };
 
     function getFiles(): FileEntry[] {
         try {
@@ -81,18 +83,24 @@
             // Create a default tab; the language-specific entry will be created lazily
             return [{ fileId: uuidv4(), fileName: 'Solution' }];
         }
-        const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number }>();
+        const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number; type?: 'editor' | 'whiteboard' }>();
         files.forEach((f, idx) => {
             const existing = groups.get(f.fileId);
             const orderVal = (typeof f.order === 'number') ? f.order : null;
+            const entryType: 'editor' | 'whiteboard' = f.type === 'whiteboard' ? 'whiteboard' : 'editor';
             if (!existing) {
                 groups.set(f.fileId, {
                     fileId: f.fileId,
-                    fileName: f.fileName || 'Solution',
+                    fileName: entryType === 'whiteboard' ? 'Whiteboard' : (f.fileName || 'Solution'),
                     order: orderVal,
-                    firstIndex: idx
+                    firstIndex: idx,
+                    type: entryType
                 });
             } else {
+                if (entryType === 'whiteboard') {
+                    existing.type = 'whiteboard';
+                    existing.fileName = 'Whiteboard';
+                }
                 if (orderVal !== null) {
                     if (existing.order === null || orderVal < existing.order) existing.order = orderVal;
                 }
@@ -107,7 +115,7 @@
             // Fallback to first appearance order in stored array
             return a.firstIndex - b.firstIndex;
         });
-        return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName }));
+        return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName, type: g.type }));
     }
 
     // Ensure an entry exists for current tab+language, optionally with initial content
@@ -145,6 +153,7 @@
 
     async function loadOrInitFile(lang: ProgrammingLanguage) {
         if (activeTabId < 0 || activeTabId >= tabs.length) return;
+        if (tabs[activeTabId].type === 'whiteboard') return;
         const currentId = tabs[activeTabId].fileId;
         const files = getFiles();
         const entry = files.find((x) => x.fileId === currentId && x.language === lang);
@@ -182,6 +191,7 @@
 
     let tabs: TabMeta[] = getInitialTabs();
     let activeTabId: number = 0;
+    $: activeTab = tabs[activeTabId];
     let editingTabId: string | null = null;
     let editingName = '';
     let renameInputEl: HTMLInputElement | null = null;
@@ -353,6 +363,23 @@
     }
 
     async function closeTab(fileId: string) {
+        const tabToClose = tabs.find((t) => t.fileId === fileId);
+        if (tabToClose?.type === 'whiteboard') {
+            const idx = tabs.findIndex((t) => t.fileId === fileId);
+            if (activeTabId === idx) {
+                const next = tabs.find((x) => x.fileId !== fileId);
+                if (next) await activateTab(next.fileId);
+            }
+            const fkey = fileKey();
+            fileStore.update((s) => {
+                let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+                files = files.filter((f) => f.fileId !== fileId);
+                return { ...s, [fkey]: JSON.stringify(files) };
+            });
+            tabs = tabs.filter((t) => t.fileId !== fileId);
+            persistTabOrder();
+            return;
+        }
         if (tabs.length <= 1) return;
         if (!await showConfirm('This file and all of its saved language versions will be permanently removed.', {
             title: 'Remove file?',
@@ -518,7 +545,43 @@
         saveCurrentViewState();
         activeTabId = idx;
         debugBreakpoints = [];
+        if (tabs[idx].type === 'whiteboard') return;
         await loadOrInitFile(language);
+    }
+
+    async function openWhiteboard() {
+        const existing = tabs.find((t) => t.type === 'whiteboard' || t.fileId === WHITEBOARD_FILE_ID);
+        if (existing) {
+            if (tabs[activeTabId]?.fileId === existing.fileId) {
+                closeTab(existing.fileId);
+                return;
+            }
+            await activateTab(existing.fileId);
+            return;
+        }
+        const nextId = WHITEBOARD_FILE_ID;
+        tabs = [...tabs, { fileId: nextId, fileName: 'Whiteboard', type: 'whiteboard' }];
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            files = [
+                ...files,
+                {
+                    fileId: nextId,
+                    fileName: 'Whiteboard',
+                    language: 'plaintext',
+                    content: '',
+                    viewState: null,
+                    isActive: false,
+                    order: tabs.length - 1,
+                    type: 'whiteboard'
+                } as FileEntry
+            ];
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
+        activeTabId = tabs.length - 1;
+        persistTabOrder();
+        await tick();
     }
 
     // Runtime image name (like in ExecutionPanel)
@@ -818,6 +881,7 @@
     <div class="editor-pane">
         <div class="editor-header" style="display:flex;align-items:center;justify-content:space-between;padding:var(--spacing-2);border-bottom:1px solid var(--color-border);">
             <div class="lang-dropdown-tabs-container">
+                {#if activeTab?.type !== 'whiteboard'}
                 <div style="display:flex;gap:var(--spacing-2);align-items:center;">
                     <label for="language-select" style="font-size:0.9rem;color:var(--color-text-secondary);">Language</label>
                     <select
@@ -842,6 +906,7 @@
                         <option value="go">Go</option>
                     </select>
                 </div>
+                {/if}
                 <div class="tabs-container">
                     <div class="tab-bar" role="tablist" aria-label="Editor tabs">
                         {#each tabs as t}
@@ -873,8 +938,15 @@
                                         on:blur={applyRename}
                                     />
                                 {:else}
+                                    {#if t.type === 'whiteboard'}
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:2px;flex-shrink:0;">
+                                            <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                                            <path d="m8 15 6-6 2 2-6 6H8v-2Z"></path>
+                                        </svg>
+                                    {/if}
                                     <span class="tab-title">{t.fileName}</span>
                                 {/if}
+                                {#if t.type !== 'whiteboard'}
                                 <button
                                     class="tab-rename"
                                     aria-label="Rename tab"
@@ -887,6 +959,7 @@
                                         <path d="M14.06 6.19l3.75 3.75 1.69-1.69a1.5 1.5 0 000-2.12L17.87 4.5a1.5 1.5 0 00-2.12 0l-1.69 1.69z" stroke="currentColor" stroke-width="1.5" fill="none"/>
                                     </svg>
                                 </button>
+                                {/if}
                                 {#if tabs.length > 1}
                                     <button
                                         class="tab-close"
@@ -904,6 +977,20 @@
                 </div>
             </div>
             <div style="display:flex;align-items:center;gap:var(--spacing-2);">
+                <Tooltip text={"Whiteboard"} pos={"bottom"}>
+                    <button
+                        class="icon-button {activeTab?.type === 'whiteboard' ? 'active' : ''}"
+                        on:click={openWhiteboard}
+                        title="Whiteboard"
+                        aria-label="Whiteboard"
+                    >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                            <path d="m8 15 6-6 2 2-6 6H8v-2Z"></path>
+                        </svg>
+                    </button>
+                </Tooltip>
+                {#if activeTab?.type !== 'whiteboard'}
                 {#if !isGameMode}
                     <Tooltip text={"Start Game"} pos={"bottom"}>
                         <button class="icon-button game-start-btn" on:click={() => showGameStartPopup = true} title="Start Game">
@@ -940,6 +1027,7 @@
                         </svg>
                     </button>
                 </Tooltip>
+                {/if}
                 <div class="settings-wrapper" bind:this={settingsContainer}>
                     <Tooltip text={"Settings"} pos={"bottom"}>
                         <button
@@ -976,12 +1064,16 @@
                         </div>
                     {/if}
                 </div>
-                <div style="font-size:0.85rem;color:var(--color-text-secondary);">{imageName || language.toUpperCase()}</div>
+                <div style="font-size:0.85rem;color:var(--color-text-secondary);">{activeTab?.type === 'whiteboard' ? 'Whiteboard' : (imageName || language.toUpperCase())}</div>
             </div>
         </div>
 
-        <div class="editor-container">
-            {#if CodeEditor}
+        <div class="editor-container" class:whiteboard-active={activeTab?.type === 'whiteboard'}>
+            {#if activeTab?.type === 'whiteboard'}
+                <div class="whiteboard-host">
+                    <Whiteboard embedded active={true} />
+                </div>
+            {:else if CodeEditor}
                 <svelte:component 
                     this={CodeEditor} 
                     bind:this={editorComponent}
@@ -1129,6 +1221,23 @@
         padding: var(--spacing-1); /* Padding around the editor */
         display: flex;
         flex-direction: column;
+    }
+
+    .editor-container.whiteboard-active {
+        padding: 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .whiteboard-host {
+        position: absolute;
+        inset: 0;
+        min-height: 0;
+    }
+
+    .icon-button.active {
+        color: var(--color-highlight);
+        background: rgba(255,255,255,0.06);
     }
 
     /* --- Browser-like Tabs --- */
