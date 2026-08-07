@@ -70,9 +70,12 @@ if (typeof document !== 'undefined') {
         if (copyBtn) {
             e.preventDefault();
             const wrapper = copyBtn.closest('.code-block-wrapper, .md-code-copy') as HTMLElement | null;
-            const codeEl = wrapper?.querySelector('code');
+            // Rendered blocks are <pre><code>, but blocks created in WYSIWYG
+            // (toolbar button / ``` shortcut) are bare <pre>, so fall back.
+            const codeEl = wrapper?.querySelector('code') ?? wrapper?.querySelector('pre');
             if (!codeEl) return;
-            const code = codeEl.innerText;
+            // Strip the ZWSP caret placeholder kept in fresh WYSIWYG blocks.
+            const code = (codeEl.innerText || '').replace(/\u200B/g, '');
             navigator.clipboard.writeText(code).then(() => {
                 const originalInner = copyBtn.innerHTML;
                 const originalColor = copyBtn.style.color;
@@ -578,6 +581,23 @@ function getTurndownService(): TurndownService {
             hr: '---'
         });
         turndownService.use(gfm);
+        // execCommand('formatBlock', 'pre') (the WYSIWYG code-block toolbar
+        // button) produces a bare <pre> without the <code> child turndown's
+        // default fencedCodeBlock rule expects, so round-trip those back to
+        // fenced code blocks too.
+        turndownService.addRule('bareCodeBlock', {
+            filter: (node: HTMLElement) =>
+                node.nodeName === 'PRE' && !node.querySelector('code'),
+            replacement: (_content: string, node: HTMLElement) => {
+                // The WYSIWYG ``` shortcut keeps a ZWSP in a freshly created
+                // empty code block (turndown skips truly blank elements), which
+                // is stripped here so the fence round-trips as ```\n```.
+                const code = (node.textContent || '').replace(/\u200B/g, '');
+                let fence = '```';
+                while (code.includes(fence)) fence += '`';
+                return '\n\n' + fence + (code ? '\n' + code.replace(/\n$/, '') + '\n' : '\n') + fence + '\n\n';
+            }
+        });
         // Inline code created by the WYSIWYG backtick auto-matching (see
         // inlineCodeSpanHtml) round-trips back to inline code markdown.
         turndownService.addRule('wysiwygInlineCode', {

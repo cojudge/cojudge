@@ -17,7 +17,7 @@
     import fileStore, { isDotFileName, type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
-    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, wrapImageThumbnails, wrapCodeBlocksWithCopy, ensureTrailingEmptyLine, ensureFileMentionCarets, prepareTaskListCheckboxes, isTaskListItem, isEmptyTaskListItem, createTaskCheckbox, ensureTaskCheckbox, ensureTaskItemCaretAnchor, removeTaskCheckbox, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, resolvePastedImages, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref, fileMentionHtml, FILE_MENTION_CLASS } from '$lib/utils/markdown';
+    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, wrapImageThumbnails, wrapCodeBlocksWithCopy, ensureTrailingEmptyLine, ensureFileMentionCarets, prepareTaskListCheckboxes, isTaskListItem, isEmptyTaskListItem, createTaskCheckbox, ensureTaskCheckbox, ensureTaskItemCaretAnchor, removeTaskCheckbox, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, CODE_COPY_WRAPPER_CLASS, resolvePastedImages, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref, fileMentionHtml, FILE_MENTION_CLASS } from '$lib/utils/markdown';
     import { storePastedImage, deletePastedImage, inlinePastedImageLinks } from '$lib/utils/imageStore';
     import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
     import QRCode from 'qrcode';
@@ -2200,11 +2200,13 @@ func main() {
     }
 
     function handleWysiwygInput() {
+        removeOrphanCodeWrappers();
         healTaskListStructure();
         if (wysiwygEl?.querySelector('li input[type="checkbox"][disabled]')) {
             prepareTaskListCheckboxes(wysiwygEl);
         }
         maybeAutoInsertHorizontalRule();
+        maybeAutoInsertCodeBlock();
         maybeAutoCloseInlineCode();
         updateMentionPopup();
         if (wysiwygDebounce) clearTimeout(wysiwygDebounce);
@@ -2273,6 +2275,171 @@ func main() {
         selection.removeAllRanges();
         selection.addRange(nextRange);
         return true;
+    }
+
+    let applyingCodeBlock = false;
+    // Notion-style: typing an exact ``` line turns it into a code block.
+    function maybeAutoInsertCodeBlock() {
+        if (applyingCodeBlock || !wysiwygEl) return;
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return;
+        const range = selection.getRangeAt(0);
+        if (!range.collapsed || !wysiwygEl.contains(range.startContainer)) return;
+
+        const parent = range.startContainer.nodeType === Node.ELEMENT_NODE
+            ? range.startContainer as HTMLElement
+            : range.startContainer.parentElement;
+        if (!parent || parent.closest('pre, code')) return;
+
+        let line: HTMLElement | null = parent;
+        while (line && line.parentElement !== wysiwygEl) line = line.parentElement;
+        if (!line || line.parentElement !== wysiwygEl || !/^(P|DIV)$/.test(line.tagName)) return;
+        if (line.childNodes.length !== 1 || line.firstChild?.nodeType !== Node.TEXT_NODE || line.textContent !== '```') return;
+
+        insertWysiwygCodeBlock(line);
+    }
+
+    function insertWysiwygCodeBlock(lineToReplace: HTMLElement) {
+        if (!wysiwygEl) return false;
+        wysiwygEl.focus();
+        const selection = window.getSelection();
+        if (!selection) return false;
+        const lineRange = document.createRange();
+        lineRange.selectNodeContents(lineToReplace);
+        selection.removeAllRanges();
+        selection.addRange(lineRange);
+
+        applyingCodeBlock = true;
+        try {
+            document.execCommand('formatBlock', false, 'pre');
+        } finally {
+            applyingCodeBlock = false;
+        }
+
+        const insertedPre = Array.from(wysiwygEl.querySelectorAll('pre')).find(
+            (pre) => (pre.textContent || '') === '```'
+        );
+        if (!insertedPre) return false;
+
+        // Notion-style: the fence disappears and the caret lands inside the
+        // freshly created code block, ready to type. A ZWSP keeps the empty
+        // block in the DOM (and markdown) until the user types something.
+        insertedPre.textContent = '';
+        const zwsp = document.createTextNode('\u200B');
+        insertedPre.appendChild(zwsp);
+        wrapCodeBlocksWithCopy(wysiwygEl);
+        // Keep a paragraph after the code block so the caret can move past it
+        if (!insertedPre.parentElement?.nextElementSibling) {
+            const paragraph = document.createElement('p');
+            paragraph.innerHTML = '<br>';
+            insertedPre.parentElement?.after(paragraph);
+        }
+        const caret = document.createRange();
+        caret.setStart(zwsp, 0);
+        caret.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(caret);
+        return true;
+    }
+
+    // The <pre> the caret is inside, if any (within the WYSIWYG editor).
+    function getPreFromSelection(): HTMLElement | null {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0 || !wysiwygEl) return null;
+        const range = selection.getRangeAt(0);
+        if (!wysiwygEl.contains(range.startContainer)) return null;
+        let node: Node | null = range.startContainer;
+        if (node.nodeType === Node.TEXT_NODE) node = node.parentElement;
+        if (!node || !(node instanceof HTMLElement)) return null;
+        const pre = node.closest('pre');
+        return pre && wysiwygEl.contains(pre) ? pre : null;
+    }
+
+    // The char range (in the ZWSP-stripped text) of the line the caret is on
+    // inside the pre, when that line is already empty. Returns null otherwise.
+    function emptyLineInPre(pre: HTMLElement): { start: number; end: number; total: number } | null {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return null;
+        const range = selection.getRangeAt(0);
+        const prefixRange = document.createRange();
+        prefixRange.selectNodeContents(pre);
+        prefixRange.setEnd(range.startContainer, range.startOffset);
+        const before = prefixRange.toString().replace(/\u200B/g, '');
+        const total = (pre.textContent || '').replace(/\u200B/g, '');
+        const after = total.slice(before.length);
+        const lastNewline = before.lastIndexOf('\n');
+        const start = lastNewline === -1 ? 0 : lastNewline + 1;
+        const nextNewline = after.indexOf('\n');
+        const end = nextNewline === -1 ? total.length : before.length + nextNewline;
+        if (total.slice(start, end).trim() !== '') return null;
+        return { start, end, total: total.length };
+    }
+
+    // Enter inside a code block: insert a real newline so the line stays part
+    // of the same code block.
+    function insertNewlineInPre() {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return;
+        const range = selection.getRangeAt(0);
+        if (!range.collapsed) range.deleteContents();
+        const nl = document.createTextNode('\n');
+        range.insertNode(nl);
+        range.setStartAfter(nl);
+        range.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+
+    // Notion-style exit from a code block: Enter on an empty last line. An
+    // empty code block is deleted; a non-empty one stays — with the empty
+    // line removed — and the caret moves to a fresh paragraph right after it.
+    function escapeWysiwygCodeBlock(pre: HTMLElement, line: { start: number; total: number }) {
+        const wrapper = pre.parentElement?.classList.contains(CODE_COPY_WRAPPER_CLASS) ? pre.parentElement : null;
+        const block = wrapper ?? pre;
+        const p = document.createElement('p');
+        p.innerHTML = '<br>';
+        const empty = !(pre.textContent || '').replace(/\u200B/g, '').trim();
+        if (!empty) {
+            // Drop the empty line the caret is on (the '\n' that starts it), so
+            // the code block does not keep a phantom empty last line.
+            if (line.start > 0) {
+                const text = (pre.textContent || '').replace(/\u200B/g, '');
+                pre.textContent = text.slice(0, line.start - 1) + text.slice(line.start);
+            }
+        }
+        if (empty || !(pre.textContent || '').replace(/\u200B/g, '').trim()) {
+            block.replaceWith(p);
+        } else {
+            block.after(p);
+        }
+        const selection = window.getSelection();
+        if (selection) {
+            const caret = document.createRange();
+            caret.selectNodeContents(p);
+            caret.collapse(false);
+            selection.removeAllRanges();
+            selection.addRange(caret);
+        }
+    }
+
+    // The browser sometimes deletes a code block on its own (e.g. Backspace
+    // emptying it and merging into the previous paragraph), leaving the copy
+    // button wrapper behind like a widow. Remove orphan wrappers, and empty
+    // ones the caret has moved out of.
+    function removeOrphanCodeWrappers() {
+        if (!wysiwygEl) return;
+        const selection = window.getSelection();
+        const caretNode = selection?.anchorNode ?? null;
+        wysiwygEl.querySelectorAll(`.${CODE_COPY_WRAPPER_CLASS}`).forEach((wrapper) => {
+            const pres = wrapper.querySelectorAll('pre');
+            if (pres.length === 0) {
+                wrapper.remove();
+                return;
+            }
+            if (caretNode && wrapper.contains(caretNode)) return;
+            const hasText = Array.from(pres).some((p) => (p.textContent || '').replace(/\u200B/g, '').trim() !== '');
+            if (!hasText) wrapper.remove();
+        });
     }
 
     // When the user types a closing backtick, try to match it with a previous
@@ -2396,6 +2563,52 @@ func main() {
             selection.addRange(newRange);
         }
         handleWysiwygInput();
+    }
+
+    // Toggle a code block around the current block, or unwrap the <pre> the
+    // caret is inside back into a paragraph.
+    function toggleCodeBlock() {
+        if (!wysiwygEl) return false;
+        wysiwygEl.focus();
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return false;
+        const range = selection.getRangeAt(0);
+        if (!wysiwygEl.contains(range.startContainer)) return false;
+
+        let node: Node | null = range.startContainer;
+        if (node.nodeType === Node.TEXT_NODE) node = node.parentElement;
+        const pre = node instanceof HTMLElement ? node.closest('pre') : null;
+        if (pre && wysiwygEl.contains(pre)) {
+            // Unwrap: replace the code block (and its copy-button wrapper, if
+            // the block was rendered from markdown) with a plain paragraph.
+            const block = pre.parentElement?.classList.contains(CODE_COPY_WRAPPER_CLASS) ? pre.parentElement : pre;
+            const p = document.createElement('p');
+            for (const child of Array.from(pre.childNodes)) {
+                // Rendered code blocks are <pre><code>…</code></pre>; unwrap the
+                // <code> so toggling off yields a plain paragraph, not inline code
+                if (child instanceof HTMLElement && child.tagName === 'CODE') {
+                    p.append(...Array.from(child.childNodes));
+                } else {
+                    p.appendChild(child);
+                }
+            }
+            block.replaceWith(p);
+            const caret = document.createRange();
+            caret.selectNodeContents(p);
+            caret.collapse(false);
+            selection.removeAllRanges();
+            selection.addRange(caret);
+            handleWysiwygInput();
+            return true;
+        }
+
+        // execCommand produces a bare <pre>; htmlToMarkdown's bareCodeBlock
+        // rule round-trips it back to a fenced code block. Wrap it right away
+        // so the copy button shows up immediately, like rendered code blocks.
+        document.execCommand('formatBlock', false, 'pre');
+        wrapCodeBlocksWithCopy(wysiwygEl);
+        handleWysiwygInput();
+        return true;
     }
 
     // If the click target is a playground file link, switch to that tab in-app.
@@ -2936,6 +3149,7 @@ func main() {
     // via the native control + change handler.
     function handleWysiwygClick(event: MouseEvent) {
         if (tryOpenPlaygroundFileLink(event, wysiwygEl)) return;
+        removeOrphanCodeWrappers();
         const target = event.target as HTMLElement;
         if (target instanceof HTMLInputElement && target.type === 'checkbox' && wysiwygEl?.contains(target)) {
             // Let the native checkbox toggle; change handler syncs markdown.
@@ -3011,6 +3225,7 @@ func main() {
             wysiwygDebounce = null;
         }
         if (!previewEditMode || !wysiwygEl || !wysiwygSourceFileId) return;
+        removeOrphanCodeWrappers();
         healTaskListStructure();
         prepareTaskListCheckboxes(wysiwygEl);
         const markdown = htmlToMarkdown(wysiwygEl.innerHTML);
@@ -3406,6 +3621,23 @@ func main() {
             }
         }
 
+        // Code block: Enter inserts a new line inside the block (staying in
+        // it); Enter on an empty last line exits the block (an empty line in
+        // the middle just adds a new line).
+        if (e.key === 'Enter' && !e.shiftKey && !e.metaKey && !e.ctrlKey && !e.altKey) {
+            const pre = getPreFromSelection();
+            if (!pre) return;
+            e.preventDefault();
+            const selection = window.getSelection();
+            const line = selection && selection.isCollapsed ? emptyLineInPre(pre) : null;
+            if (line && line.end === line.total) {
+                escapeWysiwygCodeBlock(pre, line);
+            } else {
+                insertNewlineInPre();
+            }
+            handleWysiwygInput();
+        }
+
         // Backspace at the start of a task item removes the checkbox.
         if (e.key === 'Backspace' && !e.shiftKey && !e.metaKey && !e.ctrlKey && !e.altKey) {
             if (handleTaskListBackspace()) {
@@ -3540,6 +3772,10 @@ func main() {
             insertOrToggleTaskList();
             return;
         }
+        if (command === 'codeBlock') {
+            toggleCodeBlock();
+            return;
+        }
         applyWysiwygCommand(command, btn.dataset.value);
     }
 
@@ -3563,6 +3799,10 @@ func main() {
         }
         if (command === 'insertTaskList') {
             insertOrToggleTaskList();
+            return;
+        }
+        if (command === 'codeBlock') {
+            toggleCodeBlock();
             return;
         }
         applyWysiwygCommand(command, btn.dataset.value);
@@ -4928,7 +5168,7 @@ func main() {
                             <button type="button" data-command="formatBlock" data-value="blockquote" title="Quote" aria-label="Quote">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1zm12 0c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
                             </button>
-                            <button type="button" data-command="formatBlock" data-value="pre" title="Code block" aria-label="Code block">
+                            <button type="button" data-command="codeBlock" title="Code block" aria-label="Code block">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
                             </button>
                             <Tooltip text={isMac ? "Cmd+E" : "Ctrl+E"} pos="bottom">
