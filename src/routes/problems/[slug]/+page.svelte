@@ -11,6 +11,7 @@
     import { showAlert, showConfirm } from '$lib/dialogs';
     import { consumeForkTransfer } from '$lib/forkTransfer';
     import { initFirebase, ensureAuthenticated } from '$lib/firebase';
+    import { isDesktopRuntime } from '$lib/firebaseSettings';
     import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress } from '$lib/progressBackup';
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
@@ -19,6 +20,7 @@
     import userStore from '$lib/stores/userStore';
     import { getDifficultyClass, type ProgrammingLanguage } from '$lib/utils/util.js';
     import { doc, setDoc } from 'firebase/firestore';
+    import { browser } from '$app/environment';
     import { renderMarkdown } from '$lib/utils/markdown';
     import QRCode from 'qrcode';
     import { onMount, tick } from 'svelte';
@@ -27,6 +29,7 @@
 
     export let data;
     const problemId = data.problem.id;
+    const isDesktopMode = browser && isDesktopRuntime();
     let isMac = false;
     let description = '';
     let constraints = '';
@@ -283,17 +286,87 @@
         });
     }
 
-    function moveTab(sourceId: string, targetId: string) {
-        if (sourceId === targetId) return;
-        const from = tabs.findIndex((t) => t.fileId === sourceId);
-        const to = tabs.findIndex((t) => t.fileId === targetId);
-        if (from < 0 || to < 0) return;
+    // --- Tab drag-and-drop reordering ---
+    // HTML5 drag events are suppressed in Chromium by the tab's mousedown
+    // preventDefault (which keeps focus in the editor), so tabs are reordered
+    // with pointer events, same as the playground.
+    type TabPointerDrag = { fileId: string; startX: number; startY: number; active: boolean; pointerId: number };
+    let tabPointerDrag: TabPointerDrag | null = null;
+    let tabDidDrag = false;
+    /** Insertion index among tabs, -1 when not dragging */
+    let tabDragInsertIndex = -1;
+
+    function handleTabPointerDown(e: PointerEvent, fileId: string) {
+        if (e.button !== 0) return;
+        const target = e.target as HTMLElement | null;
+        if (target?.closest('button, input, a')) return;
+        tabDidDrag = false;
+        tabPointerDrag = { fileId, startX: e.clientX, startY: e.clientY, active: false, pointerId: e.pointerId };
+        window.addEventListener('pointermove', onTabPointerMove);
+        window.addEventListener('pointerup', onTabPointerUp);
+        window.addEventListener('pointercancel', onTabPointerUp);
+    }
+
+    function onTabPointerMove(e: PointerEvent) {
+        if (!tabPointerDrag || e.pointerId !== tabPointerDrag.pointerId) return;
+        const dx = e.clientX - tabPointerDrag.startX;
+        const dy = e.clientY - tabPointerDrag.startY;
+        if (!tabPointerDrag.active) {
+            if (Math.hypot(dx, dy) < 6) return;
+            tabPointerDrag = { ...tabPointerDrag, active: true };
+            tabDidDrag = true;
+            document.body.classList.add('tab-dragging');
+        }
+        e.preventDefault();
+        tabDragInsertIndex = computeTabInsertIndex(e.clientX);
+    }
+
+    function onTabPointerUp(e: PointerEvent) {
+        if (!tabPointerDrag || e.pointerId !== tabPointerDrag.pointerId) return;
+        const drag = tabPointerDrag;
+        const wasActive = drag.active;
+        const insertIndex = tabDragInsertIndex;
+        window.removeEventListener('pointermove', onTabPointerMove);
+        window.removeEventListener('pointerup', onTabPointerUp);
+        window.removeEventListener('pointercancel', onTabPointerUp);
+        document.body.classList.remove('tab-dragging');
+        tabPointerDrag = null;
+        tabDragInsertIndex = -1;
+        if (!wasActive) {
+            tabDidDrag = false;
+            return;
+        }
+        e.preventDefault();
+        if (insertIndex >= 0) {
+            const fromIdx = tabs.findIndex((t) => t.fileId === drag.fileId);
+            if (fromIdx >= 0 && fromIdx !== (fromIdx < insertIndex ? insertIndex - 1 : insertIndex)) {
+                moveTabToIndex(drag.fileId, insertIndex);
+            }
+        }
+        // Suppress the click that follows the drag
+        setTimeout(() => { tabDidDrag = false; }, 0);
+    }
+
+    function computeTabInsertIndex(clientX: number): number {
+        const els = Array.from(document.querySelectorAll<HTMLElement>('.editor-header .tab'));
+        if (!els.length) return 0;
+        for (let i = 0; i < els.length; i++) {
+            const rect = els[i].getBoundingClientRect();
+            if (clientX < rect.left + rect.width / 2) return i;
+        }
+        return els.length;
+    }
+
+    function moveTabToIndex(sourceFileId: string, insertIndex: number) {
+        const fromIdx = tabs.findIndex((t) => t.fileId === sourceFileId);
+        if (fromIdx < 0) return;
+        insertIndex = Math.max(0, Math.min(insertIndex, tabs.length));
         const activeFileId = tabs[activeTabId]?.fileId;
         const updated = [...tabs];
-        const [moved] = updated.splice(from, 1);
-        updated.splice(to, 0, moved);
+        const [moved] = updated.splice(fromIdx, 1);
+        const adjusted = fromIdx < insertIndex ? insertIndex - 1 : insertIndex;
+        updated.splice(adjusted, 0, moved);
         tabs = updated;
-        // Recompute activeTabId by locating current active fileId
         if (activeFileId) {
             const newIdx = tabs.findIndex((t) => t.fileId === activeFileId);
             if (newIdx !== -1) activeTabId = newIdx;
@@ -301,25 +374,34 @@
         persistTabOrder();
     }
 
-    let draggingId: string | null = null;
-    function handleDragStart(e: DragEvent, fileId: string) {
-        draggingId = fileId;
-        try { e.dataTransfer?.setData('text/plain', fileId); } catch {}
-        if (e.dataTransfer) e.dataTransfer.effectAllowed = 'move';
+    function handleTabClick(t: TabMeta) {
+        if (tabDidDrag) {
+            tabDidDrag = false;
+            return;
+        }
+        activateTab(t.fileId);
     }
-    function handleDragOver(e: DragEvent, _fileId: string) {
-        e.preventDefault();
-        if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
-    }
-    function handleDrop(e: DragEvent, targetId: string) {
-        e.preventDefault();
-        const source = draggingId || e.dataTransfer?.getData('text/plain') || '';
-        if (source) moveTab(source, targetId);
-        draggingId = null;
-    }
-    function handleDragEnd() {
-        draggingId = null;
-    }
+
+    $: tabDropIndicatorStyle = (() => {
+        if (tabDragInsertIndex < 0) return null;
+        const bar = document.querySelector<HTMLElement>('.editor-header .tab-bar');
+        if (!bar) return null;
+        const barRect = bar.getBoundingClientRect();
+        const els = Array.from(document.querySelectorAll<HTMLElement>('.editor-header .tab'));
+        let left: number;
+        if (!els.length) {
+            left = 0;
+        } else if (tabDragInsertIndex === 0) {
+            left = els[0].getBoundingClientRect().left - barRect.left - 4;
+        } else if (tabDragInsertIndex >= els.length) {
+            left = els[els.length - 1].getBoundingClientRect().right - barRect.left + 4;
+        } else {
+            const prev = els[tabDragInsertIndex - 1].getBoundingClientRect();
+            const next = els[tabDragInsertIndex].getBoundingClientRect();
+            left = (prev.right + next.left) / 2 - barRect.left;
+        }
+        return `left: ${left}px`;
+    })();
     $: if (!suppressSave && code !== undefined) {
         if (!skipNextSave) {
             const fkey = fileKey();
@@ -496,6 +578,29 @@
             if ((e.ctrlKey || e.metaKey) && (e.key === 'b' || e.key === 'B')) {
                 e.preventDefault();
                 toggleProblemPaneVisibility();
+            }
+            if (e.defaultPrevented) return;
+            if (!isDesktopMode) return;
+            if (!e.metaKey && !e.ctrlKey) return;
+            if (e.altKey) return;
+            const key = e.key.toLowerCase();
+            // Desktop-only shortcuts: Ctrl/Cmd+W closes the active tab and
+            // Ctrl/Cmd+1-9 activates the nth tab (left to right). In the browser
+            // these keys are reserved by the browser itself.
+            if (key === 'w' && !e.shiftKey) {
+                const active = tabs[activeTabId];
+                if (active) {
+                    e.preventDefault();
+                    closeTab(active.fileId);
+                }
+                return;
+            }
+            if (/^[1-9]$/.test(key)) {
+                const target = tabs[parseInt(key, 10) - 1];
+                if (target) {
+                    e.preventDefault();
+                    activateTab(target.fileId);
+                }
             }
         };
         const handleUnload = () => {
@@ -911,17 +1016,18 @@
                     <div class="tab-bar" role="tablist" aria-label="Editor tabs">
                         {#each tabs as t}
                             <div
-                                class="tab {t.fileId === tabs[activeTabId].fileId ? 'active' : ''}"
+                                class="tab {t.fileId === tabs[activeTabId].fileId ? 'active' : ''} {tabPointerDrag?.active && tabPointerDrag.fileId === t.fileId ? 'is-dragging' : ''}"
                                 role="tab"
                                 aria-selected={t.fileId === tabs[activeTabId].fileId}
                                 tabindex={t.fileId === tabs[activeTabId].fileId ? 0 : -1}
-                                on:click={() => activateTab(t.fileId)}
+                                data-file-id={t.fileId}
+                                on:click={() => handleTabClick(t)}
                                 on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateTab(t.fileId); } }}
-                                draggable={true}
-                                on:dragstart={(e) => handleDragStart(e, t.fileId)}
-                                on:dragover={(e) => handleDragOver(e, t.fileId)}
-                                on:drop={(e) => handleDrop(e, t.fileId)}
-                                on:dragend={handleDragEnd}
+                                on:pointerdown={(e) => handleTabPointerDown(e, t.fileId)}
+                                on:mousedown={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                }}
                                 on:auxclick={(e) => { if (e.button === 1) { e.preventDefault(); e.stopPropagation(); closeTab(t.fileId); } }}
                             >
                                 {#if editingTabId === t.fileId}
@@ -972,6 +1078,9 @@
                                 {/if}
                             </div>
                         {/each}
+                        {#if tabDropIndicatorStyle}
+                            <div class="tab-drop-indicator" style={tabDropIndicatorStyle} aria-hidden="true"></div>
+                        {/if}
                         <button class="tab-add" aria-label="New tab" title="New tab" on:click={() => addNewTab()}>+</button>
                     </div>
                 </div>
@@ -1251,6 +1360,7 @@
         flex: 1;
         min-width: 0;
         flex-wrap: nowrap;
+        position: relative;
     }
     /* Compact the tab bar when shown inside the header */
     .editor-header .tab-bar {
@@ -1285,6 +1395,29 @@
         font-size: 0.85rem;
         line-height: 1;
         user-select: none;
+        -webkit-user-select: none;
+        cursor: grab;
+        touch-action: none;
+    }
+    .tab.is-dragging {
+        opacity: 0.45;
+    }
+    .tab-drop-indicator {
+        position: absolute;
+        top: 4px;
+        bottom: 4px;
+        width: 2px;
+        border-radius: 1px;
+        background: var(--color-highlight);
+        pointer-events: none;
+        z-index: 5;
+    }
+    :global(body.tab-dragging) {
+        cursor: grabbing !important;
+        user-select: none !important;
+    }
+    :global(body.tab-dragging .tab) {
+        cursor: grabbing;
     }
     .tab.active {
         background-color: var(--color-surface);
