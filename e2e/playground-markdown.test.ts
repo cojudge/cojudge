@@ -389,6 +389,171 @@ test('WYSIWYG code blocks have a working copy button', async ({ page }) => {
   await expect.poll(() => getMarkdownContent(page)).toContain('```js');
 });
 
+test('WYSIWYG turns an exact three-backtick line into a code block', async ({ page }) => {
+  await openMarkdownPlayground(page);
+  await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('before');
+  await expect.poll(() => getMarkdownContent(page)).toBe('before');
+
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  await expect(editable).toBeVisible();
+
+  // An exact ``` line becomes a code block with a copy button
+  await editable.locator('> p:last-child').click();
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('```');
+  await expect(editable.locator('pre')).toHaveCount(1);
+  await expect(editable.locator('.md-code-copy .copy-code-button')).toBeVisible();
+  await expect.poll(async () => (await getMarkdownContent(page))?.match(/^```$/gm)?.length ?? 0).toBe(2);
+
+  // Typing continues inside the code block and round-trips as fenced code
+  await page.keyboard.type('const y = 2;');
+  await expect.poll(async () => (await getMarkdownContent(page)) ?? '').toContain('const y = 2;');
+  await expect.poll(async () => (await getMarkdownContent(page))?.match(/^```$/gm)?.length ?? 0).toBe(2);
+
+  // The copy button copies the bare <pre> content (no <code> child in WYSIWYG blocks)
+  await editable.locator('.md-code-copy .copy-code-button').click();
+  await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toContain('const y = 2;');
+  await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).not.toContain('\u200B');
+
+  await page.getByRole('button', { name: 'Preview' }).click();
+  const preview = page.locator('.markdown-preview:not(.wysiwyg-editing)');
+  await expect(preview.locator('code')).toHaveText('const y = 2;');
+});
+
+test('WYSIWYG Enter stays inside a code block and only exits on an empty line', async ({ page }) => {
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('before');
+  await expect.poll(() => getMarkdownContent(page)).toBe('before');
+
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  await expect(editable).toBeVisible();
+
+  // Create a code block and type two lines, separated by Enter
+  await editable.locator('> p:last-child').click();
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('```');
+  await page.keyboard.type('line1');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('line2');
+  await expect.poll(async () => (await getMarkdownContent(page)) ?? '').toContain('```\nline1\nline2\n```');
+  await expect.poll(async () => (await getMarkdownContent(page))?.match(/^```$/gm)?.length ?? 0).toBe(2);
+
+  // Enter again on the empty trailing line exits the block, keeping it intact
+  await page.keyboard.press('Enter'); // creates the empty line 3, still in the block
+  await expect(editable.locator('pre')).toHaveCount(1);
+  await expect(editable.locator('pre')).toContainText('line1\nline2\n');
+  await page.keyboard.press('Enter'); // exits the code block, dropping the empty line
+  await expect(editable.locator('pre')).toHaveCount(1);
+  expect(await editable.locator('pre').textContent()).toBe('line1\nline2');
+  await page.keyboard.type('after');
+  await expect.poll(async () => (await getMarkdownContent(page)) ?? '').toContain('after');
+  await expect.poll(async () => (await getMarkdownContent(page)) ?? '').toContain('```\nline1\nline2\n```');
+  await expect.poll(async () => (await getMarkdownContent(page))?.match(/^```$/gm)?.length ?? 0).toBe(2);
+
+  // Enter on an empty line in the middle of the block stays inside it
+  await editable.locator('> p:last-child').click();
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('```');
+  await page.keyboard.type('a');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('b');
+  await page.keyboard.press('ArrowUp');
+  await page.keyboard.press('End');
+  await page.keyboard.press('Enter'); // splits into 'a\n\nb' with the caret on the empty middle line
+  await page.keyboard.press('Enter'); // empty middle line: must stay inside the block
+  await expect(editable.locator('pre')).toHaveCount(2);
+  await expect(editable.locator('pre').last()).toContainText('a\n\n\nb');
+  await expect.poll(async () => (await getMarkdownContent(page))?.match(/^```$/gm)?.length ?? 0).toBe(4);
+
+  // Enter on a freshly created empty code block deletes the block entirely
+  await editable.locator('> p:last-child').click();
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('```');
+  await expect(editable.locator('pre')).toHaveCount(3);
+  await page.keyboard.press('Enter');
+  await expect(editable.locator('pre')).toHaveCount(2);
+  await expect.poll(async () => (await getMarkdownContent(page))?.match(/^```$/gm)?.length ?? 0).toBe(4);
+});
+
+test('WYSIWYG removes the copy button when the code block is deleted', async ({ page }) => {
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('before');
+  await expect.poll(() => getMarkdownContent(page)).toBe('before');
+
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  await expect(editable).toBeVisible();
+
+  // Create a code block, type, then delete all its content
+  await editable.locator('> p:last-child').click();
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('```');
+  await page.keyboard.type('abc');
+  await expect(editable.locator('.md-code-copy')).toHaveCount(1);
+  await page.keyboard.press('End');
+  await page.keyboard.press('Backspace');
+  await page.keyboard.press('Backspace');
+  await page.keyboard.press('Backspace');
+  await page.keyboard.press('Backspace');
+  await expect(editable.locator('pre')).toHaveCount(1);
+
+  // Clicking away removes the empty code block, copy button and all
+  await editable.locator('> p').first().click();
+  await expect(editable.locator('.md-code-copy')).toHaveCount(0);
+  await expect(editable.locator('pre')).toHaveCount(0);
+  await expect.poll(async () => (await getMarkdownContent(page))?.match(/^```$/gm)?.length ?? 0).toBe(0);
+});
+
+test('WYSIWYG code block button wraps the selection in a fenced code block and toggles off', async ({ page }) => {
+  await openMarkdownPlayground(page);
+  await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('const x = 1;');
+  await expect.poll(() => getMarkdownContent(page)).toBe('const x = 1;');
+
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  await expect(editable).toBeVisible();
+
+  // Wrap the paragraph in a code block via the toolbar button
+  await editable.locator('p').first().click();
+  await page.getByRole('button', { name: 'Code block' }).click();
+  await expect(editable.locator('pre')).toHaveText('const x = 1;');
+  await expect(editable.locator('.md-code-copy .copy-code-button')).toBeVisible();
+  await expect.poll(() => getMarkdownContent(page)).toBe('```\nconst x = 1;\n```');
+
+  // The copy button copies the bare <pre> content
+  await editable.locator('.md-code-copy .copy-code-button').click();
+  await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toContain('const x = 1;');
+
+  // The preview renders it as a real code block
+  await page.getByRole('button', { name: 'Preview' }).click();
+  const preview = page.locator('.markdown-preview:not(.wysiwyg-editing)');
+  await expect(preview.locator('code')).toHaveText('const x = 1;');
+
+  // Re-entering WYSIWYG and clicking the button again unwraps it back to a paragraph
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  await expect(editable).toBeVisible();
+  await editable.locator('pre').click();
+  await page.getByRole('button', { name: 'Code block' }).click();
+  await expect(editable.locator('pre')).toHaveCount(0);
+  await expect.poll(() => getMarkdownContent(page)).toBe('const x = 1;');
+});
+
 test('WYSIWYG @ mention inserts a playground file link and click switches tab', async ({ page }) => {
   const noteId = 'note-file-id-001';
   const targetId = 'target-file-id-002';

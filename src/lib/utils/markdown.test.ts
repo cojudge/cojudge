@@ -112,6 +112,29 @@ describe('markdown utils', () => {
         expect(htmlToMarkdown(renderMarkdownPlain(back))).toBe(back);
     });
 
+    it('round-trips bare <pre> elements (WYSIWYG code-block button) to fenced code', () => {
+        // execCommand('formatBlock', 'pre') produces <pre> without a <code> child
+        const back = htmlToMarkdown('<pre>const x = 1;</pre>');
+        expect(back).toContain('```');
+        expect(back).toContain('const x = 1;');
+        expect(back).toMatch(/^```\nconst x = 1;\n```$/m);
+
+        // Multi-line content keeps every line inside the fence
+        const multi = htmlToMarkdown('<pre>line one\nline two</pre>');
+        expect(multi).toMatch(/^```\nline one\nline two\n```$/m);
+
+        // Backticks inside the code grow the fence instead of breaking it
+        const tricky = htmlToMarkdown('<pre>```js\nfn()</pre>');
+        expect(tricky).toContain('````');
+
+        // Normal <pre><code> blocks (from rendered markdown) are unaffected
+        expect(htmlToMarkdown('<pre><code class="language-js">fn()</code></pre>')).toContain('```js');
+
+        // A freshly created empty code block holds a ZWSP (turndown skips blank
+        // elements); it round-trips as an empty fence
+        expect(htmlToMarkdown('<p>before</p><pre>\u200B</pre>')).toBe('before\n\n```\n```');
+    });
+
     it('converts base64 images back to markdown image syntax', () => {
         const dataUrl = 'data:image/png;base64,iVBORw0KGgo=';
         const html = renderMarkdownPlain(`![image](${dataUrl})`);
