@@ -42,6 +42,7 @@ export type FileChange = {
 export const WHITEBOARD_FILE_ID = 'whiteboard';
 export const WHITEBOARD_BOARD_KEY = 'cojudge-whiteboard-v1';
 export const WHITEBOARD_RESTORED_EVENT = 'cojudge:whiteboard-restored';
+export const CLOUD_FILE_DISCARDED_EVENT = 'cojudge:cloud-file-discarded';
 export const SOLUTION_FILE_ID_PREFIX = 'solution:';
 export const TESTCASES_FILE_ID_PREFIX = 'testcases:';
 export const GAME_RESULT_FILE_ID_PREFIX = 'game-result:';

@@ -12,7 +12,7 @@
     import { ensureAuthenticated, initFirebase } from '$lib/firebase';
     import { isDesktopRuntime } from '$lib/firebaseSettings';
     import { cloudSyncState } from '$lib/cloudSync';
-    import { WHITEBOARD_FILE_ID } from '$lib/cloudFileChange';
+    import { CLOUD_FILE_DISCARDED_EVENT, WHITEBOARD_FILE_ID, WORKSPACE_FILE_ID_PREFIX } from '$lib/cloudFileChange';
     import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress, writeProgressStorageItem } from '$lib/progressBackup';
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { isDotFileName, type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
@@ -2177,6 +2177,19 @@ func main() {
         return sourceEntry?.content ?? '';
     }
 
+    function renderWysiwygFromStore() {
+        if (!wysiwygEl || !wysiwygSourceFileId) return;
+        wysiwygEl.innerHTML = renderMarkdownPlain(getActivePreviewSourceContent(), {
+            resolveFileLanguage: (fileId) => getLanguageForTab(fileId)
+        });
+        wrapImageThumbnails(wysiwygEl);
+        wrapCodeBlocksWithCopy(wysiwygEl);
+        ensureFileMentionCarets(wysiwygEl);
+        prepareTaskListCheckboxes(wysiwygEl);
+        ensureTrailingEmptyLine(wysiwygEl);
+        resolvePastedImages(wysiwygEl);
+    }
+
     async function enterPreviewEditMode(force = false) {
         if (!activeTab?.sourceFileId) return;
         if (!force && previewEditMode && wysiwygSourceFileId === activeTab.sourceFileId && wysiwygEl) {
@@ -2186,15 +2199,7 @@ func main() {
         previewEditMode = true;
         await tick();
         if (wysiwygEl) {
-            wysiwygEl.innerHTML = renderMarkdownPlain(getActivePreviewSourceContent(), {
-                resolveFileLanguage: (fileId) => getLanguageForTab(fileId)
-            });
-            wrapImageThumbnails(wysiwygEl);
-            wrapCodeBlocksWithCopy(wysiwygEl);
-            ensureFileMentionCarets(wysiwygEl);
-            prepareTaskListCheckboxes(wysiwygEl);
-            ensureTrailingEmptyLine(wysiwygEl);
-            resolvePastedImages(wysiwygEl);
+            renderWysiwygFromStore();
             wysiwygEl.focus();
         }
     }
@@ -3297,6 +3302,37 @@ func main() {
             }
             return { ...s, [fkey]: JSON.stringify(files) };
         });
+    }
+
+    function handleCloudFileDiscard(event: Event) {
+        const fileId = (event as CustomEvent<{ fileId?: unknown }>).detail?.fileId;
+        if (typeof fileId !== 'string') return;
+
+        const activeSourceId = activeTab?.type === 'preview'
+            ? activeTab.sourceFileId
+            : activeTab?.fileId;
+        const workspaceWasDiscarded = fileId === `${WORKSPACE_FILE_ID_PREFIX}${fileKey()}`;
+        if (!activeSourceId || (fileId !== activeSourceId && !workspaceWasDiscarded)) return;
+
+        if (activeTab?.type === 'preview') {
+            // WYSIWYG content is not driven by a Svelte prop. Replace the DOM
+            // before refreshCloudLocalState emits its next flush event, or the
+            // stale DOM would immediately save the discarded content again.
+            if (previewEditMode && wysiwygSourceFileId === activeTab.sourceFileId) {
+                if (wysiwygDebounce) {
+                    clearTimeout(wysiwygDebounce);
+                    wysiwygDebounce = null;
+                }
+                renderWysiwygFromStore();
+            }
+            return;
+        }
+        if (activeTab?.type === 'whiteboard') return;
+
+        // CodeEditor is also bound to an in-memory value. Suppress its reactive
+        // save while loading the restored entry into the active editor.
+        skipNextSave = true;
+        void loadOrInitFile(language);
     }
 
     // Switch WYSIWYG mode when changing tabs
@@ -4514,11 +4550,13 @@ func main() {
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('beforeunload', handleUnload);
         window.addEventListener(CLOUD_FLUSH_EVENT, handleCloudFlush);
+        window.addEventListener(CLOUD_FILE_DISCARDED_EVENT, handleCloudFileDiscard);
         return () => {
             document.removeEventListener('click', handleDocClick);
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('beforeunload', handleUnload);
             window.removeEventListener(CLOUD_FLUSH_EVENT, handleCloudFlush);
+            window.removeEventListener(CLOUD_FILE_DISCARDED_EVENT, handleCloudFileDiscard);
         };
     });
 </script>
