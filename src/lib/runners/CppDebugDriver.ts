@@ -9,6 +9,7 @@ import time
 STATE_FILE = '/tmp/cojudge_debug_state.json'
 CMD_FILE = '/tmp/cojudge_debug_cmd.json'
 STDOUT_FILE = '/tmp/cojudge_stdout.txt'
+EVAL_RESULT_FILE = '/tmp/cojudge_eval_result.json'
 
 def send_mi(gdb_proc, cmd):
     gdb_proc.stdin.write(cmd + '\n')
@@ -80,6 +81,35 @@ def collect_variables(gdb_proc):
     send_mi(gdb_proc, '-stack-list-variables --all-values')
     resp = read_mi_until(gdb_proc)
     return extract_all_vars(resp)
+
+def unescape_mi(raw):
+    return raw.replace('\\"', '"').replace('\\\\', '\\')
+
+def eval_expression(gdb_proc, expr):
+    quoted = '"' + expr.replace('\\', '\\\\').replace('"', '\\"') + '"'
+    send_mi(gdb_proc, '-data-evaluate-expression ' + quoted)
+    resp = read_mi_until(gdb_proc)
+    for record in resp:
+        if record.startswith('^error'):
+            m = re.search(r'msg="((?:[^"\\]|\\.)*)"', record)
+            msg = m.group(1) if m else 'evaluation failed'
+            return None, unescape_mi(msg)
+        m = re.match(r'\^done,value="((?:[^"\\]|\\.)*)"', record)
+        if m:
+            return unescape_mi(m.group(1)), None
+    return None, 'no result from gdb'
+
+def write_eval_result(value, error):
+    payload = {}
+    if error is not None:
+        payload['error'] = error
+    else:
+        payload['value'] = value
+    try:
+        with open(EVAL_RESULT_FILE, 'w') as f:
+            json.dump(payload, f)
+    except:
+        pass
 
 def wait_for_cmd():
     while True:
@@ -203,6 +233,10 @@ def main():
                         elif action == 'continue':
                             send_mi(gdb_proc, '-exec-continue')
                             break
+                        elif action == 'eval':
+                            expr = cmd.get('expression', '')
+                            value, err = eval_expression(gdb_proc, expr)
+                            write_eval_result(value, err)
                         elif action == 'set_breakpoints':
                             new_bps = cmd.get('breakpoints', [])
                             new_bps_int = []
