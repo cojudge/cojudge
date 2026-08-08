@@ -30,6 +30,127 @@
     let evalInput = "";
     let evalBusy = false;
     let evalHistory: { expr: string; result?: string; error?: string }[] = [];
+    let evalCmdHistory: string[] = [];
+    let evalHistoryIndex: number | null = null;
+    let evalInputEl: HTMLInputElement;
+    let completions: string[] = [];
+    let completionIndex = 0;
+
+    function computeCompletions() {
+        const text = evalInput;
+        const pos = evalInputEl?.selectionStart ?? text.length;
+        const before = text.slice(0, pos);
+        const after = text.slice(pos);
+        const wordMatch = before.match(/([A-Za-z_$][A-Za-z0-9_$]*)$/);
+        const word = wordMatch ? wordMatch[1] : "";
+        if (!wordMatch) {
+            completions = [];
+            return;
+        }
+        const matched = Object.keys(debugState?.vars || {}).filter((s) =>
+            s.toLowerCase().startsWith(word.toLowerCase()),
+        );
+        if (after === "" && matched.some((s) => s === word)) {
+            completions = [];
+            return;
+        }
+        completions = matched.slice(0, 10);
+        if (completionIndex >= completions.length) {
+            completionIndex = Math.max(0, completions.length - 1);
+        }
+        if (completionIndex < 0) completionIndex = 0;
+    }
+
+    function acceptCompletion() {
+        const suggestion = completions[completionIndex];
+        if (!suggestion || !evalInputEl) return;
+        const text = evalInput;
+        const pos = evalInputEl.selectionStart ?? text.length;
+        const before = text.slice(0, pos);
+        const after = text.slice(pos);
+        const wordMatch = before.match(/([A-Za-z_$][A-Za-z0-9_$]*)$/);
+        const wordStart = wordMatch ? pos - wordMatch[1].length : pos;
+        evalInput = before.slice(0, wordStart) + suggestion + after;
+        completions = [];
+        requestAnimationFrame(() => {
+            const caret = wordStart + suggestion.length;
+            evalInputEl?.setSelectionRange(caret, caret);
+        });
+    }
+
+    function historyPrev() {
+        if (evalCmdHistory.length === 0) return;
+        const idx = (evalHistoryIndex ?? evalCmdHistory.length) - 1;
+        if (idx < 0) return;
+        evalHistoryIndex = idx;
+        evalInput = evalCmdHistory[idx];
+        requestAnimationFrame(() => {
+            if (evalInputEl) {
+                const end = evalInputEl.value.length;
+                evalInputEl.setSelectionRange(end, end);
+            }
+        });
+    }
+
+    function historyNext() {
+        if (evalHistoryIndex === null) return;
+        const idx = evalHistoryIndex + 1;
+        if (idx >= evalCmdHistory.length) {
+            evalHistoryIndex = null;
+            evalInput = "";
+        } else {
+            evalHistoryIndex = idx;
+            evalInput = evalCmdHistory[idx];
+        }
+        requestAnimationFrame(() => {
+            if (evalInputEl) {
+                const end = evalInputEl.value.length;
+                evalInputEl.setSelectionRange(end, end);
+            }
+        });
+    }
+
+    function handleEvalKeydown(e: KeyboardEvent) {
+        if (e.ctrlKey && (e.key === "c" || e.key === "C")) {
+            e.preventDefault();
+            evalInput = "";
+            evalHistoryIndex = null;
+            completions = [];
+            return;
+        }
+        if (completions.length > 0) {
+            if (e.key === "ArrowDown") {
+                e.preventDefault();
+                completionIndex = (completionIndex + 1) % completions.length;
+                return;
+            }
+            if (e.key === "ArrowUp") {
+                e.preventDefault();
+                completionIndex =
+                    (completionIndex - 1 + completions.length) %
+                    completions.length;
+                return;
+            }
+            if (e.key === "Tab" || e.key === "Enter") {
+                e.preventDefault();
+                acceptCompletion();
+                return;
+            }
+            if (e.key === "Escape") {
+                completions = [];
+                return;
+            }
+        }
+        if (e.key === "Enter") {
+            debugEvalExpression();
+        } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            historyPrev();
+        } else if (e.key === "ArrowDown") {
+            e.preventDefault();
+            historyNext();
+        }
+    }
 
     async function debugEvalExpression() {
         const expr = evalInput.trim();
@@ -37,6 +158,11 @@
         if (evalBusy) return;
         evalBusy = true;
         evalInput = "";
+        if (evalCmdHistory[evalCmdHistory.length - 1] !== expr) {
+            evalCmdHistory.push(expr);
+        }
+        evalHistoryIndex = null;
+        completions = [];
         try {
             const res = await fetch("/api/debug", {
                 method: "POST",
@@ -349,6 +475,9 @@
         debugState = { status: 'running' };
         runningMessage = "Debug starting...";
         evalHistory = [];
+        evalCmdHistory = [];
+        evalHistoryIndex = null;
+        completions = [];
         lastSyncedBreakpoints = JSON.stringify(debugBreakpoints);
 
         try {
@@ -402,10 +531,13 @@
                 isDebugRunning = false;
                 return;
             }
-            debugState = body;
             if (body.status === 'completed' || body.status === 'error' || body.status === 'stopped') {
                 stopDebugPolling();
                 debugJobId = null;
+                debugState = null;
+                activeTab = 'output';
+            } else {
+                debugState = body;
             }
         } catch (err: any) {
             error = err.message || "Debug action failed";
@@ -418,17 +550,22 @@
         stopDebugPolling();
         let pollCount = 0;
         debugPollInterval = setInterval(async () => {
-            if (!debugJobId) return;
+            const jobId = debugJobId;
+            if (!jobId) return;
             pollCount++;
             try {
-                const res = await fetch(`/api/debug?jobId=${encodeURIComponent(debugJobId)}`);
+                const res = await fetch(`/api/debug?jobId=${encodeURIComponent(jobId)}`);
                 const body = await res.json();
                 if (res.ok) {
+                    // Ignore stale responses from a session that was stopped meanwhile
+                    if (debugJobId !== jobId) return;
                     debugState = body;
                     if (body.status === 'completed' || body.status === 'error') {
                         console.warn(`[debug] session reached terminal state: ${body.status}`, body.error || '');
                         stopDebugPolling();
                         debugJobId = null;
+                        debugState = null;
+                        activeTab = 'output';
                     }
                 } else if (pollCount <= 3) {
                     console.warn('[debug] poll error:', body.error || res.statusText);
@@ -574,17 +711,50 @@
                 </div>
                 <div class="repl-input-row">
                     <span class="repl-prompt">&gt;</span>
+                    {#if completions.length > 0}
+                        <div class="repl-completions">
+                            {#each completions as c, i}
+                                <button
+                                    type="button"
+                                    class="repl-completion"
+                                    class:selected={i === completionIndex}
+                                    on:mousedown={(e) => e.preventDefault()}
+                                    on:click={() => {
+                                        completionIndex = i;
+                                        acceptCompletion();
+                                    }}
+                                >
+                                    {c}
+                                </button>
+                            {/each}
+                        </div>
+                    {/if}
                     <input
                         class="repl-input"
                         type="text"
                         placeholder={debugState.status === 'paused'
                             ? 'Enter expression to evaluate'
                             : 'Session must be paused to evaluate'}
-                        bind:value={evalInput}
+                        value={evalInput}
+                        bind:this={evalInputEl}
                         disabled={debugState.status !== 'paused' || evalBusy || !debugJobId}
-                        on:keydown={(e) => {
-                            if (e.key === 'Enter') debugEvalExpression();
+                        on:input={(e) => {
+                            evalInput = (e.currentTarget as HTMLInputElement).value;
+                            evalHistoryIndex = null;
+                            computeCompletions();
                         }}
+                        on:keydown={handleEvalKeydown}
+                        on:keyup={(e) => {
+                            if (
+                                e.key === 'ArrowLeft' ||
+                                e.key === 'ArrowRight' ||
+                                e.key === 'Home' ||
+                                e.key === 'End'
+                            ) {
+                                computeCompletions();
+                            }
+                        }}
+                        on:click={() => computeCompletions()}
                         spellcheck="false"
                         autocomplete="off"
                     />
@@ -1281,6 +1451,39 @@
         gap: 6px;
         border-top: 1px solid var(--color-border);
         padding-top: var(--spacing-2);
+        position: relative;
+    }
+    .repl-completions {
+        position: absolute;
+        bottom: calc(100% + 6px);
+        left: 0;
+        right: 0;
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+        max-height: 180px;
+        overflow-y: auto;
+        background: var(--color-second-bg);
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius-sm);
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .repl-completion {
+        text-align: left;
+        padding: 4px 10px;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        background: none;
+        border: none;
+        color: var(--color-text);
+        cursor: pointer;
+    }
+    .repl-completion.selected {
+        background: var(--color-third-bg);
+        color: var(--color-highlight);
+    }
+    .repl-completion:hover {
+        background: var(--color-third-bg);
     }
     .repl-input {
         flex: 1;
