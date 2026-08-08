@@ -20,7 +20,7 @@
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
     import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, wrapImageThumbnails, wrapCodeBlocksWithCopy, ensureTrailingEmptyLine, ensureFileMentionCarets, prepareTaskListCheckboxes, isTaskListItem, isEmptyTaskListItem, createTaskCheckbox, ensureTaskCheckbox, ensureTaskItemCaretAnchor, removeTaskCheckbox, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, CODE_COPY_WRAPPER_CLASS, resolvePastedImages, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref, fileMentionHtml, FILE_MENTION_CLASS } from '$lib/utils/markdown';
     import { storePastedImage, deletePastedImage, inlinePastedImageLinks } from '$lib/utils/imageStore';
-    import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+    import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore/lite';
     import QRCode from 'qrcode';
     import { browser } from '$app/environment';
     import { onMount, tick, onDestroy } from 'svelte';

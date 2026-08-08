@@ -8,7 +8,7 @@ import {
 	signOut,
 	type Auth
 } from 'firebase/auth';
-import { getFirestore, type Firestore } from 'firebase/firestore';
+import { getFirestore, type Firestore } from 'firebase/firestore/lite';
 import {
 	getFirebaseSettings,
 	isDesktopRuntime,
