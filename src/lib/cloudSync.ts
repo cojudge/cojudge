@@ -59,6 +59,7 @@ import {
 	computeOtherChanges,
 	computeWhiteboardChange,
 	computeWorkspaceChanges,
+	CLOUD_FILE_DISCARDED_EVENT,
 	discardChange,
 	discardFile,
 	OTHER_CHANGE_FILE_ID_PREFIXES,
@@ -1253,6 +1254,10 @@ export async function discardLocalFileChange(fileId: string): Promise<void> {
 		}
 	}
 
+	// The active editor keeps its own in-memory value. Notify the page after the
+	// restored store is complete so it can reload that value before the next
+	// cloud flush compares local progress.
+	window.dispatchEvent(new CustomEvent(CLOUD_FILE_DISCARDED_EVENT, { detail: { fileId } }));
 	await refreshCloudLocalState();
 }
 
