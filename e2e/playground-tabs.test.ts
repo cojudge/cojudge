@@ -52,3 +52,39 @@ test('closing the active tab keeps the next tab\'s own language', async ({ page 
   await expect(page.locator('#language-select')).toHaveValue('python');
   await expect(page.locator('.monaco-editor .view-lines')).toContainText('python file B');
 });
+
+test('recent whiteboards use the whiteboard icon', async ({ page }) => {
+  await page.goto('/playground');
+  await page.evaluate(() => {
+    const now = Date.now();
+    const files = [
+      {
+        fileId: 'whiteboard',
+        fileName: 'Whiteboard',
+        language: 'plaintext',
+        content: '',
+        isActive: false,
+        order: 0,
+        isOpen: false,
+        type: 'whiteboard',
+        lastUpdated: now + 1000
+      },
+      {
+        fileId: 'markdown-file',
+        fileName: 'Notes',
+        language: 'markdown',
+        content: '# Notes',
+        isActive: false,
+        order: 1,
+        isOpen: false,
+        lastUpdated: now
+      }
+    ];
+    localStorage.setItem('files', JSON.stringify({ playground: JSON.stringify(files) }));
+  });
+  await page.reload();
+
+  const card = page.locator('.recent-file-card').filter({ hasText: 'Whiteboard' });
+  await expect(card).toHaveCount(1);
+  await expect(card.locator('svg[viewBox="0 0 24 24"]')).toHaveCount(1);
+});

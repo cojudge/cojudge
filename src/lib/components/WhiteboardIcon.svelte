@@ -21,6 +21,9 @@
 >
 	{#if name === 'menu'}
 		<path d="M4 7h16M4 12h16M4 17h16" />
+	{:else if name === 'whiteboard'}
+		<rect x="3" y="4" width="18" height="16" rx="2" />
+		<path d="m8 15 6-6 2 2-6 6H8v-2Z" />
 	{:else if name === 'lock'}
 		<rect x="5.5" y="10" width="13" height="10" rx="2" />
 		<path d="M8.5 10V7a3.5 3.5 0 0 1 7 0" />
