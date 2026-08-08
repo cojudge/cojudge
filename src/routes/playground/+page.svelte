@@ -5,6 +5,7 @@
     import LanguageIcon from '$lib/components/LanguageIcon.svelte';
     import ShareModal from '$lib/components/ShareModal.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
+    import WhiteboardIcon from '$lib/components/WhiteboardIcon.svelte';
     import Whiteboard from '$lib/components/Whiteboard.svelte';
     import { showAlert, showConfirm } from '$lib/dialogs';
     import { consumeForkTransfer } from '$lib/forkTransfer';
@@ -87,6 +88,10 @@ func main() {
 
     function isSpecialTabType(type?: string): type is 'preview' | 'whiteboard' {
         return type === 'preview' || type === 'whiteboard';
+    }
+
+    function isWhiteboardTab(fileId: string): boolean {
+        return tabs.some((tab) => tab.fileId === fileId && tab.type === 'whiteboard');
     }
 
     type ExplorerNode = {
@@ -4899,7 +4904,11 @@ func main() {
                                 </svg>
                                 <div class="search-result-file-info" on:click|stopPropagation={() => activateTab(result.fileId)}>
                                     <span class="file-icon">
-                                        <LanguageIcon language={tabLanguages[result.fileId] ?? result.language} size={17} />
+                                        {#if isWhiteboardTab(result.fileId)}
+                                            <WhiteboardIcon name="whiteboard" size={17} />
+                                        {:else}
+                                            <LanguageIcon language={tabLanguages[result.fileId] ?? result.language} size={17} />
+                                        {/if}
                                     </span>
                                     <span class="file-name">{@html highlightMatch(result.fileName, globalSearchQuery, globalSearchCaseSensitive, globalSearchRegex)}</span>
                                 </div>
@@ -4971,10 +4980,7 @@ func main() {
                                         <LanguageIcon language="markdown" size={17} />
                                     </span>
                                 {:else if t.type === 'whiteboard'}
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:2px;flex-shrink:0;">
-                                        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
-                                        <path d="m8 15 6-6 2 2-6 6H8v-2Z"></path>
-                                    </svg>
+                                    <WhiteboardIcon name="whiteboard" size={12} strokeWidth={2} />
                                 {:else}
                                     <span class="tab-lang-icon">
                                         <LanguageIcon language={tabLanguages[t.fileId] ?? language} size={17} />
@@ -5326,7 +5332,9 @@ func main() {
                                     }}
                                 >
                                     <div class="recent-file-card-header">
-                                        {#if file.type === 'preview'}
+                                        {#if file.type === 'whiteboard'}
+                                            <WhiteboardIcon name="whiteboard" size={17} />
+                                        {:else if file.type === 'preview'}
                                             <LanguageIcon language="markdown" size={17} />
                                         {:else}
                                             <LanguageIcon language={tabLanguages[file.fileId] ?? language} size={17} />
@@ -5446,7 +5454,9 @@ func main() {
                             on:mouseenter={() => selectedIndex = i}
                         >
                             <span class="search-file-info">
-                                {#if file.type === 'preview'}
+                                {#if file.type === 'whiteboard'}
+                                    <WhiteboardIcon name="whiteboard" size={17} />
+                                {:else if file.type === 'preview'}
                                     <LanguageIcon language="markdown" size={17} />
                                 {:else}
                                     <LanguageIcon language={tabLanguages[file.fileId] ?? language} size={17} />
@@ -5485,7 +5495,9 @@ func main() {
                         on:mouseenter={() => mentionSelectedIndex = i}
                     >
                         <span class="search-file-info">
-                            {#if file.type === 'preview'}
+                            {#if file.type === 'whiteboard'}
+                                <WhiteboardIcon name="whiteboard" size={17} />
+                            {:else if file.type === 'preview'}
                                 <LanguageIcon language="markdown" size={17} />
                             {:else}
                                 <LanguageIcon language={tabLanguages[file.fileId] ?? language} size={17} />
