@@ -2445,6 +2445,14 @@ func main() {
         });
     }
 
+    // True when el is an inline code element: a toolbar-wrapped <code> or a
+    // marker span created by the backtick auto-close.
+    function isInlineCodeElement(el: Element | null): boolean {
+        if (!(el instanceof HTMLElement)) return false;
+        if (el.tagName === 'CODE') return el.parentElement?.tagName !== 'PRE';
+        return (el.getAttribute('style') || '').includes(INLINE_CODE_STYLE_MARKER);
+    }
+
     // When the user types a closing backtick, try to match it with a previous
     // backtick in the same text node and form an inline code element. Runs on
     // the input event, after the backtick has been typed, so a single ctrl+z
@@ -2461,7 +2469,15 @@ func main() {
         const node = range.startContainer;
         if (node.nodeType !== Node.TEXT_NODE || !wysiwygEl.contains(node)) return;
         const parentEl = node.parentElement;
-        if (!parentEl || parentEl.closest('code') || parentEl.closest('pre')) return;
+        if (!parentEl || parentEl.closest('pre')) return;
+        // Never wrap inside an existing inline code element (a toolbar <code>
+        // or a previous marker span): the caret inside one would nest another
+        // span and corrupt the stored markdown.
+        let ancestor: Element | null = parentEl;
+        while (ancestor && ancestor !== wysiwygEl) {
+            if (isInlineCodeElement(ancestor)) return;
+            ancestor = ancestor.parentElement;
+        }
         const text = node.textContent ?? '';
         const offset = range.startOffset;
         if (offset < 1 || text.charAt(offset - 1) !== '`') return;
@@ -2476,13 +2492,46 @@ func main() {
             replaceRange.setEnd(node, offset);
             selection.removeAllRanges();
             selection.addRange(replaceRange);
+            // Track the spans that exist before inserting so the freshly
+            // inserted one can be found reliably: insertHTML can place it
+            // before other spans in the document, so picking the last span
+            // in document order would re-mark an unrelated span and leave the
+            // new one without the marker (breaking the markdown round-trip).
+            const existingSpans = new Set(wysiwygEl.querySelectorAll('span'));
             document.execCommand('insertHTML', false, inlineCodeSpanHtml(codeText));
-            // Rewrite the inserted span's background from the concrete color
-            // (which the sanitizer kept) to the theme-variable marker, so the
-            // code adapts to the active theme and round-trips back to backticks.
-            const inserted = wysiwygEl.querySelectorAll('span');
-            const markerSpan = inserted[inserted.length - 1];
-            if (markerSpan instanceof HTMLElement) markerSpan.style.backgroundColor = INLINE_CODE_STYLE_MARKER;
+            const inserted = Array.from(wysiwygEl.querySelectorAll('span')).find((span) => !existingSpans.has(span));
+            const markerSpan = inserted instanceof HTMLElement ? inserted : null;
+            if (markerSpan) {
+                // Rewrite the inserted span's background from the concrete
+                // color (which the sanitizer kept) to the theme-variable
+                // marker, so the code adapts to the active theme and
+                // round-trips back to backticks.
+                markerSpan.style.backgroundColor = INLINE_CODE_STYLE_MARKER;
+                // Anchor the caret just after the marker span so further
+                // typing continues outside the (already closed) inline code.
+                // Chrome redirects typing at the end of a paragraph after a
+                // trailing inline element back INTO that element (a caret
+                // after the span, in an empty node, or before a ZWSP all
+                // resolve inside the span), so the caret must sit AFTER a
+                // ZWSP in the text node that follows the span. htmlToMarkdown
+                // strips the ZWSP, so it never reaches the stored markdown.
+                let after: Node | null = markerSpan.nextSibling;
+                if (after && after.nodeType === Node.TEXT_NODE && after.textContent !== '') {
+                    // Existing text right after the span: caret at its start.
+                } else {
+                    if (after && after.nodeType === Node.TEXT_NODE) {
+                        after.textContent = '\u200B';
+                    } else {
+                        after = document.createTextNode('\u200B');
+                        markerSpan.after(after);
+                    }
+                }
+                const caret = document.createRange();
+                caret.setStart(after, after.textContent === '\u200B' ? 1 : 0);
+                caret.collapse(true);
+                selection.removeAllRanges();
+                selection.addRange(caret);
+            }
         } finally {
             applyingInlineCode = false;
         }
