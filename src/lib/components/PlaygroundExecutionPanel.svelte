@@ -26,6 +26,35 @@
     let isDebugRunning = false;
     let debugPollInterval: any = null;
     let lastSyncedBreakpoints: string = '[]';
+    let activeTab: "output" | "console" = "output";
+    let evalInput = "";
+    let evalBusy = false;
+    let evalHistory: { expr: string; result?: string; error?: string }[] = [];
+
+    async function debugEvalExpression() {
+        const expr = evalInput.trim();
+        if (!expr || !debugJobId) return;
+        if (evalBusy) return;
+        evalBusy = true;
+        evalInput = "";
+        try {
+            const res = await fetch("/api/debug", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ jobId: debugJobId, action: "eval", variable: expr }),
+            });
+            const body = await res.json();
+            if (res.ok) {
+                evalHistory = [...evalHistory, { expr, result: body.value }];
+            } else {
+                evalHistory = [...evalHistory, { expr, error: body?.error || "Evaluation failed" }];
+            }
+        } catch (err: any) {
+            evalHistory = [...evalHistory, { expr, error: err?.message || "Evaluation failed" }];
+        } finally {
+            evalBusy = false;
+        }
+    }
 
     $: activeDebugLine = (debugState && debugState.status === 'paused') ? debugState.line : null;
 
@@ -319,6 +348,7 @@
         hasRunOnce = true;
         debugState = { status: 'running' };
         runningMessage = "Debug starting...";
+        evalHistory = [];
         lastSyncedBreakpoints = JSON.stringify(debugBreakpoints);
 
         try {
@@ -460,14 +490,107 @@
         on:keydown={handleResizerKeydown}
     ></button>
     <div class="tabs" class:hide={$execPaneHeightStore <= 15}>
-        <button class="tab active">Output</button>
+        <button
+            class="tab"
+            class:active={activeTab === "output"}
+            on:click={() => (activeTab = "output")}
+        >
+            Output
+        </button>
+        {#if debugState}
+            <button
+                class="tab"
+                class:active={activeTab === "console"}
+                on:click={() => (activeTab = "console")}
+            >
+                Debug Console
+            </button>
+        {/if}
     </div>
 
     <div
         class="content"
         class:hide={$execPaneHeightStore <= minExecPanelHeight}
     >
-        {#if debugState}
+        {#if debugState && activeTab === "console"}
+            <div class="debug-view repl-view">
+                <div class="debug-header">
+                    <span class="debug-status">
+                        {#if debugState.status === 'paused'}
+                            <span class="debug-dot paused"></span> Paused at line {debugState.line}
+                        {:else}
+                            <span class="debug-dot running"></span>
+                            {debugState.status === 'running'
+                                ? 'Running'
+                                : debugState.status === 'completed'
+                                  ? 'Completed'
+                                  : 'Not paused'}
+                        {/if}
+                    </span>
+                    <button
+                        class="btn btn-debug-action"
+                        on:click={() => (evalHistory = [])}
+                        disabled={evalHistory.length === 0}
+                    >
+                        Clear
+                    </button>
+                    {#if debugJobId && (debugState.status === 'paused' || debugState.status === 'running')}
+                        <div class="debug-actions">
+                            <button class="btn btn-debug-action" on:click={() => debugAction('step')} disabled={isDebugRunning}>
+                                Step Over
+                            </button>
+                            <button class="btn btn-debug-action" on:click={() => debugAction('continue')} disabled={isDebugRunning}>
+                                Continue
+                            </button>
+                            <button class="btn btn-debug-action" on:click={() => debugAction('stop')} disabled={isDebugRunning}>
+                                Stop
+                            </button>
+                        </div>
+                    {/if}
+                </div>
+                <div class="repl-history">
+                    {#each evalHistory as entry (entry.expr + entry.result + entry.error)}
+                        <div class="repl-entry">
+                            <div class="repl-input-line">
+                                <span class="repl-prompt">&gt;</span>
+                                <span class="repl-expr">{entry.expr}</span>
+                            </div>
+                            {#if entry.error}
+                                <div class="repl-result repl-error">{entry.error}</div>
+                            {:else}
+                                <div class="repl-result">{entry.result}</div>
+                            {/if}
+                        </div>
+                    {/each}
+                    {#if evalHistory.length === 0}
+                        <div class="debug-placeholder">
+                            {#if debugState.status === 'paused'}
+                                Enter an expression to evaluate, e.g. <code>x + y</code>.
+                            {:else}
+                                Waiting for the debug session to pause...
+                            {/if}
+                        </div>
+                    {/if}
+                </div>
+                <div class="repl-input-row">
+                    <span class="repl-prompt">&gt;</span>
+                    <input
+                        class="repl-input"
+                        type="text"
+                        placeholder={debugState.status === 'paused'
+                            ? 'Enter expression to evaluate'
+                            : 'Session must be paused to evaluate'}
+                        bind:value={evalInput}
+                        disabled={debugState.status !== 'paused' || evalBusy || !debugJobId}
+                        on:keydown={(e) => {
+                            if (e.key === 'Enter') debugEvalExpression();
+                        }}
+                        spellcheck="false"
+                        autocomplete="off"
+                    />
+                </div>
+            </div>
+        {:else if debugState}
             <div class="debug-view">
                 <div class="debug-header">
                     <span class="debug-status">
@@ -1112,5 +1235,68 @@
         color: var(--color-text-secondary);
         font-style: italic;
         padding: var(--spacing-1) var(--spacing-2);
+    }
+    .repl-history {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-2);
+        overflow-y: auto;
+        flex: 1;
+        min-height: 0;
+    }
+    .repl-view {
+        height: 100%;
+        min-height: 0;
+    }
+    .repl-entry {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+    }
+    .repl-input-line {
+        color: var(--color-text-secondary);
+    }
+    .repl-prompt {
+        color: var(--color-highlight);
+        font-weight: 700;
+        margin-right: 4px;
+    }
+    .repl-expr {
+        color: var(--color-text-primary);
+    }
+    .repl-result {
+        color: var(--color-text);
+        white-space: pre-wrap;
+        word-break: break-word;
+        padding-left: 16px;
+    }
+    .repl-error {
+        color: var(--color-incorrect);
+    }
+    .repl-input-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        border-top: 1px solid var(--color-border);
+        padding-top: var(--spacing-2);
+    }
+    .repl-input {
+        flex: 1;
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        padding: 6px 8px;
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius-sm);
+        background: var(--color-surface);
+        color: var(--color-text);
+        outline: none;
+    }
+    .repl-input:focus {
+        border-color: var(--color-highlight);
+    }
+    .repl-input:disabled {
+        opacity: 0.5;
     }
 </style>

@@ -28,6 +28,7 @@ import inspector from 'node:inspector';
 const STATE_FILE = '/tmp/cojudge_debug_state.json';
 const CMD_FILE = '/tmp/cojudge_debug_cmd.json';
 const OUTPUT_FILE = '/tmp/cojudge_debug_output.txt';
+const EVAL_RESULT_FILE = '/tmp/cojudge_eval_result.json';
 
 const ENTRY_FILE = '${entryFile}';
 const SOURCE_BASENAME = '${sourceBasename}';
@@ -52,6 +53,32 @@ function readCmd() {
 
 function consumeCmd() {
     try { fs.unlinkSync(CMD_FILE); } catch {}
+}
+
+function writeEvalResult(payload) {
+    try { fs.writeFileSync(EVAL_RESULT_FILE, JSON.stringify(payload)); } catch {}
+}
+
+async function evaluateExpression(session, frame, expression) {
+    const r = await post(session, 'Debugger.evaluateOnCallFrame', {
+        callFrameId: frame.callFrameId,
+        expression,
+        returnByValue: true,
+        throwOnSideEffect: false
+    });
+    if (r.exceptionDetails) {
+        const exc = r.exceptionDetails;
+        throw new Error((exc.exception && exc.exception.description) || exc.text || 'Evaluation failed');
+    }
+    const res = r && r.result ? r.result : null;
+    if (!res) throw new Error('Evaluation failed');
+    if (res.value !== undefined) {
+        const v = res.value;
+        if (typeof v === 'object' && v !== null) return JSON.stringify(v);
+        return String(v);
+    }
+    if (res.description) return String(res.description);
+    return '';
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -219,6 +246,16 @@ async function runWorker() {
                 if (cmd.action === 'set_breakpoints') {
                     consumeCmd();
                     await setBreakpoints(cmd.breakpoints || []);
+                    continue;
+                }
+                if (cmd.action === 'eval') {
+                    consumeCmd();
+                    try {
+                        const val = await evaluateExpression(session, frame, cmd.expression || '');
+                        writeEvalResult({ value: val });
+                    } catch (e) {
+                        writeEvalResult({ error: String((e && e.message) || e) });
+                    }
                     continue;
                 }
                 if (cmd.action === 'continue') {

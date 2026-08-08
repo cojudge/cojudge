@@ -25,6 +25,7 @@ const docker = new Dockerode();
 
 const DEBUG_STATE_FILE = '/tmp/cojudge_debug_state.json';
 const DEBUG_CMD_FILE = '/tmp/cojudge_debug_cmd.json';
+const DEBUG_EVAL_RESULT_FILE = '/tmp/cojudge_eval_result.json';
 
 export type DebugState = {
     status: 'running' | 'paused' | 'completed' | 'error' | 'stopped';
@@ -77,6 +78,7 @@ import sys, os, json, time, types, io
 _COJUDGE_BREAKPOINTS = ${bpStr}
 _COJUDGE_STATE_FILE = '${DEBUG_STATE_FILE}'
 _COJUDGE_CMD_FILE = '${DEBUG_CMD_FILE}'
+_COJUDGE_EVAL_RESULT_FILE = '${DEBUG_EVAL_RESULT_FILE}'
 _COJUDGE_SOURCE_FILE = '${sourceFile}'
 _COJUDGE_ENTRY_FILE = '${entryFile}'
 
@@ -106,7 +108,29 @@ def _write_state(status, line=None, vars=None, error=None):
     except:
         pass
 
-def _wait_for_cmd():
+def _write_eval_result(value=None, error=None):
+    payload = {}
+    if error is not None:
+        payload['error'] = error
+    else:
+        payload['value'] = value
+    try:
+        with open(_COJUDGE_EVAL_RESULT_FILE, 'w') as f:
+            json.dump(payload, f)
+    except:
+        pass
+
+def _eval_expression(expr, frame):
+    try:
+        val = eval(expr, frame.f_globals, frame.f_locals)
+        try:
+            _write_eval_result(value=repr(val))
+        except:
+            _write_eval_result(value='<' + type(val).__name__ + '>')
+    except Exception as e:
+        _write_eval_result(error=str(e))
+
+def _wait_for_cmd(frame=None):
     global _COJUDGE_BREAKPOINTS
     while True:
         try:
@@ -115,6 +139,14 @@ def _wait_for_cmd():
             if cmd.get('action') == 'set_breakpoints':
                 _COJUDGE_BREAKPOINTS = set(cmd.get('breakpoints', []))
                 os.remove(_COJUDGE_CMD_FILE)
+                continue
+            if cmd.get('action') == 'eval':
+                expr = cmd.get('expression', '')
+                try:
+                    os.remove(_COJUDGE_CMD_FILE)
+                except:
+                    pass
+                _eval_expression(expr, frame)
                 continue
             if cmd.get('action') in ('continue', 'step', 'stop'):
                 os.remove(_COJUDGE_CMD_FILE)
@@ -160,7 +192,7 @@ def _cojudge_trace(frame, event, arg):
 
         _write_state('paused', line=lineno, vars=vars_dict)
 
-        cmd = _wait_for_cmd()
+        cmd = _wait_for_cmd(frame)
 
         if cmd.get('action') == 'stop':
             _write_state('stopped')
@@ -209,12 +241,37 @@ async function readDebugState(container: Dockerode.Container): Promise<DebugStat
     return { status: 'running' };
 }
 
-async function writeDebugCmd(container: Dockerode.Container, action: 'continue' | 'step' | 'stop' | 'set_breakpoints', extra?: Record<string, any>): Promise<void> {
+async function readEvalResult(container: Dockerode.Container): Promise<{ value?: string; error?: string } | null> {
+    try {
+        const exec = await container.exec({
+            Cmd: ['cat', DEBUG_EVAL_RESULT_FILE],
+            AttachStdout: true,
+            AttachStderr: true
+        });
+        const stream: any = await exec.start({ hijack: true, stdin: false });
+        let stdout = '';
+        await new Promise<void>((resolve) => {
+            (container as any).modem.demuxStream(
+                stream,
+                { write: (chunk: any) => (stdout += chunk.toString()) },
+                { write: () => {} }
+            );
+            stream.on('end', resolve);
+            stream.on('error', resolve);
+        });
+        if (stdout.trim()) {
+            return JSON.parse(stdout.trim());
+        }
+    } catch {}
+    return null;
+}
+
+async function writeDebugCmd(container: Dockerode.Container, action: 'continue' | 'step' | 'stop' | 'set_breakpoints' | 'eval', extra?: Record<string, any>): Promise<void> {
     const cmdContent: any = { action };
     if (extra) Object.assign(cmdContent, extra);
     const cmd = JSON.stringify(cmdContent);
     let escaped: string;
-    if (action === 'set_breakpoints') {
+    if (action === 'set_breakpoints' || action === 'eval') {
         escaped = `echo '${cmd.replace(/'/g, "'\\''")}' > ${DEBUG_CMD_FILE}`;
     } else {
         const newState = JSON.stringify({ status: 'running' });
@@ -1013,14 +1070,42 @@ export async function debugEval(jobId: string, variable: string): Promise<{ vari
         throw new Error(`Cannot evaluate '${variable}': session is ${state.status} (must be paused at a breakpoint)`);
     }
 
+    const expr = variable.trim();
+    if (!expr) throw new Error('Empty expression');
+
+    const isBareIdent = /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(expr);
     const vars = state.vars || {};
-    if (!(variable in vars)) {
+    if (isBareIdent && expr in vars) {
+        return { variable: expr, value: vars[expr], line: state.line };
+    }
+
+    // Live evaluation inside the paused container: write an eval command,
+    // then poll for the result file the driver writes.
+    await runExec(session.container, ['sh', '-c', `rm -f ${DEBUG_EVAL_RESULT_FILE}; true`]);
+    await writeDebugCmd(session.container, 'eval', { expression: expr });
+
+    const start = Date.now();
+    while (Date.now() - start < 5000) {
+        const result = await readEvalResult(session.container);
+        if (result) {
+            if (result.error) {
+                const available = Object.keys(vars);
+                const hint = isBareIdent && available.length > 0
+                    ? ` Available variables: ${available.join(', ')}`
+                    : '';
+                throw new Error(`${result.error}${hint}`);
+            }
+            return { variable: expr, value: result.value ?? '', line: state.line };
+        }
+        await new Promise(r => setTimeout(r, 150));
+    }
+
+    if (isBareIdent) {
         const available = Object.keys(vars);
         const hint = available.length > 0
             ? `Available variables: ${available.join(', ')}`
             : 'No variables in scope at this point';
-        throw new Error(`Variable '${variable}' not found. ${hint}`);
+        throw new Error(`Variable '${expr}' not found. ${hint}`);
     }
-
-    return { variable, value: vars[variable], line: state.line };
+    throw new Error(`Timed out evaluating '${expr}'`);
 }

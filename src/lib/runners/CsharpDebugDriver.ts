@@ -1,7 +1,10 @@
 export const CSHARP_DEBUG_SUPPORT: string = String.raw`using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 
@@ -11,6 +14,7 @@ public static class DebugSupport
     private static bool stepMode = false;
     private static string STATE_FILE = "/tmp/cojudge_debug_state.json";
     private static string CMD_FILE = "/tmp/cojudge_debug_cmd.json";
+    private static string EVAL_RESULT_FILE = "/tmp/cojudge_eval_result.json";
     private static StringWriter outputCapture = new StringWriter();
     private static TextWriter originalOut;
 
@@ -33,7 +37,7 @@ public static class DebugSupport
         WriteState("running", -1, null, null);
     }
 
-    public static void Check(int line, Dictionary<string, string> vars)
+    public static void Check(int line, Dictionary<string, object> vars)
     {
         PollCommands();
 
@@ -81,9 +85,9 @@ public static class DebugSupport
         catch { }
     }
 
-    private static void Pause(int line, Dictionary<string, string> vars)
+    private static void Pause(int line, Dictionary<string, object> vars)
     {
-        WriteState("paused", line, null, vars);
+        WriteState("paused", line, null, RenderDict(vars));
 
         while (true)
         {
@@ -126,7 +130,22 @@ public static class DebugSupport
                             }
                         }
                     }
-                    WriteState("paused", line, null, vars);
+                    WriteState("paused", line, null, RenderDict(vars));
+                    continue;
+                }
+
+                if (action == "eval")
+                {
+                    string expr = GetJsonString(content, "expression");
+                    try
+                    {
+                        object result = ExprEvaluator.Evaluate(expr, vars);
+                        WriteEvalResult(RenderValue(result), null);
+                    }
+                    catch (Exception e)
+                    {
+                        WriteEvalResult(null, e.Message);
+                    }
                     continue;
                 }
 
@@ -150,6 +169,74 @@ public static class DebugSupport
                 Thread.Sleep(100);
             }
         }
+    }
+
+    private static string GetJsonString(string json, string key)
+    {
+        int ki = json.IndexOf("\"" + key + "\"", StringComparison.Ordinal);
+        if (ki < 0) return "";
+        int ci = json.IndexOf(':', ki);
+        if (ci < 0) return "";
+        int q1 = json.IndexOf('"', ci);
+        if (q1 < 0) return "";
+        var sb = new StringBuilder();
+        int i = q1 + 1;
+        while (i < json.Length)
+        {
+            char c = json[i];
+            if (c == '\\')
+            {
+                if (i + 1 >= json.Length) break;
+                char e = json[i + 1];
+                switch (e)
+                {
+                    case '"': sb.Append('"'); break;
+                    case '\\': sb.Append('\\'); break;
+                    case 'n': sb.Append('\n'); break;
+                    case 't': sb.Append('\t'); break;
+                    case 'r': sb.Append('\r'); break;
+                    default: sb.Append(e); break;
+                }
+                i += 2;
+            }
+            else if (c == '"')
+            {
+                return sb.ToString();
+            }
+            else
+            {
+                sb.Append(c);
+                i++;
+            }
+        }
+        return sb.ToString();
+    }
+
+    private static Dictionary<string, string> RenderDict(Dictionary<string, object> vars)
+    {
+        var rendered = new Dictionary<string, string>();
+        if (vars == null) return rendered;
+        foreach (var kv in vars)
+        {
+            rendered[kv.Key] = RenderValue(kv.Value);
+        }
+        return rendered;
+    }
+
+    private static void WriteEvalResult(string value, string error)
+    {
+        var sb = new StringBuilder();
+        sb.Append("{");
+        if (error != null)
+        {
+            sb.Append("\"error\":\"").Append(EscapeJson(error)).Append("\"");
+        }
+        else
+        {
+            sb.Append("\"value\":\"").Append(EscapeJson(value ?? "null")).Append("\"");
+        }
+        sb.Append("}");
+        try { File.WriteAllText(EVAL_RESULT_FILE, sb.ToString()); } catch { }
     }
 
     private static string ParseAction(string json)
@@ -360,6 +447,504 @@ public static class DebugSupport
         WriteState("completed", -1, null, null);
     }
 }
+
+public static class ExprEvaluator
+{
+    public static object Evaluate(string expr, Dictionary<string, object> vars)
+    {
+        var p = new Parser(expr, vars);
+        object v = p.ParseExpression();
+        if (!p.AtEnd) throw new InvalidOperationException("Unexpected token at position " + p.Pos);
+        return v;
+    }
+
+    private class Parser
+    {
+        private readonly string s;
+        private readonly Dictionary<string, object> vars;
+        private int pos;
+
+        public Parser(string s, Dictionary<string, object> vars) { this.s = s; this.vars = vars; }
+
+        public int Pos { get { SkipWs(); return pos; } }
+
+        private char Cur { get { SkipWs(); return pos < s.Length ? s[pos] : '\0'; } }
+        private char Peek(int off) { return pos + off < s.Length ? s[pos + off] : '\0'; }
+
+        public bool AtEnd { get { SkipWs(); return pos >= s.Length; } }
+
+        private void SkipWs() { while (pos < s.Length && char.IsWhiteSpace(s[pos])) pos++; }
+
+        public object ParseExpression() { return ParseOr(); }
+
+        private object ParseOr()
+        {
+            object a = ParseAnd();
+            while (Cur == '|' && Peek(1) == '|')
+            {
+                pos += 2;
+                object b = ParseAnd();
+                a = (bool)a || (bool)b;
+            }
+            return a;
+        }
+
+        private object ParseAnd()
+        {
+            object a = ParseEquality();
+            while (Cur == '&' && Peek(1) == '&')
+            {
+                pos += 2;
+                object b = ParseEquality();
+                a = (bool)a && (bool)b;
+            }
+            return a;
+        }
+
+        private object ParseEquality()
+        {
+            object a = ParseRelational();
+            while (true)
+            {
+                string op = null;
+                if (Cur == '=' && Peek(1) == '=') op = "==";
+                else if (Cur == '!' && Peek(1) == '=') op = "!=";
+                if (op == null) return a;
+                pos += 2;
+                object b = ParseRelational();
+                a = Compare(a, b, op);
+            }
+        }
+
+        private object ParseRelational()
+        {
+            object a = ParseAdditive();
+            while (true)
+            {
+                string op = null;
+                char c = Cur;
+                if (c == '<' && Peek(1) == '=') op = "<=";
+                else if (c == '>' && Peek(1) == '=') op = ">=";
+                else if (c == '<') op = "<";
+                else if (c == '>') op = ">";
+                if (op == null) return a;
+                pos += op.Length;
+                object b = ParseAdditive();
+                a = Compare(a, b, op);
+            }
+        }
+
+        private object ParseAdditive()
+        {
+            object a = ParseMultiplicative();
+            while (true)
+            {
+                char c = Cur;
+                if (c != '+' && c != '-') return a;
+                pos++;
+                object b = ParseMultiplicative();
+                a = Arith(c, a, b);
+            }
+        }
+
+        private object ParseMultiplicative()
+        {
+            object a = ParseUnary();
+            while (true)
+            {
+                char c = Cur;
+                if (c != '*' && c != '/' && c != '%') return a;
+                pos++;
+                object b = ParseUnary();
+                a = Arith(c, a, b);
+            }
+        }
+
+        private object ParseUnary()
+        {
+            char c = Cur;
+            if (c == '-')
+            {
+                pos++;
+                object v = ParseUnary();
+                if (v == null) throw new InvalidOperationException("Unary '-' on null");
+                if (v is string) throw new InvalidOperationException("Unary '-' on string");
+                if (v is bool) throw new InvalidOperationException("Unary '-' on bool");
+                return -((dynamic)v);
+            }
+            if (c == '+') { pos++; return ParseUnary(); }
+            if (c == '!')
+            {
+                pos++;
+                object v = ParseUnary();
+                if (v == null || !(v is bool)) throw new InvalidOperationException("'!' requires a boolean operand");
+                return !(bool)v;
+            }
+            return ParsePostfix();
+        }
+
+        private object ParsePostfix()
+        {
+            object v = ParsePrimary();
+            while (true)
+            {
+                SkipWs();
+                if (pos < s.Length && s[pos] == '[')
+                {
+                    pos++;
+                    object idx = ParseExpression();
+                    if (Cur != ']') throw new InvalidOperationException("Expected ']'");
+                    pos++;
+                    v = Index(v, idx);
+                }
+                else if (pos < s.Length && s[pos] == '.')
+                {
+                    pos++;
+                    SkipWs();
+                    string name = ReadIdent();
+                    SkipWs();
+                    if (pos < s.Length && s[pos] == '(')
+                    {
+                        pos++;
+                        var args = new List<object>();
+                        SkipWs();
+                        if (Cur != ')')
+                        {
+                            args.Add(ParseExpression());
+                            while (Cur == ',') { pos++; args.Add(ParseExpression()); }
+                        }
+                        if (Cur != ')') throw new InvalidOperationException("Expected ')'");
+                        pos++;
+                        v = Invoke(v, name, args);
+                    }
+                    else
+                    {
+                        v = Member(v, name);
+                    }
+                }
+                else
+                {
+                    return v;
+                }
+            }
+        }
+
+        private object ParsePrimary()
+        {
+            SkipWs();
+            if (pos >= s.Length) throw new InvalidOperationException("Unexpected end of expression");
+            char c = s[pos];
+            if (c == '(')
+            {
+                pos++;
+                object v = ParseExpression();
+                if (Cur != ')') throw new InvalidOperationException("Expected ')'");
+                pos++;
+                return v;
+            }
+            if (c == '"') return ParseString();
+            if (char.IsDigit(c)) return ParseNumber();
+            if (char.IsLetter(c) || c == '_')
+            {
+                string name = ReadIdent();
+                switch (name)
+                {
+                    case "true": return true;
+                    case "false": return false;
+                    case "null": return null;
+                }
+                if (vars != null && vars.TryGetValue(name, out object val))
+                    return val;
+                Type t = FindType(name);
+                if (t != null) return t;
+                throw new InvalidOperationException("Unknown identifier '" + name + "'");
+            }
+            throw new InvalidOperationException("Unexpected character '" + c + "' at position " + pos);
+        }
+
+        private static readonly Dictionary<string, Type> typeCache = new Dictionary<string, Type>();
+
+        private static Type FindType(string name)
+        {
+            if (typeCache.TryGetValue(name, out Type cached)) return cached;
+            switch (name)
+            {
+                case "int": return typeof(int);
+                case "long": return typeof(long);
+                case "double": return typeof(double);
+                case "float": return typeof(float);
+                case "decimal": return typeof(decimal);
+                case "short": return typeof(short);
+                case "byte": return typeof(byte);
+                case "sbyte": return typeof(sbyte);
+                case "char": return typeof(char);
+                case "bool": return typeof(bool);
+                case "string": return typeof(string);
+                case "object": return typeof(object);
+                case "uint": return typeof(uint);
+                case "ulong": return typeof(ulong);
+                case "ushort": return typeof(ushort);
+            }
+            Type t = Type.GetType("System." + name);
+            if (t != null) { typeCache[name] = t; return t; }
+            foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                if (asm.IsDynamic) continue;
+                Type[] types;
+                try { types = asm.GetExportedTypes(); }
+                catch { continue; }
+                foreach (var ty in types)
+                {
+                    if (ty.IsPublic && ty.Name == name)
+                    {
+                        typeCache[name] = ty;
+                        return ty;
+                    }
+                }
+            }
+            return null;
+        }
+
+        private string ReadIdent()
+        {
+            SkipWs();
+            int start = pos;
+            while (pos < s.Length && (char.IsLetterOrDigit(s[pos]) || s[pos] == '_')) pos++;
+            if (pos == start) throw new InvalidOperationException("Expected identifier at position " + pos);
+            return s.Substring(start, pos - start);
+        }
+
+        private string ParseString()
+        {
+            pos++;
+            var sb = new StringBuilder();
+            while (pos < s.Length && s[pos] != '"')
+            {
+                char c = s[pos];
+                if (c == '\\' && pos + 1 < s.Length)
+                {
+                    char e = s[pos + 1];
+                    switch (e)
+                    {
+                        case 'n': sb.Append('\n'); break;
+                        case 't': sb.Append('\t'); break;
+                        case 'r': sb.Append('\r'); break;
+                        case '\\': sb.Append('\\'); break;
+                        case '"': sb.Append('"'); break;
+                        case '\'': sb.Append('\''); break;
+                        default: sb.Append(e); break;
+                    }
+                    pos += 2;
+                }
+                else
+                {
+                    sb.Append(c);
+                    pos++;
+                }
+            }
+            if (pos >= s.Length) throw new InvalidOperationException("Unterminated string literal");
+            pos++;
+            return sb.ToString();
+        }
+
+        private object ParseNumber()
+        {
+            int start = pos;
+            bool isDouble = false;
+            while (pos < s.Length && (char.IsDigit(s[pos]) || s[pos] == '.' || s[pos] == 'e' || s[pos] == 'E'
+                || ((s[pos] == '-' || s[pos] == '+') && pos > start && (s[pos - 1] == 'e' || s[pos - 1] == 'E'))))
+            {
+                if (s[pos] == '.' || s[pos] == 'e' || s[pos] == 'E') isDouble = true;
+                pos++;
+            }
+            string num = s.Substring(start, pos - start);
+            if (isDouble)
+                return double.Parse(num, CultureInfo.InvariantCulture);
+            if (long.TryParse(num, NumberStyles.Integer, CultureInfo.InvariantCulture, out long lv))
+                return lv;
+            return double.Parse(num, CultureInfo.InvariantCulture);
+        }
+
+        private static object Arith(char op, object a, object b)
+        {
+            try
+            {
+                if (op == '+' && (a is string || b is string))
+                {
+                    return (a == null ? "" : Convert.ToString(a, CultureInfo.InvariantCulture))
+                        + (b == null ? "" : Convert.ToString(b, CultureInfo.InvariantCulture));
+                }
+                if (a == null || b == null) throw new InvalidOperationException("Arithmetic on null");
+                if (a is bool || b is bool) throw new InvalidOperationException("Arithmetic on bool");
+                if (a is string || b is string) throw new InvalidOperationException("Arithmetic on string");
+                dynamic x = a, y = b;
+                switch (op)
+                {
+                    case '+': return x + y;
+                    case '-': return x - y;
+                    case '*': return x * y;
+                    case '/': return x / y;
+                    default: return x % y;
+                }
+            }
+            catch (InvalidOperationException) { throw; }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException("Arithmetic error: " + e.Message);
+            }
+        }
+
+        private static bool Eq(object a, object b)
+        {
+            if (a == null && b == null) return true;
+            if (a == null || b == null) return false;
+            if (a is string || b is string)
+                return Convert.ToString(a, CultureInfo.InvariantCulture) == Convert.ToString(b, CultureInfo.InvariantCulture);
+            if (a.GetType() == b.GetType() && a is IComparable c) return c.CompareTo(b) == 0;
+            return ((dynamic)a) == ((dynamic)b);
+        }
+
+        private static object Compare(object a, object b, string op)
+        {
+            try
+            {
+                if (op == "==") return Eq(a, b);
+                if (op == "!=") return !Eq(a, b);
+                if (a == null || b == null) throw new InvalidOperationException("Cannot compare null");
+                if (a is string || b is string) throw new InvalidOperationException("Cannot order-compare strings");
+                if (a is bool || b is bool) throw new InvalidOperationException("Cannot order-compare booleans");
+                dynamic x = a, y = b;
+                switch (op)
+                {
+                    case "<": return x < y;
+                    case "<=": return x <= y;
+                    case ">": return x > y;
+                    default: return x >= y;
+                }
+            }
+            catch (InvalidOperationException) { throw; }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException("Comparison error: " + e.Message);
+            }
+        }
+
+        private static object Index(object target, object index)
+        {
+            if (target == null) throw new InvalidOperationException("Cannot index null");
+            try
+            {
+                return ((dynamic)target)[(dynamic)index];
+            }
+            catch (InvalidOperationException) { throw; }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException("Indexing failed: " + e.Message);
+            }
+        }
+
+        private static object Member(object target, string name)
+        {
+            if (target == null) throw new InvalidOperationException("Cannot access member on null");
+            try
+            {
+                if (target is Type ty)
+                {
+                    var sProp = ty.GetProperty(name);
+                    if (sProp != null) return sProp.GetValue(null, null);
+                    var sField = ty.GetField(name);
+                    if (sField != null) return sField.GetValue(null);
+                    throw new InvalidOperationException("No static member '" + name + "' on " + ty.Name);
+                }
+                var t = target.GetType();
+                var prop = t.GetProperty(name);
+                if (prop != null) return prop.GetValue(target, null);
+                var field = t.GetField(name);
+                if (field != null) return field.GetValue(target);
+                throw new InvalidOperationException("No member '" + name + "' on " + t.Name);
+            }
+            catch (InvalidOperationException) { throw; }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException("Member access failed: " + e.Message);
+            }
+        }
+
+        private static object Invoke(object target, string name, List<object> args)
+        {
+            if (target == null) throw new InvalidOperationException("Cannot call method on null");
+            try
+            {
+                bool isStatic = target is Type;
+                var t = isStatic ? (Type)target : target.GetType();
+                MethodInfo method = null;
+                int bestScore = -1;
+                foreach (var m in t.GetMethods())
+                {
+                    if (m.Name != name || m.IsStatic != isStatic || m.GetParameters().Length != args.Count) continue;
+                    var types = m.GetParameters().Select(p => p.ParameterType).ToArray();
+                    int sc = 0;
+                    bool ok = true;
+                    for (int i = 0; i < args.Count; i++)
+                    {
+                        int s = ScoreArg(args[i], types[i]);
+                        if (s <= 0) { ok = false; break; }
+                        sc += s;
+                    }
+                    if (ok && sc > bestScore) { bestScore = sc; method = m; }
+                }
+                if (method == null)
+                    throw new InvalidOperationException("No method '" + name + "' with " + args.Count + " args on " + t.Name);
+                var paramTypes = method.GetParameters().Select(p => p.ParameterType).ToArray();
+                var converted = new object[args.Count];
+                for (int i = 0; i < args.Count; i++)
+                {
+                    converted[i] = ConvertArg(args[i], paramTypes[i]);
+                }
+                return method.Invoke(isStatic ? null : target, converted);
+            }
+            catch (InvalidOperationException) { throw; }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException("Method call failed: " + e.Message);
+            }
+        }
+
+        private static int ScoreArg(object v, Type t)
+        {
+            if (v == null) return (t.IsClass || t.IsInterface) && !t.IsPrimitive ? 1 : 0;
+            Type vt = v.GetType();
+            if (t == vt) return 3;
+            if (vt == typeof(string) || vt == typeof(bool)) return 0;
+            if (t == typeof(object)) return 1;
+            if (vt == typeof(long) || vt == typeof(int) || vt == typeof(short) || vt == typeof(byte)
+                || vt == typeof(double) || vt == typeof(float) || vt == typeof(char))
+            {
+                if (t == typeof(int)) return vt == typeof(long) ? 2 : 1;
+                if (t == typeof(long)) return 2;
+                if (t == typeof(double)) return vt == typeof(double) || vt == typeof(float) ? 3 : 2;
+                if (t == typeof(float)) return vt == typeof(double) ? 0 : 2;
+                if (t == typeof(short) || t == typeof(byte) || t == typeof(char)) return 1;
+                if (t == typeof(decimal)) return 2;
+                return 0;
+            }
+            return 0;
+        }
+
+        private static object ConvertArg(object v, Type t)
+        {
+            if (v == null) return null;
+            if (t == typeof(int)) return Convert.ToInt32(v, CultureInfo.InvariantCulture);
+            if (t == typeof(long)) return Convert.ToInt64(v, CultureInfo.InvariantCulture);
+            if (t == typeof(double)) return Convert.ToDouble(v, CultureInfo.InvariantCulture);
+            if (t == typeof(float)) return Convert.ToSingle(v, CultureInfo.InvariantCulture);
+            if (t == typeof(short)) return Convert.ToInt16(v, CultureInfo.InvariantCulture);
+            if (t == typeof(byte)) return Convert.ToByte(v, CultureInfo.InvariantCulture);
+            if (t == typeof(bool)) return Convert.ToBoolean(v);
+            return v;
+        }
+    }
+}
 `;
 
 const SIMPLE_TYPE_RE = /\b(var|int|long|double|float|decimal|bool|string|char|byte|short|uint|ulong|ushort|sbyte|object|dynamic)\s+(\w+)\s*(?=[=;,)])/g;
@@ -558,9 +1143,9 @@ export function generateCsharpDebugWrapper(
 
         if (inMethod && !varsInited && (braceOnThisLine || bareBrace)) {
             const bodyIndent = indent + '    ';
-            result.push(`${bodyIndent}var ${V} = new Dictionary<string, string>();`);
+            result.push(`${bodyIndent}var ${V} = new Dictionary<string, object>();`);
             for (const p of paramNames) {
-                result.push(`${bodyIndent}${V}["${p}"] = DebugSupport.RenderValue(${p});`);
+                result.push(`${bodyIndent}${V}["${p}"] = ${p};`);
             }
             if (isMainMethod && !mainInited) {
                 const bpStr = initBreakpoints ? `DebugSupport.Init("${initBreakpoints}")` : 'DebugSupport.Init("")';
@@ -576,7 +1161,7 @@ export function generateCsharpDebugWrapper(
                 if (!allVarNames.includes(vn)) allVarNames.push(vn);
             }
             for (const vn of allVarNames) {
-                result.push(`${indent}${V}["${vn}"] = DebugSupport.RenderValue(${vn});`);
+                result.push(`${indent}${V}["${vn}"] = ${vn};`);
             }
         }
 
