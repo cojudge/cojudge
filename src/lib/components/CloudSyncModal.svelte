@@ -405,7 +405,7 @@
         >
             <div class="modal-heading-row">
                 <div>
-                    <span class="modal-eyebrow">Cojudge Cloud</span>
+                    <span id="cloud-settings-title" class="modal-eyebrow">Cojudge Cloud</span>
                 </div>
                 <div class="modal-heading-right">
                     <span class:configured={$cloudSyncState.authStatus === 'signed-in'} class="firebase-status-pill">

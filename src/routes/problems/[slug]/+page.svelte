@@ -19,7 +19,7 @@
     import userSettingsStorage, { type ThemeChoice } from '$lib/stores/userSettingsStorage';
     import userStore from '$lib/stores/userStore';
     import { getDifficultyClass, type ProgrammingLanguage } from '$lib/utils/util.js';
-    import { doc, setDoc } from 'firebase/firestore';
+    import { doc, setDoc } from 'firebase/firestore/lite';
     import { browser } from '$app/environment';
     import { renderMarkdown } from '$lib/utils/markdown';
     import QRCode from 'qrcode';

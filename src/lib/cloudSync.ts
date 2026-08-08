@@ -4,14 +4,15 @@ import { onIdTokenChanged, type Auth, type Unsubscribe, type User } from 'fireba
 import {
 	collection,
 	doc,
-	getDocFromServer,
-	getDocsFromServer,
+	getDoc,
+	getDocs,
+	limit,
 	orderBy,
 	query,
 	runTransaction,
 	serverTimestamp,
 	type Firestore
-} from 'firebase/firestore';
+} from 'firebase/firestore/lite';
 import { initFirebase, signInWithGoogle, signOutFirebase } from '$lib/firebase';
 import {
 	CLOUD_HISTORY_LIMIT,
@@ -648,23 +649,30 @@ function parseHistoryMeta(snapshotId: string, data: Record<string, unknown>): Re
 }
 
 async function readRemoteMeta(db: Firestore, uid: string): Promise<RemoteSnapshotMeta | null> {
-	const result = await getDocFromServer(latestRef(db, uid));
+	const result = await getDoc(latestRef(db, uid));
 	return result.exists() ? parseRemoteMeta(result.data()) : null;
 }
 
 async function readRemoteHistory(
 	db: Firestore,
 	uid: string,
-	current: RemoteSnapshotMeta | null
+	current: RemoteSnapshotMeta | null | Promise<RemoteSnapshotMeta | null>
 ): Promise<RemoteSnapshotMeta[]> {
-	const result = await getDocsFromServer(
-		query(collection(db, 'users', uid, 'snapshots'), orderBy('createdAt', 'desc'))
-	);
+	const [result, resolvedCurrent] = await Promise.all([
+		getDocs(
+			query(
+				collection(db, 'users', uid, 'snapshots'),
+				orderBy('createdAt', 'desc'),
+				limit(CLOUD_HISTORY_LIMIT)
+			)
+		),
+		current
+	]);
 	const history = result.docs
 		.map((snapshot) => parseHistoryMeta(snapshot.id, snapshot.data()))
 		.filter((snapshot): snapshot is RemoteSnapshotMeta => snapshot !== null);
-	if (current && !history.some((snapshot) => snapshot.revisionId === current.revisionId)) {
-		history.unshift(current);
+	if (resolvedCurrent && !history.some((snapshot) => snapshot.revisionId === resolvedCurrent.revisionId)) {
+		history.unshift(resolvedCurrent);
 	}
 	return history.slice(0, CLOUD_HISTORY_LIMIT);
 }
@@ -692,7 +700,7 @@ async function uploadSnapshot(
 	uid: string,
 	local: LocalSnapshot,
 	previous: RemoteSnapshotMeta | null
-): Promise<RemoteSnapshotMeta> {
+): Promise<string> {
 	const { parts, totalBytes } = encodeProgressParts(local.serialized);
 	if (totalBytes > MAX_SNAPSHOT_BYTES || parts.length > MAX_SNAPSHOT_PARTS) {
 		throw new Error('This progress snapshot is too large for Cojudge Cloud.');
@@ -747,12 +755,7 @@ async function uploadSnapshot(
 			updatedAt: serverTimestamp()
 		});
 	});
-
-	const confirmed = await readRemoteMeta(db, uid);
-	if (!confirmed || confirmed.revisionId !== revisionId) {
-		throw new Error('Cojudge Cloud could not confirm the uploaded snapshot.');
-	}
-	return confirmed;
+	return revisionId;
 }
 
 async function downloadSnapshot(
@@ -760,7 +763,7 @@ async function downloadSnapshot(
 	uid: string,
 	meta: RemoteSnapshotMeta
 ): Promise<DownloadedSnapshot> {
-	const result = await getDocsFromServer(query(partsRef(db, uid, meta.snapshotId), orderBy('index')));
+	const result = await getDocs(query(partsRef(db, uid, meta.snapshotId), orderBy('index')));
 	if (result.size !== meta.partCount) throw new Error('Cloud snapshot is incomplete.');
 
 	const parts = result.docs.map((part, index) => {
@@ -900,8 +903,11 @@ async function refreshRemoteState(
 	db: Firestore,
 	uid: string
 ): Promise<{ remote: RemoteSnapshotMeta | null; history: RemoteSnapshotMeta[] }> {
-	const remote = await readRemoteMeta(db, uid);
-	const history = await readRemoteHistory(db, uid, remote);
+	const remotePromise = readRemoteMeta(db, uid);
+	const [remote, history] = await Promise.all([
+		remotePromise,
+		readRemoteHistory(db, uid, remotePromise)
+	]);
 	return { remote, history };
 }
 
@@ -1027,19 +1033,23 @@ async function runSync(mode: SyncMode, context: OperationContext): Promise<void>
 		}
 		if (direction === 'upload') {
 			setCloudProgress('Uploading progress…', 55);
-			const uploaded = await uploadSnapshot(context.db, context.uid, local, remote);
+			const revisionId = await uploadSnapshot(context.db, context.uid, local, remote);
 			if (!isOperationCurrent(context)) return;
+			setCloudProgress('Finalizing…', 85);
+			const updated = await refreshRemoteState(context.db, context.uid);
+			if (!isOperationCurrent(context)) return;
+			const uploaded = updated.remote;
+			if (!uploaded || uploaded.revisionId !== revisionId) {
+				throw new Error('Cojudge Cloud could not confirm the uploaded snapshot.');
+			}
 			writeCloudClone(
 				cloudAccountId(context.projectId, context.uid),
 				uploaded.checksum,
 				local.serialized,
 				uploaded.revisionId
 			);
-			setCloudProgress('Finalizing…', 85);
-			const updatedHistory = await readRemoteHistory(context.db, context.uid, uploaded);
-			if (!isOperationCurrent(context)) return;
 			setCloudProgress('Finalizing…', 95);
-			publishHistory(updatedHistory, uploaded.revisionId);
+			publishHistory(updated.history, uploaded.revisionId);
 			await finalizeCloudRevision(context, uploaded.checksum);
 			return;
 		}
@@ -1324,7 +1334,7 @@ async function runRevisionRestore(
 
 		let selected = cached;
 		if (cached.revisionId !== remote.revisionId) {
-			const result = await getDocFromServer(
+			const result = await getDoc(
 				snapshotRef(context.db, context.uid, cached.snapshotId)
 			);
 			if (!isOperationCurrent(context)) return;
