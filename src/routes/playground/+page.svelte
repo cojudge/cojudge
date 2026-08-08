@@ -4403,6 +4403,7 @@ func main() {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.defaultPrevented) return;
             if (e.key === 'Escape') {
+                e.preventDefault();
                 showSettings = false;
                 closeSearch();
                 closeLightbox();
@@ -5364,7 +5365,10 @@ func main() {
                     placeholder="Search files by name..."
                     class="search-file-input"
                     on:keydown={(e) => {
-                        if (e.key === 'Escape') closeSearch();
+                        if (e.key === 'Escape') {
+                            e.preventDefault();
+                            closeSearch();
+                        }
                         if (e.key === 'ArrowDown') {
                             e.preventDefault();
                             selectedIndex = (selectedIndex + 1) % filteredFiles.length;
