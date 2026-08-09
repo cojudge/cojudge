@@ -207,47 +207,8 @@
             }
         }
 
-        let zoom = 1;
-    
-        const handleZoomShortcut = async (event: KeyboardEvent) => {
-          if (!event.metaKey || event.ctrlKey || event.altKey) return;
-    
-          const zoomIn =
-            event.key === '+' ||
-            event.key === '=' ||
-            event.code === 'Equal';
-    
-          const zoomOut =
-            event.key === '-' ||
-            event.code === 'Minus';
-    
-          const resetZoom = event.key === '0' || event.code === 'Digit0';
-    
-          if (!zoomIn && !zoomOut && !resetZoom) return;
-    
-          event.preventDefault();
-          event.stopPropagation();
-    
-          if (resetZoom) {
-            zoom = 1;
-          } else if (zoomIn) {
-            zoom = Math.min(10, zoom + 0.2);
-          } else {
-            zoom = Math.max(0.2, zoom - 0.2);
-          }
-    
-          const { getCurrentWebview } =
-            await import('@tauri-apps/api/webview');
-    
-          await getCurrentWebview().setZoom(zoom);
-        };
-    
-        // Capture phase helps when editors/components intercept the shortcut.
-        window.addEventListener('keydown', handleZoomShortcut, true);
-
         return () => {
             window.removeEventListener("click", handleClickOutside);
-            window.removeEventListener('keydown', handleZoomShortcut, true);
         };
     });
 
