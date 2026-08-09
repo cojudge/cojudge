@@ -2,6 +2,7 @@
     import { page } from '$app/stores';
     import PlaygroundExecutionPanel from '$lib/components/PlaygroundExecutionPanel.svelte';
     import CloudSyncModal from '$lib/components/CloudSyncModal.svelte';
+    import McpServerModal from '$lib/components/McpServerModal.svelte';
     import LanguageIcon from '$lib/components/LanguageIcon.svelte';
     import ShareModal from '$lib/components/ShareModal.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
@@ -11,6 +12,7 @@
     import { consumeForkTransfer } from '$lib/forkTransfer';
     import { ensureAuthenticated, initFirebase } from '$lib/firebase';
     import { isDesktopRuntime } from '$lib/firebaseSettings';
+    import { ensureMcpServerRunning, mcpClientState, pushMcpTabs, setupMcpFileSync, startMcpEventSync, toMcpTabState } from '$lib/mcp/client';
     import { cloudSyncState } from '$lib/cloudSync';
     import { CLOUD_FILE_DISCARDED_EVENT, WHITEBOARD_FILE_ID, WORKSPACE_FILE_ID_PREFIX } from '$lib/cloudFileChange';
     import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress, writeProgressStorageItem } from '$lib/progressBackup';
@@ -35,6 +37,8 @@
     const codeKey = () => `${problemId}:${language}`;
     let showCloudSettings = false;
     let cloudActivityButton: HTMLButtonElement | null = null;
+    let showMcpSettings = false;
+    let mcpActivityButton: HTMLButtonElement | null = null;
 
     function openCloudSettings() {
         showCloudSettings = true;
@@ -44,6 +48,16 @@
         showCloudSettings = false;
         await tick();
         cloudActivityButton?.focus();
+    }
+
+    function openMcpSettings() {
+        showMcpSettings = true;
+    }
+
+    async function closeMcpSettings() {
+        showMcpSettings = false;
+        await tick();
+        mcpActivityButton?.focus();
     }
 
     const starterCode = {
@@ -1579,10 +1593,64 @@ func main() {
         loadOrInitFile(language);
     }
 
-    // Reload code when another browser tab changes the file store
-    $: if ($fileSyncVersion > 0 && activeTabId >= 0 && activeTabId < tabs.length && !isSpecialTabType(tabs[activeTabId]?.type) && language) {
-        skipNextSave = true;
-        loadOrInitFile(language);
+    // Keep the MCP server informed of the open tabs + active tab, so agents
+    // can see what the user is looking at. Debounced; skipped while the MCP
+    // server is stopped (a subscription in onMount re-pushes when it starts).
+    let tabPushTimer: ReturnType<typeof setTimeout> | undefined;
+
+    $: scheduleTabPush(tabs, activeTabId);
+
+    function scheduleTabPush(tabList: TabMeta[], activeIndex: number): void {
+        if (tabPushTimer) clearTimeout(tabPushTimer);
+        tabPushTimer = setTimeout(() => {
+            tabPushTimer = undefined;
+            void pushMcpTabs(toMcpTabState(tabList, activeIndex));
+        }, 200);
+    }
+
+    // Reload code when another browser tab or the MCP server changes the file
+    // store. Only reload when the stored content actually differs from the
+    // editor buffer, so an in-progress edit is never clobbered by a no-op merge.
+    $: if ($fileSyncVersion > 0 && activeTabId >= 0 && activeTabId < tabs.length && language) {
+        const activeFile = tabs[activeTabId];
+        if (activeFile?.type === 'preview' && previewEditMode && wysiwygEl && activeFile.sourceFileId) {
+            // WYSIWYG renders from innerHTML, not from `code`, so re-render it
+            // from the store when the markdown source changed elsewhere (e.g. an
+            // agent edit). Skip while the user is typing there — their own edits
+            // win via last-writer-wins and a mid-keystroke re-render would jump
+            // the caret.
+            try {
+                const files = JSON.parse(get(fileStore)[fileKey()] ?? '[]') as FileEntry[];
+                const source = files.find((x) => x.fileId === activeFile.sourceFileId && x.language === 'markdown');
+                if (source) {
+                    const rendered = htmlToMarkdown(wysiwygEl.innerHTML);
+                    if (normalizeContent(source.content) !== normalizeContent(rendered) && !wysiwygDirty) {
+                        wysiwygEl.innerHTML = renderMarkdownPlain(source.content, {
+                            resolveFileLanguage: (fileId) => getLanguageForTab(fileId)
+                        });
+                        wrapImageThumbnails(wysiwygEl);
+                        wrapCodeBlocksWithCopy(wysiwygEl);
+                        ensureFileMentionCarets(wysiwygEl);
+                        prepareTaskListCheckboxes(wysiwygEl);
+                        ensureTrailingEmptyLine(wysiwygEl);
+                    }
+                }
+            } catch {
+                // Ignore malformed store content.
+            }
+        } else if (activeFile && !isSpecialTabType(activeFile.type)) {
+            let freshCode: string | undefined;
+            try {
+                const files = JSON.parse(get(fileStore)[fileKey()] ?? '[]') as FileEntry[];
+                freshCode = files.find((x) => x.fileId === activeFile.fileId && x.language === language)?.content;
+            } catch {
+                // Ignore malformed store content.
+            }
+            if (freshCode !== undefined && freshCode !== code) {
+                skipNextSave = true;
+                loadOrInitFile(language);
+            }
+        }
         $fileSyncVersion;
     }
 
@@ -2141,6 +2209,7 @@ func main() {
     // --- Markdown preview WYSIWYG editing ---
     let previewEditMode = false;
     let wysiwygEl: HTMLDivElement | null = null;
+    let wysiwygDirty = false;
     let wysiwygDebounce: ReturnType<typeof setTimeout> | null = null;
     let wysiwygSourceFileId: string | null = null;
     let lastActiveTabFileId: string | null = null;
@@ -2214,6 +2283,7 @@ func main() {
 
     function handleWysiwygInput() {
         removeOrphanCodeWrappers();
+        wysiwygDirty = true;
         healTaskListStructure();
         if (wysiwygEl?.querySelector('li input[type="checkbox"][disabled]')) {
             prepareTaskListCheckboxes(wysiwygEl);
@@ -3286,6 +3356,7 @@ func main() {
             clearTimeout(wysiwygDebounce);
             wysiwygDebounce = null;
         }
+        wysiwygDirty = false;
         if (!previewEditMode || !wysiwygEl || !wysiwygSourceFileId) return;
         removeOrphanCodeWrappers();
         healTaskListStructure();
@@ -4550,12 +4621,42 @@ func main() {
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('beforeunload', handleUnload);
         window.addEventListener(CLOUD_FLUSH_EVENT, handleCloudFlush);
+        // MCP server: auto-start when previously running and keep playground files in sync
+        void ensureMcpServerRunning();
+        const stopMcpEventSync = startMcpEventSync();
+        const stopMcpFileSync = setupMcpFileSync({
+            onApplied: ({ added }) => {
+                if (!added.length) return;
+                const existingIds = new Set(tabs.map((t) => t.fileId));
+                const additions: TabMeta[] = [];
+                for (const file of added) {
+                    if (existingIds.has(file.fileId)) continue;
+                    existingIds.add(file.fileId);
+                    additions.push({ fileId: file.fileId, fileName: file.fileName, isOpen: true, lastUpdated: file.lastUpdated });
+                }
+                if (additions.length) tabs = [...tabs, ...additions];
+            }
+        });
+        // Push the tab state when the MCP server comes up (the reactive
+        // scheduleTabPush only fires on tab changes, so the initial state
+        // would otherwise be missing until the user switches tabs).
+        let mcpWasRunning = false;
+        const stopMcpStateWatch = mcpClientState.subscribe((state) => {
+            if (state.running && !mcpWasRunning) {
+                scheduleTabPush(tabs, activeTabId);
+            }
+            mcpWasRunning = state.running;
+        });
         window.addEventListener(CLOUD_FILE_DISCARDED_EVENT, handleCloudFileDiscard);
         return () => {
             document.removeEventListener('click', handleDocClick);
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('beforeunload', handleUnload);
             window.removeEventListener(CLOUD_FLUSH_EVENT, handleCloudFlush);
+            stopMcpFileSync();
+            stopMcpEventSync();
+            stopMcpStateWatch();
+            if (tabPushTimer) clearTimeout(tabPushTimer);
             window.removeEventListener(CLOUD_FILE_DISCARDED_EVENT, handleCloudFileDiscard);
         };
     });
@@ -4642,6 +4743,24 @@ func main() {
                         <line x1="5" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                     </svg>
                 {/if}
+            </button>
+        </Tooltip>
+        <Tooltip text="MCP Server" pos="right">
+            <button
+                class="activity-icon"
+                on:click={openMcpSettings}
+                title={$mcpClientState.running ? 'MCP Server — Running' : 'MCP Server — Stopped'}
+                aria-label="MCP Server"
+                bind:this={mcpActivityButton}
+            >
+                <span class:mcp-running={$mcpClientState.running} class="mcp-icon-legend" aria-hidden="true"></span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 2v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M15 2v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M7 8h10v4a5 5 0 0 1-10 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 17v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M8 22h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
             </button>
         </Tooltip>
         <div class="settings-wrapper activity-settings" bind:this={settingsContainer}>
@@ -5558,6 +5677,7 @@ func main() {
 </div>
 
 <CloudSyncModal open={showCloudSettings} onClose={closeCloudSettings} />
+<McpServerModal open={showMcpSettings} onClose={closeMcpSettings} />
 
 <style>
     .workspace {
@@ -5691,6 +5811,22 @@ func main() {
 
     .cloud-icon-offline {
         opacity: 0.5;
+    }
+
+    .mcp-icon-legend {
+        position: absolute;
+        top: 5px;
+        right: 6px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--color-text-secondary);
+        box-shadow: 0 0 0 2px var(--color-bg);
+    }
+
+    .mcp-icon-legend.mcp-running {
+        background: var(--color-easy);
+        box-shadow: 0 0 0 2px var(--color-bg), 0 0 6px color-mix(in srgb, var(--color-easy) 70%, transparent);
     }
 
     /* Sidebar Styles */

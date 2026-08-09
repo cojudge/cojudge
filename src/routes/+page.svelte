@@ -13,6 +13,8 @@
     import GameHistoryPopup from "$lib/components/GameHistoryPopup.svelte";
     import gameResultsStore, { type GameResult } from '$lib/stores/gameResultsStore';
     import CloudSyncModal from "$lib/components/CloudSyncModal.svelte";
+    import McpServerModal from "$lib/components/McpServerModal.svelte";
+    import { ensureMcpServerRunning, mcpClientState, startMcpEventSync } from '$lib/mcp/client';
     import {
         cloudSyncState,
         refreshCloudLocalState,
@@ -51,6 +53,7 @@
     let importNoticeTimer: ReturnType<typeof setTimeout> | undefined;
     let showFirebaseSettings = false;
     let showCloudSettings = false;
+    let showMcpSettings = false;
     let showLoadCode = false;
     let firebaseForm: FirebaseSettings = emptyFirebaseSettings();
     let firebaseSettingsError = '';
@@ -194,6 +197,12 @@
 
     onMount(() => {
         window.addEventListener("click", handleClickOutside);
+        void ensureMcpServerRunning();
+        let stopMcpEventSync: (() => void) | undefined;
+        stopMcpEventSync = startMcpEventSync();
+        onDestroy(() => {
+            if (stopMcpEventSync) stopMcpEventSync();
+        });
 
         // Restore last selected course from localStorage if no course param in URL
         const url = new URL(window.location.href);
@@ -558,6 +567,16 @@
         void tick().then(() => dropdownToggleButton?.focus());
     }
 
+    function openMcpSettings() {
+        showDropdown = false;
+        showMcpSettings = true;
+    }
+
+    function closeMcpSettings() {
+        showMcpSettings = false;
+        void tick().then(() => dropdownToggleButton?.focus());
+    }
+
     async function openFirebaseSettings() {
         firebaseForm = getFirebaseSettings();
         firebaseSettingsSaved = hasSavedFirebaseSettings();
@@ -810,6 +829,26 @@
                             {cloudMenuStatus()}
                         </span>
                     </button>
+                    <button
+                        class="dropdown-item"
+                        role="menuitem"
+                        onclick={openMcpSettings}
+                        title="Configure the MCP server agents can use to access your playground files"
+                    >
+                        <span class="dropdown-item-content">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 2v6"></path>
+                                <path d="M15 2v6"></path>
+                                <path d="M7 8h10v4a5 5 0 0 1-10 0Z"></path>
+                                <path d="M12 17v5"></path>
+                                <path d="M8 22h8"></path>
+                            </svg>
+                            MCP Server
+                        </span>
+                        <span class:configured={$mcpClientState.running} class="firebase-menu-status">
+                            {$mcpClientState.running ? 'Running' : 'Stopped'}
+                        </span>
+                    </button>
                     <div class="dropdown-separator" role="separator"></div>
                     <button
                         class="dropdown-item"
@@ -977,6 +1016,7 @@
         </div>
     {/if}
     <CloudSyncModal open={showCloudSettings} onClose={closeCloudSettings} />
+    <McpServerModal open={showMcpSettings} onClose={closeMcpSettings} />
     {#if showFirebaseSettings}
         <div class="home-modal-shell">
             <button class="home-modal-backdrop" aria-label="Close Firebase settings" tabindex="-1" onclick={closeFirebaseSettings}></button>

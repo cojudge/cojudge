@@ -67,6 +67,7 @@
 		"vitest": "^1.1.5"
 	},
 	"dependencies": {
+		"@modelcontextprotocol/sdk": "^1.30.0",
 		"@tauri-apps/api": "^2.11.1",
 		"dockerode": "^5.0.1",
 		"tar-stream": "^3.1.7",

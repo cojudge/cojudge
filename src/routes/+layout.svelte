@@ -3,11 +3,16 @@
 	import { onMount } from 'svelte';
 	import AppDialog from '$lib/components/AppDialog.svelte';
 	import { startCloudSync, stopCloudSync } from '$lib/cloudSync';
+	import { setDesktopMcpToken } from '$lib/mcp/client';
 	import favicon from '$lib/assets/favicon.svg';
 	import DemoBanner from '$lib/components/DemoBanner.svelte';
 	import '../app.css';
 
 	let { children, data } = $props();
+
+	$effect(() => {
+		setDesktopMcpToken(data.desktopMcpToken ?? null);
+	});
 
 	onMount(() => {
 		void startCloudSync();
