@@ -1,11 +1,18 @@
 import { describe, it, expect } from 'vitest';
-import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref } from './markdown';
+import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, highlightCodeHtml, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref } from './markdown';
 
 describe('markdown utils', () => {
     it('renders markdown with the interactive code-block renderer', () => {
         const html = renderMarkdown('```js\nconsole.log("hi");\n```');
         expect(html).toContain('code-block-wrapper');
         expect(html).toContain('console');
+    });
+
+    it('syntax-highlights common code language aliases', () => {
+        const html = renderMarkdown('```js\nconst value = "hi";\n```');
+        expect(html).toContain('<span class="hl-keyword">const</span>');
+        expect(html).toContain('<span class="hl-string">&quot;hi&quot;</span>');
+        expect(highlightCodeHtml('if True:\n    print("ok")', 'python')).toContain('<span class="hl-keyword">if</span>');
     });
 
     it('renders plain GFM markdown to HTML', () => {
@@ -122,6 +129,9 @@ describe('markdown utils', () => {
         // Multi-line content keeps every line inside the fence
         const multi = htmlToMarkdown('<pre>line one\nline two</pre>');
         expect(multi).toMatch(/^```\nline one\nline two\n```$/m);
+
+        const language = htmlToMarkdown('<pre data-language="python">if True:</pre>');
+        expect(language).toMatch(/^```python\nif True:\n```$/m);
 
         // Backticks inside the code grow the fence instead of breaking it
         const tricky = htmlToMarkdown('<pre>```js\nfn()</pre>');

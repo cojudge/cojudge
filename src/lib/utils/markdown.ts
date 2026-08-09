@@ -160,6 +160,14 @@ function escapeHtmlAttr(value: string): string {
         .replace(/>/g, '&gt;');
 }
 
+function escapeHtmlText(value: string): string {
+    return value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+
 // True when the entire string is a single URL-like token (no whitespace).
 // Accepts http(s)://... and www....
 export function isUrlLike(text: string): boolean {
@@ -286,6 +294,40 @@ export function wrapImageThumbnails(root: HTMLElement) {
 // they get a copy button (see wrapCodeBlocksWithCopy). Stripped again by
 // htmlToMarkdown so only the <pre> round-trips back to markdown.
 export const CODE_COPY_WRAPPER_CLASS = 'md-code-copy';
+export const CODE_LANGUAGE_WRAPPER_CLASS = 'code-block-language';
+export const CODE_LANGUAGE_INPUT_CLASS = 'code-language-input';
+export const CODE_LANGUAGE_DATALIST_ID = 'wysiwyg-code-languages';
+
+export type CodeLanguageOption = { value: string; label: string };
+
+// Keep this list focused on languages people commonly use in Markdown notes.
+// The input remains free-form, so less common languages can still be entered.
+export const CODE_LANGUAGE_OPTIONS: CodeLanguageOption[] = [
+    { value: 'javascript', label: 'JavaScript' },
+    { value: 'typescript', label: 'TypeScript' },
+    { value: 'python', label: 'Python' },
+    { value: 'java', label: 'Java' },
+    { value: 'c', label: 'C' },
+    { value: 'cpp', label: 'C++' },
+    { value: 'csharp', label: 'C#' },
+    { value: 'go', label: 'Go' },
+    { value: 'rust', label: 'Rust' },
+    { value: 'kotlin', label: 'Kotlin' },
+    { value: 'swift', label: 'Swift' },
+    { value: 'ruby', label: 'Ruby' },
+    { value: 'php', label: 'PHP' },
+    { value: 'dart', label: 'Dart' },
+    { value: 'scala', label: 'Scala' },
+    { value: 'sql', label: 'SQL' },
+    { value: 'bash', label: 'Bash' },
+    { value: 'html', label: 'HTML' },
+    { value: 'css', label: 'CSS' },
+    { value: 'json', label: 'JSON' },
+    { value: 'xml', label: 'XML' },
+    { value: 'yaml', label: 'YAML' },
+    { value: 'markdown', label: 'Markdown' },
+    { value: 'plaintext', label: 'Plain text' }
+];
 
 // Images pasted into markdown documents are stored in IndexedDB and referenced
 // by a fake link (cojudge://image/<id>). While the payload is being resolved,
@@ -464,19 +506,170 @@ export function ensureTrailingEmptyLine(root: HTMLElement) {
     root.appendChild(p);
 }
 
+export function normalizeCodeLanguage(language: string | null | undefined): string {
+    return (language ?? '')
+        .trim()
+        .split(/\s+/)[0]
+        .toLowerCase()
+        .replace(/[^a-z0-9_+#.-]/g, '');
+}
+
+const CODE_HIGHLIGHT_LANGUAGES = new Set([
+    'c', 'cc', 'cpp', 'cxx', 'h', 'hpp', 'c++',
+    'csharp', 'cs', 'c#',
+    'css', 'less', 'scss',
+    'dart', 'go', 'golang', 'java', 'javascript', 'js', 'jsx',
+    'json', 'kotlin', 'kt', 'markdown', 'md', 'php', 'python', 'py',
+    'ruby', 'rb', 'rust', 'rs', 'scala', 'shell', 'sh', 'bash', 'zsh',
+    'sql', 'swift', 'typescript', 'ts', 'tsx', 'html', 'xml', 'xhtml',
+    'yaml', 'yml'
+]);
+
+const CODE_BUILTINS = new Set([
+    'append', 'bool', 'boolean', 'char', 'console', 'cout', 'double', 'endl',
+    'float', 'int', 'len', 'list', 'log', 'make', 'map', 'None', 'nil',
+    'number', 'panic', 'print', 'range', 'recover', 'String', 'str', 'true',
+    'false'
+]);
+
+const CODE_HASH_COMMENT_LANGUAGES = new Set(['bash', 'markdown', 'md', 'php', 'py', 'python', 'rb', 'ruby', 'shell', 'sh', 'zsh', 'yaml', 'yml']);
+const CODE_TOKEN_PATTERN = /\/\*[\s\S]*?\*\/|<!--[\s\S]*?-->|\/\/[^\r\n]*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`|\b(?:as|async|await|break|case|catch|chan|class|const|continue|default|defer|def|delete|do|else|enum|except|extends|false|final|finally|fn|for|from|func|function|go|if|implements|import|in|include|interface|is|let|match|mod|module|mut|namespace|new|None|null|of|package|private|protected|pub|public|raise|return|select|self|Self|static|struct|super|switch|this|throw|trait|true|try|type|using|var|void|where|while|with|yield|append|bool|boolean|char|console|cout|double|endl|float|int|len|list|log|make|map|nil|number|panic|print|range|recover|String|str)\b|\b\d+(?:\.\d+)?\b/g;
+
+function syntaxTokenClass(token: string, language: string): string {
+    if (token.startsWith('//') || token.startsWith('/*') || token.startsWith('<!--')) return 'comment';
+    if (token.startsWith('#')) {
+        return CODE_HASH_COMMENT_LANGUAGES.has(language) ? 'comment' : 'keyword';
+    }
+    if (/^["'`]/.test(token)) return 'string';
+    if (/^\d/.test(token)) return 'number';
+    return CODE_BUILTINS.has(token) ? 'builtin' : 'keyword';
+}
+
+/** Convert source code to escaped HTML with lightweight, dependency-free highlighting. */
+export function highlightCodeHtml(text: string, language: string | null | undefined): string {
+    const lang = normalizeCodeLanguage(language);
+    if (!CODE_HIGHLIGHT_LANGUAGES.has(lang)) return escapeHtmlText(text);
+
+    const source = CODE_HASH_COMMENT_LANGUAGES.has(lang)
+        ? `#[^\\r\\n]*|${CODE_TOKEN_PATTERN.source}`
+        : CODE_TOKEN_PATTERN.source;
+    const pattern = new RegExp(source, 'g');
+    let html = '';
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+    while ((match = pattern.exec(text)) !== null) {
+        const start = match.index;
+        html += escapeHtmlText(text.slice(lastIndex, start));
+        const token = match[0];
+        const tokenClass = syntaxTokenClass(token, lang);
+        html += `<span class="hl-${tokenClass}">${escapeHtmlText(token)}</span>`;
+        lastIndex = start + token.length;
+    }
+    return html + escapeHtmlText(text.slice(lastIndex));
+}
+
+function getCodeElement(pre: HTMLElement): HTMLElement {
+    const firstElement = pre.firstElementChild;
+    return firstElement?.tagName === 'CODE' ? firstElement as HTMLElement : pre;
+}
+
+export function getCodeBlockLanguage(pre: HTMLElement): string {
+    const wrapper = pre.parentElement?.classList.contains(CODE_COPY_WRAPPER_CLASS) ? pre.parentElement : null;
+    const storedLanguage = wrapper?.dataset.language || pre.dataset.language;
+    if (storedLanguage) return normalizeCodeLanguage(storedLanguage);
+
+    const code = getCodeElement(pre);
+    const languageClass = Array.from(code.classList).find((name) => name.startsWith('language-'));
+    return normalizeCodeLanguage(languageClass?.slice('language-'.length));
+}
+
+/** Set a WYSIWYG block's language without changing its source text. */
+export function setCodeBlockLanguage(wrapper: HTMLElement, language: string): string {
+    const normalized = normalizeCodeLanguage(language);
+    if (normalized) wrapper.dataset.language = normalized;
+    else delete wrapper.dataset.language;
+
+    const pre = wrapper.querySelector('pre');
+    if (pre) {
+        const code = getCodeElement(pre);
+        for (const className of Array.from(code.classList)) {
+            if (className.startsWith('language-')) code.classList.remove(className);
+        }
+        if (code !== pre) {
+            delete pre.dataset.language;
+            if (normalized) code.classList.add(`language-${normalized}`);
+        } else if (normalized) {
+            pre.dataset.language = normalized;
+        } else {
+            delete pre.dataset.language;
+        }
+    }
+
+    const input = wrapper.querySelector(`.${CODE_LANGUAGE_INPUT_CLASS}`) as HTMLInputElement | null;
+    if (input) {
+        input.value = normalized;
+        input.setAttribute('value', normalized);
+    }
+    return normalized;
+}
+
+/** Re-highlight all code blocks under an editable Markdown root. */
+export function highlightCodeBlocks(root: HTMLElement) {
+    root.querySelectorAll('pre').forEach((preNode) => {
+        const pre = preNode as HTMLElement;
+        const code = getCodeElement(pre);
+        const highlighted = highlightCodeHtml(code.textContent || '', getCodeBlockLanguage(pre));
+        if (code.innerHTML !== highlighted) code.innerHTML = highlighted;
+    });
+}
+
 // Wraps every <pre> under root with a copy button. The button is
-// contenteditable="false" so it stays out of the editable content; the <pre>
-// itself remains editable.
+// contenteditable="false" controls so they stay out of the editable content;
+// the <pre> itself remains editable.
 export function wrapCodeBlocksWithCopy(root: HTMLElement) {
     const preElements = Array.from(root.querySelectorAll('pre'));
     for (const pre of preElements) {
-        if (pre.closest(`.${CODE_COPY_WRAPPER_CLASS}`)) continue;
-        const wrapper = document.createElement('div');
-        wrapper.className = `code-block-wrapper ${CODE_COPY_WRAPPER_CLASS}`;
-        pre.replaceWith(wrapper);
-        wrapper.appendChild(pre);
-        const actions = document.createElement('div');
-        actions.className = 'code-block-actions';
+        let wrapper = pre.parentElement?.classList.contains(CODE_COPY_WRAPPER_CLASS)
+            ? pre.parentElement
+            : null;
+        if (!wrapper) {
+            wrapper = document.createElement('div');
+            wrapper.className = `code-block-wrapper ${CODE_COPY_WRAPPER_CLASS}`;
+            pre.replaceWith(wrapper);
+            wrapper.appendChild(pre);
+        }
+
+        const language = getCodeBlockLanguage(pre);
+        if (language) wrapper.dataset.language = language;
+        else delete wrapper.dataset.language;
+
+        if (!wrapper.querySelector(`.${CODE_LANGUAGE_WRAPPER_CLASS}`)) {
+            const languageWrapper = document.createElement('label');
+            languageWrapper.className = CODE_LANGUAGE_WRAPPER_CLASS;
+            languageWrapper.setAttribute('contenteditable', 'false');
+            languageWrapper.title = 'Code language';
+
+            const languageInput = document.createElement('input');
+            languageInput.type = 'text';
+            languageInput.className = CODE_LANGUAGE_INPUT_CLASS;
+            languageInput.setAttribute('contenteditable', 'false');
+            languageInput.setAttribute('autocomplete', 'off');
+            languageInput.setAttribute('spellcheck', 'false');
+            languageInput.setAttribute('aria-label', 'Code language');
+            languageInput.setAttribute('list', CODE_LANGUAGE_DATALIST_ID);
+            languageInput.placeholder = 'Language';
+            languageWrapper.appendChild(languageInput);
+            wrapper.insertBefore(languageWrapper, pre);
+        }
+        setCodeBlockLanguage(wrapper, language);
+
+        let actions = wrapper.querySelector('.code-block-actions') as HTMLElement | null;
+        if (!actions) {
+            actions = document.createElement('div');
+            actions.className = 'code-block-actions';
+            wrapper.appendChild(actions);
+        }
+        if (actions.querySelector('.copy-code-button')) continue;
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'copy-code-button';
@@ -485,8 +678,8 @@ export function wrapCodeBlocksWithCopy(root: HTMLElement) {
         btn.setAttribute('contenteditable', 'false');
         btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
         actions.appendChild(btn);
-        wrapper.appendChild(actions);
     }
+    highlightCodeBlocks(root);
 }
 
 function configureLinks(renderer: Renderer, options?: MarkdownRenderOptions) {
@@ -512,28 +705,12 @@ export function getMarkdownRenderer(options?: MarkdownRenderOptions) {
         renderer.image = (token: any) => imageThumbnailHtml(token.href ?? '', token.text ?? '', token.title);
     }
     renderer.code = (token: any) => {
-        const text = token.text;
-        const lang = (token.lang || '').split(/\s+/)[0];
-        let escapedText = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        
-        // Basic syntax highlighting for common languages using a single-pass regex
-        if (['cpp', 'java', 'csharp', 'python', 'javascript', 'typescript', 'rust', 'c', 'go', 'swift', 'ruby', 'php', 'bash', 'sh'].includes(lang.toLowerCase())) {
-            const regex = /\/\/(.*)|#(.*)|"(.*?)"|'(.*?)'|\b(int|float|double|char|void|if|else|while|for|return|class|public|private|protected|static|new|import|from|def|fn|let|mut|using|namespace|include|cout|endl|String|args|console|log|var|const|type|interface|bool|boolean|true|false|self|Self|None|nil|range|in|is|yield|async|await|try|except|catch|finally|throw|raise|break|continue|case|switch|default|package|func|go|chan|defer|struct|interface|type|map|select|pub|use|mod|trait|impl|enum|where|match)\b/g;
-            escapedText = escapedText.replace(regex, (match, c1, c2, s1, s2, k) => {
-                if (c1) return `<span class="hl-comment">//${c1}</span>`;
-                if (c2) return `<span class="hl-comment">#${c2}</span>`;
-                if (s1) return `<span class="hl-string">"${s1}"</span>`;
-                if (s2) return `<span class="hl-string">'${s2}'</span>`;
-                if (k) {
-                    const builtins = ['cout', 'endl', 'String', 'args', 'console', 'log', 'print', 'self', 'Self', 'None', 'nil', 'true', 'false', 'range', 'len', 'append', 'make', 'new', 'panic', 'recover'];
-                    if (builtins.includes(k)) return `<span class="hl-builtin">${k}</span>`;
-                    return `<span class="hl-keyword">${k}</span>`;
-                }
-                return match;
-            });
-        }
+        const text = String(token.text ?? '');
+        const lang = normalizeCodeLanguage(token.lang);
+        const highlightedText = highlightCodeHtml(text, lang);
+        const languageClass = lang ? ` class="language-${escapeHtmlAttr(lang)}"` : '';
 
-        const langLabel = lang ? `<span class="code-block-lang-label" style="display:none;">${lang}</span>` : '';
+        const langLabel = lang ? `<span class="code-block-lang-label" style="display:none;">${escapeHtmlText(lang)}</span>` : '';
 
         return `<div class="code-block-wrapper" data-code-hash="${simpleHash(text)}">
             <div class="code-block-actions">
@@ -550,7 +727,7 @@ export function getMarkdownRenderer(options?: MarkdownRenderOptions) {
                     </svg>
                 </button>
             </div>
-            <pre><code class="language-${lang}">${escapedText}</code></pre>
+            <pre><code${languageClass}>${highlightedText}</code></pre>
         </div>`;
     };
     return renderer;
@@ -593,9 +770,10 @@ function getTurndownService(): TurndownService {
                 // empty code block (turndown skips truly blank elements), which
                 // is stripped here so the fence round-trips as ```\n```.
                 const code = (node.textContent || '').replace(/\u200B/g, '');
+                const language = normalizeCodeLanguage(node.getAttribute('data-language'));
                 let fence = '```';
                 while (code.includes(fence)) fence += '`';
-                return '\n\n' + fence + (code ? '\n' + code.replace(/\n$/, '') + '\n' : '\n') + fence + '\n\n';
+                return '\n\n' + fence + language + (code ? '\n' + code.replace(/\n$/, '') + '\n' : '\n') + fence + '\n\n';
             }
         });
         // Inline code created by the WYSIWYG backtick auto-matching (see
@@ -653,8 +831,8 @@ function getTurndownService(): TurndownService {
 }
 
 export function htmlToMarkdown(html: string): string {
-    // Strip interactive wrappers (thumbnail delete buttons, code-block copy
-    // buttons, contenteditable markers) and normalize task-list checkboxes so
+    // Strip interactive wrappers (thumbnail delete buttons, code-block controls,
+    // contenteditable markers) and normalize task-list checkboxes so
     // that checkboxes inside loose list items (<p><input ...></p>) or nested
     // elements round-trip back to markdown instead of being dropped by turndown.
     if (typeof DOMParser !== 'undefined') {
@@ -667,7 +845,23 @@ export function htmlToMarkdown(html: string): string {
                 else el.remove();
             });
             doc.querySelectorAll(`.${CODE_COPY_WRAPPER_CLASS}`).forEach((el) => {
+                const pre = el.querySelector('pre') as HTMLElement | null;
+                const language = normalizeCodeLanguage(el.getAttribute('data-language'));
+                if (pre && language) {
+                    const code = pre.firstElementChild?.tagName === 'CODE'
+                        ? pre.firstElementChild as HTMLElement
+                        : null;
+                    if (code) {
+                        for (const className of Array.from(code.classList)) {
+                            if (className.startsWith('language-')) code.classList.remove(className);
+                        }
+                        code.classList.add(`language-${language}`);
+                    } else {
+                        pre.setAttribute('data-language', language);
+                    }
+                }
                 el.querySelector('.code-block-actions')?.remove();
+                el.querySelector(`.${CODE_LANGUAGE_WRAPPER_CLASS}`)?.remove();
                 el.replaceWith(...Array.from(el.childNodes));
             });
         }

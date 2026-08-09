@@ -365,10 +365,48 @@
 .hl-keyword { color: var(--hl-keyword); font-weight: 600; }
 .hl-string { color: var(--hl-string); }
 .hl-builtin { color: var(--hl-builtin); }
+.hl-number { color: var(--hl-builtin); }
 
 .code-block-wrapper {
   position: relative;
   margin-bottom: 16px;
+}
+
+/* WYSIWYG code blocks keep their language outside the editable <pre>. */
+.md-code-copy > pre {
+  padding-top: 44px;
+}
+
+.md-code-copy .code-block-language {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+}
+
+.md-code-copy .code-language-input {
+  width: 118px;
+  height: 28px;
+  padding: 2px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  outline: none;
+}
+
+.md-code-copy .code-language-input::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.8;
+}
+
+.md-code-copy .code-language-input:focus {
+  border-color: var(--color-highlight);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-highlight) 20%, transparent);
 }
 
 .code-block-actions {
