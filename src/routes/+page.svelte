@@ -19,14 +19,15 @@
         restartCloudSync
     } from '$lib/cloudSync';
     import { activeDialog } from '$lib/dialogs';
-    import { collectProgressData, writeProgressStorageItem } from '$lib/progressBackup';
+    import { collectProgressData, writeProgressStorageItem, clearProgressStorage } from '$lib/progressBackup';
 
     import { applyProgressData } from '$lib/progressBackupClient';
     import {
         PASTED_IMAGES_KEY,
         getAllPastedImages,
         importPastedImages,
-        extractPastedImages
+        extractPastedImages,
+        clearPastedImages
     } from '$lib/utils/imageStore';
     import {
         clearFirebaseSettings,
@@ -42,11 +43,13 @@
     let dropdownToggleButton: HTMLButtonElement | null = null;
     let importConfirmButton: HTMLButtonElement | null = null;
     let importModalCard: HTMLElement | null = null;
+    let clearConfirmCard: HTMLElement | null = null;
     let firebaseModalCard: HTMLElement | null = null;
     let firebaseApiKeyInput: HTMLInputElement | null = null;
     let loadModalCard: HTMLElement | null = null;
     let loadCodeInputs: HTMLInputElement[] = [];
     let pendingImport: Record<string, unknown> | null = null;
+    let showClearConfirm = false;
     let importNotice: { message: string; error: boolean; filePath?: string } | null = null;
     let importNoticeTimer: ReturnType<typeof setTimeout> | undefined;
     let showFirebaseSettings = false;
@@ -62,7 +65,7 @@
     let showGamePopup = false;
     let isDesktopMode = browser && isDesktopRuntime();
     $: if (browser) {
-        document.body.style.overflow = showGamePopup || pendingImport || showFirebaseSettings || showLoadCode ? 'hidden' : '';
+        document.body.style.overflow = showGamePopup || pendingImport || showFirebaseSettings || showLoadCode || showClearConfirm ? 'hidden' : '';
     }
     let gameResultData: Record<string, GameResult[]> = {};
     let historyProblem: { id: string; title: string } | null = null;
@@ -724,15 +727,18 @@
         if ($activeDialog) return;
         const activeModal = pendingImport
             ? importModalCard
-            : showFirebaseSettings
-                ? firebaseModalCard
-                : showLoadCode
-                    ? loadModalCard
-                    : null;
+            : showClearConfirm
+                ? clearConfirmCard
+                : showFirebaseSettings
+                    ? firebaseModalCard
+                    : showLoadCode
+                        ? loadModalCard
+                        : null;
         if (!activeModal) return;
         if (event.key === 'Escape') {
             event.preventDefault();
             if (pendingImport) cancelImport();
+            else if (showClearConfirm) void closeClearProgress();
             else if (showFirebaseSettings) void closeFirebaseSettings();
             else void closeLoadCode();
             return;
@@ -742,6 +748,29 @@
 
     function triggerImport() {
         fileInputEl?.click();
+    }
+
+    function openClearProgress() {
+        showDropdown = false;
+        showClearConfirm = true;
+    }
+
+    async function closeClearProgress() {
+        showClearConfirm = false;
+        await tick();
+        dropdownToggleButton?.focus();
+    }
+
+    async function confirmClearProgress() {
+        try {
+            clearProgressStorage(localStorage);
+            await clearPastedImages();
+            void closeClearProgress();
+            window.location.reload();
+        } catch (err: any) {
+            void closeClearProgress();
+            showImportNotice(`Failed to clear progress: ${err?.message || String(err)}`, true);
+        }
     }
 </script>
 
@@ -843,6 +872,23 @@
                             Import progress
                         </span>
                     </button>
+                    <button
+                        class="dropdown-item"
+                        role="menuitem"
+                        onclick={openClearProgress}
+                        disabled={!browser}
+                        title="Delete all progress, solutions, files, and settings stored locally"
+                    >
+                        <span class="dropdown-item-content">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 6h18"></path>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+                                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                            Clear progress
+                        </span>
+                    </button>
+                    <div class="dropdown-separator" role="separator"></div>
                     <button
                         class="dropdown-item"
                         role="menuitem"
@@ -972,6 +1018,19 @@
                 <div class="home-modal-actions">
                     <button class="btn" type="button" onclick={cancelImport}>Cancel</button>
                     <button bind:this={importConfirmButton} class="btn modal-primary-btn" type="button" onclick={confirmImport}>Import data</button>
+                </div>
+            </div>
+        </div>
+    {/if}
+    {#if showClearConfirm}
+        <div class="home-modal-shell">
+            <button class="home-modal-backdrop" aria-label="Cancel clearing progress" tabindex="-1" onclick={closeClearProgress}></button>
+            <div bind:this={clearConfirmCard} class="home-modal-card clear-progress-card" role="dialog" aria-modal="true" aria-labelledby="clear-progress-title">
+                <h2 id="clear-progress-title">Clear all progress?</h2>
+                <p>This permanently deletes all local progress: solutions, saved code, files, settings, test cases, game history, and pasted images. All local storage will be gone and this cannot be undone.</p>
+                <div class="home-modal-actions">
+                    <button class="btn" type="button" onclick={closeClearProgress}>Cancel</button>
+                    <button class="btn clear-progress-danger-btn" type="button" onclick={confirmClearProgress}>Clear progress</button>
                 </div>
             </div>
         </div>
@@ -2080,6 +2139,15 @@
     }
     .remove-settings-btn {
         color: var(--color-hard);
+    }
+    .clear-progress-danger-btn {
+        border-color: var(--color-hard);
+        background: var(--color-hard);
+        color: #fff;
+        font-weight: 650;
+    }
+    .clear-progress-danger-btn:hover {
+        filter: brightness(1.1);
     }
     .load-code-card {
         width: min(560px, 100%);

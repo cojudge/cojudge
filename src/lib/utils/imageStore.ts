@@ -157,6 +157,23 @@ export async function getAllPastedImages(): Promise<Record<string, string>> {
     }
 }
 
+// Removes every stored image (used when clearing all local progress).
+export async function clearPastedImages(): Promise<void> {
+    cache.clear();
+    try {
+        const db = await openDb();
+        await new Promise<void>((resolve, reject) => {
+            const tx = db.transaction(STORE_NAME, 'readwrite');
+            tx.objectStore(STORE_NAME).clear();
+            tx.oncomplete = () => resolve();
+            tx.onerror = () => reject(tx.error);
+            tx.onabort = () => reject(tx.error);
+        });
+    } catch {
+        // ignore
+    }
+}
+
 // Writes records ({ [id]: dataUrl }) from a cloud snapshot or backup import
 // into the store. Missing entries are left untouched; existing ones are
 // overwritten.
