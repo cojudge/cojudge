@@ -421,6 +421,33 @@ test('WYSIWYG code blocks have a working copy button', async ({ page }) => {
   await expect.poll(() => getMarkdownContent(page)).toContain('```js');
 });
 
+test('WYSIWYG code blocks have a language autocomplete and syntax highlighting', async ({ page }) => {
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('```python\nif True:\n    print("ok")\n```');
+  await expect.poll(() => getMarkdownContent(page)).toContain('```python');
+
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  const languageInput = editable.locator('.code-language-input');
+  await expect(languageInput).toHaveValue('python');
+  await expect(languageInput).toHaveAttribute('list', 'wysiwyg-code-languages');
+  await expect(editable.locator('.hl-keyword')).toContainText('if');
+  await expect(editable.locator('.hl-string').filter({ hasText: '"ok"' })).toBeVisible();
+
+  const languageOptions = await page.locator('#wysiwyg-code-languages option').evaluateAll((options) =>
+    options.map((option) => option.getAttribute('value'))
+  );
+  expect(languageOptions).toEqual(expect.arrayContaining(['javascript', 'typescript', 'python', 'java', 'cpp', 'rust', 'go', 'sql', 'bash']));
+
+  await languageInput.fill('javascript');
+  await expect.poll(() => getMarkdownContent(page)).toContain('```javascript');
+  await expect(languageInput).toHaveValue('javascript');
+  await expect(editable.locator('.hl-keyword')).toContainText('if');
+});
+
 test('WYSIWYG turns an exact three-backtick line into a code block', async ({ page }) => {
   await openMarkdownPlayground(page);
   await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);

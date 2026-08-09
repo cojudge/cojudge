@@ -19,7 +19,7 @@
     import fileStore, { isDotFileName, type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
-    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, wrapImageThumbnails, wrapCodeBlocksWithCopy, ensureTrailingEmptyLine, ensureFileMentionCarets, prepareTaskListCheckboxes, isTaskListItem, isEmptyTaskListItem, createTaskCheckbox, ensureTaskCheckbox, ensureTaskItemCaretAnchor, removeTaskCheckbox, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, CODE_COPY_WRAPPER_CLASS, resolvePastedImages, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref, fileMentionHtml, FILE_MENTION_CLASS } from '$lib/utils/markdown';
+    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, wrapImageThumbnails, wrapCodeBlocksWithCopy, highlightCodeBlocks, setCodeBlockLanguage, ensureTrailingEmptyLine, ensureFileMentionCarets, prepareTaskListCheckboxes, isTaskListItem, isEmptyTaskListItem, createTaskCheckbox, ensureTaskCheckbox, ensureTaskItemCaretAnchor, removeTaskCheckbox, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, CODE_COPY_WRAPPER_CLASS, CODE_LANGUAGE_INPUT_CLASS, CODE_LANGUAGE_DATALIST_ID, CODE_LANGUAGE_OPTIONS, resolvePastedImages, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref, fileMentionHtml, FILE_MENTION_CLASS } from '$lib/utils/markdown';
     import { storePastedImage, deletePastedImage, inlinePastedImageLinks } from '$lib/utils/imageStore';
     import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore/lite';
     import QRCode from 'qrcode';
@@ -2281,7 +2281,12 @@ func main() {
         await enterPreviewEditMode(true);
     }
 
-    function handleWysiwygInput() {
+    function handleWysiwygInput(event?: Event) {
+        const target = event?.target;
+        if (target instanceof HTMLInputElement && target.classList.contains(CODE_LANGUAGE_INPUT_CLASS)) {
+            const wrapper = target.closest(`.${CODE_COPY_WRAPPER_CLASS}`) as HTMLElement | null;
+            if (wrapper) setCodeBlockLanguage(wrapper, target.value);
+        }
         wysiwygDirty = true;
         removeOrphanCodeWrappers();
         healTaskListStructure();
@@ -2291,6 +2296,7 @@ func main() {
         maybeAutoInsertHorizontalRule();
         maybeAutoInsertCodeBlock();
         maybeAutoCloseInlineCode();
+        rehighlightWysiwygCodeBlocks();
         updateMentionPopup();
         if (wysiwygDebounce) clearTimeout(wysiwygDebounce);
         wysiwygDebounce = setTimeout(commitWysiwygEdits, 300);
@@ -2438,6 +2444,56 @@ func main() {
         return pre && wysiwygEl.contains(pre) ? pre : null;
     }
 
+    function getCaretTextOffset(root: HTMLElement): number | null {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0 || !selection.isCollapsed || !root.contains(selection.anchorNode)) return null;
+        const range = selection.getRangeAt(0).cloneRange();
+        const before = document.createRange();
+        before.selectNodeContents(root);
+        before.setEnd(range.startContainer, range.startOffset);
+        return before.toString().length;
+    }
+
+    function restoreCaretTextOffset(root: HTMLElement, offset: number) {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        let remaining = offset;
+        let node = walker.nextNode() as Text | null;
+        let lastText: Text | null = null;
+        while (node) {
+            lastText = node;
+            const length = node.textContent?.length ?? 0;
+            if (remaining <= length) {
+                const range = document.createRange();
+                range.setStart(node, remaining);
+                range.collapse(true);
+                const selection = window.getSelection();
+                selection?.removeAllRanges();
+                selection?.addRange(range);
+                return;
+            }
+            remaining -= length;
+            node = walker.nextNode() as Text | null;
+        }
+
+        const range = document.createRange();
+        if (lastText) range.setStart(lastText, lastText.length);
+        else range.setStart(root, 0);
+        range.collapse(true);
+        const selection = window.getSelection();
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+    }
+
+    function rehighlightWysiwygCodeBlocks() {
+        if (!wysiwygEl) return;
+        const activePre = getPreFromSelection();
+        const caretOffset = activePre ? getCaretTextOffset(activePre) : null;
+        highlightCodeBlocks(wysiwygEl);
+        if (activePre?.isConnected && caretOffset !== null) {
+            restoreCaretTextOffset(activePre, caretOffset);
+        }
+    }
+
     // The char range (in the ZWSP-stripped text) of the line the caret is on
     // inside the pre, when that line is already empty. Returns null otherwise.
     function emptyLineInPre(pre: HTMLElement): { start: number; end: number; total: number } | null {
@@ -2513,12 +2569,17 @@ func main() {
         if (!wysiwygEl) return;
         const selection = window.getSelection();
         const caretNode = selection?.anchorNode ?? null;
+        const focusedLanguageInput = document.activeElement instanceof HTMLInputElement &&
+            document.activeElement.classList.contains(CODE_LANGUAGE_INPUT_CLASS)
+            ? document.activeElement
+            : null;
         wysiwygEl.querySelectorAll(`.${CODE_COPY_WRAPPER_CLASS}`).forEach((wrapper) => {
             const pres = wrapper.querySelectorAll('pre');
             if (pres.length === 0) {
                 wrapper.remove();
                 return;
             }
+            if (focusedLanguageInput && wrapper.contains(focusedLanguageInput)) return;
             if (caretNode && wrapper.contains(caretNode)) return;
             const hasText = Array.from(pres).some((p) => (p.textContent || '').replace(/\u200B/g, '').trim() !== '');
             if (!hasText) wrapper.remove();
@@ -3281,8 +3342,9 @@ func main() {
     // via the native control + change handler.
     function handleWysiwygClick(event: MouseEvent) {
         if (tryOpenPlaygroundFileLink(event, wysiwygEl)) return;
-        removeOrphanCodeWrappers();
         const target = event.target as HTMLElement;
+        if (target instanceof HTMLInputElement && target.classList.contains(CODE_LANGUAGE_INPUT_CLASS)) return;
+        removeOrphanCodeWrappers();
         if (target instanceof HTMLInputElement && target.type === 'checkbox' && wysiwygEl?.contains(target)) {
             // Let the native checkbox toggle; change handler syncs markdown.
             return;
@@ -5408,6 +5470,11 @@ func main() {
                             on:change={handleWysiwygChange}
                             on:blur={commitWysiwygEdits}
                         ></div>
+                        <datalist id={CODE_LANGUAGE_DATALIST_ID}>
+                            {#each CODE_LANGUAGE_OPTIONS as option}
+                                <option value={option.value} label={option.label}></option>
+                            {/each}
+                        </datalist>
                     </div>
                 {:else}
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
