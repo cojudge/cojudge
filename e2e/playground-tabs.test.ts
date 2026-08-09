@@ -88,3 +88,29 @@ test('recent whiteboards use the whiteboard icon', async ({ page }) => {
   await expect(card).toHaveCount(1);
   await expect(card.locator('svg[viewBox="0 0 24 24"]')).toHaveCount(1);
 });
+
+test('closing the last whiteboard tab clears its activity state', async ({ page }) => {
+  await page.goto('/playground');
+  await page.evaluate(() => {
+    const files = [
+      {
+        fileId: 'whiteboard',
+        fileName: 'Whiteboard',
+        language: 'plaintext',
+        content: '',
+        isActive: false,
+        order: 0,
+        isOpen: true,
+        type: 'whiteboard',
+        lastUpdated: Date.now()
+      }
+    ];
+    localStorage.setItem('files', JSON.stringify({ playground: JSON.stringify(files) }));
+  });
+  await page.reload();
+
+  const whiteboardButton = page.locator('button[aria-label="Whiteboard"]');
+  await expect(whiteboardButton).toHaveClass(/active/);
+  await page.locator('.tab', { hasText: 'Whiteboard' }).locator('.tab-close').click();
+  await expect(whiteboardButton).not.toHaveClass(/active/);
+});

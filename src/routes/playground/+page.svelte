@@ -4676,7 +4676,7 @@ func main() {
         </Tooltip>
         <Tooltip text="Whiteboard" pos="right">
             <button
-                class="activity-icon {activeTab?.type === 'whiteboard' ? 'active' : ''}"
+                class="activity-icon {activeTab?.type === 'whiteboard' && activeTab.isOpen ? 'active' : ''}"
                 on:click={openWhiteboard}
                 aria-label="Whiteboard"
             >
