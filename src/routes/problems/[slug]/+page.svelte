@@ -2,6 +2,7 @@
     import SaveStatus from '$lib/components/SaveStatus.svelte';
     import ExecutionPanel from '$lib/components/ExecutionPanel.svelte';
     import ShareModal from '$lib/components/ShareModal.svelte';
+    import TabContextMenu from '$lib/components/TabContextMenu.svelte';
     import GameResultPopup from '$lib/components/GameResultPopup.svelte';
     import GameHistoryPopup from '$lib/components/GameHistoryPopup.svelte';
     import GameModePopup from '$lib/components/GameModePopup.svelte';
@@ -195,6 +196,7 @@
     let tabs: TabMeta[] = getInitialTabs();
     let activeTabId: number = 0;
     $: activeTab = tabs[activeTabId];
+    let tabContextMenu: { x: number; y: number; fileId: string } | null = null;
     let editingTabId: string | null = null;
     let editingName = '';
     let renameInputEl: HTMLInputElement | null = null;
@@ -382,6 +384,22 @@
         activateTab(t.fileId);
     }
 
+    function closeTabContextMenu() {
+        tabContextMenu = null;
+    }
+
+    function openTabContextMenu(e: MouseEvent, fileId: string) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!tabs.some((tab) => tab.fileId === fileId)) return;
+
+        const menuW = 160;
+        const menuH = 120;
+        const x = Math.min(e.clientX, window.innerWidth - menuW - 8);
+        const y = Math.min(e.clientY, window.innerHeight - menuH - 8);
+        tabContextMenu = { x: Math.max(8, x), y: Math.max(8, y), fileId };
+    }
+
     $: tabDropIndicatorStyle = (() => {
         if (tabDragInsertIndex < 0) return null;
         const bar = document.querySelector<HTMLElement>('.editor-header .tab-bar');
@@ -444,7 +462,7 @@
         $fileSyncVersion;
     }
 
-    async function closeTab(fileId: string) {
+    async function closeTab(fileId: string, skipConfirm = false) {
         const tabToClose = tabs.find((t) => t.fileId === fileId);
         if (tabToClose?.type === 'whiteboard') {
             const idx = tabs.findIndex((t) => t.fileId === fileId);
@@ -463,7 +481,7 @@
             return;
         }
         if (tabs.length <= 1) return;
-        if (!await showConfirm('This file and all of its saved language versions will be permanently removed.', {
+        if (!skipConfirm && !await showConfirm('This file and all of its saved language versions will be permanently removed.', {
             title: 'Remove file?',
             confirmLabel: 'Remove file',
             tone: 'danger'
@@ -484,6 +502,60 @@
         tabs = newTabs;
         // Re-number orders after removal
         persistTabOrder();
+    }
+
+    type TabContextAction = 'close' | 'left' | 'right' | 'others';
+
+    function getContextTabIds(fileId: string, action: TabContextAction): string[] {
+        const targetIndex = tabs.findIndex((tab) => tab.fileId === fileId);
+        if (targetIndex === -1) return [];
+        if (action === 'close') return [fileId];
+        if (action === 'left') return tabs.slice(0, targetIndex).map((tab) => tab.fileId);
+        if (action === 'right') return tabs.slice(targetIndex + 1).map((tab) => tab.fileId);
+        return tabs.filter((_, index) => index !== targetIndex).map((tab) => tab.fileId);
+    }
+
+    async function closeTabsFromContext(action: TabContextAction) {
+        const menu = tabContextMenu;
+        if (!menu) return;
+        const idsToClose = getContextTabIds(menu.fileId, action);
+        closeTabContextMenu();
+        if (!idsToClose.length) return;
+
+        const filesToRemove = idsToClose.filter((fileId) => tabs.find((tab) => tab.fileId === fileId)?.type !== 'whiteboard');
+        if (filesToRemove.length > 0) {
+            const isSingleFile = filesToRemove.length === 1;
+            if (!await showConfirm(
+                isSingleFile
+                    ? 'This file and all of its saved language versions will be permanently removed.'
+                    : 'These files and all of their saved language versions will be permanently removed.',
+                {
+                    title: isSingleFile ? 'Remove file?' : 'Remove files?',
+                    confirmLabel: isSingleFile ? 'Remove file' : 'Remove files',
+                    tone: 'danger'
+                }
+            )) return;
+        }
+
+        for (const fileId of idsToClose) await closeTab(fileId, true);
+    }
+
+    function isContextTabCloseDisabled(fileId: string): boolean {
+        const tab = tabs.find((item) => item.fileId === fileId);
+        return !tab || (tabs.length <= 1 && tab.type !== 'whiteboard');
+    }
+
+    function isContextTabRenameDisabled(fileId: string): boolean {
+        return tabs.find((tab) => tab.fileId === fileId)?.type === 'whiteboard';
+    }
+
+    function renameTabFromContext() {
+        const menu = tabContextMenu;
+        if (!menu) return;
+        const tab = tabs.find((item) => item.fileId === menu.fileId);
+        closeTabContextMenu();
+        if (!tab || tab.type === 'whiteboard') return;
+        startRename(tab.fileId, tab.fileName);
     }
 
     function handleMouseDown(event: MouseEvent) {
@@ -570,10 +642,19 @@
             if (showSettings && settingsContainer && !settingsContainer.contains(e.target as Node)) {
                 showSettings = false;
             }
+            if (tabContextMenu && !(e.target as HTMLElement | null)?.closest('.tab-context-menu')) {
+                closeTabContextMenu();
+            }
+        };
+        const handleDocContextMenu = (e: MouseEvent) => {
+            if (tabContextMenu && !(e.target as HTMLElement | null)?.closest('.tab, .tab-context-menu')) {
+                closeTabContextMenu();
+            }
         };
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
                 showSettings = false;
+                closeTabContextMenu();
             }
             if ((e.ctrlKey || e.metaKey) && (e.key === 'b' || e.key === 'B')) {
                 e.preventDefault();
@@ -610,15 +691,20 @@
         const handleCloudFlush = () => {
             if (!isCloudRestoreInProgress()) saveCurrentViewState();
         };
+        const handleResize = () => closeTabContextMenu();
         document.addEventListener('click', handleDocClick);
+        document.addEventListener('contextmenu', handleDocContextMenu);
         document.addEventListener('keydown', handleKeyDown);
         window.addEventListener('beforeunload', handleUnload);
         window.addEventListener(CLOUD_FLUSH_EVENT, handleCloudFlush);
+        window.addEventListener('resize', handleResize);
         return () => {
             document.removeEventListener('click', handleDocClick);
+            document.removeEventListener('contextmenu', handleDocContextMenu);
             document.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('beforeunload', handleUnload);
             window.removeEventListener(CLOUD_FLUSH_EVENT, handleCloudFlush);
+            window.removeEventListener('resize', handleResize);
         };
     });
 
@@ -1024,7 +1110,9 @@
                                 on:click={() => handleTabClick(t)}
                                 on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateTab(t.fileId); } }}
                                 on:pointerdown={(e) => handleTabPointerDown(e, t.fileId)}
+                                on:contextmenu={(e) => openTabContextMenu(e, t.fileId)}
                                 on:mousedown={(e) => {
+                                    if (e.button === 2) return;
                                     e.preventDefault();
                                     e.stopPropagation();
                                 }}
@@ -1084,6 +1172,23 @@
                         <button class="tab-add" aria-label="New tab" title="New tab" on:click={() => addNewTab()}>+</button>
                     </div>
                 </div>
+                {#if tabContextMenu}
+                    {@const tabContextPosition = tabs.findIndex((tab) => tab.fileId === tabContextMenu?.fileId)}
+                    <TabContextMenu
+                        x={tabContextMenu.x}
+                        y={tabContextMenu.y}
+                        closeDisabled={isContextTabCloseDisabled(tabContextMenu.fileId)}
+                        renameDisabled={isContextTabRenameDisabled(tabContextMenu.fileId)}
+                        closeLeftDisabled={tabContextPosition <= 0}
+                        closeRightDisabled={tabContextPosition < 0 || tabContextPosition >= tabs.length - 1}
+                        closeOthersDisabled={tabs.length <= 1}
+                        on:close={() => closeTabsFromContext('close')}
+                        on:closeLeft={() => closeTabsFromContext('left')}
+                        on:closeRight={() => closeTabsFromContext('right')}
+                        on:closeOthers={() => closeTabsFromContext('others')}
+                        on:rename={renameTabFromContext}
+                    />
+                {/if}
             </div>
             <div style="display:flex;align-items:center;gap:var(--spacing-2);">
                 <Tooltip text={"Whiteboard"} pos={"bottom"}>

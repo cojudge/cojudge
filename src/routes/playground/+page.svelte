@@ -4,6 +4,7 @@
     import CloudSyncModal from '$lib/components/CloudSyncModal.svelte';
     import LanguageIcon from '$lib/components/LanguageIcon.svelte';
     import ShareModal from '$lib/components/ShareModal.svelte';
+    import TabContextMenu from '$lib/components/TabContextMenu.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
     import WhiteboardIcon from '$lib/components/WhiteboardIcon.svelte';
     import Whiteboard from '$lib/components/Whiteboard.svelte';
@@ -370,6 +371,7 @@ func main() {
     let importInputEl: HTMLInputElement | null = null;
     let contextMenu: { x: number; y: number; parentId: string | null } | null = null;
     let contextMenuEl: HTMLElement | null = null;
+    let tabContextMenu: { x: number; y: number; fileId: string } | null = null;
     // Collapse state is device-local UI preference: it is kept in localStorage
     // but not in CLOUD_KEYS, so cloud sync never collects or restores it.
     const COLLAPSED_FOLDERS_KEY = 'playground-collapsed-folders';
@@ -1453,9 +1455,28 @@ func main() {
         contextMenuEl = null;
     }
 
+    function closeTabContextMenu() {
+        tabContextMenu = null;
+    }
+
+    function openTabContextMenu(e: MouseEvent, fileId: string) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!tabs.some((tab) => tab.fileId === fileId && tab.isOpen)) return;
+
+        closeContextMenu();
+        showAddMenu = false;
+        const menuW = 160;
+        const menuH = 120;
+        const x = Math.min(e.clientX, window.innerWidth - menuW - 8);
+        const y = Math.min(e.clientY, window.innerHeight - menuH - 8);
+        tabContextMenu = { x: Math.max(8, x), y: Math.max(8, y), fileId };
+    }
+
     function openExplorerContextMenu(e: MouseEvent, node: FlatExplorerItem) {
         e.preventDefault();
         e.stopPropagation();
+        closeTabContextMenu();
         if (node.kind === 'empty') return;
         // Cancel any pending explorer drag started by the right-click mousedown
         if (explorerPointerDrag) {
@@ -1652,6 +1673,44 @@ func main() {
         }
     }
 
+    type TabContextAction = 'close' | 'left' | 'right' | 'others';
+
+    function getContextTabIds(fileId: string, action: TabContextAction): string[] {
+        const openTabs = tabs.filter((tab) => tab.isOpen);
+        const targetIndex = openTabs.findIndex((tab) => tab.fileId === fileId);
+        if (targetIndex === -1) return [];
+        if (action === 'close') return [fileId];
+        if (action === 'left') return openTabs.slice(0, targetIndex).map((tab) => tab.fileId);
+        if (action === 'right') return openTabs.slice(targetIndex + 1).map((tab) => tab.fileId);
+        return openTabs.filter((_, index) => index !== targetIndex).map((tab) => tab.fileId);
+    }
+
+    function getContextTabPosition(fileId: string): { index: number; count: number } {
+        const openTabs = tabs.filter((tab) => tab.isOpen);
+        return { index: openTabs.findIndex((tab) => tab.fileId === fileId), count: openTabs.length };
+    }
+
+    function isContextTabRenameDisabled(fileId: string): boolean {
+        return tabs.find((tab) => tab.fileId === fileId)?.type === 'whiteboard';
+    }
+
+    function closeTabsFromContext(action: TabContextAction) {
+        const menu = tabContextMenu;
+        if (!menu) return;
+        const idsToClose = getContextTabIds(menu.fileId, action);
+        closeTabContextMenu();
+        for (const fileId of idsToClose) closeTab(fileId);
+    }
+
+    function renameTabFromContext() {
+        const menu = tabContextMenu;
+        if (!menu) return;
+        const tab = tabs.find((item) => item.fileId === menu.fileId);
+        closeTabContextMenu();
+        if (!tab || tab.type === 'whiteboard') return;
+        startRename(tab.fileId, tab.fileName, 'tab');
+    }
+
     async function deleteFile(fileId: string) {
         const files = getFiles();
         const isFolder = files.some((f) => f.fileId === fileId && isFolderEntry(f));
@@ -1794,6 +1853,9 @@ func main() {
             if (contextMenu && contextMenuEl && !contextMenuEl.contains(e.target as Node)) {
                 closeContextMenu();
             }
+            if (tabContextMenu && !(e.target as HTMLElement | null)?.closest('.tab-context-menu')) {
+                closeTabContextMenu();
+            }
         };
         const handleDocContextMenu = (e: MouseEvent) => {
             if (contextMenu && contextMenuEl && !contextMenuEl.contains(e.target as Node)) {
@@ -1801,12 +1863,16 @@ func main() {
                 const target = e.target as HTMLElement | null;
                 if (!target?.closest('[data-explorer-id]')) closeContextMenu();
             }
+            if (tabContextMenu && !(e.target as HTMLElement | null)?.closest('.tab, .tab-context-menu')) {
+                closeTabContextMenu();
+            }
         };
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
                 showSettings = false;
                 showAddMenu = false;
                 closeContextMenu();
+                closeTabContextMenu();
             }
         };
         const handleScroll = () => {
@@ -4991,7 +5057,9 @@ func main() {
                             on:click={() => handleTabClick(t)}
                             on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateTab(t.fileId); } }}
                             on:pointerdown={(e) => handleTabPointerDown(e, t.fileId)}
+                            on:contextmenu={(e) => openTabContextMenu(e, t.fileId)}
                             on:mousedown={(e) => {
+                                if (e.button === 2) return;
                                 e.preventDefault();
                                 e.stopPropagation();
                                 if (e.which === 2) {
@@ -5060,6 +5128,22 @@ func main() {
                     <button class="tab-add" aria-label="New tab" on:click={() => addNewTab('tab')}>+</button>
                 </div>
             </div>
+            {#if tabContextMenu}
+                {@const tabContextPosition = getContextTabPosition(tabContextMenu.fileId)}
+                <TabContextMenu
+                    x={tabContextMenu.x}
+                    y={tabContextMenu.y}
+                    renameDisabled={isContextTabRenameDisabled(tabContextMenu.fileId)}
+                    closeLeftDisabled={tabContextPosition.index <= 0}
+                    closeRightDisabled={tabContextPosition.index < 0 || tabContextPosition.index >= tabContextPosition.count - 1}
+                    closeOthersDisabled={tabContextPosition.count <= 1}
+                    on:close={() => closeTabsFromContext('close')}
+                    on:closeLeft={() => closeTabsFromContext('left')}
+                    on:closeRight={() => closeTabsFromContext('right')}
+                    on:closeOthers={() => closeTabsFromContext('others')}
+                    on:rename={renameTabFromContext}
+                />
+            {/if}
             <div style="display:flex;align-items:center;gap:var(--spacing-2);">
                 {#if activeTab?.type === 'preview'}
                     <div class="markdown-mode-switch" role="group" aria-label="Markdown view mode">
