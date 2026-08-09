@@ -16,6 +16,7 @@ import (
 
 const STATE_FILE = "/tmp/cojudge_debug_state.json"
 const CMD_FILE = "/tmp/cojudge_debug_cmd.json"
+const EVAL_RESULT_FILE = "/tmp/cojudge_eval_result.json"
 
 var dlvAddr string
 var outputBuffer bytes.Buffer
@@ -89,11 +90,11 @@ func rpcCall(method string, params interface{}) (json.RawMessage, error) {
 }
 
 type dlvState struct {
-	Exited bool   `json:"-"`
+	Exited bool `json:"-"`
 	State  struct {
-		Exited        bool   `json:"Exited"`
-		ExitStatus    int    `json:"ExitStatus"`
-		Running       bool   `json:"Running"`
+		Exited        bool `json:"Exited"`
+		ExitStatus    int  `json:"ExitStatus"`
+		Running       bool `json:"Running"`
 		CurrentThread *struct {
 			File string `json:"File"`
 			Line int    `json:"Line"`
@@ -184,12 +185,12 @@ func writeState(status string, line int, vars map[string]string, errMsg string) 
 }
 
 type dlvVariable struct {
-	Name       string         `json:"name"`
-	Value      string         `json:"value"`
-	Type       string         `json:"type"`
-	Len        int64          `json:"len"`
-	Unreadable string         `json:"unreadable"`
-	Children   []dlvVariable  `json:"children"`
+	Name       string        `json:"name"`
+	Value      string        `json:"value"`
+	Type       string        `json:"type"`
+	Len        int64         `json:"len"`
+	Unreadable string        `json:"unreadable"`
+	Children   []dlvVariable `json:"children"`
 }
 
 func renderVar(v dlvVariable, depth int) string {
@@ -233,11 +234,11 @@ func collectVars() map[string]string {
 		"Frame":       0,
 	}
 	cfg := map[string]interface{}{
-		"FollowPointers":    true,
+		"FollowPointers":     true,
 		"MaxVariableRecurse": 2,
-		"MaxArrayValues":    100,
-		"MaxStringLen":      200,
-		"MaxStructFields":   -1,
+		"MaxArrayValues":     100,
+		"MaxStringLen":       200,
+		"MaxStructFields":    -1,
 	}
 
 	locResult, err := rpcCall("RPCServer.ListLocalVars", map[string]interface{}{
@@ -281,6 +282,55 @@ func collectVars() map[string]string {
 	}
 
 	return vars
+}
+
+func evalScope() map[string]interface{} {
+	return map[string]interface{}{
+		"GoroutineID": -1,
+		"Frame":       0,
+	}
+}
+
+func evalCfg() map[string]interface{} {
+	return map[string]interface{}{
+		"FollowPointers":     true,
+		"MaxVariableRecurse": 2,
+		"MaxArrayValues":     100,
+		"MaxStringLen":       200,
+		"MaxStructFields":    -1,
+	}
+}
+
+func evalExpression(expr string) (string, error) {
+	result, err := rpcCall("RPCServer.Eval", map[string]interface{}{
+		"Scope": evalScope(),
+		"Expr":  expr,
+		"Cfg":   evalCfg(),
+	})
+	if err != nil {
+		return "", err
+	}
+	var v struct {
+		Variable dlvVariable `json:"Variable"`
+	}
+	if err := json.Unmarshal(result, &v); err != nil {
+		return "", err
+	}
+	if v.Variable.Unreadable != "" {
+		return "", fmt.Errorf("%s", v.Variable.Unreadable)
+	}
+	return renderVar(v.Variable, 0), nil
+}
+
+func writeEvalResult(value, errorMsg string) {
+	payload := map[string]interface{}{}
+	if errorMsg != "" {
+		payload["error"] = errorMsg
+	} else {
+		payload["value"] = value
+	}
+	data, _ := json.Marshal(payload)
+	os.WriteFile(EVAL_RESULT_FILE, data, 0644)
 }
 
 func createBreakpoints(sourceFile string, lines []int) {
@@ -489,6 +539,16 @@ func main() {
 				createBreakpoints(sourceFile, newBps)
 				vars := collectVars()
 				writeState("paused", line, vars, "")
+				continue
+
+			case "eval":
+				expr, _ := cmdMap["expression"].(string)
+				val, err := evalExpression(expr)
+				if err != nil {
+					writeEvalResult("", err.Error())
+				} else {
+					writeEvalResult(val, "")
+				}
 				continue
 			}
 

@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 test('Cojudge Cloud is optional and explicitly offline-first', async ({ page }) => {
 	await page.goto('/');
 	await page.getByRole('button', { name: 'Toggle menu' }).click();
-	await page.getByRole('menuitem', { name: /Cojudge Cloud/ }).click();
+	await page.getByRole('menuitem', { name: /Cloud Sync/ }).click();
 
 	const dialog = page.getByRole('dialog', { name: 'Cojudge Cloud' });
 	await expect(dialog).toBeVisible();
@@ -18,7 +18,7 @@ test('cloud status fits in the responsive menu without wrapping labels', async (
 	await page.getByRole('button', { name: 'Toggle menu' }).click();
 
 	const menu = page.getByRole('menu');
-	const cloudItem = page.getByRole('menuitem', { name: /Cojudge Cloud/ });
+	const cloudItem = page.getByRole('menuitem', { name: /Cloud Sync/ });
 	await expect(menu).toBeVisible();
 	const menuBox = await menu.boundingBox();
 	expect(menuBox?.width).toBeGreaterThanOrEqual(220);

@@ -6,9 +6,12 @@
     import GameHistoryPopup from '$lib/components/GameHistoryPopup.svelte';
     import GameModePopup from '$lib/components/GameModePopup.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
+    import Whiteboard from '$lib/components/Whiteboard.svelte';
+    import { WHITEBOARD_FILE_ID } from '$lib/cloudFileChange';
     import { showAlert, showConfirm } from '$lib/dialogs';
     import { consumeForkTransfer } from '$lib/forkTransfer';
     import { initFirebase, ensureAuthenticated } from '$lib/firebase';
+    import { isDesktopRuntime } from '$lib/firebaseSettings';
     import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress } from '$lib/progressBackup';
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
@@ -16,7 +19,8 @@
     import userSettingsStorage, { type ThemeChoice } from '$lib/stores/userSettingsStorage';
     import userStore from '$lib/stores/userStore';
     import { getDifficultyClass, type ProgrammingLanguage } from '$lib/utils/util.js';
-    import { doc, setDoc } from 'firebase/firestore';
+    import { doc, setDoc } from 'firebase/firestore/lite';
+    import { browser } from '$app/environment';
     import { renderMarkdown } from '$lib/utils/markdown';
     import QRCode from 'qrcode';
     import { onMount, tick } from 'svelte';
@@ -25,6 +29,7 @@
 
     export let data;
     const problemId = data.problem.id;
+    const isDesktopMode = browser && isDesktopRuntime();
     let isMac = false;
     let description = '';
     let constraints = '';
@@ -65,7 +70,7 @@
     const codeKey = () => `${problemId}:${language}`;
 
     // Tabs are grouped by fileId (language-agnostic)
-    type TabMeta = { fileId: string; fileName: string };
+    type TabMeta = { fileId: string; fileName: string; type?: 'editor' | 'whiteboard' };
 
     function getFiles(): FileEntry[] {
         try {
@@ -81,18 +86,24 @@
             // Create a default tab; the language-specific entry will be created lazily
             return [{ fileId: uuidv4(), fileName: 'Solution' }];
         }
-        const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number }>();
+        const groups = new Map<string, { fileId: string; fileName: string; order: number | null; firstIndex: number; type?: 'editor' | 'whiteboard' }>();
         files.forEach((f, idx) => {
             const existing = groups.get(f.fileId);
             const orderVal = (typeof f.order === 'number') ? f.order : null;
+            const entryType: 'editor' | 'whiteboard' = f.type === 'whiteboard' ? 'whiteboard' : 'editor';
             if (!existing) {
                 groups.set(f.fileId, {
                     fileId: f.fileId,
-                    fileName: f.fileName || 'Solution',
+                    fileName: entryType === 'whiteboard' ? 'Whiteboard' : (f.fileName || 'Solution'),
                     order: orderVal,
-                    firstIndex: idx
+                    firstIndex: idx,
+                    type: entryType
                 });
             } else {
+                if (entryType === 'whiteboard') {
+                    existing.type = 'whiteboard';
+                    existing.fileName = 'Whiteboard';
+                }
                 if (orderVal !== null) {
                     if (existing.order === null || orderVal < existing.order) existing.order = orderVal;
                 }
@@ -107,7 +118,7 @@
             // Fallback to first appearance order in stored array
             return a.firstIndex - b.firstIndex;
         });
-        return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName }));
+        return list.map((g) => ({ fileId: g.fileId, fileName: g.fileName, type: g.type }));
     }
 
     // Ensure an entry exists for current tab+language, optionally with initial content
@@ -145,6 +156,7 @@
 
     async function loadOrInitFile(lang: ProgrammingLanguage) {
         if (activeTabId < 0 || activeTabId >= tabs.length) return;
+        if (tabs[activeTabId].type === 'whiteboard') return;
         const currentId = tabs[activeTabId].fileId;
         const files = getFiles();
         const entry = files.find((x) => x.fileId === currentId && x.language === lang);
@@ -182,6 +194,7 @@
 
     let tabs: TabMeta[] = getInitialTabs();
     let activeTabId: number = 0;
+    $: activeTab = tabs[activeTabId];
     let editingTabId: string | null = null;
     let editingName = '';
     let renameInputEl: HTMLInputElement | null = null;
@@ -273,17 +286,87 @@
         });
     }
 
-    function moveTab(sourceId: string, targetId: string) {
-        if (sourceId === targetId) return;
-        const from = tabs.findIndex((t) => t.fileId === sourceId);
-        const to = tabs.findIndex((t) => t.fileId === targetId);
-        if (from < 0 || to < 0) return;
+    // --- Tab drag-and-drop reordering ---
+    // HTML5 drag events are suppressed in Chromium by the tab's mousedown
+    // preventDefault (which keeps focus in the editor), so tabs are reordered
+    // with pointer events, same as the playground.
+    type TabPointerDrag = { fileId: string; startX: number; startY: number; active: boolean; pointerId: number };
+    let tabPointerDrag: TabPointerDrag | null = null;
+    let tabDidDrag = false;
+    /** Insertion index among tabs, -1 when not dragging */
+    let tabDragInsertIndex = -1;
+
+    function handleTabPointerDown(e: PointerEvent, fileId: string) {
+        if (e.button !== 0) return;
+        const target = e.target as HTMLElement | null;
+        if (target?.closest('button, input, a')) return;
+        tabDidDrag = false;
+        tabPointerDrag = { fileId, startX: e.clientX, startY: e.clientY, active: false, pointerId: e.pointerId };
+        window.addEventListener('pointermove', onTabPointerMove);
+        window.addEventListener('pointerup', onTabPointerUp);
+        window.addEventListener('pointercancel', onTabPointerUp);
+    }
+
+    function onTabPointerMove(e: PointerEvent) {
+        if (!tabPointerDrag || e.pointerId !== tabPointerDrag.pointerId) return;
+        const dx = e.clientX - tabPointerDrag.startX;
+        const dy = e.clientY - tabPointerDrag.startY;
+        if (!tabPointerDrag.active) {
+            if (Math.hypot(dx, dy) < 6) return;
+            tabPointerDrag = { ...tabPointerDrag, active: true };
+            tabDidDrag = true;
+            document.body.classList.add('tab-dragging');
+        }
+        e.preventDefault();
+        tabDragInsertIndex = computeTabInsertIndex(e.clientX);
+    }
+
+    function onTabPointerUp(e: PointerEvent) {
+        if (!tabPointerDrag || e.pointerId !== tabPointerDrag.pointerId) return;
+        const drag = tabPointerDrag;
+        const wasActive = drag.active;
+        const insertIndex = tabDragInsertIndex;
+        window.removeEventListener('pointermove', onTabPointerMove);
+        window.removeEventListener('pointerup', onTabPointerUp);
+        window.removeEventListener('pointercancel', onTabPointerUp);
+        document.body.classList.remove('tab-dragging');
+        tabPointerDrag = null;
+        tabDragInsertIndex = -1;
+        if (!wasActive) {
+            tabDidDrag = false;
+            return;
+        }
+        e.preventDefault();
+        if (insertIndex >= 0) {
+            const fromIdx = tabs.findIndex((t) => t.fileId === drag.fileId);
+            if (fromIdx >= 0 && fromIdx !== (fromIdx < insertIndex ? insertIndex - 1 : insertIndex)) {
+                moveTabToIndex(drag.fileId, insertIndex);
+            }
+        }
+        // Suppress the click that follows the drag
+        setTimeout(() => { tabDidDrag = false; }, 0);
+    }
+
+    function computeTabInsertIndex(clientX: number): number {
+        const els = Array.from(document.querySelectorAll<HTMLElement>('.editor-header .tab'));
+        if (!els.length) return 0;
+        for (let i = 0; i < els.length; i++) {
+            const rect = els[i].getBoundingClientRect();
+            if (clientX < rect.left + rect.width / 2) return i;
+        }
+        return els.length;
+    }
+
+    function moveTabToIndex(sourceFileId: string, insertIndex: number) {
+        const fromIdx = tabs.findIndex((t) => t.fileId === sourceFileId);
+        if (fromIdx < 0) return;
+        insertIndex = Math.max(0, Math.min(insertIndex, tabs.length));
         const activeFileId = tabs[activeTabId]?.fileId;
         const updated = [...tabs];
-        const [moved] = updated.splice(from, 1);
-        updated.splice(to, 0, moved);
+        const [moved] = updated.splice(fromIdx, 1);
+        const adjusted = fromIdx < insertIndex ? insertIndex - 1 : insertIndex;
+        updated.splice(adjusted, 0, moved);
         tabs = updated;
-        // Recompute activeTabId by locating current active fileId
         if (activeFileId) {
             const newIdx = tabs.findIndex((t) => t.fileId === activeFileId);
             if (newIdx !== -1) activeTabId = newIdx;
@@ -291,25 +374,34 @@
         persistTabOrder();
     }
 
-    let draggingId: string | null = null;
-    function handleDragStart(e: DragEvent, fileId: string) {
-        draggingId = fileId;
-        try { e.dataTransfer?.setData('text/plain', fileId); } catch {}
-        if (e.dataTransfer) e.dataTransfer.effectAllowed = 'move';
+    function handleTabClick(t: TabMeta) {
+        if (tabDidDrag) {
+            tabDidDrag = false;
+            return;
+        }
+        activateTab(t.fileId);
     }
-    function handleDragOver(e: DragEvent, _fileId: string) {
-        e.preventDefault();
-        if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
-    }
-    function handleDrop(e: DragEvent, targetId: string) {
-        e.preventDefault();
-        const source = draggingId || e.dataTransfer?.getData('text/plain') || '';
-        if (source) moveTab(source, targetId);
-        draggingId = null;
-    }
-    function handleDragEnd() {
-        draggingId = null;
-    }
+
+    $: tabDropIndicatorStyle = (() => {
+        if (tabDragInsertIndex < 0) return null;
+        const bar = document.querySelector<HTMLElement>('.editor-header .tab-bar');
+        if (!bar) return null;
+        const barRect = bar.getBoundingClientRect();
+        const els = Array.from(document.querySelectorAll<HTMLElement>('.editor-header .tab'));
+        let left: number;
+        if (!els.length) {
+            left = 0;
+        } else if (tabDragInsertIndex === 0) {
+            left = els[0].getBoundingClientRect().left - barRect.left - 4;
+        } else if (tabDragInsertIndex >= els.length) {
+            left = els[els.length - 1].getBoundingClientRect().right - barRect.left + 4;
+        } else {
+            const prev = els[tabDragInsertIndex - 1].getBoundingClientRect();
+            const next = els[tabDragInsertIndex].getBoundingClientRect();
+            left = (prev.right + next.left) / 2 - barRect.left;
+        }
+        return `left: ${left}px`;
+    })();
     $: if (!suppressSave && code !== undefined) {
         if (!skipNextSave) {
             const fkey = fileKey();
@@ -353,6 +445,23 @@
     }
 
     async function closeTab(fileId: string) {
+        const tabToClose = tabs.find((t) => t.fileId === fileId);
+        if (tabToClose?.type === 'whiteboard') {
+            const idx = tabs.findIndex((t) => t.fileId === fileId);
+            if (activeTabId === idx) {
+                const next = tabs.find((x) => x.fileId !== fileId);
+                if (next) await activateTab(next.fileId);
+            }
+            const fkey = fileKey();
+            fileStore.update((s) => {
+                let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+                files = files.filter((f) => f.fileId !== fileId);
+                return { ...s, [fkey]: JSON.stringify(files) };
+            });
+            tabs = tabs.filter((t) => t.fileId !== fileId);
+            persistTabOrder();
+            return;
+        }
         if (tabs.length <= 1) return;
         if (!await showConfirm('This file and all of its saved language versions will be permanently removed.', {
             title: 'Remove file?',
@@ -470,6 +579,29 @@
                 e.preventDefault();
                 toggleProblemPaneVisibility();
             }
+            if (e.defaultPrevented) return;
+            if (!isDesktopMode) return;
+            if (!e.metaKey && !e.ctrlKey) return;
+            if (e.altKey) return;
+            const key = e.key.toLowerCase();
+            // Desktop-only shortcuts: Ctrl/Cmd+W closes the active tab and
+            // Ctrl/Cmd+1-9 activates the nth tab (left to right). In the browser
+            // these keys are reserved by the browser itself.
+            if (key === 'w' && !e.shiftKey) {
+                const active = tabs[activeTabId];
+                if (active) {
+                    e.preventDefault();
+                    closeTab(active.fileId);
+                }
+                return;
+            }
+            if (/^[1-9]$/.test(key)) {
+                const target = tabs[parseInt(key, 10) - 1];
+                if (target) {
+                    e.preventDefault();
+                    activateTab(target.fileId);
+                }
+            }
         };
         const handleUnload = () => {
             if (isCloudRestoreInProgress()) return;
@@ -518,7 +650,43 @@
         saveCurrentViewState();
         activeTabId = idx;
         debugBreakpoints = [];
+        if (tabs[idx].type === 'whiteboard') return;
         await loadOrInitFile(language);
+    }
+
+    async function openWhiteboard() {
+        const existing = tabs.find((t) => t.type === 'whiteboard' || t.fileId === WHITEBOARD_FILE_ID);
+        if (existing) {
+            if (tabs[activeTabId]?.fileId === existing.fileId) {
+                closeTab(existing.fileId);
+                return;
+            }
+            await activateTab(existing.fileId);
+            return;
+        }
+        const nextId = WHITEBOARD_FILE_ID;
+        tabs = [...tabs, { fileId: nextId, fileName: 'Whiteboard', type: 'whiteboard' }];
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            files = [
+                ...files,
+                {
+                    fileId: nextId,
+                    fileName: 'Whiteboard',
+                    language: 'plaintext',
+                    content: '',
+                    viewState: null,
+                    isActive: false,
+                    order: tabs.length - 1,
+                    type: 'whiteboard'
+                } as FileEntry
+            ];
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
+        activeTabId = tabs.length - 1;
+        persistTabOrder();
+        await tick();
     }
 
     // Runtime image name (like in ExecutionPanel)
@@ -818,6 +986,7 @@
     <div class="editor-pane">
         <div class="editor-header" style="display:flex;align-items:center;justify-content:space-between;padding:var(--spacing-2);border-bottom:1px solid var(--color-border);">
             <div class="lang-dropdown-tabs-container">
+                {#if activeTab?.type !== 'whiteboard'}
                 <div style="display:flex;gap:var(--spacing-2);align-items:center;">
                     <label for="language-select" style="font-size:0.9rem;color:var(--color-text-secondary);">Language</label>
                     <select
@@ -842,21 +1011,23 @@
                         <option value="go">Go</option>
                     </select>
                 </div>
+                {/if}
                 <div class="tabs-container">
                     <div class="tab-bar" role="tablist" aria-label="Editor tabs">
                         {#each tabs as t}
                             <div
-                                class="tab {t.fileId === tabs[activeTabId].fileId ? 'active' : ''}"
+                                class="tab {t.fileId === tabs[activeTabId].fileId ? 'active' : ''} {tabPointerDrag?.active && tabPointerDrag.fileId === t.fileId ? 'is-dragging' : ''}"
                                 role="tab"
                                 aria-selected={t.fileId === tabs[activeTabId].fileId}
                                 tabindex={t.fileId === tabs[activeTabId].fileId ? 0 : -1}
-                                on:click={() => activateTab(t.fileId)}
+                                data-file-id={t.fileId}
+                                on:click={() => handleTabClick(t)}
                                 on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateTab(t.fileId); } }}
-                                draggable={true}
-                                on:dragstart={(e) => handleDragStart(e, t.fileId)}
-                                on:dragover={(e) => handleDragOver(e, t.fileId)}
-                                on:drop={(e) => handleDrop(e, t.fileId)}
-                                on:dragend={handleDragEnd}
+                                on:pointerdown={(e) => handleTabPointerDown(e, t.fileId)}
+                                on:mousedown={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                }}
                                 on:auxclick={(e) => { if (e.button === 1) { e.preventDefault(); e.stopPropagation(); closeTab(t.fileId); } }}
                             >
                                 {#if editingTabId === t.fileId}
@@ -873,8 +1044,15 @@
                                         on:blur={applyRename}
                                     />
                                 {:else}
+                                    {#if t.type === 'whiteboard'}
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:2px;flex-shrink:0;">
+                                            <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                                            <path d="m8 15 6-6 2 2-6 6H8v-2Z"></path>
+                                        </svg>
+                                    {/if}
                                     <span class="tab-title">{t.fileName}</span>
                                 {/if}
+                                {#if t.type !== 'whiteboard'}
                                 <button
                                     class="tab-rename"
                                     aria-label="Rename tab"
@@ -887,6 +1065,7 @@
                                         <path d="M14.06 6.19l3.75 3.75 1.69-1.69a1.5 1.5 0 000-2.12L17.87 4.5a1.5 1.5 0 00-2.12 0l-1.69 1.69z" stroke="currentColor" stroke-width="1.5" fill="none"/>
                                     </svg>
                                 </button>
+                                {/if}
                                 {#if tabs.length > 1}
                                     <button
                                         class="tab-close"
@@ -899,11 +1078,28 @@
                                 {/if}
                             </div>
                         {/each}
+                        {#if tabDropIndicatorStyle}
+                            <div class="tab-drop-indicator" style={tabDropIndicatorStyle} aria-hidden="true"></div>
+                        {/if}
                         <button class="tab-add" aria-label="New tab" title="New tab" on:click={() => addNewTab()}>+</button>
                     </div>
                 </div>
             </div>
             <div style="display:flex;align-items:center;gap:var(--spacing-2);">
+                <Tooltip text={"Whiteboard"} pos={"bottom"}>
+                    <button
+                        class="icon-button {activeTab?.type === 'whiteboard' ? 'active' : ''}"
+                        on:click={openWhiteboard}
+                        title="Whiteboard"
+                        aria-label="Whiteboard"
+                    >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                            <path d="m8 15 6-6 2 2-6 6H8v-2Z"></path>
+                        </svg>
+                    </button>
+                </Tooltip>
+                {#if activeTab?.type !== 'whiteboard'}
                 {#if !isGameMode}
                     <Tooltip text={"Start Game"} pos={"bottom"}>
                         <button class="icon-button game-start-btn" on:click={() => showGameStartPopup = true} title="Start Game">
@@ -940,6 +1136,7 @@
                         </svg>
                     </button>
                 </Tooltip>
+                {/if}
                 <div class="settings-wrapper" bind:this={settingsContainer}>
                     <Tooltip text={"Settings"} pos={"bottom"}>
                         <button
@@ -976,12 +1173,16 @@
                         </div>
                     {/if}
                 </div>
-                <div style="font-size:0.85rem;color:var(--color-text-secondary);">{imageName || language.toUpperCase()}</div>
+                <div style="font-size:0.85rem;color:var(--color-text-secondary);">{activeTab?.type === 'whiteboard' ? 'Whiteboard' : (imageName || language.toUpperCase())}</div>
             </div>
         </div>
 
-        <div class="editor-container">
-            {#if CodeEditor}
+        <div class="editor-container" class:whiteboard-active={activeTab?.type === 'whiteboard'}>
+            {#if activeTab?.type === 'whiteboard'}
+                <div class="whiteboard-host">
+                    <Whiteboard embedded active={true} />
+                </div>
+            {:else if CodeEditor}
                 <svelte:component 
                     this={CodeEditor} 
                     bind:this={editorComponent}
@@ -1131,6 +1332,23 @@
         flex-direction: column;
     }
 
+    .editor-container.whiteboard-active {
+        padding: 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .whiteboard-host {
+        position: absolute;
+        inset: 0;
+        min-height: 0;
+    }
+
+    .icon-button.active {
+        color: var(--color-highlight);
+        background: rgba(255,255,255,0.06);
+    }
+
     /* --- Browser-like Tabs --- */
     .tab-bar {
         display: flex;
@@ -1142,6 +1360,7 @@
         flex: 1;
         min-width: 0;
         flex-wrap: nowrap;
+        position: relative;
     }
     /* Compact the tab bar when shown inside the header */
     .editor-header .tab-bar {
@@ -1176,6 +1395,29 @@
         font-size: 0.85rem;
         line-height: 1;
         user-select: none;
+        -webkit-user-select: none;
+        cursor: grab;
+        touch-action: none;
+    }
+    .tab.is-dragging {
+        opacity: 0.45;
+    }
+    .tab-drop-indicator {
+        position: absolute;
+        top: 4px;
+        bottom: 4px;
+        width: 2px;
+        border-radius: 1px;
+        background: var(--color-highlight);
+        pointer-events: none;
+        z-index: 5;
+    }
+    :global(body.tab-dragging) {
+        cursor: grabbing !important;
+        user-select: none !important;
+    }
+    :global(body.tab-dragging .tab) {
+        cursor: grabbing;
     }
     .tab.active {
         background-color: var(--color-surface);

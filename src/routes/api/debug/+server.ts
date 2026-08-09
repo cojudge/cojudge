@@ -49,7 +49,7 @@ export const POST: RequestHandler = async ({ request }) => {
             return json({ status: 'ok' });
         } else if (action === 'eval') {
             if (!variable || typeof variable !== 'string') {
-                return json({ error: 'Missing variable name for eval action' }, { status: 400 });
+                return json({ error: 'Missing expression for eval action' }, { status: 400 });
             }
             const result = await debugEval(jobId, variable.trim());
             return json(result);

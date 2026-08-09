@@ -298,6 +298,7 @@ describe('progress backups', () => {
 						language: 'python',
 						isOpen: true,
 						isActive: true,
+						order: 0,
 						lastUpdated: 100,
 						viewState: '1:5'
 					}
@@ -316,6 +317,7 @@ describe('progress backups', () => {
 						language: 'python',
 						isOpen: false,
 						isActive: false,
+						order: 4,
 						lastUpdated: 200,
 						viewState: '2:10'
 					}

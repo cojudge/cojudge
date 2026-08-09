@@ -4,7 +4,7 @@
     import { initFirebase } from '$lib/firebase';
     import { storeForkTransfer, type ForkTransfer } from '$lib/forkTransfer';
     import userSettingsStorage from '$lib/stores/userSettingsStorage';
-    import { doc, getDoc } from 'firebase/firestore';
+    import { doc, getDoc } from 'firebase/firestore/lite';
     import { onMount } from 'svelte';
 
     let code = '';

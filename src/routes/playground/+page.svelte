@@ -6,6 +6,7 @@
     import LanguageIcon from '$lib/components/LanguageIcon.svelte';
     import ShareModal from '$lib/components/ShareModal.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
+    import WhiteboardIcon from '$lib/components/WhiteboardIcon.svelte';
     import Whiteboard from '$lib/components/Whiteboard.svelte';
     import { showAlert, showConfirm } from '$lib/dialogs';
     import { consumeForkTransfer } from '$lib/forkTransfer';
@@ -13,7 +14,7 @@
     import { isDesktopRuntime } from '$lib/firebaseSettings';
     import { ensureMcpServerRunning, mcpClientState, pushMcpTabs, setupMcpFileSync, startMcpEventSync, toMcpTabState } from '$lib/mcp/client';
     import { cloudSyncState } from '$lib/cloudSync';
-    import { WHITEBOARD_FILE_ID } from '$lib/cloudFileChange';
+    import { CLOUD_FILE_DISCARDED_EVENT, WHITEBOARD_FILE_ID, WORKSPACE_FILE_ID_PREFIX } from '$lib/cloudFileChange';
     import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress, writeProgressStorageItem } from '$lib/progressBackup';
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { isDotFileName, type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
@@ -21,7 +22,7 @@
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
     import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, wrapImageThumbnails, wrapCodeBlocksWithCopy, ensureTrailingEmptyLine, ensureFileMentionCarets, prepareTaskListCheckboxes, isTaskListItem, isEmptyTaskListItem, createTaskCheckbox, ensureTaskCheckbox, ensureTaskItemCaretAnchor, removeTaskCheckbox, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, CODE_COPY_WRAPPER_CLASS, resolvePastedImages, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref, fileMentionHtml, FILE_MENTION_CLASS } from '$lib/utils/markdown';
     import { storePastedImage, deletePastedImage, inlinePastedImageLinks } from '$lib/utils/imageStore';
-    import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+    import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore/lite';
     import QRCode from 'qrcode';
     import { browser } from '$app/environment';
     import { onMount, tick, onDestroy } from 'svelte';
@@ -101,6 +102,10 @@ func main() {
 
     function isSpecialTabType(type?: string): type is 'preview' | 'whiteboard' {
         return type === 'preview' || type === 'whiteboard';
+    }
+
+    function isWhiteboardTab(fileId: string): boolean {
+        return tabs.some((tab) => tab.fileId === fileId && tab.type === 'whiteboard');
     }
 
     type ExplorerNode = {
@@ -1663,7 +1668,7 @@ func main() {
 
     function closeTab(fileId: string) {
         const tabToClose = tabs.find(t => t.fileId === fileId);
-        if (isSpecialTabType(tabToClose?.type)) {
+        if (tabToClose?.type === 'preview') {
             const closedIdx = tabs.findIndex(t => t.fileId === fileId);
             tabs = tabs.filter(t => t.fileId !== fileId);
             if (!tabs[activeTabId]?.isOpen) {
@@ -1685,6 +1690,9 @@ func main() {
             return;
         }
 
+        // Editor and whiteboard tabs close the same way: the entry stays in the
+        // workspace and only the open/active state (local-only) changes, so
+        // closing a tab never becomes a cloud change.
         tabs = tabs.map(t => t.fileId === fileId ? { ...t, isOpen: false } : t);
 
         const fkey = fileKey();
@@ -2238,6 +2246,19 @@ func main() {
         return sourceEntry?.content ?? '';
     }
 
+    function renderWysiwygFromStore() {
+        if (!wysiwygEl || !wysiwygSourceFileId) return;
+        wysiwygEl.innerHTML = renderMarkdownPlain(getActivePreviewSourceContent(), {
+            resolveFileLanguage: (fileId) => getLanguageForTab(fileId)
+        });
+        wrapImageThumbnails(wysiwygEl);
+        wrapCodeBlocksWithCopy(wysiwygEl);
+        ensureFileMentionCarets(wysiwygEl);
+        prepareTaskListCheckboxes(wysiwygEl);
+        ensureTrailingEmptyLine(wysiwygEl);
+        resolvePastedImages(wysiwygEl);
+    }
+
     async function enterPreviewEditMode(force = false) {
         if (!activeTab?.sourceFileId) return;
         if (!force && previewEditMode && wysiwygSourceFileId === activeTab.sourceFileId && wysiwygEl) {
@@ -2247,15 +2268,7 @@ func main() {
         previewEditMode = true;
         await tick();
         if (wysiwygEl) {
-            wysiwygEl.innerHTML = renderMarkdownPlain(getActivePreviewSourceContent(), {
-                resolveFileLanguage: (fileId) => getLanguageForTab(fileId)
-            });
-            wrapImageThumbnails(wysiwygEl);
-            wrapCodeBlocksWithCopy(wysiwygEl);
-            ensureFileMentionCarets(wysiwygEl);
-            prepareTaskListCheckboxes(wysiwygEl);
-            ensureTrailingEmptyLine(wysiwygEl);
-            resolvePastedImages(wysiwygEl);
+            renderWysiwygFromStore();
             wysiwygEl.focus();
         }
     }
@@ -2512,6 +2525,14 @@ func main() {
         });
     }
 
+    // True when el is an inline code element: a toolbar-wrapped <code> or a
+    // marker span created by the backtick auto-close.
+    function isInlineCodeElement(el: Element | null): boolean {
+        if (!(el instanceof HTMLElement)) return false;
+        if (el.tagName === 'CODE') return el.parentElement?.tagName !== 'PRE';
+        return (el.getAttribute('style') || '').includes(INLINE_CODE_STYLE_MARKER);
+    }
+
     // When the user types a closing backtick, try to match it with a previous
     // backtick in the same text node and form an inline code element. Runs on
     // the input event, after the backtick has been typed, so a single ctrl+z
@@ -2528,7 +2549,15 @@ func main() {
         const node = range.startContainer;
         if (node.nodeType !== Node.TEXT_NODE || !wysiwygEl.contains(node)) return;
         const parentEl = node.parentElement;
-        if (!parentEl || parentEl.closest('code') || parentEl.closest('pre')) return;
+        if (!parentEl || parentEl.closest('pre')) return;
+        // Never wrap inside an existing inline code element (a toolbar <code>
+        // or a previous marker span): the caret inside one would nest another
+        // span and corrupt the stored markdown.
+        let ancestor: Element | null = parentEl;
+        while (ancestor && ancestor !== wysiwygEl) {
+            if (isInlineCodeElement(ancestor)) return;
+            ancestor = ancestor.parentElement;
+        }
         const text = node.textContent ?? '';
         const offset = range.startOffset;
         if (offset < 1 || text.charAt(offset - 1) !== '`') return;
@@ -2543,13 +2572,46 @@ func main() {
             replaceRange.setEnd(node, offset);
             selection.removeAllRanges();
             selection.addRange(replaceRange);
+            // Track the spans that exist before inserting so the freshly
+            // inserted one can be found reliably: insertHTML can place it
+            // before other spans in the document, so picking the last span
+            // in document order would re-mark an unrelated span and leave the
+            // new one without the marker (breaking the markdown round-trip).
+            const existingSpans = new Set(wysiwygEl.querySelectorAll('span'));
             document.execCommand('insertHTML', false, inlineCodeSpanHtml(codeText));
-            // Rewrite the inserted span's background from the concrete color
-            // (which the sanitizer kept) to the theme-variable marker, so the
-            // code adapts to the active theme and round-trips back to backticks.
-            const inserted = wysiwygEl.querySelectorAll('span');
-            const markerSpan = inserted[inserted.length - 1];
-            if (markerSpan instanceof HTMLElement) markerSpan.style.backgroundColor = INLINE_CODE_STYLE_MARKER;
+            const inserted = Array.from(wysiwygEl.querySelectorAll('span')).find((span) => !existingSpans.has(span));
+            const markerSpan = inserted instanceof HTMLElement ? inserted : null;
+            if (markerSpan) {
+                // Rewrite the inserted span's background from the concrete
+                // color (which the sanitizer kept) to the theme-variable
+                // marker, so the code adapts to the active theme and
+                // round-trips back to backticks.
+                markerSpan.style.backgroundColor = INLINE_CODE_STYLE_MARKER;
+                // Anchor the caret just after the marker span so further
+                // typing continues outside the (already closed) inline code.
+                // Chrome redirects typing at the end of a paragraph after a
+                // trailing inline element back INTO that element (a caret
+                // after the span, in an empty node, or before a ZWSP all
+                // resolve inside the span), so the caret must sit AFTER a
+                // ZWSP in the text node that follows the span. htmlToMarkdown
+                // strips the ZWSP, so it never reaches the stored markdown.
+                let after: Node | null = markerSpan.nextSibling;
+                if (after && after.nodeType === Node.TEXT_NODE && after.textContent !== '') {
+                    // Existing text right after the span: caret at its start.
+                } else {
+                    if (after && after.nodeType === Node.TEXT_NODE) {
+                        after.textContent = '\u200B';
+                    } else {
+                        after = document.createTextNode('\u200B');
+                        markerSpan.after(after);
+                    }
+                }
+                const caret = document.createRange();
+                caret.setStart(after, after.textContent === '\u200B' ? 1 : 0);
+                caret.collapse(true);
+                selection.removeAllRanges();
+                selection.addRange(caret);
+            }
         } finally {
             applyingInlineCode = false;
         }
@@ -3311,6 +3373,37 @@ func main() {
             }
             return { ...s, [fkey]: JSON.stringify(files) };
         });
+    }
+
+    function handleCloudFileDiscard(event: Event) {
+        const fileId = (event as CustomEvent<{ fileId?: unknown }>).detail?.fileId;
+        if (typeof fileId !== 'string') return;
+
+        const activeSourceId = activeTab?.type === 'preview'
+            ? activeTab.sourceFileId
+            : activeTab?.fileId;
+        const workspaceWasDiscarded = fileId === `${WORKSPACE_FILE_ID_PREFIX}${fileKey()}`;
+        if (!activeSourceId || (fileId !== activeSourceId && !workspaceWasDiscarded)) return;
+
+        if (activeTab?.type === 'preview') {
+            // WYSIWYG content is not driven by a Svelte prop. Replace the DOM
+            // before refreshCloudLocalState emits its next flush event, or the
+            // stale DOM would immediately save the discarded content again.
+            if (previewEditMode && wysiwygSourceFileId === activeTab.sourceFileId) {
+                if (wysiwygDebounce) {
+                    clearTimeout(wysiwygDebounce);
+                    wysiwygDebounce = null;
+                }
+                renderWysiwygFromStore();
+            }
+            return;
+        }
+        if (activeTab?.type === 'whiteboard') return;
+
+        // CodeEditor is also bound to an in-memory value. Suppress its reactive
+        // save while loading the restored entry into the active editor.
+        skipNextSave = true;
+        void loadOrInitFile(language);
     }
 
     // Switch WYSIWYG mode when changing tabs
@@ -4471,6 +4564,7 @@ func main() {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.defaultPrevented) return;
             if (e.key === 'Escape') {
+                e.preventDefault();
                 showSettings = false;
                 closeSearch();
                 closeLightbox();
@@ -4553,6 +4647,7 @@ func main() {
             }
             mcpWasRunning = state.running;
         });
+        window.addEventListener(CLOUD_FILE_DISCARDED_EVENT, handleCloudFileDiscard);
         return () => {
             document.removeEventListener('click', handleDocClick);
             window.removeEventListener('keydown', handleKeyDown);
@@ -4562,6 +4657,7 @@ func main() {
             stopMcpEventSync();
             stopMcpStateWatch();
             if (tabPushTimer) clearTimeout(tabPushTimer);
+            window.removeEventListener(CLOUD_FILE_DISCARDED_EVENT, handleCloudFileDiscard);
         };
     });
 </script>
@@ -4965,7 +5061,11 @@ func main() {
                                 </svg>
                                 <div class="search-result-file-info" on:click|stopPropagation={() => activateTab(result.fileId)}>
                                     <span class="file-icon">
-                                        <LanguageIcon language={tabLanguages[result.fileId] ?? result.language} size={17} />
+                                        {#if isWhiteboardTab(result.fileId)}
+                                            <WhiteboardIcon name="whiteboard" size={17} />
+                                        {:else}
+                                            <LanguageIcon language={tabLanguages[result.fileId] ?? result.language} size={17} />
+                                        {/if}
                                     </span>
                                     <span class="file-name">{@html highlightMatch(result.fileName, globalSearchQuery, globalSearchCaseSensitive, globalSearchRegex)}</span>
                                 </div>
@@ -5037,10 +5137,7 @@ func main() {
                                         <LanguageIcon language="markdown" size={17} />
                                     </span>
                                 {:else if t.type === 'whiteboard'}
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:2px;flex-shrink:0;">
-                                        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
-                                        <path d="m8 15 6-6 2 2-6 6H8v-2Z"></path>
-                                    </svg>
+                                    <WhiteboardIcon name="whiteboard" size={12} strokeWidth={2} />
                                 {:else}
                                     <span class="tab-lang-icon">
                                         <LanguageIcon language={tabLanguages[t.fileId] ?? language} size={17} />
@@ -5392,7 +5489,9 @@ func main() {
                                     }}
                                 >
                                     <div class="recent-file-card-header">
-                                        {#if file.type === 'preview'}
+                                        {#if file.type === 'whiteboard'}
+                                            <WhiteboardIcon name="whiteboard" size={17} />
+                                        {:else if file.type === 'preview'}
                                             <LanguageIcon language="markdown" size={17} />
                                         {:else}
                                             <LanguageIcon language={tabLanguages[file.fileId] ?? language} size={17} />
@@ -5480,7 +5579,10 @@ func main() {
                     placeholder="Search files by name..."
                     class="search-file-input"
                     on:keydown={(e) => {
-                        if (e.key === 'Escape') closeSearch();
+                        if (e.key === 'Escape') {
+                            e.preventDefault();
+                            closeSearch();
+                        }
                         if (e.key === 'ArrowDown') {
                             e.preventDefault();
                             selectedIndex = (selectedIndex + 1) % filteredFiles.length;
@@ -5509,7 +5611,9 @@ func main() {
                             on:mouseenter={() => selectedIndex = i}
                         >
                             <span class="search-file-info">
-                                {#if file.type === 'preview'}
+                                {#if file.type === 'whiteboard'}
+                                    <WhiteboardIcon name="whiteboard" size={17} />
+                                {:else if file.type === 'preview'}
                                     <LanguageIcon language="markdown" size={17} />
                                 {:else}
                                     <LanguageIcon language={tabLanguages[file.fileId] ?? language} size={17} />
@@ -5548,7 +5652,9 @@ func main() {
                         on:mouseenter={() => mentionSelectedIndex = i}
                     >
                         <span class="search-file-info">
-                            {#if file.type === 'preview'}
+                            {#if file.type === 'whiteboard'}
+                                <WhiteboardIcon name="whiteboard" size={17} />
+                            {:else if file.type === 'preview'}
                                 <LanguageIcon language="markdown" size={17} />
                             {:else}
                                 <LanguageIcon language={tabLanguages[file.fileId] ?? language} size={17} />

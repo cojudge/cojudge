@@ -13,7 +13,8 @@ Usage:
   cojudge debug continue <jobId>          Continue execution (run until next breakpoint or end)
   cojudge debug step <jobId>              Step over to the next line
   cojudge debug stop <jobId>              Stop the debug session
-  cojudge debug eval <jobId> <variable>   Show the value of a variable in the current runtime
+  cojudge debug eval <jobId> <expr>       Evaluate an expression in the current runtime
+                                          (e.g. 'cojudge debug eval <jobId> "x + y"')
 
 Start a debug session with:
   cojudge run <file> --debug-lines 5,10,15
@@ -32,15 +33,15 @@ Start a debug session with:
     }
 
     if (subAction === 'eval') {
-        const variable = args[3];
+        const variable = args.slice(3).join(' ');
         if (!jobId) {
             console.error(`Error: Missing job ID for 'eval' action.`);
-            console.error(`Usage: cojudge debug eval <jobId> <variable>`);
+            console.error(`Usage: cojudge debug eval <jobId> <expression>`);
             process.exit(1);
         }
         if (!variable) {
-            console.error(`Error: Missing variable name for 'eval' action.`);
-            console.error(`Usage: cojudge debug eval <jobId> <variable>`);
+            console.error(`Error: Missing expression for 'eval' action.`);
+            console.error(`Usage: cojudge debug eval <jobId> <expression>`);
             process.exit(1);
         }
         await debugEval(PORT, jobId, variable);

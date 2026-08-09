@@ -9,6 +9,7 @@ import time
 STATE_FILE = '/tmp/cojudge_debug_state.json'
 CMD_FILE = '/tmp/cojudge_debug_cmd.json'
 STDOUT_FILE = '/tmp/cojudge_stdout.txt'
+EVAL_RESULT_FILE = '/tmp/cojudge_eval_result.json'
 
 def send_mi(gdb_proc, cmd):
     gdb_proc.stdin.write(cmd + '\n')
@@ -88,6 +89,35 @@ def _format_scalar(raw):
         short = type_name.group(1).rsplit('::', 1)[-1]
         return '<' + short + '>'
     return raw[:60]
+
+def unescape_mi(raw):
+    return raw.replace('\\"', '"').replace('\\\\', '\\')
+
+def _mi_eval_with_error(gdb_proc, expr):
+    quoted = '"' + expr.replace('\\', '\\\\').replace('"', '\\"') + '"'
+    send_mi(gdb_proc, '-data-evaluate-expression ' + quoted)
+    resp = read_mi_until(gdb_proc)
+    for record in resp:
+        if record.startswith('^error'):
+            m = re.search(r'msg="((?:[^"\\]|\\.)*)"', record)
+            msg = m.group(1) if m else 'evaluation failed'
+            return None, unescape_mi(msg)
+        m = re.match(r'\^done,value="((?:[^"\\]|\\.)*)"', record)
+        if m:
+            return unescape_mi(m.group(1)), None
+    return None, 'no result from gdb'
+
+def write_eval_result(value, error):
+    payload = {}
+    if error is not None:
+        payload['error'] = error
+    else:
+        payload['value'] = value
+    try:
+        with open(EVAL_RESULT_FILE, 'w') as f:
+            json.dump(payload, f)
+    except:
+        pass
 
 def collect_variables(gdb_proc):
     send_mi(gdb_proc, '-stack-list-variables --no-values')
@@ -283,6 +313,15 @@ def main():
                         elif action == 'continue':
                             send_mi(gdb_proc, '-exec-continue')
                             break
+                        elif action == 'eval':
+                            expr = cmd.get('expression', '')
+                            raw, err = _mi_eval_with_error(gdb_proc, expr)
+                            if err is not None:
+                                write_eval_result(None, err)
+                            elif raw is not None and '{' in raw:
+                                write_eval_result(_format_scalar(raw), None)
+                            else:
+                                write_eval_result(raw, None)
                         elif action == 'set_breakpoints':
                             new_bps = cmd.get('breakpoints', [])
                             new_bps_int = []
