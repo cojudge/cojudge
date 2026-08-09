@@ -61,11 +61,7 @@ import {
 	computeWhiteboardChange,
 	computeWorkspaceChanges,
 	CLOUD_FILE_DISCARDED_EVENT,
-	discardChange,
-	discardFile,
-	OTHER_CHANGE_FILE_ID_PREFIXES,
-	CHECKBOXES_FILE_ID,
-	USER_SETTINGS_FILE_ID,
+	applySelectedChanges,
 	WHITEBOARD_BOARD_KEY,
 	WHITEBOARD_FILE_ID,
 	WHITEBOARD_RESTORED_EVENT,
@@ -141,6 +137,8 @@ type LocalSnapshot = {
 	meaningful: boolean;
 	meta: DeviceUserMeta;
 };
+
+type UploadSnapshot = Pick<LocalSnapshot, 'serialized' | 'checksum' | 'meaningful'>;
 
 type RemoteSnapshotMeta = {
 	snapshotId: string;
@@ -376,11 +374,8 @@ function clearCloudClone(): void {
 	if (browser) localStorage.removeItem(CLOUD_CLONE_KEY);
 }
 
-// Collects the IndexedDB-backed pasted images referenced by markdown file
-// contents, as { [id]: dataUrl }. Returns null when none are referenced so the
-// snapshot stays image-free (and checksums unchanged) for image-less documents.
-async function collectReferencedPastedImages(filesValue: unknown): Promise<Record<string, string> | null> {
-	const links = new Set<string>();
+function referencedPastedImageIds(filesValue: unknown): Set<string> {
+	const ids = new Set<string>();
 	if (filesValue && typeof filesValue === 'object' && !Array.isArray(filesValue)) {
 		for (const serialized of Object.values(filesValue)) {
 			if (typeof serialized !== 'string') continue;
@@ -395,21 +390,49 @@ async function collectReferencedPastedImages(filesValue: unknown): Promise<Recor
 				if (!entry || typeof entry !== 'object' || Array.isArray(entry)) continue;
 				const file = entry as Record<string, unknown>;
 				if (file.language !== 'markdown' || typeof file.content !== 'string') continue;
-				for (const link of findPastedImageLinks(file.content)) links.add(link);
+				for (const link of findPastedImageLinks(file.content)) {
+					const id = parsePastedImageLink(link);
+					if (id) ids.add(id);
+				}
 			}
 		}
 	}
-	if (links.size === 0) return null;
+	return ids;
+}
+
+// Collects the IndexedDB-backed pasted images referenced by markdown file
+// contents, as { [id]: dataUrl }. Returns null when none are referenced so the
+// snapshot stays image-free (and checksums unchanged) for image-less documents.
+async function collectReferencedPastedImages(filesValue: unknown): Promise<Record<string, string> | null> {
+	const ids = referencedPastedImageIds(filesValue);
+	if (ids.size === 0) return null;
 
 	const all = await getAllPastedImages();
 	const record: Record<string, string> = {};
-	for (const link of links) {
-		const id = parsePastedImageLink(link);
-		if (!id) continue;
+	for (const id of ids) {
 		const dataUrl = all[id];
 		if (dataUrl) record[id] = dataUrl;
 	}
 	return Object.keys(record).length > 0 ? record : null;
+}
+
+function retainReferencedPastedImages(
+	data: ProgressData,
+	sources: Array<Record<string, string> | null>
+): ProgressData {
+	const result = { ...data };
+	const images: Record<string, string> = {};
+	for (const id of referencedPastedImageIds(result.files)) {
+		for (const source of sources) {
+			const dataUrl = source?.[id];
+			if (!dataUrl) continue;
+			images[id] = dataUrl;
+			break;
+		}
+	}
+	if (Object.keys(images).length > 0) result[PASTED_IMAGES_KEY] = images;
+	else delete result[PASTED_IMAGES_KEY];
+	return result;
 }
 
 async function readLocalSnapshot(
@@ -698,7 +721,7 @@ function makeRevisionId(): string {
 async function uploadSnapshot(
 	db: Firestore,
 	uid: string,
-	local: LocalSnapshot,
+	local: UploadSnapshot,
 	previous: RemoteSnapshotMeta | null
 ): Promise<string> {
 	const { parts, totalBytes } = encodeProgressParts(local.serialized);
@@ -1204,7 +1227,125 @@ export async function fetchCloudFileChanges(): Promise<FileChange[]> {
 	return fileChangesAgainstCloud(local.data, cloudData);
 }
 
-export async function discardLocalFileChange(fileId: string): Promise<void> {
+async function runSelectedFilePush(
+	fileIds: readonly string[],
+	context: OperationContext
+): Promise<void> {
+	if (!browser || !isOperationCurrent(context) || isCloudRestoreInProgress()) return;
+	cloudSyncState.update((state) => ({
+		...state,
+		syncStatus: 'syncing',
+		error: null,
+		progress: { label: 'Preparing selected changes…', value: 10 }
+	}));
+
+	try {
+		if (!navigator.onLine) {
+			throw new Error('Connect to the internet before pushing selected changes.');
+		}
+		const resolution = get(cloudSyncState).resolution;
+		if (resolution === 'account' || resolution === 'conflict') {
+			throw new Error('Resolve the current cloud workspace choice before pushing selected changes.');
+		}
+
+		await coordinateOtherContexts('flush');
+		if (!isOperationCurrent(context)) return;
+		const local = await readLocalSnapshot(context);
+		if (!isOperationCurrent(context)) return;
+
+		setCloudProgress('Reading cloud state…', 30);
+		const { remote, history } = await refreshRemoteState(context.db, context.uid);
+		if (!isOperationCurrent(context)) return;
+		publishHistory(history, remote?.revisionId ?? null);
+
+		let cloudData: ProgressData = {};
+		if (remote) {
+			setCloudProgress('Merging selected changes…', 45);
+			cloudData = await ensureCloudClone(context, remote);
+			if (!isOperationCurrent(context)) return;
+		}
+
+		let mergedData = applySelectedChanges(cloudData, fileIds, local.data) as ProgressData;
+		mergedData = sanitizeCloudFiles(mergedData);
+		mergedData = retainReferencedPastedImages(mergedData, [
+			extractPastedImages(cloudData),
+			extractPastedImages(local.data)
+		]);
+		const serialized = serializeProgressData(mergedData);
+		const upload: UploadSnapshot = {
+			serialized,
+			checksum: await hashProgress(serialized),
+			meaningful: isMeaningfulProgress(mergedData)
+		};
+		if (!isOperationCurrent(context)) return;
+
+		if (remote && upload.checksum === remote.checksum) {
+			writeCloudClone(
+				cloudAccountId(context.projectId, context.uid),
+				remote.checksum,
+				serialized,
+				remote.revisionId
+			);
+			await finalizeCloudRevision(context, remote.checksum);
+			return;
+		}
+
+		setCloudProgress('Uploading selected changes…', 60);
+		const revisionId = await uploadSnapshot(context.db, context.uid, upload, remote);
+		if (!isOperationCurrent(context)) return;
+		setCloudProgress('Finalizing…', 85);
+		const updated = await refreshRemoteState(context.db, context.uid);
+		if (!isOperationCurrent(context)) return;
+		const uploaded = updated.remote;
+		if (!uploaded || uploaded.revisionId !== revisionId) {
+			throw new Error('Cojudge Cloud could not confirm the selected changes.');
+		}
+		writeCloudClone(
+			cloudAccountId(context.projectId, context.uid),
+			uploaded.checksum,
+			serialized,
+			uploaded.revisionId
+		);
+		publishHistory(updated.history, uploaded.revisionId);
+		await finalizeCloudRevision(context, uploaded.checksum);
+	} catch (error) {
+		if (!isOperationCurrent(context)) return;
+		const offline = !navigator.onLine;
+		cloudSyncState.update((state) => ({
+			...state,
+			syncStatus: offline ? 'offline' : 'error',
+			remoteStatus: offline ? state.remoteStatus : 'error',
+			error: offline ? null : errorMessage(error),
+			progress: null
+		}));
+		throw error;
+	}
+}
+
+export function pushLocalFileChanges(fileIds: readonly string[]): Promise<void> {
+	const selectedFileIds = [...new Set(fileIds.filter((fileId) => fileId.length > 0))];
+	const requestedContext = captureOperationContext();
+	if (selectedFileIds.length === 0 || !requestedContext) return Promise.resolve();
+	if (syncPromise) {
+		return syncPromise.catch(() => undefined).then(() => {
+			if (!isOperationCurrent(requestedContext)) return;
+			return pushLocalFileChanges(selectedFileIds);
+		});
+	}
+	const pending = runSelectedFilePush(selectedFileIds, requestedContext).finally(() => {
+		if (syncPromise === pending) {
+			syncPromise = null;
+			syncContext = null;
+		}
+	});
+	syncPromise = pending;
+	syncContext = requestedContext;
+	return pending;
+}
+
+export async function discardLocalFileChanges(fileIds: readonly string[]): Promise<void> {
+	const selectedFileIds = [...new Set(fileIds.filter((fileId) => fileId.length > 0))];
+	if (selectedFileIds.length === 0) return;
 	const context = captureOperationContext();
 	if (!browser || !context || isCloudRestoreInProgress()) return;
 	if (!navigator.onLine) {
@@ -1227,28 +1368,14 @@ export async function discardLocalFileChange(fileId: string): Promise<void> {
 	// before any discard path that rewrites `files` so secrets like `.env` are
 	// never wiped when restoring cloud content.
 	const localDotFiles = extractDotFilesData(localStorage);
-
-	if (fileId === WHITEBOARD_FILE_ID) {
-		const cloudBoard = downloaded[WHITEBOARD_BOARD_KEY];
-		if (cloudBoard === undefined) {
-			localStorage.removeItem(WHITEBOARD_BOARD_KEY);
-		} else {
-			localStorage.setItem(WHITEBOARD_BOARD_KEY, JSON.stringify(cloudBoard));
-		}
-		window.dispatchEvent(new CustomEvent(WHITEBOARD_RESTORED_EVENT));
-	} else if (isOtherChangeFileId(fileId)) {
-		const contextSnapshot = await readLocalSnapshot(context);
-		if (!isOperationCurrent(context)) return;
-		const updated = discardChange(contextSnapshot.data as ProgressStore, fileId, downloaded);
-		applyProgressData(updated, { replace: true });
-	} else {
-		const cloudFiles = (downloaded.files ?? {}) as FileStore;
-		const localStore = readLocalFilesStore();
-		const updated = discardFile(localStore, fileId, cloudFiles);
-		localStorage.setItem('files', JSON.stringify(updated));
-		fileStore.set(updated);
-		fileSyncVersion.update((version) => version + 1);
-	}
+	const contextSnapshot = await readLocalSnapshot(context);
+	if (!isOperationCurrent(context)) return;
+	const localData: ProgressStore = {
+		...contextSnapshot.data,
+		files: readLocalFilesStore()
+	};
+	const updated = applySelectedChanges(localData, selectedFileIds, downloaded);
+	applyProgressData(updated, { replace: true });
 
 	if (localDotFiles !== null) {
 		const merged = mergeDotFilesData(localStorage.getItem('files'), localDotFiles);
@@ -1264,19 +1391,20 @@ export async function discardLocalFileChange(fileId: string): Promise<void> {
 		}
 	}
 
-	// The active editor keeps its own in-memory value. Notify the page after the
-	// restored store is complete so it can reload that value before the next
-	// cloud flush compares local progress.
-	window.dispatchEvent(new CustomEvent(CLOUD_FILE_DISCARDED_EVENT, { detail: { fileId } }));
+	if (selectedFileIds.includes(WHITEBOARD_FILE_ID)) {
+		window.dispatchEvent(new CustomEvent(WHITEBOARD_RESTORED_EVENT));
+	}
+
+	// Active editors keep their own in-memory values. Notify them after every
+	// selected restore is complete and before the next cloud flush compares it.
+	for (const fileId of selectedFileIds) {
+		window.dispatchEvent(new CustomEvent(CLOUD_FILE_DISCARDED_EVENT, { detail: { fileId } }));
+	}
 	await refreshCloudLocalState();
 }
 
-function isOtherChangeFileId(fileId: string): boolean {
-	return (
-		fileId === CHECKBOXES_FILE_ID
-		|| fileId === USER_SETTINGS_FILE_ID
-		|| OTHER_CHANGE_FILE_ID_PREFIXES.some((prefix) => fileId.startsWith(prefix))
-	);
+export function discardLocalFileChange(fileId: string): Promise<void> {
+	return discardLocalFileChanges([fileId]);
 }
 
 async function inspectCloudSignOut(context: OperationContext): Promise<CloudSignOutCheck> {

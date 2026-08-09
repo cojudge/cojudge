@@ -62,25 +62,29 @@ test('discarding an active WYSIWYG file reloads the restored content', async ({ 
     localStorage.setItem('playground-markdown-mode', 'wysiwyg');
     localStorage.setItem('files', JSON.stringify({
       playground: JSON.stringify([
-        { fileId: 'active-file', fileName: 'Notes', language: 'markdown', content: '# Local version', isOpen: true, order: 0, lastUpdated: Date.now() }
+        { fileId: 'active-file', fileName: 'Notes', language: 'markdown', content: '\n\n# Local version', isOpen: true, order: 0, lastUpdated: Date.now() }
       ])
     }));
   });
   await page.reload();
   await expect(page.locator('.wysiwyg-editing h1')).toHaveText('Local version');
+  await page.evaluate(() => window.dispatchEvent(new Event('cojudge:cloud-flush')));
+  await expect.poll(() => getMarkdownContent(page)).toBe('\n\n# Local version');
 
   await page.evaluate(() => {
     const restoredFiles = JSON.stringify({
       playground: JSON.stringify([
-        { fileId: 'active-file', fileName: 'Notes', language: 'markdown', content: '# Cloud version', isOpen: true, order: 0, lastUpdated: Date.now() }
+        { fileId: 'active-file', fileName: 'Notes', language: 'markdown', content: '\n\n# Cloud version', isOpen: true, order: 0, lastUpdated: Date.now() }
       ])
     });
     localStorage.setItem('files', restoredFiles);
     window.dispatchEvent(new StorageEvent('storage', { key: 'files', newValue: restoredFiles }));
     window.dispatchEvent(new CustomEvent('cojudge:cloud-file-discarded', { detail: { fileId: 'active-file' } }));
+    window.dispatchEvent(new Event('cojudge:cloud-flush'));
   });
 
   await expect(page.locator('.wysiwyg-editing h1')).toHaveText('Cloud version');
+  await expect.poll(() => getMarkdownContent(page)).toBe('\n\n# Cloud version');
 });
 
 test('playground markdown editor pastes clipboard images as base64 markdown', async ({ page }) => {
@@ -795,4 +799,3 @@ test('WYSIWYG Tab/Shift+Tab on checklists keeps checkboxes intact', async ({ pag
   await expect(editable.locator('li').nth(1).locator('input[type="checkbox"]')).toBeChecked();
   await expect.poll(() => getMarkdownContent(page)).toMatch(/- +\[ \] +one\s*\n- +\[x\] +two/);
 });
-

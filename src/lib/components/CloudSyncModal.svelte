@@ -8,8 +8,9 @@
         connectCloud,
         deleteCloudRevision,
         disconnectCloud,
-        discardLocalFileChange,
+        discardLocalFileChanges,
         fetchCloudFileChanges,
+        pushLocalFileChanges,
         refreshCloudLocalState,
         resolveCloudProgress,
         restoreCloudRevision,
@@ -34,6 +35,7 @@
     let cloudFileChanges: FileChange[] = [];
     let cloudFileChangesLoading = false;
     let cloudFileChangesError = '';
+    let selectedCloudFileIds = new Set<string>();
     let expandedDiffs = new Set<string>();
     function toggleDiff(key: string) {
         const next = new Set(expandedDiffs);
@@ -92,6 +94,7 @@
 
     async function openModal() {
         showAllCloudHistory = false;
+        selectedCloudFileIds = new Set();
         await refreshCloudLocalState();
         await tick();
         cloudPrimaryButton?.focus();
@@ -109,8 +112,9 @@
         if (shouldLoadFileChanges && !fileChangesLoadArmed) {
             fileChangesLoadArmed = true;
             void loadCloudFileChanges();
-        } else if (!shouldLoadFileChanges) {
+        } else if (!shouldLoadFileChanges && fileChangesLoadArmed) {
             fileChangesLoadArmed = false;
+            selectedCloudFileIds = new Set();
         }
     }
 
@@ -131,27 +135,46 @@
         if ($cloudSyncState.authStatus !== 'signed-in' || $cloudSyncState.resolution !== 'local-changes') {
             cloudFileChanges = [];
             cloudFileChangesError = '';
+            selectedCloudFileIds = new Set();
             return;
         }
         cloudFileChangesLoading = true;
         cloudFileChangesError = '';
         try {
             cloudFileChanges = await fetchCloudFileChanges();
+            const availableIds = new Set(cloudFileChanges.map((change) => change.fileId));
+            selectedCloudFileIds = new Set(
+                [...selectedCloudFileIds].filter((fileId) => availableIds.has(fileId))
+            );
         } catch {
             cloudFileChangesError = 'Could not compare with the cloud. Check your connection and try again.';
             cloudFileChanges = [];
+            selectedCloudFileIds = new Set();
         } finally {
             cloudFileChangesLoading = false;
         }
     }
 
-    async function discardCloudFile(fileId: string) {
-        const change = cloudFileChanges.find((c) => c.fileId === fileId);
+    function cloudFileChangeLabel(change: FileChange): string {
+        return change.fileName ? `${change.slug}/${change.fileName}` : change.slug;
+    }
+
+    function setCloudFileSelected(fileId: string, selected: boolean) {
+        const next = new Set(selectedCloudFileIds);
+        if (selected) next.add(fileId);
+        else next.delete(fileId);
+        selectedCloudFileIds = next;
+    }
+
+    async function discardCloudFiles(changes: FileChange[]) {
+        if (changes.length === 0) return;
+        const labels = changes.map((change) => `- ${cloudFileChangeLabel(change)}`).join('\n');
+        const multiple = changes.length > 1;
         const confirmed = await showConfirm(
-            `Discard the local changes to "${change?.fileName ?? 'this file'}"? The file will be restored to its cloud version, which cannot be undone.`,
+            `The following local ${multiple ? 'changes' : 'change'} will be discarded:\n\n${labels}\n\n${multiple ? 'They will' : 'It will'} be restored from the latest cloud version. This cannot be undone.`,
             {
-                title: 'Discard file changes',
-                confirmLabel: 'Discard changes',
+                title: multiple ? 'Discard selected changes' : 'Discard file changes',
+                confirmLabel: multiple ? `Discard ${changes.length} changes` : 'Discard changes',
                 tone: 'danger'
             }
         );
@@ -159,7 +182,38 @@
 
         cloudActionPending = true;
         try {
-            await discardLocalFileChange(fileId);
+            const discardedIds = new Set(changes.map((change) => change.fileId));
+            await discardLocalFileChanges([...discardedIds]);
+            selectedCloudFileIds = new Set(
+                [...selectedCloudFileIds].filter((fileId) => !discardedIds.has(fileId))
+            );
+            await loadCloudFileChanges();
+        } catch {
+            // The shared cloud state renders the actionable error.
+        } finally {
+            cloudActionPending = false;
+        }
+    }
+
+    function discardSelectedCloudFiles() {
+        return discardCloudFiles(selectedCloudFileChanges());
+    }
+
+    function selectedCloudFileChanges(): FileChange[] {
+        return cloudFileChanges.filter((change) => selectedCloudFileIds.has(change.fileId));
+    }
+
+    async function pushSelectedCloudFiles() {
+        const changes = selectedCloudFileChanges();
+        if (changes.length === 0) return;
+
+        cloudActionPending = true;
+        try {
+            const pushedIds = new Set(changes.map((change) => change.fileId));
+            await pushLocalFileChanges([...pushedIds]);
+            selectedCloudFileIds = new Set(
+                [...selectedCloudFileIds].filter((fileId) => !pushedIds.has(fileId))
+            );
             await loadCloudFileChanges();
         } catch {
             // The shared cloud state renders the actionable error.
@@ -473,7 +527,11 @@
                     <div class="cloud-file-changes">
                         <div class="cloud-file-changes-heading">
                             <strong>Local changes</strong>
-                            <button class="btn cloud-file-reload" type="button" onclick={loadCloudFileChanges} disabled={cloudActionPending}>{cloudFileChangesLoading ? 'Comparing…' : 'Refresh'}</button>
+                            <div class="cloud-file-changes-actions">
+                                <button class="btn cloud-file-reload" type="button" onclick={loadCloudFileChanges} disabled={cloudActionPending}>{cloudFileChangesLoading ? 'Comparing…' : 'Refresh'}</button>
+                                <button class="btn cloud-file-push-selected" type="button" onclick={pushSelectedCloudFiles} disabled={cloudActionPending || cloudFileChangesLoading || selectedCloudFileIds.size === 0}>Push selected{selectedCloudFileIds.size > 0 ? ` (${selectedCloudFileIds.size})` : ''}</button>
+                                <button class="btn cloud-file-discard cloud-file-discard-selected" type="button" onclick={discardSelectedCloudFiles} disabled={cloudActionPending || cloudFileChangesLoading || selectedCloudFileIds.size === 0}>Discard selected{selectedCloudFileIds.size > 0 ? ` (${selectedCloudFileIds.size})` : ''}</button>
+                            </div>
                         </div>
                         {#if cloudFileChangesError}
                             <p class="modal-error" role="alert">{cloudFileChangesError}</p>
@@ -483,10 +541,13 @@
                             <p class="cloud-file-changes-empty">No differences found. Local data matches the latest cloud version.</p>
                         {:else}
                             {#each cloudFileChanges as change}
-                                <div class="cloud-file-change">
+                                <div class:selected={selectedCloudFileIds.has(change.fileId)} class="cloud-file-change">
                                     <div class="cloud-file-change-row">
-                                        <span class="cloud-file-change-name" title={change.fileName ? `${change.slug}/${change.fileName}` : change.slug}><span class="cloud-file-change-slug">{change.slug}</span>{change.fileName ? `/${change.fileName}` : ''}</span>
-                                        <button class="btn cloud-file-discard" type="button" onclick={() => discardCloudFile(change.fileId)} disabled={cloudActionPending}>Discard changes</button>
+                                        <label class="cloud-file-change-selection">
+                                            <input class="cloud-file-change-checkbox" type="checkbox" checked={selectedCloudFileIds.has(change.fileId)} onchange={(event) => setCloudFileSelected(change.fileId, event.currentTarget.checked)} disabled={cloudActionPending} />
+                                            <span class="cloud-file-change-name" title={cloudFileChangeLabel(change)}><span class="cloud-file-change-slug">{change.slug}</span>{change.fileName ? `/${change.fileName}` : ''}</span>
+                                        </label>
+                                        <button class="btn cloud-file-discard" type="button" onclick={() => discardCloudFiles([change])} disabled={cloudActionPending}>Discard changes</button>
                                     </div>
                                     {#each change.languages as lang}
                                         {@const diffKeyValue = diffKey(change.fileId, lang.language)}
@@ -870,8 +931,20 @@
         color: var(--color-text);
         font-size: 0.78rem;
     }
+    .cloud-file-changes-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+    }
     .cloud-file-reload {
         padding: 0.25rem 0.6rem;
+        font-size: 0.72rem;
+    }
+    .cloud-file-push-selected {
+        padding: 0.25rem 0.6rem;
+        border-color: color-mix(in srgb, var(--color-highlight) 45%, var(--color-border));
+        color: var(--color-highlight);
         font-size: 0.72rem;
     }
     .cloud-file-changes-empty {
@@ -887,13 +960,36 @@
         border-radius: 0.65rem;
         background: var(--color-second-bg);
     }
+    .cloud-file-change.selected {
+        border-color: color-mix(in srgb, var(--color-highlight) 48%, var(--color-border));
+    }
     .cloud-file-change-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 0.5rem;
     }
+    .cloud-file-change-selection {
+        display: flex;
+        align-items: center;
+        min-width: 0;
+        flex: 1 1 auto;
+        gap: 0.5rem;
+        cursor: pointer;
+    }
+    .cloud-file-change-checkbox {
+        width: 1rem;
+        height: 1rem;
+        margin: 0;
+        flex: 0 0 auto;
+        accent-color: var(--color-highlight);
+        cursor: pointer;
+    }
+    .cloud-file-change-checkbox:disabled {
+        cursor: not-allowed;
+    }
     .cloud-file-change-name {
+        min-width: 0;
         overflow: hidden;
         color: var(--color-text);
         font-size: 0.82rem;
@@ -910,6 +1006,9 @@
         flex: 0 0 auto;
         font-size: 0.72rem;
         border-color: color-mix(in srgb, var(--color-hard) 45%, var(--color-border));
+    }
+    .cloud-file-discard-selected {
+        color: var(--color-hard);
     }
     .cloud-file-diff {
         min-width: 0;

@@ -182,6 +182,9 @@
 		background: color-mix(in srgb, var(--color-easy) 14%, transparent);
 		color: var(--color-easy);
 	}
+	.dialog-copy {
+		min-width: 0;
+	}
 	.dialog-copy h2 {
 		margin: 0;
 		font-size: 1.12rem;
@@ -192,6 +195,9 @@
 		color: var(--color-text-secondary);
 		font-size: 0.9rem;
 		line-height: 1.55;
+		max-height: min(50vh, 20rem);
+		overflow-y: auto;
+		overflow-wrap: anywhere;
 		white-space: pre-wrap;
 	}
 	.dialog-actions {
