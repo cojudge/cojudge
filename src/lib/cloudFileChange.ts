@@ -512,6 +512,43 @@ export function discardChange(data: ProgressStore, fileId: string, cloudData: Pr
 	return result;
 }
 
+function isOtherChangeFileId(fileId: string): boolean {
+	return (
+		fileId === CHECKBOXES_FILE_ID
+		|| fileId === USER_SETTINGS_FILE_ID
+		|| OTHER_CHANGE_FILE_ID_PREFIXES.some((prefix) => fileId.startsWith(prefix))
+	);
+}
+
+// Copies a group of displayed changes from one snapshot into another. Applying
+// them to a shared result avoids later changes overwriting earlier merges.
+export function applySelectedChanges(
+	targetData: ProgressStore,
+	fileIds: Iterable<string>,
+	sourceData: ProgressStore
+): ProgressStore {
+	let result: ProgressStore = { ...targetData };
+	const sourceFiles = (sourceData['files'] ?? {}) as FileStore;
+
+	for (const fileId of new Set(fileIds)) {
+		if (fileId === WHITEBOARD_FILE_ID) {
+			const sourceBoard = sourceData[WHITEBOARD_BOARD_KEY];
+			if (sourceBoard === undefined) delete result[WHITEBOARD_BOARD_KEY];
+			else result[WHITEBOARD_BOARD_KEY] = sourceBoard;
+			continue;
+		}
+		if (isOtherChangeFileId(fileId)) {
+			result = discardChange(result, fileId, sourceData);
+			continue;
+		}
+
+		const localFiles = (result['files'] ?? {}) as FileStore;
+		result = { ...result, files: discardFile(localFiles, fileId, sourceFiles) };
+	}
+
+	return result;
+}
+
 // Describes whether the whiteboard board differs from the cloud. The board is a
 // JSON payload that can embed base64 images, so the diff is always treated as a
 // blob and no line-wise diff is produced.
@@ -550,7 +587,7 @@ export function discardFile(
 ): FileStore {
 	const result: FileStore = { ...localStore };
 
-	for (const slug of Object.keys(result)) {
+	for (const slug of new Set([...Object.keys(result), ...Object.keys(cloudStore)])) {
 		const entries = parseEntries(result, slug);
 		const localEntries = entries.filter((entry) => entry['fileId'] === fileId);
 		const cloudEntries = parseEntries(cloudStore, slug).filter((entry) => entry['fileId'] === fileId);

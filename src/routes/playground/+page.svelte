@@ -2209,6 +2209,8 @@ func main() {
     let wysiwygEl: HTMLDivElement | null = null;
     let wysiwygDebounce: ReturnType<typeof setTimeout> | null = null;
     let wysiwygSourceFileId: string | null = null;
+    // Markdown-to-HTML rendering is lossy, so only serialize after a real edit.
+    let wysiwygDirty = false;
     let lastActiveTabFileId: string | null = null;
     let showLinkInput = false;
     let linkUrl = '';
@@ -2254,6 +2256,7 @@ func main() {
         prepareTaskListCheckboxes(wysiwygEl);
         ensureTrailingEmptyLine(wysiwygEl);
         resolvePastedImages(wysiwygEl);
+        wysiwygDirty = false;
     }
 
     async function enterPreviewEditMode(force = false) {
@@ -2279,6 +2282,7 @@ func main() {
     }
 
     function handleWysiwygInput() {
+        wysiwygDirty = true;
         removeOrphanCodeWrappers();
         healTaskListStructure();
         if (wysiwygEl?.querySelector('li input[type="checkbox"][disabled]')) {
@@ -3291,6 +3295,7 @@ func main() {
             if (fakeLink) deletePastedImage(fakeLink);
             deleteBtn.closest(`.${THUMB_WRAPPER_CLASS}`)?.remove();
             ensureTrailingEmptyLine(wysiwygEl);
+            wysiwygDirty = true;
             commitWysiwygEdits();
             return;
         }
@@ -3352,7 +3357,7 @@ func main() {
             clearTimeout(wysiwygDebounce);
             wysiwygDebounce = null;
         }
-        if (!previewEditMode || !wysiwygEl || !wysiwygSourceFileId) return;
+        if (!previewEditMode || !wysiwygEl || !wysiwygSourceFileId || !wysiwygDirty) return;
         removeOrphanCodeWrappers();
         healTaskListStructure();
         prepareTaskListCheckboxes(wysiwygEl);
@@ -3368,6 +3373,7 @@ func main() {
             }
             return { ...s, [fkey]: JSON.stringify(files) };
         });
+        wysiwygDirty = false;
     }
 
     function handleCloudFileDiscard(event: Event) {

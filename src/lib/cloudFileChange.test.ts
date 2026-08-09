@@ -6,6 +6,7 @@ import {
 	computeWhiteboardChange,
 	computeWorkspaceChanges,
 	discardChange,
+	applySelectedChanges,
 	discardFile,
 	isBlobContent,
 	CHECKBOXES_FILE_ID,
@@ -243,6 +244,21 @@ describe('discardFile', () => {
 		expect(entries).toHaveLength(2);
 		expect(entries.map((entry) => entry.fileId).sort()).toEqual(['1', '2']);
 	});
+
+	it('re-adds a cloud file when its local workspace no longer exists', () => {
+		const cloudStore: FileStore = {
+			playground: JSON.stringify([
+				{ fileId: '1', fileName: 'Solution', language: 'python', content: 'print(1)' }
+			])
+		};
+
+		const updated = discardFile({}, '1', cloudStore);
+		const entries = JSON.parse(updated.playground) as Array<Record<string, unknown>>;
+
+		expect(entries).toHaveLength(1);
+		expect(entries[0].fileId).toBe('1');
+		expect(entries[0].content).toBe('print(1)');
+	});
 });
 
 describe('computeOtherChanges', () => {
@@ -400,6 +416,90 @@ describe('discardChange', () => {
 		const cloud: ProgressStore = { files: { playground: JSON.stringify([{ fileId: '1', fileName: 'Original' }]) } };
 		const updated = discardChange(local, `${WORKSPACE_FILE_ID_PREFIX}playground`, cloud);
 		expect(JSON.parse((updated.files as Record<string, string>).playground)[0].fileName).toBe('Original');
+	});
+});
+
+describe('applySelectedChanges', () => {
+	it('restores multiple files in one workspace while preserving unselected files', () => {
+		const local: ProgressStore = {
+			files: {
+				playground: JSON.stringify([
+					{ fileId: '1', fileName: 'A', language: 'python', content: 'local-a', isOpen: true },
+					{ fileId: '2', fileName: 'B', language: 'python', content: 'local-b', order: 4 },
+					{ fileId: '3', fileName: 'C', language: 'python', content: 'keep-local' }
+				])
+			}
+		};
+		const cloud: ProgressStore = {
+			files: {
+				playground: JSON.stringify([
+					{ fileId: '1', fileName: 'A', language: 'python', content: 'cloud-a' },
+					{ fileId: '2', fileName: 'B', language: 'python', content: 'cloud-b' },
+					{ fileId: '3', fileName: 'C', language: 'python', content: 'cloud-c' }
+				])
+			}
+		};
+
+		const updated = applySelectedChanges(local, ['1', '2'], cloud);
+		const entries = JSON.parse((updated.files as FileStore).playground) as Array<Record<string, unknown>>;
+
+		expect(entries.map((entry) => entry.content)).toEqual(['cloud-a', 'cloud-b', 'keep-local']);
+		expect(entries[0].isOpen).toBe(true);
+		expect(entries[1].order).toBe(4);
+	});
+
+	it('restores mixed file, solution, and whiteboard changes from one snapshot', () => {
+		const local: ProgressStore = {
+			files: store([{ fileId: '1', fileName: 'A', language: 'python', content: 'local' }]),
+			solutions: { selected: 'local', untouched: 'keep-local' },
+			'cojudge-whiteboard-v1': { elements: ['local'] }
+		};
+		const cloud: ProgressStore = {
+			files: store([{ fileId: '1', fileName: 'A', language: 'python', content: 'cloud' }]),
+			solutions: { selected: 'cloud', untouched: 'cloud-untouched' },
+			'cojudge-whiteboard-v1': { elements: ['cloud'] }
+		};
+
+		const updated = applySelectedChanges(
+			local,
+			['1', `${SOLUTION_FILE_ID_PREFIX}selected`, WHITEBOARD_FILE_ID],
+			cloud
+		);
+		const entries = JSON.parse((updated.files as FileStore).playground) as Array<Record<string, unknown>>;
+
+		expect(entries[0].content).toBe('cloud');
+		expect(updated.solutions).toEqual({ selected: 'cloud', untouched: 'keep-local' });
+		expect(updated['cojudge-whiteboard-v1']).toEqual({ elements: ['cloud'] });
+	});
+
+	it('pushes only selected local values into a cloud snapshot', () => {
+		const local: ProgressStore = {
+			files: store([
+				{ fileId: '1', fileName: 'A', language: 'python', content: 'local-a' },
+				{ fileId: '2', fileName: 'B', language: 'python', content: 'local-b' }
+			]),
+			solutions: { selected: 'local-selected', untouched: 'local-untouched' }
+		};
+		const cloud: ProgressStore = {
+			files: store([
+				{ fileId: '1', fileName: 'A', language: 'python', content: 'cloud-a' },
+				{ fileId: '2', fileName: 'B', language: 'python', content: 'cloud-b' }
+			]),
+			solutions: { selected: 'cloud-selected', untouched: 'cloud-untouched' }
+		};
+
+		const updated = applySelectedChanges(
+			cloud,
+			['1', `${SOLUTION_FILE_ID_PREFIX}selected`],
+			local
+		);
+		const entries = JSON.parse((updated.files as FileStore).playground) as Array<Record<string, unknown>>;
+
+		expect(entries.map((entry) => entry.content)).toEqual(['local-a', 'cloud-b']);
+		expect(updated.solutions).toEqual({
+			selected: 'local-selected',
+			untouched: 'cloud-untouched'
+		});
 	});
 });
 
