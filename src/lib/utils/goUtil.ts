@@ -430,6 +430,7 @@ function goType(typeName: string): string {
         case "boolean": return "bool";
         case "int_array": return "[]int";
         case "int_array_2d":
+        case "int_list_2d":
         case "int_matrix": return "[][]int";
         case "string_array":
         case "string_list": return "[]string";
