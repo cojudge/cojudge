@@ -583,6 +583,14 @@ export function getCodeBlockLanguage(pre: HTMLElement): string {
     return normalizeCodeLanguage(languageClass?.slice('language-'.length));
 }
 
+export function getLanguageLabel(language: string | null | undefined): string {
+    const normalized = normalizeCodeLanguage(language);
+    if (!normalized) return 'Plain text';
+    const found = CODE_LANGUAGE_OPTIONS.find((opt) => opt.value === normalized);
+    if (found) return found.label;
+    return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+}
+
 /** Set a WYSIWYG block's language without changing its source text. */
 export function setCodeBlockLanguage(wrapper: HTMLElement, language: string): string {
     const normalized = normalizeCodeLanguage(language);
@@ -605,6 +613,10 @@ export function setCodeBlockLanguage(wrapper: HTMLElement, language: string): st
         }
     }
 
+    const langNameEl = wrapper.querySelector('.code-lang-name');
+    if (langNameEl) {
+        langNameEl.textContent = getLanguageLabel(normalized);
+    }
     const input = wrapper.querySelector(`.${CODE_LANGUAGE_INPUT_CLASS}`) as HTMLInputElement | null;
     if (input) {
         input.value = normalized;
@@ -623,9 +635,9 @@ export function highlightCodeBlocks(root: HTMLElement) {
     });
 }
 
-// Wraps every <pre> under root with a copy button. The button is
-// contenteditable="false" controls so they stay out of the editable content;
-// the <pre> itself remains editable.
+// Wraps every <pre> under root with a copy button and language selector. The
+// controls are contenteditable="false" so they stay out of the editable
+// content; the <pre> itself remains editable.
 export function wrapCodeBlocksWithCopy(root: HTMLElement) {
     const preElements = Array.from(root.querySelectorAll('pre'));
     for (const pre of preElements) {
@@ -643,41 +655,33 @@ export function wrapCodeBlocksWithCopy(root: HTMLElement) {
         if (language) wrapper.dataset.language = language;
         else delete wrapper.dataset.language;
 
-        if (!wrapper.querySelector(`.${CODE_LANGUAGE_WRAPPER_CLASS}`)) {
-            const languageWrapper = document.createElement('label');
-            languageWrapper.className = CODE_LANGUAGE_WRAPPER_CLASS;
-            languageWrapper.setAttribute('contenteditable', 'false');
-            languageWrapper.title = 'Code language';
-
-            const languageInput = document.createElement('input');
-            languageInput.type = 'text';
-            languageInput.className = CODE_LANGUAGE_INPUT_CLASS;
-            languageInput.setAttribute('contenteditable', 'false');
-            languageInput.setAttribute('autocomplete', 'off');
-            languageInput.setAttribute('spellcheck', 'false');
-            languageInput.setAttribute('aria-label', 'Code language');
-            languageInput.setAttribute('list', CODE_LANGUAGE_DATALIST_ID);
-            languageInput.placeholder = 'Language';
-            languageWrapper.appendChild(languageInput);
-            wrapper.insertBefore(languageWrapper, pre);
-        }
-        setCodeBlockLanguage(wrapper, language);
-
         let actions = wrapper.querySelector('.code-block-actions') as HTMLElement | null;
         if (!actions) {
             actions = document.createElement('div');
             actions.className = 'code-block-actions';
+            actions.setAttribute('contenteditable', 'false');
             wrapper.appendChild(actions);
         }
-        if (actions.querySelector('.copy-code-button')) continue;
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'copy-code-button';
-        btn.title = 'Copy code';
-        btn.setAttribute('aria-label', 'Copy code');
-        btn.setAttribute('contenteditable', 'false');
-        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
-        actions.appendChild(btn);
+
+        if (!actions.querySelector('.code-lang-btn')) {
+            actions.innerHTML = `
+                <div class="code-lang-picker">
+                    <button type="button" class="code-lang-btn" title="Select language" aria-label="Select language" contenteditable="false">
+                        <span class="code-lang-name">${getLanguageLabel(language)}</span>
+                        <svg class="code-lang-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                </div>
+                <div class="code-action-divider"></div>
+                <button type="button" class="copy-code-button" title="Copy code" aria-label="Copy code" contenteditable="false">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
+                <div class="code-action-divider"></div>
+                <button type="button" class="delete-code-button" title="Delete code block" aria-label="Delete code block" contenteditable="false">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                </button>
+            `;
+        }
+        setCodeBlockLanguage(wrapper, language);
     }
     highlightCodeBlocks(root);
 }
@@ -724,6 +728,13 @@ export function getMarkdownRenderer(options?: MarkdownRenderOptions) {
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                </button>
+                <div class="code-action-divider"></div>
+                <button class="delete-code-button" title="Delete code block" aria-label="Delete code block">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                     </svg>
                 </button>
             </div>
@@ -878,4 +889,56 @@ export function htmlToMarkdown(html: string): string {
     // keep repeated WYSIWYG round-trips stable. Also strip ZWSP caret anchors
     // inserted after contenteditable=false file mentions.
     return getTurndownService().turndown(html).replace(/\u200B/g, '').replace(/\s+$/, '');
+}
+
+// Removes the first fenced code block whose language and (trailing-newline
+// trimmed) content match, e.g. when the user deletes a code block from the
+// read-only preview. Longer fences (``` vs ````) and tilde fences are handled;
+// non-matching blocks are left untouched. Returns the original string when no
+// block matched.
+export function removeFencedCodeBlock(markdown: string, language: string, content: string): string {
+    const normalizedLang = normalizeCodeLanguage(language);
+    const normalizedContent = (content || '').replace(/\u200B/g, '').replace(/\n$/, '');
+    const lines = markdown.split('\n');
+    const kept: string[] = [];
+    let fenceChar = '';
+    let fenceLen = 0;
+    let blockLang = '';
+    let start = -1;
+    const body: string[] = [];
+    let removed = false;
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const m = /^ {0,3}(`{3,}|~{3,})\s*([^\s`]*)\s*$/.exec(line);
+        if (start < 0) {
+            if (m) {
+                fenceChar = m[1][0];
+                fenceLen = m[1].length;
+                blockLang = normalizeCodeLanguage(m[2]);
+                start = i;
+                body.length = 0;
+            } else {
+                kept.push(line);
+            }
+            continue;
+        }
+        if (m && m[1][0] === fenceChar && m[1].length >= fenceLen) {
+            const blockContent = body.join('\n').replace(/\n$/, '');
+            const matches = blockLang === normalizedLang && blockContent === normalizedContent;
+            if (matches && !removed) {
+                removed = true;
+                // Also drop a single following blank line to avoid double spacing.
+                if (lines[i + 1] === '') i += 1;
+            } else {
+                kept.push(...lines.slice(start, i + 1));
+            }
+            start = -1;
+            body.length = 0;
+            continue;
+        }
+        body.push(line);
+    }
+    if (start >= 0) kept.push(...lines.slice(start));
+    return (removed ? kept.join('\n') : markdown).replace(/\n{3,}/g, '\n\n');
 }

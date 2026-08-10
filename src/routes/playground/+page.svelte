@@ -19,7 +19,7 @@
     import fileStore, { isDotFileName, type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
-    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, wrapImageThumbnails, wrapCodeBlocksWithCopy, highlightCodeBlocks, setCodeBlockLanguage, ensureTrailingEmptyLine, ensureFileMentionCarets, prepareTaskListCheckboxes, isTaskListItem, isEmptyTaskListItem, createTaskCheckbox, ensureTaskCheckbox, ensureTaskItemCaretAnchor, removeTaskCheckbox, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, CODE_COPY_WRAPPER_CLASS, CODE_LANGUAGE_INPUT_CLASS, CODE_LANGUAGE_DATALIST_ID, CODE_LANGUAGE_OPTIONS, resolvePastedImages, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref, fileMentionHtml, FILE_MENTION_CLASS } from '$lib/utils/markdown';
+    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, removeFencedCodeBlock, wrapImageThumbnails, wrapCodeBlocksWithCopy, highlightCodeBlocks, getCodeBlockLanguage, setCodeBlockLanguage, normalizeCodeLanguage, ensureTrailingEmptyLine, ensureFileMentionCarets, prepareTaskListCheckboxes, isTaskListItem, isEmptyTaskListItem, createTaskCheckbox, ensureTaskCheckbox, ensureTaskItemCaretAnchor, removeTaskCheckbox, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, CODE_COPY_WRAPPER_CLASS, CODE_LANGUAGE_INPUT_CLASS, CODE_LANGUAGE_DATALIST_ID, CODE_LANGUAGE_OPTIONS, resolvePastedImages, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref, fileMentionHtml, FILE_MENTION_CLASS } from '$lib/utils/markdown';
     import { storePastedImage, deletePastedImage, inlinePastedImageLinks } from '$lib/utils/imageStore';
     import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore/lite';
     import QRCode from 'qrcode';
@@ -2257,6 +2257,9 @@ func main() {
         ensureTrailingEmptyLine(wysiwygEl);
         resolvePastedImages(wysiwygEl);
         wysiwygDirty = false;
+        // A full re-render rebuilds the editor, so a snapshot of a deleted
+        // block's position is no longer valid.
+        deletedCodeBlockUndo = null;
     }
 
     async function enterPreviewEditMode(force = false) {
@@ -2281,7 +2284,72 @@ func main() {
         await enterPreviewEditMode(true);
     }
 
+    let activeLangPicker: {
+        wrapper: HTMLElement;
+        button: HTMLElement;
+        currentLang: string;
+        rect: DOMRect;
+    } | null = null;
+    let langSearchQuery = '';
+    let langSearchInputEl: HTMLInputElement | null = null;
+
+    $: filteredLanguages = CODE_LANGUAGE_OPTIONS.filter((opt) => {
+        if (!langSearchQuery.trim()) return true;
+        const q = langSearchQuery.trim().toLowerCase();
+        return opt.label.toLowerCase().includes(q) || opt.value.toLowerCase().includes(q);
+    });
+
+    function openLangPicker(btn: HTMLElement, wrapper: HTMLElement) {
+        const pre = wrapper.querySelector('pre');
+        const currentLang = pre ? getCodeBlockLanguage(pre) : (wrapper.dataset.language || '');
+        const rect = btn.getBoundingClientRect();
+        langSearchQuery = '';
+        activeLangPicker = { wrapper, button: btn, currentLang, rect };
+        wrapper.classList.add('lang-picker-active');
+        setTimeout(() => {
+            if (langSearchInputEl) langSearchInputEl.focus();
+        }, 20);
+    }
+
+    function closeLangPicker() {
+        if (activeLangPicker) {
+            activeLangPicker.wrapper.classList.remove('lang-picker-active');
+            activeLangPicker = null;
+        }
+    }
+
+    function selectCodeLanguage(langValue: string) {
+        if (!activeLangPicker) return;
+        const { wrapper } = activeLangPicker;
+        setCodeBlockLanguage(wrapper, langValue);
+        closeLangPicker();
+        // Keep the action bar visible for a moment after picking a language so
+        // the user can see the result, then fade back to hover-only.
+        wrapper.classList.add('lang-picker-active');
+        setTimeout(() => {
+            if (wrapper.isConnected) wrapper.classList.remove('lang-picker-active');
+        }, 2500);
+        handleWysiwygInput();
+    }
+
+    function handleLangSearchKeyDown(e: KeyboardEvent) {
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            closeLangPicker();
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (filteredLanguages.length > 0) {
+                selectCodeLanguage(filteredLanguages[0].value);
+            } else if (langSearchQuery.trim()) {
+                selectCodeLanguage(langSearchQuery.trim());
+            }
+        }
+    }
+
     function handleWysiwygInput(event?: Event) {
+        // Any real edit supersedes the last code-block deletion, so the
+        // one-level undo no longer applies (native undo takes over).
+        deletedCodeBlockUndo = null;
         const target = event?.target;
         if (target instanceof HTMLInputElement && target.classList.contains(CODE_LANGUAGE_INPUT_CLASS)) {
             const wrapper = target.closest(`.${CODE_COPY_WRAPPER_CLASS}`) as HTMLElement | null;
@@ -2579,6 +2647,7 @@ func main() {
                 wrapper.remove();
                 return;
             }
+            if (activeLangPicker && wrapper === activeLangPicker.wrapper) return;
             if (focusedLanguageInput && wrapper.contains(focusedLanguageInput)) return;
             if (caretNode && wrapper.contains(caretNode)) return;
             const hasText = Array.from(pres).some((p) => (p.textContent || '').replace(/\u200B/g, '').trim() !== '');
@@ -3341,8 +3410,32 @@ func main() {
     // clicking the thumbnail opens the full-size lightbox. Checkboxes toggle
     // via the native control + change handler.
     function handleWysiwygClick(event: MouseEvent) {
-        if (tryOpenPlaygroundFileLink(event, wysiwygEl)) return;
         const target = event.target as HTMLElement;
+        const langBtn = target.closest('.code-lang-btn') as HTMLElement | null;
+        if (langBtn) {
+            event.preventDefault();
+            event.stopPropagation();
+            const wrapper = langBtn.closest(`.${CODE_COPY_WRAPPER_CLASS}`) as HTMLElement | null;
+            if (wrapper) {
+                if (activeLangPicker && activeLangPicker.button === langBtn) {
+                    closeLangPicker();
+                } else {
+                    openLangPicker(langBtn, wrapper);
+                }
+            }
+            return;
+        }
+        const deleteCodeBtn = target.closest('.delete-code-button') as HTMLElement | null;
+        if (deleteCodeBtn && wysiwygEl?.contains(deleteCodeBtn)) {
+            event.preventDefault();
+            const wrapper = deleteCodeBtn.closest(`.${CODE_COPY_WRAPPER_CLASS}`) as HTMLElement | null;
+            if (wrapper) deleteWysiwygCodeBlock(wrapper);
+            return;
+        }
+        if (activeLangPicker && !target.closest('.lang-picker-popover')) {
+            closeLangPicker();
+        }
+        if (tryOpenPlaygroundFileLink(event, wysiwygEl)) return;
         if (target instanceof HTMLInputElement && target.classList.contains(CODE_LANGUAGE_INPUT_CLASS)) return;
         removeOrphanCodeWrappers();
         if (target instanceof HTMLInputElement && target.type === 'checkbox' && wysiwygEl?.contains(target)) {
@@ -3371,8 +3464,32 @@ func main() {
     // Click handling in the read-only markdown preview.
     function handlePreviewClick(event: MouseEvent) {
         const container = event.currentTarget as HTMLElement;
-        if (tryOpenPlaygroundFileLink(event, container)) return;
         const target = event.target as HTMLElement;
+        const langBtn = target.closest('.code-lang-btn') as HTMLElement | null;
+        if (langBtn) {
+            event.preventDefault();
+            event.stopPropagation();
+            const wrapper = langBtn.closest(`.${CODE_COPY_WRAPPER_CLASS}`) as HTMLElement | null;
+            if (wrapper) {
+                if (activeLangPicker && activeLangPicker.button === langBtn) {
+                    closeLangPicker();
+                } else {
+                    openLangPicker(langBtn, wrapper);
+                }
+            }
+            return;
+        }
+        const deleteCodeBtn = target.closest('.delete-code-button') as HTMLElement | null;
+        if (deleteCodeBtn && container.contains(deleteCodeBtn)) {
+            event.preventDefault();
+            const wrapper = deleteCodeBtn.closest('.code-block-wrapper') as HTMLElement | null;
+            if (wrapper) void deletePreviewCodeBlock(wrapper);
+            return;
+        }
+        if (activeLangPicker && !target.closest('.lang-picker-popover')) {
+            closeLangPicker();
+        }
+        if (tryOpenPlaygroundFileLink(event, container)) return;
         const deleteBtn = target.closest(`.${THUMB_DELETE_CLASS}`) as HTMLElement | null;
         if (deleteBtn && container.contains(deleteBtn)) {
             event.preventDefault();
@@ -3406,6 +3523,85 @@ func main() {
                 .replace(pattern, '')
                 .replace(/[ \t]+\n/g, '\n')
                 .replace(/\n{3,}/g, '\n\n');
+            if (next !== sourceEntry.content) {
+                sourceEntry.content = next;
+                sourceEntry.lastUpdated = Date.now();
+            }
+            return { ...s, [fkey]: JSON.stringify(files) };
+        });
+    }
+
+    // Deletes a code block from the WYSIWYG editor. The removed wrapper is
+    // snapshotted so a single ctrl/cmd+z (handleWysiwygKeydown) restores the
+    // block; the browser's native undo stack can't restore a block removed by
+    // JS, so this is a one-level undo that mirrors a manual delete.
+    let deletedCodeBlockUndo: { html: string; index: number } | null = null;
+    function deleteWysiwygCodeBlock(wrapper: HTMLElement) {
+        if (!wysiwygEl || !wrapper.isConnected) return;
+        if (activeLangPicker && activeLangPicker.wrapper === wrapper) closeLangPicker();
+        const children = Array.from(wysiwygEl.children);
+        deletedCodeBlockUndo = {
+            html: wrapper.outerHTML,
+            index: children.indexOf(wrapper)
+        };
+        wrapper.remove();
+        ensureTrailingEmptyLine(wysiwygEl);
+        wysiwygDirty = true;
+        commitWysiwygEdits();
+        // Bring focus back to the editor so the next ctrl/cmd+z is handled
+        // here (the trash button is contenteditable=false and would keep it).
+        wysiwygEl.focus();
+    }
+
+    // Restores the most recently deleted code block. Returns true when a
+    // block was restored (and the native undo must not run).
+    function undoWysiwygCodeBlockDelete(): boolean {
+        if (!wysiwygEl || !deletedCodeBlockUndo) return false;
+        const { html, index } = deletedCodeBlockUndo;
+        deletedCodeBlockUndo = null;
+        const holder = document.createElement('div');
+        holder.innerHTML = html;
+        const el = holder.firstElementChild as HTMLElement | null;
+        if (!el) return false;
+        wysiwygEl.insertBefore(el, wysiwygEl.children[index] ?? null);
+        wrapCodeBlocksWithCopy(wysiwygEl);
+        const pre = el.querySelector('pre');
+        if (pre) {
+            const range = document.createRange();
+            range.selectNodeContents(pre);
+            range.collapse(false);
+            const selection = window.getSelection();
+            selection?.removeAllRanges();
+            selection?.addRange(range);
+        }
+        wysiwygEl.focus();
+        handleWysiwygInput();
+        return true;
+    }
+
+    // Deletes a code block from the source markdown when its trash button is
+    // clicked in the read-only preview.
+    async function deletePreviewCodeBlock(wrapper: HTMLElement) {
+        const sourceFileId = activeTab?.type === 'preview' ? activeTab.sourceFileId : null;
+        if (!sourceFileId) return;
+        const confirmed = await showConfirm('Delete this code block? This action cannot be undone.', {
+            title: 'Delete code block',
+            confirmLabel: 'Delete',
+            tone: 'danger'
+        });
+        if (!confirmed) return;
+        const pre = wrapper.querySelector('pre');
+        const code = pre?.firstElementChild?.tagName === 'CODE' ? (pre.firstElementChild as HTMLElement) : null;
+        const language = code
+            ? (Array.from(code.classList).find((name) => name.startsWith('language-'))?.slice('language-'.length) ?? '')
+            : '';
+        const content = code ? (code.textContent || '') : (pre?.textContent || '');
+        const fkey = fileKey();
+        fileStore.update((s) => {
+            const files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            const sourceEntry = files.find((f) => f.fileId === sourceFileId && f.language === 'markdown');
+            if (!sourceEntry) return s;
+            const next = removeFencedCodeBlock(sourceEntry.content, language, content);
             if (next !== sourceEntry.content) {
                 sourceEntry.content = next;
                 sourceEntry.lastUpdated = Date.now();
@@ -3801,6 +3997,14 @@ func main() {
     // code, Ctrl/Cmd+K insert link. Also navigates the @-mention popup and
     // deletes file mentions atomically on Backspace/Delete.
     function handleWysiwygKeydown(e: KeyboardEvent) {
+        // ctrl/cmd+z after a code-block deletion restores the block (one
+        // level, before the browser's own undo stack gets a chance to undo
+        // the earlier typing instead).
+        if ((e.metaKey || e.ctrlKey) && !e.shiftKey && e.key.toLowerCase() === 'z' && deletedCodeBlockUndo) {
+            e.preventDefault();
+            undoWysiwygCodeBlockDelete();
+            return;
+        }
         if (showMentionPopup) {
             if (e.key === 'ArrowDown') {
                 e.preventDefault();
@@ -5481,6 +5685,54 @@ func main() {
                     <!-- svelte-ignore a11y-no-static-element-interactions -->
                     <div class="markdown-preview markdown-body" bind:this={previewEl} on:click={handlePreviewClick}>
                         {@html previewHtml}
+                    </div>
+                {/if}
+
+                {#if activeLangPicker}
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <!-- svelte-ignore a11y-no-static-element-interactions -->
+                    <div class="lang-picker-backdrop" on:click={closeLangPicker}></div>
+                    <div
+                        class="lang-picker-popover"
+                        style="position: fixed; top: {activeLangPicker.rect.bottom + 4}px; left: {Math.max(8, Math.min((typeof window !== 'undefined' ? window.innerWidth : 1000) - 230, activeLangPicker.rect.right - 220))}px;"
+                        role="dialog"
+                        aria-label="Select code block language"
+                    >
+                        <div class="lang-picker-search">
+                            <input
+                                type="text"
+                                class="lang-search-input"
+                                placeholder="Search for a language..."
+                                bind:value={langSearchQuery}
+                                bind:this={langSearchInputEl}
+                                on:keydown={handleLangSearchKeyDown}
+                            />
+                        </div>
+                        <div class="lang-picker-list">
+                            {#each filteredLanguages as option}
+                                <button
+                                    type="button"
+                                    class="lang-picker-option {normalizeCodeLanguage(option.value) === normalizeCodeLanguage(activeLangPicker.currentLang) ? 'selected' : ''}"
+                                    on:click={() => selectCodeLanguage(option.value)}
+                                >
+                                    <span class="lang-option-label">{option.label}</span>
+                                    {#if normalizeCodeLanguage(option.value) === normalizeCodeLanguage(activeLangPicker.currentLang)}
+                                        <svg class="lang-check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    {/if}
+                                </button>
+                            {/each}
+                            {#if filteredLanguages.length === 0 && langSearchQuery.trim()}
+                                <button
+                                    type="button"
+                                    class="lang-picker-option custom-lang"
+                                    on:click={() => selectCodeLanguage(langSearchQuery.trim())}
+                                >
+                                    <span class="lang-option-label">Use "{langSearchQuery.trim()}"</span>
+                                </button>
+                            {/if}
+                        </div>
                     </div>
                 {/if}
             {:else if CodeEditor}
