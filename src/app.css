@@ -374,49 +374,186 @@
 
 /* WYSIWYG code blocks keep their language outside the editable <pre>. */
 .md-code-copy > pre {
-  padding-top: 44px;
-}
-
-.md-code-copy .code-block-language {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  z-index: 10;
-  display: inline-flex;
-  align-items: center;
-}
-
-.md-code-copy .code-language-input {
-  width: 118px;
-  height: 28px;
-  padding: 2px 8px;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  background: var(--color-surface);
-  color: var(--color-text-secondary);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  outline: none;
-}
-
-.md-code-copy .code-language-input::placeholder {
-  color: var(--color-text-secondary);
-  opacity: 0.8;
-}
-
-.md-code-copy .code-language-input:focus {
-  border-color: var(--color-highlight);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-highlight) 20%, transparent);
+  padding-top: 36px;
 }
 
 .code-block-actions {
   position: absolute;
   top: 8px;
   right: 8px;
-  display: flex;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 4px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, background-color 0.15s ease;
+}
+
+.code-block-wrapper:hover .code-block-actions,
+.code-block-wrapper:focus-within .code-block-actions,
+.code-block-wrapper.lang-picker-active .code-block-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.code-lang-picker {
+  display: inline-flex;
+  align-items: center;
+}
+
+.code-lang-btn {
+  display: inline-flex;
   align-items: center;
   gap: 4px;
-  z-index: 10;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  padding: 3px 6px;
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  line-height: 1;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.code-lang-btn:hover {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.code-lang-chevron {
+  opacity: 0.7;
+}
+
+.code-action-divider {
+  width: 1px;
+  height: 14px;
+  background-color: var(--color-border);
+  margin: 0 2px;
+}
+
+.copy-code-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  padding: 4px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  line-height: 1;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.copy-code-button:hover {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.delete-code-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  padding: 4px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  line-height: 1;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.delete-code-button:hover {
+  background-color: color-mix(in srgb, var(--color-hard) 14%, transparent);
+  color: var(--color-hard);
+}
+
+/* Notion-style Language Picker Popover */
+.lang-picker-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: transparent;
+}
+
+.lang-picker-popover {
+  position: fixed;
+  z-index: 10000;
+  width: 220px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lang-picker-search {
+  padding: 2px;
+}
+
+.lang-search-input {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.lang-search-input:focus {
+  border-color: var(--color-highlight);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-highlight) 20%, transparent);
+}
+
+.lang-picker-list {
+  max-height: 220px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lang-picker-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 6px 10px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.lang-picker-option:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.lang-check-icon {
+  color: var(--color-text);
 }
 
 .code-block-lang-label {

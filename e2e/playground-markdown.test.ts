@@ -411,6 +411,7 @@ test('WYSIWYG code blocks have a working copy button', async ({ page }) => {
   await page.getByRole('button', { name: 'WYSIWYG' }).click();
   const editable = page.locator('.wysiwyg-editing');
   const copyButton = editable.locator('.md-code-copy .copy-code-button');
+  await editable.locator('.code-block-wrapper').first().hover();
   await expect(copyButton).toBeVisible();
 
   // Copying must not modify the stored markdown
@@ -431,20 +432,25 @@ test('WYSIWYG code blocks have a language autocomplete and syntax highlighting',
 
   await page.getByRole('button', { name: 'WYSIWYG' }).click();
   const editable = page.locator('.wysiwyg-editing');
-  const languageInput = editable.locator('.code-language-input');
-  await expect(languageInput).toHaveValue('python');
-  await expect(languageInput).toHaveAttribute('list', 'wysiwyg-code-languages');
+
+  const wrapper = editable.locator('.code-block-wrapper').first();
+  await wrapper.hover();
+
+  const langBtn = wrapper.locator('.code-lang-btn');
+  await expect(langBtn).toContainText('Python');
   await expect(editable.locator('.hl-keyword')).toContainText('if');
   await expect(editable.locator('.hl-string').filter({ hasText: '"ok"' })).toBeVisible();
 
-  const languageOptions = await page.locator('#wysiwyg-code-languages option').evaluateAll((options) =>
-    options.map((option) => option.getAttribute('value'))
-  );
-  expect(languageOptions).toEqual(expect.arrayContaining(['javascript', 'typescript', 'python', 'java', 'cpp', 'rust', 'go', 'sql', 'bash']));
+  await langBtn.click();
+  const popover = page.locator('.lang-picker-popover');
+  await expect(popover).toBeVisible();
 
-  await languageInput.fill('javascript');
+  const searchInput = popover.locator('.lang-search-input');
+  await searchInput.fill('javascript');
+  await page.keyboard.press('Enter');
+
   await expect.poll(() => getMarkdownContent(page)).toContain('```javascript');
-  await expect(languageInput).toHaveValue('javascript');
+  await expect(langBtn).toContainText('JavaScript');
   await expect(editable.locator('.hl-keyword')).toContainText('if');
 });
 
@@ -466,6 +472,8 @@ test('WYSIWYG turns an exact three-backtick line into a code block', async ({ pa
   await page.keyboard.press('Enter');
   await page.keyboard.type('```');
   await expect(editable.locator('pre')).toHaveCount(1);
+  const codeBlockWrapper = editable.locator('.code-block-wrapper').first();
+  await codeBlockWrapper.hover();
   await expect(editable.locator('.md-code-copy .copy-code-button')).toBeVisible();
   await expect.poll(async () => (await getMarkdownContent(page))?.match(/^```$/gm)?.length ?? 0).toBe(2);
 
@@ -475,6 +483,7 @@ test('WYSIWYG turns an exact three-backtick line into a code block', async ({ pa
   await expect.poll(async () => (await getMarkdownContent(page))?.match(/^```$/gm)?.length ?? 0).toBe(2);
 
   // The copy button copies the bare <pre> content (no <code> child in WYSIWYG blocks)
+  await codeBlockWrapper.hover();
   await editable.locator('.md-code-copy .copy-code-button').click();
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toContain('const y = 2;');
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).not.toContain('\u200B');
@@ -482,6 +491,53 @@ test('WYSIWYG turns an exact three-backtick line into a code block', async ({ pa
   await page.getByRole('button', { name: 'Preview' }).click();
   const preview = page.locator('.markdown-preview:not(.wysiwyg-editing)');
   await expect(preview.locator('code')).toHaveText('const y = 2;');
+});
+
+test('WYSIWYG deletes a code block from the trash button and ctrl+z restores it', async ({ page }) => {
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('```js\nconst a = 1;\n```');
+  await expect.poll(() => getMarkdownContent(page)).toContain('```js');
+
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  const wrapper = editable.locator('.code-block-wrapper').first();
+  await wrapper.hover();
+  await expect(editable.locator('.delete-code-button')).toBeVisible();
+
+  // The trash button removes the block immediately (no confirmation dialog)
+  await editable.locator('.delete-code-button').click();
+  await expect(editable.locator('pre')).toHaveCount(0);
+  await expect.poll(() => getMarkdownContent(page)).not.toContain('```js');
+
+  // ctrl+z (undo) restores the code block and its markdown
+  await editable.locator('> p:last-child').click();
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('pre')).toHaveCount(1);
+  await expect(editable.locator('pre')).toContainText('const a = 1');
+  await expect.poll(() => getMarkdownContent(page)).toContain('```js');
+
+  // Recreate a code block so the preview can be checked too
+  await editable.locator('> p:last-child').click();
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('```');
+  await page.keyboard.type('const b = 2;');
+  await expect.poll(() => getMarkdownContent(page)).toMatch(/^```\nconst b = 2;\n```$/m);
+
+  // The trash button also works from the read-only preview (now 2 blocks)
+  await page.getByRole('button', { name: 'Preview' }).click();
+  const preview = page.locator('.markdown-preview:not(.wysiwyg-editing)');
+  await expect(preview.locator('code')).toHaveCount(2);
+  await preview.locator('.code-block-wrapper').first().hover();
+  await preview.locator('.delete-code-button').first().click();
+  const dialog = page.locator('.dialog-card');
+  await expect(dialog).toBeVisible();
+  await dialog.getByRole('button', { name: 'Delete' }).click();
+  await expect(preview.locator('code')).toHaveCount(1);
+  await expect.poll(() => getMarkdownContent(page)).not.toContain('const a = 1');
+  await expect.poll(() => getMarkdownContent(page)).toContain('const b = 2');
 });
 
 test('WYSIWYG Enter stays inside a code block and only exits on an empty line', async ({ page }) => {

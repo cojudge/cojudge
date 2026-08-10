@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, highlightCodeHtml, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref } from './markdown';
+import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, highlightCodeHtml, removeFencedCodeBlock, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref } from './markdown';
 
 describe('markdown utils', () => {
     it('renders markdown with the interactive code-block renderer', () => {
@@ -117,6 +117,22 @@ describe('markdown utils', () => {
         expect(back).toContain('| A | B |');
         // Round-tripping is stable: md -> html -> md -> html -> md converges
         expect(htmlToMarkdown(renderMarkdownPlain(back))).toBe(back);
+    });
+
+    it('removes a matching fenced code block from markdown', () => {
+        const md = ['before', '', '```python', 'if True:', '    print("ok")', '```', '', 'after'].join('\n');
+        expect(removeFencedCodeBlock(md, 'python', 'if True:\n    print("ok")')).toBe('before\n\nafter');
+        // Non-matching language or content leaves the block untouched
+        expect(removeFencedCodeBlock(md, 'js', 'if True:\n    print("ok")')).toBe(md);
+        expect(removeFencedCodeBlock(md, 'python', 'else')).toBe(md);
+        // Longer fences (content containing backticks) still match
+        const backticks = ['a', '', '````', 'x`y', '````', '', 'b'].join('\n');
+        expect(removeFencedCodeBlock(backticks, '', 'x`y')).toBe('a\n\nb');
+        // Tilde fences and language-less blocks match too
+        const tilde = ['a', '', '~~~', 'z', '~~~', '', 'b'].join('\n');
+        expect(removeFencedCodeBlock(tilde, '', 'z')).toBe('a\n\nb');
+        // No fence at all returns the input unchanged
+        expect(removeFencedCodeBlock('plain text', '', 'plain')).toBe('plain text');
     });
 
     it('round-trips bare <pre> elements (WYSIWYG code-block button) to fenced code', () => {
