@@ -227,13 +227,16 @@ static vector<string> to_string_array(const string &s) {
     if (t.front() == '[' && t.back() == ']') {
         t = t.substr(1, t.size() - 2);
     }
+    int depth = 0;
     bool inDQ = false, inSQ = false;
     string cur;
     for (size_t i = 0; i < t.size(); ++i) {
         char c = t[i];
         if (c == '"' && !inSQ) { inDQ = !inDQ; continue; }
         if (c == '\\'' && !inDQ) { inSQ = !inSQ; continue; }
-        if (c == ',' && !inDQ && !inSQ) {
+        if (c == '[') depth++;
+        else if (c == ']') depth--;
+        if (c == ',' && !inDQ && !inSQ && depth == 0) {
             string token = trim(cur);
             res.push_back(unquote(token));
             cur.clear();

@@ -220,6 +220,7 @@ func toStringArray(s string) []string {
     s = s[1 : len(s)-1]
     var res []string
     var cur strings.Builder
+    depth := 0
     inDQ := false
     inSQ := false
     for _, c := range s {
@@ -231,7 +232,12 @@ func toStringArray(s string) []string {
             inSQ = !inSQ
             continue
         }
-        if c == ',' && !inDQ && !inSQ {
+        if c == '[' {
+            depth++
+        } else if c == ']' {
+            depth--
+        }
+        if c == ',' && !inDQ && !inSQ && depth == 0 {
             token := strings.TrimSpace(cur.String())
             res = append(res, token)
             cur.Reset()
