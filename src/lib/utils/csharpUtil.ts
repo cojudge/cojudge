@@ -189,12 +189,15 @@ public static class CSharpHelper {
         if (t.StartsWith("[")) t = t.Substring(1);
         if (t.EndsWith("]")) t = t.Substring(0, t.Length - 1);
         StringBuilder cur = new StringBuilder();
+        int depth = 0;
         bool inDQ = false, inSQ = false;
         for (int i = 0; i < t.Length; i++) {
             char c = t[i];
             if (c == '"' && !inSQ) { inDQ = !inDQ; continue; }
             if (c == '\\'' && !inDQ) { inSQ = !inSQ; continue; }
-            if (c == ',' && !inDQ && !inSQ) {
+            if (c == '[') depth++;
+            else if (c == ']') depth--;
+            if (c == ',' && !inDQ && !inSQ && depth == 0) {
                 string token = cur.ToString().Trim();
                 res.Add(token);
                 cur.Clear();

@@ -165,12 +165,15 @@ export const javaHelperMethods = `
         if (t.startsWith("[")) t = t.substring(1);
         if (t.endsWith("]")) t = t.substring(0, t.length()-1);
         StringBuilder cur = new StringBuilder();
+        int depth = 0;
         boolean inDQ = false, inSQ = false;
         for (int i = 0; i < t.length(); i++) {
             char c = t.charAt(i);
             if (c == '"' && !inSQ) { inDQ = !inDQ; continue; }
             if (c == '\\'' && !inDQ) { inSQ = !inSQ; continue; }
-            if (c == ',' && !inDQ && !inSQ) {
+            if (c == '[') depth++;
+            else if (c == ']') depth--;
+            if (c == ',' && !inDQ && !inSQ && depth == 0) {
                 String token = cur.toString().trim();
                 res.add(token);
                 cur.setLength(0);
