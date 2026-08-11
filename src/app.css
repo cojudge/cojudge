@@ -617,7 +617,6 @@
   justify-content: center;
   color: var(--color-text-secondary);
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
