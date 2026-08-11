@@ -1,4 +1,4 @@
-export const CLOUD_HISTORY_LIMIT = 12;
+export const CLOUD_HISTORY_LIMIT = 5;
 
 export type SyncIntent = 'fetch' | 'push';
 export type SyncDirection = 'none' | 'pending-upload' | 'upload' | 'download' | 'conflict';
@@ -63,7 +63,7 @@ export function resolveSyncDirection(
 }
 
 export function nextCloudSnapshotSlot(currentSnapshotId: string | null): string {
-	const match = /^slot-([0-9]+)$/.exec(currentSnapshotId ?? '');
+	const match = /^slot-([0-4])$/.exec(currentSnapshotId ?? '');
 	const current = match ? Number(match[1]) : -1;
 	return `slot-${(current + 1) % CLOUD_HISTORY_LIMIT}`;
 }

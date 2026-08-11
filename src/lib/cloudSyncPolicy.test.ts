@@ -105,10 +105,10 @@ describe('cloud sync direction', () => {
 });
 
 describe('cloud snapshot slots', () => {
-	it('cycles through a bounded twelve-revision history', () => {
+	it('cycles through a bounded five-revision history', () => {
 		let slot: string | null = null;
 		const revisions: string[] = [];
-		for (let index = 0; index < 14; index++) {
+		for (let index = 0; index < 7; index++) {
 			slot = nextCloudSnapshotSlot(slot);
 			revisions.push(slot);
 		}
@@ -118,13 +118,6 @@ describe('cloud snapshot slots', () => {
 			'slot-2',
 			'slot-3',
 			'slot-4',
-			'slot-5',
-			'slot-6',
-			'slot-7',
-			'slot-8',
-			'slot-9',
-			'slot-10',
-			'slot-11',
 			'slot-0',
 			'slot-1'
 		]);

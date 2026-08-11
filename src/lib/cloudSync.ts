@@ -607,7 +607,7 @@ function timestampMillis(data: Record<string, unknown>, key: string): number {
 }
 
 function validSnapshotId(value: string): boolean {
-	return /^slot-[0-9]+$/.test(value) || /^[a-z0-9-]{8,100}$/i.test(value);
+	return /^slot-[0-4]$/.test(value) || /^[a-z0-9-]{8,100}$/i.test(value);
 }
 
 function validRevisionId(value: string): boolean {
