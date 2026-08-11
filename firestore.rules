@@ -14,7 +14,7 @@ service cloud.firestore {
     }
 
     function isSnapshotSlot(snapshotId) {
-      return snapshotId.matches('^slot-[0-4]$');
+      return snapshotId.matches('^slot-[0-9]+$');
     }
 
     function isRevisionId(revisionId) {
@@ -45,12 +45,19 @@ service cloud.firestore {
     }
 
     function isNextSnapshotSlot(previousSnapshotId, nextSnapshotId) {
-      return (!previousSnapshotId.matches('^slot-[0-4]$') && nextSnapshotId == 'slot-0')
+      return (!previousSnapshotId.matches('^slot-[0-9]+$') && nextSnapshotId == 'slot-0')
         || (previousSnapshotId == 'slot-0' && nextSnapshotId == 'slot-1')
         || (previousSnapshotId == 'slot-1' && nextSnapshotId == 'slot-2')
         || (previousSnapshotId == 'slot-2' && nextSnapshotId == 'slot-3')
         || (previousSnapshotId == 'slot-3' && nextSnapshotId == 'slot-4')
-        || (previousSnapshotId == 'slot-4' && nextSnapshotId == 'slot-0');
+        || (previousSnapshotId == 'slot-4' && nextSnapshotId == 'slot-5')
+        || (previousSnapshotId == 'slot-5' && nextSnapshotId == 'slot-6')
+        || (previousSnapshotId == 'slot-6' && nextSnapshotId == 'slot-7')
+        || (previousSnapshotId == 'slot-7' && nextSnapshotId == 'slot-8')
+        || (previousSnapshotId == 'slot-8' && nextSnapshotId == 'slot-9')
+        || (previousSnapshotId == 'slot-9' && nextSnapshotId == 'slot-10')
+        || (previousSnapshotId == 'slot-10' && nextSnapshotId == 'slot-11')
+        || (previousSnapshotId == 'slot-11' && nextSnapshotId == 'slot-0');
     }
 
     function isValidLatestWrite(userId) {
