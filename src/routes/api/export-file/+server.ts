@@ -7,7 +7,7 @@ import os from 'node:os';
 export const POST: RequestHandler = async ({ request }) => {
     try {
         const { base64Data, textData, filename } = await request.json();
-        if (!filename) {
+        if (typeof filename !== 'string' || !filename.trim()) {
             return json({ error: 'Missing filename' }, { status: 400 });
         }
 
@@ -20,7 +20,13 @@ export const POST: RequestHandler = async ({ request }) => {
             targetDir = homeDir;
         }
 
-        const filePath = path.join(targetDir, filename);
+        const safeFilename =
+            path.basename(filename)
+                .replace(/["\u201C\u201D\u201E\u201F\uFF02]/g, '"')
+                .replace(/[<>:"/\\|?*\x00-\x1F]/g, '_')
+                .trim()
+                .slice(0, 200) || 'export.json';
+        const filePath = path.join(targetDir, safeFilename);
 
         if (textData !== undefined) {
             await fs.writeFile(filePath, textData, 'utf8');
