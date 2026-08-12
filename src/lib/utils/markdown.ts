@@ -808,7 +808,7 @@ function getTurndownService(): TurndownService {
             replacement: (_content: string, node: HTMLElement) => {
                 const href = node.getAttribute('href') || '';
                 const labelEl = node.querySelector(`.${FILE_MENTION_LABEL_CLASS}`);
-                const label = (labelEl?.textContent || node.textContent || href).trim();
+                const label = (labelEl?.textContent || node.textContent || href).trim().replace(/\\/g, '\\\\').replace(/[[\]]/g, '\\$&');
                 return `[${label}](${href})`;
             }
         });

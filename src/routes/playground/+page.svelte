@@ -615,6 +615,73 @@ func main() {
         if (changed) collapsedFolders = next;
     }
 
+    const INVALID_FILE_NAME_CHARS = /[<>:"/\\|?*\x00-\x1F]/g;
+    const INVALID_FILE_NAME_CHAR = /[<>:"/\\|?*\x00-\x1F]/;
+
+    function sanitizeFileName(raw: string): string {
+        // Normalize curly/smart quotes to straight ones first so autocorrect
+        // output ("“test”" etc.) gets the same treatment as typed quotes.
+        const normalized = raw.replace(/["\u201C\u201D\u201E\u201F\uFF02]/g, '"');
+        const cleaned = normalized.replace(INVALID_FILE_NAME_CHARS, '_').trim();
+        return (cleaned || 'Untitled').slice(0, 100);
+    }
+
+    // Returns a warning message when the typed name is not allowed, or ''.
+    function fileNameIssue(name: string): string {
+        if (!name.trim()) return '';
+        const normalized = name.replace(/["\u201C\u201D\u201E\u201F\uFF02]/g, '"');
+        if (INVALID_FILE_NAME_CHAR.test(normalized)) {
+            return 'Invalid characters: " < > : / \\ | ? *';
+        }
+        if (normalized.length > 100) {
+            return 'Name must be 100 characters or fewer.';
+        }
+        return '';
+    }
+
+    let renameIssue = '';
+    $: renameIssue = editingName ? fileNameIssue(editingName) : '';
+
+    let warningLeft = 0;
+    let warningTop = 0;
+    let warningPositioned = false;
+    $: if (!renameIssue) warningPositioned = false;
+
+    function updateWarningPosition() {
+        if (!renameInputEl || !renameIssue) return;
+        const rect = renameInputEl.getBoundingClientRect();
+        const gap = 6;
+        let left = rect.left;
+        let top = rect.bottom + gap;
+        const warningWidth = 240;
+        const warningHeight = 28;
+        if (left + warningWidth > window.innerWidth - 8) {
+            left = window.innerWidth - warningWidth - 8;
+        }
+        if (left < 8) left = 8;
+        if (top + warningHeight > window.innerHeight - 8) {
+            top = rect.top - warningHeight - gap;
+            if (top < 8) top = 8;
+        }
+        warningLeft = left;
+        warningTop = top;
+        warningPositioned = true;
+    }
+
+    $: if (renameIssue && renameInputEl) {
+        tick().then(updateWarningPosition);
+    }
+
+    onMount(() => {
+        const handler = () => updateWarningPosition();
+        window.addEventListener('scroll', handler, true);
+        window.addEventListener('resize', handler);
+        return () => {
+            window.removeEventListener('scroll', handler, true);
+            window.removeEventListener('resize', handler);
+        };
+    });
+
     function startRename(fileId: string, currentName: string, source: 'sidebar' | 'tab') {
         const tab = tabs.find((t) => t.fileId === fileId);
         if (tab?.type === 'whiteboard') return;
@@ -630,14 +697,18 @@ func main() {
 
     function applyRename() {
         if (!editingTabId) return;
-        const newName = editingName.trim();
+        const rawName = editingName.trim();
+        if (rawName && fileNameIssue(rawName)) {
+            // Keep the input open; the warning under it explains why.
+            return;
+        }
         const targetId = editingTabId;
         const targetTab = tabs.find(t => t.fileId === targetId);
         const oldName =
             targetTab?.fileName ||
             getFiles().find(f => f.fileId === targetId)?.fileName ||
             'Solution';
-        const finalName = newName || oldName;
+        const finalName = rawName || oldName;
         // Preview tabs share a display name with their source markdown file.
         const linkedIds = new Set<string>([targetId]);
         if (targetTab?.type === 'preview' && targetTab.sourceFileId) {
@@ -757,7 +828,7 @@ func main() {
         const nextId = uuidv4();
         const now = Date.now();
         const match = sourceFileName.match(/^(.*\D)(\d+)$/);
-        const fileName = match ? `${match[1]}${parseInt(match[2], 10) + 1}` : `${sourceFileName}-1`;
+        const fileName = sanitizeFileName(match ? `${match[1]}${parseInt(match[2], 10) + 1}` : `${sourceFileName}-1`);
         const parentId = sourceEntries[0].parentId ?? null;
 
         tabs = [...tabs, { fileId: nextId, fileName, isOpen: true, lastUpdated: now }];
@@ -954,7 +1025,7 @@ func main() {
             const folderId = resolveImportFileId(preferred, usedIds, idMap);
             files.push({
                 fileId: folderId,
-                fileName: node.name || 'Folder',
+                fileName: sanitizeFileName(node.name || 'Folder'),
                 content: '',
                 language: 'plaintext',
                 isActive: false,
@@ -976,7 +1047,7 @@ func main() {
             if (!lang || typeof lang.language !== 'string') continue;
             files.push({
                 fileId,
-                fileName: node.name || 'Solution',
+                fileName: sanitizeFileName(node.name || 'Solution'),
                 language: lang.language,
                 lastLanguage: typeof lang.lastLanguage === 'string' ? lang.lastLanguage : lang.language,
                 content: typeof lang.content === 'string' ? lang.content : '',
@@ -1782,6 +1853,55 @@ func main() {
         const idx = tabs.findIndex((t) => t.fileId === activeFileId);
         activeTabId = idx !== -1 ? idx : 0;
     }
+
+    // Sanitize file names that predate validation (older builds, CLI, MCP)
+    // so invalid characters cannot corrupt the explorer, tabs, or markdown
+    // file mentions.
+    onMount(() => {
+        const fkey = fileKey();
+        const current = getFiles();
+        let storeChanged = false;
+        for (const f of current) {
+            if (f.type === 'preview' || f.type === 'whiteboard') continue;
+            if (typeof f.fileName === 'string' && sanitizeFileName(f.fileName) !== f.fileName) {
+                storeChanged = true;
+                break;
+            }
+        }
+        if (storeChanged) {
+            fileStore.update((s) => {
+                let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+                let changed = false;
+                for (const f of files) {
+                    if (f.type === 'preview' || f.type === 'whiteboard') continue;
+                    if (typeof f.fileName === 'string') {
+                        const sanitized = sanitizeFileName(f.fileName);
+                        if (sanitized !== f.fileName) {
+                            f.fileName = sanitized;
+                            changed = true;
+                        }
+                    }
+                }
+                if (!changed) return s;
+                return { ...s, [fkey]: JSON.stringify(files) };
+            });
+        }
+        let tabsChanged = false;
+        for (const t of tabs) {
+            if (t.type === 'preview' || t.type === 'whiteboard') continue;
+            if (sanitizeFileName(t.fileName) !== t.fileName) {
+                tabsChanged = true;
+                break;
+            }
+        }
+        if (tabsChanged) {
+            tabs = tabs.map((t) => {
+                if (t.type === 'preview' || t.type === 'whiteboard') return t;
+                const sanitized = sanitizeFileName(t.fileName);
+                return sanitized === t.fileName ? t : { ...t, fileName: sanitized };
+            });
+        }
+    });
 
     onMount(async () => {
         const module = await import('$lib/components/CodeEditor.svelte');
@@ -5130,18 +5250,23 @@ func main() {
                             </span>
                         {/if}
                         {#if editingTabId === t.fileId && renamingSource === 'sidebar'}
-                             <input
-                                class="file-rename-input"
-                                type="text"
-                                bind:value={editingName}
-                                bind:this={renameInputEl}
-                                on:click|stopPropagation
-                                on:keydown|stopPropagation={(e) => {
-                                    if (e.key === 'Enter') { e.preventDefault(); applyRename(); }
-                                    else if (e.key === 'Escape') { e.preventDefault(); cancelRename(); }
-                                }}
-                                on:blur={applyRename}
-                            />
+                            <div class="rename-wrap">
+                                <input
+                                    class="file-rename-input"
+                                    type="text"
+                                    bind:value={editingName}
+                                    bind:this={renameInputEl}
+                                    on:click|stopPropagation
+                                    on:keydown|stopPropagation={(e) => {
+                                        if (e.key === 'Enter') { e.preventDefault(); applyRename(); }
+                                        else if (e.key === 'Escape') { e.preventDefault(); cancelRename(); }
+                                    }}
+                                    on:blur={applyRename}
+                                />
+                                {#if renameIssue}
+                                    <div class="rename-warning" role="alert" style="left:{warningLeft}px;top:{warningTop}px;{warningPositioned ? '' : 'visibility:hidden;'}">{renameIssue}</div>
+                                {/if}
+                            </div>
                         {:else}
                             {#if t.kind === 'file'}
                                 <span class="file-lang-icon">
@@ -5340,18 +5465,23 @@ func main() {
                             }}
                         >
                             {#if editingTabId === t.fileId && renamingSource === 'tab'}
-                                <input
-                                    class="tab-rename-input"
-                                    type="text"
-                                    bind:value={editingName}
-                                    bind:this={renameInputEl}
-                                    on:click|stopPropagation
-                                    on:keydown|stopPropagation={(e) => {
-                                        if (e.key === 'Enter') { e.preventDefault(); applyRename(); }
-                                        else if (e.key === 'Escape') { e.preventDefault(); cancelRename(); }
-                                    }}
-                                    on:blur={applyRename}
-                                />
+                                <div class="rename-wrap">
+                                    <input
+                                        class="tab-rename-input"
+                                        type="text"
+                                        bind:value={editingName}
+                                        bind:this={renameInputEl}
+                                        on:click|stopPropagation
+                                        on:keydown|stopPropagation={(e) => {
+                                            if (e.key === 'Enter') { e.preventDefault(); applyRename(); }
+                                            else if (e.key === 'Escape') { e.preventDefault(); cancelRename(); }
+                                        }}
+                                        on:blur={applyRename}
+                                    />
+                                    {#if renameIssue}
+                                        <div class="rename-warning" role="alert" style="left:{warningLeft}px;top:{warningTop}px;{warningPositioned ? '' : 'visibility:hidden;'}">{renameIssue}</div>
+                                    {/if}
+                                </div>
                             {:else}
                                 {#if t.type === 'preview'}
                                     <span class="tab-lang-icon">
@@ -6334,6 +6464,30 @@ func main() {
         min-width: 0;
     }
 
+    .rename-wrap {
+        position: relative;
+        display: inline-flex;
+        flex-direction: column;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .rename-warning {
+        position: fixed;
+        z-index: 60;
+        max-width: 240px;
+        padding: 3px 6px;
+        border-radius: 4px;
+        background: var(--color-third-bg);
+        border: 1px solid #e53e3e;
+        color: #e53e3e;
+        font-size: 0.7rem;
+        line-height: 1.3;
+        white-space: normal;
+        pointer-events: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
     /* Search Panel Styles */
     .search-panel {
         display: flex;
@@ -6856,6 +7010,7 @@ func main() {
         border-radius: 4px;
         padding: 2px 4px;
         font-size: 0.85rem;
+        width: 100%;
         max-width: 18ch;
     }
 
