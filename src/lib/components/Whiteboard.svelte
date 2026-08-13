@@ -2685,6 +2685,7 @@
 		--muted: var(--color-text-secondary, #475569);
 		--faint: var(--color-text-secondary, #64748b);
 		--border: var(--color-border, rgba(0, 0, 0, 0.1));
+		container-type: inline-size;
 		position: fixed;
 		inset: 0;
 		z-index: 1000;
@@ -3416,12 +3417,12 @@
 		to { opacity: 1; transform: translate(-50%, 0); }
 	}
 
-	@media (max-width: 1180px) {
+	@container (max-width: 1180px) {
 		.tool-button { width: 39px; }
 		.top-toolbar { gap: 1px; }
 	}
 
-	@media (max-width: 900px) {
+	@container (max-width: 900px) {
 		.top-toolbar {
 			top: auto;
 			bottom: 76px;
@@ -3477,7 +3478,7 @@
 		.toast { bottom: 136px; }
 	}
 
-	@media (max-width: 620px) {
+	@container (max-width: 620px) {
 		.square-button { width: 44px; height: 44px; }
 		.top-left { top: 12px; left: 12px; }
 		.top-actions { top: 12px; right: 12px; gap: 7px; }
