@@ -599,6 +599,40 @@ test('WYSIWYG Enter stays inside a code block and only exits on an empty line', 
   await expect.poll(async () => (await getMarkdownContent(page))?.match(/^```$/gm)?.length ?? 0).toBe(4);
 });
 
+test('WYSIWYG Ctrl+A inside a code block selects only the code', async ({ page }) => {
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('before');
+  await expect.poll(() => getMarkdownContent(page)).toBe('before');
+
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  await expect(editable).toBeVisible();
+
+  await editable.locator('> p:last-child').click();
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('```');
+  await page.keyboard.type('old code');
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('after');
+  await expect.poll(async () => (await getMarkdownContent(page)) ?? '').toContain('```\nold code\n```');
+  await expect.poll(async () => (await getMarkdownContent(page)) ?? '').toContain('after');
+
+  await editable.locator('pre').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  const selected = await page.evaluate(() => (window.getSelection()?.toString() ?? '').replace(/\u200B/g, ''));
+  expect(selected).toBe('old code');
+
+  await page.keyboard.type('new code');
+  await expect.poll(async () => (await getMarkdownContent(page)) ?? '').toContain('before');
+  await expect.poll(async () => (await getMarkdownContent(page)) ?? '').toContain('```\nnew code\n```');
+  await expect.poll(async () => (await getMarkdownContent(page)) ?? '').toContain('after');
+  await expect.poll(async () => (await getMarkdownContent(page)) ?? '').not.toContain('old code');
+});
+
 test('WYSIWYG removes the copy button when the code block is deleted', async ({ page }) => {
   await openMarkdownPlayground(page);
 

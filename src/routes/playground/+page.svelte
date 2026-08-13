@@ -2702,6 +2702,16 @@ func main() {
         return { start, end, total: total.length };
     }
 
+    function selectAllInWysiwygCodeBlock(pre: HTMLElement) {
+        const selection = window.getSelection();
+        if (!selection) return;
+        const range = document.createRange();
+        const code = pre.firstElementChild?.tagName === 'CODE' ? pre.firstElementChild : pre;
+        range.selectNodeContents(code);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+
     // Enter inside a code block: insert a real newline so the line stays part
     // of the same code block.
     function insertNewlineInPre() {
@@ -4255,6 +4265,18 @@ func main() {
 
         if (!e.metaKey && !e.ctrlKey) return;
         const key = e.key.toLowerCase();
+        if (key === 'a' && !e.shiftKey && !e.altKey) {
+            if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+            const pre = getPreFromSelection();
+            if (!pre) return;
+            const selection = window.getSelection();
+            if (!selection || selection.rangeCount === 0) return;
+            const end = selection.getRangeAt(0).endContainer;
+            if (end !== pre && !pre.contains(end)) return;
+            e.preventDefault();
+            selectAllInWysiwygCodeBlock(pre);
+            return;
+        }
         if (key === 'b' && !e.shiftKey && !e.altKey) {
             e.preventDefault();
             applyWysiwygCommand('bold');
@@ -5897,7 +5919,7 @@ func main() {
                             {#each recentFiles as file}
                                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                                 <div
-                                    class="recent-file-card"
+                                    class="recent-file-card {isDotFileName(file.fileName) ? 'dotfile' : ''}"
                                     role="button"
                                     tabindex="0"
                                     on:click={() => activateTab(file.fileId)}
@@ -7155,6 +7177,9 @@ func main() {
     .recent-file-card:hover {
         background-color: rgba(255, 255, 255, 0.06);
         border-color: var(--color-text-secondary);
+    }
+    .recent-file-card.dotfile {
+        opacity: 0.6;
     }
     .recent-file-card-header {
         display: flex;
