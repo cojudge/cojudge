@@ -371,6 +371,8 @@ func main() {
     let importInputEl: HTMLInputElement | null = null;
     let contextMenu: { x: number; y: number; parentId: string | null } | null = null;
     let contextMenuEl: HTMLElement | null = null;
+    let fileActionsMenu: { fileId: string; kind: 'file' | 'folder'; fileName: string; top: number; right: number } | null = null;
+    let fileActionsMenuEl: HTMLElement | null = null;
     let tabContextMenu: { x: number; y: number; fileId: string } | null = null;
     // Collapse state is device-local UI preference: it is kept in localStorage
     // but not in CLOUD_KEYS, so cloud sync never collects or restores it.
@@ -831,6 +833,10 @@ func main() {
         const fileName = sanitizeFileName(match ? `${match[1]}${parseInt(match[2], 10) + 1}` : `${sourceFileName}-1`);
         const parentId = sourceEntries[0].parentId ?? null;
 
+        const sourceLanguage = sourceFileId === tabs[activeTabId]?.fileId && !isSpecialTabType(tabs[activeTabId]?.type)
+            ? language
+            : getLanguageForTab(sourceFileId);
+
         tabs = [...tabs, { fileId: nextId, fileName, isOpen: true, lastUpdated: now }];
         const fkey = fileKey();
         fileStore.update((s) => {
@@ -841,6 +847,7 @@ func main() {
                     fileId: nextId,
                     fileName,
                     content: entry.content,
+                    lastLanguage: sourceLanguage,
                     output: '',
                     logs: '',
                     isActive: false,
@@ -856,7 +863,8 @@ func main() {
             return { ...s, [fkey]: JSON.stringify(files) };
         });
         activeTabId = tabs.length - 1;
-        await loadOrInitFile(language);
+        language = sourceLanguage;
+        await loadOrInitFile(sourceLanguage);
         persistTabOrder();
         startRename(nextId, fileName, 'sidebar');
     }
@@ -925,13 +933,31 @@ func main() {
         return { ...node, languages };
     }
 
-    async function downloadFolder(folderId: string) {
-        const files = getFiles();
-        const node = buildExportNode(folderId, files);
-        if (!node || node.type !== 'folder') return;
-        const textData = JSON.stringify(await inlineExportNodeImages(node), null, 2);
-        const filename = `${node.name || 'folder'}.json`;
+    const LANGUAGE_FILE_EXTENSIONS: Record<ProgrammingLanguage, string> = {
+        java: '.java',
+        python: '.py',
+        cpp: '.cpp',
+        csharp: '.cs',
+        rust: '.rs',
+        go: '.go',
+        typescript: '.ts',
+        plaintext: '.txt',
+        markdown: '.md'
+    };
 
+    function filenameForLanguageDownload(fileName: string, lang: ProgrammingLanguage): string {
+        const ext = LANGUAGE_FILE_EXTENSIONS[lang];
+        const base = (fileName || 'file').trim() || 'file';
+        if (base.toLowerCase().endsWith(ext)) return base;
+        return `${base}${ext}`;
+    }
+
+    async function saveTextDownload(
+        textData: string,
+        filename: string,
+        successTitle: string,
+        mimeType = 'text/plain;charset=utf-8'
+    ) {
         if (isDesktopMode) {
             try {
                 const response = await fetch('/api/export-file', {
@@ -942,7 +968,7 @@ func main() {
                 const result = await response.json();
                 if (result.success) {
                     void revealExportedFile(result.filePath);
-                    await showAlert(`Saved to ${result.filePath}`, { title: 'Folder downloaded' });
+                    await showAlert(`Saved to ${result.filePath}`, { title: successTitle });
                 } else {
                     await showAlert(result.error || 'Failed to save file', { title: 'Download failed' });
                 }
@@ -952,7 +978,7 @@ func main() {
             return;
         }
 
-        const blob = new Blob([textData], { type: 'application/json' });
+        const blob = new Blob([textData], { type: mimeType });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -961,6 +987,27 @@ func main() {
         a.click();
         a.remove();
         setTimeout(() => URL.revokeObjectURL(url), 0);
+    }
+
+    async function downloadFolder(folderId: string) {
+        const files = getFiles();
+        const node = buildExportNode(folderId, files);
+        if (!node || node.type !== 'folder') return;
+        const textData = JSON.stringify(await inlineExportNodeImages(node), null, 2);
+        await saveTextDownload(textData, `${node.name || 'folder'}.json`, 'Folder downloaded', 'application/json');
+    }
+
+    async function downloadActiveLanguageFile(fileId: string, fileName: string) {
+        const active = tabs[activeTabId];
+        const isActiveEditor = active?.fileId === fileId && !isSpecialTabType(active?.type);
+        const lang = isActiveEditor ? language : getLanguageForTab(fileId);
+        let content = isActiveEditor
+            ? (code ?? '')
+            : (getFiles().find((f) => f.fileId === fileId && f.language === lang)?.content ?? '');
+        if (lang === 'markdown') {
+            content = await inlinePastedImageLinks(content);
+        }
+        await saveTextDownload(content, filenameForLanguageDownload(fileName, lang), 'File downloaded');
     }
 
     function isExportNode(value: unknown): value is ExportNode {
@@ -1530,12 +1577,57 @@ func main() {
         tabContextMenu = null;
     }
 
+    function closeFileActionsMenu() {
+        fileActionsMenu = null;
+        fileActionsMenuEl = null;
+    }
+
+    function runFileAction(action: (menu: NonNullable<typeof fileActionsMenu>) => void) {
+        if (!fileActionsMenu) return;
+        const menu = fileActionsMenu;
+        closeFileActionsMenu();
+        action(menu);
+    }
+
+    function openFileActionsMenu(e: MouseEvent, node: FlatExplorerItem) {
+        e.stopPropagation();
+        if (node.kind === 'empty') return;
+        if (fileActionsMenu?.fileId === node.fileId) {
+            closeFileActionsMenu();
+            return;
+        }
+        closeContextMenu();
+        closeTabContextMenu();
+        showAddMenu = false;
+        const btn = e.currentTarget as HTMLElement;
+        btn.blur();
+        const rect = btn.getBoundingClientRect();
+        fileActionsMenu = {
+            fileId: node.fileId,
+            kind: node.kind,
+            fileName: node.fileName,
+            top: rect.bottom + 2,
+            right: Math.max(8, window.innerWidth - rect.right)
+        };
+        tick().then(() => {
+            if (!fileActionsMenuEl || !fileActionsMenu) return;
+            const menuRect = fileActionsMenuEl.getBoundingClientRect();
+            let top = rect.bottom + 2;
+            if (top + menuRect.height > window.innerHeight - 8) {
+                top = rect.top - menuRect.height - 2;
+            }
+            const next = { ...fileActionsMenu, top: Math.max(8, top) };
+            if (next.top !== fileActionsMenu.top) fileActionsMenu = next;
+        });
+    }
+
     function openTabContextMenu(e: MouseEvent, fileId: string) {
         e.preventDefault();
         e.stopPropagation();
         if (!tabs.some((tab) => tab.fileId === fileId && tab.isOpen)) return;
 
         closeContextMenu();
+        closeFileActionsMenu();
         showAddMenu = false;
         const menuW = 160;
         const menuH = 120;
@@ -1560,6 +1652,7 @@ func main() {
             clearExplorerDropHighlight();
         }
         showAddMenu = false;
+        closeFileActionsMenu();
         const parentId = node.kind === 'folder' ? node.fileId : getParentId(node.fileId);
         // Position within viewport
         const menuW = 150;
@@ -1973,6 +2066,11 @@ func main() {
             if (contextMenu && contextMenuEl && !contextMenuEl.contains(e.target as Node)) {
                 closeContextMenu();
             }
+            if (fileActionsMenu && fileActionsMenuEl && !fileActionsMenuEl.contains(e.target as Node)) {
+                if (!(e.target as HTMLElement | null)?.closest('.file-actions-trigger')) {
+                    closeFileActionsMenu();
+                }
+            }
             if (tabContextMenu && !(e.target as HTMLElement | null)?.closest('.tab-context-menu')) {
                 closeTabContextMenu();
             }
@@ -1993,10 +2091,12 @@ func main() {
                 showAddMenu = false;
                 closeContextMenu();
                 closeTabContextMenu();
+                closeFileActionsMenu();
             }
         };
         const handleScroll = () => {
             if (contextMenu) closeContextMenu();
+            if (fileActionsMenu) closeFileActionsMenu();
         };
         document.addEventListener('click', handleDocClick);
         document.addEventListener('contextmenu', handleDocContextMenu);
@@ -5195,7 +5295,7 @@ func main() {
                         aria-label="New file or folder"
                         aria-haspopup="menu"
                         aria-expanded={showAddMenu}
-                        on:click|stopPropagation={() => { closeContextMenu(); showAddMenu = !showAddMenu; }}
+                        on:click|stopPropagation={() => { closeContextMenu(); closeFileActionsMenu(); showAddMenu = !showAddMenu; }}
                     >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -5234,7 +5334,7 @@ func main() {
                     </div>
                 {:else}
                     <div
-                        class="file-item {t.kind === 'folder' ? 'folder-item' : ''} {isDotFileName(t.fileName) ? 'dotfile' : ''} {t.kind === 'file' && hasOpenTabs && t.fileId === activeExplorerFileId ? 'active' : ''} {explorerDragOverId === t.fileId ? 'drag-over-folder' : ''} {explorerPointerDrag?.active && explorerPointerDrag.id === t.fileId ? 'is-dragging' : ''}"
+                        class="file-item {t.kind === 'folder' ? 'folder-item' : ''} {isDotFileName(t.fileName) ? 'dotfile' : ''} {t.kind === 'file' && hasOpenTabs && t.fileId === activeExplorerFileId ? 'active' : ''} {explorerDragOverId === t.fileId ? 'drag-over-folder' : ''} {explorerPointerDrag?.active && explorerPointerDrag.id === t.fileId ? 'is-dragging' : ''} {fileActionsMenu?.fileId === t.fileId ? 'actions-open' : ''}"
                         style="padding-left: {8 + t.depth * 14}px"
                         data-explorer-id={t.fileId}
                         data-explorer-kind={t.kind}
@@ -5299,65 +5399,19 @@ func main() {
                         {/if}
 
                         <div class="file-actions">
-                            {#if t.kind === 'file'}
-                                <button
-                                    class="file-action-btn"
-                                    title={isDotFileName(t.fileName) ? 'Show this file in cloud backups' : 'Hide this file from cloud backups'}
-                                    aria-label={isDotFileName(t.fileName) ? 'Show this file in cloud backups' : 'Hide this file from cloud backups'}
-                                    on:click|stopPropagation={() => toggleCloudVisibility(t.fileId, t.fileName)}
-                                >
-                                    {#if isDotFileName(t.fileName)}
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="2" fill="none"/>
-                                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
-                                            <path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                        </svg>
-                                    {:else}
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="2" fill="none"/>
-                                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
-                                        </svg>
-                                    {/if}
-                                </button>
-                                <button
-                                    class="file-action-btn"
-                                    title="Duplicate"
-                                    on:click|stopPropagation={() => duplicateFile(t.fileId, t.fileName)}
-                                >
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                        <path d="M8 16H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2m-6 12h8a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2z" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                                    </svg>
-                                </button>
-                            {:else}
-                                <button
-                                    class="file-action-btn"
-                                    title="Download folder"
-                                    on:click|stopPropagation={() => downloadFolder(t.fileId)}
-                                >
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </button>
-                            {/if}
                             <button
-                                class="file-action-btn"
-                                title="Rename"
-                                on:click|stopPropagation={() => startRename(t.fileId, t.fileName, 'sidebar')}
+                                type="button"
+                                class="icon-button file-actions-trigger"
+                                aria-label="More actions"
+                                aria-haspopup="menu"
+                                aria-expanded={fileActionsMenu?.fileId === t.fileId}
+                                on:pointerdown|stopPropagation
+                                on:click|stopPropagation={(e) => openFileActionsMenu(e, t)}
                             >
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                                    <path d="M14.06 6.19l3.75 3.75 1.69-1.69a1.5 1.5 0 000-2.12L17.87 4.5a1.5 1.5 0 00-2.12 0l-1.69 1.69z" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                                </svg>
-                            </button>
-                            <button
-                                class="file-action-btn"
-                                title="Delete"
-                                on:click|stopPropagation={() => deleteFile(t.fileId)}
-                            >
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6" stroke-linecap="round" stroke-linejoin="round"/>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <circle cx="5" cy="12" r="2"/>
+                                    <circle cx="12" cy="12" r="2"/>
+                                    <circle cx="19" cy="12" r="2"/>
                                 </svg>
                             </button>
                         </div>
@@ -5375,6 +5429,96 @@ func main() {
             >
                 <button class="add-menu-item" role="menuitem" on:click={contextCreateFile}>New File</button>
                 <button class="add-menu-item" role="menuitem" on:click={contextCreateFolder}>New Folder</button>
+            </div>
+        {/if}
+        {#if fileActionsMenu}
+            <div
+                class="file-actions-menu"
+                role="menu"
+                aria-label="File actions"
+                tabindex="-1"
+                bind:this={fileActionsMenuEl}
+                style="top: {fileActionsMenu.top}px; right: {fileActionsMenu.right}px;"
+                on:contextmenu|preventDefault
+            >
+                {#if fileActionsMenu.kind === 'file'}
+                    <button
+                        class="file-actions-menu-item"
+                        role="menuitem"
+                        on:click={() => runFileAction((m) => void downloadActiveLanguageFile(m.fileId, m.fileName))}
+                    >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Download
+                    </button>
+                    <button
+                        class="file-actions-menu-item"
+                        role="menuitem"
+                        on:click={() => runFileAction((m) => toggleCloudVisibility(m.fileId, m.fileName))}
+                    >
+                        {#if isDotFileName(fileActionsMenu.fileName)}
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                                <path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            Show in cloud
+                        {:else}
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Hide from cloud
+                        {/if}
+                    </button>
+                    <button
+                        class="file-actions-menu-item"
+                        role="menuitem"
+                        on:click={() => runFileAction((m) => void duplicateFile(m.fileId, m.fileName))}
+                    >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M8 16H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2m-6 12h8a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2z" stroke="currentColor" stroke-width="1.5"/>
+                        </svg>
+                        Duplicate
+                    </button>
+                {:else}
+                    <button
+                        class="file-actions-menu-item"
+                        role="menuitem"
+                        on:click={() => runFileAction((m) => void downloadFolder(m.fileId))}
+                    >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Download
+                    </button>
+                {/if}
+                <button
+                    class="file-actions-menu-item"
+                    role="menuitem"
+                    on:click={() => runFileAction((m) => startRename(m.fileId, m.fileName, 'sidebar'))}
+                >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M14.06 6.19l3.75 3.75 1.69-1.69a1.5 1.5 0 000-2.12L17.87 4.5a1.5 1.5 0 00-2.12 0l-1.69 1.69z" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    Rename
+                </button>
+                <button
+                    class="file-actions-menu-item"
+                    role="menuitem"
+                    on:click={() => runFileAction((m) => void deleteFile(m.fileId))}
+                >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Delete
+                </button>
             </div>
         {/if}
         {:else if activePanel === 'search'}
@@ -6448,30 +6592,59 @@ func main() {
     }
 
     .file-actions {
-        display: none;
-        align-items: center;
-        gap: 4px;
-        flex-shrink: 0;
-    }
-
-    .file-item:hover .file-actions {
         display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        opacity: 0;
+        pointer-events: none;
     }
 
-    .file-action-btn {
+    .file-item:hover .file-actions,
+    .file-item.actions-open .file-actions {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .file-actions-menu {
+        position: fixed;
+        min-width: 156px;
+        border: 1px solid var(--color-border);
+        background-color: var(--color-bg);
+        border-radius: 6px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+        z-index: 1000;
+        padding: 4px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .file-actions-menu-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
         background: transparent;
         border: none;
-        color: var(--color-text-secondary);
-        cursor: pointer;
-        padding: 2px;
+        color: var(--color-text);
+        text-align: left;
+        padding: 6px 8px;
         border-radius: 4px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.82rem;
+        white-space: nowrap;
     }
 
-    .file-action-btn:hover {
-        background-color: rgba(255,255,255,0.1);
+    .file-actions-menu-item svg {
+        flex-shrink: 0;
+        color: var(--color-text-secondary);
+    }
+
+    .file-actions-menu-item:hover {
+        background-color: var(--color-second-bg);
+    }
+
+    .file-actions-menu-item:hover svg {
         color: var(--color-text);
     }
 
