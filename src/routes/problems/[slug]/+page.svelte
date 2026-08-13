@@ -971,25 +971,28 @@
             <div class="title-row">
                 <h1>{data.problem.title}</h1>
                 {#if !isGameMode && $userStore && $userStore[fileKey()]}
-                    <span class="solved-pill" title="You've solved this problem" aria-label="Solved" role="status">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        Solved
-                    </span>
-                    {#if bestRank}
-                        <button
-                            class="game-rank-badge"
-                            class:rank-s={bestRank === 'S'}
-                            class:rank-a={bestRank === 'A'}
-                            class:rank-b={bestRank === 'B'}
-                            class:rank-c={bestRank === 'C'}
-                            on:click={() => (showGameHistory = true)}
-                            title="View game history"
-                        >
-                            {bestRank}
-                        </button>
-                    {/if}
+                    <div class="title-badges">
+                        <span class="solved-pill" title="You've solved this problem" aria-label="Solved" role="status">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Solved
+                        </span>
+                        {#if bestRank}
+                            <button
+                                class="game-rank-badge"
+                                class:rank-s={bestRank === 'S'}
+                                class:rank-a={bestRank === 'A'}
+                                class:rank-b={bestRank === 'B'}
+                                class:rank-c={bestRank === 'C'}
+                                on:click={() => (showGameHistory = true)}
+                                title="View game history"
+                                aria-label="Rank {bestRank}, view game history"
+                            >
+                                {bestRank}
+                            </button>
+                        {/if}
+                    </div>
                 {/if}
             </div>
             <span class="badge {getDifficultyClass(data.problem.difficulty)}">
@@ -1393,14 +1396,20 @@
     .prose h1 { font-size: 1.75rem; margin-bottom: var(--spacing-3); }
     .title-row {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
+        align-items: flex-start;
         gap: var(--spacing-2);
     }
     .title-row h1 {
         margin: 0 0 var(--spacing-3) 0;
         flex: 1 1 auto;
         min-width: 0;
+    }
+    .title-badges {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;
+        margin-top: 0.4em;
     }
     
     .back-button {
@@ -1643,8 +1652,6 @@
         border-radius: 999px;
         background-color: var(--color-easy);
         color: var(--color-primary-text);
-        margin-left: var(--spacing-1);
-        margin-bottom: var(--spacing-2);
         flex: 0 0 auto;
     }
 
@@ -1652,36 +1659,41 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 22px;
-        height: 22px;
+        width: 26px;
+        height: 26px;
+        min-width: 26px;
+        flex-shrink: 0;
+        aspect-ratio: 1;
         border-radius: 50%;
-        font-size: 0.7rem;
+        font-size: 0.75rem;
         font-weight: 800;
         color: #fff;
-        border: none;
+        border: 2px solid rgba(255, 255, 255, 0.18);
         cursor: pointer;
-        margin-left: 6px;
-        margin-bottom: var(--spacing-2);
-        vertical-align: middle;
         transition: transform 0.15s, box-shadow 0.15s;
         line-height: 1;
         padding: 0;
+        box-sizing: border-box;
     }
     .game-rank-badge:hover {
-        transform: scale(1.2);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        transform: scale(1.12);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     }
     .game-rank-badge.rank-s {
         background: linear-gradient(135deg, #ffd700, #f59e0b);
+        box-shadow: 0 1px 6px rgba(245, 158, 11, 0.35);
     }
     .game-rank-badge.rank-a {
         background: linear-gradient(135deg, #34d399, #059669);
+        box-shadow: 0 1px 6px rgba(16, 185, 129, 0.35);
     }
     .game-rank-badge.rank-b {
         background: linear-gradient(135deg, #60a5fa, #2563eb);
+        box-shadow: 0 1px 6px rgba(59, 130, 246, 0.35);
     }
     .game-rank-badge.rank-c {
         background: linear-gradient(135deg, #9ca3af, #4b5563);
+        box-shadow: 0 1px 6px rgba(107, 114, 128, 0.35);
     }
 
     .external-link {

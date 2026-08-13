@@ -2410,6 +2410,9 @@
         justify-content: center;
         width: 22px;
         height: 22px;
+        min-width: 22px;
+        flex-shrink: 0;
+        aspect-ratio: 1;
         border-radius: 50%;
         font-size: 0.7rem;
         font-weight: 800;
@@ -2421,6 +2424,7 @@
         transition: transform 0.15s, box-shadow 0.15s;
         line-height: 1;
         padding: 0;
+        box-sizing: border-box;
     }
     .game-rank-badge:hover {
         transform: scale(1.2);
