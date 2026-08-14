@@ -3117,6 +3117,20 @@ func main() {
         return true;
     }
 
+    // Browsers do not consistently activate links inside contenteditable
+    // elements. Desktop mode delegates target=_blank to Tauri's opener hook,
+    // so only provide the explicit browser fallback here.
+    function tryOpenExternalLink(event: MouseEvent, container: HTMLElement | null): boolean {
+        if (isDesktopMode || !container) return false;
+        const anchor = (event.target as HTMLElement).closest('a[href]') as HTMLAnchorElement | null;
+        if (!anchor || !container.contains(anchor) || anchor.target !== '_blank') return false;
+        if (parsePlaygroundFileId(anchor.getAttribute('href') || '')) return false;
+        event.preventDefault();
+        event.stopPropagation();
+        window.open(anchor.href, '_blank', 'noopener,noreferrer');
+        return true;
+    }
+
     // Keep checkbox HTML attributes in sync after native toggle so innerHTML
     // (and turndown) sees the current checked state.
     function handleWysiwygChange(event: Event) {
@@ -3666,6 +3680,7 @@ func main() {
             closeLangPicker();
         }
         if (tryOpenPlaygroundFileLink(event, wysiwygEl)) return;
+        if (tryOpenExternalLink(event, wysiwygEl)) return;
         if (target instanceof HTMLInputElement && target.classList.contains(CODE_LANGUAGE_INPUT_CLASS)) return;
         removeOrphanCodeWrappers();
         if (target instanceof HTMLInputElement && target.type === 'checkbox' && wysiwygEl?.contains(target)) {

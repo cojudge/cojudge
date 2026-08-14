@@ -137,6 +137,28 @@ test('WYSIWYG paste turns a URL string into a link', async ({ page }) => {
   await expect.poll(() => getMarkdownContent(page)).toContain('[https://example.com/path](https://example.com/path)');
 });
 
+test('browser WYSIWYG opens external links in a new tab', async ({ page }) => {
+  await page.goto('/playground');
+  await page.evaluate(() => {
+    localStorage.setItem('user-settings', JSON.stringify({ playgroundPreferredLanguage: 'markdown' }));
+    localStorage.setItem('playground-markdown-mode', 'wysiwyg');
+    localStorage.setItem('files', JSON.stringify({
+      playground: JSON.stringify([
+        { fileId: 'linked-note', fileName: 'Linked note', language: 'markdown', content: '[Example](https://example.com/path)', isOpen: true, order: 0, lastUpdated: Date.now() }
+      ])
+    }));
+  });
+  await page.reload();
+  const dismiss = page.getByRole('button', { name: 'Dismiss' });
+  if (await dismiss.isVisible().catch(() => false)) await dismiss.click();
+
+  const link = page.locator('.wysiwyg-editing a[href="https://example.com/path"]');
+  await expect(link).toBeVisible();
+  const popup = page.waitForEvent('popup');
+  await link.click();
+  await expect(await popup).toHaveURL('https://example.com/path');
+});
+
 test('playground markdown preview has a WYSIWYG editing mode', async ({ page }) => {
   await openMarkdownPlayground(page);
 
