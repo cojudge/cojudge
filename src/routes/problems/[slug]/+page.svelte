@@ -13,7 +13,7 @@
     import { consumeForkTransfer } from '$lib/forkTransfer';
     import { initFirebase, ensureAuthenticated } from '$lib/firebase';
     import { isDesktopRuntime } from '$lib/firebaseSettings';
-    import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress } from '$lib/progressBackup';
+    import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress, flushProgressStorageWrites } from '$lib/progressBackup';
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import { leftPaneWidthStore } from '$lib/stores/layoutStore';
@@ -685,8 +685,11 @@
             }
         };
         const handleUnload = () => {
-            if (isCloudRestoreInProgress()) return;
+            // Flush even during a cloud-restore window: deferred storage
+            // writes are only resumed while the page stays alive, so they
+            // would be silently dropped when the app closes.
             saveCurrentViewState();
+            flushProgressStorageWrites();
         };
         const handleCloudFlush = () => {
             if (!isCloudRestoreInProgress()) saveCurrentViewState();
@@ -696,6 +699,7 @@
         document.addEventListener('contextmenu', handleDocContextMenu);
         document.addEventListener('keydown', handleKeyDown);
         window.addEventListener('beforeunload', handleUnload);
+        window.addEventListener('pagehide', handleUnload);
         window.addEventListener(CLOUD_FLUSH_EVENT, handleCloudFlush);
         window.addEventListener('resize', handleResize);
         return () => {
@@ -703,6 +707,7 @@
             document.removeEventListener('contextmenu', handleDocContextMenu);
             document.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('beforeunload', handleUnload);
+            window.removeEventListener('pagehide', handleUnload);
             window.removeEventListener(CLOUD_FLUSH_EVENT, handleCloudFlush);
             window.removeEventListener('resize', handleResize);
         };
