@@ -288,7 +288,7 @@
 		window.addEventListener('keydown', handleKeyDown);
 		window.addEventListener('keyup', handleKeyUp);
 		window.addEventListener('hashchange', handleHashChange);
-		window.addEventListener('pagehide', saveBoardNow);
+		window.addEventListener('pagehide', handleBoardPageHide);
 		window.addEventListener(CLOUD_FLUSH_EVENT, saveBoardNow);
 		window.addEventListener('storage', reloadBoardFromStorage);
 		window.addEventListener(WHITEBOARD_RESTORED_EVENT, reloadBoardFromStorage);
@@ -310,7 +310,7 @@
 			window.removeEventListener('keydown', handleKeyDown);
 			window.removeEventListener('keyup', handleKeyUp);
 			window.removeEventListener('hashchange', handleHashChange);
-			window.removeEventListener('pagehide', saveBoardNow);
+			window.removeEventListener('pagehide', handleBoardPageHide);
 			window.removeEventListener(CLOUD_FLUSH_EVENT, saveBoardNow);
 			window.removeEventListener('storage', reloadBoardFromStorage);
 			window.removeEventListener(WHITEBOARD_RESTORED_EVENT, reloadBoardFromStorage);
@@ -510,8 +510,19 @@
 	}
 
 	function saveBoardNow(): void {
+		saveBoardImpl(false);
+	}
+
+	// pagehide is the one teardown event that fires reliably when the app
+	// window closes; force the save even during a cloud-restore window, since
+	// the restore's deferred-write resume never runs once the page is gone.
+	function handleBoardPageHide(): void {
+		saveBoardImpl(true);
+	}
+
+	function saveBoardImpl(force: boolean): void {
 		if (!mounted) return;
-		if (isCloudRestoreInProgress()) return;
+		if (isCloudRestoreInProgress() && !force) return;
 		if (saveTimer) clearTimeout(saveTimer);
 		saveTimer = undefined;
 		const board: StoredBoard = {

@@ -95,6 +95,16 @@ export function resumeProgressStorageWrites(): void {
 	deferredStorageWrites.clear();
 }
 
+// Writes deferred storage writes straight to localStorage, bypassing the
+// cloud-restore guard. Used during page teardown (beforeunload/pagehide):
+// the restore window can never resume once the page is gone, so deferring
+// would silently drop the freshest edits.
+export function flushProgressStorageWrites(): void {
+	if (typeof window === 'undefined') return;
+	for (const [key, value] of deferredStorageWrites) localStorage.setItem(key, value);
+	deferredStorageWrites.clear();
+}
+
 function parseStoredValue(value: string): unknown {
 	try {
 		return JSON.parse(value);

@@ -14,7 +14,7 @@
     import { isDesktopRuntime } from '$lib/firebaseSettings';
     import { cloudSyncState } from '$lib/cloudSync';
     import { CLOUD_FILE_DISCARDED_EVENT, WHITEBOARD_FILE_ID, WORKSPACE_FILE_ID_PREFIX } from '$lib/cloudFileChange';
-    import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress, writeProgressStorageItem } from '$lib/progressBackup';
+    import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress, flushProgressStorageWrites, writeProgressStorageItem } from '$lib/progressBackup';
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { isDotFileName, type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
@@ -5117,9 +5117,13 @@ func main() {
             }
         };
         const handleUnload = () => {
-            if (isCloudRestoreInProgress()) return;
+            // Never skip the final flush, even during a cloud-restore window:
+            // the restore defers storage writes until it resumes, which never
+            // happens once the page is torn down. Dropping the freshest edits
+            // is worse than re-serializing them.
             commitWysiwygEdits();
             saveCurrentViewState();
+            flushProgressStorageWrites();
         };
         const handleCloudFlush = () => {
             if (isCloudRestoreInProgress()) return;
@@ -5129,12 +5133,14 @@ func main() {
         document.addEventListener('click', handleDocClick);
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('beforeunload', handleUnload);
+        window.addEventListener('pagehide', handleUnload);
         window.addEventListener(CLOUD_FLUSH_EVENT, handleCloudFlush);
         window.addEventListener(CLOUD_FILE_DISCARDED_EVENT, handleCloudFileDiscard);
         return () => {
             document.removeEventListener('click', handleDocClick);
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('beforeunload', handleUnload);
+            window.removeEventListener('pagehide', handleUnload);
             window.removeEventListener(CLOUD_FLUSH_EVENT, handleCloudFlush);
             window.removeEventListener(CLOUD_FILE_DISCARDED_EVENT, handleCloudFileDiscard);
         };
