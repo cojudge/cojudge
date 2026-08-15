@@ -159,7 +159,7 @@ test('discarding an active WYSIWYG file reloads the restored content', async ({ 
   await expect.poll(() => getMarkdownContent(page)).toBe('\n\n# Cloud version');
 });
 
-test('playground markdown editor pastes clipboard images as base64 markdown', async ({ page }) => {
+test('playground markdown editor stores pasted clipboard images by reference', async ({ page }) => {
   await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
   await openMarkdownPlayground(page);
 
@@ -180,7 +180,7 @@ test('playground markdown editor pastes clipboard images as base64 markdown', as
   await page.keyboard.press('ControlOrMeta+a');
   await page.keyboard.press('ControlOrMeta+v');
 
-  await expect.poll(() => getMarkdownContent(page)).toMatch(/^!\[image\]\(data:image\/png;base64,/);
+  await expect.poll(() => getMarkdownContent(page)).toMatch(/^!\[image\]\(cojudge:\/\/image\/[^)]+\)$/);
 });
 
 test('WYSIWYG paste turns a URL string into a link', async ({ page }) => {
@@ -335,12 +335,48 @@ async function writeImageToClipboard(page: Page, width = 800, height = 600) {
   }, { width, height });
 }
 
+async function delayImageClipboardReads(page: Page, delayMs: number | number[] = 250) {
+  const delays = Array.isArray(delayMs) ? delayMs : [delayMs];
+  await page.evaluate((schedule) => {
+    const readAsDataUrl = FileReader.prototype.readAsDataURL;
+    let readIndex = 0;
+    FileReader.prototype.readAsDataURL = function (blob: Blob) {
+      const delay = schedule[Math.min(readIndex++, schedule.length - 1)];
+      setTimeout(() => readAsDataUrl.call(this, blob), delay);
+    };
+  }, delays);
+}
+
+async function failNextImageClipboardRead(page: Page) {
+  await page.evaluate(() => {
+    FileReader.prototype.readAsDataURL = function () {
+      queueMicrotask(() => this.dispatchEvent(new ProgressEvent('error')));
+    };
+  });
+}
+
+async function storedImageExists(page: Page, id: string) {
+  return page.evaluate((imageId) => new Promise<boolean>((resolve, reject) => {
+    const request = indexedDB.open('cojudge-images', 1);
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => {
+      const db = request.result;
+      const lookup = db.transaction('images', 'readonly').objectStore('images').get(imageId);
+      lookup.onerror = () => reject(lookup.error);
+      lookup.onsuccess = () => {
+        resolve(!!lookup.result);
+        db.close();
+      };
+    };
+  }), id);
+}
+
 async function pasteImageIntoEditor(page: Page, width = 800, height = 600) {
   await writeImageToClipboard(page, width, height);
   await page.locator('.monaco-editor .view-lines').click();
   await page.keyboard.press('ControlOrMeta+a');
   await page.keyboard.press('ControlOrMeta+v');
-  await expect.poll(() => getMarkdownContent(page)).toMatch(/^!\[image\]\(data:image\/png;base64,/);
+  await expect.poll(() => getMarkdownContent(page)).toMatch(/^!\[image\]\(cojudge:\/\/image\/[^)]+\)$/);
 }
 
 test('pasted images render as thumbnails with lightbox and delete in the preview', async ({ page }) => {
@@ -413,7 +449,7 @@ test('WYSIWYG keeps an empty line at the end so typing continues after a pasted 
   // alt text, so they round-trip as ![](...), not ![image](...).
   await page.keyboard.press('ArrowDown');
   await page.keyboard.type('more text');
-  await expect.poll(() => getMarkdownContent(page)).toMatch(/!\[\]\(data:image\/png;base64,[^)]*\)\n\nmore text/);
+  await expect.poll(() => getMarkdownContent(page)).toMatch(/!\[\]\(cojudge:\/\/image\/[^)]+\)\n\nmore text/);
 
   // Round-tripping through edit mode must not accumulate blank lines: leaving
   // and re-entering WYSIWYG rebuilds the document from the stored markdown, so
@@ -426,6 +462,204 @@ test('WYSIWYG keeps an empty line at the end so typing continues after a pasted 
   await page.keyboard.type('x');
   await page.getByRole('button', { name: 'Preview' }).click();
   await expect.poll(() => getMarkdownContent(page)).toBe(`${stable}\n\nx`);
+});
+
+test('WYSIWYG can undo deletion of a pasted image', async ({ page }) => {
+  await openMarkdownPlayground(page);
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('before');
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+
+  const editable = page.locator('.wysiwyg-editing');
+  await writeImageToClipboard(page);
+  await editable.locator('p').first().click();
+  await page.keyboard.press('End');
+  await page.keyboard.press('ControlOrMeta+v');
+  await expect(editable.locator('.md-thumb')).toHaveCount(1);
+
+  await editable.locator('.md-thumb-delete').click();
+  await expect(editable.locator('.md-thumb')).toHaveCount(0);
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('.md-thumb')).toHaveCount(1);
+  await expect.poll(() => getMarkdownContent(page)).toContain('cojudge://image/');
+});
+
+test('WYSIWYG keeps a pending image paste as one undoable action', async ({ page }) => {
+  await openMarkdownPlayground(page);
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('before');
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+
+  const editable = page.locator('.wysiwyg-editing');
+  await delayImageClipboardReads(page, 1000);
+  await writeImageToClipboard(page);
+  await editable.locator('p').first().click();
+  await page.keyboard.press('End');
+  await page.keyboard.press('ControlOrMeta+v');
+  await expect(editable.locator('[data-wysiwyg-pending-image]')).toHaveCount(1);
+
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('[data-wysiwyg-pending-image]')).toHaveCount(0);
+  await expect.poll(() => getMarkdownContent(page)).toBe('before');
+
+  // Redo while storage is still pending must retain the paste and its ordering.
+  await page.keyboard.press('ControlOrMeta+Shift+z');
+  await expect(editable.locator('.md-thumb')).toHaveCount(1);
+  await expect.poll(() => getMarkdownContent(page)).toMatch(/^before\s*!\[\]\(cojudge:\/\/image\/[^)]+\)$/);
+
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('.md-thumb')).toHaveCount(0);
+  await expect.poll(() => getMarkdownContent(page)).toBe('before');
+});
+
+test('WYSIWYG updates an open link transaction when a pending image resolves', async ({ page }) => {
+  await openMarkdownPlayground(page);
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('before');
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+
+  const editable = page.locator('.wysiwyg-editing');
+  await delayImageClipboardReads(page, 1000);
+  await writeImageToClipboard(page);
+  await editable.locator('p').first().click();
+  await page.keyboard.press('End');
+  await page.keyboard.press('ControlOrMeta+v');
+  await expect(editable.locator('[data-wysiwyg-pending-image]')).toHaveCount(1);
+
+  await page.getByRole('button', { name: 'Insert link' }).click();
+  await page.getByRole('textbox', { name: 'Link URL' }).fill('https://example.com');
+  await expect(editable.locator('.md-thumb')).toHaveCount(1);
+  await page.keyboard.press('Enter');
+  await expect(editable.locator('a[href="https://example.com"]')).toBeVisible();
+
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('a[href="https://example.com"]')).toHaveCount(0);
+  await expect(editable.locator('.md-thumb')).toHaveCount(1);
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('.md-thumb')).toHaveCount(0);
+  await expect.poll(() => getMarkdownContent(page)).toBe('before');
+});
+
+test('WYSIWYG restores selected text when an image paste fails', async ({ page }) => {
+  await openMarkdownPlayground(page);
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('hello world');
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+
+  const editable = page.locator('.wysiwyg-editing');
+  await failNextImageClipboardRead(page);
+  await writeImageToClipboard(page);
+  await editable.focus();
+  await editable.locator('p').first().evaluate((paragraph) => {
+    const text = paragraph.firstChild!;
+    window.getSelection()?.setBaseAndExtent(text, 6, text, 11);
+  });
+  await page.keyboard.press('ControlOrMeta+v');
+  await expect(editable.locator('[data-wysiwyg-pending-image]')).toHaveCount(0);
+  await expect.poll(() => getMarkdownContent(page)).toBe('hello world');
+
+  await page.keyboard.type('!');
+  await expect.poll(() => getMarkdownContent(page)).toBe('hello world!');
+  await page.keyboard.press('ControlOrMeta+z');
+  await page.keyboard.type('?');
+  await expect.poll(() => getMarkdownContent(page)).toBe('hello world?');
+  await page.keyboard.press('ControlOrMeta+z');
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect.poll(() => editable.evaluate(() => window.getSelection()?.toString())).toBe('world');
+});
+
+test('WYSIWYG failed image paste preserves untouched source syntax', async ({ page }) => {
+  await openMarkdownPlayground(page);
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('__hello__');
+  await expect.poll(() => getMarkdownContent(page)).toBe('__hello__');
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+
+  const editable = page.locator('.wysiwyg-editing');
+  await failNextImageClipboardRead(page);
+  await writeImageToClipboard(page);
+  await editable.locator('strong').click();
+  await page.keyboard.press('End');
+  await page.keyboard.press('ControlOrMeta+v');
+  await expect(editable.locator('[data-wysiwyg-pending-image]')).toHaveCount(0);
+  await expect.poll(() => getMarkdownContent(page)).toBe('__hello__');
+});
+
+test('WYSIWYG retains two image pastes that resolve out of order', async ({ page }) => {
+  await openMarkdownPlayground(page);
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('before');
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+
+  const editable = page.locator('.wysiwyg-editing');
+  await delayImageClipboardReads(page, [1000, 100]);
+  await writeImageToClipboard(page, 10, 10);
+  await editable.locator('p').first().click();
+  await page.keyboard.press('End');
+  await page.keyboard.press('ControlOrMeta+v');
+  await writeImageToClipboard(page, 20, 20);
+  await page.keyboard.press('ControlOrMeta+v');
+  await expect(editable.locator('.md-thumb')).toHaveCount(2);
+  await expect.poll(() => editable.locator('.md-thumb img').evaluateAll((images) =>
+    images.map((image) => (image as HTMLImageElement).naturalWidth)
+  )).toEqual([10, 20]);
+  await expect.poll(async () => (await getMarkdownContent(page))?.match(/cojudge:\/\/image\//g)?.length ?? 0).toBe(2);
+
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('.md-thumb')).toHaveCount(1);
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('.md-thumb')).toHaveCount(0);
+  await expect.poll(() => getMarkdownContent(page)).toBe('before');
+});
+
+test('WYSIWYG finalizes image storage removed by ordinary editing', async ({ page }) => {
+  await openMarkdownPlayground(page);
+  await pasteImageIntoEditor(page);
+  const markdown = await getMarkdownContent(page);
+  const imageId = /cojudge:\/\/image\/([^)]+)/.exec(markdown ?? '')?.[1];
+  expect(imageId).toBeTruthy();
+  await expect.poll(() => storedImageExists(page, imageId!)).toBe(true);
+
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  await editable.click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('replacement');
+  await expect.poll(() => getMarkdownContent(page)).toBe('replacement');
+  await page.getByRole('button', { name: 'Source' }).click();
+  await expect.poll(() => storedImageExists(page, imageId!)).toBe(false);
+});
+
+test('WYSIWYG cleans up an existing image replaced by another image paste', async ({ page }) => {
+  await openMarkdownPlayground(page);
+  await pasteImageIntoEditor(page, 10, 10);
+  const originalMarkdown = await getMarkdownContent(page);
+  const originalImageId = /cojudge:\/\/image\/([^)]+)/.exec(originalMarkdown ?? '')?.[1];
+  expect(originalImageId).toBeTruthy();
+
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  await writeImageToClipboard(page, 20, 20);
+  await editable.focus();
+  await editable.locator('.md-thumb').evaluate((thumbnail) => {
+    const range = document.createRange();
+    range.selectNode(thumbnail);
+    const selection = window.getSelection();
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+  });
+  await page.keyboard.press('ControlOrMeta+v');
+  await expect(editable.locator('.md-thumb')).toHaveCount(1);
+  await expect.poll(() => getMarkdownContent(page)).not.toContain(originalImageId!);
+
+  await page.getByRole('button', { name: 'Source' }).click();
+  await expect.poll(() => storedImageExists(page, originalImageId!)).toBe(false);
 });
 
 test('WYSIWYG toolbar wraps the selection in inline code', async ({ page }) => {
@@ -448,9 +682,111 @@ test('WYSIWYG toolbar wraps the selection in inline code', async ({ page }) => {
   await expect(editable.locator('code')).toHaveText('hello world');
   await expect.poll(() => getMarkdownContent(page)).toContain('`hello world`');
 
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('code')).toHaveCount(0);
+  await expect.poll(() => getMarkdownContent(page)).toBe('hello world');
+  await page.keyboard.press('ControlOrMeta+Shift+z');
+  await expect(editable.locator('code')).toHaveText('hello world');
+
   await page.getByRole('button', { name: 'Preview' }).click();
   const preview = page.locator('.markdown-preview:not(.wysiwyg-editing)');
   await expect(preview.locator('code')).toHaveText('hello world');
+});
+
+test('WYSIWYG undo restores backward selection direction', async ({ page }) => {
+  await openMarkdownPlayground(page);
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('abcdef');
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+
+  const editable = page.locator('.wysiwyg-editing');
+  await editable.focus();
+  await editable.locator('p').first().evaluate((paragraph) => {
+    const text = paragraph.firstChild!;
+    window.getSelection()?.setBaseAndExtent(text, 4, text, 2);
+  });
+  await expect.poll(() => editable.evaluate(() => window.getSelection()?.toString())).toBe('cd');
+  await page.keyboard.type('X');
+  await expect(editable.locator('p').first()).toHaveText('abXef');
+  await page.keyboard.press('ControlOrMeta+z');
+
+  const restored = await editable.evaluate(() => {
+    const selection = window.getSelection();
+    return {
+      text: selection?.toString(),
+      anchorOffset: selection?.anchorOffset,
+      focusOffset: selection?.focusOffset
+    };
+  });
+  expect(restored).toEqual({ text: 'cd', anchorOffset: 4, focusOffset: 2 });
+});
+
+test('WYSIWYG link undo restores the original text selection', async ({ page }) => {
+  await openMarkdownPlayground(page);
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('hello world');
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+
+  const editable = page.locator('.wysiwyg-editing');
+  await editable.locator('p').first().evaluate((paragraph) => {
+    const text = paragraph.firstChild!;
+    window.getSelection()?.setBaseAndExtent(text, 6, text, 11);
+  });
+  await page.getByRole('button', { name: 'Insert link' }).click();
+  await page.getByRole('textbox', { name: 'Link URL' }).fill('https://example.com');
+  await page.keyboard.press('Enter');
+  await expect(editable.locator('a')).toHaveText('world');
+
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('a')).toHaveCount(0);
+  await expect.poll(() => editable.evaluate(() => window.getSelection()?.toString())).toBe('world');
+  await page.keyboard.type('X');
+  await expect.poll(() => getMarkdownContent(page)).toBe('hello X');
+});
+
+test('WYSIWYG cancels an open link transaction after another edit', async ({ page }) => {
+  await openMarkdownPlayground(page);
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('hello');
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+
+  const editable = page.locator('.wysiwyg-editing');
+  await editable.locator('p').first().click();
+  await page.keyboard.press('End');
+  await page.getByRole('button', { name: 'Insert link' }).click();
+  await expect(page.getByRole('textbox', { name: 'Link URL' })).toBeVisible();
+
+  await editable.locator('p').first().click();
+  await page.keyboard.press('End');
+  await page.keyboard.type('X');
+  await expect(page.getByRole('textbox', { name: 'Link URL' })).toHaveCount(0);
+  await expect.poll(() => getMarkdownContent(page)).toBe('helloX');
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect.poll(() => getMarkdownContent(page)).toBe('hello');
+});
+
+test('WYSIWYG cancels an open link transaction when history changes', async ({ page }) => {
+  await openMarkdownPlayground(page);
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('hello');
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+
+  const editable = page.locator('.wysiwyg-editing');
+  await editable.locator('p').first().click();
+  await page.keyboard.press('End');
+  await page.keyboard.type('X');
+  await expect.poll(() => getMarkdownContent(page)).toBe('helloX');
+  await page.getByRole('button', { name: 'Insert link' }).click();
+  await expect(page.getByRole('textbox', { name: 'Link URL' })).toBeVisible();
+
+  await editable.locator('p').first().click();
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(page.getByRole('textbox', { name: 'Link URL' })).toHaveCount(0);
+  await expect.poll(() => getMarkdownContent(page)).toBe('hello');
 });
 
 test('WYSIWYG auto-matches backticks into inline code and undo cancels it', async ({ page }) => {
@@ -516,6 +852,59 @@ test('WYSIWYG code blocks have a working copy button', async ({ page }) => {
   await expect.poll(() => getMarkdownContent(page)).toContain('```js');
 });
 
+test('WYSIWYG copy-button feedback does not block code undo', async ({ page }) => {
+  await openMarkdownPlayground(page);
+  await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('```js\nconst value = 1;\n```');
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+
+  const editable = page.locator('.wysiwyg-editing');
+  const pre = editable.locator('pre');
+  await pre.click();
+  await page.keyboard.press('End');
+  await page.keyboard.type(' changed');
+  const copyButton = editable.locator('.copy-code-button');
+  await editable.locator('.code-block-wrapper').hover();
+  await copyButton.click();
+  await expect(copyButton).toHaveAttribute('style', /color:/);
+
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(pre).not.toContainText('changed');
+  await expect.poll(() => getMarkdownContent(page)).not.toContain('changed');
+});
+
+test('WYSIWYG undo removes a paste made inside a code block', async ({ page }) => {
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('```js\nconst value = 1;\n```');
+  await expect.poll(() => getMarkdownContent(page)).toContain('const value = 1;');
+  const original = await getMarkdownContent(page);
+
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  const pre = editable.locator('pre').first();
+  await pre.click();
+  await page.keyboard.press('End');
+
+  await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+  await page.evaluate(async () => navigator.clipboard.writeText(' pasted();'));
+  await page.keyboard.press('ControlOrMeta+v');
+  await expect(pre).toContainText('pasted();');
+
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(pre).not.toContainText('pasted();');
+  await expect.poll(() => getMarkdownContent(page)).toBe(original);
+
+  await page.keyboard.press('ControlOrMeta+Shift+z');
+  await expect(pre).toContainText('pasted();');
+  await expect.poll(() => getMarkdownContent(page)).toContain('pasted();');
+});
+
 test('WYSIWYG code blocks have a language autocomplete and syntax highlighting', async ({ page }) => {
   await openMarkdownPlayground(page);
 
@@ -535,6 +924,14 @@ test('WYSIWYG code blocks have a language autocomplete and syntax highlighting',
   await expect(editable.locator('.hl-keyword')).toContainText('if');
   await expect(editable.locator('.hl-string').filter({ hasText: '"ok"' })).toBeVisible();
 
+  await editable.locator('pre').evaluate((pre) => {
+    const range = document.createRange();
+    range.selectNodeContents(pre);
+    range.collapse(false);
+    const selection = window.getSelection();
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+  });
   await langBtn.click();
   const popover = page.locator('.lang-picker-popover');
   await expect(popover).toBeVisible();
@@ -546,6 +943,8 @@ test('WYSIWYG code blocks have a language autocomplete and syntax highlighting',
   await expect.poll(() => getMarkdownContent(page)).toContain('```javascript');
   await expect(langBtn).toContainText('JavaScript');
   await expect(editable.locator('.hl-keyword')).toContainText('if');
+  await page.keyboard.type('X');
+  await expect(editable.locator('pre')).toHaveText(/X\s*$/);
 });
 
 test('WYSIWYG turns an exact three-backtick line into a code block', async ({ page }) => {
@@ -634,6 +1033,37 @@ test('WYSIWYG deletes a code block from the trash button and ctrl+z restores it'
   await expect.poll(() => getMarkdownContent(page)).toContain('const b = 2');
 });
 
+test('WYSIWYG handles native history beforeinput events with custom undo and redo', async ({ page }) => {
+  await openMarkdownPlayground(page);
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('```js\nconst a = 1;\n```');
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+
+  const editable = page.locator('.wysiwyg-editing');
+  await editable.locator('.code-block-wrapper').hover();
+  await editable.locator('.delete-code-button').click();
+  await expect(editable.locator('pre')).toHaveCount(0);
+
+  const undoCanceled = await editable.evaluate((element) => !element.dispatchEvent(new InputEvent('beforeinput', {
+    bubbles: true,
+    cancelable: true,
+    inputType: 'historyUndo'
+  })));
+  expect(undoCanceled).toBe(true);
+  await expect(editable.locator('pre')).toContainText('const a = 1');
+  await expect.poll(() => getMarkdownContent(page)).toContain('```js');
+
+  const redoCanceled = await editable.evaluate((element) => !element.dispatchEvent(new InputEvent('beforeinput', {
+    bubbles: true,
+    cancelable: true,
+    inputType: 'historyRedo'
+  })));
+  expect(redoCanceled).toBe(true);
+  await expect(editable.locator('pre')).toHaveCount(0);
+  await expect.poll(() => getMarkdownContent(page)).not.toContain('```js');
+});
+
 test('WYSIWYG Enter stays inside a code block and only exits on an empty line', async ({ page }) => {
   await openMarkdownPlayground(page);
 
@@ -691,6 +1121,35 @@ test('WYSIWYG Enter stays inside a code block and only exits on an empty line', 
   await page.keyboard.press('Enter');
   await expect(editable.locator('pre')).toHaveCount(2);
   await expect.poll(async () => (await getMarkdownContent(page))?.match(/^```$/gm)?.length ?? 0).toBe(4);
+});
+
+test('WYSIWYG undo restores an empty code block after exiting it', async ({ page }) => {
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('before');
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+
+  const editable = page.locator('.wysiwyg-editing');
+  await editable.locator('> p:last-child').click();
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('```');
+  await expect(editable.locator('pre')).toHaveCount(1);
+
+  await page.keyboard.press('Enter');
+  await expect(editable.locator('pre')).toHaveCount(0);
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('pre')).toHaveCount(1);
+  await expect.poll(async () => (await getMarkdownContent(page))?.match(/^```$/gm)?.length ?? 0).toBe(2);
+
+  await editable.locator('> p:last-child').click();
+  await page.keyboard.type('after');
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('pre')).toHaveCount(0);
+  await expect(editable).not.toContainText('after');
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('pre')).toHaveCount(1);
 });
 
 test('WYSIWYG Ctrl+A inside a code block selects only the code', async ({ page }) => {
@@ -774,12 +1233,13 @@ test('WYSIWYG code block button wraps the selection in a fenced code block and t
 
   // Wrap the paragraph in a code block via the toolbar button
   await editable.locator('p').first().click();
-  await page.getByRole('button', { name: 'Code block' }).click();
+  await page.getByRole('button', { name: 'Code block', exact: true }).click();
   await expect(editable.locator('pre')).toHaveText('const x = 1;');
   await expect(editable.locator('.md-code-copy .copy-code-button')).toBeVisible();
   await expect.poll(() => getMarkdownContent(page)).toBe('```\nconst x = 1;\n```');
 
   // The copy button copies the bare <pre> content
+  await editable.locator('.md-code-copy').hover();
   await editable.locator('.md-code-copy .copy-code-button').click();
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toContain('const x = 1;');
 
@@ -792,7 +1252,7 @@ test('WYSIWYG code block button wraps the selection in a fenced code block and t
   await page.getByRole('button', { name: 'WYSIWYG' }).click();
   await expect(editable).toBeVisible();
   await editable.locator('pre').click();
-  await page.getByRole('button', { name: 'Code block' }).click();
+  await page.getByRole('button', { name: 'Code block', exact: true }).click();
   await expect(editable.locator('pre')).toHaveCount(0);
   await expect.poll(() => getMarkdownContent(page)).toBe('const x = 1;');
 });
@@ -904,6 +1364,135 @@ test('WYSIWYG checklists toggle, continue on Enter, and break out when empty', a
     const md = await getMarkdownContent(page);
     return md?.includes('after list') && !md.match(/\[\s\]\s+after list/);
   }).toBeTruthy();
+});
+
+test('WYSIWYG undo removes a newly created checklist item', async ({ page }) => {
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('- [ ] first item');
+  await expect.poll(() => getMarkdownContent(page)).toContain('- [ ] first item');
+
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  await editable.locator('li').first().click();
+  await page.keyboard.press('End');
+  await page.keyboard.press('Enter');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(2);
+
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(1);
+  await expect.poll(() => getMarkdownContent(page)).toBe('- [ ] first item');
+
+  await page.keyboard.press('ControlOrMeta+Shift+z');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(2);
+  await expect.poll(async () => (await getMarkdownContent(page))?.match(/\[\s\]/g)?.length ?? 0).toBe(2);
+});
+
+test('WYSIWYG undo restores a checklist checkbox state', async ({ page }) => {
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('- [ ] first item');
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+
+  const checkbox = page.locator('.wysiwyg-editing li input[type="checkbox"]');
+  await checkbox.click();
+  await expect(checkbox).toBeChecked();
+  await expect(checkbox).toBeFocused();
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(checkbox).not.toBeChecked();
+  await expect(checkbox).toBeFocused();
+  await expect.poll(() => getMarkdownContent(page)).toMatch(/\[\s\]\s+first item/);
+  await page.keyboard.press('ControlOrMeta+Shift+z');
+  await expect(checkbox).toBeChecked();
+  await expect(checkbox).toBeFocused();
+  await expect.poll(() => getMarkdownContent(page)).toMatch(/\[x\]\s+first item/i);
+  await page.keyboard.press('ControlOrMeta+z');
+  await page.keyboard.press('Space');
+  await expect(checkbox).toBeChecked();
+  await expect.poll(() => getMarkdownContent(page)).toMatch(/\[x\]\s+first item/i);
+});
+
+test('WYSIWYG keeps earlier typing available after undoing checklist creation', async ({ page }) => {
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('- [ ] first item');
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+
+  const editable = page.locator('.wysiwyg-editing');
+  await editable.locator('li').first().click();
+  await page.keyboard.press('End');
+  await page.keyboard.type(' updated');
+  await page.keyboard.press('Enter');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(2);
+
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(1);
+  await expect(editable.locator('li').first()).toContainText('updated');
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('li').first()).not.toContainText('updated');
+  await expect.poll(() => getMarkdownContent(page)).toBe('- [ ] first item');
+
+  await page.keyboard.press('ControlOrMeta+Shift+z');
+  await expect(editable.locator('li').first()).toContainText('updated');
+  await page.keyboard.press('ControlOrMeta+Shift+z');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(2);
+});
+
+test('WYSIWYG undoes checklist text before the item that contains it', async ({ page }) => {
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('- [ ] first item');
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+
+  const editable = page.locator('.wysiwyg-editing');
+  await editable.locator('li').first().click();
+  await page.keyboard.press('End');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('second item');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(2);
+
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(2);
+  await expect(editable.locator('li').last()).not.toContainText('second item');
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(1);
+  await expect.poll(() => getMarkdownContent(page)).toBe('- [ ] first item');
+});
+
+test('WYSIWYG supports multiple checklist undo steps', async ({ page }) => {
+  await openMarkdownPlayground(page);
+
+  await page.locator('.monaco-editor .view-lines').click();
+  await page.keyboard.press('ControlOrMeta+a');
+  await page.keyboard.type('- [ ] first\n- [ ] second');
+  await expect.poll(() => getMarkdownContent(page)).toContain('- [ ] second');
+  const original = await getMarkdownContent(page);
+
+  await page.getByRole('button', { name: 'WYSIWYG' }).click();
+  const editable = page.locator('.wysiwyg-editing');
+  await editable.locator('li').first().click();
+  await page.keyboard.press('End');
+  await page.keyboard.press('Enter');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(3);
+
+  await editable.locator('li').first().click();
+  await page.keyboard.press('End');
+  await page.keyboard.press('Enter');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(4);
+
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(3);
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(editable.locator('li input[type="checkbox"]')).toHaveCount(2);
+  await expect.poll(() => getMarkdownContent(page)).toBe(original);
 });
 
 test('WYSIWYG checklist item merges keep checkboxes intact', async ({ page }) => {

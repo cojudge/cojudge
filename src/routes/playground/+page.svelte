@@ -20,7 +20,7 @@
     import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
     import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, removeFencedCodeBlock, wrapImageThumbnails, wrapCodeBlocksWithCopy, highlightCodeBlocks, getCodeBlockLanguage, setCodeBlockLanguage, normalizeCodeLanguage, ensureTrailingEmptyLine, ensureFileMentionCarets, prepareTaskListCheckboxes, isTaskListItem, isEmptyTaskListItem, createTaskCheckbox, ensureTaskCheckbox, ensureTaskItemCaretAnchor, removeTaskCheckbox, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, CODE_COPY_WRAPPER_CLASS, CODE_LANGUAGE_INPUT_CLASS, CODE_LANGUAGE_DATALIST_ID, CODE_LANGUAGE_OPTIONS, resolvePastedImages, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref, fileMentionHtml, FILE_MENTION_CLASS } from '$lib/utils/markdown';
-    import { storePastedImage, deletePastedImage, inlinePastedImageLinks } from '$lib/utils/imageStore';
+    import { storePastedImage, deletePastedImage, inlinePastedImageLinks, parsePastedImageLink } from '$lib/utils/imageStore';
     import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore/lite';
     import QRCode from 'qrcode';
     import { browser } from '$app/environment';
@@ -2339,10 +2339,13 @@ func main() {
     function exitPreviewEditMode() {
         if (previewEditMode) {
             commitWysiwygEdits();
+            resetWysiwygHistory();
         }
         previewEditMode = false;
         wysiwygSourceFileId = null;
         showLinkInput = false;
+        savedLinkRange = null;
+        savedLinkHistoryBefore = null;
         closeMentionPopup();
     }
 
@@ -2394,9 +2397,12 @@ func main() {
 
         if (previewEditMode) {
             commitWysiwygEdits();
+            resetWysiwygHistory();
             previewEditMode = false;
             wysiwygSourceFileId = null;
             showLinkInput = false;
+            savedLinkRange = null;
+            savedLinkHistoryBefore = null;
             closeMentionPopup();
         }
 
@@ -2457,10 +2463,43 @@ func main() {
     // Markdown-to-HTML rendering is lossy, so only serialize after a real edit.
     let wysiwygDirty = false;
     let lastActiveTabFileId: string | null = null;
+    // Native contenteditable history omits scripted DOM changes and can lose a
+    // paste when highlighting replaces code nodes, so keep bounded edit history.
+    type WysiwygSelectionPoint = { path: number[]; offset: number };
+    type WysiwygSelection = {
+        start: WysiwygSelectionPoint;
+        end: WysiwygSelectionPoint;
+        backward: boolean;
+    };
+    type WysiwygHistoryState = {
+        html: string;
+        sourceContent: string | null;
+        selection: WysiwygSelection | null;
+        activeElementPath: number[] | null;
+        sourceFileId: string;
+    };
+    type WysiwygHistoryEntry = {
+        before: WysiwygHistoryState;
+        after: WysiwygHistoryState;
+        kind: string;
+        timestamp: number;
+    };
+    const WYSIWYG_HISTORY_LIMIT = 100;
+    const WYSIWYG_HISTORY_MAX_CHARS = 5 * 1024 * 1024;
+    const WYSIWYG_PENDING_IMAGE_ATTR = 'data-wysiwyg-pending-image';
+    let wysiwygUndoStack: WysiwygHistoryEntry[] = [];
+    let wysiwygRedoStack: WysiwygHistoryEntry[] = [];
+    let pendingWysiwygHistory: WysiwygHistoryState | null = null;
+    let pendingWysiwygHistoryKind: string | null = null;
+    let pendingWysiwygHistoryTimeout: ReturnType<typeof setTimeout> | null = null;
+    let applyingWysiwygHistory = false;
+    let manualWysiwygHistoryDepth = 0;
+    const wysiwygTrackedImageLinks = new Set<string>();
     let showLinkInput = false;
     let linkUrl = '';
     let linkInputEl: HTMLInputElement | null = null;
     let savedLinkRange: Range | null = null;
+    let savedLinkHistoryBefore: WysiwygHistoryState | null = null;
 
     // @-mention file picker in the WYSIWYG editor
     let showMentionPopup = false;
@@ -2501,9 +2540,7 @@ func main() {
         ensureTrailingEmptyLine(wysiwygEl);
         resolvePastedImages(wysiwygEl);
         wysiwygDirty = false;
-        // A full re-render rebuilds the editor, so a snapshot of a deleted
-        // block's position is no longer valid.
-        deletedCodeBlockUndo = null;
+        resetWysiwygHistory();
     }
 
     async function enterPreviewEditMode(force = false) {
@@ -2539,6 +2576,7 @@ func main() {
         button: HTMLElement;
         currentLang: string;
         rect: DOMRect;
+        historyBefore: WysiwygHistoryState | null;
     } | null = null;
     let langSearchQuery = '';
     let langSearchInputEl: HTMLInputElement | null = null;
@@ -2554,7 +2592,7 @@ func main() {
         const currentLang = pre ? getCodeBlockLanguage(pre) : (wrapper.dataset.language || '');
         const rect = btn.getBoundingClientRect();
         langSearchQuery = '';
-        activeLangPicker = { wrapper, button: btn, currentLang, rect };
+        activeLangPicker = { wrapper, button: btn, currentLang, rect, historyBefore: captureWysiwygHistoryState() };
         wrapper.classList.add('lang-picker-active');
         setTimeout(() => {
             if (langSearchInputEl) langSearchInputEl.focus();
@@ -2570,7 +2608,11 @@ func main() {
 
     function selectCodeLanguage(langValue: string) {
         if (!activeLangPicker) return;
-        const { wrapper } = activeLangPicker;
+        const { wrapper, historyBefore } = activeLangPicker;
+        if (historyBefore && wysiwygEl) {
+            wysiwygEl.focus();
+            restoreWysiwygSelection(historyBefore);
+        }
         setCodeBlockLanguage(wrapper, langValue);
         closeLangPicker();
         // Keep the action bar visible for a moment after picking a language so
@@ -2580,6 +2622,8 @@ func main() {
             if (wrapper.isConnected) wrapper.classList.remove('lang-picker-active');
         }, 2500);
         handleWysiwygInput();
+        finishWysiwygHistoryEntry(historyBefore);
+        wysiwygEl?.focus();
     }
 
     function handleLangSearchKeyDown(e: KeyboardEvent) {
@@ -2596,11 +2640,451 @@ func main() {
         }
     }
 
+    function getWysiwygNodePath(root: Node, node: Node): number[] | null {
+        const path: number[] = [];
+        let current: Node | null = node;
+        while (current && current !== root) {
+            const parent: Node | null = current.parentNode;
+            if (!parent) return null;
+            const index = Array.prototype.indexOf.call(parent.childNodes, current);
+            if (index < 0) return null;
+            path.unshift(index);
+            current = parent;
+        }
+        return current === root ? path : null;
+    }
+
+    function getWysiwygNodeAtPath(root: Node, path: number[]): Node | null {
+        let node = root;
+        for (const index of path) {
+            const child = node.childNodes[index];
+            if (!child) return null;
+            node = child;
+        }
+        return node;
+    }
+
+    function getWysiwygSnapshotHtml(): string | null {
+        if (!wysiwygEl) return null;
+        const snapshotRoot = wysiwygEl.cloneNode(true) as HTMLElement;
+        snapshotRoot.querySelectorAll('img[data-cojudge-img]').forEach((image) => {
+            const fakeLink = image.getAttribute('data-cojudge-img');
+            if (fakeLink) image.setAttribute('src', fakeLink);
+            image.removeAttribute('data-cojudge-img');
+        });
+        snapshotRoot.querySelectorAll('.code-block-actions').forEach((element) => element.remove());
+        snapshotRoot.querySelectorAll('.lang-picker-active').forEach((element) => {
+            element.classList.remove('lang-picker-active');
+        });
+        return snapshotRoot.innerHTML;
+    }
+
+    function captureWysiwygHistoryState(): WysiwygHistoryState | null {
+        if (!wysiwygEl || !wysiwygSourceFileId) return null;
+        const html = getWysiwygSnapshotHtml();
+        if (html === null) return null;
+        let selection: WysiwygSelection | null = null;
+        const browserSelection = window.getSelection();
+        if (browserSelection && browserSelection.rangeCount > 0) {
+            const range = browserSelection.getRangeAt(0);
+            const startPath = getWysiwygNodePath(wysiwygEl, range.startContainer);
+            const endPath = getWysiwygNodePath(wysiwygEl, range.endContainer);
+            if (startPath && endPath) {
+                let backward = false;
+                if (!browserSelection.isCollapsed && browserSelection.anchorNode && browserSelection.focusNode) {
+                    if (browserSelection.anchorNode === browserSelection.focusNode) {
+                        backward = browserSelection.anchorOffset > browserSelection.focusOffset;
+                    } else {
+                        const directionRange = document.createRange();
+                        directionRange.setStart(browserSelection.anchorNode, browserSelection.anchorOffset);
+                        directionRange.setEnd(browserSelection.focusNode, browserSelection.focusOffset);
+                        backward = directionRange.collapsed;
+                    }
+                }
+                selection = {
+                    start: { path: startPath, offset: range.startOffset },
+                    end: { path: endPath, offset: range.endOffset },
+                    backward
+                };
+            }
+        }
+        const activeElement = document.activeElement;
+        const activeElementPath = activeElement instanceof HTMLElement && wysiwygEl.contains(activeElement)
+            ? getWysiwygNodePath(wysiwygEl, activeElement)
+            : null;
+        return {
+            html,
+            sourceContent: wysiwygDirty ? null : getPreviewSourceContent(wysiwygSourceFileId),
+            selection,
+            activeElementPath,
+            sourceFileId: wysiwygSourceFileId
+        };
+    }
+
+    function restoreWysiwygSelection(state: WysiwygHistoryState): boolean {
+        if (!wysiwygEl || !state.selection) return false;
+        const startNode = getWysiwygNodeAtPath(wysiwygEl, state.selection.start.path);
+        const endNode = getWysiwygNodeAtPath(wysiwygEl, state.selection.end.path);
+        if (!startNode || !endNode) return false;
+        const maxOffset = (node: Node) => node.nodeType === Node.TEXT_NODE
+            ? node.textContent?.length ?? 0
+            : node.childNodes.length;
+        const startOffset = Math.min(state.selection.start.offset, maxOffset(startNode));
+        const endOffset = Math.min(state.selection.end.offset, maxOffset(endNode));
+        const range = document.createRange();
+        try {
+            range.setStart(startNode, startOffset);
+            range.setEnd(endNode, endOffset);
+        } catch {
+            return false;
+        }
+        const selection = window.getSelection();
+        if (!selection) return false;
+        selection.removeAllRanges();
+        if (state.selection.backward && typeof selection.setBaseAndExtent === 'function') {
+            selection.setBaseAndExtent(endNode, endOffset, startNode, startOffset);
+        } else {
+            selection.addRange(range);
+        }
+        return true;
+    }
+
+    function restoreWysiwygFocus(state: WysiwygHistoryState) {
+        if (!wysiwygEl) return;
+        const activeNode = state.activeElementPath !== null
+            ? getWysiwygNodeAtPath(wysiwygEl, state.activeElementPath)
+            : null;
+        if (activeNode instanceof HTMLElement && (activeNode === wysiwygEl || wysiwygEl.contains(activeNode))) {
+            activeNode.focus();
+        } else {
+            wysiwygEl.focus();
+        }
+    }
+
+    function resetWysiwygHistory() {
+        if (pendingWysiwygHistoryTimeout) clearTimeout(pendingWysiwygHistoryTimeout);
+        pendingWysiwygHistoryTimeout = null;
+        pendingWysiwygHistory = null;
+        pendingWysiwygHistoryKind = null;
+        showLinkInput = false;
+        linkUrl = '';
+        savedLinkRange = null;
+        savedLinkHistoryBefore = null;
+        closeLangPicker();
+        wysiwygUndoStack = [];
+        wysiwygRedoStack = [];
+        cleanupWysiwygHistoryImages(true);
+    }
+
+    function sameWysiwygSelection(a: WysiwygSelection | null, b: WysiwygSelection | null): boolean {
+        if (!a || !b) return a === b;
+        const samePoint = (left: WysiwygSelectionPoint, right: WysiwygSelectionPoint) =>
+            left.offset === right.offset &&
+            left.path.length === right.path.length &&
+            left.path.every((value, index) => value === right.path[index]);
+        return a.backward === b.backward && samePoint(a.start, b.start) && samePoint(a.end, b.end);
+    }
+
+    function wysiwygHistoryMergeGroup(kind: string): string | null {
+        if (kind === 'insertText' || kind === 'insertCompositionText') return 'insertText';
+        if (kind === 'deleteContentBackward' || kind === 'deleteWordBackward') return 'deleteBackward';
+        if (kind === 'deleteContentForward' || kind === 'deleteWordForward') return 'deleteForward';
+        return null;
+    }
+
+    function wysiwygHistoryStateChars(state: WysiwygHistoryState): number {
+        return state.html.length + (state.sourceContent?.length ?? 0);
+    }
+
+    function wysiwygHistoryReferencesImage(link: string): boolean {
+        if (wysiwygEl?.innerHTML.includes(link)) return true;
+        if (getFiles().some((file) => !isFolderEntry(file) && file.content?.includes(link))) return true;
+        return [...wysiwygUndoStack, ...wysiwygRedoStack].some((entry) =>
+            entry.before.html.includes(link) || entry.after.html.includes(link) ||
+            entry.before.sourceContent?.includes(link) || entry.after.sourceContent?.includes(link)
+        );
+    }
+
+    function wysiwygHistoryStateImageLinks(state: WysiwygHistoryState): Set<string> {
+        const root = document.createElement('div');
+        root.innerHTML = state.html;
+        const links = new Set<string>();
+        root.querySelectorAll('img').forEach((image) => {
+            const link = image.getAttribute('data-cojudge-img') || image.getAttribute('src') || '';
+            if (parsePastedImageLink(link)) links.add(link);
+        });
+        return links;
+    }
+
+    function trackRemovedWysiwygImages(before: WysiwygHistoryState, after: WysiwygHistoryState) {
+        if (!before.html.includes('cojudge://image/')) return;
+        const afterLinks = wysiwygHistoryStateImageLinks(after);
+        for (const link of wysiwygHistoryStateImageLinks(before)) {
+            if (!afterLinks.has(link)) wysiwygTrackedImageLinks.add(link);
+        }
+    }
+
+    function cleanupWysiwygHistoryImages(finalize = false) {
+        for (const link of wysiwygTrackedImageLinks) {
+            const referenced = wysiwygHistoryReferencesImage(link);
+            if (!referenced) void deletePastedImage(link);
+            if (finalize || !referenced) wysiwygTrackedImageLinks.delete(link);
+        }
+    }
+
+    function findPendingWysiwygImage(root: HTMLElement, token: string): HTMLElement | null {
+        return Array.from(root.querySelectorAll<HTMLElement>(`[${WYSIWYG_PENDING_IMAGE_ATTR}]`))
+            .find((element) => element.getAttribute(WYSIWYG_PENDING_IMAGE_ATTR) === token) ?? null;
+    }
+
+    function replacePendingWysiwygImage(root: HTMLElement, token: string, link: string | null): boolean {
+        const placeholder = findPendingWysiwygImage(root, token);
+        if (!placeholder) return false;
+        if (link) {
+            const image = document.createElement('img');
+            image.src = link;
+            image.alt = '';
+            placeholder.replaceWith(image);
+            wrapImageThumbnails(root);
+        } else {
+            placeholder.removeAttribute(WYSIWYG_PENDING_IMAGE_ATTR);
+            placeholder.removeAttribute('contenteditable');
+        }
+        return true;
+    }
+
+    function replacePendingWysiwygImageInState(
+        state: WysiwygHistoryState,
+        token: string,
+        link: string | null
+    ): boolean {
+        const root = document.createElement('div');
+        root.innerHTML = state.html;
+        const previous = link ? { ...state } : null;
+        if (!replacePendingWysiwygImage(root, token, link)) return false;
+        state.html = root.innerHTML;
+        if (link && state.sourceContent !== null) state.sourceContent = htmlToMarkdown(state.html);
+        if (previous) trackRemovedWysiwygImages(previous, state);
+        return true;
+    }
+
+    function settlePendingWysiwygImage(
+        token: string,
+        sourceFileId: string,
+        link: string | null
+    ) {
+        let referenced = false;
+        for (const entry of [...wysiwygUndoStack, ...wysiwygRedoStack]) {
+            referenced = replacePendingWysiwygImageInState(entry.before, token, link) || referenced;
+            referenced = replacePendingWysiwygImageInState(entry.after, token, link) || referenced;
+        }
+        if (pendingWysiwygHistory) {
+            referenced = replacePendingWysiwygImageInState(pendingWysiwygHistory, token, link) || referenced;
+        }
+        if (savedLinkHistoryBefore) {
+            referenced = replacePendingWysiwygImageInState(savedLinkHistoryBefore, token, link) || referenced;
+        }
+        if (activeLangPicker?.historyBefore) {
+            referenced = replacePendingWysiwygImageInState(activeLangPicker.historyBefore, token, link) || referenced;
+        }
+
+        const currentBefore = link ? captureWysiwygHistoryState() : null;
+        if (
+            previewEditMode &&
+            wysiwygSourceFileId === sourceFileId &&
+            wysiwygEl &&
+            replacePendingWysiwygImage(wysiwygEl, token, link)
+        ) {
+            referenced = true;
+            ensureTrailingEmptyLine(wysiwygEl);
+            if (link) {
+                const currentAfter = captureWysiwygHistoryState();
+                if (currentBefore && currentAfter) trackRemovedWysiwygImages(currentBefore, currentAfter);
+                wysiwygDirty = true;
+                void resolvePastedImages(wysiwygEl);
+                commitWysiwygEdits();
+            }
+        }
+
+        if (!link) {
+            wysiwygUndoStack = wysiwygUndoStack.filter((entry) => entry.before.html !== entry.after.html);
+            wysiwygRedoStack = wysiwygRedoStack.filter((entry) => entry.before.html !== entry.after.html);
+            return;
+        }
+        if (referenced) {
+            wysiwygTrackedImageLinks.add(link);
+            cleanupWysiwygHistoryImages();
+        } else {
+            void deletePastedImage(link);
+        }
+    }
+
+    function trimWysiwygHistory() {
+        let chars = wysiwygUndoStack.reduce(
+            (total, entry) => total + wysiwygHistoryStateChars(entry.before) + wysiwygHistoryStateChars(entry.after),
+            0
+        );
+        while (wysiwygUndoStack.length > WYSIWYG_HISTORY_LIMIT || chars > WYSIWYG_HISTORY_MAX_CHARS) {
+            const removed = wysiwygUndoStack.shift();
+            if (!removed) break;
+            chars -= wysiwygHistoryStateChars(removed.before) + wysiwygHistoryStateChars(removed.after);
+        }
+        cleanupWysiwygHistoryImages();
+    }
+
+    function finishWysiwygHistoryEntry(
+        before: WysiwygHistoryState | null,
+        kind = 'command',
+        after = captureWysiwygHistoryState()
+    ) {
+        if (!before || applyingWysiwygHistory || before.sourceFileId !== wysiwygSourceFileId) return;
+        if (!after || before.html === after.html) return;
+        if (savedLinkHistoryBefore && before !== savedLinkHistoryBefore) {
+            showLinkInput = false;
+            linkUrl = '';
+            savedLinkRange = null;
+            savedLinkHistoryBefore = null;
+        }
+        if (activeLangPicker?.historyBefore && before !== activeLangPicker.historyBefore) closeLangPicker();
+        trackRemovedWysiwygImages(before, after);
+        const timestamp = Date.now();
+        const previous = wysiwygUndoStack[wysiwygUndoStack.length - 1];
+        const mergeGroup = wysiwygHistoryMergeGroup(kind);
+        if (
+            mergeGroup &&
+            previous &&
+            wysiwygHistoryMergeGroup(previous.kind) === mergeGroup &&
+            timestamp - previous.timestamp < 1500 &&
+            previous.after.html === before.html &&
+            sameWysiwygSelection(previous.after.selection, before.selection)
+        ) {
+            previous.after = after;
+            previous.timestamp = timestamp;
+        } else {
+            wysiwygUndoStack.push({ before, after, kind, timestamp });
+        }
+        trimWysiwygHistory();
+        if (wysiwygRedoStack.length > 0) {
+            wysiwygRedoStack = [];
+            cleanupWysiwygHistoryImages();
+        }
+    }
+
+    function runWysiwygHistoryTransaction<T>(
+        edit: () => T,
+        before = captureWysiwygHistoryState(),
+        kind = 'command'
+    ): T {
+        manualWysiwygHistoryDepth++;
+        try {
+            return edit();
+        } finally {
+            manualWysiwygHistoryDepth--;
+            finishWysiwygHistoryEntry(before, kind);
+        }
+    }
+
+    function queueWysiwygHistoryEntry(before: WysiwygHistoryState | null, kind: string) {
+        if (!before || applyingWysiwygHistory) return;
+        if (pendingWysiwygHistoryTimeout) clearTimeout(pendingWysiwygHistoryTimeout);
+        pendingWysiwygHistory = before;
+        pendingWysiwygHistoryKind = kind;
+        pendingWysiwygHistoryTimeout = setTimeout(() => {
+            if (pendingWysiwygHistory === before) {
+                pendingWysiwygHistory = null;
+                pendingWysiwygHistoryKind = null;
+            }
+            pendingWysiwygHistoryTimeout = null;
+        }, 0);
+    }
+
+    function handleWysiwygBeforeInput(event: InputEvent) {
+        if (manualWysiwygHistoryDepth > 0) return;
+        if (event.inputType === 'historyUndo' || event.inputType === 'historyRedo') {
+            event.preventDefault();
+            if (event.inputType === 'historyUndo') undoWysiwygHistory();
+            else redoWysiwygHistory();
+            return;
+        }
+        if (!pendingWysiwygHistory) {
+            queueWysiwygHistoryEntry(captureWysiwygHistoryState(), event.inputType || 'input');
+        }
+    }
+
+    function wysiwygHistoryStateMatches(state: WysiwygHistoryState): boolean {
+        return !!wysiwygEl &&
+            state.sourceFileId === wysiwygSourceFileId &&
+            getWysiwygSnapshotHtml() === state.html;
+    }
+
+    function applyWysiwygHistoryState(state: WysiwygHistoryState): boolean {
+        if (!wysiwygEl || state.sourceFileId !== wysiwygSourceFileId) return false;
+        applyingWysiwygHistory = true;
+        try {
+            if (pendingWysiwygHistoryTimeout) clearTimeout(pendingWysiwygHistoryTimeout);
+            pendingWysiwygHistoryTimeout = null;
+            pendingWysiwygHistory = null;
+            pendingWysiwygHistoryKind = null;
+            closeMentionPopup();
+            closeLangPicker();
+            showLinkInput = false;
+            linkUrl = '';
+            savedLinkRange = null;
+            savedLinkHistoryBefore = null;
+            wysiwygEl.innerHTML = state.html;
+            wrapCodeBlocksWithCopy(wysiwygEl);
+            wysiwygDirty = true;
+            restoreWysiwygSelection(state);
+            restoreWysiwygFocus(state);
+            commitWysiwygEdits(state.sourceContent ?? undefined);
+            restoreWysiwygSelection(state);
+            restoreWysiwygFocus(state);
+            void resolvePastedImages(wysiwygEl);
+            return true;
+        } finally {
+            applyingWysiwygHistory = false;
+        }
+    }
+
+    function undoWysiwygHistory(): boolean {
+        const entry = wysiwygUndoStack[wysiwygUndoStack.length - 1];
+        if (!entry || !wysiwygHistoryStateMatches(entry.after)) return false;
+        if (!applyWysiwygHistoryState(entry.before)) return false;
+        wysiwygUndoStack.pop();
+        wysiwygRedoStack.push(entry);
+        return true;
+    }
+
+    function redoWysiwygHistory(): boolean {
+        const entry = wysiwygRedoStack[wysiwygRedoStack.length - 1];
+        if (!entry || !wysiwygHistoryStateMatches(entry.before)) return false;
+        if (!applyWysiwygHistoryState(entry.after)) return false;
+        wysiwygRedoStack.pop();
+        wysiwygUndoStack.push(entry);
+        return true;
+    }
+
     function handleWysiwygInput(event?: Event) {
-        // Any real edit supersedes the last code-block deletion, so the
-        // one-level undo no longer applies (native undo takes over).
-        deletedCodeBlockUndo = null;
         const target = event?.target;
+        if (target instanceof HTMLInputElement && target.type === 'checkbox') {
+            if (pendingWysiwygHistoryTimeout) clearTimeout(pendingWysiwygHistoryTimeout);
+            pendingWysiwygHistoryTimeout = null;
+            pendingWysiwygHistory = null;
+            pendingWysiwygHistoryKind = null;
+            return;
+        }
+        const historyBefore = pendingWysiwygHistory;
+        const historyKind = pendingWysiwygHistoryKind ?? 'input';
+        if (historyBefore) {
+            pendingWysiwygHistory = null;
+            pendingWysiwygHistoryKind = null;
+            if (pendingWysiwygHistoryTimeout) clearTimeout(pendingWysiwygHistoryTimeout);
+            pendingWysiwygHistoryTimeout = null;
+        }
+        if (!applyingWysiwygHistory && wysiwygRedoStack.length > 0) {
+            wysiwygRedoStack = [];
+            cleanupWysiwygHistoryImages();
+        }
         if (target instanceof HTMLInputElement && target.classList.contains(CODE_LANGUAGE_INPUT_CLASS)) {
             const wrapper = target.closest(`.${CODE_COPY_WRAPPER_CLASS}`) as HTMLElement | null;
             if (wrapper) setCodeBlockLanguage(wrapper, target.value);
@@ -2613,9 +3097,16 @@ func main() {
         }
         maybeAutoInsertHorizontalRule();
         maybeAutoInsertCodeBlock();
-        maybeAutoCloseInlineCode();
+        const beforeInlineCode = historyBefore ? captureWysiwygHistoryState() : null;
+        const autoClosedInlineCode = maybeAutoCloseInlineCode();
         rehighlightWysiwygCodeBlocks();
         updateMentionPopup();
+        if (autoClosedInlineCode && beforeInlineCode) {
+            finishWysiwygHistoryEntry(historyBefore, historyKind, beforeInlineCode);
+            finishWysiwygHistoryEntry(beforeInlineCode, 'inlineCode');
+        } else {
+            finishWysiwygHistoryEntry(historyBefore, historyKind);
+        }
         if (wysiwygDebounce) clearTimeout(wysiwygDebounce);
         const sourceFileId = wysiwygSourceFileId;
         wysiwygDebounce = setTimeout(() => {
@@ -2662,9 +3153,11 @@ func main() {
 
         const existingRules = new Set(wysiwygEl.querySelectorAll('hr'));
         applyingHorizontalRule = true;
+        manualWysiwygHistoryDepth++;
         try {
             document.execCommand('insertHorizontalRule');
         } finally {
+            manualWysiwygHistoryDepth--;
             applyingHorizontalRule = false;
         }
 
@@ -2720,9 +3213,11 @@ func main() {
         selection.addRange(lineRange);
 
         applyingCodeBlock = true;
+        manualWysiwygHistoryDepth++;
         try {
             document.execCommand('formatBlock', false, 'pre');
         } finally {
+            manualWysiwygHistoryDepth--;
             applyingCodeBlock = false;
         }
 
@@ -2897,7 +3392,7 @@ func main() {
     // button wrapper behind like a widow. Remove orphan wrappers, and empty
     // ones the caret has moved out of.
     function removeOrphanCodeWrappers() {
-        if (!wysiwygEl) return;
+        if (!wysiwygEl || applyingWysiwygHistory) return;
         const selection = window.getSelection();
         const caretNode = selection?.anchorNode ?? null;
         const focusedLanguageInput = document.activeElement instanceof HTMLInputElement &&
@@ -2933,31 +3428,32 @@ func main() {
     // Chrome sanitizes <code> tags in execCommand HTML, so a marker span is
     // inserted instead and converted back to inline code by htmlToMarkdown.
     let applyingInlineCode = false;
-    function maybeAutoCloseInlineCode() {
-        if (applyingInlineCode || !wysiwygEl) return;
+    function maybeAutoCloseInlineCode(): boolean {
+        if (applyingInlineCode || !wysiwygEl) return false;
         const selection = window.getSelection();
-        if (!selection || selection.rangeCount === 0) return;
+        if (!selection || selection.rangeCount === 0) return false;
         const range = selection.getRangeAt(0);
-        if (!range.collapsed) return;
+        if (!range.collapsed) return false;
         const node = range.startContainer;
-        if (node.nodeType !== Node.TEXT_NODE || !wysiwygEl.contains(node)) return;
+        if (node.nodeType !== Node.TEXT_NODE || !wysiwygEl.contains(node)) return false;
         const parentEl = node.parentElement;
-        if (!parentEl || parentEl.closest('pre')) return;
+        if (!parentEl || parentEl.closest('pre')) return false;
         // Never wrap inside an existing inline code element (a toolbar <code>
         // or a previous marker span): the caret inside one would nest another
         // span and corrupt the stored markdown.
         let ancestor: Element | null = parentEl;
         while (ancestor && ancestor !== wysiwygEl) {
-            if (isInlineCodeElement(ancestor)) return;
+            if (isInlineCodeElement(ancestor)) return false;
             ancestor = ancestor.parentElement;
         }
         const text = node.textContent ?? '';
         const offset = range.startOffset;
-        if (offset < 1 || text.charAt(offset - 1) !== '`') return;
+        if (offset < 1 || text.charAt(offset - 1) !== '`') return false;
         const openIdx = text.slice(0, offset - 1).lastIndexOf('`');
-        if (openIdx === -1) return;
+        if (openIdx === -1) return false;
         const codeText = text.slice(openIdx + 1, offset - 1);
-        if (!codeText || codeText !== codeText.trim()) return;
+        if (!codeText || codeText !== codeText.trim()) return false;
+        let didInsert = false;
         applyingInlineCode = true;
         try {
             const replaceRange = document.createRange();
@@ -2971,10 +3467,16 @@ func main() {
             // in document order would re-mark an unrelated span and leave the
             // new one without the marker (breaking the markdown round-trip).
             const existingSpans = new Set(wysiwygEl.querySelectorAll('span'));
-            document.execCommand('insertHTML', false, inlineCodeSpanHtml(codeText));
+            manualWysiwygHistoryDepth++;
+            try {
+                document.execCommand('insertHTML', false, inlineCodeSpanHtml(codeText));
+            } finally {
+                manualWysiwygHistoryDepth--;
+            }
             const inserted = Array.from(wysiwygEl.querySelectorAll('span')).find((span) => !existingSpans.has(span));
             const markerSpan = inserted instanceof HTMLElement ? inserted : null;
             if (markerSpan) {
+                didInsert = true;
                 // Rewrite the inserted span's background from the concrete
                 // color (which the sanitizer kept) to the theme-variable
                 // marker, so the code adapts to the active theme and
@@ -3008,6 +3510,7 @@ func main() {
         } finally {
             applyingInlineCode = false;
         }
+        return didInsert;
     }
 
     // Toggle inline code on the current selection (or the word at the caret).
@@ -3170,9 +3673,11 @@ func main() {
         const target = event.target;
         if (!(target instanceof HTMLInputElement) || target.type !== 'checkbox') return;
         if (!wysiwygEl?.contains(target)) return;
+        const historyBefore = captureWysiwygHistoryState();
         if (target.checked) target.setAttribute('checked', '');
         else target.removeAttribute('checked');
         handleWysiwygInput();
+        finishWysiwygHistoryEntry(historyBefore);
     }
 
     function getListItemFromSelection(): HTMLLIElement | null {
@@ -3715,7 +4220,13 @@ func main() {
         if (tryOpenPlaygroundFileLink(event, wysiwygEl)) return;
         if (tryOpenExternalLink(event, wysiwygEl)) return;
         if (target instanceof HTMLInputElement && target.classList.contains(CODE_LANGUAGE_INPUT_CLASS)) return;
+        const cleanupBefore = captureWysiwygHistoryState();
         removeOrphanCodeWrappers();
+        if (cleanupBefore && getWysiwygSnapshotHtml() !== cleanupBefore.html) {
+            wysiwygDirty = true;
+            commitWysiwygEdits();
+            finishWysiwygHistoryEntry(cleanupBefore);
+        }
         if (target instanceof HTMLInputElement && target.type === 'checkbox' && wysiwygEl?.contains(target)) {
             // Let the native checkbox toggle; change handler syncs markdown.
             return;
@@ -3725,10 +4236,14 @@ func main() {
             event.preventDefault();
             const img = deleteBtn.closest(`.${THUMB_WRAPPER_CLASS}`)?.querySelector('img');
             const fakeLink = img?.dataset.cojudgeImg;
-            if (fakeLink) deletePastedImage(fakeLink);
-            deleteBtn.closest(`.${THUMB_WRAPPER_CLASS}`)?.remove();
-            ensureTrailingEmptyLine(wysiwygEl);
-            wysiwygDirty = true;
+            if (fakeLink) wysiwygTrackedImageLinks.add(fakeLink);
+            runWysiwygHistoryTransaction(() => {
+                deleteBtn.closest(`.${THUMB_WRAPPER_CLASS}`)?.remove();
+                if (!wysiwygEl) return;
+                ensureTrailingEmptyLine(wysiwygEl);
+                handleWysiwygInput();
+                wysiwygEl.focus();
+            });
             commitWysiwygEdits();
             return;
         }
@@ -3809,52 +4324,18 @@ func main() {
         });
     }
 
-    // Deletes a code block from the WYSIWYG editor. The removed wrapper is
-    // snapshotted so a single ctrl/cmd+z (handleWysiwygKeydown) restores the
-    // block; the browser's native undo stack can't restore a block removed by
-    // JS, so this is a one-level undo that mirrors a manual delete.
-    let deletedCodeBlockUndo: { html: string; index: number } | null = null;
+    // Deletes a code block from the WYSIWYG editor. This is a scripted DOM edit,
+    // so record it in the editor history rather than relying on native undo.
     function deleteWysiwygCodeBlock(wrapper: HTMLElement) {
         if (!wysiwygEl || !wrapper.isConnected) return;
         if (activeLangPicker && activeLangPicker.wrapper === wrapper) closeLangPicker();
-        const children = Array.from(wysiwygEl.children);
-        deletedCodeBlockUndo = {
-            html: wrapper.outerHTML,
-            index: children.indexOf(wrapper)
-        };
+        const historyBefore = captureWysiwygHistoryState();
         wrapper.remove();
         ensureTrailingEmptyLine(wysiwygEl);
-        wysiwygDirty = true;
-        commitWysiwygEdits();
-        // Bring focus back to the editor so the next ctrl/cmd+z is handled
-        // here (the trash button is contenteditable=false and would keep it).
-        wysiwygEl.focus();
-    }
-
-    // Restores the most recently deleted code block. Returns true when a
-    // block was restored (and the native undo must not run).
-    function undoWysiwygCodeBlockDelete(): boolean {
-        if (!wysiwygEl || !deletedCodeBlockUndo) return false;
-        const { html, index } = deletedCodeBlockUndo;
-        deletedCodeBlockUndo = null;
-        const holder = document.createElement('div');
-        holder.innerHTML = html;
-        const el = holder.firstElementChild as HTMLElement | null;
-        if (!el) return false;
-        wysiwygEl.insertBefore(el, wysiwygEl.children[index] ?? null);
-        wrapCodeBlocksWithCopy(wysiwygEl);
-        const pre = el.querySelector('pre');
-        if (pre) {
-            const range = document.createRange();
-            range.selectNodeContents(pre);
-            range.collapse(false);
-            const selection = window.getSelection();
-            selection?.removeAllRanges();
-            selection?.addRange(range);
-        }
-        wysiwygEl.focus();
         handleWysiwygInput();
-        return true;
+        finishWysiwygHistoryEntry(historyBefore);
+        commitWysiwygEdits();
+        wysiwygEl.focus();
     }
 
     // Deletes a code block from the source markdown when its trash button is
@@ -3888,7 +4369,7 @@ func main() {
         });
     }
 
-    function commitWysiwygEdits() {
+    function commitWysiwygEdits(markdownOverride?: string) {
         if (wysiwygDebounce) {
             clearTimeout(wysiwygDebounce);
             wysiwygDebounce = null;
@@ -3897,7 +4378,7 @@ func main() {
         removeOrphanCodeWrappers();
         healTaskListStructure();
         prepareTaskListCheckboxes(wysiwygEl);
-        const markdown = htmlToMarkdown(wysiwygEl.innerHTML);
+        const markdown = markdownOverride ?? htmlToMarkdown(wysiwygEl.innerHTML);
         const sourceFileId = wysiwygSourceFileId;
         const sourceTab = tabs.find((tab) => tab.fileId === sourceFileId);
         const sourceIndex = tabs.findIndex((tab) => tab.fileId === sourceFileId);
@@ -3937,6 +4418,12 @@ func main() {
         wysiwygDirty = false;
     }
 
+    function handleWysiwygBlur() {
+        const historyBefore = captureWysiwygHistoryState();
+        commitWysiwygEdits();
+        finishWysiwygHistoryEntry(historyBefore);
+    }
+
     function handleCloudFileDiscard(event: Event) {
         const fileId = (event as CustomEvent<{ fileId?: unknown }>).detail?.fileId;
         if (typeof fileId !== 'string') return;
@@ -3970,9 +4457,14 @@ func main() {
 
     // Switch WYSIWYG mode when changing tabs
     $: if ((activeTab?.fileId ?? null) !== lastActiveTabFileId) {
-        if (previewEditMode) commitWysiwygEdits();
+        if (previewEditMode) {
+            commitWysiwygEdits();
+            resetWysiwygHistory();
+        }
         wysiwygSourceFileId = null;
         showLinkInput = false;
+        savedLinkRange = null;
+        savedLinkHistoryBefore = null;
         closeMentionPopup();
         lastActiveTabFileId = activeTab?.fileId ?? null;
         if (activeTab?.type === 'preview') {
@@ -3987,6 +4479,20 @@ func main() {
     // swaps it for the payload). Plain URL strings are inserted as clickable
     // links (new tab).
     function handleWysiwygPaste(event: ClipboardEvent) {
+        const historyBefore = captureWysiwygHistoryState();
+        const pasted = event.clipboardData?.getData('text/plain') ?? '';
+
+        // Code blocks are plain-text editing surfaces. Handling this ourselves
+        // avoids rich clipboard HTML and keeps highlighting in one undo step.
+        if (getPreFromSelection()) {
+            event.preventDefault();
+            runWysiwygHistoryTransaction(() => {
+                document.execCommand('insertText', false, pasted);
+                handleWysiwygInput();
+            }, historyBefore, 'insertFromPaste');
+            return;
+        }
+
         const items = event.clipboardData?.items;
         if (items) {
             for (const item of items) {
@@ -3994,26 +4500,52 @@ func main() {
                 const file = item.getAsFile();
                 if (!file) continue;
                 event.preventDefault();
+                const sourceFileId = wysiwygSourceFileId;
+                if (!sourceFileId) return;
+                const token = uuidv4();
+                let inserted = false;
+                runWysiwygHistoryTransaction(() => {
+                    const selection = window.getSelection();
+                    if (!selection || selection.rangeCount === 0 || !wysiwygEl) return;
+                    const range = selection.getRangeAt(0);
+                    if (!wysiwygEl.contains(range.startContainer) || !wysiwygEl.contains(range.endContainer)) return;
+                    const placeholder = document.createElement('span');
+                    placeholder.setAttribute(WYSIWYG_PENDING_IMAGE_ATTR, token);
+                    placeholder.setAttribute('contenteditable', 'false');
+                    const replacedContent = range.extractContents();
+                    if (replacedContent.hasChildNodes()) placeholder.appendChild(replacedContent);
+                    else placeholder.appendChild(document.createTextNode('\u200B'));
+                    range.insertNode(placeholder);
+                    range.setStartAfter(placeholder);
+                    range.collapse(true);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                    inserted = true;
+                    ensureTrailingEmptyLine(wysiwygEl);
+                }, historyBefore, 'insertFromPaste');
+                if (!inserted) return;
+
                 const reader = new FileReader();
-                reader.onload = async () => {
-                    const link = await storePastedImage(reader.result as string);
-                    document.execCommand('insertImage', false, link);
-                    if (wysiwygEl) {
-                        wrapImageThumbnails(wysiwygEl);
-                        wrapCodeBlocksWithCopy(wysiwygEl);
-                        // Keep an empty line after the pasted image so the caret
-                        // can move past the contenteditable="false" thumbnail
-                        ensureTrailingEmptyLine(wysiwygEl);
-                        resolvePastedImages(wysiwygEl);
+                const discard = () => settlePendingWysiwygImage(token, sourceFileId, null);
+                reader.onerror = discard;
+                reader.onload = () => {
+                    if (typeof reader.result !== 'string') {
+                        discard();
+                        return;
                     }
+                    void storePastedImage(reader.result)
+                        .then((link) => settlePendingWysiwygImage(token, sourceFileId, link))
+                        .catch(discard);
                 };
                 reader.readAsDataURL(file);
                 return;
             }
         }
 
-        const pasted = event.clipboardData?.getData('text/plain') ?? '';
-        if (!isUrlLike(pasted)) return;
+        if (!isUrlLike(pasted)) {
+            queueWysiwygHistoryEntry(historyBefore, 'insertFromPaste');
+            return;
+        }
 
         event.preventDefault();
         const href = normalizeUrl(pasted);
@@ -4025,13 +4557,15 @@ func main() {
             !!selection.anchorNode &&
             wysiwygEl.contains(selection.anchorNode);
 
-        if (hasSelection) {
-            document.execCommand('createLink', false, href);
-            ensureWysiwygLinksOpenInNewTab();
-        } else {
-            document.execCommand('insertHTML', false, linkHtml(href, pasted.trim()));
-        }
-        handleWysiwygInput();
+        runWysiwygHistoryTransaction(() => {
+            if (hasSelection) {
+                document.execCommand('createLink', false, href);
+                ensureWysiwygLinksOpenInNewTab();
+            } else {
+                document.execCommand('insertHTML', false, linkHtml(href, pasted.trim()));
+            }
+            handleWysiwygInput();
+        }, historyBefore, 'insertFromPaste');
     }
 
     function ensureWysiwygLinksOpenInNewTab() {
@@ -4155,6 +4689,7 @@ func main() {
 
     function insertFileMention(file: TabMeta) {
         if (!wysiwygEl || !savedMentionRange) return;
+        const historyBefore = captureWysiwygHistoryState();
         // Prefer the underlying source file so the link stays valid if a preview tab is closed.
         const targetId = file.type === 'preview' && file.sourceFileId ? file.sourceFileId : file.fileId;
         const href = playgroundFileHref(targetId);
@@ -4185,6 +4720,7 @@ func main() {
         selection?.addRange(caret);
 
         handleWysiwygInput();
+        finishWysiwygHistoryEntry(historyBefore);
     }
 
     function selectMentionByIndex(index: number) {
@@ -4195,9 +4731,11 @@ func main() {
 
     function applyWysiwygCommand(command: string, value?: string) {
         if (!wysiwygEl) return;
-        wysiwygEl.focus();
-        document.execCommand(command, false, value);
-        handleWysiwygInput();
+        runWysiwygHistoryTransaction(() => {
+            wysiwygEl?.focus();
+            document.execCommand(command, false, value);
+            handleWysiwygInput();
+        });
     }
 
     function isFileMentionEl(node: Node | null | undefined): node is HTMLElement {
@@ -4210,6 +4748,7 @@ func main() {
 
     function removeFileMention(mention: HTMLElement) {
         if (!wysiwygEl) return;
+        const historyBefore = captureWysiwygHistoryState();
         // Drop caret-anchor ZWSPs next to the mention
         const prev = mention.previousSibling;
         const next = mention.nextSibling;
@@ -4228,6 +4767,7 @@ func main() {
         selection?.removeAllRanges();
         selection?.addRange(caret);
         handleWysiwygInput();
+        finishWysiwygHistoryEntry(historyBefore);
     }
 
     // Mention immediately before a collapsed caret (skipping ZWSP anchors).
@@ -4300,13 +4840,18 @@ func main() {
     // code, Ctrl/Cmd+K insert link. Also navigates the @-mention popup and
     // deletes file mentions atomically on Backspace/Delete.
     function handleWysiwygKeydown(e: KeyboardEvent) {
-        // ctrl/cmd+z after a code-block deletion restores the block (one
-        // level, before the browser's own undo stack gets a chance to undo
-        // the earlier typing instead).
-        if ((e.metaKey || e.ctrlKey) && !e.shiftKey && e.key.toLowerCase() === 'z' && deletedCodeBlockUndo) {
-            e.preventDefault();
-            undoWysiwygCodeBlockDelete();
-            return;
+        if ((e.metaKey || e.ctrlKey) && !e.altKey) {
+            const historyKey = e.key.toLowerCase();
+            if (!e.shiftKey && historyKey === 'z') {
+                e.preventDefault();
+                undoWysiwygHistory();
+                return;
+            }
+            if ((e.shiftKey && historyKey === 'z') || (!e.shiftKey && historyKey === 'y')) {
+                e.preventDefault();
+                redoWysiwygHistory();
+                return;
+            }
         }
         if (showMentionPopup) {
             if (e.key === 'ArrowDown') {
@@ -4339,8 +4884,10 @@ func main() {
 
         // Tab/Shift+Tab indents/outdents list items (including checklists).
         if (e.key === 'Tab' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+            const historyBefore = captureWysiwygHistoryState();
             if (handleWysiwygTab(e)) {
                 e.preventDefault();
+                finishWysiwygHistoryEntry(historyBefore);
                 return;
             }
         }
@@ -4349,8 +4896,12 @@ func main() {
         if (e.key === 'Enter' && !e.shiftKey && !e.metaKey && !e.ctrlKey && !e.altKey) {
             const taskItem = getListItemFromSelection();
             if (taskItem && isTaskListItem(taskItem)) {
+                const historyBefore = captureWysiwygHistoryState();
                 e.preventDefault();
-                if (handleTaskListEnter(taskItem)) handleWysiwygInput();
+                if (handleTaskListEnter(taskItem)) {
+                    handleWysiwygInput();
+                    finishWysiwygHistoryEntry(historyBefore);
+                }
                 return;
             }
         }
@@ -4361,6 +4912,7 @@ func main() {
         if (e.key === 'Enter' && !e.shiftKey && !e.metaKey && !e.ctrlKey && !e.altKey) {
             const pre = getPreFromSelection();
             if (!pre) return;
+            const historyBefore = captureWysiwygHistoryState();
             e.preventDefault();
             const selection = window.getSelection();
             const line = selection && selection.isCollapsed ? emptyLineInPre(pre) : null;
@@ -4370,16 +4922,20 @@ func main() {
                 insertNewlineInPre();
             }
             handleWysiwygInput();
+            finishWysiwygHistoryEntry(historyBefore);
         }
 
         // Backspace at the start of a task item removes the checkbox.
         if (e.key === 'Backspace' && !e.shiftKey && !e.metaKey && !e.ctrlKey && !e.altKey) {
+            const historyBefore = captureWysiwygHistoryState();
             if (handleTaskListBackspace()) {
                 e.preventDefault();
+                finishWysiwygHistoryEntry(historyBefore);
                 return;
             }
             if (handlePlainItemBackspaceIntoTask()) {
                 e.preventDefault();
+                finishWysiwygHistoryEntry(historyBefore);
                 return;
             }
         }
@@ -4387,8 +4943,10 @@ func main() {
         // Delete at a task-list boundary: merge manually so the browser never
         // rebuilds the <li> (which drops the checkbox inputs).
         if (e.key === 'Delete' && !e.shiftKey && !e.metaKey && !e.ctrlKey && !e.altKey) {
+            const historyBefore = captureWysiwygHistoryState();
             if (handleTaskBoundaryDelete()) {
                 e.preventDefault();
+                finishWysiwygHistoryEntry(historyBefore);
                 return;
             }
         }
@@ -4461,7 +5019,7 @@ func main() {
             applyWysiwygCommand('strikeThrough');
         } else if (key === 'e' && !e.shiftKey && !e.altKey) {
             e.preventDefault();
-            toggleInlineCode();
+            runWysiwygHistoryTransaction(() => toggleInlineCode());
         } else if (key === 'k' && !e.shiftKey && !e.altKey) {
             e.preventDefault();
             openLinkInput();
@@ -4507,19 +5065,21 @@ func main() {
             return;
         }
         if (command === 'inlineCode') {
-            toggleInlineCode();
+            runWysiwygHistoryTransaction(() => toggleInlineCode());
             return;
         }
         if (command === 'insertHorizontalRule') {
-            if (insertWysiwygHorizontalRule()) handleWysiwygInput();
+            runWysiwygHistoryTransaction(() => {
+                if (insertWysiwygHorizontalRule()) handleWysiwygInput();
+            });
             return;
         }
         if (command === 'insertTaskList') {
-            insertOrToggleTaskList();
+            runWysiwygHistoryTransaction(() => insertOrToggleTaskList());
             return;
         }
         if (command === 'codeBlock') {
-            toggleCodeBlock();
+            runWysiwygHistoryTransaction(() => toggleCodeBlock());
             return;
         }
         applyWysiwygCommand(command, btn.dataset.value);
@@ -4536,19 +5096,21 @@ func main() {
             return;
         }
         if (command === 'inlineCode') {
-            toggleInlineCode();
+            runWysiwygHistoryTransaction(() => toggleInlineCode());
             return;
         }
         if (command === 'insertHorizontalRule') {
-            if (insertWysiwygHorizontalRule()) handleWysiwygInput();
+            runWysiwygHistoryTransaction(() => {
+                if (insertWysiwygHorizontalRule()) handleWysiwygInput();
+            });
             return;
         }
         if (command === 'insertTaskList') {
-            insertOrToggleTaskList();
+            runWysiwygHistoryTransaction(() => insertOrToggleTaskList());
             return;
         }
         if (command === 'codeBlock') {
-            toggleCodeBlock();
+            runWysiwygHistoryTransaction(() => toggleCodeBlock());
             return;
         }
         applyWysiwygCommand(command, btn.dataset.value);
@@ -4556,6 +5118,7 @@ func main() {
 
     function openLinkInput() {
         if (!wysiwygEl) return;
+        savedLinkHistoryBefore = captureWysiwygHistoryState();
         const selection = window.getSelection();
         savedLinkRange = selection && selection.rangeCount > 0 && wysiwygEl.contains(selection.anchorNode)
             ? selection.getRangeAt(0).cloneRange()
@@ -4567,26 +5130,29 @@ func main() {
     function applyLink() {
         const url = linkUrl.trim();
         if (url && wysiwygEl) {
-            wysiwygEl.focus();
-            if (savedLinkRange) {
+            runWysiwygHistoryTransaction(() => {
+                wysiwygEl?.focus();
+                if (savedLinkRange) {
+                    const selection = window.getSelection();
+                    selection?.removeAllRanges();
+                    selection?.addRange(savedLinkRange);
+                }
+                const href = isUrlLike(url) ? normalizeUrl(url) : url;
                 const selection = window.getSelection();
-                selection?.removeAllRanges();
-                selection?.addRange(savedLinkRange);
-            }
-            const href = isUrlLike(url) ? normalizeUrl(url) : url;
-            const selection = window.getSelection();
-            const hasSelection = !!selection && !selection.isCollapsed;
-            if (hasSelection) {
-                document.execCommand('createLink', false, href);
-            } else {
-                document.execCommand('insertHTML', false, linkHtml(href, url));
-            }
-            ensureWysiwygLinksOpenInNewTab();
-            handleWysiwygInput();
+                const hasSelection = !!selection && !selection.isCollapsed;
+                if (hasSelection) {
+                    document.execCommand('createLink', false, href);
+                } else {
+                    document.execCommand('insertHTML', false, linkHtml(href, url));
+                }
+                ensureWysiwygLinksOpenInNewTab();
+                handleWysiwygInput();
+            }, savedLinkHistoryBefore);
         }
         showLinkInput = false;
         linkUrl = '';
         savedLinkRange = null;
+        savedLinkHistoryBefore = null;
     }
 
     let isFirebaseAvailable = false;
@@ -5195,6 +5761,7 @@ func main() {
             // happens once the page is torn down. Dropping the freshest edits
             // is worse than re-serializing them.
             commitWysiwygEdits();
+            if (previewEditMode) resetWysiwygHistory();
             saveCurrentViewState();
             flushProgressStorageWrites();
         };
@@ -6026,7 +6593,7 @@ func main() {
                                     bind:this={linkInputEl}
                                     on:keydown={(e) => {
                                         if (e.key === 'Enter') { e.preventDefault(); applyLink(); }
-                                        else if (e.key === 'Escape') { e.preventDefault(); showLinkInput = false; linkUrl = ''; savedLinkRange = null; }
+                                        else if (e.key === 'Escape') { e.preventDefault(); showLinkInput = false; linkUrl = ''; savedLinkRange = null; savedLinkHistoryBefore = null; }
                                     }}
                                 />
                             {/if}
@@ -6042,12 +6609,13 @@ func main() {
                             aria-label="Markdown editor (WYSIWYG)"
                             tabindex="0"
                             bind:this={wysiwygEl}
+                            on:beforeinput={handleWysiwygBeforeInput}
                             on:input={handleWysiwygInput}
                             on:keydown={handleWysiwygKeydown}
                             on:paste={handleWysiwygPaste}
                             on:click={handleWysiwygClick}
                             on:change={handleWysiwygChange}
-                            on:blur={commitWysiwygEdits}
+                            on:blur={handleWysiwygBlur}
                         ></div>
                         <datalist id={CODE_LANGUAGE_DATALIST_ID}>
                             {#each CODE_LANGUAGE_OPTIONS as option}
