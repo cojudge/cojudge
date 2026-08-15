@@ -570,7 +570,8 @@ func Solve(operations []string, values []string) []string {
     var obj *${className}
     for i, op := range operations {
         if op == "${className}" {
-            obj = &${className}{}
+            __obj := Constructor()
+            obj = &__obj
             result = append(result, "null")
 ${branches}
         }
@@ -586,7 +587,8 @@ func Solve(operations []string, values [][]int) []string {
     var obj *${className}
     for i, op := range operations {
         if op == "${className}" {
-            obj = &${className}{}
+            __obj := Constructor()
+            obj = &__obj
             result = append(result, "null")
 ${branches}
         }
