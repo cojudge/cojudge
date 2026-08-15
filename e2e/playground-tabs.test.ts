@@ -53,6 +53,75 @@ test('closing the active tab keeps the next tab\'s own language', async ({ page 
   await expect(page.locator('.monaco-editor .view-lines')).toContainText('python file B');
 });
 
+test('closing an inactive preview keeps the active file and other contents unchanged', async ({ page }) => {
+  await page.addInitScript(() => {
+    const now = Date.now();
+    localStorage.setItem('user-settings', JSON.stringify({ playgroundPreferredLanguage: 'java' }));
+    localStorage.setItem('playground-markdown-mode', 'source');
+    localStorage.setItem('files', JSON.stringify({
+      playground: JSON.stringify([
+        {
+          fileId: 'preview-a',
+          fileName: 'Notes',
+          language: 'markdown',
+          content: '',
+          isOpen: true,
+          order: 0,
+          lastUpdated: now,
+          type: 'preview',
+          sourceFileId: 'source-a'
+        },
+        {
+          fileId: 'source-a',
+          fileName: 'Notes',
+          language: 'markdown',
+          content: '# Notes',
+          isOpen: false,
+          order: 1,
+          lastUpdated: now
+        },
+        {
+          fileId: 'file-b',
+          fileName: 'FileB',
+          language: 'java',
+          lastLanguage: 'java',
+          content: '// file B',
+          isOpen: true,
+          order: 2,
+          lastUpdated: now + 200
+        },
+        {
+          fileId: 'file-c',
+          fileName: 'FileC',
+          language: 'java',
+          lastLanguage: 'java',
+          content: '// file C',
+          isOpen: true,
+          order: 3,
+          lastUpdated: now + 100
+        }
+      ])
+    }));
+  });
+  await page.goto('/playground');
+  await expect(page.locator('.tab.active .tab-title')).toHaveText('FileB');
+  await expect(page.locator('.monaco-editor .view-lines')).toContainText('file B');
+
+  const notesTab = page.locator('.tab', { hasText: 'Notes' });
+  await notesTab.hover();
+  await notesTab.locator('.tab-close').click();
+
+  await expect.poll(() => page.evaluate(() => {
+    const allFiles = JSON.parse(localStorage.getItem('files') || '{}');
+    const files = JSON.parse(allFiles.playground || '[]');
+    return files.find((file: { fileId: string; language: string }) =>
+      file.fileId === 'file-c' && file.language === 'java'
+    )?.content;
+  })).toBe('// file C');
+  await expect(page.locator('.tab.active .tab-title')).toHaveText('FileB');
+  await expect(page.locator('.monaco-editor .view-lines')).toContainText('file B');
+});
+
 test('recent whiteboards use the whiteboard icon', async ({ page }) => {
   await page.goto('/playground');
   await page.evaluate(() => {

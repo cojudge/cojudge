@@ -295,13 +295,21 @@ func main() {
 
     let suppressSave = true; // prevent save during programmatic loads
     let skipNextSave = false; // prevent save when code was loaded from cross-tab sync
+    // The Monaco buffer belongs to this exact file/language pair. Keeping the
+    // identity with the buffer prevents tab index changes from retargeting it.
+    let editorFileId: string | null = null;
+    let editorLanguage: ProgrammingLanguage | null = null;
 
     async function loadOrInitFile(lang: ProgrammingLanguage) {
         if (activeTabId < 0 || activeTabId >= tabs.length) return;
-        const currentId = tabs[activeTabId].fileId;
+        const currentTab = tabs[activeTabId];
+        if (isSpecialTabType(currentTab.type)) return;
+        const currentId = currentTab.fileId;
         const files = getFiles();
         const entry = files.find((x) => x.fileId === currentId && x.language === lang);
         suppressSave = true;
+        editorFileId = currentId;
+        editorLanguage = lang;
         if (entry) {
             code = entry.content;
             currentViewState = entry.viewState ?? null;
@@ -1713,22 +1721,31 @@ func main() {
         }
         prevCloudLoading = loading;
     }
-    $: if (!suppressSave && !isSpecialTabType(tabs[activeTabId]?.type) && (code !== undefined || output !== undefined || logs !== undefined)) {
+    $: if (
+        !suppressSave &&
+        editorFileId &&
+        editorLanguage &&
+        tabs[activeTabId]?.isOpen &&
+        tabs[activeTabId]?.fileId === editorFileId &&
+        !isSpecialTabType(tabs[activeTabId]?.type) &&
+        language === editorLanguage &&
+        code !== undefined
+    ) {
         if (!skipNextSave && !isPristineStarterTab()) {
             const fkey = fileKey();
             const now = Date.now();
             const latestViewState = editorComponent?.getViewState?.() || currentViewState;
+            const targetFileId = editorFileId;
+            const targetLanguage = editorLanguage;
+            const targetTab = tabs[activeTabId];
 
-            if (activeTabId >= 0 && activeTabId < tabs.length) {
-                 tabs = tabs.map((t, i) => i === activeTabId ? { ...t, lastUpdated: now } : t);
-            }
+            tabs = tabs.map((t) => t.fileId === targetFileId ? { ...t, lastUpdated: now } : t);
 
             fileStore.update((s) => {
                 let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
-                if (activeTabId < 0 || activeTabId >= tabs.length) return s;
                 const existingFile = files.find(x =>
-                    x.fileId === tabs[activeTabId].fileId &&
-                    x.language === language
+                    x.fileId === targetFileId &&
+                    x.language === targetLanguage
                 );
                 if (existingFile) {
                     existingFile.content = code;
@@ -1737,17 +1754,17 @@ func main() {
                     existingFile.logs = logs;
                     existingFile.lastUpdated = now;
                 } else {
-                    const sibling = files.find((x) => x.fileId === tabs[activeTabId].fileId);
+                    const sibling = files.find((x) => x.fileId === targetFileId);
                     files = [...files, {
-                        fileId: tabs[activeTabId].fileId,
-                        fileName: tabs[activeTabId].fileName,
-                        language: language,
+                        fileId: targetFileId,
+                        fileName: targetTab.fileName,
+                        language: targetLanguage,
                         content: code,
                         viewState: latestViewState,
                         output: output,
                         logs: logs,
                         isActive: false,
-                        isOpen: tabs[activeTabId].isOpen,
+                        isOpen: targetTab.isOpen,
                         lastUpdated: now,
                         parentId: sibling?.parentId ?? null,
                         order: sibling?.order
@@ -1787,8 +1804,12 @@ func main() {
         const tabToClose = tabs.find(t => t.fileId === fileId);
         if (tabToClose?.type === 'preview') {
             const closedIdx = tabs.findIndex(t => t.fileId === fileId);
+            const activeFileId = tabs[activeTabId]?.fileId;
             tabs = tabs.filter(t => t.fileId !== fileId);
-            if (!tabs[activeTabId]?.isOpen) {
+            if (activeFileId && activeFileId !== fileId) {
+                const nextActiveIdx = tabs.findIndex((t) => t.fileId === activeFileId);
+                if (nextActiveIdx !== -1) activeTabId = nextActiveIdx;
+            } else {
                 let nextOpenIdx = -1;
                 for (let i = Math.min(closedIdx, tabs.length - 1); i >= 0; i--) {
                     if (tabs[i].isOpen) { nextOpenIdx = i; break; }
@@ -1801,6 +1822,8 @@ func main() {
                 if (nextOpenIdx !== -1) {
                     activeTabId = nextOpenIdx;
                     loadTabContent(tabs[nextOpenIdx]);
+                } else {
+                    activeTabId = Math.max(0, Math.min(closedIdx, tabs.length - 1));
                 }
             }
             persistTabOrder();
@@ -2113,16 +2136,18 @@ func main() {
     });
 
     function saveCurrentViewState() {
-        if (!editorComponent || activeTabId < 0 || activeTabId >= tabs.length) return;
+        if (!editorComponent || !editorFileId || !editorLanguage) return;
         const state = editorComponent.getViewState();
         if (!state) return;
+        const targetFileId = editorFileId;
+        const targetLanguage = editorLanguage;
 
         const fkey = fileKey();
         fileStore.update((s) => {
             let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
             const existingFile = files.find(x =>
-                x.fileId === tabs[activeTabId].fileId &&
-                x.language === language
+                x.fileId === targetFileId &&
+                x.language === targetLanguage
             );
             if (existingFile) {
                 if (existingFile.viewState === state) return s;
@@ -2458,16 +2483,15 @@ func main() {
 
     $: if (mentionQuery !== undefined) mentionSelectedIndex = 0;
 
-    function getActivePreviewSourceContent(): string {
-        if (!activeTab || activeTab.type !== 'preview' || !activeTab.sourceFileId) return '';
+    function getPreviewSourceContent(sourceFileId: string): string {
         const files = getFiles();
-        const sourceEntry = files.find((f) => f.fileId === activeTab.sourceFileId && f.language === 'markdown');
+        const sourceEntry = files.find((f) => f.fileId === sourceFileId && f.language === 'markdown');
         return sourceEntry?.content ?? '';
     }
 
     function renderWysiwygFromStore() {
         if (!wysiwygEl || !wysiwygSourceFileId) return;
-        wysiwygEl.innerHTML = renderMarkdownPlain(getActivePreviewSourceContent(), {
+        wysiwygEl.innerHTML = renderMarkdownPlain(getPreviewSourceContent(wysiwygSourceFileId), {
             resolveFileLanguage: (fileId) => getLanguageForTab(fileId)
         });
         wrapImageThumbnails(wysiwygEl);
@@ -2483,14 +2507,20 @@ func main() {
     }
 
     async function enterPreviewEditMode(force = false) {
-        if (!activeTab?.sourceFileId) return;
-        if (!force && previewEditMode && wysiwygSourceFileId === activeTab.sourceFileId && wysiwygEl) {
+        const sourceFileId = activeTab?.type === 'preview' ? activeTab.sourceFileId : null;
+        if (!sourceFileId) return;
+        if (!force && previewEditMode && wysiwygSourceFileId === sourceFileId && wysiwygEl) {
             return;
         }
-        wysiwygSourceFileId = activeTab.sourceFileId;
+        wysiwygSourceFileId = sourceFileId;
         previewEditMode = true;
         await tick();
-        if (wysiwygEl) {
+        if (
+            wysiwygEl &&
+            wysiwygSourceFileId === sourceFileId &&
+            activeTab?.type === 'preview' &&
+            activeTab.sourceFileId === sourceFileId
+        ) {
             renderWysiwygFromStore();
             wysiwygEl.focus();
         }
@@ -2587,7 +2617,10 @@ func main() {
         rehighlightWysiwygCodeBlocks();
         updateMentionPopup();
         if (wysiwygDebounce) clearTimeout(wysiwygDebounce);
-        wysiwygDebounce = setTimeout(commitWysiwygEdits, 300);
+        const sourceFileId = wysiwygSourceFileId;
+        wysiwygDebounce = setTimeout(() => {
+            if (wysiwygSourceFileId === sourceFileId) commitWysiwygEdits();
+        }, 300);
     }
 
     let applyingHorizontalRule = false;
@@ -3866,16 +3899,41 @@ func main() {
         prepareTaskListCheckboxes(wysiwygEl);
         const markdown = htmlToMarkdown(wysiwygEl.innerHTML);
         const sourceFileId = wysiwygSourceFileId;
+        const sourceTab = tabs.find((tab) => tab.fileId === sourceFileId);
+        const sourceIndex = tabs.findIndex((tab) => tab.fileId === sourceFileId);
+        const now = Date.now();
         const fkey = fileKey();
         fileStore.update((s) => {
-            const files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            let files = JSON.parse(s[fkey] || '[]') as FileEntry[];
             const sourceEntry = files.find((f) => f.fileId === sourceFileId && f.language === 'markdown');
-            if (sourceEntry && sourceEntry.content !== markdown) {
+            if (sourceEntry) {
+                if (sourceEntry.content === markdown) return s;
                 sourceEntry.content = markdown;
-                sourceEntry.lastUpdated = Date.now();
+                sourceEntry.lastUpdated = now;
+            } else {
+                const sibling = files.find((f) =>
+                    f.fileId === sourceFileId && !isFolderEntry(f) && !isSpecialTabType(f.type)
+                );
+                const previewEntry = files.find((f) => f.type === 'preview' && f.sourceFileId === sourceFileId);
+                files = [...files, {
+                    fileId: sourceFileId,
+                    fileName: sourceTab?.fileName ?? sibling?.fileName ?? previewEntry?.fileName ?? 'Solution',
+                    language: 'markdown',
+                    lastLanguage: 'markdown',
+                    content: markdown,
+                    viewState: null,
+                    output: '',
+                    logs: '',
+                    isActive: false,
+                    isOpen: sourceTab?.isOpen ?? false,
+                    lastUpdated: now,
+                    parentId: sibling?.parentId ?? previewEntry?.parentId ?? null,
+                    order: sibling?.order ?? (sourceIndex >= 0 ? sourceIndex : previewEntry?.order)
+                } as FileEntry];
             }
             return { ...s, [fkey]: JSON.stringify(files) };
         });
+        if (editorFileId === sourceFileId && editorLanguage === 'markdown') code = markdown;
         wysiwygDirty = false;
     }
 

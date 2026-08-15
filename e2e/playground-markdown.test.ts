@@ -27,6 +27,17 @@ function getMarkdownContent(page: Page): Promise<string | null> {
   });
 }
 
+function getFileContent(page: Page, fileId: string, language: string): Promise<string | null> {
+  return page.evaluate(({ fileId, language }) => {
+    const allFiles = JSON.parse(localStorage.getItem('files') || '{}');
+    const files = JSON.parse(allFiles.playground || '[]');
+    const entry = files.find((file: { fileId: string; language: string }) =>
+      file.fileId === fileId && file.language === language
+    );
+    return entry?.content ?? null;
+  }, { fileId, language });
+}
+
 test('closing the active WYSIWYG tab keeps the other markdown tab in WYSIWYG mode', async ({ page }) => {
   await page.goto('/playground');
   await page.evaluate(() => {
@@ -53,6 +64,67 @@ test('closing the active WYSIWYG tab keeps the other markdown tab in WYSIWYG mod
   await page.locator('.tab:has-text("Tasks") .tab-close').click();
   await expect(page.locator('.wysiwyg-editing')).toBeVisible();
   await expect(page.locator('.wysiwyg-editing h1')).toHaveText('Notes');
+});
+
+test('closing the last WYSIWYG tab does not restore stale source content', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('user-settings', JSON.stringify({ playgroundPreferredLanguage: 'markdown' }));
+    localStorage.setItem('playground-markdown-mode', 'wysiwyg');
+    localStorage.setItem('files', JSON.stringify({
+      playground: JSON.stringify([
+        { fileId: 'note', fileName: 'Note', language: 'markdown', content: '# Original', isOpen: true, order: 0, lastUpdated: Date.now() }
+      ])
+    }));
+  });
+  await page.goto('/playground');
+
+  const editable = page.locator('.wysiwyg-editing');
+  await expect(editable.locator('h1')).toHaveText('Original');
+  await editable.evaluate((element) => {
+    element.innerHTML = '<h1>Edited in WYSIWYG</h1>';
+    element.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText' }));
+  });
+  await expect.poll(() => getFileContent(page, 'note', 'markdown')).toContain('Edited in WYSIWYG');
+
+  await page.locator('.tab.active .tab-close').click();
+
+  await expect(page.locator('.empty-state')).toBeVisible();
+  await expect.poll(() => getFileContent(page, 'note', 'markdown')).toContain('Edited in WYSIWYG');
+});
+
+test('WYSIWYG creates a missing markdown source before saving', async ({ page }) => {
+  await page.addInitScript(() => {
+    if (sessionStorage.getItem('missing-markdown-source-seeded')) return;
+    sessionStorage.setItem('missing-markdown-source-seeded', 'true');
+    localStorage.setItem('user-settings', JSON.stringify({ playgroundPreferredLanguage: 'markdown' }));
+    localStorage.setItem('playground-markdown-mode', 'wysiwyg');
+    localStorage.setItem('files', JSON.stringify({
+      playground: JSON.stringify([
+        {
+          fileId: 'new-note',
+          fileName: 'New note',
+          language: 'java',
+          lastLanguage: 'markdown',
+          content: '// Existing language version',
+          isOpen: true,
+          order: 0,
+          lastUpdated: Date.now()
+        }
+      ])
+    }));
+  });
+  await page.goto('/playground');
+
+  const editable = page.locator('.wysiwyg-editing');
+  await expect(editable).toBeVisible();
+  await editable.evaluate((element) => {
+    element.innerHTML = '<p>First saved note</p>';
+    element.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText' }));
+  });
+
+  await expect.poll(() => getFileContent(page, 'new-note', 'markdown')).toContain('First saved note');
+  await page.reload();
+  await expect(page.locator('.wysiwyg-editing')).toContainText('First saved note');
 });
 
 test('discarding an active WYSIWYG file reloads the restored content', async ({ page }) => {
