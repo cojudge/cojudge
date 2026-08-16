@@ -37,11 +37,13 @@ For a custom Firebase project:
 3. Put the Google provider's Web OAuth client ID in `VITE_GOOGLE_WEB_CLIENT_ID`. Add each browser origin that hosts Cojudge to that client's authorized JavaScript origins.
 4. Create a Google OAuth client with application type **Desktop app**. Put its client ID in `VITE_GOOGLE_DESKTOP_CLIENT_ID` and its generated client secret in `VITE_GOOGLE_DESKTOP_CLIENT_SECRET` for local/custom builds.
 5. If Identity Platform asks for external Google client IDs, add the desktop client ID there as well.
-6. Deploy the private per-user and sharing rules with `npx firebase-tools deploy --only firestore:rules --project <project-id>`.
+6. Deploy the private per-user and sharing rules with `npx firebase-tools deploy --only firestore:rules --project <project-id>`. Deploy rules before distributing a newer client because cloud schema changes are intentionally rejected until their matching rules are active.
 
 Desktop Google sign-in opens the system browser, listens temporarily on a random `127.0.0.1` port, uses OAuth PKCE, and then closes the local listener. No hosted callback server or VPS is involved. Google calls the native credential a client secret, but installed apps cannot keep embedded values confidential; PKCE and callback validation provide the security boundary.
 
 Cojudge Cloud follows a Git-like synchronization model: login, reconnect, and periodic checks fetch cloud metadata and pull only onto an unchanged local working copy. Local edits and deletions are never pushed by those background checks. **Sync now** explicitly creates a cloud revision, and the five most recent revisions remain available for local restore.
+
+Cloud snapshot schema v2 keeps image payloads in immutable, revision-scoped Firestore sidecars instead of the 6 MiB progress JSON. Pasted Markdown images, inline image data URLs, and whiteboard images are replaced with content-hashed references during upload and restored before local data is applied. Sidecars are integrity checked, limited to 64 MiB per revision, and deleted with expired revisions. Existing schema v1 revisions remain readable and are migrated only when a new revision is pushed.
 
 ## Development
 

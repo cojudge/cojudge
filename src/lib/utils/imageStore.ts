@@ -193,8 +193,10 @@ export async function importPastedImages(records: Record<string, string>): Promi
             tx.onerror = () => reject(tx.error);
             tx.onabort = () => reject(tx.error);
         });
-    } catch {
-        // ignore
+    } catch (error) {
+        throw new Error(
+            `Pasted images could not be saved locally: ${error instanceof Error ? error.message : String(error)}`
+        );
     }
 }
 
