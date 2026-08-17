@@ -27,7 +27,8 @@ const CLOUD_KEYS = new Set([
 const CLOUD_KEY_PREFIXES = ['cojudge-whiteboard-v1:share:'];
 
 export const CLOUD_SNAPSHOT_LEGACY_VERSION = 1;
-export const CLOUD_SNAPSHOT_VERSION = 2;
+export const CLOUD_SNAPSHOT_SIDECAR_VERSION = 2;
+export const CLOUD_SNAPSHOT_VERSION = 3;
 export const CLOUD_SNAPSHOT_CHUNK_BYTES = 600 * 1024;
 export const CLOUD_RESTORE_SESSION_KEY = 'cojudge-cloud-restoring';
 export const CLOUD_FLUSH_EVENT = 'cojudge:cloud-flush';

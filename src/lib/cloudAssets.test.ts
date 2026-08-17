@@ -3,6 +3,7 @@ import {
 	decodeCloudAssetParts,
 	encodeCloudAssetParts,
 	extractCloudAssets,
+	hashCloudAssetBytes,
 	hydrateCloudAssets
 } from './cloudAssets';
 import { hashProgress, serializeProgressData } from './progressBackup';
@@ -70,6 +71,28 @@ describe('cloud image sidecars', () => {
 		expect(new TextEncoder().encode(JSON.stringify(data)).length).toBeGreaterThan(6 * 1024 * 1024);
 		expect(new TextEncoder().encode(JSON.stringify(extracted.data)).length).toBeLessThan(1024);
 		expect(extracted.bytes.length).toBeGreaterThan(6 * 1024 * 1024);
+	});
+
+	it('keeps the asset-set hash stable when only progress text changes', async () => {
+		const image = 'data:image/png;base64,AQIDBA==';
+		const first = await extractCloudAssets({
+			'pasted-images': { image },
+			solutions: { sample: 'return 1;' }
+		});
+		const second = await extractCloudAssets({
+			'pasted-images': { image },
+			solutions: { sample: 'return 2;' }
+		});
+		const changedImage = await extractCloudAssets({
+			'pasted-images': { image: 'data:image/png;base64,BQYHCA==' },
+			solutions: { sample: 'return 2;' }
+		});
+
+		expect(await hashCloudAssetBytes(first.bytes)).toBe(await hashCloudAssetBytes(second.bytes));
+		expect(await hashCloudAssetBytes(first.bytes)).not.toBe(
+			await hashCloudAssetBytes(changedImage.bytes)
+		);
+		expect(serializeProgressData(first.data)).not.toBe(serializeProgressData(second.data));
 	});
 
 	it('rejects corrupt or incomplete image payloads before restore', async () => {

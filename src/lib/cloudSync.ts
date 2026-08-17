@@ -38,6 +38,7 @@ import {
 	CLOUD_RESTORE_LOCK_KEY,
 	CLOUD_RESTORE_SESSION_KEY,
 	CLOUD_SNAPSHOT_LEGACY_VERSION,
+	CLOUD_SNAPSHOT_SIDECAR_VERSION,
 	CLOUD_SNAPSHOT_VERSION,
 	decodeProgressParts,
 	encodeProgressParts,
@@ -94,6 +95,8 @@ const MAX_SNAPSHOT_BYTES = 6 * 1024 * 1024;
 const MAX_SNAPSHOT_PARTS = 12;
 const CLOUD_ASSET_SET_VERSION = 1;
 const CLOUD_ASSET_BATCH_PARTS = 8;
+const CLOUD_ASSET_STALE_WAIT_MS = 5 * 60 * 1000;
+const CLOUD_ASSET_READY_WAIT_MS = CLOUD_ASSET_STALE_WAIT_MS + 60 * 1000;
 const CLOUD_RESTORE_WEB_LOCK = 'cojudge-cloud-restore';
 
 type CloudAuthStatus = 'initializing' | 'unavailable' | 'signed-out' | 'signing-in' | 'signed-in';
@@ -167,7 +170,8 @@ type RemoteSnapshotMeta = {
 	payloadChecksum: string;
 	partCount: number;
 	totalBytes: number;
-	assetRevisionId: string | null;
+	assetStorage: 'none' | 'revision' | 'shared';
+	assetSetId: string | null;
 	assetPartCount: number;
 	assetBytes: number;
 	assetChecksum: string | null;
@@ -176,8 +180,9 @@ type RemoteSnapshotMeta = {
 };
 
 type CloudAssetSet = {
-	snapshotId: string;
-	revisionId: string;
+	storage: 'revision' | 'shared';
+	snapshotId: string | null;
+	assetSetId: string;
 	partCount: number;
 	totalBytes: number;
 	checksum: string;
@@ -629,11 +634,11 @@ function partsRef(db: Firestore, uid: string, snapshotId: string) {
 	return collection(db, 'users', uid, 'snapshots', snapshotId, 'parts');
 }
 
-function assetSetRef(db: Firestore, uid: string, snapshotId: string, revisionId: string) {
+function revisionAssetSetRef(db: Firestore, uid: string, snapshotId: string, revisionId: string) {
 	return doc(db, 'users', uid, 'snapshots', snapshotId, 'assetSets', revisionId);
 }
 
-function assetPartsRef(db: Firestore, uid: string, snapshotId: string, revisionId: string) {
+function revisionAssetPartsRef(db: Firestore, uid: string, snapshotId: string, revisionId: string) {
 	return collection(
 		db,
 		'users',
@@ -644,6 +649,26 @@ function assetPartsRef(db: Firestore, uid: string, snapshotId: string, revisionI
 		revisionId,
 		'parts'
 	);
+}
+
+function sharedAssetSetRef(db: Firestore, uid: string, assetSetId: string) {
+	return doc(db, 'users', uid, 'cloudAssets', assetSetId);
+}
+
+function sharedAssetPartsRef(db: Firestore, uid: string, assetSetId: string) {
+	return collection(db, 'users', uid, 'cloudAssets', assetSetId, 'parts');
+}
+
+function cloudAssetSetRef(db: Firestore, uid: string, assetSet: CloudAssetSet) {
+	return assetSet.storage === 'shared'
+		? sharedAssetSetRef(db, uid, assetSet.assetSetId)
+		: revisionAssetSetRef(db, uid, assetSet.snapshotId!, assetSet.assetSetId);
+}
+
+function cloudAssetPartsRef(db: Firestore, uid: string, assetSet: CloudAssetSet) {
+	return assetSet.storage === 'shared'
+		? sharedAssetPartsRef(db, uid, assetSet.assetSetId)
+		: revisionAssetPartsRef(db, uid, assetSet.snapshotId!, assetSet.assetSetId);
 }
 
 function integer(value: unknown, minimum: number, maximum: number, label: string): number {
@@ -680,7 +705,11 @@ function parseSnapshotMeta(
 	const parentRevisionId = typeof data.parentRevisionId === 'string' ? data.parentRevisionId : null;
 	const checksum = typeof data.checksum === 'string' ? data.checksum : '';
 	if (
-		(schemaVersion !== CLOUD_SNAPSHOT_LEGACY_VERSION && schemaVersion !== CLOUD_SNAPSHOT_VERSION) ||
+		(
+			schemaVersion !== CLOUD_SNAPSHOT_LEGACY_VERSION
+			&& schemaVersion !== CLOUD_SNAPSHOT_SIDECAR_VERSION
+			&& schemaVersion !== CLOUD_SNAPSHOT_VERSION
+		) ||
 		!validSnapshotId(snapshotId) ||
 		!validRevisionId(revisionId) ||
 		(parentRevisionId !== null && !validRevisionId(parentRevisionId)) ||
@@ -690,25 +719,44 @@ function parseSnapshotMeta(
 	}
 
 	let payloadChecksum = checksum;
-	let assetRevisionId: string | null = null;
+	let assetStorage: RemoteSnapshotMeta['assetStorage'] = 'none';
+	let assetSetId: string | null = null;
 	let assetPartCount = 0;
 	let assetBytes = 0;
 	let assetChecksum: string | null = null;
-	if (schemaVersion === CLOUD_SNAPSHOT_VERSION) {
+	if (schemaVersion !== CLOUD_SNAPSHOT_LEGACY_VERSION) {
 		payloadChecksum = typeof data.payloadChecksum === 'string' ? data.payloadChecksum : '';
-		assetRevisionId = typeof data.assetRevisionId === 'string' ? data.assetRevisionId : null;
 		assetPartCount = integer(data.assetPartCount, 0, MAX_CLOUD_ASSET_PARTS, 'image part count');
 		assetBytes = integer(data.assetBytes, 0, MAX_CLOUD_ASSET_BYTES, 'image size');
-		assetChecksum = typeof data.assetChecksum === 'string' ? data.assetChecksum : null;
 		const expectedPartCount = assetBytes === 0 ? 0 : Math.ceil(assetBytes / CLOUD_ASSET_CHUNK_BYTES);
-		if (
-			!/^[a-f0-9]{64}$/.test(payloadChecksum)
-			|| assetPartCount !== expectedPartCount
-			|| (assetPartCount === 0
-				? assetRevisionId !== null || assetChecksum !== null
-				: assetRevisionId !== revisionId || !assetChecksum || !/^[a-f0-9]{64}$/.test(assetChecksum))
-		) {
+		if (!/^[a-f0-9]{64}$/.test(payloadChecksum) || assetPartCount !== expectedPartCount) {
 			throw new Error('Cloud snapshot image metadata is invalid.');
+		}
+
+		if (schemaVersion === CLOUD_SNAPSHOT_SIDECAR_VERSION) {
+			const assetRevisionId = typeof data.assetRevisionId === 'string' ? data.assetRevisionId : null;
+			assetChecksum = typeof data.assetChecksum === 'string' ? data.assetChecksum : null;
+			if (assetPartCount === 0
+				? assetRevisionId !== null || assetChecksum !== null
+				: assetRevisionId !== revisionId || !assetChecksum || !/^[a-f0-9]{64}$/.test(assetChecksum)) {
+				throw new Error('Cloud snapshot image metadata is invalid.');
+			}
+			if (assetPartCount > 0) {
+				assetStorage = 'revision';
+				assetSetId = assetRevisionId;
+			}
+		} else {
+			const sharedAssetSetId = typeof data.assetSetId === 'string' ? data.assetSetId : null;
+			if (assetPartCount === 0
+				? sharedAssetSetId !== null
+				: !sharedAssetSetId || !/^[a-f0-9]{64}$/.test(sharedAssetSetId)) {
+				throw new Error('Cloud snapshot image metadata is invalid.');
+			}
+			if (assetPartCount > 0) {
+				assetStorage = 'shared';
+				assetSetId = sharedAssetSetId;
+				assetChecksum = sharedAssetSetId;
+			}
 		}
 	}
 
@@ -721,7 +769,8 @@ function parseSnapshotMeta(
 		payloadChecksum,
 		partCount: integer(data.partCount, 1, MAX_SNAPSHOT_PARTS, 'part count'),
 		totalBytes: integer(data.totalBytes, 0, MAX_SNAPSHOT_BYTES, 'size'),
-		assetRevisionId,
+		assetStorage,
+		assetSetId,
 		assetPartCount,
 		assetBytes,
 		assetChecksum,
@@ -792,19 +841,42 @@ function makeRevisionId(): string {
 }
 
 function cloudAssetSet(meta: RemoteSnapshotMeta | null): CloudAssetSet | null {
-	if (!meta?.assetRevisionId || meta.assetPartCount === 0 || !meta.assetChecksum) return null;
+	if (!meta?.assetSetId || meta.assetPartCount === 0 || !meta.assetChecksum) return null;
 	return {
-		snapshotId: meta.snapshotId,
-		revisionId: meta.assetRevisionId,
+		storage: meta.assetStorage === 'shared' ? 'shared' : 'revision',
+		snapshotId: meta.assetStorage === 'revision' ? meta.snapshotId : null,
+		assetSetId: meta.assetSetId,
 		partCount: meta.assetPartCount,
 		totalBytes: meta.assetBytes,
 		checksum: meta.assetChecksum
 	};
 }
 
+function cloudAssetManifestMatches(data: Record<string, unknown>, assetSet: CloudAssetSet): boolean {
+	return data.schemaVersion === CLOUD_ASSET_SET_VERSION
+		&& data.partCount === assetSet.partCount
+		&& data.totalBytes === assetSet.totalBytes
+		&& data.checksum === assetSet.checksum
+		&& (assetSet.storage === 'shared'
+			? data.assetSetId === assetSet.assetSetId
+				&& typeof data.uploadId === 'string'
+				&& validRevisionId(data.uploadId)
+			: data.snapshotId === assetSet.snapshotId && data.revisionId === assetSet.assetSetId);
+}
+
+function sharedAssetUploadState(data: Record<string, unknown>): { uploadId: string; updatedAt: number } {
+	const uploadId = typeof data.uploadId === 'string' ? data.uploadId : '';
+	const timestamp = data.updatedAt as { toMillis?: () => number } | undefined;
+	const updatedAt = timestamp?.toMillis?.() ?? 0;
+	if (!validRevisionId(uploadId) || !Number.isFinite(updatedAt) || updatedAt <= 0) {
+		throw new Error('Cloud image upload metadata is invalid.');
+	}
+	return { uploadId, updatedAt };
+}
+
 async function deleteCloudAssetSet(db: Firestore, uid: string, assetSet: CloudAssetSet): Promise<void> {
 	const result = await getDocs(
-		query(assetPartsRef(db, uid, assetSet.snapshotId, assetSet.revisionId), orderBy('index'))
+		query(cloudAssetPartsRef(db, uid, assetSet), orderBy('index'))
 	);
 	for (let offset = 0; offset < result.docs.length; offset += CLOUD_ASSET_BATCH_PARTS) {
 		const batch = writeBatch(db);
@@ -813,7 +885,7 @@ async function deleteCloudAssetSet(db: Firestore, uid: string, assetSet: CloudAs
 		}
 		await batch.commit();
 	}
-	await deleteDoc(assetSetRef(db, uid, assetSet.snapshotId, assetSet.revisionId));
+	await deleteDoc(cloudAssetSetRef(db, uid, assetSet));
 }
 
 async function deleteCloudAssetSetQuietly(
@@ -829,43 +901,231 @@ async function deleteCloudAssetSetQuietly(
 	}
 }
 
-async function stageCloudAssetSet(
+async function stageSharedCloudAssetSet(
 	db: Firestore,
 	uid: string,
 	assetSet: CloudAssetSet,
 	parts: readonly Uint8Array[]
 ): Promise<void> {
-	// Asset chunks are immutable once marked ready. The later snapshot transaction
-	// can publish only a ready set, so interrupted uploads are never visible.
-	const reference = assetSetRef(db, uid, assetSet.snapshotId, assetSet.revisionId);
+	const reference = cloudAssetSetRef(db, uid, assetSet);
+	// The generation ID and heartbeat let another device distinguish an abandoned
+	// staging upload from a live one before reclaiming the content-addressed path.
+	const uploadId = makeRevisionId();
+	let manifestCreated = false;
 	try {
 		await setDoc(reference, {
 			schemaVersion: CLOUD_ASSET_SET_VERSION,
 			status: 'staging',
-			snapshotId: assetSet.snapshotId,
-			revisionId: assetSet.revisionId,
+			assetSetId: assetSet.assetSetId,
+			uploadId,
 			partCount: assetSet.partCount,
 			totalBytes: assetSet.totalBytes,
 			checksum: assetSet.checksum,
-			createdAt: serverTimestamp()
+			createdAt: serverTimestamp(),
+			updatedAt: serverTimestamp()
 		});
+		manifestCreated = true;
 		for (let offset = 0; offset < parts.length; offset += CLOUD_ASSET_BATCH_PARTS) {
 			const batch = writeBatch(db);
 			for (let index = offset; index < Math.min(parts.length, offset + CLOUD_ASSET_BATCH_PARTS); index++) {
 				batch.set(
 					doc(
-						assetPartsRef(db, uid, assetSet.snapshotId, assetSet.revisionId),
+						cloudAssetPartsRef(db, uid, assetSet),
 						index.toString().padStart(4, '0')
 					),
-					{ index, data: Bytes.fromUint8Array(parts[index]) }
+					{ index, data: Bytes.fromUint8Array(parts[index]), uploadId }
 				);
 			}
+			batch.update(reference, { updatedAt: serverTimestamp() });
 			await batch.commit();
 		}
-		await updateDoc(reference, { status: 'ready' });
+		await updateDoc(reference, { status: 'ready', updatedAt: serverTimestamp() });
 	} catch (error) {
-		await deleteCloudAssetSetQuietly(db, uid, assetSet, 'an incomplete upload');
+		if (manifestCreated) {
+			const current = await getDoc(reference).catch(() => null);
+			if (current?.exists()) {
+				const data = current.data();
+				if (data.status === 'ready' && cloudAssetManifestMatches(data, assetSet)) return;
+				try {
+					const currentUpload = sharedAssetUploadState(data);
+					if (currentUpload.uploadId === uploadId) {
+						const marked = data.status === 'deleting'
+							|| await markSharedCloudAssetUploadDeleting(
+								db,
+								uid,
+								assetSet,
+								currentUpload
+							);
+						if (marked) {
+							await deleteCloudAssetSetQuietly(db, uid, assetSet, 'an incomplete upload');
+						}
+					}
+				} catch (cleanupError) {
+					console.warn('Cojudge Cloud could not abandon an incomplete image upload:', cleanupError);
+				}
+			}
+		}
 		throw error;
+	}
+}
+
+async function markSharedCloudAssetUploadDeleting(
+	db: Firestore,
+	uid: string,
+	assetSet: CloudAssetSet,
+	expected: { uploadId: string; updatedAt: number }
+): Promise<boolean> {
+	return runTransaction(db, async (transaction) => {
+		const reference = cloudAssetSetRef(db, uid, assetSet);
+		const manifest = await transaction.get(reference);
+		if (!manifest.exists()) return false;
+		const data = manifest.data();
+		if (!cloudAssetManifestMatches(data, assetSet)) {
+			throw new Error('Cloud image metadata is invalid.');
+		}
+		const current = sharedAssetUploadState(data);
+		if (current.uploadId !== expected.uploadId) return false;
+		if (data.status === 'deleting') return true;
+		if (data.status !== 'staging' || current.updatedAt !== expected.updatedAt) return false;
+		transaction.update(reference, { status: 'deleting', updatedAt: serverTimestamp() });
+		return true;
+	});
+}
+
+async function waitForSharedCloudAssetSet(
+	db: Firestore,
+	uid: string,
+	assetSet: CloudAssetSet
+): Promise<'ready' | 'absent'> {
+	const reference = cloudAssetSetRef(db, uid, assetSet);
+	const deadline = Date.now() + CLOUD_ASSET_READY_WAIT_MS;
+	let observedUpload = '';
+	let unchangedSince = Date.now();
+	while (Date.now() < deadline) {
+		const result = await getDoc(reference);
+		if (!result.exists()) return 'absent';
+		const data = result.data();
+		if (!cloudAssetManifestMatches(data, assetSet)) {
+			throw new Error('An existing cloud image set has invalid metadata.');
+		}
+		if (data.status === 'ready') return 'ready';
+		if (data.status !== 'staging' && data.status !== 'deleting') {
+			throw new Error('An existing cloud image set has an invalid status.');
+		}
+
+		const upload = sharedAssetUploadState(data);
+		if (data.status === 'deleting') {
+			// Finish an interrupted collector before this canonical path is reused.
+			await deleteCloudAssetSet(db, uid, assetSet).catch(() => undefined);
+			observedUpload = '';
+			unchangedSince = Date.now();
+			await wait(100);
+			continue;
+		}
+
+		const observation = `${upload.uploadId}:${upload.updatedAt}`;
+		if (observation !== observedUpload) {
+			observedUpload = observation;
+			unchangedSince = Date.now();
+		} else if (Date.now() - unchangedSince >= CLOUD_ASSET_STALE_WAIT_MS) {
+			const marked = await markSharedCloudAssetUploadDeleting(db, uid, assetSet, upload);
+			if (marked) await deleteCloudAssetSet(db, uid, assetSet).catch(() => undefined);
+			observedUpload = '';
+			unchangedSince = Date.now();
+		}
+		await wait(500);
+	}
+	throw new Error('Another device is still preparing or cleaning the same cloud images. Try syncing again shortly.');
+}
+
+async function ensureSharedCloudAssetSet(
+	db: Firestore,
+	uid: string,
+	assetSet: CloudAssetSet,
+	parts: readonly Uint8Array[]
+): Promise<boolean> {
+	for (let attempt = 0; attempt < 3; attempt++) {
+		const state = await waitForSharedCloudAssetSet(db, uid, assetSet);
+		if (state === 'ready') return false;
+		try {
+			await stageSharedCloudAssetSet(db, uid, assetSet, parts);
+			return true;
+		} catch (error) {
+			const raced = await waitForSharedCloudAssetSet(db, uid, assetSet);
+			if (raced === 'ready') return false;
+			if (attempt === 2) throw error;
+		}
+	}
+	throw new Error('Cojudge Cloud could not prepare image data.');
+}
+
+function retainedSnapshotRefs(db: Firestore, uid: string) {
+	return Array.from({ length: CLOUD_HISTORY_LIMIT }, (_, index) =>
+		snapshotRef(db, uid, `slot-${index}`)
+	);
+}
+
+async function markSharedCloudAssetSetDeleting(
+	db: Firestore,
+	uid: string,
+	assetSet: CloudAssetSet
+): Promise<boolean> {
+	return runTransaction(db, async (transaction) => {
+		const reference = cloudAssetSetRef(db, uid, assetSet);
+		const [manifest, snapshots] = await Promise.all([
+			transaction.get(reference),
+			Promise.all(retainedSnapshotRefs(db, uid).map((snapshot) => transaction.get(snapshot)))
+		]);
+		if (!manifest.exists()) return false;
+		const data = manifest.data();
+		if (!cloudAssetManifestMatches(data, assetSet)) {
+			throw new Error('Cloud image metadata is invalid.');
+		}
+		if (snapshots.some((snapshot) => {
+			if (!snapshot.exists()) return false;
+			const snapshotData = snapshot.data();
+			return snapshotData.schemaVersion === CLOUD_SNAPSHOT_VERSION
+				&& snapshotData.assetSetId === assetSet.assetSetId;
+		})) return false;
+		if (data.status === 'deleting') return true;
+		if (data.status !== 'ready') return false;
+		transaction.update(reference, { status: 'deleting', updatedAt: serverTimestamp() });
+		return true;
+	});
+}
+
+async function collectSharedCloudAssetSet(
+	db: Firestore,
+	uid: string,
+	assetSet: CloudAssetSet
+): Promise<void> {
+	const reference = cloudAssetSetRef(db, uid, assetSet);
+	const current = await getDoc(reference);
+	if (!current.exists()) return;
+	const data = current.data();
+	if (!cloudAssetManifestMatches(data, assetSet)) {
+		throw new Error('Cloud image metadata is invalid.');
+	}
+	if (data.status === 'staging') return;
+	if (data.status === 'deleting') {
+		await deleteCloudAssetSet(db, uid, assetSet);
+		return;
+	}
+	if (data.status !== 'ready') throw new Error('Cloud image metadata is invalid.');
+	if (!await markSharedCloudAssetSetDeleting(db, uid, assetSet)) return;
+	await deleteCloudAssetSet(db, uid, assetSet);
+}
+
+async function collectSharedCloudAssetSetQuietly(
+	db: Firestore,
+	uid: string,
+	assetSet: CloudAssetSet,
+	label: string
+): Promise<void> {
+	try {
+		await collectSharedCloudAssetSet(db, uid, assetSet);
+	} catch (error) {
+		console.warn(`Cojudge Cloud could not collect ${label} shared image data:`, error);
 	}
 }
 
@@ -894,16 +1154,19 @@ async function uploadSnapshot(
 	const assetChecksum = extracted.bytes.length > 0
 		? await hashCloudAssetBytes(extracted.bytes)
 		: null;
-	const stagedAssetSet: CloudAssetSet | null = assetChecksum
+	const preparedAssetSet: CloudAssetSet | null = assetChecksum
 		? {
-				snapshotId,
-				revisionId,
+				storage: 'shared',
+				snapshotId: null,
+				assetSetId: assetChecksum,
 				partCount: assetParts.length,
 				totalBytes: extracted.bytes.length,
 				checksum: assetChecksum
 			}
 		: null;
-	if (stagedAssetSet) await stageCloudAssetSet(db, uid, stagedAssetSet, assetParts);
+	const assetSetCreated = preparedAssetSet
+		? await ensureSharedCloudAssetSet(db, uid, preparedAssetSet, assetParts)
+		: false;
 
 	let replacedAssetSet: CloudAssetSet | null = null;
 	try {
@@ -928,10 +1191,9 @@ async function uploadSnapshot(
 
 			const assetMetadata = {
 				payloadChecksum,
-				assetRevisionId: stagedAssetSet?.revisionId ?? null,
-				assetPartCount: stagedAssetSet?.partCount ?? 0,
-				assetBytes: stagedAssetSet?.totalBytes ?? 0,
-				assetChecksum: stagedAssetSet?.checksum ?? null
+				assetSetId: preparedAssetSet?.assetSetId ?? null,
+				assetPartCount: preparedAssetSet?.partCount ?? 0,
+				assetBytes: preparedAssetSet?.totalBytes ?? 0
 			};
 			transaction.set(manifest, {
 				schemaVersion: CLOUD_SNAPSHOT_VERSION,
@@ -959,20 +1221,25 @@ async function uploadSnapshot(
 				...assetMetadata,
 				partCount: parts.length,
 				totalBytes,
-				storageUsed: totalBytes + (stagedAssetSet?.totalBytes ?? 0),
+				storageUsed: totalBytes + (preparedAssetSet?.totalBytes ?? 0),
 				meaningful: local.meaningful,
 				updatedAt: serverTimestamp()
 			});
 			return cloudAssetSet(previousMeta);
 		});
 	} catch (error) {
-		if (stagedAssetSet) {
-			await deleteCloudAssetSetQuietly(db, uid, stagedAssetSet, 'the rejected upload');
+		if (assetSetCreated && preparedAssetSet) {
+			await collectSharedCloudAssetSetQuietly(db, uid, preparedAssetSet, 'the rejected upload');
 		}
 		throw error;
 	}
-	if (replacedAssetSet && replacedAssetSet.revisionId !== revisionId) {
+	if (replacedAssetSet?.storage === 'revision') {
 		await deleteCloudAssetSetQuietly(db, uid, replacedAssetSet, 'an expired revision');
+	} else if (
+		replacedAssetSet?.storage === 'shared'
+		&& replacedAssetSet.assetSetId !== preparedAssetSet?.assetSetId
+	) {
+		await collectSharedCloudAssetSetQuietly(db, uid, replacedAssetSet, 'an expired revision');
 	}
 	return revisionId;
 }
@@ -985,28 +1252,30 @@ async function downloadCloudAssetSet(
 	const assetSet = cloudAssetSet(meta);
 	if (!assetSet) return new Uint8Array();
 
-	const manifest = await getDoc(assetSetRef(db, uid, assetSet.snapshotId, assetSet.revisionId));
+	const manifest = await getDoc(cloudAssetSetRef(db, uid, assetSet));
 	const manifestData = manifest.exists() ? manifest.data() : null;
 	if (
 		!manifestData
-		|| manifestData.schemaVersion !== CLOUD_ASSET_SET_VERSION
 		|| manifestData.status !== 'ready'
-		|| manifestData.snapshotId !== assetSet.snapshotId
-		|| manifestData.revisionId !== assetSet.revisionId
-		|| manifestData.partCount !== assetSet.partCount
-		|| manifestData.totalBytes !== assetSet.totalBytes
-		|| manifestData.checksum !== assetSet.checksum
+		|| !cloudAssetManifestMatches(manifestData, assetSet)
 	) {
 		throw new Error('Cloud image metadata is invalid.');
 	}
 
 	const result = await getDocs(
-		query(assetPartsRef(db, uid, assetSet.snapshotId, assetSet.revisionId), orderBy('index'))
+		query(cloudAssetPartsRef(db, uid, assetSet), orderBy('index'))
 	);
 	if (result.size !== assetSet.partCount) throw new Error('Cloud image download is incomplete.');
+	const sharedUploadId = assetSet.storage === 'shared'
+		? sharedAssetUploadState(manifestData).uploadId
+		: null;
 	const parts = result.docs.map((part, index) => {
 		const data = part.data();
-		if (data.index !== index || !(data.data instanceof Bytes)) {
+		if (
+			data.index !== index
+			|| !(data.data instanceof Bytes)
+			|| (sharedUploadId !== null && data.uploadId !== sharedUploadId)
+		) {
 			throw new Error('Cloud image download contains an invalid part.');
 		}
 		return data.data.toUint8Array();
@@ -1827,8 +2096,10 @@ async function runRevisionDelete(
 			return currentSlot;
 		});
 		const deletedAssetSet = cloudAssetSet(deletedMeta);
-		if (deletedAssetSet) {
+		if (deletedAssetSet?.storage === 'revision') {
 			await deleteCloudAssetSetQuietly(context.db, context.uid, deletedAssetSet, 'the deleted revision');
+		} else if (deletedAssetSet) {
+			await collectSharedCloudAssetSetQuietly(context.db, context.uid, deletedAssetSet, 'the deleted revision');
 		}
 		if (!isOperationCurrent(context)) return;
 		const updated = await refreshRemoteState(context.db, context.uid);
