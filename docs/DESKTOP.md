@@ -43,7 +43,7 @@ Desktop Google sign-in opens the system browser, listens temporarily on a random
 
 Cojudge Cloud follows a Git-like synchronization model: login, reconnect, and periodic checks fetch cloud metadata and pull only onto an unchanged local working copy. Local edits and deletions are never pushed by those background checks. **Sync now** explicitly creates a cloud revision, and the five most recent revisions remain available for local restore.
 
-Cloud snapshot schema v2 keeps image payloads in immutable, revision-scoped Firestore sidecars instead of the 6 MiB progress JSON. Pasted Markdown images, inline image data URLs, and whiteboard images are replaced with content-hashed references during upload and restored before local data is applied. Sidecars are integrity checked, limited to 64 MiB per revision, and deleted with expired revisions. Existing schema v1 revisions remain readable and are migrated only when a new revision is pushed.
+Cloud snapshot schema v3 keeps image payloads in immutable, content-addressed Firestore asset sets instead of the 6 MiB progress JSON. Pasted Markdown images, inline image data URLs, and whiteboard images are replaced with content-hashed references during upload and restored before local data is applied. Revisions with the same image collection reuse the existing asset set without uploading its bytes again. Asset sets are integrity checked, limited to 64 MiB, and garbage collected only after no retained revision references them. Existing schema v1 and revision-scoped v2 snapshots remain readable and are migrated only when a new revision is pushed.
 
 ## Development
 

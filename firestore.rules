@@ -44,6 +44,16 @@ service cloud.firestore {
         || (partId == '0011' && index == 11);
     }
 
+    function isAssetPart(partId, index) {
+      return index is int
+        && index >= 0
+        && index < 96
+        && (
+          (index < 10 && partId == '000' + string(index))
+          || (index >= 10 && partId == '00' + string(index))
+        );
+    }
+
     function storedRevisionId(data) {
       return data.keys().hasAll(['revisionId']) ? data.revisionId : data.snapshotId;
     }
@@ -84,6 +94,16 @@ service cloud.firestore {
         && asset.data.checksum == data.assetChecksum;
     }
 
+    function hasReadySharedAssetSet(userId, assetSetId, data) {
+      let asset = get(/databases/$(database)/documents/users/$(userId)/cloudAssets/$(assetSetId));
+      return asset.data.schemaVersion == 1
+        && asset.data.status == 'ready'
+        && asset.data.assetSetId == assetSetId
+        && asset.data.partCount == data.assetPartCount
+        && asset.data.totalBytes == data.assetBytes
+        && asset.data.checksum == assetSetId;
+    }
+
     function hasValidV2AssetMetadata(userId, snapshotId, data) {
       return isChecksum(data.payloadChecksum)
         && data.assetPartCount is int
@@ -103,6 +123,26 @@ service cloud.firestore {
             && data.assetBytes > (data.assetPartCount - 1) * 716800
             && data.assetBytes <= data.assetPartCount * 716800
             && hasReadyAssetSet(userId, snapshotId, data.assetRevisionId, data))
+        );
+    }
+
+    function hasValidV3AssetMetadata(userId, data) {
+      return isChecksum(data.payloadChecksum)
+        && data.assetPartCount is int
+        && data.assetPartCount >= 0
+        && data.assetPartCount <= 96
+        && data.assetBytes is int
+        && data.assetBytes >= 0
+        && data.assetBytes <= 67108864
+        && (
+          (data.assetPartCount == 0
+            && data.assetBytes == 0
+            && data.assetSetId == null)
+          || (data.assetPartCount > 0
+            && isChecksum(data.assetSetId)
+            && data.assetBytes > (data.assetPartCount - 1) * 716800
+            && data.assetBytes <= data.assetPartCount * 716800
+            && hasReadySharedAssetSet(userId, data.assetSetId, data))
         );
     }
 
@@ -137,6 +177,23 @@ service cloud.firestore {
         && data.storageUsed == data.totalBytes + data.assetBytes;
     }
 
+    function isValidV3LatestData(userId, data) {
+      return data.keys().hasAll([
+          'schemaVersion', 'snapshotId', 'revisionId', 'parentRevisionId', 'checksum',
+          'payloadChecksum', 'assetSetId', 'assetPartCount', 'assetBytes',
+          'partCount', 'totalBytes', 'storageUsed', 'meaningful', 'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'schemaVersion', 'snapshotId', 'revisionId', 'parentRevisionId', 'checksum',
+          'payloadChecksum', 'assetSetId', 'assetPartCount', 'assetBytes',
+          'partCount', 'totalBytes', 'storageUsed', 'meaningful', 'updatedAt'
+        ])
+        && data.schemaVersion == 3
+        && hasValidLatestBase(data)
+        && hasValidV3AssetMetadata(userId, data)
+        && data.storageUsed == data.totalBytes + data.assetBytes;
+    }
+
     function latestMatchesSnapshot(userId, data) {
       let snapshot = getAfter(/databases/$(database)/documents/users/$(userId)/snapshots/$(data.snapshotId));
       return snapshot.data.status == 'ready'
@@ -149,11 +206,17 @@ service cloud.firestore {
         && snapshot.data.meaningful == data.meaningful
         && (
           data.schemaVersion == 1
-          || (snapshot.data.payloadChecksum == data.payloadChecksum
+          || (data.schemaVersion == 2
+            && snapshot.data.payloadChecksum == data.payloadChecksum
             && snapshot.data.assetRevisionId == data.assetRevisionId
             && snapshot.data.assetPartCount == data.assetPartCount
             && snapshot.data.assetBytes == data.assetBytes
             && snapshot.data.assetChecksum == data.assetChecksum)
+          || (data.schemaVersion == 3
+            && snapshot.data.payloadChecksum == data.payloadChecksum
+            && snapshot.data.assetSetId == data.assetSetId
+            && snapshot.data.assetPartCount == data.assetPartCount
+            && snapshot.data.assetBytes == data.assetBytes)
         );
     }
 
@@ -162,6 +225,7 @@ service cloud.firestore {
         && (
           isValidV1LatestData(request.resource.data)
           || isValidV2LatestData(userId, request.resource.data)
+          || isValidV3LatestData(userId, request.resource.data)
         )
         && latestMatchesSnapshot(userId, request.resource.data);
     }
@@ -222,6 +286,22 @@ service cloud.firestore {
         && hasValidV2AssetMetadata(userId, snapshotId, data);
     }
 
+    function isValidV3SnapshotData(userId, snapshotId, data) {
+      return data.keys().hasAll([
+          'schemaVersion', 'status', 'revisionId', 'parentRevisionId', 'checksum',
+          'payloadChecksum', 'assetSetId', 'assetPartCount', 'assetBytes',
+          'partCount', 'totalBytes', 'meaningful', 'createdAt'
+        ])
+        && data.keys().hasOnly([
+          'schemaVersion', 'status', 'revisionId', 'parentRevisionId', 'checksum',
+          'payloadChecksum', 'assetSetId', 'assetPartCount', 'assetBytes',
+          'partCount', 'totalBytes', 'meaningful', 'createdAt'
+        ])
+        && data.schemaVersion == 3
+        && hasValidSnapshotBase(snapshotId, data)
+        && hasValidV3AssetMetadata(userId, data);
+    }
+
     function snapshotMatchesLatest(userId, snapshotId, data) {
       let latest = getAfter(/databases/$(database)/documents/users/$(userId)/cloud/latest);
       return latest.data.snapshotId == snapshotId
@@ -235,11 +315,17 @@ service cloud.firestore {
         && latest.data.updatedAt == request.time
         && (
           data.schemaVersion == 1
-          || (latest.data.payloadChecksum == data.payloadChecksum
+          || (data.schemaVersion == 2
+            && latest.data.payloadChecksum == data.payloadChecksum
             && latest.data.assetRevisionId == data.assetRevisionId
             && latest.data.assetPartCount == data.assetPartCount
             && latest.data.assetBytes == data.assetBytes
             && latest.data.assetChecksum == data.assetChecksum)
+          || (data.schemaVersion == 3
+            && latest.data.payloadChecksum == data.payloadChecksum
+            && latest.data.assetSetId == data.assetSetId
+            && latest.data.assetPartCount == data.assetPartCount
+            && latest.data.assetBytes == data.assetBytes)
         );
     }
 
@@ -248,6 +334,7 @@ service cloud.firestore {
         && (
           isValidV1SnapshotData(snapshotId, request.resource.data)
           || isValidV2SnapshotData(userId, snapshotId, request.resource.data)
+          || isValidV3SnapshotData(userId, snapshotId, request.resource.data)
         )
         && snapshotMatchesLatest(userId, snapshotId, request.resource.data);
     }
@@ -304,6 +391,138 @@ service cloud.firestore {
         ]);
     }
 
+    function isValidRevisionAssetPartCreate(userId, snapshotId, assetRevisionId, partId) {
+      let asset = get(/databases/$(database)/documents/users/$(userId)/snapshots/$(snapshotId)/assetSets/$(assetRevisionId));
+      let index = request.resource.data.index;
+      return request.resource.data.keys().hasOnly(['index', 'data'])
+        && isAssetPart(partId, index)
+        && request.resource.data.data is bytes
+        && asset.data.status == 'staging'
+        && index < asset.data.partCount
+        && (
+          (index < asset.data.partCount - 1 && request.resource.data.data.size() == 716800)
+          || (index == asset.data.partCount - 1
+            && request.resource.data.data.size() == asset.data.totalBytes - index * 716800)
+        );
+    }
+
+    function snapshotDoesNotReferenceSharedAssetAfter(userId, snapshotId, assetSetId) {
+      let path = /databases/$(database)/documents/users/$(userId)/snapshots/$(snapshotId);
+      let snapshot = getAfter(path);
+      return !existsAfter(path)
+        || snapshot.data.schemaVersion != 3
+        || snapshot.data.assetSetId != assetSetId;
+    }
+
+    function sharedAssetIsUnreferencedAfter(userId, assetSetId) {
+      return snapshotDoesNotReferenceSharedAssetAfter(userId, 'slot-0', assetSetId)
+        && snapshotDoesNotReferenceSharedAssetAfter(userId, 'slot-1', assetSetId)
+        && snapshotDoesNotReferenceSharedAssetAfter(userId, 'slot-2', assetSetId)
+        && snapshotDoesNotReferenceSharedAssetAfter(userId, 'slot-3', assetSetId)
+        && snapshotDoesNotReferenceSharedAssetAfter(userId, 'slot-4', assetSetId);
+    }
+
+    function isValidSharedAssetSetCreate(assetSetId) {
+      return request.resource.data.keys().hasAll([
+          'schemaVersion', 'status', 'assetSetId', 'uploadId', 'partCount', 'totalBytes',
+          'checksum', 'createdAt', 'updatedAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'schemaVersion', 'status', 'assetSetId', 'uploadId', 'partCount', 'totalBytes',
+          'checksum', 'createdAt', 'updatedAt'
+        ])
+        && request.resource.data.schemaVersion == 1
+        && request.resource.data.status == 'staging'
+        && request.resource.data.assetSetId == assetSetId
+        && isChecksum(assetSetId)
+        && isRevisionId(request.resource.data.uploadId)
+        && request.resource.data.checksum == assetSetId
+        && request.resource.data.partCount is int
+        && request.resource.data.partCount >= 1
+        && request.resource.data.partCount <= 96
+        && request.resource.data.totalBytes is int
+        && request.resource.data.totalBytes > (request.resource.data.partCount - 1) * 716800
+        && request.resource.data.totalBytes <= request.resource.data.partCount * 716800
+        && request.resource.data.totalBytes <= 67108864
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+    }
+
+    function sharedAssetSetFieldsAreUnchanged(assetSetId) {
+      return request.resource.data.schemaVersion == resource.data.schemaVersion
+        && request.resource.data.assetSetId == assetSetId
+        && request.resource.data.assetSetId == resource.data.assetSetId
+        && request.resource.data.uploadId == resource.data.uploadId
+        && request.resource.data.partCount == resource.data.partCount
+        && request.resource.data.totalBytes == resource.data.totalBytes
+        && request.resource.data.checksum == resource.data.checksum
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.keys().hasOnly([
+          'schemaVersion', 'status', 'assetSetId', 'uploadId', 'partCount', 'totalBytes',
+          'checksum', 'createdAt', 'updatedAt'
+        ]);
+    }
+
+    function isValidSharedAssetSetUpdate(userId, assetSetId) {
+      return sharedAssetSetFieldsAreUnchanged(assetSetId)
+        && (
+          (resource.data.status == 'staging'
+            && (
+              request.resource.data.status == 'staging'
+              || request.resource.data.status == 'ready'
+              || request.resource.data.status == 'deleting'
+            ))
+          || (resource.data.status == 'ready'
+            && request.resource.data.status == 'deleting'
+            && sharedAssetIsUnreferencedAfter(userId, assetSetId))
+        );
+    }
+
+    function isValidSharedAssetPartCreate(userId, assetSetId, partId) {
+      let asset = getAfter(/databases/$(database)/documents/users/$(userId)/cloudAssets/$(assetSetId));
+      let index = request.resource.data.index;
+      return request.resource.data.keys().hasOnly(['index', 'data', 'uploadId'])
+        && isAssetPart(partId, index)
+        && request.resource.data.data is bytes
+        && request.resource.data.uploadId == asset.data.uploadId
+        && asset.data.status == 'staging'
+        && index < asset.data.partCount
+        && (
+          (index < asset.data.partCount - 1 && request.resource.data.data.size() == 716800)
+          || (index == asset.data.partCount - 1
+            && request.resource.data.data.size() == asset.data.totalBytes - index * 716800)
+        );
+    }
+
+    function isValidSharedAssetPartDelete(userId, assetSetId, partId) {
+      let asset = getAfter(/databases/$(database)/documents/users/$(userId)/cloudAssets/$(assetSetId));
+      return isAssetPart(partId, resource.data.index)
+        && resource.data.uploadId == asset.data.uploadId
+        && asset.data.status == 'deleting';
+    }
+
+    match /users/{userId}/cloudAssets/{assetSetId} {
+      allow read: if isCloudUser(userId);
+      allow create: if isCloudUser(userId)
+        && isValidSharedAssetSetCreate(assetSetId);
+      allow update: if isCloudUser(userId)
+        && isValidSharedAssetSetUpdate(userId, assetSetId);
+      // Keeping the tombstone until every part is gone prevents an older
+      // collector from deleting chunks belonging to a recreated generation.
+      allow delete: if isCloudUser(userId)
+        && resource.data.status == 'deleting';
+
+      match /parts/{partId} {
+        allow read: if isCloudUser(userId);
+        allow create: if isCloudUser(userId)
+          && isChecksum(assetSetId)
+          && isValidSharedAssetPartCreate(userId, assetSetId, partId);
+        allow delete: if isCloudUser(userId)
+          && isValidSharedAssetPartDelete(userId, assetSetId, partId);
+      }
+    }
+
     match /users/{userId}/snapshots/{snapshotId} {
       allow read: if isCloudUser(userId);
       allow delete: if isCloudUser(userId)
@@ -355,16 +574,7 @@ service cloud.firestore {
           allow create: if isCloudUser(userId)
             && isSnapshotSlot(snapshotId)
             && isRevisionId(assetRevisionId)
-            && partId.matches('^[0-9]{4}$')
-            && request.resource.data.keys().hasOnly(['index', 'data'])
-            && request.resource.data.index is int
-            && request.resource.data.index >= 0
-            && request.resource.data.index < 96
-            && request.resource.data.data is bytes
-            && request.resource.data.data.size() > 0
-            && request.resource.data.data.size() <= 716800
-            && get(/databases/$(database)/documents/users/$(userId)/snapshots/$(snapshotId)/assetSets/$(assetRevisionId)).data.status == 'staging'
-            && get(/databases/$(database)/documents/users/$(userId)/snapshots/$(snapshotId)/assetSets/$(assetRevisionId)).data.partCount > request.resource.data.index;
+            && isValidRevisionAssetPartCreate(userId, snapshotId, assetRevisionId, partId);
           allow delete: if isCloudUser(userId)
             && !isAssetSetReferenced(userId, snapshotId, assetRevisionId);
         }
