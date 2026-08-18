@@ -6697,9 +6697,12 @@ func main() {
                 Loading...
             {/if}
         </div>
-        {#if language !== 'plaintext' && language !== 'markdown' && !isSpecialTabType(activeTab?.type)}
+        <div
+            class="exec-panel-host"
+            class:hidden={language === 'plaintext' || language === 'markdown' || isSpecialTabType(activeTab?.type)}
+        >
             <PlaygroundExecutionPanel {code} {language} {isMac} bind:output bind:logs debugBreakpoints={debugBreakpoints} bind:activeDebugLine={activeDebugLine} bind:debugJobId={debugJobId} />
-        {/if}
+        </div>
         {:else}
         <div class="empty-state">
             <div class="empty-state-content">
@@ -7513,6 +7516,13 @@ func main() {
     /* Right Pane Layout */
     .editor-pane {
         padding: 0; /* No padding on the pane itself */
+    }
+
+    .exec-panel-host {
+        display: contents;
+    }
+    .exec-panel-host.hidden {
+        display: none;
     }
 
     .editor-container {
