@@ -377,9 +377,7 @@ func main() {
     let showAddMenu = false;
     let addMenuContainer: HTMLElement | null = null;
     let importInputEl: HTMLInputElement | null = null;
-    let contextMenu: { x: number; y: number; parentId: string | null } | null = null;
-    let contextMenuEl: HTMLElement | null = null;
-    let fileActionsMenu: { fileId: string; kind: 'file' | 'folder'; fileName: string; top: number; right: number } | null = null;
+    let fileActionsMenu: { fileId: string; kind: 'file' | 'folder'; fileName: string; top: number; left: number | null; right: number | null } | null = null;
     let fileActionsMenuEl: HTMLElement | null = null;
     let tabContextMenu: { x: number; y: number; fileId: string } | null = null;
     // Collapse state is device-local UI preference: it is kept in localStorage
@@ -1576,11 +1574,6 @@ func main() {
         else activateTab(node.fileId);
     }
 
-    function closeContextMenu() {
-        contextMenu = null;
-        contextMenuEl = null;
-    }
-
     function closeTabContextMenu() {
         tabContextMenu = null;
     }
@@ -1604,7 +1597,6 @@ func main() {
             closeFileActionsMenu();
             return;
         }
-        closeContextMenu();
         closeTabContextMenu();
         showAddMenu = false;
         const btn = e.currentTarget as HTMLElement;
@@ -1615,6 +1607,7 @@ func main() {
             kind: node.kind,
             fileName: node.fileName,
             top: rect.bottom + 2,
+            left: null,
             right: Math.max(8, window.innerWidth - rect.right)
         };
         tick().then(() => {
@@ -1634,7 +1627,6 @@ func main() {
         e.stopPropagation();
         if (!tabs.some((tab) => tab.fileId === fileId && tab.isOpen)) return;
 
-        closeContextMenu();
         closeFileActionsMenu();
         showAddMenu = false;
         const menuW = 160;
@@ -1642,6 +1634,10 @@ func main() {
         const x = Math.min(e.clientX, window.innerWidth - menuW - 8);
         const y = Math.min(e.clientY, window.innerHeight - menuH - 8);
         tabContextMenu = { x: Math.max(8, x), y: Math.max(8, y), fileId };
+    }
+
+    function parentIdForCreate(menu: { kind: 'file' | 'folder'; fileId: string }) {
+        return menu.kind === 'folder' ? menu.fileId : getParentId(menu.fileId);
     }
 
     function openExplorerContextMenu(e: MouseEvent, node: FlatExplorerItem) {
@@ -1660,42 +1656,27 @@ func main() {
             clearExplorerDropHighlight();
         }
         showAddMenu = false;
-        closeFileActionsMenu();
-        const parentId = node.kind === 'folder' ? node.fileId : getParentId(node.fileId);
-        // Position within viewport
-        const menuW = 150;
-        const menuH = 80;
+        const menuW = 180;
+        const menuH = node.kind === 'file' ? 240 : 180;
         const x = Math.min(e.clientX, window.innerWidth - menuW - 8);
         const y = Math.min(e.clientY, window.innerHeight - menuH - 8);
-        contextMenu = { x: Math.max(8, x), y: Math.max(8, y), parentId };
+        fileActionsMenu = {
+            fileId: node.fileId,
+            kind: node.kind,
+            fileName: node.fileName,
+            top: Math.max(8, y),
+            left: Math.max(8, x),
+            right: null
+        };
         tick().then(() => {
-            // Re-clamp using actual menu size if available
-            if (!contextMenuEl || !contextMenu) return;
-            const rect = contextMenuEl.getBoundingClientRect();
-            const nx = Math.min(contextMenu.x, window.innerWidth - rect.width - 8);
-            const ny = Math.min(contextMenu.y, window.innerHeight - rect.height - 8);
-            if (nx !== contextMenu.x || ny !== contextMenu.y) {
-                contextMenu = { ...contextMenu, x: Math.max(8, nx), y: Math.max(8, ny) };
+            if (!fileActionsMenuEl || !fileActionsMenu || fileActionsMenu.left == null) return;
+            const rect = fileActionsMenuEl.getBoundingClientRect();
+            const nx = Math.min(fileActionsMenu.left, window.innerWidth - rect.width - 8);
+            const ny = Math.min(fileActionsMenu.top, window.innerHeight - rect.height - 8);
+            if (nx !== fileActionsMenu.left || ny !== fileActionsMenu.top) {
+                fileActionsMenu = { ...fileActionsMenu, left: Math.max(8, nx), top: Math.max(8, ny) };
             }
         });
-    }
-
-    function contextCreateFile() {
-        const parentId = contextMenu?.parentId ?? null;
-        closeContextMenu();
-        if (parentId) {
-            collapsedFolders = { ...collapsedFolders, [parentId]: false };
-        }
-        void addNewTab('sidebar', parentId);
-    }
-
-    function contextCreateFolder() {
-        const parentId = contextMenu?.parentId ?? null;
-        closeContextMenu();
-        if (parentId) {
-            collapsedFolders = { ...collapsedFolders, [parentId]: false };
-        }
-        addNewFolder(parentId);
     }
 
     onDestroy(() => {
@@ -2086,9 +2067,6 @@ func main() {
             if (showAddMenu && addMenuContainer && !addMenuContainer.contains(e.target as Node)) {
                 showAddMenu = false;
             }
-            if (contextMenu && contextMenuEl && !contextMenuEl.contains(e.target as Node)) {
-                closeContextMenu();
-            }
             if (fileActionsMenu && fileActionsMenuEl && !fileActionsMenuEl.contains(e.target as Node)) {
                 if (!(e.target as HTMLElement | null)?.closest('.file-actions-trigger')) {
                     closeFileActionsMenu();
@@ -2099,10 +2077,9 @@ func main() {
             }
         };
         const handleDocContextMenu = (e: MouseEvent) => {
-            if (contextMenu && contextMenuEl && !contextMenuEl.contains(e.target as Node)) {
-                // Allow other context menus; just close ours if click is outside
+            if (fileActionsMenu && fileActionsMenuEl && !fileActionsMenuEl.contains(e.target as Node)) {
                 const target = e.target as HTMLElement | null;
-                if (!target?.closest('[data-explorer-id]')) closeContextMenu();
+                if (!target?.closest('[data-explorer-id]')) closeFileActionsMenu();
             }
             if (tabContextMenu && !(e.target as HTMLElement | null)?.closest('.tab, .tab-context-menu')) {
                 closeTabContextMenu();
@@ -2112,13 +2089,11 @@ func main() {
             if (e.key === 'Escape') {
                 showSettings = false;
                 showAddMenu = false;
-                closeContextMenu();
                 closeTabContextMenu();
                 closeFileActionsMenu();
             }
         };
         const handleScroll = () => {
-            if (contextMenu) closeContextMenu();
             if (fileActionsMenu) closeFileActionsMenu();
         };
         document.addEventListener('click', handleDocClick);
@@ -5941,7 +5916,7 @@ func main() {
                         aria-label="New file or folder"
                         aria-haspopup="menu"
                         aria-expanded={showAddMenu}
-                        on:click|stopPropagation={() => { closeContextMenu(); closeFileActionsMenu(); showAddMenu = !showAddMenu; }}
+                        on:click|stopPropagation={() => { closeFileActionsMenu(); showAddMenu = !showAddMenu; }}
                     >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -6065,18 +6040,6 @@ func main() {
                 {/if}
             {/each}
         </div>
-        {#if contextMenu}
-            <div
-                class="explorer-context-menu"
-                role="menu"
-                bind:this={contextMenuEl}
-                style="left: {contextMenu.x}px; top: {contextMenu.y}px;"
-                on:contextmenu|preventDefault
-            >
-                <button class="add-menu-item" role="menuitem" on:click={contextCreateFile}>New File</button>
-                <button class="add-menu-item" role="menuitem" on:click={contextCreateFolder}>New Folder</button>
-            </div>
-        {/if}
         {#if fileActionsMenu}
             <div
                 class="file-actions-menu"
@@ -6084,9 +6047,32 @@ func main() {
                 aria-label="File actions"
                 tabindex="-1"
                 bind:this={fileActionsMenuEl}
-                style="top: {fileActionsMenu.top}px; right: {fileActionsMenu.right}px;"
+                style="top: {fileActionsMenu.top}px; left: {fileActionsMenu.left != null ? fileActionsMenu.left + 'px' : 'auto'}; right: {fileActionsMenu.right != null ? fileActionsMenu.right + 'px' : 'auto'};"
                 on:contextmenu|preventDefault
             >
+                <button
+                    class="file-actions-menu-item"
+                    role="menuitem"
+                    on:click={() => runFileAction((m) => void addNewTab('sidebar', parentIdForCreate(m)))}
+                >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                        <path d="M14 2v6h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 11v6M9 14h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    New File
+                </button>
+                <button
+                    class="file-actions-menu-item"
+                    role="menuitem"
+                    on:click={() => runFileAction((m) => addNewFolder(parentIdForCreate(m)))}
+                >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                        <path d="M12 11v6M9 14h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    New Folder
+                </button>
                 {#if fileActionsMenu.kind === 'file'}
                     <button
                         class="file-actions-menu-item"
@@ -7114,19 +7100,6 @@ func main() {
 
     .add-menu-item:hover {
         background-color: var(--color-second-bg);
-    }
-
-    .explorer-context-menu {
-        position: fixed;
-        min-width: 140px;
-        border: 1px solid var(--color-border);
-        background-color: var(--color-bg);
-        border-radius: 6px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
-        z-index: 1000;
-        padding: 4px;
-        display: flex;
-        flex-direction: column;
     }
 
     .file-list {
