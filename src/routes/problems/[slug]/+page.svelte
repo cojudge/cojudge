@@ -49,6 +49,8 @@
     let isGameMode = false;
     let gameStartTime = 0;
     let gameFinished = false;
+    let gameCountdownSeconds: number | null = null;
+    let gameExpired = false;
     let showGameResult = false;
     let gameResultStats: { runCount: number; submitCount: number; timeSpent: number } | null = null;
     let showGameHistory = false;
@@ -596,6 +598,10 @@
         // Check for game mode
         if (urlParams.get('gameMode') === '1') {
             isGameMode = true;
+            const countdownMinutes = Number(urlParams.get('minutes'));
+            if (urlParams.get('countdown') === '1' && Number.isFinite(countdownMinutes) && countdownMinutes > 0) {
+                gameCountdownSeconds = Math.round(countdownMinutes * 60);
+            }
             gameStartTime = Date.now();
             // Force fresh starter code, ignore saved
             suppressSave = true;
@@ -1319,11 +1325,20 @@
             {language}
             gameMode={isGameMode}
             gameStartTime={gameStartTime}
+            gameCountdownSeconds={gameCountdownSeconds}
             {gameFinished}
             debugBreakpoints={debugBreakpoints}
             bind:activeDebugLine={activeDebugLine}
             bind:debugJobId={debugJobId}
+            on:gameTimeExpired={() => {
+                if (gameFinished || gameResultStats) return;
+                gameExpired = true;
+                gameFinished = true;
+                gameResultStats = { runCount: 0, submitCount: 0, timeSpent: gameCountdownSeconds || 0 };
+                showGameResult = true;
+            }}
             on:gameSubmitSuccess={(e) => {
+                if (gameFinished || gameExpired) return;
                 const { runCount, submitCount, timeSpent } = e.detail;
                 const result = computeGameResult(runCount, submitCount, timeSpent, code, language);
                 gameResultsStore.update((prev) => ({
@@ -1357,6 +1372,7 @@
             runCount={gameResultStats.runCount}
             submitCount={gameResultStats.submitCount}
             timeSpent={gameResultStats.timeSpent}
+            expired={gameExpired}
             on:close={() => { showGameResult = false; gameFinished = true; }}
         />
     {/if}

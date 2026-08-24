@@ -10,10 +10,39 @@
     const dispatch = createEventDispatcher();
 
     let includeSolved = false;
+    const COUNTDOWN_STORAGE_KEY = 'cojudge-game-countdown-settings';
+    let countdownEnabled = false;
+    let countdownMinutes = 15;
+
+    if (typeof window !== 'undefined') {
+        try {
+            const saved = JSON.parse(localStorage.getItem(COUNTDOWN_STORAGE_KEY) || 'null');
+            if (saved && typeof saved === 'object') {
+                countdownEnabled = saved.enabled === true;
+                if (Number.isFinite(saved.minutes)) countdownMinutes = Math.max(1, Math.min(60, Math.round(saved.minutes)));
+            }
+        } catch { /* use defaults */ }
+    }
+
+    function persistCountdownSettings() {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem(COUNTDOWN_STORAGE_KEY, JSON.stringify({ enabled: countdownEnabled, minutes: countdownMinutes }));
+        }
+    }
+
+    function gameUrl(problemId: string) {
+        persistCountdownSettings();
+        const params = new URLSearchParams({ gameMode: '1' });
+        if (countdownEnabled) {
+            params.set('countdown', '1');
+            params.set('minutes', String(countdownMinutes));
+        }
+        return `/problems/${problemId}?${params.toString()}`;
+    }
 
     async function startGame() {
         if (currentProblemId) {
-            window.location.href = `/problems/${currentProblemId}?gameMode=1`;
+            window.location.href = gameUrl(currentProblemId);
             return;
         }
         let pool = problems;
@@ -28,7 +57,7 @@
         }
         const randomIndex = Math.floor(Math.random() * pool.length);
         const chosen = pool[randomIndex];
-        window.location.href = `/problems/${chosen.id}?gameMode=1`;
+        window.location.href = gameUrl(chosen.id);
     }
 
     function handleBackdropClick(e: MouseEvent) {
@@ -67,6 +96,17 @@
             </table>
             <p class="rank-info">Final rank: <strong>S</strong> (best) → <strong>A</strong> → <strong>B</strong> → <strong>C</strong></p>
         </div>
+        <label class="toggle-label">
+            <input type="checkbox" bind:checked={countdownEnabled} on:change={persistCountdownSettings} />
+            Enable Time Limit
+        </label>
+        {#if countdownEnabled}
+            <div class="countdown-control">
+                <button type="button" aria-label="Decrease countdown" on:click={() => { countdownMinutes = Math.max(1, countdownMinutes - 1); persistCountdownSettings(); }}>-</button>
+                <strong>{countdownMinutes} mins</strong>
+                <button type="button" aria-label="Increase countdown" on:click={() => { countdownMinutes = Math.min(60, countdownMinutes + 1); persistCountdownSettings(); }}>+</button>
+            </div>
+        {/if}
         {#if !currentProblemId}
             <label class="toggle-label">
                 <input type="checkbox" bind:checked={includeSolved} />
@@ -155,6 +195,28 @@
         text-align: center;
         margin-top: 0.5rem;
         color: var(--color-text);
+    }
+    .countdown-control {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin: -0.5rem 0 1.25rem 1.65rem;
+        color: var(--color-text);
+    }
+    .countdown-control button {
+        width: 30px;
+        height: 30px;
+        border: 1px solid var(--color-border);
+        border-radius: 6px;
+        background: var(--color-surface);
+        color: var(--color-text);
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+    .countdown-control strong {
+        min-width: 65px;
+        text-align: center;
+        font-variant-numeric: tabular-nums;
     }
     .toggle-label {
         display: flex;
