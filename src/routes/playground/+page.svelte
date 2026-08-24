@@ -2584,8 +2584,10 @@ func main() {
     function selectCodeLanguage(langValue: string) {
         if (!activeLangPicker) return;
         const { wrapper, historyBefore } = activeLangPicker;
+        const scrollX = window.scrollX;
+        const scrollY = window.scrollY;
         if (historyBefore && wysiwygEl) {
-            wysiwygEl.focus();
+            wysiwygEl.focus({ preventScroll: true });
             restoreWysiwygSelection(historyBefore);
         }
         setCodeBlockLanguage(wrapper, langValue);
@@ -2598,7 +2600,8 @@ func main() {
         }, 2500);
         handleWysiwygInput();
         finishWysiwygHistoryEntry(historyBefore);
-        wysiwygEl?.focus();
+        wysiwygEl?.focus({ preventScroll: true });
+        window.scrollTo(scrollX, scrollY);
     }
 
     function handleLangSearchKeyDown(e: KeyboardEvent) {

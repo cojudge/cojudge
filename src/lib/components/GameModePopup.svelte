@@ -9,6 +9,7 @@
 
     const dispatch = createEventDispatcher();
 
+    const INCLUDE_SOLVED_STORAGE_KEY = 'cojudge-game-include-solved';
     let includeSolved = false;
     const COUNTDOWN_STORAGE_KEY = 'cojudge-game-countdown-settings';
     let countdownEnabled = false;
@@ -16,12 +17,19 @@
 
     if (typeof window !== 'undefined') {
         try {
+            includeSolved = localStorage.getItem(INCLUDE_SOLVED_STORAGE_KEY) === 'true';
             const saved = JSON.parse(localStorage.getItem(COUNTDOWN_STORAGE_KEY) || 'null');
             if (saved && typeof saved === 'object') {
                 countdownEnabled = saved.enabled === true;
                 if (Number.isFinite(saved.minutes)) countdownMinutes = Math.max(1, Math.min(60, Math.round(saved.minutes)));
             }
         } catch { /* use defaults */ }
+    }
+
+    function persistIncludeSolved() {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem(INCLUDE_SOLVED_STORAGE_KEY, String(includeSolved));
+        }
     }
 
     function persistCountdownSettings() {
@@ -109,7 +117,7 @@
         {/if}
         {#if !currentProblemId}
             <label class="toggle-label">
-                <input type="checkbox" bind:checked={includeSolved} />
+                <input type="checkbox" bind:checked={includeSolved} on:change={persistIncludeSolved} />
                 Include already solved problems
             </label>
         {/if}
