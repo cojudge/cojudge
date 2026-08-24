@@ -3,12 +3,19 @@
 
     export let startTime: number;
     export let stopped = false;
+    export let countdownSeconds: number | null = null;
+    export let onExpired: (() => void) | null = null;
 
     let elapsed = 0;
+    let expired = false;
     let interval: ReturnType<typeof setInterval>;
 
     function tick() {
         elapsed = Math.floor((Date.now() - startTime) / 1000);
+        if (countdownSeconds !== null && elapsed >= countdownSeconds && !expired) {
+            expired = true;
+            onExpired?.();
+        }
     }
 
     tick();
@@ -23,8 +30,9 @@
         if (interval) clearInterval(interval);
     });
 
-    $: minutes = Math.floor(elapsed / 60);
-    $: seconds = elapsed % 60;
+    $: remaining = countdownSeconds === null ? elapsed : Math.max(0, countdownSeconds - elapsed);
+    $: minutes = Math.floor(remaining / 60);
+    $: seconds = remaining % 60;
     $: display = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 </script>
 

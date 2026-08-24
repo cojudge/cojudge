@@ -14,6 +14,7 @@
     export let gameMode = false;
     export let gameStartTime = 0;
     export let gameFinished = false;
+    export let gameCountdownSeconds: number | null = null;
     export let debugBreakpoints: number[] = [];
     export let activeDebugLine: number | null = null;
     export let debugJobId: string | null = null;
@@ -1709,7 +1710,12 @@
         <div class="buttons">
             <div style="display: flex; align-items: center; margin-right: 8px;">
                 {#if gameMode && gameStartTime > 0}
-                    <GameModeTimer startTime={gameStartTime} stopped={gameFinished} />
+                    <GameModeTimer
+                        startTime={gameStartTime}
+                        stopped={gameFinished}
+                        countdownSeconds={gameCountdownSeconds}
+                        onExpired={() => dispatch('gameTimeExpired')}
+                    />
                 {/if}
                 <SaveStatus />
             </div>

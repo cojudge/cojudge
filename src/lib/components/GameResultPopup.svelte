@@ -7,6 +7,7 @@
     export let runCount: number;
     export let submitCount: number;
     export let timeSpent: number; // in seconds
+    export let expired = false;
 
     function clamp(val: number, min: number, max: number) {
         return Math.max(min, Math.min(max, val));
@@ -41,11 +42,16 @@
 <div class="modal-backdrop" on:click={handleBackdropClick} on:keydown={handleKeydown} role="dialog" aria-modal="true" tabindex="-1" transition:fade={{ duration: 200 }}>
     <div class="modal" transition:scale={{ start: 0.95, duration: 200 }}>
         <button class="close-btn" on:click={() => dispatch('close')} aria-label="Close">&times;</button>
-        <h2>Game Over</h2>
+        <h2>{expired ? 'Time\'s Up' : 'Game Over'}</h2>
 
-        <div class="rank-circle" class:rank-s={rank === 'S'} class:rank-a={rank === 'A'} class:rank-b={rank === 'B'} class:rank-c={rank === 'C'}>
-            {rank}
-        </div>
+        {#if expired}
+            <div class="rank-circle expired">F</div>
+            <p class="encouragement">Keep going — every attempt helps you get closer. Submit again when you’re ready!</p>
+        {:else}
+            <div class="rank-circle" class:rank-s={rank === 'S'} class:rank-a={rank === 'A'} class:rank-b={rank === 'B'} class:rank-c={rank === 'C'}>
+                {rank}
+            </div>
+        {/if}
 
         <table class="stats">
             <tbody>
@@ -67,9 +73,11 @@
             </tbody>
         </table>
 
-        <div class="total">
-            Total Score: <strong>{totalScore}</strong> &rarr; Rank <strong class="rank-label" class:rank-s={rank === 'S'} class:rank-a={rank === 'A'} class:rank-b={rank === 'B'} class:rank-c={rank === 'C'}>{rank}</strong>
-        </div>
+        {#if !expired}
+            <div class="total">
+                Total Score: <strong>{totalScore}</strong> &rarr; Rank <strong class="rank-label" class:rank-s={rank === 'S'} class:rank-a={rank === 'A'} class:rank-b={rank === 'B'} class:rank-c={rank === 'C'}>{rank}</strong>
+            </div>
+        {/if}
 
         <button class="home-btn" on:click={goHome}>Back to Home</button>
     </div>
@@ -129,6 +137,15 @@
         font-size: 2.5rem;
         font-weight: 800;
         color: #fff;
+    }
+    .expired {
+        background: linear-gradient(135deg, #ef4444, #991b1b);
+        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.35);
+    }
+    .encouragement {
+        margin: -0.5rem 0 1.25rem;
+        color: var(--color-text-secondary);
+        line-height: 1.5;
     }
     .rank-s {
         background: linear-gradient(135deg, #ffd700, #f59e0b);
