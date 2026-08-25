@@ -1,6 +1,6 @@
 [package]
 name = "cojudge-desktop"
-version = "0.3.10"
+version = "0.3.11"
 description = "Cojudge desktop application"
 edition = "2021"
 license = "MIT"
