@@ -109,7 +109,7 @@
     // makes this section flicker between the diff and "Comparing with the cloud…".
     let fileChangesLoadArmed = false;
     $: {
-        const shouldLoadFileChanges = open && $cloudSyncState.resolution === 'local-changes';
+        const shouldLoadFileChanges = open && ($cloudSyncState.resolution === 'local-changes' || $cloudSyncState.resolution === 'conflict');
         if (shouldLoadFileChanges && !fileChangesLoadArmed) {
             fileChangesLoadArmed = true;
             void loadCloudFileChanges();
@@ -133,7 +133,10 @@
 
     async function loadCloudFileChanges() {
         if (cloudFileChangesLoading) return;
-        if ($cloudSyncState.authStatus !== 'signed-in' || $cloudSyncState.resolution !== 'local-changes') {
+        if (
+            $cloudSyncState.authStatus !== 'signed-in' ||
+            ($cloudSyncState.resolution !== 'local-changes' && $cloudSyncState.resolution !== 'conflict')
+        ) {
             cloudFileChanges = [];
             cloudFileChangesError = '';
             selectedCloudFileIds = new Set();
@@ -165,6 +168,10 @@
         if (selected) next.add(fileId);
         else next.delete(fileId);
         selectedCloudFileIds = next;
+    }
+
+    function selectAllCloudFiles() {
+        selectedCloudFileIds = new Set(cloudFileChanges.map((change) => change.fileId));
     }
 
     async function discardCloudFiles(changes: FileChange[]) {
@@ -524,14 +531,17 @@
                         </div>
                     </div>
                 {/if}
-                {#if $cloudSyncState.resolution === 'local-changes'}
+                {#if $cloudSyncState.resolution === 'local-changes' || $cloudSyncState.resolution === 'conflict'}
                     <div class="cloud-file-changes">
                         <div class="cloud-file-changes-heading">
                             <strong>Local changes</strong>
                             <div class="cloud-file-changes-actions">
                                 <button class="btn cloud-file-reload" type="button" onclick={loadCloudFileChanges} disabled={cloudActionPending}>{cloudFileChangesLoading ? 'Comparing…' : 'Refresh'}</button>
-                                <button class="btn cloud-file-push-selected" type="button" onclick={pushSelectedCloudFiles} disabled={cloudActionPending || cloudFileChangesLoading || selectedCloudFileIds.size === 0}>Push selected{selectedCloudFileIds.size > 0 ? ` (${selectedCloudFileIds.size})` : ''}</button>
+                                {#if $cloudSyncState.resolution === 'local-changes'}
+                                    <button class="btn cloud-file-push-selected" type="button" onclick={pushSelectedCloudFiles} disabled={cloudActionPending || cloudFileChangesLoading || selectedCloudFileIds.size === 0}>Push selected{selectedCloudFileIds.size > 0 ? ` (${selectedCloudFileIds.size})` : ''}</button>
+                                {/if}
                                 <button class="btn cloud-file-discard cloud-file-discard-selected" type="button" onclick={discardSelectedCloudFiles} disabled={cloudActionPending || cloudFileChangesLoading || selectedCloudFileIds.size === 0}>Discard selected{selectedCloudFileIds.size > 0 ? ` (${selectedCloudFileIds.size})` : ''}</button>
+                                <button class="btn cloud-file-select-all" type="button" onclick={selectAllCloudFiles} disabled={cloudActionPending || cloudFileChangesLoading || cloudFileChanges.length === 0 || selectedCloudFileIds.size === cloudFileChanges.length}>Select all</button>
                             </div>
                         </div>
                         {#if cloudFileChangesError}
