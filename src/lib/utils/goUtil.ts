@@ -461,7 +461,13 @@ export function goGetFullParam(params: Param[], tc: any): string {
         } else if (p.type === "boolean") {
             parts.push(String(val) === "true" ? "true" : "false");
         } else if (p.type === "int_array") {
-            parts.push(`toIntArray(${goEscapeStringLiteral(val ?? "[]")})`);
+            let strVal: string;
+            if (Array.isArray(val)) {
+                try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+            } else {
+                strVal = String(val ?? '[]');
+            }
+            parts.push(`toIntArray(${goEscapeStringLiteral(strVal)})`);
         } else if (p.type === "int_array_2d" || p.type === "int_matrix") {
             let strVal: string;
             if (Array.isArray(val)) {
