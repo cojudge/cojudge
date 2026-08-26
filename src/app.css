@@ -17,6 +17,8 @@
 }
 
 :root[data-theme='dark'] {
+  color-scheme: dark;
+
   --color-bg: #443835;
   --color-second-bg: rgba(0,0,0,0.25);
   --color-third-bg: rgba(0,0,0,0.1);
@@ -55,6 +57,8 @@
 
 :root,
 :root[data-theme='light'] {
+  color-scheme: light;
+
   --color-bg: #f8fafc;
   --color-second-bg: rgba(0,0,0,0.05);
   --color-third-bg: rgba(0,0,0,0.03);
@@ -680,7 +684,7 @@ html {
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb) transparent;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
 /* Chromium, Safari, Edge */
@@ -690,7 +694,7 @@ html {
 }
 
 *::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--scrollbar-track);
 }
 
 *::-webkit-scrollbar-thumb {
@@ -707,7 +711,7 @@ html {
 
 /* Corner for both directions (e.g., pre blocks) */
 *::-webkit-scrollbar-corner {
-  background: transparent;
+  background: var(--scrollbar-track);
 }
 
 /* Make common scroll areas feel consistent */
@@ -723,7 +727,7 @@ textarea {
 pre:hover,
 textarea:hover {
   /* Firefox hover color */
-  scrollbar-color: var(--scrollbar-thumb-hover) transparent;
+  scrollbar-color: var(--scrollbar-thumb-hover) var(--scrollbar-track);
 }
 
 .problem-pane:hover::-webkit-scrollbar-thumb,
