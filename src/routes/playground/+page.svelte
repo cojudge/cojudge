@@ -2316,6 +2316,8 @@ func main() {
             commitWysiwygEdits();
             resetWysiwygHistory();
         }
+        clearWysiwygFindHighlights();
+        wysiwygFindOpen = false;
         previewEditMode = false;
         wysiwygSourceFileId = null;
         showLinkInput = false;
@@ -2373,6 +2375,8 @@ func main() {
         if (previewEditMode) {
             commitWysiwygEdits();
             resetWysiwygHistory();
+            clearWysiwygFindHighlights();
+            wysiwygFindOpen = false;
             previewEditMode = false;
             wysiwygSourceFileId = null;
             showLinkInput = false;
@@ -2476,6 +2480,19 @@ func main() {
     let savedLinkRange: Range | null = null;
     let savedLinkHistoryBefore: WysiwygHistoryState | null = null;
 
+    // --- WYSIWYG find in current document (Cmd/Ctrl+F) ---
+    let wysiwygFindOpen = false;
+    let wysiwygFindQuery = '';
+    let wysiwygFindCaseSensitive = false;
+    let wysiwygFindRegex = false;
+    let wysiwygFindWholeWord = false;
+    let wysiwygFindMatches: HTMLElement[] = [];
+    let wysiwygFindActiveIndex = -1;
+    let wysiwygFindInputEl: HTMLInputElement | null = null;
+    let applyingWysiwygFind = false;
+    const WYSIWYG_FIND_MARK_CLASS = 'wysiwyg-find-match';
+    const WYSIWYG_FIND_ACTIVE_CLASS = 'wysiwyg-find-active';
+
     // @-mention file picker in the WYSIWYG editor
     let showMentionPopup = false;
     let mentionQuery = '';
@@ -2516,7 +2533,188 @@ func main() {
         resolvePastedImages(wysiwygEl);
         wysiwygDirty = false;
         resetWysiwygHistory();
+        if (wysiwygFindOpen) {
+            // Re-apply find highlights after a full re-render (e.g. file switch)
+            tick().then(() => updateWysiwygFindHighlights());
+        }
     }
+
+    function clearWysiwygFindHighlights() {
+        try {
+            (CSS as any).highlights?.delete?.('wysiwyg-find');
+            (CSS as any).highlights?.delete?.('wysiwyg-find-active');
+        } catch {}
+        if (!wysiwygEl) {
+            wysiwygFindMatches = [];
+            wysiwygFindActiveIndex = -1;
+            return;
+        }
+        applyingWysiwygFind = true;
+        try {
+            const marks = Array.from(wysiwygEl.querySelectorAll(`.${WYSIWYG_FIND_MARK_CLASS}, mark[data-find-mark]`));
+            for (const mark of marks) {
+                const parent = mark.parentNode;
+                if (!parent) continue;
+                while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+                parent.removeChild(mark);
+            }
+            if (marks.length) wysiwygEl.normalize();
+        } finally {
+            applyingWysiwygFind = false;
+        }
+        wysiwygFindMatches = [];
+        wysiwygFindActiveIndex = -1;
+    }
+
+    function getWysiwygFindRegExp(): RegExp | null {
+        if (!wysiwygFindQuery) return null;
+        try {
+            if (wysiwygFindRegex) {
+                return new RegExp(wysiwygFindQuery, wysiwygFindCaseSensitive ? 'g' : 'gi');
+            }
+            const escaped = wysiwygFindQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const pattern = wysiwygFindWholeWord ? `\\b${escaped}\\b` : escaped;
+            return new RegExp(pattern, wysiwygFindCaseSensitive ? 'g' : 'gi');
+        } catch {
+            return null;
+        }
+    }
+
+    function updateWysiwygFindHighlights(keepActive = false) {
+        if (!wysiwygEl || !wysiwygFindOpen) return;
+        const prevActive = keepActive ? wysiwygFindActiveIndex : 0;
+        clearWysiwygFindHighlights();
+        const query = wysiwygFindQuery;
+        if (!query) return;
+        const pattern = getWysiwygFindRegExp();
+        if (!pattern) return;
+
+        const walker = document.createTreeWalker(wysiwygEl, NodeFilter.SHOW_TEXT, {
+            acceptNode: (node: Node) => {
+                const parent = (node as Text).parentElement;
+                if (!parent) return NodeFilter.FILTER_REJECT;
+                if (parent.closest(`.${CODE_COPY_WRAPPER_CLASS} .code-block-actions`)) return NodeFilter.FILTER_REJECT;
+                if (parent.closest(`.${WYSIWYG_FIND_MARK_CLASS}`)) return NodeFilter.FILTER_REJECT;
+                if (parent.tagName === 'BUTTON' || parent.closest(`.${THUMB_WRAPPER_CLASS}`)) return NodeFilter.FILTER_REJECT;
+                const text = node.textContent || '';
+                if (!text) return NodeFilter.FILTER_REJECT;
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        });
+
+        const textNodes: Text[] = [];
+        let n: Node | null;
+        while ((n = walker.nextNode())) textNodes.push(n as Text);
+
+        type Match = { node: Text; start: number; length: number };
+        const allMatches: Match[] = [];
+        for (const textNode of textNodes) {
+            const text = textNode.textContent || '';
+            const re = new RegExp(pattern.source, pattern.flags);
+            let m: RegExpExecArray | null;
+            while ((m = re.exec(text))) {
+                if (m[0].length === 0) {
+                    re.lastIndex++;
+                    continue;
+                }
+                allMatches.push({ node: textNode, start: m.index, length: m[0].length });
+                if (m.index === re.lastIndex) re.lastIndex++;
+            }
+        }
+
+        applyingWysiwygFind = true;
+        const marks: HTMLElement[] = [];
+        try {
+            const byNode = new Map<Text, Match[]>();
+            for (const match of allMatches) {
+                const list = byNode.get(match.node) ?? [];
+                list.push(match);
+                byNode.set(match.node, list);
+            }
+            for (const [node, matches] of byNode) {
+                matches.sort((a, b) => b.start - a.start);
+                for (const match of matches) {
+                    const range = document.createRange();
+                    try {
+                        range.setStart(node, match.start);
+                        range.setEnd(node, match.start + match.length);
+                        const mark = document.createElement('mark');
+                        mark.className = WYSIWYG_FIND_MARK_CLASS;
+                        mark.dataset.findMark = '1';
+                        range.surroundContents(mark);
+                        marks.push(mark);
+                    } catch {}
+                }
+            }
+        } finally {
+            applyingWysiwygFind = false;
+        }
+
+        marks.sort((a, b) => {
+            const pos = a.compareDocumentPosition(b);
+            return pos & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+        });
+        wysiwygFindMatches = marks;
+        if (marks.length) {
+            setWysiwygFindActive(Math.min(Math.max(prevActive, 0), marks.length - 1));
+        }
+    }
+
+    function setWysiwygFindActive(index: number) {
+        if (!wysiwygEl || wysiwygFindMatches.length === 0) {
+            wysiwygFindActiveIndex = -1;
+            return;
+        }
+        const clamped = ((index % wysiwygFindMatches.length) + wysiwygFindMatches.length) % wysiwygFindMatches.length;
+        wysiwygFindActiveIndex = clamped;
+        wysiwygFindMatches.forEach((m, i) => m.classList.toggle(WYSIWYG_FIND_ACTIVE_CLASS, i === clamped));
+        const active = wysiwygFindMatches[clamped];
+        if (active) {
+            active.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+        }
+    }
+
+    function nextWysiwygFindMatch(delta = 1) {
+        if (wysiwygFindMatches.length === 0) return;
+        setWysiwygFindActive(wysiwygFindActiveIndex + delta);
+    }
+
+    function openWysiwygFind() {
+        if (!wysiwygEl || !previewEditMode) return;
+        const sel = window.getSelection();
+        let initial = '';
+        if (sel && !sel.isCollapsed && wysiwygEl.contains(sel.anchorNode) && wysiwygEl.contains(sel.focusNode)) {
+            initial = sel.toString().slice(0, 120);
+        }
+        const wasOpen = wysiwygFindOpen;
+        wysiwygFindOpen = true;
+        if (initial && !wasOpen) wysiwygFindQuery = initial;
+        tick().then(() => {
+            wysiwygFindInputEl?.focus();
+            wysiwygFindInputEl?.select();
+            updateWysiwygFindHighlights();
+        });
+    }
+
+    function closeWysiwygFind() {
+        const wasOpen = wysiwygFindOpen;
+        wysiwygFindOpen = false;
+        clearWysiwygFindHighlights();
+        if (wasOpen) wysiwygEl?.focus({ preventScroll: true });
+    }
+
+    function handleWysiwygFindInputKeydown(e: KeyboardEvent) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            if (e.shiftKey) nextWysiwygFindMatch(-1);
+            else nextWysiwygFindMatch(1);
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            closeWysiwygFind();
+        }
+    }
+
+    $: if (!previewEditMode && wysiwygFindOpen) closeWysiwygFind();
 
     async function enterPreviewEditMode(force = false) {
         const sourceFileId = activeTab?.type === 'preview' ? activeTab.sourceFileId : null;
@@ -2586,6 +2784,8 @@ func main() {
         const { wrapper, historyBefore } = activeLangPicker;
         const scrollX = window.scrollX;
         const scrollY = window.scrollY;
+        const elTop = wysiwygEl?.scrollTop ?? 0;
+        const elLeft = wysiwygEl?.scrollLeft ?? 0;
         if (historyBefore && wysiwygEl) {
             wysiwygEl.focus({ preventScroll: true });
             restoreWysiwygSelection(historyBefore);
@@ -2601,6 +2801,10 @@ func main() {
         handleWysiwygInput();
         finishWysiwygHistoryEntry(historyBefore);
         wysiwygEl?.focus({ preventScroll: true });
+        if (wysiwygEl) {
+            wysiwygEl.scrollTop = elTop;
+            wysiwygEl.scrollLeft = elLeft;
+        }
         window.scrollTo(scrollX, scrollY);
     }
 
@@ -2653,6 +2857,13 @@ func main() {
         snapshotRoot.querySelectorAll('.code-block-actions').forEach((element) => element.remove());
         snapshotRoot.querySelectorAll('.lang-picker-active').forEach((element) => {
             element.classList.remove('lang-picker-active');
+        });
+        snapshotRoot.querySelectorAll(`.${WYSIWYG_FIND_MARK_CLASS}`).forEach((mark) => {
+            const parent = mark.parentNode;
+            if (!parent) return;
+            while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+            parent.removeChild(mark);
+            if ((parent as HTMLElement).normalize) (parent as HTMLElement).normalize();
         });
         return snapshotRoot.innerHTML;
     }
@@ -2733,9 +2944,9 @@ func main() {
             ? getWysiwygNodeAtPath(wysiwygEl, state.activeElementPath)
             : null;
         if (activeNode instanceof HTMLElement && (activeNode === wysiwygEl || wysiwygEl.contains(activeNode))) {
-            activeNode.focus();
+            (activeNode as HTMLElement).focus({ preventScroll: true } as FocusOptions);
         } else {
-            wysiwygEl.focus();
+            wysiwygEl.focus({ preventScroll: true });
         }
     }
 
@@ -2977,6 +3188,7 @@ func main() {
     }
 
     function handleWysiwygBeforeInput(event: InputEvent) {
+        if (applyingWysiwygFind) return;
         if (manualWysiwygHistoryDepth > 0) return;
         if (event.inputType === 'historyUndo' || event.inputType === 'historyRedo') {
             event.preventDefault();
@@ -2998,6 +3210,10 @@ func main() {
     function applyWysiwygHistoryState(state: WysiwygHistoryState): boolean {
         if (!wysiwygEl || state.sourceFileId !== wysiwygSourceFileId) return false;
         applyingWysiwygHistory = true;
+        const prevScrollTop = wysiwygEl.scrollTop;
+        const prevScrollLeft = wysiwygEl.scrollLeft;
+        const winX = window.scrollX;
+        const winY = window.scrollY;
         try {
             if (pendingWysiwygHistoryTimeout) clearTimeout(pendingWysiwygHistoryTimeout);
             pendingWysiwygHistoryTimeout = null;
@@ -3021,6 +3237,13 @@ func main() {
             return true;
         } finally {
             applyingWysiwygHistory = false;
+            // innerHTML replacement resets scroll to 0; restore previous
+            // viewport so undo/redo doesn't jump to top.
+            if (wysiwygEl) {
+                wysiwygEl.scrollTop = prevScrollTop;
+                wysiwygEl.scrollLeft = prevScrollLeft;
+                if (window.scrollX !== winX || window.scrollY !== winY) window.scrollTo(winX, winY);
+            }
         }
     }
 
@@ -3043,6 +3266,7 @@ func main() {
     }
 
     function handleWysiwygInput(event?: Event) {
+        if (applyingWysiwygFind) return;
         const target = event?.target;
         if (target instanceof HTMLInputElement && target.type === 'checkbox') {
             if (pendingWysiwygHistoryTimeout) clearTimeout(pendingWysiwygHistoryTimeout);
@@ -3084,6 +3308,11 @@ func main() {
             finishWysiwygHistoryEntry(beforeInlineCode, 'inlineCode');
         } else {
             finishWysiwygHistoryEntry(historyBefore, historyKind);
+        }
+        if (wysiwygFindOpen) {
+            // Keep find highlights in sync with the latest content, but don't
+            // include the marks themselves in history.
+            tick().then(() => updateWysiwygFindHighlights(true));
         }
         if (wysiwygDebounce) clearTimeout(wysiwygDebounce);
         const sourceFileId = wysiwygSourceFileId;
@@ -4215,14 +4444,21 @@ func main() {
             const img = deleteBtn.closest(`.${THUMB_WRAPPER_CLASS}`)?.querySelector('img');
             const fakeLink = img?.dataset.cojudgeImg;
             if (fakeLink) wysiwygTrackedImageLinks.add(fakeLink);
+            const scrollTop = wysiwygEl.scrollTop;
+            const scrollLeft = wysiwygEl.scrollLeft;
+            const winX = window.scrollX;
+            const winY = window.scrollY;
             runWysiwygHistoryTransaction(() => {
                 deleteBtn.closest(`.${THUMB_WRAPPER_CLASS}`)?.remove();
                 if (!wysiwygEl) return;
                 ensureTrailingEmptyLine(wysiwygEl);
                 handleWysiwygInput();
-                wysiwygEl.focus();
+                wysiwygEl.focus({ preventScroll: true });
             });
             commitWysiwygEdits();
+            wysiwygEl.scrollTop = scrollTop;
+            wysiwygEl.scrollLeft = scrollLeft;
+            if (window.scrollX !== winX || window.scrollY !== winY) window.scrollTo(winX, winY);
             return;
         }
         const img = target.closest(`.${THUMB_WRAPPER_CLASS} img`) as HTMLImageElement | null;
@@ -4308,12 +4544,19 @@ func main() {
         if (!wysiwygEl || !wrapper.isConnected) return;
         if (activeLangPicker && activeLangPicker.wrapper === wrapper) closeLangPicker();
         const historyBefore = captureWysiwygHistoryState();
+        const scrollTop = wysiwygEl.scrollTop;
+        const scrollLeft = wysiwygEl.scrollLeft;
+        const winX = window.scrollX;
+        const winY = window.scrollY;
         wrapper.remove();
         ensureTrailingEmptyLine(wysiwygEl);
         handleWysiwygInput();
         finishWysiwygHistoryEntry(historyBefore);
         commitWysiwygEdits();
-        wysiwygEl.focus();
+        wysiwygEl.focus({ preventScroll: true });
+        wysiwygEl.scrollTop = scrollTop;
+        wysiwygEl.scrollLeft = scrollLeft;
+        if (window.scrollX !== winX || window.scrollY !== winY) window.scrollTo(winX, winY);
     }
 
     // Deletes a code block from the source markdown when its trash button is
@@ -4356,7 +4599,21 @@ func main() {
         removeOrphanCodeWrappers();
         healTaskListStructure();
         prepareTaskListCheckboxes(wysiwygEl);
-        const markdown = markdownOverride ?? htmlToMarkdown(wysiwygEl.innerHTML);
+        let htmlForMarkdown = wysiwygEl.innerHTML;
+        // Strip find highlights so they don't leak into stored markdown
+        if (wysiwygFindOpen && htmlForMarkdown.includes(WYSIWYG_FIND_MARK_CLASS)) {
+            const temp = document.createElement('div');
+            temp.innerHTML = htmlForMarkdown;
+            temp.querySelectorAll(`.${WYSIWYG_FIND_MARK_CLASS}`).forEach((mark) => {
+                const parent = mark.parentNode;
+                if (!parent) return;
+                while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+                parent.removeChild(mark);
+                if ((parent as HTMLElement).normalize) (parent as HTMLElement).normalize();
+            });
+            htmlForMarkdown = temp.innerHTML;
+        }
+        const markdown = markdownOverride ?? htmlToMarkdown(htmlForMarkdown);
         const sourceFileId = wysiwygSourceFileId;
         const sourceTab = tabs.find((tab) => tab.fileId === sourceFileId);
         const sourceIndex = tabs.findIndex((tab) => tab.fileId === sourceFileId);
@@ -4444,6 +4701,7 @@ func main() {
         savedLinkRange = null;
         savedLinkHistoryBefore = null;
         closeMentionPopup();
+        closeWysiwygFind();
         lastActiveTabFileId = activeTab?.fileId ?? null;
         if (activeTab?.type === 'preview') {
             applyPreferredVisualMode();
@@ -4830,6 +5088,17 @@ func main() {
                 redoWysiwygHistory();
                 return;
             }
+            if (!e.shiftKey && historyKey === 'f') {
+                e.preventDefault();
+                e.stopPropagation();
+                openWysiwygFind();
+                return;
+            }
+        }
+        if (wysiwygFindOpen && e.key === 'Escape') {
+            e.preventDefault();
+            closeWysiwygFind();
+            return;
         }
         if (showMentionPopup) {
             if (e.key === 'ArrowDown') {
@@ -5726,6 +5995,12 @@ func main() {
                     tick().then(() => globalSearchInputEl?.focus());
                 }
             }
+            // Ctrl/Cmd+F — WYSIWYG document find (local to current doc)
+            if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 'f' && previewEditMode) {
+                e.preventDefault();
+                e.stopPropagation();
+                openWysiwygFind();
+            }
             // Ctrl+Alt+N or Cmd+Alt+N
             if ((e.ctrlKey || e.metaKey) && e.altKey && (e.key.toLowerCase() === 'n' || e.code === 'KeyN')) {
                 e.preventDefault();
@@ -6587,6 +6862,91 @@ func main() {
                                 />
                             {/if}
                         </div>
+                        {#if wysiwygFindOpen}
+                            <div class="wysiwyg-find-bar" role="search" aria-label="Find in document">
+                                <div class="wysiwyg-find-input-wrap">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                                    <input
+                                        class="wysiwyg-find-input"
+                                        type="text"
+                                        placeholder="Find"
+                                        aria-label="Find"
+                                        value={wysiwygFindQuery}
+                                        bind:this={wysiwygFindInputEl}
+                                        on:input={(e) => { wysiwygFindQuery = (e.currentTarget as HTMLInputElement).value; updateWysiwygFindHighlights(); }}
+                                        on:keydown={handleWysiwygFindInputKeydown}
+                                    />
+                                    {#if wysiwygFindQuery}
+                                        <span class="wysiwyg-find-count">
+                                            {#if wysiwygFindMatches.length === 0}
+                                                No results
+                                            {:else}
+                                                {wysiwygFindActiveIndex + 1} of {wysiwygFindMatches.length}
+                                            {/if}
+                                        </span>
+                                    {/if}
+                                </div>
+                                <div class="wysiwyg-find-actions">
+                                    <button
+                                        type="button"
+                                        class="wysiwyg-find-toggle {wysiwygFindCaseSensitive ? 'active' : ''}"
+                                        title="Match Case (Alt+C)"
+                                        aria-label="Match Case"
+                                        aria-pressed={wysiwygFindCaseSensitive}
+                                        on:click={() => { wysiwygFindCaseSensitive = !wysiwygFindCaseSensitive; updateWysiwygFindHighlights(); wysiwygFindInputEl?.focus(); }}
+                                    >Aa</button>
+                                    <button
+                                        type="button"
+                                        class="wysiwyg-find-toggle {wysiwygFindWholeWord ? 'active' : ''}"
+                                        title="Match Whole Word (Alt+W)"
+                                        aria-label="Match Whole Word"
+                                        aria-pressed={wysiwygFindWholeWord}
+                                        on:click={() => { wysiwygFindWholeWord = !wysiwygFindWholeWord; updateWysiwygFindHighlights(); wysiwygFindInputEl?.focus(); }}
+                                    >
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="1"/><path d="M8 9h8M8 13h5M8 17h8"/></svg>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="wysiwyg-find-toggle {wysiwygFindRegex ? 'active' : ''}"
+                                        title="Use Regular Expression (Alt+R)"
+                                        aria-label="Use Regular Expression"
+                                        aria-pressed={wysiwygFindRegex}
+                                        on:click={() => { wysiwygFindRegex = !wysiwygFindRegex; updateWysiwygFindHighlights(); wysiwygFindInputEl?.focus(); }}
+                                    >.*</button>
+                                </div>
+                                <div class="wysiwyg-find-nav">
+                                    <button
+                                        type="button"
+                                        class="wysiwyg-find-nav-btn"
+                                        title="Previous Match (Shift+Enter)"
+                                        aria-label="Previous Match"
+                                        on:click={() => nextWysiwygFindMatch(-1)}
+                                        disabled={wysiwygFindMatches.length === 0}
+                                    >
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="wysiwyg-find-nav-btn"
+                                        title="Next Match (Enter)"
+                                        aria-label="Next Match"
+                                        on:click={() => nextWysiwygFindMatch(1)}
+                                        disabled={wysiwygFindMatches.length === 0}
+                                    >
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                                    </button>
+                                </div>
+                                <button
+                                    type="button"
+                                    class="wysiwyg-find-close"
+                                    title="Close (Esc)"
+                                    aria-label="Close"
+                                    on:click={closeWysiwygFind}
+                                >
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                </button>
+                            </div>
+                        {/if}
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <!-- svelte-ignore a11y-no-static-element-interactions -->
                         <div
@@ -7622,6 +7982,149 @@ func main() {
     .wysiwyg-editing:focus {
         box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--color-highlight) 40%, transparent);
         border-radius: var(--border-radius-md);
+    }
+
+    /* WYSIWYG find in document */
+    .wysiwyg-find-bar {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 8px;
+        background: var(--color-bg);
+        border-bottom: 1px solid var(--color-border);
+        flex-shrink: 0;
+    }
+
+    .wysiwyg-find-input-wrap {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex: 1;
+        min-width: 0;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: 6px;
+        padding: 4px 8px;
+    }
+
+    .wysiwyg-find-input-wrap:focus-within {
+        border-color: var(--color-highlight);
+    }
+
+    .wysiwyg-find-input {
+        flex: 1;
+        min-width: 0;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--color-text);
+        font-size: 0.85rem;
+        font-family: inherit;
+    }
+
+    .wysiwyg-find-count {
+        font-size: 0.75rem;
+        color: var(--color-text-secondary);
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .wysiwyg-find-actions {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+    }
+
+    .wysiwyg-find-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 22px;
+        height: 22px;
+        padding: 0 4px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        background: transparent;
+        color: var(--color-text-secondary);
+        font-size: 0.7rem;
+        font-family: var(--font-mono, monospace);
+        cursor: pointer;
+    }
+
+    .wysiwyg-find-toggle:hover {
+        background: var(--color-second-bg);
+        color: var(--color-text);
+    }
+
+    .wysiwyg-find-toggle.active {
+        background: rgba(var(--color-highlight-rgb, 59, 130, 246), 0.3);
+        border-color: var(--color-highlight);
+        color: var(--color-text);
+    }
+
+    .wysiwyg-find-nav {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+    }
+
+    .wysiwyg-find-nav-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        border: 1px solid var(--color-border);
+        border-radius: 4px;
+        background: var(--color-surface);
+        color: var(--color-text-secondary);
+        cursor: pointer;
+    }
+
+    .wysiwyg-find-nav-btn:hover:not(:disabled) {
+        background: var(--color-second-bg);
+        color: var(--color-text);
+    }
+
+    .wysiwyg-find-nav-btn:disabled {
+        opacity: 0.4;
+        cursor: default;
+    }
+
+    .wysiwyg-find-close {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        border: none;
+        border-radius: 4px;
+        background: transparent;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+    }
+
+    .wysiwyg-find-close:hover {
+        background: var(--color-second-bg);
+        color: var(--color-text);
+    }
+
+    :global(::highlight(wysiwyg-find)) {
+        background-color: rgba(234, 179, 8, 0.4);
+    }
+
+    :global(::highlight(wysiwyg-find-active)) {
+        background-color: rgba(234, 179, 8, 0.85);
+    }
+
+    :global(.wysiwyg-find-match) {
+        background: rgba(234, 179, 8, 0.4);
+        border-radius: 2px;
+    }
+
+    :global(.wysiwyg-find-match.wysiwyg-find-active) {
+        background: rgba(234, 179, 8, 0.85);
+        outline: 1px solid #eab308;
     }
 
     .icon-button.active {
