@@ -848,7 +848,7 @@ export function htmlToMarkdown(html: string): string {
     // elements round-trip back to markdown instead of being dropped by turndown.
     if (typeof DOMParser !== 'undefined') {
         const doc = new DOMParser().parseFromString(html, 'text/html');
-        if (html.includes(THUMB_WRAPPER_CLASS) || html.includes(CODE_COPY_WRAPPER_CLASS)) {
+        if (html.includes(THUMB_WRAPPER_CLASS) || html.includes(CODE_COPY_WRAPPER_CLASS) || html.includes('wysiwyg-find-match')) {
             doc.querySelectorAll(`.${THUMB_DELETE_CLASS}`).forEach((el) => el.remove());
             doc.querySelectorAll(`.${THUMB_WRAPPER_CLASS}`).forEach((el) => {
                 const img = el.querySelector('img');
@@ -874,6 +874,13 @@ export function htmlToMarkdown(html: string): string {
                 el.querySelector('.code-block-actions')?.remove();
                 el.querySelector(`.${CODE_LANGUAGE_WRAPPER_CLASS}`)?.remove();
                 el.replaceWith(...Array.from(el.childNodes));
+            });
+            doc.querySelectorAll('.wysiwyg-find-match').forEach((mark) => {
+                const parent = mark.parentNode;
+                if (!parent) return;
+                while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+                parent.removeChild(mark);
+                (parent as HTMLElement).normalize();
             });
         }
         doc.querySelectorAll('li').forEach((li) => {
