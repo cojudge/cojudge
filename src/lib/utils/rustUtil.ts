@@ -408,7 +408,13 @@ export function rustGetFullParam(params: Param[], tc: any): string {
     if (p.type === "string") {
       parts.push(`${rustEscapeStringLiteral(val ?? "")}.to_string()`);
     } else if (p.type === "int_array") {
-      parts.push(`to_int_array(${rustEscapeStringLiteral(val ?? "[]")})`);
+      let strVal: string;
+      if (Array.isArray(val)) {
+        try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+      } else {
+        strVal = String(val ?? '[]');
+      }
+      parts.push(`to_int_array(${rustEscapeStringLiteral(strVal)})`);
     } else if (p.type === "int") {
       parts.push(`${val}`);
     } else if (p.type === "boolean") {
@@ -432,16 +438,34 @@ export function rustGetFullParam(params: Param[], tc: any): string {
       }
       parts.push(`to_int_array_2d(${rustEscapeStringLiteral(strVal)})`);
     } else if (p.type === "list_node") {
+      let strVal: string;
+      if (Array.isArray(val)) {
+        try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+      } else {
+        strVal = String(val ?? "[]");
+      }
       parts.push(
-        `add_cycle(to_list_node(${rustEscapeStringLiteral(String(val ?? "[]"))}), ${tc.pos !== undefined ? tc.pos : -1})`,
+        `add_cycle(to_list_node(${rustEscapeStringLiteral(strVal)}), ${tc.pos !== undefined ? tc.pos : -1})`,
       );
     } else if (p.type === "tree_node") {
+      let strVal: string;
+      if (Array.isArray(val)) {
+        try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+      } else {
+        strVal = String(val ?? "[]");
+      }
       parts.push(
-        `to_tree_node(${rustEscapeStringLiteral(String(val ?? "[]"))})`,
+        `to_tree_node(${rustEscapeStringLiteral(strVal)})`,
       );
     } else if (p.type === "graph_node") {
+      let strVal: string;
+      if (Array.isArray(val)) {
+        try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+      } else {
+        strVal = String(val ?? "[]");
+      }
       parts.push(
-        `to_graph_node(${rustEscapeStringLiteral(String(val ?? "[]"))})`,
+        `to_graph_node(${rustEscapeStringLiteral(strVal)})`,
       );
     } else {
       parts.push(`${rustEscapeStringLiteral(String(val ?? ""))}.to_string()`);
@@ -573,7 +597,13 @@ export function generateRustDebugRunner(
           const val = tc[p.name];
           const varName = `__input${caseIndex}_${i}`;
           if (p.type === 'graph_node') {
-            const escaped = String(val ?? '[]').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+            let strVal: string;
+            if (Array.isArray(val)) {
+              try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+            } else {
+              strVal = String(val ?? '[]');
+            }
+            const escaped = strVal.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
             decls.push(`let ${varName} = to_graph_node("${escaped}");`);
             args.push(`${varName}.clone()`);
           } else {
@@ -745,7 +775,13 @@ export function generateRustRunner(
           const val = tc[p.name];
           const varName = `__input${caseIndex}_${i}`;
           if (p.type === 'graph_node') {
-            const escaped = String(val ?? '[]').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+            let strVal: string;
+            if (Array.isArray(val)) {
+              try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+            } else {
+              strVal = String(val ?? '[]');
+            }
+            const escaped = strVal.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
             decls.push(`let ${varName} = to_graph_node("${escaped}");`);
             args.push(`${varName}.clone()`);
           } else {

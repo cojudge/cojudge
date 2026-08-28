@@ -196,16 +196,40 @@ export function pyGetFullParam(params: Param[], tc: any): string {
         } else if (param.type === 'boolean') {
             parts.push(String(val) === 'true' ? 'True' : 'False');
         } else if (param.type === 'list_node') {
-            const escaped = String(val ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+            let strVal: string;
+            if (Array.isArray(val)) {
+                try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+            } else {
+                strVal = String(val ?? '');
+            }
+            const escaped = strVal.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
             parts.push(`add_cycle(to_list_node('${escaped}'), ${tc.pos !== undefined ? tc.pos : -1})`);
         } else if (param.type === 'list_node_array') {
-            const escaped = String(val ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+            let strVal: string;
+            if (Array.isArray(val)) {
+                try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+            } else {
+                strVal = String(val ?? '');
+            }
+            const escaped = strVal.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
             parts.push(`to_list_node_array('${escaped}')`);
         } else if (param.type === 'tree_node') {
-            const escaped = String(val ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+            let strVal: string;
+            if (Array.isArray(val)) {
+                try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+            } else {
+                strVal = String(val ?? '');
+            }
+            const escaped = strVal.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
             parts.push(`read_tree_node('${escaped}')`);
         } else if (param.type === 'graph_node') {
-            const escaped = String(val ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+            let strVal: string;
+            if (Array.isArray(val)) {
+                try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+            } else {
+                strVal = String(val ?? '');
+            }
+            const escaped = strVal.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
             parts.push(`read_graph_node('${escaped}')`);
         } else if (param.type === 'string_array') {
             const raw = val ?? '[]';
@@ -328,7 +352,13 @@ export function generatePythonRunner(functionName: string, params: Param[], test
             params.forEach((p, i) => {
                 if (p.type === 'graph_node') {
                     const val = tc[p.name];
-                    const escaped = String(val ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+                    let strVal: string;
+                    if (Array.isArray(val)) {
+                        try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+                    } else {
+                        strVal = String(val ?? '');
+                    }
+                    const escaped = strVal.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
                     const varName = `__input${idx}_${i}`;
                     decls.push(`${varName} = read_graph_node('${escaped}')`);
                     args.push(varName);
