@@ -326,7 +326,13 @@ export function generateTypeScriptRunner(functionName: string, params: Param[], 
                     const val = tc[p.name];
                     const varName = `__input${idx}_${i}`;
                     if (p.type === 'graph_node') {
-                        decls.push(`const ${varName} = toGraphNode(${JSON.stringify(String(val ?? '[]'))});`);
+                        let gVal: string;
+                        if (Array.isArray(val)) {
+                            gVal = JSON.stringify(val);
+                        } else {
+                            gVal = JSON.stringify(String(val ?? '[]'));
+                        }
+                        decls.push(`const ${varName} = toGraphNode(${gVal});`);
                         args.push(varName);
                     } else {
                         args.push(tsGetFullParam([p], tc));
@@ -358,7 +364,7 @@ import { Solution } from './Solution';
 
 const sol = new Solution();
 ${calls}
-`;
+ `;
     }
 
     const calls = testCases.map((tc, idx) => {
@@ -369,7 +375,13 @@ ${calls}
                 const val = tc[p.name];
                 const varName = `__input${idx}_${i}`;
                 if (p.type === 'graph_node') {
-                    decls.push(`const ${varName} = toGraphNode(${JSON.stringify(String(val ?? '[]'))});`);
+                    let gVal: string;
+                    if (Array.isArray(val)) {
+                        gVal = JSON.stringify(val);
+                    } else {
+                        gVal = JSON.stringify(String(val ?? '[]'));
+                    }
+                    decls.push(`const ${varName} = toGraphNode(${gVal});`);
                     args.push(varName);
                 } else {
                     args.push(tsGetFullParam([p], tc));

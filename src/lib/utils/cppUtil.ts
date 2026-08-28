@@ -524,7 +524,13 @@ export function cppGetFullParam(params: Param[], tc: any): string {
             }
             parts.push(`to_string_array(${cppEscapeStringLiteral(strVal)})`);
         } else if (p.type === 'int_array') {
-            parts.push(`to_int_array(${cppEscapeStringLiteral(val ?? '[]')})`);
+            let strVal: string;
+            if (Array.isArray(val)) {
+                try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+            } else {
+                strVal = String(val ?? '[]');
+            }
+            parts.push(`to_int_array(${cppEscapeStringLiteral(strVal)})`);
         } else if (p.type === 'int_array_2d' || p.type === 'int_matrix') {
             let strVal: string;
             if (Array.isArray(val)) {
@@ -546,13 +552,37 @@ export function cppGetFullParam(params: Param[], tc: any): string {
         } else if (p.type === 'boolean') {
             parts.push(String(val) === 'true' ? 'true' : 'false');
         } else if (p.type === 'list_node') {
-            parts.push(`add_cycle(to_list_node(${cppEscapeStringLiteral(val ?? '[]')}), ${tc.pos !== undefined ? tc.pos : -1})`);
+            let strVal: string;
+            if (Array.isArray(val)) {
+                try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+            } else {
+                strVal = String(val ?? '[]');
+            }
+            parts.push(`add_cycle(to_list_node(${cppEscapeStringLiteral(strVal)}), ${tc.pos !== undefined ? tc.pos : -1})`);
         } else if (p.type === 'list_node_array') {
-            parts.push(`to_list_node_array(${cppEscapeStringLiteral(val ?? '[]')})`);
+            let strVal: string;
+            if (Array.isArray(val)) {
+                try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+            } else {
+                strVal = String(val ?? '[]');
+            }
+            parts.push(`to_list_node_array(${cppEscapeStringLiteral(strVal)})`);
         } else if (p.type === 'tree_node') {
-            parts.push(`to_tree_node(${cppEscapeStringLiteral(val ?? '[]')})`);
+            let strVal: string;
+            if (Array.isArray(val)) {
+                try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+            } else {
+                strVal = String(val ?? '[]');
+            }
+            parts.push(`to_tree_node(${cppEscapeStringLiteral(strVal)})`);
         } else if (p.type === 'graph_node') {
-            parts.push(`to_graph_node(${cppEscapeStringLiteral(val ?? '[]')})`);
+            let strVal: string;
+            if (Array.isArray(val)) {
+                try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+            } else {
+                strVal = String(val ?? '[]');
+            }
+            parts.push(`to_graph_node(${cppEscapeStringLiteral(strVal)})`);
         } else {
             // default pass as string
             parts.push(cppEscapeStringLiteral(String(val ?? '')));
@@ -691,7 +721,13 @@ export function generateCppRunner(functionName: string, params: Param[], testCas
                 const vname = `p${i}`;
                 const raw = tc[p.name];
                 if (p.type === 'int_array') {
-                    decls.push(`vector<int> ${vname} = to_int_array(${cppEscapeStringLiteral(raw ?? '[]')});`);
+                    let strVal: string;
+                    if (Array.isArray(raw)) {
+                        try { strVal = JSON.stringify(raw); } catch { strVal = '[]'; }
+                    } else {
+                        strVal = String(raw ?? '[]');
+                    }
+                    decls.push(`vector<int> ${vname} = to_int_array(${cppEscapeStringLiteral(strVal)});`);
                     args.push(vname);
                 } else if (p.type === 'int_array_2d' || p.type === 'int_matrix') {
                     let strVal: string;

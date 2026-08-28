@@ -509,13 +509,37 @@ export function goGetFullParam(params: Param[], tc: any): string {
             }
             parts.push(`toByteArray2d(${goEscapeStringLiteral(strVal)})`);
         } else if (p.type === "list_node") {
-            parts.push(`addCycle(toListNode(${goEscapeStringLiteral(String(val ?? "[]"))}), ${tc.pos !== undefined ? tc.pos : -1})`);
+            let strVal: string;
+            if (Array.isArray(val)) {
+                try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+            } else {
+                strVal = String(val ?? "[]");
+            }
+            parts.push(`addCycle(toListNode(${goEscapeStringLiteral(strVal)}), ${tc.pos !== undefined ? tc.pos : -1})`);
         } else if (p.type === "list_node_array") {
-            parts.push(`toListNodeArray(${goEscapeStringLiteral(String(val ?? "[]"))})`);
+            let strVal: string;
+            if (Array.isArray(val)) {
+                try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+            } else {
+                strVal = String(val ?? "[]");
+            }
+            parts.push(`toListNodeArray(${goEscapeStringLiteral(strVal)})`);
         } else if (p.type === "tree_node") {
-            parts.push(`toTreeNode(${goEscapeStringLiteral(String(val ?? "[]"))})`);
+            let strVal: string;
+            if (Array.isArray(val)) {
+                try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+            } else {
+                strVal = String(val ?? "[]");
+            }
+            parts.push(`toTreeNode(${goEscapeStringLiteral(strVal)})`);
         } else if (p.type === "graph_node") {
-            parts.push(`toGraphNode(${goEscapeStringLiteral(String(val ?? "[]"))})`);
+            let strVal: string;
+            if (Array.isArray(val)) {
+                try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+            } else {
+                strVal = String(val ?? "[]");
+            }
+            parts.push(`toGraphNode(${goEscapeStringLiteral(strVal)})`);
         } else {
             parts.push(goEscapeStringLiteral(String(val ?? "")));
         }
@@ -623,7 +647,13 @@ export function generateGoRunner(
                     const val = tc[p.name];
                     const varName = `p${caseIndex}_${i}`;
                     if (p.type === 'graph_node') {
-                        decls.push(`${varName} := toGraphNode(${goEscapeStringLiteral(String(val ?? "[]"))})`);
+                        let strVal: string;
+                        if (Array.isArray(val)) {
+                            try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+                        } else {
+                            strVal = String(val ?? "[]");
+                        }
+                        decls.push(`${varName} := toGraphNode(${goEscapeStringLiteral(strVal)})`);
                         args.push(varName);
                     } else {
                         args.push(goGetFullParam([p], tc));
