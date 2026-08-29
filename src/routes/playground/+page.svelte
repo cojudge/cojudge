@@ -2753,6 +2753,8 @@ func main() {
     } | null = null;
     let langSearchQuery = '';
     let langSearchInputEl: HTMLInputElement | null = null;
+    let langPickerListEl: HTMLElement | null = null;
+    let langSelectedIndex = 0;
 
     $: filteredLanguages = CODE_LANGUAGE_OPTIONS.filter((opt) => {
         if (!langSearchQuery.trim()) return true;
@@ -2760,15 +2762,37 @@ func main() {
         return opt.label.toLowerCase().includes(q) || opt.value.toLowerCase().includes(q);
     });
 
+    $: if (filteredLanguages) {
+        if (filteredLanguages.length === 0) {
+            if (langSelectedIndex !== 0) langSelectedIndex = 0;
+        } else if (langSelectedIndex >= filteredLanguages.length) {
+            langSelectedIndex = filteredLanguages.length - 1;
+        } else if (langSelectedIndex < 0) {
+            langSelectedIndex = 0;
+        }
+    }
+
+    function scrollLangSelectedIntoView() {
+        tick().then(() => {
+            const el = langPickerListEl?.querySelector('.lang-picker-option.focused') as HTMLElement | null;
+            el?.scrollIntoView({ block: 'nearest' });
+        });
+    }
+
     function openLangPicker(btn: HTMLElement, wrapper: HTMLElement) {
         const pre = wrapper.querySelector('pre');
         const currentLang = pre ? getCodeBlockLanguage(pre) : (wrapper.dataset.language || '');
         const rect = btn.getBoundingClientRect();
         langSearchQuery = '';
+        const initialFiltered = CODE_LANGUAGE_OPTIONS;
+        const normalizedCurrent = normalizeCodeLanguage(currentLang);
+        const currentIdx = initialFiltered.findIndex((opt) => normalizeCodeLanguage(opt.value) === normalizedCurrent);
+        langSelectedIndex = currentIdx >= 0 ? currentIdx : 0;
         activeLangPicker = { wrapper, button: btn, currentLang, rect, historyBefore: captureWysiwygHistoryState() };
         wrapper.classList.add('lang-picker-active');
         setTimeout(() => {
             if (langSearchInputEl) langSearchInputEl.focus();
+            scrollLangSelectedIntoView();
         }, 20);
     }
 
@@ -2812,10 +2836,28 @@ func main() {
         if (e.key === 'Escape') {
             e.preventDefault();
             closeLangPicker();
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (filteredLanguages.length > 0) {
+                langSelectedIndex = (langSelectedIndex + 1) % filteredLanguages.length;
+                scrollLangSelectedIntoView();
+            } else if (langSearchQuery.trim()) {
+                // single custom option, keep at 0
+                langSelectedIndex = 0;
+            }
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (filteredLanguages.length > 0) {
+                langSelectedIndex = (langSelectedIndex - 1 + filteredLanguages.length) % filteredLanguages.length;
+                scrollLangSelectedIntoView();
+            } else if (langSearchQuery.trim()) {
+                langSelectedIndex = 0;
+            }
         } else if (e.key === 'Enter') {
             e.preventDefault();
             if (filteredLanguages.length > 0) {
-                selectCodeLanguage(filteredLanguages[0].value);
+                const idx = Math.min(Math.max(0, langSelectedIndex), filteredLanguages.length - 1);
+                selectCodeLanguage(filteredLanguages[idx].value);
             } else if (langSearchQuery.trim()) {
                 selectCodeLanguage(langSearchQuery.trim());
             }
@@ -6998,14 +7040,32 @@ func main() {
                                 bind:value={langSearchQuery}
                                 bind:this={langSearchInputEl}
                                 on:keydown={handleLangSearchKeyDown}
+                                on:input={(e) => {
+                                    const q = (e.target as HTMLInputElement).value;
+                                    if (!q.trim()) {
+                                        const normalized = normalizeCodeLanguage(activeLangPicker?.currentLang ?? '');
+                                        const fallback = CODE_LANGUAGE_OPTIONS.findIndex((opt) => normalizeCodeLanguage(opt.value) === normalized);
+                                        langSelectedIndex = fallback >= 0 ? fallback : 0;
+                                    } else {
+                                        langSelectedIndex = 0;
+                                    }
+                                    scrollLangSelectedIntoView();
+                                }}
+                                aria-autocomplete="list"
+                                aria-controls="lang-picker-list"
+                                aria-activedescendant={filteredLanguages[langSelectedIndex] ? `lang-option-${filteredLanguages[langSelectedIndex].value}` : undefined}
                             />
                         </div>
-                        <div class="lang-picker-list">
-                            {#each filteredLanguages as option}
+                        <div class="lang-picker-list" bind:this={langPickerListEl} id="lang-picker-list" role="listbox">
+                            {#each filteredLanguages as option, i}
                                 <button
                                     type="button"
-                                    class="lang-picker-option {normalizeCodeLanguage(option.value) === normalizeCodeLanguage(activeLangPicker.currentLang) ? 'selected' : ''}"
+                                    id={`lang-option-${option.value}`}
+                                    role="option"
+                                    aria-selected={i === langSelectedIndex}
+                                    class="lang-picker-option {normalizeCodeLanguage(option.value) === normalizeCodeLanguage(activeLangPicker.currentLang) ? 'selected' : ''} {i === langSelectedIndex ? 'focused' : ''}"
                                     on:click={() => selectCodeLanguage(option.value)}
+                                    on:mouseenter={() => langSelectedIndex = i}
                                 >
                                     <span class="lang-option-label">{option.label}</span>
                                     {#if normalizeCodeLanguage(option.value) === normalizeCodeLanguage(activeLangPicker.currentLang)}
@@ -7018,8 +7078,11 @@ func main() {
                             {#if filteredLanguages.length === 0 && langSearchQuery.trim()}
                                 <button
                                     type="button"
-                                    class="lang-picker-option custom-lang"
+                                    role="option"
+                                    aria-selected="true"
+                                    class="lang-picker-option custom-lang {langSelectedIndex === 0 ? 'focused' : ''}"
                                     on:click={() => selectCodeLanguage(langSearchQuery.trim())}
+                                    on:mouseenter={() => langSelectedIndex = 0}
                                 >
                                     <span class="lang-option-label">Use "{langSearchQuery.trim()}"</span>
                                 </button>
