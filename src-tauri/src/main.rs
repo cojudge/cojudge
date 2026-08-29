@@ -93,6 +93,9 @@ fn create_window(app: &tauri::AppHandle, url: tauri::Url) -> tauri::Result<()> {
         .inner_size(1400.0, 900.0)
         .min_inner_size(300.0, 300.0)
         .center()
+        // Required for HTML5 drag-and-drop (Explorer file upload highlight).
+        // Tauri's native handler otherwise swallows OS file drags.
+        .disable_drag_drop_handler()
         // The macOS polyfill also treats trackpad pinch events as page zoom.
         // Whiteboard provides its own canvas zoom handling.
         .zoom_hotkeys_enabled(!cfg!(target_os = "macos"))
@@ -166,6 +169,13 @@ fn open_new_window(app: &tauri::AppHandle) -> Result<(), String> {
 #[tauri::command]
 fn new_window(app: tauri::AppHandle) -> Result<(), String> {
     open_new_window(&app)
+}
+
+#[tauri::command]
+fn read_text_file(path: String) -> Result<String, String> {
+    std::fs::read(&path)
+        .map(|bytes| String::from_utf8_lossy(&bytes).to_string())
+        .map_err(|e| e.to_string())
 }
 
 struct GoogleOauthGuard<'a>(&'a AtomicBool);
@@ -797,7 +807,8 @@ fn main() {
         .manage(Backend::default())
         .invoke_handler(tauri::generate_handler![
             new_window,
-            google_oauth_access_token
+            google_oauth_access_token,
+            read_text_file
         ])
         .on_menu_event(|app, event| {
             if event.id().0.as_str() == NEW_WINDOW_MENU_ID {

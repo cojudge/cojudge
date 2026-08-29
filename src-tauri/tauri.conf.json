@@ -16,7 +16,7 @@
 				{
 					"identifier": "default",
 					"windows": ["main-*"],
-					"permissions": ["allow-new-window", "allow-google-oauth-access-token", "opener:default", "core:webview:allow-set-webview-zoom"],
+					"permissions": ["allow-new-window", "allow-google-oauth-access-token", "allow-read-text-file", "opener:default", "core:webview:allow-set-webview-zoom"],
 					"remote": {
 						"urls": ["http://127.0.0.1:5173/*", "http://cojudge.localhost:5376/*"]
 					}
