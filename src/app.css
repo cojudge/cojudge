@@ -552,8 +552,13 @@
   transition: background-color 0.1s ease;
 }
 
-.lang-picker-option:hover {
+.lang-picker-option:hover,
+.lang-picker-option.focused {
   background-color: var(--color-surface-hover);
+}
+
+.lang-picker-option.focused {
+  outline: none;
 }
 
 .lang-check-icon {
