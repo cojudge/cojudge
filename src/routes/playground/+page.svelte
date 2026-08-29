@@ -8,7 +8,7 @@
     import Tooltip from '$lib/components/Tooltip.svelte';
     import WhiteboardIcon from '$lib/components/WhiteboardIcon.svelte';
     import Whiteboard from '$lib/components/Whiteboard.svelte';
-    import { showAlert, showConfirm } from '$lib/dialogs';
+    import { showAlert, showChoice, showConfirm } from '$lib/dialogs';
     import { consumeForkTransfer } from '$lib/forkTransfer';
     import { ensureAuthenticated, initFirebase } from '$lib/firebase';
     import { isDesktopRuntime } from '$lib/firebaseSettings';
@@ -1012,8 +1012,13 @@ func main() {
                 });
                 const result = await response.json();
                 if (result.success) {
-                    void revealExportedFile(result.filePath);
-                    await showAlert(`Saved to ${result.filePath}`, { title: successTitle });
+                    const openFolder = await showChoice(`Saved to ${result.filePath}`, {
+                        title: successTitle,
+                        confirmLabel: 'Open Containing Folder',
+                        cancelLabel: 'Close',
+                        tone: 'success'
+                    });
+                    if (openFolder) await revealExportedFile(result.filePath);
                 } else {
                     await showAlert(result.error || 'Failed to save file', { title: 'Download failed' });
                 }

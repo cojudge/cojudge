@@ -4,6 +4,23 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 
+async function uniqueFilePath(targetDir: string, filename: string): Promise<string> {
+    const ext = path.extname(filename);
+    const stem = path.basename(filename, ext);
+    let n = 0;
+    while (n < 10000) {
+        const name = n === 0 ? filename : `${stem}-${n}${ext}`;
+        const filePath = path.join(targetDir, name);
+        try {
+            await fs.access(filePath);
+            n += 1;
+        } catch {
+            return filePath;
+        }
+    }
+    throw new Error('Could not allocate a unique filename');
+}
+
 export const POST: RequestHandler = async ({ request }) => {
     try {
         const { base64Data, textData, filename } = await request.json();
@@ -26,7 +43,7 @@ export const POST: RequestHandler = async ({ request }) => {
                 .replace(/[<>:"/\\|?*\x00-\x1F]/g, '_')
                 .trim()
                 .slice(0, 200) || 'export.json';
-        const filePath = path.join(targetDir, safeFilename);
+        const filePath = await uniqueFilePath(targetDir, safeFilename);
 
         if (textData !== undefined) {
             await fs.writeFile(filePath, textData, 'utf8');
