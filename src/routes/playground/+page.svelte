@@ -958,6 +958,45 @@ func main() {
         return `${base}${ext}`;
     }
 
+    function getLanguageFromExtension(fileName: string): ProgrammingLanguage {
+        const dot = fileName.lastIndexOf('.');
+        if (dot === -1 || dot === fileName.length - 1) return 'plaintext';
+        const ext = fileName.slice(dot).toLowerCase();
+        switch (ext) {
+            case '.java':
+                return 'java';
+            case '.py':
+                return 'python';
+            case '.cpp':
+            case '.cc':
+            case '.cxx':
+            case '.c':
+            case '.h':
+            case '.hpp':
+                return 'cpp';
+            case '.cs':
+                return 'csharp';
+            case '.rs':
+                return 'rust';
+            case '.go':
+                return 'go';
+            case '.ts':
+            case '.js':
+            case '.jsx':
+            case '.tsx':
+            case '.mjs':
+            case '.cjs':
+                return 'typescript';
+            case '.md':
+            case '.markdown':
+                return 'markdown';
+            case '.txt':
+                return 'plaintext';
+            default:
+                return 'plaintext';
+        }
+    }
+
     async function saveTextDownload(
         textData: string,
         filename: string,
@@ -1574,6 +1613,300 @@ func main() {
         else activateTab(node.fileId);
     }
 
+    function resolveExplorerExternalParent(clientX: number, clientY: number): string | null {
+        const target = resolveExplorerDropTarget(clientX, clientY);
+        if (target.kind === 'folder' && target.id) {
+            return target.id.endsWith('__empty') ? target.id.slice(0, -'__empty'.length) : target.id;
+        }
+        if (target.id && target.id.endsWith('__empty')) return target.id.slice(0, -'__empty'.length);
+        if (target.kind === 'file' && target.id) return getParentId(target.id);
+        return null;
+    }
+
+    function isOverExplorerSidebar(clientX: number, clientY: number, target?: EventTarget | null): boolean {
+        if (target instanceof Element && target.closest('.sidebar')) return true;
+        const el = document.elementFromPoint(clientX, clientY);
+        return !!el?.closest('.sidebar');
+    }
+
+    function updateExternalDropHighlight(clientX: number, clientY: number) {
+        const target = resolveExplorerDropTarget(clientX, clientY);
+        if (target.id && target.id.endsWith('__empty')) {
+            setExplorerDropHighlight(target.id.slice(0, -'__empty'.length), 'folder');
+            return;
+        }
+        if (target.kind === 'file' && target.id) {
+            const parent = getParentId(target.id);
+            if (parent && getFiles().some((f) => f.fileId === parent && isFolderEntry(f))) {
+                setExplorerDropHighlight(parent, 'folder');
+                return;
+            }
+            setExplorerDropHighlight(null, 'root');
+            return;
+        }
+        setExplorerDropHighlight(target.id, target.kind);
+    }
+
+    function handleExplorerDragOver(e: DragEvent) {
+        if (activePanel !== 'explorer') return;
+        e.preventDefault();
+        if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy';
+        updateExternalDropHighlight(e.clientX, e.clientY);
+    }
+
+    function handleExplorerDragEnter(e: DragEvent) {
+        handleExplorerDragOver(e);
+    }
+
+    function handleExplorerDragLeave(e: DragEvent) {
+        if (activePanel !== 'explorer') return;
+        const related = e.relatedTarget as HTMLElement | null;
+        const sidebarEl = document.querySelector('.sidebar');
+        if (related && sidebarEl?.contains(related)) return;
+        const rect = sidebarEl?.getBoundingClientRect();
+        if (rect && e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom) {
+            return;
+        }
+        clearExplorerDropHighlight();
+    }
+
+    async function handleExplorerDrop(e: DragEvent) {
+        if (activePanel !== 'explorer') return;
+        e.preventDefault();
+        e.stopPropagation();
+        clearExplorerDropHighlight();
+        const dt = e.dataTransfer;
+        if (!dt) return;
+        // Try to collect files via DataTransfer.files first; fallback to items for directory support
+        let filesArray: File[] = Array.from(dt.files || []);
+        // If filesArray is empty but items exist (e.g. directory drag via webkitGetAsEntry), try to traverse
+        if (filesArray.length === 0 && dt.items) {
+            const items = Array.from(dt.items);
+            const entryPromises: Promise<File | null>[] = items.map(async (item) => {
+                const entry: any = (item as any).webkitGetAsEntry?.() || (item as any).getAsEntry?.();
+                if (entry?.isFile) {
+                    return await new Promise<File | null>((resolve) => entry.file((f: File) => resolve(f), () => resolve(null)));
+                }
+                return null;
+            });
+            const resolved = await Promise.all(entryPromises);
+            filesArray = resolved.filter((f): f is File => !!f);
+        }
+        if (filesArray.length === 0) return;
+
+        let targetParentId: string | null = resolveExplorerExternalParent(e.clientX, e.clientY);
+        if (targetParentId) {
+            const folder = getFiles().find((f) => f.fileId === targetParentId && isFolderEntry(f));
+            if (!folder) targetParentId = null;
+        }
+
+        const now = Date.now();
+        const fkey = fileKey();
+        const MAX_UPLOAD_BYTES = 2 * 1024 * 1024;
+        const BINARY_UPLOAD_EXT = /\.(png|jpe?g|gif|webp|bmp|ico|tiff?|mp3|wav|flac|aac|ogg|m4a|wma|mp4|mov|avi|mkv|webm|zip|rar|7z|gz|tar|pdf|exe|dll|dmg|wasm|woff2?|ttf|otf|eot|psd|ai|sketch)$/i;
+
+        type PendingFile = { name: string; language: ProgrammingLanguage; content: string };
+        const pending: PendingFile[] = [];
+        const exportNodes: ExportNode[] = [];
+        const skippedBinary: string[] = [];
+        const skippedLarge: string[] = [];
+
+        for (const file of filesArray) {
+            const originalName = file.name || 'Untitled';
+            if (!originalName) continue;
+            const mime = (file.type || '').toLowerCase();
+            if (
+                BINARY_UPLOAD_EXT.test(originalName) ||
+                mime.startsWith('image/') ||
+                mime.startsWith('audio/') ||
+                mime.startsWith('video/')
+            ) {
+                skippedBinary.push(originalName);
+                continue;
+            }
+            if (typeof file.size === 'number' && file.size > MAX_UPLOAD_BYTES) {
+                skippedLarge.push(originalName);
+                continue;
+            }
+            let content = '';
+            try {
+                if (typeof file.text === 'function') {
+                    content = await file.text();
+                } else {
+                    content = await new Promise<string>((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = () => resolve(String(reader.result || ''));
+                        reader.onerror = () => reject(reader.error);
+                        reader.readAsText(file);
+                    });
+                }
+            } catch {
+                content = '';
+            }
+            // If it's a JSON export file, try to import as folder/file tree
+            const isJsonFile = originalName.toLowerCase().endsWith('.json');
+            if (isJsonFile && content.trim().startsWith('{')) {
+                try {
+                    const parsed = JSON.parse(content);
+                    if (isExportNode(parsed)) {
+                        exportNodes.push(parsed);
+                        continue;
+                    }
+                } catch {
+                    // not a valid export JSON, fall through to plain file
+                }
+            }
+            const language = getLanguageFromExtension(originalName);
+            const sanitized = sanitizeFileName(originalName);
+            pending.push({ name: sanitized, language, content });
+        }
+
+        const skippedCount = skippedBinary.length + skippedLarge.length;
+        if (skippedCount > 0) {
+            const names = [...skippedBinary, ...skippedLarge].slice(0, 5);
+            const extra = skippedCount > names.length ? ` and ${skippedCount - names.length} more` : '';
+            const reason = skippedBinary.length && !skippedLarge.length
+                ? 'Image, audio, and other binary files cannot be added to the Explorer.'
+                : skippedLarge.length && !skippedBinary.length
+                    ? 'Files larger than 2 MB cannot be added to the Explorer.'
+                    : 'Image, audio, binary, and files larger than 2 MB cannot be added to the Explorer.';
+            void showAlert(`${reason}\n\nSkipped: ${names.join(', ')}${extra}`, { title: 'Some files were skipped' });
+        }
+
+        if (pending.length === 0 && exportNodes.length === 0) return;
+
+        // Prepare sibling names for plain files (and for top-level import names)
+        const existingFiles = getFiles();
+        const siblingNames = new Set(
+            existingFiles.filter((f) => (f.parentId ?? null) === targetParentId).map((f) => f.fileName)
+        );
+
+        // Deduplicate top-level import names against siblingNames
+        for (const node of exportNodes) {
+            const rawName = (node.name || (node.type === 'folder' ? 'Folder' : 'Solution')).trim() || (node.type === 'folder' ? 'Folder' : 'Solution');
+            const sanitized = sanitizeFileName(rawName);
+            if (siblingNames.has(sanitized)) {
+                let unique = sanitized;
+                let n = 1;
+                const base = sanitized;
+                while (siblingNames.has(unique)) {
+                    unique = `${base}-${n}`;
+                    n++;
+                }
+                node.name = unique;
+                siblingNames.add(unique);
+            } else {
+                siblingNames.add(sanitized);
+                node.name = sanitized;
+            }
+        }
+
+        const newEntries: FileEntry[] = [];
+        const newTabs: TabMeta[] = [];
+
+        for (const { name, language, content } of pending) {
+            let finalName = name;
+            if (siblingNames.has(finalName)) {
+                const dot = finalName.lastIndexOf('.');
+                const base = dot > 0 ? finalName.slice(0, dot) : finalName;
+                const ext = dot > 0 ? finalName.slice(dot) : '';
+                let n = 1;
+                while (siblingNames.has(`${base}-${n}${ext}`)) n++;
+                finalName = `${base}-${n}${ext}`;
+            }
+            siblingNames.add(finalName);
+            const fileId = uuidv4();
+            newEntries.push({
+                fileId,
+                fileName: finalName,
+                language,
+                lastLanguage: language,
+                content,
+                viewState: null,
+                output: '',
+                logs: '',
+                isActive: false,
+                order: 0,
+                isOpen: false,
+                lastUpdated: now,
+                parentId: targetParentId
+            } as FileEntry);
+            newTabs.push({ fileId, fileName: finalName, isOpen: false, lastUpdated: now });
+        }
+
+        // Import JSON export nodes together with plain files in one atomic store update
+        const createdExportFileIds: string[] = [];
+        const createdExportFolderIds: string[] = [];
+        const importIdMap = new Map<string, string>();
+        let hadExportImport = false;
+        fileStore.update((s) => {
+            let list = JSON.parse(s[fkey] || '[]') as FileEntry[];
+            const before = new Set(list.map((f) => f.fileId));
+            const usedIds = new Set(list.map((f) => f.fileId));
+            const idMap = new Map<string, string>();
+            // First import export nodes
+            for (const node of exportNodes) {
+                importExportNode(node, targetParentId, list, usedIds, idMap);
+            }
+            // Record idMap for later rewriting and collect created ids
+            if (idMap.size > 0) {
+                for (const [k, v] of idMap.entries()) importIdMap.set(k, v);
+                for (const f of list) {
+                    if (before.has(f.fileId)) continue;
+                    if (typeof f.content === 'string' && f.content.includes('fileId=')) {
+                        f.content = rewritePlaygroundFileIdsInContent(f.content, idMap);
+                    }
+                }
+            }
+            for (const f of list) {
+                if (before.has(f.fileId)) continue;
+                if (isFolderEntry(f)) {
+                    if (!createdExportFolderIds.includes(f.fileId)) createdExportFolderIds.push(f.fileId);
+                } else if (!isSpecialTabType(f.type)) {
+                    if (!createdExportFileIds.includes(f.fileId)) createdExportFileIds.push(f.fileId);
+                }
+            }
+            // Then add plain file entries
+            for (const entry of newEntries) {
+                entry.order = nextOrder(list);
+                // Ensure plain entries don't collide with just-imported ids
+                if (usedIds.has(entry.fileId)) {
+                    let nid = uuidv4();
+                    while (usedIds.has(nid)) nid = uuidv4();
+                    entry.fileId = nid;
+                }
+                usedIds.add(entry.fileId);
+                list.push(entry);
+            }
+            hadExportImport = exportNodes.length > 0;
+            return { ...s, [fkey]: JSON.stringify(list) };
+        });
+
+        // Refresh tabs for imported export nodes and plain files
+        const filesAfter = getFiles();
+        const existingIds = new Set(tabs.map((t) => t.fileId));
+        const additions: TabMeta[] = [...newTabs];
+        const seen = new Set<string>(newTabs.map((t) => t.fileId));
+        for (const fid of createdExportFileIds) {
+            if (existingIds.has(fid) || seen.has(fid)) continue;
+            const e = filesAfter.find((f) => f.fileId === fid);
+            if (!e) continue;
+            seen.add(fid);
+            additions.push({ fileId: fid, fileName: e.fileName, isOpen: false, lastUpdated: e.lastUpdated });
+        }
+        if (additions.length) tabs = [...tabs, ...additions];
+
+        // Expand target folder and any newly imported folders
+        if (targetParentId) {
+            collapsedFolders = { ...collapsedFolders, [targetParentId]: false };
+        }
+        if (hadExportImport && createdExportFolderIds.length > 0) {
+            const next = { ...collapsedFolders };
+            for (const fid of createdExportFolderIds) next[fid] = false;
+            collapsedFolders = next;
+        }
+    }
+
     function closeTabContextMenu() {
         tabContextMenu = null;
     }
@@ -1685,6 +2018,37 @@ func main() {
         window.removeEventListener('pointerup', onExplorerPointerUp);
         window.removeEventListener('pointercancel', onExplorerPointerUp);
         document.body.classList.remove('explorer-dragging');
+    });
+
+    onMount(() => {
+        if (!browser) return;
+        const onWindowDragOver = (e: DragEvent) => {
+            if (activePanel !== 'explorer') return;
+            if (!isOverExplorerSidebar(e.clientX, e.clientY, e.target)) {
+                clearExplorerDropHighlight();
+                return;
+            }
+            e.preventDefault();
+            if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy';
+            updateExternalDropHighlight(e.clientX, e.clientY);
+        };
+        const onWindowDrop = (e: DragEvent) => {
+            if (activePanel !== 'explorer') return;
+            if (!isOverExplorerSidebar(e.clientX, e.clientY, e.target)) return;
+            e.preventDefault();
+            void handleExplorerDrop(e);
+        };
+        const onWindowDragLeave = (e: DragEvent) => {
+            if (e.relatedTarget == null) clearExplorerDropHighlight();
+        };
+        window.addEventListener('dragover', onWindowDragOver);
+        window.addEventListener('drop', onWindowDrop);
+        window.addEventListener('dragleave', onWindowDragLeave);
+        return () => {
+            window.removeEventListener('dragover', onWindowDragOver);
+            window.removeEventListener('drop', onWindowDrop);
+            window.removeEventListener('dragleave', onWindowDragLeave);
+        };
     });
 
     let showSyncSuccess = false;
@@ -6205,7 +6569,13 @@ func main() {
 
     <!-- Left Sidebar -->
     {#if isSidebarOpen}
-    <div class="sidebar">
+    <div
+        class="sidebar {explorerDragOverRoot ? 'drag-over-root' : ''}"
+        on:dragenter|preventDefault={handleExplorerDragEnter}
+        on:dragover|preventDefault={handleExplorerDragOver}
+        on:dragleave={handleExplorerDragLeave}
+        on:drop|preventDefault={handleExplorerDrop}
+    >
         {#if activePanel === 'explorer'}
         <div class="sidebar-header">
             <span>EXPLORER</span>
@@ -6270,6 +6640,8 @@ func main() {
                         class="file-item empty-folder-label"
                         style="padding-left: {8 + t.depth * 14}px"
                         aria-hidden="true"
+                        data-explorer-id={t.fileId}
+                        data-explorer-kind="folder"
                     >
                         <span class="file-name">(empty)</span>
                     </div>
@@ -7539,6 +7911,10 @@ func main() {
         box-shadow: inset 0 0 0 1px var(--color-highlight);
     }
 
+    .sidebar.drag-over-root {
+        box-shadow: inset 0 0 0 1px var(--color-highlight);
+    }
+
     .file-item {
         display: flex;
         align-items: center;
@@ -7559,7 +7935,6 @@ func main() {
         cursor: default;
         opacity: 0.5;
         font-style: italic;
-        pointer-events: none;
     }
 
     .file-item.empty-folder-label:hover {
