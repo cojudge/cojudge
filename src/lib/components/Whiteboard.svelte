@@ -2098,9 +2098,15 @@
 								fill={resolvedStroke(element.stroke, isDark)}
 								font-size={element.fontSize}
 								font-family="'Comic Sans MS', 'Bradley Hand', cursive"
+								xml:space="preserve"
+								style="white-space: pre;"
 							>
 								{#each (element.text ?? '').split('\n') as line, index}
-									<tspan x={element.x} y={element.y + element.fontSize + index * element.fontSize * 1.25}
+									<tspan
+										x={element.x}
+										y={element.y + element.fontSize + index * element.fontSize * 1.25}
+										xml:space="preserve"
+										style="white-space: pre;"
 										>{line || ' '}</tspan
 									>
 								{/each}
