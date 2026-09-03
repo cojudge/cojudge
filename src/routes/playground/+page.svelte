@@ -5131,10 +5131,28 @@ func main() {
 
         // Code blocks are plain-text editing surfaces. Handling this ourselves
         // avoids rich clipboard HTML and keeps highlighting in one undo step.
+        // `execCommand('insertText')` with a multiline string splits the <pre>
+        // into multiple <pre> elements (one per line) inside the same wrapper,
+        // which then round-trips to multiple fenced blocks (see reproduction).
+        // Insert via Range as a single TextNode so newlines stay inside one <pre>.
         if (getPreFromSelection()) {
             event.preventDefault();
             runWysiwygHistoryTransaction(() => {
-                document.execCommand('insertText', false, pasted);
+                const selection = window.getSelection();
+                if (!selection || selection.rangeCount === 0) return;
+                const range = selection.getRangeAt(0);
+                if (!range.collapsed) range.deleteContents();
+                const normalized = pasted.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+                if (normalized.length === 0) {
+                    handleWysiwygInput();
+                    return;
+                }
+                const textNode = document.createTextNode(normalized);
+                range.insertNode(textNode);
+                range.setStartAfter(textNode);
+                range.collapse(true);
+                selection.removeAllRanges();
+                selection.addRange(range);
                 handleWysiwygInput();
             }, historyBefore, 'insertFromPaste');
             return;
