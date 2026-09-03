@@ -25,6 +25,7 @@
     import { renderMarkdown } from '$lib/utils/markdown';
     import QRCode from 'qrcode';
     import { onMount, tick } from 'svelte';
+    import { get } from 'svelte/store';
     import { v4 as uuidv4 } from 'uuid';
     import gameResultsStore, { computeGameResult } from '$lib/stores/gameResultsStore';
 
@@ -77,7 +78,8 @@
 
     function getFiles(): FileEntry[] {
         try {
-            return JSON.parse($fileStore[fileKey()] || '[]') as FileEntry[];
+            const s = get(fileStore);
+            return JSON.parse(s[fileKey()] || '[]') as FileEntry[];
         } catch (err) {
             return [];
         }
