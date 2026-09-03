@@ -5685,6 +5685,22 @@ func main() {
             return;
         }
         if (key === 'b' && !e.shiftKey && !e.altKey) {
+            const selection = window.getSelection();
+            const hasTextSelection =
+                !!selection &&
+                !selection.isCollapsed &&
+                selection.rangeCount > 0 &&
+                !!wysiwygEl &&
+                !!selection.anchorNode &&
+                !!selection.focusNode &&
+                wysiwygEl.contains(selection.anchorNode) &&
+                wysiwygEl.contains(selection.focusNode) &&
+                selection.toString().replace(/\u200B/g, '').trim().length > 0;
+            if (!hasTextSelection) {
+                // No text selected inside the WYSIWYG editor — let the global
+                // Cmd/Ctrl+B handler toggle the sidebar instead of applying bold.
+                return;
+            }
             e.preventDefault();
             applyWysiwygCommand('bold');
         } else if (key === 'i' && !e.shiftKey && !e.altKey) {
