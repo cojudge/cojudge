@@ -18,7 +18,7 @@
         refreshCloudLocalState,
         restartCloudSync
     } from '$lib/cloudSync';
-    import { activeDialog } from '$lib/dialogs';
+    import { activeDialog, showConfirm } from '$lib/dialogs';
     import { collectProgressData, writeProgressStorageItem, clearProgressStorage } from '$lib/progressBackup';
 
     import { applyProgressData } from '$lib/progressBackupClient';
@@ -733,6 +733,32 @@
             showImportNotice(`Failed to clear progress: ${err?.message || String(err)}`, true);
         }
     }
+
+    async function handleSolvedCheckboxClick(event: MouseEvent, problemId: string) {
+        const isSolved = checkMap[problemId] === true;
+        if (isSolved) {
+            event.preventDefault();
+            const confirmed = await showConfirm(
+                'Do you want to mark this problem as unsolved? You will need to submit a correct solution again to mark it as solved.',
+                {
+                    title: 'Mark as unsolved?',
+                    confirmLabel: 'Mark unsolved',
+                    cancelLabel: 'Cancel',
+                    tone: 'danger'
+                }
+            );
+            if (confirmed) {
+                userStore.update((prev) => {
+                    const next = { ...prev };
+                    delete next[problemId];
+                    return next;
+                });
+            }
+        } else {
+            // Prevent manually marking as solved; only a successful submit can mark solved
+            event.preventDefault();
+        }
+    }
 </script>
 
 <svelte:head>
@@ -1276,17 +1302,10 @@
                                                 checked={checkMap[
                                                     problem.id
                                                 ] === true}
-                                                disabled
-                                                onchange={(e) => {
-                                                    userStore.update(
-                                                        (prev) => ({
-                                                            ...prev,
-                                                            [problem.id]: (
-                                                                e.target as HTMLInputElement
-                                                            ).checked,
-                                                        }),
-                                                    );
-                                                }}
+                                                disabled={checkMap[problem.id] !== true}
+                                                title={checkMap[problem.id] === true ? 'Mark as unsolved' : 'Submit a correct solution to mark as solved'}
+                                                aria-label={checkMap[problem.id] === true ? `Mark ${problem.title} as unsolved` : `${problem.title} is unsolved`}
+                                                onclick={(e) => handleSolvedCheckboxClick(e, problem.id)}
                                             />
                                         </td>
                                         <td>
@@ -2363,6 +2382,15 @@
     .status-cell {
         width: 1%;
         white-space: nowrap;
+    }
+
+    .status-cell input[type="checkbox"] {
+        cursor: pointer;
+    }
+
+    .status-cell input[type="checkbox"]:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
     }
 
     .external-link {
