@@ -3748,7 +3748,11 @@ func main() {
         let line: HTMLElement | null = parent;
         while (line && line.parentElement !== wysiwygEl) line = line.parentElement;
         if (!line || line.parentElement !== wysiwygEl || !/^(P|DIV)$/.test(line.tagName)) return;
-        if (line.childNodes.length !== 1 || line.firstChild?.nodeType !== Node.TEXT_NODE || line.textContent !== '---') return;
+        // Only the visible text must be the fence: ignore inline formatting
+        // wrappers (e.g. <strong>---</strong> when bold is still active after a
+        // bold line). Never trigger inside inline code.
+        if (line.querySelector('pre, code')) return;
+        if ((line.textContent || '').replace(/\u200B/g, '') !== '---') return;
 
         insertWysiwygHorizontalRule(line);
     }
@@ -3815,7 +3819,11 @@ func main() {
         let line: HTMLElement | null = parent;
         while (line && line.parentElement !== wysiwygEl) line = line.parentElement;
         if (!line || line.parentElement !== wysiwygEl || !/^(P|DIV)$/.test(line.tagName)) return;
-        if (line.childNodes.length !== 1 || line.firstChild?.nodeType !== Node.TEXT_NODE || line.textContent !== '```') return;
+        // Only the visible text must be the fence: ignore inline formatting
+        // wrappers (e.g. <strong>```</strong> when bold is still active after a
+        // bold line). Never trigger inside inline code.
+        if (line.querySelector('pre, code')) return;
+        if ((line.textContent || '').replace(/\u200B/g, '') !== '```') return;
 
         insertWysiwygCodeBlock(line);
     }
@@ -3840,7 +3848,7 @@ func main() {
         }
 
         const insertedPre = Array.from(wysiwygEl.querySelectorAll('pre')).find(
-            (pre) => (pre.textContent || '') === '```'
+            (pre) => (pre.textContent || '').replace(/\u200B/g, '') === '```'
         );
         if (!insertedPre) return false;
 
