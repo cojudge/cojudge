@@ -219,10 +219,21 @@ export function playgroundFileHref(fileId: string): string {
 export const FILE_MENTION_CLASS = 'md-file-mention';
 export const FILE_MENTION_LABEL_CLASS = 'md-file-mention-label';
 
+export type CodeBlockControls = {
+    /** Show the collapse/expand toggle. Defaults to true. */
+    collapse?: boolean;
+    /** Show the copy button. Defaults to true. */
+    copy?: boolean;
+    /** Show the delete button. Defaults to true. */
+    delete?: boolean;
+};
+
 export type MarkdownRenderOptions = {
     imageThumbnails?: boolean;
     /** Resolve a playground fileId to a language so mentions can show the right icon. */
     resolveFileLanguage?: (fileId: string) => string | null | undefined;
+    /** Control which buttons appear on rendered code blocks. Defaults to all visible. */
+    codeBlockControls?: CodeBlockControls;
 };
 
 export function fileMentionHtml(href: string, text: string, language?: string | null): string {
@@ -714,29 +725,40 @@ export function getMarkdownRenderer(options?: MarkdownRenderOptions) {
         const highlightedText = highlightCodeHtml(text, lang);
         const languageClass = lang ? ` class="language-${escapeHtmlAttr(lang)}"` : '';
 
-        const langLabel = lang ? `<span class="code-block-lang-label" style="display:none;">${escapeHtmlText(lang)}</span>` : '';
+        const controls = options?.codeBlockControls;
+        const showCollapse = controls?.collapse !== false;
+        const showCopy = controls?.copy !== false;
+        const showDelete = controls?.delete !== false;
 
-        return `<div class="code-block-wrapper" data-code-hash="${simpleHash(text)}">
-            <div class="code-block-actions">
-                ${langLabel}
-                <button class="collapse-code-button" title="Collapse code" aria-label="Collapse code">
+        // The lang label doubles as the collapsed-state placeholder, so it is
+        // only needed when the collapse toggle is present.
+        const langLabel = lang && showCollapse ? `<span class="code-block-lang-label" style="display:none;">${escapeHtmlText(lang)}</span>` : '';
+
+        const collapseButton = showCollapse ? `<button class="collapse-code-button" title="Collapse code" aria-label="Collapse code">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <polyline points="18 15 12 9 6 15"></polyline>
                     </svg>
-                </button>
-                <button class="copy-code-button" title="Copy code" aria-label="Copy code">
+                </button>` : '';
+        const copyButton = showCopy ? `<button class="copy-code-button" title="Copy code" aria-label="Copy code">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                     </svg>
-                </button>
-                <div class="code-action-divider"></div>
-                <button class="delete-code-button" title="Delete code block" aria-label="Delete code block">
+                </button>` : '';
+        const deleteButton = showDelete ? `<button class="delete-code-button" title="Delete code block" aria-label="Delete code block">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <polyline points="3 6 5 6 21 6"></polyline>
                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                     </svg>
-                </button>
+                </button>` : '';
+        const visibleButtons = [collapseButton, copyButton].filter(Boolean).join('');
+        const divider = visibleButtons && deleteButton ? '<div class="code-action-divider"></div>' : '';
+        const actions = `${visibleButtons}${divider}${deleteButton}`;
+
+        return `<div class="code-block-wrapper" data-code-hash="${simpleHash(text)}">
+            <div class="code-block-actions">
+                ${langLabel}
+                ${actions}
             </div>
             <pre><code${languageClass}>${highlightedText}</code></pre>
         </div>`;
