@@ -1014,8 +1014,9 @@
             <a href={data.problem.link} target="_blank" rel="noopener noreferrer" class="external-link">↗</a>
             {#if viewMode === 'solution'}
                 <!-- Solution content from problems/[slug]/solution.md -->
+                <!-- Reference solution code blocks keep copy only (no collapse/delete) -->
                 <div class="markdown-body">
-                    {@html renderMarkdown(data.problem.solution)}
+                    {@html renderMarkdown(data.problem.solution, { codeBlockControls: { collapse: false, delete: false } })}
                 </div>
             {:else}
                 <!-- Statement content is sourced from problems/[slug]/statement.md (attached on server as problem.statement) -->
