@@ -596,6 +596,15 @@
         stopDebugPolling();
     }
 
+    function isDebugActionAvailable(action: string): boolean {
+        if (!debugJobId || !debugState) return false;
+        if (isDebugRunning) return false;
+        if (action === 'stop') {
+            return debugState.status === 'paused' || debugState.status === 'running';
+        }
+        return debugState.status === 'paused';
+    }
+
     onDestroy(stopDebugPolling);
 
     onMount(() => {
@@ -607,6 +616,25 @@
             if ((e.ctrlKey || e.metaKey) && (e.key === "j" || e.key === "J")) {
                 e.preventDefault();
                 togglePanelVisibility();
+            }
+            // Generic debugging shortcuts (VS Code conventions):
+            // F10 = Step Over, F5 = Continue, Shift+F5 = Stop
+            if (!e.ctrlKey && !e.metaKey && !e.altKey) {
+                if (e.key === 'F10') {
+                    if (!isDebugActionAvailable('step')) return;
+                    e.preventDefault();
+                    debugAction('step');
+                } else if (e.key === 'F5') {
+                    if (e.shiftKey) {
+                        if (!isDebugActionAvailable('stop')) return;
+                        e.preventDefault();
+                        debugAction('stop');
+                    } else {
+                        if (!isDebugActionAvailable('continue')) return;
+                        e.preventDefault();
+                        debugAction('continue');
+                    }
+                }
             }
         };
         window.addEventListener("keydown", keyHandler);
@@ -673,15 +701,21 @@
                     </button>
                     {#if debugJobId && (debugState.status === 'paused' || debugState.status === 'running')}
                         <div class="debug-actions">
-                            <button class="btn btn-debug-action" on:click={() => debugAction('step')} disabled={isDebugRunning}>
-                                Step Over
-                            </button>
-                            <button class="btn btn-debug-action" on:click={() => debugAction('continue')} disabled={isDebugRunning}>
-                                Continue
-                            </button>
-                            <button class="btn btn-debug-action" on:click={() => debugAction('stop')} disabled={isDebugRunning}>
-                                Stop
-                            </button>
+                            <Tooltip text="Step Over (F10)">
+                                <button class="btn btn-debug-action" on:click={() => debugAction('step')} disabled={isDebugRunning}>
+                                    Step Over
+                                </button>
+                            </Tooltip>
+                            <Tooltip text="Continue (F5)">
+                                <button class="btn btn-debug-action" on:click={() => debugAction('continue')} disabled={isDebugRunning}>
+                                    Continue
+                                </button>
+                            </Tooltip>
+                            <Tooltip text="Stop (Shift+F5)">
+                                <button class="btn btn-debug-action" on:click={() => debugAction('stop')} disabled={isDebugRunning}>
+                                    Stop
+                                </button>
+                            </Tooltip>
                         </div>
                     {/if}
                 </div>
@@ -776,15 +810,21 @@
                     </span>
                     {#if debugJobId && (debugState.status === 'paused' || debugState.status === 'running')}
                         <div class="debug-actions">
-                            <button class="btn btn-debug-action" on:click={() => debugAction('step')} disabled={isDebugRunning}>
-                                Step Over
-                            </button>
-                            <button class="btn btn-debug-action" on:click={() => debugAction('continue')} disabled={isDebugRunning}>
-                                Continue
-                            </button>
-                            <button class="btn btn-debug-action" on:click={() => debugAction('stop')} disabled={isDebugRunning}>
-                                Stop
-                            </button>
+                            <Tooltip text="Step Over (F10)">
+                                <button class="btn btn-debug-action" on:click={() => debugAction('step')} disabled={isDebugRunning}>
+                                    Step Over
+                                </button>
+                            </Tooltip>
+                            <Tooltip text="Continue (F5)">
+                                <button class="btn btn-debug-action" on:click={() => debugAction('continue')} disabled={isDebugRunning}>
+                                    Continue
+                                </button>
+                            </Tooltip>
+                            <Tooltip text="Stop (Shift+F5)">
+                                <button class="btn btn-debug-action" on:click={() => debugAction('stop')} disabled={isDebugRunning}>
+                                    Stop
+                                </button>
+                            </Tooltip>
                         </div>
                     {/if}
                 </div>
@@ -1318,6 +1358,16 @@
         justify-content: space-between;
         gap: var(--spacing-2);
         flex-wrap: wrap;
+        position: sticky;
+        top: calc(var(--spacing-3) * -1);
+        z-index: 5;
+        /* Opaque bar matching panel bg in both themes (surface can be translucent in dark) */
+        background-color: var(--color-bg);
+        background-image: linear-gradient(var(--color-surface), var(--color-surface));
+        margin-left: calc(var(--spacing-3) * -1);
+        margin-right: calc(var(--spacing-3) * -1);
+        padding: var(--spacing-2) var(--spacing-3);
+        border-bottom: 1px solid var(--color-border);
     }
     .debug-status {
         display: flex;
