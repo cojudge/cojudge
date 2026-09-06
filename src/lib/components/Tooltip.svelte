@@ -7,9 +7,20 @@
   let element: any;
 
   onMount(() => {
-    // Add event listeners to the wrapped element
-    element.addEventListener('mouseenter', () => (show = true));
-    element.addEventListener('mouseleave', () => (show = false));
+    const onEnter = () => (show = true);
+    const onLeave = () => (show = false);
+    // Dismiss on click: activating a toggle reshuffles the layout and can
+    // move the button out from under the cursor, so mouseleave may never
+    // fire and the tooltip would stay stuck until the next hover.
+    const onClick = () => (show = false);
+    element.addEventListener('mouseenter', onEnter);
+    element.addEventListener('mouseleave', onLeave);
+    element.addEventListener('click', onClick);
+    return () => {
+      element.removeEventListener('mouseenter', onEnter);
+      element.removeEventListener('mouseleave', onLeave);
+      element.removeEventListener('click', onClick);
+    };
   });
 </script>
 
