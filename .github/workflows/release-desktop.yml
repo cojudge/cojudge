@@ -241,7 +241,19 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           TAG: v${{ inputs.version }}
-          MACOS_INSTALL_NOTE: |
+          RELEASE_NOTES: |
+            ## Manage Problems
+
+            You can add or edit problems without having to clone the repo, modify files and build a new binary!
+            All you need is to go to `~/cojudge` to add or edit files there:
+
+            - `/problems/[slug]` for adding new problems. You can also view or edit existing problems
+            - `/courses/[id]/courseinfo.json` for adding new course. You can also view or edit existing courses
+
+            Optional: You can install the `cojudge` desktop CLI via GUI to verify your new problems programmatically after adding them.
+
+            View `~/cojudge/README.md` for a more detailed guide.
+
             ## macOS installation
 
             The macOS application is ad-hoc signed and is not notarized. After dragging `Cojudge.app` into `/Applications`, this command is required before the first launch:
@@ -258,5 +270,5 @@ jobs:
             --target "$GITHUB_SHA" \
             --title "Cojudge $TAG" \
             --generate-notes \
-            --notes "$MACOS_INSTALL_NOTE" \
+            --notes "$RELEASE_NOTES" \
             "${release_args[@]}"

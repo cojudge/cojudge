@@ -108,7 +108,7 @@ Before running a release, configure these GitHub Actions repository secrets. Vit
 - `GOOGLE_DESKTOP_CLIENT_ID`
 - `GOOGLE_DESKTOP_CLIENT_SECRET`
 
-The generated release notes automatically include this required command for the ad-hoc-signed macOS build:
+The generated release notes automatically include a **Manage Problems** section (`~/cojudge` for adding/editing problems and courses, plus optional desktop CLI verification) and this required command for the ad-hoc-signed macOS build:
 
 ```bash
 xattr -dr com.apple.quarantine /Applications/Cojudge.app
