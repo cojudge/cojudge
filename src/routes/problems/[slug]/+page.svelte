@@ -32,7 +32,6 @@
     export let data;
     const problemId = data.problem.id;
     const isDesktopMode = browser && isDesktopRuntime();
-    let isMac = false;
     let description = '';
     let constraints = '';
 
@@ -645,7 +644,6 @@
     });
 
     onMount(() => {
-        isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
         const handleDocClick = (e: MouseEvent) => {
             if (showSettings && settingsContainer && !settingsContainer.contains(e.target as Node)) {
                 showSettings = false;
@@ -958,28 +956,6 @@
                         </svg>
                     </a>
                 {/if}
-            </Tooltip>
-            <Tooltip text={isMac ? "Cmd + B" : "Ctrl + B"} pos="bottom">
-                <button
-                    class="back-button"
-                    aria-label={($leftPaneWidthStore === null ? 50 : $leftPaneWidthStore) > 5 ? 'Hide problem pane' : 'Show problem pane'}
-                    on:click={toggleProblemPaneVisibility}
-                >
-                    {#if ($leftPaneWidthStore === null ? 50 : $leftPaneWidthStore) > 5}
-                        <!-- Eye icon (visible) -->
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="2" fill="none"/>
-                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
-                        </svg>
-                    {:else}
-                        <!-- Eye-off icon (hidden) -->
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="2" fill="none"/>
-                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
-                            <path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    {/if}
-                </button>
             </Tooltip>
             <div class="title-row">
                 <h1>{data.problem.title}</h1>

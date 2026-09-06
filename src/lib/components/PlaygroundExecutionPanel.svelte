@@ -906,56 +906,46 @@
                     on:click={togglePanelVisibility}
                 >
                     {#if $execPaneHeightStore > minExecPanelHeight}
+                        <!-- Toggle bottom icon (panel on): split like reference -->
                         <svg
                             width="18"
                             height="18"
                             viewBox="0 0 24 24"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
                         >
-                            <path
-                                d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"
+                            <rect
+                                x="3"
+                                y="3"
+                                width="18"
+                                height="18"
+                                rx="4"
                                 stroke="currentColor"
                                 stroke-width="2"
-                                fill="none"
                             />
-                            <circle
-                                cx="12"
-                                cy="12"
-                                r="3"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                fill="none"
-                            />
+                            <path d="M3 15h18" stroke="currentColor" stroke-width="2" />
                         </svg>
                     {:else}
+                        <!-- Toggle bottom icon (panel off) -->
                         <svg
                             width="18"
                             height="18"
                             viewBox="0 0 24 24"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
                         >
-                            <path
-                                d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"
+                            <rect
+                                x="3"
+                                y="3"
+                                width="18"
+                                height="18"
+                                rx="4"
                                 stroke="currentColor"
                                 stroke-width="2"
-                                fill="none"
                             />
-                            <circle
-                                cx="12"
-                                cy="12"
-                                r="3"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                fill="none"
-                            />
-                            <path
-                                d="M3 3l18 18"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                            />
+                            <rect x="6.5" y="15" width="11" height="3" rx="1.5" fill="currentColor" />
                         </svg>
                     {/if}
                 </button>

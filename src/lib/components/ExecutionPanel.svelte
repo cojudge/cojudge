@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount, onDestroy, createEventDispatcher } from "svelte";
-    import { execPaneHeightStore } from "$lib/stores/layoutStore";
+    import { execPaneHeightStore, leftPaneWidthStore } from "$lib/stores/layoutStore";
     import testCaseStore from "$lib/stores/testCaseStore";
     import Tooltip from "./Tooltip.svelte";
     import Visualization from "./Visualization.svelte";
@@ -85,6 +85,24 @@
             $execPaneHeightStore = restore;
         }
     }
+
+    // Problem pane (left) visibility memory and toggle - button lives in div.actions row
+    let lastNonZeroLeftWidth = 50; // default width percentage
+    $: if ($leftPaneWidthStore && $leftPaneWidthStore > 0) {
+        lastNonZeroLeftWidth = $leftPaneWidthStore;
+    }
+    function toggleProblemPaneVisibility() {
+        const current = $leftPaneWidthStore === null ? 50 : $leftPaneWidthStore;
+        if (current > 5) {
+            lastNonZeroLeftWidth = current || lastNonZeroLeftWidth || 50;
+            $leftPaneWidthStore = 0;
+        } else {
+            const restore = Math.max(10, Math.min(70, lastNonZeroLeftWidth || 50));
+            $leftPaneWidthStore = restore;
+        }
+    }
+    $: isLeftPaneVisible = ($leftPaneWidthStore === null ? 50 : $leftPaneWidthStore) > 5;
+    $: isBottomPaneVisible = $execPaneHeightStore > minExecPanelHeight;
 
     function statusToString(status: StatusType) {
         switch (status) {
@@ -1756,6 +1774,112 @@
     </div>
 
     <div class="actions">
+        <div class="layout-toggles">
+            <!-- Toggle left (problem pane) - leftmost -->
+            <Tooltip text={isMac ? "Cmd + B" : "Ctrl + B"} pos="right">
+                <button
+                    class="icon-btn"
+                    aria-label={isLeftPaneVisible ? "Hide problem pane" : "Show problem pane"}
+                    on:click={toggleProblemPaneVisibility}
+                >
+                    {#if isLeftPaneVisible}
+                        <!-- Toggle left icon (panel on): split like reference -->
+                        <svg
+                            width="18"
+                            height="18"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                        >
+                            <rect
+                                x="3"
+                                y="3"
+                                width="18"
+                                height="18"
+                                rx="4"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            />
+                            <path d="M9.5 3v18" stroke="currentColor" stroke-width="2" />
+                        </svg>
+                    {:else}
+                        <!-- Toggle left icon (panel off) -->
+                        <svg
+                            width="18"
+                            height="18"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                        >
+                            <rect
+                                x="3"
+                                y="3"
+                                width="18"
+                                height="18"
+                                rx="4"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            />
+                            <rect x="6.5" y="6.5" width="3" height="11" rx="1.5" fill="currentColor" />
+                        </svg>
+                    {/if}
+                </button>
+            </Tooltip>
+            <!-- Toggle bottom (test case pane) -->
+            <Tooltip text={isMac ? "Cmd + J" : "Ctrl + J"}>
+                <button
+                    class="icon-btn"
+                    aria-label={isBottomPaneVisible ? "Hide panel" : "Show panel"}
+                    on:click={togglePanelVisibility}
+                >
+                    {#if isBottomPaneVisible}
+                        <!-- Toggle bottom icon (panel on): split like reference -->
+                        <svg
+                            width="18"
+                            height="18"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                        >
+                            <rect
+                                x="3"
+                                y="3"
+                                width="18"
+                                height="18"
+                                rx="4"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            />
+                            <path d="M3 15h18" stroke="currentColor" stroke-width="2" />
+                        </svg>
+                    {:else}
+                        <!-- Toggle bottom icon (panel off) -->
+                        <svg
+                            width="18"
+                            height="18"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                        >
+                            <rect
+                                x="3"
+                                y="3"
+                                width="18"
+                                height="18"
+                                rx="4"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            />
+                            <rect x="6.5" y="15" width="11" height="3" rx="1.5" fill="currentColor" />
+                        </svg>
+                    {/if}
+                </button>
+            </Tooltip>
+        </div>
         <div class="buttons">
             <div style="display: flex; align-items: center; margin-right: 8px;">
                 {#if gameMode && gameStartTime > 0}
@@ -1768,72 +1892,6 @@
                 {/if}
                 <SaveStatus />
             </div>
-            <!-- Show/Hide panel button -->
-            <Tooltip text={isMac ? "Cmd + J" : "Ctrl + J"}>
-                <button
-                    class="icon-btn"
-                    aria-label={$execPaneHeightStore > minExecPanelHeight
-                        ? "Hide panel"
-                        : "Show panel"}
-                    on:click={togglePanelVisibility}
-                >
-                    {#if $execPaneHeightStore > minExecPanelHeight}
-                        <!-- Eye (visible) icon -->
-                        <svg
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                fill="none"
-                            />
-                            <circle
-                                cx="12"
-                                cy="12"
-                                r="3"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                fill="none"
-                            />
-                        </svg>
-                    {:else}
-                        <!-- Eye-off (hidden) icon -->
-                        <svg
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                fill="none"
-                            />
-                            <circle
-                                cx="12"
-                                cy="12"
-                                r="3"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                fill="none"
-                            />
-                            <path
-                                d="M3 3l18 18"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                            />
-                        </svg>
-                    {/if}
-                </button>
-            </Tooltip>
             {#if isCheckingDocker}
                 <div class="docker-error-msg">
                     <svg
@@ -2213,9 +2271,14 @@
         align-items: center;
         gap: var(--spacing-2);
     }
+    .layout-toggles {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-2);
+    }
     .actions {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
         align-items: center;
         padding: var(--spacing-2) var(--spacing-3);
         border-top: 1px solid var(--color-border);
