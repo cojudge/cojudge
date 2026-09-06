@@ -2,22 +2,28 @@
 
 This guide explains how to add a new problem to CoJudge, with examples for both standard function-based problems and class-based design problems.
 
-## Overview
+## Where content lives (`~/cojudge`)
 
-Each problem lives in its own folder under `problems/<slug>/` with the following files:
+For local use, CoJudge keeps all editable content in your home folder:
 
 ```
-problems/<slug>/
-├── statement.md        # Problem description (Markdown)
-├── metadata.json       # Metadata, starter code, sample tests, hints
-├── official-tests.json # Comprehensive test cases for submission
-├── Marker.java         # Reference solution + validation logic
-└── solution.md         # Optional — Approach, complexity, and Python solution
+~/cojudge/
+├── problems/<slug>/
+│   ├── statement.md        # Problem description (Markdown)
+│   ├── metadata.json       # Metadata, starter code, sample tests, hints
+│   ├── official-tests.json # Comprehensive test cases for submission
+│   ├── Marker.java         # Reference solution + validation logic
+│   └── solution.md         # Optional — Approach, complexity, and Python solution
+└── courses/<course-id>/courseinfo.json
 ```
+
+On first start, CoJudge copies (seeds) the repo's bundled `problems/` and `courses/` into `~/cojudge`. Afterwards `~/cojudge` is the source of truth: view / edit / add problems, test cases, solutions, and courses by managing files there — changes take effect immediately (refresh the browser or re-run the CLI, no restart needed). Missing files are re-seeded from the bundled copy but your edits are never overwritten. Set `COJUDGE_CONTENT_DIR` (or `COJUDGE_HOME`) to use a different folder.
 
 Only `statement.md`, `metadata.json`, `official-tests.json`, and `Marker.java` are required. `solution.md` is optional — if present, a "Reference Solution" button appears in the UI.
 
-After creating the problem files, register it in `courses/blind75/courseinfo.json`.
+After creating the problem files, register it in `~/cojudge/courses/blind75/courseinfo.json`.
+
+> Contributing to the repo itself? Edit `problems/` / `courses/` in the repo — those are the seed contents that get copied to `~/cojudge` on first start.
 
 ---
 
@@ -30,7 +36,7 @@ Instead of writing problem files from scratch, use `cojudge scrape` to fetch can
 ```bash
 cojudge scrape -n 1            # Fetch problem #1 (Two Sum)
 cojudge scrape -s two-sum      # Fetch by slug
-cojudge scrape -s valid-parentheses > problems/valid-parentheses/scraped.txt  # Save to file
+cojudge scrape -s valid-parentheses > ~/cojudge/problems/valid-parentheses/scraped.txt  # Save to file
 ```
 
 ### Output
@@ -434,7 +440,7 @@ class Marker {
 
 ## 7. Registering in a Course
 
-Add the problem slug to `courses/blind75/courseinfo.json` under the appropriate category:
+Add the problem slug to `~/cojudge/courses/blind75/courseinfo.json` under the appropriate category:
 
 ```json
 {

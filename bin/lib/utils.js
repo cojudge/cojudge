@@ -3,11 +3,11 @@ import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
 
-export const rootDir = path.resolve(
-  path.dirname(fileURLToPath(import.meta.url)),
-  "..",
-  "..",
-);
+export const rootDir = process.env.COJUDGE_ROOT
+  ? path.resolve(process.env.COJUDGE_ROOT)
+  : path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
+
+export const isDesktopCli = process.env.COJUDGE_DESKTOP === "1";
 
 export function getParam(args, param) {
   const index = args.findIndex((arg) => arg === param);
@@ -117,14 +117,27 @@ export function printVersion(dir) {
       .toString()
       .trim();
     console.log(`Cojudge version: ${commit} (${date})`);
-    console.log(`Installed at: ${dir}`);
   } catch (e) {
-    console.log("Cojudge version unknown");
-    console.log(`Installed at: ${dir}`);
+    try {
+      const pkg = JSON.parse(
+        fs.readFileSync(path.join(dir, "package.json"), "utf8"),
+      );
+      console.log(`Cojudge version: ${pkg.version || "unknown"}`);
+    } catch {
+      console.log("Cojudge version unknown");
+    }
   }
+  console.log(`Installed at: ${dir}`);
 }
 
 export function updateRepo(dir) {
+  if (isDesktopCli) {
+    console.log("This CLI is bundled with the Cojudge desktop app.");
+    console.log(
+      "Download a newer app from GitHub Releases, then reinstall the CLI from the app menu.",
+    );
+    return false;
+  }
   console.log("Updating cojudge...");
   try {
     const before = execSync("git rev-parse HEAD", { cwd: dir })

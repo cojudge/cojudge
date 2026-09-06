@@ -126,7 +126,10 @@ Every installer includes:
 
 - The SvelteKit client and server build
 - The platform-specific Node.js runtime
+- The `cojudge` CLI (`bin/`), which can be added to PATH from the homepage **CLI** menu
 - Production dependencies required by Docker-based judging
 - All courses, problems, tests, markers, and debugger Dockerfiles
 
 Docker itself and language runtime images are not included. Missing runner images are downloaded through the configured Docker daemon as needed.
+
+The in-app **CLI** action writes a shim to `~/.local/bin/cojudge` (macOS/Linux) or `%LOCALAPPDATA%\Cojudge\cli\cojudge.cmd` (Windows) that runs the bundled Node.js sidecar. Uninstall removes that shim. Open a new terminal after installing.

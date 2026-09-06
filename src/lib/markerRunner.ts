@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
-import path from 'path';
 import Dockerode from 'dockerode';
+import { resolveProblemFile } from './server/contentPaths';
 import tar from 'tar-stream';
 import { formatAndSplitJavaString, getDisplayFuncName, javaGetFullParam, javaHelperMethods, javaImage, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from './utils/javaUtil';
 import { ensureImageAvailable, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE, type Param } from './utils/util';
@@ -41,7 +41,7 @@ export async function getMarkerResponses(problemId: string, functionName: string
             ${testCalls}
         }
     }`;
-    const markerPath = path.resolve('problems', problemId, 'Marker.java');
+    const markerPath = await resolveProblemFile(problemId, 'Marker.java');
     const markerCode = await fs.readFile(markerPath, 'utf-8');
     let container: Dockerode.Container | null = null;
     try {

@@ -11,6 +11,7 @@ import Dockerode from "dockerode";
 import fs from 'fs/promises';
 import path from 'path';
 import tar from 'tar-stream';
+import { resolveProblemFile } from "$lib/server/contentPaths";
 import ContainerPool from "./ContainerPool";
 import { JAVA_DEBUG_DRIVER } from "./JavaDebugDriver";
 import { CPP_DEBUG_DRIVER } from "./CppDebugDriver";
@@ -526,7 +527,7 @@ async function evaluateCompletedResults(session: DebugSession, state: DebugState
                 return o;
             });
 
-            const problemPath = path.resolve('problems', session.problemId, 'metadata.json');
+            const problemPath = await resolveProblemFile(session.problemId, 'metadata.json');
             const problemContent = await fs.readFile(problemPath, 'utf-8');
             const problemData = JSON.parse(problemContent);
 
@@ -700,7 +701,7 @@ export async function startProblemDebugSession(problemId: string, language: stri
         throw new Error(`No test cases available for problem '${problemId}'`);
     }
 
-    const problemPath = path.resolve('problems', problemId, 'metadata.json');
+    const problemPath = await resolveProblemFile(problemId, 'metadata.json');
     const problemContent = await fs.readFile(problemPath, 'utf-8');
     const problemData = JSON.parse(problemContent);
 

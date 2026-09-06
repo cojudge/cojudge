@@ -3,8 +3,8 @@ import { extractOperations } from "$lib/utils/util";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import fs from 'fs/promises';
-import path from 'path';
 import tar from 'tar-stream';
+import { resolveProblemFile } from "$lib/server/contentPaths";
 import { ProgramRunner } from "./ProgramRunner";
 import ContainerPool from "./ContainerPool";
 import { cojudgeContainerLabels } from "$lib/server/containerSession";
@@ -21,7 +21,7 @@ export class PythonRunner extends ProgramRunner {
 
     async compile(): Promise<void> {
         try {
-            const problemPath = path.resolve('problems', this.problemId, 'metadata.json');
+            const problemPath = await resolveProblemFile(this.problemId, 'metadata.json');
             const problemContent = await fs.readFile(problemPath, 'utf-8');
             const problemData = JSON.parse(problemContent);
             const runnerCode = generatePythonRunner(problemData.functionName, problemData.params, this.testCases, problemData.checkGraphClone);

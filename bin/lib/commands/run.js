@@ -1,12 +1,12 @@
 import path from "path";
 import fs from "fs";
-import {
-  rootDir,
-  getPIDs,
-  getLangFromExt,
-  isDockerRunning,
-} from "../utils.js";
+import { getPIDs, getLangFromExt, isDockerRunning } from "../utils.js";
 import { startServer } from "../server.js";
+import {
+  ensureUserContentSeededSync,
+  resolveProblemDirSync,
+  resolveProblemFileSync,
+} from "../contentPaths.js";
 
 function parseDebugLines(args) {
   const debugIdx = args.findIndex(a => a === '--debug-lines');
@@ -31,6 +31,7 @@ function stripDebugArgs(args) {
 }
 
 export async function handleRun(argsToUse, PORT) {
+  ensureUserContentSeededSync();
   const debugLines = parseDebugLines(argsToUse);
   const cleanedArgs = debugLines ? stripDebugArgs(argsToUse) : argsToUse;
 
@@ -53,7 +54,7 @@ export async function handleRun(argsToUse, PORT) {
     slug &&
     !filename &&
     fs.existsSync(slug) &&
-    !fs.existsSync(path.join(rootDir, "problems", slug))
+    !fs.existsSync(resolveProblemDirSync(slug))
   ) {
     filename = slug;
     slug = "playground";
@@ -69,13 +70,13 @@ export async function handleRun(argsToUse, PORT) {
   let testCases = [];
 
   if (!isPlayground) {
-    const problemsPath = path.join(rootDir, "problems", slug);
+    const problemsPath = resolveProblemDirSync(slug);
     if (!fs.existsSync(problemsPath)) {
       console.error(`Error: Problem slug '${slug}' not found.`);
       process.exit(1);
     }
 
-    const metadataPath = path.join(problemsPath, "metadata.json");
+    const metadataPath = resolveProblemFileSync(slug, "metadata.json");
     try {
       const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf8"));
       testCases = metadata.testCases || [];

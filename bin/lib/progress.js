@@ -2,6 +2,7 @@ import path from "path";
 import fs from "fs";
 import os from "os";
 import { rootDir } from "./utils.js";
+import { resolveProblemDirSync } from "./contentPaths.js";
 
 function getProgressFile() {
   const homeProgressFile = path.join(os.homedir(), ".cojudge", "progress.json");
@@ -41,7 +42,7 @@ function saveProgress(progress) {
 }
 
 export function markProblem(slug, solvedValue) {
-  const problemsPath = path.join(rootDir, "problems", slug);
+  const problemsPath = resolveProblemDirSync(slug);
   if (!fs.existsSync(problemsPath)) {
     console.error(`Error: Problem slug '${slug}' not found.`);
     return;

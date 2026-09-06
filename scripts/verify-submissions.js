@@ -111,9 +111,21 @@ function runCommand(args, timeout = 180_000) {
   });
 }
 
+function resolveProblemDirForVerify(slug) {
+  const override =
+    (process.env.COJUDGE_CONTENT_DIR || "").trim() ||
+    (process.env.COJUDGE_HOME || "").trim();
+  const userRoot = override
+    ? path.resolve(override)
+    : path.join(os.homedir(), "cojudge");
+  const userDir = path.join(userRoot, "problems", slug);
+  if (fs.existsSync(userDir)) return userDir;
+  return path.resolve(rootDir, "problems", slug);
+}
+
 async function verifySubmission(item, options, tempRoot) {
   const { slug, language } = item;
-  const problemDir = path.resolve(rootDir, "problems", slug);
+  const problemDir = resolveProblemDirForVerify(slug);
   let solutionPath;
   if (options.solutionsRoot) {
     solutionPath = path.resolve(

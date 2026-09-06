@@ -1,8 +1,8 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import fs from 'fs/promises';
-import path from 'path';
 import { getMarkerResponses } from '../../../lib/markerRunner';
+import { ensureUserContentSeeded, resolveProblemFile } from '$lib/server/contentPaths';
 import type { ProgramRunner } from '$lib/runners/ProgramRunner';
 import { JavaRunner } from '$lib/runners/JavaRunner';
 import { PythonRunner } from '$lib/runners/PythonRunner';
@@ -48,7 +48,8 @@ function isJavaLanguage(language: string): boolean {
 
 async function executeRun(problemId: string, language: string, code: string, testCases: any[], job: RunJob) {
     try {
-        const problemPath = path.resolve('problems', problemId, 'metadata.json');
+        await ensureUserContentSeeded();
+        const problemPath = await resolveProblemFile(problemId, 'metadata.json');
         const problemContent = await fs.readFile(problemPath, 'utf-8');
         const problemData = JSON.parse(problemContent);
 

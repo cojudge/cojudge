@@ -37,7 +37,7 @@ const install = npmExecPath
 if (install.error) throw install.error;
 if (install.status !== 0) process.exit(install.status ?? 1);
 
-for (const directory of ['build', 'courses', 'problems', 'docker']) {
+for (const directory of ['build', 'courses', 'problems', 'docker', 'bin']) {
 	const source = join(root, directory);
 	if (!existsSync(source)) throw new Error(`Missing ${source}`);
 	cpSync(source, join(backend, directory), {

@@ -1,8 +1,12 @@
-import path from "path";
 import fs from "fs";
-import { rootDir } from "../utils.js";
+import {
+  ensureUserContentSeededSync,
+  listProblemSlugsSync,
+  resolveProblemFileSync,
+} from "../contentPaths.js";
 
 export function handleSearch(args) {
+  ensureUserContentSeededSync();
   const keyword = args[1];
   if (!keyword) {
     console.error("Error: Please specify a keyword to search for.");
@@ -10,17 +14,14 @@ export function handleSearch(args) {
     return;
   }
 
-  const problemsPath = path.join(rootDir, "problems");
-  const slugs = fs.readdirSync(problemsPath).filter((f) => {
-    return fs.statSync(path.join(problemsPath, f)).isDirectory();
-  });
+  const slugs = listProblemSlugsSync();
 
   const lowerKeyword = keyword.toLowerCase();
   let results = [];
 
   for (const slug of slugs) {
-    const metaPath = path.join(problemsPath, slug, "metadata.json");
-    const statementPath = path.join(problemsPath, slug, "statement.md");
+    const metaPath = resolveProblemFileSync(slug, "metadata.json");
+    const statementPath = resolveProblemFileSync(slug, "statement.md");
 
     const meta = fs.existsSync(metaPath)
       ? JSON.parse(fs.readFileSync(metaPath, "utf8"))

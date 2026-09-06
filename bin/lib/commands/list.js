@@ -1,16 +1,18 @@
-import path from "path";
 import fs from "fs";
-import { rootDir, getDifficultyOrder } from "../utils.js";
+import { getDifficultyOrder } from "../utils.js";
 import { loadProgress } from "../progress.js";
+import {
+  ensureUserContentSeededSync,
+  getContentRoot,
+  listProblemSlugsSync,
+  resolveCourseFileSync,
+  resolveProblemFileSync,
+} from "../contentPaths.js";
 
 export function listProblems() {
-  const problemsPath = path.join(rootDir, "problems");
-  const blind75Path = path.join(
-    rootDir,
-    "courses",
-    "blind75",
-    "courseinfo.json",
-  );
+  ensureUserContentSeededSync();
+  console.log(`Content: ${getContentRoot()}`);
+  const blind75Path = resolveCourseFileSync("blind75", "courseinfo.json");
 
   try {
     let orderedSlugs = [];
@@ -22,7 +24,7 @@ export function listProblems() {
       categories.forEach((cat) => {
         const slugs = categoryProblems[cat] || [];
         const problemsWithMetadata = slugs.map((slug) => {
-          const metaPath = path.join(problemsPath, slug, "metadata.json");
+          const metaPath = resolveProblemFileSync(slug, "metadata.json");
           let difficulty = "unknown";
           let title = slug;
           if (fs.existsSync(metaPath)) {
@@ -45,12 +47,7 @@ export function listProblems() {
         orderedSlugs.push(...problemsWithMetadata.map((p) => p.slug));
       });
     } else {
-      orderedSlugs = fs
-        .readdirSync(problemsPath)
-        .filter((f) => {
-          return fs.statSync(path.join(problemsPath, f)).isDirectory();
-        })
-        .sort();
+      orderedSlugs = listProblemSlugsSync();
     }
 
     const progress = loadProgress();
@@ -64,9 +61,7 @@ export function listProblems() {
       console.log(`  ${mark} ${s}`);
     });
 
-    const allFolders = fs.readdirSync(problemsPath).filter((f) => {
-      return fs.statSync(path.join(problemsPath, f)).isDirectory();
-    });
+    const allFolders = listProblemSlugsSync();
     const extraSlugs = allFolders
       .filter((f) => !orderedSlugs.includes(f))
       .sort();

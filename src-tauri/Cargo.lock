@@ -502,6 +502,7 @@ version = "0.4.7"
 dependencies = [
  "getrandom 0.3.4",
  "oauth2",
+ "serde",
  "tauri",
  "tauri-build",
  "tauri-plugin-opener",

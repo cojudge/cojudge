@@ -26,7 +26,7 @@
 - Debugger support (Java/C++/Python/Typescript/Rust/C#/Go)
 - Multiple languages support for all problems (Java/C++/Python/Typescript/Rust/C#/Go)
 - Code Playground: Run code snippets in Java, C++, Python, Typescript, Rust, C# or Go without a problem context
-- Extensible: add new problems by dropping folders in `problems/`
+- Extensible: add new problems by dropping folders in `~/cojudge/problems/` (auto-seeded from bundled `problems/` on first start)
 - Persistent Code & Progress Tracking via Local Storage
 - Optional Cojudge Cloud sync through Google sign-in; local storage remains the source of truth offline
 - Browser-like tabs to organize your local solutions
@@ -42,10 +42,10 @@
 ### 1. Installation
 
 #### Desktop app
-Download the latest installer for macOS, Windows, or Linux from [GitHub Releases](https://github.com/cojudge/cojudge/releases). Desktop builds bundle Node.js; Docker is only required when running, submitting, or debugging code.
+Download the latest installer for macOS, Windows, or Linux from [GitHub Releases](https://github.com/cojudge/cojudge/releases). Desktop builds bundle Node.js; Docker is only required when running, submitting, or debugging code. After installing the app, open the homepage menu and choose **CLI** to put `cojudge` on your PATH (no separate Node.js install).
 
 #### CLI
-The easiest way to install the `cojudge` CLI without dealing with NPM permission issues is to run our install script:
+If you are not using the desktop app, the easiest way to install the `cojudge` CLI without dealing with NPM permission issues is to run our install script:
 
 #### Mac / Linux
 ```bash
@@ -153,6 +153,8 @@ npm run dev
 
 ## Add a problem
 
+Local content lives in `~/cojudge` (auto-seeded from the repo's bundled `problems/` + `courses/` on first start; your copy overrides bundled content — edit / add / delete files there, changes apply immediately). Override the location with `COJUDGE_CONTENT_DIR`.
+
 See [`docs/ADD_PROBLEMS.md`](docs/ADD_PROBLEMS.md) for a comprehensive guide covering:
 
 - Required files (`statement.md`, `metadata.json`, `official-tests.json`, `Marker.java`)
@@ -160,10 +162,10 @@ See [`docs/ADD_PROBLEMS.md`](docs/ADD_PROBLEMS.md) for a comprehensive guide cov
 - Supported parameter/output types
 - Starter code conventions for all 7 languages (Java, Python, C++, C#, Rust, Go, Typescript)
 - How to write `Marker.java` with the reference solution and `isCorrect` validator
-- Registration in `courses/blind75/courseinfo.json`
+- Registration in `~/cojudge/courses/blind75/courseinfo.json`
 - Verification checklist (`cojudge init`/`run`/`submit`)
 
-Refer to `problems/two-sum` for a minimal example.
+Refer to `~/cojudge/problems/two-sum` (seeded from `problems/two-sum`) for a minimal example.
 
 #### Note on problems
 
@@ -187,7 +189,7 @@ This is a more complicated process but it is definitely doable.
 
 7. Create a new class that extends `PlaygroundRunner` (e.g. `PlaygroundJavascriptRunner`) in `src/lib/runners/PlaygroundRunners.ts` and add the instantiation logic in `src/routes/api/playground/run/+server.ts`.
 
-Refer to `javaUtil.ts`, `JavaRunner.ts` and `problems/two-sum` for a detailed example.
+Refer to `javaUtil.ts`, `JavaRunner.ts` and `problems/two-sum` (runtime copy: `~/cojudge/problems/two-sum`) for a detailed example.
 
 ## Troubleshooting
 

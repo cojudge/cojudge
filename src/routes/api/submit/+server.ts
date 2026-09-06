@@ -1,8 +1,8 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import fs from 'fs/promises';
-import path from 'path';
 import vm from 'vm';
+import { ensureUserContentSeeded, resolveProblemFile } from '$lib/server/contentPaths';
 import { getMarkerResponses } from '../../../lib/markerRunner';
 import type { ProgramRunner } from '$lib/runners/ProgramRunner';
 import { JavaRunner } from '$lib/runners/JavaRunner';
@@ -50,12 +50,13 @@ async function executeSubmit(problemId: string, language: string, code: string, 
     let timeoutTestcase: any = null;
     try {
         job.status = 'running';
+        await ensureUserContentSeeded();
 
-        const problemPath = path.resolve('problems', problemId, 'metadata.json');
+        const problemPath = await resolveProblemFile(problemId, 'metadata.json');
         const problemContent = await fs.readFile(problemPath, 'utf-8');
         const problemData = JSON.parse(problemContent);
 
-        let officialTestsPath = path.resolve('problems', problemId, 'official-tests.json');
+        let officialTestsPath = await resolveProblemFile(problemId, 'official-tests.json');
         let testCases: any[] = [];
         let totalTc = 0;
         let passedTc = 0;

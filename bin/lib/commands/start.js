@@ -1,9 +1,14 @@
 import path from "path";
 import fs from "fs";
-import { rootDir, getPIDs, openBrowser, getLangFromExt, getPort } from "../utils.js";
+import { getPIDs, openBrowser, getLangFromExt } from "../utils.js";
 import { startServer } from "../server.js";
+import {
+  ensureUserContentSeededSync,
+  resolveProblemDirSync,
+} from "../contentPaths.js";
 
 export function handleStart(argsToUse, PORT) {
+  ensureUserContentSeededSync();
   let slug = argsToUse[1];
   let filename = argsToUse[2];
 
@@ -11,7 +16,7 @@ export function handleStart(argsToUse, PORT) {
     slug &&
     !filename &&
     fs.existsSync(slug) &&
-    !fs.existsSync(path.join(rootDir, "problems", slug))
+    !fs.existsSync(resolveProblemDirSync(slug))
   ) {
     filename = slug;
     slug = "playground";
