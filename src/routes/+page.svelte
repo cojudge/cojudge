@@ -4,6 +4,7 @@
     import { marked } from "marked";
     import { browser } from '$app/environment';
     import { goto } from '$app/navigation';
+    import { page } from '$app/stores';
     import Tooltip from "$lib/components/Tooltip.svelte";
     import SortIcon from "$lib/components/SortIcon.svelte";
     import userSettingsStorage from '$lib/stores/userSettingsStorage';
@@ -50,6 +51,33 @@
     let loadCodeInputs: HTMLInputElement[] = [];
     let pendingImport: Record<string, unknown> | null = null;
     let showClearConfirm = false;
+    let showManageProblems = false;
+    let manageProblemsCard: HTMLElement | null = null;
+    let manageProblemsError = '';
+    let showCliSettings = false;
+    let cliSettingsCard: HTMLElement | null = null;
+    let cliBusy = false;
+    let cliError = '';
+    let cliPathCopied = false;
+    let cliPathCopiedTimer: ReturnType<typeof setTimeout> | undefined;
+    let cliStatus: {
+        available: boolean;
+        installed: boolean;
+        path: string | null;
+        aliasPaths: string[];
+        needsNewTerminal: boolean;
+        message: string | null;
+    } = {
+        available: false,
+        installed: false,
+        path: null,
+        aliasPaths: [],
+        needsNewTerminal: false,
+        message: null
+    };
+    let revealingFolder = false;
+    let pathCopied = false;
+    let pathCopiedTimer: ReturnType<typeof setTimeout> | undefined;
     let importNotice: { message: string; error: boolean; filePath?: string } | null = null;
     let importNoticeTimer: ReturnType<typeof setTimeout> | undefined;
     let showFirebaseSettings = false;
@@ -65,8 +93,10 @@
     let showGamePopup = false;
     let isDesktopMode = browser && isDesktopRuntime();
     $: if (browser) {
-        document.body.style.overflow = showGamePopup || pendingImport || showFirebaseSettings || showLoadCode || showClearConfirm ? 'hidden' : '';
+        document.body.style.overflow = showGamePopup || pendingImport || showFirebaseSettings || showLoadCode || showClearConfirm || showManageProblems || showCliSettings ? 'hidden' : '';
     }
+
+    $: contentDir = (data?.contentDir ?? '~/cojudge') as string;
     let gameResultData: Record<string, GameResult[]> = {};
     let historyProblem: { id: string; title: string } | null = null;
 
@@ -197,6 +227,7 @@
 
     onMount(() => {
         window.addEventListener("click", handleClickOutside);
+        if (isDesktopMode) void refreshCliStatus();
 
         // Restore last selected course from localStorage if no course param in URL
         const url = new URL(window.location.href);
@@ -213,6 +244,7 @@
     });
 
     // Types for problems from the loader
+    type ContentSource = 'custom' | 'modified' | 'bundled';
     type Problem = {
         id: string;
         title: string;
@@ -220,12 +252,26 @@
         link?: string;
         category?: string;
         statement?: string;
+        source?: ContentSource;
     };
 
     type CourseSummary = {
         id: string;
         title: string;
+        source?: ContentSource;
     };
+
+    function sourceLabel(source?: ContentSource): string {
+        return source === 'custom' ? 'Custom' : source === 'modified' ? 'Modified' : '';
+    }
+
+    function sourceTitle(source?: ContentSource): string {
+        return source === 'custom'
+            ? 'Custom content — only exists in your CoJudge folder'
+            : source === 'modified'
+                ? 'Modified — edited in your CoJudge folder, differs from the bundled copy'
+                : '';
+    }
 
     // Group problems by category
     let grouped: Record<string, Problem[]> = {};
@@ -694,13 +740,19 @@
                     ? firebaseModalCard
                     : showLoadCode
                         ? loadModalCard
-                        : null;
+                        : showManageProblems
+                            ? manageProblemsCard
+                            : showCliSettings
+                                ? cliSettingsCard
+                                : null;
         if (!activeModal) return;
         if (event.key === 'Escape') {
             event.preventDefault();
             if (pendingImport) cancelImport();
             else if (showClearConfirm) void closeClearProgress();
             else if (showFirebaseSettings) void closeFirebaseSettings();
+            else if (showManageProblems) void closeManageProblems();
+            else if (showCliSettings) void closeCliSettings();
             else void closeLoadCode();
             return;
         }
@@ -714,6 +766,158 @@
     function openClearProgress() {
         showDropdown = false;
         showClearConfirm = true;
+    }
+
+    function openManageProblems() {
+        if ($page.data.isDemoSite) return;
+        showDropdown = false;
+        manageProblemsError = '';
+        pathCopied = false;
+        if (pathCopiedTimer) clearTimeout(pathCopiedTimer);
+        showManageProblems = true;
+    }
+
+    async function closeManageProblems() {
+        showManageProblems = false;
+        pathCopied = false;
+        if (pathCopiedTimer) clearTimeout(pathCopiedTimer);
+        await tick();
+        dropdownToggleButton?.focus();
+    }
+
+    function invokeDesktop<T>(command: string): Promise<T> {
+        const tauriInternals = (window as Window & {
+            __TAURI_INTERNALS__?: { invoke: (name: string, args?: Record<string, unknown>) => Promise<T> };
+        }).__TAURI_INTERNALS__;
+        if (!tauriInternals?.invoke) {
+            return Promise.reject(new Error('Desktop bridge unavailable.'));
+        }
+        return tauriInternals.invoke(command);
+    }
+
+    async function refreshCliStatus() {
+        if (!isDesktopMode) return;
+        try {
+            cliStatus = await invokeDesktop('cli_status');
+            cliError = '';
+        } catch (error) {
+            cliStatus = {
+                available: false,
+                installed: false,
+                path: null,
+                aliasPaths: [],
+                needsNewTerminal: false,
+                message: null
+            };
+            cliError = error instanceof Error ? error.message : String(error);
+        }
+    }
+
+    async function openCliSettings() {
+        if (!isDesktopMode) return;
+        showDropdown = false;
+        cliError = '';
+        cliPathCopied = false;
+        if (cliPathCopiedTimer) clearTimeout(cliPathCopiedTimer);
+        showCliSettings = true;
+        await refreshCliStatus();
+    }
+
+    async function closeCliSettings() {
+        showCliSettings = false;
+        cliBusy = false;
+        cliPathCopied = false;
+        if (cliPathCopiedTimer) clearTimeout(cliPathCopiedTimer);
+        await tick();
+        dropdownToggleButton?.focus();
+    }
+
+    async function copyCliPath() {
+        const cliPath = cliStatus.path;
+        if (!cliPath) return;
+        cliError = '';
+        try {
+            await navigator.clipboard.writeText(cliPath);
+            cliPathCopied = true;
+            if (cliPathCopiedTimer) clearTimeout(cliPathCopiedTimer);
+            cliPathCopiedTimer = setTimeout(() => {
+                cliPathCopied = false;
+            }, 1500);
+        } catch {
+            cliError = `Could not copy. Path: ${cliPath}`;
+        }
+    }
+
+    async function installCli() {
+        cliBusy = true;
+        cliError = '';
+        try {
+            cliStatus = await invokeDesktop('cli_install');
+        } catch (error) {
+            cliError = error instanceof Error ? error.message : String(error);
+        } finally {
+            cliBusy = false;
+        }
+    }
+
+    async function uninstallCli() {
+        cliBusy = true;
+        cliError = '';
+        try {
+            cliStatus = await invokeDesktop('cli_uninstall');
+        } catch (error) {
+            cliError = error instanceof Error ? error.message : String(error);
+        } finally {
+            cliBusy = false;
+        }
+    }
+
+    async function removeCliAlias() {
+        cliBusy = true;
+        cliError = '';
+        try {
+            cliStatus = await invokeDesktop('cli_remove_shell_alias');
+        } catch (error) {
+            cliError = error instanceof Error ? error.message : String(error);
+        } finally {
+            cliBusy = false;
+        }
+    }
+
+    async function copyContentDir() {
+        manageProblemsError = '';
+        try {
+            await navigator.clipboard.writeText(contentDir);
+            pathCopied = true;
+            if (pathCopiedTimer) clearTimeout(pathCopiedTimer);
+            pathCopiedTimer = setTimeout(() => {
+                pathCopied = false;
+            }, 1500);
+        } catch {
+            manageProblemsError = `Could not copy. Path: ${contentDir}`;
+        }
+    }
+
+    async function revealContentFolder() {
+        manageProblemsError = '';
+        revealingFolder = true;
+        try {
+            const response = await fetch('/api/reveal-file', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ filePath: contentDir })
+            });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(result?.error || 'Could not open the folder');
+            }
+        } catch (err: any) {
+            manageProblemsError = err?.message
+                ? `Could not open the folder automatically. Please open it manually: ${contentDir}`
+                : `Please open this folder manually: ${contentDir}`;
+        } finally {
+            revealingFolder = false;
+        }
     }
 
     async function closeClearProgress() {
@@ -907,7 +1111,41 @@
                             Game
                         </span>
                     </button>
+                    {#if !$page.data.isDemoSite}
+                        <button
+                            class="dropdown-item"
+                            role="menuitem"
+                            onclick={openManageProblems}
+                            title="View, edit, and add problems and courses in your CoJudge folder"
+                        >
+                            <span class="dropdown-item-content">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                                    <line x1="12" y1="11" x2="12" y2="17"></line>
+                                    <line x1="9" y1="14" x2="15" y2="14"></line>
+                                </svg>
+                                Manage Problems
+                            </span>
+                        </button>
+                    {/if}
                     {#if isDesktopMode}
+                        <button
+                            class="dropdown-item"
+                            role="menuitem"
+                            onclick={openCliSettings}
+                            title="Install the cojudge CLI on your PATH"
+                        >
+                            <span class="dropdown-item-content">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="4 17 10 11 4 5"></polyline>
+                                    <line x1="12" y1="19" x2="20" y2="19"></line>
+                                </svg>
+                                CLI
+                            </span>
+                            <span class:configured={cliStatus.installed} class="firebase-menu-status">
+                                {cliStatus.installed ? 'On' : 'Off'}
+                            </span>
+                        </button>
                         <div class="dropdown-separator" role="separator"></div>
                         <button
                             class="dropdown-item"
@@ -1018,6 +1256,141 @@
                 <div class="home-modal-actions">
                     <button class="btn" type="button" onclick={closeClearProgress}>Cancel</button>
                     <button class="btn clear-progress-danger-btn" type="button" onclick={confirmClearProgress}>Clear progress</button>
+                </div>
+            </div>
+        </div>
+    {/if}
+    {#if showManageProblems && !$page.data.isDemoSite}
+        <div class="home-modal-shell">
+            <button class="home-modal-backdrop" aria-label="Close manage problems" tabindex="-1" onclick={() => void closeManageProblems()}></button>
+            <div bind:this={manageProblemsCard} class="home-modal-card manage-problems-card" role="dialog" aria-modal="true" aria-labelledby="manage-problems-title">
+                <span class="modal-eyebrow">Local content</span>
+                <h2 id="manage-problems-title">Manage Problems</h2>
+                <p class="manage-intro">Problems and courses live in your CoJudge folder. Edit files directly — changes apply on refresh.</p>
+
+                <div class="manage-path-row">
+                    <code class="manage-path-text">{contentDir}</code>
+                    <button
+                        class="manage-path-copy"
+                        type="button"
+                        onclick={copyContentDir}
+                        title={pathCopied ? 'Copied' : 'Copy path'}
+                        aria-label={pathCopied ? 'Path copied' : 'Copy path'}
+                    >
+                        {#if pathCopied}
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        {:else}
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        {/if}
+                    </button>
+                </div>
+
+                <div class="manage-sections">
+                    <div class="manage-section">
+                        <h3>Problems</h3>
+                        <code class="manage-section-path">problems/&lt;slug&gt;/</code>
+                        <p>statement.md · metadata.json · official-tests.json · Marker.java · solution.md (optional)</p>
+                    </div>
+                    <div class="manage-section">
+                        <h3>Courses</h3>
+                        <code class="manage-section-path">courses/&lt;id&gt;/courseinfo.json</code>
+                        <p>Category order and problem list for each course tab.</p>
+                    </div>
+                </div>
+
+                <p class="manage-note">Duplicate a problem folder, edit it, then register the slug in a <code>courseinfo.json</code>. Missing files are re-seeded; your edits are never overwritten.</p>
+
+                {#if manageProblemsError}
+                    <p class="modal-error" role="alert">{manageProblemsError}</p>
+                {/if}
+                <div class="home-modal-actions">
+                    <button class="btn" type="button" onclick={revealContentFolder} disabled={revealingFolder}>{revealingFolder ? 'Opening…' : 'Open folder'}</button>
+                    <span class="modal-action-spacer"></span>
+                    <button class="btn modal-primary-btn" type="button" onclick={() => void closeManageProblems()}>Done</button>
+                </div>
+            </div>
+        </div>
+    {/if}
+    {#if showCliSettings && isDesktopMode}
+        <div class="home-modal-shell">
+            <button class="home-modal-backdrop" aria-label="Close CLI settings" tabindex="-1" onclick={() => void closeCliSettings()}></button>
+            <div bind:this={cliSettingsCard} class="home-modal-card manage-problems-card" role="dialog" aria-modal="true" aria-labelledby="cli-settings-title">
+                <div class="modal-heading-row">
+                    <div>
+                        <span class="modal-eyebrow">Command line</span>
+                        <h2 id="cli-settings-title">Cojudge CLI</h2>
+                    </div>
+                    <span class:configured={cliStatus.installed} class="firebase-status-pill">
+                        <span></span>{cliStatus.installed ? 'Installed' : 'Not installed'}
+                    </span>
+                </div>
+                <p class="manage-intro">Adds <code>cojudge</code> to your PATH using this app's Node.js.</p>
+
+                {#if cliStatus.path}
+                    <div class="manage-path-row">
+                        <code class="manage-path-text">{cliStatus.path}</code>
+                        <button
+                            class="manage-path-copy"
+                            type="button"
+                            onclick={copyCliPath}
+                            title={cliPathCopied ? 'Copied' : 'Copy path'}
+                            aria-label={cliPathCopied ? 'Path copied' : 'Copy path'}
+                        >
+                            {#if cliPathCopied}
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            {:else}
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            {/if}
+                        </button>
+                    </div>
+                {/if}
+
+                <div class="manage-sections">
+                    <div class="manage-section">
+                        <h3>Usage</h3>
+                        <ul class="cli-usage">
+                            <li><code>cojudge list</code> List problems</li>
+                            <li><code>cojudge init two-sum --lang python</code> Starter file</li>
+                            <li><code>cojudge run two-sum Solution.py</code> Sample tests</li>
+                            <li><code>cojudge submit two-sum Solution.py</code> Official tests</li>
+                        </ul>
+                    </div>
+                    {#if cliStatus.aliasPaths?.length}
+                        <div class="manage-section">
+                            <h3>Shell alias</h3>
+                            <p>A <code>cojudge</code> alias from <code>./install.sh</code> was found in {cliStatus.aliasPaths.join(', ')}. It overrides the desktop CLI in terminals.</p>
+                            <button class="btn" type="button" onclick={removeCliAlias} disabled={cliBusy}>{cliBusy ? 'Removing…' : 'Remove alias'}</button>
+                        </div>
+                    {/if}
+                </div>
+
+                <p class="manage-note">Open a new terminal after installing. Problems live in <code>{contentDir}</code>. Docker is required for run and submit.</p>
+
+                {#if cliStatus.message && !cliError}
+                    <p class="cli-status-note">{cliStatus.message}</p>
+                {/if}
+                {#if cliError}
+                    <p class="modal-error" role="alert">{cliError}</p>
+                {/if}
+                <div class="home-modal-actions">
+                    {#if cliStatus.installed}
+                        <button class="btn remove-settings-btn" type="button" onclick={uninstallCli} disabled={cliBusy}>{cliBusy ? 'Removing…' : 'Uninstall'}</button>
+                    {/if}
+                    <span class="modal-action-spacer"></span>
+                    <button class="btn" type="button" onclick={() => void closeCliSettings()}>Close</button>
+                    {#if !cliStatus.installed}
+                        <button class="btn modal-primary-btn" type="button" onclick={installCli} disabled={cliBusy || !cliStatus.available}>{cliBusy ? 'Installing…' : 'Install'}</button>
+                    {/if}
                 </div>
             </div>
         </div>
@@ -1142,9 +1515,19 @@
                 href={`/?course=${encodeURIComponent(course.id)}`}
                 aria-current={course.id === selectedCourseId ? "page" : undefined}
                 onclick={() => selectCourse(course.id)}
-            >{course.title}</a>
+            >{course.title}{#if course.source && course.source !== 'bundled'}<span
+                    class="source-badge {course.source}"
+                    title={sourceTitle(course.source)}
+                >{sourceLabel(course.source)}</span>{/if}</a>
         {/each}
     </nav>
+    {#if courses.some((course) => course.source && course.source !== 'bundled')}
+        <div class="source-legend" aria-label="Legend for custom content labels">
+            <span class="source-badge custom">Custom</span> created in your CoJudge folder
+            <span class="source-legend-sep" aria-hidden="true">·</span>
+            <span class="source-badge modified">Modified</span> edited in your CoJudge folder
+        </div>
+    {/if}
     <div class="intro">
         <!-- Overall progress at top of intro -->
         <div class="overall">
@@ -1319,6 +1702,12 @@
                                                     rel="noopener noreferrer"
                                                     class="external-link">↗</a
                                                 >
+                                            {/if}
+                                            {#if problem.source && problem.source !== 'bundled'}
+                                                <span
+                                                    class="source-badge {problem.source}"
+                                                    title={sourceTitle(problem.source)}
+                                                >{sourceLabel(problem.source)}</span>
                                             {/if}
                                             {#if bestRanks[problem.id]}
                                                 <button
@@ -1639,6 +2028,153 @@
         font-weight: 750;
         letter-spacing: 0.12em;
         text-transform: uppercase;
+    }
+    .manage-problems-card {
+        width: min(520px, 100%);
+    }
+    .manage-problems-card h2 {
+        margin: 0.15rem 0 0.5rem;
+    }
+    .manage-intro {
+        margin: 0 0 0.85rem !important;
+        font-size: 0.92rem;
+        line-height: 1.5;
+    }
+    .manage-path-row {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        margin: 0 0 1rem;
+        padding: 0.45rem 0.45rem 0.45rem 0.75rem;
+        border: 1px solid var(--color-border);
+        border-radius: 0.55rem;
+        background: var(--color-surface);
+    }
+    .manage-path-text {
+        flex: 1 1 auto;
+        min-width: 0;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.8rem;
+        line-height: 1.4;
+        color: var(--color-text);
+        word-break: break-all;
+    }
+    .manage-path-copy {
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        padding: 0;
+        border: 1px solid transparent;
+        border-radius: 0.4rem;
+        background: transparent;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+    }
+    .manage-path-copy:hover {
+        background: var(--color-surface-hover, rgba(0, 0, 0, 0.05));
+        color: var(--color-text);
+        border-color: var(--color-border);
+    }
+    .manage-path-copy:focus-visible {
+        outline: 2px solid var(--color-highlight);
+        outline-offset: 1px;
+    }
+    .manage-sections {
+        display: grid;
+        gap: 0.55rem;
+        margin: 0 0 0.9rem;
+    }
+    .manage-section {
+        padding: 0.65rem 0.75rem;
+        border: 1px solid var(--color-border);
+        border-radius: 0.55rem;
+        background: var(--color-surface);
+    }
+    .manage-section h3 {
+        margin: 0 0 0.3rem;
+        font-size: 0.72rem;
+        font-weight: 750;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-text-secondary);
+    }
+    .manage-section-path {
+        display: block;
+        margin: 0 0 0.25rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.82rem;
+        color: var(--color-text);
+        word-break: break-all;
+    }
+    .manage-section p {
+        margin: 0 !important;
+        font-size: 0.82rem;
+        line-height: 1.45;
+        color: var(--color-text-secondary);
+    }
+    .manage-section .btn {
+        margin-top: 0.55rem;
+    }
+    .manage-note {
+        margin: 0 0 0.65rem !important;
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+    .manage-note code,
+    .manage-intro code,
+    .manage-cli code {
+        font-size: 0.9em;
+        padding: 0.05em 0.3em;
+        border-radius: 0.25rem;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+    }
+    .manage-cli {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.35rem;
+        margin: 0 !important;
+        font-size: 0.82rem;
+        color: var(--color-text-secondary);
+    }
+    .manage-cli span {
+        font-weight: 700;
+        color: var(--color-text);
+        margin-right: 0.15rem;
+    }
+    .cli-usage {
+        margin: 0.15rem 0 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 0.4rem;
+        font-size: 0.82rem;
+        line-height: 1.45;
+        color: var(--color-text-secondary);
+    }
+    .cli-usage code {
+        display: inline-block;
+        margin-right: 0.35rem;
+        font-size: 0.78rem;
+        padding: 0.05em 0.3em;
+        border-radius: 0.25rem;
+        background: var(--color-second-bg);
+        border: 1px solid var(--color-border);
+        color: var(--color-text);
+        word-break: break-all;
+    }
+    .cli-status-note {
+        margin: 0 0 0.35rem !important;
+        color: var(--color-text) !important;
+        font-size: 0.85rem;
+    }
+    .manage-problems-card .home-modal-actions {
+        margin-top: 1.15rem;
     }
     .firebase-settings-card {
         width: min(720px, 100%);
@@ -2255,6 +2791,48 @@
         height: 2px;
         background: var(--color-surface);
         pointer-events: none;
+    }
+
+    /* Labels for user content from ~/cojudge (custom = user-created, modified = user-edited) */
+    .source-badge {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 0.45rem;
+        padding: 0.08rem 0.45rem;
+        border-radius: 999px;
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        line-height: 1.5;
+        white-space: nowrap;
+    }
+    .tab .source-badge {
+        margin-left: 0;
+    }
+    .source-badge.custom {
+        background: rgba(99, 102, 241, 0.14);
+        color: #6366f1;
+        border: 1px solid rgba(99, 102, 241, 0.45);
+    }
+    .source-badge.modified {
+        background: rgba(245, 158, 11, 0.14);
+        color: #b45309;
+        border: 1px solid rgba(245, 158, 11, 0.5);
+    }
+    .source-legend {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin: 0.5rem 0 0;
+        font-size: 0.78rem;
+        color: var(--color-text-secondary);
+    }
+    .source-legend .source-badge {
+        margin-left: 0;
+    }
+    .source-legend-sep {
+        opacity: 0.6;
     }
 
     /* Group header (accordion) */

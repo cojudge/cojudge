@@ -2,7 +2,8 @@
 
 import path from "path";
 import fs from "fs";
-import { rootDir, getPort, getPIDs, openBrowser, printVersion, updateRepo } from "./lib/utils.js";
+import { rootDir, getPort, getPIDs, openBrowser, printVersion, updateRepo, isDesktopCli } from "./lib/utils.js";
+import { ensureUserContentSeededSync, resolveProblemDirSync } from "./lib/contentPaths.js";
 import { showHelp } from "./lib/help.js";
 import { startServer, streamLogs, killServer, restartServer } from "./lib/server.js";
 import { markProblem } from "./lib/progress.js";
@@ -82,6 +83,10 @@ async function main() {
   }
 
   if (!action || action === "-p" || action === "--port") {
+    if (isDesktopCli && !action) {
+      showHelp();
+      return;
+    }
     const pids = getPIDs(PORT);
     if (pids.length > 0) {
       console.log(
@@ -119,10 +124,9 @@ async function main() {
     showHelp();
   } else {
     if (action && !action.startsWith("-")) {
+      ensureUserContentSeededSync();
       const isFile = fs.existsSync(action);
-      const isProblemSlug = fs.existsSync(
-        path.join(rootDir, "problems", action),
-      );
+      const isProblemSlug = fs.existsSync(resolveProblemDirSync(action));
 
       if (isFile && !isProblemSlug) {
         handleStart(["start", "playground", action], PORT);

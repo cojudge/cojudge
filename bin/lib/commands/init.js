@@ -1,21 +1,26 @@
-import path from "path";
 import fs from "fs";
-import { rootDir, getParam } from "../utils.js";
+import { getParam } from "../utils.js";
+import {
+  ensureUserContentSeededSync,
+  resolveProblemDirSync,
+  resolveProblemFileSync,
+} from "../contentPaths.js";
 
 export function handleInit(argsToUse) {
+  ensureUserContentSeededSync();
   const slug = argsToUse[1];
   if (!slug) {
     console.error("Usage: cojudge init <slug> [--lang <language>] [--output <filename>]");
     process.exit(1);
   }
 
-  const problemsPath = path.join(rootDir, "problems", slug);
+  const problemsPath = resolveProblemDirSync(slug);
   if (!fs.existsSync(problemsPath)) {
     console.error(`Error: Problem slug '${slug}' not found.`);
     process.exit(1);
   }
 
-  const metadataPath = path.join(problemsPath, "metadata.json");
+  const metadataPath = resolveProblemFileSync(slug, "metadata.json");
   let metadata;
   try {
     metadata = JSON.parse(fs.readFileSync(metadataPath, "utf8"));

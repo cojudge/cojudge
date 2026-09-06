@@ -3,6 +3,8 @@
     windows_subsystem = "windows"
 )]
 
+mod cli;
+
 use std::{
     io::Write as _,
     process::Child,
@@ -808,7 +810,11 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             new_window,
             google_oauth_access_token,
-            read_text_file
+            read_text_file,
+            cli::cli_status,
+            cli::cli_install,
+            cli::cli_uninstall,
+            cli::cli_remove_shell_alias
         ])
         .on_menu_event(|app, event| {
             if event.id().0.as_str() == NEW_WINDOW_MENU_ID {

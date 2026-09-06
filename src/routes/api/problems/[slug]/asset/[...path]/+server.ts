@@ -2,6 +2,7 @@ import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import fs from 'fs/promises';
 import path from 'path';
+import { ensureUserContentSeeded, resolveProblemDir } from '$lib/server/contentPaths';
 
 const MIME_TYPES: Record<string, string> = {
     '.png': 'image/png',
@@ -13,10 +14,12 @@ const MIME_TYPES: Record<string, string> = {
 };
 
 export const GET: RequestHandler = async ({ params }) => {
-    const assetPath = path.resolve('problems', params.slug, params.path);
-    const baseDir = path.resolve('problems', params.slug);
+    await ensureUserContentSeeded();
+    // Serve from ~/cojudge/problems/<slug> first, bundled copy as fallback.
+    const baseDir = await resolveProblemDir(params.slug);
+    const assetPath = path.join(baseDir, params.path);
 
-    if (!assetPath.startsWith(baseDir)) {
+    if (!path.resolve(assetPath).startsWith(path.resolve(baseDir))) {
         throw error(403, 'Forbidden');
     }
 

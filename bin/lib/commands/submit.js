@@ -1,15 +1,15 @@
 import path from "path";
 import fs from "fs";
-import {
-  rootDir,
-  getPIDs,
-  getLangFromExt,
-  isDockerRunning,
-} from "../utils.js";
+import { getPIDs, getLangFromExt, isDockerRunning } from "../utils.js";
 import { startServer } from "../server.js";
 import { markProblem } from "../progress.js";
+import {
+  ensureUserContentSeededSync,
+  resolveProblemDirSync,
+} from "../contentPaths.js";
 
 export async function handleSubmit(argsToUse, PORT) {
+  ensureUserContentSeededSync();
   if (!isDockerRunning()) {
     console.error(
       "\x1b[31mError: Docker engine not detected. Please ensure Docker is running.\x1b[0m",
@@ -48,7 +48,7 @@ Examples:
     process.exit(1);
   }
 
-  const problemsPath = path.join(rootDir, "problems", slug);
+  const problemsPath = resolveProblemDirSync(slug);
   if (!fs.existsSync(problemsPath)) {
     console.error(`Error: Problem slug '${slug}' not found.`);
     process.exit(1);

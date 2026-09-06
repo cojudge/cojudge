@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-cli-remove-shell-alias"
+description = "Enables the cli_remove_shell_alias command without any pre-configured scope."
+commands.allow = ["cli_remove_shell_alias"]
+
+[[permission]]
+identifier = "deny-cli-remove-shell-alias"
+description = "Denies the cli_remove_shell_alias command without any pre-configured scope."
+commands.deny = ["cli_remove_shell_alias"]

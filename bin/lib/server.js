@@ -2,7 +2,8 @@ import { spawn, execSync } from "child_process";
 import path from "path";
 import fs from "fs";
 import os from "os";
-import { rootDir, getPIDs } from "./utils.js";
+import { rootDir, getPIDs, isDesktopCli } from "./utils.js";
+import { ensureUserContentSeededSync, getContentRoot } from "./contentPaths.js";
 
 export function getLogFile() {
   const homeConfigDir = path.join(os.homedir(), ".cojudge");
@@ -17,9 +18,11 @@ export function getLogFile() {
 }
 
 export function startServer(PORT, callback, shouldExit = true) {
+  ensureUserContentSeededSync();
+  console.log(`Content: ${getContentRoot()} (edit problems/courses there; overrides bundled content)`);
   const logFile = getLogFile();
 
-  if (!fs.existsSync(path.join(rootDir, "node_modules"))) {
+  if (!isDesktopCli && !fs.existsSync(path.join(rootDir, "node_modules"))) {
     console.log("Installing dependencies (first-time setup)...");
     try {
       execSync("npm install", { cwd: rootDir, stdio: "inherit" });
@@ -30,6 +33,7 @@ export function startServer(PORT, callback, shouldExit = true) {
   }
 
   if (
+    !isDesktopCli &&
     !fs.existsSync(path.join(rootDir, ".svelte-kit", "output")) &&
     !fs.existsSync(path.join(rootDir, "build"))
   ) {
@@ -57,13 +61,19 @@ export function startServer(PORT, callback, shouldExit = true) {
       "bin",
       "vite.js",
     );
-    const spawnArgs = [
-      vitePath,
-      "preview",
-      "--port",
-      PORT.toString(),
-      "--host",
-    ];
+    const previewServer = path.join(rootDir, "bin", "lib", "preview-server.mjs");
+    const handlerPath = path.join(rootDir, "build", "handler.js");
+    const spawnArgs = fs.existsSync(vitePath)
+      ? [vitePath, "preview", "--port", PORT.toString(), "--host"]
+      : fs.existsSync(handlerPath) && fs.existsSync(previewServer)
+        ? [previewServer]
+        : null;
+    if (!spawnArgs) {
+      console.error(
+        "Cannot start the server: missing Vite preview and production build.",
+      );
+      process.exit(1);
+    }
 
     const child = spawn(cmd, spawnArgs, {
       cwd: rootDir,

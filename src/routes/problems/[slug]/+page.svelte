@@ -987,6 +987,11 @@
             <span class="badge {getDifficultyClass(data.problem.difficulty)}">
                 {data.problem.difficulty}
             </span>
+            {#if data.problem.source === 'custom'}
+                <span class="source-badge custom" title="Custom content — only exists in your CoJudge folder">Custom</span>
+            {:else if data.problem.source === 'modified'}
+                <span class="source-badge modified" title="Modified — edited in your CoJudge folder, differs from the bundled copy">Modified</span>
+            {/if}
             <a href={data.problem.link} target="_blank" rel="noopener noreferrer" class="external-link">↗</a>
             {#if viewMode === 'solution'}
                 <!-- Solution content from problems/[slug]/solution.md -->
@@ -1640,6 +1645,29 @@
     .difficulty-easy { background-color: var(--color-easy); }
     .difficulty-medium { background-color: var(--color-medium); }
     .difficulty-hard { background-color: var(--color-hard); color: #fff; }
+
+    /* Labels for user content from ~/cojudge (custom = user-created, modified = user-edited) */
+    .source-badge {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 0.45rem;
+        padding: 0.15rem 0.55rem;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        line-height: 1.4;
+        white-space: nowrap;
+    }
+    .source-badge.custom {
+        background: rgba(99, 102, 241, 0.14);
+        color: #6366f1;
+        border: 1px solid rgba(99, 102, 241, 0.45);
+    }
+    .source-badge.modified {
+        background: rgba(245, 158, 11, 0.14);
+        color: #b45309;
+        border: 1px solid rgba(245, 158, 11, 0.5);
+    }
 
     .solved-pill {
         display: inline-flex;

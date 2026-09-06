@@ -1,9 +1,11 @@
+import { isDesktopCli } from "./utils.js";
+
 export function showHelp() {
   console.log(`
-Cojudge CLI - Offline code judge
+${isDesktopCli ? "Cojudge desktop CLI" : "Cojudge CLI - Offline code judge"}
 
 Usage:
-  cojudge [options]              Start the server and open in browser
+  ${isDesktopCli ? "cojudge                        Show this help message" : "cojudge [options]              Start the server and open in browser"}
   cojudge start <slug> <file>    Open a specific problem or playground with a file
   cojudge [file]                 Same as 'cojudge playground [file]'
   cojudge list                   List all available problem slugs
@@ -45,5 +47,9 @@ Examples:
   cojudge mark two-sum
   cojudge scrape -n 1
   cojudge scrape -s valid-parentheses
+
+Content:
+  Problems & courses live in ~/cojudge (auto-seeded on first start).
+  Edit/add files there to override bundled content. Override with COJUDGE_CONTENT_DIR.
 `);
 }

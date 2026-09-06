@@ -1,5 +1,10 @@
 import { startCleanupCron, stopCleanupCron } from '$lib/server/cleanup';
+import { ensureUserContentSeeded } from '$lib/server/contentPaths';
 import process from 'node:process';
+
+// Seed ~/cojudge/problems + ~/cojudge/courses from the bundled content on
+// first start. Missing files only — never overwrites user edits.
+void ensureUserContentSeeded();
 
 declare global {
     var __cleanup_cron_started: boolean | undefined;

@@ -1,11 +1,14 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { error } from '@sveltejs/kit';
+import { ensureUserContentSeeded, getProblemSource, resolveProblemDir } from '$lib/server/contentPaths';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
     try {
-        const baseDir = path.resolve('problems', params.slug);
+        await ensureUserContentSeeded();
+        // Reads from ~/cojudge/problems/<slug> first, bundled copy as fallback.
+        const baseDir = await resolveProblemDir(params.slug);
         const problemPath = path.join(baseDir, 'metadata.json');
         const content = await fs.readFile(problemPath, 'utf-8');
         const problem = JSON.parse(content);
@@ -50,6 +53,13 @@ export const load: PageServerLoad = async ({ params }) => {
                         : ''
                 }))
             : [];
+
+        // Label user content so the UI can badge custom/modified problems.
+        try {
+            problem.source = await getProblemSource(params.slug);
+        } catch {
+            problem.source = 'bundled';
+        }
 
         return { problem };
     } catch (e) {
