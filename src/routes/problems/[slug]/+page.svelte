@@ -988,9 +988,9 @@
                 {data.problem.difficulty}
             </span>
             {#if data.problem.source === 'custom'}
-                <span class="source-badge custom" title="Custom content — only exists in your CoJudge folder">Custom</span>
+                <span class="source-badge custom" title="Custom content — only exists in your Cojudge folder">Custom</span>
             {:else if data.problem.source === 'modified'}
-                <span class="source-badge modified" title="Modified — edited in your CoJudge folder, differs from the bundled copy">Modified</span>
+                <span class="source-badge modified" title="Modified — edited in your Cojudge folder, differs from the bundled copy">Modified</span>
             {/if}
             <a href={data.problem.link} target="_blank" rel="noopener noreferrer" class="external-link">↗</a>
             {#if viewMode === 'solution'}
