@@ -25,6 +25,9 @@ Usage:
                                  (Options: --lang java|python|cpp|rust|csharp|go)
   cojudge scrape -n <number>    Scrape problem data from LeetCode by number
   cojudge scrape -s <slug>      Scrape problem data from LeetCode by slug
+  cojudge sync                  Show content status (auto-updates unedited copies)
+  cojudge sync --reset <id>     Reset a problem/course to the bundled version
+  cojudge sync --reset --all    Reset all modified content to bundled versions
   cojudge -p, --port <number>    Specify port (default: 5375)
   cojudge -v, --version          Show current version and date
   cojudge -u, --update           Update cojudge to the latest version
@@ -50,6 +53,8 @@ Examples:
 
 Content:
   Problems & courses live in ~/cojudge (auto-seeded on first start).
-  Edit/add files there to override bundled content. Override with COJUDGE_CONTENT_DIR.
+  Unedited copies auto-update when Cojudge ships fixes; your edits are
+  never overwritten. If an item shows as modified but you never edited it,
+  reset it with 'cojudge sync --reset <id>'. Override with COJUDGE_CONTENT_DIR.
 `);
 }

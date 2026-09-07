@@ -15,6 +15,7 @@ import { listProblems } from "./lib/commands/list.js";
 import { handleSearch } from "./lib/commands/search.js";
 import { handleScrape } from "./lib/commands/scrape.js";
 import { handleDebug } from "./lib/commands/debug.js";
+import { handleSync } from "./lib/commands/sync.js";
 
 const args = process.argv.slice(2);
 const PORT = getPort(args);
@@ -69,6 +70,11 @@ async function main() {
       return;
     }
     markProblem(slug, false);
+    return;
+  }
+
+  if (action === "sync") {
+    handleSync(args);
     return;
   }
 

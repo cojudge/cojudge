@@ -153,7 +153,7 @@ npm run dev
 
 ## Add a problem
 
-Local content lives in `~/cojudge` (auto-seeded from the repo's bundled `problems/` + `courses/` on first start; your copy overrides bundled content — edit / add / delete files there, changes apply immediately). Override the location with `COJUDGE_CONTENT_DIR`.
+Local content lives in `~/cojudge` (auto-seeded from the repo's bundled `problems/` + `courses/` on first start; your copy overrides bundled content — edit / add / delete files there, changes apply immediately). Unedited copies auto-update when Cojudge ships fixes; your edits are never overwritten (reset stale "Modified" items in Manage Problems or via `cojudge sync --reset <id>`). Override the location with `COJUDGE_CONTENT_DIR`.
 
 See [`docs/ADD_PROBLEMS.md`](docs/ADD_PROBLEMS.md) for a comprehensive guide covering:
 
