@@ -61,6 +61,15 @@ export const load: PageServerLoad = async ({ url }) => {
         selectedCourseId: selectedCourse?.id ?? null,
         selectedCourseInfo: selectedCourse?.info ?? null,
         problems,
+        // Every modified item (user copy differs from bundled) across all
+        // courses, so Manage Problems can offer a reset-to-bundled recovery.
+        // Needed because `problems` only covers the selected course.
+        modifiedProblems: allProblems
+            .filter((problem) => (problemSources[problem.id] ?? 'bundled') === 'modified')
+            .map((problem) => ({ id: problem.id, title: problem.title })),
+        modifiedCourses: courses
+            .filter((course) => (courseSources[course.id] ?? 'bundled') === 'modified')
+            .map((course) => ({ id: course.id, title: course.info.title })),
         // Absolute path of the user-editable content folder (~/cojudge by
         // default), shown in the "Manage Problems" popup.
         contentDir: getContentRoot()

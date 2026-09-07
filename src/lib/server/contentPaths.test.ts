@@ -181,4 +181,147 @@ describe('contentPaths', () => {
 			cwdSpy.mockRestore();
 		}
 	});
+
+	it('auto-updates pristine copies when bundled content changes', async () => {
+		const cwdSpy = vi.spyOn(process, 'cwd').mockReturnValue(bundledRoot);
+		try {
+			await fs.mkdir(path.join(bundledRoot, 'problems', 'two-sum'), { recursive: true });
+			await fs.writeFile(
+				path.join(bundledRoot, 'problems', 'two-sum', 'metadata.json'),
+				'{"v":1}'
+			);
+
+			const mod = await import('./contentPaths');
+			await mod.ensureUserContentSeeded();
+			expect(await mod.getProblemSource('two-sum')).toBe('bundled');
+
+			// Maintainer ships a fix; the user never edited the file.
+			await fs.writeFile(
+				path.join(bundledRoot, 'problems', 'two-sum', 'metadata.json'),
+				'{"v":2}'
+			);
+			mod.__resetEnsureMemoForTests();
+			await mod.ensureUserContentSeeded();
+
+			expect(
+				await fs.readFile(
+					path.join(tmpRoot, 'user', 'problems', 'two-sum', 'metadata.json'),
+					'utf-8'
+				)
+			).toBe('{"v":2}');
+			expect(await mod.getProblemSource('two-sum')).toBe('bundled');
+		} finally {
+			cwdSpy.mockRestore();
+		}
+	});
+
+	it('preserves user edits when bundled content changes', async () => {
+		const cwdSpy = vi.spyOn(process, 'cwd').mockReturnValue(bundledRoot);
+		try {
+			await fs.mkdir(path.join(bundledRoot, 'problems', 'two-sum'), { recursive: true });
+			await fs.writeFile(
+				path.join(bundledRoot, 'problems', 'two-sum', 'metadata.json'),
+				'{"v":1}'
+			);
+
+			const mod = await import('./contentPaths');
+			await mod.ensureUserContentSeeded();
+
+			// User edit.
+			await fs.writeFile(
+				path.join(tmpRoot, 'user', 'problems', 'two-sum', 'metadata.json'),
+				'{"mine":true}'
+			);
+
+			// Maintainer ships a fix — the edit must win.
+			await fs.writeFile(
+				path.join(bundledRoot, 'problems', 'two-sum', 'metadata.json'),
+				'{"v":2}'
+			);
+			mod.__resetEnsureMemoForTests();
+			await mod.ensureUserContentSeeded();
+
+			expect(
+				await fs.readFile(
+					path.join(tmpRoot, 'user', 'problems', 'two-sum', 'metadata.json'),
+					'utf-8'
+				)
+			).toBe('{"mine":true}');
+			expect(await mod.getProblemSource('two-sum')).toBe('modified');
+		} finally {
+			cwdSpy.mockRestore();
+		}
+	});
+
+	it('preserves pre-manifest differing copies instead of overwriting (safe migration)', async () => {
+		const cwdSpy = vi.spyOn(process, 'cwd').mockReturnValue(bundledRoot);
+		try {
+			// Bundled v2, user still on stale v1, no seed manifest yet
+			// (install predates manifest tracking).
+			await fs.mkdir(path.join(bundledRoot, 'problems', 'two-sum'), { recursive: true });
+			await fs.writeFile(
+				path.join(bundledRoot, 'problems', 'two-sum', 'metadata.json'),
+				'{"v":2}'
+			);
+			await fs.mkdir(path.join(tmpRoot, 'user', 'problems', 'two-sum'), { recursive: true });
+			await fs.writeFile(
+				path.join(tmpRoot, 'user', 'problems', 'two-sum', 'metadata.json'),
+				'{"v":1}'
+			);
+
+			const mod = await import('./contentPaths');
+			await mod.ensureUserContentSeeded();
+
+			// Must not overwrite a possible user edit.
+			expect(
+				await fs.readFile(
+					path.join(tmpRoot, 'user', 'problems', 'two-sum', 'metadata.json'),
+					'utf-8'
+				)
+			).toBe('{"v":1}');
+			expect(await mod.getProblemSource('two-sum')).toBe('modified');
+
+			// The recovery path brings the user back to bundled.
+			await mod.resetProblemToBundled('two-sum');
+			expect(
+				await fs.readFile(
+					path.join(tmpRoot, 'user', 'problems', 'two-sum', 'metadata.json'),
+					'utf-8'
+				)
+			).toBe('{"v":2}');
+			expect(await mod.getProblemSource('two-sum')).toBe('bundled');
+		} finally {
+			cwdSpy.mockRestore();
+		}
+	});
+
+	it('resetProblemToBundled discards edits and restores the bundled copy', async () => {
+		const cwdSpy = vi.spyOn(process, 'cwd').mockReturnValue(bundledRoot);
+		try {
+			await fs.mkdir(path.join(bundledRoot, 'problems', 'two-sum'), { recursive: true });
+			await fs.writeFile(
+				path.join(bundledRoot, 'problems', 'two-sum', 'metadata.json'),
+				'{"v":1}'
+			);
+
+			const mod = await import('./contentPaths');
+			await mod.ensureUserContentSeeded();
+			await fs.writeFile(
+				path.join(tmpRoot, 'user', 'problems', 'two-sum', 'metadata.json'),
+				'{"edited":true}'
+			);
+			expect(await mod.getProblemSource('two-sum')).toBe('modified');
+
+			await mod.resetProblemToBundled('two-sum');
+			expect(
+				await fs.readFile(
+					path.join(tmpRoot, 'user', 'problems', 'two-sum', 'metadata.json'),
+					'utf-8'
+				)
+			).toBe('{"v":1}');
+			expect(await mod.getProblemSource('two-sum')).toBe('bundled');
+		} finally {
+			cwdSpy.mockRestore();
+		}
+	});
 });
