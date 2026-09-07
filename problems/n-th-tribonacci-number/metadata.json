@@ -1,0 +1,56 @@
+{
+  "id": "n-th-tribonacci-number",
+  "title": "227. N-th Tribonacci Number",
+  "difficulty": "Easy",
+  "category": "dp-1d",
+  "link": "https://leetcode.com/problems/n-th-tribonacci-number/",
+  "examples": [
+    {
+      "input": "n = 4",
+      "output": "4",
+      "explanation": "T_3 = 0 + 1 + 1 = 2, T_4 = 1 + 1 + 2 = 4."
+    },
+    {
+      "input": "n = 25",
+      "output": "1389537",
+      "explanation": "T_25 = 1389537."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int tribonacci(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def tribonacci(self, n: int) -> int:\n        pass\n",
+    "cpp": "class Solution {\npublic:\n    int tribonacci(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int Tribonacci(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn tribonacci(n: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc Tribonacci(n int) int {\n    \n}",
+    "typescript": "export function tribonacci(n: number): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "n": 4
+    },
+    {
+      "n": 25
+    },
+    {
+      "n": 0
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 2
+    }
+  ],
+  "functionName": "tribonacci",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Iterate from the base cases T(0)=0, T(1)=1, T(2)=1, keeping only the last three values: T(n) = T(n-1) + T(n-2) + T(n-3)."
+  ]
+}

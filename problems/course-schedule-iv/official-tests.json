@@ -1,0 +1,42 @@
+[
+  {
+    "numCourses": 2,
+    "prerequisites": "[[1,0]]",
+    "queries": "[[0,1],[1,0]]"
+  },
+  {
+    "numCourses": 2,
+    "prerequisites": "[]",
+    "queries": "[[1,0],[0,1]]"
+  },
+  {
+    "numCourses": 3,
+    "prerequisites": "[[1,2],[1,0],[2,0]]",
+    "queries": "[[1,0],[1,2]]"
+  },
+  {
+    "numCourses": 3,
+    "prerequisites": "[[1,0],[2,0]]",
+    "queries": "[[1,2],[2,1]]"
+  },
+  {
+    "numCourses": 4,
+    "prerequisites": "[[0,1],[1,2],[2,3]]",
+    "queries": "[[0,3],[3,0],[1,3]]"
+  },
+  {
+    "numCourses": 5,
+    "prerequisites": "[[0,1],[1,2],[2,3],[3,4]]",
+    "queries": "[[0,4],[1,3],[4,0]]"
+  },
+  {
+    "numCourses": 3,
+    "prerequisites": "[[0,1],[0,2]]",
+    "queries": "[[0,1],[0,2],[1,2]]"
+  },
+  {
+    "numCourses": 2,
+    "prerequisites": "[[0,1]]",
+    "queries": "[[0,1]]"
+  }
+]

@@ -1,0 +1,78 @@
+{
+  "id": "perfect-squares",
+  "title": "228. Perfect Squares",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/perfect-squares/",
+  "examples": [
+    {
+      "input": "n = 12",
+      "output": "3",
+      "explanation": "12 = 4 + 4 + 4."
+    },
+    {
+      "input": "n = 13",
+      "output": "2",
+      "explanation": "13 = 4 + 9."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numSquares(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def numSquares(self, n: int) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int numSquares(int n) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public int NumSquares(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_squares(n: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc NumSquares(n int) int {\n    \n}",
+    "typescript": "export function numSquares(n: number): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "n": "12"
+    },
+    {
+      "n": "13"
+    },
+    {
+      "n": "1"
+    },
+    {
+      "n": "2"
+    },
+    {
+      "n": "3"
+    },
+    {
+      "n": "4"
+    },
+    {
+      "n": "7"
+    },
+    {
+      "n": "9"
+    },
+    {
+      "n": "10"
+    },
+    {
+      "n": "16"
+    },
+    {
+      "n": "100"
+    },
+    {
+      "n": "9999"
+    }
+  ],
+  "functionName": "numSquares",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use dynamic programming. dp[i] = minimum number of perfect squares that sum to i.",
+    "dp[0] = 0. For each i, try all perfect squares j*j <= i and update dp[i] = min(dp[i], dp[i - j*j] + 1)."
+  ]
+}

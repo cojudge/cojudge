@@ -1,0 +1,55 @@
+{
+  "id": "dota2-senate",
+  "title": "240. Dota2 Senate",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/dota2-senate/",
+  "category": "greedy",
+  "examples": [
+    {
+      "input": "senate = \"RD\"",
+      "output": "\"Radiant\"",
+      "explanation": "The first senator comes from Radiant and he can just ban the next senator's right in round 1."
+    },
+    {
+      "input": "senate = \"RDD\"",
+      "output": "\"Dire\"",
+      "explanation": "The first senator comes from Radiant and he can just ban the next senator's right in round 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String predictPartyVictory(String senate) {\n        \n    }\n}",
+    "python": "class Solution:\n    def predictPartyVictory(self, senate: str) -> str:\n        ",
+    "cpp": "#include <string>\n#include <queue>\nusing namespace std;\n\nclass Solution {\npublic:\n    string predictPartyVictory(string senate) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public string PredictPartyVictory(string senate) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn predict_party_victory(senate: String) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc PredictPartyVictory(senate string) string {\n    \n}",
+    "typescript": "export function predictPartyVictory(senate: string): string {\n    \n}"
+  },
+  "testCases": [
+    {
+      "senate": "RD"
+    },
+    {
+      "senate": "RDD"
+    },
+    {
+      "senate": "RRDDD"
+    },
+    {
+      "senate": "DDRRR"
+    }
+  ],
+  "functionName": "predictPartyVictory",
+  "params": [
+    {
+      "name": "senate",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "A senator should always ban the closest opposite-party senator that comes after them.",
+    "Use two queues holding the indices of each party's senators.",
+    "The smaller index gets to act first, bans the other senator, and re-queues itself at the end with its index increased by senate.length to model the next round."
+  ]
+}

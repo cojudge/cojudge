@@ -1,0 +1,48 @@
+{
+  "id": "majority-element",
+  "title": "155. Majority Element",
+  "difficulty": "Easy",
+  "category": "array",
+  "link": "https://leetcode.com/problems/majority-element/",
+  "examples": [
+    {
+      "input": "nums = [3,2,3]",
+      "output": "3",
+      "explanation": "3 appears 2 times out of 3, which is more than 3/2 = 1."
+    },
+    {
+      "input": "nums = [2,2,1,1,1,2,2]",
+      "output": "2",
+      "explanation": "2 appears 4 times out of 7, which is more than 7/2 = 3."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int majorityElement(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def majorityElement(self, nums: List[int]) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int majorityElement(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MajorityElement(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn majority_element(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MajorityElement(nums []int) int {\n    return 0\n}",
+    "typescript": "export function majorityElement(nums: number[]): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[3,2,3]"
+    },
+    {
+      "nums": "[2,2,1,1,1,2,2]"
+    }
+  ],
+  "functionName": "majorityElement",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The Boyer-Moore voting algorithm finds the majority in O(n) time and O(1) space: keep a candidate and count, incrementing on match and decrementing otherwise.",
+    "Alternatively, sorting puts the majority element at index n/2, or a hash map can count frequencies."
+  ]
+}

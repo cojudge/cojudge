@@ -1,0 +1,51 @@
+{
+  "id": "reverse-string",
+  "title": "165. Reverse String",
+  "difficulty": "Easy",
+  "category": "two-pointer",
+  "link": "https://leetcode.com/problems/reverse-string/",
+  "examples": [
+    {
+      "input": "s = \"hello\"",
+      "output": "\"olleh\"",
+      "explanation": "Reversing \"hello\" gives \"olleh\"."
+    },
+    {
+      "input": "s = \"Hannah\"",
+      "output": "\"hannaH\"",
+      "explanation": "Reversing \"Hannah\" gives \"hannaH\"."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String reverseString(String s) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def reverseString(self, s: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string reverseString(string s) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string ReverseString(string s)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reverse_string(s: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc ReverseString(s string) string {\n    return \"\"\n}",
+    "typescript": "export function reverseString(s: string): string {\n    return \"\";\n}"
+  },
+  "testCases": [
+    {
+      "s": "hello"
+    },
+    {
+      "s": "Hannah"
+    },
+    {
+      "s": "a"
+    }
+  ],
+  "functionName": "reverseString",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Use two pointers starting at opposite ends and swap characters while moving toward the center.",
+    "Reversing can also be done by building the result from the end of the string to the start."
+  ]
+}

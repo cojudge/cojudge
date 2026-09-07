@@ -1,0 +1,67 @@
+{
+  "id": "design-circular-queue",
+  "title": "192. Design Circular Queue",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/design-circular-queue/",
+  "category": "linked-list",
+  "examples": [
+    {
+      "input": "operations = [\"MyCircularQueue\",\"enQueue\",\"enQueue\",\"enQueue\",\"enQueue\",\"Rear\",\"isFull\",\"deQueue\",\"enQueue\",\"Rear\"], values = [3,1,2,3,4,0,0,0,4,0]",
+      "output": "[1,1,1,0,3,1,1,1,4]",
+      "explanation": "Capacity 3. EnQueue 1, 2, 3 succeed; enQueue 4 fails (full). Rear is 3, isFull is true (1), deQueue succeeds, enQueue 4 succeeds, Rear is 4."
+    },
+    {
+      "input": "operations = [\"MyCircularQueue\",\"enQueue\",\"Rear\",\"Front\",\"deQueue\",\"isEmpty\"], values = [2,7,0,0,0,0]",
+      "output": "[1,7,7,1,1]",
+      "explanation": "Capacity 2. EnQueue 7 succeeds, Rear and Front are 7, deQueue succeeds, then isEmpty is true (1)."
+    },
+    {
+      "input": "operations = [\"MyCircularQueue\",\"Front\",\"Rear\",\"isEmpty\",\"enQueue\",\"isFull\"], values = [1,0,0,0,5,0]",
+      "output": "[-1,-1,1,1,1]",
+      "explanation": "Capacity 1 starts empty so Front/Rear are -1 and isEmpty is true (1). EnQueue 5 succeeds, then isFull is true (1)."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runCircularQueue(String[] operations, int[] values) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def runCircularQueue(self, operations: List[str], values: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runCircularQueue(vector<string>& operations, vector<int>& values) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunCircularQueue(string[] operations, int[] values)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_circular_queue(operations: Vec<String>, values: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunCircularQueue(operations []string, values []int) []int {\n    return []int{}\n}",
+    "typescript": "export function runCircularQueue(operations: string[], values: number[]): number[] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "operations": "[\"MyCircularQueue\",\"enQueue\",\"enQueue\",\"enQueue\",\"enQueue\",\"Rear\",\"isFull\",\"deQueue\",\"enQueue\",\"Rear\"]",
+      "values": "[3,1,2,3,4,0,0,0,4,0]"
+    },
+    {
+      "operations": "[\"MyCircularQueue\",\"enQueue\",\"Rear\",\"Front\",\"deQueue\",\"isEmpty\"]",
+      "values": "[2,7,0,0,0,0]"
+    },
+    {
+      "operations": "[\"MyCircularQueue\",\"Front\",\"Rear\",\"isEmpty\",\"enQueue\",\"isFull\"]",
+      "values": "[1,0,0,0,5,0]"
+    },
+    {
+      "operations": "[\"MyCircularQueue\",\"enQueue\",\"enQueue\",\"Front\",\"Rear\",\"deQueue\",\"Front\"]",
+      "values": "[2,1,2,0,0,0,0]"
+    }
+  ],
+  "functionName": "runCircularQueue",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Keep a fixed-size array with head and count pointers; indices wrap with modulo k.",
+    "enQueue fails when full, deQueue fails when empty; Front/Rear return -1 when empty and booleans are encoded as 1/0."
+  ]
+}

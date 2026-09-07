@@ -1,0 +1,67 @@
+{
+  "id": "implement-stack-using-queues",
+  "title": "177. Implement Stack using Queues",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/implement-stack-using-queues/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "operations = [\"push\",\"push\",\"top\",\"pop\",\"empty\"], values = [1,2,0,0,0]",
+      "output": "[2,2,0]",
+      "explanation": "Push 1 then push 2. Top returns 2, pop removes and returns 2, then empty returns false (encoded as 0)."
+    },
+    {
+      "input": "operations = [\"push\",\"top\",\"pop\",\"empty\"], values = [1,0,0,0]",
+      "output": "[1,1,1]",
+      "explanation": "Push 1. Top returns 1, pop returns 1, then the stack is empty so empty returns true (encoded as 1)."
+    },
+    {
+      "input": "operations = [\"push\",\"push\",\"push\",\"pop\",\"pop\",\"top\",\"empty\"], values = [1,2,3,0,0,0,0]",
+      "output": "[3,2,1,0]",
+      "explanation": "Push 1, 2, 3. Pop returns 3, pop returns 2, top returns 1, and empty returns false (0) because 1 remains."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runStackUsingQueues(String[] operations, int[] values) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def runStackUsingQueues(self, operations: List[str], values: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runStackUsingQueues(vector<string>& operations, vector<int>& values) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunStackUsingQueues(string[] operations, int[] values)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_stack_using_queues(operations: Vec<String>, values: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunStackUsingQueues(operations []string, values []int) []int {\n    return []int{}\n}",
+    "typescript": "export function runStackUsingQueues(operations: string[], values: number[]): number[] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "operations": "[\"push\",\"push\",\"top\",\"pop\",\"empty\"]",
+      "values": "[1,2,0,0,0]"
+    },
+    {
+      "operations": "[\"push\",\"top\",\"pop\",\"empty\"]",
+      "values": "[1,0,0,0]"
+    },
+    {
+      "operations": "[\"push\",\"push\",\"push\",\"pop\",\"pop\",\"top\",\"empty\"]",
+      "values": "[1,2,3,0,0,0,0]"
+    },
+    {
+      "operations": "[\"push\",\"empty\",\"top\",\"pop\",\"empty\"]",
+      "values": "[5,0,0,0,0]"
+    }
+  ],
+  "functionName": "runStackUsingQueues",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Simulate a stack with two queues: on push, move all elements so the newest element is always at the front.",
+    "Pop and top read from the front of the primary queue; empty checks whether it has no elements. Encode empty as 1 for true and 0 for false."
+  ]
+}

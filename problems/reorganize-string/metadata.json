@@ -1,0 +1,58 @@
+{
+  "id": "reorganize-string",
+  "title": "203. Reorganize String",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/reorganize-string/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "s = \"aab\"",
+      "output": "\"aba\"",
+      "explanation": "The only possible rearrangement is \"aba\"."
+    },
+    {
+      "input": "s = \"aaab\"",
+      "output": "\"\"",
+      "explanation": "No valid rearrangement exists because three a's would always touch."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String reorganizeString(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def reorganizeString(self, s: str) -> str:\n        ",
+    "cpp": "#include <string>\n#include <queue>\nusing namespace std;\n\nclass Solution {\npublic:\n    string reorganizeString(string s) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public string ReorganizeString(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reorganize_string(s: String) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc ReorganizeString(s string) string {\n    \n}",
+    "typescript": "export function reorganizeString(s: string): string {\n    \n}"
+  },
+  "testCases": [
+    {
+      "s": "aab"
+    },
+    {
+      "s": "aaab"
+    },
+    {
+      "s": "aaabc"
+    },
+    {
+      "s": "aabb"
+    },
+    {
+      "s": "z"
+    }
+  ],
+  "functionName": "reorganizeString",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Count the frequency of each character.",
+    "Use a max-heap keyed by frequency to always append the most frequent remaining character that was not just placed.",
+    "If a character appears more than (s.length + 1) / 2 times, a rearrangement is impossible."
+  ]
+}

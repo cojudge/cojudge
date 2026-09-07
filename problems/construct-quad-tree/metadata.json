@@ -1,0 +1,50 @@
+{
+  "id": "construct-quad-tree",
+  "title": "199. Construct Quad Tree",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/construct-quad-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "grid = [[0,1],[1,0]]",
+      "output": "[[0,1],[1,0],[1,1],[1,1],[1,0]]",
+      "explanation": "Serialized as BFS list of [isLeaf,val] (1/0). null children of leaves omitted via structure."
+    },
+    {
+      "input": "grid = [[1,1],[1,1]]",
+      "output": "[[1,1]]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    // Return BFS serialization: list of [isLeaf, val] as 0/1 ints; use null marker as [-1,-1] for missing non-leaf slots is not needed \u2014 return full 4-children expansion only for internal nodes in preorder flattened list.\n    public int[][] construct(int[][] grid) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def construct(self, grid: List[List[int]]) -> List[List[int]]:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> construct(vector<vector<int>>& grid) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[][] Construct(int[][] grid) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn construct(grid: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc Construct(grid [][]int) [][]int {\n    return nil\n}",
+    "typescript": "export function construct(grid: number[][]): number[][] {\n    \n}"
+  },
+  "testCases": [
+    {
+      "grid": "[[0,1],[1,0]]"
+    },
+    {
+      "grid": "[[1,1],[1,1]]"
+    },
+    {
+      "grid": "[[1,1,0,0],[1,1,0,0],[0,0,1,1],[0,0,1,1]]"
+    }
+  ],
+  "functionName": "construct",
+  "params": [
+    {
+      "name": "grid",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Recursively build the quad tree. If a subgrid is uniform, return a leaf.",
+    "Serialize the tree as a BFS list of [isLeaf, val] pairs (1/0). For internal nodes, four children follow in order TL,TR,BL,BR. Leaves have no children in the serialization (standard LeetCode display)."
+  ]
+}

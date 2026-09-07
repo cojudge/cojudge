@@ -1,0 +1,59 @@
+{
+  "id": "simplify-path",
+  "title": "181. Simplify Path",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/simplify-path/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "path = \"/home/\"",
+      "output": "\"/home\"",
+      "explanation": "Trailing slash is removed; /home/ simplifies to /home."
+    },
+    {
+      "input": "path = \"/home//foo/\"",
+      "output": "\"/home/foo\"",
+      "explanation": "Multiple slashes collapse to one; trailing slash is removed."
+    },
+    {
+      "input": "path = \"/home/user/Documents/../Pictures\"",
+      "output": "\"/home/user/Pictures\"",
+      "explanation": "Documents/.. cancels, leaving /home/user/Pictures."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String simplifyPath(String path) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def simplifyPath(self, path: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string simplifyPath(string path) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string SimplifyPath(string path) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn simplify_path(path: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc SimplifyPath(path string) string {\n    return \"\"\n}",
+    "typescript": "export function simplifyPath(path: string): string {\n    return \"\";\n}"
+  },
+  "testCases": [
+    {
+      "path": "/home/"
+    },
+    {
+      "path": "/home//foo/"
+    },
+    {
+      "path": "/home/user/Documents/../Pictures"
+    },
+    {
+      "path": "/../"
+    }
+  ],
+  "functionName": "simplifyPath",
+  "params": [
+    {
+      "name": "path",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Split by '/' and use a stack: ignore empty parts and '.', pop on '..' when possible, otherwise push the directory name.",
+    "Join the stack with '/' prefixed; return '/' when the stack is empty."
+  ]
+}

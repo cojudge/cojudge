@@ -1,0 +1,16 @@
+[
+  { "prices": "[100,80,60,70,60,75,85]" },
+  { "prices": "[10,4,5,90,120,80]" },
+  { "prices": "[30,20,10]" },
+  { "prices": "[10]" },
+  { "prices": "[10,10,10,10]" },
+  { "prices": "[1,2,3,4,5]" },
+  { "prices": "[5,4,3,2,1]" },
+  { "prices": "[31,41,59,26,53,58,97,93,23,84]" },
+  { "prices": "[100,100,100,90,90,100]" },
+  { "prices": "[28,14,28,35,46,53,66,80,87,88]" },
+  { "prices": "[73,73,73,73,73]" },
+  { "prices": "[1,100000,1,100000,1]" },
+  { "prices": "@javascript:JSON.stringify(Array.from({length:10000},(_,i)=>i+1))", "_isLargeTest": true },
+  { "prices": "@javascript:JSON.stringify(Array.from({length:10000},(_,i)=>10000-i))", "_isLargeTest": true }
+]

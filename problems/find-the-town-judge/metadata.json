@@ -1,0 +1,59 @@
+{
+  "id": "find-the-town-judge",
+  "title": "217. Find the Town Judge",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/find-the-town-judge/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "n = 2, trust = [[1,2]]",
+      "output": "2"
+    },
+    {
+      "input": "n = 3, trust = [[1,3],[2,3]]",
+      "output": "3"
+    },
+    {
+      "input": "n = 3, trust = [[1,3],[2,3],[3,1]]",
+      "output": "-1"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findJudge(int n, int[][] trust) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findJudge(self, n: int, trust: List[List[int]]) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int findJudge(int n, vector<vector<int>>& trust) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindJudge(int n, int[][] trust) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_judge(n: i32, trust: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindJudge(n int, trust [][]int) int {\n    \n}",
+    "typescript": "export function findJudge(n: number, trust: number[][]): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "n": 2,
+      "trust": "[[1,2]]"
+    },
+    {
+      "n": 3,
+      "trust": "[[1,3],[2,3]]"
+    },
+    {
+      "n": 3,
+      "trust": "[[1,3],[2,3],[3,1]]"
+    }
+  ],
+  "functionName": "findJudge",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "trust",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The judge is trusted by everyone else and trusts nobody. Track in/out degree."
+  ]
+}

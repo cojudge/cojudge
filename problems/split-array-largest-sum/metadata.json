@@ -1,0 +1,57 @@
+{
+  "id": "split-array-largest-sum",
+  "title": "189. Split Array Largest Sum",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/split-array-largest-sum/",
+  "category": "binary-search",
+  "examples": [
+    {
+      "input": "nums = [7,2,5,10,8], k = 2",
+      "output": "18",
+      "explanation": "Split into [7,2,5] and [10,8] with largest sum 18."
+    },
+    {
+      "input": "nums = [1,2,3,4,5], k = 2",
+      "output": "9",
+      "explanation": "Split into [1,2,3] and [4,5]."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int splitArray(int[] nums, int k) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def splitArray(self, nums: List[int], k: int) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int splitArray(vector<int>& nums, int k) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int SplitArray(int[] nums, int k) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn split_array(nums: Vec<i32>, k: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc SplitArray(nums []int, k int) int {\n    return 0\n}",
+    "typescript": "export function splitArray(nums: number[], k: number): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "nums": "[7,2,5,10,8]",
+      "k": 2
+    },
+    {
+      "nums": "[1,2,3,4,5]",
+      "k": 2
+    },
+    {
+      "nums": "[1,4,4]",
+      "k": 3
+    }
+  ],
+  "functionName": "splitArray",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Binary search the answer. Check if you can split into at most k subarrays with sum <= mid."
+  ]
+}

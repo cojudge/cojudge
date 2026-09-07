@@ -1,0 +1,56 @@
+{
+  "id": "first-missing-positive",
+  "title": "164. First Missing Positive",
+  "difficulty": "Hard",
+  "category": "array",
+  "link": "https://leetcode.com/problems/first-missing-positive/",
+  "examples": [
+    {
+      "input": "nums = [1,2,0]",
+      "output": "3",
+      "explanation": "The numbers in the range [1,2] are all in the array."
+    },
+    {
+      "input": "nums = [3,4,-1,1]",
+      "output": "2",
+      "explanation": "1 is in the array but 2 is missing."
+    },
+    {
+      "input": "nums = [7,8,9,11,12]",
+      "output": "1",
+      "explanation": "The smallest positive integer 1 is missing."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int firstMissingPositive(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def firstMissingPositive(self, nums: List[int]) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int firstMissingPositive(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FirstMissingPositive(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn first_missing_positive(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc FirstMissingPositive(nums []int) int {\n    return 0\n}",
+    "typescript": "export function firstMissingPositive(nums: number[]): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,0]"
+    },
+    {
+      "nums": "[3,4,-1,1]"
+    },
+    {
+      "nums": "[7,8,9,11,12]"
+    }
+  ],
+  "functionName": "firstMissingPositive",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Place each value v with 1 <= v <= n at index v-1 by swapping (cyclic sort), ignoring others.",
+    "Then the first index i with nums[i] != i+1 gives answer i+1; otherwise n+1."
+  ]
+}

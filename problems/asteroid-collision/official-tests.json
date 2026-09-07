@@ -1,0 +1,17 @@
+[
+  { "asteroids": "[5,10,-5]" },
+  { "asteroids": "[8,-8]" },
+  { "asteroids": "[10,2,-5]" },
+  { "asteroids": "[-2,-1,1,2]" },
+  { "asteroids": "[3,5,-6,2,-1,4]" },
+  { "asteroids": "[-2,-2,1,-2]" },
+  { "asteroids": "[1,-1]" },
+  { "asteroids": "[1,2,3,-4]" },
+  { "asteroids": "[-5,5,-5,5]" },
+  { "asteroids": "[10,-10,10,-10]" },
+  { "asteroids": "[1,1,-2,-2]" },
+  { "asteroids": "[-3,1,2,-2,-2]" },
+  { "asteroids": "[1000,-1000]" },
+  { "asteroids": "@javascript:JSON.stringify(Array.from({length:10000},(_,i)=>i%2===0?1000:-1000))", "_isLargeTest": true },
+  { "asteroids": "@javascript:JSON.stringify(Array.from({length:10000},(_,i)=>i<5000?i+1:-(10000-i)))", "_isLargeTest": true }
+]

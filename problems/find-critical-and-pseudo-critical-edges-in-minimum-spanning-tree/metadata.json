@@ -1,0 +1,51 @@
+{
+  "id": "find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree",
+  "title": "224. Find Critical and Pseudo-Critical Edges in Minimum Spanning Tree",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "n = 5, edges = [[0,1,1],[1,2,1],[2,3,2],[0,3,2],[0,4,3],[3,4,3],[1,4,6]]",
+      "output": "[[0,1],[2,3,4,5]]"
+    },
+    {
+      "input": "n = 4, edges = [[0,1,1],[1,2,1],[2,3,1],[0,3,1]]",
+      "output": "[[],[0,1,2,3]]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] findCriticalAndPseudoCriticalEdges(int n, int[][] edges) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findCriticalAndPseudoCriticalEdges(self, n: int, edges: List[List[int]]) -> List[List[int]]:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> findCriticalAndPseudoCriticalEdges(int n, vector<vector<int>>& edges) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[][] FindCriticalAndPseudoCriticalEdges(int n, int[][] edges) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_critical_and_pseudo_critical_edges(n: i32, edges: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindCriticalAndPseudoCriticalEdges(n int, edges [][]int) [][]int {\n    return nil\n}",
+    "typescript": "export function findCriticalAndPseudoCriticalEdges(n: number, edges: number[][]): number[][] {\n    \n}"
+  },
+  "testCases": [
+    {
+      "n": 5,
+      "edges": "[[0,1,1],[1,2,1],[2,3,2],[0,3,2],[0,4,3],[3,4,3],[1,4,6]]"
+    },
+    {
+      "n": 4,
+      "edges": "[[0,1,1],[1,2,1],[2,3,1],[0,3,1]]"
+    }
+  ],
+  "functionName": "findCriticalAndPseudoCriticalEdges",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "edges",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Compute MST weight. An edge is critical if excluding it raises the weight. Pseudo-critical if forcing it still achieves MST weight."
+  ]
+}

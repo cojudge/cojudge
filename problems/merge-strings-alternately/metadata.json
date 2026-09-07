@@ -1,0 +1,63 @@
+{
+  "id": "merge-strings-alternately",
+  "title": "167. Merge Strings Alternately",
+  "difficulty": "Easy",
+  "category": "two-pointer",
+  "link": "https://leetcode.com/problems/merge-strings-alternately/",
+  "examples": [
+    {
+      "input": "word1 = \"abc\", word2 = \"pqr\"",
+      "output": "\"apbqcr\"",
+      "explanation": "The merged string is \"apbqcr\"."
+    },
+    {
+      "input": "word1 = \"ab\", word2 = \"pqrs\"",
+      "output": "\"apbqrs\"",
+      "explanation": "As word2 is longer, \"rs\" is appended to the end."
+    },
+    {
+      "input": "word1 = \"abcd\", word2 = \"pq\"",
+      "output": "\"apbqcd\"",
+      "explanation": "As word1 is longer, \"cd\" is appended to the end."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String mergeAlternately(String word1, String word2) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def mergeAlternately(self, word1: str, word2: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string mergeAlternately(string word1, string word2) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string MergeAlternately(string word1, string word2)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn merge_alternately(word1: String, word2: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc MergeAlternately(word1 string, word2 string) string {\n    return \"\"\n}",
+    "typescript": "export function mergeAlternately(word1: string, word2: string): string {\n    return \"\";\n}"
+  },
+  "testCases": [
+    {
+      "word1": "abc",
+      "word2": "pqr"
+    },
+    {
+      "word1": "ab",
+      "word2": "pqrs"
+    },
+    {
+      "word1": "abcd",
+      "word2": "pq"
+    }
+  ],
+  "functionName": "mergeAlternately",
+  "params": [
+    {
+      "name": "word1",
+      "type": "string"
+    },
+    {
+      "name": "word2",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Use two pointers, one for each string, and alternately append characters.",
+    "When one pointer reaches the end, append the remainder of the other string."
+  ]
+}

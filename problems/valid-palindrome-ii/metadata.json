@@ -1,0 +1,56 @@
+{
+  "id": "valid-palindrome-ii",
+  "title": "166. Valid Palindrome II",
+  "difficulty": "Easy",
+  "category": "two-pointer",
+  "link": "https://leetcode.com/problems/valid-palindrome-ii/",
+  "examples": [
+    {
+      "input": "s = \"aba\"",
+      "output": "true",
+      "explanation": "\"aba\" is already a palindrome."
+    },
+    {
+      "input": "s = \"abca\"",
+      "output": "true",
+      "explanation": "Delete the character 'c' to get \"aba\", which is a palindrome."
+    },
+    {
+      "input": "s = \"abc\"",
+      "output": "false",
+      "explanation": "No single deletion makes \"abc\" a palindrome."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean validPalindrome(String s) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def validPalindrome(self, s: str) -> bool:\n        return False\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool validPalindrome(string s) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool ValidPalindrome(string s)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn valid_palindrome(s: String) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc ValidPalindrome(s string) bool {\n    return false\n}",
+    "typescript": "export function validPalindrome(s: string): boolean {\n    return false;\n}"
+  },
+  "testCases": [
+    {
+      "s": "aba"
+    },
+    {
+      "s": "abca"
+    },
+    {
+      "s": "abc"
+    }
+  ],
+  "functionName": "validPalindrome",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Use two pointers from both ends; on the first mismatch try skipping either the left or the right character.",
+    "Check whether the remaining substring is a palindrome after one skip."
+  ]
+}

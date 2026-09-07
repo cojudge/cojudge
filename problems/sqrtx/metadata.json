@@ -1,0 +1,60 @@
+{
+  "id": "sqrtx",
+  "title": "186. Sqrt(x)",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/sqrtx/",
+  "category": "binary-search",
+  "examples": [
+    {
+      "input": "x = 4",
+      "output": "2",
+      "explanation": "The square root of 4 is 2."
+    },
+    {
+      "input": "x = 8",
+      "output": "2",
+      "explanation": "The square root of 8 is 2.82842..., rounded down to 2."
+    },
+    {
+      "input": "x = 1",
+      "output": "1",
+      "explanation": "The square root of 1 is 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int mySqrt(int x) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def mySqrt(self, x: int) -> int:\n        return 0\n",
+    "cpp": "class Solution {\npublic:\n    int mySqrt(int x) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MySqrt(int x)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn my_sqrt(x: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MySqrt(x int) int {\n    return 0\n}",
+    "typescript": "export function mySqrt(x: number): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "x": 4
+    },
+    {
+      "x": 8
+    },
+    {
+      "x": 1
+    },
+    {
+      "x": 0
+    }
+  ],
+  "functionName": "mySqrt",
+  "params": [
+    {
+      "name": "x",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Binary-search the answer in [0, x]: for mid, compare mid with x / mid instead of mid * mid to avoid overflow.",
+    "When mid <= x / mid, mid is feasible and the answer is at least mid; otherwise it is smaller.",
+    "Handle x = 0 and x = 1 as direct answers."
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": "permutations-ii",
+  "title": "209. Permutations II",
+  "difficulty": "Medium",
+  "category": "backtracking",
+  "link": "https://leetcode.com/problems/permutations-ii/",
+  "examples": [
+    {
+      "input": "nums = [1,1,2]",
+      "output": "[[1,1,2],[1,2,1],[2,1,1]]",
+      "explanation": "The three output arrays do not include duplicate permutations: [1,1,2] appears only once."
+    },
+    {
+      "input": "nums = [1,2,3]",
+      "output": "[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]",
+      "explanation": "There are six ways to order three distinct values."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public List<List<Integer>> permuteUnique(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def permuteUnique(self, nums: List[int]) -> List[List[int]]:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> permuteUnique(vector<int>& nums) {\n        \n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<List<int>> PermuteUnique(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn permute_unique(nums: Vec<i32>) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc PermuteUnique(nums []int) [][]int {\n    \n}",
+    "typescript": "export function permuteUnique(nums: number[]): number[][] {\n    \n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,1,2]"
+    },
+    {
+      "nums": "[1,2,3]"
+    },
+    {
+      "nums": "[2,2,2]"
+    }
+  ],
+  "functionName": "permuteUnique",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_list_2d",
+  "hints": [
+    "Sort `nums` so equal values are adjacent.",
+    "Build the permutation one position at a time, and skip placing `nums[i]` when it equals a value already placed at that same depth in a previous branch."
+  ]
+}

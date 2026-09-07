@@ -1,0 +1,57 @@
+{
+  "id": "build-a-matrix-with-conditions",
+  "title": "225. Build a Matrix With Conditions",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/build-a-matrix-with-conditions/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "k = 3, rowConditions = [[1,2],[3,2]], colConditions = [[2,1],[3,2]]",
+      "output": "[[3,0,0],[0,0,1],[0,2,0]]"
+    },
+    {
+      "input": "k = 3, rowConditions = [[1,2],[2,3],[3,1],[2,3]], colConditions = [[2,1]]",
+      "output": "[]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] buildMatrix(int k, int[][] rowConditions, int[][] colConditions) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def buildMatrix(self, k: int, rowConditions: List[List[int]], colConditions: List[List[int]]) -> List[List[int]]:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> buildMatrix(int k, vector<vector<int>>& rowConditions, vector<vector<int>>& colConditions) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[][] BuildMatrix(int k, int[][] rowConditions, int[][] colConditions) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn build_matrix(k: i32, row_conditions: Vec<Vec<i32>>, col_conditions: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc BuildMatrix(k int, rowConditions [][]int, colConditions [][]int) [][]int {\n    return nil\n}",
+    "typescript": "export function buildMatrix(k: number, rowConditions: number[][], colConditions: number[][]): number[][] {\n    \n}"
+  },
+  "testCases": [
+    {
+      "k": 3,
+      "rowConditions": "[[1,2],[3,2]]",
+      "colConditions": "[[2,1],[3,2]]"
+    },
+    {
+      "k": 3,
+      "rowConditions": "[[1,2],[2,3],[3,1],[2,3]]",
+      "colConditions": "[[2,1]]"
+    }
+  ],
+  "functionName": "buildMatrix",
+  "params": [
+    {
+      "name": "k",
+      "type": "int"
+    },
+    {
+      "name": "rowConditions",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "colConditions",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Topological sort for rows and columns separately. Place number i at (rowPos[i], colPos[i])."
+  ]
+}

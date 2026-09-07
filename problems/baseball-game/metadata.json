@@ -1,0 +1,56 @@
+{
+  "id": "baseball-game",
+  "title": "176. Baseball Game",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/baseball-game/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "operations = [\"5\",\"2\",\"C\",\"D\",\"+\"]",
+      "output": "30",
+      "explanation": "\"5\" - Add 5 to the record, record is now [5]. \"2\" - Add 2 to the record, record is now [5, 2]. \"C\" - Invalidate and remove the previous score, record is now [5]. \"D\" - Add 2 * 5 = 10 to the record, record is now [5, 10]. \"+\" - Add 5 + 10 = 15 to the record, record is now [5, 10, 15]. The sum is 30."
+    },
+    {
+      "input": "operations = [\"5\",\"-2\",\"4\",\"C\",\"D\",\"9\",\"+\",\"+\"]",
+      "output": "27",
+      "explanation": "\"5\" - Add 5, record is [5]. \"-2\" - Add -2, record is [5, -2]. \"4\" - Add 4, record is [5, -2, 4]. \"C\" - Remove 4, record is [5, -2]. \"D\" - Add 2 * -2 = -4, record is [5, -2, -4]. \"9\" - Add 9, record is [5, -2, -4, 9]. \"+\" - Add -4 + 9 = 5, record is [5, -2, -4, 9, 5]. \"+\" - Add 9 + 5 = 14, record is [5, -2, -4, 9, 5, 14]. The sum is 27."
+    },
+    {
+      "input": "operations = [\"1\",\"C\"]",
+      "output": "0",
+      "explanation": "\"1\" - Add 1 to the record, record is now [1]. \"C\" - Invalidate and remove the previous score, record is now []. The sum is 0."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int calPoints(String[] operations) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def calPoints(self, operations: List[str]) -> int:\n        return 0\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int calPoints(vector<string>& operations) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int CalPoints(string[] operations)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn cal_points(operations: Vec<String>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc CalPoints(operations []string) int {\n    return 0\n}",
+    "typescript": "export function calPoints(operations: string[]): number {\n    return 0;\n}\n"
+  },
+  "testCases": [
+    {
+      "operations": "[\"5\",\"2\",\"C\",\"D\",\"+\"]"
+    },
+    {
+      "operations": "[\"5\",\"-2\",\"4\",\"C\",\"D\",\"9\",\"+\",\"+\"]"
+    },
+    {
+      "operations": "[\"1\",\"C\"]"
+    }
+  ],
+  "functionName": "calPoints",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Keep a stack (list) of valid scores and update it for each operation.",
+    "For '+' push the sum of the last two scores; for 'D' push twice the last score; for 'C' pop the last score; otherwise parse and push the integer."
+  ]
+}

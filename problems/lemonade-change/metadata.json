@@ -1,0 +1,50 @@
+{
+  "id": "lemonade-change",
+  "title": "236. Lemonade Change",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/lemonade-change/",
+  "category": "greedy",
+  "examples": [
+    {
+      "input": "bills = [5,5,5,10,20]",
+      "output": "true",
+      "explanation": "From the first 3 customers, we collect three $5 bills. From the fourth, we collect a $10 and give back a $5. From the fifth, we give a $10 and a $5."
+    },
+    {
+      "input": "bills = [5,5,10,10,20]",
+      "output": "false",
+      "explanation": "From the first two customers we collect two $5. From the third and fourth we collect two $10 and give back two $5. For the fifth we cannot give $15 change."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean lemonadeChange(int[] bills) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def lemonadeChange(self, bills: List[int]) -> bool:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool lemonadeChange(vector<int>& bills) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool LemonadeChange(int[] bills) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn lemonade_change(bills: Vec<i32>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc LemonadeChange(bills []int) bool {\n    \n}",
+    "typescript": "export function lemonadeChange(bills: number[]): boolean {\n    \n}"
+  },
+  "testCases": [
+    {
+      "bills": "[5,5,5,10,20]"
+    },
+    {
+      "bills": "[5,5,10,10,20]"
+    },
+    {
+      "bills": "[5,5,5,5,20,20,10]"
+    }
+  ],
+  "functionName": "lemonadeChange",
+  "params": [
+    {
+      "name": "bills",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Track counts of $5 and $10 bills. Prefer giving a $10+$5 when possible for a $20."
+  ]
+}

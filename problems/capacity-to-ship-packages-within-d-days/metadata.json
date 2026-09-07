@@ -1,0 +1,68 @@
+{
+  "id": "capacity-to-ship-packages-within-d-days",
+  "title": "187. Capacity To Ship Packages Within D Days",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/",
+  "category": "binary-search",
+  "examples": [
+    {
+      "input": "weights = [1,2,3,4,5,6,7,8,9,10], days = 5",
+      "output": "15",
+      "explanation": "Capacity 15 ships as [1,2,3,4,5],[6,7],[8],[9],[10] in 5 days; 14 needs 6 days."
+    },
+    {
+      "input": "weights = [3,2,2,4,1,4], days = 3",
+      "output": "6",
+      "explanation": "Capacity 6 ships as [3,2],[2,4],[1,4] in 3 days; 5 needs 4 days."
+    },
+    {
+      "input": "weights = [1,2,3,1,1], days = 4",
+      "output": "3",
+      "explanation": "Capacity 3 ships as [1,2],[3],[1],[1] in 4 days."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int shipWithinDays(int[] weights, int days) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def shipWithinDays(self, weights: List[int], days: int) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int shipWithinDays(vector<int>& weights, int days) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int ShipWithinDays(int[] weights, int days)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn ship_within_days(weights: Vec<i32>, days: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc ShipWithinDays(weights []int, days int) int {\n    return 0\n}",
+    "typescript": "export function shipWithinDays(weights: number[], days: number): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "weights": "[1,2,3,4,5,6,7,8,9,10]",
+      "days": 5
+    },
+    {
+      "weights": "[3,2,2,4,1,4]",
+      "days": 3
+    },
+    {
+      "weights": "[1,2,3,1,1]",
+      "days": 4
+    },
+    {
+      "weights": "[1]",
+      "days": 1
+    }
+  ],
+  "functionName": "shipWithinDays",
+  "params": [
+    {
+      "name": "weights",
+      "type": "int_array"
+    },
+    {
+      "name": "days",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "For a fixed capacity, greedily fill each day and count how many days are needed.",
+    "Feasibility is monotone: if capacity C works, every larger capacity works.",
+    "Binary-search between max(weights) and sum(weights)."
+  ]
+}

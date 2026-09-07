@@ -1,0 +1,48 @@
+{
+  "id": "sort-an-array",
+  "title": "158. Sort an Array",
+  "difficulty": "Medium",
+  "category": "array",
+  "link": "https://leetcode.com/problems/sort-an-array/",
+  "examples": [
+    {
+      "input": "nums = [5,2,3,1]",
+      "output": "[1,2,3,5]",
+      "explanation": "After sorting, 2 and 3 keep relative positions while 1 and 5 move."
+    },
+    {
+      "input": "nums = [5,1,1,2,0,0]",
+      "output": "[0,0,1,1,2,5]",
+      "explanation": "Values are not necessarily unique; duplicates are grouped together."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] sortArray(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def sortArray(self, nums: List[int]) -> List[int]:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> sortArray(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] SortArray(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn sort_array(nums: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc SortArray(nums []int) []int {\n    \n}",
+    "typescript": "export function sortArray(nums: number[]): number[] {\n    \n}"
+  },
+  "testCases": [
+    {
+      "nums": "[5,2,3,1]"
+    },
+    {
+      "nums": "[5,1,1,2,0,0]"
+    }
+  ],
+  "functionName": "sortArray",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Implement merge sort or quicksort to achieve O(n log n) time without built-in sort.",
+    "Merge sort guarantees O(n log n) worst case with O(n) extra space; quicksort with random pivot is O(n log n) average with O(log n) stack."
+  ]
+}

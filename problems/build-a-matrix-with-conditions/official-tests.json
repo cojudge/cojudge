@@ -1,0 +1,32 @@
+[
+  {
+    "k": 3,
+    "rowConditions": "[[1,2],[3,2]]",
+    "colConditions": "[[2,1],[3,2]]"
+  },
+  {
+    "k": 3,
+    "rowConditions": "[[1,2],[2,3],[3,1],[2,3]]",
+    "colConditions": "[[2,1]]"
+  },
+  {
+    "k": 2,
+    "rowConditions": "[[1,2]]",
+    "colConditions": "[[2,1]]"
+  },
+  {
+    "k": 2,
+    "rowConditions": "[[1,2],[2,1]]",
+    "colConditions": "[[1,2]]"
+  },
+  {
+    "k": 4,
+    "rowConditions": "[[1,2],[2,3],[3,4]]",
+    "colConditions": "[[4,3],[3,2],[2,1]]"
+  },
+  {
+    "k": 3,
+    "rowConditions": "[[1,2]]",
+    "colConditions": "[[1,2]]"
+  }
+]

@@ -1,0 +1,59 @@
+{
+  "id": "open-the-lock",
+  "title": "218. Open the Lock",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/open-the-lock/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "deadends = [\"0201\",\"0101\",\"0102\",\"1212\",\"2002\"], target = \"0202\"",
+      "output": "6"
+    },
+    {
+      "input": "deadends = [\"8888\"], target = \"0009\"",
+      "output": "1"
+    },
+    {
+      "input": "deadends = [\"8887\",\"8889\",\"8878\",\"8898\",\"8788\",\"8988\",\"7888\",\"9888\"], target = \"8888\"",
+      "output": "-1"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int openLock(String[] deadends, String target) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def openLock(self, deadends: List[str], target: str) -> int:\n        ",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int openLock(vector<string>& deadends, string target) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int OpenLock(string[] deadends, string target) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn open_lock(deadends: Vec<String>, target: String) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc OpenLock(deadends []string, target string) int {\n    return 0\n}",
+    "typescript": "export function openLock(deadends: string[], target: string): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "deadends": "[\"0201\",\"0101\",\"0102\",\"1212\",\"2002\"]",
+      "target": "0202"
+    },
+    {
+      "deadends": "[\"8888\"]",
+      "target": "0009"
+    },
+    {
+      "deadends": "[\"8887\",\"8889\",\"8878\",\"8898\",\"8788\",\"8988\",\"7888\",\"9888\"]",
+      "target": "8888"
+    }
+  ],
+  "functionName": "openLock",
+  "params": [
+    {
+      "name": "deadends",
+      "type": "string_array"
+    },
+    {
+      "name": "target",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "BFS from \"0000\". Each move turns one wheel up or down by one."
+  ]
+}

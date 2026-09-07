@@ -1,0 +1,56 @@
+{
+  "id": "stone-game-iii",
+  "title": "230. Stone Game III",
+  "difficulty": "Hard",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/stone-game-iii/",
+  "examples": [
+    {
+      "input": "stoneValue = [1,2,3,7]",
+      "output": "\"Bob\"",
+      "explanation": "Alice will always lose. Her best move will be to take three piles and the score become 6. Now the score of Bob is 7 and Bob wins."
+    },
+    {
+      "input": "stoneValue = [1,2,3,-9]",
+      "output": "\"Alice\"",
+      "explanation": "Alice must choose all the three piles at the first move to win and leave Bob with negative score."
+    },
+    {
+      "input": "stoneValue = [1,2,3,6]",
+      "output": "\"Tie\"",
+      "explanation": "Alice cannot win this game. She can end the game in a draw if she decided to choose all the first three piles, otherwise she will lose."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String stoneGameIII(int[] stoneValue) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def stoneGameIII(self, stoneValue: List[int]) -> str:\n        ",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string stoneGameIII(vector<int>& stoneValue) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public string StoneGameIII(int[] stoneValue) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn stone_game_iii(stone_value: Vec<i32>) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc StoneGameIII(stoneValue []int) string {\n    \n}",
+    "typescript": "export function stoneGameIII(stoneValue: number[]): string {\n    \n}"
+  },
+  "testCases": [
+    {
+      "stoneValue": "[1,2,3,7]"
+    },
+    {
+      "stoneValue": "[1,2,3,-9]"
+    },
+    {
+      "stoneValue": "[1,2,3,6]"
+    }
+  ],
+  "functionName": "stoneGameIII",
+  "params": [
+    {
+      "name": "stoneValue",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "The game can be mapped to minmax game. Alice tries to maximize the total score and Bob tries to minimize it.",
+    "Use dynamic programming to simulate the game. If the total score was 0 the game is \"Tie\", and if it has positive value then \"Alice\" wins, otherwise \"Bob\" wins."
+  ]
+}

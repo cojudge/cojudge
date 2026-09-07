@@ -1,0 +1,52 @@
+{
+  "id": "greatest-common-divisor-traversal",
+  "title": "226. Greatest Common Divisor Traversal",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/greatest-common-divisor-traversal/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "nums = [2,3,6]",
+      "output": "true"
+    },
+    {
+      "input": "nums = [3,9,5]",
+      "output": "false"
+    },
+    {
+      "input": "nums = [4,3,12,8]",
+      "output": "true"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean canTraverseAllPairs(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def canTraverseAllPairs(self, nums: List[int]) -> bool:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool canTraverseAllPairs(vector<int>& nums) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool CanTraverseAllPairs(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_traverse_all_pairs(nums: Vec<i32>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc CanTraverseAllPairs(nums []int) bool {\n    return false\n}",
+    "typescript": "export function canTraverseAllPairs(nums: number[]): boolean {\n    \n}"
+  },
+  "testCases": [
+    {
+      "nums": "[2,3,6]"
+    },
+    {
+      "nums": "[3,9,5]"
+    },
+    {
+      "nums": "[4,3,12,8]"
+    }
+  ],
+  "functionName": "canTraverseAllPairs",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Union indices that share a prime factor. If nums contains 1 and length > 1, return false."
+  ]
+}

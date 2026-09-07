@@ -1,0 +1,63 @@
+{
+  "id": "design-hashmap",
+  "title": "157. Design HashMap",
+  "difficulty": "Easy",
+  "category": "array",
+  "link": "https://leetcode.com/problems/design-hashmap/",
+  "examples": [
+    {
+      "input": "operations = [\"MyHashMap\",\"put\",\"put\",\"get\",\"get\",\"put\",\"get\",\"remove\",\"get\"], args = [[],[1,1],[2,2],[1],[3],[2,1],[2],[2],[2]]",
+      "output": "[1,-1,1,-1]",
+      "explanation": "put(1,1) and put(2,2); get(1) is 1 and get(3) is -1. After put(2,1) updates key 2, get(2) is 1. After remove(2), get(2) is -1."
+    },
+    {
+      "input": "operations = [\"MyHashMap\",\"get\",\"put\",\"get\",\"remove\",\"get\"], args = [[],[5],[5,7],[5],[5],[5]]",
+      "output": "[-1,7,-1]",
+      "explanation": "Initially get(5) is -1. After put(5,7), get(5) is 7. After remove(5), get(5) is -1."
+    },
+    {
+      "input": "operations = [\"MyHashMap\",\"put\",\"remove\"], args = [[],[3,9],[3]]",
+      "output": "[]",
+      "explanation": "No get calls, so the result is empty."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runHashMap(String[] operations, int[][] args) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def runHashMap(self, operations: List[str], args: List[List[int]]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runHashMap(vector<string>& operations, vector<vector<int>>& args) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunHashMap(string[] operations, int[][] args)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_hash_map(operations: Vec<String>, args: Vec<Vec<i32>>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunHashMap(operations []string, args [][]int) []int {\n    return []int{}\n}",
+    "typescript": "export function runHashMap(operations: string[], args: number[][]): number[] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "operations": "[\"MyHashMap\",\"put\",\"put\",\"get\",\"get\",\"put\",\"get\",\"remove\",\"get\"]",
+      "args": "[[],[1,1],[2,2],[1],[3],[2,1],[2],[2],[2]]"
+    },
+    {
+      "operations": "[\"MyHashMap\",\"get\",\"put\",\"get\",\"remove\",\"get\"]",
+      "args": "[[],[5],[5,7],[5],[5],[5]]"
+    },
+    {
+      "operations": "[\"MyHashMap\",\"put\",\"remove\"]",
+      "args": "[[],[3,9],[3]]"
+    }
+  ],
+  "functionName": "runHashMap",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "args",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Simulate the map with a hash map: put inserts or updates, remove deletes, get looks up with -1 default and records the result.",
+    "A direct array of size 1000001 with -1 sentinel also works since keys are bounded."
+  ]
+}

@@ -1,0 +1,58 @@
+[
+  {
+    "str1": "ABCABC",
+    "str2": "ABC"
+  },
+  {
+    "str1": "ABABAB",
+    "str2": "ABAB"
+  },
+  {
+    "str1": "LEET",
+    "str2": "CODE"
+  },
+  {
+    "str1": "AAAAAB",
+    "str2": "AAA"
+  },
+  {
+    "str1": "A",
+    "str2": "A"
+  },
+  {
+    "str1": "AB",
+    "str2": "A"
+  },
+  {
+    "str1": "ABC",
+    "str2": "AB"
+  },
+  {
+    "str1": "AAAAAAAAAA",
+    "str2": "AAAAA"
+  },
+  {
+    "str1": "ABCDEF",
+    "str2": "ABC"
+  },
+  {
+    "str1": "TAUXXTAUXXTAUXXTAUXXTAUXX",
+    "str2": "TAUXXTAUXXTAUXXTAUXXTAUXXTAUXXTAUXXTAUXXTAUXX"
+  },
+  {
+    "str1": "BBB",
+    "str2": "BBBB"
+  },
+  {
+    "str1": "ABABABAB",
+    "str2": "ABAB"
+  },
+  {
+    "str1": "AAAAAA",
+    "str2": "AA"
+  },
+  {
+    "str1": "ABCDABCDABCD",
+    "str2": "ABCDABCD"
+  }
+]

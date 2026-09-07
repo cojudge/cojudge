@@ -1,0 +1,59 @@
+{
+  "id": "partition-to-k-equal-sum-subsets",
+  "title": "211. Partition to K Equal Sum Subsets",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/partition-to-k-equal-sum-subsets/",
+  "examples": [
+    {
+      "input": "nums = [4,3,2,3,5,2,1], k = 4",
+      "output": "true",
+      "explanation": "It is possible to divide it into 4 subsets (5), (1, 4), (2,3), (2,3) with equal sums."
+    },
+    {
+      "input": "nums = [1,2,3,4], k = 3",
+      "output": "false",
+      "explanation": "The sum is 10, which is not divisible by 3, so an equal split is impossible."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean canPartitionKSubsets(int[] nums, int k) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def canPartitionKSubsets(self, nums: List[int], k: int) -> bool:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool canPartitionKSubsets(vector<int>& nums, int k) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool CanPartitionKSubsets(int[] nums, int k) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_partition_k_subsets(nums: Vec<i32>, k: i32) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc CanPartitionKSubsets(nums []int, k int) bool {\n    \n}",
+    "typescript": "export function canPartitionKSubsets(nums: number[], k: number): boolean {\n    \n}"
+  },
+  "testCases": [
+    {
+      "nums": "[4,3,2,3,5,2,1]",
+      "k": 4
+    },
+    {
+      "nums": "[1,2,3,4]",
+      "k": 3
+    },
+    {
+      "nums": "[1,1,1]",
+      "k": 1
+    }
+  ],
+  "functionName": "canPartitionKSubsets",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Each subset must sum to total / k, so the total sum must be divisible by k.",
+    "We can figure out what target each subset must sum to. Then, let's recursively search, where at each call to our function, we choose which of k subsets the next value will join.",
+    "Use memoization on the bitmask of already-used numbers to avoid re-exploring the same partial assignment."
+  ]
+}

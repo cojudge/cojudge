@@ -1,0 +1,60 @@
+{
+  "id": "verifying-an-alien-dictionary",
+  "title": "216. Verifying an Alien Dictionary",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/verifying-an-alien-dictionary/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "words = [\"hello\",\"leetcode\"], order = \"hlabcdefgijkmnopqrstuvwxyz\"",
+      "output": "true",
+      "explanation": "As 'h' comes before 'l' in this language, the sequence is sorted."
+    },
+    {
+      "input": "words = [\"word\",\"world\",\"row\"], order = \"worldabcefghijkmnpqstuvxyz\"",
+      "output": "false"
+    },
+    {
+      "input": "words = [\"apple\",\"app\"], order = \"abcdefghijklmnopqrstuvwxyz\"",
+      "output": "false"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isAlienSorted(String[] words, String order) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def isAlienSorted(self, words: List[str], order: str) -> bool:\n        ",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool isAlienSorted(vector<string>& words, string order) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool IsAlienSorted(string[] words, string order) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_alien_sorted(words: Vec<String>, order: String) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc IsAlienSorted(words []string, order string) bool {\n    \n}",
+    "typescript": "export function isAlienSorted(words: string[], order: string): boolean {\n    \n}"
+  },
+  "testCases": [
+    {
+      "words": "[\"hello\",\"leetcode\"]",
+      "order": "hlabcdefgijkmnopqrstuvwxyz"
+    },
+    {
+      "words": "[\"word\",\"world\",\"row\"]",
+      "order": "worldabcefghijkmnpqstuvxyz"
+    },
+    {
+      "words": "[\"apple\",\"app\"]",
+      "order": "abcdefghijklmnopqrstuvwxyz"
+    }
+  ],
+  "functionName": "isAlienSorted",
+  "params": [
+    {
+      "name": "words",
+      "type": "string_array"
+    },
+    {
+      "name": "order",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Build a rank map from order, then compare adjacent words using that rank."
+  ]
+}

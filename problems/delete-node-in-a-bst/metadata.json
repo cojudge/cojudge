@@ -1,0 +1,61 @@
+{
+  "id": "delete-node-in-a-bst",
+  "title": "198. Delete Node in a BST",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/delete-node-in-a-bst/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [5,3,6,2,4,null,7], key = 3",
+      "output": "[5,4,6,2,null,null,7]",
+      "explanation": "One valid result after deleting 3."
+    },
+    {
+      "input": "root = [5,3,6,2,4,null,7], key = 0",
+      "output": "[5,3,6,2,4,null,7]"
+    },
+    {
+      "input": "root = [], key = 0",
+      "output": "[]"
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public TreeNode deleteNode(TreeNode root, int key) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def deleteNode(self, root, key: int):\n        pass\n",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\nclass Solution {\npublic:\n    TreeNode* deleteNode(TreeNode* root, int key) {\n        return nullptr;\n    }\n};",
+    "csharp": "/*\nDefinition for a binary tree node.\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\npublic class Solution \n{\n    public TreeNode DeleteNode(TreeNode root, int key) \n    {\n        \n    }\n}",
+    "rust": "use std::rc::Rc;\nuse std::cell::RefCell;\npub struct Solution;\n\nimpl Solution {\n    pub fn delete_node(root: Option<Rc<RefCell<TreeNode>>>, key: i32) -> Option<Rc<RefCell<TreeNode>>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc DeleteNode(root *TreeNode, key int) *TreeNode {\n    return nil\n}",
+    "typescript": "import { TreeNode } from './TreeNode';\nexport function deleteNode(root: TreeNode | null, key: number): TreeNode | null {\n    return null;\n}"
+  },
+  "testCases": [
+    {
+      "root": "[5,3,6,2,4,null,7]",
+      "key": 3
+    },
+    {
+      "root": "[5,3,6,2,4,null,7]",
+      "key": 0
+    },
+    {
+      "root": "[]",
+      "key": 0
+    }
+  ],
+  "functionName": "deleteNode",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    },
+    {
+      "name": "key",
+      "type": "int"
+    }
+  ],
+  "outputType": "tree_node",
+  "hints": [
+    "If the node has two children, replace it with its inorder successor (min of right subtree)."
+  ]
+}

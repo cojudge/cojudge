@@ -231,7 +231,7 @@ export function pyGetFullParam(params: Param[], tc: any): string {
             }
             const escaped = strVal.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
             parts.push(`read_graph_node('${escaped}')`);
-        } else if (param.type === 'string_array') {
+        } else if (param.type === 'string_array' || param.type === 'string_list_2d' || param.type === 'string_list') {
             const raw = val ?? '[]';
             const str = Array.isArray(raw) ? JSON.stringify(raw): String(raw);
             const escaped = str.replace(/\\/g, '\\\\').replace(/'/g, "\\'");

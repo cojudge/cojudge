@@ -1,0 +1,31 @@
+[
+  { "s": "011010", "minJump": 2, "maxJump": 3 },
+  { "s": "01101110", "minJump": 2, "maxJump": 3 },
+  { "s": "00", "minJump": 1, "maxJump": 1 },
+  { "s": "0011100010", "minJump": 2, "maxJump": 5 },
+  { "s": "011", "minJump": 1, "maxJump": 1 },
+  { "s": "01010", "minJump": 1, "maxJump": 1 },
+  { "s": "001", "minJump": 1, "maxJump": 2 },
+  { "s": "000", "minJump": 1, "maxJump": 1 },
+  { "s": "001010", "minJump": 1, "maxJump": 2 },
+  { "s": "0100010010", "minJump": 3, "maxJump": 5 },
+  { "s": "000000", "minJump": 2, "maxJump": 4 },
+  { "s": "01010101", "minJump": 2, "maxJump": 3 },
+  { "s": "0111010010", "minJump": 2, "maxJump": 4 },
+  { "s": "00100", "minJump": 2, "maxJump": 3 },
+  { "s": "00001", "minJump": 1, "maxJump": 4 },
+  { "s": "00001111", "minJump": 1, "maxJump": 2 },
+  { "s": "001", "minJump": 1, "maxJump": 1 },
+  {
+    "s": "@javascript:'0'.repeat(2000) + '1'.repeat(4000) + '0'.repeat(4000)",
+    "minJump": 2,
+    "maxJump": 3,
+    "_isLargeTest": true
+  },
+  {
+    "s": "@javascript:'0'.repeat(10000)",
+    "minJump": 1,
+    "maxJump": 2,
+    "_isLargeTest": true
+  }
+]

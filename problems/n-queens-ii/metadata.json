@@ -1,0 +1,51 @@
+{
+  "id": "n-queens-ii",
+  "title": "212. N-Queens II",
+  "difficulty": "Hard",
+  "category": "backtracking",
+  "link": "https://leetcode.com/problems/n-queens-ii/",
+  "examples": [
+    {
+      "input": "n = 4",
+      "output": "2",
+      "explanation": "There are two distinct solutions to the 4-queens puzzle."
+    },
+    {
+      "input": "n = 1",
+      "output": "1",
+      "explanation": "There is one distinct solution to the 1-queens puzzle."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int totalNQueens(int n) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def totalNQueens(self, n: int) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int totalNQueens(int n) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public int TotalNQueens(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn total_n_queens(n: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc TotalNQueens(n int) int {\n    \n}",
+    "typescript": "export function totalNQueens(n: number): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "n": 4
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 8
+    }
+  ],
+  "functionName": "totalNQueens",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Place one queen per row: a new queen is valid only when its column, diagonal, and anti-diagonal are all free.",
+    "Columns are tracked by index, diagonals by `row - col` (shifted), and anti-diagonals by `row + col`; when all n rows are filled, the placement is a solution."
+  ]
+}

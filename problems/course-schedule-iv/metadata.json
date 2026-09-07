@@ -1,0 +1,66 @@
+{
+  "id": "course-schedule-iv",
+  "title": "219. Course Schedule IV",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/course-schedule-iv/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "numCourses = 2, prerequisites = [[1,0]], queries = [[0,1],[1,0]]",
+      "output": "[false,true]"
+    },
+    {
+      "input": "numCourses = 2, prerequisites = [], queries = [[1,0],[0,1]]",
+      "output": "[false,false]"
+    },
+    {
+      "input": "numCourses = 3, prerequisites = [[1,2],[1,0],[2,0]], queries = [[1,0],[1,2]]",
+      "output": "[true,true]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public java.util.List<String> checkIfPrerequisite(int numCourses, int[][] prerequisites, int[][] queries) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def checkIfPrerequisite(self, numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]) -> List[str]:\n        ",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> checkIfPrerequisite(int numCourses, vector<vector<int>>& prerequisites, vector<vector<int>>& queries) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<string> CheckIfPrerequisite(int numCourses, int[][] prerequisites, int[][] queries) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn check_if_prerequisite(num_courses: i32, prerequisites: Vec<Vec<i32>>, queries: Vec<Vec<i32>>) -> Vec<String> {\n        \n    }\n}",
+    "go": "package main\n\nfunc CheckIfPrerequisite(numCourses int, prerequisites [][]int, queries [][]int) []string {\n    return nil\n}",
+    "typescript": "export function checkIfPrerequisite(numCourses: number, prerequisites: number[][], queries: number[][]): string[] {\n    \n}"
+  },
+  "testCases": [
+    {
+      "numCourses": 2,
+      "prerequisites": "[[1,0]]",
+      "queries": "[[0,1],[1,0]]"
+    },
+    {
+      "numCourses": 2,
+      "prerequisites": "[]",
+      "queries": "[[1,0],[0,1]]"
+    },
+    {
+      "numCourses": 3,
+      "prerequisites": "[[1,2],[1,0],[2,0]]",
+      "queries": "[[1,0],[1,2]]"
+    }
+  ],
+  "functionName": "checkIfPrerequisite",
+  "params": [
+    {
+      "name": "numCourses",
+      "type": "int"
+    },
+    {
+      "name": "prerequisites",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "queries",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Build reachability via Floyd-Warshall or DFS from each course."
+  ]
+}

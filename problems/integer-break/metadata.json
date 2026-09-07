@@ -1,0 +1,78 @@
+{
+  "id": "integer-break",
+  "title": "229. Integer Break",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/integer-break/",
+  "examples": [
+    {
+      "input": "n = 2",
+      "output": "1",
+      "explanation": "2 = 1 + 1, 1 \u00d7 1 = 1."
+    },
+    {
+      "input": "n = 10",
+      "output": "36",
+      "explanation": "10 = 3 + 3 + 4, 3 \u00d7 3 \u00d7 4 = 36."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int integerBreak(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def integerBreak(self, n: int) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int integerBreak(int n) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public int IntegerBreak(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn integer_break(n: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc IntegerBreak(n int) int {\n    \n}",
+    "typescript": "export function integerBreak(n: number): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "n": "2"
+    },
+    {
+      "n": "10"
+    },
+    {
+      "n": "3"
+    },
+    {
+      "n": "4"
+    },
+    {
+      "n": "5"
+    },
+    {
+      "n": "6"
+    },
+    {
+      "n": "7"
+    },
+    {
+      "n": "8"
+    },
+    {
+      "n": "9"
+    },
+    {
+      "n": "11"
+    },
+    {
+      "n": "50"
+    },
+    {
+      "n": "58"
+    }
+  ],
+  "functionName": "integerBreak",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "There is a simple O(n) solution to this problem.",
+    "You may check the breaking results of n ranging from 7 to 10 to discover the regularities."
+  ]
+}

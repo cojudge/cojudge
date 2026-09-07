@@ -1,0 +1,52 @@
+{
+  "id": "single-threaded-cpu",
+  "title": "202. Single-Threaded CPU",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/single-threaded-cpu/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "tasks = [[1,2],[2,4],[3,2],[4,1]]",
+      "output": "[0,2,3,1]",
+      "explanation": "The events go as follows: at time 1 task 0 is available, CPU processes it until time 3. At time 3 tasks 1 and 2 are available, CPU picks task 2 (shorter). At time 5 task 3 is available with tasks 1, CPU picks task 3 (shortest), then task 1."
+    },
+    {
+      "input": "tasks = [[7,10],[7,12],[7,5],[7,4],[7,2]]",
+      "output": "[4,3,2,0,1]",
+      "explanation": "All tasks are available at time 7. CPU picks them in order of processing time, breaking ties by index."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] getOrder(int[][] tasks) {\n        throw new UnsupportedOperationException();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def getOrder(self, tasks: List[List[int]]) -> List[int]:\n        raise NotImplementedError\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> getOrder(vector<vector<int>>& tasks) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] GetOrder(int[][] tasks)\n    {\n        throw new System.NotImplementedException();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn get_order(tasks: Vec<Vec<i32>>) -> Vec<i32> {\n        todo!()\n    }\n}",
+    "go": "package main\n\nfunc GetOrder(tasks [][]int) []int {\n    panic(\"TODO\")\n}",
+    "typescript": "export function getOrder(tasks: number[][]): number[] {\n    throw new Error('Not implemented');\n}"
+  },
+  "testCases": [
+    {
+      "tasks": "[[1,2],[2,4],[3,2],[4,1]]"
+    },
+    {
+      "tasks": "[[7,10],[7,12],[7,5],[7,4],[7,2]]"
+    },
+    {
+      "tasks": "[[1,2]]"
+    }
+  ],
+  "functionName": "getOrder",
+  "params": [
+    {
+      "name": "tasks",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Sort tasks by enqueue time, then simulate the CPU clock, pushing newly available tasks into a min-heap.",
+    "The heap orders by (processingTime, index) so the CPU always picks the shortest available task.",
+    "When the heap is empty, jump the clock forward to the next enqueue time."
+  ]
+}

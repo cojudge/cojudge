@@ -1,0 +1,68 @@
+{
+  "id": "guess-number-higher-or-lower",
+  "title": "185. Guess Number Higher or Lower",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/guess-number-higher-or-lower/",
+  "category": "binary-search",
+  "examples": [
+    {
+      "input": "n = 10, pick = 6",
+      "output": "6",
+      "explanation": "The hidden number is 6; binary search with the guess API finds 6."
+    },
+    {
+      "input": "n = 1, pick = 1",
+      "output": "1",
+      "explanation": "With only one possible number, the answer is 1."
+    },
+    {
+      "input": "n = 2, pick = 1",
+      "output": "1",
+      "explanation": "Guessing 1 hits immediately; otherwise the API directs the search to 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int guessNumber(int n, int pick) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def guessNumber(self, n: int, pick: int) -> int:\n        return 0\n",
+    "cpp": "class Solution {\npublic:\n    int guessNumber(int n, int pick) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int GuessNumber(int n, int pick)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn guess_number(n: i32, pick: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc GuessNumber(n int, pick int) int {\n    return 0\n}",
+    "typescript": "export function guessNumber(n: number, pick: number): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "n": 10,
+      "pick": 6
+    },
+    {
+      "n": 1,
+      "pick": 1
+    },
+    {
+      "n": 2,
+      "pick": 1
+    },
+    {
+      "n": 100,
+      "pick": 42
+    }
+  ],
+  "functionName": "guessNumber",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "pick",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Simulate the guess API locally: compare mid with pick to get -1, 1, or 0.",
+    "Binary-search the inclusive interval [1, n]; move to [mid+1, right] when the guess is low and [left, mid-1] when it is high.",
+    "Compute mid as left + (right - left) / 2 to avoid overflow."
+  ]
+}

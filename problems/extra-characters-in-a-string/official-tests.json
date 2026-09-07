@@ -1,0 +1,58 @@
+[
+  {
+    "s": "abc",
+    "dictionary": "[\"a\",\"b\",\"c\"]"
+  },
+  {
+    "s": "leetscode",
+    "dictionary": "[\"leet\",\"code\",\"leetcode\"]"
+  },
+  {
+    "s": "sayhelloworld",
+    "dictionary": "[\"hello\",\"world\"]"
+  },
+  {
+    "s": "abcd",
+    "dictionary": "[\"ab\",\"cd\"]"
+  },
+  {
+    "s": "aaa",
+    "dictionary": "[\"a\"]"
+  },
+  {
+    "s": "zzz",
+    "dictionary": "[\"c\",\"d\"]"
+  },
+  {
+    "s": "xab",
+    "dictionary": "[\"ab\"]"
+  },
+  {
+    "s": "short",
+    "dictionary": "[\"s\",\"hort\",\"sh\",\"or\",\"t\"]"
+  },
+  {
+    "s": "dynamicprogramming",
+    "dictionary": "[\"dynamic\",\"programming\",\"pro\",\"gramming\"]"
+  },
+  {
+    "s": "abcdefgh",
+    "dictionary": "[\"ab\",\"cd\",\"ef\"]"
+  },
+  {
+    "s": "ilovecoding",
+    "dictionary": "[\"i\",\"love\",\"coding\"]"
+  },
+  {
+    "s": "cojudgeiscool",
+    "dictionary": "[\"co\",\"judge\",\"is\",\"cool\"]"
+  },
+  {
+    "s": "aaaaaaaa",
+    "dictionary": "[\"aaa\",\"aa\",\"a\"]"
+  },
+  {
+    "s": "hello",
+    "dictionary": "[\"world\",\"hell\",\"o\"]"
+  }
+]

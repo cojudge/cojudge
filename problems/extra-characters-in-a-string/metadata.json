@@ -1,0 +1,55 @@
+{
+  "id": "extra-characters-in-a-string",
+  "title": "214. Extra Characters in a String",
+  "difficulty": "Medium",
+  "category": "trie",
+  "link": "https://leetcode.com/problems/extra-characters-in-a-string/",
+  "examples": [
+    {
+      "input": "s = \"leetscode\", dictionary = [\"leet\",\"code\",\"leetcode\"]",
+      "output": "1",
+      "explanation": "We can break s in two substrings: \"leet\" from index 0 to 3 and \"code\" from index 5 to 8. There is only 1 unused character (at index 4), so we return 1."
+    },
+    {
+      "input": "s = \"sayhelloworld\", dictionary = [\"hello\",\"world\"]",
+      "output": "3",
+      "explanation": "We can break s in two substrings: \"hello\" from index 3 to 7 and \"world\" from index 8 to 12. The characters at indices 0, 1, 2 are not used in any substring and thus are considered as extra characters. Hence, we return 3."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minExtraChar(String s, String[] dictionary) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minExtraChar(self, s: str, dictionary: List[str]) -> int:\n        ",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minExtraChar(string s, vector<string>& dictionary) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MinExtraChar(string s, string[] dictionary) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_extra_char(s: String, dictionary: Vec<String>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MinExtraChar(s string, dictionary []string) int {\n    \n}",
+    "typescript": "export function minExtraChar(s: string, dictionary: string[]): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "s": "leetscode",
+      "dictionary": "[\"leet\",\"code\",\"leetcode\"]"
+    },
+    {
+      "s": "sayhelloworld",
+      "dictionary": "[\"hello\",\"world\"]"
+    }
+  ],
+  "functionName": "minExtraChar",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "dictionary",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Can we use Dynamic Programming here?",
+    "Define dp[i] as the minimum number of extra characters if breaking up s[i:] optimally: either s[i] is unused (one extra character plus dp[i+1]) or it starts a dictionary word of some length len, giving dp[i + len].",
+    "A trie of the dictionary lets every word starting at the same position be found in one pass instead of re-scanning all dictionary entries at every index."
+  ]
+}

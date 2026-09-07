@@ -1,0 +1,17 @@
+[
+  { "stoneValue": "[1,2,3,7]" },
+  { "stoneValue": "[1,2,3,-9]" },
+  { "stoneValue": "[1,2,3,6]" },
+  { "stoneValue": "[1]" },
+  { "stoneValue": "[2]" },
+  { "stoneValue": "[-1]" },
+  { "stoneValue": "[1,2]" },
+  { "stoneValue": "[-2,-1,0]" },
+  { "stoneValue": "[5,-5,5,-5,5]" },
+  { "stoneValue": "[1,2,3,4,5,6,7,8,9,10]" },
+  { "stoneValue": "[1000,-1000,1000,-1000,1000,-1000]" },
+  { "stoneValue": "[-1,-2,-3]" },
+  { "stoneValue": "[0,0,0,0]" },
+  { "stoneValue": "[3,7,1,2,9,4]" },
+  { "stoneValue": "[-2,3,5,-1,2,4]" }
+]

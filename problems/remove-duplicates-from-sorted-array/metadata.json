@@ -1,0 +1,51 @@
+{
+  "id": "remove-duplicates-from-sorted-array",
+  "title": "169. Remove Duplicates from Sorted Array",
+  "difficulty": "Easy",
+  "category": "two-pointer",
+  "link": "https://leetcode.com/problems/remove-duplicates-from-sorted-array/",
+  "examples": [
+    {
+      "input": "nums = [1,1,2]",
+      "output": "2",
+      "explanation": "Return k = 2, with the first two elements of nums being 1 and 2."
+    },
+    {
+      "input": "nums = [0,0,1,1,1,2,2,3,3,4]",
+      "output": "5",
+      "explanation": "Return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int removeDuplicates(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def removeDuplicates(self, nums: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int removeDuplicates(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int RemoveDuplicates(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn remove_duplicates(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc RemoveDuplicates(nums []int) int {\n    return 0\n}",
+    "typescript": "export function removeDuplicates(nums: number[]): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,1,2]"
+    },
+    {
+      "nums": "[0,0,1,1,1,2,2,3,3,4]"
+    },
+    {
+      "nums": "[1,2,3]"
+    }
+  ],
+  "functionName": "removeDuplicates",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The array is sorted, so duplicates are adjacent. Use a slow pointer for the next unique position.",
+    "Iterate with a fast pointer; when a new value is found, write it to the slow position and advance."
+  ]
+}

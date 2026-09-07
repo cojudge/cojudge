@@ -1,0 +1,58 @@
+{
+  "id": "candy",
+  "title": "241. Candy",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/candy/",
+  "category": "greedy",
+  "examples": [
+    {
+      "input": "ratings = [1,0,2]",
+      "output": "5",
+      "explanation": "You can allocate to the first, second and third child with 2, 1, 2 candies respectively."
+    },
+    {
+      "input": "ratings = [1,2,2]",
+      "output": "4",
+      "explanation": "You can allocate to the first, second and third child with 1, 2, 1 candies respectively."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int candy(int[] ratings) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def candy(self, ratings: List[int]) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int candy(vector<int>& ratings) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public int Candy(int[] ratings) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn candy(ratings: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc Candy(ratings []int) int {\n    \n}",
+    "typescript": "export function candy(ratings: number[]): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "ratings": "[1,0,2]"
+    },
+    {
+      "ratings": "[1,2,2]"
+    },
+    {
+      "ratings": "[1,2,3]"
+    },
+    {
+      "ratings": "[3,2,1,0]"
+    },
+    {
+      "ratings": "[1]"
+    }
+  ],
+  "functionName": "candy",
+  "params": [
+    {
+      "name": "ratings",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Start by giving every child one candy.",
+    "A left-to-right pass fixes the left neighbor requirement: if ratings[i] > ratings[i-1], give child i more than child i-1.",
+    "A right-to-left pass fixes the right neighbor requirement; take the max of the two passes for each child."
+  ]
+}

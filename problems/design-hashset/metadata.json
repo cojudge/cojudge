@@ -1,0 +1,63 @@
+{
+  "id": "design-hashset",
+  "title": "156. Design HashSet",
+  "difficulty": "Easy",
+  "category": "array",
+  "link": "https://leetcode.com/problems/design-hashset/",
+  "examples": [
+    {
+      "input": "operations = [\"MyHashSet\",\"add\",\"add\",\"contains\",\"contains\",\"add\",\"contains\",\"remove\",\"contains\"], values = [0,1,2,1,3,2,2,2,2]",
+      "output": "[1,0,1,0]",
+      "explanation": "After add(1) and add(2), contains(1) is 1 and contains(3) is 0. After add(2) again, contains(2) is 1. After remove(2), contains(2) is 0."
+    },
+    {
+      "input": "operations = [\"MyHashSet\",\"contains\",\"add\",\"contains\",\"remove\",\"contains\"], values = [0,5,5,5,5,5]",
+      "output": "[0,1,0]",
+      "explanation": "Initially contains(5) is 0. After add(5), contains(5) is 1. After remove(5), contains(5) is 0."
+    },
+    {
+      "input": "operations = [\"MyHashSet\",\"add\",\"remove\"], values = [0,7,7]",
+      "output": "[]",
+      "explanation": "No contains calls, so the result is empty."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runHashSet(String[] operations, int[] values) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def runHashSet(self, operations: List[str], values: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runHashSet(vector<string>& operations, vector<int>& values) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunHashSet(string[] operations, int[] values)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_hash_set(operations: Vec<String>, values: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunHashSet(operations []string, values []int) []int {\n    return []int{}\n}",
+    "typescript": "export function runHashSet(operations: string[], values: number[]): number[] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "operations": "[\"MyHashSet\",\"add\",\"add\",\"contains\",\"contains\",\"add\",\"contains\",\"remove\",\"contains\"]",
+      "values": "[0,1,2,1,3,2,2,2,2]"
+    },
+    {
+      "operations": "[\"MyHashSet\",\"contains\",\"add\",\"contains\",\"remove\",\"contains\"]",
+      "values": "[0,5,5,5,5,5]"
+    },
+    {
+      "operations": "[\"MyHashSet\",\"add\",\"remove\"]",
+      "values": "[0,7,7]"
+    }
+  ],
+  "functionName": "runHashSet",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Simulate the set with a hash set: add inserts, remove deletes, contains checks membership and records 1 or 0.",
+    "A boolean array of size 1000001 also works since keys are bounded, giving O(1) operations."
+  ]
+}

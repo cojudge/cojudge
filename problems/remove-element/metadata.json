@@ -1,0 +1,54 @@
+{
+  "id": "remove-element",
+  "title": "154. Remove Element",
+  "difficulty": "Easy",
+  "category": "array",
+  "link": "https://leetcode.com/problems/remove-element/",
+  "examples": [
+    {
+      "input": "nums = [3,2,2,3], val = 3",
+      "output": "2",
+      "explanation": "Your function should return k = 2, with the first two elements of nums being 2 and 2."
+    },
+    {
+      "input": "nums = [0,1,2,2,3,0,4,2], val = 2",
+      "output": "5",
+      "explanation": "Your function should return k = 5, with the first five elements containing 0, 0, 1, 3, and 4 in any order."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int removeElement(int[] nums, int val) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def removeElement(self, nums: List[int], val: int) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int removeElement(vector<int>& nums, int val) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int RemoveElement(int[] nums, int val) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn remove_element(nums: Vec<i32>, val: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc RemoveElement(nums []int, val int) int {\n    return 0\n}",
+    "typescript": "export function removeElement(nums: number[], val: number): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[3,2,2,3]",
+      "val": 3
+    },
+    {
+      "nums": "[0,1,2,2,3,0,4,2]",
+      "val": 2
+    }
+  ],
+  "functionName": "removeElement",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "val",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use two pointers: overwrite kept elements in a single pass by copying every element not equal to val to the front.",
+    "The elements beyond the returned length k can be anything; only k and the multiset of the first k matter."
+  ]
+}

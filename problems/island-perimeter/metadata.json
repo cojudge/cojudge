@@ -1,0 +1,53 @@
+{
+  "id": "island-perimeter",
+  "title": "215. Island Perimeter",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/island-perimeter/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "grid = [[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]]",
+      "output": "16",
+      "explanation": "The perimeter is the 16 yellow edges."
+    },
+    {
+      "input": "grid = [[1]]",
+      "output": "4"
+    },
+    {
+      "input": "grid = [[1,0]]",
+      "output": "4"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int islandPerimeter(int[][] grid) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def islandPerimeter(self, grid: List[List[int]]) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int islandPerimeter(vector<vector<int>>& grid) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public int IslandPerimeter(int[][] grid) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn island_perimeter(grid: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc IslandPerimeter(grid [][]int) int {\n    \n}",
+    "typescript": "export function islandPerimeter(grid: number[][]): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "grid": "[[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]]"
+    },
+    {
+      "grid": "[[1]]"
+    },
+    {
+      "grid": "[[1,0]]"
+    }
+  ],
+  "functionName": "islandPerimeter",
+  "params": [
+    {
+      "name": "grid",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Count each land cell contribution of 4, subtract 2 for each adjacent land pair."
+  ]
+}

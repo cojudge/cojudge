@@ -1,0 +1,60 @@
+{
+  "id": "path-with-minimum-effort",
+  "title": "223. Path With Minimum Effort",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/path-with-minimum-effort/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "heights = [[1,2,2],[3,8,2],[5,3,5]]",
+      "output": "2",
+      "explanation": "The route of [1,3,5,3,5] has a maximum absolute difference of 2 in consecutive cells. This is better than the route of [1,2,2,2,5], where the maximum absolute difference is 3."
+    },
+    {
+      "input": "heights = [[1,2,3],[3,8,4],[5,3,5]]",
+      "output": "1",
+      "explanation": "The route of [1,2,3,4,5] has a maximum absolute difference of 1 in consecutive cells, which is better than route [1,3,5,3,5]."
+    },
+    {
+      "input": "heights = [[1,2,1,1,1],[1,2,1,2,1],[1,2,1,2,1],[1,2,1,2,1],[1,1,1,2,1]]",
+      "output": "0",
+      "explanation": "This route does not require any effort."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minimumEffortPath(int[][] heights) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minimumEffortPath(self, heights: List[List[int]]) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minimumEffortPath(vector<vector<int>>& heights) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MinimumEffortPath(int[][] heights) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn minimum_effort_path(heights: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MinimumEffortPath(heights [][]int) int {\n    \n}",
+    "typescript": "export function minimumEffortPath(heights: number[][]): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "heights": "[[1,2,2],[3,8,2],[5,3,5]]"
+    },
+    {
+      "heights": "[[1,2,3],[3,8,4],[5,3,5]]"
+    },
+    {
+      "heights": "[[1,2,1,1,1],[1,2,1,2,1],[1,2,1,2,1],[1,2,1,2,1],[1,1,1,2,1]]"
+    },
+    {
+      "heights": "[[1]]"
+    }
+  ],
+  "functionName": "minimumEffortPath",
+  "params": [
+    {
+      "name": "heights",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Consider the grid as a graph, where adjacent cells have an edge with cost of the difference between the cells.",
+    "If you are given threshold k, check if it is possible to go from (0, 0) to (n-1, m-1) using only edges of cost at most k.",
+    "Binary search the k value."
+  ]
+}

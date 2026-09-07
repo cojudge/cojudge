@@ -381,6 +381,78 @@ pub fn to_string_array(s: &str) -> Vec<String> {
     res.push(current.trim().trim_matches('"').to_string());
     res
 }
+
+pub fn to_string_list_2d(s: &str) -> Vec<Vec<String>> {
+    let s = s.trim();
+    if s == "[]" || s.is_empty() { return vec![]; }
+    let mut res: Vec<Vec<String>> = vec![];
+    let mut i = 0;
+    let bytes: Vec<char> = s.chars().collect();
+    // expect [[...],[...]]
+    while i < bytes.len() {
+        if bytes[i] == '[' {
+            // find matching closing for this inner or outer
+            let start = i;
+            let mut depth = 0;
+            let mut in_q = false;
+            let mut j = i;
+            while j < bytes.len() {
+                let c = bytes[j];
+                if c == '"' { in_q = !in_q; }
+                else if !in_q {
+                    if c == '[' { depth += 1; }
+                    else if c == ']' {
+                        depth -= 1;
+                        if depth == 0 { break; }
+                    }
+                }
+                j += 1;
+            }
+            let chunk: String = bytes[start..=j.min(bytes.len()-1)].iter().collect();
+            // if this is an inner list (starts after outer)
+            if chunk.starts_with("[[") || (start > 0) {
+                // parse as one inner list if chunk is like [...]
+                if chunk.starts_with('[') && !chunk.starts_with("[[") {
+                    res.push(to_string_array(&chunk));
+                } else if chunk.starts_with("[[") {
+                    // outer - skip, will find inners
+                    i = start + 1;
+                    continue;
+                }
+            }
+            i = j + 1;
+            continue;
+        }
+        i += 1;
+    }
+    // Fallback: split top-level lists
+    if res.is_empty() {
+        let inner = s.strip_prefix('[').unwrap_or(s).strip_suffix(']').unwrap_or(s);
+        let mut depth = 0;
+        let mut in_q = false;
+        let mut cur = String::new();
+        for c in inner.chars() {
+            if c == '"' { in_q = !in_q; cur.push(c); }
+            else if !in_q && c == '[' { depth += 1; cur.push(c); }
+            else if !in_q && c == ']' {
+                cur.push(c);
+                depth -= 1;
+                if depth == 0 {
+                    res.push(to_string_array(&cur));
+                    cur.clear();
+                }
+            } else if !in_q && c == ',' && depth == 0 {
+                // skip
+            } else if depth > 0 || in_q {
+                cur.push(c);
+            }
+        }
+        if !cur.is_empty() {
+            res.push(to_string_array(&cur));
+        }
+    }
+    res
+}
 `;
 
 export const rustListNodeMain = `
@@ -428,6 +500,18 @@ export function rustGetFullParam(params: Param[], tc: any): string {
       }
       parts.push(
         `to_string_array(${rustEscapeStringLiteral(strVal)})`,
+      );
+    } else if (p.type === "string_list_2d" || p.type === "string_list") {
+      let strVal: string;
+      if (Array.isArray(val)) {
+        try { strVal = JSON.stringify(val); } catch { strVal = '[]'; }
+      } else {
+        strVal = String(val ?? '[]');
+      }
+      parts.push(
+        p.type === "string_list"
+          ? `to_string_array(${rustEscapeStringLiteral(strVal)})`
+          : `to_string_list_2d(${rustEscapeStringLiteral(strVal)})`,
       );
     } else if (p.type === "int_array_2d" || p.type === "int_matrix") {
       let strVal: string;
@@ -581,7 +665,8 @@ export function generateRustDebugRunner(
   checkGraphClone?: boolean,
 ): string {
   const snakedFunctionName = functionName
-    .replace(/([A-Z])/g, "_$1")
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1_$2")
+    .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
     .toLowerCase()
     .replace(/^_/, "");
 
@@ -760,7 +845,8 @@ export function generateRustRunner(
   checkGraphClone?: boolean,
 ): string {
   const snakedFunctionName = functionName
-    .replace(/([A-Z])/g, "_$1")
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1_$2")
+    .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
     .toLowerCase()
     .replace(/^_/, "");
 

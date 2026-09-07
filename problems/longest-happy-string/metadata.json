@@ -1,0 +1,71 @@
+{
+  "id": "longest-happy-string",
+  "title": "204. Longest Happy String",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/longest-happy-string/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "a = 1, b = 1, c = 7",
+      "output": "\"ccaccbcc\"",
+      "explanation": "\"ccbccacc\" would also be a correct answer."
+    },
+    {
+      "input": "a = 7, b = 1, c = 0",
+      "output": "\"aabaa\"",
+      "explanation": "It is the only correct answer in this case."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String longestDiverseString(int a, int b, int c) {\n        \n    }\n}",
+    "python": "class Solution:\n    def longestDiverseString(self, a: int, b: int, c: int) -> str:\n        ",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string longestDiverseString(int a, int b, int c) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public string LongestDiverseString(int a, int b, int c) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn longest_diverse_string(a: i32, b: i32, c: i32) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc LongestDiverseString(a int, b int, c int) string {\n    \n}",
+    "typescript": "export function longestDiverseString(a: number, b: number, c: number): string {\n    \n}"
+  },
+  "testCases": [
+    {
+      "a": 1,
+      "b": 1,
+      "c": 7
+    },
+    {
+      "a": 7,
+      "b": 1,
+      "c": 0
+    },
+    {
+      "a": 0,
+      "b": 0,
+      "c": 3
+    },
+    {
+      "a": 3,
+      "b": 3,
+      "c": 3
+    }
+  ],
+  "functionName": "longestDiverseString",
+  "params": [
+    {
+      "name": "a",
+      "type": "int"
+    },
+    {
+      "name": "b",
+      "type": "int"
+    },
+    {
+      "name": "c",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Use a greedy approach.",
+    "Use the letter with the maximum current limit that can be added without breaking the condition.",
+    "Track the last two appended characters so you never build \"aaa\", \"bbb\", or \"ccc\"."
+  ]
+}

@@ -1,0 +1,60 @@
+[
+  {
+    "operations": "[\"push\",\"push\",\"peek\",\"pop\",\"empty\"]",
+    "values": "[1,2,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"peek\",\"pop\",\"empty\"]",
+    "values": "[1,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"pop\",\"peek\",\"pop\",\"empty\"]",
+    "values": "[1,2,3,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"empty\",\"peek\",\"pop\",\"empty\"]",
+    "values": "[5,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"pop\",\"empty\"]",
+    "values": "[9,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"pop\",\"peek\",\"pop\",\"empty\"]",
+    "values": "[3,7,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"push\",\"peek\",\"pop\",\"peek\",\"pop\",\"empty\"]",
+    "values": "[1,2,3,4,0,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"empty\",\"pop\",\"empty\",\"push\",\"peek\",\"empty\"]",
+    "values": "[4,5,0,0,0,6,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"push\",\"push\",\"pop\",\"pop\",\"pop\",\"pop\",\"pop\",\"empty\"]",
+    "values": "[9,8,7,6,5,0,0,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"peek\",\"peek\",\"pop\",\"empty\",\"push\",\"peek\",\"empty\"]",
+    "values": "[2,0,0,0,0,8,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"pop\",\"push\",\"pop\",\"pop\",\"empty\"]",
+    "values": "[1,9,0,2,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"peek\",\"peek\",\"pop\",\"empty\",\"pop\",\"peek\",\"empty\"]",
+    "values": "[5,1,9,0,0,0,0,0,0,0]"
+  },
+  {
+    "operations": "@javascript:JSON.stringify(Array(50).fill('push').flatMap((_,i)=>i%5===4?['push','peek','pop']:['push']))",
+    "values": "@javascript:JSON.stringify(Array.from({length:50},(_,i)=>(i%9)+1).flatMap((v,i)=>i%5===4?[v,0,0]:[v]))",
+    "_isLargeTest": true
+  },
+  {
+    "operations": "@javascript:JSON.stringify([...Array(500).fill('push'),...Array(250).fill('pop'),'peek','empty'])",
+    "values": "@javascript:JSON.stringify([...Array.from({length:500},(_,i)=>(i%9)+1),...Array(252).fill(0)])",
+    "_isLargeTest": true
+  }
+]
