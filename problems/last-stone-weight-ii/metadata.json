@@ -1,0 +1,48 @@
+{
+  "id": "last-stone-weight-ii",
+  "title": "233. Last Stone Weight II",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/last-stone-weight-ii/",
+  "examples": [
+    {
+      "input": "stones = [2,7,4,1,8,1]",
+      "output": "1",
+      "explanation": "We can combine 2 and 4 to get 2, so the array converts to [2,7,1,8,1] then, we can combine 7 and 8 to get 1, so the array converts to [2,1,1,1] then, we can combine 2 and 1 to get 1, so the array converts to [1,1,1] then, we can combine 1 and 1 to get 0, so the array converts to [1], then that's the optimal value."
+    },
+    {
+      "input": "stones = [31,26,33,21,40]",
+      "output": "5",
+      "explanation": "We can do any sequence of smashes we want, and 5 is the smallest possible."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int lastStoneWeightII(int[] stones) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def lastStoneWeightII(self, stones: List[int]) -> int:\n        ",
+    "cpp": "#include <vector>\n#include <algorithm>\nusing namespace std;\n\nclass Solution {\npublic:\n    int lastStoneWeightII(vector<int>& stones) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public int LastStoneWeightII(int[] stones) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn last_stone_weight_ii(stones: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc LastStoneWeightII(stones []int) int {\n    \n}",
+    "typescript": "export function lastStoneWeightII(stones: number[]): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "stones": "[2,7,4,1,8,1]"
+    },
+    {
+      "stones": "[31,26,33,21,40]"
+    }
+  ],
+  "functionName": "lastStoneWeightII",
+  "params": [
+    {
+      "name": "stones",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Think of the final answer as a sum of weights with + or - sign symbols in front of each weight. Actually, all sums with 1 of each sign symbol are possible.",
+    "Use dynamic programming: for every possible sum with N stones, those sums +x or -x is possible with N+1 stones, where x is the value of the newest stone."
+  ]
+}

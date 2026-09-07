@@ -1,0 +1,59 @@
+{
+  "id": "asteroid-collision",
+  "title": "179. Asteroid Collision",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/asteroid-collision/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "asteroids = [5,10,-5]",
+      "output": "[5,10]",
+      "explanation": "The 10 and -5 collide resulting in 10. The 5 and 10 never collide."
+    },
+    {
+      "input": "asteroids = [8,-8]",
+      "output": "[]",
+      "explanation": "The 8 and -8 collide exploding each other."
+    },
+    {
+      "input": "asteroids = [10,2,-5]",
+      "output": "[10]",
+      "explanation": "The 2 and -5 collide resulting in -5. The 10 and -5 collide resulting in 10."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] asteroidCollision(int[] asteroids) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def asteroidCollision(self, asteroids: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> asteroidCollision(vector<int>& asteroids) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] AsteroidCollision(int[] asteroids)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn asteroid_collision(asteroids: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc AsteroidCollision(asteroids []int) []int {\n    return []int{}\n}",
+    "typescript": "export function asteroidCollision(asteroids: number[]): number[] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "asteroids": "[5,10,-5]"
+    },
+    {
+      "asteroids": "[8,-8]"
+    },
+    {
+      "asteroids": "[10,2,-5]"
+    },
+    {
+      "asteroids": "[-2,-1,1,2]"
+    }
+  ],
+  "functionName": "asteroidCollision",
+  "params": [
+    {
+      "name": "asteroids",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Keep survivors in a stack; only a right-moving top and a left-moving incoming asteroid can collide.",
+    "While the incoming left-moving asteroid destroys smaller right-moving tops, pop them; if sizes are equal, pop the top and discard the incoming one."
+  ]
+}

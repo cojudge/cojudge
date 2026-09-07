@@ -1,0 +1,61 @@
+{
+  "id": "greatest-common-divisor-of-strings",
+  "title": "244. Greatest Common Divisor of Strings",
+  "difficulty": "Easy",
+  "category": "string",
+  "link": "https://leetcode.com/problems/greatest-common-divisor-of-strings/",
+  "examples": [
+    {
+      "input": "str1 = \"ABCABC\", str2 = \"ABC\"",
+      "output": "\"ABC\""
+    },
+    {
+      "input": "str1 = \"ABABAB\", str2 = \"ABAB\"",
+      "output": "\"AB\""
+    },
+    {
+      "input": "str1 = \"LEET\", str2 = \"CODE\"",
+      "output": "\"\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String gcdOfStrings(String str1, String str2) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def gcdOfStrings(self, str1: str, str2: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string gcdOfStrings(string str1, string str2) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string GcdOfStrings(string str1, string str2) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn gcd_of_strings(str1: String, str2: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc GcdOfStrings(str1 string, str2 string) string {\n    return \"\"\n}",
+    "typescript": "export function gcdOfStrings(str1: string, str2: string): string {\n    return \"\";\n}"
+  },
+  "testCases": [
+    {
+      "str1": "ABCABC",
+      "str2": "ABC"
+    },
+    {
+      "str1": "ABABAB",
+      "str2": "ABAB"
+    },
+    {
+      "str1": "LEET",
+      "str2": "CODE"
+    }
+  ],
+  "functionName": "gcdOfStrings",
+  "params": [
+    {
+      "name": "str1",
+      "type": "string"
+    },
+    {
+      "name": "str2",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "The greatest common divisor must be a prefix of both strings, so try every prefix of the shorter string from longest to shortest.",
+    "A divisor x of length len divides a string of length L only if L is a multiple of len and the string is x repeated L / len times.",
+    "Alternatively, if str1 + str2 != str2 + str1 there is no common divisor; otherwise the answer is the prefix of length gcd(str1.length, str2.length)."
+  ]
+}

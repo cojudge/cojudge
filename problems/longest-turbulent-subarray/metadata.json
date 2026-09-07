@@ -1,0 +1,61 @@
+{
+  "id": "longest-turbulent-subarray",
+  "title": "238. Longest Turbulent Subarray",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/longest-turbulent-subarray/",
+  "category": "greedy",
+  "examples": [
+    {
+      "input": "arr = [9,4,2,10,7,8,8,1,9]",
+      "output": "5",
+      "explanation": "arr[1] > arr[2] < arr[3] > arr[4] < arr[5]"
+    },
+    {
+      "input": "arr = [4,8,12,16]",
+      "output": "2"
+    },
+    {
+      "input": "arr = [100]",
+      "output": "1"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxTurbulenceSize(int[] arr) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxTurbulenceSize(self, arr: List[int]) -> int:\n        ",
+    "cpp": "#include <vector>\n#include <algorithm>\nusing namespace std;\n\nclass Solution {\npublic:\n    int maxTurbulenceSize(vector<int>& arr) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MaxTurbulenceSize(int[] arr) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_turbulence_size(arr: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MaxTurbulenceSize(arr []int) int {\n    \n}",
+    "typescript": "export function maxTurbulenceSize(arr: number[]): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "arr": "[9,4,2,10,7,8,8,1,9]"
+    },
+    {
+      "arr": "[4,8,12,16]"
+    },
+    {
+      "arr": "[100]"
+    },
+    {
+      "arr": "[1,1,1]"
+    },
+    {
+      "arr": "[1,3,2,4,3,5]"
+    }
+  ],
+  "functionName": "maxTurbulenceSize",
+  "params": [
+    {
+      "name": "arr",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Turbulence is a local alternating property; track two counters: the longest swing ending with '<' and the longest ending with '>'.",
+    "When consecutive elements are equal, a turbulent run restarts at size 1.",
+    "Keep a sliding window over arr while it remains turbulent."
+  ]
+}

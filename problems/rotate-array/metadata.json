@@ -1,0 +1,58 @@
+{
+  "id": "rotate-array",
+  "title": "171. Rotate Array",
+  "difficulty": "Medium",
+  "category": "two-pointer",
+  "link": "https://leetcode.com/problems/rotate-array/",
+  "examples": [
+    {
+      "input": "nums = [1,2,3,4,5,6,7], k = 3",
+      "output": "[5,6,7,1,2,3,4]",
+      "explanation": "Rotate 1 step: [7,1,2,3,4,5,6]. Rotate 2 steps: [6,7,1,2,3,4,5]. Rotate 3 steps: [5,6,7,1,2,3,4]."
+    },
+    {
+      "input": "nums = [-1,-100,3,99], k = 2",
+      "output": "[3,99,-1,-100]",
+      "explanation": "Rotate 1 step: [99,-1,-100,3]. Rotate 2 steps: [3,99,-1,-100]."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] rotate(int[] nums, int k) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def rotate(self, nums: List[int], k: int) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> rotate(vector<int>& nums, int k) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] Rotate(int[] nums, int k)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn rotate(nums: Vec<i32>, k: i32) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc Rotate(nums []int, k int) []int {\n    return []int{}\n}",
+    "typescript": "export function rotate(nums: number[], k: number): number[] {\n    return [];\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3,4,5,6,7]",
+      "k": 3
+    },
+    {
+      "nums": "[-1,-100,3,99]",
+      "k": 2
+    },
+    {
+      "nums": "[1,2]",
+      "k": 3
+    }
+  ],
+  "functionName": "rotate",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Reduce k modulo n to handle k larger than the array length.",
+    "Reverse the whole array, then reverse the first k elements and the remaining n-k elements."
+  ]
+}

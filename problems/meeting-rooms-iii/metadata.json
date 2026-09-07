@@ -1,0 +1,51 @@
+{
+  "id": "meeting-rooms-iii",
+  "title": "242. Meeting Rooms III",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/meeting-rooms-iii/",
+  "category": "interval",
+  "examples": [
+    {
+      "input": "n = 2, meetings = [[0,10],[1,5],[2,7],[3,4]]",
+      "output": "0"
+    },
+    {
+      "input": "n = 3, meetings = [[1,20],[2,10],[3,5],[4,9],[6,8]]",
+      "output": "1"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int mostBooked(int n, int[][] meetings) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def mostBooked(self, n: int, meetings: List[List[int]]) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int mostBooked(int n, vector<vector<int>>& meetings) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MostBooked(int n, int[][] meetings) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn most_booked(n: i32, meetings: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MostBooked(n int, meetings [][]int) int {\n    return 0\n}",
+    "typescript": "export function mostBooked(n: number, meetings: number[][]): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "n": 2,
+      "meetings": "[[0,10],[1,5],[2,7],[3,4]]"
+    },
+    {
+      "n": 3,
+      "meetings": "[[1,20],[2,10],[3,5],[4,9],[6,8]]"
+    }
+  ],
+  "functionName": "mostBooked",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "meetings",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sort meetings by start. Use two heaps: free rooms and busy rooms (end time, room)."
+  ]
+}

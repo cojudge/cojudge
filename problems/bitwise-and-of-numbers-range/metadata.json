@@ -1,0 +1,61 @@
+{
+  "id": "bitwise-and-of-numbers-range",
+  "title": "249. Bitwise AND of Numbers Range",
+  "difficulty": "Medium",
+  "category": "bit-manipulation",
+  "link": "https://leetcode.com/problems/bitwise-and-of-numbers-range/",
+  "examples": [
+    {
+      "input": "left = 5, right = 7",
+      "output": "4",
+      "explanation": "5 (101) & 6 (110) & 7 (111) = 4 (100)."
+    },
+    {
+      "input": "left = 0, right = 0",
+      "output": "0"
+    },
+    {
+      "input": "left = 1, right = 2147483647",
+      "output": "0"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int rangeBitwiseAnd(int left, int right) {\n        \n    }\n}",
+    "python": "class Solution:\n    def rangeBitwiseAnd(self, left: int, right: int) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int rangeBitwiseAnd(int left, int right) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public int RangeBitwiseAnd(int left, int right) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn range_bitwise_and(left: i32, right: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc RangeBitwiseAnd(left int, right int) int {\n    \n}",
+    "typescript": "export function rangeBitwiseAnd(left: number, right: number): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "left": 5,
+      "right": 7
+    },
+    {
+      "left": 0,
+      "right": 0
+    },
+    {
+      "left": 1,
+      "right": 2147483647
+    }
+  ],
+  "functionName": "rangeBitwiseAnd",
+  "params": [
+    {
+      "name": "left",
+      "type": "int"
+    },
+    {
+      "name": "right",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The bitwise AND of the range has the common prefix of left and right in their binary forms, with all lower bits set to 0.",
+    "Shift both left and right right until they become equal; shift the result back left by the same count."
+  ]
+}

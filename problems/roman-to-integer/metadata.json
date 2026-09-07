@@ -1,0 +1,56 @@
+{
+  "id": "roman-to-integer",
+  "title": "247. Roman to Integer",
+  "difficulty": "Easy",
+  "category": "string",
+  "link": "https://leetcode.com/problems/roman-to-integer/",
+  "examples": [
+    {
+      "input": "s = \"III\"",
+      "output": "3",
+      "explanation": "III = 3."
+    },
+    {
+      "input": "s = \"LVIII\"",
+      "output": "58",
+      "explanation": "L = 50, V = 5, III = 3."
+    },
+    {
+      "input": "s = \"MCMXCIV\"",
+      "output": "1994",
+      "explanation": "M = 1000, CM = 900, XC = 90 and IV = 4."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int romanToInt(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def romanToInt(self, s: str) -> int:\n        ",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int romanToInt(string s) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public int RomanToInt(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn roman_to_int(s: String) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc RomanToInt(s string) int {\n    \n}",
+    "typescript": "export function romanToInt(s: string): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "s": "III"
+    },
+    {
+      "s": "LVIII"
+    },
+    {
+      "s": "MCMXCIV"
+    }
+  ],
+  "functionName": "romanToInt",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Work the string from back to front so each numeral is either added or subtracted based on the symbol to its right.",
+    "If a numeral is smaller than the one that follows it, subtract it; otherwise add it."
+  ]
+}

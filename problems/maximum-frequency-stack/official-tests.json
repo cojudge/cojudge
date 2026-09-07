@@ -1,0 +1,60 @@
+[
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"push\",\"push\",\"push\",\"pop\",\"pop\",\"pop\",\"pop\"]",
+    "values": "[5,7,5,7,4,5,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"pop\",\"pop\"]",
+    "values": "[1,1,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"pop\",\"pop\",\"pop\"]",
+    "values": "[4,6,4,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"pop\"]",
+    "values": "[9,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"pop\",\"push\",\"pop\",\"pop\",\"pop\"]",
+    "values": "[1,2,1,0,2,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"push\",\"pop\",\"pop\",\"pop\",\"pop\"]",
+    "values": "[3,3,3,3,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"pop\",\"push\",\"push\",\"pop\",\"pop\",\"pop\"]",
+    "values": "[5,5,0,7,7,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"push\",\"push\",\"pop\",\"pop\",\"pop\"]",
+    "values": "[1,2,3,2,1,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"push\",\"pop\",\"push\",\"pop\",\"pop\",\"pop\",\"pop\"]",
+    "values": "[8,8,9,9,0,8,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"pop\",\"push\",\"pop\",\"push\",\"pop\"]",
+    "values": "[1,0,2,0,3,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"push\",\"push\",\"push\",\"push\",\"pop\",\"pop\",\"pop\",\"pop\",\"pop\"]",
+    "values": "[0,0,0,1000000000,0,5,5,0,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"pop\",\"pop\",\"push\",\"push\",\"pop\",\"pop\",\"pop\"]",
+    "values": "[7,7,7,0,0,5,5,0,0,0]"
+  },
+  {
+    "operations": "@javascript:JSON.stringify([...Array(5000).fill('push'),...Array(2500).fill('pop')])",
+    "values": "@javascript:JSON.stringify([...Array.from({length:5000},(_,i)=>i%100),...Array(2500).fill(0)])",
+    "_isLargeTest": true
+  },
+  {
+    "operations": "@javascript:JSON.stringify([...Array(4000).fill('push'),'pop','pop','pop'])",
+    "values": "@javascript:JSON.stringify([...Array.from({length:4000},(_,i)=>i%50),0,0,0])",
+    "_isLargeTest": true
+  }
+]

@@ -1,0 +1,63 @@
+{
+  "id": "minimum-size-subarray-sum",
+  "title": "174. Minimum Size Subarray Sum",
+  "difficulty": "Medium",
+  "category": "sliding-window",
+  "link": "https://leetcode.com/problems/minimum-size-subarray-sum/",
+  "examples": [
+    {
+      "input": "target = 7, nums = [2,3,1,2,4,3]",
+      "output": "2",
+      "explanation": "The subarray [4,3] has the minimal length 2."
+    },
+    {
+      "input": "target = 4, nums = [1,4,4]",
+      "output": "1",
+      "explanation": "The subarray [4] has the minimal length 1."
+    },
+    {
+      "input": "target = 11, nums = [1,1,1,1,1,1,1,1]",
+      "output": "0",
+      "explanation": "There is no subarray with sum >= 11."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minSubArrayLen(int target, int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minSubArrayLen(self, target: int, nums: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int minSubArrayLen(int target, vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinSubArrayLen(int target, int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_sub_array_len(target: i32, nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinSubArrayLen(target int, nums []int) int {\n    return 0\n}",
+    "typescript": "export function minSubArrayLen(target: number, nums: number[]): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "target": 7,
+      "nums": "[2,3,1,2,4,3]"
+    },
+    {
+      "target": 4,
+      "nums": "[1,4,4]"
+    },
+    {
+      "target": 11,
+      "nums": "[1,1,1,1,1,1,1,1]"
+    }
+  ],
+  "functionName": "minSubArrayLen",
+  "params": [
+    {
+      "name": "target",
+      "type": "int"
+    },
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use a sliding window with left and right pointers and a running sum.",
+    "Expand right to reach the target, then shrink left to minimize the length while staying >= target."
+  ]
+}

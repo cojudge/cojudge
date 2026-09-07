@@ -1,0 +1,46 @@
+{
+  "id": "transpose-matrix",
+  "title": "246. Transpose Matrix",
+  "difficulty": "Easy",
+  "category": "array",
+  "link": "https://leetcode.com/problems/transpose-matrix/",
+  "examples": [
+    {
+      "input": "matrix = [[1,2,3],[4,5,6],[7,8,9]]",
+      "output": "[[1,4,7],[2,5,8],[3,6,9]]"
+    },
+    {
+      "input": "matrix = [[1,2,3],[4,5,6]]",
+      "output": "[[1,4],[2,5],[3,6]]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] transpose(int[][] matrix) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def transpose(self, matrix: List[List[int]]) -> List[List[int]]:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> transpose(vector<vector<int>>& matrix) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[][] Transpose(int[][] matrix) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn transpose(matrix: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc Transpose(matrix [][]int) [][]int {\n    \n}",
+    "typescript": "export function transpose(matrix: number[][]): number[][] {\n    \n}"
+  },
+  "testCases": [
+    {
+      "matrix": "[[1,2,3],[4,5,6],[7,8,9]]"
+    },
+    {
+      "matrix": "[[1,2,3],[4,5,6]]"
+    }
+  ],
+  "functionName": "transpose",
+  "params": [
+    {
+      "name": "matrix",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "The transpose of a matrix swaps rows and columns: result[j][i] = matrix[i][j].",
+    "No special algorithm is needed; just build a result matrix with swapped dimensions."
+  ]
+}

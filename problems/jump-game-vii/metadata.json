@@ -1,0 +1,70 @@
+{
+  "id": "jump-game-vii",
+  "title": "239. Jump Game VII",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/jump-game-vii/",
+  "category": "greedy",
+  "examples": [
+    {
+      "input": "s = \"011010\", minJump = 2, maxJump = 3",
+      "output": "true",
+      "explanation": "In the first step, move from index 0 to index 3."
+    },
+    {
+      "input": "s = \"01101110\", minJump = 2, maxJump = 3",
+      "output": "false"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean canReach(String s, int minJump, int maxJump) {\n        \n    }\n}",
+    "python": "class Solution:\n    def canReach(self, s: str, minJump: int, maxJump: int) -> bool:\n        ",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool canReach(string s, int minJump, int maxJump) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool CanReach(string s, int minJump, int maxJump) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_reach(s: String, min_jump: i32, max_jump: i32) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc CanReach(s string, minJump int, maxJump int) bool {\n    \n}",
+    "typescript": "export function canReach(s: string, minJump: number, maxJump: number): boolean {\n    \n}"
+  },
+  "testCases": [
+    {
+      "s": "011010",
+      "minJump": 2,
+      "maxJump": 3
+    },
+    {
+      "s": "01101110",
+      "minJump": 2,
+      "maxJump": 3
+    },
+    {
+      "s": "00",
+      "minJump": 1,
+      "maxJump": 1
+    },
+    {
+      "s": "0011100010",
+      "minJump": 2,
+      "maxJump": 3
+    }
+  ],
+  "functionName": "canReach",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "minJump",
+      "type": "int"
+    },
+    {
+      "name": "maxJump",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Consider for each reachable index i the interval [i + minJump, i + maxJump].",
+    "Use a sliding window that counts how many reachable indices fall inside each index's previous window.",
+    "Index j is reachable when s[j] == '0' and some reachable index lies in [j - maxJump, j - minJump]."
+  ]
+}

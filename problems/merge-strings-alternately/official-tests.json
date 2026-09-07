@@ -1,0 +1,14 @@
+[
+  { "word1": "abc", "word2": "pqr" },
+  { "word1": "ab", "word2": "pqrs" },
+  { "word1": "abcd", "word2": "pq" },
+  { "word1": "a", "word2": "b" },
+  { "word1": "ab", "word2": "cd" },
+  { "word1": "a", "word2": "bcdef" },
+  { "word1": "abcde", "word2": "f" },
+  { "word1": "xyz", "word2": "xyz" },
+  { "word1": "hello", "word2": "world" },
+  { "word1": "a", "word2": "a" },
+  { "word1": "abcdefghij", "word2": "klm" },
+  { "word1": "q", "word2": "wertyuiop" }
+]

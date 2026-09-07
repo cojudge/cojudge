@@ -1,0 +1,48 @@
+{
+  "id": "stone-game",
+  "title": "234. Stone Game",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/stone-game/",
+  "examples": [
+    {
+      "input": "piles = [5,3,4,5]",
+      "output": "true",
+      "explanation": "Alice starts first, and can only take the first 5 or the last 5. Say she takes the first 5, so the row becomes [3, 4, 5]. If Bob takes 3, then the board is [4, 5], and Alice takes 5 and then she wins (10 vs 7). If Bob takes the last 5, then the board is [3, 4], and Alice takes 4 and she wins (9 vs 8)."
+    },
+    {
+      "input": "piles = [3,7,2,3]",
+      "output": "true",
+      "explanation": ""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean stoneGame(int[] piles) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def stoneGame(self, piles: List[int]) -> bool:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool stoneGame(vector<int>& piles) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool StoneGame(int[] piles) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn stone_game(piles: Vec<i32>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc StoneGame(piles []int) bool {\n    \n}",
+    "typescript": "export function stoneGame(piles: number[]): boolean {\n    \n}"
+  },
+  "testCases": [
+    {
+      "piles": "[5,3,4,5]"
+    },
+    {
+      "piles": "[3,7,2,3]"
+    }
+  ],
+  "functionName": "stoneGame",
+  "params": [
+    {
+      "name": "piles",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Let dp[i][j] be the largest score advantage the current player can achieve on the subarray piles[i..j]. dp[i][j] = max(piles[i] - dp[i+1][j], piles[j] - dp[i][j-1]).",
+    "Alice wins if and only if dp[0][n-1] > 0. Solve dp over increasing interval lengths."
+  ]
+}

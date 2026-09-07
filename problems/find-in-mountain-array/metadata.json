@@ -1,0 +1,68 @@
+{
+  "id": "find-in-mountain-array",
+  "title": "190. Find in Mountain Array",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/find-in-mountain-array/",
+  "category": "binary-search",
+  "examples": [
+    {
+      "input": "arr = [1,2,3,4,5,3,1], target = 3",
+      "output": "2",
+      "explanation": "3 occurs at indices 2 and 5; the minimum index is 2."
+    },
+    {
+      "input": "arr = [0,1,2,4,2,1], target = 3",
+      "output": "-1",
+      "explanation": "3 does not occur in the array."
+    },
+    {
+      "input": "arr = [1,5,2], target = 5",
+      "output": "1",
+      "explanation": "5 is the peak at index 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findInMountainArray(int[] arr, int target) {\n        return -1;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def findInMountainArray(self, arr: List[int], target: int) -> int:\n        return -1\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int findInMountainArray(vector<int>& arr, int target) {\n        return -1;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int FindInMountainArray(int[] arr, int target)\n    {\n        return -1;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_in_mountain_array(arr: Vec<i32>, target: i32) -> i32 {\n        -1\n    }\n}",
+    "go": "package main\n\nfunc FindInMountainArray(arr []int, target int) int {\n    return -1\n}",
+    "typescript": "export function findInMountainArray(arr: number[], target: number): number {\n    return -1;\n}"
+  },
+  "testCases": [
+    {
+      "arr": "[1,2,3,4,5,3,1]",
+      "target": 3
+    },
+    {
+      "arr": "[0,1,2,4,2,1]",
+      "target": 3
+    },
+    {
+      "arr": "[1,5,2]",
+      "target": 5
+    },
+    {
+      "arr": "[1,2,3,5,3,1]",
+      "target": 1
+    }
+  ],
+  "functionName": "findInMountainArray",
+  "params": [
+    {
+      "name": "arr",
+      "type": "int_array"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Binary-search the peak: arr[mid] < arr[mid+1] means the peak is to the right.",
+    "Binary-search the increasing left side for the target with the usual ascending order.",
+    "Binary-search the decreasing right side with reversed comparisons, and return the left-side hit first to get the minimum index."
+  ]
+}

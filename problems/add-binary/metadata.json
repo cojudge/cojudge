@@ -1,0 +1,52 @@
+{
+  "id": "add-binary",
+  "title": "248. Add Binary",
+  "difficulty": "Easy",
+  "category": "string",
+  "link": "https://leetcode.com/problems/add-binary/",
+  "examples": [
+    {
+      "input": "a = \"11\", b = \"1\"",
+      "output": "\"100\""
+    },
+    {
+      "input": "a = \"1010\", b = \"1011\"",
+      "output": "\"10101\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String addBinary(String a, String b) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def addBinary(self, a: str, b: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string addBinary(string a, string b) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string AddBinary(string a, string b) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn add_binary(a: String, b: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc AddBinary(a string, b string) string {\n    return \"\"\n}",
+    "typescript": "export function addBinary(a: string, b: string): string {\n    return \"\";\n}"
+  },
+  "testCases": [
+    {
+      "a": "11",
+      "b": "1"
+    },
+    {
+      "a": "1010",
+      "b": "1011"
+    }
+  ],
+  "functionName": "addBinary",
+  "params": [
+    {
+      "name": "a",
+      "type": "string"
+    },
+    {
+      "name": "b",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Add the two strings bit by bit from the least significant digit (rightmost), carrying a 1 into the next position when a column sums to 2.",
+    "Pad the shorter string with leading zeros, or stop once both are consumed and the carry is zero."
+  ]
+}

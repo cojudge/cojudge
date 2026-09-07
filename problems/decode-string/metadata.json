@@ -1,0 +1,59 @@
+{
+  "id": "decode-string",
+  "title": "182. Decode String",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/decode-string/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "s = \"3[a]2[bc]\"",
+      "output": "\"aaabcbc\"",
+      "explanation": "Repeat 'a' 3 times and 'bc' 2 times, concatenating to 'aaabcbc'."
+    },
+    {
+      "input": "s = \"3[a2[c]]\"",
+      "output": "\"accaccacc\"",
+      "explanation": "Inner '2[c]' becomes 'cc', so 'a2[c]' is 'acc', repeated 3 times."
+    },
+    {
+      "input": "s = \"2[abc]3[cd]ef\"",
+      "output": "\"abcabccdcdcdef\"",
+      "explanation": "'abc' twice, 'cd' three times, then 'ef'."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String decodeString(String s) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def decodeString(self, s: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string decodeString(string s) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string DecodeString(string s) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn decode_string(s: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc DecodeString(s string) string {\n    return \"\"\n}",
+    "typescript": "export function decodeString(s: string): string {\n    return \"\";\n}"
+  },
+  "testCases": [
+    {
+      "s": "3[a]2[bc]"
+    },
+    {
+      "s": "3[a2[c]]"
+    },
+    {
+      "s": "2[abc]3[cd]ef"
+    },
+    {
+      "s": "abc"
+    }
+  ],
+  "functionName": "decodeString",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Use two stacks: one for repeat counts and one for the string built so far.",
+    "On ']' pop the count and previous string, repeat the current segment, and append it to the previous string."
+  ]
+}

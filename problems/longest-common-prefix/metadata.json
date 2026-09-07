@@ -1,0 +1,48 @@
+{
+  "id": "longest-common-prefix",
+  "title": "153. Longest Common Prefix",
+  "difficulty": "Easy",
+  "category": "array",
+  "link": "https://leetcode.com/problems/longest-common-prefix/",
+  "examples": [
+    {
+      "input": "strs = [\"flower\",\"flow\",\"flight\"]",
+      "output": "\"fl\"",
+      "explanation": "The strings share the prefix \"fl\"; the third character differs ('o' vs 'i')."
+    },
+    {
+      "input": "strs = [\"dog\",\"racecar\",\"car\"]",
+      "output": "\"\"",
+      "explanation": "There is no common prefix among the input strings."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String longestCommonPrefix(String[] strs) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def longestCommonPrefix(self, strs: List[str]) -> str:\n        ",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string longestCommonPrefix(vector<string>& strs) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string LongestCommonPrefix(string[] strs) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn longest_common_prefix(strs: Vec<String>) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc LongestCommonPrefix(strs []string) string {\n    \n}",
+    "typescript": "export function longestCommonPrefix(strs: string[]): string {\n    \n}"
+  },
+  "testCases": [
+    {
+      "strs": "[\"flower\",\"flow\",\"flight\"]"
+    },
+    {
+      "strs": "[\"dog\",\"racecar\",\"car\"]"
+    }
+  ],
+  "functionName": "longestCommonPrefix",
+  "params": [
+    {
+      "name": "strs",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Compare characters column by column: take the first string as reference and shrink the prefix while any other string mismatches.",
+    "Alternatively sort the array and only compare the first and last strings, since they differ the most."
+  ]
+}

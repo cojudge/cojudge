@@ -1,0 +1,65 @@
+{
+  "id": "find-k-closest-elements",
+  "title": "175. Find K Closest Elements",
+  "difficulty": "Medium",
+  "category": "sliding-window",
+  "link": "https://leetcode.com/problems/find-k-closest-elements/",
+  "examples": [
+    {
+      "input": "arr = [1,2,3,4,5], k = 4, x = 3",
+      "output": "[1,2,3,4]",
+      "explanation": "The 4 closest elements to 3 are 1, 2, 3 and 4."
+    },
+    {
+      "input": "arr = [1,2,3,4,5], k = 4, x = -1",
+      "output": "[1,2,3,4]",
+      "explanation": "The 4 closest elements to -1 are 1, 2, 3 and 4."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] findClosestElements(int[] arr, int k, int x) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> findClosestElements(vector<int>& arr, int k, int x) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] FindClosestElements(int[] arr, int k, int x)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_closest_elements(arr: Vec<i32>, k: i32, x: i32) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc FindClosestElements(arr []int, k int, x int) []int {\n    return []int{}\n}",
+    "typescript": "export function findClosestElements(arr: number[], k: number, x: number): number[] {\n    return [];\n}"
+  },
+  "testCases": [
+    {
+      "arr": "[1,2,3,4,5]",
+      "k": 4,
+      "x": 3
+    },
+    {
+      "arr": "[1,2,3,4,5]",
+      "k": 4,
+      "x": -1
+    },
+    {
+      "arr": "[1,1,2,3,4,5]",
+      "k": 4,
+      "x": -1
+    }
+  ],
+  "functionName": "findClosestElements",
+  "params": [
+    {
+      "name": "arr",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    },
+    {
+      "name": "x",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Use two pointers shrinking from both ends until k elements remain, discarding the farther end each time.",
+    "Equivalently, binary-search the left bound of the size-k window."
+  ]
+}

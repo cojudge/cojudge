@@ -1,0 +1,58 @@
+{
+  "id": "evaluate-division",
+  "title": "221. Evaluate Division",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/evaluate-division/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "equations = [[\"a\",\"b\"],[\"b\",\"c\"]], values = [2.0,3.0], queries = [[\"a\",\"c\"],[\"b\",\"a\"],[\"a\",\"e\"],[\"a\",\"a\"],[\"x\",\"x\"]]",
+      "output": "[6.00000,0.50000,-1.00000,1.00000,-1.00000]"
+    },
+    {
+      "input": "equations = [[\"a\",\"b\"],[\"b\",\"c\"],[\"bc\",\"cd\"]], values = [1.5,2.5,5.0], queries = [[\"a\",\"c\"],[\"c\",\"b\"],[\"bc\",\"cd\"],[\"cd\",\"bc\"]]",
+      "output": "[3.75000,0.40000,5.00000,0.20000]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public java.util.List<String> calcEquation(java.util.List<java.util.List<String>> equations, String[] values, java.util.List<java.util.List<String>> queries) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def calcEquation(self, equations: List[List[str]], values: List[str], queries: List[List[str]]) -> List[str]:\n        ",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> calcEquation(vector<vector<string>>& equations, vector<string>& values, vector<vector<string>>& queries) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<string> CalcEquation(List<List<string>> equations, string[] values, List<List<string>> queries) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn calc_equation(equations: Vec<Vec<String>>, values: Vec<String>, queries: Vec<Vec<String>>) -> Vec<String> {\n        \n    }\n}",
+    "go": "package main\n\nfunc CalcEquation(equations [][]string, values []string, queries [][]string) []string {\n    return nil\n}",
+    "typescript": "export function calcEquation(equations: string[][], values: string[], queries: string[][]): string[] {\n    \n}"
+  },
+  "testCases": [
+    {
+      "equations": "[[\"a\",\"b\"],[\"b\",\"c\"]]",
+      "values": "[\"2.0\",\"3.0\"]",
+      "queries": "[[\"a\",\"c\"],[\"b\",\"a\"],[\"a\",\"e\"],[\"a\",\"a\"],[\"x\",\"x\"]]"
+    },
+    {
+      "equations": "[[\"a\",\"b\"],[\"b\",\"c\"],[\"bc\",\"cd\"]]",
+      "values": "[\"1.5\",\"2.5\",\"5.0\"]",
+      "queries": "[[\"a\",\"c\"],[\"c\",\"b\"],[\"bc\",\"cd\"],[\"cd\",\"bc\"]]"
+    }
+  ],
+  "functionName": "calcEquation",
+  "params": [
+    {
+      "name": "equations",
+      "type": "string_list_2d"
+    },
+    {
+      "name": "values",
+      "type": "string_array"
+    },
+    {
+      "name": "queries",
+      "type": "string_list_2d"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Build a weighted graph of variables. For each query BFS/DFS to compute the product of edge weights.",
+    "Note: values and answers are decimal strings (e.g. \"2.0\", \"-1.0\") because Cojudge has no double type."
+  ]
+}

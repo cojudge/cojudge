@@ -1,0 +1,67 @@
+{
+  "id": "implement-queue-using-stacks",
+  "title": "178. Implement Queue using Stacks",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/implement-queue-using-stacks/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "operations = [\"push\",\"push\",\"peek\",\"pop\",\"empty\"], values = [1,2,0,0,0]",
+      "output": "[1,1,0]",
+      "explanation": "Push 1 then push 2. Peek returns 1, pop removes and returns 1, then empty returns false (encoded as 0) because 2 remains."
+    },
+    {
+      "input": "operations = [\"push\",\"peek\",\"pop\",\"empty\"], values = [1,0,0,0]",
+      "output": "[1,1,1]",
+      "explanation": "Push 1. Peek returns 1, pop returns 1, then the queue is empty so empty returns true (encoded as 1)."
+    },
+    {
+      "input": "operations = [\"push\",\"push\",\"push\",\"pop\",\"peek\",\"pop\",\"empty\"], values = [1,2,3,0,0,0,0]",
+      "output": "[1,2,2,0]",
+      "explanation": "Push 1, 2, 3. Pop returns 1, peek returns 2, pop returns 2, and empty returns false (0) because 3 remains."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runQueueUsingStacks(String[] operations, int[] values) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def runQueueUsingStacks(self, operations: List[str], values: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runQueueUsingStacks(vector<string>& operations, vector<int>& values) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunQueueUsingStacks(string[] operations, int[] values)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_queue_using_stacks(operations: Vec<String>, values: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunQueueUsingStacks(operations []string, values []int) []int {\n    return []int{}\n}",
+    "typescript": "export function runQueueUsingStacks(operations: string[], values: number[]): number[] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "operations": "[\"push\",\"push\",\"peek\",\"pop\",\"empty\"]",
+      "values": "[1,2,0,0,0]"
+    },
+    {
+      "operations": "[\"push\",\"peek\",\"pop\",\"empty\"]",
+      "values": "[1,0,0,0]"
+    },
+    {
+      "operations": "[\"push\",\"push\",\"push\",\"pop\",\"peek\",\"pop\",\"empty\"]",
+      "values": "[1,2,3,0,0,0,0]"
+    },
+    {
+      "operations": "[\"push\",\"empty\",\"peek\",\"pop\",\"empty\"]",
+      "values": "[5,0,0,0,0]"
+    }
+  ],
+  "functionName": "runQueueUsingStacks",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Use two stacks: push onto the input stack, and lazily move elements to the output stack when a peek or pop needs the front.",
+    "Empty checks whether both stacks have no elements. Encode empty as 1 for true and 0 for false."
+  ]
+}

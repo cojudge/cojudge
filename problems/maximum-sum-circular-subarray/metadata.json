@@ -1,0 +1,63 @@
+{
+  "id": "maximum-sum-circular-subarray",
+  "title": "237. Maximum Sum Circular Subarray",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/maximum-sum-circular-subarray/",
+  "category": "greedy",
+  "examples": [
+    {
+      "input": "nums = [1,-2,3,-2]",
+      "output": "3",
+      "explanation": "Subarray [3] has maximum sum 3."
+    },
+    {
+      "input": "nums = [5,-3,5]",
+      "output": "10",
+      "explanation": "Subarray [5,5] has maximum sum 5 + 5 = 10."
+    },
+    {
+      "input": "nums = [-3,-2,-3]",
+      "output": "-2",
+      "explanation": "Subarray [-2] has maximum sum -2."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxSubarraySumCircular(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxSubarraySumCircular(self, nums: List[int]) -> int:\n        ",
+    "cpp": "#include <vector>\n#include <algorithm>\nusing namespace std;\n\nclass Solution {\npublic:\n    int maxSubarraySumCircular(vector<int>& nums) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MaxSubarraySumCircular(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_subarray_sum_circular(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MaxSubarraySumCircular(nums []int) int {\n    \n}",
+    "typescript": "export function maxSubarraySumCircular(nums: number[]): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,-2,3,-2]"
+    },
+    {
+      "nums": "[5,-3,5]"
+    },
+    {
+      "nums": "[-3,-2,-3]"
+    },
+    {
+      "nums": "[1,2,3,4]"
+    },
+    {
+      "nums": "[3,-1,2,-1]"
+    }
+  ],
+  "functionName": "maxSubarraySumCircular",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "For those familiar with Kadane's algorithm, this problem is a twist on that idea: use Kadane's on a straight array first.",
+    "There are two cases; the second maximizes the sum by wrapping around, which equals the total sum minus the minimum subarray sum.",
+    "If every element is negative, the answer is simply the maximum element."
+  ]
+}

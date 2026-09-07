@@ -1,0 +1,42 @@
+[
+  {
+    "words": "[\"hello\",\"leetcode\"]",
+    "order": "hlabcdefgijkmnopqrstuvwxyz"
+  },
+  {
+    "words": "[\"word\",\"world\",\"row\"]",
+    "order": "worldabcefghijkmnpqstuvxyz"
+  },
+  {
+    "words": "[\"apple\",\"app\"]",
+    "order": "abcdefghijklmnopqrstuvwxyz"
+  },
+  {
+    "words": "[\"a\",\"b\"]",
+    "order": "abcdefghijklmnopqrstuvwxyz"
+  },
+  {
+    "words": "[\"hello\",\"hello\"]",
+    "order": "abcdefghijklmnopqrstuvwxyz"
+  },
+  {
+    "words": "[\"zub\",\"zub\"]",
+    "order": "worldabcefghijkmnpqstuvxyz"
+  },
+  {
+    "words": "[\"kuvp\",\"q\"]",
+    "order": "ngxlkthsjuoqcpavbfdermiywz"
+  },
+  {
+    "words": "[\"fxasxpc\",\"dfbdrifhp\",\"nwzgs\",\"cmwqriv\",\"ebulyzdv\",\"meiq\"]",
+    "order": "zkgwaverwomldsyxujtqphbcif"
+  },
+  {
+    "words": "[\"aa\",\"a\"]",
+    "order": "abcdefghijklmnopqrstuvwxyz"
+  },
+  {
+    "words": "[\"a\",\"aa\"]",
+    "order": "abcdefghijklmnopqrstuvwxyz"
+  }
+]

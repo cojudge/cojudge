@@ -1,0 +1,67 @@
+{
+  "id": "maximum-frequency-stack",
+  "title": "183. Maximum Frequency Stack",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/maximum-frequency-stack/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "operations = [\"push\",\"push\",\"push\",\"push\",\"push\",\"push\",\"pop\",\"pop\",\"pop\",\"pop\"], values = [5,7,5,7,4,5,0,0,0,0]",
+      "output": "[5,7,5,4]",
+      "explanation": "Push 5, 7, 5, 7, 4, 5. Frequencies are 5:3, 7:2, 4:1. Pop returns 5 (most frequent), then 7 (tie between 7:2 and 5:2 broken by recency), then 5, then 4."
+    },
+    {
+      "input": "operations = [\"push\",\"push\",\"pop\",\"pop\"], values = [1,1,0,0]",
+      "output": "[1,1]",
+      "explanation": "Push 1 twice. Both pops return 1."
+    },
+    {
+      "input": "operations = [\"push\",\"push\",\"push\",\"pop\",\"pop\",\"pop\"], values = [4,6,4,0,0,0]",
+      "output": "[4,6,4]",
+      "explanation": "Push 4, 6, 4. Pop returns 4 (freq 2), then 6 and 4 tie at freq 1 so recency pops 6 then 4."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runFreqStack(String[] operations, int[] values) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def runFreqStack(self, operations: List[str], values: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runFreqStack(vector<string>& operations, vector<int>& values) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunFreqStack(string[] operations, int[] values)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_freq_stack(operations: Vec<String>, values: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunFreqStack(operations []string, values []int) []int {\n    return []int{}\n}",
+    "typescript": "export function runFreqStack(operations: string[], values: number[]): number[] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "operations": "[\"push\",\"push\",\"push\",\"push\",\"push\",\"push\",\"pop\",\"pop\",\"pop\",\"pop\"]",
+      "values": "[5,7,5,7,4,5,0,0,0,0]"
+    },
+    {
+      "operations": "[\"push\",\"push\",\"pop\",\"pop\"]",
+      "values": "[1,1,0,0]"
+    },
+    {
+      "operations": "[\"push\",\"push\",\"push\",\"pop\",\"pop\",\"pop\"]",
+      "values": "[4,6,4,0,0,0]"
+    },
+    {
+      "operations": "[\"push\",\"pop\"]",
+      "values": "[9,0]"
+    }
+  ],
+  "functionName": "runFreqStack",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Track each value's frequency and group values by frequency in stacks.",
+    "Keep the current maximum frequency; push appends to its frequency group and pop removes from the max group, decreasing max when empty."
+  ]
+}

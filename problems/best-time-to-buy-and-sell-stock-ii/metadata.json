@@ -1,0 +1,56 @@
+{
+  "id": "best-time-to-buy-and-sell-stock-ii",
+  "title": "161. Best Time to Buy and Sell Stock II",
+  "difficulty": "Medium",
+  "category": "array",
+  "link": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/",
+  "examples": [
+    {
+      "input": "prices = [7,1,5,3,6,4]",
+      "output": "7",
+      "explanation": "Buy on day 2 (price 1) sell on day 3 (price 5) profit 4; buy on day 4 (price 3) sell on day 5 (price 6) profit 3; total 7."
+    },
+    {
+      "input": "prices = [1,2,3,4,5]",
+      "output": "4",
+      "explanation": "Buy on day 1 (price 1) and sell on day 5 (price 5), profit 4."
+    },
+    {
+      "input": "prices = [7,6,4,3,1]",
+      "output": "0",
+      "explanation": "No profitable transaction exists, so profit is 0."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxProfit(int[] prices) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxProfit(self, prices: List[int]) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int maxProfit(vector<int>& prices) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MaxProfit(int[] prices) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_profit(prices: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MaxProfit(prices []int) int {\n    \n}",
+    "typescript": "export function maxProfit(prices: number[]): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "prices": "[7,1,5,3,6,4]"
+    },
+    {
+      "prices": "[1,2,3,4,5]"
+    },
+    {
+      "prices": "[7,6,4,3,1]"
+    }
+  ],
+  "functionName": "maxProfit",
+  "params": [
+    {
+      "name": "prices",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sum every positive day-to-day difference: profit += max(0, prices[i]-prices[i-1]).",
+    "This greedy equals unlimited transactions since each uphill step can be captured."
+  ]
+}

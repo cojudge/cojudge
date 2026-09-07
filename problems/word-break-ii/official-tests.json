@@ -1,0 +1,50 @@
+[
+  {
+    "s": "a",
+    "wordDict": "[\"a\"]"
+  },
+  {
+    "s": "a",
+    "wordDict": "[\"b\"]"
+  },
+  {
+    "s": "ab",
+    "wordDict": "[\"a\",\"b\",\"ab\"]"
+  },
+  {
+    "s": "catsanddog",
+    "wordDict": "[\"cat\",\"cats\",\"and\",\"sand\",\"dog\"]"
+  },
+  {
+    "s": "catsandog",
+    "wordDict": "[\"cats\",\"dog\",\"sand\",\"and\",\"cat\"]"
+  },
+  {
+    "s": "pineapplepenapple",
+    "wordDict": "[\"apple\",\"pen\",\"applepen\",\"pine\",\"pineapple\"]"
+  },
+  {
+    "s": "aaaa",
+    "wordDict": "[\"a\",\"aa\",\"aaa\"]"
+  },
+  {
+    "s": "aaaaaaa",
+    "wordDict": "[\"aaaa\",\"aa\",\"a\"]"
+  },
+  {
+    "s": "leetcode",
+    "wordDict": "[\"leet\",\"code\",\"lee\",\"tcode\"]"
+  },
+  {
+    "s": "aaaa",
+    "wordDict": "[\"aaaaa\"]"
+  },
+  {
+    "s": "aaaaaaaaaa",
+    "wordDict": "[\"a\",\"aa\"]"
+  },
+  {
+    "s": "abcdef",
+    "wordDict": "[\"abc\",\"def\",\"abcdef\",\"bc\",\"a\",\"d\",\"ef\"]"
+  }
+]

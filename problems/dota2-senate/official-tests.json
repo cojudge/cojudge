@@ -1,0 +1,20 @@
+[
+  { "senate": "RD" },
+  { "senate": "RDD" },
+  { "senate": "RRDDD" },
+  { "senate": "DDRRR" },
+  { "senate": "R" },
+  { "senate": "D" },
+  { "senate": "RRR" },
+  { "senate": "DDD" },
+  { "senate": "RDDR" },
+  { "senate": "DRRD" },
+  { "senate": "RRDR" },
+  { "senate": "DDDR" },
+  { "senate": "RDRDRD" },
+  { "senate": "DRDRDR" },
+  { "senate": "RRRRDDD" },
+  { "senate": "RDDDR" },
+  { "senate": "RDRDD" },
+  { "senate": "DRRDRD" }
+]

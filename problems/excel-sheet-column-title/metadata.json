@@ -1,0 +1,53 @@
+{
+  "id": "excel-sheet-column-title",
+  "title": "243. Excel Sheet Column Title",
+  "difficulty": "Easy",
+  "category": "math",
+  "link": "https://leetcode.com/problems/excel-sheet-column-title/",
+  "examples": [
+    {
+      "input": "columnNumber = 1",
+      "output": "\"A\""
+    },
+    {
+      "input": "columnNumber = 28",
+      "output": "\"AB\""
+    },
+    {
+      "input": "columnNumber = 701",
+      "output": "\"ZY\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String convertToTitle(int columnNumber) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def convertToTitle(self, columnNumber: int) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string convertToTitle(int columnNumber) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string ConvertToTitle(int columnNumber) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn convert_to_title(column_number: i32) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc ConvertToTitle(columnNumber int) string {\n    return \"\"\n}",
+    "typescript": "export function convertToTitle(columnNumber: number): string {\n    return \"\";\n}"
+  },
+  "testCases": [
+    {
+      "columnNumber": 1
+    },
+    {
+      "columnNumber": 28
+    },
+    {
+      "columnNumber": 701
+    }
+  ],
+  "functionName": "convertToTitle",
+  "params": [
+    {
+      "name": "columnNumber",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Repeatedly reduce columnNumber by taking (columnNumber - 1) % 26 to find each letter from the right.",
+    "Divide columnNumber by 26 after removing the offset so 1-based indexing maps to 'A' through 'Z'."
+  ]
+}

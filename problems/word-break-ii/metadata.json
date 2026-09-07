@@ -1,0 +1,64 @@
+{
+  "id": "word-break-ii",
+  "title": "213. Word Break II",
+  "difficulty": "Hard",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/word-break-ii/",
+  "examples": [
+    {
+      "input": "s = \"catsanddog\", wordDict = [\"cat\",\"cats\",\"and\",\"sand\",\"dog\"]",
+      "output": "[\"cats and dog\",\"cat sand dog\"]",
+      "explanation": "Add spaces in \"catsanddog\" so that each word is a valid dictionary word."
+    },
+    {
+      "input": "s = \"pineapplepenapple\", wordDict = [\"apple\",\"pen\",\"applepen\",\"pine\",\"pineapple\"]",
+      "output": "[\"pine apple pen apple\",\"pineapple pen apple\",\"pine applepen apple\"]",
+      "explanation": "Note that you are allowed to reuse a dictionary word."
+    },
+    {
+      "input": "s = \"catsandog\", wordDict = [\"cats\",\"dog\",\"sand\",\"and\",\"cat\"]",
+      "output": "[]",
+      "explanation": "The string cannot be segmented into dictionary words, so the result is empty."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> wordBreak(String s, String[] wordDict) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:\n        ",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> wordBreak(string s, vector<string>& wordDict) {\n        \n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<string> WordBreak(string s, string[] wordDict) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn word_break(s: String, word_dict: Vec<String>) -> Vec<String> {\n        \n    }\n}",
+    "go": "package main\n\nfunc WordBreak(s string, wordDict []string) []string {\n    \n}",
+    "typescript": "export function wordBreak(s: string, wordDict: string[]): string[] {\n    \n}"
+  },
+  "testCases": [
+    {
+      "s": "catsanddog",
+      "wordDict": "[\"cat\",\"cats\",\"and\",\"sand\",\"dog\"]"
+    },
+    {
+      "s": "pineapplepenapple",
+      "wordDict": "[\"apple\",\"pen\",\"applepen\",\"pine\",\"pineapple\"]"
+    },
+    {
+      "s": "catsandog",
+      "wordDict": "[\"cats\",\"dog\",\"sand\",\"and\",\"cat\"]"
+    }
+  ],
+  "functionName": "wordBreak",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "wordDict",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Think of the string positions as cut points: every valid sentence is a sequence of dictionary words that tile `s` from position 0 to the end.",
+    "Use recursion with memoization keyed by the start position to avoid re-computing all suffix segmentations.",
+    "Build each sentence by concatenating a matched word with the space-separated segmentations of the remaining suffix."
+  ]
+}

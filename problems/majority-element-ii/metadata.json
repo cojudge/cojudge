@@ -1,0 +1,56 @@
+{
+  "id": "majority-element-ii",
+  "title": "162. Majority Element II",
+  "difficulty": "Medium",
+  "category": "array",
+  "link": "https://leetcode.com/problems/majority-element-ii/",
+  "examples": [
+    {
+      "input": "nums = [3,2,3]",
+      "output": "[3]",
+      "explanation": "3 appears twice, which is more than 3/3 = 1."
+    },
+    {
+      "input": "nums = [1]",
+      "output": "[1]",
+      "explanation": "A single element trivially appears more than 1/3 times."
+    },
+    {
+      "input": "nums = [1,2]",
+      "output": "[1,2]",
+      "explanation": "Both 1 and 2 appear once, which is more than 2/3."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] majorityElement(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def majorityElement(self, nums: List[int]) -> List[int]:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> majorityElement(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] MajorityElement(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn majority_element(nums: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc MajorityElement(nums []int) []int {\n    \n}",
+    "typescript": "export function majorityElement(nums: number[]): number[] {\n    \n}"
+  },
+  "testCases": [
+    {
+      "nums": "[3,2,3]"
+    },
+    {
+      "nums": "[1]"
+    },
+    {
+      "nums": "[1,2]"
+    }
+  ],
+  "functionName": "majorityElement",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "At most two elements can appear more than n/3 times.",
+    "Extended Boyer-Moore with two candidates and counts finds them in O(n) time and O(1) space, followed by a verification pass."
+  ]
+}

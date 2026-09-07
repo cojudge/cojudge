@@ -1,0 +1,77 @@
+{
+  "id": "merge-sorted-array",
+  "title": "168. Merge Sorted Array",
+  "difficulty": "Easy",
+  "category": "two-pointer",
+  "link": "https://leetcode.com/problems/merge-sorted-array/",
+  "examples": [
+    {
+      "input": "nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3",
+      "output": "[1,2,2,3,5,6]",
+      "explanation": "The arrays to merge are [1,2,3] and [2,5,6]; the merged sorted array is [1,2,2,3,5,6]."
+    },
+    {
+      "input": "nums1 = [1], m = 1, nums2 = [], n = 0",
+      "output": "[1]",
+      "explanation": "The arrays to merge are [1] and []; the merged sorted array is [1]."
+    },
+    {
+      "input": "nums1 = [0], m = 0, nums2 = [1], n = 1",
+      "output": "[1]",
+      "explanation": "The arrays to merge are [] and [1]; the merged sorted array is [1]."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] merge(int[] nums1, int m, int[] nums2, int n) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] Merge(int[] nums1, int m, int[] nums2, int n)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn merge(nums1: Vec<i32>, m: i32, nums2: Vec<i32>, n: i32) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc Merge(nums1 []int, m int, nums2 []int, n int) []int {\n    return []int{}\n}",
+    "typescript": "export function merge(nums1: number[], m: number, nums2: number[], n: number): number[] {\n    return [];\n}"
+  },
+  "testCases": [
+    {
+      "nums1": "[1,2,3,0,0,0]",
+      "m": 3,
+      "nums2": "[2,5,6]",
+      "n": 3
+    },
+    {
+      "nums1": "[1]",
+      "m": 1,
+      "nums2": "[]",
+      "n": 0
+    },
+    {
+      "nums1": "[0]",
+      "m": 0,
+      "nums2": "[1]",
+      "n": 1
+    }
+  ],
+  "functionName": "merge",
+  "params": [
+    {
+      "name": "nums1",
+      "type": "int_array"
+    },
+    {
+      "name": "m",
+      "type": "int"
+    },
+    {
+      "name": "nums2",
+      "type": "int_array"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Merge from the back of nums1, comparing the largest remaining elements of each array.",
+    "When one array is exhausted, copy the remaining elements of the other array."
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "id": "contains-duplicate-ii",
+  "title": "173. Contains Duplicate II",
+  "difficulty": "Easy",
+  "category": "sliding-window",
+  "link": "https://leetcode.com/problems/contains-duplicate-ii/",
+  "examples": [
+    {
+      "input": "nums = [1,2,3,1], k = 3",
+      "output": "true",
+      "explanation": "nums[0] == nums[3] and abs(0 - 3) = 3 <= 3."
+    },
+    {
+      "input": "nums = [1,0,1,1], k = 1",
+      "output": "true",
+      "explanation": "nums[2] == nums[3] and abs(2 - 3) = 1 <= 1."
+    },
+    {
+      "input": "nums = [1,2,3,1,2,3], k = 2",
+      "output": "false",
+      "explanation": "No two equal values are within distance 2."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean containsNearbyDuplicate(int[] nums, int k) {\n        return false;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:\n        return False\n",
+    "cpp": "#include <vector>\n#include <unordered_set>\nusing namespace std;\nclass Solution {\npublic:\n    bool containsNearbyDuplicate(vector<int>& nums, int k) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool ContainsNearbyDuplicate(int[] nums, int k)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn contains_nearby_duplicate(nums: Vec<i32>, k: i32) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc ContainsNearbyDuplicate(nums []int, k int) bool {\n    return false\n}",
+    "typescript": "export function containsNearbyDuplicate(nums: number[], k: number): boolean {\n    return false;\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3,1]",
+      "k": 3
+    },
+    {
+      "nums": "[1,0,1,1]",
+      "k": 1
+    },
+    {
+      "nums": "[1,2,3,1,2,3]",
+      "k": 2
+    }
+  ],
+  "functionName": "containsNearbyDuplicate",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Keep a sliding window of the last k elements in a hash set.",
+    "For each element, if it is already in the set return true; otherwise insert it and evict the element falling out of the window."
+  ]
+}

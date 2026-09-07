@@ -1,0 +1,59 @@
+{
+  "id": "online-stock-span",
+  "title": "180. Online Stock Span",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/online-stock-span/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "prices = [100,80,60,70,60,75,85]",
+      "output": "[1,1,1,2,1,4,6]",
+      "explanation": "Each span counts consecutive days backwards with price less than or equal to today: day 4 (70) covers 60 and 70 for a span of 2; day 6 (75) covers 60, 70, 60, 75 for 4; day 7 (85) covers all except 100 for 6."
+    },
+    {
+      "input": "prices = [10,4,5,90,120,80]",
+      "output": "[1,1,2,4,5,1]",
+      "explanation": "Spans are computed streaming: 5 covers 4 and 5, 90 covers all before it, 120 covers all before it, and 80 covers only itself."
+    },
+    {
+      "input": "prices = [30,20,10]",
+      "output": "[1,1,1]",
+      "explanation": "Strictly decreasing prices each have a span of 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] stockSpan(int[] prices) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def stockSpan(self, prices: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> stockSpan(vector<int>& prices) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] StockSpan(int[] prices)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn stock_span(prices: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc StockSpan(prices []int) []int {\n    return []int{}\n}",
+    "typescript": "export function stockSpan(prices: number[]): number[] {\n    return [];\n}\n"
+  },
+  "testCases": [
+    {
+      "prices": "[100,80,60,70,60,75,85]"
+    },
+    {
+      "prices": "[10,4,5,90,120,80]"
+    },
+    {
+      "prices": "[30,20,10]"
+    },
+    {
+      "prices": "[10]"
+    }
+  ],
+  "functionName": "stockSpan",
+  "params": [
+    {
+      "name": "prices",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Keep a monotonic decreasing stack of (price, span) pairs.",
+    "For each price, accumulate spans while the stack top price is less than or equal to the current price, then push the combined span."
+  ]
+}

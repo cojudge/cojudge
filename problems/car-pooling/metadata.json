@@ -1,0 +1,63 @@
+{
+  "id": "car-pooling",
+  "title": "205. Car Pooling",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/car-pooling/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "trips = [[2,1,5],[3,3,7]], capacity = 4",
+      "output": "false",
+      "explanation": "At kilometer 1, 2 passengers are picked up, so the car holds 2."
+    },
+    {
+      "input": "trips = [[2,1,5],[3,3,7]], capacity = 5",
+      "output": "true",
+      "explanation": "At kilometer 1, the car holds 2 passengers."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean carPooling(int[][] trips, int capacity) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def carPooling(self, trips: List[List[int]], capacity: int) -> bool:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool carPooling(vector<vector<int>>& trips, int capacity) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool CarPooling(int[][] trips, int capacity) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn car_pooling(trips: Vec<Vec<i32>>, capacity: i32) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc CarPooling(trips [][]int, capacity int) bool {\n    \n}",
+    "typescript": "export function carPooling(trips: number[][], capacity: number): boolean {\n    \n}"
+  },
+  "testCases": [
+    {
+      "trips": "[[2,1,5],[3,3,7]]",
+      "capacity": 4
+    },
+    {
+      "trips": "[[2,1,5],[3,3,7]]",
+      "capacity": 5
+    },
+    {
+      "trips": "[[2,1,5],[3,5,7]]",
+      "capacity": 3
+    },
+    {
+      "trips": "[[3,2,7],[3,7,9],[8,3,9]]",
+      "capacity": 11
+    }
+  ],
+  "functionName": "carPooling",
+  "params": [
+    {
+      "name": "trips",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "capacity",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Sort the pickup and dropoff events by location, then process them in order.",
+    "Use a difference array: add passengers at `from`, subtract them at `to`, then sweep over all locations.",
+    "Passengers always drop off at `to` before others pick up at the same location, so subtract before adding at equal positions."
+  ]
+}

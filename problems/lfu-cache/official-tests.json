@@ -1,0 +1,17 @@
+[
+  { "operations": "[\"LFUCache\",\"put\",\"put\",\"get\",\"put\",\"get\",\"get\",\"put\",\"get\",\"get\",\"get\"]", "args": "[[2],[1,1],[2,2],[1],[3,3],[2],[3],[4,4],[1],[3],[4]]" },
+  { "operations": "[\"LFUCache\",\"put\",\"get\",\"put\",\"get\",\"get\"]", "args": "[[1],[2,1],[2],[3,2],[2],[3]]" },
+  { "operations": "[\"LFUCache\",\"put\",\"put\",\"get\",\"get\"]", "args": "[[2],[1,1],[1,9],[1],[2]]" },
+  { "operations": "[\"LFUCache\",\"get\"]", "args": "[[3],[7]]" },
+  { "operations": "[\"LFUCache\",\"put\",\"get\"]", "args": "[[1],[0,0],[0]]" },
+  { "operations": "[\"LFUCache\",\"put\",\"put\",\"get\",\"get\"]", "args": "[[1],[1,10],[2,20],[1],[2]]" },
+  { "operations": "[\"LFUCache\",\"put\",\"put\",\"put\",\"get\",\"get\",\"get\"]", "args": "[[2],[1,10],[2,20],[3,30],[1],[2],[3]]" },
+  { "operations": "[\"LFUCache\",\"put\",\"put\",\"get\",\"put\",\"get\",\"get\"]", "args": "[[2],[1,10],[2,20],[1],[3,30],[2],[3]]" },
+  { "operations": "[\"LFUCache\",\"put\",\"put\",\"put\",\"get\",\"put\",\"get\",\"get\",\"get\",\"get\"]", "args": "[[3],[1,1],[2,2],[3,3],[1],[4,4],[1],[2],[3],[4]]" },
+  { "operations": "[\"LFUCache\",\"put\",\"get\",\"put\",\"get\",\"put\",\"get\"]", "args": "[[1],[5,50],[5],[5,55],[5],[6,60],[5]]" },
+  { "operations": "[\"LFUCache\",\"put\",\"put\",\"get\",\"get\",\"get\"]", "args": "[[2],[0,100],[10000,200],[0],[10000],[5000]]" },
+  { "operations": "[\"LFUCache\",\"put\",\"put\",\"put\",\"get\",\"get\",\"put\",\"get\",\"get\"]", "args": "[[2],[1,1],[2,2],[2,22],[1],[2],[3,3],[1],[3]]" },
+  { "operations": "[\"LFUCache\",\"put\",\"put\",\"put\",\"put\",\"get\",\"get\",\"get\",\"get\"]", "args": "[[2],[1,1],[2,2],[3,3],[2,20],[1],[2],[3],[4]]" },
+  { "operations": "[\"LFUCache\",\"put\",\"get\",\"get\",\"get\"]", "args": "[[2],[1,5],[2],[1],[1]]" },
+  { "operations": "@javascript:(()=>{const ops=['LFUCache'];const args=[[100]];for(let i=0;i<3000;i++){if(i%3===2){ops.push('get');args.push([i%150]);}else{ops.push('put');args.push([i%150,(i*13)%100000]);}}return JSON.stringify(ops)})()", "args": "@javascript:(()=>{const args=[[100]];for(let i=0;i<3000;i++){if(i%3===2){args.push([i%150]);}else{args.push([i%150,(i*13)%100000]);}}return JSON.stringify(args)})()", "_isLargeTest": true }
+]

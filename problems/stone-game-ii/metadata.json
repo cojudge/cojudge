@@ -1,0 +1,48 @@
+{
+  "id": "stone-game-ii",
+  "title": "235. Stone Game II",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/stone-game-ii/",
+  "examples": [
+    {
+      "input": "piles = [2,7,9,4,4]",
+      "output": "10",
+      "explanation": "If Alice takes one pile at the beginning, Bob takes two piles, then Alice takes 2 piles again. Alice can get 2 + 4 + 4 = 10 piles in total. If Alice takes two piles at the beginning, then Bob can take three piles, and Alice can get 2 + 7 = 9 piles in total. If Alice takes three piles at the beginning, then Bob takes all the four remaining piles, and Alice can get 9 piles in total. So the maximum Alice can get is 10."
+    },
+    {
+      "input": "piles = [1,2,3,4,5,100]",
+      "output": "104",
+      "explanation": ""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int stoneGameII(int[] piles) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def stoneGameII(self, piles: List[int]) -> int:\n        ",
+    "cpp": "#include <vector>\n#include <algorithm>\nusing namespace std;\n\nclass Solution {\npublic:\n    int stoneGameII(vector<int>& piles) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public int StoneGameII(int[] piles) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn stone_game_ii(piles: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc StoneGameII(piles []int) int {\n    \n}",
+    "typescript": "export function stoneGameII(piles: number[]): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "piles": "[2,7,9,4,4]"
+    },
+    {
+      "piles": "[1,2,3,4,5,100]"
+    }
+  ],
+  "functionName": "stoneGameII",
+  "params": [
+    {
+      "name": "piles",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use dynamic programming: the states are (i, m) for the answer of piles[i:] given m.",
+    "If 2*m >= n - i the current player can take all remaining piles. Otherwise try every X in 1..2*m and let the opponent start at i + X with M = max(m, X), keeping the take that maximizes suffix[i] - opponent's score."
+  ]
+}

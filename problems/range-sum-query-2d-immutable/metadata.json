@@ -1,0 +1,63 @@
+{
+  "id": "range-sum-query-2d-immutable",
+  "title": "160. Range Sum Query 2D - Immutable",
+  "difficulty": "Medium",
+  "category": "array",
+  "link": "https://leetcode.com/problems/range-sum-query-2d-immutable/",
+  "examples": [
+    {
+      "input": "matrix = [[3,0,1,4,2],[5,6,3,2,1],[1,2,0,1,5],[4,1,0,1,7],[1,0,3,0,5]], queries = [[2,1,4,3],[1,1,2,2],[1,2,2,4]]",
+      "output": "[8,11,12]",
+      "explanation": "sumRegion(2,1,4,3) = 8; sumRegion(1,1,2,2) = 11; sumRegion(1,2,2,4) = 12 via 2D prefix sums."
+    },
+    {
+      "input": "matrix = [[1]], queries = [[0,0,0,0]]",
+      "output": "[1]",
+      "explanation": "A single cell query returns the cell itself."
+    },
+    {
+      "input": "matrix = [[1,2],[3,4]], queries = [[0,0,1,1],[0,0,0,0],[1,1,1,1]]",
+      "output": "[10,1,4]",
+      "explanation": "Whole matrix sums to 10; corners are 1 and 4."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] sumRegion(int[][] matrix, int[][] queries) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def sumRegion(self, matrix: List[List[int]], queries: List[List[int]]) -> List[int]:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> sumRegion(vector<vector<int>>& matrix, vector<vector<int>>& queries) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] SumRegion(int[][] matrix, int[][] queries) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn sum_region(matrix: Vec<Vec<i32>>, queries: Vec<Vec<i32>>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc SumRegion(matrix [][]int, queries [][]int) []int {\n    \n}",
+    "typescript": "export function sumRegion(matrix: number[][], queries: number[][]): number[] {\n    \n}"
+  },
+  "testCases": [
+    {
+      "matrix": "[[3,0,1,4,2],[5,6,3,2,1],[1,2,0,1,5],[4,1,0,1,7],[1,0,3,0,5]]",
+      "queries": "[[2,1,4,3],[1,1,2,2],[1,2,2,4]]"
+    },
+    {
+      "matrix": "[[1]]",
+      "queries": "[[0,0,0,0]]"
+    },
+    {
+      "matrix": "[[1,2],[3,4]]",
+      "queries": "[[0,0,1,1],[0,0,0,0],[1,1,1,1]]"
+    }
+  ],
+  "functionName": "sumRegion",
+  "params": [
+    {
+      "name": "matrix",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "queries",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Precompute a (m+1)x(n+1) prefix sum where pref[i+1][j+1] is the sum of matrix[0..i][0..j].",
+    "Answer each query as pref[r2+1][c2+1]-pref[r1][c2+1]-pref[r2+1][c1]+pref[r1][c1]."
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "4sum",
+  "title": "170. 4Sum",
+  "difficulty": "Medium",
+  "category": "two-pointer",
+  "link": "https://leetcode.com/problems/4sum/",
+  "examples": [
+    {
+      "input": "nums = [1,0,-1,0,-2,2], target = 0",
+      "output": "[[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]",
+      "explanation": "The quadruplets [-2,-1,1,2], [-2,0,0,2] and [-1,0,0,1] each sum to 0."
+    },
+    {
+      "input": "nums = [2,2,2,2,2], target = 8",
+      "output": "[[2,2,2,2]]",
+      "explanation": "The only quadruplet [2,2,2,2] sums to 8."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] fourSum(int[] nums, int target) {\n        return new int[0][0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> fourSum(vector<int>& nums, int target) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[][] FourSum(int[] nums, int target)\n    {\n        return new int[0][];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn four_sum(nums: Vec<i32>, target: i32) -> Vec<Vec<i32>> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc FourSum(nums []int, target int) [][]int {\n    return [][]int{}\n}",
+    "typescript": "export function fourSum(nums: number[], target: number): number[][] {\n    return [];\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,0,-1,0,-2,2]",
+      "target": 0
+    },
+    {
+      "nums": "[2,2,2,2,2]",
+      "target": 8
+    },
+    {
+      "nums": "[0,0,0,0]",
+      "target": 0
+    }
+  ],
+  "functionName": "fourSum",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Sort the array and fix two indices, then use two pointers for the remaining pair.",
+    "Skip duplicates at every level to avoid repeated quadruplets. Output order does not matter."
+  ]
+}

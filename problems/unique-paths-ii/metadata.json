@@ -1,0 +1,48 @@
+{
+  "id": "unique-paths-ii",
+  "title": "231. Unique Paths II",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/unique-paths-ii/",
+  "examples": [
+    {
+      "input": "obstacleGrid = [[0,0,0],[0,1,0],[0,0,0]]",
+      "output": "2",
+      "explanation": "There is one obstacle in the middle of the 3x3 grid above. There are two ways to reach the bottom-right corner: Right -> Right -> Down -> Down and Down -> Down -> Right -> Right."
+    },
+    {
+      "input": "obstacleGrid = [[0,1],[0,0]]",
+      "output": "1",
+      "explanation": ""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int uniquePathsWithObstacles(int[][] obstacleGrid) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public int UniquePathsWithObstacles(int[][] obstacleGrid) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn unique_paths_with_obstacles(obstacle_grid: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc UniquePathsWithObstacles(obstacleGrid [][]int) int {\n    \n}",
+    "typescript": "export function uniquePathsWithObstacles(obstacleGrid: number[][]): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "obstacleGrid": "[[0,0,0],[0,1,0],[0,0,0]]"
+    },
+    {
+      "obstacleGrid": "[[0,1],[0,0]]"
+    }
+  ],
+  "functionName": "uniquePathsWithObstacles",
+  "params": [
+    {
+      "name": "obstacleGrid",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use dynamic programming since, from each cell, you can move to the right or down.",
+    "Assume dp[i][j] is the number of unique paths to reach (i, j). dp[i][j] = dp[i][j - 1] + dp[i - 1][j]. Be careful when you encounter an obstacle; set its value in dp to 0."
+  ]
+}

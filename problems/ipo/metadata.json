@@ -1,0 +1,78 @@
+{
+  "id": "ipo",
+  "title": "206. IPO",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/ipo/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "k = 2, w = 0, profits = [1,2,3], capital = [0,1,1]",
+      "output": "4",
+      "explanation": "Since your initial capital is 0, you can only start the project indexed 0."
+    },
+    {
+      "input": "k = 3, w = 0, profits = [1,2,3], capital = [0,1,2]",
+      "output": "6"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findMaximizedCapital(self, k: int, w: int, profits: List[int], capital: List[int]) -> int:\n        ",
+    "cpp": "#include <vector>\n#include <queue>\nusing namespace std;\n\nclass Solution {\npublic:\n    int findMaximizedCapital(int k, int w, vector<int>& profits, vector<int>& capital) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindMaximizedCapital(int k, int w, int[] profits, int[] capital) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_maximized_capital(k: i32, w: i32, profits: Vec<i32>, capital: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindMaximizedCapital(k int, w int, profits []int, capital []int) int {\n    \n}",
+    "typescript": "export function findMaximizedCapital(k: number, w: number, profits: number[], capital: number[]): number {\n    \n}"
+  },
+  "testCases": [
+    {
+      "k": 2,
+      "w": 0,
+      "profits": "[1,2,3]",
+      "capital": "[0,1,1]"
+    },
+    {
+      "k": 3,
+      "w": 0,
+      "profits": "[1,2,3]",
+      "capital": "[0,1,2]"
+    },
+    {
+      "k": 1,
+      "w": 2,
+      "profits": "[1,2,3]",
+      "capital": "[1,1,2]"
+    },
+    {
+      "k": 2,
+      "w": 0,
+      "profits": "[1,2,3]",
+      "capital": "[0,9,9]"
+    }
+  ],
+  "functionName": "findMaximizedCapital",
+  "params": [
+    {
+      "name": "k",
+      "type": "int"
+    },
+    {
+      "name": "w",
+      "type": "int"
+    },
+    {
+      "name": "profits",
+      "type": "int_array"
+    },
+    {
+      "name": "capital",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "At each step you may only start the affordable project with the largest profit.",
+    "Sort projects by required capital and sweep affordable ones into a max-heap of profits.",
+    "Reach into the heap up to k times; stop early when nothing is affordable."
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "matchsticks-to-square",
+  "title": "210. Matchsticks to Square",
+  "difficulty": "Medium",
+  "category": "backtracking",
+  "link": "https://leetcode.com/problems/matchsticks-to-square/",
+  "examples": [
+    {
+      "input": "matchsticks = [1,1,2,2,2]",
+      "output": "true",
+      "explanation": "You can form a square with side length 2: three sides use a single stick of length 2 each, and the fourth side uses two sticks of length 1."
+    },
+    {
+      "input": "matchsticks = [3,3,3,3,4]",
+      "output": "false",
+      "explanation": "You cannot find a way to form a square with all the matchsticks."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean makesquare(int[] matchsticks) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def makesquare(self, matchsticks: List[int]) -> bool:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool makesquare(vector<int>& matchsticks) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool Makesquare(int[] matchsticks) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn makesquare(matchsticks: Vec<i32>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc Makesquare(matchsticks []int) bool {\n    \n}",
+    "typescript": "export function makesquare(matchsticks: number[]): boolean {\n    \n}"
+  },
+  "testCases": [
+    {
+      "matchsticks": "[1,1,2,2,2]"
+    },
+    {
+      "matchsticks": "[3,3,3,3,4]"
+    },
+    {
+      "matchsticks": "[1,1,1,1]"
+    }
+  ],
+  "functionName": "makesquare",
+  "params": [
+    {
+      "name": "matchsticks",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "The total length must be divisible by 4 for a square to exist.",
+    "Treat each matchstick as belonging to one of 4 buckets (the sides). The choice of which bucket a stick joins can be shared with bitmask DP to avoid re-searching repeated partial states.",
+    "Sort the sticks descending so that large sticks are placed first and prune the search early."
+  ]
+}

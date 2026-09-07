@@ -1,0 +1,42 @@
+[
+  {
+    "strs": "[\"flower\",\"flow\",\"flight\"]"
+  },
+  {
+    "strs": "[\"dog\",\"racecar\",\"car\"]"
+  },
+  {
+    "strs": "[\"a\"]"
+  },
+  {
+    "strs": "[\"\", \"\"]"
+  },
+  {
+    "strs": "[\"ab\", \"a\"]"
+  },
+  {
+    "strs": "[\"interspecies\",\"interstellar\",\"interstate\"]"
+  },
+  {
+    "strs": "[\"throne\",\"throne\"]"
+  },
+  {
+    "strs": "[\"throne\",\"dungeon\"]"
+  },
+  {
+    "strs": "[\"a\",\"a\",\"b\"]"
+  },
+  {
+    "strs": "[\"abc\",\"abc\",\"abc\"]"
+  },
+  {
+    "strs": "[\"aaa\",\"aa\",\"aaa\"]"
+  },
+  {
+    "strs": "[\"c\",\"acc\",\"ccc\"]"
+  },
+  {
+    "strs": "@javascript:JSON.stringify([...Array(200).fill(\"a\".repeat(200))])",
+    "_isLargeTest": true
+  }
+]

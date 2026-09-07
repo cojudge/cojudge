@@ -1,0 +1,47 @@
+{
+  "id": "concatenation-of-array",
+  "title": "152. Concatenation of Array",
+  "difficulty": "Easy",
+  "category": "array",
+  "link": "https://leetcode.com/problems/concatenation-of-array/",
+  "examples": [
+    {
+      "input": "nums = [1,2,1]",
+      "output": "[1,2,1,1,2,1]",
+      "explanation": "The array ans is formed as follows: ans = [nums[0],nums[1],nums[2],nums[0],nums[1],nums[2]] = [1,2,1,1,2,1]."
+    },
+    {
+      "input": "nums = [1,3,2,1]",
+      "output": "[1,3,2,1,1,3,2,1]",
+      "explanation": "The array ans is formed as follows: ans = [nums[0],nums[1],nums[2],nums[3],nums[0],nums[1],nums[2],nums[3]] = [1,3,2,1,1,3,2,1]."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] getConcatenation(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def getConcatenation(self, nums: List[int]) -> List[int]:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> getConcatenation(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] GetConcatenation(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn get_concatenation(nums: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc GetConcatenation(nums []int) []int {\n    \n}",
+    "typescript": "export function getConcatenation(nums: number[]): number[] {\n    \n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,1]"
+    },
+    {
+      "nums": "[1,3,2,1]"
+    }
+  ],
+  "functionName": "getConcatenation",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Build an array of size 2 * n and assign nums[i] to ans[i] and ans[i + n]."
+  ]
+}

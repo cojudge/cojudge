@@ -1,0 +1,63 @@
+{
+  "id": "boats-to-save-people",
+  "title": "172. Boats to Save People",
+  "difficulty": "Medium",
+  "category": "two-pointer",
+  "link": "https://leetcode.com/problems/boats-to-save-people/",
+  "examples": [
+    {
+      "input": "people = [1,2], limit = 3",
+      "output": "1",
+      "explanation": "1 boat (1, 2)."
+    },
+    {
+      "input": "people = [3,2,2,1], limit = 3",
+      "output": "3",
+      "explanation": "3 boats (1, 2), (2) and (3)."
+    },
+    {
+      "input": "people = [3,5,3,4], limit = 5",
+      "output": "4",
+      "explanation": "4 boats (3), (3), (4), (5)."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numRescueBoats(int[] people, int limit) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numRescueBoats(self, people: List[int], limit: int) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int numRescueBoats(vector<int>& people, int limit) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int NumRescueBoats(int[] people, int limit)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_rescue_boats(people: Vec<i32>, limit: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumRescueBoats(people []int, limit int) int {\n    return 0\n}",
+    "typescript": "export function numRescueBoats(people: number[], limit: number): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "people": "[1,2]",
+      "limit": 3
+    },
+    {
+      "people": "[3,2,2,1]",
+      "limit": 3
+    },
+    {
+      "people": "[3,5,3,4]",
+      "limit": 5
+    }
+  ],
+  "functionName": "numRescueBoats",
+  "params": [
+    {
+      "name": "people",
+      "type": "int_array"
+    },
+    {
+      "name": "limit",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sort the array and use two pointers at opposite ends.",
+    "Pair the lightest remaining person with the heaviest when possible; otherwise the heaviest goes alone."
+  ]
+}
