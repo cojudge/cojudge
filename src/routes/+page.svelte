@@ -267,9 +267,9 @@
 
     function sourceTitle(source?: ContentSource): string {
         return source === 'custom'
-            ? 'Custom content — only exists in your CoJudge folder'
+            ? 'Custom content — only exists in your Cojudge folder'
             : source === 'modified'
-                ? 'Modified — edited in your CoJudge folder, differs from the bundled copy'
+                ? 'Modified — edited in your Cojudge folder, differs from the bundled copy'
                 : '';
     }
 
@@ -326,6 +326,12 @@
     $: selectedCourseProblems = (data?.problems ?? []) as Problem[];
     $: courseDescription = data?.selectedCourseInfo?.description ?? "";
     $: categoryOrder = data?.selectedCourseInfo?.["category-order"] ?? [];
+    $: hasCustomContent =
+        courses.some((c) => c.source === 'custom') ||
+        selectedCourseProblems.some((p) => p.source === 'custom');
+    $: hasModifiedContent =
+        courses.some((c) => c.source === 'modified') ||
+        selectedCourseProblems.some((p) => p.source === 'modified');
     // Map for fast lookup of category rank
     let orderMap: Record<string, number> = {};
     $: (function buildOrderMap() {
@@ -1116,7 +1122,7 @@
                             class="dropdown-item"
                             role="menuitem"
                             onclick={openManageProblems}
-                            title="View, edit, and add problems and courses in your CoJudge folder"
+                            title="View, edit, and add problems and courses in your Cojudge folder"
                         >
                             <span class="dropdown-item-content">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1266,7 +1272,7 @@
             <div bind:this={manageProblemsCard} class="home-modal-card manage-problems-card" role="dialog" aria-modal="true" aria-labelledby="manage-problems-title">
                 <span class="modal-eyebrow">Local content</span>
                 <h2 id="manage-problems-title">Manage Problems</h2>
-                <p class="manage-intro">Problems and courses live in your CoJudge folder. Edit files directly — changes apply on refresh.</p>
+                <p class="manage-intro">Problems and courses live in your Cojudge folder. Edit files directly — changes apply on refresh.</p>
 
                 <div class="manage-path-row">
                     <code class="manage-path-text">{contentDir}</code>
@@ -1521,11 +1527,17 @@
                 >{sourceLabel(course.source)}</span>{/if}</a>
         {/each}
     </nav>
-    {#if courses.some((course) => course.source && course.source !== 'bundled')}
+    {#if hasCustomContent || hasModifiedContent}
         <div class="source-legend" aria-label="Legend for custom content labels">
-            <span class="source-badge custom">Custom</span> created in your CoJudge folder
-            <span class="source-legend-sep" aria-hidden="true">·</span>
-            <span class="source-badge modified">Modified</span> edited in your CoJudge folder
+            {#if hasCustomContent}
+                <span class="source-badge custom">Custom</span> created in your Cojudge folder
+            {/if}
+            {#if hasCustomContent && hasModifiedContent}
+                <span class="source-legend-sep" aria-hidden="true">·</span>
+            {/if}
+            {#if hasModifiedContent}
+                <span class="source-badge modified">Modified</span> edited in your Cojudge folder
+            {/if}
         </div>
     {/if}
     <div class="intro">
