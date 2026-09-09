@@ -12,5 +12,5 @@
   { "path": "/a/b/../../../../c" },
   { "path": "/.../.../..." },
   { "path": "/a/.../b/../c//.//" },
-  { "path": "@javascript:('/a'.repeat(500)+'/b'.repeat(500)+'/..'.repeat(500))", "_isLargeTest": true }
+  { "path": "@javascript:('/a'.repeat(400)+'/b'.repeat(400)+'/..'.repeat(400))", "_isLargeTest": true }
 ]

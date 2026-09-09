@@ -27,7 +27,7 @@
     "nums": "[2,0,2,0,2]"
   },
   {
-    "nums": "@javascript:JSON.stringify([...Array(100000).fill(1), 2, 3])",
+    "nums": "@javascript:JSON.stringify([...Array(99998).fill(1), 2, 3])",
     "_isLargeTest": true
   }
 ]

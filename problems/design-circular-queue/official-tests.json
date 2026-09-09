@@ -48,8 +48,8 @@
     "values": "[3,1,1,1,1,1,0,0,0,0,2,0]"
   },
   {
-    "operations": "@javascript:JSON.stringify(['MyCircularQueue',...Array(1500).fill('enQueue'),...Array(1000).fill('deQueue'),...Array(500).fill('enQueue'),'Front','Rear','isFull','isEmpty'])",
-    "values": "@javascript:JSON.stringify([1000,...Array.from({length:1500},(_,i)=>i%1001),...Array(1000).fill(0),...Array.from({length:500},(_,i)=>(i*7)%1001),0,0,0,0])",
+    "operations": "@javascript:JSON.stringify(['MyCircularQueue',...Array(1200).fill('enQueue'),...Array(800).fill('deQueue'),...Array(400).fill('enQueue'),'Front','Rear','isFull','isEmpty'])",
+    "values": "@javascript:JSON.stringify([1000,...Array.from({length:1200},(_,i)=>i%1001),...Array(800).fill(0),...Array.from({length:400},(_,i)=>(i*7)%1001),0,0,0,0])",
     "_isLargeTest": true
   }
 ]

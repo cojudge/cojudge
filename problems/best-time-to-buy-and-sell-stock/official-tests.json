@@ -30,7 +30,7 @@
     "prices": "[152,3]"
   },
   {
-    "prices": "@javascript:JSON.stringify([...Array(500000).fill(1), 2, 2])",
+    "prices": "@javascript:JSON.stringify([...Array(99998).fill(1), 2, 2])",
     "_isLargeTest": true
   }
 ]
