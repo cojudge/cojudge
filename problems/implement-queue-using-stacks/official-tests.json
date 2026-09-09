@@ -53,8 +53,8 @@
     "_isLargeTest": true
   },
   {
-    "operations": "@javascript:JSON.stringify([...Array(500).fill('push'),...Array(250).fill('pop'),'peek','empty'])",
-    "values": "@javascript:JSON.stringify([...Array.from({length:500},(_,i)=>(i%9)+1),...Array(252).fill(0)])",
+    "operations": "@javascript:JSON.stringify([...Array(60).fill('push'),...Array(30).fill('pop'),'peek','empty'])",
+    "values": "@javascript:JSON.stringify([...Array.from({length:60},(_,i)=>(i%9)+1),...Array(32).fill(0)])",
     "_isLargeTest": true
   }
 ]

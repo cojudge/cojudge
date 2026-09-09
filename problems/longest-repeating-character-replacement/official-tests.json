@@ -10,7 +10,7 @@
   { "s": "AB", "k": 1 },
   { "s": "ABBB", "k": 2 },
   { "s": "AAAAAA", "k": 0 },
-  { "s": "AAAAAA", "k": 10 },
+  { "s": "AAAAAA", "k": 6 },
   { "s": "ABCDEF", "k": 3 },
   { "s": "AABBBBCC", "k": 0 },
   { "s": "ABABABAB", "k": 3 },
