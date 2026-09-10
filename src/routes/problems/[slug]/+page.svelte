@@ -207,10 +207,21 @@
     function startRename(fileId: string, currentName: string) {
         editingTabId = fileId;
         editingName = currentName;
-        // Focus the input on next tick
+        // Focus the input on next tick. When the name has an extension,
+        // pre-select only the stem so the extension is preserved by default.
         tick().then(() => {
-            renameInputEl?.focus();
-            renameInputEl?.select();
+            if (!renameInputEl) return;
+            renameInputEl.focus();
+            const dot = currentName.lastIndexOf('.');
+            if (dot > 0 && dot < currentName.length - 1) {
+                try {
+                    renameInputEl.setSelectionRange(0, dot);
+                } catch {
+                    renameInputEl.select();
+                }
+            } else {
+                renameInputEl.select();
+            }
         });
     }
 

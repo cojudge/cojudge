@@ -207,6 +207,17 @@ func main() {
             return lastUsedFile.language;
         }
 
+        // Fall back to a known filename extension. This keeps pristine
+        // (in-memory only) tabs on the renamed language when there are no
+        // store rows to carry lastLanguage yet.
+        const storeName = tabFiles.find((f) => f.fileName)?.fileName;
+        const tabName = tabs?.find((t) => t.fileId === fileId)?.fileName;
+        const nameToInfer = storeName || tabName;
+        if (nameToInfer) {
+            const inferred = inferLanguageFromExtension(nameToInfer);
+            if (inferred) return inferred;
+        }
+
         return language;
     }
 
@@ -696,10 +707,22 @@ func main() {
         editingTabId = fileId;
         editingName = currentName;
         renamingSource = source;
-        // Focus the input on next tick
+        // Focus the input on next tick. When the name has an extension,
+        // pre-select only the stem so the extension is preserved by default.
         tick().then(() => {
-            renameInputEl?.focus();
-            renameInputEl?.select();
+            if (!renameInputEl) return;
+            renameInputEl.focus();
+            const isFolder = getFiles().some((f) => f.fileId === fileId && isFolderEntry(f));
+            const dot = currentName.lastIndexOf('.');
+            if (!isFolder && dot > 0 && dot < currentName.length - 1) {
+                try {
+                    renameInputEl.setSelectionRange(0, dot);
+                } catch {
+                    renameInputEl.select();
+                }
+            } else {
+                renameInputEl.select();
+            }
         });
     }
 
@@ -743,6 +766,24 @@ func main() {
             }
             return { ...s, [fkey]: JSON.stringify(files) };
         });
+        // If the new name has a known extension (e.g. .md, .py, .cpp), switch
+        // that file to the matching language. Background files only update
+        // their stored lastLanguage; the active editor also switches view.
+        const isFolderRename = getFiles().some((f) => f.fileId === targetId && isFolderEntry(f));
+        if (!isFolderRename && targetTab?.type !== 'whiteboard') {
+            const langFileId =
+                targetTab?.type === 'preview' && targetTab.sourceFileId ? targetTab.sourceFileId : targetId;
+            const inferred = inferLanguageFromExtension(finalName);
+            if (inferred) {
+                setLastLanguage(langFileId, inferred);
+                const active = tabs[activeTabId];
+                if (active && !isSpecialTabType(active.type) && active.fileId === langFileId && language !== inferred) {
+                    saveCurrentViewState();
+                    language = inferred;
+                    userSettingsStorage.update((s) => ({ ...s, playgroundPreferredLanguage: inferred }));
+                }
+            }
+        }
         editingTabId = null;
         editingName = '';
         renamingSource = null;
@@ -958,9 +999,25 @@ func main() {
         return `${base}${ext}`;
     }
 
-    function getLanguageFromExtension(fileName: string): ProgrammingLanguage {
+    // If fileName already has an extension, swap it for the target language's
+    // extension. Returns null when there is no extension to replace (so we
+    // never add one) or when the extension already matches.
+    function fileNameWithLanguageExtension(fileName: string, lang: ProgrammingLanguage): string | null {
         const dot = fileName.lastIndexOf('.');
-        if (dot === -1 || dot === fileName.length - 1) return 'plaintext';
+        if (dot <= 0 || dot === fileName.length - 1) return null;
+        const newExt = LANGUAGE_FILE_EXTENSIONS[lang];
+        const currentExt = fileName.slice(dot).toLowerCase();
+        if (currentExt === newExt.toLowerCase()) return null;
+        return `${fileName.slice(0, dot)}${newExt}`;
+    }
+
+    // Returns the language implied by a known file extension, or null when the
+    // name has no (known) extension. Unknown extensions return null so callers
+    // can decide whether to keep the current language (rename) or fall back
+    // to plaintext (import/download).
+    function inferLanguageFromExtension(fileName: string): ProgrammingLanguage | null {
+        const dot = fileName.lastIndexOf('.');
+        if (dot === -1 || dot === fileName.length - 1) return null;
         const ext = fileName.slice(dot).toLowerCase();
         switch (ext) {
             case '.java':
@@ -993,8 +1050,12 @@ func main() {
             case '.txt':
                 return 'plaintext';
             default:
-                return 'plaintext';
+                return null;
         }
+    }
+
+    function getLanguageFromExtension(fileName: string): ProgrammingLanguage {
+        return inferLanguageFromExtension(fileName) ?? 'plaintext';
     }
 
     async function saveTextDownload(
@@ -7145,6 +7206,38 @@ func main() {
                             const currentTab = tabs[activeTabId];
                             if (currentTab && !isSpecialTabType(currentTab.type)) {
                                 setLastLanguage(currentTab.fileId, language);
+                                // If the file already has an extension, keep it
+                                // in sync with the new language. Files without
+                                // an extension are left untouched.
+                                const syncedName = fileNameWithLanguageExtension(currentTab.fileName || '', language);
+                                if (syncedName) {
+                                    const now = Date.now();
+                                    const targetId = currentTab.fileId;
+                                    const linkedIds = new Set<string>([targetId]);
+                                    for (const t of tabs) {
+                                        if (t.type === 'preview' && t.sourceFileId === targetId) linkedIds.add(t.fileId);
+                                    }
+                                    tabs = tabs.map((t) =>
+                                        linkedIds.has(t.fileId) ||
+                                        (t.type === 'preview' && t.sourceFileId && linkedIds.has(t.sourceFileId))
+                                            ? { ...t, fileName: syncedName, lastUpdated: now }
+                                            : t
+                                    );
+                                    const fkey = fileKey();
+                                    fileStore.update((s) => {
+                                        const files = JSON.parse(s[fkey] || '[]') as FileEntry[];
+                                        for (const f of files) {
+                                            if (
+                                                linkedIds.has(f.fileId) ||
+                                                (f.type === 'preview' && f.sourceFileId && linkedIds.has(f.sourceFileId))
+                                            ) {
+                                                f.fileName = syncedName;
+                                                f.lastUpdated = now;
+                                            }
+                                        }
+                                        return { ...s, [fkey]: JSON.stringify(files) };
+                                    });
+                                }
                             }
                         }}
                         on:blur={() => (suppressSave = false)}
