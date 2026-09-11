@@ -193,6 +193,7 @@
 	let showGrid = false;
 	let isDark = false;
 	let hasInteracted = false;
+	let isMac = false;
 
 	let drawingStyle: StyleState = {
 		stroke: '#1b1b1f',
@@ -275,6 +276,7 @@
 	}
 
 	onMount(() => {
+		isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
 		const previousOverflow = document.body.style.overflow;
 		const previousOverscrollBehavior = document.documentElement.style.overscrollBehavior;
 		if (!embedded) {
@@ -2312,7 +2314,7 @@
 					</a>
 				{/if}
 				<button class="menu-item" onclick={newBoard}>
-					<WhiteboardIcon name="plus" size={18} /><span>New whiteboard</span><kbd>Ctrl N</kbd>
+					<WhiteboardIcon name="plus" size={18} /><span>New whiteboard</span><kbd>{isMac ? 'Cmd N' : 'Ctrl N'}</kbd>
 				</button>
 				<button class="menu-item" onclick={() => boardInput?.click()}>
 					<WhiteboardIcon name="upload" size={18} /><span>Open</span>
