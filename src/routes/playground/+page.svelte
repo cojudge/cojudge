@@ -6766,6 +6766,18 @@ func main() {
                         aria-expanded={t.kind === 'folder' ? isFolderExpanded(t.fileId) : undefined}
                         tabindex="0"
                         on:keydown={(e) => {
+                            if (e.key === 'F2' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                startRename(t.fileId, t.fileName, 'sidebar');
+                                return;
+                            }
+                            if (e.key === 'Enter' && isMac && !e.ctrlKey && !e.metaKey && !e.altKey && !e.shiftKey) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                startRename(t.fileId, t.fileName, 'sidebar');
+                                return;
+                            }
                             if (e.key === 'Enter' || e.key === ' ') {
                                 e.preventDefault();
                                 handleExplorerItemClick(t);
