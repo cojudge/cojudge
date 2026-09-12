@@ -8,6 +8,7 @@
 	import { showConfirm } from '$lib/dialogs';
 	import userSettingsStorage from '$lib/stores/userSettingsStorage';
 	import { onMount, tick } from 'svelte';
+	import { isConnector, connectorEndpoints, connectorVertices, connectorRoute, connectorMidpoint, snapConnection, resolveConnections, type Connection } from '$lib/whiteboardConnections';
 
 	export let embedded = false;
 	export let active = true;
@@ -50,6 +51,8 @@
 		opacity: number;
 		fontSize: number;
 		rotation?: number;
+		startConnection?: Connection;
+		endConnection?: Connection;
 	};
 
 	type StyleState = Pick<
@@ -65,6 +68,22 @@
 	};
 
 	type Gesture =
+		| {
+				kind: 'bend';
+				start: Point;
+				original: BoardElement;
+				index: number;
+				insert: boolean;
+				before: BoardElement[];
+				moved: boolean;
+		  }
+		| {
+				kind: 'endpoint';
+				elementId: string;
+				endpoint: 'start' | 'end';
+				before: BoardElement[];
+				moved: boolean;
+		  }
 		| {
 				kind: 'pan';
 				startClient: Point;
@@ -162,6 +181,7 @@
 	let activeTool: Tool = 'selection';
 	let toolLocked = false;
 	let gesture: Gesture | null = null;
+	let connectionTargetId: string | null = null;
 	let panX = 0;
 	let panY = 0;
 	let zoom = 1;
@@ -206,6 +226,7 @@
 
 	let selectionBounds: Bounds | null = null;
 	let selectedElement: BoardElement | undefined;
+	$: elements = resolveConnections(elements);
 	$: selectedElement = elements.find((element) => selectedIds.includes(element.id));
 	$: selectionBounds = getUnionBounds(elements.filter((element) => selectedIds.includes(element.id)));
 	$: isDark = $userSettingsStorage.theme === 'dark';
@@ -473,7 +494,9 @@
 						: 'solid',
 					opacity: clamp(Number(item.opacity) || 100, 10, 100),
 					fontSize: Math.round(clamp(Number(item.fontSize) || 24, 10, 96)),
-					rotation: Number.isFinite(item.rotation) ? normalizeDeg(Number(item.rotation)) : undefined
+					rotation: Number.isFinite(item.rotation) ? normalizeDeg(Number(item.rotation)) : undefined,
+					startConnection: typeof item.startConnection?.elementId === 'string' ? { elementId: item.startConnection.elementId } : undefined,
+					endConnection: typeof item.endConnection?.elementId === 'string' ? { elementId: item.endConnection.elementId } : undefined
 				}
 			];
 		});
@@ -525,6 +548,7 @@
 	function saveBoardImpl(force: boolean): void {
 		if (!mounted) return;
 		if (isCloudRestoreInProgress() && !force) return;
+		elements = resolveConnections(elements);
 		if (saveTimer) clearTimeout(saveTimer);
 		saveTimer = undefined;
 		const board: StoredBoard = {
@@ -614,6 +638,7 @@
 	}
 
 	function recordSnapshot(before: BoardElement[]): void {
+		elements = resolveConnections(elements);
 		if (JSON.stringify(before) === JSON.stringify(elements)) return;
 		undoStack = [...undoStack.slice(-99), before];
 		redoStack = [];
@@ -643,6 +668,19 @@
 	}
 
 	function getBounds(element: BoardElement): Bounds {
+		if (isConnector(element)) {
+			const vertices = connectorVertices({ ...element, rotation: 0 });
+			if (element.text) {
+				const label = embeddedTextLayout(element);
+				vertices.push({ x: label.x - label.width / 2 - 6, y: label.y - label.height / 2 - 4 },
+					{ x: label.x + label.width / 2 + 6, y: label.y + label.height / 2 + 4 });
+			}
+			const x = Math.min(...vertices.map((point) => point.x));
+			const y = Math.min(...vertices.map((point) => point.y));
+			return { x, y,
+				width: Math.max(1, Math.max(...vertices.map((point) => point.x)) - x),
+				height: Math.max(1, Math.max(...vertices.map((point) => point.y)) - y) };
+		}
 		if (element.type === 'text') {
 			return { x: element.x, y: element.y, ...textDimensions(element.text ?? '', element.fontSize) };
 		}
@@ -672,8 +710,8 @@
 		const bounds = getBounds(element);
 		if (!element.rotation) return bounds;
 		const center = {
-			x: bounds.x + bounds.width / 2,
-			y: bounds.y + bounds.height / 2
+			x: isConnector(element) ? element.x + element.width / 2 : bounds.x + bounds.width / 2,
+			y: isConnector(element) ? element.y + element.height / 2 : bounds.y + bounds.height / 2
 		};
 		const corners = [
 			{ x: bounds.x, y: bounds.y },
@@ -730,6 +768,15 @@
 
 	function hitTest(element: BoardElement, point: Point): boolean {
 		const tolerance = 9 / zoom;
+		if (isConnector(element)) {
+			if (element.text) {
+				const label = embeddedTextLayout(element);
+				const local = rotatePoint(point, { x: element.x + element.width / 2, y: element.y + element.height / 2 }, -(element.rotation ?? 0));
+				if (Math.abs(local.x - label.x) <= label.width / 2 + 6 && Math.abs(local.y - label.y) <= label.height / 2 + 4) return true;
+			}
+			const points = connectorRoute(element).hitPoints;
+			return points.slice(1).some((end, index) => distanceToSegment(point, points[index], end) <= tolerance);
+		}
 		if (element.rotation) {
 			const bounds = getBounds(element);
 			point = rotatePoint(point, {
@@ -737,16 +784,6 @@
 				y: bounds.y + bounds.height / 2
 			}, -element.rotation);
 		}
-		if (element.type === 'line' || element.type === 'arrow') {
-			return (
-				distanceToSegment(
-					point,
-					{ x: element.x, y: element.y },
-					{ x: element.x + element.width, y: element.y + element.height }
-				) <= tolerance
-			);
-		}
-
 		if (element.type === 'draw' && element.points?.length) {
 			for (let index = 1; index < element.points.length; index += 1) {
 				const previous = element.points[index - 1];
@@ -790,6 +827,7 @@
 	}
 
 	function chooseTool(tool: Tool): void {
+		connectionTargetId = null;
 		if (textEditor) finishTextEditor(true);
 		showOverflowMenu = false;
 		if (tool === 'image') {
@@ -823,6 +861,23 @@
 		}
 
 		if (activeTool === 'selection') {
+			const dataset = (event.target as SVGElement | null)?.dataset;
+			const bendIndex = dataset?.bendIndex ?? dataset?.insertIndex;
+			const connector = elements.find((element) => element.id === selectedIds[0]);
+			if (bendIndex !== undefined && selectedIds.length === 1 && connector && isConnector(connector)) {
+				event.preventDefault();
+				canvasElement?.setPointerCapture(event.pointerId);
+				gesture = { kind: 'bend', start: point, original: cloneElements([connector])[0], index: Number(bendIndex),
+					insert: dataset?.insertIndex !== undefined, before: cloneElements(), moved: false };
+				return;
+			}
+			const endpoint = (event.target as SVGElement | null)?.dataset?.endpoint as 'start' | 'end' | undefined;
+			if (endpoint && selectedIds.length === 1) {
+				event.preventDefault();
+				canvasElement?.setPointerCapture(event.pointerId);
+				gesture = { kind: 'endpoint', elementId: selectedIds[0], endpoint, before: cloneElements(), moved: false };
+				return;
+			}
 			const additiveSelection = event.shiftKey || event.metaKey || event.ctrlKey;
 			const rotateHit =
 				(event.target as SVGElement | null)?.dataset?.rotateHandle !== undefined;
@@ -912,6 +967,10 @@
 		if (!drawableTools.has(activeTool)) return;
 		const before = cloneElements();
 		const element = makeElement(activeTool as ElementType, point.x, point.y);
+		if (isConnector(element) && !event.altKey) {
+			element.startConnection = snapConnection(point, elements, 16 / zoom);
+			connectionTargetId = element.startConnection?.elementId ?? null;
+		}
 		if (activeTool === 'draw') element.points = [{ x: 0, y: 0 }];
 		elements = [...elements, element];
 		selectedIds = [element.id];
@@ -927,7 +986,12 @@
 	}
 
 	function handlePointerMove(event: PointerEvent): void {
-		if (!gesture) return;
+		if (!gesture) {
+			connectionTargetId = (activeTool === 'line' || activeTool === 'arrow') && !event.altKey
+				? snapConnection(screenToWorld(event.clientX, event.clientY), elements, 16 / zoom)?.elementId ?? null
+				: null;
+			return;
+		}
 		if (gesture.kind === 'pan') {
 			panX = gesture.startPan.x + event.clientX - gesture.startClient.x;
 			panY = gesture.startPan.y + event.clientY - gesture.startClient.y;
@@ -935,6 +999,58 @@
 		}
 
 		const point = screenToWorld(event.clientX, event.clientY);
+		if (gesture.kind === 'bend') {
+			const currentGesture = gesture;
+			if (!currentGesture.moved && Math.hypot(point.x - currentGesture.start.x, point.y - currentGesture.start.y) < 3 / zoom) return;
+			const original = currentGesture.original;
+			const vertices = connectorVertices(original);
+			const bends = vertices.slice(1, -1);
+			let bend = { ...point };
+			if (!event.altKey) {
+				// Align to connected shape centers so a bend can make a clean vertical/horizontal route.
+				const anchors = [vertices[currentGesture.index], vertices[currentGesture.index + (currentGesture.insert ? 1 : 2)]];
+				if (currentGesture.index === 0 && original.startConnection) {
+					const target = elements.find((element) => element.id === original.startConnection?.elementId);
+					if (target) anchors[0] = { x: target.x + target.width / 2, y: target.y + target.height / 2 };
+				}
+				if (currentGesture.index === bends.length - (currentGesture.insert ? 0 : 1) && original.endConnection) {
+					const target = elements.find((element) => element.id === original.endConnection?.elementId);
+					if (target) anchors[1] = { x: target.x + target.width / 2, y: target.y + target.height / 2 };
+				}
+				for (const axis of ['x', 'y'] as const) {
+					const closest = anchors.filter(Boolean).sort((a, b) => Math.abs(a[axis] - point[axis]) - Math.abs(b[axis] - point[axis]))[0];
+					if (closest && Math.abs(closest[axis] - point[axis]) < 12 / zoom) bend[axis] = closest[axis];
+				}
+			}
+			bends.splice(currentGesture.index, currentGesture.insert ? 0 : 1, bend);
+			const start = vertices[0];
+			const end = vertices.at(-1)!;
+			elements = elements.map((element) => element.id === original.id ? {
+				...original, x: start.x, y: start.y, width: end.x - start.x, height: end.y - start.y, rotation: 0,
+				points: bends.map((point) => ({ x: point.x - start.x, y: point.y - start.y }))
+			} : element);
+			gesture = { ...currentGesture, moved: true };
+			return;
+		}
+		if (gesture.kind === 'endpoint') {
+			const currentGesture = gesture;
+			const connector = elements.find((element) => element.id === currentGesture.elementId);
+			const oppositeConnection = currentGesture.endpoint === 'start' ? connector?.endConnection : connector?.startConnection;
+			const connection = event.altKey ? undefined : snapConnection(point, elements, 16 / zoom, oppositeConnection?.elementId);
+			connectionTargetId = connection?.elementId ?? null;
+			elements = elements.map((element) => {
+				if (element.id !== currentGesture.elementId) return element;
+				const endpoints = connectorEndpoints(element);
+				const bends = connectorVertices(element).slice(1, -1);
+				endpoints[currentGesture.endpoint] = point;
+				return { ...element, x: endpoints.start.x, y: endpoints.start.y,
+					points: element.points ? bends.map((point) => ({ x: point.x - endpoints.start.x, y: point.y - endpoints.start.y })) : undefined,
+					width: endpoints.end.x - endpoints.start.x, height: endpoints.end.y - endpoints.start.y,
+					rotation: 0, [currentGesture.endpoint === 'start' ? 'startConnection' : 'endConnection']: connection };
+			});
+			gesture = { ...currentGesture, moved: true };
+			return;
+		}
 		if (gesture.kind === 'draw') {
 			const currentGesture = gesture;
 			elements = elements.map((element) => {
@@ -966,6 +1082,11 @@
 						height = (height < 0 ? -1 : 1) * size;
 					}
 				}
+				if (isConnector(element)) {
+					const endConnection = event.altKey ? undefined : snapConnection(point, elements, 16 / zoom, element.startConnection?.elementId);
+					connectionTargetId = endConnection?.elementId ?? null;
+					return { ...element, x: currentGesture.origin.x, y: currentGesture.origin.y, width, height, endConnection };
+				}
 				return { ...element, width, height };
 			});
 			gesture = { ...gesture, moved: true };
@@ -982,7 +1103,13 @@
 			const originalsById = new Map(gesture.originals.map((item) => [item.id, item]));
 			elements = elements.map((element) => {
 				const original = originalsById.get(element.id);
-				return original ? { ...element, x: original.x + dx, y: original.y + dy } : element;
+				if (!original) return element;
+				const moved = Math.abs(dx) + Math.abs(dy) > 0.1;
+				return { ...element, x: original.x + dx, y: original.y + dy,
+					points: original.points,
+					width: original.width, height: original.height,
+					startConnection: moved && original.startConnection && !originalsById.has(original.startConnection.elementId) ? undefined : original.startConnection,
+					endConnection: moved && original.endConnection && !originalsById.has(original.endConnection.elementId) ? undefined : original.endConnection };
 			});
 			gesture = { ...gesture, moved: Math.abs(dx) + Math.abs(dy) > 0.1 };
 			return;
@@ -1032,6 +1159,7 @@
 	}
 
 	function handlePointerUp(event: PointerEvent): void {
+		connectionTargetId = null;
 		if (!gesture) return;
 		const completedGesture = gesture;
 		gesture = null;
@@ -1044,9 +1172,9 @@
 			if (created) {
 				const bounds = getBounds(created);
 				const tooSmall =
-					created.type === 'draw'
+					(isConnector(created) && !completedGesture.moved) || (created.type === 'draw'
 						? (created.points?.length ?? 0) < 2
-						: Math.hypot(bounds.width, bounds.height) < 5 / zoom;
+						: Math.hypot(bounds.width, bounds.height) < 5 / zoom);
 				if (tooSmall && created.type !== 'draw') {
 					elements = elements.filter((element) => element.id !== created.id);
 					selectedIds = [];
@@ -1064,6 +1192,8 @@
 
 		if (
 			completedGesture.kind === 'move'
+			|| completedGesture.kind === 'endpoint'
+			|| completedGesture.kind === 'bend'
 			|| completedGesture.kind === 'resize'
 			|| completedGesture.kind === 'rotate'
 		) {
@@ -1080,10 +1210,30 @@
 	function handleDoubleClick(event: MouseEvent): void {
 		if (activeTool !== 'selection') return;
 		const point = screenToWorld(event.clientX, event.clientY);
-		const hit = elementAt(point);
-		if (hit?.type === 'text') {
+		const selected = selectedIds.length === 1 ? elements.find((element) => element.id === selectedIds[0]) : undefined;
+		// Pointer capture can retarget dblclick to the canvas, so locate bend handles geometrically.
+		const bendIndex = selected && isConnector(selected)
+			? connectorVertices(selected).slice(1, -1).findIndex((bend) => Math.hypot(bend.x - point.x, bend.y - point.y) <= 9 / zoom)
+			: -1;
+		const hit = bendIndex >= 0 ? selected : elementAt(point);
+		if (hit && (hit.type === 'text' || supportsEmbeddedText(hit))) {
 			selectedIds = [hit.id];
 			beginTextEditor({ x: hit.x, y: hit.y }, hit);
+		}
+	}
+
+	function removeConnectorBend(elementId: string, bendIndex: number): void {
+		const before = cloneElements();
+		elements = elements.map((element) => element.id === elementId && isConnector(element)
+			? { ...element, points: element.points?.filter((_, index) => index !== bendIndex) } : element);
+		recordSnapshot(before);
+	}
+
+	function handleCanvasContextMenu(event: MouseEvent): void {
+		event.preventDefault();
+		const bendIndex = (event.target as SVGElement | null)?.dataset?.bendIndex;
+		if (bendIndex !== undefined && selectedIds.length === 1) {
+			removeConnectorBend(selectedIds[0], Number(bendIndex));
 		}
 	}
 
@@ -1175,6 +1325,33 @@
 		});
 	}
 
+	function supportsEmbeddedText(element: BoardElement): boolean {
+		return element.type === 'rectangle' || element.type === 'ellipse' || element.type === 'diamond' || isConnector(element);
+	}
+
+	function embeddedTextLayout(element: BoardElement, value = element.text ?? '') {
+		if (isConnector(element)) {
+			const midpoint = connectorMidpoint({ ...element, rotation: 0 });
+			const dimensions = textDimensions(value, element.fontSize);
+			return { ...midpoint, ...dimensions, fontSize: element.fontSize, textHeight: dimensions.height };
+		}
+		const bounds = getBounds(element);
+		// Use an interior rectangle so labels also fit inside curved and slanted edges.
+		const insetRatio = element.type === 'diamond' ? 0.5 : element.type === 'ellipse' ? 0.7 : 1;
+		const width = Math.max(1, bounds.width * insetRatio - 16);
+		const height = Math.max(1, bounds.height * insetRatio - 16);
+		const dimensions = textDimensions(value, element.fontSize);
+		const fontSize = element.fontSize * Math.min(1, width / dimensions.width, height / dimensions.height);
+		return {
+			x: bounds.x + bounds.width / 2,
+			y: bounds.y + bounds.height / 2,
+			width,
+			height,
+			fontSize,
+			textHeight: value.split('\n').length * fontSize * 1.25
+		};
+	}
+
 	function textDimensions(text: string, fontSize: number): { width: number; height: number } {
 		const lines = text.split('\n');
 		let widths = lines.map((line) => line.length * fontSize * 0.58);
@@ -1199,6 +1376,20 @@
 
 	function textEditorPlacement(editor: TextEditor): { x: number; y: number; width: number; height: number; fontSize: number } {
 		const fontSize = textEditorFontSize(editor);
+		const element = elements.find((item) => item.id === editor.elementId);
+		if (element && supportsEmbeddedText(element)) {
+			const layout = embeddedTextLayout(element, editor.value);
+			const center = worldToScreen(isConnector(element)
+				? rotatePoint(layout, { x: element.x + element.width / 2, y: element.y + element.height / 2 }, element.rotation ?? 0)
+				: layout);
+			return {
+				x: center.x - layout.width * zoom / 2,
+				y: center.y - layout.textHeight * zoom / 2,
+				width: layout.width * zoom,
+				height: layout.textHeight * zoom,
+				fontSize: layout.fontSize * zoom
+			};
+		}
 		const screen = worldToScreen({ x: editor.x, y: editor.y });
 		const viewportWidth = canvasElement?.clientWidth ?? 360;
 		const viewportHeight = canvasElement?.clientHeight ?? 640;
@@ -1220,7 +1411,8 @@
 		const editor = textEditor;
 		if (!editor) return;
 		textEditor = null;
-		if (!shouldSave || !editor.value.trim()) {
+		const existing = elements.find((element) => element.id === editor.elementId);
+		if (!shouldSave || (!editor.value.trim() && !(existing && supportsEmbeddedText(existing)))) {
 			if (!toolLocked && editor.elementId === null) activeTool = 'selection';
 			return;
 		}
@@ -1230,6 +1422,7 @@
 		if (editor.elementId) {
 			elements = elements.map((element) => {
 				if (element.id !== editor.elementId) return element;
+				if (supportsEmbeddedText(element)) return { ...element, text: editor.value };
 				const nextDimensions = textDimensions(editor.value, element.fontSize);
 				return { ...element, text: editor.value, ...nextDimensions };
 			});
@@ -1246,6 +1439,7 @@
 	}
 
 	function handleTextKeyDown(event: KeyboardEvent): void {
+		event.stopPropagation();
 		if (event.key === 'Escape') {
 			event.preventDefault();
 			finishTextEditor(false);
@@ -1277,8 +1471,10 @@
 
 	function arrowHeadPath(element: BoardElement): string {
 		const end = { x: element.x + element.width, y: element.y + element.height };
-		const angle = Math.atan2(element.height, element.width);
-		const length = Math.min(18, Math.max(8, Math.hypot(element.width, element.height) * 0.25));
+		const vertices = connectorVertices({ ...element, rotation: 0 });
+		const previous = vertices.slice(0, -1).findLast((point) => Math.hypot(end.x - point.x, end.y - point.y) > 0.01) ?? vertices[0];
+		const angle = Math.atan2(end.y - previous.y, end.x - previous.x);
+		const length = Math.min(18, Math.max(8, Math.hypot(end.x - previous.x, end.y - previous.y) * 0.25));
 		const first = {
 			x: end.x - length * Math.cos(angle - Math.PI / 6),
 			y: end.y - length * Math.sin(angle - Math.PI / 6)
@@ -1303,6 +1499,7 @@
 
 	function rotationTransform(element: BoardElement): string | undefined {
 		if (!element.rotation) return undefined;
+		if (isConnector(element)) return `rotate(${element.rotation} ${element.x + element.width / 2} ${element.y + element.height / 2})`;
 		const bounds = getBounds(element);
 		return `rotate(${element.rotation} ${bounds.x + bounds.width / 2} ${bounds.y + bounds.height / 2})`;
 	}
@@ -1421,12 +1618,7 @@
 		const selected = elements.filter((element) => selectedIds.includes(element.id));
 		if (selected.length === 0) return;
 		const before = cloneElements();
-		const duplicated = cloneElements(selected).map((element) => ({
-			...element,
-			id: createId(),
-			x: element.x + offset,
-			y: element.y + offset
-		}));
+		const duplicated = duplicateElements(selected, offset);
 		elements = [...elements, ...duplicated];
 		selectedIds = duplicated.map((element) => element.id);
 		recordSnapshot(before);
@@ -1437,15 +1629,22 @@
 		if (clipboardElements.length > 0) showToast('Copied to whiteboard clipboard');
 	}
 
+	function duplicateElements(items: BoardElement[], offset: number): BoardElement[] {
+		const ids = new Map(items.map((element) => [element.id, createId()]));
+		const remap = (connection?: Connection): Connection | undefined => {
+			const id = connection && ids.get(connection.elementId);
+			return id ? { elementId: id } : undefined;
+		};
+		return cloneElements(items).map((element) => ({
+			...element, id: ids.get(element.id)!, x: element.x + offset, y: element.y + offset,
+			startConnection: remap(element.startConnection), endConnection: remap(element.endConnection)
+		}));
+	}
+
 	function pasteSelected(): void {
 		if (clipboardElements.length === 0) return;
 		const before = cloneElements();
-		const pasted = cloneElements(clipboardElements).map((element) => ({
-			...element,
-			id: createId(),
-			x: element.x + 24,
-			y: element.y + 24
-		}));
+		const pasted = duplicateElements(clipboardElements, 24);
 		clipboardElements = cloneElements(pasted);
 		elements = [...elements, ...pasted];
 		selectedIds = pasted.map((element) => element.id);
@@ -1466,7 +1665,9 @@
 		const before = cloneElements();
 		elements = elements.map((element) =>
 			selectedIds.includes(element.id)
-				? { ...element, x: element.x + dx, y: element.y + dy }
+				? { ...element, x: element.x + dx, y: element.y + dy,
+					startConnection: element.startConnection && selectedIds.includes(element.startConnection.elementId) ? element.startConnection : undefined,
+					endConnection: element.endConnection && selectedIds.includes(element.endConnection.elementId) ? element.endConnection : undefined }
 				: element
 		);
 		recordSnapshot(before);
@@ -1541,6 +1742,9 @@
 			if (showShare) closeShareDialog();
 			else if (showHelp) closeHelpDialog();
 			else {
+				if (gesture && 'before' in gesture) elements = cloneElements(gesture.before);
+				gesture = null;
+				connectionTargetId = null;
 				showLibrary = false;
 				showMainMenu = false;
 				showOverflowMenu = false;
@@ -1914,7 +2118,7 @@
 		const height = Math.max(1, Math.ceil(bounds.height + padding * 2));
 		const content = elementsGroup?.outerHTML ?? '<g></g>';
 		const background = isDark ? '#443835' : '#ffffff';
-		const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><rect width="100%" height="100%" fill="${background}"/><g transform="translate(${-bounds.x + padding} ${-bounds.y + padding})">${content}</g></svg>`;
+		const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" style="--canvas: ${background}"><rect width="100%" height="100%" fill="${background}"/><g transform="translate(${-bounds.x + padding} ${-bounds.y + padding})">${content}</g></svg>`;
 		const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml;charset=utf-8' }));
 		const image = new Image();
 
@@ -2027,14 +2231,14 @@
 		onpointercancel={handlePointerUp}
 		ondblclick={handleDoubleClick}
 		onauxclick={(event) => event.preventDefault()}
-		oncontextmenu={(event) => event.preventDefault()}
+		oncontextmenu={handleCanvasContextMenu}
 	>
 		<g transform={`translate(${panX} ${panY}) scale(${zoom})`}>
 			<g class="elements-layer" bind:this={elementsGroup}>
 				{#each elements as element (element.id)}
 					<g
 						opacity={element.opacity / 100}
-						class:hidden-element={textEditor?.elementId === element.id}
+						class:hidden-element={element.type === 'text' && textEditor?.elementId === element.id}
 						transform={rotationTransform(element)}
 					>
 						{#if element.type === 'rectangle'}
@@ -2072,7 +2276,7 @@
 							/>
 						{:else if element.type === 'line' || element.type === 'arrow'}
 							<path
-								d={`M ${element.x} ${element.y} L ${element.x + element.width} ${element.y + element.height}`}
+								d={connectorRoute({ ...element, rotation: 0 }).path}
 								fill="none"
 								stroke={resolvedStroke(element.stroke, isDark)}
 								stroke-width={element.strokeWidth}
@@ -2124,9 +2328,40 @@
 								preserveAspectRatio="none"
 							/>
 						{/if}
+						{#if supportsEmbeddedText(element) && element.text && textEditor?.elementId !== element.id}
+							{@const layout = embeddedTextLayout(element)}
+							{#if isConnector(element)}
+								<rect x={layout.x - layout.width / 2 - 6} y={layout.y - layout.height / 2 - 4}
+									width={layout.width + 12} height={layout.height + 8} rx="4" fill="var(--canvas, #f8fafc)" />
+							{/if}
+							<text
+								fill={resolvedStroke(element.stroke, isDark)}
+								font-size={layout.fontSize}
+								font-family="'Comic Sans MS', 'Bradley Hand', cursive"
+								text-anchor="middle"
+								xml:space="preserve"
+								style="white-space: pre;"
+							>
+								{#each element.text.split('\n') as line, index}
+									<tspan x={layout.x} y={layout.y - layout.textHeight / 2 + layout.fontSize + index * layout.fontSize * 1.25}>{line || ' '}</tspan>
+								{/each}
+							</text>
+						{/if}
 					</g>
 				{/each}
 			</g>
+
+			{#if connectionTargetId}
+				{@const target = elements.find((element) => element.id === connectionTargetId)}
+				{#if target}
+					{@const bounds = getBounds(target)}
+					<rect x={bounds.x - 5 / zoom} y={bounds.y - 5 / zoom}
+						width={bounds.width + 10 / zoom} height={bounds.height + 10 / zoom}
+						rx={8 / zoom} fill="#6965db" fill-opacity="0.1" stroke="#6965db"
+						stroke-width={2 / zoom} transform={rotationTransform(target)}
+						pointer-events="none" data-export-ignore="true" />
+				{/if}
+			{/if}
 
 			{#if activeTool === 'selection' && selectionBounds}
 				<g class="selection-layer" data-export-ignore="true">
@@ -2149,7 +2384,33 @@
 					{/if}
 				{#if selectedIds.length === 1}
 					{@const single = elements.find((element) => element.id === selectedIds[0])}
-					{#if single}
+					{#if single && isConnector(single)}
+						{@const endpoints = connectorEndpoints(single)}
+						{@const vertices = connectorVertices(single)}
+						{#each vertices.slice(1) as end, index}
+							<circle cx={(vertices[index].x + end.x) / 2} cy={(vertices[index].y + end.y) / 2}
+								r={5 / zoom} fill="white" stroke="#6965db" stroke-width={1.5 / zoom}
+								data-insert-index={index} style="cursor: move; pointer-events: all;">
+								<title>Drag to add a bend. Hold Alt to disable alignment snapping.</title>
+							</circle>
+						{/each}
+						{#each vertices.slice(1, -1) as point, index}
+							<circle cx={point.x} cy={point.y} r={7 / zoom}
+								fill="#e7e6fb" stroke="#6965db" stroke-width={2 / zoom}
+								data-bend-index={index} style="cursor: move; pointer-events: all;">
+								<title>Drag to move bend. Double-click to edit text. Right-click to remove bend.</title>
+							</circle>
+						{/each}
+						{#each ['start', 'end'] as endpoint}
+							{@const point = endpoint === 'start' ? endpoints.start : endpoints.end}
+							{@const connected = endpoint === 'start' ? single.startConnection : single.endConnection}
+							<circle cx={point.x} cy={point.y} r={7 / zoom}
+								fill={connected ? '#6965db' : 'white'} stroke="#6965db" stroke-width={2 / zoom}
+								data-endpoint={endpoint} style="cursor: grab; pointer-events: all;">
+								<title>Drag to connect or detach. Hold Alt to disable snapping.</title>
+							</circle>
+						{/each}
+					{:else if single}
 						{@const b = getBounds(single)}
 						{@const pad = 5 / zoom}
 						{@const center = { x: b.x + b.width / 2, y: b.y + b.height / 2 }}
@@ -2277,13 +2538,14 @@
 
 	{#if textEditor}
 		{@const editorPosition = textEditorPlacement(textEditor)}
+		{@const editedShape = elements.find((element) => element.id === textEditor?.elementId && supportsEmbeddedText(element))}
 		<textarea
 			bind:this={textArea}
 			bind:value={textEditor.value}
 			class="text-editor"
 			aria-label="Whiteboard text"
 			placeholder="Type something..."
-			style={`left: ${editorPosition.x}px; top: ${editorPosition.y}px; width: ${editorPosition.width}px; height: ${editorPosition.height}px; font-size: ${editorPosition.fontSize}px; line-height: 1.25;`}
+			style={`left: ${editorPosition.x}px; top: ${editorPosition.y}px; width: ${editorPosition.width}px; height: ${editorPosition.height}px; font-size: ${editorPosition.fontSize}px; line-height: 1.25; ${editedShape ? `min-height: 0; text-align: center; transform: rotate(${editedShape.rotation ?? 0}deg); ${isConnector(editedShape) ? 'background: var(--canvas);' : ''}` : ''}`}
 			onkeydown={handleTextKeyDown}
 			onblur={() => finishTextEditor(true)}
 		></textarea>
@@ -2398,6 +2660,8 @@
 		<p class="canvas-hint">
 			Pan with two fingers, or hold <kbd>Space</kbd> or the middle mouse button while dragging
 		</p>
+	{:else if activeTool === 'line' || activeTool === 'arrow' || (selectedIds.length === 1 && selectedElement && isConnector(selectedElement))}
+		<p class="canvas-hint">Drag middle handles to bend · Double-click to edit text · Right-click a bend to remove</p>
 	{/if}
 
 	<div class="top-actions">
