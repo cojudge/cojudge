@@ -313,3 +313,18 @@ jobs:
             --generate-notes \
             --notes "$RELEASE_NOTES" \
             "${release_args[@]}"
+
+  winget:
+    needs: publish
+    if: ${{ !contains(inputs.version, '-') }}
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    steps:
+      - uses: vedantmgoyal9/winget-releaser@v2
+        with:
+          identifier: Cojudge.Cojudge
+          installers-regex: 'x64-setup\.exe$'
+          release-tag: v${{ inputs.version }}
+          fork-user: anslwy
+          token: ${{ secrets.WINGET_TOKEN }}
