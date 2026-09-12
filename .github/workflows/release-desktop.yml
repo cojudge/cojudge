@@ -87,6 +87,18 @@ jobs:
             rust_targets: x86_64-unknown-linux-gnu
             bundles: deb
             artifact: src-tauri/target/x86_64-unknown-linux-gnu/release/bundle/deb/Cojudge_${{ inputs.version }}_amd64.deb
+          - id: linux-rpm
+            os: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+            rust_targets: x86_64-unknown-linux-gnu
+            bundles: rpm
+            artifact: src-tauri/target/x86_64-unknown-linux-gnu/release/bundle/rpm/Cojudge-${{ inputs.version }}-1.x86_64.rpm
+          - id: linux-appimage
+            os: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+            rust_targets: x86_64-unknown-linux-gnu
+            bundles: appimage
+            artifact: src-tauri/target/x86_64-unknown-linux-gnu/release/bundle/appimage/Cojudge_${{ inputs.version }}_amd64.AppImage
 
     runs-on: ${{ matrix.os }}
     env:
@@ -113,6 +125,10 @@ jobs:
             librsvg2-dev \
             patchelf \
             xdg-utils
+
+      - name: Install AppImage build dependencies
+        if: matrix.bundles == 'appimage'
+        run: sudo apt-get install -y libfuse2 squashfs-tools
 
       - uses: actions/setup-node@v4
         with:
@@ -219,6 +235,8 @@ jobs:
 
           const version = process.env.VERSION;
           const expected = [
+            `Cojudge-${version}-1.x86_64.rpm`,
+            `Cojudge_${version}_amd64.AppImage`,
             `Cojudge_${version}_amd64.deb`,
             `Cojudge_${version}_universal.dmg`,
             `Cojudge_${version}_x64-setup.exe`
@@ -253,6 +271,29 @@ jobs:
             Optional: You can install the `cojudge` desktop CLI via GUI to verify your new problems programmatically after adding them.
 
             View `~/cojudge/README.md` for a more detailed guide.
+
+            ## Linux installation (x86_64)
+
+            Ubuntu, Debian, and Pop!_OS: download the `.deb` and install it with:
+
+            ```bash
+            sudo apt install ./Cojudge_${{ inputs.version }}_amd64.deb
+            ```
+
+            Fedora: download the `.rpm` and install it with:
+
+            ```bash
+            sudo dnf install ./Cojudge-${{ inputs.version }}-1.x86_64.rpm
+            ```
+
+            Arch Linux and other compatible Linux distributions: download the `.AppImage`, make it executable, and run it:
+
+            ```bash
+            chmod +x Cojudge_${{ inputs.version }}_amd64.AppImage
+            ./Cojudge_${{ inputs.version }}_amd64.AppImage
+            ```
+
+            If the AppImage reports a missing `libfuse.so.2` on Arch, install `fuse2` with `sudo pacman -S fuse2`.
 
             ## macOS installation
 
