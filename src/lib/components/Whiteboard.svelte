@@ -12,6 +12,8 @@
 
 	export let embedded = false;
 	export let active = true;
+	export let saveShortcutEnabled = true;
+	export let newBoardShortcutEnabled = true;
 
 	const isDesktopMode = browser && isDesktopRuntime();
 
@@ -1806,12 +1808,15 @@
 			duplicateSelected();
 			return;
 		}
-		if (modifier && event.key.toLowerCase() === 'n') {
+		if (modifier && !event.shiftKey && !event.altKey && event.key.toLowerCase() === 'n') {
+			if (!newBoardShortcutEnabled) return;
 			event.preventDefault();
 			newBoard();
 			return;
 		}
 		if (modifier && event.key.toLowerCase() === 's') {
+			// The playground owns this shortcut for Cloud Sync.
+			if (!saveShortcutEnabled) return;
 			event.preventDefault();
 			saveBoardFile();
 			return;
@@ -2576,7 +2581,7 @@
 					</a>
 				{/if}
 				<button class="menu-item" onclick={newBoard}>
-					<WhiteboardIcon name="plus" size={18} /><span>New whiteboard</span><kbd>{isMac ? 'Cmd N' : 'Ctrl N'}</kbd>
+					<WhiteboardIcon name="plus" size={18} /><span>New whiteboard</span>{#if newBoardShortcutEnabled}<kbd>{isMac ? 'Cmd N' : 'Ctrl N'}</kbd>{/if}
 				</button>
 				<button class="menu-item" onclick={() => boardInput?.click()}>
 					<WhiteboardIcon name="upload" size={18} /><span>Open</span>
@@ -2911,8 +2916,8 @@
 					<div><span>Free draw / text</span><kbd>P</kbd><kbd>T</kbd></div>
 					<div><span>Pan canvas</span><kbd>Trackpad</kbd><kbd>Middle mouse</kbd></div>
 					<div><span>Place / cycle selection</span><kbd>Enter</kbd><kbd>Shift Enter</kbd></div>
-					<div><span>Undo / redo</span><kbd>Ctrl Z</kbd><kbd>Shift Ctrl Z</kbd></div>
-					<div><span>Duplicate</span><kbd>Ctrl D</kbd></div>
+					<div><span>Undo / redo</span><kbd>{isMac ? 'Cmd Z' : 'Ctrl Z'}</kbd><kbd>{isMac ? 'Shift Cmd Z' : 'Shift Ctrl Z'}</kbd></div>
+					<div><span>Duplicate</span><kbd>{isMac ? 'Cmd D' : 'Ctrl D'}</kbd></div>
 					<div><span>Delete selected</span><kbd>Delete</kbd></div>
 				</div>
 			</div>
