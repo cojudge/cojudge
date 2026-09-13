@@ -6515,8 +6515,8 @@ func main() {
                 e.stopPropagation();
                 openWysiwygFind();
             }
-            // Ctrl+Alt+N or Cmd+Alt+N
-            if ((e.ctrlKey || e.metaKey) && e.altKey && (e.key.toLowerCase() === 'n' || e.code === 'KeyN')) {
+            // Ctrl/Cmd+N — create a document, matching the New Tab button.
+            if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && (e.key.toLowerCase() === 'n' || e.code === 'KeyN')) {
                 e.preventDefault();
                 e.stopPropagation();
                 addNewTab('tab');
@@ -6708,9 +6708,9 @@ func main() {
                     </svg>
                 </button>
                 <div class="add-menu-wrapper" bind:this={addMenuContainer}>
+                    <Tooltip text={isMac ? 'CMD + N' : 'CTRL + N'} pos="bottom">
                     <button
                         class="icon-button"
-                        title="New"
                         aria-label="New file or folder"
                         aria-haspopup="menu"
                         aria-expanded={showAddMenu}
@@ -6720,6 +6720,7 @@ func main() {
                             <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </button>
+                    </Tooltip>
                     {#if showAddMenu}
                         <div class="add-menu" role="menu">
                             <button
@@ -6984,12 +6985,12 @@ func main() {
                         <button
                             class="search-toggle-btn {globalSearchCaseSensitive ? 'active' : ''}"
                             on:click={() => { globalSearchCaseSensitive = !globalSearchCaseSensitive; persistPanel(); }}
-                            title="Match Case (Alt+C)"
+                            title="Match Case"
                         >Aa</button>
                         <button
                             class="search-toggle-btn {globalSearchRegex ? 'active' : ''}"
                             on:click={() => { globalSearchRegex = !globalSearchRegex; persistPanel(); }}
-                            title="Use Regular Expression (Alt+R)"
+                            title="Use Regular Expression"
                         >.*</button>
                     </div>
                 </div>
@@ -7137,8 +7138,10 @@ func main() {
                     {#if tabDropIndicatorStyle}
                         <div class="tab-drop-indicator" style={tabDropIndicatorStyle} aria-hidden="true"></div>
                     {/if}
-                    <button class="tab-add" aria-label="New tab" on:click={() => addNewTab('tab')}>+</button>
                 </div>
+                <Tooltip text={isMac ? 'CMD + N' : 'CTRL + N'} pos="bottom">
+                    <button class="tab-add" aria-label="New tab" on:click={() => addNewTab('tab')}>+</button>
+                </Tooltip>
             </div>
             {#if tabContextMenu}
                 {@const tabContextPosition = getContextTabPosition(tabContextMenu.fileId)}
@@ -7353,7 +7356,7 @@ func main() {
         <div class="editor-container" class:whiteboard-active={activeTab?.type === 'whiteboard'}>
             {#if activeTab?.type === 'whiteboard'}
                 <div class="whiteboard-host">
-                    <Whiteboard embedded active={true} />
+                    <Whiteboard embedded active={true} saveShortcutEnabled={false} newBoardShortcutEnabled={false} />
                 </div>
             {:else if activeTab?.type === 'preview'}
                 {#if previewEditMode}
@@ -7456,7 +7459,7 @@ func main() {
                                     <button
                                         type="button"
                                         class="wysiwyg-find-toggle {wysiwygFindCaseSensitive ? 'active' : ''}"
-                                        title="Match Case (Alt+C)"
+                                        title="Match Case"
                                         aria-label="Match Case"
                                         aria-pressed={wysiwygFindCaseSensitive}
                                         on:click={() => { wysiwygFindCaseSensitive = !wysiwygFindCaseSensitive; updateWysiwygFindHighlights(); wysiwygFindInputEl?.focus(); }}
@@ -7464,7 +7467,7 @@ func main() {
                                     <button
                                         type="button"
                                         class="wysiwyg-find-toggle {wysiwygFindWholeWord ? 'active' : ''}"
-                                        title="Match Whole Word (Alt+W)"
+                                        title="Match Whole Word"
                                         aria-label="Match Whole Word"
                                         aria-pressed={wysiwygFindWholeWord}
                                         on:click={() => { wysiwygFindWholeWord = !wysiwygFindWholeWord; updateWysiwygFindHighlights(); wysiwygFindInputEl?.focus(); }}
@@ -7474,7 +7477,7 @@ func main() {
                                     <button
                                         type="button"
                                         class="wysiwyg-find-toggle {wysiwygFindRegex ? 'active' : ''}"
-                                        title="Use Regular Expression (Alt+R)"
+                                        title="Use Regular Expression"
                                         aria-label="Use Regular Expression"
                                         aria-pressed={wysiwygFindRegex}
                                         on:click={() => { wysiwygFindRegex = !wysiwygFindRegex; updateWysiwygFindHighlights(); wysiwygFindInputEl?.focus(); }}
@@ -7707,7 +7710,7 @@ func main() {
                     <!-- svelte-ignore a11y-no-static-element-interactions -->
                     <div class="shortcut-row" on:click={() => addNewTab('tab')}>
                         <span class="shortcut-label">New Tab</span>
-                        <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">ALT</span><span class="key">N</span></span>
+                        <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">N</span></span>
                     </div>
                 </div>
             </div>
@@ -8786,6 +8789,7 @@ func main() {
     /* Compact the tab bar when shown inside the header */
     .editor-header .tab-bar {
         padding: 0;
+        flex: 0 1 auto;
     }
     .tab-add {
         display: inline-flex;

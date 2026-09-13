@@ -121,7 +121,7 @@ fn create_window(app: &tauri::AppHandle, url: tauri::Url) -> tauri::Result<()> {
 fn build_menu(app: &tauri::AppHandle) -> tauri::Result<()> {
     let menu = Menu::default(app)?;
     let new_window = MenuItemBuilder::with_id(NEW_WINDOW_MENU_ID, "New Window")
-        .accelerator("CmdOrCtrl+N")
+        .accelerator("CmdOrCtrl+Shift+N")
         .build(app)?;
 
     let mut file_submenu = None;
