@@ -6515,8 +6515,8 @@ func main() {
                 e.stopPropagation();
                 openWysiwygFind();
             }
-            // Ctrl/Cmd+N — create a document, matching the New Tab button.
-            if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && (e.key.toLowerCase() === 'n' || e.code === 'KeyN')) {
+            // Ctrl/Cmd+N — create a document, matching the New Tab button (desktop only; browsers reserve this).
+            if (isDesktopMode && (e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && (e.key.toLowerCase() === 'n' || e.code === 'KeyN')) {
                 e.preventDefault();
                 e.stopPropagation();
                 addNewTab('tab');
@@ -6708,7 +6708,7 @@ func main() {
                     </svg>
                 </button>
                 <div class="add-menu-wrapper" bind:this={addMenuContainer}>
-                    <Tooltip text={isMac ? 'CMD + N' : 'CTRL + N'} pos="bottom">
+                    <Tooltip text={isDesktopMode ? (isMac ? 'CMD + N' : 'CTRL + N') : 'New'} pos="bottom">
                     <button
                         class="icon-button"
                         aria-label="New file or folder"
@@ -7139,7 +7139,7 @@ func main() {
                         <div class="tab-drop-indicator" style={tabDropIndicatorStyle} aria-hidden="true"></div>
                     {/if}
                 </div>
-                <Tooltip text={isMac ? 'CMD + N' : 'CTRL + N'} pos="bottom">
+                <Tooltip text={isDesktopMode ? (isMac ? 'CMD + N' : 'CTRL + N') : 'New tab'} pos="bottom">
                     <button class="tab-add" aria-label="New tab" on:click={() => addNewTab('tab')}>+</button>
                 </Tooltip>
             </div>
@@ -7710,7 +7710,9 @@ func main() {
                     <!-- svelte-ignore a11y-no-static-element-interactions -->
                     <div class="shortcut-row" on:click={() => addNewTab('tab')}>
                         <span class="shortcut-label">New Tab</span>
+                        {#if isDesktopMode}
                         <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">N</span></span>
+                        {/if}
                     </div>
                 </div>
             </div>
