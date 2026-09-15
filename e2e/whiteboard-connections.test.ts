@@ -11,6 +11,83 @@ async function drag(page: Page, from: { x: number; y: number }, to: { x: number;
 	await page.mouse.up();
 }
 
+test('arrowheads are independent and persistent, while normal lines remain unattached', async ({ page }) => {
+	await page.setViewportSize({ width: 1280, height: 900 });
+	await page.goto('/whiteboard');
+	await page.locator('.drawing-canvas').focus();
+	await page.keyboard.press('5');
+	await page.getByLabel('Start arrowhead', { exact: true }).click();
+	await page.getByRole('button', { name: 'start arrowhead: Filled triangle', exact: true }).click();
+	await page.getByLabel('End arrowhead', { exact: true }).click();
+	await page.getByRole('button', { name: 'end arrowhead: Outlined triangle', exact: true }).click();
+	await drag(page, { x: 450, y: 300 }, { x: 750, y: 400 });
+	await expect.poll(async () => (await board(page))[0]).toMatchObject({ startArrowhead: 'triangle', endArrowhead: 'triangle-outline' });
+	await expect(page.locator('.elements-layer > g').first().locator('path')).toHaveCount(3);
+	await page.getByLabel('Start arrowhead', { exact: true }).click();
+	await page.getByRole('button', { name: 'start arrowhead: None', exact: true }).click();
+	await expect(page.locator('.elements-layer > g').first().locator('path')).toHaveCount(2);
+	await page.locator('.drawing-canvas').focus();
+	await page.keyboard.press('ControlOrMeta+z');
+	await expect.poll(async () => (await board(page))[0].startArrowhead).toBe('triangle');
+	await page.reload();
+	await expect(page.locator('.elements-layer > g').first().locator('path')).toHaveCount(3);
+	await page.locator('.drawing-canvas').focus();
+	await page.keyboard.press('2');
+	await drag(page, { x: 350, y: 500 }, { x: 450, y: 600 });
+	await page.keyboard.press('6');
+	await drag(page, { x: 400, y: 550 }, { x: 700, y: 550 });
+	await expect.poll(async () => (await board(page)).find((element: any) => element.type === 'line')).toMatchObject({ x: 400, y: 550, width: 300, height: 0 });
+	let line = (await board(page)).find((element: any) => element.type === 'line');
+	expect(line.startConnection).toBeUndefined();
+	expect(line.endConnection).toBeUndefined();
+	const handle = (await page.locator('[data-endpoint="end"]').boundingBox())!;
+	await drag(page, { x: handle.x + handle.width / 2, y: handle.y + handle.height / 2 }, { x: 420, y: 570 });
+	await expect.poll(async () => (await board(page)).find((element: any) => element.type === 'line').width).toBe(20);
+	line = (await board(page)).find((element: any) => element.type === 'line');
+	expect(line.endConnection).toBeUndefined();
+	await drag(page, { x: 380, y: 520 }, { x: 480, y: 620 });
+	await expect.poll(async () => (await board(page)).find((element: any) => element.type === 'rectangle').x).toBe(450);
+	expect((await board(page)).find((element: any) => element.type === 'line')).toEqual(line);
+});
+
+test('chosen edge positions survive endpoint editing, moving, resizing, reload, and duplication', async ({ page }) => {
+	await page.setViewportSize({ width: 1280, height: 900 });
+	await page.goto('/whiteboard');
+	await page.locator('.drawing-canvas').focus();
+	await page.keyboard.press('2');
+	await drag(page, { x: 400, y: 300 }, { x: 600, y: 500 });
+	await page.keyboard.press('5');
+	await drag(page, { x: 450, y: 300 }, { x: 850, y: 400 });
+	const arrow = async () => (await board(page)).find((element: any) => element.type === 'arrow');
+	await expect.poll(arrow).toMatchObject({ x: 450, y: 300, startConnection: { anchor: { x: -0.5, y: -1 } } });
+	const startHandle = page.locator('[data-endpoint="start"]');
+	for (const point of [{ x: 400, y: 440 }, { x: 550, y: 500 }, { x: 600, y: 350 }]) {
+		const handle = (await startHandle.boundingBox())!;
+		await drag(page, { x: handle.x + handle.width / 2, y: handle.y + handle.height / 2 }, point);
+		await expect.poll(arrow).toMatchObject({ x: point.x, y: point.y });
+	}
+	await page.keyboard.press('ControlOrMeta+z');
+	await expect.poll(arrow).toMatchObject({ x: 550, y: 500 });
+	await page.reload();
+	await expect(page.locator('.elements-layer > g')).toHaveCount(2);
+	await expect.poll(arrow).toMatchObject({ x: 550, y: 500, startConnection: { anchor: { x: 0.5, y: 1 } } });
+	await drag(page, { x: 450, y: 400 }, { x: 500, y: 450 });
+	await expect.poll(arrow).toMatchObject({ x: 600, y: 550 });
+	const resize = (await page.locator('[data-resize-handle="se"]').boundingBox())!;
+	await drag(page, { x: resize.x + resize.width / 2, y: resize.y + resize.height / 2 }, { x: 750, y: 650 });
+	await expect.poll(arrow).toMatchObject({ x: 675, y: 650 });
+	await page.keyboard.press('ControlOrMeta+a');
+	await page.keyboard.press('ControlOrMeta+d');
+	await expect.poll(async () => (await board(page)).length).toBe(4);
+	const copies = (await board(page)).slice(2);
+	expect(copies.find((element: any) => element.type === 'arrow')).toMatchObject({
+		x: 693, y: 668, startConnection: {
+			elementId: copies.find((element: any) => element.type === 'rectangle').id,
+			anchor: { x: 0.5, y: 1 }
+		}
+	});
+});
+
 test('connectors follow shapes, reconnect, detach, undo, and survive reload', async ({ page }) => {
 	await page.setViewportSize({ width: 1280, height: 900 });
 	await page.addInitScript((key) => {

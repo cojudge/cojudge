@@ -1,4 +1,8 @@
-export type Connection = { elementId: string };
+export type Connection = {
+	elementId: string;
+	/** Shape-local outline position, normalized by its half-width/height around the center. */
+	anchor?: { x: number; y: number };
+};
 type Point = { x: number; y: number };
 type Element = {
 	id: string;
@@ -20,6 +24,19 @@ export function isConnector(element: Element): boolean {
 
 export function canConnect(element: Element): boolean {
 	return ['rectangle', 'ellipse', 'diamond', 'text', 'image'].includes(element.type);
+}
+
+export function sanitizeConnection(value: unknown): Connection | undefined {
+	if (!value || typeof value !== 'object') return undefined;
+	const connection = value as Partial<Connection>;
+	if (typeof connection.elementId !== 'string') return undefined;
+	const anchor = connection.anchor;
+	if (anchor && Number.isFinite(anchor.x) && Number.isFinite(anchor.y)
+		&& Math.abs(anchor.x) <= 1 && Math.abs(anchor.y) <= 1
+		&& Math.hypot(anchor.x, anchor.y) > 1e-8) {
+		return { elementId: connection.elementId, anchor: { x: anchor.x, y: anchor.y } };
+	}
+	return { elementId: connection.elementId };
 }
 
 function center(element: Element): Point {
@@ -51,6 +68,15 @@ export function connectionPoint(element: Element, toward: Point): Point {
 			? Math.abs(dx / rx) + Math.abs(dy / ry)
 			: Math.max(Math.abs(dx / rx), Math.abs(dy / ry));
 	return rotate({ x: origin.x + dx / divisor, y: origin.y + dy / divisor }, origin, element.rotation ?? 0);
+}
+
+function attachedPoint(element: Element, connection: Connection | undefined, toward: Point): Point {
+	if (!connection?.anchor) return connectionPoint(element, toward);
+	const origin = center(element);
+	return connectionPoint(element, rotate({
+		x: origin.x + connection.anchor.x * Math.max(0.5, Math.abs(element.width) / 2),
+		y: origin.y + connection.anchor.y * Math.max(0.5, Math.abs(element.height) / 2)
+	}, origin, element.rotation ?? 0));
 }
 
 export function connectorEndpoints(element: Element): { start: Point; end: Point } {
@@ -120,9 +146,28 @@ export function snapConnection(point: Point, elements: Element[], tolerance: num
 		const dy = Math.abs(local.y - origin.y) / Math.max(0.5, Math.abs(element.height) / 2);
 		const inside = element.type === 'ellipse' ? dx * dx + dy * dy <= 1
 			: element.type === 'diamond' ? dx + dy <= 1 : Math.max(dx, dy) <= 1;
-		const edge = connectionPoint(element, point);
+		let edge = connectionPoint(element, point);
+		if (element.type !== 'ellipse' && element.type !== 'diamond') {
+			// Project to the nearest rectangular edge without shifting along that edge.
+			const rx = Math.max(0.5, Math.abs(element.width) / 2);
+			const ry = Math.max(0.5, Math.abs(element.height) / 2);
+			const x = Math.max(origin.x - rx, Math.min(origin.x + rx, local.x));
+			const y = Math.max(origin.y - ry, Math.min(origin.y + ry, local.y));
+			const candidates = [
+				{ x: origin.x - rx, y }, { x: origin.x + rx, y },
+				{ x, y: origin.y - ry }, { x, y: origin.y + ry }
+			];
+			candidates.sort((a, b) => Math.hypot(a.x - local.x, a.y - local.y) - Math.hypot(b.x - local.x, b.y - local.y));
+			edge = rotate(candidates[0], origin, element.rotation ?? 0);
+		}
 		if (inside || Math.hypot(edge.x - point.x, edge.y - point.y) <= tolerance) {
-			return { elementId: element.id };
+			// A center drop has no preferred edge; preserve automatic routing for that gesture.
+			if (Math.hypot(local.x - origin.x, local.y - origin.y) < 1e-8) return { elementId: element.id };
+			const localEdge = rotate(edge, origin, -(element.rotation ?? 0));
+			return { elementId: element.id, anchor: {
+				x: Math.max(-1, Math.min(1, (localEdge.x - origin.x) / Math.max(0.5, Math.abs(element.width) / 2))),
+				y: Math.max(-1, Math.min(1, (localEdge.y - origin.y) / Math.max(0.5, Math.abs(element.height) / 2)))
+			} };
 		}
 	}
 	return undefined;
@@ -133,7 +178,7 @@ export function resolveConnections<T extends Element>(elements: T[]): T[] {
 	const byId = new Map(elements.map((element) => [element.id, element]));
 	let changed = false;
 	const result = elements.map((element) => {
-		if (!isConnector(element) || (!element.startConnection && !element.endConnection)) return element;
+		if (element.type !== 'arrow' || (!element.startConnection && !element.endConnection)) return element;
 		const target = (connection?: Connection) => {
 			const found = connection && byId.get(connection.elementId);
 			return found && canConnect(found) ? found : undefined;
@@ -144,8 +189,8 @@ export function resolveConnections<T extends Element>(elements: T[]): T[] {
 		const bends = connectorVertices(element).slice(1, -1);
 		const startToward = bends[0] ?? (endTarget ? center(endTarget) : end);
 		const endToward = bends.at(-1) ?? (startTarget ? center(startTarget) : start);
-		if (startTarget) start = connectionPoint(startTarget, startToward);
-		if (endTarget) end = connectionPoint(endTarget, endToward);
+		if (startTarget) start = attachedPoint(startTarget, element.startConnection, startToward);
+		if (endTarget) end = attachedPoint(endTarget, element.endConnection, endToward);
 		const width = end.x - start.x;
 		const height = end.y - start.y;
 		if ((!element.startConnection || startTarget) && (!element.endConnection || endTarget)

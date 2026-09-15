@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { connectionPoint, connectorVertices, connectorRoute, connectorMidpoint, resolveConnections, snapConnection } from './whiteboardConnections';
+import { connectionPoint, connectorVertices, connectorRoute, connectorMidpoint, resolveConnections, snapConnection, sanitizeConnection } from './whiteboardConnections';
 
 const shape = (id: string, x: number, type = 'rectangle') => ({ id, type, x, y: 0, width: 100, height: 100 });
 const line = {
@@ -8,6 +8,54 @@ const line = {
 };
 
 describe('whiteboard connections', () => {
+	it.each([{ x: 20, y: 0 }, { x: 100, y: 30 }, { x: 75, y: 100 }, { x: 0, y: 65 }])('attaches at the chosen rectangle edge position %j regardless of the other endpoint', (point) => {
+		const target = shape('a', 0);
+		const connection = snapConnection(point, [target], 16);
+		const arrow = { ...line, startConnection: connection, endConnection: undefined };
+		const resolved = resolveConnections([target, arrow]);
+		expect(connectorVertices(resolved[1])[0]).toEqual(point);
+		const rerouted = resolveConnections([target, { ...arrow, width: -300, height: 400, points: [{ x: 50, y: -200 }] }]);
+		expect(connectorVertices(rerouted[1])[0]).toEqual(point);
+	});
+
+	it('preserves the position along an edge when snapping nearby and follows translation, resize, and rotation', () => {
+		const target = shape('a', 0);
+		const connection = snapConnection({ x: 25, y: -6 }, [target], 8);
+		expect(connection).toEqual({ elementId: 'a', anchor: { x: -0.5, y: -1 } });
+		const arrow = { ...line, startConnection: connection, endConnection: undefined };
+		const resized = { ...target, x: 200, y: 100, width: 200, height: 80, rotation: 90 };
+		const result = resolveConnections([resized, arrow]);
+		const start = connectorVertices(result[1])[0];
+		expect(start.x).toBeCloseTo(340);
+		expect(start.y).toBeCloseTo(90);
+		expect(resolveConnections(result)).toBe(result);
+	});
+
+	it.each(['ellipse', 'diamond'])('preserves an arbitrary attachment on a %s outline', (type) => {
+		const target = { ...shape('a', 0, type), width: -100, rotation: 30 };
+		const point = connectionPoint(target, { x: -120, y: -30 });
+		const connection = snapConnection(point, [target], 8);
+		const result = resolveConnections([target, { ...line, endConnection: connection, startConnection: undefined }]);
+		const end = connectorVertices(result[1]).at(-1)!;
+		expect(end.x).toBeCloseTo(point.x);
+		expect(end.y).toBeCloseTo(point.y);
+	});
+
+	it('retains saved anchors and safely falls back for old or malformed connections', () => {
+		expect(sanitizeConnection({ elementId: 'a', anchor: { x: 0.3, y: -1 } })).toEqual({ elementId: 'a', anchor: { x: 0.3, y: -1 } });
+		for (const anchor of [undefined, { x: NaN, y: 1 }, { x: 2, y: -1 }, { x: 0, y: 0 }]) {
+			expect(sanitizeConnection({ elementId: 'a', anchor })).toEqual({ elementId: 'a' });
+		}
+		expect(sanitizeConnection({ elementId: 1 })).toBeUndefined();
+	});
+
+	it('keeps normal lines fixed even when legacy connection targets move', () => {
+		const normalLine = { ...line, type: 'line' };
+		const elements = [shape('a', 200), { ...shape('b', 600), y: 100 }, normalLine];
+		expect(resolveConnections(elements)).toBe(elements);
+		expect(connectorVertices(normalLine)).toEqual([{ x: 100, y: 50 }, { x: 300, y: 50 }]);
+	});
+
 	it('routes via a bend and attaches according to the first and last segment directions', () => {
 		const routed = { ...line, points: [{ x: -50, y: 200 }] };
 		const result = resolveConnections([shape('a', 0), { ...shape('b', 300), y: 200 }, routed]);
