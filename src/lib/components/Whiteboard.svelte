@@ -5,10 +5,11 @@
 	import { WHITEBOARD_RESTORED_EVENT } from '$lib/cloudFileChange';
 	import { refreshCloudLocalState } from '$lib/cloudSync';
 	import WhiteboardIcon from '$lib/components/WhiteboardIcon.svelte';
+	import WhiteboardArrowheadIcon from '$lib/components/WhiteboardArrowheadIcon.svelte';
 	import { showConfirm } from '$lib/dialogs';
 	import userSettingsStorage from '$lib/stores/userSettingsStorage';
 	import { onMount, tick } from 'svelte';
-	import { isConnector, connectorEndpoints, connectorVertices, connectorRoute, connectorMidpoint, snapConnection, resolveConnections, type Connection } from '$lib/whiteboardConnections';
+	import { isConnector, connectorEndpoints, connectorVertices, connectorRoute, connectorMidpoint, snapConnection, resolveConnections, sanitizeConnection, type Connection } from '$lib/whiteboardConnections';
 
 	export let embedded = false;
 	export let active = true;
@@ -31,6 +32,13 @@
 		| 'eraser';
 	type ElementType = Exclude<Tool, 'hand' | 'selection' | 'eraser'>;
 	type StrokeStyle = 'solid' | 'dashed' | 'dotted';
+	type Arrowhead = 'none' | 'arrow' | 'triangle' | 'triangle-outline';
+	const arrowheads: { value: Arrowhead; label: string }[] = [
+		{ value: 'none', label: 'None' },
+		{ value: 'arrow', label: 'Open arrow' },
+		{ value: 'triangle', label: 'Filled triangle' },
+		{ value: 'triangle-outline', label: 'Outlined triangle' }
+	];
 	type ResizeHandle = 'nw' | 'ne' | 'se' | 'sw';
 
 	type Point = { x: number; y: number };
@@ -55,11 +63,13 @@
 		rotation?: number;
 		startConnection?: Connection;
 		endConnection?: Connection;
+		startArrowhead: Arrowhead;
+		endArrowhead: Arrowhead;
 	};
 
 	type StyleState = Pick<
 		BoardElement,
-		'stroke' | 'fill' | 'strokeWidth' | 'strokeStyle' | 'opacity' | 'fontSize'
+		'stroke' | 'fill' | 'strokeWidth' | 'strokeStyle' | 'opacity' | 'fontSize' | 'startArrowhead' | 'endArrowhead'
 	>;
 
 	type TextEditor = {
@@ -222,6 +232,8 @@
 		fill: 'transparent',
 		strokeWidth: 2,
 		strokeStyle: 'solid',
+		startArrowhead: 'none',
+		endArrowhead: 'arrow',
 		opacity: 100,
 		fontSize: 24
 	};
@@ -497,8 +509,10 @@
 					opacity: clamp(Number(item.opacity) || 100, 10, 100),
 					fontSize: Math.round(clamp(Number(item.fontSize) || 24, 10, 96)),
 					rotation: Number.isFinite(item.rotation) ? normalizeDeg(Number(item.rotation)) : undefined,
-					startConnection: typeof item.startConnection?.elementId === 'string' ? { elementId: item.startConnection.elementId } : undefined,
-					endConnection: typeof item.endConnection?.elementId === 'string' ? { elementId: item.endConnection.elementId } : undefined
+					startArrowhead: arrowheads.some((head) => head.value === item.startArrowhead) ? item.startArrowhead! : 'none',
+					endArrowhead: arrowheads.some((head) => head.value === item.endArrowhead) ? item.endArrowhead! : 'arrow',
+					startConnection: item.type === 'arrow' ? sanitizeConnection(item.startConnection) : undefined,
+					endConnection: item.type === 'arrow' ? sanitizeConnection(item.endConnection) : undefined
 				}
 			];
 		});
@@ -523,6 +537,8 @@
 			fill: drawingStyle.fill,
 			strokeWidth: drawingStyle.strokeWidth,
 			strokeStyle: drawingStyle.strokeStyle,
+			startArrowhead: drawingStyle.startArrowhead,
+			endArrowhead: drawingStyle.endArrowhead,
 			opacity: drawingStyle.opacity,
 			fontSize: drawingStyle.fontSize,
 			...overrides
@@ -969,7 +985,7 @@
 		if (!drawableTools.has(activeTool)) return;
 		const before = cloneElements();
 		const element = makeElement(activeTool as ElementType, point.x, point.y);
-		if (isConnector(element) && !event.altKey) {
+		if (element.type === 'arrow' && !event.altKey) {
 			element.startConnection = snapConnection(point, elements, 16 / zoom);
 			connectionTargetId = element.startConnection?.elementId ?? null;
 		}
@@ -989,7 +1005,7 @@
 
 	function handlePointerMove(event: PointerEvent): void {
 		if (!gesture) {
-			connectionTargetId = (activeTool === 'line' || activeTool === 'arrow') && !event.altKey
+			connectionTargetId = activeTool === 'arrow' && !event.altKey
 				? snapConnection(screenToWorld(event.clientX, event.clientY), elements, 16 / zoom)?.elementId ?? null
 				: null;
 			return;
@@ -1011,11 +1027,11 @@
 			if (!event.altKey) {
 				// Align to connected shape centers so a bend can make a clean vertical/horizontal route.
 				const anchors = [vertices[currentGesture.index], vertices[currentGesture.index + (currentGesture.insert ? 1 : 2)]];
-				if (currentGesture.index === 0 && original.startConnection) {
+				if (currentGesture.index === 0 && original.startConnection && !original.startConnection.anchor) {
 					const target = elements.find((element) => element.id === original.startConnection?.elementId);
 					if (target) anchors[0] = { x: target.x + target.width / 2, y: target.y + target.height / 2 };
 				}
-				if (currentGesture.index === bends.length - (currentGesture.insert ? 0 : 1) && original.endConnection) {
+				if (currentGesture.index === bends.length - (currentGesture.insert ? 0 : 1) && original.endConnection && !original.endConnection.anchor) {
 					const target = elements.find((element) => element.id === original.endConnection?.elementId);
 					if (target) anchors[1] = { x: target.x + target.width / 2, y: target.y + target.height / 2 };
 				}
@@ -1038,7 +1054,7 @@
 			const currentGesture = gesture;
 			const connector = elements.find((element) => element.id === currentGesture.elementId);
 			const oppositeConnection = currentGesture.endpoint === 'start' ? connector?.endConnection : connector?.startConnection;
-			const connection = event.altKey ? undefined : snapConnection(point, elements, 16 / zoom, oppositeConnection?.elementId);
+			const connection = event.altKey || connector?.type !== 'arrow' ? undefined : snapConnection(point, elements, 16 / zoom, oppositeConnection?.elementId);
 			connectionTargetId = connection?.elementId ?? null;
 			elements = elements.map((element) => {
 				if (element.id !== currentGesture.elementId) return element;
@@ -1084,7 +1100,7 @@
 						height = (height < 0 ? -1 : 1) * size;
 					}
 				}
-				if (isConnector(element)) {
+				if (element.type === 'arrow') {
 					const endConnection = event.altKey ? undefined : snapConnection(point, elements, 16 / zoom, element.startConnection?.elementId);
 					connectionTargetId = endConnection?.elementId ?? null;
 					return { ...element, x: currentGesture.origin.x, y: currentGesture.origin.y, width, height, endConnection };
@@ -1471,9 +1487,10 @@
 		return `${bounds.x + bounds.width / 2},${bounds.y} ${bounds.x + bounds.width},${bounds.y + bounds.height / 2} ${bounds.x + bounds.width / 2},${bounds.y + bounds.height} ${bounds.x},${bounds.y + bounds.height / 2}`;
 	}
 
-	function arrowHeadPath(element: BoardElement): string {
-		const end = { x: element.x + element.width, y: element.y + element.height };
+	function arrowHeadPath(element: BoardElement, endpoint: 'start' | 'end'): string {
 		const vertices = connectorVertices({ ...element, rotation: 0 });
+		if (endpoint === 'start') vertices.reverse();
+		const end = vertices.at(-1)!;
 		const previous = vertices.slice(0, -1).findLast((point) => Math.hypot(end.x - point.x, end.y - point.y) > 0.01) ?? vertices[0];
 		const angle = Math.atan2(end.y - previous.y, end.x - previous.x);
 		const length = Math.min(18, Math.max(8, Math.hypot(end.x - previous.x, end.y - previous.y) * 0.25));
@@ -1485,7 +1502,8 @@
 			x: end.x - length * Math.cos(angle + Math.PI / 6),
 			y: end.y - length * Math.sin(angle + Math.PI / 6)
 		};
-		return `M ${first.x} ${first.y} L ${end.x} ${end.y} L ${second.x} ${second.y}`;
+		const head = element[endpoint === 'start' ? 'startArrowhead' : 'endArrowhead'];
+		return `M ${first.x} ${first.y} L ${end.x} ${end.y} L ${second.x} ${second.y}${head === 'arrow' ? '' : ' Z'}`;
 	}
 
 	function dashArray(element: BoardElement): string | undefined {
@@ -1599,6 +1617,7 @@
 		const before = cloneElements();
 		elements = elements.map((element) => {
 			if (!selectedIds.includes(element.id)) return element;
+			if ((key === 'startArrowhead' || key === 'endArrowhead') && element.type !== 'arrow') return element;
 			const updated = { ...element, [key]: value } as BoardElement;
 			if (key === 'fontSize' && element.type === 'text') {
 				return { ...updated, ...textDimensions(element.text ?? '', Number(value)) };
@@ -1635,7 +1654,7 @@
 		const ids = new Map(items.map((element) => [element.id, createId()]));
 		const remap = (connection?: Connection): Connection | undefined => {
 			const id = connection && ids.get(connection.elementId);
-			return id ? { elementId: id } : undefined;
+			return id ? { ...connection, elementId: id } : undefined;
 		};
 		return cloneElements(items).map((element) => ({
 			...element, id: ids.get(element.id)!, x: element.x + offset, y: element.y + offset,
@@ -2288,12 +2307,17 @@
 								stroke-dasharray={dashArray(element)}
 							/>
 							{#if element.type === 'arrow'}
-								<path
-									d={arrowHeadPath(element)}
-									fill="none"
-									stroke={resolvedStroke(element.stroke, isDark)}
-									stroke-width={element.strokeWidth}
-								/>
+								{#each ['start', 'end'] as endpoint}
+									{@const head = element[endpoint === 'start' ? 'startArrowhead' : 'endArrowhead']}
+									{#if head !== 'none'}
+										<path
+											d={arrowHeadPath(element, endpoint as 'start' | 'end')}
+											fill={head === 'triangle' ? resolvedStroke(element.stroke, isDark) : head === 'triangle-outline' ? 'var(--canvas)' : 'none'}
+											stroke={resolvedStroke(element.stroke, isDark)}
+											stroke-width={element.strokeWidth}
+										/>
+									{/if}
+								{/each}
 							{/if}
 						{:else if element.type === 'draw'}
 							<path
@@ -2746,6 +2770,32 @@
 					</div>
 				</div>
 			</div>
+
+			{#if activeTool === 'arrow' || elements.some((element) => selectedIds.includes(element.id) && element.type === 'arrow')}
+				<div class="panel-section">
+					<span class="section-label">Arrowheads</span>
+					<div class="arrowhead-controls">
+						{#each ['start', 'end'] as endpoint}
+							{@const key = endpoint === 'start' ? 'startArrowhead' : 'endArrowhead'}
+							{@const arrow = elements.find((element) => selectedIds.includes(element.id) && element.type === 'arrow')}
+							{@const current = arrow?.[key] ?? drawingStyle[key]}
+							<details class="arrowhead-picker" name="whiteboard-arrowheads">
+								<summary title={`${endpoint === 'start' ? 'Start' : 'End'} arrowhead`} aria-label={`${endpoint === 'start' ? 'Start' : 'End'} arrowhead`}>
+									<WhiteboardArrowheadIcon head={current} start={endpoint === 'start'} />
+								</summary>
+								<div class="arrowhead-options" role="group" aria-label={`${endpoint} arrowhead options`}>
+									{#each arrowheads as head}
+										<button class:active={current === head.value} title={head.label} aria-label={`${endpoint} arrowhead: ${head.label}`} aria-pressed={current === head.value}
+											onclick={(event) => { setStyle(key, head.value); const picker = event.currentTarget.closest('details'); if (picker) picker.open = false; }}>
+											<WhiteboardArrowheadIcon head={head.value} start={endpoint === 'start'} />
+										</button>
+									{/each}
+								</div>
+							</details>
+						{/each}
+					</div>
+				</div>
+			{/if}
 
 			{#if activeTool === 'text' || selectedElement?.type === 'text'}
 				<div class="panel-section">
@@ -3371,6 +3421,23 @@
 	}
 
 	.panel-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+	.arrowhead-controls { display: flex; gap: 8px; position: relative; }
+	.arrowhead-picker summary,
+	.arrowhead-options button {
+		display: flex; align-items: center; justify-content: center;
+		width: 40px; height: 40px; border: 0; border-radius: 10px;
+		background: var(--button-bg); color: var(--text); cursor: pointer;
+	}
+	.arrowhead-picker summary { list-style: none; }
+	.arrowhead-picker summary::-webkit-details-marker { display: none; }
+	.arrowhead-picker[open] summary,
+	.arrowhead-options button.active { background: var(--active); color: var(--active-strong); }
+	.arrowhead-options {
+		position: absolute; left: 0; top: 48px; z-index: 5;
+		display: flex; gap: 6px; padding: 8px; border-radius: 12px;
+		background: var(--panel-bg); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+	}
+
 	.segmented-control {
 		display: flex;
 		padding: 2px;
