@@ -220,6 +220,8 @@
     }
 
     function handleMouseDown(event: MouseEvent) {
+        if (event.button !== 0) return;
+        event.preventDefault();
         isResizing = true;
         document.body.style.userSelect = "none";
         document.body.style.cursor = "row-resize";
@@ -229,7 +231,14 @@
 
     function handleMouseMove(event: MouseEvent) {
         if (!isResizing || !panelElement?.parentElement) return;
-        const parentRect = panelElement.parentElement.getBoundingClientRect();
+        // display: contents wrappers have no layout box of their own.
+        let parent: HTMLElement | null = panelElement.parentElement;
+        while (parent && getComputedStyle(parent).display === "contents") {
+            parent = parent.parentElement;
+        }
+        if (!parent) return;
+        const parentRect = parent.getBoundingClientRect();
+        if (parentRect.height <= 0) return;
         const newHeight = parentRect.bottom - event.clientY;
         const newPercentage = (newHeight / parentRect.height) * 100;
         const constrainedPercentage = Math.max(12, Math.min(90, newPercentage));
@@ -701,17 +710,17 @@
                     </button>
                     {#if debugJobId && (debugState.status === 'paused' || debugState.status === 'running')}
                         <div class="debug-actions">
-                            <Tooltip text="Step Over (F10)">
+                            <Tooltip text="F10" pos="bottom">
                                 <button class="btn btn-debug-action" on:click={() => debugAction('step')} disabled={isDebugRunning}>
                                     Step Over
                                 </button>
                             </Tooltip>
-                            <Tooltip text="Continue (F5)">
+                            <Tooltip text="F5" pos="bottom">
                                 <button class="btn btn-debug-action" on:click={() => debugAction('continue')} disabled={isDebugRunning}>
                                     Continue
                                 </button>
                             </Tooltip>
-                            <Tooltip text="Stop (Shift+F5)">
+                            <Tooltip text="Shift+F5" pos="bottom">
                                 <button class="btn btn-debug-action" on:click={() => debugAction('stop')} disabled={isDebugRunning}>
                                     Stop
                                 </button>
@@ -810,17 +819,17 @@
                     </span>
                     {#if debugJobId && (debugState.status === 'paused' || debugState.status === 'running')}
                         <div class="debug-actions">
-                            <Tooltip text="Step Over (F10)">
+                            <Tooltip text="F10" pos="bottom">
                                 <button class="btn btn-debug-action" on:click={() => debugAction('step')} disabled={isDebugRunning}>
                                     Step Over
                                 </button>
                             </Tooltip>
-                            <Tooltip text="Continue (F5)">
+                            <Tooltip text="F5" pos="bottom">
                                 <button class="btn btn-debug-action" on:click={() => debugAction('continue')} disabled={isDebugRunning}>
                                     Continue
                                 </button>
                             </Tooltip>
-                            <Tooltip text="Stop (Shift+F5)">
+                            <Tooltip text="Shift+F5" pos="bottom">
                                 <button class="btn btn-debug-action" on:click={() => debugAction('stop')} disabled={isDebugRunning}>
                                     Stop
                                 </button>

@@ -1610,7 +1610,7 @@
                                     Continue
                                 </button>
                             </Tooltip>
-                            <Tooltip text="Shift+F5" pos="left">
+                            <Tooltip text="Shift+F5" pos="bottom">
                                 <button class="btn btn-debug-action" on:click={() => debugAction("stop")} disabled={isDebugRunning}>
                                     Stop
                                 </button>
@@ -1676,17 +1676,17 @@
                     </button>
                     {#if debugJobId && (debugState.status === "paused" || debugState.status === "running")}
                         <div class="debug-actions">
-                            <Tooltip text="Step Over (F10)">
+                            <Tooltip text="F10" pos="bottom">
                                 <button class="btn btn-debug-action" on:click={() => debugAction("step")} disabled={isDebugRunning}>
                                     Step Over
                                 </button>
                             </Tooltip>
-                            <Tooltip text="Continue (F5)">
+                            <Tooltip text="F5" pos="bottom">
                                 <button class="btn btn-debug-action" on:click={() => debugAction("continue")} disabled={isDebugRunning}>
                                     Continue
                                 </button>
                             </Tooltip>
-                            <Tooltip text="Stop (Shift+F5)">
+                            <Tooltip text="Shift+F5" pos="bottom">
                                 <button class="btn btn-debug-action" on:click={() => debugAction("stop")} disabled={isDebugRunning}>
                                     Stop
                                 </button>
