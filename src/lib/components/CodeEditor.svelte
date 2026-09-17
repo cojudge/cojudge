@@ -2,6 +2,7 @@
     import type * as Monaco from 'monaco-editor';
     import { configureMonacoVim } from '$lib/utils/vimMode';
     import { isDebugSupported } from '$lib/utils/util';
+    import { canInspectToken, isBreakpointCandidate, type SourceToken } from '$lib/utils/debugSource';
     import { onMount } from 'svelte';
     export let value = '';
     export let language = 'javascript';
@@ -26,13 +27,31 @@
     let bpDecos: string[] = [];
     let activeLineDecos: string[] = [];
     let hoverDisposable: Monaco.IDisposable | null = null;
+    let tokenCache: { model: Monaco.editor.ITextModel; version: number; language: string; lines: SourceToken[][] } | null = null;
+
+    function sourceTokens(model: Monaco.editor.ITextModel): SourceToken[][] {
+        const version = model.getVersionId();
+        const modelLanguage = model.getLanguageId();
+        if (!tokenCache || tokenCache.model !== model || tokenCache.version !== version || tokenCache.language !== modelLanguage) {
+            // Tokenize the whole document so block comments and multiline strings
+            // retain their lexical state across lines.
+            tokenCache = { model, version, language: modelLanguage, lines: monacoRef.editor.tokenize(model.getValue(), modelLanguage) };
+        }
+        return tokenCache.lines;
+    }
+
+    function canSetBreakpoint(model: Monaco.editor.ITextModel, line: number): boolean {
+        if (line < 1 || line > model.getLineCount()) return false;
+        return isBreakpointCandidate(model.getLineContent(line), sourceTokens(model)[line - 1] ?? [], model.getLanguageId());
+    }
 
     function registerDebugHoverProvider() {
         if (!monacoRef || !language || !isDebugSupported(language)) return;
         hoverDisposable?.dispose();
         hoverDisposable = monacoRef.languages.registerHoverProvider(language, {
             provideHover: async (model: Monaco.editor.ITextModel, position: Monaco.Position) => {
-                if (!debugJobId || !activeDebugLine) return null;
+                if (!debugJobId || !activeDebugLine || model !== editor?.getModel()) return null;
+                if (!canInspectToken(sourceTokens(model)[position.lineNumber - 1] ?? [], position.column - 1)) return null;
                 const word = model.getWordAtPosition(position);
                 if (!word) return null;
                 try {
@@ -218,7 +237,9 @@
             });
 
             editor.onMouseDown((e: any) => {
-                if (!isDebugSupported(language)) return;
+                if (!editor || !e.target.position || !isDebugSupported(language)) return;
+                const model = editor.getModel();
+                if (!model) return;
                 if (e.target.type === monaco.editor.MouseTargetType.GUTTER_GLYPH_MARGIN
                     || e.target.type === monaco.editor.MouseTargetType.GUTTER_LINE_NUMBERS) {
                     const prevSelection = editor.getSelection();
@@ -226,7 +247,7 @@
                     const idx = breakpoints.indexOf(line);
                     if (idx >= 0) {
                         breakpoints = breakpoints.filter(l => l !== line);
-                    } else {
+                    } else if (canSetBreakpoint(model, line)) {
                         breakpoints = [...breakpoints, line].sort((a, b) => a - b);
                     }
                     updateBreakpointDecorations();
@@ -239,6 +260,10 @@
             editor.onDidChangeModelContent(() => {
                 if (!editor) return;
                 value = editor.getValue();
+                const model = editor.getModel();
+                if (model && breakpoints.length > 0) {
+                    breakpoints = breakpoints.filter(line => canSetBreakpoint(model, line));
+                }
             });
 
             // Reactively handle vim mode after editor creation
