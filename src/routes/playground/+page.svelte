@@ -7311,7 +7311,7 @@ func main() {
                     </div>
                 {/if}
                 {/if}
-                {#if isFirebaseAvailable && (activeTab?.type === 'preview' || !isSpecialTabType(tabs[activeTabId]?.type))}
+                {#if !isDesktopMode && isFirebaseAvailable && (activeTab?.type === 'preview' || !isSpecialTabType(tabs[activeTabId]?.type))}
                     <Tooltip text={"Share"} pos={"bottom"}>
                         <button
                             class="icon-button"

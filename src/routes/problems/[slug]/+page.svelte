@@ -1223,7 +1223,7 @@
                         </button>
                     </Tooltip>
                 {/if}
-                {#if isFirebaseAvailable}
+                {#if !isDesktopMode && isFirebaseAvailable}
                     <Tooltip text={"Share Code"} pos={"bottom"}>
                         <button class="icon-button" on:click={handleShare} title="Share Code">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
