@@ -1,7 +1,7 @@
 import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
 import { saveStatus } from './saveStatus';
-import { crossTabSync } from './crossTabSync';
+import { crossTabSync, isApplyingCrossTabSync } from './crossTabSync';
 import { writeProgressStorageItem } from '$lib/progressBackup';
 
 // The key we'll use to save the data in localStorage
@@ -53,6 +53,7 @@ export const fileSyncVersion = writable(0);
 let saveTimeout: any;
 if (browser) {
     fileStore.subscribe((value) => {
+        if (isApplyingCrossTabSync(STORAGE_KEY)) return;
         if (!writeProgressStorageItem(localStorage, STORAGE_KEY, JSON.stringify(value))) return;
         
         saveStatus.set('saving');
