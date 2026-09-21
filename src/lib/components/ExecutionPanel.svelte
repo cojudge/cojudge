@@ -1368,6 +1368,10 @@
                                 <textarea
                                     id={key}
                                     rows="1"
+                                    {...{ autocorrect: "off" }}
+                                    autocapitalize="off"
+                                    autocomplete="off"
+                                    spellcheck="false"
                                     on:input={(e) => updateCaseValue(key, e)}
                                     >{stringifyForTextarea(value)}</textarea
                                 >
