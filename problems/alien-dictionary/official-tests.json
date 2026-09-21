@@ -2,5 +2,21 @@
   { "words": "[\"wrt\",\"wrf\",\"er\",\"ett\",\"rftt\"]" },
   { "words": "[\"z\",\"x\"]" },
   { "words": "[\"z\",\"x\",\"z\"]" },
-  { "words": "[\"abc\",\"ab\"]" }
+  { "words": "[\"abc\",\"ab\"]" },
+  { "words": "[\"a\"]" },
+  { "words": "[\"abcdefghijklmnopqrstuvwxyz\"]" },
+  { "words": "[\"abc\",\"abc\",\"abc\"]" },
+  { "words": "[\"a\",\"aa\",\"aaa\",\"aaaa\"]" },
+  { "words": "[\"aaa\",\"aab\",\"aba\",\"abb\",\"baa\",\"bab\",\"bba\",\"bbb\"]" },
+  { "words": "[\"za\",\"zb\",\"ca\",\"cb\"]" },
+  { "words": "[\"za\",\"zb\"]" },
+  { "words": "[\"aa\",\"ab\",\"ba\",\"bc\",\"ca\",\"cb\"]" },
+  { "words": "[\"aa\",\"ab\",\"ac\",\"ba\",\"bd\"]" },
+  { "words": "[\"a\",\"b\",\"c\",\"a\"]" },
+  { "words": "[\"za\",\"zb\",\"zc\",\"za\"]" },
+  { "words": "[\"a\",\"abc\",\"ab\"]" },
+  { "words": "[\"ab\",\"abc\",\"b\"]" },
+  { "words": "[\"ab\",\"ba\",\"bb\"]" },
+  { "words": "[\"z\",\"y\",\"x\",\"w\",\"v\",\"u\",\"t\",\"s\",\"r\",\"q\",\"p\",\"o\",\"n\",\"m\",\"l\",\"k\",\"j\",\"i\",\"h\",\"g\",\"f\",\"e\",\"d\",\"c\",\"b\",\"a\"]" },
+  { "words": "[\"aaaaaaaaaaaaaaaaaaaaaaaaab\",\"aaaaaaaaaaaaaaaaaaaaaaaaac\"]" }
 ]
