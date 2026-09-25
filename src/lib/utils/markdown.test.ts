@@ -214,6 +214,28 @@ describe('markdown utils', () => {
         expect(plain).toContain('world');
     });
 
+    it.each([
+        ['[test]', '`[test]`'],
+        [String.raw`\[test\]`, '`' + String.raw`\[test\]` + '`'],
+        [String.raw`C:\temp\file`, '`' + String.raw`C:\temp\file` + '`'],
+        ['*bold* _value_ #heading', '`*bold* _value_ #heading`'],
+        ['`[test]`', '`` `[test]` ``'],
+        ['&lt;tag&gt; &amp; [value]', '`<tag> & [value]`'],
+        ['<b>[test]</b>', '`[test]`']
+    ])('preserves literal inline code %s across mode switches', (content, code) => {
+        const expected = `${code} ad sf`;
+        let html = `<p><span style="background-color: var(--color-second-bg);">${content}</span> ad sf</p>`;
+        for (let i = 0; i < 3; i++) {
+            const markdown = htmlToMarkdown(html);
+            expect(markdown).toBe(expected);
+            html = renderMarkdownPlain(markdown);
+            expect(htmlToMarkdown(html)).toBe(expected);
+            // Editing can turn rendered <code> back into a styled span.
+            html = html.replace(/<code>/g, '<span style="background-color: var(--color-second-bg);">')
+                .replace(/<\/code>/g, '</span>');
+        }
+    });
+
     it('preserves checklist checkboxes when round-tripping with text or loose paragraphs', () => {
         const md = '- [ ] sdf\n\nabc\n\n- [ ] adsf\n- [ ] adfsa';
         const html = renderMarkdownPlain(md);
@@ -253,6 +275,36 @@ describe('markdown utils', () => {
         expect(htmlToMarkdown('<p>hello</p><p>more</p><p><br></p>')).toBe('hello\n\nmore');
         // No growth when round-tripping twice
         expect(htmlToMarkdown(renderMarkdownPlain(htmlToMarkdown('<p>hello</p><p><br></p>')))).toBe('hello');
+    });
+
+    it.each(['`[test]`', '# Heading', '- item', '> quote', '---', '```js\nconst x = 1;\n```'])(
+        'preserves extra blank lines after %s in both renderers and repeated round-trips', (before) => {
+            const markdown = `${before}\n\n\n\n\n\nTesting this is fun`;
+            expect(renderMarkdownPlain(markdown).match(/<p><br><\/p>/g)).toHaveLength(4);
+            expect((renderMarkdown(markdown) as string).match(/<p><br><\/p>/g)).toHaveLength(4);
+            let back = markdown;
+            for (let i = 0; i < 3; i++) {
+                back = htmlToMarkdown(renderMarkdownPlain(back));
+                // List serialization may normalize the bullet's spacing.
+                expect(back).toContain('\n\n\n\n\n\nTesting this is fun');
+                expect(renderMarkdownPlain(back).match(/<p><br><\/p>/g)).toHaveLength(4);
+            }
+        }
+    );
+
+    it('stores empty paragraphs created by Enter as extra blank lines', () => {
+        expect(htmlToMarkdown('<p>before</p><p><br></p><p>\u200B<br></p><p>after</p>'))
+            .toBe('before\n\n\n\nafter');
+        expect(htmlToMarkdown('<div>before</div><div><br></div><div>after</div>'))
+            .toBe('before\n\n\nafter');
+        expect(htmlToMarkdown('<p>before</p><p>after</p>')).toBe('before\n\nafter');
+    });
+
+    it('keeps code-block blank lines literal and ordinary paragraph spacing unchanged', () => {
+        const markdown = '```\na\n\n\n\nb\n```\n\nafter';
+        expect(renderMarkdownPlain(markdown)).not.toContain('<p><br></p>');
+        expect(htmlToMarkdown(renderMarkdownPlain(markdown))).toBe(markdown);
+        expect(renderMarkdownPlain('before\n\nafter')).toBe('<p>before</p>\n<p>after</p>\n');
     });
 
     it('round-trips GFM task list checkboxes', () => {

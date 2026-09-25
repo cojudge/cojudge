@@ -43,6 +43,59 @@ async function getMarkdownText(page: Page): Promise<string | null> {
 const markerSpan = (editable: ReturnType<Page['locator']>) =>
   editable.locator('span[style*="var(--color-second-bg)"]');
 
+test('extra blank lines survive editing and switching Source, WYSIWYG, and Preview', async ({ page }) => {
+  const original = '`[test]`\n\n\n\n\n\nTesting this is fun';
+  const editable = await openWysiwyg(page, original);
+  // Four intentional empty paragraphs plus the editor's trailing caret line.
+  await expect(editable.locator('p').filter({ has: page.locator('br') })).toHaveCount(5);
+  await editable.locator('p', { hasText: 'Testing this is fun' }).click();
+  await page.keyboard.press('End');
+  await page.keyboard.type('!');
+  await expect.poll(() => getMarkdownText(page)).toBe(original + '!');
+
+  for (let i = 0; i < 2; i++) {
+    await page.getByRole('button', { name: 'Preview', exact: true }).click();
+    const preview = page.locator('.markdown-preview:not(.wysiwyg-editing)');
+    await expect(preview.locator('p').filter({ has: page.locator('br') })).toHaveCount(4);
+    await page.getByRole('button', { name: 'Source', exact: true }).click();
+    await expect.poll(() => getMarkdownText(page)).toBe(original + '!');
+    await page.getByRole('button', { name: 'WYSIWYG', exact: true }).click();
+    await expect(editable.locator('p').filter({ has: page.locator('br') })).toHaveCount(5);
+  }
+});
+
+for (const kind of ['rendered', 'auto-closed'] as const) {
+  for (const key of ['Enter', 'Shift+Enter']) {
+    test(`WYSIWYG ${kind} inline code: ${key} at the end starts plain text`, async ({ page }) => {
+      const editable = await openWysiwyg(page, kind === 'rendered' ? '`[test]`' : 'hello');
+      if (kind === 'auto-closed') await page.keyboard.type(' `[test]`');
+      const code = editable.locator('code, span[style*="var(--color-second-bg)"]').first();
+      // Clicking back into code reproduces the caret position after reopening
+      // a document, rather than relying on the auto-close caret anchor.
+      await code.evaluate((element) => {
+        const range = document.createRange();
+        range.selectNodeContents(element);
+        range.collapse(false);
+        window.getSelection()!.removeAllRanges();
+        window.getSelection()!.addRange(range);
+      });
+      await page.keyboard.press(key);
+      await page.keyboard.press(key);
+      await page.keyboard.type('Testing this is fun');
+      await expect(editable.locator('code, span[style*="var(--color-second-bg)"]')).toHaveCount(1);
+      await expect(code).toHaveText('[test]');
+      await expect.poll(() => getMarkdownText(page)).toContain('Testing this is fun');
+      await expect.poll(() => getMarkdownText(page)).not.toContain('`Testing');
+      if (key === 'Enter') {
+        await expect.poll(() => getMarkdownText(page)).toContain('`[test]`\n\n\nTesting this is fun');
+        await page.getByRole('button', { name: 'Source', exact: true }).click();
+        await page.getByRole('button', { name: 'WYSIWYG', exact: true }).click();
+        await expect(editable.locator('p').filter({ has: page.locator('br') })).toHaveCount(2);
+      }
+    });
+  }
+}
+
 test('WYSIWYG auto-close: text typed after the closing backtick stays outside the code', async ({ page }) => {
   const editable = await openWysiwyg(page, 'hello');
 
