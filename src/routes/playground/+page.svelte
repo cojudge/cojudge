@@ -620,6 +620,10 @@ func main() {
 
     async function revealActiveExplorerFile(fileId: string | undefined) {
         if (!fileId) return;
+        // Let the tab/tree update finish before changing collapsedFolders.
+        // Otherwise flatExplorer may already have run in this reactive flush.
+        await tick();
+        if (!fileListEl || fileId !== activeExplorerFileId) return;
         expandAncestorFolders(fileId);
         await tick();
         if (!fileListEl || fileId !== activeExplorerFileId) return;
