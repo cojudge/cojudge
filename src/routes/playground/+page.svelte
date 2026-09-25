@@ -616,6 +616,27 @@ func main() {
         collapsePrefSeeded = true;
     }
 
+    let fileListEl: HTMLDivElement | undefined;
+
+    async function revealActiveExplorerFile(fileId: string | undefined) {
+        if (!fileId) return;
+        expandAncestorFolders(fileId);
+        await tick();
+        if (!fileListEl || fileId !== activeExplorerFileId) return;
+        const item = fileListEl.querySelector<HTMLElement>('.file-item.active');
+        if (!item) return;
+
+        const listRect = fileListEl.getBoundingClientRect();
+        const itemRect = item.getBoundingClientRect();
+        const top = listRect.top + fileListEl.clientTop;
+        const bottom = top + fileListEl.clientHeight;
+        if (itemRect.top < top) {
+            fileListEl.scrollTop += itemRect.top - top;
+        } else if (itemRect.bottom > bottom) {
+            fileListEl.scrollTop += itemRect.bottom - bottom;
+        }
+    }
+
     function expandAncestorFolders(fileId: string) {
         const files = getFiles();
         let parentId: string | null | undefined = files.find((f) => f.fileId === fileId)?.parentId ?? null;
@@ -6433,11 +6454,15 @@ func main() {
     $: hasOpenTabs = tabs.some(t => t.isOpen);
     $: activeTabName = tabs[activeTabId]?.fileName;
     $: activeTab = tabs[activeTabId];
+    $: activeRevealTabId = activeTab?.fileId;
     // Preview tabs use a distinct fileId; explorer should highlight the source file.
     $: activeExplorerFileId =
         activeTab?.type === 'preview' && activeTab.sourceFileId
             ? activeTab.sourceFileId
             : activeTab?.fileId;
+    $: if (browser && fileListEl && activeRevealTabId && hasOpenTabs) {
+        void revealActiveExplorerFile(activeExplorerFileId);
+    }
     $: fileStoreValue = $fileStore;
     $: tabLanguages = (() => {
         fileStoreValue;
@@ -6773,6 +6798,7 @@ func main() {
         </div>
         <div
             class="file-list {explorerDragOverRoot ? 'drag-over-root' : ''}"
+            bind:this={fileListEl}
             data-explorer-root="true"
             role="tree"
         >
@@ -7397,7 +7423,7 @@ func main() {
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
                         <!-- svelte-ignore a11y-no-static-element-interactions -->
                         <div class="wysiwyg-toolbar" on:mousedown={handleToolbarMouseDown} on:click={handleToolbarClick}>
-                            <Tooltip text={isMac ? "Cmd+B" : "Ctrl+B"} pos="bottom">
+                            <Tooltip text={isMac ? "Cmd+B" : "Ctrl+B"} pos="right">
                                 <button type="button" data-command="bold" aria-label="Bold">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/></svg>
                                 </button>
