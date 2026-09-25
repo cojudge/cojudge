@@ -768,7 +768,32 @@ export function getMarkdownRenderer(options?: MarkdownRenderOptions) {
 
 export function renderMarkdown(content: string, options?: MarkdownRenderOptions) {
     const renderer = getMarkdownRenderer(options);
-    return marked.parse(content, { renderer });
+    return parseMarkdownWithBlankLines(content, renderer);
+}
+
+// Markdown normally discards extra paragraph separators. Keep each extra
+// blank line as an editable empty paragraph, using block tokens so whitespace
+// inside code, lists, and raw HTML is not rewritten.
+function parseMarkdownWithBlankLines(content: string, renderer: Renderer): string {
+    const tokens = marked.lexer(content);
+    for (let i = tokens.length - 1; i > 0; i--) {
+        if (tokens[i].type === 'space') continue;
+        let previous = i - 1;
+        let gap = '';
+        if (tokens[previous].type === 'space') {
+            gap = tokens[previous].raw;
+            previous--;
+        }
+        if (previous < 0) continue;
+        // Some block tokens (notably headings) consume their trailing newlines.
+        gap = (tokens[previous].raw.match(/\n[\t \n]*$/)?.[0] || '') + gap;
+        const extraLines = (gap.match(/\n/g)?.length || 0) - 2;
+        if (extraLines > 0) {
+            const html = '<p><br></p>\n'.repeat(extraLines);
+            tokens.splice(i, 0, { type: 'html', raw: html, text: html, block: true });
+        }
+    }
+    return marked.parser(tokens, { renderer });
 }
 
 // Plain GFM rendering without the interactive code-block wrapper.
@@ -776,10 +801,18 @@ export function renderMarkdown(content: string, options?: MarkdownRenderOptions)
 export function renderMarkdownPlain(content: string, options?: MarkdownRenderOptions): string {
     const renderer = new Renderer();
     configureLinks(renderer, options);
-    return marked.parse(content, { async: false, renderer });
+    return parseMarkdownWithBlankLines(content, renderer);
 }
 
 let turndownService: TurndownService | null = null;
+let blankLineMarker = '\uE000cojudge-blank-line\uE001';
+
+function emptyParagraphReplacement(_content: string, node: HTMLElement): string {
+    if (/^(P|DIV)$/.test(node.nodeName) && node.parentElement?.id === 'turndown-root') {
+        return '\n\n' + blankLineMarker + '\n\n';
+    }
+    return (node as HTMLElement & { isBlock: boolean }).isBlock ? '\n\n' : '';
+}
 
 function getTurndownService(): TurndownService {
     if (!turndownService) {
@@ -788,9 +821,18 @@ function getTurndownService(): TurndownService {
             codeBlockStyle: 'fenced',
             bulletListMarker: '-',
             emDelimiter: '*',
-            hr: '---'
+            hr: '---',
+            blankReplacement: emptyParagraphReplacement
         });
         turndownService.use(gfm);
+        // Caret anchors make otherwise empty paragraphs non-blank to Turndown.
+        turndownService.addRule('emptyParagraph', {
+            filter: (node: HTMLElement) => /^(P|DIV)$/.test(node.nodeName) &&
+                node.parentElement?.id === 'turndown-root' &&
+                /^[\s\u200B]*$/.test(node.textContent || '') &&
+                Array.from(node.children).every((child) => child.tagName === 'BR'),
+            replacement: emptyParagraphReplacement
+        });
         // execCommand('formatBlock', 'pre') (the WYSIWYG code-block toolbar
         // button) produces a bare <pre> without the <code> child turndown's
         // default fencedCodeBlock rule expects, so round-trip those back to
@@ -814,7 +856,10 @@ function getTurndownService(): TurndownService {
         turndownService.addRule('wysiwygInlineCode', {
             filter: (node: HTMLElement) =>
                 node.nodeName === 'SPAN' && (node.getAttribute('style') || '').includes(INLINE_CODE_STYLE_MARKER),
-            replacement: (content: string) => {
+            replacement: (_content: string, node: HTMLElement) => {
+                // Turndown escapes text inside spans as ordinary Markdown.
+                // Code needs literal text, including any original backslashes.
+                let content = node.textContent || '';
                 if (!content) return '';
                 content = content.replace(/\r?\n|\r/g, ' ');
                 let delimiter = '`';
@@ -917,7 +962,15 @@ export function htmlToMarkdown(html: string): string {
     // ensureTrailingEmptyLine) is insignificant in markdown, so drop it to
     // keep repeated WYSIWYG round-trips stable. Also strip ZWSP caret anchors
     // inserted after contenteditable=false file mentions.
-    return getTurndownService().turndown(html).replace(/\u200B/g, '').replace(/\s+$/, '');
+    // Protect empty paragraphs from Turndown's newline collapsing, then restore
+    // one extra source newline per empty paragraph between content blocks.
+    while (html.includes(blankLineMarker)) blankLineMarker += '\uE001';
+    const markdown = getTurndownService().turndown(html);
+    const blankLines = new RegExp(`(?:\\n*${blankLineMarker})+\\n*`, 'g');
+    return markdown.replace(blankLines, (match, offset: number) => {
+        if (offset === 0 || offset + match.length === markdown.length) return '';
+        return '\n'.repeat(2 + match.split(blankLineMarker).length - 1);
+    }).replace(/\u200B/g, '').replace(/\s+$/, '');
 }
 
 // Removes the first fenced code block whose language and (trailing-newline

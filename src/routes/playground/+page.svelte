@@ -3671,6 +3671,9 @@ func main() {
         if (!pendingWysiwygHistory) {
             queueWysiwygHistoryEntry(captureWysiwygHistoryState(), event.inputType || 'input');
         }
+        if (event.inputType === 'insertParagraph' || event.inputType === 'insertLineBreak') {
+            exitInlineCodeAtEnd();
+        }
     }
 
     function wysiwygHistoryStateMatches(state: WysiwygHistoryState): boolean {
@@ -4106,6 +4109,36 @@ func main() {
         if (!(el instanceof HTMLElement)) return false;
         if (el.tagName === 'CODE') return el.parentElement?.tagName !== 'PRE';
         return (el.getAttribute('style') || '').includes(INLINE_CODE_STYLE_MARKER);
+    }
+
+    // Breaks at the end of inline code must start outside its formatting;
+    // otherwise the browser clones empty code pills into the following lines.
+    function exitInlineCodeAtEnd() {
+        const selection = window.getSelection();
+        if (!wysiwygEl || !selection?.isCollapsed || !selection.rangeCount) return;
+        const range = selection.getRangeAt(0);
+        if (!wysiwygEl.contains(range.startContainer)) return;
+        let ancestor = range.startContainer instanceof Element
+            ? range.startContainer : range.startContainer.parentElement;
+        if (ancestor?.closest('pre')) return;
+        let code: Element | null = null;
+        while (ancestor && ancestor !== wysiwygEl) {
+            if (isInlineCodeElement(ancestor)) code = ancestor;
+            ancestor = ancestor.parentElement;
+        }
+        if (!code) return;
+        const remaining = range.cloneRange();
+        remaining.setEnd(code, code.childNodes.length);
+        if (remaining.toString().replace(/\u200B/g, '') !== '') return;
+
+        // A caret immediately after an inline element still inherits its style
+        // in Chrome. Place it after a plain-text anchor instead, as auto-close does.
+        const anchor = document.createTextNode('\u200B');
+        code.after(anchor);
+        range.setStart(anchor, 1);
+        range.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(range);
     }
 
     // When the user types a closing backtick, try to match it with a previous
