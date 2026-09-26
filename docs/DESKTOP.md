@@ -13,7 +13,11 @@ A bundled Node.js sidecar runs the existing SvelteKit server on the loopback int
 - macOS 13.5 or newer, Windows x64, or Debian/Ubuntu x64
 - Docker Desktop, OrbStack, or Colima only when running, submitting, or debugging code
 
-`DOCKER_HOST` takes precedence when provided. Otherwise the app checks the standard Docker endpoints for its operating system.
+Open the homepage menu → **Docker settings** to select a runtime for this device, then quit and reopen Cojudge to apply it. The menu is hidden on the demo site. macOS offers Docker Desktop, OrbStack, and Colima (default profile); Linux offers Docker Desktop, Docker Engine, and rootless Docker Engine; Windows offers Docker Desktop. The runtime must be installed and running separately.
+
+The default **Automatic** option gives `DOCKER_HOST` precedence when provided, then checks the standard Docker endpoints for the operating system. An explicit runtime selection overrides `DOCKER_HOST` for the packaged app's backend. The selection is stored in the native app configuration directory and does not change the terminal CLI's Docker configuration. Development mode uses an external server and still requires configuring that server's `DOCKER_HOST`.
+
+Use **Test connection** below the dropdown to ping the selected runtime's Docker API before saving. The test does not change the saved selection or start any containers, and reports connection failures or timeouts in the popup.
 
 ## Firebase And Cojudge Cloud
 

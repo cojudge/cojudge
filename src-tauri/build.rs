@@ -8,6 +8,9 @@ fn main() {
             "cli_install",
             "cli_uninstall",
             "cli_remove_shell_alias",
+            "docker_settings",
+            "save_docker_settings",
+            "test_docker_connection",
         ]),
     ))
     .expect("failed to run tauri-build");
