@@ -317,21 +317,58 @@
       comps.push(comp);
     }
 
-    // Determine layout per component (circular), stacked vertically
+    // Split multi-node components (circular layout) from isolated
+    // singletons (compact grid layout, so n isolated nodes don't
+    // produce a huge vertically-stacked canvas + nested scrollbar).
+    const multiComps: number[][] = [];
+    const singletonIdx: number[] = [];
+    for (const comp of comps) {
+      if (comp.length <= 1) singletonIdx.push(comp[0]);
+      else multiComps.push(comp);
+    }
+
+    // Determine layout per multi-node component (circular), stacked vertically
     type Pos = { x: number; y: number };
     const positions = new Map<number, Pos>();
 
-    // Estimate component heights and overall height first
-    const compRadii: number[] = [];
-    for (const comp of comps) {
+    // Estimate multi-component heights first
+    const multiRadii: number[] = [];
+    for (const comp of multiComps) {
       const count = comp.length || 1;
       const desiredSpacing = nodeRadius * spacingMult; // arc spacing between centers
       const minR = Math.max(40, nodeRadius * 3);
       const maxR = Math.max(minR, (width - 2 * marginX) / 2 - nodeRadius);
       const R = Math.min(maxR, Math.max(minR, (count * desiredSpacing) / (2 * Math.PI)));
-      compRadii.push(R);
+      multiRadii.push(R);
     }
-    const totalHeight = comps.reduce((acc, _c, i) => acc + (compRadii[i] * 2 + nodeRadius * 2) + (i > 0 ? compGap : marginY) + (i === comps.length - 1 ? marginY : 0), 0);
+
+    // Grid metrics for isolated singletons
+    const gridGap = nodeRadius * 0.9;
+    const cellStep = nodeRadius * 2 + gridGap;
+    const usableW = Math.max(10, width - 2 * marginX);
+    const gridCols = Math.max(1, Math.floor((usableW + gridGap) / cellStep));
+    const gridRows = singletonIdx.length > 0 ? Math.ceil(singletonIdx.length / gridCols) : 0;
+    const gridHeight = gridRows > 0 ? gridRows * nodeRadius * 2 + (gridRows - 1) * gridGap : 0;
+
+    let multiHeight = 0;
+    if (multiComps.length > 0) {
+      multiHeight = marginY;
+      for (let i = 0; i < multiComps.length; i++) {
+        multiHeight += multiRadii[i] * 2 + nodeRadius * 2;
+        if (i < multiComps.length - 1) multiHeight += compGap;
+      }
+    }
+
+    let totalHeight: number;
+    if (multiComps.length > 0 && singletonIdx.length > 0) {
+      totalHeight = multiHeight + compGap + gridHeight + marginY;
+    } else if (multiComps.length > 0) {
+      totalHeight = multiHeight + marginY;
+    } else if (singletonIdx.length > 0) {
+      totalHeight = marginY + gridHeight + marginY;
+    } else {
+      totalHeight = 0;
+    }
 
   const requiredHeight = Math.max(120, totalHeight);
 
@@ -351,25 +388,37 @@
 
     if (nodes.length === 0) return;
 
-    // Compute positions
-    let yCursor = marginY + (comps.length > 0 ? compRadii[0] + nodeRadius : 0);
-    for (let ci = 0; ci < comps.length; ci++) {
-      const comp = comps[ci];
-      const R = compRadii[ci];
+    // Compute positions: multi-node components stacked vertically,
+    // then isolated singletons in a centered grid.
+    let yCursor = marginY + (multiComps.length > 0 ? multiRadii[0] + nodeRadius : 0);
+    for (let ci = 0; ci < multiComps.length; ci++) {
+      const comp = multiComps[ci];
+      const R = multiRadii[ci];
       const centerX = marginX + (width - 2 * marginX) / 2;
       const centerY = yCursor;
       const count = comp.length;
-      if (count === 1) {
-        positions.set(comp[0], { x: centerX, y: centerY });
-      } else {
-        for (let i = 0; i < count; i++) {
-          const angle = (2 * Math.PI * i) / count - Math.PI / 2; // start at top
-          const x = centerX + R * Math.cos(angle);
-          const y = centerY + R * Math.sin(angle);
-          positions.set(comp[i], { x, y });
-        }
+      for (let i = 0; i < count; i++) {
+        const angle = (2 * Math.PI * i) / count - Math.PI / 2; // start at top
+        const x = centerX + R * Math.cos(angle);
+        const y = centerY + R * Math.sin(angle);
+        positions.set(comp[i], { x, y });
       }
-      yCursor += R + nodeRadius + (ci < comps.length - 1 ? compGap + compRadii[ci + 1] + nodeRadius : 0);
+      yCursor += R + nodeRadius + (ci < multiComps.length - 1 ? compGap + multiRadii[ci + 1] + nodeRadius : 0);
+    }
+
+    if (singletonIdx.length > 0) {
+      const gridTop = multiComps.length > 0 ? yCursor + compGap : marginY;
+      for (let k = 0; k < singletonIdx.length; k++) {
+        const row = Math.floor(k / gridCols);
+        const rowStart = row * gridCols;
+        const rowCount = Math.min(gridCols, singletonIdx.length - rowStart);
+        const col = k - rowStart;
+        const rowWidth = rowCount * nodeRadius * 2 + (rowCount - 1) * gridGap;
+        const startX = marginX + (usableW - rowWidth) / 2 + nodeRadius;
+        const x = startX + col * cellStep;
+        const y = gridTop + nodeRadius + row * cellStep;
+        positions.set(singletonIdx[k], { x, y });
+      }
     }
 
     // Draw edges
@@ -693,15 +742,18 @@
 
   $: if (visualType === 'tree_node' || visualType === 'undirected_edges' || visualType === 'matrix' || visualType === 'adjacency_list') { scheduleDraw(); }
   $: if (data != null) { scheduleDraw(); }
+  $: if (numNodes !== undefined) { scheduleDraw(); }
 </script>
 
 {#if visualType === 'tree_node' || visualType === 'undirected_edges' || visualType === 'matrix' || visualType === 'adjacency_list'}
-  <div class="canvas-container" bind:this={containerEl}>
-    <canvas
-      bind:this={canvasEl}
-      on:mousedown={handleMouseDown}
-      class:zoomable={visualType === 'undirected_edges' || visualType === 'adjacency_list'}
-    ></canvas>
+  <div class="viz-wrapper">
+    <div class="canvas-container" bind:this={containerEl}>
+      <canvas
+        bind:this={canvasEl}
+        on:mousedown={handleMouseDown}
+        class:zoomable={visualType === 'undirected_edges' || visualType === 'adjacency_list'}
+      ></canvas>
+    </div>
     {#if visualType === 'undirected_edges' || visualType === 'adjacency_list'}
       <div class="zoom-controls">
         <button on:click={zoomIn} title="Zoom in">+</button>
@@ -744,6 +796,11 @@
     --visual-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
   }
 
+  .viz-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
   .canvas-container {
     border: 1px solid var(--visual-border);
     width: 100%;
@@ -764,7 +821,7 @@
     touch-action: none;
   }
 
-  .canvas-container:has(canvas) {
+  .viz-wrapper:has(canvas) {
     position: relative;
   }
 
