@@ -55,6 +55,19 @@
     let manageProblemsCard: HTMLElement | null = null;
     let manageProblemsError = '';
     let showCliSettings = false;
+    let showDockerSettings = false;
+    let dockerSettingsCard: HTMLElement | null = null;
+    let dockerSelect: HTMLSelectElement | null = null;
+    let dockerSelection = 'auto';
+    let dockerOptions: { id: string; label: string }[] = [];
+    let dockerBusy = false;
+    let dockerError = '';
+    let dockerSaved = false;
+    let dockerDevelopment = false;
+    let dockerTesting = false;
+    let dockerConnected = false;
+    let dockerStatusChecking = false;
+    let dockerTestResult: { success: boolean; message: string } | null = null;
     let cliSettingsCard: HTMLElement | null = null;
     let cliBusy = false;
     let cliError = '';
@@ -99,7 +112,7 @@
     let showGamePopup = false;
     let isDesktopMode = browser && isDesktopRuntime();
     $: if (browser) {
-        document.body.style.overflow = showGamePopup || pendingImport || showFirebaseSettings || showLoadCode || showClearConfirm || showManageProblems || showCliSettings ? 'hidden' : '';
+        document.body.style.overflow = showGamePopup || pendingImport || showFirebaseSettings || showLoadCode || showClearConfirm || showManageProblems || showCliSettings || showDockerSettings ? 'hidden' : '';
     }
 
     $: contentDir = (data?.contentDir ?? '~/cojudge') as string;
@@ -194,6 +207,7 @@
         if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
         event.preventDefault();
         showDropdown = true;
+        void refreshDockerStatus();
         void refreshCloudLocalState();
         await tick();
         const items = dropdownItems();
@@ -203,6 +217,7 @@
     function toggleDropdown() {
         showDropdown = !showDropdown;
         if (showDropdown) void refreshCloudLocalState();
+        if (showDropdown) void refreshDockerStatus();
     }
 
     function handleDropdownKeydown(event: KeyboardEvent) {
@@ -728,7 +743,7 @@
 
     function trapModalFocus(event: KeyboardEvent, modal: HTMLElement) {
         const focusable = Array.from(
-            modal.querySelectorAll<HTMLElement>('button:not(:disabled), input:not(:disabled)')
+            modal.querySelectorAll<HTMLElement>('button:not(:disabled), input:not(:disabled), select:not(:disabled)')
         );
         if (!focusable.length) return;
         const first = focusable[0];
@@ -756,7 +771,7 @@
                             ? manageProblemsCard
                             : showCliSettings
                                 ? cliSettingsCard
-                                : null;
+                                : showDockerSettings ? dockerSettingsCard : null;
         if (!activeModal) return;
         if (event.key === 'Escape') {
             event.preventDefault();
@@ -765,6 +780,7 @@
             else if (showFirebaseSettings) void closeFirebaseSettings();
             else if (showManageProblems) void closeManageProblems();
             else if (showCliSettings) void closeCliSettings();
+            else if (showDockerSettings) void closeDockerSettings();
             else void closeLoadCode();
             return;
         }
@@ -797,14 +813,94 @@
         dropdownToggleButton?.focus();
     }
 
-    function invokeDesktop<T>(command: string): Promise<T> {
+    function invokeDesktop<T>(command: string, args?: Record<string, unknown>): Promise<T> {
         const tauriInternals = (window as Window & {
             __TAURI_INTERNALS__?: { invoke: (name: string, args?: Record<string, unknown>) => Promise<T> };
         }).__TAURI_INTERNALS__;
         if (!tauriInternals?.invoke) {
             return Promise.reject(new Error('Desktop bridge unavailable.'));
         }
-        return tauriInternals.invoke(command);
+        return tauriInternals.invoke(command, args);
+    }
+
+    async function openDockerSettings() {
+        if (!isDesktopMode || $page.data.isDemoSite) return;
+        showDropdown = false;
+        showDockerSettings = true;
+        dockerBusy = true;
+        dockerError = '';
+        dockerSaved = false;
+        dockerOptions = [];
+        dockerTestResult = null;
+        try {
+            const settings = await invokeDesktop<{
+                selected: string; options: { id: string; label: string }[]; development: boolean;
+            }>('docker_settings');
+            dockerSelection = settings.selected;
+            dockerOptions = settings.options;
+            dockerDevelopment = settings.development;
+        } catch (error) {
+            dockerError = error instanceof Error ? error.message : String(error);
+        } finally {
+            dockerBusy = false;
+            await tick();
+            if (showDockerSettings) (dockerSelect ?? dockerSettingsCard?.querySelector('button'))?.focus();
+        }
+    }
+
+    async function refreshDockerStatus() {
+        if (!isDesktopMode || $page.data.isDemoSite || dockerStatusChecking) return;
+        dockerStatusChecking = true;
+        try {
+            const settings = await invokeDesktop<{ selected: string }>('docker_settings');
+            await invokeDesktop('test_docker_connection', { selected: settings.selected });
+            dockerConnected = true;
+        } catch {
+            dockerConnected = false;
+        } finally {
+            dockerStatusChecking = false;
+        }
+    }
+
+    async function closeDockerSettings() {
+        if (dockerBusy || dockerTesting) return;
+        showDockerSettings = false;
+        await tick();
+        dropdownToggleButton?.focus();
+    }
+
+    async function saveDockerSettings() {
+        dockerBusy = true;
+        dockerError = '';
+        dockerSaved = false;
+        try {
+            await invokeDesktop('save_docker_settings', { selected: dockerSelection });
+            dockerSaved = true;
+            showDockerSettings = false;
+            showImportNotice('Docker settings saved. Quit and reopen Cojudge to apply.', false);
+        } catch (error) {
+            dockerError = error instanceof Error ? error.message : String(error);
+        } finally {
+            dockerBusy = false;
+            await tick();
+            if (showDockerSettings) dockerSelect?.focus();
+            else dropdownToggleButton?.focus();
+        }
+    }
+
+    async function testDockerConnection() {
+        dockerTesting = true;
+        dockerTestResult = null;
+        try {
+            const message = await invokeDesktop<string>('test_docker_connection', { selected: dockerSelection });
+            dockerTestResult = { success: true, message };
+        } catch (error) {
+            dockerTestResult = { success: false, message: error instanceof Error ? error.message : String(error) };
+        } finally {
+            dockerTesting = false;
+            await tick();
+            dockerSelect?.focus();
+        }
     }
 
     async function refreshCliStatus() {
@@ -1205,6 +1301,22 @@
                             </span>
                         </button>
                         <div class="dropdown-separator" role="separator"></div>
+                        {#if !$page.data.isDemoSite}
+                            <button class="dropdown-item" role="menuitem" onclick={openDockerSettings}>
+                                <span class="dropdown-item-content">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+                                        <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+                                        <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+                                        <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+                                    </svg>
+                                    Docker settings
+                                </span>
+                                <span class="firebase-menu-status" class:configured={dockerConnected && !dockerStatusChecking} title="Connection status of the saved Docker runtime" aria-label={dockerStatusChecking ? 'Checking Docker connection' : dockerConnected ? 'Docker connected' : 'Docker unavailable'}>
+                                    {dockerStatusChecking ? '…' : dockerConnected ? 'On' : 'Off'}
+                                </span>
+                            </button>
+                        {/if}
                         <button
                             class="dropdown-item"
                             role="menuitem"
@@ -1411,6 +1523,41 @@
                     <button class="btn" type="button" onclick={revealContentFolder} disabled={revealingFolder}>{revealingFolder ? 'Opening…' : 'Open folder'}</button>
                     <span class="modal-action-spacer"></span>
                     <button class="btn modal-primary-btn" type="button" onclick={() => void closeManageProblems()}>Done</button>
+                </div>
+            </div>
+        </div>
+    {/if}
+    {#if showDockerSettings && isDesktopMode && !$page.data.isDemoSite}
+        <div class="home-modal-shell">
+            <button class="home-modal-backdrop" aria-label="Close Docker settings" tabindex="-1" onclick={() => void closeDockerSettings()}></button>
+            <div bind:this={dockerSettingsCard} class="home-modal-card docker-settings-card" role="dialog" aria-modal="true" aria-labelledby="docker-settings-title" aria-busy={dockerBusy}>
+                <span class="modal-eyebrow">Code execution</span>
+                <h2 id="docker-settings-title">Docker settings</h2>
+                <p class="docker-intro">Choose a runtime for running, submitting, and debugging code.</p>
+                <label class="docker-runtime-field" for="docker-runtime">Docker runtime
+                    <select id="docker-runtime" bind:this={dockerSelect} bind:value={dockerSelection} disabled={dockerBusy || dockerTesting || !dockerOptions.length} onchange={() => { dockerSaved = false; dockerTestResult = null; }}>
+                        {#each dockerOptions as option}
+                            <option value={option.id}>{option.label}</option>
+                        {/each}
+                    </select>
+                </label>
+                <button class="btn docker-test-button" type="button" onclick={testDockerConnection} disabled={dockerBusy || dockerTesting || !dockerOptions.length}>{dockerTesting ? 'Testing…' : 'Test connection'}</button>
+                <div class="docker-connection-status" class:success={!dockerError && dockerTestResult?.success} class:failure={!!dockerError || dockerTestResult?.success === false} role="status" aria-live="polite" aria-atomic="true">
+                    <span class="docker-status-icon" aria-hidden="true">{dockerError || dockerTestResult?.success === false ? '!' : dockerTestResult?.success ? '✓' : '·'}</span>
+                    <div class="docker-status-copy">
+                        <strong>{dockerError ? 'Settings error' : dockerTesting ? 'Checking connection…' : dockerTestResult ? (dockerTestResult.success ? 'Connected' : 'Connection failed') : 'Ready to test'}</strong>
+                        <span>{dockerError || dockerTestResult?.message || 'Start your runtime, then test the connection.'}</span>
+                    </div>
+                </div>
+                <p class="docker-help">Automatic checks <code>DOCKER_HOST</code>, then local sockets. Select a runtime to override detection.</p>
+                {#if dockerDevelopment}
+                    <p class="docker-help docker-dev-note">Development mode: configure the external server with <code>DOCKER_HOST</code>. This preference applies to the packaged app.</p>
+                {/if}
+                <p class="docker-save-note" class:saved={dockerSaved} role="status">{dockerSaved ? '✓ Saved on this device.' : 'Saved on this device.'} Quit and reopen Cojudge to apply.</p>
+                <div class="home-modal-actions">
+                    <span class="modal-action-spacer"></span>
+                    <button class="btn" type="button" onclick={() => void closeDockerSettings()} disabled={dockerBusy || dockerTesting}>Close</button>
+                    <button class="btn modal-primary-btn" type="button" onclick={saveDockerSettings} disabled={dockerBusy || dockerTesting || !dockerOptions.length}>{dockerBusy ? 'Please wait…' : 'Save'}</button>
                 </div>
             </div>
         </div>
@@ -1849,6 +1996,119 @@
 </div>
 
 <style>
+    .docker-runtime-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin: 1rem 0;
+        font-weight: 600;
+    }
+    .docker-runtime-field select {
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23818b98' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.85rem center;
+        width: 100%;
+        min-height: 2.75rem;
+        padding: 0.65rem 2.5rem 0.65rem 0.85rem;
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        background-color: var(--color-surface);
+        color: var(--color-text);
+        font: inherit;
+        font-weight: 500;
+    }
+    .docker-runtime-field select:focus-visible {
+        outline: 2px solid var(--color-highlight);
+        outline-offset: 2px;
+    }
+    .docker-settings-card {
+        width: min(460px, 100%);
+    }
+    .docker-settings-card h2 {
+        margin-bottom: 0.65rem;
+    }
+    .docker-settings-card .docker-intro {
+        margin: 0 0 1.25rem;
+        font-size: 0.9rem;
+    }
+    .docker-test-button {
+        min-width: 9rem;
+        justify-content: center;
+    }
+    .docker-connection-status {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.65rem;
+        height: 5.5rem;
+        box-sizing: border-box;
+        margin: 0.85rem 0 1rem;
+        padding: 0.8rem;
+        border: 1px solid var(--color-border);
+        border-radius: 10px;
+        background: var(--color-surface);
+        color: var(--color-text-secondary);
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+    .docker-connection-status.success {
+        color: #16803d;
+        border-color: rgba(34, 197, 94, 0.35);
+        background: rgba(34, 197, 94, 0.08);
+    }
+    .docker-connection-status.failure {
+        color: #dc2626;
+        border-color: rgba(239, 68, 68, 0.35);
+        background: rgba(239, 68, 68, 0.08);
+    }
+    :global([data-theme='dark']) .docker-connection-status.success,
+    :global([data-theme='dark']) .docker-save-note.saved {
+        color: #4ade80;
+    }
+    :global([data-theme='dark']) .docker-connection-status.failure {
+        color: #f87171;
+    }
+    .docker-status-icon {
+        display: grid;
+        place-items: center;
+        flex: 0 0 1.25rem;
+        height: 1.25rem;
+        border: 1px solid currentColor;
+        border-radius: 50%;
+        font-weight: 700;
+    }
+    .docker-status-copy {
+        min-width: 0;
+        max-height: 100%;
+        overflow: auto;
+        overflow-wrap: anywhere;
+    }
+    .docker-status-copy strong,
+    .docker-status-copy span {
+        display: block;
+    }
+    .docker-status-copy span {
+        margin-top: 0.2rem;
+        font-size: 0.75rem;
+    }
+    .docker-settings-card .docker-help,
+    .docker-settings-card .docker-save-note {
+        margin: 0.75rem 0 0;
+        font-size: 0.78rem;
+        line-height: 1.5;
+    }
+    .docker-dev-note {
+        padding-left: 0.75rem;
+        border-left: 2px solid var(--color-border);
+    }
+    .docker-settings-card .docker-save-note {
+        height: 2.5rem;
+        margin-top: 1rem;
+    }
+    .docker-settings-card .docker-save-note.saved {
+        color: #16803d;
+    }
     .container {
         max-width: 1024px;
         margin: 0 auto;

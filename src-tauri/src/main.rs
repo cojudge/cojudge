@@ -4,6 +4,7 @@
 )]
 
 mod cli;
+mod docker_settings;
 
 use std::{
     io::Write as _,
@@ -23,7 +24,7 @@ use std::{
     process::{Command, Stdio},
 };
 
-#[cfg(all(not(debug_assertions), unix))]
+#[cfg(unix)]
 use std::{os::unix::net::UnixStream, path::PathBuf};
 
 #[cfg(all(not(debug_assertions), windows))]
@@ -601,7 +602,7 @@ fn random_token() -> std::io::Result<String> {
     Ok(token)
 }
 
-#[cfg(all(not(debug_assertions), windows))]
+#[cfg(windows)]
 fn docker_host() -> Option<String> {
     if let Ok(value) = std::env::var("DOCKER_HOST") {
         if !value.is_empty() {
@@ -612,7 +613,7 @@ fn docker_host() -> Option<String> {
     Some("npipe:////./pipe/docker_engine".to_string())
 }
 
-#[cfg(all(not(debug_assertions), unix))]
+#[cfg(unix)]
 fn docker_host() -> Option<String> {
     if let Ok(value) = std::env::var("DOCKER_HOST") {
         if !value.is_empty() {
@@ -688,7 +689,10 @@ fn start_backend(app: &tauri::AppHandle) -> Result<(), Box<dyn std::error::Error
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped());
-    if let Some(value) = docker_host() {
+    if let Some(value) = docker_settings::selected_host(app)
+        .map_err(std::io::Error::other)?
+        .or_else(docker_host)
+    {
         command.env("DOCKER_HOST", value);
     }
     #[cfg(windows)]
@@ -814,6 +818,9 @@ fn main() {
             cli::cli_status,
             cli::cli_install,
             cli::cli_uninstall,
+            docker_settings::docker_settings,
+            docker_settings::save_docker_settings,
+            docker_settings::test_docker_connection,
             cli::cli_remove_shell_alias
         ])
         .on_menu_event(|app, event| {
