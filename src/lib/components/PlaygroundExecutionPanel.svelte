@@ -2,8 +2,12 @@
     import { execPaneHeightStore } from "$lib/stores/layoutStore";
     import { isDebugSupported, type ProgrammingLanguage } from "$lib/utils/util";
     import { onMount, onDestroy } from "svelte";
+    import { browser } from "$app/environment";
+    import { page } from "$app/stores";
     import Tooltip from "./Tooltip.svelte";
     import SaveStatus from "./SaveStatus.svelte";
+    import DockerSettingsModal from "./DockerSettingsModal.svelte";
+    import { isDesktopRuntime } from "$lib/firebaseSettings";
 
     export let code: string;
     export let language: ProgrammingLanguage = "java";
@@ -197,6 +201,8 @@
     let imageStatus: "unknown" | "present" | "absent" = "unknown";
     let isDockerRunning = true;
     let isCheckingDocker = false;
+    let showDockerSettings = false;
+    let isDesktopMode = browser && isDesktopRuntime();
     let isPullingImage = false;
     let pullProgress = 0;
     let pullStatusMessage = "";
@@ -987,6 +993,13 @@
                         on:click={refreshImageStatus}
                         style="margin-left: 0.5rem;">Check again</button
                     >
+                    {#if isDesktopMode && !$page.data.isDemoSite}
+                        <button
+                            class="link-btn"
+                            on:click={() => (showDockerSettings = true)}
+                            style="margin-left: 0.5rem;">Configure</button
+                        >
+                    {/if}
                 </div>
             {:else}
                 <Tooltip
@@ -1130,6 +1143,12 @@
         </div>
     </div>
 </div>
+
+<DockerSettingsModal
+    open={showDockerSettings}
+    onClose={() => (showDockerSettings = false)}
+    onSaved={() => void refreshImageStatus()}
+/>
 
 <style>
     /* Main Panel */
