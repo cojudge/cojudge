@@ -106,26 +106,34 @@ export function isDockerRunning() {
 }
 
 export function printVersion(dir) {
-  try {
-    const commit = execSync('git log -1 --format="%h"', { cwd: dir })
-      .toString()
-      .trim();
-    const date = execSync(
-      'git log -1 --format="%cd" --date=format:"%Y-%m-%d %H:%M:%S"',
-      { cwd: dir },
-    )
-      .toString()
-      .trim();
-    console.log(`Cojudge version: ${commit} (${date})`);
-  } catch (e) {
+  if (!isDesktopCli) {
     try {
-      const pkg = JSON.parse(
-        fs.readFileSync(path.join(dir, "package.json"), "utf8"),
-      );
-      console.log(`Cojudge version: ${pkg.version || "unknown"}`);
+      const commit = execSync('git log -1 --format="%h"', {
+        cwd: dir,
+        stdio: ["ignore", "pipe", "ignore"],
+      })
+        .toString()
+        .trim();
+      const date = execSync(
+        'git log -1 --format="%cd" --date=format:"%Y-%m-%d %H:%M:%S"',
+        { cwd: dir, stdio: ["ignore", "pipe", "ignore"] },
+      )
+        .toString()
+        .trim();
+      console.log(`Cojudge version: ${commit} (${date})`);
+      console.log(`Installed at: ${dir}`);
+      return;
     } catch {
-      console.log("Cojudge version unknown");
+      // fall through to package.json version below
     }
+  }
+  try {
+    const pkg = JSON.parse(
+      fs.readFileSync(path.join(dir, "package.json"), "utf8"),
+    );
+    console.log(`Cojudge version: ${pkg.version || "unknown"}`);
+  } catch {
+    console.log("Cojudge version unknown");
   }
   console.log(`Installed at: ${dir}`);
 }
@@ -286,11 +294,17 @@ export function updateRepo(dir) {
   }
   console.log("Updating cojudge...");
   try {
-    const before = execSync("git rev-parse HEAD", { cwd: dir })
+    const before = execSync("git rev-parse HEAD", {
+      cwd: dir,
+      stdio: ["ignore", "pipe", "ignore"],
+    })
       .toString()
       .trim();
     execSync("git pull", { cwd: dir, stdio: "inherit" });
-    const after = execSync("git rev-parse HEAD", { cwd: dir })
+    const after = execSync("git rev-parse HEAD", {
+      cwd: dir,
+      stdio: ["ignore", "pipe", "ignore"],
+    })
       .toString()
       .trim();
     if (before === after) {
