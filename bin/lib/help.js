@@ -23,8 +23,6 @@ Usage:
   cojudge unmark <slug>          Unmark a problem as solved
   cojudge init <slug>           Initialize a problem file with starter code
                                  (Options: --lang java|python|cpp|rust|csharp|go)
-  cojudge scrape -n <number>    Scrape problem data from LeetCode by number (this only shows the text for reference or checking, no files are generated)
-  cojudge scrape -s <slug>      Scrape problem data from LeetCode by slug (this only shows the text for reference or checking, no files are generated)
   cojudge sync                  Show content status (auto-updates unedited copies)
   cojudge sync --reset <id>     Reset a problem/course to the bundled version
   cojudge sync --reset --all    Reset all modified content to bundled versions
@@ -50,8 +48,6 @@ Examples:
   cojudge debug step abc123
   cojudge debug eval abc123 nums
   cojudge mark two-sum
-  cojudge scrape -n 1
-  cojudge scrape -s valid-parentheses
 
 Content:
   Problems & courses live in ~/cojudge (auto-seeded on first start).
