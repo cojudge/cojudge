@@ -173,6 +173,8 @@ Refer to `~/cojudge/problems/two-sum` (seeded from `problems/two-sum`) for a min
 
 Some test cases and reference marker solutions were AI‑assisted and human‑reviewed. Issues may remain—please open an issue or PR if you spot anything.
 
+Cojudge is not intended as a replacement for LeetCode. Use it as a preliminary secondary judge to practice without internet access, then run the full submission on LeetCode once you are online and ready.
+
 ## Add a programming language
 
 This is a more complicated process but it is definitely doable.

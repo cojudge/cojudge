@@ -1,3 +1,19 @@
+#!/usr/bin/env node
+/**
+ * Developer reference script — INFORMATIONAL PURPOSES ONLY.
+ *
+ * This script prints public problem metadata to STDOUT for reference/checking.
+ * It will NOT create any file. Do not redirect its output into the repo and
+ * do not commit scraped text.
+ *
+ * Usage:
+ *   node scripts/scrape.js -n <number> | -s <slug>
+ *
+ * Examples:
+ *   node scripts/scrape.js -n 1
+ *   node scripts/scrape.js -s two-sum
+ */
+
 import https from "https";
 
 const GRAPHQL_URL = "https://leetcode.com/graphql";
@@ -277,14 +293,9 @@ export async function formatScrapeOutput(problem) {
   }
 
   lines.push("=".repeat(60));
-  lines.push("Suggested cojudge problem creation:");
-  lines.push(
-    `  mkdir -p problems/${problem.slug}`,
-  );
-  lines.push(
-    `  cojudge scrape -s ${problem.slug} > problems/${problem.slug}/scraped.txt`,
-  );
-  lines.push(`  # Then create statement.md, metadata.json, official-tests.json, Marker.java`);
+  lines.push("Reference only — author problem files manually:");
+  lines.push(`  mkdir -p problems/${problem.slug}`);
+  lines.push(`  # Then manually create statement.md, metadata.json, official-tests.json, Marker.java`);
   lines.push("");
   lines.push("metadata.json suggestions:");
   lines.push(`  id: "${problem.slug}"`);
@@ -300,4 +311,45 @@ export async function formatScrapeOutput(problem) {
   lines.push(`  link: "https://leetcode.com/problems/${problem.slug}/"`);
 
   return lines.join("\n");
+}
+
+async function main() {
+  const args = process.argv.slice(2);
+  const nIdx = args.indexOf("-n");
+  const sIdx = args.indexOf("-s");
+  let slug = null;
+
+  if (nIdx !== -1 && args[nIdx + 1]) {
+    const number = parseInt(args[nIdx + 1]);
+    if (isNaN(number)) {
+      console.error("Error: -n requires a numeric problem number.");
+      process.exit(1);
+    }
+    console.error(`Fetching problem #${number}...`);
+    slug = await getSlugByNumber(number);
+    if (!slug) {
+      console.error(`Error: Problem #${number} not found.`);
+      process.exit(1);
+    }
+  } else if (sIdx !== -1 && args[sIdx + 1]) {
+    slug = args[sIdx + 1];
+  } else {
+    console.error("Usage: node scripts/scrape.js -n <number> | -s <slug>");
+    process.exit(1);
+  }
+
+  console.error(`Fetching "${slug}" for informational reference only...`);
+  try {
+    const problem = await scrapeProblem(slug);
+    const output = await formatScrapeOutput(problem);
+    console.log(output);
+  } catch (e) {
+    console.error(`Error: ${e.message}`);
+    process.exit(1);
+  }
+}
+
+// Only run CLI handler when executed directly, not when imported.
+if (import.meta.url === `file://${process.argv[1]}`) {
+  await main();
 }
