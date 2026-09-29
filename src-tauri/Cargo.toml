@@ -6,12 +6,15 @@ edition = "2021"
 license = "MIT"
 
 [build-dependencies]
-tauri-build = { version = "=2.6.3", features = [] }
+tauri-build = { version = "2", features = [] }
 
 [dependencies]
 getrandom = "=0.3.4"
 oauth2 = { version = "=5.0.0", default-features = false, features = ["reqwest-blocking", "rustls-tls", "timing-resistant-secret-traits"] }
-tauri = { version = "=2.11.5", features = [] }
-tauri-plugin-opener = "=2.5.4"
+tauri = { version = "2", features = [] }
+tauri-plugin-opener = "2"
+tauri-plugin-updater = "2"
+tauri-plugin-process = "2"
 tiny_http = "=0.12.0"
 serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = "1"

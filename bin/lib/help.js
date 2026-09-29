@@ -23,15 +23,17 @@ Usage:
   cojudge unmark <slug>          Unmark a problem as solved
   cojudge init <slug>           Initialize a problem file with starter code
                                  (Options: --lang java|python|cpp|rust|csharp|go)
-  cojudge scrape -n <number>    Scrape problem data from LeetCode by number
-  cojudge scrape -s <slug>      Scrape problem data from LeetCode by slug
+  cojudge scrape -n <number>    Scrape problem data from LeetCode by number (this only shows the text for reference or checking, no files are generated)
+  cojudge scrape -s <slug>      Scrape problem data from LeetCode by slug (this only shows the text for reference or checking, no files are generated)
   cojudge sync                  Show content status (auto-updates unedited copies)
   cojudge sync --reset <id>     Reset a problem/course to the bundled version
   cojudge sync --reset --all    Reset all modified content to bundled versions
   cojudge -p, --port <number>    Specify port (default: 5375)
-  cojudge -v, --version          Show current version and date
-  cojudge -u, --update           Update cojudge to the latest version
-                                 (restarts the server if it is running)
+  cojudge -v, --version          Show installed release number
+  cojudge version                Same as 'cojudge --version'
+  cojudge -u, --update           ${isDesktopCli ? "Check GitHub Releases for a newer app" : "Update cojudge to the latest version"}
+  cojudge update                 Same as 'cojudge --update'
+                                  ${isDesktopCli ? "(prints the download for this device, then reinstall the CLI from the app menu)" : "(restarts the server if it is running)"}
   cojudge -s, --status           Show if the server is running
   cojudge -l, --logs             Stream the server logs
   cojudge -k, --kill             Stop the server

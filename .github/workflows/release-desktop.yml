@@ -112,6 +112,8 @@ jobs:
       VITE_GOOGLE_DESKTOP_CLIENT_ID: ${{ secrets.GOOGLE_DESKTOP_CLIENT_ID }}
       GOOGLE_DESKTOP_CLIENT_ID: ${{ secrets.GOOGLE_DESKTOP_CLIENT_ID }}
       GOOGLE_DESKTOP_CLIENT_SECRET: ${{ secrets.GOOGLE_DESKTOP_CLIENT_SECRET }}
+      TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+      TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
 
@@ -206,11 +208,31 @@ jobs:
           COJUDGE_DESKTOP_TARGET: ${{ matrix.target }}
         run: npm run desktop:build -- --target ${{ matrix.target }} --bundles ${{ matrix.bundles }}
 
+      - name: List bundle outputs (debug updater artifacts)
+        shell: bash
+        run: |
+          echo "=== bundle outputs for ${{ matrix.id }} ==="
+          find src-tauri/target -path "*bundle*" \( -name "*.sig" -o -name "*.tar.gz" -o -name "*.AppImage" -o -name "*.deb" -o -name "*.rpm" -o -name "*.dmg" -o -name "*.exe" -o -name "*.zip" \) -type f 2>/dev/null | sort || true
+
       - uses: actions/upload-artifact@v4
         with:
           name: desktop-${{ matrix.id }}
           path: ${{ matrix.artifact }}
           if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
+
+      - name: Upload updater artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-updater-${{ matrix.id }}
+          path: |
+            src-tauri/target/**/bundle/**/*.sig
+            src-tauri/target/**/bundle/**/*.tar.gz
+            src-tauri/target/**/bundle/**/*.AppImage
+            src-tauri/target/**/bundle/nsis/*setup.exe
+            src-tauri/target/**/bundle/nsis/*.nsis.zip
+          if-no-files-found: warn
           compression-level: 0
           retention-days: 7
 
@@ -234,24 +256,94 @@ jobs:
           import { readdirSync, statSync } from 'node:fs';
 
           const version = process.env.VERSION;
-          const expected = [
+          const expectedInstallers = [
             `Cojudge-${version}-1.x86_64.rpm`,
             `Cojudge_${version}_amd64.AppImage`,
             `Cojudge_${version}_amd64.deb`,
             `Cojudge_${version}_universal.dmg`,
             `Cojudge_${version}_x64-setup.exe`
-          ].sort();
-          const actual = readdirSync('release', { withFileTypes: true })
+          ];
+          const files = readdirSync('release', { withFileTypes: true })
             .filter((entry) => entry.isFile())
-            .map((entry) => entry.name)
-            .sort();
+            .map((entry) => entry.name);
 
-          if (JSON.stringify(actual) !== JSON.stringify(expected)) {
-            throw new Error(`Unexpected release assets: ${JSON.stringify(actual)}`);
-          }
-          for (const name of actual) {
+          for (const name of expectedInstallers) {
+            if (!files.includes(name)) throw new Error(`Missing installer: ${name} (found: ${JSON.stringify(files)})`);
             if (statSync(`release/${name}`).size === 0) throw new Error(`${name} is empty`);
           }
+          // Updater bundles + signatures must exist for win/mac/linux auto-update.
+          const hasMacTarGz = files.some((n) => n.endsWith('.app.tar.gz'));
+          const hasMacSig = files.some((n) => n.endsWith('.app.tar.gz.sig'));
+          const hasWinBundle = files.some((n) => n.endsWith('-setup.exe') || n.endsWith('.nsis.zip'));
+          const hasWinSig = files.some((n) => n.endsWith('-setup.exe.sig') || n.endsWith('.nsis.zip.sig'));
+          const hasLinuxAppImage = files.some((n) => n.endsWith('.AppImage') && !n.endsWith('.sig'));
+          const hasLinuxSig = files.some((n) => n.endsWith('.AppImage.sig'));
+          if (!hasMacTarGz || !hasMacSig) throw new Error(`Missing macOS updater bundle/sig: ${JSON.stringify(files)}`);
+          if (!hasWinBundle || !hasWinSig) throw new Error(`Missing Windows updater bundle/sig: ${JSON.stringify(files)}`);
+          if (!hasLinuxAppImage || !hasLinuxSig) throw new Error(`Missing Linux AppImage updater bundle/sig: ${JSON.stringify(files)}`);
+          NODE
+
+      - name: Generate latest.json for Tauri updater
+        env:
+          VERSION: ${{ inputs.version }}
+          TAG: v${{ inputs.version }}
+          REPO: ${{ github.repository }}
+        run: |
+          node --input-type=module <<'NODE'
+          import { readdirSync, readFileSync, writeFileSync, statSync } from 'node:fs';
+
+          const version = process.env.VERSION;
+          const tag = process.env.TAG;
+          const repo = process.env.REPO;
+          const base = `https://github.com/${repo}/releases/download/${tag}`;
+          const files = readdirSync('release', { withFileTypes: true })
+            .filter((e) => e.isFile())
+            .map((e) => e.name);
+
+          function pick(patterns) {
+            for (const pat of patterns) {
+              const found = typeof pat === 'string' ? (files.includes(pat) ? pat : null) : files.find((n) => pat.test(n)) ?? null;
+              if (found) return found;
+            }
+            return null;
+          }
+
+          // macOS universal updater bundle (same file serves both archs)
+          const macBundle = pick([/\.app\.tar\.gz$/]);
+          // Windows: prefer nsis.zip (classic updater bundle), else setup.exe (supported since updater 2.10)
+          const winBundle = pick([/\.nsis\.zip$/, /-setup\.exe$/]);
+          // Linux: AppImage is the auto-updatable bundle (deb/rpm need manual reinstall)
+          const linuxBundle = pick([/\.AppImage$/]);
+
+          if (!macBundle) throw new Error(`macOS updater bundle not found in ${JSON.stringify(files)}`);
+          if (!winBundle) throw new Error(`Windows updater bundle not found in ${JSON.stringify(files)}`);
+          if (!linuxBundle) throw new Error(`Linux AppImage updater bundle not found in ${JSON.stringify(files)}`);
+
+          function sigFor(bundle) {
+            const sig = `${bundle}.sig`;
+            if (!files.includes(sig)) throw new Error(`Missing signature ${sig}`);
+            const content = readFileSync(`release/${sig}`, 'utf8').trim();
+            if (!content) throw new Error(`Signature ${sig} is empty`);
+            return content;
+          }
+
+          const manifest = {
+            version,
+            pub_date: new Date().toISOString(),
+            platforms: {
+              'darwin-aarch64': { signature: sigFor(macBundle), url: `${base}/${macBundle}` },
+              'darwin-x86_64': { signature: sigFor(macBundle), url: `${base}/${macBundle}` },
+              'linux-x86_64': { signature: sigFor(linuxBundle), url: `${base}/${linuxBundle}` },
+              'windows-x86_64': { signature: sigFor(winBundle), url: `${base}/${winBundle}` }
+            }
+          };
+          for (const [platform, entry] of Object.entries(manifest.platforms)) {
+            const filename = entry.url.split('/').pop();
+            if (statSync(`release/${filename}`).size === 0) throw new Error(`Updater bundle for ${platform} is empty`);
+          }
+          writeFileSync('release/latest.json', JSON.stringify(manifest, null, 2) + '\n');
+          console.log('Wrote release/latest.json:');
+          console.log(JSON.stringify(manifest, null, 2));
           NODE
 
       - name: Create GitHub release
@@ -260,6 +352,15 @@ jobs:
           GH_REPO: ${{ github.repository }}
           TAG: v${{ inputs.version }}
           RELEASE_NOTES: |
+            ## Automatic updates
+
+            Cojudge checks `github.com/cojudge/cojudge/releases` for new versions automatically on startup (desktop only).
+            Use the menu → **Check for Updates** button (under Light/Dark theme) to check manually, install in-app, and restart to apply.
+
+            - macOS (universal `.dmg` / `.app.tar.gz`): in-app install supported when launched from `/Applications`.
+            - Windows (`-setup.exe`): in-app install supported; the installer restarts the app automatically.
+            - Linux: in-app install supported for the `.AppImage`. If you installed via `.deb`/`.rpm`, download the new package manually.
+
             ## Manage Problems
 
             You can add or edit problems without having to clone the repo, modify files and build a new binary!

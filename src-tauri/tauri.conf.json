@@ -16,7 +16,7 @@
 				{
 					"identifier": "default",
 					"windows": ["main-*"],
-					"permissions": ["allow-new-window", "allow-google-oauth-access-token", "allow-read-text-file", "allow-cli-status", "allow-cli-install", "allow-cli-uninstall", "allow-cli-remove-shell-alias", "allow-docker-settings", "allow-save-docker-settings", "allow-test-docker-connection", "opener:default", "core:webview:allow-set-webview-zoom"],
+					"permissions": ["allow-new-window", "allow-google-oauth-access-token", "allow-read-text-file", "allow-cli-status", "allow-cli-install", "allow-cli-uninstall", "allow-cli-remove-shell-alias", "allow-docker-settings", "allow-save-docker-settings", "allow-test-docker-connection", "opener:default", "core:webview:allow-set-webview-zoom", "updater:default", "process:default"],
 					"remote": {
 						"urls": ["http://127.0.0.1:5173/*", "http://cojudge.localhost:5376/*"]
 					}
@@ -26,6 +26,7 @@
 	},
 	"bundle": {
 		"active": true,
+		"createUpdaterArtifacts": true,
 		"icon": [
 			"icons/32x32.png",
 			"icons/128x128.png",
@@ -46,6 +47,14 @@
 			"exceptionDomain": "localhost",
 			"entitlements": "Entitlements.plist",
 			"hardenedRuntime": true
+		}
+	},
+	"plugins": {
+		"updater": {
+			"pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDgyMTQ2MzAwNzJCRDQ1RgpSV1JmMUNzSE1FWWhDTGZtaVF1TEdUUVkyVDdoaE8rNkFtd050TXVzUnppNFcraENyNDBCalZYLwo=",
+			"endpoints": [
+				"https://github.com/cojudge/cojudge/releases/latest/download/latest.json"
+			]
 		}
 	}
 }

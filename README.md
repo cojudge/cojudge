@@ -85,10 +85,12 @@ cojudge
 | `cojudge unmark <slug>` | Unmark a problem as solved |
 | `cojudge -p, --port <port>` | Start server on specific port (default 5375) |
 | `cojudge -s, --status` | Check if server is running |
-| `cojudge -u, --update` | Update to latest version (git pull) |
+| `cojudge -u, --update` | Update to latest version (git pull, or check GitHub Releases in the desktop CLI) |
+| `cojudge update` | Same as `--update` |
 | `cojudge -l, --logs` | Stream the server logs |
 | `cojudge -k, --kill` | Stop the server |
 | `cojudge -v, --version` | Show current version & age |
+| `cojudge version` | Same as `--version` |
 | `cojudge -h, --help` | Show help message |
 
 **Note:** You can browse problems and organize solutions without Docker. Docker is only required when you actually want to `Run` or `Submit` code, either from the web UI or CLI.
