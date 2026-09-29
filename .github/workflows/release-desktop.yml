@@ -252,6 +252,17 @@ jobs:
           path: release
           merge-multiple: true
 
+      # upload-artifact preserves each file's relative path, so updater bundles
+      # land in nested dirs (e.g. release/universal-apple-darwin/release/bundle/macos/
+      # Cojudge.app.tar.gz). Flatten everything to release/ so verification,
+      # latest.json generation, and `gh release create release/*` all see them.
+      - name: Flatten downloaded artifacts
+        run: |
+          find release -mindepth 2 -type f -exec mv -n {} release/ \;
+          find release -mindepth 1 -type d -empty -delete
+          echo "=== release/ ==="
+          ls -la release/
+
       - name: Verify release assets
         env:
           VERSION: ${{ inputs.version }}
