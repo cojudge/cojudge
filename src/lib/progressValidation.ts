@@ -135,6 +135,9 @@ export function requireUserSettingsObject(data: ProgressData): Record<string, un
 	if ('isSidebarOpen' in value && typeof value.isSidebarOpen !== 'boolean') {
 		throw new Error('user-settings.isSidebarOpen must contain a boolean.');
 	}
+	if ('autoHideActivityBar' in value && typeof value.autoHideActivityBar !== 'boolean') {
+		throw new Error('user-settings.autoHideActivityBar must contain a boolean.');
+	}
 	if (
 		'activePanel' in value
 		&& value.activePanel !== 'explorer'

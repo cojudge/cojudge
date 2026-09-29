@@ -15,6 +15,7 @@ export interface UserSettings {
     vimMode: 'off' | 'on';
     isSidebarOpen: boolean;
     activePanel: ActivePanel;
+    autoHideActivityBar: boolean;
 }
 
 const STORAGE_KEY = 'user-settings';
@@ -27,6 +28,7 @@ export const defaultUserSettings: UserSettings = {
     vimMode: 'off',
     isSidebarOpen: true,
     activePanel: 'explorer',
+    autoHideActivityBar: false,
 };
 
 export function normalizeUserSettings(input: any): UserSettings {
@@ -41,7 +43,8 @@ export function normalizeUserSettings(input: any): UserSettings {
     const isSidebarOpen = typeof input?.isSidebarOpen === 'boolean' ? input.isSidebarOpen : defaultUserSettings.isSidebarOpen;
     const validPanels: ActivePanel[] = ['explorer', 'search', null];
     const activePanel = validPanels.includes(input?.activePanel as ActivePanel) ? input.activePanel as ActivePanel : defaultUserSettings.activePanel;
-    return { preferredLanguage, playgroundPreferredLanguage, editorFontSize, theme, vimMode, isSidebarOpen, activePanel };
+    const autoHideActivityBar = typeof input?.autoHideActivityBar === 'boolean' ? input.autoHideActivityBar : defaultUserSettings.autoHideActivityBar;
+    return { preferredLanguage, playgroundPreferredLanguage, editorFontSize, theme, vimMode, isSidebarOpen, activePanel, autoHideActivityBar };
 }
 
 // Load initial settings from localStorage if available
