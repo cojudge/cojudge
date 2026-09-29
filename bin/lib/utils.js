@@ -130,6 +130,152 @@ export function printVersion(dir) {
   console.log(`Installed at: ${dir}`);
 }
 
+export const APP_UPDATE_REPO = "cojudge/cojudge";
+export const APP_UPDATE_RELEASES_URL = `https://github.com/${APP_UPDATE_REPO}/releases/latest`;
+export const APP_UPDATE_API_URL = `https://api.github.com/repos/${APP_UPDATE_REPO}/releases/latest`;
+
+export function getInstalledVersion(dir) {
+  try {
+    const pkg = JSON.parse(
+      fs.readFileSync(path.join(dir, "package.json"), "utf8"),
+    );
+    const version = typeof pkg.version === "string" ? pkg.version.trim() : "";
+    return version || null;
+  } catch {
+    return null;
+  }
+}
+
+export function normalizeReleaseVersion(version) {
+  return String(version ?? "").trim().replace(/^v/i, "");
+}
+
+export function compareReleaseVersions(a, b) {
+  const parse = (value) => {
+    const cleaned = normalizeReleaseVersion(value);
+    const [core, ...preRest] = cleaned.split("-");
+    const parts = core.split(".").map((part) => {
+      const num = Number.parseInt(part, 10);
+      return Number.isFinite(num) ? num : 0;
+    });
+    while (parts.length < 3) parts.push(0);
+    return { parts, prerelease: preRest.join("-") };
+  };
+  const left = parse(a);
+  const right = parse(b);
+  for (let i = 0; i < 3; i++) {
+    if (left.parts[i] !== right.parts[i]) {
+      return left.parts[i] < right.parts[i] ? -1 : 1;
+    }
+  }
+  if (left.prerelease === right.prerelease) return 0;
+  if (!left.prerelease) return 1;
+  if (!right.prerelease) return -1;
+  return left.prerelease < right.prerelease ? -1 : 1;
+}
+
+function pickReleaseAsset(assets, patterns) {
+  for (const pattern of patterns) {
+    const found = assets.find((asset) =>
+      typeof pattern === "string"
+        ? asset.name === pattern
+        : pattern.test(asset.name),
+    );
+    if (found) return found;
+  }
+  return null;
+}
+
+export function pickPlatformAsset(assets) {
+  const list = Array.isArray(assets) ? assets : [];
+  if (process.platform === "darwin") {
+    return pickReleaseAsset(list, [/\.dmg$/, /\.app\.tar\.gz$/]);
+  }
+  if (process.platform === "win32") {
+    return pickReleaseAsset(list, [/-setup\.exe$/, /\.nsis\.zip$/, /\.msi$/]);
+  }
+  return pickReleaseAsset(list, [/\.AppImage$/, /\.deb$/, /\.rpm$/]);
+}
+
+export async function fetchLatestRelease({ timeoutMs = 15000 } = {}) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(APP_UPDATE_API_URL, {
+      signal: controller.signal,
+      headers: {
+        Accept: "application/vnd.github+json",
+        "User-Agent": "cojudge-cli",
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`GitHub API responded with status ${response.status}`);
+    }
+    return await response.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+export async function checkDesktopUpdate(dir) {
+  const current = getInstalledVersion(dir);
+  const release = await fetchLatestRelease();
+  const latest = normalizeReleaseVersion(release?.tag_name ?? release?.name ?? "");
+  if (!latest) {
+    throw new Error("Could not determine the latest release version.");
+  }
+  const comparison = current ? compareReleaseVersions(current, latest) : null;
+  const releaseUrl =
+    typeof release?.html_url === "string" && release.html_url.trim()
+      ? release.html_url.trim()
+      : APP_UPDATE_RELEASES_URL;
+  const asset = pickPlatformAsset(release?.assets);
+  return {
+    current,
+    latest,
+    upToDate: comparison === null ? null : comparison >= 0,
+    releaseUrl,
+    assetName: asset?.name ?? null,
+    assetUrl: asset?.browser_download_url ?? null,
+  };
+}
+
+export async function runDesktopUpdate(dir) {
+  const displayCurrent = getInstalledVersion(dir) ?? "unknown";
+  console.log(`Installed version: ${displayCurrent}`);
+  console.log("Checking for updates...");
+  let status;
+  try {
+    status = await checkDesktopUpdate(dir);
+  } catch (e) {
+    console.error(`Update check failed: ${e?.message ?? e}`);
+    console.log(`See releases at ${APP_UPDATE_RELEASES_URL}`);
+    return false;
+  }
+  if (status.upToDate === true) {
+    console.log(`Cojudge is up to date (v${status.latest}).`);
+    return false;
+  }
+  if (status.upToDate === null) {
+    console.log(`Latest release: v${status.latest}.`);
+  } else {
+    console.log(`Update available: v${status.current} → v${status.latest}.`);
+  }
+  if (status.assetUrl) {
+    console.log(`Download for this device: ${status.assetUrl}`);
+  }
+  console.log(`All downloads: ${status.releaseUrl}`);
+  console.log(
+    "Install the new app, then reinstall the CLI from the app menu (CLI → Install).",
+  );
+  if (process.platform === "darwin") {
+    console.log(
+      "macOS: after dragging Cojudge.app into /Applications, run: xattr -dr com.apple.quarantine /Applications/Cojudge.app",
+    );
+  }
+  return true;
+}
+
 export function updateRepo(dir) {
   if (isDesktopCli) {
     console.log("This CLI is bundled with the Cojudge desktop app.");

@@ -94,11 +94,42 @@ The `Release desktop installers` workflow is manually triggered:
 3. Select `Release desktop installers` and choose `Run workflow`.
 4. Enter the version without a leading `v`, for example `0.1.0`.
 
-The workflow builds all platforms before publishing anything. When every build succeeds, it creates tag `v<version>` and a GitHub Release containing exactly:
+The workflow builds all platforms before publishing anything. When every build succeeds, it creates tag `v<version>` and a GitHub Release containing:
 
-- `Cojudge_<version>_universal.dmg`
-- `Cojudge_<version>_x64-setup.exe`
-- `Cojudge_<version>_amd64.deb`
+- Installers: `Cojudge_<version>_universal.dmg`, `Cojudge_<version>_x64-setup.exe`, `Cojudge_<version>_amd64.deb`, `Cojudge-<version>-1.x86_64.rpm`, `Cojudge_<version>_amd64.AppImage`
+- Tauri updater bundles + signatures (`*.app.tar.gz`, `*.AppImage`, `*-setup.exe`/`*.nsis.zip`, plus `*.sig`)
+- `latest.json` — the signed updater manifest polled by the desktop app at `https://github.com/cojudge/cojudge/releases/latest/download/latest.json`
+
+## Automatic Updates
+
+The desktop app checks `github.com/cojudge/cojudge/releases` for new versions using Tauri's signed updater (same flow as `anslwy/openduck`, extended to win/mac/linux):
+
+- Auto-check runs once shortly after startup (desktop only, online only, opt-out via localStorage `cojudge.app-update-preferences.v1`).
+- Homepage menu → **Check for Updates** (directly under Light/Dark theme) triggers a manual check. In a browser it opens the releases page; in the desktop app it shows the update dialog.
+- The update dialog shows current/latest versions, publish date, release-notes preview, **Install Update** (downloads + verifies signature + installs), **Restart to Apply**, **Skip for this version**, and **Remind Later**.
+- `latest.json` serves all platforms: `darwin-aarch64` + `darwin-x86_64` (same universal `.app.tar.gz`), `windows-x86_64` (`-setup.exe` or `.nsis.zip`), `linux-x86_64` (`.AppImage`). Linux `.deb`/`.rpm` installs are published for manual download — in-app install targets the AppImage.
+
+One-time signing setup (private key stays out of the repo):
+
+```bash
+npx tauri signer generate -w ~/.tauri/cojudge.key --ci
+# public key -> src-tauri/updater-public-key.pem (committed)
+# also embedded in src-tauri/tauri.conf.json plugins.updater.pubkey
+cat ~/.tauri/cojudge.key.pub
+```
+
+Then add GitHub Actions secrets:
+
+- `TAURI_SIGNING_PRIVATE_KEY` — contents of `~/.tauri/cojudge.key`
+- `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` — only if the key has a password
+
+Local signed test build:
+
+```bash
+export TAURI_SIGNING_PRIVATE_KEY="$(cat ~/.tauri/cojudge.key)"
+npm run desktop:build -- --bundles app
+# check src-tauri/target/*/release/bundle/**/ *.sig exists
+```
 
 Before running a release, configure these GitHub Actions repository secrets. Vite embeds the public project identifiers and desktop client ID in each installer; the workflow compiles the desktop client secret into the native binary rather than the web bundle:
 
@@ -111,6 +142,8 @@ Before running a release, configure these GitHub Actions repository secrets. Vit
 - `GOOGLE_WEB_CLIENT_ID`
 - `GOOGLE_DESKTOP_CLIENT_ID`
 - `GOOGLE_DESKTOP_CLIENT_SECRET`
+- `TAURI_SIGNING_PRIVATE_KEY` (contents of `~/.tauri/cojudge.key` — required for signed updater artifacts)
+- `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` (only if the signing key has a password)
 
 The generated release notes automatically include a **Manage Problems** section (`~/cojudge` for adding/editing problems and courses, plus optional desktop CLI verification) and this required command for the ad-hoc-signed macOS build:
 
@@ -137,3 +170,5 @@ Every installer includes:
 Docker itself and language runtime images are not included. Missing runner images are downloaded through the configured Docker daemon as needed.
 
 The in-app **CLI** action writes a shim to `~/.local/bin/cojudge` (macOS/Linux) or `%LOCALAPPDATA%\Cojudge\cli\cojudge.cmd` (Windows) that runs the bundled Node.js sidecar. Uninstall removes that shim. Open a new terminal after installing.
+
+Check the installed release with `cojudge -v`, `cojudge --version`, or `cojudge version`. Check GitHub Releases for a newer app with `cojudge update` (or `cojudge -u`): it prints the download for the current device — install the new app, then reinstall the CLI from the app menu.

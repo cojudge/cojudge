@@ -2,7 +2,7 @@
 
 import path from "path";
 import fs from "fs";
-import { rootDir, getPort, getPIDs, openBrowser, printVersion, updateRepo, isDesktopCli } from "./lib/utils.js";
+import { rootDir, getPort, getPIDs, openBrowser, printVersion, updateRepo, isDesktopCli, runDesktopUpdate } from "./lib/utils.js";
 import { ensureUserContentSeededSync, resolveProblemDirSync } from "./lib/contentPaths.js";
 import { showHelp } from "./lib/help.js";
 import { startServer, streamLogs, killServer, restartServer } from "./lib/server.js";
@@ -45,6 +45,24 @@ async function main() {
 
   if (action === "list") {
     listProblems();
+    return;
+  }
+
+  if (action === "version") {
+    printVersion(rootDir);
+    return;
+  }
+
+  if (action === "update") {
+    if (isDesktopCli) {
+      await runDesktopUpdate(rootDir);
+    } else {
+      const updated = updateRepo(rootDir);
+      if (updated && getPIDs(PORT).length > 0) {
+        console.log("Restarting server to apply update...");
+        restartServer(PORT);
+      }
+    }
     return;
   }
 
@@ -106,6 +124,10 @@ async function main() {
   } else if (action === "-v" || action === "--version") {
     printVersion(rootDir);
   } else if (action === "-u" || action === "--update") {
+    if (isDesktopCli) {
+      await runDesktopUpdate(rootDir);
+      return;
+    }
     const updated = updateRepo(rootDir);
     if (updated && getPIDs(PORT).length > 0) {
       console.log("Restarting server to apply update...");

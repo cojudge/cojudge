@@ -68,6 +68,8 @@
 	},
 	"dependencies": {
 		"@tauri-apps/api": "^2.11.1",
+		"@tauri-apps/plugin-process": "^2.3.1",
+		"@tauri-apps/plugin-updater": "^2.11.1",
 		"dockerode": "^5.0.1",
 		"tar-stream": "^3.1.7",
 		"turndown": "^7.2.4",

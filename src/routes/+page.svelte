@@ -15,6 +15,19 @@
     import gameResultsStore, { type GameResult } from '$lib/stores/gameResultsStore';
     import CloudSyncModal from "$lib/components/CloudSyncModal.svelte";
     import DockerSettingsModal from "$lib/components/DockerSettingsModal.svelte";
+    import UpdatePromptModal from "$lib/components/UpdatePromptModal.svelte";
+    import {
+        APP_UPDATE_RELEASES_URL,
+        APP_UPDATE_REPO_URL,
+        createReleaseNotesPreview,
+        fetchGithubReleaseNotesMetadata,
+        formatAppUpdateInstallError,
+        loadAppUpdatePreferenceFromStorage,
+        normalizeUpdateErrorMessage,
+        persistAppUpdatePreference,
+        type AppUpdateInfo,
+        type AppUpdateStatus
+    } from '$lib/appUpdate';
     import {
         cloudSyncState,
         refreshCloudLocalState,
@@ -102,8 +115,35 @@
     let checkMap: Record<string, boolean> = {};
     let showGamePopup = false;
     let isDesktopMode = browser && isDesktopRuntime();
+    // --- App updates (Tauri signed updater, same flow as openduck) ---
+    let showUpdatePrompt = false;
+    let availableAppUpdate: AppUpdateInfo | null = null;
+    let appUpdateStatus: AppUpdateStatus = 'idle';
+    let appUpdateError: string | null = null;
+    let skippedAppUpdateVersion: string | null = null;
+    let autoCheckAppUpdatesEnabled = true;
+    let suppressAutoUpdatePromptUntilNextCheck = false;
+    let pendingAutomaticUpdatePromptVersion: string | null = null;
+    let updateObject: {
+        version: string;
+        currentVersion: string;
+        date?: string | null;
+        body?: string | null;
+        rawJson: { target?: unknown };
+        downloadAndInstall: (
+            onEvent?: (event: { event: string; data: { chunkLength?: number; contentLength?: number | null } }) => void
+        ) => Promise<void>;
+    } | null = null;
+    $: updateAvailable = appUpdateStatus === 'available' && !!availableAppUpdate;
+    $: updateMenuLabel = appUpdateStatus === 'checking'
+        ? 'Checking for updates…'
+        : appUpdateStatus === 'installing'
+            ? 'Installing update…'
+            : appUpdateStatus === 'available' && availableAppUpdate
+                ? `Update to v${availableAppUpdate.version}`
+                : 'Check for Updates';
     $: if (browser) {
-        document.body.style.overflow = showGamePopup || pendingImport || showFirebaseSettings || showLoadCode || showClearConfirm || showManageProblems || showCliSettings || showDockerSettings ? 'hidden' : '';
+        document.body.style.overflow = showGamePopup || pendingImport || showFirebaseSettings || showLoadCode || showClearConfirm || showManageProblems || showCliSettings || showDockerSettings || showUpdatePrompt ? 'hidden' : '';
     }
 
     $: contentDir = (data?.contentDir ?? '~/cojudge') as string;
@@ -240,6 +280,7 @@
     onMount(() => {
         window.addEventListener("click", handleClickOutside);
         if (isDesktopMode) void refreshCliStatus();
+        void initializeAppUpdatePreference();
 
         // Restore last selected course from localStorage if no course param in URL
         const url = new URL(window.location.href);
@@ -248,6 +289,18 @@
             if (saved && courses.some(c => c.id === saved)) {
                 goto(`/?course=${encodeURIComponent(saved)}`, { replaceState: true });
             }
+        }
+
+        // Automatic update detection on startup (desktop only), same as openduck.
+        if (isDesktopMode) {
+            const timer = setTimeout(() => {
+                void triggerAutomaticAppUpdateCheck();
+            }, 2500);
+            const cleanup = () => {
+                window.removeEventListener("click", handleClickOutside);
+                clearTimeout(timer);
+            };
+            return cleanup;
         }
 
         return () => {
@@ -752,6 +805,13 @@
         if ($activeDialog) return;
         // Note: Docker settings modal handles its own Escape/Tab via DockerSettingsModal.
         if (showDockerSettings) return;
+        if (showUpdatePrompt && event.key === 'Escape') {
+            if (appUpdateStatus !== 'installing') {
+                event.preventDefault();
+                remindAboutAppUpdateLater();
+            }
+            return;
+        }
         const activeModal = pendingImport
             ? importModalCard
             : showClearConfirm
@@ -813,6 +873,177 @@
             return Promise.reject(new Error('Desktop bridge unavailable.'));
         }
         return tauriInternals.invoke(command, args);
+    }
+
+    // --- App updates (mirrors openduck: auto-check + manual check + install) ---
+    function initializeAppUpdatePreference() {
+        const stored = loadAppUpdatePreferenceFromStorage();
+        skippedAppUpdateVersion = stored.skippedVersion;
+        autoCheckAppUpdatesEnabled = stored.autoCheckEnabled;
+    }
+
+    function closeUpdatePrompt() {
+        showUpdatePrompt = false;
+        pendingAutomaticUpdatePromptVersion = null;
+    }
+
+    function queueAutomaticUpdatePrompt(version: string) {
+        pendingAutomaticUpdatePromptVersion = version;
+        // Show immediately unless a modal is already open; otherwise defer
+        // until the next manual check (avoids interrupting the user).
+        if (!pendingImport && !showClearConfirm && !showManageProblems && !showCliSettings && !showDockerSettings) {
+            showUpdatePrompt = true;
+            pendingAutomaticUpdatePromptVersion = null;
+        }
+    }
+
+    function skipAvailableAppUpdateVersion() {
+        const version = availableAppUpdate?.version?.trim();
+        if (version) {
+            skippedAppUpdateVersion = version;
+            persistAppUpdatePreference({ skippedVersion: version, autoCheckEnabled: autoCheckAppUpdatesEnabled });
+        }
+        suppressAutoUpdatePromptUntilNextCheck = false;
+        closeUpdatePrompt();
+    }
+
+    function remindAboutAppUpdateLater() {
+        suppressAutoUpdatePromptUntilNextCheck = true;
+        closeUpdatePrompt();
+    }
+
+    async function triggerAutomaticAppUpdateCheck() {
+        if (typeof navigator !== 'undefined' && !navigator.onLine) return;
+        if (!autoCheckAppUpdatesEnabled) return;
+        if (appUpdateStatus === 'checking' || appUpdateStatus === 'installing' || appUpdateStatus === 'installed') return;
+        const suppressPrompt = suppressAutoUpdatePromptUntilNextCheck;
+        suppressAutoUpdatePromptUntilNextCheck = false;
+        await checkForAppUpdates({ source: 'automatic', suppressAutoPrompt: suppressPrompt });
+    }
+
+    async function resolveAppUpdateReleaseNotes(update: {
+        body?: string | null;
+    }): Promise<{ notesPreview: string | null; releaseNotesUrl: string }> {
+        const fallback = createReleaseNotesPreview(update.body ?? null);
+        try {
+            return await fetchGithubReleaseNotesMetadata();
+        } catch (err) {
+            console.warn('Failed to fetch GitHub release notes preview:', err);
+            return { notesPreview: fallback, releaseNotesUrl: APP_UPDATE_RELEASES_URL };
+        }
+    }
+
+    async function checkForAppUpdates(
+        options: { source?: 'manual' | 'automatic'; suppressAutoPrompt?: boolean } = {}
+    ) {
+        const source = options.source ?? 'manual';
+        const suppressAutoPrompt = options.suppressAutoPrompt ?? false;
+        if (!isDesktopMode) {
+            window.open(APP_UPDATE_REPO_URL, '_blank', 'noopener');
+            return;
+        }
+        if (appUpdateStatus === 'checking' || appUpdateStatus === 'installing') return;
+
+        const previousAvailable = availableAppUpdate;
+        const previousStatus = appUpdateStatus;
+        const previousError = appUpdateError;
+        const previousUpdateObject = updateObject;
+
+        appUpdateStatus = 'checking';
+        appUpdateError = null;
+        availableAppUpdate = null;
+        updateObject = null;
+
+        try {
+            const { check } = await import('@tauri-apps/plugin-updater');
+            const update = await check();
+            if (update) {
+                const rawTarget = (update as unknown as { rawJson?: { target?: unknown } }).rawJson?.target;
+                const releaseNotes = await resolveAppUpdateReleaseNotes({
+                    body: (update as unknown as { body?: string | null }).body ?? null
+                });
+                availableAppUpdate = {
+                    version: update.version,
+                    currentVersion: update.currentVersion || '',
+                    notes: releaseNotes.notesPreview,
+                    publishedAt: (update as unknown as { date?: string | null }).date ?? null,
+                    target: typeof rawTarget === 'string' ? rawTarget : '',
+                    releaseNotesUrl: releaseNotes.releaseNotesUrl
+                };
+                updateObject = update as unknown as typeof updateObject;
+                appUpdateStatus = 'available';
+                if (source === 'manual') {
+                    showUpdatePrompt = true;
+                } else if (!suppressAutoPrompt && update.version !== skippedAppUpdateVersion) {
+                    queueAutomaticUpdatePrompt(update.version);
+                } else {
+                    closeUpdatePrompt();
+                }
+            } else {
+                appUpdateStatus = 'up_to_date';
+                closeUpdatePrompt();
+                if (source === 'manual') {
+                    showImportNotice('Cojudge is already up to date.', false);
+                }
+            }
+        } catch (err) {
+            console.error('Failed to check for app updates:', err);
+            if (source === 'automatic') {
+                availableAppUpdate = previousAvailable;
+                appUpdateStatus = previousStatus;
+                appUpdateError = previousError;
+                updateObject = previousUpdateObject;
+                return;
+            }
+            availableAppUpdate = null;
+            updateObject = null;
+            appUpdateStatus = 'error';
+            appUpdateError = normalizeUpdateErrorMessage(err);
+            showUpdatePrompt = false;
+            showImportNotice(`Update check failed: ${appUpdateError}`, true);
+        }
+    }
+
+    async function installAppUpdate() {
+        if (appUpdateStatus !== 'available' || !updateObject) return;
+        appUpdateStatus = 'installing';
+        appUpdateError = null;
+        try {
+            await updateObject.downloadAndInstall((event) => {
+                if (event.event === 'Started') {
+                    console.log(`Downloading update (${event.data.contentLength ?? '?'} bytes)`);
+                }
+            });
+            appUpdateStatus = 'installed';
+        } catch (err) {
+            console.error('Failed to install app update:', err);
+            appUpdateStatus = 'error';
+            appUpdateError = formatAppUpdateInstallError(err);
+        }
+    }
+
+    async function restartToApplyUpdate() {
+        try {
+            const { relaunch } = await import('@tauri-apps/plugin-process');
+            await relaunch();
+        } catch (err) {
+            console.error('Failed to restart after installing update:', err);
+            appUpdateError = normalizeUpdateErrorMessage(err);
+        }
+    }
+
+    async function openUpdateFromMenu() {
+        showDropdown = false;
+        if (!isDesktopMode) {
+            window.open(APP_UPDATE_REPO_URL, '_blank', 'noopener');
+            return;
+        }
+        // If we already know an update is available, just show it.
+        if (appUpdateStatus === 'available' && availableAppUpdate) {
+            showUpdatePrompt = true;
+            return;
+        }
+        await checkForAppUpdates({ source: 'manual' });
     }
 
     function openDockerSettings() {
@@ -1341,6 +1572,26 @@
                             {/if}
                         </span>
                     </button>
+                    <button
+                        class="dropdown-item"
+                        role="menuitem"
+                        onclick={() => void openUpdateFromMenu()}
+                        title={isDesktopMode ? 'Check GitHub Releases for a newer Cojudge build' : 'Open Cojudge on GitHub'}
+                    >
+                        <span class="dropdown-item-content">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17 8 12 3 7 8"></polyline>
+                                <line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                            {updateMenuLabel}
+                        </span>
+                        {#if updateAvailable}
+                            <span class="firebase-menu-status configured" title="A newer Cojudge build is available">
+                                New
+                            </span>
+                        {/if}
+                    </button>
                 </div>
             {/if}
         </div>
@@ -1519,6 +1770,8 @@
                             <li><code>cojudge init two-sum --lang python</code> Starter file</li>
                             <li><code>cojudge run two-sum Solution.py</code> Sample tests</li>
                             <li><code>cojudge submit two-sum Solution.py</code> Official tests</li>
+                            <li><code>cojudge version</code> Installed release number</li>
+                            <li><code>cojudge update</code> Check GitHub Releases for a newer app</li>
                         </ul>
                     </div>
                     {#if cliStatus.aliasPaths?.length}
@@ -1552,6 +1805,17 @@
         </div>
     {/if}
     <CloudSyncModal open={showCloudSettings} onClose={closeCloudSettings} />
+    {#if showUpdatePrompt && availableAppUpdate}
+        <UpdatePromptModal
+            {availableAppUpdate}
+            {appUpdateStatus}
+            {appUpdateError}
+            onInstall={appUpdateStatus === 'installed' ? restartToApplyUpdate : installAppUpdate}
+            onSkipVersion={skipAvailableAppUpdateVersion}
+            onRemindLater={remindAboutAppUpdateLater}
+            onClose={remindAboutAppUpdateLater}
+        />
+    {/if}
     {#if showFirebaseSettings}
         <div class="home-modal-shell">
             <button class="home-modal-backdrop" aria-label="Close Firebase settings" tabindex="-1" onclick={closeFirebaseSettings}></button>
