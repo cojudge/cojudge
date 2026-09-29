@@ -358,6 +358,7 @@ func main() {
     let fontSize: number = $userSettingsStorage.editorFontSize ?? 14;
     let theme: ThemeChoice = $userSettingsStorage.theme ?? 'light';
     let vimMode: 'off' | 'on' = $userSettingsStorage.vimMode ?? 'off';
+    let autoHideActivityBar: boolean = $userSettingsStorage.autoHideActivityBar ?? false;
 
     let tabs: TabMeta[] = getInitialTabs();
     let activeTabId: number = (() => {
@@ -6000,6 +6001,13 @@ func main() {
         }
     }
 
+    $: {
+        const currentAutoHide = $userSettingsStorage.autoHideActivityBar ?? false;
+        if (typeof autoHideActivityBar === 'boolean' && currentAutoHide !== autoHideActivityBar) {
+            userSettingsStorage.update((s) => ({ ...s, autoHideActivityBar }));
+        }
+    }
+
     onMount(async () => {
         const fb = await initFirebase();
         if (fb) {
@@ -6622,8 +6630,11 @@ func main() {
 
 <svelte:window on:keydown={handleGlobalKeydown} />
 
-<div class="workspace">
+<div class="workspace" class:auto-hide-activity-bar={autoHideActivityBar}>
     <!-- Activity Bar -->
+    {#if autoHideActivityBar}
+        <div class="activity-bar-hover-zone" aria-hidden="true"></div>
+    {/if}
     <div class="activity-bar">
         <a href="/" class="activity-icon" title="Home">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -6731,6 +6742,11 @@ func main() {
                     <select id="vim-mode-select" bind:value={vimMode}>
                         <option value="off">Standard</option>
                         <option value="on">Vim</option>
+                    </select>
+                    <label for="autohide-select">Auto-hide activity bar</label>
+                    <select id="autohide-select" bind:value={autoHideActivityBar}>
+                        <option value={false}>Off</option>
+                        <option value={true}>On</option>
                     </select>
                 </div>
             {/if}
@@ -7946,6 +7962,49 @@ func main() {
         padding-top: var(--spacing-2);
         flex-shrink: 0;
         z-index: 10;
+    }
+
+    /* macOS-style auto-hide: bar slides off-canvas, reappears on left-edge hover */
+    .workspace.auto-hide-activity-bar {
+        position: relative;
+    }
+    .workspace.auto-hide-activity-bar .activity-bar-hover-zone {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 16px;
+        z-index: 40;
+        background: transparent;
+    }
+    .workspace.auto-hide-activity-bar .activity-bar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 41;
+        transform: translateX(-102%);
+        opacity: 0;
+        pointer-events: none;
+        transition:
+            transform 0.22s ease 0.12s,
+            opacity 0.18s ease 0.12s,
+            box-shadow 0.22s ease;
+        box-shadow: none;
+    }
+    .workspace.auto-hide-activity-bar .activity-bar-hover-zone:hover + .activity-bar,
+    .workspace.auto-hide-activity-bar .activity-bar:hover,
+    .workspace.auto-hide-activity-bar .activity-bar:focus-within {
+        transform: translateX(0);
+        opacity: 1;
+        pointer-events: auto;
+        transition-delay: 0s;
+        box-shadow: 8px 0 24px rgba(0, 0, 0, 0.18);
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .workspace.auto-hide-activity-bar .activity-bar {
+            transition: none;
+        }
     }
 
     .activity-icon {
