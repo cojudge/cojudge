@@ -73,7 +73,11 @@ jobs:
             os: macos-14
             target: universal-apple-darwin
             rust_targets: aarch64-apple-darwin,x86_64-apple-darwin
-            bundles: dmg
+            # NOTE: `app` must be included alongside `dmg` — the bundler only
+            # creates signed updater artifacts (.app.tar.gz + .sig) for the
+            # updater-enabled targets (app, appimage, msi, nsis). With `dmg`
+            # alone it warns "no updater-enabled targets were built" and skips them.
+            bundles: dmg,app
             artifact: src-tauri/target/universal-apple-darwin/release/bundle/dmg/Cojudge_${{ inputs.version }}_universal.dmg
           - id: windows
             os: windows-2022
