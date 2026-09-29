@@ -256,10 +256,12 @@ jobs:
       # land in nested dirs (e.g. release/universal-apple-darwin/release/bundle/macos/
       # Cojudge.app.tar.gz). Flatten everything to release/ so verification,
       # latest.json generation, and `gh release create release/*` all see them.
+      # Leftover dirs (e.g. target triples holding non-file content) must be
+      # removed entirely, or `release/*` uploads a directory and fails.
       - name: Flatten downloaded artifacts
         run: |
           find release -mindepth 2 -type f -exec mv -n {} release/ \;
-          find release -mindepth 1 -type d -empty -delete
+          find release -mindepth 1 -depth -type d -exec rm -rf {} +
           echo "=== release/ ==="
           ls -la release/
 
