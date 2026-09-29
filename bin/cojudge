@@ -13,7 +13,6 @@ import { handleSubmit } from "./lib/commands/submit.js";
 import { handleInit } from "./lib/commands/init.js";
 import { listProblems } from "./lib/commands/list.js";
 import { handleSearch } from "./lib/commands/search.js";
-import { handleScrape } from "./lib/commands/scrape.js";
 import { handleDebug } from "./lib/commands/debug.js";
 import { handleSync } from "./lib/commands/sync.js";
 
@@ -98,11 +97,6 @@ async function main() {
 
   if (action === "debug") {
     await handleDebug(args, PORT);
-    return;
-  }
-
-  if (action === "scrape") {
-    await handleScrape(args);
     return;
   }
 
