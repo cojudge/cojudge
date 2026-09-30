@@ -120,6 +120,7 @@
     let availableAppUpdate: AppUpdateInfo | null = null;
     let appUpdateStatus: AppUpdateStatus = 'idle';
     let appUpdateError: string | null = null;
+    let appUpdateProgress: { downloadedBytes: number; totalBytes: number | null } | null = null;
     let skippedAppUpdateVersion: string | null = null;
     let autoCheckAppUpdatesEnabled = true;
     let suppressAutoUpdatePromptUntilNextCheck = false;
@@ -139,9 +140,11 @@
         ? 'Checking for updates…'
         : appUpdateStatus === 'installing'
             ? 'Installing update…'
-            : appUpdateStatus === 'available' && availableAppUpdate
-                ? `Update to v${availableAppUpdate.version}`
-                : 'Check for Updates';
+            : appUpdateStatus === 'installed'
+                ? 'Restart to apply update'
+                : appUpdateStatus === 'available' && availableAppUpdate
+                    ? `Update to v${availableAppUpdate.version}`
+                    : 'Check for Updates';
     $: if (browser) {
         document.body.style.overflow = showGamePopup || pendingImport || showFirebaseSettings || showLoadCode || showClearConfirm || showManageProblems || showCliSettings || showDockerSettings || showUpdatePrompt ? 'hidden' : '';
     }
@@ -806,10 +809,10 @@
         // Note: Docker settings modal handles its own Escape/Tab via DockerSettingsModal.
         if (showDockerSettings) return;
         if (showUpdatePrompt && event.key === 'Escape') {
-            if (appUpdateStatus !== 'installing') {
-                event.preventDefault();
-                remindAboutAppUpdateLater();
-            }
+            // The install keeps running in the background; the dialog must
+            // stay dismissible so it can never trap the user on this screen.
+            event.preventDefault();
+            remindAboutAppUpdateLater();
             return;
         }
         const activeModal = pendingImport
@@ -951,6 +954,7 @@
 
         appUpdateStatus = 'checking';
         appUpdateError = null;
+        appUpdateProgress = null;
         availableAppUpdate = null;
         updateObject = null;
 
@@ -1005,18 +1009,44 @@
     }
 
     async function installAppUpdate() {
-        if (appUpdateStatus !== 'available' || !updateObject) return;
+        if (appUpdateStatus === 'installing' || appUpdateStatus === 'installed') return;
+        // The modal can outlive the in-memory updater handle, and the old
+        // guard also rejected the 'error' state — both made Install/Retry
+        // silently do nothing. Re-check instead of returning quietly.
+        if (!updateObject) {
+            appUpdateError = null;
+            await checkForAppUpdates({ source: 'manual' });
+            if (!updateObject || appUpdateStatus !== 'available') return;
+        }
+        if (appUpdateStatus !== 'available' && appUpdateStatus !== 'error') return;
         appUpdateStatus = 'installing';
         appUpdateError = null;
+        appUpdateProgress = { downloadedBytes: 0, totalBytes: null };
+        // Keep the dialog visible so progress is seen; it stays dismissible
+        // and the install continues in the background if hidden.
+        showUpdatePrompt = true;
         try {
             await updateObject.downloadAndInstall((event) => {
-                if (event.event === 'Started') {
-                    console.log(`Downloading update (${event.data.contentLength ?? '?'} bytes)`);
+                const name = (event as { event?: string })?.event;
+                const data = (event as { data?: { chunkLength?: unknown; contentLength?: unknown } })?.data ?? {};
+                if (name === 'Started') {
+                    const total = typeof data.contentLength === 'number' ? data.contentLength : null;
+                    console.log(`Downloading update (${total ?? '?'} bytes)`);
+                    appUpdateProgress = { downloadedBytes: 0, totalBytes: total };
+                } else if (name === 'Progress') {
+                    const chunk = typeof data.chunkLength === 'number' ? data.chunkLength : 0;
+                    const prev = appUpdateProgress ?? { downloadedBytes: 0, totalBytes: null };
+                    appUpdateProgress = {
+                        downloadedBytes: prev.downloadedBytes + chunk,
+                        totalBytes: prev.totalBytes
+                    };
                 }
             });
+            appUpdateProgress = null;
             appUpdateStatus = 'installed';
         } catch (err) {
             console.error('Failed to install app update:', err);
+            appUpdateProgress = null;
             appUpdateStatus = 'error';
             appUpdateError = formatAppUpdateInstallError(err);
         }
@@ -1038,8 +1068,16 @@
             window.open(APP_UPDATE_REPO_URL, '_blank', 'noopener');
             return;
         }
-        // If we already know an update is available, just show it.
-        if (appUpdateStatus === 'available' && availableAppUpdate) {
+        // If we already know about an update (including one that is
+        // installing, installed, or failed), just show it again so progress
+        // and errors stay visible instead of starting a conflicting check.
+        if (
+            availableAppUpdate &&
+            (appUpdateStatus === 'available' ||
+                appUpdateStatus === 'installing' ||
+                appUpdateStatus === 'installed' ||
+                appUpdateStatus === 'error')
+        ) {
             showUpdatePrompt = true;
             return;
         }
@@ -1810,6 +1848,7 @@
             {availableAppUpdate}
             {appUpdateStatus}
             {appUpdateError}
+            downloadProgress={appUpdateProgress}
             onInstall={appUpdateStatus === 'installed' ? restartToApplyUpdate : installAppUpdate}
             onSkipVersion={skipAvailableAppUpdateVersion}
             onRemindLater={remindAboutAppUpdateLater}
