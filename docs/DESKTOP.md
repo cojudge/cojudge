@@ -106,7 +106,7 @@ The desktop app checks `github.com/cojudge/cojudge/releases` for new versions us
 
 - Auto-check runs once shortly after startup (desktop only, online only, opt-out via localStorage `cojudge.app-update-preferences.v1`).
 - Homepage menu → **Check for Updates** (directly under Light/Dark theme) triggers a manual check. In a browser it opens the releases page; in the desktop app it shows the update dialog.
-- The update dialog shows current/latest versions, publish date, release-notes preview, **Install Update** (downloads + verifies signature + installs), **Restart to Apply**, **Skip for this version**, and **Remind Later**.
+- The update dialog shows current/latest versions, publish date, release-notes preview, **Install Update** (downloads + verifies signature + installs, with a progress bar), **Restart to Apply**, **Skip for this version**, and **Remind Later**. The dialog stays dismissible while the download runs — the install continues in the background and the homepage menu shows the live status. A failed install surfaces the error with a **Retry Install** action and a manual-download fallback link.
 - `latest.json` serves all platforms: `darwin-aarch64` + `darwin-x86_64` (same universal `.app.tar.gz`), `windows-x86_64` (`-setup.exe` or `.nsis.zip`), `linux-x86_64` (`.AppImage`). Linux `.deb`/`.rpm` installs are published for manual download — in-app install targets the AppImage.
 
 One-time signing setup (private key stays out of the repo):

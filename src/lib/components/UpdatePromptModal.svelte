@@ -6,6 +6,7 @@
 		availableAppUpdate,
 		appUpdateStatus,
 		appUpdateError,
+		downloadProgress = null,
 		onInstall,
 		onSkipVersion,
 		onRemindLater,
@@ -14,32 +15,34 @@
 		availableAppUpdate: AppUpdateInfo;
 		appUpdateStatus: AppUpdateStatus;
 		appUpdateError: string | null;
+		downloadProgress?: { downloadedBytes: number; totalBytes: number | null } | null;
 		onInstall: () => void;
 		onSkipVersion: () => void;
 		onRemindLater: () => void;
 		onClose: () => void;
 	} = $props();
 
-	const actionDisabled = $derived(appUpdateStatus === 'installing');
-	const showSkipButton = $derived(appUpdateStatus !== 'installed');
+	const isInstalling = $derived(appUpdateStatus === 'installing');
+	const isInstalled = $derived(appUpdateStatus === 'installed');
+	// The dialog must stay dismissible while the download runs in the
+	// background — locking it here is what made the popup feel "stuck".
+	const showSkipButton = $derived(!isInstalled && !isInstalling);
 	const primaryActionLabel = $derived(
-		appUpdateStatus === 'installing'
+		isInstalling
 			? 'Installing…'
-			: appUpdateStatus === 'installed'
+			: isInstalled
 				? 'Restart to Apply'
 				: appUpdateStatus === 'error'
 					? 'Retry Install'
 					: 'Install Update'
 	);
-	const title = $derived(
-		appUpdateStatus === 'installed' ? 'Update Installed' : 'Update Available'
-	);
+	const title = $derived(isInstalled ? 'Update Installed' : 'Update Available');
 	const subtitle = $derived(
-		appUpdateStatus === 'installed'
+		isInstalled
 			? `Version ${availableAppUpdate.version} is installed. Restart Cojudge to finish applying it.`
 			: `Version ${availableAppUpdate.version} is available for Cojudge.`
 	);
-	const remindLaterLabel = $derived(appUpdateStatus === 'installed' ? 'Later' : 'Remind Later');
+	const remindLaterLabel = $derived(isInstalled ? 'Later' : isInstalling ? 'Hide' : 'Remind Later');
 	const effectiveReleaseNotesUrl = $derived(
 		availableAppUpdate.releaseNotesUrl?.trim() || APP_UPDATE_RELEASES_URL
 	);
@@ -49,6 +52,33 @@
 		if (Number.isNaN(parsed.valueOf())) return availableAppUpdate.publishedAt;
 		return parsed.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
 	});
+	const progressPercent = $derived.by(() => {
+		if (!downloadProgress || !downloadProgress.totalBytes) return null;
+		if (downloadProgress.totalBytes <= 0) return null;
+		return Math.min(
+			100,
+			Math.round((downloadProgress.downloadedBytes / downloadProgress.totalBytes) * 100)
+		);
+	});
+	const progressText = $derived.by(() => {
+		if (!downloadProgress) return null;
+		const downloaded = formatBytes(downloadProgress.downloadedBytes);
+		if (downloadProgress.totalBytes == null) return `${downloaded} downloaded`;
+		return `${downloaded} of ${formatBytes(downloadProgress.totalBytes)}${progressPercent != null ? ` (${progressPercent}%)` : ''}`;
+	});
+
+	function formatBytes(bytes: number): string {
+		if (!Number.isFinite(bytes) || bytes < 0) return '0 B';
+		if (bytes < 1024) return `${bytes} B`;
+		const units = ['KB', 'MB', 'GB'];
+		let value = bytes / 1024;
+		let unit = 0;
+		while (value >= 1024 && unit < units.length - 1) {
+			value /= 1024;
+			unit += 1;
+		}
+		return `${value >= 100 ? Math.round(value) : value.toFixed(value >= 10 ? 1 : 2)} ${units[unit]}`;
+	}
 
 	async function openReleaseNotes() {
 		try {
@@ -69,34 +99,29 @@
 			window.open(effectiveReleaseNotesUrl, '_blank', 'noopener');
 		}
 	}
-
-	function handleBackdropClick() {
-		if (actionDisabled) return;
-		onRemindLater();
-	}
 </script>
 
-<!-- svelte-ignore a11y_click_events_have_key_events -->
-<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-<div class="update-backdrop" role="presentation" onclick={handleBackdropClick}>
+<div class="home-modal-shell">
+	<button class="home-modal-backdrop" aria-label="Dismiss update dialog" tabindex="-1" onclick={onClose}></button>
 	<div
-		class="update-modal"
+		class="home-modal-card update-modal-card"
 		role="dialog"
 		aria-modal="true"
 		aria-labelledby="cojudge-update-title"
-		tabindex="-1"
-		onclick={(event) => event.stopPropagation()}
+		aria-busy={isInstalling}
 	>
-		<div class="update-header">
-			<div class="update-copy">
-				<span class="update-kicker">Software Update</span>
-				<h2 class="update-title" id="cojudge-update-title">{title}</h2>
-				<p class="update-subtitle">{subtitle}</p>
+		<div class="modal-heading-row">
+			<div>
+				<span class="modal-eyebrow">Software update</span>
+				<h2 id="cojudge-update-title">{title}</h2>
 			</div>
-			<span class="update-badge">v{availableAppUpdate.version}</span>
+			<span class="update-version-pill" title="Latest available version">
+				<span></span>v{availableAppUpdate.version}
+			</span>
 		</div>
+		<p class="update-intro">{subtitle}</p>
 
-		<div class="update-metadata">
+		<div class="update-section">
 			<div class="update-row">
 				<span class="update-label">Current</span>
 				<span class="update-value update-mono">{availableAppUpdate.currentVersion || 'Unknown'}</span>
@@ -114,7 +139,22 @@
 		</div>
 
 		{#if availableAppUpdate.notes}
-			<div class="update-notes">{availableAppUpdate.notes}</div>
+			<div class="update-section update-notes">{availableAppUpdate.notes}</div>
+		{/if}
+
+		{#if isInstalling}
+			<div class="update-progress" role="status" aria-live="polite">
+				<div class="update-progress-track">
+					<div
+						class="update-progress-fill"
+						class:indeterminate={progressPercent == null}
+						style={progressPercent != null ? `width: ${progressPercent}%` : undefined}
+					></div>
+				</div>
+				<span class="update-progress-text">
+					{progressText ?? 'Downloading update…'} The dialog can be hidden; the install continues in the background.
+				</span>
+			</div>
 		{/if}
 
 		<button type="button" class="update-link" onclick={openReleaseNotes}>
@@ -122,236 +162,281 @@
 		</button>
 
 		{#if appUpdateError}
-			<div class="update-error">{appUpdateError}</div>
+			<p class="modal-error update-error-text" role="alert">{appUpdateError}</p>
 		{/if}
 
-		<div class="update-actions">
+		<div class="home-modal-actions">
 			{#if showSkipButton}
-				<button
-					type="button"
-					class="btn update-secondary"
-					onclick={onSkipVersion}
-					disabled={actionDisabled}
-				>
+				<button type="button" class="btn" onclick={onSkipVersion}>
 					Skip for this version
 				</button>
 			{/if}
-			<button
-				type="button"
-				class="btn update-secondary"
-				onclick={onRemindLater}
-				disabled={actionDisabled}
-			>
+			<button type="button" class="btn" onclick={onRemindLater}>
 				{remindLaterLabel}
 			</button>
-			<button type="button" class="btn modal-primary-btn" onclick={onInstall} disabled={actionDisabled}>
+			<button type="button" class="btn modal-primary-btn" onclick={onInstall} disabled={isInstalling}>
 				{primaryActionLabel}
 			</button>
 		</div>
 
-		<button type="button" class="update-close" aria-label="Close update dialog" onclick={onClose} disabled={actionDisabled}>
+		<button type="button" class="update-close" aria-label="Dismiss update dialog" onclick={onClose}>
 			×
 		</button>
 	</div>
 </div>
 
 <style>
-	.update-backdrop {
+	.btn {
+		appearance: none;
+		border: 1px solid var(--color-border);
+		padding: 0.35rem 0.75rem;
+		border-radius: 0.375rem;
+		background: var(--color-btn);
+		cursor: pointer;
+		font-size: 0.9rem;
+		color: inherit;
+	}
+	.btn:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+	.home-modal-shell {
 		position: fixed;
 		inset: 0;
 		z-index: 1200;
+		display: grid;
+		place-items: center;
+		padding: 1.25rem;
+		overflow-y: auto;
+	}
+	.home-modal-backdrop {
+		position: absolute;
+		inset: 0;
+		border: 0;
+		background: rgba(0, 0, 0, 0.52);
+		cursor: default;
+	}
+	.home-modal-card {
+		position: relative;
+		width: min(430px, 100%);
+		max-height: calc(100vh - 2.5rem);
+		max-height: calc(100dvh - 2.5rem);
+		overflow-y: auto;
+		padding: 1.5rem;
+		border: 1px solid var(--color-border);
+		border-radius: 0.875rem;
+		background: var(--color-bg);
+		box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
+		color: var(--color-text);
+	}
+	.home-modal-card h2 {
+		margin: 0.15rem 0 0.5rem;
+		font-size: 1.25rem;
+	}
+	.home-modal-card p {
+		margin: 0;
+		color: var(--color-text-secondary);
+		line-height: 1.55;
+	}
+	.home-modal-actions {
 		display: flex;
 		align-items: center;
-		justify-content: center;
-		padding: 20px;
-		background: rgba(0, 0, 0, 0.45);
+		justify-content: flex-end;
+		flex-wrap: wrap;
+		gap: 0.625rem;
+		margin-top: 1.15rem;
 	}
-	.update-modal {
-		position: relative;
-		width: min(100%, 560px);
-		max-height: min(calc(100vh - 40px), 760px);
-		overflow-y: auto;
-		display: flex;
-		flex-direction: column;
-		gap: 16px;
-		padding: 24px;
-		border-radius: 16px;
-		background: var(--surface, #fff);
-		border: 1px solid var(--border, #e5e7eb);
-		box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
-		color: var(--text, #111827);
+	.modal-primary-btn {
+		border-color: var(--color-highlight);
+		background: var(--color-highlight);
+		color: #fff;
+		font-weight: 650;
 	}
-	:global(:root[data-theme='dark']) .update-modal {
-		--surface: #1f1f23;
-		--border: #33333a;
-		--text: #e8e8ed;
+	.modal-primary-btn:hover {
+		filter: brightness(1.05);
 	}
-	.update-header {
+	.modal-heading-row {
 		display: flex;
 		align-items: flex-start;
 		justify-content: space-between;
-		gap: 16px;
+		gap: 1rem;
+		margin-bottom: 0.5rem;
+		padding-right: 2rem;
 	}
-	.update-copy {
-		display: flex;
-		flex-direction: column;
-		gap: 6px;
-		min-width: 0;
+	.modal-heading-row h2 {
+		margin-bottom: 0;
 	}
-	.update-kicker {
-		color: var(--accent, #0b5c8a);
-		font-size: 0.76rem;
-		font-weight: 800;
+	.modal-eyebrow {
+		display: block;
+		margin-top: 0.35rem;
+		color: var(--color-highlight);
+		font-size: 0.7rem;
+		font-weight: 750;
 		letter-spacing: 0.12em;
 		text-transform: uppercase;
 	}
-	.update-title {
-		margin: 0;
-		font-size: 1.35rem;
-		font-weight: 800;
-		letter-spacing: -0.02em;
+	.modal-error {
+		margin-top: 0.75rem !important;
+		color: var(--color-hard) !important;
+		font-size: 0.8rem;
+		font-weight: 600;
 	}
-	.update-subtitle {
-		margin: 0;
-		opacity: 0.75;
-		font-size: 0.94rem;
-		line-height: 1.5;
+	.update-modal-card {
+		width: min(520px, 100%);
 	}
-	.update-badge {
-		flex-shrink: 0;
+	.update-version-pill {
 		display: inline-flex;
 		align-items: center;
-		justify-content: center;
-		padding: 8px 12px;
+		flex: 0 0 auto;
+		gap: 0.4rem;
+		margin-top: 0.35rem;
+		padding: 0.3rem 0.55rem;
+		border: 1px solid var(--color-border);
 		border-radius: 999px;
-		background: var(--badge-bg, #e8f3fb);
-		border: 1px solid var(--border, #e5e7eb);
-		color: var(--badge-text, #0b5c8a);
-		font-size: 0.82rem;
-		font-weight: 800;
+		color: var(--color-text-secondary);
+		font-size: 0.72rem;
+		font-weight: 650;
+		font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
+		white-space: nowrap;
 	}
-	:global(:root[data-theme='dark']) .update-badge {
-		--badge-bg: #16324a;
-		--badge-text: #7cc4ea;
+	.update-version-pill span {
+		width: 0.45rem;
+		height: 0.45rem;
+		border-radius: 50%;
+		background: var(--color-highlight);
+		box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-highlight) 16%, transparent);
 	}
-	.update-metadata {
-		display: grid;
-		gap: 10px;
-		padding: 16px;
-		border-radius: 12px;
-		background: var(--meta-bg, #f8fafc);
-		border: 1px solid var(--border, #e5e7eb);
+	.update-intro {
+		margin: 0 0 0.85rem !important;
+		font-size: 0.92rem;
+		line-height: 1.5;
 	}
-	:global(:root[data-theme='dark']) .update-metadata {
-		--meta-bg: rgba(255, 255, 255, 0.04);
+	.update-section {
+		padding: 0.65rem 0.75rem;
+		border: 1px solid var(--color-border);
+		border-radius: 0.55rem;
+		background: var(--color-surface);
+		margin: 0 0 0.65rem;
 	}
 	.update-row {
 		display: grid;
 		grid-template-columns: minmax(88px, 112px) minmax(0, 1fr);
-		gap: 12px;
+		gap: 0.75rem;
 		align-items: center;
+		padding: 0.2rem 0;
+	}
+	.update-row + .update-row {
+		border-top: 1px solid var(--color-border);
+		margin-top: 0.2rem;
+		padding-top: 0.45rem;
 	}
 	.update-label {
-		opacity: 0.6;
-		font-size: 0.76rem;
-		font-weight: 700;
+		color: var(--color-text-secondary);
+		font-size: 0.72rem;
+		font-weight: 750;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
 	}
 	.update-value {
-		font-size: 0.92rem;
-		line-height: 1.4;
+		font-size: 0.88rem;
+		line-height: 1.45;
+		color: var(--color-text);
 		word-break: break-word;
 	}
 	.update-mono {
-		font-family:
-			ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas, monospace;
+		font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
 	}
 	.update-notes {
-		padding: 14px 16px;
-		border-radius: 12px;
-		background: var(--meta-bg, #f8fafc);
-		border: 1px solid var(--border, #e5e7eb);
-		font-size: 0.9rem;
+		font-size: 0.85rem;
 		line-height: 1.55;
+		color: var(--color-text-secondary);
 		white-space: pre-wrap;
 	}
-	:global(:root[data-theme='dark']) .update-notes {
-		--meta-bg: rgba(255, 255, 255, 0.04);
+	.update-progress {
+		display: grid;
+		gap: 0.45rem;
+		margin: 0 0 0.65rem;
+		padding: 0.65rem 0.75rem;
+		border: 1px solid var(--color-border);
+		border-radius: 0.55rem;
+		background: var(--color-surface);
+	}
+	.update-progress-track {
+		height: 0.5rem;
+		overflow: hidden;
+		border-radius: 999px;
+		background: var(--color-second-bg);
+	}
+	.update-progress-fill {
+		height: 100%;
+		border-radius: 999px;
+		background: var(--color-highlight);
+		transition: width 0.2s ease;
+	}
+	.update-progress-fill.indeterminate {
+		width: 33%;
+		animation: update-progress-slide 1.2s ease-in-out infinite alternate;
+	}
+	@keyframes update-progress-slide {
+		from {
+			margin-left: 0;
+		}
+		to {
+			margin-left: 67%;
+		}
+	}
+	.update-progress-text {
+		font-size: 0.78rem;
+		line-height: 1.45;
+		color: var(--color-text-secondary);
 	}
 	.update-link {
 		align-self: flex-start;
 		border: none;
 		background: none;
 		padding: 0;
-		color: var(--accent, #0b5c8a);
-		font-size: 0.9rem;
+		color: var(--color-highlight);
+		font-size: 0.88rem;
 		font-weight: 700;
 		cursor: pointer;
 	}
 	.update-link:hover {
 		text-decoration: underline;
 	}
-	.update-error {
-		padding: 12px 14px;
-		border-radius: 12px;
-		background: rgba(220, 38, 38, 0.08);
-		border: 1px solid rgba(220, 38, 38, 0.25);
-		color: #b91c1c;
-		font-size: 0.88rem;
-		line-height: 1.45;
+	.update-error-text {
 		white-space: pre-wrap;
-	}
-	:global(:root[data-theme='dark']) .update-error {
-		color: #ffbbb4;
-		background: rgba(255, 112, 98, 0.12);
-		border-color: rgba(255, 112, 98, 0.24);
-	}
-	.update-actions {
-		display: flex;
-		justify-content: flex-end;
-		gap: 10px;
-		flex-wrap: wrap;
-	}
-	.update-secondary {
-		background: transparent;
 	}
 	.update-close {
 		position: absolute;
-		top: 12px;
-		right: 12px;
-		width: 32px;
-		height: 32px;
+		top: 0.75rem;
+		right: 0.75rem;
+		width: 2rem;
+		height: 2rem;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
 		border-radius: 999px;
-		border: 1px solid var(--border, #e5e7eb);
+		border: 1px solid var(--color-border);
 		background: transparent;
-		color: inherit;
+		color: var(--color-text-secondary);
 		font-size: 1.1rem;
 		line-height: 1;
 		cursor: pointer;
 	}
+	.update-close:hover {
+		background: var(--color-surface-hover, rgba(0, 0, 0, 0.05));
+		color: var(--color-text);
+	}
 	@media (max-width: 640px) {
-		.update-backdrop {
-			padding: 12px;
+		.home-modal-shell {
+			padding: 0.75rem;
 		}
-		.update-modal {
-			padding: 20px;
-		}
-		.update-header {
-			flex-direction: column;
-		}
-		.update-badge {
-			align-self: flex-start;
+		.modal-heading-row {
+			padding-right: 1.75rem;
 		}
 		.update-row {
 			grid-template-columns: minmax(0, 1fr);
-			gap: 4px;
-		}
-		.update-actions {
-			flex-direction: column-reverse;
-		}
-		.update-actions :global(.btn) {
-			width: 100%;
+			gap: 0.2rem;
 		}
 	}
 </style>
