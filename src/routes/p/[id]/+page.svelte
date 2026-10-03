@@ -158,7 +158,7 @@
                 />
             {/if}
         </div>
-        {#if PlaygroundExecutionPanel}
+        {#if PlaygroundExecutionPanel && language !== 'plaintext' && language !== 'markdown'}
             <svelte:component 
                 this={PlaygroundExecutionPanel} 
                 {code} 

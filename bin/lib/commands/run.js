@@ -30,10 +30,49 @@ function stripDebugArgs(args) {
   return result;
 }
 
+function parseInputFile(args) {
+  const idx = args.findIndex((a) => a === '--input' || a === '--stdin-file');
+  if (idx === -1) return undefined;
+  const val = args[idx + 1];
+  if (!val || val.startsWith('-')) return null;
+  return val;
+}
+
+function stripInputArgs(args) {
+  const result = [];
+  let i = 0;
+  while (i < args.length) {
+    if (args[i] === '--input' || args[i] === '--stdin-file') {
+      i += 2;
+    } else {
+      result.push(args[i]);
+      i++;
+    }
+  }
+  return result;
+}
+
+function readPipedStdin() {
+  try {
+    if (process.stdin.isTTY) return '';
+    return fs.readFileSync(0, 'utf8');
+  } catch {
+    return '';
+  }
+}
+
 export async function handleRun(argsToUse, PORT) {
   ensureUserContentSeededSync();
   const debugLines = parseDebugLines(argsToUse);
-  const cleanedArgs = debugLines ? stripDebugArgs(argsToUse) : argsToUse;
+  let cleanedArgs = argsToUse;
+  if (debugLines) cleanedArgs = stripDebugArgs(cleanedArgs);
+
+  const inputFile = parseInputFile(argsToUse);
+  if (inputFile === null) {
+    console.error('Error: Missing value for --input <file>.');
+    process.exit(1);
+  }
+  if (inputFile) cleanedArgs = stripInputArgs(cleanedArgs);
 
   if (!isDockerRunning()) {
     console.error(
@@ -104,6 +143,18 @@ export async function handleRun(argsToUse, PORT) {
     process.exit(1);
   }
 
+  let stdin = "";
+  if (inputFile) {
+    try {
+      stdin = fs.readFileSync(inputFile, "utf8");
+    } catch (e) {
+      console.error(`Error: Could not read input file '${inputFile}': ${e.message}`);
+      process.exit(1);
+    }
+  } else {
+    stdin = readPipedStdin();
+  }
+
   const pids = getPIDs(PORT);
   if (pids.length === 0) {
     console.log("Server not running. Starting it first...");
@@ -143,7 +194,7 @@ export async function handleRun(argsToUse, PORT) {
   try {
     let apiEndpoint = isPlayground ? "/api/playground/run" : "/api/run";
     let body = isPlayground
-      ? { language: lang, code: code }
+      ? { language: lang, code: code, stdin: stdin }
       : { problemId: slug, language: lang, code: code, testCases: testCases };
 
     if (debugLines) {
@@ -351,14 +402,24 @@ Usage:
   cojudge run <slug> <file> --debug-lines <lines>  Debug a solution against a problem's test cases
   cojudge run <file> --debug-lines <lines>         Debug a playground file
 
+Stdin (playground only):
+  Piped stdin is forwarded to the program, e.g.:
+    echo "5" | cojudge run main.cpp
+    cojudge run main.py < input.txt
+  Alternatively: cojudge run main.cpp --input input.txt
+
 Options:
   --debug-lines <lines>   Comma-separated line numbers to set breakpoints
                           (e.g. --debug-lines 5,10,15)
                           Breakpoints refer to line numbers in your file.
+  --input <file>          File whose contents are fed to the program on stdin
+                          (playground only; overrides piped stdin)
 
 Examples:
   cojudge run two-sum Solution.py
   cojudge run my-script.py
+  echo "42" | cojudge run main.cpp
+  cojudge run main.cpp --input input.txt
   cojudge run two-sum Solution.java --debug-lines 4,7
   cojudge run my-script.rs --debug-lines 3,8,12
 `);

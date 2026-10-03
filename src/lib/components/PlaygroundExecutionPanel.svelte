@@ -8,6 +8,7 @@
     import SaveStatus from "./SaveStatus.svelte";
     import DockerSettingsModal from "./DockerSettingsModal.svelte";
     import { isDesktopRuntime } from "$lib/firebaseSettings";
+    import { writeProgressStorageItem } from "$lib/progressBackup";
 
     export let code: string;
     export let language: ProgrammingLanguage = "java";
@@ -18,6 +19,8 @@
     export let debugBreakpoints: number[] = [];
     export let activeDebugLine: number | null = null;
     export let debugJobId: string | null = null;
+    /** Scope key for the per-file stdin input persisted in localStorage. */
+    export let inputStorageKey: string = "default";
 
     let isLoading = false;
     let isResizing = false;
@@ -30,7 +33,51 @@
     let isDebugRunning = false;
     let debugPollInterval: any = null;
     let lastSyncedBreakpoints: string = '[]';
-    let activeTab: "output" | "console" = "output";
+    let activeTab: "output" | "console" | "input" = "input";
+    /** Standard input fed to the program on stdin. Persisted per file. */
+    let stdin = "";
+    let stdinLoadedKey: string | null = null;
+
+    const STDIN_STORAGE_PREFIX = "cojudge.playground.stdin.";
+
+    function loadStdin(key: string) {
+        stdinLoadedKey = key;
+        if (!browser) {
+            stdin = "";
+            return;
+        }
+        try {
+            // Stored JSON-encoded so cloud snapshots round-trip it exactly;
+            // fall back to the raw value for keys written before encoding.
+            const raw = localStorage.getItem(STDIN_STORAGE_PREFIX + key) ?? "";
+            try {
+                const parsed = JSON.parse(raw);
+                stdin = typeof parsed === "string" ? parsed : raw;
+            } catch {
+                stdin = raw;
+            }
+        } catch {
+            stdin = "";
+        }
+    }
+
+    function persistStdin(value: string) {
+        if (!browser || stdinLoadedKey === null) return;
+        try {
+            writeProgressStorageItem(localStorage, STDIN_STORAGE_PREFIX + stdinLoadedKey, JSON.stringify(value));
+        } catch {
+            // localStorage unavailable (private mode, quota) — input still works for this run.
+        }
+    }
+
+    function handleStdinInput(e: Event) {
+        stdin = (e.currentTarget as HTMLTextAreaElement).value;
+        persistStdin(stdin);
+    }
+
+    $: if (browser && inputStorageKey !== stdinLoadedKey) {
+        loadStdin(inputStorageKey);
+    }
     let evalInput = "";
     let evalBusy = false;
     let evalHistory: { expr: string; result?: string; error?: string }[] = [];
@@ -399,6 +446,7 @@
         lastLanguageChecked = language;
         imageStatus = "unknown";
         refreshImageStatus();
+        activeTab = "input";
     }
 
     function delay(ms: number) {
@@ -415,6 +463,7 @@
         logs = "";
         error = null;
         hasRunOnce = true;
+        activeTab = "output";
 
         try {
             if (imageStatus === "absent" || imageStatus === "unknown") {
@@ -427,7 +476,7 @@
             const startRes = await fetch("/api/playground/run", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ language, code }),
+                body: JSON.stringify({ language, code, stdin }),
             });
             const startBody = await startRes.json();
             if (!startRes.ok || !startBody?.jobId) {
@@ -672,6 +721,13 @@
     <div class="tabs" class:hide={$execPaneHeightStore <= 15}>
         <button
             class="tab"
+            class:active={activeTab === "input"}
+            on:click={() => (activeTab = "input")}
+        >
+            Input
+        </button>
+        <button
+            class="tab"
             class:active={activeTab === "output"}
             on:click={() => (activeTab = "output")}
         >
@@ -692,7 +748,19 @@
         class="content"
         class:hide={$execPaneHeightStore <= minExecPanelHeight}
     >
-        {#if debugState && activeTab === "console"}
+        {#if activeTab === "input"}
+            <div class="input-view">
+                <textarea
+                    class="stdin-input"
+                    rows="7"
+                    placeholder="Type program input here"
+                    aria-label="Program standard input"
+                    value={stdin}
+                    on:input={handleStdinInput}
+                    spellcheck="false"
+                ></textarea>
+            </div>
+        {:else if debugState && activeTab === "console"}
             <div class="debug-view repl-view">
                 <div class="debug-header">
                     <span class="debug-status">
@@ -1223,6 +1291,29 @@
     .placeholder {
         color: var(--color-text-secondary);
         font-style: italic;
+    }
+
+    /* Input View */
+    .input-view {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-2);
+    }
+    .stdin-input {
+        width: 100%;
+        min-height: 90px;
+        resize: vertical;
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        color: var(--color-text-primary);
+        background-color: var(--color-bg);
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius);
+        padding: var(--spacing-2);
+    }
+    .stdin-input:focus {
+        outline: 2px solid var(--color-text-secondary);
+        outline-offset: -1px;
     }
 
     /* Actions Footer */

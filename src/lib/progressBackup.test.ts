@@ -139,6 +139,23 @@ describe('progress backups', () => {
 		expect(cloudFiles.playground).not.toContain('.env');
 	});
 
+	it('includes playground stdin inputs in cloud snapshots', () => {
+		const storage = new MemoryStorage();
+		// Stored JSON-encoded by the playground panel so values round-trip exactly.
+		storage.setItem('cojudge.playground.stdin.file-1', JSON.stringify('21\n'));
+		storage.setItem('cojudge.playground.stdin.file-2', JSON.stringify(''));
+		storage.setItem('unrelated-scratch', 'x');
+
+		const local = collectProgressData(storage);
+		const cloud = collectProgressData(storage, { cloud: true });
+
+		expect(local['cojudge.playground.stdin.file-1']).toBe('21\n');
+		expect(cloud['cojudge.playground.stdin.file-1']).toBe('21\n');
+		expect(cloud['cojudge.playground.stdin.file-2']).toBe('');
+		expect(cloud['unrelated-scratch']).toBeUndefined();
+		expect(isProgressStorageKey('cojudge.playground.stdin.file-1', { cloud: true })).toBe(true);
+	});
+
 	it('keeps markdown preview tabs locally but leaves them out of cloud snapshots', () => {
 		const storage = new MemoryStorage();
 		storage.setItem(
