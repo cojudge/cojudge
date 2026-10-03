@@ -27,7 +27,7 @@ function genId() {
     return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 }
 
-async function executeRun(language: string, code: string, job: RunJob) {
+async function executeRun(language: string, code: string, job: RunJob, stdin: string = '') {
     try {
         let runner: any = null;
         if (language === 'java') {
@@ -52,7 +52,7 @@ async function executeRun(language: string, code: string, job: RunJob) {
         job.status = 'preparing';
         await runner.compile();
         job.status = 'running';
-        const rawOutput = await runner.run();
+        const rawOutput = await runner.run(stdin);
 
         job.result = {
             output: rawOutput.output,
@@ -72,7 +72,7 @@ async function executeRun(language: string, code: string, job: RunJob) {
 }
 
 export const POST: RequestHandler = async ({ request }) => {
-    const { language, code, debugLines } = await request.json();
+    const { language, code, debugLines, stdin } = await request.json();
 
     if (debugLines && Array.isArray(debugLines) && debugLines.length > 0) {
         try {
@@ -87,7 +87,7 @@ export const POST: RequestHandler = async ({ request }) => {
     const id = genId();
     const job: RunJob = { id, status: 'pending', createdAt: Date.now() };
     jobs.set(id, job);
-    executeRun(language, code, job);
+    executeRun(language, code, job, typeof stdin === 'string' ? stdin : '');
     return json({ jobId: id, debug: false });
 };
 

@@ -7719,7 +7719,7 @@ func main() {
             class="exec-panel-host"
             class:hidden={language === 'plaintext' || language === 'markdown' || isSpecialTabType(activeTab?.type)}
         >
-            <PlaygroundExecutionPanel {code} {language} {isMac} bind:output bind:logs debugBreakpoints={debugBreakpoints} bind:activeDebugLine={activeDebugLine} bind:debugJobId={debugJobId} />
+            <PlaygroundExecutionPanel {code} {language} {isMac} bind:output bind:logs debugBreakpoints={debugBreakpoints} bind:activeDebugLine={activeDebugLine} bind:debugJobId={debugJobId} inputStorageKey={activeTab?.fileId ?? "default"} />
         </div>
         {:else}
         <div class="empty-state">

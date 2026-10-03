@@ -24,7 +24,7 @@ const CLOUD_KEYS = new Set([
 	'user-checkboxes',
 	'cojudge-whiteboard-v1'
 ]);
-const CLOUD_KEY_PREFIXES = ['cojudge-whiteboard-v1:share:'];
+const CLOUD_KEY_PREFIXES = ['cojudge-whiteboard-v1:share:', 'cojudge.playground.stdin.'];
 
 export const CLOUD_SNAPSHOT_LEGACY_VERSION = 1;
 export const CLOUD_SNAPSHOT_SIDECAR_VERSION = 2;

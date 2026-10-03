@@ -21,7 +21,17 @@ export abstract class PlaygroundRunner {
     }
 
     abstract compile(): Promise<void>;
-    abstract run(): Promise<{ output: string; logs: string }>;
+    abstract run(stdin?: string): Promise<{ output: string; logs: string }>;
+
+    /** Stage piped stdin as a file so the program can `<` redirect from it.
+     *  Empty stdin yields immediate EOF (same as before). */
+    protected async stageStdin(stdin: string = ''): Promise<void> {
+        if (!this.container) throw new Error('Container not initialized');
+        const stdinPack = tar.pack();
+        stdinPack.entry({ name: 'cojudge_stdin.txt' }, Buffer.from(stdin ?? ''));
+        stdinPack.finalize();
+        await this.container.putArchive(stdinPack as any, { path: '/app' });
+    }
 }
 
 export class PlaygroundJavaRunner extends PlaygroundRunner {
@@ -70,11 +80,11 @@ export class PlaygroundJavaRunner extends PlaygroundRunner {
         }
     }
 
-    async run(): Promise<{ output: string; logs: string }> {
-        if (!this.container) throw new Error('Container not initialized');
+    async run(stdin: string = ''): Promise<{ output: string; logs: string }> {
+        await this.stageStdin(stdin);
         
-        const exec = await this.container.exec({
-            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'java Main'],
+        const exec = await this.container!.exec({
+            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'java Main < cojudge_stdin.txt'],
             AttachStdout: true,
             AttachStderr: true
         });
@@ -128,11 +138,11 @@ export class PlaygroundPythonRunner extends PlaygroundRunner {
         await this.container.putArchive(pack as any, { path: '/app' });
     }
 
-    async run(): Promise<{ output: string; logs: string }> {
-        if (!this.container) throw new Error('Container not initialized');
+    async run(stdin: string = ''): Promise<{ output: string; logs: string }> {
+        await this.stageStdin(stdin);
         
-        const exec = await this.container.exec({
-            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'python3 main.py'],
+        const exec = await this.container!.exec({
+            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'python3 main.py < cojudge_stdin.txt'],
             AttachStdout: true,
             AttachStderr: true
         });
@@ -209,11 +219,11 @@ export class PlaygroundCppRunner extends PlaygroundRunner {
         }
     }
 
-    async run(): Promise<{ output: string; logs: string }> {
-        if (!this.container) throw new Error('Container not initialized');
-        
-        const exec = await this.container.exec({
-            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', './main'],
+    async run(stdin: string = ''): Promise<{ output: string; logs: string }> {
+        await this.stageStdin(stdin);
+
+        const exec = await this.container!.exec({
+            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', './main < cojudge_stdin.txt'],
             AttachStdout: true,
             AttachStderr: true
         });
@@ -302,11 +312,11 @@ export class PlaygroundCSharpRunner extends PlaygroundRunner {
         }
     }
 
-    async run(): Promise<{ output: string; logs: string }> {
-        if (!this.container) throw new Error('Container not initialized');
-        
-        const exec = await this.container.exec({
-            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'dotnet run --no-build'],
+    async run(stdin: string = ''): Promise<{ output: string; logs: string }> {
+        await this.stageStdin(stdin);
+
+        const exec = await this.container!.exec({
+            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'dotnet run --no-build < cojudge_stdin.txt'],
             AttachStdout: true,
             AttachStderr: true
         });
@@ -383,11 +393,11 @@ export class PlaygroundRustRunner extends PlaygroundRunner {
         }
     }
 
-    async run(): Promise<{ output: string; logs: string }> {
-        if (!this.container) throw new Error('Container not initialized');
-        
-        const exec = await this.container.exec({
-            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', './main'],
+    async run(stdin: string = ''): Promise<{ output: string; logs: string }> {
+        await this.stageStdin(stdin);
+
+        const exec = await this.container!.exec({
+            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', './main < cojudge_stdin.txt'],
             AttachStdout: true,
             AttachStderr: true
         });
@@ -476,11 +486,11 @@ export class PlaygroundGoRunner extends PlaygroundRunner {
         }
     }
 
-    async run(): Promise<{ output: string; logs: string }> {
-        if (!this.container) throw new Error('Container not initialized');
-        
-        const exec = await this.container.exec({
-            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', './main'],
+    async run(stdin: string = ''): Promise<{ output: string; logs: string }> {
+        await this.stageStdin(stdin);
+
+        const exec = await this.container!.exec({
+            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', './main < cojudge_stdin.txt'],
             AttachStdout: true,
             AttachStderr: true
         });
@@ -546,11 +556,11 @@ export class PlaygroundTypeScriptRunner extends PlaygroundRunner {
         await this.container.putArchive(pack as any, { path: '/app' });
     }
 
-    async run(): Promise<{ output: string; logs: string }> {
-        if (!this.container) throw new Error('Container not initialized');
-        
-        const exec = await this.container.exec({
-            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'npx --yes tsx main.ts'],
+    async run(stdin: string = ''): Promise<{ output: string; logs: string }> {
+        await this.stageStdin(stdin);
+
+        const exec = await this.container!.exec({
+            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'npx --yes tsx main.ts < cojudge_stdin.txt'],
             AttachStdout: true,
             AttachStderr: true
         });
