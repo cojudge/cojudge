@@ -505,4 +505,16 @@
     :global(.monaco-editor.monaco-vim-normal-mode .cursor) {
         display: none !important;
     }
+    /* Blurred editor: hollow block like the macOS terminal unfocused cursor. */
+    :global(.monaco-editor.monaco-vim-blurred .monaco-vim-visual-cursor) {
+        background: transparent !important;
+        border: 1px solid #d48f43;
+        animation: none;
+        opacity: 1;
+    }
+    :global(.vs-dark .monaco-editor.monaco-vim-blurred .monaco-vim-visual-cursor),
+    :global(.monaco-editor.vs-dark.monaco-vim-blurred .monaco-vim-visual-cursor),
+    :global(.vs-dark .monaco-vim-blurred .monaco-vim-visual-cursor) {
+        border-color: #42c882;
+    }
 </style>
