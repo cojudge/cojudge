@@ -119,6 +119,21 @@ export const MONACO_VIM_BLURRED_CLASS = 'monaco-vim-blurred';
 export const MONACO_VIM_VISUAL_CURSOR_CLASS = 'monaco-vim-visual-cursor';
 
 /**
+ * Pure helper for Normal-mode mouse clicks past end-of-line.
+ *
+ * In Vim Normal mode the cursor must stay on a character, but a mouse click
+ * past the last character (e.g. after the `)` in `print('x')`) lands one
+ * column too far right, while `hjkl` motions clip correctly. Returns the
+ * corrected 1-based column, or null when no correction is needed.
+ */
+export function getNormalModeClickClipColumn(lineLength: number, column: number): number | null {
+    if (!Number.isInteger(lineLength) || !Number.isInteger(column)) return null;
+    if (lineLength <= 0) return null;
+    if (column > lineLength) return lineLength;
+    return null;
+}
+
+/**
  * Pure helper for the monaco-vim visual cursor fix.
  *
  * monaco-vim renders visual selections as half-open Monaco ranges
@@ -150,6 +165,8 @@ type VisualCursorFixEditor = {
     getModel?: () => { getLineCount: () => number; getLineContent: (lineNumber: number) => string } | null;
     getDomNode?: () => HTMLElement | null;
     getPosition?: () => { lineNumber: number; column: number } | null;
+    getSelection?: () => { isEmpty?: () => boolean } | null;
+    setPosition?: (position: { lineNumber: number; column: number }) => void;
     hasTextFocus?: () => boolean;
     deltaDecorations?: (oldIds: string[], newDecos: unknown[]) => string[];
     onDidChangeCursorSelection?: (listener: () => void) => { dispose: () => void };
@@ -245,6 +262,35 @@ export function attachVisualCursorFix(
         if (!model) {
             clear();
             return;
+        }
+        if (!vim.visualMode) {
+            // Normal mode: a mouse click past the last character lands one
+            // column too far right (monaco-vim only guards mouse events, while
+            // `hjkl` motions clip via clipCursorToContent). Pull it back to
+            // the last character; the follow-up cursor event re-decorates.
+            // Skip when a range is selected so drags are left alone.
+            const sel = editor.getSelection?.() ?? null;
+            const selEmpty = !sel || typeof sel.isEmpty !== 'function' || sel.isEmpty();
+            const pos = editor.getPosition?.() ?? null;
+            if (
+                selEmpty &&
+                pos &&
+                pos.lineNumber >= 1 &&
+                pos.lineNumber <= model.getLineCount()
+            ) {
+                const clipped = getNormalModeClickClipColumn(
+                    model.getLineContent(pos.lineNumber).length,
+                    pos.column
+                );
+                if (clipped !== null) {
+                    try {
+                        editor.setPosition?.({ lineNumber: pos.lineNumber, column: clipped });
+                    } catch {
+                        // ignore
+                    }
+                    return;
+                }
+            }
         }
         if (vim.visualMode) {
             const head = vim.sel?.head;
