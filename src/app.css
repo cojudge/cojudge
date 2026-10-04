@@ -638,6 +638,35 @@
 }
 
 
+/* Monaco Vim cursor fix: custom blocks sit on the correct character in both
+   NORMAL and VISUAL mode (native solid block would hide it, and visual native
+   would be one cell right). Blink slowly (~once a second) so the covered
+   character stays readable. */
+.monaco-vim-visual-cursor {
+  background: #d48f43 !important;
+  animation: monaco-vim-visual-cursor-blink 2s step-start infinite;
+}
+
+.vs-dark .monaco-vim-visual-cursor {
+  background: #42c882 !important;
+}
+
+.monaco-editor.monaco-vim-visual-mode .cursor,
+.monaco-editor.monaco-vim-normal-mode .cursor {
+  display: none !important;
+}
+
+@keyframes monaco-vim-visual-cursor-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
 /* Basic Reset and Global Styles */
 *,
 *::before,
