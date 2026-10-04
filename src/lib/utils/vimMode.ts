@@ -106,6 +106,246 @@ export function getExYankRegister(params: Record<string, any>) {
     return registerName ? registerName.charAt(0) : undefined;
 }
 
+export type MonacoVisualCursorRange = {
+    startLineNumber: number;
+    startColumn: number;
+    endLineNumber: number;
+    endColumn: number;
+};
+
+export const MONACO_VIM_VISUAL_MODE_CLASS = 'monaco-vim-visual-mode';
+export const MONACO_VIM_NORMAL_MODE_CLASS = 'monaco-vim-normal-mode';
+export const MONACO_VIM_VISUAL_CURSOR_CLASS = 'monaco-vim-visual-cursor';
+
+/**
+ * Pure helper for the monaco-vim visual cursor fix.
+ *
+ * monaco-vim renders visual selections as half-open Monaco ranges
+ * ([anchor, head + 1)), so the native block cursor lands one character to
+ * the right of Vim's inclusive head (e.g. on `m` instead of `h` for `hm`).
+ * The editor fix draws its own block at the inclusive head and hides the
+ * native cursor. This returns the 1-based single-character range to decorate,
+ * or null when the native cursor should be left alone (not in visual mode,
+ * or head is on an empty/EOL position with no character to cover).
+ */
+export function getVisualCursorRange(
+    head: CmPosition | null | undefined,
+    lineContent: string | null | undefined
+): MonacoVisualCursorRange | null {
+    if (!head || head.line == null || head.ch == null) return null;
+    if (lineContent == null) return null;
+    if (!Number.isInteger(head.line) || !Number.isInteger(head.ch)) return null;
+    if (head.line < 0 || head.ch < 0 || head.ch >= lineContent.length) return null;
+    const lineNumber = head.line + 1;
+    return {
+        startLineNumber: lineNumber,
+        startColumn: head.ch + 1,
+        endLineNumber: lineNumber,
+        endColumn: head.ch + 2
+    };
+}
+
+type VisualCursorFixEditor = {
+    getModel?: () => { getLineCount: () => number; getLineContent: (lineNumber: number) => string } | null;
+    getDomNode?: () => HTMLElement | null;
+    getPosition?: () => { lineNumber: number; column: number } | null;
+    deltaDecorations?: (oldIds: string[], newDecos: unknown[]) => string[];
+    onDidChangeCursorSelection?: (listener: () => void) => { dispose: () => void };
+    onDidChangeCursorPosition?: (listener: () => void) => { dispose: () => void };
+    updateOptions?: (options: Record<string, unknown>) => void;
+};
+
+type VisualCursorFixAdapter = {
+    on?: (event: string, handler: () => void) => void;
+    off?: (event: string, handler: () => void) => void;
+    state?: { vim?: { visualMode?: boolean; insertMode?: boolean; sel?: { head?: CmPosition } } };
+    enterVimMode?: (...args: unknown[]) => unknown;
+};
+
+/**
+ * Attaches the cursor correction to a live vim-mode editor.
+ *
+ * Visual mode keeps the exclusive Monaco selection (so yank/delete stay
+ * correct) but hides the native block — which sits on the exclusive end —
+ * and decorates the inclusive Vim head instead.
+ *
+ * Normal mode uses the same slow-blinking custom block (the native solid
+ * block permanently hides the covered character, e.g. orange keyword text on
+ * an orange background). Insert mode is left alone so the native line cursor
+ * shows. Falls back to the native cursor when there is no character to cover.
+ */
+export function attachVisualCursorFix(
+    editor: VisualCursorFixEditor,
+    vimAdapter: VisualCursorFixAdapter
+): () => void {
+    let decoIds: string[] = [];
+    let disposed = false;
+
+    const getDomNode = (): HTMLElement | null => {
+        try {
+            return editor?.getDomNode?.() ?? null;
+        } catch {
+            return null;
+        }
+    };
+
+    const clear = () => {
+        if (decoIds.length > 0) {
+            try {
+                const result = editor.deltaDecorations?.(decoIds, []);
+                decoIds = Array.isArray(result) ? result : [];
+            } catch {
+                decoIds = [];
+            }
+        }
+        try {
+            const classList = getDomNode()?.classList;
+            classList?.remove(MONACO_VIM_VISUAL_MODE_CLASS);
+            classList?.remove(MONACO_VIM_NORMAL_MODE_CLASS);
+        } catch {
+            // ignore
+        }
+    };
+
+    const showRange = (range: MonacoVisualCursorRange, modeClass: string, otherClass: string) => {
+        try {
+            decoIds =
+                editor.deltaDecorations?.(decoIds, [
+                    {
+                        range,
+                        options: {
+                            className: MONACO_VIM_VISUAL_CURSOR_CLASS,
+                            stickiness: 1,
+                            zIndex: 20
+                        }
+                    }
+                ]) ?? decoIds;
+            const classList = getDomNode()?.classList;
+            classList?.add(modeClass);
+            classList?.remove(otherClass);
+        } catch {
+            // ignore decoration failures; native cursor remains as fallback
+        }
+    };
+
+    const update = () => {
+        if (disposed) return;
+        const vim = vimAdapter?.state?.vim;
+        // Insert mode keeps the native line cursor.
+        if (!vim || vim.insertMode) {
+            clear();
+            return;
+        }
+        const model = editor?.getModel?.() ?? null;
+        if (!model) {
+            clear();
+            return;
+        }
+        if (vim.visualMode) {
+            const head = vim.sel?.head;
+            const lineContent =
+                head && head.line + 1 >= 1 && head.line + 1 <= model.getLineCount()
+                    ? model.getLineContent(head.line + 1)
+                    : null;
+            const range = getVisualCursorRange(head, lineContent);
+            if (!range) {
+                clear();
+                return;
+            }
+            showRange(range, MONACO_VIM_VISUAL_MODE_CLASS, MONACO_VIM_NORMAL_MODE_CLASS);
+            return;
+        }
+        // Normal mode: same slow-blinking custom block so the covered
+        // character stays readable (native solid block hides it).
+        const pos = editor.getPosition?.() ?? null;
+        if (!pos || pos.lineNumber < 1 || pos.lineNumber > model.getLineCount()) {
+            clear();
+            return;
+        }
+        const range = getVisualCursorRange(
+            { line: pos.lineNumber - 1, ch: pos.column - 1 },
+            model.getLineContent(pos.lineNumber)
+        );
+        if (!range) {
+            clear();
+            return;
+        }
+        showRange(range, MONACO_VIM_NORMAL_MODE_CLASS, MONACO_VIM_VISUAL_MODE_CLASS);
+    };
+
+    const disposables: { dispose: () => void }[] = [];
+    try {
+        const selectionDisposable = editor.onDidChangeCursorSelection?.(() => update());
+        if (selectionDisposable) disposables.push(selectionDisposable);
+    } catch {
+        // ignore
+    }
+    try {
+        // Normal-mode moves keep an empty selection; position events catch them.
+        const positionDisposable = editor.onDidChangeCursorPosition?.(() => update());
+        if (positionDisposable) disposables.push(positionDisposable);
+    } catch {
+        // ignore
+    }
+
+    const modeHandler = () => {
+        // vim-mode-change fires before updateCmSelection; defer so vim.sel is current.
+        setTimeout(update, 0);
+    };
+    try {
+        vimAdapter?.on?.('vim-mode-change', modeHandler);
+    } catch {
+        // ignore
+    }
+
+    // monaco-vim forces cursorBlinking: "solid" in enterVimMode (called on
+    // attach and on every exitInsertMode), which hides the covered character
+    // in NORMAL mode too. Wrap it so the native block blinks instead.
+    const adapterAny = vimAdapter as Record<string, unknown>;
+    const originalEnterVimMode = typeof adapterAny['enterVimMode'] === 'function'
+        ? (adapterAny['enterVimMode'] as (...args: unknown[]) => unknown)
+        : null;
+    const applyBlink = () => {
+        try {
+            editor.updateOptions?.({ cursorBlinking: 'blink' });
+        } catch {
+            // ignore
+        }
+    };
+    if (originalEnterVimMode) {
+        adapterAny['enterVimMode'] = (...args: unknown[]) => {
+            const result = originalEnterVimMode.apply(vimAdapter, args);
+            applyBlink();
+            return result;
+        };
+    }
+    applyBlink();
+
+    setTimeout(update, 0);
+
+    return () => {
+        disposed = true;
+        try {
+            disposables.forEach((d) => d?.dispose?.());
+        } catch {
+            // ignore
+        }
+        try {
+            vimAdapter?.off?.('vim-mode-change', modeHandler);
+        } catch {
+            // ignore
+        }
+        if (originalEnterVimMode) {
+            try {
+                adapterAny['enterVimMode'] = originalEnterVimMode;
+            } catch {
+                // ignore
+            }
+        }
+        clear();
+    };
+}
+
 function normalizeLine(line: number, cm: CmAdapter) {
     return Math.min(Math.max(line, cm.firstLine()), cm.lastLine());
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
     import type * as Monaco from 'monaco-editor';
-    import { configureMonacoVim } from '$lib/utils/vimMode';
+    import { attachVisualCursorFix, configureMonacoVim } from '$lib/utils/vimMode';
     import { isDebugSupported } from '$lib/utils/util';
     import { canInspectToken, isBreakpointCandidate, type SourceToken } from '$lib/utils/debugSource';
     import { onMount } from 'svelte';
@@ -23,6 +23,7 @@
     let editorElement: HTMLDivElement;
     let monacoRef: any;
     let vimModeInstance: any = null;
+    let disposeVisualCursorFix: (() => void) | null = null;
     let vimStatusElement: HTMLDivElement;
     let bpDecos: string[] = [];
     let activeLineDecos: string[] = [];
@@ -267,17 +268,36 @@
             });
 
             // Reactively handle vim mode after editor creation
+            const enableVimMode = (initFn: any) => {
+                if (!editor) return;
+                if (!vimModeInstance) {
+                    vimModeInstance = initFn(editor, vimStatusElement);
+                    try {
+                        disposeVisualCursorFix?.();
+                    } catch {
+                        // ignore
+                    }
+                    disposeVisualCursorFix = attachVisualCursorFix(editor as any, vimModeInstance as any);
+                }
+            };
+            const disableVimMode = () => {
+                try {
+                    disposeVisualCursorFix?.();
+                } catch {
+                    // ignore
+                }
+                disposeVisualCursorFix = null;
+                if (vimModeInstance) {
+                    vimModeInstance.dispose();
+                    vimModeInstance = null;
+                }
+            };
             const updateVimMode = (enabled: string) => {
                 if (!editor) return;
                 if (enabled === 'on') {
-                    if (!vimModeInstance) {
-                        vimModeInstance = initVimMode(editor, vimStatusElement);
-                    }
+                    enableVimMode(initVimMode);
                 } else {
-                    if (vimModeInstance) {
-                        vimModeInstance.dispose();
-                        vimModeInstance = null;
-                    }
+                    disableVimMode();
                 }
             };
             
@@ -289,6 +309,12 @@
         return () => {
             disposed = true;
             editorElement.removeEventListener('paste', handlePasteCapture, true);
+            try {
+                disposeVisualCursorFix?.();
+            } catch {
+                // ignore
+            }
+            disposeVisualCursorFix = null;
             if (vimModeInstance) {
                 vimModeInstance.dispose();
             }
@@ -315,8 +341,20 @@
             if (vimMode === 'on') {
                 if (!vimModeInstance) {
                     vimModeInstance = initVimMode(editor, vimStatusElement);
+                    try {
+                        disposeVisualCursorFix?.();
+                    } catch {
+                        // ignore
+                    }
+                    disposeVisualCursorFix = attachVisualCursorFix(editor as any, vimModeInstance as any);
                 }
             } else {
+                try {
+                    disposeVisualCursorFix?.();
+                } catch {
+                    // ignore
+                }
+                disposeVisualCursorFix = null;
                 if (vimModeInstance) {
                     vimModeInstance.dispose();
                     vimModeInstance = null;
@@ -453,5 +491,18 @@
         border-radius: 50%;
         opacity: 0.5;
         pointer-events: none;
+    }
+    /* monaco-vim native blocks hide the covered character and visual lands one
+       cell right, so both NORMAL and VISUAL use the slow-blinking custom block. */
+    :global(.monaco-vim-visual-cursor) {
+        background: #d48f43 !important;
+        animation: monaco-vim-visual-cursor-blink 2s step-start infinite;
+    }
+    :global(.vs-dark .monaco-vim-visual-cursor) {
+        background: #42c882 !important;
+    }
+    :global(.monaco-editor.monaco-vim-visual-mode .cursor),
+    :global(.monaco-editor.monaco-vim-normal-mode .cursor) {
+        display: none !important;
     }
 </style>
