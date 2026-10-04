@@ -807,7 +807,48 @@ fn shutdown_backend(app: &tauri::AppHandle) {
     let _ = child.wait();
 }
 
+#[cfg(target_os = "macos")]
+fn disable_macos_press_and_hold_in_memory() {
+    // Apply to the running process immediately (no restart needed).
+    // WKWebView / NSTextInputContext reads this from NSUserDefaults.
+    // Safe to call on any thread; must run before any webview is created.
+    use objc2_foundation::{NSString, NSUserDefaults};
+    let key = NSString::from_str("ApplePressAndHoldEnabled");
+    let defaults = NSUserDefaults::standardUserDefaults();
+    defaults.setBool_forKey(false, &key);
+}
+
+#[cfg(target_os = "macos")]
+fn disable_macos_press_and_hold(identifier: &str) {
+    // macOS press-and-hold shows the accent popup (e.g. holding `k` in Monaco
+    // vim mode) instead of repeating the key. Disabling it for our bundle
+    // restores normal key repeat in the WKWebView. Same as:
+    //   defaults write <bundle-id> ApplePressAndHoldEnabled -bool false
+    // Must run before any webview is created; WKWebView picks it up on creation.
+    disable_macos_press_and_hold_in_memory();
+
+    // Persist for next launches. Best-effort: ignore failures.
+    if let Err(error) = std::process::Command::new("defaults")
+        .args([
+            "write",
+            identifier,
+            "ApplePressAndHoldEnabled",
+            "-bool",
+            "false",
+        ])
+        .output()
+    {
+        eprintln!("failed to disable macOS press-and-hold: {error}");
+    }
+}
+
 fn main() {
+    // Earliest possible: disable press-and-hold for this process before
+    // NSApplication / WKWebView init. Fixes `tauri dev` too, where the
+    // bundle identifier isn't applied to the unbundled helper binary.
+    #[cfg(target_os = "macos")]
+    disable_macos_press_and_hold_in_memory();
+
     let app = tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_updater::Builder::new().build())
@@ -833,6 +874,9 @@ fn main() {
             }
         })
         .setup(|app| {
+            #[cfg(target_os = "macos")]
+            disable_macos_press_and_hold(&app.config().identifier);
+
             build_menu(app.handle())?;
 
             #[cfg(debug_assertions)]
