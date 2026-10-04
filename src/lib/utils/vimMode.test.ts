@@ -4,6 +4,7 @@ import {
     findMatchingSymbolPosition,
     getExYankRegister,
     getLinewiseRangeText,
+    getNormalModeClickClipColumn,
     getVisualCursorRange,
     yankLineRangeToRegister
 } from './vimMode';
@@ -74,6 +75,14 @@ describe('vim mode helpers', () => {
         expect(getVisualCursorRange({ line: 0, ch: 0 }, '')).toBeNull();
         expect(getVisualCursorRange({ line: 0, ch: 3 }, 'abc')).toBeNull();
         expect(getVisualCursorRange(null, 'abc')).toBeNull();
+    });
+
+    it('clips a normal-mode click past end-of-line back to the last character', () => {
+        // `print('x')` is 10 chars; clicking after `)` gives column 11.
+        expect(getNormalModeClickClipColumn(10, 11)).toBe(10);
+        expect(getNormalModeClickClipColumn(10, 10)).toBeNull();
+        expect(getNormalModeClickClipColumn(10, 1)).toBeNull();
+        expect(getNormalModeClickClipColumn(0, 1)).toBeNull();
     });
 
     it('attaches a single-character decoration at the visual head and hides the native cursor', () => {
@@ -240,8 +249,7 @@ describe('vim mode helpers', () => {
         expect(classList.remove).toHaveBeenCalledWith('monaco-vim-blurred');
     });
 
-    it('starts hollow when attaching while already blurred', () => {
-        const classList = { add: vi.fn(), remove: vi.fn(), toggle: vi.fn() };
+    it('starts hollow when attaching while already blurred', () => {        const classList = { add: vi.fn(), remove: vi.fn(), toggle: vi.fn() };
         const editor = {
             getModel: () => ({
                 getLineCount: () => 1,
@@ -266,5 +274,107 @@ describe('vim mode helpers', () => {
         const dispose = attachVisualCursorFix(editor, adapter);
         expect(classList.toggle).toHaveBeenCalledWith('monaco-vim-blurred', true);
         dispose();
+    });
+
+    it('pulls a normal-mode click past end-of-line back to the last character', () => {
+        const classList = { add: vi.fn(), remove: vi.fn(), toggle: vi.fn() };
+        const editor = {
+            getModel: () => ({
+                getLineCount: () => 5,
+                getLineContent: () => "print('x')"
+            }),
+            getDomNode: () => ({ classList }) as unknown as HTMLElement,
+            // Click after the `)` on line 2: column 11 on a 10-char line.
+            getPosition: () => ({ lineNumber: 2, column: 11 }),
+            getSelection: () => ({ isEmpty: () => true }),
+            setPosition: vi.fn(),
+            deltaDecorations: vi.fn(() => ['deco-1']),
+            onDidChangeCursorSelection: vi.fn(() => ({ dispose: vi.fn() })),
+            onDidChangeCursorPosition: vi.fn(() => ({ dispose: vi.fn() })),
+            updateOptions: vi.fn()
+        };
+        const adapter = {
+            on: vi.fn(),
+            off: vi.fn(),
+            state: { vim: { visualMode: false, insertMode: false } }
+        };
+
+        const dispose = attachVisualCursorFix(editor, adapter);
+
+        const calls = editor.onDidChangeCursorPosition.mock.calls as unknown[][] | undefined;
+        const listener = calls?.[0]?.[0] as (() => void) | undefined;
+        listener?.();
+
+        expect(editor.setPosition).toHaveBeenCalledWith({ lineNumber: 2, column: 10 });
+        // No decoration this round; the follow-up cursor event re-decorates.
+        expect(editor.deltaDecorations).not.toHaveBeenCalled();
+
+        dispose();
+    });
+
+    it('leaves clicks alone in insert/visual mode, on selections, or on the last character', () => {
+        const makeEditor = (position: { lineNumber: number; column: number }, empty: boolean) => ({
+            getModel: () => ({
+                getLineCount: () => 5,
+                getLineContent: () => "print('x')"
+            }),
+            getDomNode: () => ({ classList: { add: vi.fn(), remove: vi.fn(), toggle: vi.fn() } }) as unknown as HTMLElement,
+            getPosition: () => position,
+            getSelection: () => ({ isEmpty: () => empty }),
+            setPosition: vi.fn(),
+            deltaDecorations: vi.fn(() => ['deco-1']),
+            onDidChangeCursorSelection: vi.fn(() => ({ dispose: vi.fn() })),
+            onDidChangeCursorPosition: vi.fn(() => ({ dispose: vi.fn() })),
+            updateOptions: vi.fn()
+        });
+        const firePosition = (selectionMock: { mock: { calls: unknown[][] } }) => {
+            const listener = selectionMock.mock.calls?.[0]?.[0] as (() => void) | undefined;
+            listener?.();
+        };
+
+        // Insert mode: appending past end is legal.
+        const insertEditor = makeEditor({ lineNumber: 2, column: 11 }, true);
+        const disposeInsert = attachVisualCursorFix(insertEditor, {
+            on: vi.fn(),
+            off: vi.fn(),
+            state: { vim: { visualMode: false, insertMode: true } }
+        });
+        firePosition(insertEditor.onDidChangeCursorPosition);
+        expect(insertEditor.setPosition).not.toHaveBeenCalled();
+        disposeInsert();
+
+        // Visual mode: EOL positions select the newline.
+        const visualEditor = makeEditor({ lineNumber: 2, column: 11 }, false);
+        const disposeVisual = attachVisualCursorFix(visualEditor, {
+            on: vi.fn(),
+            off: vi.fn(),
+            state: { vim: { visualMode: true, insertMode: false, sel: { head: { line: 1, ch: 10 } } } }
+        });
+        firePosition(visualEditor.onDidChangeCursorPosition);
+        expect(visualEditor.setPosition).not.toHaveBeenCalled();
+        disposeVisual();
+
+        // Normal mode with a non-empty selection (drag): leave alone.
+        const dragEditor = makeEditor({ lineNumber: 2, column: 11 }, false);
+        const disposeDrag = attachVisualCursorFix(dragEditor, {
+            on: vi.fn(),
+            off: vi.fn(),
+            state: { vim: { visualMode: false, insertMode: false } }
+        });
+        firePosition(dragEditor.onDidChangeCursorPosition);
+        expect(dragEditor.setPosition).not.toHaveBeenCalled();
+        disposeDrag();
+
+        // Normal mode already on the last character: no move.
+        const okEditor = makeEditor({ lineNumber: 2, column: 10 }, true);
+        const disposeOk = attachVisualCursorFix(okEditor, {
+            on: vi.fn(),
+            off: vi.fn(),
+            state: { vim: { visualMode: false, insertMode: false } }
+        });
+        firePosition(okEditor.onDidChangeCursorPosition);
+        expect(okEditor.setPosition).not.toHaveBeenCalled();
+        expect(okEditor.deltaDecorations).toHaveBeenCalled();
+        disposeOk();
     });
 });
