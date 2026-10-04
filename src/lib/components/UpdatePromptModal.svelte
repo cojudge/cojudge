@@ -138,10 +138,6 @@
 			{/if}
 		</div>
 
-		{#if availableAppUpdate.notes}
-			<div class="update-section update-notes">{availableAppUpdate.notes}</div>
-		{/if}
-
 		{#if isInstalling}
 			<div class="update-progress">
 				<div
@@ -355,12 +351,6 @@
 	}
 	.update-mono {
 		font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
-	}
-	.update-notes {
-		font-size: 0.85rem;
-		line-height: 1.55;
-		color: var(--color-text-secondary);
-		white-space: pre-wrap;
 	}
 	.update-progress {
 		display: grid;
