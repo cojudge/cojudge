@@ -143,17 +143,27 @@
 		{/if}
 
 		{#if isInstalling}
-			<div class="update-progress" role="status" aria-live="polite">
-				<div class="update-progress-track">
+			<div class="update-progress">
+				<div
+					class="update-progress-track"
+					role="progressbar"
+					aria-label="Download progress"
+					aria-valuemin={0}
+					aria-valuemax={100}
+					aria-valuenow={progressPercent ?? undefined}
+				>
 					<div
 						class="update-progress-fill"
 						class:indeterminate={progressPercent == null}
 						style={progressPercent != null ? `width: ${progressPercent}%` : undefined}
 					></div>
 				</div>
-				<span class="update-progress-text">
-					{progressText ?? 'Downloading update…'} The dialog can be hidden; the install continues in the background.
-				</span>
+				<div class="update-progress-text">
+					<span class="update-progress-numbers">{progressText ?? 'Downloading update…'}</span>
+					<span class="update-progress-hint">
+						The dialog can be hidden; the install continues in the background.
+					</span>
+				</div>
 			</div>
 		{/if}
 
@@ -386,8 +396,21 @@
 		}
 	}
 	.update-progress-text {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
 		font-size: 0.78rem;
 		line-height: 1.45;
+		color: var(--color-text-secondary);
+	}
+	.update-progress-numbers {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		font-variant-numeric: tabular-nums;
+		font-feature-settings: 'tnum' 1;
+	}
+	.update-progress-hint {
 		color: var(--color-text-secondary);
 	}
 	.update-link {
