@@ -115,6 +115,7 @@ export type MonacoVisualCursorRange = {
 
 export const MONACO_VIM_VISUAL_MODE_CLASS = 'monaco-vim-visual-mode';
 export const MONACO_VIM_NORMAL_MODE_CLASS = 'monaco-vim-normal-mode';
+export const MONACO_VIM_BLURRED_CLASS = 'monaco-vim-blurred';
 export const MONACO_VIM_VISUAL_CURSOR_CLASS = 'monaco-vim-visual-cursor';
 
 /**
@@ -149,9 +150,12 @@ type VisualCursorFixEditor = {
     getModel?: () => { getLineCount: () => number; getLineContent: (lineNumber: number) => string } | null;
     getDomNode?: () => HTMLElement | null;
     getPosition?: () => { lineNumber: number; column: number } | null;
+    hasTextFocus?: () => boolean;
     deltaDecorations?: (oldIds: string[], newDecos: unknown[]) => string[];
     onDidChangeCursorSelection?: (listener: () => void) => { dispose: () => void };
     onDidChangeCursorPosition?: (listener: () => void) => { dispose: () => void };
+    onDidBlurEditorWidget?: (listener: () => void) => { dispose: () => void };
+    onDidFocusEditorWidget?: (listener: () => void) => { dispose: () => void };
     updateOptions?: (options: Record<string, unknown>) => void;
 };
 
@@ -202,6 +206,7 @@ export function attachVisualCursorFix(
             const classList = getDomNode()?.classList;
             classList?.remove(MONACO_VIM_VISUAL_MODE_CLASS);
             classList?.remove(MONACO_VIM_NORMAL_MODE_CLASS);
+            classList?.remove(MONACO_VIM_BLURRED_CLASS);
         } catch {
             // ignore
         }
@@ -284,6 +289,32 @@ export function attachVisualCursorFix(
         // Normal-mode moves keep an empty selection; position events catch them.
         const positionDisposable = editor.onDidChangeCursorPosition?.(() => update());
         if (positionDisposable) disposables.push(positionDisposable);
+    } catch {
+        // ignore
+    }
+    const setBlurred = (blurred: boolean) => {
+        try {
+            getDomNode()?.classList.toggle(MONACO_VIM_BLURRED_CLASS, blurred);
+        } catch {
+            // ignore
+        }
+    };
+    try {
+        const blurDisposable = editor.onDidBlurEditorWidget?.(() => setBlurred(true));
+        if (blurDisposable) disposables.push(blurDisposable);
+    } catch {
+        // ignore
+    }
+    try {
+        const focusDisposable = editor.onDidFocusEditorWidget?.(() => setBlurred(false));
+        if (focusDisposable) disposables.push(focusDisposable);
+    } catch {
+        // ignore
+    }
+    try {
+        if (typeof editor.hasTextFocus === 'function' && !editor.hasTextFocus()) {
+            setBlurred(true);
+        }
     } catch {
         // ignore
     }

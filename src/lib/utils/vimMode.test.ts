@@ -168,7 +168,7 @@ describe('vim mode helpers', () => {
     });
 
     it('leaves insert mode alone so the native line cursor shows', () => {
-        const classList = { add: vi.fn(), remove: vi.fn() };
+        const classList = { add: vi.fn(), remove: vi.fn(), toggle: vi.fn() };
         const editor = {
             getModel: () => ({
                 getLineCount: () => 1,
@@ -179,6 +179,8 @@ describe('vim mode helpers', () => {
             deltaDecorations: vi.fn(() => ['deco-1']),
             onDidChangeCursorSelection: vi.fn(() => ({ dispose: vi.fn() })),
             onDidChangeCursorPosition: vi.fn(() => ({ dispose: vi.fn() })),
+            onDidBlurEditorWidget: vi.fn(() => ({ dispose: vi.fn() })),
+            onDidFocusEditorWidget: vi.fn(() => ({ dispose: vi.fn() })),
             updateOptions: vi.fn()
         };
         const adapter = {
@@ -196,6 +198,73 @@ describe('vim mode helpers', () => {
         expect(editor.deltaDecorations).not.toHaveBeenCalled();
         expect(classList.add).not.toHaveBeenCalled();
 
+        dispose();
+    });
+
+    it('hollows the custom block when the editor loses focus', () => {
+        const classList = { add: vi.fn(), remove: vi.fn(), toggle: vi.fn() };
+        const editor = {
+            getModel: () => ({
+                getLineCount: () => 1,
+                getLineContent: () => 'hm'
+            }),
+            getDomNode: () => ({ classList }) as unknown as HTMLElement,
+            getPosition: () => ({ lineNumber: 1, column: 1 }),
+            hasTextFocus: () => true,
+            deltaDecorations: vi.fn(() => ['deco-1']),
+            onDidChangeCursorSelection: vi.fn(() => ({ dispose: vi.fn() })),
+            onDidChangeCursorPosition: vi.fn(() => ({ dispose: vi.fn() })),
+            onDidBlurEditorWidget: vi.fn(() => ({ dispose: vi.fn() })),
+            onDidFocusEditorWidget: vi.fn(() => ({ dispose: vi.fn() })),
+            updateOptions: vi.fn()
+        };
+        const adapter = {
+            on: vi.fn(),
+            off: vi.fn(),
+            state: { vim: { visualMode: false, insertMode: false } }
+        };
+
+        const dispose = attachVisualCursorFix(editor, adapter);
+
+        const blurCalls = editor.onDidBlurEditorWidget.mock.calls as unknown[][] | undefined;
+        const blur = blurCalls?.[0]?.[0] as (() => void) | undefined;
+        blur?.();
+        expect(classList.toggle).toHaveBeenCalledWith('monaco-vim-blurred', true);
+
+        const focusCalls = editor.onDidFocusEditorWidget.mock.calls as unknown[][] | undefined;
+        const focus = focusCalls?.[0]?.[0] as (() => void) | undefined;
+        focus?.();
+        expect(classList.toggle).toHaveBeenCalledWith('monaco-vim-blurred', false);
+
+        dispose();
+        expect(classList.remove).toHaveBeenCalledWith('monaco-vim-blurred');
+    });
+
+    it('starts hollow when attaching while already blurred', () => {
+        const classList = { add: vi.fn(), remove: vi.fn(), toggle: vi.fn() };
+        const editor = {
+            getModel: () => ({
+                getLineCount: () => 1,
+                getLineContent: () => 'hm'
+            }),
+            getDomNode: () => ({ classList }) as unknown as HTMLElement,
+            getPosition: () => ({ lineNumber: 1, column: 1 }),
+            hasTextFocus: () => false,
+            deltaDecorations: vi.fn(() => ['deco-1']),
+            onDidChangeCursorSelection: vi.fn(() => ({ dispose: vi.fn() })),
+            onDidChangeCursorPosition: vi.fn(() => ({ dispose: vi.fn() })),
+            onDidBlurEditorWidget: vi.fn(() => ({ dispose: vi.fn() })),
+            onDidFocusEditorWidget: vi.fn(() => ({ dispose: vi.fn() })),
+            updateOptions: vi.fn()
+        };
+        const adapter = {
+            on: vi.fn(),
+            off: vi.fn(),
+            state: { vim: { visualMode: false, insertMode: false } }
+        };
+
+        const dispose = attachVisualCursorFix(editor, adapter);
+        expect(classList.toggle).toHaveBeenCalledWith('monaco-vim-blurred', true);
         dispose();
     });
 });
