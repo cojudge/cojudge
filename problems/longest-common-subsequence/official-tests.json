@@ -1,7 +1,131 @@
 [
-  { "text1": "abcde", "text2": "ace" },
-  { "text1": "abc", "text2": "abc" },
-  { "text1": "abc", "text2": "def" },
-  { "text1": "bl", "text2": "yby" },
-  { "text1": "@javascript: 'a'.repeat(1000)", "text2": "@javascript: 'a'.repeat(1000)", "_isLargeTest": true }
+  {
+    "text1": "abcde",
+    "text2": "ace"
+  },
+  {
+    "text1": "abc",
+    "text2": "abc"
+  },
+  {
+    "text1": "abc",
+    "text2": "def"
+  },
+  {
+    "text1": "bl",
+    "text2": "yby"
+  },
+  {
+    "text1": "@javascript: 'a'.repeat(1000)",
+    "text2": "@javascript: 'a'.repeat(1000)",
+    "_isLargeTest": true
+  },
+  {
+    "text1": "a",
+    "text2": "a"
+  },
+  {
+    "text1": "a",
+    "text2": "b"
+  },
+  {
+    "text1": "aaaaa",
+    "text2": "aaa"
+  },
+  {
+    "text1": "abcdefghij",
+    "text2": "klmnopqrst"
+  },
+  {
+    "text1": "abcdef",
+    "text2": "abcdef"
+  },
+  {
+    "text1": "abcxyz",
+    "text2": "xyzabc"
+  },
+  {
+    "text1": "horse",
+    "text2": "ros"
+  },
+  {
+    "text1": "abcdgh",
+    "text2": "aedfhr"
+  },
+  {
+    "text1": "aggtab",
+    "text2": "gxtxayb"
+  },
+  {
+    "text1": "abcbdab",
+    "text2": "bdcaba"
+  },
+  {
+    "text1": "aaaa",
+    "text2": "aa"
+  },
+  {
+    "text1": "abc",
+    "text2": "cba"
+  },
+  {
+    "text1": "algorithm",
+    "text2": "logarithm"
+  },
+  {
+    "text1": "pmjghexybyrgzczy",
+    "text2": "hafcdqbgncrcbihkd"
+  },
+  {
+    "text1": "abcba",
+    "text2": "abcbcba"
+  },
+  {
+    "text1": "aaaaaa",
+    "text2": "bbbbbb"
+  },
+  {
+    "text1": "abcdef",
+    "text2": "fedcba"
+  },
+  {
+    "text1": "longest",
+    "text2": "stone"
+  },
+  {
+    "text1": "abcd",
+    "text2": "efgh"
+  },
+  {
+    "text1": "aab",
+    "text2": "aba"
+  },
+  {
+    "text1": "abcde",
+    "text2": "edcba"
+  },
+  {
+    "text1": "xyz",
+    "text2": "xyz"
+  },
+  {
+    "text1": "qwerty",
+    "text2": "qwerty"
+  },
+  {
+    "text1": "ab",
+    "text2": "ba"
+  },
+  {
+    "text1": "aaabbb",
+    "text2": "ab"
+  },
+  {
+    "text1": "programming",
+    "text2": "gaming"
+  },
+  {
+    "text1": "abcdefgh",
+    "text2": "aceg"
+  }
 ]

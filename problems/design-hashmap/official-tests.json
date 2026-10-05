@@ -47,5 +47,85 @@
     "operations": "@javascript:JSON.stringify([\"MyHashMap\",...Array(5000).fill(\"put\"),...Array(5000).fill(\"get\")])",
     "args": "@javascript:JSON.stringify([[],...Array.from({length:5000},(_,i)=>[i,i*2]),...Array.from({length:5000},(_,i)=>[i])])",
     "_isLargeTest": true
+  },
+  {
+    "operations": "[\"MyHashMap\"]",
+    "args": "[[]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"put\",\"get\"]",
+    "args": "[[],[0,0],[0]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"put\",\"get\"]",
+    "args": "[[],[1000000,1000000],[1000000]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"put\",\"put\",\"get\"]",
+    "args": "[[],[10,20],[10,30],[10]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"remove\",\"get\"]",
+    "args": "[[],[999],[999]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"put\",\"put\",\"put\",\"get\",\"get\",\"get\"]",
+    "args": "[[],[5,50],[6,60],[7,70],[5],[6],[8]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"put\",\"get\",\"remove\",\"get\",\"put\",\"get\"]",
+    "args": "[[],[100,1],[100],[100],[100],[100,2],[100]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"put\",\"get\"]",
+    "args": "[[],[0,1000000],[0]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"put\",\"put\",\"get\",\"get\"]",
+    "args": "[[],[1,1],[1000000,2],[1],[1000000]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"put\",\"remove\",\"put\",\"get\"]",
+    "args": "[[],[9,9],[9],[9,10],[9]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"get\",\"get\",\"get\"]",
+    "args": "[[],[1],[2],[3]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"put\",\"put\",\"remove\",\"put\",\"get\",\"get\"]",
+    "args": "[[],[4,40],[5,50],[4],[4,44],[4],[5]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"put\",\"get\",\"put\",\"get\",\"put\",\"get\"]",
+    "args": "[[],[123,456],[123],[123,789],[123],[999999,1],[999999]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"remove\",\"remove\",\"put\",\"get\"]",
+    "args": "[[],[1],[1],[1,5],[1]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"put\",\"put\",\"put\",\"put\",\"get\",\"remove\",\"get\"]",
+    "args": "[[],[11,1],[22,2],[33,3],[44,4],[33],[33],[33]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"put\",\"get\",\"get\"]",
+    "args": "[[],[500000,0],[500000],[500001]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"put\",\"put\",\"get\",\"remove\",\"put\",\"get\"]",
+    "args": "[[],[8,80],[8,81],[8],[8],[8,82],[8]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"put\",\"put\",\"put\",\"get\",\"get\",\"remove\",\"get\",\"get\"]",
+    "args": "[[],[2,20],[3,30],[4,40],[2],[4],[2],[2],[4]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"put\",\"get\",\"remove\",\"put\",\"get\"]",
+    "args": "[[],[777,888],[777],[777],[777,999],[777]]"
+  },
+  {
+    "operations": "[\"MyHashMap\",\"put\",\"put\",\"put\",\"put\",\"put\",\"get\",\"get\",\"get\",\"get\",\"get\"]",
+    "args": "[[],[1,2],[3,4],[5,6],[7,8],[9,10],[1],[3],[5],[7],[11]]"
   }
 ]

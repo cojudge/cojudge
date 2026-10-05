@@ -28,5 +28,135 @@
     "k": 3,
     "rowConditions": "[[1,2]]",
     "colConditions": "[[1,2]]"
+  },
+  {
+    "k": 2,
+    "rowConditions": "[[1,2]]",
+    "colConditions": "[[1,2]]"
+  },
+  {
+    "k": 2,
+    "rowConditions": "[[2,1]]",
+    "colConditions": "[[2,1]]"
+  },
+  {
+    "k": 2,
+    "rowConditions": "[[2,1]]",
+    "colConditions": "[[1,2]]"
+  },
+  {
+    "k": 2,
+    "rowConditions": "[[1,2],[2,1]]",
+    "colConditions": "[[2,1]]"
+  },
+  {
+    "k": 3,
+    "rowConditions": "[[1,3]]",
+    "colConditions": "[[3,2]]"
+  },
+  {
+    "k": 3,
+    "rowConditions": "[[1,2],[2,3]]",
+    "colConditions": "[[3,1]]"
+  },
+  {
+    "k": 3,
+    "rowConditions": "[[3,1]]",
+    "colConditions": "[[1,2],[2,3]]"
+  },
+  {
+    "k": 4,
+    "rowConditions": "[[4,1]]",
+    "colConditions": "[[2,3]]"
+  },
+  {
+    "k": 4,
+    "rowConditions": "[[1,2],[1,3],[1,4]]",
+    "colConditions": "[[4,2]]"
+  },
+  {
+    "k": 4,
+    "rowConditions": "[[4,2]]",
+    "colConditions": "[[1,2],[1,3],[1,4]]"
+  },
+  {
+    "k": 4,
+    "rowConditions": "[[1,2],[3,4]]",
+    "colConditions": "[[1,3],[2,4]]"
+  },
+  {
+    "k": 5,
+    "rowConditions": "[[5,1]]",
+    "colConditions": "[[4,2]]"
+  },
+  {
+    "k": 5,
+    "rowConditions": "[[1,2],[2,3],[3,4],[4,5]]",
+    "colConditions": "[[1,2],[2,3],[3,4],[4,5]]"
+  },
+  {
+    "k": 5,
+    "rowConditions": "[[1,2],[2,3],[3,4],[4,5]]",
+    "colConditions": "[[5,4],[4,3],[3,2],[2,1]]"
+  },
+  {
+    "k": 5,
+    "rowConditions": "[[1,2],[1,3],[2,4],[3,4],[4,5]]",
+    "colConditions": "[[1,5]]"
+  },
+  {
+    "k": 5,
+    "rowConditions": "[[1,2],[1,2],[2,3]]",
+    "colConditions": "[[2,3],[2,3]]"
+  },
+  {
+    "k": 3,
+    "rowConditions": "[[1,2],[2,1]]",
+    "colConditions": "[[1,3]]"
+  },
+  {
+    "k": 3,
+    "rowConditions": "[[1,2]]",
+    "colConditions": "[[1,2],[2,1]]"
+  },
+  {
+    "k": 4,
+    "rowConditions": "[[1,2],[2,3],[3,1]]",
+    "colConditions": "[[1,2]]"
+  },
+  {
+    "k": 6,
+    "rowConditions": "[[1,2],[2,3],[3,4],[4,5],[5,6]]",
+    "colConditions": "[[6,1]]"
+  },
+  {
+    "k": 6,
+    "rowConditions": "[[6,1]]",
+    "colConditions": "[[1,2],[2,3],[3,4],[4,5],[5,6]]"
+  },
+  {
+    "k": 6,
+    "rowConditions": "[[1,2],[3,4],[5,6]]",
+    "colConditions": "[[2,3],[4,5]]"
+  },
+  {
+    "k": 7,
+    "rowConditions": "[[1,2],[2,3],[4,5],[5,6],[6,7]]",
+    "colConditions": "[[1,4],[2,5],[3,6]]"
+  },
+  {
+    "k": 8,
+    "rowConditions": "[[1,5],[2,5],[3,6],[4,6],[5,7],[6,8]]",
+    "colConditions": "[[1,2],[3,4],[7,8]]"
+  },
+  {
+    "k": 5,
+    "rowConditions": "[[2,1],[3,2],[4,3]]",
+    "colConditions": "[[1,3],[3,5]]"
+  },
+  {
+    "k": 4,
+    "rowConditions": "[[1,3],[2,3],[3,4]]",
+    "colConditions": "[[1,2],[2,4],[1,4]]"
   }
 ]

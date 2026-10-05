@@ -1,7 +1,102 @@
 [
-  { "s": "anagram", "t": "nagaram" },
-  { "s": "rat", "t": "car" },
-  { "s": "ab", "t": "aa" },
-  { "s": "a", "t": "a" },
-  { "s": "ab", "t": "ba" }
+  {
+    "s": "anagram",
+    "t": "nagaram"
+  },
+  {
+    "s": "rat",
+    "t": "car"
+  },
+  {
+    "s": "ab",
+    "t": "aa"
+  },
+  {
+    "s": "a",
+    "t": "a"
+  },
+  {
+    "s": "ab",
+    "t": "ba"
+  },
+  {
+    "s": "a",
+    "t": "b"
+  },
+  {
+    "s": "aa",
+    "t": "aa"
+  },
+  {
+    "s": "abc",
+    "t": "cba"
+  },
+  {
+    "s": "aab",
+    "t": "aba"
+  },
+  {
+    "s": "abcd",
+    "t": "abce"
+  },
+  {
+    "s": "listen",
+    "t": "silent"
+  },
+  {
+    "s": "triangle",
+    "t": "integral"
+  },
+  {
+    "s": "aacc",
+    "t": "ccaa"
+  },
+  {
+    "s": "abcde",
+    "t": "edcba"
+  },
+  {
+    "s": "xyz",
+    "t": "zyx"
+  },
+  {
+    "s": "hello",
+    "t": "holle"
+  },
+  {
+    "s": "qwerty",
+    "t": "ytrewq"
+  },
+  {
+    "s": "zzzzzzzzzz",
+    "t": "zzzzzzzzzy"
+  },
+  {
+    "s": "abcdefghij",
+    "t": "jihgfedcba"
+  },
+  {
+    "s": "aabbcc",
+    "t": "abcabc"
+  },
+  {
+    "s": "abc",
+    "t": "ab"
+  },
+  {
+    "s": "ab",
+    "t": "abc"
+  },
+  {
+    "s": "a",
+    "t": "aa"
+  },
+  {
+    "s": "aa",
+    "t": "a"
+  },
+  {
+    "s": "abcdefghijklmnopqrstuvwxyz",
+    "t": "zyxwvutsrqponmlkjihgfedcba"
+  }
 ]

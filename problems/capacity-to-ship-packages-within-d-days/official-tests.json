@@ -13,5 +13,22 @@
   { "weights": "[2,3,1,2,4,3]", "days": 3 },
   { "weights": "[7,2,5,10,8]", "days": 2 },
   { "weights": "@javascript:JSON.stringify(Array(1000).fill(500))", "days": 50, "_isLargeTest": true },
-  { "weights": "@javascript:JSON.stringify(Array.from({length:5000},(_,i)=>(i%500)+1))", "days": 100, "_isLargeTest": true }
+  { "weights": "@javascript:JSON.stringify(Array.from({length:5000},(_,i)=>(i%500)+1))", "days": 100, "_isLargeTest": true },
+  { "weights": "[5]", "days": 1 },
+  { "weights": "[2,2,2,2]", "days": 2 },
+  { "weights": "[1,1,1,1,1]", "days": 5 },
+  { "weights": "[1,1,1,1,1]", "days": 1 },
+  { "weights": "[10,20,30]", "days": 2 },
+  { "weights": "[3,3,3,3,3,3]", "days": 4 },
+  { "weights": "[100,200,300,400]", "days": 2 },
+  { "weights": "[1,10,100,10,1]", "days": 3 },
+  { "weights": "[5,4,3,2,1]", "days": 2 },
+  { "weights": "[500]", "days": 1 },
+  { "weights": "[250,250,250,250]", "days": 4 },
+  { "weights": "[250,250,250,250]", "days": 1 },
+  { "weights": "[50,50,50,50,50,50,50]", "days": 3 },
+  { "weights": "[1,2,3,4,5,6]", "days": 3 },
+  { "weights": "[10,10,10,10,10]", "days": 2 },
+  { "weights": "[7,7,7,7,7,7,7]", "days": 5 },
+  { "weights": "[100,100,100]", "days": 3 }
 ]
