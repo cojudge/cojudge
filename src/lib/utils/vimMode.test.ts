@@ -1,13 +1,51 @@
 import { describe, expect, it, vi } from 'vitest';
 import {
     attachVisualCursorFix,
+    createHistoryAwareStatusBar,
+    deleteLineRangeToRegister,
+    enableVimHistoryPersistence,
     findMatchingSymbolPosition,
     getExYankRegister,
+    getLinewiseDeleteRange,
     getLinewiseRangeText,
     getNormalModeClickClipColumn,
     getVisualCursorRange,
+    normalizeExPromptKeyName,
+    patchMonacoVimKeyName,
+    readPersistedVimHistory,
+    sanitizePersistedVimHistory,
+    writePersistedVimHistory,
     yankLineRangeToRegister
 } from './vimMode';
+
+function createMemoryStorage(initial: Record<string, string> = {}) {
+    const data = new Map(Object.entries(initial));
+    return {
+        data,
+        getItem: (key: string) => (data.has(key) ? (data.get(key) as string) : null),
+        setItem: (key: string, value: string) => {
+            data.set(key, value);
+        }
+    };
+}
+
+function createHistoryController(initial: string[] = []) {
+    const controller = {
+        historyBuffer: [...initial],
+        iterator: initial.length,
+        initialPrefix: null as string | null,
+        pushInput(this: { historyBuffer: string[] }, input: string) {
+            const index = this.historyBuffer.indexOf(input);
+            if (index > -1) this.historyBuffer.splice(index, 1);
+            if (input.length) this.historyBuffer.push(input);
+        },
+        reset(this: { iterator: number; initialPrefix: null; historyBuffer: string[] }) {
+            this.initialPrefix = null;
+            this.iterator = this.historyBuffer.length;
+        }
+    };
+    return controller;
+}
 
 function createCm(lines: string[], cursor = { line: 0, ch: 0 }) {
     return {
@@ -376,5 +414,201 @@ describe('vim mode helpers', () => {
         expect(okEditor.setPosition).not.toHaveBeenCalled();
         expect(okEditor.deltaDecorations).toHaveBeenCalled();
         disposeOk();
+    });
+});
+
+describe('ex :delete command', () => {
+    const len = (lines: string[]) => (line: number) => lines[line]?.length ?? 0;
+
+    it('deletes middle lines through the start of the next line', () => {
+        const lines = ['a', 'b', 'c', 'd'];
+        // :2,3d -> lines 1..2
+        expect(getLinewiseDeleteRange(1, 2, 0, 3, len(lines))).toEqual({
+            from: { line: 1, ch: 0 },
+            to: { line: 3, ch: 0 },
+            cursorLine: 1
+        });
+    });
+
+    it('deletes a single middle line (:3d)', () => {
+        const lines = ['a', 'b', 'c'];
+        expect(getLinewiseDeleteRange(2, 2, 0, 2, len(lines))).toEqual({
+            from: { line: 1, ch: 1 },
+            to: { line: 2, ch: 1 },
+            cursorLine: 1
+        });
+    });
+
+    it('deletes the whole buffer (:%d) without shifting lines', () => {
+        const lines = ['a', 'b'];
+        expect(getLinewiseDeleteRange(0, 1, 0, 1, len(lines))).toEqual({
+            from: { line: 0, ch: 0 },
+            to: { line: 1, ch: 1 },
+            cursorLine: 0
+        });
+    });
+
+    it('orders reversed ranges (:2,1d)', () => {
+        const lines = ['a', 'b', 'c'];
+        expect(getLinewiseDeleteRange(1, 0, 0, 2, len(lines))).toEqual({
+            from: { line: 0, ch: 0 },
+            to: { line: 2, ch: 0 },
+            cursorLine: 0
+        });
+    });
+
+    it('pushes deleted text to the delete register and removes the lines', () => {
+        const lines = ['alpha', 'beta', 'gamma'];
+        const pushed: unknown[][] = [];
+        const replaced: unknown[] = [];
+        const cursors: unknown[] = [];
+        const cm = {
+            firstLine: () => 0,
+            lastLine: () => lines.length - 1,
+            getCursor: () => ({ line: 0, ch: 0 }),
+            getLine: (line: number) => lines[line] ?? '',
+            replaceRange: (text: string, from: unknown, to: unknown) => {
+                replaced.push([text, from, to]);
+            },
+            setCursor: (line: number, ch: number) => {
+                cursors.push([line, ch]);
+            }
+        };
+        const Vim = {
+            defineMotion: () => {},
+            defineEx: () => {},
+            getRegisterController: () => ({
+                pushText: (...args: unknown[]) => pushed.push(args)
+            })
+        };
+
+        // :1,2d
+        deleteLineRangeToRegister(Vim, cm, { line: 0, lineEnd: 1 });
+
+        expect(pushed).toEqual([[undefined, 'delete', 'alpha\nbeta', true, false]]);
+        expect(replaced).toEqual([['', { line: 0, ch: 0 }, { line: 2, ch: 0 }]]);
+        expect(cursors.length).toBe(1);
+    });
+});
+
+describe('ex prompt history', () => {
+    it('normalizes DOM arrow/escape names to CodeMirror names', () => {
+        expect(normalizeExPromptKeyName('ArrowUp')).toBe('Up');
+        expect(normalizeExPromptKeyName('ArrowDown')).toBe('Down');
+        expect(normalizeExPromptKeyName('ArrowLeft')).toBe('Left');
+        expect(normalizeExPromptKeyName('Escape')).toBe('Esc');
+        expect(normalizeExPromptKeyName('Up')).toBe('Up');
+        expect(normalizeExPromptKeyName('a')).toBe('a');
+        expect(normalizeExPromptKeyName(null)).toBeNull();
+    });
+
+    it('patches keyName once and maps ArrowUp to Up', () => {
+        const target = { keyName: (e: unknown) => (e as { key: string }).key };
+        patchMonacoVimKeyName(target);
+        expect(target.keyName({ key: 'ArrowUp' })).toBe('Up');
+        const first = target.keyName;
+        patchMonacoVimKeyName(target);
+        expect(target.keyName).toBe(first);
+    });
+
+    it('history-aware closeInput updates the value instead of closing', () => {
+        const focus = vi.fn();
+        const node = { value: ':', focus: vi.fn() };
+        class Base {
+            input: unknown = { node };
+            editor = { focus };
+            removeInputListeners = vi.fn();
+            setSec = vi.fn();
+            constructor() {}
+        }
+        const Fixed = createHistoryAwareStatusBar(Base as never) as unknown as new () => {
+            closeInput: (v?: string) => void;
+            input: unknown;
+            setSec: ReturnType<typeof vi.fn>;
+        };
+        const bar = new Fixed();
+        bar.closeInput(':%d');
+        expect((node as { value: string }).value).toBe(':%d');
+        expect(bar.setSec).not.toHaveBeenCalled();
+        expect(focus).not.toHaveBeenCalled();
+    });
+
+    it('history-aware closeInput without a value still closes', () => {
+        const focus = vi.fn();
+        class Base {
+            input: unknown = { node: { value: 'x' } };
+            editor = { focus };
+            removeInputListeners = vi.fn();
+            setSec = vi.fn();
+            constructor() {}
+        }
+        const Fixed = createHistoryAwareStatusBar(Base as never) as unknown as new () => {
+            closeInput: (v?: string) => void;
+            input: unknown;
+        };
+        const bar = new Fixed();
+        bar.closeInput();
+        expect(bar.input).toBeNull();
+        expect(focus).toHaveBeenCalled();
+    });
+});
+
+describe('vim history persistence', () => {
+    it('sanitizes persisted history (drops junk, dedupes, caps)', () => {
+        expect(sanitizePersistedVimHistory(['%d', '', '%d', 42, null, 'w'], 10)).toEqual(['%d', 'w']);
+        expect(sanitizePersistedVimHistory(['a', 'b', 'c'], 2)).toEqual(['b', 'c']);
+        expect(sanitizePersistedVimHistory('nope')).toEqual([]);
+        expect(sanitizePersistedVimHistory(null)).toEqual([]);
+    });
+
+    it('round-trips history through storage', () => {
+        const storage = createMemoryStorage();
+        writePersistedVimHistory(storage, 'ex', ['%d', 'w']);
+        expect(readPersistedVimHistory(storage, 'ex')).toEqual(['%d', 'w']);
+        expect(readPersistedVimHistory(storage, 'missing')).toEqual([]);
+    });
+
+    it('returns empty history for corrupt storage payloads', () => {
+        const storage = createMemoryStorage({ ex: 'not-json{{{' });
+        expect(readPersistedVimHistory(storage, 'ex')).toEqual([]);
+    });
+
+    it('restores persisted history into controllers and saves new entries', () => {
+        const storage = createMemoryStorage({ ex: JSON.stringify(['%d', 'w']), search: JSON.stringify(['/foo']) });
+        const ex = createHistoryController();
+        const search = createHistoryController();
+        const Vim = {
+            defineMotion: () => {},
+            defineEx: () => {},
+            getRegisterController: () => ({ pushText: () => {} }),
+            getVimGlobalState_: () => ({
+                exCommandHistoryController: ex,
+                searchHistoryController: search
+            })
+        };
+
+        const dispose = enableVimHistoryPersistence(Vim, { storage, exKey: 'ex', searchKey: 'search' });
+        expect(ex.historyBuffer).toEqual(['%d', 'w']);
+        expect(search.historyBuffer).toEqual(['/foo']);
+
+        ex.pushInput('q');
+        expect(JSON.parse((storage.data.get('ex') as string) as string)).toEqual(['%d', 'w', 'q']);
+
+        // Idempotent: second enable does not double-wrap or duplicate.
+        enableVimHistoryPersistence(Vim, { storage, exKey: 'ex', searchKey: 'search' });
+        ex.pushInput('q!');
+        expect(JSON.parse((storage.data.get('ex') as string) as string)).toEqual(['%d', 'w', 'q', 'q!']);
+
+        dispose();
+    });
+
+    it('is a no-op without a vim global state', () => {
+        const storage = createMemoryStorage();
+        const Vim = {
+            defineMotion: () => {},
+            defineEx: () => {},
+            getRegisterController: () => ({ pushText: () => {} })
+        };
+        expect(() => enableVimHistoryPersistence(Vim, { storage })).not.toThrow();
     });
 });
