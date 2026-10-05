@@ -8,6 +8,8 @@ type CmAdapter = {
     lastLine: () => number;
     getCursor: () => CmPosition;
     getLine: (line: number) => string;
+    replaceRange?: (text: string, from: CmPosition, to: CmPosition) => void;
+    setCursor?: (line: number, ch: number) => void;
 };
 
 type VimRegisterController = {
@@ -20,12 +22,26 @@ type VimRegisterController = {
     ) => void;
 };
 
+type VimHistoryController = {
+    historyBuffer: string[];
+    iterator: number;
+    initialPrefix: string | null;
+    pushInput: (input: string) => void;
+    reset: () => void;
+};
+
+type VimGlobalState = {
+    exCommandHistoryController?: VimHistoryController;
+    searchHistoryController?: VimHistoryController;
+};
+
 type VimApi = {
     defineMotion: (name: string, fn: (cm: CmAdapter, head: CmPosition) => CmPosition) => void;
     defineEx: (name: string, prefix: string, fn: (cm: CmAdapter, params: Record<string, any>) => void) => void;
     defineRegister?: (name: string, register: VimRegister) => void;
     unmap?: (lhs: string, ctx?: string) => boolean;
     getRegisterController: () => VimRegisterController;
+    getVimGlobalState_?: () => VimGlobalState;
 };
 
 type VimRegister = {
@@ -61,6 +77,16 @@ export function configureMonacoVim(Vim: VimApi) {
     Vim.unmap?.('%', 'visual');
     Vim.defineMotion('moveToMatchedSymbol', findMatchingSymbolPosition);
     Vim.defineEx('yank', 'y', (cm, params) => yankLineRangeToRegister(Vim, cm, params));
+    // monaco-vim ships :yank but no :delete, so :%d / :1,2d / :3d fail with
+    // `Not an editor command`. Register it here with matching range semantics.
+    Vim.defineEx('delete', 'd', (cm, params) => deleteLineRangeToRegister(Vim, cm, params));
+    // monaco-vim keeps ex/search history in memory only, so it is lost on
+    // reload. Persist it to localStorage (browser-only, never cloud-synced).
+    try {
+        enableVimHistoryPersistence(Vim);
+    } catch {
+        // ignore storage failures; vim still works without persistence
+    }
 }
 
 export function findMatchingSymbolPosition(cm: CmAdapter, head: CmPosition): CmPosition {
@@ -104,6 +130,310 @@ export function getExYankRegister(params: Record<string, any>) {
     const registerArg = params.args?.[0] ?? '';
     const registerName = String(registerArg).trim();
     return registerName ? registerName.charAt(0) : undefined;
+}
+
+export type LinewiseDeleteRange = {
+    from: CmPosition;
+    to: CmPosition;
+    cursorLine: number;
+};
+
+/**
+ * Pure helper computing the buffer range to remove for a linewise `:delete`.
+ *
+ * CodeMirror positions are `{ line, ch }` with `ch` an index into the line
+ * (no newline). To delete whole lines we must also remove one newline:
+ * prefer the trailing newline (delete through the start of the next line),
+ * or the preceding newline when deleting through the last line.
+ */
+export function getLinewiseDeleteRange(
+    lineStart: number,
+    lineEnd: number,
+    firstLine: number,
+    lastLine: number,
+    getLineLength: (line: number) => number
+): LinewiseDeleteRange {
+    const start = Math.min(lineStart, lineEnd);
+    const end = Math.max(lineStart, lineEnd);
+
+    if (start <= firstLine && end >= lastLine) {
+        return {
+            from: { line: start, ch: 0 },
+            to: { line: end, ch: getLineLength(end) },
+            cursorLine: start
+        };
+    }
+
+    if (end < lastLine) {
+        return {
+            from: { line: start, ch: 0 },
+            to: { line: end + 1, ch: 0 },
+            cursorLine: start
+        };
+    }
+
+    const deletedCount = end - start + 1;
+    const newLastLine = lastLine - deletedCount;
+    return {
+        from: { line: start - 1, ch: getLineLength(start - 1) },
+        to: { line: end, ch: getLineLength(end) },
+        cursorLine: Math.min(Math.max(start, firstLine), Math.max(newLastLine, firstLine))
+    };
+}
+
+export function deleteLinewiseRange(cm: CmAdapter, lineStart: number, lineEnd: number) {
+    const range = getLinewiseDeleteRange(
+        lineStart,
+        lineEnd,
+        cm.firstLine(),
+        cm.lastLine(),
+        (line) => cm.getLine(line).length
+    );
+    cm.replaceRange?.('', range.from, range.to);
+    try {
+        const clampedLine = Math.min(Math.max(range.cursorLine, cm.firstLine()), cm.lastLine());
+        const content = cm.getLine(clampedLine) ?? '';
+        const firstNonBlank = content.search(/[^ \t]/);
+        cm.setCursor?.(clampedLine, firstNonBlank < 0 ? 0 : firstNonBlank);
+    } catch {
+        // ignore cursor failures; the deletion itself already happened
+    }
+}
+
+export function deleteLineRangeToRegister(Vim: VimApi, cm: CmAdapter, params: Record<string, any>) {
+    const cursorLine = cm.getCursor().line;
+    const lineStart = normalizeLine(params.line ?? cursorLine, cm);
+    const lineEnd = normalizeLine(params.lineEnd ?? lineStart, cm);
+    const start = Math.min(lineStart, lineEnd);
+    const end = Math.max(lineStart, lineEnd);
+
+    Vim.getRegisterController().pushText(
+        getExYankRegister(params),
+        'delete',
+        getLinewiseRangeText(cm, start, end),
+        true,
+        false
+    );
+    deleteLinewiseRange(cm, start, end);
+}
+
+const EX_PROMPT_KEY_ALIASES: Record<string, string> = {
+    ArrowUp: 'Up',
+    ArrowDown: 'Down',
+    ArrowLeft: 'Left',
+    ArrowRight: 'Right',
+    Escape: 'Esc'
+};
+
+/**
+ * The `:` prompt input is a plain DOM `<input>` (not a Monaco editor), so
+ * `monacoToCmKey` sees a DOM KeyboardEvent with `key: "ArrowUp"` and returns
+ * it verbatim. The vim keymap, however, expects CodeMirror names (`"Up"`),
+ * so Up/Down/Esc never match and history navigation silently breaks.
+ */
+export function normalizeExPromptKeyName(keyName: string | null | undefined): string | null | undefined {
+    if (typeof keyName !== 'string') return keyName;
+    return EX_PROMPT_KEY_ALIASES[keyName] ?? keyName;
+}
+
+export function patchMonacoVimKeyName(VimModeClass: { keyName: (e: unknown) => string }) {
+    const holder = VimModeClass as unknown as Record<string, unknown>;
+    const current = holder['keyName'];
+    if (typeof current !== 'function' || (current as unknown as Record<string, unknown>)['__cojudgePatched']) return;
+    const original = current as (e: unknown) => string;
+    const wrapped = function (this: unknown, e: unknown) {
+        const raw = original.call(this, e);
+        return normalizeExPromptKeyName(raw) ?? raw;
+    };
+    (wrapped as unknown as Record<string, unknown>)['__cojudgePatched'] = true;
+    holder['keyName'] = wrapped;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type StatusBarConstructor = new (node: HTMLElement, editor: any, sanitizer?: any) => {
+    closeInput: (newValue?: string) => void;
+    [key: string]: unknown;
+};
+
+/**
+ * monaco-vim's `StatusBar.closeInput()` ignores its argument and always
+ * closes the prompt. CodeMirror's dialog `close(value)`, which the vim
+ * keymap relies on for Up/Down history (`close(historyMatch)`) and Ctrl-U
+ * (`close("")`), instead replaces the input value and keeps the prompt open.
+ * This subclass restores that contract so history navigation works.
+ */
+export function createHistoryAwareStatusBar<T extends StatusBarConstructor>(Base: T): T {
+    const cache = Base as unknown as Record<string, unknown>;
+    if (cache['__cojudgeHistoryAware']) return cache['__cojudgeHistoryAware'] as T;
+    class HistoryAwareStatusBar extends (Base as unknown as new (
+        node: HTMLElement,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        editor: any,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        sanitizer?: any
+    ) => Record<string, unknown>) {
+        closeInput = (newValue?: unknown) => {
+            const self = this as unknown as Record<string, any>;
+            if (typeof newValue === 'string') {
+                const input = self['input'] as { node?: HTMLInputElement } | null | undefined;
+                if (input?.node) {
+                    input.node.value = newValue;
+                    try {
+                        input.node.focus();
+                    } catch {
+                        // ignore
+                    }
+                    return;
+                }
+            }
+            try {
+                (self['removeInputListeners'] as (() => void) | undefined)?.();
+            } catch {
+                // ignore
+            }
+            self['input'] = null;
+            try {
+                (self['setSec'] as ((text: string) => void) | undefined)?.('');
+            } catch {
+                // ignore
+            }
+            try {
+                (self['editor'] as { focus?: () => void } | null | undefined)?.focus?.();
+            } catch {
+                // ignore
+            }
+        };
+    }
+    const result = HistoryAwareStatusBar as unknown as T;
+    cache['__cojudgeHistoryAware'] = result;
+    return result;
+}
+
+export const VIM_EX_HISTORY_STORAGE_KEY = 'cojudge:vim:ex-history';
+export const VIM_SEARCH_HISTORY_STORAGE_KEY = 'cojudge:vim:search-history';
+export const MAX_PERSISTED_VIM_HISTORY = 100;
+
+export type VimHistoryStorage = Pick<Storage, 'getItem' | 'setItem'>;
+
+function getBrowserHistoryStorage(): VimHistoryStorage | null {
+    try {
+        if (typeof localStorage === 'undefined') return null;
+        return localStorage;
+    } catch {
+        return null;
+    }
+}
+
+/**
+ * Clean persisted history for storage: drop non-strings/empties, de-dupe
+ * (keeping first occurrence), and keep only the most recent `max` entries.
+ */
+export function sanitizePersistedVimHistory(value: unknown, max: number = MAX_PERSISTED_VIM_HISTORY): string[] {
+    if (!Array.isArray(value)) return [];
+    const limit = Number.isInteger(max) && max > 0 ? max : MAX_PERSISTED_VIM_HISTORY;
+    const seen = new Set<string>();
+    const cleaned: string[] = [];
+    for (const item of value) {
+        if (typeof item !== 'string' || item.length === 0 || seen.has(item)) continue;
+        seen.add(item);
+        cleaned.push(item);
+    }
+    return cleaned.slice(-limit);
+}
+
+export function readPersistedVimHistory(
+    storage: VimHistoryStorage | null | undefined,
+    key: string,
+    max: number = MAX_PERSISTED_VIM_HISTORY
+): string[] {
+    try {
+        const raw = storage?.getItem(key);
+        if (!raw) return [];
+        return sanitizePersistedVimHistory(JSON.parse(raw), max);
+    } catch {
+        return [];
+    }
+}
+
+export function writePersistedVimHistory(
+    storage: VimHistoryStorage | null | undefined,
+    key: string,
+    history: readonly string[],
+    max: number = MAX_PERSISTED_VIM_HISTORY
+): void {
+    try {
+        storage?.setItem(key, JSON.stringify(sanitizePersistedVimHistory(history, max)));
+    } catch {
+        // ignore quota/private-mode failures; history just won't persist
+    }
+}
+
+function restoreVimHistoryController(
+    controller: VimHistoryController | undefined,
+    entries: string[]
+): void {
+    if (!controller || entries.length === 0) return;
+    controller.historyBuffer = entries.slice();
+    controller.iterator = controller.historyBuffer.length;
+    controller.initialPrefix = null;
+}
+
+export type VimHistoryPersistenceOptions = {
+    storage?: VimHistoryStorage | null;
+    exKey?: string;
+    searchKey?: string;
+    max?: number;
+};
+
+/**
+ * Persist monaco-vim's ex (`:`) and search (`/`) history to browser
+ * localStorage so Up/Down recall survives app restarts. This is intentionally
+ * local-only: the keys are never added to cloud sync.
+ *
+ * Idempotent per controller (safe to call from both vim-mode setup paths).
+ * Returns a dispose function restoring the original `pushInput` methods.
+ */
+export function enableVimHistoryPersistence(
+    Vim: VimApi,
+    options: VimHistoryPersistenceOptions = {}
+): () => void {
+    const storage = options.storage !== undefined ? options.storage : getBrowserHistoryStorage();
+    const exKey = options.exKey ?? VIM_EX_HISTORY_STORAGE_KEY;
+    const searchKey = options.searchKey ?? VIM_SEARCH_HISTORY_STORAGE_KEY;
+    const max = options.max ?? MAX_PERSISTED_VIM_HISTORY;
+    const state = Vim.getVimGlobalState_?.();
+    if (!state) return () => {};
+
+    restoreVimHistoryController(state.exCommandHistoryController, readPersistedVimHistory(storage, exKey, max));
+    restoreVimHistoryController(state.searchHistoryController, readPersistedVimHistory(storage, searchKey, max));
+
+    const disposers: Array<() => void> = [];
+    const persistOnPush = (controller: VimHistoryController | undefined, key: string) => {
+        if (!controller || typeof controller.pushInput !== 'function') return;
+        const marker = controller as unknown as Record<string, unknown>;
+        if (marker['__cojudgeHistoryPersisted']) return;
+        marker['__cojudgeHistoryPersisted'] = true;
+        const original = controller.pushInput.bind(controller);
+        const wrapped = (input: string) => {
+            original(input);
+            writePersistedVimHistory(storage, key, controller.historyBuffer, max);
+        };
+        controller.pushInput = wrapped;
+        disposers.push(() => {
+            try {
+                if (controller.pushInput === wrapped) controller.pushInput = original;
+                delete marker['__cojudgeHistoryPersisted'];
+            } catch {
+                // ignore
+            }
+        });
+    };
+    persistOnPush(state.exCommandHistoryController, exKey);
+    persistOnPush(state.searchHistoryController, searchKey);
+
+    return () => {
+        disposers.forEach((dispose) => dispose());
+    };
 }
 
 export type MonacoVisualCursorRange = {
