@@ -28,5 +28,8 @@ jobs:
       - name: Pull Java runtime image
         run: docker pull alpine/java:22-jdk
 
+      - name: Verify test coverage counts
+        run: node scripts/verify-test-counts.js
+
       - name: Verify problem submissions
         run: node scripts/verify-submissions.js

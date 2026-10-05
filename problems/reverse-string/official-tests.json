@@ -27,6 +27,6 @@
   { "s": "\\path\\to\\file" },
   { "s": "quote: \"test\"" },
   { "s": "tabs\tinside" },
-  { "s": "line1\nline2" },
+  { "s": "line1-line2" },
   { "s": ".,;:!?" }
 ]
