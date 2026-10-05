@@ -46,5 +46,131 @@
   {
     "s": "abcdef",
     "wordDict": "[\"abc\",\"def\",\"abcdef\",\"bc\",\"a\",\"d\",\"ef\"]"
+  },
+  {
+    "s": "b",
+    "wordDict": [
+      "a"
+    ]
+  },
+  {
+    "s": "ab",
+    "wordDict": [
+      "ab"
+    ]
+  },
+  {
+    "s": "aa",
+    "wordDict": [
+      "a"
+    ]
+  },
+  {
+    "s": "aaa",
+    "wordDict": [
+      "a",
+      "aa"
+    ]
+  },
+  {
+    "s": "abc",
+    "wordDict": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "s": "abcd",
+    "wordDict": [
+      "ab",
+      "cd"
+    ]
+  },
+  {
+    "s": "dogcat",
+    "wordDict": [
+      "dog",
+      "cat"
+    ]
+  },
+  {
+    "s": "catdogcat",
+    "wordDict": [
+      "cat",
+      "dog"
+    ]
+  },
+  {
+    "s": "aaaaa",
+    "wordDict": [
+      "a",
+      "aa"
+    ]
+  },
+  {
+    "s": "abab",
+    "wordDict": [
+      "a",
+      "b",
+      "ab"
+    ]
+  },
+  {
+    "s": "xyz",
+    "wordDict": [
+      "xy",
+      "z"
+    ]
+  },
+  {
+    "s": "helloworld",
+    "wordDict": [
+      "hello",
+      "world"
+    ]
+  },
+  {
+    "s": "aaaaaaaa",
+    "wordDict": [
+      "a",
+      "aa",
+      "aaa"
+    ]
+  },
+  {
+    "s": "abcde",
+    "wordDict": [
+      "ab",
+      "cde"
+    ]
+  },
+  {
+    "s": "qq",
+    "wordDict": [
+      "q"
+    ]
+  },
+  {
+    "s": "pqr",
+    "wordDict": [
+      "p",
+      "qr"
+    ]
+  },
+  {
+    "s": "aab",
+    "wordDict": [
+      "a",
+      "ab"
+    ]
+  },
+  {
+    "s": "bac",
+    "wordDict": [
+      "b",
+      "a",
+      "c"
+    ]
   }
 ]

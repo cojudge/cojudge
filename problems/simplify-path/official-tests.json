@@ -12,5 +12,21 @@
   { "path": "/a/b/../../../../c" },
   { "path": "/.../.../..." },
   { "path": "/a/.../b/../c//.//" },
-  { "path": "@javascript:('/a'.repeat(400)+'/b'.repeat(400)+'/..'.repeat(400))", "_isLargeTest": true }
+  { "path": "@javascript:('/a'.repeat(400)+'/b'.repeat(400)+'/..'.repeat(400))", "_isLargeTest": true },
+  { "path": "/." },
+  { "path": "/././" },
+  { "path": "////" },
+  { "path": "/a/.." },
+  { "path": "/a/../.." },
+  { "path": "/a/b/.." },
+  { "path": "/a/b/../.." },
+  { "path": "/a/b/../../d" },
+  { "path": "/a/....//b" },
+  { "path": "/..hidden/file" },
+  { "path": "/_tmp/123/./file_1" },
+  { "path": "/A/b/C/../../D" },
+  { "path": "/1/2/3/../../../4" },
+  { "path": "/a///../b//./c/" },
+  { "path": "/x/y/../../../z" },
+  { "path": "/abc.def/ghi" }
 ]

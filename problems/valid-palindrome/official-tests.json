@@ -1,7 +1,77 @@
 [
-  { "s": "A man, a plan, a canal: Panama" },
-  { "s": "race a car" },
-  { "s": "a" },
-  { "s": " " },
-  { "s": "0P" }
+  {
+    "s": "A man, a plan, a canal: Panama"
+  },
+  {
+    "s": "race a car"
+  },
+  {
+    "s": "a"
+  },
+  {
+    "s": " "
+  },
+  {
+    "s": "0P"
+  },
+  {
+    "s": "ab"
+  },
+  {
+    "s": "aa"
+  },
+  {
+    "s": "aba"
+  },
+  {
+    "s": "abcba"
+  },
+  {
+    "s": "abccaa"
+  },
+  {
+    "s": "Madam"
+  },
+  {
+    "s": "No 'x' in Nixon"
+  },
+  {
+    "s": "Was it a car or a cat I saw?"
+  },
+  {
+    "s": ".,;:"
+  },
+  {
+    "s": "aA"
+  },
+  {
+    "s": "abBA"
+  },
+  {
+    "s": "12321"
+  },
+  {
+    "s": "12345"
+  },
+  {
+    "s": "Able was I ere I saw Elba"
+  },
+  {
+    "s": "a b a"
+  },
+  {
+    "s": "a  b  a"
+  },
+  {
+    "s": "!!aa!!"
+  },
+  {
+    "s": "xaY"
+  },
+  {
+    "s": "0a0"
+  },
+  {
+    "s": "a0a"
+  }
 ]

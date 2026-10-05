@@ -1,11 +1,98 @@
 [
-  { "s": "abcabcbb" },
-  { "s": "bbbbb" },
-  { "s": "pwwkew" },
-  { "s": "" },
-  { "s": "au" },
-  { "s": "dvdf" },
-  { "s": "abba" },
-  { "s": "tmmzuxt" },
-  { "s": "anviaj" }
+  {
+    "s": "abcabcbb"
+  },
+  {
+    "s": "bbbbb"
+  },
+  {
+    "s": "pwwkew"
+  },
+  {
+    "s": ""
+  },
+  {
+    "s": "au"
+  },
+  {
+    "s": "dvdf"
+  },
+  {
+    "s": "abba"
+  },
+  {
+    "s": "tmmzuxt"
+  },
+  {
+    "s": "anviaj"
+  },
+  {
+    "s": "a"
+  },
+  {
+    "s": "ab"
+  },
+  {
+    "s": "aa"
+  },
+  {
+    "s": "abcdef"
+  },
+  {
+    "s": "abcdefghijklmnopqrstuvwxyz"
+  },
+  {
+    "s": "abccba"
+  },
+  {
+    "s": "bbbbba"
+  },
+  {
+    "s": "abcdabcd"
+  },
+  {
+    "s": "aab"
+  },
+  {
+    "s": "abcbdef"
+  },
+  {
+    "s": "wobble"
+  },
+  {
+    "s": "1234567890"
+  },
+  {
+    "s": "aA1! "
+  },
+  {
+    "s": "hello world"
+  },
+  {
+    "s": "mississippi"
+  },
+  {
+    "s": "abcdefgabc"
+  },
+  {
+    "s": "z"
+  },
+  {
+    "s": "aabbcc"
+  },
+  {
+    "s": "xyzzxy"
+  },
+  {
+    "s": "qwertyuiop"
+  },
+  {
+    "s": "112233"
+  },
+  {
+    "s": "abcd efgh"
+  },
+  {
+    "s": "AaAa"
+  }
 ]

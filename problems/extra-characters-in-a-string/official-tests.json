@@ -54,5 +54,77 @@
   {
     "s": "hello",
     "dictionary": "[\"world\",\"hell\",\"o\"]"
+  },
+  {
+    "s": "a",
+    "dictionary": "[\"a\"]"
+  },
+  {
+    "s": "b",
+    "dictionary": "[\"a\"]"
+  },
+  {
+    "s": "abcde",
+    "dictionary": "[\"abc\", \"de\"]"
+  },
+  {
+    "s": "abcdef",
+    "dictionary": "[\"ab\", \"cd\", \"ef\"]"
+  },
+  {
+    "s": "aaaaab",
+    "dictionary": "[\"a\", \"aa\"]"
+  },
+  {
+    "s": "xyzxyz",
+    "dictionary": "[\"xyz\"]"
+  },
+  {
+    "s": "helloworld",
+    "dictionary": "[\"hello\", \"world\", \"hell\", \"low\"]"
+  },
+  {
+    "s": "qwerty",
+    "dictionary": "[\"abc\", \"def\"]"
+  },
+  {
+    "s": "mississippi",
+    "dictionary": "[\"is\", \"si\", \"miss\"]"
+  },
+  {
+    "s": "abcdefghij",
+    "dictionary": "[\"abc\", \"def\", \"ghi\"]"
+  },
+  {
+    "s": "zzzzzzzzzz",
+    "dictionary": "[\"z\", \"zz\", \"zzz\"]"
+  },
+  {
+    "s": "thequickbrownfox",
+    "dictionary": "[\"the\", \"quick\", \"brown\", \"fox\"]"
+  },
+  {
+    "s": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "dictionary": "[\"a\", \"aa\", \"aaa\"]"
+  },
+  {
+    "s": "abcdxyz",
+    "dictionary": "[\"abc\", \"xyz\"]"
+  },
+  {
+    "s": "onetwothreefour",
+    "dictionary": "[\"one\", \"two\", \"three\", \"four\"]"
+  },
+  {
+    "s": "nomatchhere",
+    "dictionary": "[\"aaa\", \"bbb\", \"ccc\"]"
+  },
+  {
+    "s": "ababa",
+    "dictionary": "[\"aba\", \"bab\"]"
+  },
+  {
+    "s": "programming",
+    "dictionary": "[\"pro\", \"gram\", \"ming\", \"program\"]"
   }
 ]

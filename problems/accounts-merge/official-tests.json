@@ -13,5 +13,80 @@
   },
   {
     "accounts": "[[\"A\",\"a@x.com\"],[\"B\",\"b@x.com\"]]"
+  },
+  {
+    "accounts": "[[\"Solo\",\"solo@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"Zoe\",\"z3@mail.com\",\"z1@mail.com\",\"z2@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"John\",\"a@mail.com\",\"b@mail.com\"],[\"John\",\"b@mail.com\",\"c@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"John\",\"a@mail.com\"],[\"John\",\"b@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"Alice\",\"shared@mail.com\"],[\"Alice\",\"shared@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"A\",\"a1@x.com\",\"a2@x.com\"],[\"A\",\"a2@x.com\",\"a3@x.com\"],[\"A\",\"a3@x.com\",\"a4@x.com\"]]"
+  },
+  {
+    "accounts": "[[\"Dup\",\"x@mail.com\",\"x@mail.com\",\"y@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"A\",\"a@x.com\"],[\"B\",\"b@x.com\"],[\"C\",\"c@x.com\"],[\"D\",\"d@x.com\"]]"
+  },
+  {
+    "accounts": "[[\"Star\",\"center@mail.com\",\"s1@mail.com\"],[\"Star\",\"center@mail.com\",\"s2@mail.com\"],[\"Star\",\"center@mail.com\",\"s3@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"Bob\",\"bob@mail.com\"],[\"Bob\",\"bob@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"Ann\",\"ann2@mail.com\",\"ann1@mail.com\"],[\"Ann\",\"ann3@mail.com\"],[\"Ann\",\"bob@mail.com\",\"ann1@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"Mike\",\"m1@mail.com\",\"m2@mail.com\",\"m3@mail.com\",\"m4@mail.com\",\"m5@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"K\",\"k1@mail.com\"],[\"K\",\"k1@mail.com\",\"k2@mail.com\"],[\"K\",\"k2@mail.com\",\"k3@mail.com\"],[\"L\",\"l1@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"Eve\",\"e1@mail.com\",\"e2@mail.com\"],[\"Adam\",\"a1@mail.com\"],[\"Eve\",\"e2@mail.com\",\"e3@mail.com\"],[\"Adam\",\"a1@mail.com\",\"a2@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"Tom\",\"t2@mail.com\",\"t1@mail.com\"],[\"Tom\",\"t1@mail.com\",\"t0@mail.com\"],[\"Jerry\",\"j@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"A\",\"a@mail.com\",\"b@mail.com\",\"c@mail.com\"],[\"A\",\"d@mail.com\",\"e@mail.com\"],[\"A\",\"c@mail.com\",\"d@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"X\",\"x@mail.com\"],[\"X\",\"y@mail.com\"],[\"Z\",\"z@mail.com\"],[\"X\",\"x@mail.com\",\"y@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"Paul\",\"p@mail.com\"],[\"Paul\",\"p@mail.com\"],[\"Paul\",\"p@mail.com\"],[\"Paige\",\"q@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"LongName\",\"a1@mail.com\",\"a2@mail.com\"],[\"LongName\",\"a3@mail.com\"],[\"LongName\",\"a2@mail.com\",\"a3@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"A\",\"m@mail.com\",\"a@mail.com\",\"z@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"Ben\",\"b@mail.com\"],[\"Ben\",\"c@mail.com\"],[\"Ben\",\"d@mail.com\"],[\"Ben\",\"b@mail.com\",\"c@mail.com\",\"d@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"Cara\",\"c1@mail.com\",\"c2@mail.com\"],[\"Cara\",\"c3@mail.com\",\"c4@mail.com\"],[\"Cara\",\"c2@mail.com\",\"c3@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"Nina\",\"n@mail.com\"],[\"Noah\",\"m@mail.com\"],[\"Nina\",\"n2@mail.com\"],[\"Nina\",\"n@mail.com\",\"n2@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"Q\",\"q1@mail.com\",\"q2@mail.com\"],[\"Q\",\"q3@mail.com\",\"q4@mail.com\"],[\"Q\",\"q5@mail.com\"]]"
+  },
+  {
+    "accounts": "[[\"W\",\"w1@mail.com\",\"w2@mail.com\"],[\"W\",\"w2@mail.com\",\"w1@mail.com\"]]"
   }
 ]
