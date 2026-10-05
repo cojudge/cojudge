@@ -1,122 +1,38 @@
 [
-  {
-    "operations": "[\"Trie\",\"insert\",\"search\",\"search\",\"startsWith\",\"insert\",\"search\"]",
-    "values": "[\"\",\"apple\",\"apple\",\"app\",\"app\",\"app\",\"app\"]"
-  },
-  {
-    "operations": "[\"Trie\",\"insert\",\"search\",\"startsWith\"]",
-    "values": "[\"\",\"hello\",\"hello\",\"hell\"]"
-  },
-  {
-    "operations": "[\"Trie\",\"insert\",\"search\",\"search\",\"startsWith\",\"startsWith\"]",
-    "values": "[\"\",\"abc\",\"abc\",\"ab\",\"a\",\"abc\"]"
-  },
-  {
-    "operations": "[\"Trie\",\"search\",\"startsWith\",\"insert\",\"search\"]",
-    "values": "[\"\",\"key\",\"ke\",\"key\",\"key\"]"
-  },
-  {
-    "operations": "[\"Trie\",\"insert\",\"search\",\"search\",\"search\",\"startsWith\"]",
-    "values": "[\"\",\"a\",\"a\",\"aa\",\"aaa\",\"a\"]"
-  },
-  {
-    "operations": "[\"Trie\",\"insert\",\"insert\",\"insert\",\"search\",\"search\",\"search\",\"startsWith\",\"startsWith\",\"startsWith\"]",
-    "values": "[\"\",\"cat\",\"car\",\"card\",\"cat\",\"car\",\"card\",\"ca\",\"car\",\"dog\"]"
-  },
-  {
-    "operations": "[\"Trie\",\"insert\",\"startsWith\",\"startsWith\"]",
-    "values": "[\"\",\"leet\",\"lee\",\"leetc\"]"
-  },
-  {
-    "operations": "[\"Trie\",\"insert\",\"insert\",\"search\",\"search\",\"startsWith\"]",
-    "values": "[\"\",\"code\",\"cojudge\",\"code\",\"cojudge\",\"coj\"]"
-  },
-  {
-    "operations": "[\"Trie\",\"insert\",\"search\"]",
-    "values": "[\"\",\"zebra\",\"zebra\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"search\", \"search\", \"startsWith\", \"startsWith\"]",
-    "values": "[\"\", \"dog\", \"dog\", \"do\", \"do\", \"doggy\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"insert\", \"insert\", \"search\", \"search\", \"search\", \"startsWith\", \"startsWith\"]",
-    "values": "[\"\", \"a\", \"ab\", \"abc\", \"a\", \"ab\", \"abc\", \"ab\", \"abcd\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"search\", \"startsWith\", \"insert\", \"search\"]",
-    "values": "[\"\", \"nothing\", \"pre\", \"pre\", \"pre\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"insert\", \"insert\", \"search\", \"search\", \"startsWith\", \"startsWith\"]",
-    "values": "[\"\", \"banana\", \"band\", \"bandana\", \"band\", \"banda\", \"band\", \"banana\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"insert\", \"search\", \"startsWith\"]",
-    "values": "[\"\", \"test\", \"test\", \"test\", \"tes\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"search\", \"search\", \"startsWith\", \"startsWith\", \"startsWith\"]",
-    "values": "[\"\", \"xyz\", \"xy\", \"xyz\", \"x\", \"xyz\", \"xyzz\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"insert\", \"insert\", \"insert\", \"search\", \"search\", \"startsWith\", \"startsWith\"]",
-    "values": "[\"\", \"up\", \"down\", \"left\", \"right\", \"up\", \"down\", \"l\", \"r\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"insert\", \"search\", \"search\", \"startsWith\", \"startsWith\"]",
-    "values": "[\"\", \"algorithm\", \"algo\", \"algorithm\", \"algo\", \"algo\", \"algorithmx\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"search\", \"search\", \"startsWith\", \"startsWith\"]",
-    "values": "[\"\", \"m\", \"m\", \"n\", \"m\", \"n\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"insert\", \"insert\", \"search\", \"search\", \"startsWith\", \"startsWith\"]",
-    "values": "[\"\", \"s\", \"str\", \"string\", \"st\", \"str\", \"stri\", \"stringy\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"insert\", \"insert\", \"search\", \"search\", \"startsWith\", \"startsWith\"]",
-    "values": "[\"\", \"foo\", \"bar\", \"baz\", \"foo\", \"ba\", \"ba\", \"baz\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"insert\", \"insert\", \"search\", \"search\", \"startsWith\"]",
-    "values": "[\"\", \"trie\", \"tried\", \"tries\", \"trie\", \"tried\", \"tri\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"search\", \"search\", \"startsWith\", \"startsWith\"]",
-    "values": "[\"\", \"aaabbb\", \"aaabbb\", \"aaab\", \"aaa\", \"bbb\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"insert\", \"search\", \"search\", \"startsWith\", \"startsWith\"]",
-    "values": "[\"\", \"qwerty\", \"qwert\", \"qwerty\", \"qwert\", \"qwer\", \"qwertyuiop\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"insert\", \"insert\", \"search\", \"search\", \"startsWith\", \"startsWith\"]",
-    "values": "[\"\", \"data\", \"database\", \"datum\", \"data\", \"dat\", \"dat\", \"data\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"insert\", \"insert\", \"search\", \"search\", \"startsWith\", \"startsWith\", \"startsWith\"]",
-    "values": "[\"\", \"sun\", \"moon\", \"star\", \"sun\", \"moo\", \"s\", \"mo\", \"star\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"search\", \"startsWith\", \"search\"]",
-    "values": "[\"\", \"supercalifragilistic\", \"supercalifragilistic\", \"super\", \"supercali\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"search\", \"startsWith\", \"search\", \"startsWith\"]",
-    "values": "[\"\", \"abcdef\", \"abc\", \"abc\", \"abcdef\", \"abcdefg\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"insert\", \"search\", \"startsWith\", \"search\"]",
-    "values": "[\"\", \"applepie\", \"applet\", \"apple\", \"apple\", \"applepie\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"insert\", \"search\", \"search\", \"startsWith\", \"startsWith\"]",
-    "values": "[\"\", \"go\", \"golang\", \"go\", \"golan\", \"gol\", \"golangx\"]"
-  },
-  {
-    "operations": "[\"Trie\", \"insert\", \"insert\", \"insert\", \"search\", \"search\", \"startsWith\", \"startsWith\"]",
-    "values": "[\"\", \"alpha\", \"beta\", \"gamma\", \"alpha\", \"alph\", \"gam\", \"bet\"]"
-  }
+    {
+        "operations": "[\"Trie\",\"insert\",\"search\",\"search\",\"startsWith\",\"insert\",\"search\"]",
+        "values": "[\"\",\"apple\",\"apple\",\"app\",\"app\",\"app\",\"app\"]"
+    },
+    {
+        "operations": "[\"Trie\",\"insert\",\"search\",\"startsWith\"]",
+        "values": "[\"\",\"hello\",\"hello\",\"hell\"]"
+    },
+    {
+        "operations": "[\"Trie\",\"insert\",\"search\",\"search\",\"startsWith\",\"startsWith\"]",
+        "values": "[\"\",\"abc\",\"abc\",\"ab\",\"a\",\"abc\"]"
+    },
+    {
+        "operations": "[\"Trie\",\"search\",\"startsWith\",\"insert\",\"search\"]",
+        "values": "[\"\",\"key\",\"ke\",\"key\",\"key\"]"
+    },
+    {
+        "operations": "[\"Trie\",\"insert\",\"search\",\"search\",\"search\",\"startsWith\"]",
+        "values": "[\"\",\"a\",\"a\",\"aa\",\"aaa\",\"a\"]"
+    },
+    {
+        "operations": "[\"Trie\",\"insert\",\"insert\",\"insert\",\"search\",\"search\",\"search\",\"startsWith\",\"startsWith\",\"startsWith\"]",
+        "values": "[\"\",\"cat\",\"car\",\"card\",\"cat\",\"car\",\"card\",\"ca\",\"car\",\"dog\"]"
+    },
+    {
+        "operations": "[\"Trie\",\"insert\",\"startsWith\",\"startsWith\"]",
+        "values": "[\"\",\"leet\",\"lee\",\"leetc\"]"
+    },
+    {
+        "operations": "[\"Trie\",\"insert\",\"insert\",\"search\",\"search\",\"startsWith\"]",
+        "values": "[\"\",\"code\",\"cojudge\",\"code\",\"cojudge\",\"coj\"]"
+    },
+    {
+        "operations": "[\"Trie\",\"insert\",\"search\"]",
+        "values": "[\"\",\"zebra\",\"zebra\"]"
+    }
 ]

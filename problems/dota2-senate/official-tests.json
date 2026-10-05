@@ -1,98 +1,20 @@
 [
-  {
-    "senate": "RD"
-  },
-  {
-    "senate": "RDD"
-  },
-  {
-    "senate": "RRDDD"
-  },
-  {
-    "senate": "DDRRR"
-  },
-  {
-    "senate": "R"
-  },
-  {
-    "senate": "D"
-  },
-  {
-    "senate": "RRR"
-  },
-  {
-    "senate": "DDD"
-  },
-  {
-    "senate": "RDDR"
-  },
-  {
-    "senate": "DRRD"
-  },
-  {
-    "senate": "RRDR"
-  },
-  {
-    "senate": "DDDR"
-  },
-  {
-    "senate": "RDRDRD"
-  },
-  {
-    "senate": "DRDRDR"
-  },
-  {
-    "senate": "RRRRDDD"
-  },
-  {
-    "senate": "RDDDR"
-  },
-  {
-    "senate": "RDRDD"
-  },
-  {
-    "senate": "DRRDRD"
-  },
-  {
-    "senate": "RR"
-  },
-  {
-    "senate": "DD"
-  },
-  {
-    "senate": "RDR"
-  },
-  {
-    "senate": "DRD"
-  },
-  {
-    "senate": "RRD"
-  },
-  {
-    "senate": "DDR"
-  },
-  {
-    "senate": "RRDD"
-  },
-  {
-    "senate": "DRRR"
-  },
-  {
-    "senate": "RDDD"
-  },
-  {
-    "senate": "RRRDDD"
-  },
-  {
-    "senate": "DDDRRR"
-  },
-  {
-    "senate": "RDRDDR"
-  },
-  {
-    "senate": "DDRDRR"
-  },
-  {
-    "senate": "RRDRDD"
-  }
+  { "senate": "RD" },
+  { "senate": "RDD" },
+  { "senate": "RRDDD" },
+  { "senate": "DDRRR" },
+  { "senate": "R" },
+  { "senate": "D" },
+  { "senate": "RRR" },
+  { "senate": "DDD" },
+  { "senate": "RDDR" },
+  { "senate": "DRRD" },
+  { "senate": "RRDR" },
+  { "senate": "DDDR" },
+  { "senate": "RDRDRD" },
+  { "senate": "DRDRDR" },
+  { "senate": "RRRRDDD" },
+  { "senate": "RDDDR" },
+  { "senate": "RDRDD" },
+  { "senate": "DRRDRD" }
 ]

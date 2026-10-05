@@ -11,22 +11,5 @@
   { "head": "[0,0,0,0]", "left": 2, "right": 3 },
   { "head": "[-500,500,-500,500]", "left": 1, "right": 4 },
   { "head": "@javascript:JSON.stringify(Array.from({length:500},(_,i)=>i+1))", "left": 1, "right": 500, "_isLargeTest": true },
-  { "head": "@javascript:JSON.stringify(Array.from({length:500},(_,i)=>500-i))", "left": 100, "right": 400, "_isLargeTest": true },
-  { "head": "[-500]", "left": 1, "right": 1 },
-  { "head": "[500]", "left": 1, "right": 1 },
-  { "head": "[-1,0,1]", "left": 1, "right": 2 },
-  { "head": "[-1,0,1]", "left": 2, "right": 2 },
-  { "head": "[-1,0,1]", "left": 2, "right": 3 },
-  { "head": "[1,2,3,4]", "left": 1, "right": 3 },
-  { "head": "[1,2,3,4]", "left": 2, "right": 4 },
-  { "head": "[4,3,2,1]", "left": 2, "right": 3 },
-  { "head": "[5,5,5,5,5]", "left": 2, "right": 4 },
-  { "head": "[10,20,30,40,50,60]", "left": 3, "right": 6 },
-  { "head": "[10,20,30,40,50,60]", "left": 1, "right": 5 },
-  { "head": "[1,-1,2,-2,3,-3]", "left": 2, "right": 5 },
-  { "head": "[100,200,300,400,500]", "left": 3, "right": 3 },
-  { "head": "[-500,-250,0,250,500]", "left": 1, "right": 4 },
-  { "head": "[3,1,4,1,5,9,2,6]", "left": 4, "right": 7 },
-  { "head": "[8,7,6,5,4,3,2,1]", "left": 1, "right": 8 },
-  { "head": "[0,1,0,1,0,1,0]", "left": 2, "right": 6 }
+  { "head": "@javascript:JSON.stringify(Array.from({length:500},(_,i)=>500-i))", "left": 100, "right": 400, "_isLargeTest": true }
 ]

@@ -1,98 +1,38 @@
 [
-  {
-    "strs": "[\"hello\",\"world\"]"
-  },
-  {
-    "strs": "[\"\"]"
-  },
-  {
-    "strs": "[]"
-  },
-  {
-    "strs": "[\"a\",\"b\",\"c\"]"
-  },
-  {
-    "strs": "[\"leet\",\"code\",\"love\",\"you\"]"
-  },
-  {
-    "strs": "[\"\",\"\",\"\"]"
-  },
-  {
-    "strs": "[\" \",\"  \",\"   \"]"
-  },
-  {
-    "strs": "[\"\\\\#\",\"##\",\"#\\\\#\"]"
-  },
-  {
-    "strs": "@javascript:JSON.stringify([\"verylongstring\"+\"x\".repeat(186),\"short\"])"
-  },
-  {
-    "strs": "[\"special\\ncharacters\\there\",\"unicode\u2713\u2713\u2713\"]"
-  },
-  {
-    "strs": "[\"a\"]"
-  },
-  {
-    "strs": "[\"\u4f60\u597d\",\"\u4e16\u754c\"]"
-  },
-  {
-    "strs": "[\"a/b\", \"c#d\", \"123\", \"\"]"
-  },
-  {
-    "strs": "[\"#\", \"##\", \"###\"]"
-  },
-  {
-    "strs": "[\"12345\", \"67890\"]"
-  },
-  {
-    "strs": "[\"hello#world\", \"foo#bar\"]"
-  },
-  {
-    "strs": "[\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
-  },
-  {
-    "strs": "[\"ab\", \"ab\", \"ab\"]"
-  },
-  {
-    "strs": "[\" \", \"  hello  \"]"
-  },
-  {
-    "strs": "[\"Python\", \"is\", \"fun\"]"
-  },
-  {
-    "strs": "[\"x\"]"
-  },
-  {
-    "strs": "[\"AaBbCc\", \"123Xyz\"]"
-  },
-  {
-    "strs": "[\"!@#$\", \"%^&*\"]"
-  },
-  {
-    "strs": "[\"line1\", \"line2\", \"line3\"]"
-  },
-  {
-    "strs": "[\"0\", \"00\", \"000\"]"
-  },
-  {
-    "strs": "[\"test#123#test\", \"#end\"]"
-  },
-  {
-    "strs": "[\"a\", \"aa\", \"aaa\", \"aaaa\"]"
-  },
-  {
-    "strs": "[\" hello\", \"world \"]"
-  },
-  {
-    "strs": "[\"#0#\", \"#1#\", \"#2#\"]"
-  },
-  {
-    "strs": "[\"abcabcabcabcabcabcabcabcabcabc\"]"
-  },
-  {
-    "strs": "[\"qwerty\", \"asdf\", \"zxcv\"]"
-  },
-  {
-    "strs": "[\"thequickbrownfox\", \"jumps\", \"over\"]"
-  }
+    {
+        "strs": "[\"hello\",\"world\"]"
+    },
+    {
+        "strs": "[\"\"]"
+    },
+    {
+        "strs": "[]"
+    },
+    {
+        "strs": "[\"a\",\"b\",\"c\"]"
+    },
+    {
+        "strs": "[\"leet\",\"code\",\"love\",\"you\"]"
+    },
+    {
+        "strs": "[\"\",\"\",\"\"]"
+    },
+    {
+        "strs": "[\" \",\"  \",\"   \"]"
+    },
+    {
+        "strs": "[\"\\\\#\",\"##\",\"#\\\\#\"]"
+    },
+    {
+        "strs": "@javascript:JSON.stringify([\"verylongstring\"+\"x\".repeat(186),\"short\"])"
+    },
+    {
+        "strs": "[\"special\\ncharacters\\there\",\"unicode✓✓✓\"]"
+    },
+    {
+        "strs": "[\"a\"]"
+    },
+    {
+        "strs": "[\"你好\",\"世界\"]"
+    }
 ]

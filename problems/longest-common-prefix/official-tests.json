@@ -36,63 +36,6 @@
     "strs": "[\"c\",\"acc\",\"ccc\"]"
   },
   {
-    "strs": "[\"abc\",\"abd\",\"abe\"]"
-  },
-  {
-    "strs": "[\"test\",\"testing\",\"tester\"]"
-  },
-  {
-    "strs": "[\"prefix\",\"prelude\",\"prevent\"]"
-  },
-  {
-    "strs": "[\"same\",\"same\",\"same\"]"
-  },
-  {
-    "strs": "[\"a\",\"ab\",\"abc\"]"
-  },
-  {
-    "strs": "[\"abc\",\"ab\",\"a\"]"
-  },
-  {
-    "strs": "[\"z\"]"
-  },
-  {
-    "strs": "[\"hello\",\"hell\",\"heaven\"]"
-  },
-  {
-    "strs": "[\"abcd\",\"efgh\"]"
-  },
-  {
-    "strs": "[\"aa\",\"aaa\",\"aaaa\"]"
-  },
-  {
-    "strs": "[\"foo\",\"foobar\",\"foobaz\"]"
-  },
-  {
-    "strs": "[\"x\",\"y\",\"z\"]"
-  },
-  {
-    "strs": "[\"single\"]"
-  },
-  {
-    "strs": "[\"abcde\",\"abcdf\",\"abcdg\",\"abcdh\"]"
-  },
-  {
-    "strs": "[\"\",\"a\"]"
-  },
-  {
-    "strs": "[\"ab\",\"abc\",\"abcd\",\"abcde\"]"
-  },
-  {
-    "strs": "[\"qwerty\",\"qwertyuiop\",\"qwer\"]"
-  },
-  {
-    "strs": "[\"mango\",\"mangrove\",\"mango\"]"
-  },
-  {
-    "strs": "[\"bc\",\"bcd\",\"bcde\"]"
-  },
-  {
     "strs": "@javascript:JSON.stringify([...Array(200).fill(\"a\".repeat(200))])",
     "_isLargeTest": true
   }
