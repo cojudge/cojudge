@@ -1,16 +1,92 @@
 [
-  { "s": "aba" },
-  { "s": "abca" },
-  { "s": "abc" },
-  { "s": "a" },
-  { "s": "ab" },
-  { "s": "aa" },
-  { "s": "deeee" },
-  { "s": "cbbcc" },
-  { "s": "eedede" },
-  { "s": "abccaa" },
-  { "s": "aguokepatgbnvfqmgmlcupuufxoohdfpgjdmysgvhmvffcnqxjjxqncffvmhvgsymdjgpfdhooxfuupuculmgmqfvnbgtapekouga" },
-  { "s": "abcdefdba" },
-  { "s": "abccbxa" },
-  { "s": "acxcbab" }
+  {
+    "s": "aba"
+  },
+  {
+    "s": "abca"
+  },
+  {
+    "s": "abc"
+  },
+  {
+    "s": "a"
+  },
+  {
+    "s": "ab"
+  },
+  {
+    "s": "aa"
+  },
+  {
+    "s": "deeee"
+  },
+  {
+    "s": "cbbcc"
+  },
+  {
+    "s": "eedede"
+  },
+  {
+    "s": "abccaa"
+  },
+  {
+    "s": "aguokepatgbnvfqmgmlcupuufxoohdfpgjdmysgvhmvffcnqxjjxqncffvmhvgsymdjgpfdhooxfuupuculmgmqfvnbgtapekouga"
+  },
+  {
+    "s": "abcdefdba"
+  },
+  {
+    "s": "abccbxa"
+  },
+  {
+    "s": "acxcbab"
+  },
+  {
+    "s": "abcb"
+  },
+  {
+    "s": "abccb"
+  },
+  {
+    "s": "axbcb"
+  },
+  {
+    "s": "aaab"
+  },
+  {
+    "s": "baa"
+  },
+  {
+    "s": "racecar"
+  },
+  {
+    "s": "raceacar"
+  },
+  {
+    "s": "abcdefgfedcba"
+  },
+  {
+    "s": "abcdefgfedcbza"
+  },
+  {
+    "s": "z"
+  },
+  {
+    "s": "zz"
+  },
+  {
+    "s": "zaz"
+  },
+  {
+    "s": "abccbxaa"
+  },
+  {
+    "s": "abcaab"
+  },
+  {
+    "s": "abcddcba"
+  },
+  {
+    "s": "qwqwq"
+  }
 ]

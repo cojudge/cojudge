@@ -54,5 +54,69 @@
     {
         "operations": "[\"WordDictionary\",\"search\",\"addWord\",\"search\"]",
         "values": "[\"\",\"word\",\"word\",\"word\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"dog\",\"dog\",\"d.g\",\"cat\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"a\",\"b\",\".\",\"..\",\"c\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"apple\",\"app\",\"app\",\"appl\",\"app.\",\"....\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"test\",\"test\",\"test\",\"tes.\",\"....\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"abcdefghijklmnopqrstuvwxy\",\"abcdefghijklmnopqrstuvwxy\",\".........................\",\"........................\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"search\",\"addWord\",\"search\",\"search\"]",
+        "values": "[\"\",\"abc\",\"abc\",\"abc\",\"ab.\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"addWord\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"car\",\"cat\",\"cap\",\"can\",\"ca.\",\"c..\",\"cab\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"abcd\",\"....\",\"...\",\".....\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"a\",\"ab\",\"abc\",\".\",\"..\",\"...\",\"....\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"hello\",\"hell\",\"helloo\",\"h....\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"aaa\",\"aab\",\"aba\",\"a..\",\".a.\",\"..b\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"word\",\"world\",\"work\",\"wor.\",\"w.r.d\",\"word.\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"search\"]",
+        "values": "[\"\",\"a\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"z\",\".\",\"z\",\"zz\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"trie\",\"trigger\",\"try\",\"tr.\",\"t..\",\"try\",\"trigge.\"]"
+    },
+    {
+        "operations": "[\"WordDictionary\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\"]",
+        "values": "[\"\",\"aaaaa\",\"bbbbb\",\".....\",\"aaa..\",\"bb...\"]"
     }
 ]
