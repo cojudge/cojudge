@@ -17,7 +17,7 @@
     import { CLOUD_FLUSH_EVENT, isCloudRestoreInProgress, flushProgressStorageWrites, writeProgressStorageItem } from '$lib/progressBackup';
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { isDotFileName, type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
-    import userSettingsStorage, { type ThemeChoice, type ActivePanel } from '$lib/stores/userSettingsStorage';
+    import userSettingsStorage, { type ThemeChoice, type ActivePanel, type EditorIndentation } from '$lib/stores/userSettingsStorage';
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
     import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, removeFencedCodeBlock, wrapImageThumbnails, wrapCodeBlocksWithCopy, highlightCodeBlocks, getCodeBlockLanguage, setCodeBlockLanguage, normalizeCodeLanguage, ensureTrailingEmptyLine, ensureFileMentionCarets, prepareTaskListCheckboxes, isTaskListItem, isEmptyTaskListItem, createTaskCheckbox, ensureTaskCheckbox, ensureTaskItemCaretAnchor, removeTaskCheckbox, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, CODE_COPY_WRAPPER_CLASS, CODE_LANGUAGE_INPUT_CLASS, CODE_LANGUAGE_DATALIST_ID, CODE_LANGUAGE_OPTIONS, resolvePastedImages, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref, fileMentionHtml, FILE_MENTION_CLASS } from '$lib/utils/markdown';
     import { storePastedImage, deletePastedImage, inlinePastedImageLinks, parsePastedImageLink } from '$lib/utils/imageStore';
@@ -358,6 +358,7 @@ func main() {
     let fontSize: number = $userSettingsStorage.editorFontSize ?? 14;
     let theme: ThemeChoice = $userSettingsStorage.theme ?? 'light';
     let vimMode: 'off' | 'on' = $userSettingsStorage.vimMode ?? 'off';
+    let indentation: EditorIndentation = $userSettingsStorage.editorIndentation ?? '4-spaces';
     let autoHideActivityBar: boolean = $userSettingsStorage.autoHideActivityBar ?? false;
 
     let tabs: TabMeta[] = getInitialTabs();
@@ -6002,6 +6003,13 @@ func main() {
     }
 
     $: {
+        const currentIndentation = $userSettingsStorage.editorIndentation;
+        if (indentation && currentIndentation !== indentation) {
+            userSettingsStorage.update((s) => ({ ...s, editorIndentation: indentation }));
+        }
+    }
+
+    $: {
         const currentAutoHide = $userSettingsStorage.autoHideActivityBar ?? false;
         if (typeof autoHideActivityBar === 'boolean' && currentAutoHide !== autoHideActivityBar) {
             userSettingsStorage.update((s) => ({ ...s, autoHideActivityBar }));
@@ -6742,6 +6750,12 @@ func main() {
                     <select id="vim-mode-select" bind:value={vimMode}>
                         <option value="off">Standard</option>
                         <option value="on">Vim</option>
+                    </select>
+                    <label for="indent-select">Indentation</label>
+                    <select id="indent-select" bind:value={indentation}>
+                        <option value="2-spaces">2 spaces</option>
+                        <option value="4-spaces">4 spaces</option>
+                        <option value="tab">Tab</option>
                     </select>
                     <label for="autohide-select">Auto-hide activity bar</label>
                     <select id="autohide-select" bind:value={autoHideActivityBar}>
@@ -7705,6 +7719,7 @@ func main() {
                     {fontSize}
                     {theme}
                     {vimMode}
+                    {indentation}
                     viewState={currentViewState}
                     bind:breakpoints={debugBreakpoints}
                     {activeDebugLine}

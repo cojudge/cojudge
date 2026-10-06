@@ -7,15 +7,24 @@ export type ThemeChoice = 'dark' | 'light';
 
 export type ActivePanel = 'explorer' | 'search' | null;
 
+export type EditorIndentation = '2-spaces' | '4-spaces' | 'tab';
+
 export interface UserSettings {
     preferredLanguage: ProgrammingLanguage;
     playgroundPreferredLanguage: ProgrammingLanguage;
     editorFontSize: number;
     theme: ThemeChoice;
     vimMode: 'off' | 'on';
+    editorIndentation: EditorIndentation;
     isSidebarOpen: boolean;
     activePanel: ActivePanel;
     autoHideActivityBar: boolean;
+}
+
+export function indentationToMonaco(indentation: EditorIndentation): { tabSize: number; insertSpaces: boolean } {
+    if (indentation === '2-spaces') return { tabSize: 2, insertSpaces: true };
+    if (indentation === 'tab') return { tabSize: 4, insertSpaces: false };
+    return { tabSize: 4, insertSpaces: true };
 }
 
 const STORAGE_KEY = 'user-settings';
@@ -26,10 +35,16 @@ export const defaultUserSettings: UserSettings = {
     editorFontSize: 14,
     theme: 'light',
     vimMode: 'off',
+    editorIndentation: '4-spaces',
     isSidebarOpen: true,
     activePanel: 'explorer',
     autoHideActivityBar: false,
 };
+
+export function normalizeEditorIndentation(input: unknown): EditorIndentation {
+    if (input === '2-spaces' || input === '4-spaces' || input === 'tab') return input;
+    return defaultUserSettings.editorIndentation;
+}
 
 export function normalizeUserSettings(input: any): UserSettings {
     const preferredLanguage = (input?.preferredLanguage ?? defaultUserSettings.preferredLanguage) as ProgrammingLanguage;
@@ -40,11 +55,12 @@ export function normalizeUserSettings(input: any): UserSettings {
     const rawTheme = (input?.theme ?? defaultUserSettings.theme) as ThemeChoice;
     const theme: ThemeChoice = rawTheme === 'dark' ? 'dark' : 'light';
     const vimMode = input?.vimMode === 'on' ? 'on' : 'off';
+    const editorIndentation = normalizeEditorIndentation(input?.editorIndentation);
     const isSidebarOpen = typeof input?.isSidebarOpen === 'boolean' ? input.isSidebarOpen : defaultUserSettings.isSidebarOpen;
     const validPanels: ActivePanel[] = ['explorer', 'search', null];
     const activePanel = validPanels.includes(input?.activePanel as ActivePanel) ? input.activePanel as ActivePanel : defaultUserSettings.activePanel;
     const autoHideActivityBar = typeof input?.autoHideActivityBar === 'boolean' ? input.autoHideActivityBar : defaultUserSettings.autoHideActivityBar;
-    return { preferredLanguage, playgroundPreferredLanguage, editorFontSize, theme, vimMode, isSidebarOpen, activePanel, autoHideActivityBar };
+    return { preferredLanguage, playgroundPreferredLanguage, editorFontSize, theme, vimMode, editorIndentation, isSidebarOpen, activePanel, autoHideActivityBar };
 }
 
 // Load initial settings from localStorage if available

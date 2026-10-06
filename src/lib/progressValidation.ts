@@ -132,6 +132,14 @@ export function requireUserSettingsObject(data: ProgressData): Record<string, un
 	if ('vimMode' in value && value.vimMode !== 'off' && value.vimMode !== 'on') {
 		throw new Error('user-settings.vimMode is invalid.');
 	}
+	if (
+		'editorIndentation' in value
+		&& value.editorIndentation !== '2-spaces'
+		&& value.editorIndentation !== '4-spaces'
+		&& value.editorIndentation !== 'tab'
+	) {
+		throw new Error('user-settings.editorIndentation is invalid.');
+	}
 	if ('isSidebarOpen' in value && typeof value.isSidebarOpen !== 'boolean') {
 		throw new Error('user-settings.isSidebarOpen must contain a boolean.');
 	}
