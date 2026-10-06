@@ -9,6 +9,7 @@
     import SortIcon from "$lib/components/SortIcon.svelte";
     import userSettingsStorage from '$lib/stores/userSettingsStorage';
     import userStore from "$lib/stores/userStore";
+    import bookmarkStore, { toggleBookmarkId } from '$lib/stores/bookmarkStore';
     import { getDifficultyClass } from "$lib/utils/util.js";
     import GameModePopup from "$lib/components/GameModePopup.svelte";
     import GameHistoryPopup from "$lib/components/GameHistoryPopup.svelte";
@@ -161,13 +162,25 @@
         searchCollapsedGroups = new Set();
     }
 
+    let showBookmarks = false;
+    $: allProblemsList = ((data?.allProblems ?? selectedCourseProblems ?? []) as Problem[]);
+    $: bookmarkedProblems = allProblemsList.filter((p) => $bookmarkStore?.[p.id]);
+    $: bookmarkCount = bookmarkedProblems.length;
+    // Leave the Bookmarks view once the last bookmark is removed.
+    $: if (showBookmarks && bookmarkCount === 0) showBookmarks = false;
+    $: baseProblems = showBookmarks ? bookmarkedProblems : selectedCourseProblems;
+
+    function toggleBookmark(problemId: string) {
+        bookmarkStore.update((prev) => toggleBookmarkId(prev, problemId));
+    }
+
     let filteredProblems: Problem[] = [];
     $: {
         if (!searchQuery.trim()) {
-            filteredProblems = selectedCourseProblems;
+            filteredProblems = baseProblems;
         } else {
             const query = searchQuery.toLowerCase().trim();
-            filteredProblems = selectedCourseProblems.filter((p) => {
+            filteredProblems = baseProblems.filter((p) => {
                 const titleMatch = (p.title || "").toLowerCase().includes(query);
                 const slugMatch = (p.id || "").toLowerCase().includes(query);
                 const statementMatch = (p.statement || "").toLowerCase().includes(query);
@@ -380,6 +393,7 @@
 
     // Persist course selection to localStorage
     function selectCourse(courseId: string) {
+        showBookmarks = false;
         if (browser) localStorage.setItem(COURSE_STORAGE_KEY, courseId);
     }
 
@@ -505,9 +519,10 @@
     let totalProblems = 0;
     let solvedCount = 0;
     $: (function computeOverall() {
-        totalProblems = selectedCourseProblems.length;
+        const source = (typeof baseProblems !== 'undefined' ? baseProblems : selectedCourseProblems) as Problem[];
+        totalProblems = source.length;
         let done = 0;
-        for (const p of selectedCourseProblems) {
+        for (const p of source) {
             if (checkMap[p.id]) done++;
         }
         solvedCount = done;
@@ -1970,15 +1985,26 @@
         {#each courses as course}
             <a
                 class="tab"
-                class:active={course.id === selectedCourseId}
+                class:active={!showBookmarks && course.id === selectedCourseId}
                 href={`/?course=${encodeURIComponent(course.id)}`}
-                aria-current={course.id === selectedCourseId ? "page" : undefined}
+                aria-current={!showBookmarks && course.id === selectedCourseId ? "page" : undefined}
                 onclick={() => selectCourse(course.id)}
             >{course.title}{#if course.source && course.source !== 'bundled'}<span
                     class="source-badge {course.source}"
                     title={sourceTitle(course.source)}
                 >{sourceLabel(course.source)}</span>{/if}</a>
         {/each}
+        {#if bookmarkCount > 0}
+            <button
+                type="button"
+                class="tab"
+                class:active={showBookmarks}
+                aria-current={showBookmarks ? "page" : undefined}
+                aria-pressed={showBookmarks}
+                title={showBookmarks ? 'Showing bookmarked problems' : `Show bookmarked problems (${bookmarkCount})`}
+                onclick={() => { showBookmarks = true; }}
+            >Bookmarks ({bookmarkCount})</button>
+        {/if}
     </nav>
     {#if hasCustomContent || hasModifiedContent}
         <div class="source-legend" aria-label="Legend for custom content labels">
@@ -2012,7 +2038,11 @@
                 ></div>
             </div>
         </div>
-        {@html renderMarkdown(courseDescription)}
+        {#if showBookmarks}
+            <p>Problems you bookmarked for later. Toggle the bookmark icon next to any problem to add or remove it here.</p>
+        {:else}
+            {@html renderMarkdown(courseDescription)}
+        {/if}
     </div>
 
     <div class="search-container">
@@ -2161,13 +2191,30 @@
                                                 {problem.title}
                                             </a>
                                             {#if problem.link}
-                                                <a
-                                                    href={problem.link}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    class="external-link">↗</a
-                                                >
+                                                <Tooltip text="Source Link" pos="top">
+                                                    <a
+                                                        href={problem.link}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        class="external-link"
+                                                        aria-label={`Open ${problem.title} in LeetCode`}>↗</a
+                                                    >
+                                                </Tooltip>
                                             {/if}
+                                            <Tooltip text={$bookmarkStore?.[problem.id] ? 'Remove bookmark' : 'Bookmark'} pos="top">
+                                                <button
+                                                    type="button"
+                                                    class="bookmark-btn"
+                                                    class:bookmarked={$bookmarkStore?.[problem.id]}
+                                                    aria-pressed={$bookmarkStore?.[problem.id] ? 'true' : 'false'}
+                                                    aria-label={$bookmarkStore?.[problem.id] ? `Remove ${problem.title} from bookmarks` : `Bookmark ${problem.title}`}
+                                                    onclick={() => toggleBookmark(problem.id)}
+                                                >
+                                                    <svg width="13" height="13" viewBox="0 0 24 24" fill={$bookmarkStore?.[problem.id] ? 'currentColor' : 'none'} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                                                    </svg>
+                                                </button>
+                                            </Tooltip>
                                             {#if problem.source && problem.source !== 'bundled'}
                                                 <span
                                                     class="source-badge {problem.source}"
@@ -3267,6 +3314,8 @@
         flex: 0 0 auto;
         text-decoration: none;
         user-select: none;
+        font: inherit;
+        cursor: pointer;
         transition:
             background-color 0.15s ease,
             color 0.15s ease,
@@ -3479,6 +3528,41 @@
         color: var(--color-text-secondary);
         font-size: 0.8em;
         margin-left: var(--spacing-1);
+    }
+
+    .bookmark-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        vertical-align: middle;
+        width: 22px;
+        height: 22px;
+        margin-left: 4px;
+        padding: 0;
+        border: 1px solid transparent;
+        border-radius: 6px;
+        background: transparent;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        opacity: 0.55;
+        transition: opacity 0.12s ease, background-color 0.12s ease, color 0.12s ease;
+    }
+    .bookmark-btn:hover {
+        opacity: 1;
+        background: var(--color-surface-hover);
+        color: var(--color-text);
+    }
+    .bookmark-btn.bookmarked {
+        opacity: 1;
+        color: var(--color-highlight);
+    }
+    .bookmark-btn:focus-visible {
+        outline: 2px solid var(--color-highlight);
+        outline-offset: 1px;
+        opacity: 1;
+    }
+    .problem-table td :global(.tooltip-container) {
+        vertical-align: middle;
     }
 
     /* Badge styles */

@@ -113,6 +113,16 @@ export function requireGameResultsRecord(
 	return value;
 }
 
+export function requireBookmarksRecord(data: ProgressData): Record<string, unknown> {
+	const value = requireProgressObject(data, 'user-bookmarks');
+	for (const [entryKey, entryValue] of Object.entries(value)) {
+		if (entryValue !== true && entryValue !== false && entryValue !== 'true' && entryValue !== 'false') {
+			throw new Error(`user-bookmarks.${entryKey} must contain a boolean.`);
+		}
+	}
+	return value;
+}
+
 export function requireUserSettingsObject(data: ProgressData): Record<string, unknown> {
 	const value = requireProgressObject(data, 'user-settings');
 	for (const key of ['preferredLanguage', 'playgroundPreferredLanguage']) {

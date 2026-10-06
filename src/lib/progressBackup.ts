@@ -21,6 +21,7 @@ const CLOUD_KEYS = new Set([
 	'game-results',
 	'solutions',
 	'testcases',
+	'user-bookmarks',
 	'user-checkboxes',
 	'cojudge-whiteboard-v1'
 ]);

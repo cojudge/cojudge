@@ -56,11 +56,19 @@ export const load: PageServerLoad = async ({ url }) => {
         )
         : [];
 
+    const allProblemsWithSource = allProblems.map((problem) => ({
+        ...problem,
+        source: problemSources[problem.id] ?? 'bundled'
+    }));
+
     return {
         courses: courses.map((course) => ({ id: course.id, title: course.info.title, source: courseSources[course.id] ?? 'bundled' })),
         selectedCourseId: selectedCourse?.id ?? null,
         selectedCourseInfo: selectedCourse?.info ?? null,
         problems,
+        // Full catalog so the client can resolve bookmarked problems that
+        // live in a different course than the one currently selected.
+        allProblems: allProblemsWithSource.toSorted((a, b) => (a.title || '').localeCompare(b.title || '')),
         // Every modified item (user copy differs from bundled) across all
         // courses, so Manage Problems can offer a reset-to-bundled recovery.
         // Needed because `problems` only covers the selected course.

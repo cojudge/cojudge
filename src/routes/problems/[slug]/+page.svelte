@@ -19,6 +19,7 @@
     import { leftPaneWidthStore } from '$lib/stores/layoutStore';
     import userSettingsStorage, { type ThemeChoice, type EditorIndentation } from '$lib/stores/userSettingsStorage';
     import userStore from '$lib/stores/userStore';
+    import bookmarkStore, { toggleBookmarkId } from '$lib/stores/bookmarkStore';
     import { getDifficultyClass, type ProgrammingLanguage } from '$lib/utils/util.js';
     import { doc, setDoc } from 'firebase/firestore/lite';
     import { browser } from '$app/environment';
@@ -1011,7 +1012,23 @@
             {:else if data.problem.source === 'modified'}
                 <span class="source-badge modified" title="Modified — edited in your Cojudge folder, differs from the bundled copy">Modified</span>
             {/if}
-            <a href={data.problem.link} target="_blank" rel="noopener noreferrer" class="external-link">↗</a>
+            <Tooltip text="Source Link" pos="top">
+                <a href={data.problem.link} target="_blank" rel="noopener noreferrer" class="external-link" aria-label={`Open ${data.problem.title} in LeetCode`}>↗</a>
+            </Tooltip>
+            <Tooltip text={$bookmarkStore?.[problemId] ? 'Remove bookmark' : 'Bookmark'} pos="top">
+                <button
+                    type="button"
+                    class="bookmark-btn"
+                    class:bookmarked={$bookmarkStore?.[problemId]}
+                    aria-pressed={$bookmarkStore?.[problemId] ? 'true' : 'false'}
+                    aria-label={$bookmarkStore?.[problemId] ? `Remove ${data.problem.title} from bookmarks` : `Bookmark ${data.problem.title}`}
+                    on:click={() => bookmarkStore.update((prev) => toggleBookmarkId(prev, problemId))}
+                >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill={$bookmarkStore?.[problemId] ? 'currentColor' : 'none'} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </button>
+            </Tooltip>
             {#if viewMode === 'solution'}
                 <!-- Solution content from problems/[slug]/solution.md -->
                 <!-- Reference solution code blocks keep copy only (no collapse/delete) -->
@@ -1754,6 +1771,41 @@
         color: var(--color-text-secondary);
         font-size: 0.8em;
         margin-left: var(--spacing-1);
+    }
+
+    .bookmark-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        vertical-align: middle;
+        width: 24px;
+        height: 24px;
+        margin-left: 4px;
+        padding: 0;
+        border: 1px solid transparent;
+        border-radius: 6px;
+        background: transparent;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        opacity: 0.6;
+        transition: opacity 0.12s ease, background-color 0.12s ease, color 0.12s ease;
+    }
+    .bookmark-btn:hover {
+        opacity: 1;
+        background: rgba(255,255,255,0.06);
+        color: var(--color-text);
+    }
+    .bookmark-btn.bookmarked {
+        opacity: 1;
+        color: var(--color-highlight);
+    }
+    .bookmark-btn:focus-visible {
+        outline: 2px solid var(--color-highlight);
+        outline-offset: 1px;
+        opacity: 1;
+    }
+    .prose :global(.tooltip-container) {
+        vertical-align: middle;
     }
 
     .resizer {
