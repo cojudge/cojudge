@@ -17,7 +17,7 @@
     import codeStore from '$lib/stores/codeStore.js';
     import fileStore, { type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import { leftPaneWidthStore } from '$lib/stores/layoutStore';
-    import userSettingsStorage, { type ThemeChoice } from '$lib/stores/userSettingsStorage';
+    import userSettingsStorage, { type ThemeChoice, type EditorIndentation } from '$lib/stores/userSettingsStorage';
     import userStore from '$lib/stores/userStore';
     import { getDifficultyClass, type ProgrammingLanguage } from '$lib/utils/util.js';
     import { doc, setDoc } from 'firebase/firestore/lite';
@@ -195,6 +195,7 @@
     let fontSize: number = $userSettingsStorage.editorFontSize ?? 14;
     let theme: ThemeChoice = $userSettingsStorage.theme ?? 'light';
     let vimMode: 'off' | 'on' = $userSettingsStorage.vimMode ?? 'off';
+    let indentation: EditorIndentation = $userSettingsStorage.editorIndentation ?? '4-spaces';
 
     let tabs: TabMeta[] = getInitialTabs();
     let activeTabId: number = 0;
@@ -892,6 +893,13 @@
         }
     }
 
+    $: {
+        const currentIndentation = $userSettingsStorage.editorIndentation;
+        if (indentation && currentIndentation !== indentation) {
+            userSettingsStorage.update((s) => ({ ...s, editorIndentation: indentation }));
+        }
+    }
+
     function generateShortId(length: number = 4): string {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         let result = '';
@@ -1284,6 +1292,12 @@
                                 <option value="off">Standard</option>
                                 <option value="on">Vim</option>
                             </select>
+                            <label for="indent-select">Indentation</label>
+                            <select id="indent-select" bind:value={indentation}>
+                                <option value="2-spaces">2 spaces</option>
+                                <option value="4-spaces">4 spaces</option>
+                                <option value="tab">Tab</option>
+                            </select>
                         </div>
                     {/if}
                 </div>
@@ -1305,6 +1319,7 @@
                     {fontSize} 
                     {theme} 
                     {vimMode} 
+                    {indentation}
                     viewState={currentViewState}
                     bind:breakpoints={debugBreakpoints}
                     {activeDebugLine}

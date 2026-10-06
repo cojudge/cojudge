@@ -22,6 +22,7 @@
     let fontSize = $userSettingsStorage.editorFontSize ?? 14;
     let theme = $userSettingsStorage.theme ?? 'light';
     let vimMode = $userSettingsStorage.vimMode ?? 'off';
+    let indentation = $userSettingsStorage.editorIndentation ?? '4-spaces';
 
     const id = $page.params.id || '';
 
@@ -153,6 +154,7 @@
                     {fontSize} 
                     {theme} 
                     {vimMode}
+                    {indentation}
                     readOnly={true}
                     viewState={viewState}
                 />
