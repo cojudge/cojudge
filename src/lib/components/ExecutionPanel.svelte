@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { onMount, onDestroy, createEventDispatcher } from "svelte";
+    import { onMount, onDestroy, createEventDispatcher, tick } from "svelte";
     import { browser } from "$app/environment";
     import { page } from "$app/stores";
     import { execPaneHeightStore, leftPaneWidthStore } from "$lib/stores/layoutStore";
@@ -853,8 +853,21 @@
     let evalCmdHistory: string[] = [];
     let evalHistoryIndex: number | null = null;
     let evalInputEl: HTMLInputElement;
+    let replHistoryEl: HTMLElement;
     let completions: string[] = [];
     let completionIndex = 0;
+
+    function scrollReplToBottom() {
+        tick().then(() => {
+            if (replHistoryEl) {
+                replHistoryEl.scrollTop = replHistoryEl.scrollHeight;
+            }
+        });
+    }
+
+    $: if (evalHistory) {
+        scrollReplToBottom();
+    }
 
     function computeCompletions() {
         const text = evalInput;
@@ -1704,7 +1717,7 @@
                         </div>
                     {/if}
                 </div>
-                <div class="repl-history">
+                <div class="repl-history" bind:this={replHistoryEl}>
                     {#each evalHistory as entry (entry.expr + entry.result + entry.error)}
                         <div class="repl-entry">
                             <div class="repl-input-line">
@@ -2548,9 +2561,9 @@
         gap: 6px;
     }
     .btn-debug-action {
-        background: var(--color-second-bg);
+        background-color: transparent;
         border: 1px solid var(--color-border);
-        color: var(--color-text);
+        color: var(--color-text-secondary);
         padding: 4px 12px;
         border-radius: 4px;
         font-size: 0.8rem;
@@ -2559,8 +2572,8 @@
         margin-left: 0;
     }
     .btn-debug-action:hover {
-        background: var(--color-third-bg);
         border-color: var(--color-highlight);
+        color: var(--color-highlight);
         transform: none;
     }
     .btn-debug-action:disabled {
@@ -2667,7 +2680,7 @@
         flex-direction: column;
         max-height: 180px;
         overflow-y: auto;
-        background: var(--color-second-bg);
+        background-color: var(--color-bg);
         border: 1px solid var(--color-border);
         border-radius: var(--border-radius-sm);
         box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);

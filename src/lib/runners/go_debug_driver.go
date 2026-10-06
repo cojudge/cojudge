@@ -223,6 +223,15 @@ func renderVar(v dlvVariable, depth int) string {
 			return "{" + strings.Join(parts, ", ") + "}"
 		}
 	}
+	// Delve reports empty maps (and occasionally empty slices) with an
+	// empty Value and no children. Render an explicit empty composite
+	// instead of a blank string so `hm` shows as `map[]`, not nothing.
+	if strings.HasPrefix(v.Type, "map[") {
+		return "map[]"
+	}
+	if strings.HasPrefix(v.Type, "[]") && v.Value == "" {
+		return "[]"
+	}
 	return v.Value
 }
 
