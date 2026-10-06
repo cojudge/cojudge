@@ -10,9 +10,11 @@ import userSettingsStorage, {
 	normalizeUserSettings
 } from '$lib/stores/userSettingsStorage';
 import userStore from '$lib/stores/userStore';
+import bookmarkStore from '$lib/stores/bookmarkStore';
 import { isProgressStorageKey, type ProgressData } from '$lib/progressBackup';
 import {
 	requireArrayRecord,
+	requireBookmarksRecord,
 	requireFileRecord,
 	requireGameResultsRecord,
 	requireProgressObject,
@@ -27,6 +29,7 @@ type ApplyProgressOptions = {
 
 const STORE_KEYS = new Set([
 	'solutions',
+	'user-bookmarks',
 	'user-checkboxes',
 	'files',
 	'user-settings',
@@ -44,6 +47,14 @@ function sanitizeUserCheckboxes(value: Record<string, unknown>): Record<string, 
 	const result: Record<string, boolean> = {};
 	for (const [key, checked] of Object.entries(value)) {
 		result[key] = checked === true || checked === 'true';
+	}
+	return result;
+}
+
+function sanitizeBookmarks(value: Record<string, unknown>): Record<string, boolean> {
+	const result: Record<string, boolean> = {};
+	for (const [key, bookmarked] of Object.entries(value)) {
+		if (bookmarked === true || bookmarked === 'true') result[key] = true;
 	}
 	return result;
 }
@@ -84,6 +95,9 @@ export function applyProgressData(
 	const checkboxes = 'user-checkboxes' in data
 		? sanitizeUserCheckboxes(requireObject(data, 'user-checkboxes'))
 		: {};
+	const bookmarks = 'user-bookmarks' in data
+		? sanitizeBookmarks(requireBookmarksRecord(data))
+		: {};
 	const files = 'files' in data ? requireFileRecord(data) : {};
 	const settings = 'user-settings' in data
 		? normalizeUserSettings(requireUserSettingsObject(data))
@@ -109,6 +123,7 @@ export function applyProgressData(
 	const previousStores = {
 		solutions: get(codeStore),
 		checkboxes: get(userStore),
+		bookmarks: get(bookmarkStore),
 		files: get(fileStore),
 		settings: get(userSettingsStorage),
 		gameResults: get(gameResultsStore),
@@ -127,6 +142,7 @@ export function applyProgressData(
 		for (const [key, value] of incoming) storage.setItem(key, value);
 		const storeValues: Record<string, unknown> = {
 			solutions,
+			'user-bookmarks': bookmarks,
 			'user-checkboxes': checkboxes,
 			files,
 			'user-settings': settings,
@@ -144,6 +160,9 @@ export function applyProgressData(
 		}
 		if (shouldApplyStore('user-checkboxes')) {
 			userStore.set(checkboxes);
+		}
+		if (shouldApplyStore('user-bookmarks')) {
+			bookmarkStore.set(bookmarks);
 		}
 		if (shouldApplyStore('files')) {
 			fileStore.set(files);
@@ -172,6 +191,7 @@ export function applyProgressData(
 			}
 			codeStore.set(previousStores.solutions);
 			userStore.set(previousStores.checkboxes);
+			bookmarkStore.set(previousStores.bookmarks);
 			fileStore.set(previousStores.files);
 			userSettingsStorage.set(previousStores.settings);
 			gameResultsStore.set(previousStores.gameResults);
