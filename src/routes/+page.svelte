@@ -99,8 +99,12 @@
     let resettingContentKey: string | null = null;
     let resettingAllContent = false;
     type ModifiedItem = { id: string; title: string };
-    $: modifiedProblems = ((data?.modifiedProblems ?? []) as ModifiedItem[]);
-    $: modifiedCourses = ((data?.modifiedCourses ?? []) as ModifiedItem[]);
+    // Full modified inventory is fetched lazily when the dialog opens (see
+    // openManageProblems) so course-tab navigations don't pay for comparing
+    // every problem against its bundled copy.
+    let modifiedProblems: ModifiedItem[] = [];
+    let modifiedCourses: ModifiedItem[] = [];
+    let modifiedInventoryLoading = false;
     $: modifiedItemCount = modifiedProblems.length + modifiedCourses.length;
     let importNotice: { message: string; error: boolean; filePath?: string } | null = null;
     let importNoticeTimer: ReturnType<typeof setTimeout> | undefined;
@@ -175,15 +179,40 @@
     }
 
     let filteredProblems: Problem[] = [];
+    // Statement bodies are not in the page payload (see +page.server.ts);
+    // they are fetched per course on the first search keystroke so statement
+    // search keeps working without bloating every course-tab navigation.
+    let statementIndexByCourse: Record<string, Record<string, string>> = {};
+    let statementIndexPending: Record<string, boolean> = {};
+    async function ensureStatementIndex(courseId: string | null) {
+        if (!browser || !courseId || statementIndexByCourse[courseId] || statementIndexPending[courseId]) return;
+        statementIndexPending[courseId] = true;
+        try {
+            const response = await fetch(`/api/course-statements?course=${encodeURIComponent(courseId)}`);
+            const result = await response.json().catch(() => ({}));
+            if (response.ok && result?.statements && typeof result.statements === 'object') {
+                statementIndexByCourse = {
+                    ...statementIndexByCourse,
+                    [courseId]: result.statements as Record<string, string>
+                };
+            }
+        } catch {
+            // Search still matches titles and slugs without the index.
+        } finally {
+            statementIndexPending[courseId] = false;
+        }
+    }
+    $: if (browser && searchQuery.trim() && selectedCourseId) void ensureStatementIndex(selectedCourseId);
     $: {
         if (!searchQuery.trim()) {
             filteredProblems = baseProblems;
         } else {
             const query = searchQuery.toLowerCase().trim();
+            const statementIndex = statementIndexByCourse[selectedCourseId ?? ''] ?? {};
             filteredProblems = baseProblems.filter((p) => {
                 const titleMatch = (p.title || "").toLowerCase().includes(query);
                 const slugMatch = (p.id || "").toLowerCase().includes(query);
-                const statementMatch = (p.statement || "").toLowerCase().includes(query);
+                const statementMatch = ((p.statement || statementIndex[p.id] || "").toLowerCase().includes(query));
                 return titleMatch || slugMatch || statementMatch;
             });
         }
@@ -866,13 +895,27 @@
         showClearConfirm = true;
     }
 
-    function openManageProblems() {
+    async function openManageProblems() {
         if ($page.data.isDemoSite) return;
         showDropdown = false;
         manageProblemsError = '';
         pathCopied = false;
         if (pathCopiedTimer) clearTimeout(pathCopiedTimer);
         showManageProblems = true;
+        modifiedInventoryLoading = true;
+        try {
+            const response = await fetch('/api/content/modified');
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(result?.error || 'Could not load modified content');
+            modifiedProblems = Array.isArray(result.modifiedProblems) ? result.modifiedProblems : [];
+            modifiedCourses = Array.isArray(result.modifiedCourses) ? result.modifiedCourses : [];
+        } catch (err: any) {
+            manageProblemsError = err?.message
+                ? `Could not load modified content: ${err.message}`
+                : 'Could not load modified content';
+        } finally {
+            modifiedInventoryLoading = false;
+        }
     }
 
     async function closeManageProblems() {
@@ -1721,7 +1764,12 @@
 
                 <p class="manage-note">Duplicate a problem folder, edit it, then register the slug in a <code>courseinfo.json</code>. Unedited copies auto-update when Cojudge ships fixes; your edits are never overwritten.</p>
 
-                {#if modifiedItemCount > 0}
+                {#if modifiedInventoryLoading}
+                    <div class="manage-section manage-modified" aria-live="polite">
+                        <h3>Modified — differs from bundled</h3>
+                        <p>Checking your Cojudge folder for edits…</p>
+                    </div>
+                {:else if modifiedItemCount > 0}
                     <div class="manage-section manage-modified">
                         <h3>Modified — differs from bundled ({modifiedItemCount})</h3>
                         <p>If you did not edit these, they are stale copies from an older version — reset them to receive the latest fixes. Resetting discards your edits to that item.</p>

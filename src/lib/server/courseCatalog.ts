@@ -108,7 +108,43 @@ export function orderProblemsForCourse(courseInfo: CourseInfo, problems: Problem
     return ordered;
 }
 
-export async function loadProblemSummaries(problemsDir: string): Promise<ProblemSummary[]> {
+async function readProblemSummary(
+    problemsDir: string,
+    slug: string,
+    includeStatement: boolean
+): Promise<ProblemSummary | null> {
+    try {
+        const content = await fs.readFile(path.join(problemsDir, slug, 'metadata.json'), 'utf-8');
+        const metadata: unknown = JSON.parse(content);
+        if (!isRecord(metadata) || typeof metadata.id !== 'string' || typeof metadata.title !== 'string' || typeof metadata.difficulty !== 'string') {
+            return null;
+        }
+        let statement: string | undefined = undefined;
+        if (includeStatement) {
+            try {
+                statement = await fs.readFile(path.join(problemsDir, slug, 'statement.md'), 'utf-8');
+            } catch {
+                // ignore
+            }
+        }
+        return {
+            id: metadata.id,
+            title: metadata.title,
+            difficulty: metadata.difficulty,
+            link: typeof metadata.link === 'string' ? metadata.link : undefined,
+            category: typeof metadata.category === 'string' ? metadata.category : undefined,
+            statement
+        };
+    } catch {
+        return null;
+    }
+}
+
+export async function loadProblemSummaries(
+    problemsDir: string,
+    opts: { includeStatement?: boolean } = {}
+): Promise<ProblemSummary[]> {
+    const includeStatement = opts.includeStatement ?? true;
     let entries;
     try {
         entries = await fs.readdir(problemsDir, { withFileTypes: true });
@@ -119,31 +155,45 @@ export async function loadProblemSummaries(problemsDir: string): Promise<Problem
     const loaded = await Promise.all(
         entries
             .filter((entry) => entry.isDirectory())
-            .map(async (entry): Promise<ProblemSummary | null> => {
-                try {
-                    const content = await fs.readFile(path.join(problemsDir, entry.name, 'metadata.json'), 'utf-8');
-                    const metadata: unknown = JSON.parse(content);
-                    if (!isRecord(metadata) || typeof metadata.id !== 'string' || typeof metadata.title !== 'string' || typeof metadata.difficulty !== 'string') {
-                        return null;
-                    }
-                    let statement: string | undefined = undefined;
-                    try {
-                        statement = await fs.readFile(path.join(problemsDir, entry.name, 'statement.md'), 'utf-8');
-                    } catch {
-                        // ignore
-                    }
-                    return {
-                        id: metadata.id,
-                        title: metadata.title,
-                        difficulty: metadata.difficulty,
-                        link: typeof metadata.link === 'string' ? metadata.link : undefined,
-                        category: typeof metadata.category === 'string' ? metadata.category : undefined,
-                        statement
-                    };
-                } catch {
-                    return null;
-                }
-            })
+            .map((entry): Promise<ProblemSummary | null> => readProblemSummary(problemsDir, entry.name, includeStatement))
+    );
+
+    return loaded.filter((problem): problem is ProblemSummary => problem !== null);
+}
+
+/**
+ * Load every problem once, preferring the user copy and falling back to the
+ * bundled copy. The home page hits this on every course-tab navigation, so a
+ * single pass (instead of loading both dirs and merging) plus skipping
+ * `statement.md` keeps `__data.json` small and fast.
+ */
+export async function loadMergedProblemSummaries(
+    userProblemsDir: string,
+    bundledProblemsDir: string,
+    opts: { includeStatement?: boolean } = {}
+): Promise<ProblemSummary[]> {
+    const includeStatement = opts.includeStatement ?? false;
+    if (userProblemsDir === bundledProblemsDir) {
+        return loadProblemSummaries(userProblemsDir, { includeStatement });
+    }
+
+    const [userEntries, bundledEntries] = await Promise.all([
+        fs.readdir(userProblemsDir, { withFileTypes: true }).catch(() => []),
+        fs.readdir(bundledProblemsDir, { withFileTypes: true }).catch(() => [])
+    ]);
+    const userSlugs = new Set(
+        userEntries.filter((entry) => entry.isDirectory()).map((entry) => entry.name)
+    );
+    const slugs = new Set<string>();
+    for (const entry of [...userEntries, ...bundledEntries]) {
+        if (entry.isDirectory()) slugs.add(entry.name);
+    }
+
+    const loaded = await Promise.all(
+        [...slugs].map((slug): Promise<ProblemSummary | null> => {
+            const dir = userSlugs.has(slug) ? userProblemsDir : bundledProblemsDir;
+            return readProblemSummary(dir, slug, includeStatement);
+        })
     );
 
     return loaded.filter((problem): problem is ProblemSummary => problem !== null);
