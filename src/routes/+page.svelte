@@ -3525,9 +3525,32 @@
     }
 
     .external-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        vertical-align: middle;
+        width: 22px;
+        height: 22px;
+        margin-left: 4px;
+        padding: 0;
+        border-radius: 6px;
+        background: transparent;
         color: var(--color-text-secondary);
+        cursor: pointer;
+        opacity: 0.55;
+        text-decoration: none;
         font-size: 0.8em;
-        margin-left: var(--spacing-1);
+        transition: opacity 0.12s ease, background-color 0.12s ease, color 0.12s ease;
+    }
+    .external-link:hover {
+        opacity: 1;
+        background: var(--color-surface-hover);
+        color: var(--color-text);
+    }
+    .external-link:focus-visible {
+        outline: 2px solid var(--color-highlight);
+        outline-offset: 1px;
+        opacity: 1;
     }
 
     .bookmark-btn {

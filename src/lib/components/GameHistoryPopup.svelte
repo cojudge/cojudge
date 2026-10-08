@@ -1,16 +1,34 @@
 <script lang="ts">
     import { fade, scale } from 'svelte/transition';
+    import { onDestroy } from 'svelte';
     import type { GameResult } from '$lib/stores/gameResultsStore';
+    import { highlightCodeHtml } from '$lib/utils/markdown';
 
     export let problemTitle: string;
     export let results: GameResult[];
 
     let expandedIndex: number | null = null;
+    let copiedIndex: number | null = null;
+    let copyTimeout: ReturnType<typeof setTimeout> | null = null;
 
     $: sorted = [...results].sort((a, b) => b.timestamp - a.timestamp);
 
     function toggleCode(i: number) {
         expandedIndex = expandedIndex === i ? null : i;
+    }
+
+    async function copyCode(i: number, code: string) {
+        try {
+            await navigator.clipboard.writeText(code);
+        } catch {
+            return;
+        }
+        copiedIndex = i;
+        if (copyTimeout) clearTimeout(copyTimeout);
+        copyTimeout = setTimeout(() => {
+            if (copiedIndex === i) copiedIndex = null;
+            copyTimeout = null;
+        }, 1500);
     }
 
     function formatDate(ts: number) {
@@ -30,6 +48,10 @@
 
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
+
+    onDestroy(() => {
+        if (copyTimeout) clearTimeout(copyTimeout);
+    });
 
     function handleBackdropClick(e: MouseEvent) {
         if (e.target === e.currentTarget) close();
@@ -103,14 +125,12 @@
                                         <span class="code-lang">{result.language.toUpperCase()}</span>
                                         <button
                                             class="copy-btn"
-                                            on:click={() => {
-                                                navigator.clipboard.writeText(result.code);
-                                            }}
+                                            on:click={() => copyCode(i, result.code)}
                                         >
-                                            Copy
+                                            {copiedIndex === i ? 'Copied' : 'Copy'}
                                         </button>
                                     </div>
-                                    <pre class="code-block"><code>{result.code}</code></pre>
+                                    <pre class="code-block"><code>{@html highlightCodeHtml(result.code, result.language)}</code></pre>
                                 </div>
                             </div>
                         {/if}
@@ -307,7 +327,8 @@
         color: var(--color-text);
     }
     .code-block {
-        background: var(--color-second-bg, #1e1e2e);
+        background: var(--color-code-bg);
+        border: 1px solid var(--color-border);
         color: var(--color-text);
         padding: 0.75rem;
         border-radius: 6px;

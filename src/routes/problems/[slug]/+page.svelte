@@ -962,9 +962,9 @@
     <!-- Left Pane: Problem Statement -->
     <div class="problem-pane" class:hide={($leftPaneWidthStore === null ? 50 : $leftPaneWidthStore) < 5}>
         <div class="prose">
-            <Tooltip text={'Back'} pos="bottom"> 
+            <Tooltip text={viewMode === 'solution' ? 'Back to Statement' : 'Back'} pos={viewMode === 'solution' ? 'right' : 'bottom'}>
                 {#if viewMode === 'solution'}
-                    <button class="back-button" aria-label="Back" on:click={() => viewMode = 'statement'}>
+                    <button class="back-button" aria-label="Back to Statement" on:click={() => viewMode = 'statement'}>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
@@ -1768,9 +1768,31 @@
     }
 
     .external-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        vertical-align: middle;
+        width: 24px;
+        height: 24px;
+        margin-left: 4px;
+        padding: 0;
+        border-radius: 6px;
+        background: transparent;
         color: var(--color-text-secondary);
+        opacity: 0.6;
+        text-decoration: none;
         font-size: 0.8em;
-        margin-left: var(--spacing-1);
+        transition: opacity 0.12s ease, background-color 0.12s ease, color 0.12s ease;
+    }
+    .external-link:hover {
+        opacity: 1;
+        background: var(--color-surface-hover);
+        color: var(--color-text);
+    }
+    .external-link:focus-visible {
+        outline: 2px solid var(--color-highlight);
+        outline-offset: 1px;
+        opacity: 1;
     }
 
     .bookmark-btn {
@@ -1792,7 +1814,7 @@
     }
     .bookmark-btn:hover {
         opacity: 1;
-        background: rgba(255,255,255,0.06);
+        background: var(--color-surface-hover);
         color: var(--color-text);
     }
     .bookmark-btn.bookmarked {
