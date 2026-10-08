@@ -4,7 +4,7 @@
     import { marked } from "marked";
     import { browser } from '$app/environment';
     import { goto } from '$app/navigation';
-    import { page } from '$app/stores';
+    import { navigating, page } from '$app/stores';
     import Tooltip from "$lib/components/Tooltip.svelte";
     import SortIcon from "$lib/components/SortIcon.svelte";
     import userSettingsStorage from '$lib/stores/userSettingsStorage';
@@ -425,6 +425,16 @@
         showBookmarks = false;
         if (browser) localStorage.setItem(COURSE_STORAGE_KEY, courseId);
     }
+
+    // Pending course-tab navigation (SvelteKit client nav waits for
+    // __data.json, which can take seconds on slow connections). Shows a
+    // spinner in the clicked tab + a status line instead of a dead UI.
+    $: navRouteId = $navigating?.to?.route?.id ?? null;
+    $: isCourseNavigating = !!$navigating && navRouteId === '/';
+    $: pendingCourseId = isCourseNavigating
+        ? ($navigating?.to?.url?.searchParams?.get('course') ?? null)
+        : null;
+    $: isTabPending = (courseId: string) => isCourseNavigating && pendingCourseId === courseId;
 
     // Selected course data from the server loader
     let courses: CourseSummary[] = [];
@@ -2034,10 +2044,12 @@
             <a
                 class="tab"
                 class:active={!showBookmarks && course.id === selectedCourseId}
+                class:pending={isTabPending(course.id)}
                 href={`/?course=${encodeURIComponent(course.id)}`}
                 aria-current={!showBookmarks && course.id === selectedCourseId ? "page" : undefined}
+                aria-disabled={isTabPending(course.id) ? 'true' : undefined}
                 onclick={() => selectCourse(course.id)}
-            >{course.title}{#if course.source && course.source !== 'bundled'}<span
+            >{#if isTabPending(course.id)}<span class="tab-spinner" aria-hidden="true"></span>{/if}{course.title}{#if course.source && course.source !== 'bundled'}<span
                     class="source-badge {course.source}"
                     title={sourceTitle(course.source)}
                 >{sourceLabel(course.source)}</span>{/if}</a>
@@ -2067,7 +2079,7 @@
             {/if}
         </div>
     {/if}
-    <div class="intro">
+    <div class="intro" class:stale={isCourseNavigating} aria-busy={isCourseNavigating || undefined}>
         <!-- Overall progress at top of intro -->
         <div class="overall">
             <div class="overall-count" aria-live="polite">
@@ -2093,7 +2105,7 @@
         {/if}
     </div>
 
-    <div class="search-container">
+    <div class="search-container" class:stale={isCourseNavigating}>
         <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -2142,7 +2154,7 @@
         // fallback stable sort by pretty name
         return pretty(a).localeCompare(pretty(b));
     }) as key}
-        <div class="group">
+        <div class="group" class:stale={isCourseNavigating}>
             <button
                 class="group-header {isGroupOpenMap[key] ? 'open' : ''}"
                 onclick={() => toggleGroup(key)}
@@ -3392,6 +3404,31 @@
         height: 2px;
         background: var(--color-surface);
         pointer-events: none;
+    }
+    .tab.pending {
+        cursor: wait;
+        opacity: 0.75;
+    }
+    /* Spinner for pending course-tab navigations (__data.json can take
+       seconds on slow connections) and the status line below the tabs. */
+    .tab-spinner {
+        width: 0.8rem;
+        height: 0.8rem;
+        flex: 0 0 auto;
+        border-radius: 50%;
+        border: 2px solid color-mix(in srgb, currentColor 30%, transparent);
+        border-top-color: currentColor;
+        animation: tab-spin 0.7s linear infinite;
+    }
+    @keyframes tab-spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    /* Dim stale course content while the next course loads (not blocked). */
+    .stale {
+        opacity: 0.55;
+        transition: opacity 0.15s ease;
     }
 
     /* Labels for user content from ~/cojudge (custom = user-created, modified = user-edited) */
