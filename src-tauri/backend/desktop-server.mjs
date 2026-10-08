@@ -120,7 +120,7 @@ async function main() {
 	});
 
 	process.env.ORIGIN = origin;
-	process.env.BODY_SIZE_LIMIT = '10M';
+	process.env.BODY_SIZE_LIMIT = '100M';
 	delete process.env.PROTOCOL_HEADER;
 	delete process.env.HOST_HEADER;
 	delete process.env.PORT_HEADER;
