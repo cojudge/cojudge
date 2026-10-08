@@ -567,6 +567,21 @@
         solvedCount = done;
     })();
 
+    function downloadProgressBackup(data: Record<string, unknown>) {
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        const ts = new Date().toISOString().replace(/[:.]/g, '-');
+        a.href = url;
+        a.download = `cojudge-localStorage-backup-${ts}.json`;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+            URL.revokeObjectURL(url);
+            a.remove();
+        }, 0);
+    }
+
     async function exportLocalStorage() {
         if (!browser) return;
         const data = collectProgressData(localStorage);
@@ -584,30 +599,30 @@
                     },
                     body: JSON.stringify({ data })
                 });
-                const result = await response.json();
-                if (result.success) {
-                    showImportNotice(`Exported to ${result.filePath}`, false, result.filePath);
-                } else {
-                    showImportNotice(result.error || 'Failed to export progress', true);
+                const result = await response.json().catch(() => ({}));
+                if (!response.ok || !result.success) {
+                    throw new Error(result?.error || `Export failed (HTTP ${response.status})`);
                 }
+                showImportNotice(`Exported to ${result.filePath}`, false, result.filePath);
             } catch (error: any) {
-                showImportNotice(error.message || 'Failed to export progress', true);
+                // Server-side export can still fail (e.g. body limits on very
+                // large backups): fall back to a plain in-app download that
+                // never touches the server.
+                try {
+                    downloadProgressBackup(data);
+                    showImportNotice(
+                        'Server export failed; backup downloaded in the app instead. ' +
+                            'If the playground hangs, open the Recovery page from this menu.',
+                        false
+                    );
+                } catch {
+                    showImportNotice(error?.message || 'Failed to export progress', true);
+                }
             }
             return;
         }
 
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        const ts = new Date().toISOString().replace(/[:.]/g, '-');
-        a.href = url;
-        a.download = `cojudge-localStorage-backup-${ts}.json`;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => {
-            URL.revokeObjectURL(url);
-            a.remove();
-        }, 0);
+        downloadProgressBackup(data);
     }
 
     async function onImportFileSelected(e: Event) {
@@ -1512,6 +1527,21 @@
                             Clear progress
                         </span>
                     </button>
+                    {#if !$page.data.isDemoSite}
+                    <button
+                        class="dropdown-item"
+                        role="menuitem"
+                        onclick={() => { goto('/recovery'); showDropdown = false; }}
+                        title="Safe-mode storage inspector: measure and repair local data without opening the playground"
+                    >
+                        <span class="dropdown-item-content">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                            </svg>
+                            Recovery
+                        </span>
+                    </button>
+                    {/if}
                     <div class="dropdown-separator" role="separator"></div>
                     <button
                         class="dropdown-item"

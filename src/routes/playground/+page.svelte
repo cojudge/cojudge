@@ -9,6 +9,7 @@
     import WhiteboardIcon from '$lib/components/WhiteboardIcon.svelte';
     import Whiteboard from '$lib/components/Whiteboard.svelte';
     import { showAlert, showChoice, showConfirm } from '$lib/dialogs';
+    import { MAX_PERSISTED_LOG_CHARS, MAX_PERSISTED_OUTPUT_CHARS, truncateTail } from '$lib/persistLimits';
     import { consumeForkTransfer } from '$lib/forkTransfer';
     import { ensureAuthenticated, initFirebase } from '$lib/firebase';
     import { isDesktopRuntime } from '$lib/firebaseSettings';
@@ -2188,8 +2189,10 @@ func main() {
                 if (existingFile) {
                     existingFile.content = code;
                     existingFile.viewState = latestViewState;
-                    existingFile.output = output;
-                    existingFile.logs = logs;
+                    // Run output/logs are regenerable display state: cap what is
+                    // persisted so a runaway run can never wedge localStorage.
+                    existingFile.output = truncateTail(output, MAX_PERSISTED_OUTPUT_CHARS);
+                    existingFile.logs = truncateTail(logs, MAX_PERSISTED_LOG_CHARS);
                     existingFile.lastUpdated = now;
                 } else {
                     const sibling = files.find((x) => x.fileId === targetFileId);
@@ -2199,8 +2202,8 @@ func main() {
                         language: targetLanguage,
                         content: code,
                         viewState: latestViewState,
-                        output: output,
-                        logs: logs,
+                        output: truncateTail(output, MAX_PERSISTED_OUTPUT_CHARS),
+                        logs: truncateTail(logs, MAX_PERSISTED_LOG_CHARS),
                         isActive: false,
                         isOpen: targetTab.isOpen,
                         lastUpdated: now,
