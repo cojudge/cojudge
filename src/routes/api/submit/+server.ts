@@ -11,6 +11,7 @@ import { CppRunner } from '$lib/runners/CppRunner';
 import { CSharpRunner } from '$lib/runners/CSharpRunner';
 import { RustRunner } from '$lib/runners/RustRunner';
 import { GoRunner } from '$lib/runners/GoRunner';
+import { PhpRunner } from '$lib/runners/PhpRunner';
 import { TypeScriptRunner } from '$lib/runners/TypeScriptRunner';
 import { TIMEOUT_MESSAGE, type JobStatus } from '$lib/utils/util';
 
@@ -128,6 +129,8 @@ async function executeSubmit(problemId: string, language: string, code: string, 
             programRunner = new GoRunner(problemId, testCases, code);
         } else if (language === 'typescript') {
             programRunner = new TypeScriptRunner(problemId, testCases, code);
+        } else if (language === 'php') {
+            programRunner = new PhpRunner(problemId, testCases, code);
         }
         if (!programRunner) {
             throw new Error(`${language} is not supported yet`);

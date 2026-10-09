@@ -23,7 +23,8 @@
     "csharp": "public class Solution \n{\n    public int ReverseBits(int n) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reverse_bits(n: i32) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc ReverseBits(n int) int {\n    \n}",
-    "typescript": "export function reverseBits(n: number): number {\n    \n}"
+    "typescript": "export function reverseBits(n: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function reverseBits($n) {\n\n    }\n}"
   },
   "testCases": [
     {

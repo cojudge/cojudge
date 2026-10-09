@@ -48,6 +48,7 @@ export function handleInit(argsToUse) {
     csharp: ".cs",
     go: ".go",
     typescript: ".ts",
+    php: ".php",
   };
 
   const extension = extMap[lang] || ".txt";

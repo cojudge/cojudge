@@ -28,7 +28,8 @@
     "csharp": "public class Solution\n{\n    public bool CheckValidString(string s)\n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn check_valid_string(s: String) -> bool {\n        \n    }\n}",
     "go": "package main\n\nfunc CheckValidString(s string) bool {\n    \n}",
-    "typescript": "export function checkValidString(s: string): boolean {\n    \n}"
+    "typescript": "export function checkValidString(s: string): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return bool\n     */\n    public function checkValidString($s) {\n\n    }\n}"
   },
   "testCases": [
     {

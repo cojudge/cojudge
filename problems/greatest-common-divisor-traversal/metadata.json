@@ -25,7 +25,8 @@
     "csharp": "public class Solution \n{\n    public bool CanTraverseAllPairs(int[] nums) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_traverse_all_pairs(nums: Vec<i32>) -> bool {\n        \n    }\n}",
     "go": "package main\n\nfunc CanTraverseAllPairs(nums []int) bool {\n    return false\n}",
-    "typescript": "export function canTraverseAllPairs(nums: number[]): boolean {\n    \n}"
+    "typescript": "export function canTraverseAllPairs(nums: number[]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return bool\n     */\n    public function canTraverseAllPairs($nums) {\n\n    }\n}"
   },
   "testCases": [
     {

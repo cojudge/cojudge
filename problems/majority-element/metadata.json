@@ -23,7 +23,8 @@
     "csharp": "public class Solution \n{\n    public int MajorityElement(int[] nums) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn majority_element(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc MajorityElement(nums []int) int {\n    return 0\n}",
-    "typescript": "export function majorityElement(nums: number[]): number {\n    return 0;\n}"
+    "typescript": "export function majorityElement(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function majorityElement($nums) {\n\n    }\n}"
   },
   "testCases": [
     {

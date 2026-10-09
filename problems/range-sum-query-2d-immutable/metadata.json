@@ -28,7 +28,8 @@
     "csharp": "public class Solution \n{\n    public int[] SumRegion(int[][] matrix, int[][] queries) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn sum_region(matrix: Vec<Vec<i32>>, queries: Vec<Vec<i32>>) -> Vec<i32> {\n        \n    }\n}",
     "go": "package main\n\nfunc SumRegion(matrix [][]int, queries [][]int) []int {\n    \n}",
-    "typescript": "export function sumRegion(matrix: number[][], queries: number[][]): number[] {\n    \n}"
+    "typescript": "export function sumRegion(matrix: number[][], queries: number[][]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $matrix\n     * @param int[][] $queries\n     * @return int[]\n     */\n    public function sumRegion($matrix, $queries) {\n\n    }\n}"
   },
   "testCases": [
     {

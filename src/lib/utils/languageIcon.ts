@@ -10,6 +10,7 @@ export const LANGUAGE_ICONS: Record<ProgrammingLanguage, LanguageIconDef> = {
     rust: { label: 'Rs', bg: '#ce422b', fontSize: 8 },
     go: { label: 'Go', bg: '#00add8', fontSize: 8 },
     typescript: { label: 'TS', bg: '#3178c6', fontSize: 8 },
+    php: { label: 'PHP', bg: '#777bb4', fontSize: 7 },
     markdown: { label: 'MD', bg: '#519aba', fontSize: 7 },
     plaintext: { label: '', bg: '#6b7280', fontSize: 8 }
 };

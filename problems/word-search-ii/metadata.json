@@ -18,7 +18,8 @@
     "csharp": "public class Solution \n{\n    public IList<string> FindWords(char[][] board, string[] words) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_words(board: String, words: Vec<String>) -> String {\n        \n    }\n}",
     "go": "package main\n\nfunc FindWords(board [][]byte, words []string) []string {\n    \n}",
-    "typescript": "export function findWords(board: string[][], words: string[]): string[] {\n    \n}"
+    "typescript": "export function findWords(board: string[][], words: string[]): string[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string[][] $board\n     * @param string[] $words\n     * @return string[]\n     */\n    public function findWords($board, $words) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -28,7 +28,8 @@
     "csharp": "public class Solution\n{\n    public string MergeAlternately(string word1, string word2)\n    {\n        return \"\";\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn merge_alternately(word1: String, word2: String) -> String {\n        String::new()\n    }\n}",
     "go": "package main\n\nfunc MergeAlternately(word1 string, word2 string) string {\n    return \"\"\n}",
-    "typescript": "export function mergeAlternately(word1: string, word2: string): string {\n    return \"\";\n}"
+    "typescript": "export function mergeAlternately(word1: string, word2: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $word1\n     * @param string $word2\n     * @return string\n     */\n    public function mergeAlternately($word1, $word2) {\n\n    }\n}"
   },
   "testCases": [
     {

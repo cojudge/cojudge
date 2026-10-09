@@ -23,7 +23,8 @@
     "csharp": "public class Solution \n{\n    public int UniquePathsWithObstacles(int[][] obstacleGrid) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn unique_paths_with_obstacles(obstacle_grid: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc UniquePathsWithObstacles(obstacleGrid [][]int) int {\n    \n}",
-    "typescript": "export function uniquePathsWithObstacles(obstacleGrid: number[][]): number {\n    \n}"
+    "typescript": "export function uniquePathsWithObstacles(obstacleGrid: number[][]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $obstacleGrid\n     * @return int\n     */\n    public function uniquePathsWithObstacles($obstacleGrid) {\n\n    }\n}"
   },
   "testCases": [
     {

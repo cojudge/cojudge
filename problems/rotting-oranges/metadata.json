@@ -28,7 +28,8 @@
     "csharp": "public class Solution {\n    public int OrangesRotting(int[][] grid) {\n        return 0;\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn oranges_rotting(grid: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}\n",
     "go": "package main\n\nfunc OrangesRotting(grid [][]int) int {\n    return 0\n}\n",
-    "typescript": "export function orangesRotting(grid: number[][]): number {\n    return 0;\n}\n"
+    "typescript": "export function orangesRotting(grid: number[][]): number {\n    return 0;\n}\n",
+    "php": "class Solution {\n    /**\n     * @param int[][] $grid\n     * @return int\n     */\n    public function orangesRotting($grid) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -23,7 +23,8 @@
     "csharp": "public class Solution \n{\n    public bool CanAttendMeetings(int[][] intervals) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_attend_meetings(intervals: Vec<Vec<i32>>) -> bool {\n        \n    }\n}",
     "go": "package main\n\nfunc CanAttendMeetings(intervals [][]int) bool {\n    \n}",
-    "typescript": "export function canAttendMeetings(intervals: number[][]): boolean {\n    \n}"
+    "typescript": "export function canAttendMeetings(intervals: number[][]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $intervals\n     * @return bool\n     */\n    public function canAttendMeetings($intervals) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -28,7 +28,8 @@
     "csharp": "public class Solution\n{\n    public int Change(int amount, int[] coins)\n    {\n        return 0;\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn change(amount: i32, coins: Vec<i32>) -> i32 {\n        0\n    }\n}",
     "go": "package main\n\nfunc Change(amount int, coins []int) int {\n    return 0\n}",
-    "typescript": "export function change(amount: number, coins: number[]): number {\n    return 0;\n}"
+    "typescript": "export function change(amount: number, coins: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $amount\n     * @param int[] $coins\n     * @return int\n     */\n    public function change($amount, $coins) {\n\n    }\n}"
   },
   "testCases": [
     {

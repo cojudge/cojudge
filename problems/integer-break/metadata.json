@@ -8,12 +8,12 @@
     {
       "input": "n = 2",
       "output": "1",
-      "explanation": "2 = 1 + 1, 1 \u00d7 1 = 1."
+      "explanation": "2 = 1 + 1, 1 × 1 = 1."
     },
     {
       "input": "n = 10",
       "output": "36",
-      "explanation": "10 = 3 + 3 + 4, 3 \u00d7 3 \u00d7 4 = 36."
+      "explanation": "10 = 3 + 3 + 4, 3 × 3 × 4 = 36."
     }
   ],
   "starterCode": {
@@ -23,7 +23,8 @@
     "csharp": "public class Solution \n{\n    public int IntegerBreak(int n) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn integer_break(n: i32) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc IntegerBreak(n int) int {\n    \n}",
-    "typescript": "export function integerBreak(n: number): number {\n    \n}"
+    "typescript": "export function integerBreak(n: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function integerBreak($n) {\n\n    }\n}"
   },
   "testCases": [
     {

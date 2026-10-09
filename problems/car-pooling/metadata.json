@@ -23,7 +23,8 @@
     "csharp": "public class Solution \n{\n    public bool CarPooling(int[][] trips, int capacity) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn car_pooling(trips: Vec<Vec<i32>>, capacity: i32) -> bool {\n        \n    }\n}",
     "go": "package main\n\nfunc CarPooling(trips [][]int, capacity int) bool {\n    \n}",
-    "typescript": "export function carPooling(trips: number[][], capacity: number): boolean {\n    \n}"
+    "typescript": "export function carPooling(trips: number[][], capacity: number): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $trips\n     * @param int $capacity\n     * @return bool\n     */\n    public function carPooling($trips, $capacity) {\n\n    }\n}"
   },
   "testCases": [
     {

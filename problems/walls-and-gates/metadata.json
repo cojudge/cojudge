@@ -23,7 +23,8 @@
     "csharp": "public class Solution {\n    public int[][] WallsAndGates(int[][] rooms) {\n        return new int[0][];\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn walls_and_gates(rooms: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        Vec::new()\n    }\n}\n",
     "go": "package main\n\nfunc WallsAndGates(rooms [][]int) [][]int {\n    return [][]int{}\n}\n",
-    "typescript": "export function wallsAndGates(rooms: number[][]): number[][] {\n    return [];\n}\n"
+    "typescript": "export function wallsAndGates(rooms: number[][]): number[][] {\n    return [];\n}\n",
+    "php": "class Solution {\n    /**\n     * @param int[][] $rooms\n     * @return int[][]\n     */\n    public function wallsAndGates($rooms) {\n\n    }\n}"
   },
   "testCases": [
     {

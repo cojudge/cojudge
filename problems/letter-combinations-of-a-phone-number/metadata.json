@@ -28,7 +28,8 @@
     "csharp": "using System.Collections.Generic;\n\npublic class Solution {\n    public List<string> LetterCombinations(string digits) {\n        return new List<string>();\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn letter_combinations(digits: String) -> Vec<String> {\n        Vec::new()\n    }\n}\n",
     "go": "package main\n\nfunc LetterCombinations(digits string) []string {\n    return []string{}\n}\n",
-    "typescript": "export function letterCombinations(digits: string): string[] {\n    return [];\n}\n"
+    "typescript": "export function letterCombinations(digits: string): string[] {\n    return [];\n}\n",
+    "php": "class Solution {\n    /**\n     * @param string $digits\n     * @return string[]\n     */\n    public function letterCombinations($digits) {\n\n    }\n}"
   },
   "testCases": [
     {

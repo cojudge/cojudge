@@ -28,7 +28,8 @@
     "csharp": "/*\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\npublic class Solution\n{\n    public int[] RightSideView(TreeNode root)\n    {\n        \n    }\n}",
     "rust": "use std::cell::RefCell;\nuse std::rc::Rc;\n\npub struct Solution;\n\nimpl Solution {\n    pub fn right_side_view(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {\n        todo!()\n    }\n}",
     "go": "package main\n\nfunc RightSideView(root *TreeNode) []int {\n    return nil\n}",
-    "typescript": "export function rightSideView(root: TreeNode | null): number[] {\n    return [];\n}"
+    "typescript": "export function rightSideView(root: TreeNode | null): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param TreeNode|null $root\n     * @return int[]\n     */\n    public function rightSideView($root) {\n\n    }\n}"
   },
   "testCases": [
     {
