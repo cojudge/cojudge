@@ -5,6 +5,7 @@ import { generateGoRunner, goImage } from "$lib/utils/goUtil";
 import { csharpImage, generateCSharpRunner, generateCSharpClassSolution, csharpListNodeClass, csharpTreeNodeClass, csharpGraphNodeClass } from "$lib/utils/csharpUtil";
 import { rustImage, generateRustRunner, generateRustDebugRunner } from "$lib/utils/rustUtil";
 import { tsImage, generateTypeScriptRunner, tsGetTypeImports, tsListNodeClass, tsTreeNodeClass, tsGraphNodeClass } from "$lib/utils/tsUtil";
+import { phpImage, generatePhpRunner, generatePhpClassSolution, phpGetTypeImports, phpListNodeClass, phpTreeNodeClass, phpGraphNodeClass } from "$lib/utils/phpUtil";
 import { ensureImageAvailable, extractOperations } from "$lib/utils/util";
 import { getMarkerResponses } from "../markerRunner";
 import Dockerode from "dockerode";
@@ -19,6 +20,7 @@ import { GO_DEBUG_DRIVER } from "./GoDebugDriver";
 import { CSHARP_DEBUG_SUPPORT, generateCsharpDebugWrapper } from "./CsharpDebugDriver";
 import { RUST_DEBUG_DRIVER } from "./RustDebugDriver";
 import { generateTypeScriptDebugWrapper, rewriteTsImportsForNode, buildMissingTypeImports } from "./TypeScriptDebugDriver";
+import { PHP_DEBUG_SUPPORT, generatePhpDebugWrapper, phpOriginalForLint } from "./PhpDebugDriver";
 import { generateTypeScriptClassSolution } from "./TypeScriptRunner";
 import { cojudgeContainerLabels } from "$lib/server/containerSession";
 
@@ -311,6 +313,7 @@ const SUPPORTED_DEBUG_LANGUAGES: Record<string, string> = {
     csharp: csharpImage,
     rust: rustImage,
     typescript: tsImage,
+    php: phpImage,
 };
 
 async function runExec(container: Dockerode.Container, cmd: string[]): Promise<{ stdout: string; stderr: string; exitCode: number | null }> {
@@ -656,6 +659,25 @@ export async function startDebugSession(language: string, code: string, debugLin
         pack.finalize();
         await container.putArchive(pack as any, { path: '/app' });
         runCmd = ['/bin/sh', '-c', 'NODE_NO_WARNINGS=1 node --experimental-strip-types debug_main.mjs'];
+    } else if (language === 'php') {
+        const pack = tar.pack();
+        pack.entry({ name: 'PhpDebugSupport.php' }, Buffer.from(PHP_DEBUG_SUPPORT));
+        pack.entry({ name: 'debug_main.php' }, Buffer.from(generatePhpDebugWrapper(code, debugLines)));
+        pack.entry({ name: '__cjd_orig.php' }, Buffer.from(phpOriginalForLint(code)));
+        pack.finalize();
+        await container.putArchive(pack as any, { path: '/app' });
+
+        const lint = await runExec(container, ['/bin/sh', '-c', 'php -l debug_main.php']);
+        if (lint.exitCode !== 0) {
+            // Re-lint the original so syntax errors report the user's own
+            // line numbers (instrumentation shifts physical lines). If the
+            // original parses, the instrumented failure is a driver bug.
+            const lintOrig = await runExec(container, ['/bin/sh', '-c', 'php -l __cjd_orig.php']);
+            await ContainerPool.markForCleanup(container);
+            const err = lintOrig.exitCode !== 0 ? (lintOrig.stderr || lintOrig.stdout) : (lint.stderr || lint.stdout);
+            throw new Error(`Compilation failed:\n${err}`);
+        }
+        runCmd = ['/bin/sh', '-c', 'php debug_main.php'];
     } else {
         // java
         const pack = tar.pack();
@@ -900,6 +922,47 @@ export async function startProblemDebugSession(problemId: string, language: stri
         pack.finalize();
         await container.putArchive(pack as any, { path: '/app' });
         runCmd = ['/bin/sh', '-c', 'NODE_NO_WARNINGS=1 node --experimental-strip-types debug_main.mjs'];
+    } else if (language === 'php') {
+        const runnerCode = generatePhpRunner(problemData.functionName, problemData.params, testCases, problemData.outputType, problemData.checkGraphClone, problemData.classProblem?.userClassName);
+        const typeImports = phpGetTypeImports(problemData.params, problemData.outputType);
+        // Type imports are unnumbered header lines: the instrumented body
+        // keeps the user's original line numbers in its Check() calls.
+        const withImports = (fileContent: string) =>
+            typeImports ? fileContent.replace(/^<\?php/, `<?php\n${typeImports}`) : fileContent;
+
+        const pack = tar.pack();
+        pack.entry({ name: 'ListNode.php' }, Buffer.from(phpListNodeClass));
+        pack.entry({ name: 'TreeNode.php' }, Buffer.from(phpTreeNodeClass));
+        pack.entry({ name: 'GraphNode.php' }, Buffer.from(phpGraphNodeClass));
+        pack.entry({ name: 'PhpDebugSupport.php' }, Buffer.from(PHP_DEBUG_SUPPORT));
+        pack.entry({ name: '__cjd_orig.php' }, Buffer.from(phpOriginalForLint(code)));
+        let lintTarget: string;
+        if (problemData.classProblem) {
+            const className = problemData.classProblem.userClassName || 'MedianFinder';
+            pack.entry({ name: `${className}.php` }, Buffer.from(withImports(generatePhpDebugWrapper(code, debugLines))));
+            const wrapperCode = generatePhpClassSolution(className, problemData.params, problemData.outputType);
+            pack.entry({ name: 'Solution.php' }, Buffer.from(wrapperCode));
+            lintTarget = `${className}.php`;
+        } else {
+            pack.entry({ name: 'Solution.php' }, Buffer.from(withImports(generatePhpDebugWrapper(code, debugLines))));
+            lintTarget = 'Solution.php';
+        }
+        pack.entry({ name: 'main.php' }, Buffer.from(runnerCode));
+        pack.finalize();
+        await container.putArchive(pack as any, { path: '/app' });
+
+        // Lint the instrumented target; on failure re-lint the original
+        // so syntax errors report the user's own line numbers
+        // (instrumentation shifts physical lines). If the original parses,
+        // the instrumented failure is a driver bug.
+        const lint = await runExec(container, ['/bin/sh', '-c', `php -l ${lintTarget} && php -l main.php`]);
+        if (lint.exitCode !== 0) {
+            const lintOrig = await runExec(container, ['/bin/sh', '-c', 'php -l __cjd_orig.php']);
+            await ContainerPool.markForCleanup(container);
+            const err = lintOrig.exitCode !== 0 ? (lintOrig.stderr || lintOrig.stdout) : (lint.stderr || lint.stdout);
+            throw new Error(`Compilation failed:\n${err}`);
+        }
+        runCmd = ['/bin/sh', '-c', 'php main.php'];
     } else {
         throw new Error(`Debugging is not yet supported for ${language}.`);
     }
