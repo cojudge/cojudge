@@ -28,7 +28,8 @@
     "csharp": "public class Solution\n{\n    public int LargestRectangleArea(int[] heights)\n    {\n        return 0;\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn largest_rectangle_area(heights: Vec<i32>) -> i32 {\n        0\n    }\n}",
     "go": "package main\n\nfunc LargestRectangleArea(heights []int) int {\n    return 0\n}",
-    "typescript": "export function largestRectangleArea(heights: number[]): number {\n    return 0;\n}\n"
+    "typescript": "export function largestRectangleArea(heights: number[]): number {\n    return 0;\n}\n",
+    "php": "class Solution {\n    /**\n     * @param int[] $heights\n     * @return int\n     */\n    public function largestRectangleArea($heights) {\n\n    }\n}"
   },
   "testCases": [
     {

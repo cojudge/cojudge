@@ -28,7 +28,8 @@
     "csharp": "public class Solution \n{\n    public int MaxProfit(int[] prices) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_profit(prices: Vec<i32>) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc MaxProfit(prices []int) int {\n    \n}",
-    "typescript": "export function maxProfit(prices: number[]): number {\n    \n}"
+    "typescript": "export function maxProfit(prices: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $prices\n     * @return int\n     */\n    public function maxProfit($prices) {\n\n    }\n}"
   },
   "testCases": [
     {

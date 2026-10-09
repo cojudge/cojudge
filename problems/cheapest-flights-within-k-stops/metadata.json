@@ -28,7 +28,8 @@
     "csharp": "public class Solution\n{\n    public int FindCheapestPrice(int n, int[][] flights, int src, int dst, int k)\n    {\n        return 0;\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_cheapest_price(n: i32, flights: Vec<Vec<i32>>, src: i32, dst: i32, k: i32) -> i32 {\n        0\n    }\n}\n",
     "go": "package main\n\nfunc FindCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {\n    return 0\n}\n",
-    "typescript": "export function findCheapestPrice(n: number, flights: number[][], src: number, dst: number, k: number): number {\n    return 0;\n}\n"
+    "typescript": "export function findCheapestPrice(n: number, flights: number[][], src: number, dst: number, k: number): number {\n    return 0;\n}\n",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int[][] $flights\n     * @param int $src\n     * @param int $dst\n     * @param int $k\n     * @return int\n     */\n    public function findCheapestPrice($n, $flights, $src, $dst, $k) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -16,13 +16,14 @@
     }
   ],
   "starterCode": {
-    "java": "class Solution {\n    // Return BFS serialization: list of [isLeaf, val] as 0/1 ints; use null marker as [-1,-1] for missing non-leaf slots is not needed \u2014 return full 4-children expansion only for internal nodes in preorder flattened list.\n    public int[][] construct(int[][] grid) {\n        \n    }\n}",
+    "java": "class Solution {\n    // Return BFS serialization: list of [isLeaf, val] as 0/1 ints; use null marker as [-1,-1] for missing non-leaf slots is not needed — return full 4-children expansion only for internal nodes in preorder flattened list.\n    public int[][] construct(int[][] grid) {\n        \n    }\n}",
     "python": "from typing import List\nclass Solution:\n    def construct(self, grid: List[List[int]]) -> List[List[int]]:\n        ",
     "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> construct(vector<vector<int>>& grid) {\n        return {};\n    }\n};",
     "csharp": "public class Solution \n{\n    public int[][] Construct(int[][] grid) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn construct(grid: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
     "go": "package main\n\nfunc Construct(grid [][]int) [][]int {\n    return nil\n}",
-    "typescript": "export function construct(grid: number[][]): number[][] {\n    \n}"
+    "typescript": "export function construct(grid: number[][]): number[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $grid\n     * @return int[][]\n     */\n    public function construct($grid) {\n\n    }\n}"
   },
   "testCases": [
     {

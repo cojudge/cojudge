@@ -80,10 +80,13 @@ func main() {
     // your code goes here
 }`,
         typescript: `// your code goes here`,
+        php: `<?php
+// your code goes here
+echo "hello\\n";`,
         plaintext: ``,
         markdown: ``
     };
-    const programmingLanguages: ProgrammingLanguage[] = ['java', 'cpp', 'python', 'typescript', 'csharp', 'rust', 'go', 'plaintext', 'markdown'];
+    const programmingLanguages: ProgrammingLanguage[] = ['java', 'cpp', 'python', 'typescript', 'php', 'csharp', 'rust', 'go', 'plaintext', 'markdown'];
 
     // Tabs are grouped by fileId (language-agnostic). Folders are not tabs.
     type TabMeta = { fileId: string; fileName: string; isOpen: boolean; lastUpdated?: number; type?: 'editor' | 'preview' | 'whiteboard'; sourceFileId?: string };
@@ -1016,6 +1019,7 @@ func main() {
         rust: '.rs',
         go: '.go',
         typescript: '.ts',
+        php: '.php',
         plaintext: '.txt',
         markdown: '.md'
     };
@@ -1072,6 +1076,8 @@ func main() {
             case '.mjs':
             case '.cjs':
                 return 'typescript';
+            case '.php':
+                return 'php';
             case '.md':
             case '.markdown':
                 return 'markdown';
@@ -7357,6 +7363,7 @@ func main() {
                         <option value="cpp">C++</option>
                         <option value="python">Python</option>
                         <option value="typescript">TypeScript</option>
+                        <option value="php">PHP</option>
                         <option value="csharp">C#</option>
                         <option value="rust">Rust</option>
                         <option value="go">Go</option>

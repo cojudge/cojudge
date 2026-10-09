@@ -28,7 +28,8 @@
     "csharp": "public class Solution\n{\n    public bool IsValidSudoku(string[] board)\n    {\n        return false;\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_valid_sudoku(board: Vec<String>) -> bool {\n        false\n    }\n}",
     "go": "package main\n\nfunc IsValidSudoku(board []string) bool {\n    return false\n}",
-    "typescript": "export function isValidSudoku(board: string[]): boolean {\n    return false;\n}\n"
+    "typescript": "export function isValidSudoku(board: string[]): boolean {\n    return false;\n}\n",
+    "php": "class Solution {\n    /**\n     * @param string[] $board\n     * @return bool\n     */\n    public function isValidSudoku($board) {\n\n    }\n}"
   },
   "testCases": [
     {

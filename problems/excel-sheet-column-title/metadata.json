@@ -25,7 +25,8 @@
     "csharp": "public class Solution \n{\n    public string ConvertToTitle(int columnNumber) \n    {\n        return \"\";\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn convert_to_title(column_number: i32) -> String {\n        String::new()\n    }\n}",
     "go": "package main\n\nfunc ConvertToTitle(columnNumber int) string {\n    return \"\"\n}",
-    "typescript": "export function convertToTitle(columnNumber: number): string {\n    return \"\";\n}"
+    "typescript": "export function convertToTitle(columnNumber: number): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param int $columnNumber\n     * @return string\n     */\n    public function convertToTitle($columnNumber) {\n\n    }\n}"
   },
   "testCases": [
     {

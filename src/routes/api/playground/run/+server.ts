@@ -1,4 +1,4 @@
-import { PlaygroundCppRunner, PlaygroundCSharpRunner, PlaygroundGoRunner, PlaygroundJavaRunner, PlaygroundPythonRunner, PlaygroundRustRunner, PlaygroundTypeScriptRunner } from '$lib/runners/PlaygroundRunners';
+import { PlaygroundCppRunner, PlaygroundCSharpRunner, PlaygroundGoRunner, PlaygroundJavaRunner, PlaygroundPhpRunner, PlaygroundPythonRunner, PlaygroundRustRunner, PlaygroundTypeScriptRunner } from '$lib/runners/PlaygroundRunners';
 import { startDebugSession, getDebugState } from '$lib/runners/DebugRunner';
 import { TIMEOUT_MESSAGE, type JobStatus } from '$lib/utils/util';
 import { json } from '@sveltejs/kit';
@@ -44,6 +44,8 @@ async function executeRun(language: string, code: string, job: RunJob, stdin: st
             runner = new PlaygroundGoRunner(code);
         } else if (language === 'typescript') {
             runner = new PlaygroundTypeScriptRunner(code);
+        } else if (language === 'php') {
+            runner = new PlaygroundPhpRunner(code);
         }
         if (!runner) {
             throw new Error(`${language} is not supported yet`);

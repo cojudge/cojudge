@@ -28,7 +28,8 @@
     "csharp": "public class Solution \n{\n    public int EraseOverlapIntervals(int[][] intervals) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn erase_overlap_intervals(intervals: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc EraseOverlapIntervals(intervals [][]int) int {\n    \n}",
-    "typescript": "export function eraseOverlapIntervals(intervals: number[][]): number {\n    \n}"
+    "typescript": "export function eraseOverlapIntervals(intervals: number[][]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $intervals\n     * @return int\n     */\n    public function eraseOverlapIntervals($intervals) {\n\n    }\n}"
   },
   "testCases": [
     {

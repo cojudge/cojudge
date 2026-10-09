@@ -23,7 +23,8 @@
     "csharp": "public class Solution\n{\n    public int[] Rotate(int[] nums, int k)\n    {\n        return new int[0];\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn rotate(nums: Vec<i32>, k: i32) -> Vec<i32> {\n        vec![]\n    }\n}",
     "go": "package main\n\nfunc Rotate(nums []int, k int) []int {\n    return []int{}\n}",
-    "typescript": "export function rotate(nums: number[], k: number): number[] {\n    return [];\n}"
+    "typescript": "export function rotate(nums: number[], k: number): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $k\n     * @return int[]\n     */\n    public function rotate($nums, $k) {\n\n    }\n}"
   },
   "testCases": [
     {

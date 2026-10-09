@@ -11,6 +11,7 @@ import { CppRunner } from '$lib/runners/CppRunner';
 import { CSharpRunner } from '$lib/runners/CSharpRunner';
 import { RustRunner } from '$lib/runners/RustRunner';
 import { GoRunner } from '$lib/runners/GoRunner';
+import { PhpRunner } from '$lib/runners/PhpRunner';
 import { TypeScriptRunner } from '$lib/runners/TypeScriptRunner';
 import { TIMEOUT_MESSAGE, type JobStatus } from '$lib/utils/util';
 
@@ -128,6 +129,8 @@ async function executeSubmit(problemId: string, language: string, code: string, 
             programRunner = new GoRunner(problemId, testCases, code);
         } else if (language === 'typescript') {
             programRunner = new TypeScriptRunner(problemId, testCases, code);
+        } else if (language === 'php') {
+            programRunner = new PhpRunner(problemId, testCases, code);
         }
         if (!programRunner) {
             throw new Error(`${language} is not supported yet`);
@@ -191,9 +194,14 @@ async function executeSubmit(problemId: string, language: string, code: string, 
                     if (idx === -1) {
                         return { output: (chunk || '').trim(), logs: '' };
                     }
-                    const output = lines[idx].slice(':::RESULT:::'.length).trim();
+                    // NOTE: multiline-safe (see api/run): the value may span lines.
+                    // Only the trailing empty artifact is dropped; all other
+                    // whitespace is significant (e.g. whitespace-only strings).
+                    const rawParts = [lines[idx].slice(':::RESULT:::'.length), ...lines.slice(idx + 1)];
+                    if (rawParts.length > 0 && rawParts[rawParts.length - 1] === '') rawParts.pop();
+                    const output = rawParts.join('\n');
                     const logs = lines
-                        .filter((_, i) => i !== idx)
+                        .filter((_, i) => i < idx)
                         .filter((l) => l.trim().length > 0)
                         .join('\n');
                     return { output, logs };

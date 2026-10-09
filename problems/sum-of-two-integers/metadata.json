@@ -23,7 +23,8 @@
     "csharp": "public class Solution \n{\n    public int GetSum(int a, int b) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn get_sum(a: i32, b: i32) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc GetSum(a int, b int) int {\n    \n}",
-    "typescript": "export function getSum(a: number, b: number): number {\n    \n}"
+    "typescript": "export function getSum(a: number, b: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $a\n     * @param int $b\n     * @return int\n     */\n    public function getSum($a, $b) {\n\n    }\n}"
   },
   "testCases": [
     {

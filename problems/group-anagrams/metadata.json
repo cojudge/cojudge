@@ -18,7 +18,8 @@
     "csharp": "public class Solution \n{\n    public List<List<String>> GroupAnagrams(string[] strs) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {\n        \n    }\n}",
     "go": "package main\n\nfunc GroupAnagrams(strs []string) [][]string {\n    \n}",
-    "typescript": "export function groupAnagrams(strs: string[]): string[][] {\n    \n}"
+    "typescript": "export function groupAnagrams(strs: string[]): string[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $strs\n     * @return string[][]\n     */\n    public function groupAnagrams($strs) {\n\n    }\n}"
   },
   "testCases": [
     {

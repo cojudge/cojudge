@@ -23,7 +23,8 @@
     "csharp": "public class Solution \n{\n    public string LongestCommonPrefix(string[] strs) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn longest_common_prefix(strs: Vec<String>) -> String {\n        \n    }\n}",
     "go": "package main\n\nfunc LongestCommonPrefix(strs []string) string {\n    \n}",
-    "typescript": "export function longestCommonPrefix(strs: string[]): string {\n    \n}"
+    "typescript": "export function longestCommonPrefix(strs: string[]): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $strs\n     * @return string\n     */\n    public function longestCommonPrefix($strs) {\n\n    }\n}"
   },
   "testCases": [
     {

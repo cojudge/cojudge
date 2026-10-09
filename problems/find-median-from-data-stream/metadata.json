@@ -26,7 +26,8 @@
     "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class MedianFinder {\n    public MedianFinder() {\n        \n    }\n    \n    public void AddNum(int num) {\n        \n    }\n    \n    public double FindMedian() {\n        return 0.0;\n    }\n}",
     "rust": "use std::collections::BinaryHeap;\nuse std::cmp::Reverse;\n\npub struct MedianFinder {\n    \n}\n\nimpl MedianFinder {\n    pub fn new() -> Self {\n        MedianFinder {}\n    }\n    \n    pub fn add_num(&mut self, num: i32) {\n        \n    }\n    \n    pub fn find_median(&self) -> f64 {\n        0.0\n    }\n}",
     "go": "package main\n\ntype MedianFinder struct {\n    \n}\n\nfunc Constructor() MedianFinder {\n    return MedianFinder{}\n}\n\nfunc (this *MedianFinder) AddNum(num int) {\n    \n}\n\nfunc (this *MedianFinder) FindMedian() float64 {\n    return 0.0\n}",
-    "typescript": "export class MedianFinder {\n    constructor() {\n        \n    }\n\n    addNum(num: number): void {\n        \n    }\n\n    findMedian(): number {\n        return 0;\n    }\n}"
+    "typescript": "export class MedianFinder {\n    constructor() {\n        \n    }\n\n    addNum(num: number): void {\n        \n    }\n\n    findMedian(): number {\n        return 0;\n    }\n}",
+    "php": "class MedianFinder {\n    public function addNum($num) {\n\n    }\n\n    public function findMedian() {\n\n    }\n}"
   },
   "testCases": [
     {

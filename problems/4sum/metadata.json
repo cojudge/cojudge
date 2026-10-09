@@ -23,7 +23,8 @@
     "csharp": "public class Solution\n{\n    public int[][] FourSum(int[] nums, int target)\n    {\n        return new int[0][];\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn four_sum(nums: Vec<i32>, target: i32) -> Vec<Vec<i32>> {\n        vec![]\n    }\n}",
     "go": "package main\n\nfunc FourSum(nums []int, target int) [][]int {\n    return [][]int{}\n}",
-    "typescript": "export function fourSum(nums: number[], target: number): number[][] {\n    return [];\n}"
+    "typescript": "export function fourSum(nums: number[], target: number): number[][] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $target\n     * @return int[][]\n     */\n    public function fourSum($nums, $target) {\n\n    }\n}"
   },
   "testCases": [
     {

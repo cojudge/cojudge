@@ -28,7 +28,8 @@
     "csharp": "using System.Collections.Generic;\n\npublic class Solution\n{\n    public List<string> GenerateParenthesis(int n)\n    {\n        return new List<string>();\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn generate_parenthesis(n: i32) -> Vec<String> {\n        vec![]\n    }\n}",
     "go": "package main\n\nfunc GenerateParenthesis(n int) []string {\n    return []string{}\n}",
-    "typescript": "export function generateParenthesis(n: number): string[] {\n    return [];\n}\n"
+    "typescript": "export function generateParenthesis(n: number): string[] {\n    return [];\n}\n",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return string[]\n     */\n    public function generateParenthesis($n) {\n\n    }\n}"
   },
   "testCases": [
     {

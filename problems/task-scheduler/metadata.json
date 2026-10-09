@@ -23,7 +23,8 @@
     "csharp": "public class Solution\n{\n    public int LeastInterval(string tasks, int n)\n    {\n        throw new System.NotImplementedException();\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn least_interval(tasks: String, n: i32) -> i32 {\n        todo!()\n    }\n}",
     "go": "package main\n\nfunc LeastInterval(tasks string, n int) int {\n    panic(\"TODO\")\n}",
-    "typescript": "export function leastInterval(tasks: string, n: number): number {\n    throw new Error('Not implemented');\n}"
+    "typescript": "export function leastInterval(tasks: string, n: number): number {\n    throw new Error('Not implemented');\n}",
+    "php": "class Solution {\n    /**\n     * @param string $tasks\n     * @param int $n\n     * @return int\n     */\n    public function leastInterval($tasks, $n) {\n\n    }\n}"
   },
   "testCases": [
     {

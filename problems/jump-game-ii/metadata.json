@@ -28,7 +28,8 @@
     "csharp": "public class Solution\n{\n    public int Jump(int[] nums)\n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn jump(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc Jump(nums []int) int {\n    \n}",
-    "typescript": "export function jump(nums: number[]): number {\n    \n}"
+    "typescript": "export function jump(nums: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function jump($nums) {\n\n    }\n}"
   },
   "testCases": [
     {

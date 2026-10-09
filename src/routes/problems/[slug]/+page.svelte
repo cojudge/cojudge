@@ -1126,6 +1126,7 @@
                         <option value="cpp">C++</option>
                         <option value="python">Python</option>
                         <option value="typescript">TypeScript</option>
+                        <option value="php">PHP</option>
                         <option value="csharp">C#</option>
                         <option value="rust">Rust</option>
                         <option value="go">Go</option>

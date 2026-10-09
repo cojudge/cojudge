@@ -28,7 +28,8 @@
     "csharp": "public class Solution\n{\n    public int[] RunFreqStack(string[] operations, int[] values)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_freq_stack(operations: Vec<String>, values: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
     "go": "package main\n\nfunc RunFreqStack(operations []string, values []int) []int {\n    return []int{}\n}",
-    "typescript": "export function runFreqStack(operations: string[], values: number[]): number[] {\n    return [];\n}\n"
+    "typescript": "export function runFreqStack(operations: string[], values: number[]): number[] {\n    return [];\n}\n",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[] $values\n     * @return int[]\n     */\n    public function runFreqStack($operations, $values) {\n\n    }\n}"
   },
   "testCases": [
     {

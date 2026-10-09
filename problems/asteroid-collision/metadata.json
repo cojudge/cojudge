@@ -28,7 +28,8 @@
     "csharp": "public class Solution\n{\n    public int[] AsteroidCollision(int[] asteroids)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn asteroid_collision(asteroids: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
     "go": "package main\n\nfunc AsteroidCollision(asteroids []int) []int {\n    return []int{}\n}",
-    "typescript": "export function asteroidCollision(asteroids: number[]): number[] {\n    return [];\n}\n"
+    "typescript": "export function asteroidCollision(asteroids: number[]): number[] {\n    return [];\n}\n",
+    "php": "class Solution {\n    /**\n     * @param int[] $asteroids\n     * @return int[]\n     */\n    public function asteroidCollision($asteroids) {\n\n    }\n}"
   },
   "testCases": [
     {

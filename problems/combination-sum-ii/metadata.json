@@ -23,7 +23,8 @@
     "csharp": "public class Solution\n{\n    public int[][] CombinationSum2(int[] candidates, int target)\n    {\n        throw new System.NotImplementedException();\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn combination_sum2(candidates: Vec<i32>, target: i32) -> Vec<Vec<i32>> {\n        todo!()\n    }\n}",
     "go": "package main\n\nfunc CombinationSum2(candidates []int, target int) [][]int {\n    panic(\"TODO\")\n}",
-    "typescript": "export function combinationSum2(candidates: number[], target: number): number[][] {\n    throw new Error('Not implemented');\n}"
+    "typescript": "export function combinationSum2(candidates: number[], target: number): number[][] {\n    throw new Error('Not implemented');\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $candidates\n     * @param int $target\n     * @return int[][]\n     */\n    public function combinationSum2($candidates, $target) {\n\n    }\n}"
   },
   "testCases": [
     {

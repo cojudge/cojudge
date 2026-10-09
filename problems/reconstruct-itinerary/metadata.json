@@ -23,7 +23,8 @@
     "csharp": "using System.Collections.Generic;\n\npublic class Solution\n{\n    public List<string> FindItinerary(string[] from, string[] to)\n    {\n        return new List<string>();\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_itinerary(from: Vec<String>, to: Vec<String>) -> Vec<String> {\n        Vec::new()\n    }\n}\n",
     "go": "package main\n\nfunc FindItinerary(from []string, to []string) []string {\n    return nil\n}\n",
-    "typescript": "export function findItinerary(from: string[], to: string[]): string[] {\n    return [];\n}\n"
+    "typescript": "export function findItinerary(from: string[], to: string[]): string[] {\n    return [];\n}\n",
+    "php": "class Solution {\n    /**\n     * @param string[] $from\n     * @param string[] $to\n     * @return string[]\n     */\n    public function findItinerary($from, $to) {\n\n    }\n}"
   },
   "testCases": [
     {

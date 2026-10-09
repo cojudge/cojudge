@@ -2,7 +2,7 @@
     import type * as Monaco from 'monaco-editor';
     import { attachVisualCursorFix, configureMonacoVim, createHistoryAwareStatusBar, patchMonacoVimKeyName } from '$lib/utils/vimMode';
     import { isDebugSupported } from '$lib/utils/util';
-    import { canInspectToken, isBreakpointCandidate, type SourceToken } from '$lib/utils/debugSource';
+    import { canInspectToken, isBreakpointCandidate, phpHoverVariable, type SourceToken } from '$lib/utils/debugSource';
     import { onMount } from 'svelte';
     export let value = '';
     export let language = 'javascript';
@@ -36,6 +36,29 @@
         if (value === '2-spaces') return { tabSize: 2, insertSpaces: true };
         if (value === 'tab') return { tabSize: 4, insertSpaces: false };
         return { tabSize: 4, insertSpaces: true };
+    }
+
+    // Monaco only tokenizes PHP inside <?php blocks, but CoJudge solutions
+    // are tagless (LeetCode-style). Register a variant that starts directly
+    // in the PHP tokenizer state so tagless code still highlights.
+    const MONACO_PHP_CODE_ID = 'phpcode';
+    async function ensurePhpCodeLanguage(monaco: any): Promise<void> {
+        try {
+            if (monaco.languages.getLanguages().some((l: any) => l.id === MONACO_PHP_CODE_ID)) return;
+            const php = await import('monaco-editor/esm/vs/basic-languages/php/php.js');
+            monaco.languages.register({ id: MONACO_PHP_CODE_ID, aliases: ['PHP (code)'] });
+            monaco.languages.setLanguageConfiguration(MONACO_PHP_CODE_ID, php.conf);
+            monaco.languages.setMonarchTokensProvider(MONACO_PHP_CODE_ID, {
+                ...php.language,
+                tokenizer: { ...php.language.tokenizer, root: (php.language.tokenizer as any).phpRoot }
+            });
+        } catch {
+            // fall back to plain php highlighting
+        }
+    }
+
+    function monacoLangFor(lang: string): string {
+        return lang === 'php' ? MONACO_PHP_CODE_ID : lang;
     }
 
     function applyIndentation(value: typeof indentation) {
@@ -72,17 +95,25 @@
     function registerDebugHoverProvider() {
         if (!monacoRef || !language || !isDebugSupported(language)) return;
         hoverDisposable?.dispose();
-        hoverDisposable = monacoRef.languages.registerHoverProvider(language, {
+        // NOTE: register for the model's language id. PHP edits as `phpcode`
+        // (tagless highlighting), so registering for `php` would never fire.
+        const providerLanguage = monacoLangFor(language);
+        hoverDisposable = monacoRef.languages.registerHoverProvider(providerLanguage, {
             provideHover: async (model: Monaco.editor.ITextModel, position: Monaco.Position) => {
                 if (!debugJobId || !activeDebugLine || model !== editor?.getModel()) return null;
                 if (!canInspectToken(sourceTokens(model)[position.lineNumber - 1] ?? [], position.column - 1)) return null;
                 const word = model.getWordAtPosition(position);
                 if (!word) return null;
+                // Monaco words exclude `$`: hovering `$nums` yields `nums`,
+                // which is not a valid PHP expression on its own.
+                const variable = language === 'php'
+                    ? phpHoverVariable(model.getLineContent(position.lineNumber), word.startColumn, word.endColumn, word.word)
+                    : word.word;
                 try {
                     const res = await fetch('/api/debug', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ jobId: debugJobId, action: 'eval', variable: word.word }),
+                        body: JSON.stringify({ jobId: debugJobId, action: 'eval', variable }),
                     });
                     if (!res.ok) return null;
                     const data = await res.json();
@@ -196,10 +227,12 @@
         Promise.all([
             import('monaco-editor'),
             import('monaco-vim')
-        ]).then(([monaco, vim]) => {
+        ]).then(async ([monaco, vim]) => {
             if (disposed) return;
             const { initVimMode, VimMode, StatusBar } = vim as any;
             monacoRef = monaco;
+            await ensurePhpCodeLanguage(monaco);
+            if (disposed) return;
             configureMonacoVim(VimMode.Vim);
             patchMonacoVimKeyName(VimMode);
             vimStatusBarClass = StatusBar ? createHistoryAwareStatusBar(StatusBar) : null;
@@ -251,7 +284,7 @@
             const initialIndent = indentationOptions(indentation);
             editor = monaco.editor.create(editorElement, {
                 value,
-                language,
+                language: monacoLangFor(language),
                 theme: themeId,
                 automaticLayout: true,
                 fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
@@ -365,7 +398,7 @@
     $: if (editor && monacoRef) {
         const model = editor.getModel();
         if (model) {
-            monacoRef.editor.setModelLanguage(model, language);
+            monacoRef.editor.setModelLanguage(model, monacoLangFor(language));
         }
     }
 

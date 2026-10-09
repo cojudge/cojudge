@@ -28,7 +28,8 @@
     "csharp": "public class Solution \n{\n    public string DecodeString(string s) \n    {\n        return \"\";\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn decode_string(s: String) -> String {\n        String::new()\n    }\n}",
     "go": "package main\n\nfunc DecodeString(s string) string {\n    return \"\"\n}",
-    "typescript": "export function decodeString(s: string): string {\n    return \"\";\n}"
+    "typescript": "export function decodeString(s: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string\n     */\n    public function decodeString($s) {\n\n    }\n}"
   },
   "testCases": [
     {

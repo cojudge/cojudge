@@ -28,7 +28,8 @@
     "csharp": "public class Solution \n{\n    public bool Exist(char[][] board, string word) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn exist(board: String, word: String) -> bool {\n        \n    }\n}",
     "go": "package main\n\nfunc Exist(board [][]byte, word string) bool {\n    \n}",
-    "typescript": "export function exist(board: string[][], word: string): boolean {\n    \n}"
+    "typescript": "export function exist(board: string[][], word: string): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string[][] $board\n     * @param string $word\n     * @return bool\n     */\n    public function exist($board, $word) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -21,7 +21,8 @@
     "csharp": "public class Solution \n{\n    public int[][] BuildMatrix(int k, int[][] rowConditions, int[][] colConditions) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn build_matrix(k: i32, row_conditions: Vec<Vec<i32>>, col_conditions: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
     "go": "package main\n\nfunc BuildMatrix(k int, rowConditions [][]int, colConditions [][]int) [][]int {\n    return nil\n}",
-    "typescript": "export function buildMatrix(k: number, rowConditions: number[][], colConditions: number[][]): number[][] {\n    \n}"
+    "typescript": "export function buildMatrix(k: number, rowConditions: number[][], colConditions: number[][]): number[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $k\n     * @param int[][] $rowConditions\n     * @param int[][] $colConditions\n     * @return int[][]\n     */\n    public function buildMatrix($k, $rowConditions, $colConditions) {\n\n    }\n}"
   },
   "testCases": [
     {

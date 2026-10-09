@@ -18,7 +18,8 @@
     "csharp": "public class Solution \n{\n    public int[][] PacificAtlantic(int[][] heights) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn pacific_atlantic(heights: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
     "go": "package main\n\nfunc PacificAtlantic(heights [][]int) [][]int {\n    \n}",
-    "typescript": "export function pacificAtlantic(heights: number[][]): number[][] {\n    \n}"
+    "typescript": "export function pacificAtlantic(heights: number[][]): number[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $heights\n     * @return int[][]\n     */\n    public function pacificAtlantic($heights) {\n\n    }\n}"
   },
   "testCases": [
     {

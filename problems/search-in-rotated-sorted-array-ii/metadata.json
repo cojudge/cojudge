@@ -21,7 +21,8 @@
     "csharp": "public class Solution \n{\n    public bool Search(int[] nums, int target) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn search(nums: Vec<i32>, target: i32) -> bool {\n        \n    }\n}",
     "go": "package main\n\nfunc Search(nums []int, target int) bool {\n    \n}",
-    "typescript": "export function search(nums: number[], target: number): boolean {\n    \n}"
+    "typescript": "export function search(nums: number[], target: number): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $target\n     * @return bool\n     */\n    public function search($nums, $target) {\n\n    }\n}"
   },
   "testCases": [
     {

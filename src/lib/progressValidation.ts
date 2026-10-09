@@ -8,6 +8,7 @@ const PROGRAMMING_LANGUAGES = new Set([
 	'rust',
 	'go',
 	'typescript',
+	'php',
 	'plaintext',
 	'markdown'
 ]);

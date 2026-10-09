@@ -23,7 +23,8 @@
     "csharp": "public class Solution \n{\n    public bool StoneGame(int[] piles) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn stone_game(piles: Vec<i32>) -> bool {\n        \n    }\n}",
     "go": "package main\n\nfunc StoneGame(piles []int) bool {\n    \n}",
-    "typescript": "export function stoneGame(piles: number[]): boolean {\n    \n}"
+    "typescript": "export function stoneGame(piles: number[]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $piles\n     * @return bool\n     */\n    public function stoneGame($piles) {\n\n    }\n}"
   },
   "testCases": [
     {

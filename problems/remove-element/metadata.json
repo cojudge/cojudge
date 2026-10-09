@@ -23,7 +23,8 @@
     "csharp": "public class Solution \n{\n    public int RemoveElement(int[] nums, int val) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn remove_element(nums: Vec<i32>, val: i32) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc RemoveElement(nums []int, val int) int {\n    return 0\n}",
-    "typescript": "export function removeElement(nums: number[], val: number): number {\n    return 0;\n}"
+    "typescript": "export function removeElement(nums: number[], val: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $val\n     * @return int\n     */\n    public function removeElement($nums, $val) {\n\n    }\n}"
   },
   "testCases": [
     {

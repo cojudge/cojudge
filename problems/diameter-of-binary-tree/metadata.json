@@ -28,7 +28,8 @@
     "csharp": "/*\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\npublic class Solution\n{\n    public int DiameterOfBinaryTree(TreeNode root)\n    {\n        return 0;\n    }\n}",
     "rust": "use std::cell::RefCell;\nuse std::rc::Rc;\n\npub struct Solution;\n\nimpl Solution {\n    pub fn diameter_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {\n        todo!()\n    }\n}",
     "go": "package main\n\nfunc DiameterOfBinaryTree(root *TreeNode) int {\n    return 0\n}",
-    "typescript": "export function diameterOfBinaryTree(root: TreeNode | null): number {\n    return 0;\n}"
+    "typescript": "export function diameterOfBinaryTree(root: TreeNode | null): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param TreeNode|null $root\n     * @return int\n     */\n    public function diameterOfBinaryTree($root) {\n\n    }\n}"
   },
   "testCases": [
     {

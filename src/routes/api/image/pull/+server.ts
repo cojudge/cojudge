@@ -3,6 +3,7 @@ import { json } from '@sveltejs/kit';
 import Dockerode from 'dockerode';
 import type { RequestHandler } from './$types';
 import { javaImage } from '$lib/utils/javaUtil';
+import { phpImage } from '$lib/utils/phpUtil';
 import { pythonImage } from '$lib/utils/pythonUtil';
 import { cppImage } from '$lib/utils/cppUtil';
 import { csharpImage } from '$lib/utils/csharpUtil';
@@ -20,6 +21,7 @@ function imageForLanguage(language: string) {
     if (language === 'rust') return rustImage;
     if (language === 'go') return goImage;
     if (language === 'typescript') return tsImage;
+    if (language === 'php') return phpImage;
     return null;
 }
 

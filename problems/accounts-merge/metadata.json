@@ -17,7 +17,8 @@
     "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<List<string>> AccountsMerge(List<List<string>> accounts) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn accounts_merge(accounts: Vec<Vec<String>>) -> Vec<Vec<String>> {\n        \n    }\n}",
     "go": "package main\n\nfunc AccountsMerge(accounts [][]string) [][]string {\n    return nil\n}",
-    "typescript": "export function accountsMerge(accounts: string[][]): string[][] {\n    \n}"
+    "typescript": "export function accountsMerge(accounts: string[][]): string[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string[][] $accounts\n     * @return string[][]\n     */\n    public function accountsMerge($accounts) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -12,9 +12,9 @@ export type Param = {
     type: string;
 };
 
-export type ProgrammingLanguage = 'java' | 'python' | 'cpp' | 'csharp' | 'rust' | 'go' | 'typescript' | 'plaintext' | 'markdown';
+export type ProgrammingLanguage = 'java' | 'python' | 'cpp' | 'csharp' | 'rust' | 'go' | 'typescript' | 'php' | 'plaintext' | 'markdown';
 
-export const DEBUG_SUPPORTED_LANGUAGES: ProgrammingLanguage[] = ['python', 'java', 'cpp', 'go', 'csharp', 'rust', 'typescript'];
+export const DEBUG_SUPPORTED_LANGUAGES: ProgrammingLanguage[] = ['python', 'java', 'cpp', 'go', 'csharp', 'rust', 'typescript', 'php'];
 
 export function isDebugSupported(language: string): boolean {
     return DEBUG_SUPPORTED_LANGUAGES.includes(language as ProgrammingLanguage);

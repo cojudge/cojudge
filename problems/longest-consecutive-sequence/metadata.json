@@ -23,7 +23,8 @@
     "csharp": "public class Solution \n{\n    public int LongestConsecutive(int[] nums) \n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn longest_consecutive(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc LongestConsecutive(nums []int) int {\n    \n}",
-    "typescript": "export function longestConsecutive(nums: number[]): number {\n    \n}"
+    "typescript": "export function longestConsecutive(nums: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function longestConsecutive($nums) {\n\n    }\n}"
   },
   "testCases": [
     {

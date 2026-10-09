@@ -28,7 +28,8 @@
     "csharp": "public class Solution\n{\n    public int Trap(int[] height)\n    {\n        return 0;\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn trap(height: Vec<i32>) -> i32 {\n        0\n    }\n}",
     "go": "package main\n\nfunc Trap(height []int) int {\n    return 0\n}",
-    "typescript": "export function trap(height: number[]): number {\n    return 0;\n}\n"
+    "typescript": "export function trap(height: number[]): number {\n    return 0;\n}\n",
+    "php": "class Solution {\n    /**\n     * @param int[] $height\n     * @return int\n     */\n    public function trap($height) {\n\n    }\n}"
   },
   "testCases": [
     {

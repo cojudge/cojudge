@@ -28,7 +28,8 @@
     "csharp": "public class Solution\n{\n    public bool MergeTriplets(int[][] triplets, int[] target)\n    {\n        \n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn merge_triplets(triplets: Vec<Vec<i32>>, target: Vec<i32>) -> bool {\n        \n    }\n}",
     "go": "package main\n\nfunc MergeTriplets(triplets [][]int, target []int) bool {\n    \n}",
-    "typescript": "export function mergeTriplets(triplets: number[][], target: number[]): boolean {\n    \n}"
+    "typescript": "export function mergeTriplets(triplets: number[][], target: number[]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $triplets\n     * @param int[] $target\n     * @return bool\n     */\n    public function mergeTriplets($triplets, $target) {\n\n    }\n}"
   },
   "testCases": [
     {

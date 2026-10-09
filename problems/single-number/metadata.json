@@ -28,7 +28,8 @@
     "csharp": "public class Solution\n{\n    public int SingleNumber(int[] nums)\n    {\n        return 0;\n    }\n}",
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn single_number(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
     "go": "package main\n\nfunc SingleNumber(nums []int) int {\n    return 0\n}",
-    "typescript": "export function singleNumber(nums: number[]): number {\n    return 0;\n}"
+    "typescript": "export function singleNumber(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function singleNumber($nums) {\n\n    }\n}"
   },
   "testCases": [
     {
