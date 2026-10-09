@@ -2,7 +2,7 @@
     import type * as Monaco from 'monaco-editor';
     import { attachVisualCursorFix, configureMonacoVim, createHistoryAwareStatusBar, patchMonacoVimKeyName } from '$lib/utils/vimMode';
     import { isDebugSupported } from '$lib/utils/util';
-    import { canInspectToken, isBreakpointCandidate, type SourceToken } from '$lib/utils/debugSource';
+    import { canInspectToken, isBreakpointCandidate, phpHoverVariable, type SourceToken } from '$lib/utils/debugSource';
     import { onMount } from 'svelte';
     export let value = '';
     export let language = 'javascript';
@@ -95,17 +95,25 @@
     function registerDebugHoverProvider() {
         if (!monacoRef || !language || !isDebugSupported(language)) return;
         hoverDisposable?.dispose();
-        hoverDisposable = monacoRef.languages.registerHoverProvider(language, {
+        // NOTE: register for the model's language id. PHP edits as `phpcode`
+        // (tagless highlighting), so registering for `php` would never fire.
+        const providerLanguage = monacoLangFor(language);
+        hoverDisposable = monacoRef.languages.registerHoverProvider(providerLanguage, {
             provideHover: async (model: Monaco.editor.ITextModel, position: Monaco.Position) => {
                 if (!debugJobId || !activeDebugLine || model !== editor?.getModel()) return null;
                 if (!canInspectToken(sourceTokens(model)[position.lineNumber - 1] ?? [], position.column - 1)) return null;
                 const word = model.getWordAtPosition(position);
                 if (!word) return null;
+                // Monaco words exclude `$`: hovering `$nums` yields `nums`,
+                // which is not a valid PHP expression on its own.
+                const variable = language === 'php'
+                    ? phpHoverVariable(model.getLineContent(position.lineNumber), word.startColumn, word.endColumn, word.word)
+                    : word.word;
                 try {
                     const res = await fetch('/api/debug', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ jobId: debugJobId, action: 'eval', variable: word.word }),
+                        body: JSON.stringify({ jobId: debugJobId, action: 'eval', variable }),
                     });
                     if (!res.ok) return null;
                     const data = await res.json();
