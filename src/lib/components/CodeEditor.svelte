@@ -38,6 +38,29 @@
         return { tabSize: 4, insertSpaces: true };
     }
 
+    // Monaco only tokenizes PHP inside <?php blocks, but CoJudge solutions
+    // are tagless (LeetCode-style). Register a variant that starts directly
+    // in the PHP tokenizer state so tagless code still highlights.
+    const MONACO_PHP_CODE_ID = 'phpcode';
+    async function ensurePhpCodeLanguage(monaco: any): Promise<void> {
+        try {
+            if (monaco.languages.getLanguages().some((l: any) => l.id === MONACO_PHP_CODE_ID)) return;
+            const php = await import('monaco-editor/esm/vs/basic-languages/php/php.js');
+            monaco.languages.register({ id: MONACO_PHP_CODE_ID, aliases: ['PHP (code)'] });
+            monaco.languages.setLanguageConfiguration(MONACO_PHP_CODE_ID, php.conf);
+            monaco.languages.setMonarchTokensProvider(MONACO_PHP_CODE_ID, {
+                ...php.language,
+                tokenizer: { ...php.language.tokenizer, root: (php.language.tokenizer as any).phpRoot }
+            });
+        } catch {
+            // fall back to plain php highlighting
+        }
+    }
+
+    function monacoLangFor(lang: string): string {
+        return lang === 'php' ? MONACO_PHP_CODE_ID : lang;
+    }
+
     function applyIndentation(value: typeof indentation) {
         if (!editor || !monacoRef) return;
         const { tabSize, insertSpaces } = indentationOptions(value);
@@ -196,10 +219,12 @@
         Promise.all([
             import('monaco-editor'),
             import('monaco-vim')
-        ]).then(([monaco, vim]) => {
+        ]).then(async ([monaco, vim]) => {
             if (disposed) return;
             const { initVimMode, VimMode, StatusBar } = vim as any;
             monacoRef = monaco;
+            await ensurePhpCodeLanguage(monaco);
+            if (disposed) return;
             configureMonacoVim(VimMode.Vim);
             patchMonacoVimKeyName(VimMode);
             vimStatusBarClass = StatusBar ? createHistoryAwareStatusBar(StatusBar) : null;
@@ -251,7 +276,7 @@
             const initialIndent = indentationOptions(indentation);
             editor = monaco.editor.create(editorElement, {
                 value,
-                language,
+                language: monacoLangFor(language),
                 theme: themeId,
                 automaticLayout: true,
                 fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
@@ -365,7 +390,7 @@
     $: if (editor && monacoRef) {
         const model = editor.getModel();
         if (model) {
-            monacoRef.editor.setModelLanguage(model, language);
+            monacoRef.editor.setModelLanguage(model, monacoLangFor(language));
         }
     }
 

@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {\n        \n    }\n}",
     "go": "package main\n\nfunc TwoSum(nums []int, target int) []int {\n    \n}",
     "typescript": "export function twoSum(nums: number[], target: number): number[] {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $nums\n     * @param int $target\n     * @return int[]\n     */\n    public function twoSum($nums, $target) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $target\n     * @return int[]\n     */\n    public function twoSum($nums, $target) {\n\n    }\n}"
   },
   "testCases": [
     {

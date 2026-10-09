@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_happy(n: i32) -> bool {\n        false\n    }\n}",
     "go": "package main\n\nfunc IsHappy(n int) bool {\n    return false\n}",
     "typescript": "export function isHappy(n: number): boolean {\n    return false;\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int $n\n     * @return bool\n     */\n    public function isHappy($n) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return bool\n     */\n    public function isHappy($n) {\n\n    }\n}"
   },
   "testCases": [
     {

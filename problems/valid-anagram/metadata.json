@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_anagram(s: String, t: String) -> bool {\n        \n    }\n}",
     "go": "package main\n\nfunc IsAnagram(s string, t string) bool {\n    \n}",
     "typescript": "export function isAnagram(s: string, t: string): boolean {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string $s\n     * @param string $t\n     * @return bool\n     */\n    public function isAnagram($s, $t) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string $t\n     * @return bool\n     */\n    public function isAnagram($s, $t) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -34,7 +34,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reverse(x: i32) -> i32 {\n        0\n    }\n}",
     "go": "package main\n\nfunc Reverse(x int) int {\n    return 0\n}",
     "typescript": "export function reverse(x: number): number {\n    return 0;\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int $x\n     * @return int\n     */\n    public function reverse($x) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int $x\n     * @return int\n     */\n    public function reverse($x) {\n\n    }\n}"
   },
   "testCases": [
     {

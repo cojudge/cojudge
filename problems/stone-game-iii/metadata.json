@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn stone_game_iii(stone_value: Vec<i32>) -> String {\n        \n    }\n}",
     "go": "package main\n\nfunc StoneGameIII(stoneValue []int) string {\n    \n}",
     "typescript": "export function stoneGameIII(stoneValue: number[]): string {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $stoneValue\n     * @return string\n     */\n    public function stoneGameIII($stoneValue) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int[] $stoneValue\n     * @return string\n     */\n    public function stoneGameIII($stoneValue) {\n\n    }\n}"
   },
   "testCases": [
     {

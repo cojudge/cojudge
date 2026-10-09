@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_window(s: String, t: String) -> String {\n        \n    }\n}",
     "go": "package main\n\nfunc MinWindow(s string, t string) string {\n    \n}",
     "typescript": "export function minWindow(s: string, t: string): string {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string $s\n     * @param string $t\n     * @return string\n     */\n    public function minWindow($s, $t) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string $t\n     * @return string\n     */\n    public function minWindow($s, $t) {\n\n    }\n}"
   },
   "testCases": [
     {

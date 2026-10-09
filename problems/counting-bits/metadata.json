@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_bits(n: i32) -> Vec<i32> {\n        \n    }\n}",
     "go": "package main\n\nfunc CountBits(n int) []int {\n    \n}",
     "typescript": "export function countBits(n: number): number[] {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int $n\n     * @return int[]\n     */\n    public function countBits($n) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int[]\n     */\n    public function countBits($n) {\n\n    }\n}"
   },
   "testCases": [
     {

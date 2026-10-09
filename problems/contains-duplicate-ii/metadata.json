@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn contains_nearby_duplicate(nums: Vec<i32>, k: i32) -> bool {\n        false\n    }\n}",
     "go": "package main\n\nfunc ContainsNearbyDuplicate(nums []int, k int) bool {\n    return false\n}",
     "typescript": "export function containsNearbyDuplicate(nums: number[], k: number): boolean {\n    return false;\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $nums\n     * @param int $k\n     * @return bool\n     */\n    public function containsNearbyDuplicate($nums, $k) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $k\n     * @return bool\n     */\n    public function containsNearbyDuplicate($nums, $k) {\n\n    }\n}"
   },
   "testCases": [
     {

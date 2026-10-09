@@ -22,7 +22,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn add_binary(a: String, b: String) -> String {\n        String::new()\n    }\n}",
     "go": "package main\n\nfunc AddBinary(a string, b string) string {\n    return \"\"\n}",
     "typescript": "export function addBinary(a: string, b: string): string {\n    return \"\";\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string $a\n     * @param string $b\n     * @return string\n     */\n    public function addBinary($a, $b) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string $a\n     * @param string $b\n     * @return string\n     */\n    public function addBinary($a, $b) {\n\n    }\n}"
   },
   "testCases": [
     {

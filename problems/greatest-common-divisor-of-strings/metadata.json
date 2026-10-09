@@ -26,7 +26,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn gcd_of_strings(str1: String, str2: String) -> String {\n        String::new()\n    }\n}",
     "go": "package main\n\nfunc GcdOfStrings(str1 string, str2 string) string {\n    return \"\"\n}",
     "typescript": "export function gcdOfStrings(str1: string, str2: string): string {\n    return \"\";\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string $str1\n     * @param string $str2\n     * @return string\n     */\n    public function gcdOfStrings($str1, $str2) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string $str1\n     * @param string $str2\n     * @return string\n     */\n    public function gcdOfStrings($str1, $str2) {\n\n    }\n}"
   },
   "testCases": [
     {

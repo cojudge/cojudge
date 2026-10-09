@@ -24,7 +24,7 @@
     "rust": "use std::rc::Rc;\nuse std::cell::RefCell;\npub struct Solution;\n\nimpl Solution {\n    pub fn rob(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc Rob(root *TreeNode) int {\n    return 0\n}",
     "typescript": "import { TreeNode } from './TreeNode';\nexport function rob(root: TreeNode | null): number {\n    return 0;\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param TreeNode|null $root\n     * @return int\n     */\n    public function rob($root) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param TreeNode|null $root\n     * @return int\n     */\n    public function rob($root) {\n\n    }\n}"
   },
   "testCases": [
     {

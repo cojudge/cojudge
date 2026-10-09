@@ -27,7 +27,7 @@
     "rust": "use std::rc::Rc;\nuse std::cell::RefCell;\npub struct Solution;\n\nimpl Solution {\n    pub fn delete_node(root: Option<Rc<RefCell<TreeNode>>>, key: i32) -> Option<Rc<RefCell<TreeNode>>> {\n        \n    }\n}",
     "go": "package main\n\nfunc DeleteNode(root *TreeNode, key int) *TreeNode {\n    return nil\n}",
     "typescript": "import { TreeNode } from './TreeNode';\nexport function deleteNode(root: TreeNode | null, key: number): TreeNode | null {\n    return null;\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param TreeNode|null $root\n     * @param int $key\n     * @return TreeNode|null\n     */\n    public function deleteNode($root, $key) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param TreeNode|null $root\n     * @param int $key\n     * @return TreeNode|null\n     */\n    public function deleteNode($root, $key) {\n\n    }\n}"
   },
   "testCases": [
     {

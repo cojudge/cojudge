@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_palindrome(s: String) -> bool {\n        \n    }\n}",
     "go": "package main\n\nfunc IsPalindrome(s string) bool {\n    \n}",
     "typescript": "export function isPalindrome(s: string): boolean {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string $s\n     * @return bool\n     */\n    public function isPalindrome($s) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return bool\n     */\n    public function isPalindrome($s) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -27,7 +27,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_alien_sorted(words: Vec<String>, order: String) -> bool {\n        \n    }\n}",
     "go": "package main\n\nfunc IsAlienSorted(words []string, order string) bool {\n    \n}",
     "typescript": "export function isAlienSorted(words: string[], order: string): boolean {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string[] $words\n     * @param string $order\n     * @return bool\n     */\n    public function isAlienSorted($words, $order) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string[] $words\n     * @param string $order\n     * @return bool\n     */\n    public function isAlienSorted($words, $order) {\n\n    }\n}"
   },
   "testCases": [
     {

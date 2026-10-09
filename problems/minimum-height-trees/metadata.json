@@ -22,7 +22,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_min_height_trees(n: i32, edges: Vec<Vec<i32>>) -> Vec<i32> {\n        \n    }\n}",
     "go": "package main\n\nfunc FindMinHeightTrees(n int, edges [][]int) []int {\n    return nil\n}",
     "typescript": "export function findMinHeightTrees(n: number, edges: number[][]): number[] {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int $n\n     * @param int[][] $edges\n     * @return int[]\n     */\n    public function findMinHeightTrees($n, $edges) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int[][] $edges\n     * @return int[]\n     */\n    public function findMinHeightTrees($n, $edges) {\n\n    }\n}"
   },
   "testCases": [
     {

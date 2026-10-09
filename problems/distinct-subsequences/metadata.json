@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_distinct(s: String, t: String) -> i32 {\n        0\n    }\n}",
     "go": "package main\n\nfunc NumDistinct(s string, t string) int {\n    return 0\n}",
     "typescript": "export function numDistinct(s: string, t: string): number {\n    return 0;\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string $s\n     * @param string $t\n     * @return int\n     */\n    public function numDistinct($s, $t) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string $t\n     * @return int\n     */\n    public function numDistinct($s, $t) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn solve_n_queens(n: i32) -> Vec<Vec<String>> {\n        Vec::new()\n    }\n}\n",
     "go": "package main\n\nfunc SolveNQueens(n int) [][]string {\n    return [][]string{}\n}\n",
     "typescript": "export function solveNQueens(n: number): string[][] {\n    return [];\n}\n",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int $n\n     * @return string[][]\n     */\n    public function solveNQueens($n) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return string[][]\n     */\n    public function solveNQueens($n) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn set_zeroes(matrix: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
     "go": "package main\n\nfunc SetZeroes(matrix [][]int) [][]int {\n    \n}",
     "typescript": "export function setZeroes(matrix: number[][]): number[][] {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int[][] $matrix\n     * @return int[][]\n     */\n    public function setZeroes($matrix) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int[][] $matrix\n     * @return int[][]\n     */\n    public function setZeroes($matrix) {\n\n    }\n}"
   },
   "testCases": [
     {

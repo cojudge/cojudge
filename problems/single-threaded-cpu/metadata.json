@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn get_order(tasks: Vec<Vec<i32>>) -> Vec<i32> {\n        todo!()\n    }\n}",
     "go": "package main\n\nfunc GetOrder(tasks [][]int) []int {\n    panic(\"TODO\")\n}",
     "typescript": "export function getOrder(tasks: number[][]): number[] {\n    throw new Error('Not implemented');\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int[][] $tasks\n     * @return int[]\n     */\n    public function getOrder($tasks) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int[][] $tasks\n     * @return int[]\n     */\n    public function getOrder($tasks) {\n\n    }\n}"
   },
   "testCases": [
     {

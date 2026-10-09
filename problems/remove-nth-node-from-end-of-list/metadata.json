@@ -29,7 +29,7 @@
     "rust": "// Definition for singly-linked list.\n// #[derive(PartialEq, Eq, Clone, Debug)]\n// pub struct ListNode {\n//   pub val: i32,\n//   pub next: Option<Box<ListNode>>\n// }\n// \n// impl ListNode {\n//   #[inline]\n//   fn new(val: i32) -> Self {\n//     ListNode {\n//       next: None,\n//       val\n//     }\n//   }\n// }\n\npub struct Solution;\n\nimpl Solution {\n    pub fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> Option<Box<ListNode>> {\n        \n    }\n}",
     "go": "package main\n\n/*\nDefinition for singly-linked list.\ntype ListNode struct {\n    Val int\n    Next *ListNode\n}\n*/\n\nfunc RemoveNthFromEnd(head *ListNode, n int) *ListNode {\n    \n}",
     "typescript": "// Definition for singly-linked list.\n// class ListNode {\n//     val: number\n//     next: ListNode | null\n//     constructor(val?: number, next?: ListNode | null) {\n//         this.val = (val === undefined ? 0 : val)\n//         this.next = (next === undefined ? null : next)\n//     }\n// }\nimport { ListNode } from './ListNode';\nexport function removeNthFromEnd(head: ListNode | null, n: number): ListNode | null {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param ListNode|null $head\n     * @param int $n\n     * @return ListNode|null\n     */\n    public function removeNthFromEnd($head, $n) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param ListNode|null $head\n     * @param int $n\n     * @return ListNode|null\n     */\n    public function removeNthFromEnd($head, $n) {\n\n    }\n}"
   },
   "testCases": [
     {

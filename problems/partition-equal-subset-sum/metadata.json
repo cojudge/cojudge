@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_partition(nums: Vec<i32>) -> bool {\n        false\n    }\n}",
     "go": "package main\n\nfunc CanPartition(nums []int) bool {\n    return false\n}",
     "typescript": "export function canPartition(nums: number[]): boolean {\n    return false;\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $nums\n     * @return bool\n     */\n    public function canPartition($nums) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return bool\n     */\n    public function canPartition($nums) {\n\n    }\n}"
   },
   "testCases": [
     {

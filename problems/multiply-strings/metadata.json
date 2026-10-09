@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn multiply(num1: String, num2: String) -> String {\n        String::new()\n    }\n}",
     "go": "package main\n\nfunc Multiply(num1 string, num2 string) string {\n    return \"\"\n}",
     "typescript": "export function multiply(num1: string, num2: string): string {\n    return \"\";\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string $num1\n     * @param string $num2\n     * @return string\n     */\n    public function multiply($num1, $num2) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string $num1\n     * @param string $num2\n     * @return string\n     */\n    public function multiply($num1, $num2) {\n\n    }\n}"
   },
   "testCases": [
     {

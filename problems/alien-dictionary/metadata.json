@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn alien_order(words: Vec<String>) -> String {\n        \n    }\n}",
     "go": "package main\n\nfunc AlienOrder(words []string) string {\n    \n}",
     "typescript": "export function alienOrder(words: string[]): string {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string[] $words\n     * @return string\n     */\n    public function alienOrder($words) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string[] $words\n     * @return string\n     */\n    public function alienOrder($words) {\n\n    }\n}"
   },
   "testCases": [
     {

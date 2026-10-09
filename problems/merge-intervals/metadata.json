@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn merge(intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
     "go": "package main\n\nfunc Merge(intervals [][]int) [][]int {\n    \n}",
     "typescript": "export function merge(intervals: number[][]): number[][] {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int[][] $intervals\n     * @return int[][]\n     */\n    public function merge($intervals) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int[][] $intervals\n     * @return int[][]\n     */\n    public function merge($intervals) {\n\n    }\n}"
   },
   "testCases": [
     {

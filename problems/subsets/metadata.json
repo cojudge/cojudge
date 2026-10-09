@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn subsets(nums: Vec<i32>) -> Vec<Vec<i32>> {\n        todo!()\n    }\n}",
     "go": "package main\n\nfunc Subsets(nums []int) [][]int {\n    panic(\"TODO\")\n}",
     "typescript": "export function subsets(nums: number[]): number[][] {\n    throw new Error('Not implemented');\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $nums\n     * @return int[][]\n     */\n    public function subsets($nums) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[][]\n     */\n    public function subsets($nums) {\n\n    }\n}"
   },
   "testCases": [
     {

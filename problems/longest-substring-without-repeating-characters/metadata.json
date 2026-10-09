@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn length_of_longest_substring(s: String) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc LengthOfLongestSubstring(s string) int {\n    \n}",
     "typescript": "export function lengthOfLongestSubstring(s: string): number {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function lengthOfLongestSubstring($s) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function lengthOfLongestSubstring($s) {\n\n    }\n}"
   },
   "testCases": [
     {

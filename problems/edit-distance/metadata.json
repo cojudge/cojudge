@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_distance(word1: String, word2: String) -> i32 {\n        0\n    }\n}",
     "go": "package main\n\nfunc MinDistance(word1 string, word2 string) int {\n    return 0\n}",
     "typescript": "export function minDistance(word1: string, word2: string): number {\n    return 0;\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string $word1\n     * @param string $word2\n     * @return int\n     */\n    public function minDistance($word1, $word2) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string $word1\n     * @param string $word2\n     * @return int\n     */\n    public function minDistance($word1, $word2) {\n\n    }\n}"
   },
   "testCases": [
     {

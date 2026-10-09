@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn merge(nums1: Vec<i32>, m: i32, nums2: Vec<i32>, n: i32) -> Vec<i32> {\n        vec![]\n    }\n}",
     "go": "package main\n\nfunc Merge(nums1 []int, m int, nums2 []int, n int) []int {\n    return []int{}\n}",
     "typescript": "export function merge(nums1: number[], m: number, nums2: number[], n: number): number[] {\n    return [];\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $nums1\n     * @param int $m\n     * @param int[] $nums2\n     * @param int $n\n     * @return int[]\n     */\n    public function merge($nums1, $m, $nums2, $n) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int[] $nums1\n     * @param int $m\n     * @param int[] $nums2\n     * @param int $n\n     * @return int[]\n     */\n    public function merge($nums1, $m, $nums2, $n) {\n\n    }\n}"
   },
   "testCases": [
     {

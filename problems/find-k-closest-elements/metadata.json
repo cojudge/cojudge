@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_closest_elements(arr: Vec<i32>, k: i32, x: i32) -> Vec<i32> {\n        vec![]\n    }\n}",
     "go": "package main\n\nfunc FindClosestElements(arr []int, k int, x int) []int {\n    return []int{}\n}",
     "typescript": "export function findClosestElements(arr: number[], k: number, x: number): number[] {\n    return [];\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $arr\n     * @param int $k\n     * @param int $x\n     * @return int[]\n     */\n    public function findClosestElements($arr, $k, $x) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @param int $k\n     * @param int $x\n     * @return int[]\n     */\n    public function findClosestElements($arr, $k, $x) {\n\n    }\n}"
   },
   "testCases": [
     {

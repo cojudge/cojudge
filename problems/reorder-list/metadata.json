@@ -24,7 +24,7 @@
     "rust": "// Definition for singly-linked list.\n// #[derive(PartialEq, Eq, Clone, Debug)]\n// pub struct ListNode {\n//   pub val: i32,\n//   pub next: Option<Box<ListNode>>\n// }\n// \n// impl ListNode {\n//   #[inline]\n//   fn new(val: i32) -> Self {\n//     ListNode {\n//       next: None,\n//       val\n//     }\n//   }\n// }\n\npub struct Solution;\n\nimpl Solution {\n    pub fn reorder_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {\n        \n    }\n}",
     "go": "package main\n\n/*\nDefinition for singly-linked list.\ntype ListNode struct {\n    Val int\n    Next *ListNode\n}\n*/\n\nfunc ReorderList(head *ListNode) *ListNode {\n    \n}",
     "typescript": "// Definition for singly-linked list.\n// class ListNode {\n//     val: number\n//     next: ListNode | null\n//     constructor(val?: number, next?: ListNode | null) {\n//         this.val = (val === undefined ? 0 : val)\n//         this.next = (next === undefined ? null : next)\n//     }\n// }\nimport { ListNode } from './ListNode';\nexport function reorderList(head: ListNode | null): ListNode | null {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param ListNode|null $head\n     * @return ListNode|null\n     */\n    public function reorderList($head) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param ListNode|null $head\n     * @return ListNode|null\n     */\n    public function reorderList($head) {\n\n    }\n}"
   },
   "testCases": [
     {

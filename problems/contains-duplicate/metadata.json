@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn contains_duplicate(nums: Vec<i32>) -> bool {\n        \n    }\n}",
     "go": "package main\n\nfunc ContainsDuplicate(nums []int) bool {\n    \n}",
     "typescript": "export function containsDuplicate(nums: number[]): boolean {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $nums\n     * @return bool\n     */\n    public function containsDuplicate($nums) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return bool\n     */\n    public function containsDuplicate($nums) {\n\n    }\n}"
   },
   "testCases": [
     {

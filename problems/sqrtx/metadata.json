@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn my_sqrt(x: i32) -> i32 {\n        0\n    }\n}",
     "go": "package main\n\nfunc MySqrt(x int) int {\n    return 0\n}",
     "typescript": "export function mySqrt(x: number): number {\n    return 0;\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int $x\n     * @return int\n     */\n    public function mySqrt($x) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int $x\n     * @return int\n     */\n    public function mySqrt($x) {\n\n    }\n}"
   },
   "testCases": [
     {

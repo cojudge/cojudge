@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_time_map(operations: Vec<String>, keys: Vec<String>, values: Vec<String>, timestamps: Vec<i32>) -> Vec<String> {\n        Vec::new()\n    }\n}",
     "go": "package main\n\nfunc RunTimeMap(operations []string, keys []string, values []string, timestamps []int) []string {\n    return []string{}\n}",
     "typescript": "export function runTimeMap(operations: string[], keys: string[], values: string[], timestamps: number[]): string[] {\n    return [];\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string[] $operations\n     * @param string[] $keys\n     * @param string[] $values\n     * @param int[] $timestamps\n     * @return string[]\n     */\n    public function runTimeMap($operations, $keys, $values, $timestamps) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param string[] $keys\n     * @param string[] $values\n     * @param int[] $timestamps\n     * @return string[]\n     */\n    public function runTimeMap($operations, $keys, $values, $timestamps) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn check_inclusion(s1: String, s2: String) -> bool {\n        false\n    }\n}",
     "go": "package main\n\nfunc CheckInclusion(s1 string, s2 string) bool {\n    return false\n}",
     "typescript": "export function checkInclusion(s1: string, s2: string): boolean {\n    return false;\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string $s1\n     * @param string $s2\n     * @return bool\n     */\n    public function checkInclusion($s1, $s2) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string $s1\n     * @param string $s2\n     * @return bool\n     */\n    public function checkInclusion($s1, $s2) {\n\n    }\n}"
   },
   "testCases": [
     {

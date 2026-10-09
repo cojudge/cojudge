@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn partition(s: String) -> Vec<Vec<String>> {\n        Vec::new()\n    }\n}\n",
     "go": "package main\n\nfunc Partition(s string) [][]string {\n    return [][]string{}\n}\n",
     "typescript": "export function partition(s: string): string[][] {\n    return [];\n}\n",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string $s\n     * @return string[][]\n     */\n    public function partition($s) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string[][]\n     */\n    public function partition($s) {\n\n    }\n}"
   },
   "testCases": [
     {

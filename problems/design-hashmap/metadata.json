@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_hash_map(operations: Vec<String>, args: Vec<Vec<i32>>) -> Vec<i32> {\n        vec![]\n    }\n}",
     "go": "package main\n\nfunc RunHashMap(operations []string, args [][]int) []int {\n    return []int{}\n}",
     "typescript": "export function runHashMap(operations: string[], args: number[][]): number[] {\n    return [];\n}\n",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string[] $operations\n     * @param int[][] $args\n     * @return int[]\n     */\n    public function runHashMap($operations, $args) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[][] $args\n     * @return int[]\n     */\n    public function runHashMap($operations, $args) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -27,7 +27,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn range_bitwise_and(left: i32, right: i32) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc RangeBitwiseAnd(left int, right int) int {\n    \n}",
     "typescript": "export function rangeBitwiseAnd(left: number, right: number): number {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int $left\n     * @param int $right\n     * @return int\n     */\n    public function rangeBitwiseAnd($left, $right) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int $left\n     * @param int $right\n     * @return int\n     */\n    public function rangeBitwiseAnd($left, $right) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn partition_labels(s: String) -> Vec<i32> {\n        \n    }\n}",
     "go": "package main\n\nfunc PartitionLabels(s string) []int {\n    \n}",
     "typescript": "export function partitionLabels(s: string): number[] {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string $s\n     * @return int[]\n     */\n    public function partitionLabels($s) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int[]\n     */\n    public function partitionLabels($s) {\n\n    }\n}"
   },
   "testCases": [
     {

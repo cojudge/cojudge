@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn valid_palindrome(s: String) -> bool {\n        false\n    }\n}",
     "go": "package main\n\nfunc ValidPalindrome(s string) bool {\n    return false\n}",
     "typescript": "export function validPalindrome(s: string): boolean {\n    return false;\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string $s\n     * @return bool\n     */\n    public function validPalindrome($s) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return bool\n     */\n    public function validPalindrome($s) {\n\n    }\n}"
   },
   "testCases": [
     {

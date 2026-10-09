@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn ship_within_days(weights: Vec<i32>, days: i32) -> i32 {\n        0\n    }\n}",
     "go": "package main\n\nfunc ShipWithinDays(weights []int, days int) int {\n    return 0\n}",
     "typescript": "export function shipWithinDays(weights: number[], days: number): number {\n    return 0;\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $weights\n     * @param int $days\n     * @return int\n     */\n    public function shipWithinDays($weights, $days) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int[] $weights\n     * @param int $days\n     * @return int\n     */\n    public function shipWithinDays($weights, $days) {\n\n    }\n}"
   },
   "testCases": [
     {

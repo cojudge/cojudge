@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_cost_connect_points(points: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}\n",
     "go": "package main\n\nfunc MinCostConnectPoints(points [][]int) int {\n    return 0\n}\n",
     "typescript": "export function minCostConnectPoints(points: number[][]): number {\n    return 0;\n}\n",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int[][] $points\n     * @return int\n     */\n    public function minCostConnectPoints($points) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int[][] $points\n     * @return int\n     */\n    public function minCostConnectPoints($points) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_area_of_island(grid: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}\n",
     "go": "package main\n\nfunc MaxAreaOfIsland(grid [][]int) int {\n    return 0\n}\n",
     "typescript": "export function maxAreaOfIsland(grid: number[][]): number {\n    return 0;\n}\n",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int[][] $grid\n     * @return int\n     */\n    public function maxAreaOfIsland($grid) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int[][] $grid\n     * @return int\n     */\n    public function maxAreaOfIsland($grid) {\n\n    }\n}"
   },
   "testCases": [
     {

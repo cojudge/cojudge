@@ -27,7 +27,7 @@
     "rust": "pub struct Trie {\n    \n}\n\nimpl Trie {\n    pub fn new() -> Self {\n        Trie {}\n    }\n    \n    pub fn insert(&mut self, word: String) {\n        \n    }\n    \n    pub fn search(&self, word: String) -> bool {\n        false\n    }\n    \n    pub fn starts_with(&self, prefix: String) -> bool {\n        false\n    }\n}",
     "go": "package main\n\ntype Trie struct {\n    \n}\n\nfunc Constructor() Trie {\n    return Trie{}\n}\n\nfunc (this *Trie) Insert(word string) {\n    \n}\n\nfunc (this *Trie) Search(word string) bool {\n    return false\n}\n\nfunc (this *Trie) StartsWith(prefix string) bool {\n    return false\n}",
     "typescript": "export class Trie {\n    constructor() {\n        \n    }\n\n    insert(word: string): void {\n        \n    }\n\n    search(word: string): boolean {\n        return false;\n    }\n\n    startsWith(prefix: string): boolean {\n        return false;\n    }\n}",
-    "php": "<?php\nclass Trie {\n    public function insert($word) {\n\n    }\n\n    public function search($word) {\n\n    }\n\n    public function startsWith($prefix) {\n\n    }\n}"
+    "php": "class Trie {\n    public function insert($word) {\n\n    }\n\n    public function search($word) {\n\n    }\n\n    public function startsWith($prefix) {\n\n    }\n}"
   },
   "testCases": [
     {

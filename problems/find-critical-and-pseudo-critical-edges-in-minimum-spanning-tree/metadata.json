@@ -22,7 +22,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_critical_and_pseudo_critical_edges(n: i32, edges: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
     "go": "package main\n\nfunc FindCriticalAndPseudoCriticalEdges(n int, edges [][]int) [][]int {\n    return nil\n}",
     "typescript": "export function findCriticalAndPseudoCriticalEdges(n: number, edges: number[][]): number[][] {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int $n\n     * @param int[][] $edges\n     * @return int[][]\n     */\n    public function findCriticalAndPseudoCriticalEdges($n, $edges) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int[][] $edges\n     * @return int[][]\n     */\n    public function findCriticalAndPseudoCriticalEdges($n, $edges) {\n\n    }\n}"
   },
   "testCases": [
     {

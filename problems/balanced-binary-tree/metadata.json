@@ -29,7 +29,7 @@
     "rust": "use std::cell::RefCell;\nuse std::rc::Rc;\n\npub struct Solution;\n\nimpl Solution {\n    pub fn is_balanced(root: Option<Rc<RefCell<TreeNode>>>) -> bool {\n        todo!()\n    }\n}",
     "go": "package main\n\nfunc IsBalanced(root *TreeNode) bool {\n    return false\n}",
     "typescript": "export function isBalanced(root: TreeNode | null): boolean {\n    return false;\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param TreeNode|null $root\n     * @return bool\n     */\n    public function isBalanced($root) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param TreeNode|null $root\n     * @return bool\n     */\n    public function isBalanced($root) {\n\n    }\n}"
   },
   "testCases": [
     {

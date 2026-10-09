@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_itinerary(from: Vec<String>, to: Vec<String>) -> Vec<String> {\n        Vec::new()\n    }\n}\n",
     "go": "package main\n\nfunc FindItinerary(from []string, to []string) []string {\n    return nil\n}\n",
     "typescript": "export function findItinerary(from: string[], to: string[]): string[] {\n    return [];\n}\n",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string[] $from\n     * @param string[] $to\n     * @return string[]\n     */\n    public function findItinerary($from, $to) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string[] $from\n     * @param string[] $to\n     * @return string[]\n     */\n    public function findItinerary($from, $to) {\n\n    }\n}"
   },
   "testCases": [
     {

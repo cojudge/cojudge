@@ -22,7 +22,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn calc_equation(equations: Vec<Vec<String>>, values: Vec<String>, queries: Vec<Vec<String>>) -> Vec<String> {\n        \n    }\n}",
     "go": "package main\n\nfunc CalcEquation(equations [][]string, values []string, queries [][]string) []string {\n    return nil\n}",
     "typescript": "export function calcEquation(equations: string[][], values: string[], queries: string[][]): string[] {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string[][] $equations\n     * @param string[] $values\n     * @param string[][] $queries\n     * @return string[]\n     */\n    public function calcEquation($equations, $values, $queries) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string[][] $equations\n     * @param string[] $values\n     * @param string[][] $queries\n     * @return string[]\n     */\n    public function calcEquation($equations, $values, $queries) {\n\n    }\n}"
   },
   "testCases": [
     {

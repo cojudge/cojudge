@@ -26,7 +26,7 @@
     "rust": "use std::rc::Rc;\nuse std::cell::RefCell;\npub struct Solution;\n\nimpl Solution {\n    pub fn remove_leaf_nodes(root: Option<Rc<RefCell<TreeNode>>>, target: i32) -> Option<Rc<RefCell<TreeNode>>> {\n        \n    }\n}",
     "go": "package main\n\nfunc RemoveLeafNodes(root *TreeNode, target int) *TreeNode {\n    return nil\n}",
     "typescript": "import { TreeNode } from './TreeNode';\nexport function removeLeafNodes(root: TreeNode | null, target: number): TreeNode | null {\n    return null;\n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param TreeNode|null $root\n     * @param int $target\n     * @return TreeNode|null\n     */\n    public function removeLeafNodes($root, $target) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param TreeNode|null $root\n     * @param int $target\n     * @return TreeNode|null\n     */\n    public function removeLeafNodes($root, $target) {\n\n    }\n}"
   },
   "testCases": [
     {

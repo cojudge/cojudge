@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn daily_temperatures(temperatures: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
     "go": "package main\n\nfunc DailyTemperatures(temperatures []int) []int {\n    return []int{}\n}",
     "typescript": "export function dailyTemperatures(temperatures: number[]): number[] {\n    return [];\n}\n",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $temperatures\n     * @return int[]\n     */\n    public function dailyTemperatures($temperatures) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param int[] $temperatures\n     * @return int[]\n     */\n    public function dailyTemperatures($temperatures) {\n\n    }\n}"
   },
   "testCases": [
     {

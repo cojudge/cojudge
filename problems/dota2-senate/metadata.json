@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn predict_party_victory(senate: String) -> String {\n        \n    }\n}",
     "go": "package main\n\nfunc PredictPartyVictory(senate string) string {\n    \n}",
     "typescript": "export function predictPartyVictory(senate: string): string {\n    \n}",
-    "php": "<?php\nclass Solution {\n    /**\n     * @param string $senate\n     * @return string\n     */\n    public function predictPartyVictory($senate) {\n\n    }\n}"
+    "php": "class Solution {\n    /**\n     * @param string $senate\n     * @return string\n     */\n    public function predictPartyVictory($senate) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -575,8 +575,7 @@ export function generatePhpStarterCode(functionName: string, params: Param[], ou
     if (classProblem) {
         const className = classProblem.userClassName || 'MedianFinder';
         if (params && params.length > 0 && params[0]?.type === 'tree_node') {
-            return `<?php
-class ${className} {
+            return `class ${className} {
     /**
      * @param TreeNode|null $root
      * @return string
@@ -595,8 +594,7 @@ class ${className} {
 }`;
         }
         if (params && params.length === 1 && params[0]?.type === 'string_array') {
-            return `<?php
-class ${className} {
+            return `class ${className} {
     /**
      * @param string[] $strs
      * @return string
@@ -618,8 +616,7 @@ class ${className} {
             // Trie / WordDictionary shape
             const isWordDictionary = className === 'WordDictionary';
             const addMethod = isWordDictionary ? 'addWord' : 'insert';
-            return `<?php
-class ${className} {
+            return `class ${className} {
     public function ${addMethod}($word) {
 
     }
@@ -633,8 +630,7 @@ class ${className} {
     }
 }`;
         }
-        return `<?php
-class ${className} {
+        return `class ${className} {
     public function addNum($num) {
 
     }
@@ -647,11 +643,10 @@ class ${className} {
 
     const docParams = params.map(p => `     * @param ${phpDocType(p.type)} $${p.name}`).join('\n');
     const signatureParams = params.map(p => `$${p.name}`).join(', ');
-    // NOTE: the leading <?php tag is required for Monaco syntax highlighting
-    // (PHP is only tokenized inside <?php blocks). PhpRunner strips it
-    // server-side before prefixing its own requires.
-    return `<?php
-class Solution {
+    // NOTE: starters are tagless (LeetCode-style); the editor highlights
+    // tagless PHP via a custom Monaco language, and PhpRunner tolerates
+    // an optional leading <?php tag server-side.
+    return `class Solution {
     /**
 ${docParams}
      * @return ${phpDocType(outputType)}
