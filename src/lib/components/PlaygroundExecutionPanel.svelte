@@ -550,6 +550,9 @@
         error = null;
         hasRunOnce = true;
         debugState = { status: 'running' };
+        // Mirror handleRun's switch to the output tab: take the user to the
+        // Debug Console immediately (it only renders while debugState exists).
+        activeTab = "console";
         runningMessage = "Debug starting...";
         evalHistory = [];
         evalCmdHistory = [];
@@ -644,6 +647,14 @@
                         debugState = null;
                         activeTab = 'output';
                     }
+                } else if (res.status === 404) {
+                    // Session vanished server-side (restart/reload): it will
+                    // never pause — surface this instead of waiting forever.
+                    if (debugJobId !== jobId) return;
+                    console.warn('[debug] session gone:', body.error || res.statusText);
+                    stopDebugPolling();
+                    debugJobId = null;
+                    debugState = { status: "error", error: "Debug session expired. Please start debugging again." };
                 } else if (pollCount <= 3) {
                     console.warn('[debug] poll error:', body.error || res.statusText);
                 }
@@ -775,6 +786,9 @@
             </div>
         {:else if debugState && activeTab === "console"}
             <div class="debug-view repl-view">
+                {#if debugState.status === "error" && debugState.error}
+                    <div class="debug-error">{debugState.error}</div>
+                {/if}
                 <div class="debug-header">
                     <span class="debug-status">
                         {#if debugState.status === 'paused'}
@@ -1618,6 +1632,15 @@
     }
     .repl-error {
         color: var(--color-incorrect);
+    }
+    .debug-error {
+        color: var(--color-incorrect);
+        white-space: pre-wrap;
+        word-break: break-word;
+        padding: var(--spacing-2);
+        border: 1px solid var(--color-incorrect);
+        border-radius: 6px;
+        margin-bottom: var(--spacing-2);
     }
     .repl-input-row {
         display: flex;

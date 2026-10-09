@@ -1194,6 +1194,14 @@
                             activeMainTab = "output";
                         }
                     }
+                } else if (res.status === 404) {
+                    // Session vanished server-side (restart/reload): it will
+                    // never pause — surface this instead of waiting forever.
+                    if (debugJobId !== jobId) return;
+                    console.warn('[debug] session gone:', body.error || res.statusText);
+                    stopDebugPolling();
+                    debugJobId = null;
+                    debugState = { status: "error", error: "Debug session expired. Please start debugging again." };
                 } else if (pollCount <= 3) {
                     console.warn('[debug] poll error:', body.error || res.statusText);
                 }
