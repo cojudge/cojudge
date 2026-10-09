@@ -19,7 +19,10 @@ export async function getMarkerResponses(problemId: string, functionName: string
     const testCalls = testCases
     .map((tc: any, i: number) => {
         let fullParam = javaGetFullParam(params, tc);
-        const out = formatAndSplitJavaString(outputs[i]?.trim() ?? '');
+        // NOTE: no .trim() here - runner outputs are already exact (endpoint
+        // parsing preserves significant whitespace); trimming would corrupt
+        // whitespace-only values.
+        const out = formatAndSplitJavaString(outputs[i] ?? '');
         const toFunc = `to_${outputType}`;
         const displayFunc = getDisplayFuncName(outputType);
         return `try {

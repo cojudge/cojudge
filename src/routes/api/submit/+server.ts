@@ -195,7 +195,11 @@ async function executeSubmit(problemId: string, language: string, code: string, 
                         return { output: (chunk || '').trim(), logs: '' };
                     }
                     // NOTE: multiline-safe (see api/run): the value may span lines.
-                    const output = (lines[idx].slice(':::RESULT:::'.length) + '\n' + lines.slice(idx + 1).join('\n')).trim();
+                    // Only the trailing empty artifact is dropped; all other
+                    // whitespace is significant (e.g. whitespace-only strings).
+                    const rawParts = [lines[idx].slice(':::RESULT:::'.length), ...lines.slice(idx + 1)];
+                    if (rawParts.length > 0 && rawParts[rawParts.length - 1] === '') rawParts.pop();
+                    const output = rawParts.join('\n');
                     const logs = lines
                         .filter((_, i) => i < idx)
                         .filter((l) => l.trim().length > 0)

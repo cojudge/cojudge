@@ -163,8 +163,12 @@ async function executeRun(problemId: string, language: string, code: string, tes
                     // containing newlines), so everything from the RESULT line to
                     // the end of the chunk belongs to the output. Harness output
                     // (TIME/RESULT) is always printed last, so user logs can only
-                    // appear before it.
-                    const output = (lines[idx].slice(':::RESULT:::'.length) + '\n' + lines.slice(idx + 1).join('\n')).trim();
+                    // appear before it. Only the single trailing empty artifact
+                    // of the final newline is dropped - all other whitespace
+                    // (including leading/trailing spaces) is significant.
+                    const rawParts = [lines[idx].slice(':::RESULT:::'.length), ...lines.slice(idx + 1)];
+                    if (rawParts.length > 0 && rawParts[rawParts.length - 1] === '') rawParts.pop();
+                    const output = rawParts.join('\n');
                     const logs = lines
                         .filter((_, i) => i < idx)
                         .filter((l) => l.trim().length > 0)
