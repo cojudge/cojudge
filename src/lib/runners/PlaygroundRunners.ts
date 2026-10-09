@@ -2,6 +2,7 @@ import { cppImage } from "$lib/utils/cppUtil";
 import { csharpImage } from "$lib/utils/csharpUtil";
 import { goImage } from "$lib/utils/goUtil";
 import { javaImage } from "$lib/utils/javaUtil";
+import { phpImage } from "$lib/utils/phpUtil";
 import { pythonImage } from "$lib/utils/pythonUtil";
 import { rustImage } from "$lib/utils/rustUtil";
 import { tsImage } from "$lib/utils/tsUtil";
@@ -587,6 +588,64 @@ export class PlaygroundTypeScriptRunner extends PlaygroundRunner {
         await ContainerPool.release(tsImage, this.container);
         this.container = null;
         
+        return { output: stdout, logs: stderr };
+    }
+}
+
+export class PlaygroundPhpRunner extends PlaygroundRunner {
+    private container: Dockerode.Container | null = null;
+
+    async compile(): Promise<void> {
+        this.container = await ContainerPool.acquire(phpImage);
+        if (!this.container) {
+            await ensureImageAvailable(docker, phpImage);
+            this.container = await docker.createContainer({
+                Image: phpImage,
+                Cmd: ['sh', '-lc', 'tail -f /dev/null'],
+                WorkingDir: '/app',
+                Tty: false,
+                Labels: cojudgeContainerLabels()
+            });
+            await this.container.start();
+        }
+
+        const pack = tar.pack();
+        pack.entry({ name: 'main.php' }, Buffer.from(this.code));
+        pack.finalize();
+        await this.container.putArchive(pack as any, { path: '/app' });
+    }
+
+    async run(stdin: string = ''): Promise<{ output: string; logs: string }> {
+        await this.stageStdin(stdin);
+
+        const exec = await this.container!.exec({
+            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'php main.php < cojudge_stdin.txt'],
+            AttachStdout: true,
+            AttachStderr: true
+        });
+        const stream: any = await exec.start({ hijack: true, stdin: false });
+        let stdout = '';
+        let stderr = '';
+        await new Promise((resolve, reject) => {
+            (this.container as any).modem.demuxStream(
+                stream,
+                { write: (chunk: any) => (stdout += chunk.toString()) },
+                { write: (chunk: any) => (stderr += chunk.toString()) }
+            );
+            stream.on('end', resolve);
+            stream.on('error', reject);
+        });
+
+        const inspect = await exec.inspect();
+        if (inspect.ExitCode === 124) {
+            await ContainerPool.markForCleanup(this.container);
+            this.container = null;
+            throw new Error(TIMEOUT_MESSAGE);
+        }
+
+        await ContainerPool.release(phpImage, this.container);
+        this.container = null;
+
         return { output: stdout, logs: stderr };
     }
 }

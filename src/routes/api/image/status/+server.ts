@@ -3,6 +3,7 @@ import { csharpImage } from '$lib/utils/csharpUtil';
 import { goImage } from '$lib/utils/goUtil';
 import { rustImage } from '$lib/utils/rustUtil';
 import { javaImage } from '$lib/utils/javaUtil';
+import { phpImage } from '$lib/utils/phpUtil';
 import { pythonImage } from '$lib/utils/pythonUtil';
 import { tsImage } from '$lib/utils/tsUtil';
 import { getPullStatus } from '$lib/server/imagePuller';
@@ -20,6 +21,7 @@ function imageForLanguage(language: string) {
     if (language === 'rust') return { image: rustImage, language };
     if (language === 'go') return { image: goImage, language };
     if (language === 'typescript') return { image: tsImage, language };
+    if (language === 'php') return { image: phpImage, language };
     return null;
 }
 

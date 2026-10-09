@@ -10,6 +10,7 @@ const programmingLanguages = new Set<ProgrammingLanguage>([
 	'rust',
 	'go',
 	'typescript',
+	'php',
 	'plaintext',
 	'markdown'
 ]);

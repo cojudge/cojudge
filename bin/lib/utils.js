@@ -65,6 +65,8 @@ export function getLangFromExt(ext) {
       return "go";
     case ".ts":
       return "typescript";
+    case ".php":
+      return "php";
     default:
       return "plaintext";
   }
