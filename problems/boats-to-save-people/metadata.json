@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_rescue_boats(people: Vec<i32>, limit: i32) -> i32 {\n        0\n    }\n}",
     "go": "package main\n\nfunc NumRescueBoats(people []int, limit int) int {\n    return 0\n}",
     "typescript": "export function numRescueBoats(people: number[], limit: number): number {\n    return 0;\n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $people\n     * @param int $limit\n     * @return int\n     */\n    public function numRescueBoats($people, $limit) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $people\n     * @param int $limit\n     * @return int\n     */\n    public function numRescueBoats($people, $limit) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn rob(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc Rob(nums []int) int {\n    \n}",
     "typescript": "export function rob(nums: number[]): number {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function rob($nums) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function rob($nums) {\n\n    }\n}"
   },
   "testCases": [
     {

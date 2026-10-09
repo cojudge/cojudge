@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_in_mountain_array(arr: Vec<i32>, target: i32) -> i32 {\n        -1\n    }\n}",
     "go": "package main\n\nfunc FindInMountainArray(arr []int, target int) int {\n    return -1\n}",
     "typescript": "export function findInMountainArray(arr: number[], target: number): number {\n    return -1;\n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @param int $target\n     * @return int\n     */\n    public function findInMountainArray($arr, $target) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $arr\n     * @param int $target\n     * @return int\n     */\n    public function findInMountainArray($arr, $target) {\n\n    }\n}"
   },
   "testCases": [
     {

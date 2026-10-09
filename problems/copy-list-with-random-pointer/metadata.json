@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn copy_random_list(nodes: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        todo!()\n    }\n}",
     "go": "package main\n\nfunc CopyRandomList(nodes [][]int) [][]int {\n    return nil\n}",
     "typescript": "export function copyRandomList(nodes: number[][]): number[][] {\n    return [];\n}",
-    "php": "class Solution {\n    /**\n     * @param int[][] $nodes\n     * @return int[][]\n     */\n    public function copyRandomList($nodes) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[][] $nodes\n     * @return int[][]\n     */\n    public function copyRandomList($nodes) {\n\n    }\n}"
   },
   "testCases": [
     {

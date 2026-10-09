@@ -34,7 +34,7 @@
     "rust": "// Definition for a GraphNode.\n// #[derive(Debug, PartialEq, Eq)]\n// pub struct GraphNode {\n//   pub val: i32,\n//   pub neighbors: Vec<Option<Rc<RefCell<GraphNode>>>>,\n// }\n//\n// impl GraphNode {\n//   pub fn new(val: i32) -> Self {\n//     GraphNode { val, neighbors: vec![] }\n//   }\n// }\n\nuse std::rc::Rc;\nuse std::cell::RefCell;\nuse std::collections::HashMap;\n\npub struct Solution;\n\nimpl Solution {\n    pub fn clone_graph(node: Option<Rc<RefCell<GraphNode>>>) -> Option<Rc<RefCell<GraphNode>>> {\n        None\n    }\n}",
     "go": "// Definition for a GraphNode.\n// type GraphNode struct {\n//     Val int\n//     Neighbors []*GraphNode\n// }\n\npackage main\n\nfunc CloneGraph(adjList *GraphNode) *GraphNode {\n    \n}",
     "typescript": "// Definition for a GraphNode.\n// class GraphNode {\n//     val: number;\n//     neighbors: GraphNode[];\n//     constructor(val?: number, neighbors?: GraphNode[]) {\n//         this.val = val ?? 0;\n//         this.neighbors = neighbors ?? [];\n//     }\n// }\n\nimport { GraphNode } from './GraphNode';\nexport function cloneGraph(adjList: GraphNode | null): GraphNode | null {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param GraphNode|null $adjList\n     * @return GraphNode|null\n     */\n    public function cloneGraph($adjList) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param GraphNode|null $adjList\n     * @return GraphNode|null\n     */\n    public function cloneGraph($adjList) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_subarray_sum_circular(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc MaxSubarraySumCircular(nums []int) int {\n    \n}",
     "typescript": "export function maxSubarraySumCircular(nums: number[]): number {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function maxSubarraySumCircular($nums) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function maxSubarraySumCircular($nums) {\n\n    }\n}"
   },
   "testCases": [
     {

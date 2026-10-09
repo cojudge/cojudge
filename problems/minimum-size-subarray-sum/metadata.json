@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_sub_array_len(target: i32, nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
     "go": "package main\n\nfunc MinSubArrayLen(target int, nums []int) int {\n    return 0\n}",
     "typescript": "export function minSubArrayLen(target: number, nums: number[]): number {\n    return 0;\n}",
-    "php": "class Solution {\n    /**\n     * @param int $target\n     * @param int[] $nums\n     * @return int\n     */\n    public function minSubArrayLen($target, $nums) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int $target\n     * @param int[] $nums\n     * @return int\n     */\n    public function minSubArrayLen($target, $nums) {\n\n    }\n}"
   },
   "testCases": [
     {

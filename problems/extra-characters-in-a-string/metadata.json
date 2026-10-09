@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_extra_char(s: String, dictionary: Vec<String>) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc MinExtraChar(s string, dictionary []string) int {\n    \n}",
     "typescript": "export function minExtraChar(s: string, dictionary: string[]): number {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string[] $dictionary\n     * @return int\n     */\n    public function minExtraChar($s, $dictionary) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param string $s\n     * @param string[] $dictionary\n     * @return int\n     */\n    public function minExtraChar($s, $dictionary) {\n\n    }\n}"
   },
   "testCases": [
     {

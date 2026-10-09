@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn search_matrix(matrix: Vec<Vec<i32>>, target: i32) -> bool {\n        false\n    }\n}",
     "go": "package main\n\nfunc SearchMatrix(matrix [][]int, target int) bool {\n    return false\n}",
     "typescript": "export function searchMatrix(matrix: number[][], target: number): boolean {\n    return false;\n}",
-    "php": "class Solution {\n    /**\n     * @param int[][] $matrix\n     * @param int $target\n     * @return bool\n     */\n    public function searchMatrix($matrix, $target) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[][] $matrix\n     * @param int $target\n     * @return bool\n     */\n    public function searchMatrix($matrix, $target) {\n\n    }\n}"
   },
   "testCases": [
     {

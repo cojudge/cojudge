@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn get_concatenation(nums: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
     "go": "package main\n\nfunc GetConcatenation(nums []int) []int {\n    \n}",
     "typescript": "export function getConcatenation(nums: number[]): number[] {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function getConcatenation($nums) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function getConcatenation($nums) {\n\n    }\n}"
   },
   "testCases": [
     {

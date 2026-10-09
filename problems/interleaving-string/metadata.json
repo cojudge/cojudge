@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_interleave(s1: String, s2: String, s3: String) -> bool {\n        false\n    }\n}",
     "go": "package main\n\nfunc IsInterleave(s1 string, s2 string, s3 string) bool {\n    return false\n}",
     "typescript": "export function isInterleave(s1: string, s2: string, s3: string): boolean {\n    return false;\n}",
-    "php": "class Solution {\n    /**\n     * @param string $s1\n     * @param string $s2\n     * @param string $s3\n     * @return bool\n     */\n    public function isInterleave($s1, $s2, $s3) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param string $s1\n     * @param string $s2\n     * @param string $s3\n     * @return bool\n     */\n    public function isInterleave($s1, $s2, $s3) {\n\n    }\n}"
   },
   "testCases": [
     {

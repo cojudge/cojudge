@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_order(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> Vec<i32> {\n        Vec::new()\n    }\n}\n",
     "go": "package main\n\nfunc FindOrder(numCourses int, prerequisites [][]int) []int {\n    return nil\n}\n",
     "typescript": "export function findOrder(numCourses: number, prerequisites: number[][]): number[] {\n    return [];\n}\n",
-    "php": "class Solution {\n    /**\n     * @param int $numCourses\n     * @param int[][] $prerequisites\n     * @return int[]\n     */\n    public function findOrder($numCourses, $prerequisites) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int $numCourses\n     * @param int[][] $prerequisites\n     * @return int[]\n     */\n    public function findOrder($numCourses, $prerequisites) {\n\n    }\n}"
   },
   "testCases": [
     {

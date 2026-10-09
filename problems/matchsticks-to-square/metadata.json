@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn makesquare(matchsticks: Vec<i32>) -> bool {\n        \n    }\n}",
     "go": "package main\n\nfunc Makesquare(matchsticks []int) bool {\n    \n}",
     "typescript": "export function makesquare(matchsticks: number[]): boolean {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $matchsticks\n     * @return bool\n     */\n    public function makesquare($matchsticks) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $matchsticks\n     * @return bool\n     */\n    public function makesquare($matchsticks) {\n\n    }\n}"
   },
   "testCases": [
     {

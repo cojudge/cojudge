@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn k_closest(points: Vec<Vec<i32>>, k: i32) -> Vec<Vec<i32>> {\n        todo!()\n    }\n}",
     "go": "package main\n\nfunc KClosest(points [][]int, k int) [][]int {\n    panic(\"TODO\")\n}",
     "typescript": "export function kClosest(points: number[][], k: number): number[][] {\n    throw new Error('Not implemented');\n}",
-    "php": "class Solution {\n    /**\n     * @param int[][] $points\n     * @param int $k\n     * @return int[][]\n     */\n    public function kClosest($points, $k) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[][] $points\n     * @param int $k\n     * @return int[][]\n     */\n    public function kClosest($points, $k) {\n\n    }\n}"
   },
   "testCases": [
     {

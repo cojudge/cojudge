@@ -22,7 +22,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn transpose(matrix: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
     "go": "package main\n\nfunc Transpose(matrix [][]int) [][]int {\n    \n}",
     "typescript": "export function transpose(matrix: number[][]): number[][] {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param int[][] $matrix\n     * @return int[][]\n     */\n    public function transpose($matrix) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[][] $matrix\n     * @return int[][]\n     */\n    public function transpose($matrix) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_complete_circuit(gas: Vec<i32>, cost: Vec<i32>) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc CanCompleteCircuit(gas []int, cost []int) int {\n    \n}",
     "typescript": "export function canCompleteCircuit(gas: number[], cost: number[]): number {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $gas\n     * @param int[] $cost\n     * @return int\n     */\n    public function canCompleteCircuit($gas, $cost) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $gas\n     * @param int[] $cost\n     * @return int\n     */\n    public function canCompleteCircuit($gas, $cost) {\n\n    }\n}"
   },
   "testCases": [
     {

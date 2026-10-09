@@ -575,7 +575,8 @@ export function generatePhpStarterCode(functionName: string, params: Param[], ou
     if (classProblem) {
         const className = classProblem.userClassName || 'MedianFinder';
         if (params && params.length > 0 && params[0]?.type === 'tree_node') {
-            return `class ${className} {
+            return `<?php
+class ${className} {
     /**
      * @param TreeNode|null $root
      * @return string
@@ -594,7 +595,8 @@ export function generatePhpStarterCode(functionName: string, params: Param[], ou
 }`;
         }
         if (params && params.length === 1 && params[0]?.type === 'string_array') {
-            return `class ${className} {
+            return `<?php
+class ${className} {
     /**
      * @param string[] $strs
      * @return string
@@ -616,7 +618,8 @@ export function generatePhpStarterCode(functionName: string, params: Param[], ou
             // Trie / WordDictionary shape
             const isWordDictionary = className === 'WordDictionary';
             const addMethod = isWordDictionary ? 'addWord' : 'insert';
-            return `class ${className} {
+            return `<?php
+class ${className} {
     public function ${addMethod}($word) {
 
     }
@@ -630,7 +633,8 @@ export function generatePhpStarterCode(functionName: string, params: Param[], ou
     }
 }`;
         }
-        return `class ${className} {
+        return `<?php
+class ${className} {
     public function addNum($num) {
 
     }
@@ -643,7 +647,11 @@ export function generatePhpStarterCode(functionName: string, params: Param[], ou
 
     const docParams = params.map(p => `     * @param ${phpDocType(p.type)} $${p.name}`).join('\n');
     const signatureParams = params.map(p => `$${p.name}`).join(', ');
-    return `class Solution {
+    // NOTE: the leading <?php tag is required for Monaco syntax highlighting
+    // (PHP is only tokenized inside <?php blocks). PhpRunner strips it
+    // server-side before prefixing its own requires.
+    return `<?php
+class Solution {
     /**
 ${docParams}
      * @return ${phpDocType(outputType)}

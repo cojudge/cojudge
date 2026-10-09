@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_redundant_connection(edges: Vec<Vec<i32>>) -> Vec<i32> {\n        Vec::new()\n    }\n}\n",
     "go": "package main\n\nfunc FindRedundantConnection(edges [][]int) []int {\n    return nil\n}\n",
     "typescript": "export function findRedundantConnection(edges: number[][]): number[] {\n    return [];\n}\n",
-    "php": "class Solution {\n    /**\n     * @param int[][] $edges\n     * @return int[]\n     */\n    public function findRedundantConnection($edges) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[][] $edges\n     * @return int[]\n     */\n    public function findRedundantConnection($edges) {\n\n    }\n}"
   },
   "testCases": [
     {

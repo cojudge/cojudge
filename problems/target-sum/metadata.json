@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_target_sum_ways(nums: Vec<i32>, target: i32) -> i32 {\n        0\n    }\n}",
     "go": "package main\n\nfunc FindTargetSumWays(nums []int, target int) int {\n    return 0\n}",
     "typescript": "export function findTargetSumWays(nums: number[], target: number): number {\n    return 0;\n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $target\n     * @return int\n     */\n    public function findTargetSumWays($nums, $target) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $nums\n     * @param int $target\n     * @return int\n     */\n    public function findTargetSumWays($nums, $target) {\n\n    }\n}"
   },
   "testCases": [
     {

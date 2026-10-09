@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn word_break(s: String, word_dict: Vec<String>) -> Vec<String> {\n        \n    }\n}",
     "go": "package main\n\nfunc WordBreak(s string, wordDict []string) []string {\n    \n}",
     "typescript": "export function wordBreak(s: string, wordDict: string[]): string[] {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string[] $wordDict\n     * @return string[]\n     */\n    public function wordBreak($s, $wordDict) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param string $s\n     * @param string[] $wordDict\n     * @return string[]\n     */\n    public function wordBreak($s, $wordDict) {\n\n    }\n}"
   },
   "testCases": [
     {

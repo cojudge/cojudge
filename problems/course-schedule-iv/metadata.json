@@ -26,7 +26,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn check_if_prerequisite(num_courses: i32, prerequisites: Vec<Vec<i32>>, queries: Vec<Vec<i32>>) -> Vec<String> {\n        \n    }\n}",
     "go": "package main\n\nfunc CheckIfPrerequisite(numCourses int, prerequisites [][]int, queries [][]int) []string {\n    return nil\n}",
     "typescript": "export function checkIfPrerequisite(numCourses: number, prerequisites: number[][], queries: number[][]): string[] {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param int $numCourses\n     * @param int[][] $prerequisites\n     * @param int[][] $queries\n     * @return string[]\n     */\n    public function checkIfPrerequisite($numCourses, $prerequisites, $queries) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int $numCourses\n     * @param int[][] $prerequisites\n     * @param int[][] $queries\n     * @return string[]\n     */\n    public function checkIfPrerequisite($numCourses, $prerequisites, $queries) {\n\n    }\n}"
   },
   "testCases": [
     {

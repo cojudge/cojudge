@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn insert(intervals: Vec<Vec<i32>>, new_interval: Vec<i32>) -> Vec<Vec<i32>> {\n        \n    }\n}",
     "go": "package main\n\nfunc Insert(intervals [][]int, newInterval []int) [][]int {\n    \n}",
     "typescript": "export function insert(intervals: number[][], newInterval: number[]): number[][] {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param int[][] $intervals\n     * @param int[] $newInterval\n     * @return int[][]\n     */\n    public function insert($intervals, $newInterval) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[][] $intervals\n     * @param int[] $newInterval\n     * @return int[][]\n     */\n    public function insert($intervals, $newInterval) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_path_sum(grid: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc MinPathSum(grid [][]int) int {\n    \n}",
     "typescript": "export function minPathSum(grid: number[][]): number {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param int[][] $grid\n     * @return int\n     */\n    public function minPathSum($grid) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[][] $grid\n     * @return int\n     */\n    public function minPathSum($grid) {\n\n    }\n}"
   },
   "testCases": [
     {

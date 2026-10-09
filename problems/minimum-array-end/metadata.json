@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_end(n: i32, x: i32) -> String {\n        String::new()\n    }\n}",
     "go": "package main\n\nfunc MinEnd(n int, x int) int64 {\n    return 0\n}",
     "typescript": "export function minEnd(n: number, x: number): number {\n    return 0;\n}",
-    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int $x\n     * @return string\n     */\n    public function minEnd($n, $x) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int $n\n     * @param int $x\n     * @return string\n     */\n    public function minEnd($n, $x) {\n\n    }\n}"
   },
   "testCases": [
     {

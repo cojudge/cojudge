@@ -23,7 +23,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_maximized_capital(k: i32, w: i32, profits: Vec<i32>, capital: Vec<i32>) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc FindMaximizedCapital(k int, w int, profits []int, capital []int) int {\n    \n}",
     "typescript": "export function findMaximizedCapital(k: number, w: number, profits: number[], capital: number[]): number {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param int $k\n     * @param int $w\n     * @param int[] $profits\n     * @param int[] $capital\n     * @return int\n     */\n    public function findMaximizedCapital($k, $w, $profits, $capital) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int $k\n     * @param int $w\n     * @param int[] $profits\n     * @param int[] $capital\n     * @return int\n     */\n    public function findMaximizedCapital($k, $w, $profits, $capital) {\n\n    }\n}"
   },
   "testCases": [
     {

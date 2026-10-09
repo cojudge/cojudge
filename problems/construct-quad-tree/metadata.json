@@ -23,7 +23,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn construct(grid: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
     "go": "package main\n\nfunc Construct(grid [][]int) [][]int {\n    return nil\n}",
     "typescript": "export function construct(grid: number[][]): number[][] {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param int[][] $grid\n     * @return int[][]\n     */\n    public function construct($grid) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[][] $grid\n     * @return int[][]\n     */\n    public function construct($grid) {\n\n    }\n}"
   },
   "testCases": [
     {

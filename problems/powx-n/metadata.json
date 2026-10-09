@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn my_pow(x: String, n: i32) -> String {\n        String::new()\n    }\n}",
     "go": "package main\n\nfunc MyPow(x string, n int) string {\n    return \"\"\n}",
     "typescript": "export function myPow(x: string, n: number): string {\n    return \"\";\n}",
-    "php": "class Solution {\n    /**\n     * @param string $x\n     * @param int $n\n     * @return string\n     */\n    public function myPow($x, $n) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param string $x\n     * @param int $n\n     * @return string\n     */\n    public function myPow($x, $n) {\n\n    }\n}"
   },
   "testCases": [
     {

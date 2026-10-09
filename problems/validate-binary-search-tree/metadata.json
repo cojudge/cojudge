@@ -29,7 +29,7 @@
     "rust": "// Definition for a binary tree node.\n// #[derive(Debug, PartialEq, Eq)]\n// pub struct TreeNode {\n//   pub val: i32,\n//   pub left: Option<Rc<RefCell<TreeNode>>>,\n//   pub right: Option<Rc<RefCell<TreeNode>>>,\n// }\n//\n// impl TreeNode {\n//   #[inline]\n//   pub fn new(val: i32) -> Self {\n//     TreeNode {\n//       val,\n//       left: None,\n//       right: None\n//     }\n//   }\n// }\nuse std::rc::Rc;\nuse std::cell::RefCell;\npub struct Solution;\n\nimpl Solution {\n    pub fn is_valid_b_s_t(root: Option<Rc<RefCell<TreeNode>>>) -> bool {\n        \n    }\n}",
     "go": "// Definition for a binary tree node.\n// type TreeNode struct {\n//     Val int\n//     Left *TreeNode\n//     Right *TreeNode\n// }\npackage main\n\nfunc IsValidBST(root *TreeNode) bool {\n    \n}",
     "typescript": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    val: number;\n    left: TreeNode | null;\n    right: TreeNode | null;\n    constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {\n        this.val = val ?? 0;\n        this.left = left ?? null;\n        this.right = right ?? null;\n    }\n}\n*/\nimport { TreeNode } from './TreeNode';\nexport function isValidBST(root: TreeNode | null): boolean {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param TreeNode|null $root\n     * @return bool\n     */\n    public function isValidBST($root) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param TreeNode|null $root\n     * @return bool\n     */\n    public function isValidBST($root) {\n\n    }\n}"
   },
   "testCases": [
     {

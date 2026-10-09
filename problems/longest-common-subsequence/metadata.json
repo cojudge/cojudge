@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn longest_common_subsequence(text1: String, text2: String) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc LongestCommonSubsequence(text1 string, text2 string) int {\n    \n}",
     "typescript": "export function longestCommonSubsequence(text1: string, text2: string): number {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param string $text1\n     * @param string $text2\n     * @return int\n     */\n    public function longestCommonSubsequence($text1, $text2) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param string $text1\n     * @param string $text2\n     * @return int\n     */\n    public function longestCommonSubsequence($text1, $text2) {\n\n    }\n}"
   },
   "testCases": [
     {

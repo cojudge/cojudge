@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn sort_array(nums: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
     "go": "package main\n\nfunc SortArray(nums []int) []int {\n    \n}",
     "typescript": "export function sortArray(nums: number[]): number[] {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function sortArray($nums) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function sortArray($nums) {\n\n    }\n}"
   },
   "testCases": [
     {

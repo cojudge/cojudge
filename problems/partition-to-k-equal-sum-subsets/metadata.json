@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_partition_k_subsets(nums: Vec<i32>, k: i32) -> bool {\n        \n    }\n}",
     "go": "package main\n\nfunc CanPartitionKSubsets(nums []int, k int) bool {\n    \n}",
     "typescript": "export function canPartitionKSubsets(nums: number[], k: number): boolean {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $k\n     * @return bool\n     */\n    public function canPartitionKSubsets($nums, $k) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $nums\n     * @param int $k\n     * @return bool\n     */\n    public function canPartitionKSubsets($nums, $k) {\n\n    }\n}"
   },
   "testCases": [
     {

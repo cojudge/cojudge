@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_n_straight_hand(hand: Vec<i32>, group_size: i32) -> bool {\n        \n    }\n}",
     "go": "package main\n\nfunc IsNStraightHand(hand []int, groupSize int) bool {\n    \n}",
     "typescript": "export function isNStraightHand(hand: number[], groupSize: number): boolean {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $hand\n     * @param int $groupSize\n     * @return bool\n     */\n    public function isNStraightHand($hand, $groupSize) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $hand\n     * @param int $groupSize\n     * @return bool\n     */\n    public function isNStraightHand($hand, $groupSize) {\n\n    }\n}"
   },
   "testCases": [
     {

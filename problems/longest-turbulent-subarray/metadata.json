@@ -27,7 +27,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_turbulence_size(arr: Vec<i32>) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc MaxTurbulenceSize(arr []int) int {\n    \n}",
     "typescript": "export function maxTurbulenceSize(arr: number[]): number {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @return int\n     */\n    public function maxTurbulenceSize($arr) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $arr\n     * @return int\n     */\n    public function maxTurbulenceSize($arr) {\n\n    }\n}"
   },
   "testCases": [
     {

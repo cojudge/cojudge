@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn longest_diverse_string(a: i32, b: i32, c: i32) -> String {\n        \n    }\n}",
     "go": "package main\n\nfunc LongestDiverseString(a int, b int, c int) string {\n    \n}",
     "typescript": "export function longestDiverseString(a: number, b: number, c: number): string {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param int $a\n     * @param int $b\n     * @param int $c\n     * @return string\n     */\n    public function longestDiverseString($a, $b, $c) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int $a\n     * @param int $b\n     * @param int $c\n     * @return string\n     */\n    public function longestDiverseString($a, $b, $c) {\n\n    }\n}"
   },
   "testCases": [
     {

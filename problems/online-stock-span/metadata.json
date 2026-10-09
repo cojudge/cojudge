@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn stock_span(prices: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
     "go": "package main\n\nfunc StockSpan(prices []int) []int {\n    return []int{}\n}",
     "typescript": "export function stockSpan(prices: number[]): number[] {\n    return [];\n}\n",
-    "php": "class Solution {\n    /**\n     * @param int[] $prices\n     * @return int[]\n     */\n    public function stockSpan($prices) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $prices\n     * @return int[]\n     */\n    public function stockSpan($prices) {\n\n    }\n}"
   },
   "testCases": [
     {

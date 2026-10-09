@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_lfu_cache(operations: Vec<String>, args: Vec<Vec<i32>>) -> Vec<i32> {\n        vec![]\n    }\n}",
     "go": "package main\n\nfunc RunLfuCache(operations []string, args [][]int) []int {\n    return nil\n}",
     "typescript": "export function runLfuCache(operations: string[], args: number[][]): number[] {\n    return [];\n}",
-    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[][] $args\n     * @return int[]\n     */\n    public function runLfuCache($operations, $args) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param string[] $operations\n     * @param int[][] $args\n     * @return int[]\n     */\n    public function runLfuCache($operations, $args) {\n\n    }\n}"
   },
   "testCases": [
     {

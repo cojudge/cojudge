@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn last_stone_weight(stones: Vec<i32>) -> i32 {\n        todo!()\n    }\n}",
     "go": "package main\n\nfunc LastStoneWeight(stones []int) int {\n    panic(\"TODO\")\n}",
     "typescript": "export function lastStoneWeight(stones: number[]): number {\n    throw new Error('Not implemented');\n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $stones\n     * @return int\n     */\n    public function lastStoneWeight($stones) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $stones\n     * @return int\n     */\n    public function lastStoneWeight($stones) {\n\n    }\n}"
   },
   "testCases": [
     {

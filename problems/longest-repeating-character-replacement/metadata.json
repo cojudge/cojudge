@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn character_replacement(s: String, k: i32) -> i32 {\n        \n    }\n}",
     "go": "package main\n\nfunc CharacterReplacement(s string, k int) int {\n    \n}",
     "typescript": "export function characterReplacement(s: string, k: number): number {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param int $k\n     * @return int\n     */\n    public function characterReplacement($s, $k) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param string $s\n     * @param int $k\n     * @return int\n     */\n    public function characterReplacement($s, $k) {\n\n    }\n}"
   },
   "testCases": [
     {

@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_median_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> String {\n        \"0.0\".to_string()\n    }\n}",
     "go": "package main\n\nfunc FindMedianSortedArrays(nums1 []int, nums2 []int) string {\n    return \"0.0\"\n}",
     "typescript": "export function findMedianSortedArrays(nums1: number[], nums2: number[]): string {\n    return \"0.0\";\n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $nums1\n     * @param int[] $nums2\n     * @return string\n     */\n    public function findMedianSortedArrays($nums1, $nums2) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int[] $nums1\n     * @param int[] $nums2\n     * @return string\n     */\n    public function findMedianSortedArrays($nums1, $nums2) {\n\n    }\n}"
   },
   "testCases": [
     {

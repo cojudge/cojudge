@@ -29,7 +29,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn guess_number(n: i32, pick: i32) -> i32 {\n        0\n    }\n}",
     "go": "package main\n\nfunc GuessNumber(n int, pick int) int {\n    return 0\n}",
     "typescript": "export function guessNumber(n: number, pick: number): number {\n    return 0;\n}",
-    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int $pick\n     * @return int\n     */\n    public function guessNumber($n, $pick) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param int $n\n     * @param int $pick\n     * @return int\n     */\n    public function guessNumber($n, $pick) {\n\n    }\n}"
   },
   "testCases": [
     {

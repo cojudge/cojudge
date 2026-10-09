@@ -24,7 +24,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reorganize_string(s: String) -> String {\n        \n    }\n}",
     "go": "package main\n\nfunc ReorganizeString(s string) string {\n    \n}",
     "typescript": "export function reorganizeString(s: string): string {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string\n     */\n    public function reorganizeString($s) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param string $s\n     * @return string\n     */\n    public function reorganizeString($s) {\n\n    }\n}"
   },
   "testCases": [
     {

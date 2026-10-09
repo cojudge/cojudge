@@ -23,7 +23,7 @@
     "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_reach(s: String, min_jump: i32, max_jump: i32) -> bool {\n        \n    }\n}",
     "go": "package main\n\nfunc CanReach(s string, minJump int, maxJump int) bool {\n    \n}",
     "typescript": "export function canReach(s: string, minJump: number, maxJump: number): boolean {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param int $minJump\n     * @param int $maxJump\n     * @return bool\n     */\n    public function canReach($s, $minJump, $maxJump) {\n\n    }\n}"
+    "php": "<?php\nclass Solution {\n    /**\n     * @param string $s\n     * @param int $minJump\n     * @param int $maxJump\n     * @return bool\n     */\n    public function canReach($s, $minJump, $maxJump) {\n\n    }\n}"
   },
   "testCases": [
     {
