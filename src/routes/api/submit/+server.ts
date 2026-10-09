@@ -194,9 +194,10 @@ async function executeSubmit(problemId: string, language: string, code: string, 
                     if (idx === -1) {
                         return { output: (chunk || '').trim(), logs: '' };
                     }
-                    const output = lines[idx].slice(':::RESULT:::'.length).trim();
+                    // NOTE: multiline-safe (see api/run): the value may span lines.
+                    const output = (lines[idx].slice(':::RESULT:::'.length) + '\n' + lines.slice(idx + 1).join('\n')).trim();
                     const logs = lines
-                        .filter((_, i) => i !== idx)
+                        .filter((_, i) => i < idx)
                         .filter((l) => l.trim().length > 0)
                         .join('\n');
                     return { output, logs };

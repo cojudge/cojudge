@@ -48,10 +48,13 @@ export const phpHelperMethods = `function display_output($x) {
     if (is_string($x)) return $x;
     if (is_array($x)) {
         if (count($x) === 0) return '[]';
-        $parts = [];
-        foreach (array_values($x) as $v) {
-            $parts[] = is_string($v) ? json_encode($v) : display_output($v);
-        }
+        // NOTE: strings are emitted raw (no quoting/escaping), matching the
+        // Java reference display. The marker parses display output with a
+        // quote-stripping splitter (no unescaping), so escaping here would
+        // corrupt values containing backslashes/unicode/newlines.
+        // The only exception is the empty (or whitespace-padded) string,
+        // which needs double quotes to survive trimming/splitting.
+        $parts = array_map('display_string_element', array_values($x));
         return '[' . implode(',', $parts) . ']';
     }
     if ($x instanceof ListNode) {
@@ -107,8 +110,14 @@ export const phpHelperMethods = `function display_output($x) {
     return (string)$x;
 }
 
-function to_int_array($s) {
-    if (is_array($s)) return array_values($s);
+function display_string_element($v) {
+    if (is_string($v) && ($v === '' || $v !== trim($v))) {
+        return '"' . $v . '"';
+    }
+    return display_output($v);
+}
+
+function to_int_array($s) {    if (is_array($s)) return array_values($s);
     $s = trim((string)$s);
     if ($s === '' || $s === '[]') return [];
     $dec = json_decode($s, true);
@@ -224,6 +233,86 @@ function to_string_array_inner($s) {
     if (is_array($dec)) return array_values($dec);
     return [];
 }
+
+// Faithful port of the marker's to_string_list (javaUtil.ts): strips outer
+// brackets, splits top-level commas quote-aware, trims tokens, strips ONE
+// wrapping quote pair. Critically it performs NO unescaping, so inputs must
+// be passed verbatim (see phpVerbatim) to match the marker's transformation.
+function to_string_list_exact($s) {
+    if (is_array($s)) return array_values($s);
+    $t = trim((string)$s);
+    if ($t === '' || $t === '[]') return [];
+    if (strlen($t) > 0 && $t[0] === '[') $t = substr($t, 1);
+    if (strlen($t) > 0 && $t[strlen($t) - 1] === ']') $t = substr($t, 0, -1);
+    $res = [];
+    $cur = '';
+    $depth = 0;
+    $inDQ = false;
+    $inSQ = false;
+    $n = strlen($t);
+    for ($i = 0; $i < $n; $i++) {
+        $c = $t[$i];
+        if ($c === '"' && !$inSQ) { $inDQ = !$inDQ; continue; }
+        if ($c === "'" && !$inDQ) { $inSQ = !$inSQ; continue; }
+        if ($c === '[') $depth++;
+        elseif ($c === ']') $depth--;
+        if ($c === ',' && !$inDQ && !$inSQ && $depth === 0) {
+            $res[] = trim($cur);
+            $cur = '';
+        } else {
+            $cur .= $c;
+        }
+    }
+    $res[] = trim($cur);
+    foreach ($res as $k => $x) {
+        if (strlen($x) >= 2 && (($x[0] === '"' && $x[strlen($x) - 1] === '"') || ($x[0] === "'" && $x[strlen($x) - 1] === "'"))) {
+            $res[$k] = substr($x, 1, -1);
+        }
+    }
+    return array_values($res);
+}
+
+// Faithful port of the marker's to_string_list_2d.
+function to_string_list_2d_exact($s) {
+    if (is_array($s)) {
+        return array_map(function ($row) { return to_string_list_exact(is_array($row) ? $row : (string)$row); }, array_values($s));
+    }
+    $t = trim((string)$s);
+    if ($t === '' || $t === '[]') return [];
+    if (strlen($t) > 0 && $t[0] === '[') $t = substr($t, 1);
+    if (strlen($t) > 0 && $t[strlen($t) - 1] === ']') $t = substr($t, 0, -1);
+    $res = [];
+    $depth = 0;
+    $start = 0;
+    $n = strlen($t);
+    for ($i = 0; $i < $n; $i++) {
+        $c = $t[$i];
+        if ($c === '[') $depth++;
+        if ($c === ']') $depth--;
+        if ($depth === 0 && $c === ',') {
+            $part = trim(substr($t, $start, $i - $start));
+            if ($part !== '') $res[] = to_string_list_exact($part);
+            $start = $i + 1;
+        }
+    }
+    $last = trim(substr($t, $start));
+    if ($last !== '') $res[] = to_string_list_exact($last);
+    return $res;
+}
+
+// Faithful port of the marker's to_char_array_2d (via to_string_list).
+function to_char_array_2d_exact($s) {
+    $rows = to_string_list_2d_exact($s);
+    $out = [];
+    foreach ($rows as $row) {
+        $chars = [];
+        foreach ($row as $tok) {
+            $chars[] = $tok !== '' ? $tok[0] : "\0";
+        }
+        $out[] = $chars;
+    }
+    return $out;
+}
 `;
 
 function phpEscapeString(str: any): string {
@@ -236,7 +325,9 @@ function phpEscapeString(str: any): string {
     return `'${escaped}'`;
 }
 
-/** Normalize a test-case value that should be an array literal into a valid PHP expression. */
+/** Normalize a test-case value that should be an array literal into a valid PHP expression.
+ *  Only safe for int/null data (no backslash semantics); string data must use
+ *  phpVerbatim + the exact-splitter runtime helpers instead. */
 function phpArrayLiteral(val: any): string {
     if (Array.isArray(val)) {
         try { return JSON.stringify(val); } catch { return '[]'; }
@@ -248,6 +339,17 @@ function phpArrayLiteral(val: any): string {
     } catch {
         return s;
     }
+}
+
+/** Pass test-case text through verbatim (no JSON normalization): the marker's
+ *  string parsers perform no unescaping, so removing a JSON level here would
+ *  corrupt values containing backslashes. Emitted single-quoted, which only
+ *  treats backslash and single-quote specially. */
+function phpVerbatim(val: any): string {
+    if (Array.isArray(val)) {
+        try { return JSON.stringify(val); } catch { return '[]'; }
+    }
+    return String(val ?? '');
 }
 
 export function phpGetFullParam(params: Param[], tc: any): string {
@@ -262,11 +364,15 @@ export function phpGetFullParam(params: Param[], tc: any): string {
             parts.push(String(val) === 'true' ? 'true' : 'false');
         } else if (
             p.type === 'int_array' || p.type === 'int_list' ||
-            p.type === 'int_array_2d' || p.type === 'int_matrix' || p.type === 'int_list_2d' ||
-            p.type === 'string_array' || p.type === 'string_list' || p.type === 'string_list_2d' ||
-            p.type === 'char_array_2d'
+            p.type === 'int_array_2d' || p.type === 'int_matrix' || p.type === 'int_list_2d'
         ) {
             parts.push(phpArrayLiteral(val));
+        } else if (p.type === 'string_array' || p.type === 'string_list') {
+            parts.push(`to_string_list_exact(${phpEscapeString(phpVerbatim(val))})`);
+        } else if (p.type === 'string_list_2d') {
+            parts.push(`to_string_list_2d_exact(${phpEscapeString(phpVerbatim(val))})`);
+        } else if (p.type === 'char_array_2d') {
+            parts.push(`to_char_array_2d_exact(${phpEscapeString(phpVerbatim(val))})`);
         } else if (p.type === 'list_node') {
             parts.push(`add_cycle(to_list_node(${phpEscapeString(typeof val === 'string' ? val : JSON.stringify(val ?? '[]'))}), ${tc.pos !== undefined ? tc.pos : -1})`);
         } else if (p.type === 'list_node_array') {

@@ -159,9 +159,14 @@ async function executeRun(problemId: string, language: string, code: string, tes
                     if (idx === -1) {
                         return { output: (chunk || '').trim(), logs: '' };
                     }
-                    const output = lines[idx].slice(':::RESULT:::'.length).trim();
+                    // NOTE: the value may itself span multiple lines (e.g. strings
+                    // containing newlines), so everything from the RESULT line to
+                    // the end of the chunk belongs to the output. Harness output
+                    // (TIME/RESULT) is always printed last, so user logs can only
+                    // appear before it.
+                    const output = (lines[idx].slice(':::RESULT:::'.length) + '\n' + lines.slice(idx + 1).join('\n')).trim();
                     const logs = lines
-                        .filter((_, i) => i !== idx)
+                        .filter((_, i) => i < idx)
                         .filter((l) => l.trim().length > 0)
                         .join('\n');
                     return { output, logs };
