@@ -5,6 +5,8 @@
 
 > Solve classic algorithmic problems without the internet or having to deal with installing runtimes. No discussion forum, no LLM assistant, not even the internet. Solve the curated list with just you, the problem and the judge.
 
+> This is not intended as a replacement for LeetCode. Use it as a preliminary secondary judge with minimal testcases to practice without internet access, then run the full submission on LeetCode once you are online and ready.
+
 |![Web UI](/screenshots/problem.png) | ![CLI](/screenshots/cli.png) |
 |:---:|:---:|
 | localhost web | CLI |
@@ -23,14 +25,14 @@
 - Docker sandboxes: consistent, isolated runs across machines
 - LeetCode-style problem packs with statements and tests
 - Simple & fast web UI (SvelteKit) with in-browser editor and light/dark mode support
-- Debugger support (Java/C++/Python/Typescript/Rust/C#/Go)
-- Multiple languages support for all problems (Java/C++/Python/Typescript/Rust/C#/Go)
-- Code Playground: Run code snippets in Java, C++, Python, Typescript, Rust, C# or Go without a problem context
+- Debugger support (Java/C++/Python/Typescript/Rust/C#/Go/PHP)
+- Multiple languages support for all problems (Java/C++/Python/Typescript/Rust/C#/Go/PHP)
+- Code Playground: Run code snippets in Java, C++, Python, Typescript, Rust, C#, Go or PHP without a problem context
 - Extensible: add new problems by dropping folders in `~/cojudge/problems/` (auto-seeded from bundled `problems/` on first start)
 - Persistent Code & Progress Tracking via Local Storage
 - Optional Cojudge Cloud sync through Google sign-in; local storage remains the source of truth offline
 - Browser-like tabs to organize your local solutions
-- Extensive problems: includes all problems with sample test cases, hidden test cases and reference solutions from Blind 75 and NeetCode 150
+- Extensive problems: includes all problems with sample test cases, hidden test cases and reference solutions from Blind 75, NeetCode and LeetCode
 
 ## Requirements
 
@@ -162,7 +164,7 @@ See [`docs/ADD_PROBLEMS.md`](docs/ADD_PROBLEMS.md) for a comprehensive guide cov
 - Required files (`statement.md`, `metadata.json`, `official-tests.json`, `Marker.java`)
 - Standard function-based problems vs class-based design problems
 - Supported parameter/output types
-- Starter code conventions for all 7 languages (Java, Python, C++, C#, Rust, Go, Typescript)
+- Starter code conventions for all languages
 - How to write `Marker.java` with the reference solution and `isCorrect` validator
 - Registration in `~/cojudge/courses/blind75/courseinfo.json`
 - Verification checklist (`cojudge init`/`run`/`submit`)
@@ -172,8 +174,6 @@ Refer to `~/cojudge/problems/two-sum` (seeded from `problems/two-sum`) for a min
 #### Note on problems
 
 Some test cases and reference marker solutions were AI‑assisted and human‑reviewed. Issues may remain—please open an issue or PR if you spot anything.
-
-Cojudge is not intended as a replacement for LeetCode. Use it as a preliminary secondary judge to practice without internet access, then run the full submission on LeetCode once you are online and ready.
 
 ## Add a programming language
 
