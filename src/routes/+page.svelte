@@ -363,6 +363,7 @@
         category?: string;
         statement?: string;
         source?: ContentSource;
+        courseNumber?: number;
     };
 
     type CourseSummary = {
@@ -409,6 +410,16 @@
             return /\d/.test(before) && /\d/.test(after) ? m : " ";
         });
         return label.replace(/\b\w/g, (c) => c.toUpperCase());
+    };
+
+    // Display title: courses may override the leading number via
+    // courseinfo.json "problem-numbers" (e.g. LeetCode IDs in LeetCode 1000).
+    const displayTitle = (p?: { title?: string | null; courseNumber?: number | null } | null) => {
+        const title = p?.title || "";
+        if (p?.courseNumber != null) {
+            return title.replace(/^\d+\.\s*/, `${p.courseNumber}. `);
+        }
+        return title;
     };
 
     // Render markdown safely from trusted source (local JSON)
@@ -525,6 +536,8 @@
         if (!conf) {
             // default: keep insertion order (already grouped) but fall back to numeric prefix if present
             return arr.slice().toSorted((a, b) => {
+                // Prefer course-specific numbers (e.g. LeetCode IDs) when both sides have them
+                if (a?.courseNumber != null && b?.courseNumber != null) return a.courseNumber - b.courseNumber;
                 // Try numeric prefix like "63. Title"
                 const na = Number.parseInt(a?.title?.split(".")?.[0] ?? "NaN");
                 const nb = Number.parseInt(b?.title?.split(".")?.[0] ?? "NaN");
@@ -540,8 +553,8 @@
                 .toSorted(
                     (a, b) =>
                         dirMul *
-                        (a.title || "").localeCompare(
-                            b.title || "",
+                        displayTitle(a).localeCompare(
+                            displayTitle(b),
                             undefined,
                             { sensitivity: "base" },
                         ),
@@ -554,7 +567,7 @@
             const cmp = da - db;
             if (cmp !== 0) return dirMul * cmp;
             // tie-breaker by title
-            return dirMul * (a.title || "").localeCompare(b.title || "");
+            return dirMul * displayTitle(a).localeCompare(displayTitle(b));
         });
     }
 
@@ -2281,7 +2294,7 @@
                                         </td>
                                         <td>
                                             <a href="/problems/{problem.id}">
-                                                {problem.title}
+                                                {displayTitle(problem)}
                                             </a>
                                             {#if problem.link}
                                                 <Tooltip text="Source Link" pos="top">
