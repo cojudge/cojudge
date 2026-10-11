@@ -2,10 +2,15 @@
 """Paraphrase audit: compare problems/<slug>/statement.md vs LeetCode original.
 Sentence-level containment + global 8-gram overlap. JSON report to stdout/file."""
 import json, os, re, sys, html
+from pathlib import Path
 
-REPO = "/home/deck/CS/cojudge"
-CACHE = os.path.expanduser("~/.cache/cojudge-work")
-orig = json.load(open(f"{CACHE}/originals.json"))
+REPO = Path(__file__).resolve().parent.parent
+CACHE = Path(os.environ.get("COJUDGE_WORK_DIR", "~/.cache/cojudge-work")).expanduser()
+# Usage: paraphrase-audit.py [originals.json] [report.json]
+# Defaults resolve under $COJUDGE_WORK_DIR (or ~/.cache/cojudge-work).
+ORIGINALS = Path(sys.argv[1]) if len(sys.argv) > 1 else CACHE / "originals.json"
+REPORT = Path(sys.argv[2]) if len(sys.argv) > 2 else CACHE / "paraphrase-report.json"
+orig = json.load(open(ORIGINALS))
 
 def strip_html(h):
     h = re.sub(r"<[^>]+>", " ", h or "")
@@ -19,7 +24,7 @@ def sents(text):
     return [t.strip() for t in parts if len(toks(t)) >= 8]
 
 def stmt_text(slug):
-    p = f"{REPO}/problems/{slug}/statement.md"
+    p = REPO / "problems" / slug / "statement.md"
     if not os.path.exists(p):
         return ""
     t = open(p).read()
@@ -31,7 +36,7 @@ def ngrams(words, n):
     return {" ".join(words[i:i+n]) for i in range(len(words)-n+1)}
 
 report = {}
-slugs = sorted(d for d in os.listdir(f"{REPO}/problems") if os.path.isdir(f"{REPO}/problems/{d}"))
+slugs = sorted(d for d in os.listdir(REPO / "problems") if os.path.isdir(REPO / "problems" / d))
 for slug in slugs:
     o = orig.get(slug, {})
     content = o.get("content", "")
@@ -74,7 +79,7 @@ for slug in slugs:
         "flagged": flagged[:6],
     }
 
-json.dump(report, open(f"{CACHE}/paraphrase-report.json", "w"), indent=1)
+json.dump(report, open(REPORT, "w"), indent=1)
 n_ok = sum(1 for v in report.values() if v["status"] == "ok")
 n_no = sum(1 for v in report.values() if v["status"] == "no-original")
 print(f"problems={len(report)} compared={n_ok} no-original={n_no}")
