@@ -1,0 +1,58 @@
+{
+  "id": "number-of-distinct-islands",
+  "title": "709. Number of Distinct Islands",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/number-of-distinct-islands/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "grid = [[1,1,0,0,0],[1,1,0,0,0],[0,0,0,1,1],[0,0,0,1,1]]",
+      "output": "1",
+      "explanation": "Two 2x2 blocks share one shape."
+    },
+    {
+      "input": "grid = [[1,1,0,1,1],[1,0,0,0,0],[0,0,0,0,1],[1,1,0,1,1]]",
+      "output": "3",
+      "explanation": "Four islands fall into three shapes."
+    },
+    {
+      "input": "grid = [[0,0,0],[0,0,0]]",
+      "output": "0",
+      "explanation": "No land."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numDistinctIslands(int[][] grid) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numDistinctIslands(self, grid: List[List[int]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int numDistinctIslands(vector<vector<int>>& grid) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int NumDistinctIslands(int[][] grid)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_distinct_islands(grid: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumDistinctIslands(grid [][]int) int {\n    return 0\n}",
+    "typescript": "export function numDistinctIslands(grid: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $grid\n     * @return int\n     */\n    public function numDistinctIslands($grid) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "grid": "[[1,1,0,0,0],[1,1,0,0,0],[0,0,0,1,1],[0,0,0,1,1]]"
+    },
+    {
+      "grid": "[[1,1,0,1,1],[1,0,0,0,0],[0,0,0,0,1],[1,1,0,1,1]]"
+    },
+    {
+      "grid": "[[0,0,0],[0,0,0]]"
+    }
+  ],
+  "functionName": "numDistinctIslands",
+  "params": [
+    {
+      "name": "grid",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Adaptation: input is int_array_2d and output is the integer count of translation-distinct shapes.",
+    "Flood-fill each island and record every cell relative to the island's first cell; sorting those offsets gives a translation-free signature.",
+    "Store signatures in a set; its size is the answer."
+  ]
+}

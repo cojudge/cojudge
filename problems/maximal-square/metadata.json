@@ -1,0 +1,58 @@
+{
+  "category": "matrix",
+  "difficulty": "Medium",
+  "examples": [
+    {
+      "explanation": "The 2x2 block of 1s in rows 1-2, columns 2-3 (0-based) has area 4.",
+      "input": "matrix = [[\"1\",\"0\",\"1\",\"0\",\"0\"],[\"1\",\"0\",\"1\",\"1\",\"1\"],[\"1\",\"1\",\"1\",\"1\",\"1\"],[\"1\",\"0\",\"0\",\"1\",\"0\"]]",
+      "output": "4"
+    },
+    {
+      "explanation": "No 2x2 all-1 square exists, but single 1s do, so the area is 1.",
+      "input": "matrix = [[\"0\",\"1\"],[\"1\",\"0\"]]",
+      "output": "1"
+    },
+    {
+      "explanation": "There is no 1 at all.",
+      "input": "matrix = [[\"0\"]]",
+      "output": "0"
+    }
+  ],
+  "functionName": "maximalSquare",
+  "hints": [
+    "Let dp[i][j] be the side of the biggest all-1 square ending at (i, j): it extends the squares above, to the left, and diagonally above-left.",
+    "On a '1', dp[i][j] = 1 + min of those three neighbours; on a '0' it is 0.",
+    "Track the largest side seen and return its square; a single row of state suffices."
+  ],
+  "id": "maximal-square",
+  "link": "https://leetcode.com/problems/maximal-square/",
+  "outputType": "int",
+  "params": [
+    {
+      "name": "matrix",
+      "type": "char_array_2d"
+    }
+  ],
+  "starterCode": {
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int maximalSquare(vector<vector<char>>& matrix) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MaximalSquare(char[][] matrix) \n    {\n        return 0;\n    }\n}",
+    "go": "package main\n\nfunc MaximalSquare(matrix [][]byte) int {\n    return 0\n}",
+    "java": "class Solution {\n    public int maximalSquare(char[][] matrix) {\n        return 0;\n    }\n}",
+    "php": "class Solution {\n    /**\n     * @param string[][] $matrix\n     * @return int\n     */\n    public function maximalSquare($matrix) {\n\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maximalSquare(self, matrix: List[List[str]]) -> int:\n        return 0\n",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn maximal_square(matrix: String) -> i32 {\n        0\n    }\n}",
+    "typescript": "export function maximalSquare(matrix: string[][]): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "matrix": "[[\"1\",\"0\",\"1\",\"0\",\"0\"],[\"1\",\"0\",\"1\",\"1\",\"1\"],[\"1\",\"1\",\"1\",\"1\",\"1\"],[\"1\",\"0\",\"0\",\"1\",\"0\"]]"
+    },
+    {
+      "matrix": "[[\"0\",\"1\"],[\"1\",\"0\"]]"
+    },
+    {
+      "matrix": "[[\"0\"]]"
+    }
+  ],
+  "title": "336. Maximal Square"
+}

@@ -1,0 +1,64 @@
+{
+  "id": "logger-rate-limiter",
+  "title": "438. Logger Rate Limiter",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/logger-rate-limiter/",
+  "category": "hash-table",
+  "examples": [
+    {
+      "input": "timestamps = [1,2,3,8,10,11], messages = [\"foo\",\"bar\",\"foo\",\"bar\",\"foo\",\"foo\"]",
+      "output": "[1,1,0,0,0,1]",
+      "explanation": "A message prints only when 10 seconds have passed since its last printing."
+    },
+    {
+      "input": "timestamps = [0,10,20], messages = [\"a\",\"a\",\"a\"]",
+      "output": "[1,1,1]",
+      "explanation": "Each request lands exactly on the 10-second boundary."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runLogger(int[] timestamps, String[] messages) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runLogger(self, timestamps: List[int], messages: List[str]) -> List[int]:\n        pass",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runLogger(vector<int>& timestamps, vector<string>& messages) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] RunLogger(int[] timestamps, string[] messages) \n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_logger(timestamps: Vec<i32>, messages: Vec<String>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc RunLogger(timestamps []int, messages []string) []int {\n    \n}",
+    "typescript": "export function runLogger(timestamps: number[], messages: string[]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $timestamps\n     * @param string[] $messages\n     * @return int[]\n     */\n    public function runLogger($timestamps, $messages) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "timestamps": "[1,2,3,8,10,11]",
+      "messages": "[\"foo\",\"bar\",\"foo\",\"bar\",\"foo\",\"foo\"]"
+    },
+    {
+      "timestamps": "[0,10,20]",
+      "messages": "[\"a\",\"a\",\"a\"]"
+    },
+    {
+      "timestamps": "[0,1,2]",
+      "messages": "[\"a\",\"a\",\"a\"]"
+    },
+    {
+      "timestamps": "[5]",
+      "messages": "[\"solo\"]"
+    }
+  ],
+  "functionName": "runLogger",
+  "params": [
+    {
+      "name": "timestamps",
+      "type": "int_array"
+    },
+    {
+      "name": "messages",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Remember only the latest printed timestamp per distinct message.",
+    "A request prints exactly when the gap since that stored time is 10 or more.",
+    "Update the stored time on every printed request, never on rejected ones."
+  ]
+}

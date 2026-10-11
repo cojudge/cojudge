@@ -1,0 +1,61 @@
+{
+  "id": "third-maximum-number",
+  "title": "487. Third Maximum Number",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/third-maximum-number/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [3,2,1]",
+      "output": "1",
+      "explanation": "Distinct values sorted are 3, 2, 1; the third is 1."
+    },
+    {
+      "input": "nums = [1,2]",
+      "output": "2",
+      "explanation": "Only two distinct values exist, so the maximum 2 is returned."
+    },
+    {
+      "input": "nums = [2,2,3,1]",
+      "output": "1",
+      "explanation": "Distinct values are 3, 2, 1; duplicates do not create extra ranks."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int thirdMax(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def thirdMax(self, nums: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int thirdMax(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int ThirdMax(int[] nums) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn third_max(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc ThirdMax(nums []int) int {\n    return 0\n}",
+    "typescript": "export function thirdMax(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function thirdMax($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[3,2,1]"
+    },
+    {
+      "nums": "[1,2]"
+    },
+    {
+      "nums": "[2,2,3,1]"
+    },
+    {
+      "nums": "[1]"
+    }
+  ],
+  "functionName": "thirdMax",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Rank distinct values only; repeats never advance the rank.",
+    "Track the top three distinct values in one pass.",
+    "If a third distinct value never appears, answer the overall maximum."
+  ]
+}

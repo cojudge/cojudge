@@ -1,0 +1,65 @@
+{
+  "id": "custom-sort-string",
+  "title": "789. Custom Sort String",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/custom-sort-string/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "order = \"cba\", s = \"abcd\"",
+      "output": "\"cbad\"",
+      "explanation": "Ranked letters c, b, a lead; leftover d trails."
+    },
+    {
+      "input": "order = \"bcafg\", s = \"abcd\"",
+      "output": "\"bcad\"",
+      "explanation": "Ranked prefix b, c, a with unranked d at the end."
+    },
+    {
+      "input": "order = \"kqep\", s = \"pekeq\"",
+      "output": "\"kqeep\"",
+      "explanation": "Characters reshuffled by rank k < q < e < p."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String customSortString(String order, String s) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def customSortString(self, order: str, s: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string customSortString(string order, string s) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string CustomSortString(string order, string s) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn custom_sort_string(order: String, s: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc CustomSortString(order string, s string) string {\n    return \"\"\n}",
+    "typescript": "export function customSortString(order: string, s: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $order\n     * @param string $s\n     * @return string\n     */\n    public function customSortString($order, $s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "order": "cba",
+      "s": "abcd"
+    },
+    {
+      "order": "bcafg",
+      "s": "abcd"
+    },
+    {
+      "order": "kqep",
+      "s": "pekeq"
+    }
+  ],
+  "functionName": "customSortString",
+  "params": [
+    {
+      "name": "order",
+      "type": "string"
+    },
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Count how often each letter of s occurs.",
+    "Emit letters following the order string first, repeating by their counts.",
+    "Append any letters missing from order in any order at the end."
+  ]
+}

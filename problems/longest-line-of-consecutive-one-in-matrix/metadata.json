@@ -1,0 +1,58 @@
+{
+  "id": "longest-line-of-consecutive-one-in-matrix",
+  "title": "617. Longest Line of Consecutive One in Matrix",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/longest-line-of-consecutive-one-in-matrix/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "mat = [[0,1,1,0],[0,1,1,0],[0,0,0,1]]",
+      "output": "3",
+      "explanation": "Three 1s line up along the main diagonal."
+    },
+    {
+      "input": "mat = [[1,1,1],[1,0,1]]",
+      "output": "3",
+      "explanation": "The entire top row is filled with 1s."
+    },
+    {
+      "input": "mat = [[0,0],[0,0]]",
+      "output": "0",
+      "explanation": "No 1 appears at all."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int longestLine(int[][] mat) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def longestLine(self, mat: List[List[int]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int longestLine(vector<vector<int>>& mat) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int LongestLine(int[][] mat)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn longest_line(mat: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc LongestLine(mat [][]int) int {\n    return 0\n}",
+    "typescript": "export function longestLine(mat: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $mat\n     * @return int\n     */\n    public function longestLine($mat) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "mat": "[[0,1,1,0],[0,1,1,0],[0,0,0,1]]"
+    },
+    {
+      "mat": "[[1,1,1],[1,0,1]]"
+    },
+    {
+      "mat": "[[0,0],[0,0]]"
+    }
+  ],
+  "functionName": "longestLine",
+  "params": [
+    {
+      "name": "mat",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Track four running lengths per cell: across, down, diagonal, and anti-diagonal.",
+    "Each direction extends the matching neighbor's count (upper, left, upper-left, upper-right).",
+    "A single dynamic-programming pass keeps the global maximum; zeros reset all four counts."
+  ]
+}

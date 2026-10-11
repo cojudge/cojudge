@@ -1,6 +1,8 @@
-You are given an array `people` where `people[i]` is the weight of the `i`th person, and an infinite number of boats where each boat can carry a maximum weight of `limit`. Each boat carries at most two people at the same time, provided the sum of the weight of those people is at most `limit`.
+An array `people` records body masses, with `people[i]` belonging to traveller `i`.
+An unbounded fleet of dinghies is available; no dinghy tolerates a combined load above `limit`.
+No dinghy accepts more than a pair of travellers simultaneously, and any pair aboard must jointly weigh no more than `limit`.
 
-Return the minimum number of boats to carry every given person.
+Determine the smallest fleet size capable of ferrying the whole group.
 
 **Constraints:**
 

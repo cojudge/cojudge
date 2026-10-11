@@ -1,0 +1,72 @@
+{
+  "id": "reshape-the-matrix",
+  "title": "621. Reshape the Matrix",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/reshape-the-matrix/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "mat = [[1,2],[3,4]], r = 1, c = 4",
+      "output": "[[1,2,3,4]]",
+      "explanation": "Four values flow into one row in order."
+    },
+    {
+      "input": "mat = [[1,2],[3,4]], r = 2, c = 4",
+      "output": "[[1,2],[3,4]]",
+      "explanation": "Cell counts differ, so the input returns unchanged."
+    },
+    {
+      "input": "mat = [[1,2,3],[4,5,6]], r = 3, c = 2",
+      "output": "[[1,2],[3,4],[5,6]]",
+      "explanation": "Six values fill three rows of two."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] matrixReshape(int[][] mat, int r, int c) {\n        return null;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def matrixReshape(self, mat: List[List[int]], r: int, c: int) -> List[List[int]]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> matrixReshape(vector<vector<int>>& mat, int r, int c) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[][] MatrixReshape(int[][] mat, int r, int c)\n    {\n        return null;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn matrix_reshape(mat: Vec<Vec<i32>>, r: i32, c: i32) -> Vec<Vec<i32>> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc MatrixReshape(mat [][]int, r int, c int) [][]int {\n    return nil\n}",
+    "typescript": "export function matrixReshape(mat: number[][], r: number, c: number): number[][] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $mat\n     * @param int $r\n     * @param int $c\n     * @return int[][]\n     */\n    public function matrixReshape($mat, $r, $c) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "mat": "[[1,2],[3,4]]",
+      "r": 1,
+      "c": 4
+    },
+    {
+      "mat": "[[1,2],[3,4]]",
+      "r": 2,
+      "c": 4
+    },
+    {
+      "mat": "[[1,2,3],[4,5,6]]",
+      "r": 3,
+      "c": 2
+    }
+  ],
+  "functionName": "matrixReshape",
+  "params": [
+    {
+      "name": "mat",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "r",
+      "type": "int"
+    },
+    {
+      "name": "c",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "First compare r * c against m * n; on mismatch return the input unchanged.",
+    "Map flat position k to old cell (k / n, k % n) and new cell (k / c, k % c).",
+    "One linear pass over all cells fills the new matrix in row-major order."
+  ]
+}

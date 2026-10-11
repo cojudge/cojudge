@@ -1,0 +1,93 @@
+[
+  {
+    "s": "a"
+  },
+  {
+    "s": "cac"
+  },
+  {
+    "s": "zab"
+  },
+  {
+    "s": "abcd"
+  },
+  {
+    "s": "aaaa"
+  },
+  {
+    "s": "abab"
+  },
+  {
+    "s": "cdefg"
+  },
+  {
+    "s": "xyzab"
+  },
+  {
+    "s": "abczab"
+  },
+  {
+    "s": "abcdefghijklmnopqrstuvwxyz"
+  },
+  {
+    "s": "aab"
+  },
+  {
+    "s": "zabzab"
+  },
+  {
+    "s": "@javascript:\"ab\".repeat(50000)",
+    "_isLargeTest": true
+  },
+  {
+    "s": "b"
+  },
+  {
+    "s": "z"
+  },
+  {
+    "s": "abc"
+  },
+  {
+    "s": "xyz"
+  },
+  {
+    "s": "ababa"
+  },
+  {
+    "s": "cde"
+  },
+  {
+    "s": "vwxyz"
+  },
+  {
+    "s": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+  },
+  {
+    "s": "aaaaab"
+  },
+  {
+    "s": "zyx"
+  },
+  {
+    "s": "zabcde"
+  },
+  {
+    "s": "qrstuv"
+  },
+  {
+    "s": "mnopqr"
+  },
+  {
+    "s": "abcdefz"
+  },
+  {
+    "s": "bcdabc"
+  },
+  {
+    "s": "xyzxyz"
+  },
+  {
+    "s": "c"
+  }
+]

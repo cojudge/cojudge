@@ -1,0 +1,70 @@
+{
+  "id": "sentence-similarity",
+  "title": "741. Sentence Similarity",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/sentence-similarity/",
+  "category": "hash-table",
+  "examples": [
+    {
+      "input": "sentence1 = [\"great\",\"acting\",\"skills\"], sentence2 = [\"fine\",\"drama\",\"talent\"], similarPairs = [[\"great\",\"fine\"],[\"drama\",\"acting\"],[\"skills\",\"talent\"]]",
+      "output": "true",
+      "explanation": "Each position is covered by a listed pair (one of them reversed)."
+    },
+    {
+      "input": "sentence1 = [\"great\"], sentence2 = [\"great\"], similarPairs = []",
+      "output": "true"
+    },
+    {
+      "input": "sentence1 = [\"great\"], sentence2 = [\"fine\"], similarPairs = [[\"great\",\"good\"]]",
+      "output": "false"
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public boolean areSentencesSimilar(String[] sentence1, String[] sentence2, List<List<String>> similarPairs) {\n        return false;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def areSentencesSimilar(self, sentence1: List[str], sentence2: List[str], similarPairs: List[List[str]]) -> bool:\n        return False\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool areSentencesSimilar(vector<string>& sentence1, vector<string>& sentence2, vector<vector<string>>& similarPairs) {\n        return false;\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public bool AreSentencesSimilar(string[] sentence1, string[] sentence2, List<List<string>> similarPairs)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn are_sentences_similar(sentence1: Vec<String>, sentence2: Vec<String>, similar_pairs: Vec<Vec<String>>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc AreSentencesSimilar(sentence1 []string, sentence2 []string, similarPairs [][]string) bool {\n    return false\n}",
+    "typescript": "export function areSentencesSimilar(sentence1: string[], sentence2: string[], similarPairs: string[][]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $sentence1\n     * @param string[] $sentence2\n     * @param string[][] $similarPairs\n     * @return bool\n     */\n    public function areSentencesSimilar($sentence1, $sentence2, $similarPairs) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "sentence1": "[\"great\",\"acting\",\"skills\"]",
+      "sentence2": "[\"fine\",\"drama\",\"talent\"]",
+      "similarPairs": "[[\"great\",\"fine\"],[\"drama\",\"acting\"],[\"skills\",\"talent\"]]"
+    },
+    {
+      "sentence1": "[\"great\"]",
+      "sentence2": "[\"great\"]",
+      "similarPairs": "[]"
+    },
+    {
+      "sentence1": "[\"great\"]",
+      "sentence2": "[\"fine\"]",
+      "similarPairs": "[[\"great\",\"good\"]]"
+    }
+  ],
+  "functionName": "areSentencesSimilar",
+  "params": [
+    {
+      "name": "sentence1",
+      "type": "string_array"
+    },
+    {
+      "name": "sentence2",
+      "type": "string_array"
+    },
+    {
+      "name": "similarPairs",
+      "type": "string_list_2d"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Lengths must agree first; different word counts can never be similar.",
+    "Store each listed pair in both directions in a hash set of joined keys.",
+    "Identical words at a position pass without any lookup."
+  ]
+}

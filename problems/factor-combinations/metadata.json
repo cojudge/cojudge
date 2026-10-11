@@ -1,0 +1,60 @@
+{
+  "id": "factor-combinations",
+  "title": "358. Factor Combinations",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/factor-combinations/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "n = 12",
+      "output": "[[2,6],[3,4],[2,2,3]]",
+      "explanation": "12 equals 2 * 6, 3 * 4 and 2 * 2 * 3."
+    },
+    {
+      "input": "n = 37",
+      "output": "[]",
+      "explanation": "37 is prime, so it cannot be split into smaller factors above 1."
+    },
+    {
+      "input": "n = 1",
+      "output": "[]",
+      "explanation": "1 has no factor above 1 to build a combination from."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\n\nclass Solution {\n    public List<List<Integer>> getFactors(int n) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def getFactors(self, n: int) -> List[List[int]]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> getFactors(int n) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\n\npublic class Solution\n{\n    public List<List<int>> GetFactors(int n)\n    {\n        return new List<List<int>>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn get_factors(n: i32) -> Vec<Vec<i32>> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc GetFactors(n int) [][]int {\n    return [][]int{}\n}",
+    "typescript": "export function getFactors(n: number): number[][] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int[][]\n     */\n    public function getFactors($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 12
+    },
+    {
+      "n": 37
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 32
+    }
+  ],
+  "functionName": "getFactors",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_list_2d",
+  "hints": [
+    "Search depth-first, only trying divisors from the last chosen factor upward so each row stays non-decreasing.",
+    "When the remaining value is at least the current start, record current factors plus the remainder as one valid row."
+  ]
+}

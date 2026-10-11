@@ -1,0 +1,69 @@
+{
+  "id": "paint-fence",
+  "title": "375. Paint Fence",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/paint-fence/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "n = 3, k = 2",
+      "output": "6",
+      "explanation": "Six colorings of 3 posts with 2 colors avoid three in a row."
+    },
+    {
+      "input": "n = 1, k = 1",
+      "output": "1",
+      "explanation": "One post has one choice."
+    },
+    {
+      "input": "n = 2, k = 2",
+      "output": "4",
+      "explanation": "All 2x2 colorings are allowed."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numWays(int n, int k) {\n        \n    }\n}",
+    "python": "class Solution:\n    def numWays(self, n: int, k: int) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int numWays(int n, int k) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int NumWays(int n, int k) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_ways(n: i32, k: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc NumWays(n int, k int) int {\n    \n}",
+    "typescript": "export function numWays(n: number, k: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int $k\n     * @return int\n     */\n    public function numWays($n, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 3,
+      "k": 2
+    },
+    {
+      "n": 1,
+      "k": 1
+    },
+    {
+      "n": 2,
+      "k": 2
+    },
+    {
+      "n": 4,
+      "k": 2
+    }
+  ],
+  "functionName": "numWays",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Track colorings ending with a double (same as previous) versus a fresh color separately.",
+    "A double must follow a fresh color; a fresh color can follow anything with k-1 choices.",
+    "Iterate posts from 3 to n updating both counts."
+  ]
+}

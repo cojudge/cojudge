@@ -1,6 +1,7 @@
-Given the head of a singly linked list and two integers `left` and `right` where
-`left <= right`, reverse the nodes of the list from position `left` to
-position `right`, and return the reversed list. Positions are 1-indexed.
+Take the head of a singly linked chain plus two integers `left` and `right`
+with `left <= right`. Flip the order of the nodes from position `left`
+through position `right` while leaving the rest untouched, then hand back
+the head of the full chain. Node positions count from 1 at the head.
 
 **Constraints:**
 

@@ -1,0 +1,58 @@
+{
+  "id": "max-consecutive-ones",
+  "title": "549. Max Consecutive Ones",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/max-consecutive-ones/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,1,0,1,1,1]",
+      "output": "3",
+      "explanation": "Last three entries are the longest run."
+    },
+    {
+      "input": "nums = [1,0,1,1,0,1]",
+      "output": "2",
+      "explanation": "Middle pair is longest."
+    },
+    {
+      "input": "nums = [0,0,0]",
+      "output": "0",
+      "explanation": "No ones present."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findMaxConsecutiveOnes(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findMaxConsecutiveOnes(self, nums: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int findMaxConsecutiveOnes(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int FindMaxConsecutiveOnes(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_max_consecutive_ones(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FindMaxConsecutiveOnes(nums []int) int {\n    return 0\n}",
+    "typescript": "export function findMaxConsecutiveOnes(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function findMaxConsecutiveOnes($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,1,0,1,1,1]"
+    },
+    {
+      "nums": "[1,0,1,1,0,1]"
+    },
+    {
+      "nums": "[0,0,0]"
+    }
+  ],
+  "functionName": "findMaxConsecutiveOnes",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Walk once, counting the current run of 1s.",
+    "Reset the counter on each 0 and track the maximum.",
+    "No extra memory is needed."
+  ]
+}

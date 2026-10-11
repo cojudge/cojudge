@@ -1,0 +1,67 @@
+{
+  "id": "the-maze",
+  "title": "554. The Maze",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/the-maze/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "maze = [[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]], start = [0,4], destination = [4,4]",
+      "output": "true",
+      "explanation": "Rolling left, down and around the walls lets the ball halt on the target cell."
+    },
+    {
+      "input": "maze = [[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]], start = [0,4], destination = [3,2]",
+      "output": "false",
+      "explanation": "Every rolling path stops on cells other than the requested destination."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean hasPath(int[][] maze, int[] start, int[] destination) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def hasPath(self, maze: List[List[int]], start: List[int], destination: List[int]) -> bool:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool hasPath(vector<vector<int>>& maze, vector<int>& start, vector<int>& destination) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool HasPath(int[][] maze, int[] start, int[] destination) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn has_path(maze: Vec<Vec<i32>>, start: Vec<i32>, destination: Vec<i32>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc HasPath(maze [][]int, start []int, destination []int) bool {\n    \n}",
+    "typescript": "export function hasPath(maze: number[][], start: number[], destination: number[]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $maze\n     * @param int[] $start\n     * @param int[] $destination\n     * @return bool\n     */\n    public function hasPath($maze, $start, $destination) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "maze": "[[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]]",
+      "start": "[0,4]",
+      "destination": "[4,4]"
+    },
+    {
+      "maze": "[[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]]",
+      "start": "[0,4]",
+      "destination": "[3,2]"
+    },
+    {
+      "maze": "[[0,0,0,0,0],[1,1,0,0,1],[0,0,0,0,0],[0,1,0,0,1],[0,1,0,0,0]]",
+      "start": "[4,3]",
+      "destination": "[0,1]"
+    }
+  ],
+  "functionName": "hasPath",
+  "params": [
+    {
+      "name": "maze",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "start",
+      "type": "int_array"
+    },
+    {
+      "name": "destination",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Model stopping positions as graph nodes; rolling to the wall in each direction gives the edges.",
+    "Breadth-first or depth-first search over stopping positions avoids revisiting the same halt.",
+    "Simulate each roll step by step until the cell before a wall, then enqueue that halt if unseen."
+  ]
+}

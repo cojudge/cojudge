@@ -1,0 +1,58 @@
+{
+  "id": "prime-palindrome",
+  "title": "861. Prime Palindrome",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/prime-palindrome/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 6",
+      "output": "7",
+      "explanation": "7 is the next prime palindrome."
+    },
+    {
+      "input": "n = 8",
+      "output": "11",
+      "explanation": "11 is the first prime palindrome at or above 8."
+    },
+    {
+      "input": "n = 13",
+      "output": "101",
+      "explanation": "101 is the first prime palindrome at or above 13."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int primePalindrome(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def primePalindrome(self, n: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int primePalindrome(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int PrimePalindrome(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn prime_palindrome(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc PrimePalindrome(n int) int {\n    return 0\n}",
+    "typescript": "export function primePalindrome(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function primePalindrome($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 6
+    },
+    {
+      "n": 8
+    },
+    {
+      "n": 13
+    }
+  ],
+  "functionName": "primePalindrome",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Even-length palindromes beyond 11 are all multiples of 11, so only the number 11 matters among them.",
+    "It is enough to build palindromes by mirroring the first half; generate odd-length candidates in increasing order plus the special 11.",
+    "Test primality by trial division up to the square root, skipping even divisors after 2."
+  ]
+}

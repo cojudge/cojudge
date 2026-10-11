@@ -1,0 +1,61 @@
+{
+  "id": "flatten-a-multilevel-doubly-linked-list",
+  "title": "499. Flatten a Multilevel Doubly Linked List",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/",
+  "category": "linked-list",
+  "examples": [
+    {
+      "input": "head = [1,2,3,4,5,6]",
+      "output": "[1,2,3,4,5,6]",
+      "explanation": "A single-level list is already flat."
+    },
+    {
+      "input": "head = [1,2,3]",
+      "output": "[1,2,3]",
+      "explanation": "Nothing to unfold; order is preserved."
+    },
+    {
+      "input": "head = []",
+      "output": "[]",
+      "explanation": "Empty input gives empty output."
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for singly-linked list. \nListNode {\n    int val;\n    ListNode next;\n    ListNode() {}\n    ListNode(int val) { this.val = val; }\n    ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n}\n*/\nclass Solution {\n    public ListNode flatten(ListNode head) {\n        \n    }\n}",
+    "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\nclass Solution:\n    def flatten(self, head):\n        pass\n",
+    "cpp": "/*\nDefinition for singly-linked list.\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode(): val(0), next(nullptr) {}\n    ListNode(int x): val(x), next(nullptr) {}\n    ListNode(int x, ListNode* next): val(x), next(next) {}\n};\n*/\nclass Solution {\npublic:\n    ListNode* flatten(ListNode* head) {\n        \n    }\n};",
+    "csharp": "/*\nDefinition for singly-linked list.\npublic class ListNode {\n    public int val;\n    public ListNode next;\n    public ListNode(int val=0, ListNode next=null) {\n        this.val = val;\n        this.next = next;\n    }\n}\n*/\npublic class Solution \n{\n    public ListNode Flatten(ListNode head) \n    {\n        \n    }\n}",
+    "rust": "// Definition for singly-linked list.\n// #[derive(PartialEq, Eq, Clone, Debug)]\n// pub struct ListNode {\n//   pub val: i32,\n//   pub next: Option<Box<ListNode>>\n// }\n// \n// impl ListNode {\n//   #[inline]\n//   fn new(val: i32) -> Self {\n//     ListNode {\n//       next: None,\n//       val\n//     }\n//   }\n// }\n\npub struct Solution;\n\nimpl Solution {\n    pub fn flatten(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {\n        \n    }\n}",
+    "go": "package main\n\n/*\nDefinition for singly-linked list.\ntype ListNode struct {\n    Val int\n    Next *ListNode\n}\n*/\n\nfunc Flatten(head *ListNode) *ListNode {\n    \n}",
+    "typescript": "// Definition for singly-linked list.\n// class ListNode {\n//     val: number\n//     next: ListNode | null\n//     constructor(val?: number, next?: ListNode | null) {\n//         this.val = (val === undefined ? 0 : val)\n//         this.next = (next === undefined ? null : next)\n//     }\n// }\nimport { ListNode } from './ListNode';\nexport function flatten(head: ListNode | null): ListNode | null {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param ListNode|null $head\n     * @return ListNode|null\n     */\n    public function flatten($head) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "head": "[1,2,3,4,5,6]"
+    },
+    {
+      "head": "[1,2,3]"
+    },
+    {
+      "head": "[]"
+    },
+    {
+      "head": "[1]"
+    }
+  ],
+  "functionName": "flatten",
+  "params": [
+    {
+      "name": "head",
+      "type": "list_node"
+    }
+  ],
+  "outputType": "list_node",
+  "hints": [
+    "Walk the chain once and collect values, then rebuild a fresh chain in that order.",
+    "Adaptation: child and prev links are omitted, so flattening keeps the value order.",
+    "An empty input returns null."
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "id": "number-of-subarrays-with-bounded-maximum",
+  "title": "793. Number of Subarrays with Bounded Maximum",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/number-of-subarrays-with-bounded-maximum/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [2,1,4,3], left = 2, right = 3",
+      "output": "3",
+      "explanation": "Only [2], [2,1] and [3] have maximum in [2,3]."
+    },
+    {
+      "input": "nums = [2,9,2,5,6], left = 2, right = 8",
+      "output": "7",
+      "explanation": "Seven subarrays stay within the upper bound and reach at least 2."
+    },
+    {
+      "input": "nums = [1,1,1], left = 1, right = 1",
+      "output": "6",
+      "explanation": "All 6 subarrays qualify."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numSubarrayBoundedMax(int[] nums, int left, int right) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numSubarrayBoundedMax(self, nums: List[int], left: int, right: int) -> int:\n        return 0",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int numSubarrayBoundedMax(vector<int>& nums, int left, int right) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int NumSubarrayBoundedMax(int[] nums, int left, int right) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_subarray_bounded_max(nums: Vec<i32>, left: i32, right: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumSubarrayBoundedMax(nums []int, left int, right int) int {\n    return 0\n}",
+    "typescript": "export function numSubarrayBoundedMax(nums: number[], left: number, right: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $left\n     * @param int $right\n     * @return int\n     */\n    public function numSubarrayBoundedMax($nums, $left, $right) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[2, 1, 4, 3]",
+      "left": 2,
+      "right": 3
+    },
+    {
+      "nums": "[2, 9, 2, 5, 6]",
+      "left": 2,
+      "right": 8
+    },
+    {
+      "nums": "[1, 1, 1]",
+      "left": 1,
+      "right": 1
+    }
+  ],
+  "functionName": "numSubarrayBoundedMax",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "left",
+      "type": "int"
+    },
+    {
+      "name": "right",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Count subarrays whose maximum does not exceed a cap: scan once, extending the current run while values stay within the cap.",
+    "The answer for [left,right] equals count(max <= right) minus count(max <= left - 1).",
+    "Each position ending a valid run adds the length of that run to the total."
+  ]
+}

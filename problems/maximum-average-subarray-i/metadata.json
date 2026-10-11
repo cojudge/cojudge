@@ -1,0 +1,63 @@
+{
+  "id": "maximum-average-subarray-i",
+  "title": "665. Maximum Average Subarray I",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/maximum-average-subarray-i/",
+  "category": "sliding-window",
+  "examples": [
+    {
+      "input": "nums = [1,12,-5,-6,50,3], k = 4",
+      "output": "\"12.75\"",
+      "explanation": "The block [12,-5,-6,50] sums to 51, averaging 12.75, the best of the three windows."
+    },
+    {
+      "input": "nums = [5], k = 1",
+      "output": "\"5.0\""
+    },
+    {
+      "input": "nums = [-1,-2,-3], k = 2",
+      "output": "\"-1.5\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String findMaxAverage(int[] nums, int k) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findMaxAverage(self, nums: List[int], k: int) -> str:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string findMaxAverage(vector<int>& nums, int k) {\n        return \"\";\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public string FindMaxAverage(int[] nums, int k) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_max_average(nums: Vec<i32>, k: i32) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc FindMaxAverage(nums []int, k int) string {\n    return \"\"\n}",
+    "typescript": "export function findMaxAverage(nums: number[], k: number): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $k\n     * @return string\n     */\n    public function findMaxAverage($nums, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,12,-5,-6,50,3]",
+      "k": 4
+    },
+    {
+      "nums": "[5]",
+      "k": 1
+    },
+    {
+      "nums": "[-1,-2,-3]",
+      "k": 2
+    }
+  ],
+  "functionName": "findMaxAverage",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "This is a portable adaptation: return the average as a finite, double-parseable decimal string.",
+    "Sum the first window, then slide it by adding the newcomer and dropping the leaver while tracking the best sum.",
+    "Divide the best sum by k only once, at the end."
+  ]
+}

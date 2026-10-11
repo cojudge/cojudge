@@ -1,0 +1,58 @@
+{
+  "id": "split-array-with-same-average",
+  "title": "803. Split Array With Same Average",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/split-array-with-same-average/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "nums = [1,2,3,4,5,6,7,8]",
+      "output": "true",
+      "explanation": "Two groups can share the same mean."
+    },
+    {
+      "input": "nums = [3,1]",
+      "output": "false",
+      "explanation": "No split equalizes the means."
+    },
+    {
+      "input": "nums = [5,5,5]",
+      "output": "true",
+      "explanation": "Equal values always split."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean splitArraySameAverage(int[] nums) {\n        return false;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def splitArraySameAverage(self, nums: List[int]) -> bool:\n        return False",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool splitArraySameAverage(vector<int>& nums) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool SplitArraySameAverage(int[] nums) \n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn split_array_same_average(nums: Vec<i32>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc SplitArraySameAverage(nums []int) bool {\n    return false\n}",
+    "typescript": "export function splitArraySameAverage(nums: number[]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return bool\n     */\n    public function splitArraySameAverage($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1, 2, 3, 4, 5, 6, 7, 8]"
+    },
+    {
+      "nums": "[3, 1]"
+    },
+    {
+      "nums": "[5, 5, 5]"
+    }
+  ],
+  "functionName": "splitArraySameAverage",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Same average for both groups means some subset size k has sum total * k / n with an integer target.",
+    "Track reachable subset sums per cardinality with a set for each k, updating backwards over the numbers.",
+    "Only k up to n / 2 needs checking since complements mirror each other."
+  ]
+}

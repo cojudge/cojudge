@@ -1,6 +1,6 @@
-Given a binary tree `root` and an integer `target`, delete all the leaf nodes with value `target`.
+You are given the root of a binary tree plus an integer `target`. Strip out every leaf whose value equals `target`.
 
-Note that once you delete a leaf node with value `target`, if its parent node becomes a leaf node and has the value `target`, it should also be deleted (you need to continue doing that until you cannot).
+Removal cascades: after deleting such a leaf, when its parent turns into a leaf that also stores `target`, that parent is stripped as well. Repeat this pruning until no matching leaf is left, then return the resulting root.
 
 **Example 1:**
 ```

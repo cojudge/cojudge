@@ -1,0 +1,66 @@
+{
+  "id": "search-in-a-binary-search-tree",
+  "title": "713. Search in a Binary Search Tree",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/search-in-a-binary-search-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [4,2,7,1,3], val = 2",
+      "output": "[2,1,3]",
+      "explanation": "Subtree rooted at 2."
+    },
+    {
+      "input": "root = [4,2,7,1,3], val = 5",
+      "output": "[]",
+      "explanation": "Missing value."
+    },
+    {
+      "input": "root = [1,null,2,null,3], val = 3",
+      "output": "[3]",
+      "explanation": "Deepest node."
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public TreeNode searchBST(TreeNode root, int val) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\nclass Solution:\n    def searchBST(self, root, val: int):\n        pass\n",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\nclass Solution {\npublic:\n    TreeNode* searchBST(TreeNode* root, int val) {\n        return nullptr;\n    }\n};",
+    "csharp": "/*\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\npublic class Solution\n{\n    public TreeNode SearchBST(TreeNode root, int val)\n    {\n        \n    }\n}",
+    "rust": "use std::rc::Rc;\nuse std::cell::RefCell;\n// Definition for a binary tree node.\n// pub struct TreeNode {\n//   pub val: i32,\n//   pub left: Option<Rc<RefCell<TreeNode>>>,\n//   pub right: Option<Rc<RefCell<TreeNode>>>,\n// }\npub struct Solution;\n\nimpl Solution {\n    pub fn search_bst(root: Option<Rc<RefCell<TreeNode>>>, val: i32) -> Option<Rc<RefCell<TreeNode>>> {\n        None\n    }\n}",
+    "go": "package main\n\n/*\nDefinition for a binary tree node.\ntype TreeNode struct {\n    Val int\n    Left *TreeNode\n    Right *TreeNode\n}\n*/\n\nfunc SearchBST(root *TreeNode, val int) *TreeNode {\n    return nil\n}",
+    "typescript": "// Definition for a binary tree node.\n// class TreeNode {\n//     val: number\n//     left: TreeNode | null\n//     right: TreeNode | null\n//     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {\n//         this.val = val ?? 0;\n//         this.left = left ?? null;\n//         this.right = right ?? null;\n//     }\n// }\nimport { TreeNode } from './TreeNode';\n\nexport function searchBST(root: TreeNode | null, val: number): TreeNode | null {\n    return null;\n}",
+    "php": "/**\n * Definition for a binary tree node.\n * class TreeNode {\n *     public $val = 0;\n *     public $left = null;\n *     public $right = null;\n *     function __construct($val = 0, $left = null, $right = null) {\n *         $this->val = $val;\n *         $this->left = $left;\n *         $this->right = $right;\n *     }\n * }\n */\nclass Solution {\n    /**\n     * @param TreeNode|null $root\n     * @param int $val\n     * @return TreeNode|null\n     */\n    public function searchBST($root, $val) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "root": "[4,2,7,1,3]",
+      "val": 2
+    },
+    {
+      "root": "[4,2,7,1,3]",
+      "val": 5
+    },
+    {
+      "root": "[1,null,2,null,3]",
+      "val": 3
+    }
+  ],
+  "functionName": "searchBST",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    },
+    {
+      "name": "val",
+      "type": "int"
+    }
+  ],
+  "outputType": "tree_node",
+  "hints": [
+    "Use the ordering: go left when val is smaller, right when larger.",
+    "Stop at the first node equal to val and return it directly.",
+    "A loop or recursion both run in height time."
+  ]
+}

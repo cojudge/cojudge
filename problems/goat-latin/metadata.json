@@ -1,0 +1,56 @@
+{
+  "id": "goat-latin",
+  "title": "822. Goat Latin",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/goat-latin/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "sentence = \"I speak Goat Latin\"",
+      "output": "\"Imaa peaksmaaa oatGmaaaa atinLmaaaaa\"",
+      "explanation": "\"I\" keeps its order and gains \"maa\"; \"speak\" moves \"s\" to the end and gains \"maaa\"."
+    },
+    {
+      "input": "sentence = \"The quick brown fox jumped over the lazy dog\"",
+      "output": "\"heTmaa uickqmaaa rownbmaaaa oxfmaaaaa umpedjmaaaaaa overmaaaaaaa hetmaaaaaaaa azylmaaaaaaaaa ogdmaaaaaaaaaa\""
+    },
+    {
+      "input": "sentence = \"a\"",
+      "output": "\"amaa\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String toGoatLatin(String sentence) {\n        \n    }\n}",
+    "python": "class Solution:\n    def toGoatLatin(self, sentence: str) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string toGoatLatin(string sentence) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string ToGoatLatin(string sentence) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn to_goat_latin(sentence: String) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc ToGoatLatin(sentence string) string {\n    \n}",
+    "typescript": "export function toGoatLatin(sentence: string): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $sentence\n     * @return string\n     */\n    public function toGoatLatin($sentence) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "sentence": "I speak Goat Latin"
+    },
+    {
+      "sentence": "The quick brown fox jumped over the lazy dog"
+    },
+    {
+      "sentence": "a"
+    }
+  ],
+  "functionName": "toGoatLatin",
+  "params": [
+    {
+      "name": "sentence",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Split the sentence on single spaces and remember each word's 1-based position for the trailing a's.",
+    "Check only the first character against both lowercase and uppercase vowels before deciding whether to rotate.",
+    "Build each result word as core + \"ma\" + \"a\" repeated by position, then join with spaces."
+  ]
+}

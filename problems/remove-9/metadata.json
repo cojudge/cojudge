@@ -1,0 +1,58 @@
+{
+  "id": "remove-9",
+  "title": "679. Remove 9",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/remove-9/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 9",
+      "output": "10",
+      "explanation": "Counting 1,2,3,4,5,6,7,8,10 shows the 9th kept number is 10."
+    },
+    {
+      "input": "n = 10",
+      "output": "11",
+      "explanation": "The next kept number after 10 is 11."
+    },
+    {
+      "input": "n = 1",
+      "output": "1",
+      "explanation": "The first kept number is 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int newInteger(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def newInteger(self, n: int) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int newInteger(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int NewInteger(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn new_integer(n: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc NewInteger(n int) int {\n    \n}",
+    "typescript": "export function newInteger(n: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function newInteger($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 9
+    },
+    {
+      "n": 10
+    },
+    {
+      "n": 1
+    }
+  ],
+  "functionName": "newInteger",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Write down the kept numbers: skipping anything containing digit 9 leaves exactly the base-9 counting sequence read as decimal.",
+    "Convert n to base 9, then read those digits as an ordinary decimal number.",
+    "Build the answer digit by digit with repeated division by 9."
+  ]
+}

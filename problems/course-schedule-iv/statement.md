@@ -1,12 +1,12 @@
-There are a total of `numCourses` courses you have to take, labeled from `0` to `numCourses - 1`. You are given an array `prerequisites` where `prerequisites[i] = [ai, bi]` indicates that you must take course `ai` first if you want to take course `bi`.
+There are `numCourses` subjects numbered `0` through `numCourses - 1`. An entry `prerequisites[i] = [ai, bi]` declares that subject `ai` has to precede subject `bi`.
 
-Prerequisites can also be indirect. If course `a` is a prerequisite of `b`, and `b` is a prerequisite of `c`, then `a` is a prerequisite of `c`.
+Dependence carries transitively: whenever `a` must precede `b` and `b` must precede `c`, then `a` must also precede `c`.
 
-You are also given an array `queries` where `queries[j] = [uj, vj]`. For the `j`-th query, you should answer whether course `uj` is a prerequisite of course `vj` or not.
+You additionally receive a list `queries`, where each `queries[j] = [uj, vj]` asks whether subject `uj` is a (direct or indirect) requirement of subject `vj`.
 
-Return a boolean array `answer`, where `answer[j]` is the answer to the `j`-th query.
+Respond with a boolean array `answer`, whose `j`-th slot answers the `j`-th query.
 
-**Note:** In Cojudge the return type is a list of strings `"true"` / `"false"`.
+**Note:** In this judge the returned collection uses the strings `"true"` and `"false"`.
 
 **Example 1:**
 ```

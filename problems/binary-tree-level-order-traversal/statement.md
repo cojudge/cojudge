@@ -1,4 +1,4 @@
-Given the root of a binary tree, return the level order traversal of its nodes' values (i.e., from left to right, level by level).
+Starting from the `root` of a binary tree, collect the node values one horizontal layer at a time: the root layer first, then its children left to right, then the next depth left to right, and so on. Return those layers as nested lists.
 
 **Constraints:**
 

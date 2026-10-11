@@ -1,0 +1,63 @@
+{
+  "id": "my-calendar-i",
+  "title": "736. My Calendar I",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/my-calendar-i/",
+  "category": "design",
+  "examples": [
+    {
+      "input": "operations = [\"MyCalendar\",\"book\",\"book\",\"book\"]\nargs = [[],[10,20],[15,25],[20,30]]",
+      "output": "[1,0,1]",
+      "explanation": "The middle booking overlaps [10,20) and fails; touching at 20 is fine."
+    },
+    {
+      "input": "operations = [\"MyCalendar\",\"book\",\"book\"]\nargs = [[],[5,10],[10,15]]",
+      "output": "[1,1]"
+    },
+    {
+      "input": "operations = [\"MyCalendar\",\"book\",\"book\"]\nargs = [[],[0,5],[3,7]]",
+      "output": "[1,0]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runCalendar(String[] operations, int[][] args) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runCalendar(self, operations: List[str], args: List[List[int]]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runCalendar(vector<string>& operations, vector<vector<int>>& args) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunCalendar(string[] operations, int[][] args)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_calendar(operations: Vec<String>, args: Vec<Vec<i32>>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunCalendar(operations []string, args [][]int) []int {\n    return []int{}\n}",
+    "typescript": "export function runCalendar(operations: string[], args: number[][]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[][] $args\n     * @return int[]\n     */\n    public function runCalendar($operations, $args) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"MyCalendar\",\"book\",\"book\",\"book\"]",
+      "args": "[[],[10,20],[15,25],[20,30]]"
+    },
+    {
+      "operations": "[\"MyCalendar\",\"book\",\"book\"]",
+      "args": "[[],[5,10],[10,15]]"
+    },
+    {
+      "operations": "[\"MyCalendar\",\"book\",\"book\"]",
+      "args": "[[],[0,5],[3,7]]"
+    }
+  ],
+  "functionName": "runCalendar",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "args",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Keep accepted slots sorted by start (for example in an ordered map) so each booking only checks its neighbours.",
+    "A booking [s,e) clashes with a stored [a,b) exactly when max(s,a) < min(e,b).",
+    "Touching endpoints are fine: [10,20) and [20,30) do not overlap."
+  ]
+}

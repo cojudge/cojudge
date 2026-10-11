@@ -1,0 +1,72 @@
+{
+  "id": "number-of-music-playlists",
+  "title": "907. Number of Music Playlists",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/number-of-music-playlists/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "n = 3, goal = 3, k = 1",
+      "output": "6",
+      "explanation": "Every ordering of the 3 distinct songs works: 3! = 6."
+    },
+    {
+      "input": "n = 2, goal = 3, k = 0",
+      "output": "6",
+      "explanation": "Repeats are unrestricted (k = 0), so any of the 2^3 sequences with both songs present counts: 6."
+    },
+    {
+      "input": "n = 2, goal = 3, k = 1",
+      "output": "2",
+      "explanation": "Only [1,2,1] and [2,1,2] keep every repeat at distance greater than 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numPlaylists(int n, int goal, int k) {\n        \n    }\n}",
+    "python": "class Solution:\n    def numPlaylists(self, n: int, goal: int, k: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int numPlaylists(int n, int goal, int k) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int NumPlaylists(int n, int goal, int k) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_playlists(n: i32, goal: i32, k: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc NumPlaylists(n int, goal int, k int) int {\n    \n}",
+    "typescript": "export function numPlaylists(n: number, goal: number, k: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int $goal\n     * @param int $k\n     * @return int\n     */\n    public function numPlaylists($n, $goal, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 3,
+      "goal": 3,
+      "k": 1
+    },
+    {
+      "n": 2,
+      "goal": 3,
+      "k": 0
+    },
+    {
+      "n": 2,
+      "goal": 3,
+      "k": 1
+    }
+  ],
+  "functionName": "numPlaylists",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "goal",
+      "type": "int"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Count lists by (length so far, distinct songs used): appending a new song has n - used choices.",
+    "Replaying an old song is allowed only when more than k distinct others separate repeats, giving used - k choices.",
+    "Take everything modulo 1,000,000,007 and answer with full length and all n songs used."
+  ]
+}

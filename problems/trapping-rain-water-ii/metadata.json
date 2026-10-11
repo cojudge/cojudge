@@ -1,0 +1,61 @@
+{
+  "id": "trapping-rain-water-ii",
+  "title": "481. Trapping Rain Water II",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/trapping-rain-water-ii/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "heightMap = [[1,4,3,1,3,2],[3,2,1,3,2,4],[2,3,3,2,3,1]]",
+      "output": "4",
+      "explanation": "The central dip holds 4 units when water settles against the lowest rim."
+    },
+    {
+      "input": "heightMap = [[3,3,3,3,3],[3,2,2,2,3],[3,2,1,2,3],[3,2,2,2,3],[3,3,3,3,3]]",
+      "output": "10",
+      "explanation": "The bowl interior traps 10 units below its rim of 3s."
+    },
+    {
+      "input": "heightMap = [[1,1,1],[1,1,1]]",
+      "output": "0",
+      "explanation": "A flat rim with no dip traps nothing."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int trapRainWater(int[][] heightMap) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def trapRainWater(self, heightMap: List[List[int]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int trapRainWater(vector<vector<int>>& heightMap) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int TrapRainWater(int[][] heightMap) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn trap_rain_water(height_map: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc TrapRainWater(heightMap [][]int) int {\n    return 0\n}",
+    "typescript": "export function trapRainWater(heightMap: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $heightMap\n     * @return int\n     */\n    public function trapRainWater($heightMap) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "heightMap": "[[1,4,3,1,3,2],[3,2,1,3,2,4],[2,3,3,2,3,1]]"
+    },
+    {
+      "heightMap": "[[3,3,3,3,3],[3,2,2,2,3],[3,2,1,2,3],[3,2,2,2,3],[3,3,3,3,3]]"
+    },
+    {
+      "heightMap": "[[1,1,1],[1,1,1]]"
+    },
+    {
+      "heightMap": "[[5]]"
+    }
+  ],
+  "functionName": "trapRainWater",
+  "params": [
+    {
+      "name": "heightMap",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Think of water leaking out through the border: the lowest rim cell decides the level.",
+    "Push every border cell into a min-heap and expand inward, always popping the lowest boundary first.",
+    "When stepping to an inner cell, add max(0, boundary - its height) and push it back with the raised level."
+  ]
+}

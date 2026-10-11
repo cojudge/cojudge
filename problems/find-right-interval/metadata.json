@@ -1,0 +1,58 @@
+{
+  "id": "find-right-interval",
+  "title": "504. Find Right Interval",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/find-right-interval/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "intervals = [[1,2]]",
+      "output": "[-1]",
+      "explanation": "No start reaches 2."
+    },
+    {
+      "input": "intervals = [[3,4],[2,3],[1,2]]",
+      "output": "[-1,0,1]",
+      "explanation": "Each end maps to the smallest sufficient start."
+    },
+    {
+      "input": "intervals = [[1,4],[2,3],[3,4]]",
+      "output": "[-1,2,-1]",
+      "explanation": "Only the middle interval finds a neighbor."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] findRightInterval(int[][] intervals) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findRightInterval(self, intervals: List[List[int]]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> findRightInterval(vector<vector<int>>& intervals) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] FindRightInterval(int[][] intervals) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_right_interval(intervals: Vec<Vec<i32>>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindRightInterval(intervals [][]int) []int {\n    \n}",
+    "typescript": "export function findRightInterval(intervals: number[][]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $intervals\n     * @return int[]\n     */\n    public function findRightInterval($intervals) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "intervals": "[[1,2]]"
+    },
+    {
+      "intervals": "[[3,4],[2,3],[1,2]]"
+    },
+    {
+      "intervals": "[[1,4],[2,3],[3,4]]"
+    }
+  ],
+  "functionName": "findRightInterval",
+  "params": [
+    {
+      "name": "intervals",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Sort interval indices by start value once.",
+    "For each end, binary-search the sorted starts for the first start at or beyond it.",
+    "Translate the found position back to the original index, or -1 when absent."
+  ]
+}

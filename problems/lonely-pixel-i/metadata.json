@@ -1,0 +1,58 @@
+{
+  "id": "lonely-pixel-i",
+  "title": "590. Lonely Pixel I",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/lonely-pixel-i/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "picture = [[\"W\",\"W\",\"B\"],[\"W\",\"B\",\"W\"],[\"B\",\"W\",\"W\"]]",
+      "output": "3",
+      "explanation": "Each black pixel sits alone in its row and column."
+    },
+    {
+      "input": "picture = [[\"B\",\"B\"],[\"B\",\"W\"]]",
+      "output": "0",
+      "explanation": "Every black pixel shares its row or column with another black pixel."
+    },
+    {
+      "input": "picture = [[\"W\",\"B\",\"W\"]]",
+      "output": "1",
+      "explanation": "The single black pixel has no company in its row or column."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findLonelyPixel(char[][] picture) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findLonelyPixel(self, picture: List[List[str]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int findLonelyPixel(vector<vector<char>>& picture) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindLonelyPixel(char[][] picture) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_lonely_pixel(picture: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FindLonelyPixel(picture [][]byte) int {\n    return 0\n}",
+    "typescript": "export function findLonelyPixel(picture: string[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[][] $picture\n     * @return int\n     */\n    public function findLonelyPixel($picture) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "picture": "[[\"W\",\"W\",\"B\"],[\"W\",\"B\",\"W\"],[\"B\",\"W\",\"W\"]]"
+    },
+    {
+      "picture": "[[\"B\",\"B\"],[\"B\",\"W\"]]"
+    },
+    {
+      "picture": "[[\"W\",\"B\",\"W\"]]"
+    }
+  ],
+  "functionName": "findLonelyPixel",
+  "params": [
+    {
+      "name": "picture",
+      "type": "char_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Count the black pixels in each row and each column first.",
+    "A black pixel is lonely exactly when its row count and its column count are both 1.",
+    "Rust note: the picture arrives as its encoded string; parse it before counting."
+  ]
+}

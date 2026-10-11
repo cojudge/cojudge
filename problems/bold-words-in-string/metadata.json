@@ -1,0 +1,62 @@
+{
+  "id": "bold-words-in-string",
+  "title": "760. Bold Words in String",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/bold-words-in-string/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "words = [\"ab\",\"bc\"], s = \"aabcd\"",
+      "output": "\"a<b>abc</b>d\"",
+      "explanation": "Spans at 1 and 2 merge into 1-3."
+    },
+    {
+      "input": "words = [\"ab\",\"cb\"], s = \"aabcd\"",
+      "output": "\"a<b>ab</b>cd\"",
+      "explanation": "Only span 1-2 is bold."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String boldWords(String[] words, String s) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def boldWords(self, words: List[str], s: str) -> str:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string boldWords(vector<string>& words, string s) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string BoldWords(string[] words, string s) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn bold_words(words: Vec<String>, s: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc BoldWords(words []string, s string) string {\n    return \"\"\n}",
+    "typescript": "export function boldWords(words: string[], s: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $words\n     * @param string $s\n     * @return string\n     */\n    public function boldWords($words, $s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "words": [
+        "ab",
+        "bc"
+      ],
+      "s": "aabcd"
+    },
+    {
+      "words": [
+        "ab",
+        "cb"
+      ],
+      "s": "aabcd"
+    }
+  ],
+  "functionName": "boldWords",
+  "params": [
+    {
+      "name": "words",
+      "type": "string_array"
+    },
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "First build a boolean mask marking every character covered by any keyword occurrence, scanning all start positions.",
+    "Two marked blocks belong together when they overlap or sit directly adjacent with no gap.",
+    "Emit <b> at each group start and </b> at each group end while copying the original characters."
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "id": "groups-of-special-equivalent-strings",
+  "title": "884. Groups of Special-Equivalent Strings",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/groups-of-special-equivalent-strings/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "words = [\"abcd\",\"cdab\",\"cbad\",\"xyzz\",\"zzxy\",\"zzyx\"]",
+      "output": "3",
+      "explanation": "Three families: {abcd,cdab,cbad}, {xyzz,zzxy}, {zzyx}."
+    },
+    {
+      "input": "words = [\"abc\",\"acb\",\"bac\",\"bca\",\"cab\",\"cba\"]",
+      "output": "3",
+      "explanation": "Middle vs outer letters define three families."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numSpecialEquivGroups(String[] words) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numSpecialEquivGroups(self, words: List[str]) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int numSpecialEquivGroups(vector<string>& words) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int NumSpecialEquivGroups(string[] words) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_special_equiv_groups(words: Vec<String>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc NumSpecialEquivGroups(words []string) int {\n    \n}",
+    "typescript": "export function numSpecialEquivGroups(words: string[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $words\n     * @return int\n     */\n    public function numSpecialEquivGroups($words) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "words": [
+        "abcd",
+        "cdab",
+        "cbad",
+        "xyzz",
+        "zzxy",
+        "zzyx"
+      ]
+    },
+    {
+      "words": [
+        "abc",
+        "acb",
+        "bac",
+        "bca",
+        "cab",
+        "cba"
+      ]
+    },
+    {
+      "words": [
+        "a"
+      ]
+    }
+  ],
+  "functionName": "numSpecialEquivGroups",
+  "params": [
+    {
+      "name": "words",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Build a canonical key per word: sort the characters at even indexes and those at odd indexes separately, then join them.",
+    "Two words share a family exactly when their keys match, so the answer is the number of distinct keys in a hash set."
+  ]
+}

@@ -1,0 +1,114 @@
+[
+  {
+    "word1": "sea",
+    "word2": "eat"
+  },
+  {
+    "word1": "a",
+    "word2": "b"
+  },
+  {
+    "word1": "abc",
+    "word2": "abc"
+  },
+  {
+    "word1": "leetcode",
+    "word2": "etco"
+  },
+  {
+    "word1": "abc",
+    "word2": "def"
+  },
+  {
+    "word1": "a",
+    "word2": "a"
+  },
+  {
+    "word1": "ab",
+    "word2": "ba"
+  },
+  {
+    "word1": "park",
+    "word2": "spake"
+  },
+  {
+    "word1": "dinitrophenylhydrazine",
+    "word2": "acetylphenylhydrazine"
+  },
+  {
+    "word1": "x",
+    "word2": "x"
+  },
+  {
+    "word1": "x",
+    "word2": "y"
+  },
+  {
+    "word1": "ab",
+    "word2": "ab"
+  },
+  {
+    "word1": "abcd",
+    "word2": "efgh"
+  },
+  {
+    "word1": "eat",
+    "word2": "sea"
+  },
+  {
+    "word1": "horse",
+    "word2": "ros"
+  },
+  {
+    "word1": "intention",
+    "word2": "execution"
+  },
+  {
+    "word1": "a",
+    "word2": "ab"
+  },
+  {
+    "word1": "ab",
+    "word2": "a"
+  },
+  {
+    "word1": "abcde",
+    "word2": "ace"
+  },
+  {
+    "word1": "mart",
+    "word2": "karma"
+  },
+  {
+    "word1": "kitten",
+    "word2": "sitting"
+  },
+  {
+    "word1": "abcdef",
+    "word2": "azced"
+  },
+  {
+    "word1": "plasma",
+    "word2": "altruism"
+  },
+  {
+    "word1": "q",
+    "word2": "qq"
+  },
+  {
+    "word1": "qq",
+    "word2": "q"
+  },
+  {
+    "word1": "abcd",
+    "word2": "abcd"
+  },
+  {
+    "word1": "zzzz",
+    "word2": "zzzzzzzz"
+  },
+  {
+    "word1": "abcxyz",
+    "word2": "xyzabc"
+  }
+]

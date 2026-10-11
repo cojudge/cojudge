@@ -1,0 +1,70 @@
+{
+  "id": "shopping-offers",
+  "title": "660. Shopping Offers",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/shopping-offers/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "price = [2,5], special = [[3,0,5],[1,2,10]], needs = [3,2]",
+      "output": "14"
+    },
+    {
+      "input": "price = [2,3,4], special = [[1,1,0,4],[2,2,1,9]], needs = [1,2,1]",
+      "output": "11",
+      "explanation": "Buying everything separately costs 12; the first bundle saves 1."
+    },
+    {
+      "input": "price = [5], special = [[1,4]], needs = [3]",
+      "output": "12"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int shoppingOffers(int[] price, int[][] special, int[] needs) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def shoppingOffers(self, price: List[int], special: List[List[int]], needs: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int shoppingOffers(vector<int>& price, vector<vector<int>>& special, vector<int>& needs) {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public int ShoppingOffers(int[] price, int[][] special, int[] needs) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn shopping_offers(price: Vec<i32>, special: Vec<Vec<i32>>, needs: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc ShoppingOffers(price []int, special [][]int, needs []int) int {\n    return 0\n}",
+    "typescript": "export function shoppingOffers(price: number[], special: number[][], needs: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $price\n     * @param int[][] $special\n     * @param int[] $needs\n     * @return int\n     */\n    public function shoppingOffers($price, $special, $needs) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "price": "[2,5]",
+      "special": "[[3,0,5],[1,2,10]]",
+      "needs": "[3,2]"
+    },
+    {
+      "price": "[2,3,4]",
+      "special": "[[1,1,0,4],[2,2,1,9]]",
+      "needs": "[1,2,1]"
+    },
+    {
+      "price": "[5]",
+      "special": "[[1,4]]",
+      "needs": "[3]"
+    }
+  ],
+  "functionName": "shoppingOffers",
+  "params": [
+    {
+      "name": "price",
+      "type": "int_array"
+    },
+    {
+      "name": "special",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "needs",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Depth-first search over the remaining needs vector; the direct-purchase cost is always a valid upper bound.",
+    "Try every bundle that fits inside the remaining needs and add its price to the optimal cost of the reduced needs.",
+    "Memoize on the needs tuple so repeated states are solved once."
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "id": "pascals-triangle",
+  "title": "295. Pascal's Triangle",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/pascals-triangle/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "numRows = 5",
+      "output": "[[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]",
+      "explanation": "Each interior entry is the sum of the two entries above it."
+    },
+    {
+      "input": "numRows = 1",
+      "output": "[[1]]",
+      "explanation": "The apex alone forms row 1."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<List<Integer>> generate(int numRows) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def generate(self, numRows: int) -> List[List[int]]:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> generate(int numRows) {\n        \n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<List<int>> Generate(int numRows) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn generate(num_rows: i32) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc Generate(numRows int) [][]int {\n    \n}",
+    "typescript": "export function generate(numRows: number): number[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $numRows\n     * @return int[][]\n     */\n    public function generate($numRows) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "numRows": 5
+    },
+    {
+      "numRows": 1
+    },
+    {
+      "numRows": 3
+    },
+    {
+      "numRows": 2
+    },
+    {
+      "numRows": 6
+    }
+  ],
+  "functionName": "generate",
+  "params": [
+    {
+      "name": "numRows",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_list_2d",
+  "hints": [
+    "Start with [[1]] and grow one row at a time.",
+    "Each interior entry equals the sum of the two entries diagonally above it; row edges are always 1.",
+    "Adaptation: the nested list maps to int_list_2d in this judge."
+  ]
+}

@@ -1,0 +1,114 @@
+[
+  {
+    "n": 1,
+    "presses": 1
+  },
+  {
+    "n": 2,
+    "presses": 1
+  },
+  {
+    "n": 3,
+    "presses": 1
+  },
+  {
+    "n": 1,
+    "presses": 0
+  },
+  {
+    "n": 1,
+    "presses": 2
+  },
+  {
+    "n": 1,
+    "presses": 1000
+  },
+  {
+    "n": 2,
+    "presses": 0
+  },
+  {
+    "n": 2,
+    "presses": 2
+  },
+  {
+    "n": 2,
+    "presses": 3
+  },
+  {
+    "n": 3,
+    "presses": 0
+  },
+  {
+    "n": 3,
+    "presses": 2
+  },
+  {
+    "n": 3,
+    "presses": 3
+  },
+  {
+    "n": 3,
+    "presses": 100
+  },
+  {
+    "n": 4,
+    "presses": 2
+  },
+  {
+    "n": 4,
+    "presses": 3
+  },
+  {
+    "n": 5,
+    "presses": 4
+  },
+  {
+    "n": 10,
+    "presses": 0
+  },
+  {
+    "n": 10,
+    "presses": 1
+  },
+  {
+    "n": 10,
+    "presses": 2
+  },
+  {
+    "n": 10,
+    "presses": 3
+  },
+  {
+    "n": 10,
+    "presses": 10
+  },
+  {
+    "n": 1000,
+    "presses": 0
+  },
+  {
+    "n": 1000,
+    "presses": 1
+  },
+  {
+    "n": 1000,
+    "presses": 2
+  },
+  {
+    "n": 1000,
+    "presses": 3
+  },
+  {
+    "n": 1000,
+    "presses": 1000
+  },
+  {
+    "n": 2,
+    "presses": 1000
+  },
+  {
+    "n": 6,
+    "presses": 5
+  }
+]

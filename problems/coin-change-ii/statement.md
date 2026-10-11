@@ -1,9 +1,8 @@
-You are given an integer `amount` and an array `coins` of distinct coin denominations.
-Return the number of combinations that make up `amount`. You have an unlimited number
-of coins of every denomination.
-
-Different orders of the same coins count as one combination. The answer is guaranteed
-to fit in a signed 32-bit integer.
+An integer `amount` plus an array `coins` holding mutually different token face values are provided.
+Every face value may be reused without bound.
+Count how many unordered selections total exactly `amount`.
+Permutations of an identical multiset merge into a single tally.
+The tally is promised to remain representable by a signed 32-bit integer.
 
 **Constraints:**
 - `0 <= amount <= 5000`

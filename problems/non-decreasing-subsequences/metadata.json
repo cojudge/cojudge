@@ -1,0 +1,53 @@
+{
+  "id": "non-decreasing-subsequences",
+  "title": "555. Non-decreasing Subsequences",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/non-decreasing-subsequences/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [4,6,7,7]",
+      "output": "[[4,6],[4,6,7],[4,6,7,7],[4,7],[4,7,7],[6,7],[6,7,7],[7,7]]",
+      "explanation": "All eight distinct non-decreasing groups with length at least two."
+    },
+    {
+      "input": "nums = [4,4,3,2,1]",
+      "output": "[[4,4]]",
+      "explanation": "Only the leading equal pair is non-decreasing."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<List<Integer>> findSubsequences(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findSubsequences(self, nums: List[int]) -> List[List[int]]:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> findSubsequences(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<List<int>> FindSubsequences(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_subsequences(nums: Vec<i32>) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindSubsequences(nums []int) [][]int {\n    \n}",
+    "typescript": "export function findSubsequences(nums: number[]): number[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[][]\n     */\n    public function findSubsequences($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[4,6,7,7]"
+    },
+    {
+      "nums": "[4,4,3,2,1]"
+    },
+    {
+      "nums": "[1,2,3]"
+    }
+  ],
+  "functionName": "findSubsequences",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_list_2d",
+  "hints": [
+    "Backtrack over positions, extending the current path only with values at least as large as its last element.",
+    "At each recursion depth skip a value already tried at that depth to avoid duplicate groups.",
+    "Add a copy of the path to the answer whenever its length reaches two or more."
+  ]
+}

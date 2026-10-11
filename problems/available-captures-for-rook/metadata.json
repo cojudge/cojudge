@@ -1,0 +1,58 @@
+{
+  "id": "available-captures-for-rook",
+  "title": "980. Available Captures for Rook",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/available-captures-for-rook/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "board = [[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\"p\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\"R\",\".\",\".\",\".\",\"p\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\"p\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"]]",
+      "output": "3",
+      "explanation": "The rook takes the pawns above, below and to the right."
+    },
+    {
+      "input": "board = [[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\"R\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"]]",
+      "output": "0",
+      "explanation": "No pawn shares the rook's row or column."
+    },
+    {
+      "input": "board = [[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\"p\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\"R\",\".\",\"B\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\"B\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"]]",
+      "output": "1",
+      "explanation": "Only the pawn above the rook is reachable; bishops block the other lines."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numRookCaptures(char[][] board) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numRookCaptures(self, board: List[List[str]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int numRookCaptures(vector<vector<char>>& board) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int NumRookCaptures(char[][] board) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_rook_captures(board: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumRookCaptures(board [][]byte) int {\n    return 0\n}",
+    "typescript": "export function numRookCaptures(board: string[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[][] $board\n     * @return int\n     */\n    public function numRookCaptures($board) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "board": "[[\"R\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\"B\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\"p\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"]]"
+    },
+    {
+      "board": "[[\"p\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\"p\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\"R\",\".\",\".\",\".\",\"p\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\"p\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"]]"
+    },
+    {
+      "board": "[[\"R\",\"p\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"],[\".\",\".\",\".\",\".\",\".\",\".\",\".\",\".\"]]"
+    }
+  ],
+  "functionName": "numRookCaptures",
+  "params": [
+    {
+      "name": "board",
+      "type": "char_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Locate the rook first, then walk outward step by step in each of the four straight directions.",
+    "Stop a direction at the first non-empty cell: count it only for 'p', and halt silently for 'B'.",
+    "Adaptation: the board is a char_array_2d of 'R', '.', 'B' and 'p'; in Rust it arrives as its encoded string. At most four captures are possible."
+  ]
+}

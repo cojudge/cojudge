@@ -1,0 +1,97 @@
+{
+  "id": "flipping-an-image",
+  "title": "830. Flipping an Image",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/flipping-an-image/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "image = [[1,1,0],[1,0,1],[0,0,0]]",
+      "output": "[[1,0,0],[0,1,0],[1,1,1]]",
+      "explanation": "Mirror each row, then invert every bit."
+    },
+    {
+      "input": "image = [[1,1,0,0],[1,0,0,1],[0,1,1,1],[1,0,1,0]]",
+      "output": "[[1,1,0,0],[0,1,1,0],[0,0,0,1],[1,0,1,0]]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] flipAndInvertImage(int[][] image) {\n        return null;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def flipAndInvertImage(self, image: List[List[int]]) -> List[List[int]]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> flipAndInvertImage(vector<vector<int>>& image) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[][] FlipAndInvertImage(int[][] image) \n    {\n        return null;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn flip_and_invert_image(image: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc FlipAndInvertImage(image [][]int) [][]int {\n    return nil\n}",
+    "typescript": "export function flipAndInvertImage(image: number[][]): number[][] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $image\n     * @return int[][]\n     */\n    public function flipAndInvertImage($image) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "image": [
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "image": [
+        [
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "image": [
+        [
+          0
+        ]
+      ]
+    }
+  ],
+  "functionName": "flipAndInvertImage",
+  "params": [
+    {
+      "name": "image",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Mirroring plus inverting can be done in one pass by reading each row from the far end while flipping the bit.",
+    "Handle odd-length rows carefully so the middle cell is only inverted, not swapped with itself twice.",
+    "XOR with 1 is a compact way to invert a binary cell."
+  ]
+}

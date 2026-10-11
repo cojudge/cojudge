@@ -1,0 +1,86 @@
+[
+  {
+    "strs": "[\"aba\",\"cdc\",\"eae\"]"
+  },
+  {
+    "strs": "[\"aaa\",\"aaa\",\"aa\"]"
+  },
+  {
+    "strs": "[\"a\",\"a\",\"a\"]"
+  },
+  {
+    "strs": "[\"a\",\"b\",\"c\"]"
+  },
+  {
+    "strs": "[\"abc\",\"abc\"]"
+  },
+  {
+    "strs": "[\"abc\",\"def\"]"
+  },
+  {
+    "strs": "[\"abcd\",\"abc\"]"
+  },
+  {
+    "strs": "[\"abc\",\"abcd\"]"
+  },
+  {
+    "strs": "[\"a\"]"
+  },
+  {
+    "strs": "[\"ab\",\"ab\",\"cd\"]"
+  },
+  {
+    "strs": "[\"aaa\",\"aaaa\",\"aaaaa\"]"
+  },
+  {
+    "strs": "[\"abcdef\",\"abcdeg\"]"
+  },
+  {
+    "strs": "[\"aa\",\"aa\",\"a\"]"
+  },
+  {
+    "strs": "[\"a\",\"aa\",\"aaa\"]"
+  },
+  {
+    "strs": "[\"ab\",\"bc\",\"cd\",\"de\"]"
+  },
+  {
+    "strs": "[\"abcde\",\"abcde\",\"abcde\"]"
+  },
+  {
+    "strs": "[\"ab\",\"ba\"]"
+  },
+  {
+    "strs": "[\"abcdefghij\",\"abcdefghik\",\"abcdefghil\"]"
+  },
+  {
+    "strs": "[\"x\",\"xx\",\"xxx\",\"xxxx\"]"
+  },
+  {
+    "strs": "[\"abc\",\"ab\",\"a\"]"
+  },
+  {
+    "strs": "[\"a\",\"b\",\"a\"]"
+  },
+  {
+    "strs": "[\"abcd\",\"efgh\",\"ijkl\"]"
+  },
+  {
+    "strs": "[\"aab\",\"aac\",\"aad\"]"
+  },
+  {
+    "strs": "[\"abcabc\",\"abcab\",\"abca\"]"
+  },
+  {
+    "strs": "[\"z\",\"y\",\"x\",\"w\",\"v\"]"
+  },
+  {
+    "strs": "[\"aaaa\",\"aa\",\"a\"]"
+  },
+  {
+    "strs": "[\"abca\",\"bcab\",\"cabc\"]"
+  },
+  {
+    "strs": "[\"helloworld\",\"helloworl\",\"hellowo\"]"
+  }
+]

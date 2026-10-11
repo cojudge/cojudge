@@ -1,0 +1,58 @@
+{
+  "id": "array-nesting",
+  "title": "620. Array Nesting",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/array-nesting/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [5,4,0,3,1,6,2]",
+      "output": "4",
+      "explanation": "Chain 0 -> 5 -> 6 -> 2 visits four values."
+    },
+    {
+      "input": "nums = [0,1,2]",
+      "output": "1",
+      "explanation": "Every element is a self-loop."
+    },
+    {
+      "input": "nums = [1,2,0]",
+      "output": "3",
+      "explanation": "One cycle covers all indices."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int arrayNesting(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def arrayNesting(self, nums: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int arrayNesting(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int ArrayNesting(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn array_nesting(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc ArrayNesting(nums []int) int {\n    return 0\n}",
+    "typescript": "export function arrayNesting(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function arrayNesting($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[5,4,0,3,1,6,2]"
+    },
+    {
+      "nums": "[0,1,2]"
+    },
+    {
+      "nums": "[1,2,0]"
+    }
+  ],
+  "functionName": "arrayNesting",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Follow indices from each unvisited start, counting steps until you return to a visited index.",
+    "Mark every index you walk over so each position is processed only once overall.",
+    "The answer is the longest walk; it always corresponds to the longest cycle."
+  ]
+}

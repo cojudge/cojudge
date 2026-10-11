@@ -1,0 +1,57 @@
+{
+  "id": "longest-uncommon-subsequence-ii",
+  "title": "581. Longest Uncommon Subsequence II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/longest-uncommon-subsequence-ii/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "strs = [\"aba\",\"cdc\",\"eae\"]",
+      "output": "3",
+      "explanation": "All three strings have length 3 and none is a subsequence of another, so 3 is achievable."
+    },
+    {
+      "input": "strs = [\"aaa\",\"aaa\",\"aa\"]",
+      "output": "3",
+      "explanation": "\"aaa\" is not a subsequence of \"aa\", while \"aa\" is a subsequence of \"aaa\"."
+    },
+    {
+      "input": "strs = [\"a\",\"a\",\"a\"]",
+      "output": "-1",
+      "explanation": "Every string is a subsequence of another identical one."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findLUSlength(String[] strs) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findLUSlength(self, strs: List[str]) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int findLUSlength(vector<string>& strs) {\n        return -1;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindLUSlength(string[] strs) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_lu_slength(strs: Vec<String>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindLUSlength(strs []string) int {\n    \n}",
+    "typescript": "export function findLUSlength(strs: string[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $strs\n     * @return int\n     */\n    public function findLUSlength($strs) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "strs": "[\"aba\",\"cdc\",\"eae\"]"
+    },
+    {
+      "strs": "[\"aaa\",\"aaa\",\"aa\"]"
+    },
+    {
+      "strs": "[\"a\",\"a\",\"a\"]"
+    }
+  ],
+  "functionName": "findLUSlength",
+  "params": [
+    {
+      "name": "strs",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Only full strings from the array can be optimal: any proper subsequence of strs[i] that is missing elsewhere is also missed by the whole strs[i] comparison logic, so test each strs[i] itself.",
+    "Check strs[i] against every other strs[j] with a linear subsequence scan; keep the longest length that fails everywhere."
+  ]
+}

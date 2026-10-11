@@ -1,0 +1,122 @@
+[
+  {
+    "dictionary": "[\"deer\",\"door\",\"cake\",\"card\"]",
+    "words": "[\"dear\",\"cart\",\"cane\",\"make\",\"cake\"]"
+  },
+  {
+    "dictionary": "[\"hello\"]",
+    "words": "[\"hello\",\"hallo\"]"
+  },
+  {
+    "dictionary": "[\"it\",\"bit\"]",
+    "words": "[\"hit\",\"it\",\"bit\"]"
+  },
+  {
+    "dictionary": "[\"a\",\"b\"]",
+    "words": "[\"a\",\"c\"]"
+  },
+  {
+    "dictionary": "[\"dog\"]",
+    "words": "[\"dog\",\"dig\",\"dpg\"]"
+  },
+  {
+    "dictionary": "[\"deer\",\"door\"]",
+    "words": "[\"dear\",\"deer\",\"door\"]"
+  },
+  {
+    "dictionary": "[\"abc\",\"abb\"]",
+    "words": "[\"abc\",\"acc\"]"
+  },
+  {
+    "dictionary": "[\"it\"]",
+    "words": "[\"it\"]"
+  },
+  {
+    "dictionary": "[]",
+    "words": "[\"hello\"]"
+  },
+  {
+    "dictionary": "[\"hello\",\"hallo\"]",
+    "words": "[\"hello\",\"hallo\"]"
+  },
+  {
+    "dictionary": "[\"word\",\"ward\",\"world\"]",
+    "words": "[\"word\",\"would\"]"
+  },
+  {
+    "dictionary": "[\"aa\",\"aaa\"]",
+    "words": "[\"aa\",\"aaa\",\"aaaa\"]"
+  },
+  {
+    "dictionary": "[\"ab\",\"ba\"]",
+    "words": "[\"ab\",\"ac\"]"
+  },
+  {
+    "dictionary": "[\"a\"]",
+    "words": "[\"b\"]"
+  },
+  {
+    "dictionary": "[\" Hall\",\"hall\"]",
+    "words": "[\"hall\"]"
+  },
+  {
+    "dictionary": "[\"cat\",\"car\"]",
+    "words": "[\"cat\",\"can\"]"
+  },
+  {
+    "dictionary": "[\"collide\"]",
+    "words": "[\"collide\",\"connect\"]"
+  },
+  {
+    "dictionary": "[\"a\",\"ab\",\"abc\"]",
+    "words": "[\"a\",\"ab\",\"abcd\"]"
+  },
+  {
+    "dictionary": "[\"test\",\"text\"]",
+    "words": "[\"test\",\"best\"]"
+  },
+  {
+    "dictionary": "[\"foo\"]",
+    "words": "[\"bar\",\"foo\",\"fox\"]"
+  },
+  {
+    "dictionary": "[\"apple\",\"apply\"]",
+    "words": "[\"apple\",\"apply\",\"ample\"]"
+  },
+  {
+    "dictionary": "[\"it\",\"is\"]",
+    "words": "[\"it\",\"as\",\"us\"]"
+  },
+  {
+    "dictionary": "[\"word\"]",
+    "words": "[\"word\",\"world\"]"
+  },
+  {
+    "dictionary": "[\"abcd\",\"abce\"]",
+    "words": "[\"abce\",\"abcf\"]"
+  },
+  {
+    "dictionary": "[\"same\",\"same\"]",
+    "words": "[\"same\",\"some\"]"
+  },
+  {
+    "dictionary": "[\"hello\",\"world\"]",
+    "words": "[\"helloworld\",\"hello\"]"
+  },
+  {
+    "dictionary": "[\"ab\",\"ac\",\"ad\"]",
+    "words": "[\"ab\",\"ae\"]"
+  },
+  {
+    "dictionary": "[\"foo\",\"bar\",\"baz\"]",
+    "words": "[\"fox\",\"box\",\"bar\"]"
+  },
+  {
+    "dictionary": "[\"kite\",\"kit\"]",
+    "words": "[\"kite\",\"kat\"]"
+  },
+  {
+    "dictionary": "[\"dog\",\"cat\"]",
+    "words": "[\"dag\",\"cot\",\"cog\"]"
+  }
+]

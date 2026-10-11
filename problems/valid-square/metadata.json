@@ -1,0 +1,79 @@
+{
+  "id": "valid-square",
+  "title": "635. Valid Square",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/valid-square/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "p1 = [0,0], p2 = [1,1], p3 = [1,0], p4 = [0,1]",
+      "output": "true",
+      "explanation": "The four corners of a unit square."
+    },
+    {
+      "input": "p1 = [0,0], p2 = [1,1], p3 = [1,0], p4 = [0,12]",
+      "output": "false",
+      "explanation": "One corner is stretched away."
+    },
+    {
+      "input": "p1 = [1,0], p2 = [-1,0], p3 = [0,1], p4 = [0,-1]",
+      "output": "true",
+      "explanation": "A diamond with side root 2."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean validSquare(int[] p1, int[] p2, int[] p3, int[] p4) {\n        return false;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def validSquare(self, p1: List[int], p2: List[int], p3: List[int], p4: List[int]) -> bool:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool validSquare(vector<int>& p1, vector<int>& p2, vector<int>& p3, vector<int>& p4) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool ValidSquare(int[] p1, int[] p2, int[] p3, int[] p4)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn valid_square(p1: Vec<i32>, p2: Vec<i32>, p3: Vec<i32>, p4: Vec<i32>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc ValidSquare(p1 []int, p2 []int, p3 []int, p4 []int) bool {\n    return false\n}",
+    "typescript": "export function validSquare(p1: number[], p2: number[], p3: number[], p4: number[]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $p1\n     * @param int[] $p2\n     * @param int[] $p3\n     * @param int[] $p4\n     * @return bool\n     */\n    public function validSquare($p1, $p2, $p3, $p4) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "p1": "[0,0]",
+      "p2": "[1,1]",
+      "p3": "[1,0]",
+      "p4": "[0,1]"
+    },
+    {
+      "p1": "[0,0]",
+      "p2": "[1,1]",
+      "p3": "[1,0]",
+      "p4": "[0,12]"
+    },
+    {
+      "p1": "[1,0]",
+      "p2": "[-1,0]",
+      "p3": "[0,1]",
+      "p4": "[0,-1]"
+    }
+  ],
+  "functionName": "validSquare",
+  "params": [
+    {
+      "name": "p1",
+      "type": "int_array"
+    },
+    {
+      "name": "p2",
+      "type": "int_array"
+    },
+    {
+      "name": "p3",
+      "type": "int_array"
+    },
+    {
+      "name": "p4",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "A square has four equal sides and two equal diagonals twice as long in squared length.",
+    "Compute all six pairwise squared distances and sort them.",
+    "Reject zero side length to rule out repeated points."
+  ]
+}

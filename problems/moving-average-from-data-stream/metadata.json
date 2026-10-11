@@ -1,0 +1,65 @@
+{
+  "id": "moving-average-from-data-stream",
+  "title": "427. Moving Average from Data Stream",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/moving-average-from-data-stream/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "operations = [\"MovingAverage\",\"next\",\"next\",\"next\",\"next\"], args = [[3],[1],[10],[3],[5]]",
+      "output": "[\"1.0\",\"5.5\",\"4.666666666666667\",\"6.0\"]",
+      "explanation": "Sliding windows of width 3 give means 1.0, 5.5, 14/3, 6.0."
+    },
+    {
+      "input": "operations = [\"MovingAverage\",\"next\",\"next\"], args = [[1],[4],[5]]",
+      "output": "[\"4.0\",\"5.0\"]",
+      "explanation": "Width 1 always averages the single newest value."
+    },
+    {
+      "input": "operations = [\"MovingAverage\",\"next\",\"next\",\"next\"], args = [[2],[-1],[3],[5]]",
+      "output": "[\"-1.0\",\"1.0\",\"4.0\"]",
+      "explanation": "Width-2 windows give -1.0, then 1.0, then 4.0."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> runMovingAverage(String[] operations, int[][] args) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runMovingAverage(self, operations: List[str], args: List[List[int]]) -> List[str]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> runMovingAverage(vector<string>& operations, vector<vector<int>>& args) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<string> RunMovingAverage(string[] operations, int[][] args)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_moving_average(operations: Vec<String>, args: Vec<Vec<i32>>) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunMovingAverage(operations []string, args [][]int) []string {\n    return []string{}\n}",
+    "typescript": "export function runMovingAverage(operations: string[], args: number[][]): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[][] $args\n     * @return string[]\n     */\n    public function runMovingAverage($operations, $args) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\",\"next\"]",
+      "args": "[[3],[1],[10],[3],[5]]"
+    },
+    {
+      "operations": "[\"MovingAverage\",\"next\",\"next\"]",
+      "args": "[[1],[4],[5]]"
+    },
+    {
+      "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\"]",
+      "args": "[[2],[-1],[3],[5]]"
+    }
+  ],
+  "functionName": "runMovingAverage",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "args",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Adaptation: replay the trace with a queue and a running sum instead of building a class.",
+    "Subtract the evicted value when the window is full so each mean is O(1).",
+    "Format each mean with the language default double-to-string conversion; checking allows small tolerance."
+  ]
+}

@@ -1,0 +1,215 @@
+[
+  {
+    "bottom": "BCD",
+    "allowed": [
+      "BCC",
+      "CDE",
+      "CEA",
+      "FFF"
+    ]
+  },
+  {
+    "bottom": "AAAA",
+    "allowed": [
+      "AAB",
+      "AAC",
+      "BCD",
+      "BBE",
+      "DEF"
+    ]
+  },
+  {
+    "bottom": "AB",
+    "allowed": [
+      "ABC"
+    ]
+  },
+  {
+    "bottom": "AB",
+    "allowed": []
+  },
+  {
+    "bottom": "AB",
+    "allowed": [
+      "BAC"
+    ]
+  },
+  {
+    "bottom": "BCD",
+    "allowed": [
+      "BCC",
+      "CDE",
+      "CEA"
+    ]
+  },
+  {
+    "bottom": "BCD",
+    "allowed": [
+      "BCC",
+      "CDE"
+    ]
+  },
+  {
+    "bottom": "BCD",
+    "allowed": [
+      "CDE",
+      "CEA"
+    ]
+  },
+  {
+    "bottom": "AAA",
+    "allowed": [
+      "AAA"
+    ]
+  },
+  {
+    "bottom": "AAA",
+    "allowed": [
+      "AAB"
+    ]
+  },
+  {
+    "bottom": "AAAAAA",
+    "allowed": [
+      "AAA"
+    ]
+  },
+  {
+    "bottom": "ABCDEF",
+    "allowed": []
+  },
+  {
+    "bottom": "AA",
+    "allowed": [
+      "AAB",
+      "AAC"
+    ]
+  },
+  {
+    "bottom": "AB",
+    "allowed": [
+      "ABC",
+      "ABD"
+    ]
+  },
+  {
+    "bottom": "ABC",
+    "allowed": [
+      "ABC",
+      "BCD",
+      "CDE",
+      "DEF",
+      "EFA",
+      "FAB"
+    ]
+  },
+  {
+    "bottom": "AB",
+    "allowed": [
+      "ABA",
+      "ABB",
+      "ABC",
+      "ABD",
+      "ABE",
+      "ABF"
+    ]
+  },
+  {
+    "bottom": "FF",
+    "allowed": [
+      "FFF"
+    ]
+  },
+  {
+    "bottom": "FF",
+    "allowed": [
+      "FFE"
+    ]
+  },
+  {
+    "bottom": "ABC",
+    "allowed": [
+      "ABD",
+      "BCE",
+      "DEF"
+    ]
+  },
+  {
+    "bottom": "ABC",
+    "allowed": [
+      "ABD",
+      "BCE"
+    ]
+  },
+  {
+    "bottom": "AABB",
+    "allowed": [
+      "AAB",
+      "ABB",
+      "BBB",
+      "BBC"
+    ]
+  },
+  {
+    "bottom": "ABCD",
+    "allowed": [
+      "ABC",
+      "BCD",
+      "CDE",
+      "DEF",
+      "EFG"
+    ]
+  },
+  {
+    "bottom": "EF",
+    "allowed": [
+      "EFA",
+      "EFB"
+    ]
+  },
+  {
+    "bottom": "CD",
+    "allowed": [
+      "CDA",
+      "CDB",
+      "CDC"
+    ]
+  },
+  {
+    "bottom": "BC",
+    "allowed": [
+      "BCB",
+      "BCC"
+    ]
+  },
+  {
+    "bottom": "AAAB",
+    "allowed": [
+      "AAA",
+      "AAB"
+    ]
+  },
+  {
+    "bottom": "ABCDEF",
+    "allowed": [
+      "ABC",
+      "BCD",
+      "CDE",
+      "DEF",
+      "EFA",
+      "FAB"
+    ]
+  },
+  {
+    "bottom": "ABCDE",
+    "allowed": [
+      "ABC",
+      "BCD",
+      "CDE",
+      "DEF",
+      "EFA",
+      "BCA",
+      "CAB"
+    ]
+  }
+]

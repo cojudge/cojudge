@@ -1,0 +1,58 @@
+{
+  "id": "maximum-depth-of-n-ary-tree",
+  "title": "615. Maximum Depth of N-ary Tree",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/maximum-depth-of-n-ary-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "data = \"[1,null,3,2,4,null,5,6]\"",
+      "output": "3",
+      "explanation": "The chain 1 -> 3 -> 5 uses three nodes."
+    },
+    {
+      "input": "data = \"[]\"",
+      "output": "0",
+      "explanation": "No nodes means depth zero."
+    },
+    {
+      "input": "data = \"[1]\"",
+      "output": "1",
+      "explanation": "The lone root is itself the longest path."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int maxDepth(String data) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def maxDepth(self, data: str) -> int:\n        return 0\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int maxDepth(string data) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MaxDepth(string data)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_depth(data: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MaxDepth(data string) int {\n    return 0\n}",
+    "typescript": "export function maxDepth(data: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $data\n     * @return int\n     */\n    public function maxDepth($data) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "data": "[1,null,3,2,4,null,5,6]"
+    },
+    {
+      "data": "[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]"
+    },
+    {
+      "data": "[]"
+    }
+  ],
+  "functionName": "maxDepth",
+  "params": [
+    {
+      "name": "data",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Split the bracket string on commas; null tokens mark the end of each node's child group.",
+    "Rebuild the tree with a queue: each group after a null belongs to the next queued node.",
+    "Depth is one plus the deepest child subtree (a leaf contributes 1); a breadth-first level count works too."
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "id": "russian-doll-envelopes",
+  "title": "434. Russian Doll Envelopes",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/russian-doll-envelopes/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "envelopes = [[5,4],[6,4],[6,7],[2,3]]",
+      "output": "3",
+      "explanation": "The chain [2,3] -> [5,4] -> [6,7] nests three envelopes."
+    },
+    {
+      "input": "envelopes = [[1,1],[1,1],[1,1]]",
+      "output": "1",
+      "explanation": "Equal envelopes never fit inside each other."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxEnvelopes(int[][] envelopes) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxEnvelopes(self, envelopes: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int maxEnvelopes(vector<vector<int>>& envelopes) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MaxEnvelopes(int[][] envelopes) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_envelopes(envelopes: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MaxEnvelopes(envelopes [][]int) int {\n    \n}",
+    "typescript": "export function maxEnvelopes(envelopes: number[][]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $envelopes\n     * @return int\n     */\n    public function maxEnvelopes($envelopes) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "envelopes": "[[5,4],[6,4],[6,7],[2,3]]"
+    },
+    {
+      "envelopes": "[[1,1],[1,1],[1,1]]"
+    },
+    {
+      "envelopes": "[[1,1]]"
+    },
+    {
+      "envelopes": "[[4,5],[4,6],[6,7],[2,3],[1,1]]"
+    }
+  ],
+  "functionName": "maxEnvelopes",
+  "params": [
+    {
+      "name": "envelopes",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sort by width ascending, and by height descending when widths tie, so equal widths can never form a chain.",
+    "After sorting, the task becomes the longest strictly increasing subsequence of heights.",
+    "Maintain pile tops with binary search for an O(n log n) solution."
+  ]
+}

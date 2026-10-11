@@ -1,0 +1,65 @@
+{
+  "id": "minimum-number-of-k-consecutive-bit-flips",
+  "title": "977. Minimum Number of K Consecutive Bit Flips",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/minimum-number-of-k-consecutive-bit-flips/",
+  "category": "greedy",
+  "examples": [
+    {
+      "input": "nums = [0,1,0], k = 1",
+      "output": "2",
+      "explanation": "Flip index 0, then flip index 2."
+    },
+    {
+      "input": "nums = [1,1,0], k = 2",
+      "output": "-1",
+      "explanation": "No sequence of length-2 flips can fix the last zero."
+    },
+    {
+      "input": "nums = [0,0,0,1,0,1,1,0], k = 3",
+      "output": "3",
+      "explanation": "Flip starting at 0, then at 4, then at 5."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minKBitFlips(int[] nums, int k) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minKBitFlips(self, nums: List[int], k: int) -> int:\n        return 0",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int minKBitFlips(vector<int>& nums, int k) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MinKBitFlips(int[] nums, int k) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_k_bit_flips(nums: Vec<i32>, k: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinKBitFlips(nums []int, k int) int {\n    return 0\n}",
+    "typescript": "export function minKBitFlips(nums: number[], k: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $k\n     * @return int\n     */\n    public function minKBitFlips($nums, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[0,1,0]",
+      "k": 1
+    },
+    {
+      "nums": "[1,1,0]",
+      "k": 2
+    },
+    {
+      "nums": "[0,0,0,1,0,1,1,0]",
+      "k": 3
+    }
+  ],
+  "functionName": "minKBitFlips",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Scan left to right: when position i is effectively 0, the only move that can still fix it starts at i, so flip there.",
+    "Track active flips with a running count plus a marker array (or queue) instead of flipping k cells each time.",
+    "If a zero is needed but fewer than k cells remain, the answer is -1."
+  ]
+}

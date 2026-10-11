@@ -1,0 +1,52 @@
+{
+  "id": "implement-rand10-using-rand7",
+  "title": "535. Implement Rand10() Using Rand7()",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/implement-rand10-using-rand7/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "calls = 1",
+      "output": "[4]",
+      "explanation": "Any single value from 1 to 10 is acceptable; the judge only checks the range."
+    },
+    {
+      "input": "calls = 3",
+      "output": "[7,2,9]",
+      "explanation": "Return one independent uniform draw per requested call."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runRand10(int calls) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runRand10(self, calls: int) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runRand10(int calls) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] RunRand10(int calls) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_rand10(calls: i32) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc RunRand10(calls int) []int {\n    \n}",
+    "typescript": "export function runRand10(calls: number): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $calls\n     * @return int[]\n     */\n    public function runRand10($calls) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "calls": 1
+    },
+    {
+      "calls": 3
+    },
+    {
+      "calls": 10
+    }
+  ],
+  "functionName": "runRand10",
+  "params": [
+    {
+      "name": "calls",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Two rand7 draws combine into 49 equally likely pairs; map them to the numbers 1-40 and retry on 41-49.",
+    "Each accepted value `r` in 1..40 converts with `(r - 1) % 10 + 1`."
+  ]
+}

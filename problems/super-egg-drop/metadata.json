@@ -1,0 +1,68 @@
+{
+  "id": "super-egg-drop",
+  "title": "878. Super Egg Drop",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/super-egg-drop/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "k = 1, n = 2",
+      "output": "2",
+      "explanation": "With one egg there is no room for risk, so both floors must be tried from the bottom up."
+    },
+    {
+      "input": "k = 2, n = 6",
+      "output": "3",
+      "explanation": "Three drops always suffice (for instance, first try floor 3), and two drops cannot cover 6 floors."
+    },
+    {
+      "input": "k = 3, n = 14",
+      "output": "4",
+      "explanation": "Four drops cover up to 4 + 6 + 4 = 14 floors with three eggs, and three drops fall short."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int superEggDrop(int k, int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def superEggDrop(self, k: int, n: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int superEggDrop(int k, int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int SuperEggDrop(int k, int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn super_egg_drop(k: i32, n: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc SuperEggDrop(k int, n int) int {\n    \n}",
+    "typescript": "export function superEggDrop(k: number, n: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $k\n     * @param int $n\n     * @return int\n     */\n    public function superEggDrop($k, $n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "k": 1,
+      "n": 2
+    },
+    {
+      "k": 2,
+      "n": 6
+    },
+    {
+      "k": 3,
+      "n": 14
+    },
+    {
+      "k": 1,
+      "n": 1
+    }
+  ],
+  "functionName": "superEggDrop",
+  "params": [
+    {
+      "name": "k",
+      "type": "int"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Flip the question: with m drops and e eggs, the tallest tower you can resolve is dp[m][e] = dp[m-1][e-1] + dp[m-1][e] + 1.",
+    "Grow the drop count until the coverage reaches n; a one-dimensional table updated from high eggs to low eggs is enough."
+  ]
+}

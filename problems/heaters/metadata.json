@@ -1,0 +1,65 @@
+{
+  "id": "heaters",
+  "title": "539. Heaters",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/heaters/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "houses = [1,2,3], heaters = [2]",
+      "output": "1",
+      "explanation": "Radius 1 from heater 2 reaches every house."
+    },
+    {
+      "input": "houses = [1,2,3,4], heaters = [1,4]",
+      "output": "1",
+      "explanation": "Each heater covers its two nearest houses."
+    },
+    {
+      "input": "houses = [1,5], heaters = [2]",
+      "output": "3",
+      "explanation": "House 5 is distance 3 from the heater."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findRadius(int[] houses, int[] heaters) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findRadius(self, houses: List[int], heaters: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int findRadius(vector<int>& houses, vector<int>& heaters) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int FindRadius(int[] houses, int[] heaters)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_radius(houses: Vec<i32>, heaters: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FindRadius(houses []int, heaters []int) int {\n    return 0\n}",
+    "typescript": "export function findRadius(houses: number[], heaters: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $houses\n     * @param int[] $heaters\n     * @return int\n     */\n    public function findRadius($houses, $heaters) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "houses": "[1,2,3]",
+      "heaters": "[2]"
+    },
+    {
+      "houses": "[1,2,3,4]",
+      "heaters": "[1,4]"
+    },
+    {
+      "houses": "[1,5]",
+      "heaters": "[2]"
+    }
+  ],
+  "functionName": "findRadius",
+  "params": [
+    {
+      "name": "houses",
+      "type": "int_array"
+    },
+    {
+      "name": "heaters",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sort both arrays first.",
+    "For each house, binary-search the nearest heater and record the distance.",
+    "The answer is the largest of those nearest distances."
+  ]
+}

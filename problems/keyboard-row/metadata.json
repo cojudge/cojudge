@@ -1,0 +1,68 @@
+{
+  "id": "keyboard-row",
+  "title": "563. Keyboard Row",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/keyboard-row/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "words = [\"Hello\",\"Alaska\",\"Dad\",\"Peace\"]",
+      "output": "[\"Alaska\",\"Dad\"]",
+      "explanation": "Alaska uses only the middle row and Dad uses only the middle row; the other two mix rows."
+    },
+    {
+      "input": "words = [\"omk\"]",
+      "output": "[]",
+      "explanation": "The letters span at least two rows."
+    },
+    {
+      "input": "words = [\"adsdf\",\"sfd\"]",
+      "output": "[\"adsdf\",\"sfd\"]",
+      "explanation": "Both words stay within the middle row."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> findWords(String[] words) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findWords(self, words: List[str]) -> List[str]:\n        pass\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> findWords(vector<string>& words) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<string> FindWords(string[] words) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_words(words: Vec<String>) -> Vec<String> {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindWords(words []string) []string {\n    \n}",
+    "typescript": "export function findWords(words: string[]): string[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $words\n     * @return string[]\n     */\n    public function findWords($words) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "words": [
+        "Hello",
+        "Alaska",
+        "Dad",
+        "Peace"
+      ]
+    },
+    {
+      "words": [
+        "omk"
+      ]
+    },
+    {
+      "words": [
+        "adsdf",
+        "sfd"
+      ]
+    }
+  ],
+  "functionName": "findWords",
+  "params": [
+    {
+      "name": "words",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Map every letter (lowercased) to its row index 0, 1 or 2 once.",
+    "A word passes when all its letters share the row of its first letter.",
+    "Adaptation: the returned string list maps to string_list; preserve input order."
+  ]
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "root": "[1,2,3,4,null,2,4,null,null,4]"
+  },
+  {
+    "root": "[2,1,1]"
+  },
+  {
+    "root": "[2,2,2,3,null,3,null]"
+  },
+  {
+    "root": "[]"
+  },
+  {
+    "root": "[1]"
+  },
+  {
+    "root": "[1,2,3]"
+  },
+  {
+    "root": "[1,2,3,null,null,4,5]"
+  },
+  {
+    "root": "[0,0,0,0,null,null,0]"
+  },
+  {
+    "root": "[1,1,1,1,null,null,1]"
+  },
+  {
+    "root": "[5,4,4,3,null,3,null]"
+  },
+  {
+    "root": "[1,2,2,3,4,4,3]"
+  },
+  {
+    "root": "[1,2,2,null,3,null,3]"
+  },
+  {
+    "root": "[3,2,2,1,null,1,null]"
+  },
+  {
+    "root": "[10,5,15,5,null,null,15]"
+  },
+  {
+    "root": "[1,null,2,null,3,null,4]"
+  },
+  {
+    "root": "[4,2,6,1,3,5,7]"
+  },
+  {
+    "root": "[2,2,2,2,null,null,2]"
+  },
+  {
+    "root": "[1,2,3,4,5,6,7,8,null,null,null,null,null,null,null]"
+  },
+  {
+    "root": "[0,-1,-1,2,null,2,null]"
+  },
+  {
+    "root": "[7,7,7,7,7,7,7]"
+  },
+  {
+    "root": "[1,2,null,3,null,4,null]"
+  },
+  {
+    "root": "[9,6,6,4,null,4,null]"
+  },
+  {
+    "root": "[1,2,3,2,null,null,3]"
+  },
+  {
+    "root": "[5,3,6,2,4,null,null,1,null,null,null]"
+  },
+  {
+    "root": "[2,1,1,null,null,null,1]"
+  },
+  {
+    "root": "[1,2,3,4,null,null,4]"
+  },
+  {
+    "root": "[100,50,150,25,75,125,175,12,null,null,null,null,null,null,null]"
+  },
+  {
+    "root": "[1,2,2,3,null,null,3,4,null,null,4]"
+  }
+]

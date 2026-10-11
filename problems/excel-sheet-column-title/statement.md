@@ -1,6 +1,8 @@
-Given an integer `columnNumber`, return its corresponding column title as it appears in an Excel sheet.
+You get an integer `columnNumber`. Produce the label that a spreadsheet assigns to that column.
 
-For example:
+Columns are named with capital letters in sequence: `A` through `Z` cover the first 26 columns, then two-letter names take over (`AA`, `AB`, and so on), mirroring a 1-based base-26 scheme without a zero digit.
+
+For reference, the numbering runs as follows:
 
 ```
 A -> 1

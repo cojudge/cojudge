@@ -1,0 +1,57 @@
+{
+  "id": "minimum-falling-path-sum",
+  "title": "918. Minimum Falling Path Sum",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/minimum-falling-path-sum/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "matrix = [[2,1,3],[6,5,4],[7,8,9]]",
+      "output": "13",
+      "explanation": "The path 1 -> 4 -> 8 is minimal."
+    },
+    {
+      "input": "matrix = [[-19,57],[-40,-5]]",
+      "output": "-59",
+      "explanation": "-19 plus -40 is cheapest."
+    },
+    {
+      "input": "matrix = [[-48]]",
+      "output": "-48"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minFallingPathSum(int[][] matrix) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minFallingPathSum(self, matrix: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minFallingPathSum(vector<vector<int>>& matrix) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinFallingPathSum(int[][] matrix)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_falling_path_sum(matrix: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinFallingPathSum(matrix [][]int) int {\n    return 0\n}",
+    "typescript": "export function minFallingPathSum(matrix: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $matrix\n     * @return int\n     */\n    public function minFallingPathSum($matrix) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "matrix": "[[2,1,3],[6,5,4],[7,8,9]]"
+    },
+    {
+      "matrix": "[[-19,57],[-40,-5]]"
+    },
+    {
+      "matrix": "[[-48]]"
+    }
+  ],
+  "functionName": "minFallingPathSum",
+  "params": [
+    {
+      "name": "matrix",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The cheapest way to reach a cell depends only on the three cells above it.",
+    "Roll one row of best costs forward instead of storing the whole table.",
+    "Borders have fewer predecessors; handle the first and last columns carefully."
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "sum-of-square-numbers",
+  "title": "655. Sum of Square Numbers",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/sum-of-square-numbers/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "c = 5",
+      "output": "true",
+      "explanation": "1^2 + 2^2 = 5."
+    },
+    {
+      "input": "c = 3",
+      "output": "false",
+      "explanation": "No pair of squares sums to 3."
+    },
+    {
+      "input": "c = 4",
+      "output": "true",
+      "explanation": "0^2 + 2^2 = 4."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean judgeSquareSum(int c) {\n        \n    }\n}",
+    "python": "class Solution:\n    def judgeSquareSum(self, c: int) -> bool:\n        pass",
+    "cpp": "class Solution {\npublic:\n    bool judgeSquareSum(int c) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool JudgeSquareSum(int c) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn judge_square_sum(c: i32) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc JudgeSquareSum(c int) bool {\n    \n}",
+    "typescript": "export function judgeSquareSum(c: number): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $c\n     * @return bool\n     */\n    public function judgeSquareSum($c) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "c": 5
+    },
+    {
+      "c": 3
+    },
+    {
+      "c": 4
+    }
+  ],
+  "functionName": "judgeSquareSum",
+  "params": [
+    {
+      "name": "c",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Think of a at 0 and b at floor(sqrt(c)) as two ends of the search.",
+    "Compare a*a + b*b with c: too small moves a up, too large moves b down.",
+    "Squares can reuse the same root (e.g. 2 = 1^2 + 1^2)."
+  ]
+}

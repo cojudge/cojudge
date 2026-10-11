@@ -1,0 +1,57 @@
+{
+  "id": "flatten-nested-list-iterator",
+  "title": "424. Flatten Nested List Iterator",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/flatten-nested-list-iterator/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "nestedList = \"[[1,1],2,[1,1]]\"",
+      "output": "[1,1,2,1,1]",
+      "explanation": "Left-to-right depth-first reading yields 1,1,2,1,1."
+    },
+    {
+      "input": "nestedList = \"[1,[4,[6]]]\"",
+      "output": "[1,4,6]",
+      "explanation": "Descending level by level gives 1, then 4, then 6."
+    },
+    {
+      "input": "nestedList = \"[]\"",
+      "output": "[]",
+      "explanation": "Nothing is stored, so the result is empty."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] flattenNestedList(String nestedList) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def flattenNestedList(self, nestedList: str) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> flattenNestedList(string nestedList) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] FlattenNestedList(string nestedList)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn flatten_nested_list(nested_list: String) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc FlattenNestedList(nestedList string) []int {\n    return []int{}\n}",
+    "typescript": "export function flattenNestedList(nestedList: string): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $nestedList\n     * @return int[]\n     */\n    public function flattenNestedList($nestedList) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nestedList": "[[1,1],2,[1,1]]"
+    },
+    {
+      "nestedList": "[1,[4,[6]]]"
+    },
+    {
+      "nestedList": "[]"
+    }
+  ],
+  "functionName": "flattenNestedList",
+  "params": [
+    {
+      "name": "nestedList",
+      "type": "string"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Adaptation: simulate what repeated next calls would produce and return it as one array.",
+    "Parse recursively (a list) or iteratively with a stack, appending integers in encounter order."
+  ]
+}

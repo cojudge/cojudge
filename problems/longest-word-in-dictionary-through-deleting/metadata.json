@@ -1,0 +1,65 @@
+{
+  "id": "longest-word-in-dictionary-through-deleting",
+  "title": "583. Longest Word in Dictionary through Deleting",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"abpcplea\", dictionary = [\"ale\",\"apple\",\"monkey\",\"plea\"]",
+      "output": "\"apple\"",
+      "explanation": "\"apple\" is the longest dictionary word formable by deleting letters."
+    },
+    {
+      "input": "s = \"abpcplea\", dictionary = [\"a\",\"b\",\"c\"]",
+      "output": "\"a\"",
+      "explanation": "\"a\" and \"b\" tie at length 1; \"a\" is alphabetically smaller."
+    },
+    {
+      "input": "s = \"bab\", dictionary = [\"ba\",\"ab\",\"a\",\"b\"]",
+      "output": "\"ab\"",
+      "explanation": "\"ba\" and \"ab\" tie for longest; \"ab\" is alphabetically smaller."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String findLongestWord(String s, String[] dictionary) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findLongestWord(self, s: str, dictionary: List[str]) -> str:\n        pass",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    string findLongestWord(string s, vector<string>& dictionary) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string FindLongestWord(string s, string[] dictionary) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_longest_word(s: String, dictionary: Vec<String>) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindLongestWord(s string, dictionary []string) string {\n    \n}",
+    "typescript": "export function findLongestWord(s: string, dictionary: string[]): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string[] $dictionary\n     * @return string\n     */\n    public function findLongestWord($s, $dictionary) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "abpcplea",
+      "dictionary": "[\"ale\",\"apple\",\"monkey\",\"plea\"]"
+    },
+    {
+      "s": "abpcplea",
+      "dictionary": "[\"a\",\"b\",\"c\"]"
+    },
+    {
+      "s": "bab",
+      "dictionary": "[\"ba\",\"ab\",\"a\",\"b\"]"
+    }
+  ],
+  "functionName": "findLongestWord",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "dictionary",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "A word is formable exactly when it is a subsequence of s; test this with two pointers scanning s once per word.",
+    "Track the best word so far: replace it when a longer formable word appears, or an equally long but alphabetically smaller one.",
+    "Sorting the dictionary by decreasing length (ties broken alphabetically) lets you return the first formable word."
+  ]
+}

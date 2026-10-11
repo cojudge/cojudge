@@ -1,0 +1,65 @@
+{
+  "id": "bulb-switcher-ii",
+  "title": "691. Bulb Switcher II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/bulb-switcher-ii/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 1, presses = 1",
+      "output": "2",
+      "explanation": "One lamp can end on or off after one press."
+    },
+    {
+      "input": "n = 2, presses = 1",
+      "output": "3",
+      "explanation": "With two lamps, one press yields three reachable patterns."
+    },
+    {
+      "input": "n = 3, presses = 1",
+      "output": "4",
+      "explanation": "With at least three lamps, one press yields four patterns."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int flipLights(int n, int presses) {\n        \n    }\n}",
+    "python": "class Solution:\n    def flipLights(self, n: int, presses: int) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int flipLights(int n, int presses) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FlipLights(int n, int presses) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn flip_lights(n: i32, presses: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FlipLights(n int, presses int) int {\n    return 0\n}",
+    "typescript": "export function flipLights(n: number, presses: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int $presses\n     * @return int\n     */\n    public function flipLights($n, $presses) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 1,
+      "presses": 1
+    },
+    {
+      "n": 2,
+      "presses": 1
+    },
+    {
+      "n": 3,
+      "presses": 1
+    }
+  ],
+  "functionName": "flipLights",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "presses",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Only the first three lamps matter; further lamps repeat the same behavior pattern.",
+    "Enumerate the four button effects and notice presses beyond a small bound stop creating new states.",
+    "Handle n = 1 and n = 2 separately, then use the capped table 1, 4, 7, 8 for n >= 3."
+  ]
+}

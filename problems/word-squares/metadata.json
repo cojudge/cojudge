@@ -1,0 +1,53 @@
+{
+  "id": "word-squares",
+  "title": "495. Word Squares",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/word-squares/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "words=[\"area\",\"lead\",\"wall\",\"lady\",\"ball\"]",
+      "output": "[[\"wall\",\"area\",\"lead\",\"lady\"],[\"ball\",\"area\",\"lead\",\"lady\"]]",
+      "explanation": "Both arrangements read the same across rows and down columns."
+    },
+    {
+      "input": "words=[\"abat\",\"baba\",\"atan\",\"atal\"]",
+      "output": "[[\"baba\",\"abat\",\"baba\",\"atan\"],[\"baba\",\"abat\",\"baba\",\"atal\"]]",
+      "explanation": "Each arrangement mirrors along the diagonal."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<List<String>> wordSquares(String[] words) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def wordSquares(self, words: List[str]) -> List[List[str]]:\n        pass\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<string>> wordSquares(vector<string>& words) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<List<string>> WordSquares(string[] words) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn word_squares(words: Vec<String>) -> Vec<Vec<String>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc WordSquares(words []string) [][]string {\n    \n}",
+    "typescript": "export function wordSquares(words: string[]): string[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $words\n     * @return string[][]\n     */\n    public function wordSquares($words) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "words": "[\"area\",\"lead\",\"wall\",\"lady\",\"ball\"]"
+    },
+    {
+      "words": "[\"abat\",\"baba\",\"atan\",\"atal\"]"
+    },
+    {
+      "words": "[\"a\"]"
+    }
+  ],
+  "functionName": "wordSquares",
+  "params": [
+    {
+      "name": "words",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list_2d",
+  "hints": [
+    "Index every word by each of its prefixes so the required next-row prefix is a fast lookup.",
+    "Grow squares row by row: the next needed prefix is spelled by the latest column characters.",
+    "Backtrack and record a copy once the square reaches full size."
+  ]
+}

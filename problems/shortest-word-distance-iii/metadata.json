@@ -1,0 +1,66 @@
+{
+  "id": "shortest-word-distance-iii",
+  "title": "351. Shortest Word Distance III",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/shortest-word-distance-iii/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "wordsDict = [\"practice\",\"makes\",\"perfect\",\"coding\",\"makes\"], word1 = \"makes\", word2 = \"coding\"",
+      "output": "1",
+      "explanation": "\"makes\" at index 4 neighbors \"coding\" at index 3."
+    },
+    {
+      "input": "wordsDict = [\"practice\",\"makes\",\"perfect\",\"coding\",\"makes\"], word1 = \"makes\", word2 = \"makes\"",
+      "output": "3",
+      "explanation": "\"makes\" occurs at indices 1 and 4, which are 3 apart."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int shortestWordDistance(String[] wordsDict, String word1, String word2) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def shortestWordDistance(self, wordsDict: List[str], word1: str, word2: str) -> int:\n        pass",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int shortestWordDistance(vector<string>& wordsDict, string word1, string word2) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int ShortestWordDistance(string[] wordsDict, string word1, string word2) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn shortest_word_distance(words_dict: Vec<String>, word1: String, word2: String) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc ShortestWordDistance(wordsDict []string, word1 string, word2 string) int {\n    return 0\n}",
+    "typescript": "export function shortestWordDistance(wordsDict: string[], word1: string, word2: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $wordsDict\n     * @param string $word1\n     * @param string $word2\n     * @return int\n     */\n    public function shortestWordDistance($wordsDict, $word1, $word2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "wordsDict": "[\"practice\",\"makes\",\"perfect\",\"coding\",\"makes\"]",
+      "word1": "makes",
+      "word2": "coding"
+    },
+    {
+      "wordsDict": "[\"practice\",\"makes\",\"perfect\",\"coding\",\"makes\"]",
+      "word1": "makes",
+      "word2": "makes"
+    },
+    {
+      "wordsDict": "[\"a\",\"b\",\"c\",\"a\"]",
+      "word1": "a",
+      "word2": "a"
+    }
+  ],
+  "functionName": "shortestWordDistance",
+  "params": [
+    {
+      "name": "wordsDict",
+      "type": "string_array"
+    },
+    {
+      "name": "word1",
+      "type": "string"
+    },
+    {
+      "name": "word2",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "When the words differ, reuse the two-index single sweep.",
+    "When the words are equal, track only the previous occurrence and the current one."
+  ]
+}

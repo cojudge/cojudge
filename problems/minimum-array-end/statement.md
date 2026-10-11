@@ -1,19 +1,19 @@
-You are given two integers `n` and `x`. You have to construct an array of positive integers `nums` of size `n` where for every `0 <= i < n - 1`, `nums[i + 1]` is greater than `nums[i]`, and the result of the bitwise AND operation between all elements of `nums` is `x`.
+Two integers `n` and `x` are supplied. Consider positive-integer arrays `nums` of length `n` that climb strictly at each position, so `nums[i + 1]` is always larger than `nums[i]` for `0 <= i < n - 1`, and whose cumulative bitwise AND across all positions equals `x`.
 
-Return the minimum possible value of `nums[n - 1]`.
+Among every array meeting those two requirements, make the final entry `nums[n - 1]` as small as possible, and output that smallest achievable final value.
 
 **Examples:**
 
 ```
 Input: n = 3, x = 4
 Output: 6
-Explanation: nums can be [4, 5, 6], since 4 AND 5 AND 6 = 4 and all elements are strictly increasing. 6 is the smallest possible nums[2].
+Explanation: One feasible choice is [4, 5, 6], because 4 AND 5 AND 6 is 4 and the entries rise strictly. No feasible array ends below 6, so 6 is the answer for nums[2].
 ```
 
 ```
 Input: n = 2, x = 7
 Output: 15
-Explanation: nums can be [7, 15], since 7 AND 15 = 7 and all elements are strictly increasing. 15 is the smallest possible nums[1].
+Explanation: One feasible choice is [7, 15], because 7 AND 15 is 7 and the entries rise strictly. No feasible array ends below 15, so 15 is the answer for nums[1].
 ```
 
 **Constraints:**

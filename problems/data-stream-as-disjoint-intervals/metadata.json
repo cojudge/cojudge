@@ -1,0 +1,60 @@
+{
+  "id": "data-stream-as-disjoint-intervals",
+  "title": "432. Data Stream as Disjoint Intervals",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/data-stream-as-disjoint-intervals/",
+  "category": "interval",
+  "examples": [
+    {
+      "input": "values = [1,3,7,2,6]",
+      "output": "[[1,3],[6,7]]",
+      "explanation": "The distinct values are 1, 2, 3, 6 and 7, forming two blocks."
+    },
+    {
+      "input": "values = [1]",
+      "output": "[[1,1]]"
+    },
+    {
+      "input": "values = [5,4,3,2,1]",
+      "output": "[[1,5]]",
+      "explanation": "Consecutive arrivals in reverse still merge into one block."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] runSummaryRanges(int[] values) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runSummaryRanges(self, values: List[int]) -> List[List[int]]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> runSummaryRanges(vector<int>& values) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[][] RunSummaryRanges(int[] values) \n    {\n        return new int[0][];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_summary_ranges(values: Vec<i32>) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc RunSummaryRanges(values []int) [][]int {\n    \n}",
+    "typescript": "export function runSummaryRanges(values: number[]): number[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $values\n     * @return int[][]\n     */\n    public function runSummaryRanges($values) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "values": "[1,3,7,2,6]"
+    },
+    {
+      "values": "[1]"
+    },
+    {
+      "values": "[5,4,3,2,1]"
+    },
+    {
+      "values": "[1,1,1]"
+    }
+  ],
+  "functionName": "runSummaryRanges",
+  "params": [
+    {
+      "name": "values",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Keep the disjoint intervals ordered by start in a balanced search tree.",
+    "When a value arrives, check the interval just below it and merge every interval that now touches it.",
+    "Skip values that are already covered."
+  ]
+}

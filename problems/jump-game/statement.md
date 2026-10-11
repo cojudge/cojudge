@@ -1,4 +1,4 @@
-Given an integer array nums where each element represents your maximum jump length, return true if you can reach the last index.
+You stand at the first position of an integer array `nums`, where `nums[i]` states the longest forward stride permitted from position `i`. Determine whether the final position can be reached by a sequence of such strides.
 
 **Constraints:**
 

@@ -1,0 +1,61 @@
+{
+  "id": "linked-list-cycle-ii",
+  "title": "303. Linked List Cycle II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/linked-list-cycle-ii/",
+  "category": "linked-list",
+  "examples": [
+    {
+      "input": "head = [3,2,0,-4], pos = 1",
+      "output": "1",
+      "explanation": "The tail (-4) links to index 1 (value 2), so the cycle starts at index 1."
+    },
+    {
+      "input": "head = [1,2], pos = 0",
+      "output": "0",
+      "explanation": "The tail links to the head, so the cycle starts at index 0."
+    },
+    {
+      "input": "head = [1], pos = -1",
+      "output": "-1",
+      "explanation": "There is no cycle."
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for singly-linked list. \nListNode {\n    int val;\n    ListNode next;\n    ListNode() {}\n    ListNode(int val) { this.val = val; }\n    ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n}\n*/\nclass Solution {\n    public int detectCycle(ListNode head) {\n        return -1;\n    }\n}",
+    "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\nclass Solution:\n    def detectCycle(self, head) -> int:\n        return -1",
+    "cpp": "/*\nDefinition for singly-linked list.\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode(): val(0), next(nullptr) {}\n    ListNode(int x): val(x), next(nullptr) {}\n    ListNode(int x, ListNode* next): val(x), next(next) {}\n};\n*/\nclass Solution {\npublic:\n    int detectCycle(ListNode* head) {\n        return -1;\n    }\n};",
+    "csharp": "/*\nDefinition for singly-linked list.\npublic class ListNode {\n    public int val;\n    public ListNode next;\n    public ListNode(int val=0, ListNode next=null) {\n        this.val = val;\n        this.next = next;\n    }\n}\n*/\npublic class Solution \n{\n    public int DetectCycle(ListNode head) \n    {\n        return -1;\n    }\n}",
+    "rust": "// Definition for singly-linked list.\n// #[derive(PartialEq, Eq, Clone, Debug)]\n// pub struct ListNode {\n//   pub val: i32,\n//   pub next: Option<Box<ListNode>>\n// }\n// \n// impl ListNode {\n//   #[inline]\n//   fn new(val: i32) -> Self {\n//     ListNode {\n//       next: None,\n//       val\n//     }\n//   }\n// }\n\npub struct Solution;\n\nimpl Solution {\n    pub fn detect_cycle(head: Option<Box<ListNode>>) -> i32 {\n        -1\n    }\n}",
+    "go": "package main\n\n/*\nDefinition for singly-linked list.\ntype ListNode struct {\n    Val int\n    Next *ListNode\n}\n*/\n\nfunc DetectCycle(head *ListNode) int {\n    return -1\n}",
+    "typescript": "// Definition for singly-linked list.\n// class ListNode {\n//     val: number\n//     next: ListNode | null\n//     constructor(val?: number, next?: ListNode | null) {\n//         this.val = (val === undefined ? 0 : val)\n//         this.next = (next === undefined ? null : next)\n//     }\n// }\nimport { ListNode } from './ListNode';\nexport function detectCycle(head: ListNode | null): number {\n    return -1;\n}",
+    "php": "class Solution {\n    /**\n     * @param ListNode|null $head\n     * @return int\n     */\n    public function detectCycle($head) {\n        return -1;\n    }\n}"
+  },
+  "testCases": [
+    {
+      "head": "[3,2,0,-4]",
+      "pos": 1
+    },
+    {
+      "head": "[1,2]",
+      "pos": 0
+    },
+    {
+      "head": "[1]",
+      "pos": -1
+    }
+  ],
+  "functionName": "detectCycle",
+  "params": [
+    {
+      "name": "head",
+      "type": "list_node"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Floyd's tortoise and hare finds a meeting point inside the loop, if any.",
+    "Restart one pointer at the head; both advance one step until they meet at the entry.",
+    "Count nodes to translate the entry node into its index; return -1 when there is no meeting."
+  ]
+}

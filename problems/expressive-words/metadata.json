@@ -1,0 +1,74 @@
+{
+  "id": "expressive-words",
+  "title": "807. Expressive Words",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/expressive-words/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"heeellooo\", words = [\"hello\", \"hi\", \"helo\"]",
+      "output": "1",
+      "explanation": "Only \"hello\" can be stretched into \"heeellooo\": the e-group and o-group of s are long enough, while the other words fail on group counts."
+    },
+    {
+      "input": "s = \"zzzzzyyyy\", words = [\"zzyy\", \"zy\", \"zyyy\"]",
+      "output": "3",
+      "explanation": "Each listed word uses the same two groups as s, and every group of s has length at least 3, so all three stretch."
+    },
+    {
+      "input": "s = \"abcd\", words = [\"abc\"]",
+      "output": "0",
+      "explanation": "The group structure differs (4 groups versus 3), so nothing stretches."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int expressiveWords(String s, String[] words) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def expressiveWords(self, s: str, words: List[str]) -> int:\n        pass",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int expressiveWords(string s, vector<string>& words) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int ExpressiveWords(string s, string[] words) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn expressive_words(s: String, words: Vec<String>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc ExpressiveWords(s string, words []string) int {\n    return 0\n}",
+    "typescript": "export function expressiveWords(s: string, words: string[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string[] $words\n     * @return int\n     */\n    public function expressiveWords($s, $words) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "heeellooo",
+      "words": [
+        "hello",
+        "hi",
+        "helo"
+      ]
+    },
+    {
+      "s": "zzzzzyyyy",
+      "words": [
+        "zzyy",
+        "zy",
+        "zyyy"
+      ]
+    },
+    {
+      "s": "abcd",
+      "words": [
+        "abc"
+      ]
+    }
+  ],
+  "functionName": "expressiveWords",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "words",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Compress both s and each word into (character, run-length) groups and compare group by group.",
+    "A word group may expand to the s group only when lengths match or when the s run has length at least 3 and is not shorter."
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "id": "strong-password-checker",
+  "title": "491. Strong Password Checker",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/strong-password-checker/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "password = \"a\"",
+      "output": "5",
+      "explanation": "Insert four characters covering upper, digit and length plus one fix for repeats."
+    },
+    {
+      "input": "password = \"aA1\"",
+      "output": "3",
+      "explanation": "Three insertions reach length 6; types are already present."
+    },
+    {
+      "input": "password = \"1337C0d3\"",
+      "output": "0",
+      "explanation": "Length, types and repeat rules are all satisfied."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int strongPasswordChecker(String password) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def strongPasswordChecker(self, password: str) -> int:\n        return 0",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int strongPasswordChecker(string password) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int StrongPasswordChecker(string password) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn strong_password_checker(password: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc StrongPasswordChecker(password string) int {\n    return 0\n}",
+    "typescript": "export function strongPasswordChecker(password: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $password\n     * @return int\n     */\n    public function strongPasswordChecker($password) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "password": "a"
+    },
+    {
+      "password": "aA1"
+    },
+    {
+      "password": "1337C0d3"
+    },
+    {
+      "password": "aaa123"
+    }
+  ],
+  "functionName": "strongPasswordChecker",
+  "params": [
+    {
+      "name": "password",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Count missing character classes (lower, upper, digit) and repeating runs of length 3 or more.",
+    "Short passwords need max(missing, 6 - n); right-sized ones need max(missing, repeats fixed by replacements).",
+    "Long passwords must delete n - 20 characters; spend deletions on repeats with the best saving per deletion first."
+  ]
+}

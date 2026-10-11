@@ -1,0 +1,106 @@
+[
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"hit\",\"getHits\",\"hit\",\"getHits\",\"getHits\"]",
+    "timestamps": "[0,1,2,3,4,300,300,301]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"getHits\",\"getHits\"]",
+    "timestamps": "[0,5,5,305]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"getHits\"]",
+    "timestamps": "[0,100]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"getHits\"]",
+    "timestamps": "[0,1,1,301]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"getHits\"]",
+    "timestamps": "[0,1,301]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"getHits\"]",
+    "timestamps": "[0,1,302]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"hit\",\"getHits\"]",
+    "timestamps": "[0,1,2,3,303]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"getHits\",\"getHits\"]",
+    "timestamps": "[0,0,500]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"hit\",\"hit\",\"getHits\"]",
+    "timestamps": "[0,10,10,10,20,310]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"getHits\",\"hit\",\"getHits\"]",
+    "timestamps": "[0,100,100,200,400]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"getHits\",\"getHits\"]",
+    "timestamps": "[0,1,300,300,301]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"getHits\",\"getHits\",\"getHits\"]",
+    "timestamps": "[0,299,300,599,600]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"hit\",\"hit\",\"hit\",\"getHits\"]",
+    "timestamps": "[0,1,2,3,4,5,301]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"getHits\",\"hit\",\"hit\",\"getHits\"]",
+    "timestamps": "[0,5,5,6,7,305]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"getHits\"]",
+    "timestamps": "[0,0,0,299]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"getHits\"]",
+    "timestamps": "[0,0,0,300]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"getHits\"]",
+    "timestamps": "[0,0,300]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"getHits\"]",
+    "timestamps": "[0,0,301]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"hit\",\"getHits\",\"getHits\"]",
+    "timestamps": "[0,50,100,150,200,400]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"hit\",\"getHits\"]",
+    "timestamps": "[0,1,1,1,2]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"getHits\"]",
+    "timestamps": "[0,0]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"hit\",\"hit\",\"getHits\",\"getHits\"]",
+    "timestamps": "[0,295,296,297,298,299,600]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"getHits\",\"getHits\"]",
+    "timestamps": "[0,10,309,310]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"getHits\",\"hit\",\"getHits\"]",
+    "timestamps": "[0,1,2,302,303,603]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"hit\",\"hit\",\"hit\",\"hit\",\"getHits\"]",
+    "timestamps": "[0,1,2,3,4,5,6,300]"
+  },
+  {
+    "operations": "[\"HitCounter\",\"hit\",\"getHits\"]",
+    "timestamps": "[0,1000000,1000000]"
+  }
+]

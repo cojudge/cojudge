@@ -1,34 +1,34 @@
-Alice and Bob continue their games with piles of stones. There are several stones arranged in a row, and each stone has an associated value which is an integer given in the array `stoneValue`.
+Alice and Bob play a further row-removal contest. A row of stones carries integer scores listed in `stoneValue`.
 
-Alice and Bob take turns, with Alice starting first. On each player's turn, that player can take 1, 2, or 3 stones from the first remaining stones in the row.
+Alice moves first, then the two alternate. Each move removes stones only from the front of the remaining row: the player picks up 1, 2, or 3 stones there.
 
-The score of each player is the sum of the values of the stones taken. The score of each player is 0 initially.
+Every stone a player picks up adds its value to that player's total. Both totals begin at 0.
 
-The objective of the game is to end with the highest score, and the winner is the player with the highest score and there could be a tie. The game continues until all the stones have been taken.
+Whoever holds the larger total once the row is gone wins; equal totals mean a drawn game. Play runs until every stone is gone.
 
-Assume Alice and Bob play optimally.
+Both sides act optimally.
 
-Return `"Alice"` if Alice will win, `"Bob"` if Bob will win, or `"Tie"` if they will end the game with the same score.
+Return `"Alice"` when optimal play puts Alice in front, `"Bob"` when it puts Bob in front, and `"Tie"` when optimal play ends level.
 
 **Example 1:**
 ```
 Input: stoneValue = [1,2,3,7]
 Output: "Bob"
-Explanation: Alice will always lose. Her best move will be to take three piles and the score become 6. Now the score of Bob is 7 and Bob wins.
+Explanation: Alice has no winning opener. Her strongest line collects the first three stones for 6, after which Bob collects 7 and stays ahead.
 ```
 
 **Example 2:**
 ```
 Input: stoneValue = [1,2,3,-9]
 Output: "Alice"
-Explanation: Alice must choose all the three piles at the first move to win and leave Bob with negative score.
+Explanation: Alice needs to sweep the first three stones on her opener, which secures victory while stranding Bob with a negative remainder.
 ```
 
 **Example 3:**
 ```
 Input: stoneValue = [1,2,3,6]
 Output: "Tie"
-Explanation: Alice cannot win this game. She can end the game in a draw if she decided to choose all the first three piles, otherwise she will lose.
+Explanation: Alice cannot force a win here. Collecting the first three stones at the start salvages a draw; any other opener loses.
 ```
 
 **Constraints:**

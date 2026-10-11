@@ -1,0 +1,58 @@
+{
+  "id": "path-sum-iv",
+  "title": "685. Path Sum IV",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/path-sum-iv/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "nums = [113,215,221]",
+      "output": "12",
+      "explanation": "Paths 3->5 (=8) and 3->1 (=4) total 12."
+    },
+    {
+      "input": "nums = [113,221]",
+      "output": "4",
+      "explanation": "Single path 3 -> 1 totals 4."
+    },
+    {
+      "input": "nums = [111,222,333]",
+      "output": "6",
+      "explanation": "Chain 1->2->3 sums to 6."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int pathSum(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def pathSum(self, nums: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int pathSum(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int PathSum(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn path_sum(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc PathSum(nums []int) int {\n    \n}",
+    "typescript": "export function pathSum(nums: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function pathSum($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[113,215,221]"
+    },
+    {
+      "nums": "[113,221]"
+    },
+    {
+      "nums": "[113,215,221,342,324]"
+    }
+  ],
+  "functionName": "pathSum",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Decode each entry: hundreds are depth, tens are position, ones are the node value.",
+    "Store the values in a map keyed by (depth, position); children of (d, p) sit at (d+1, 2p-1) and (d+1, 2p).",
+    "Depth-first walk from (1, 1), adding the running total whenever a node has no children in the map."
+  ]
+}

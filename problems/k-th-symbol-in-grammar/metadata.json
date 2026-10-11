@@ -1,0 +1,65 @@
+{
+  "id": "k-th-symbol-in-grammar",
+  "title": "778. K-th Symbol in Grammar",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/k-th-symbol-in-grammar/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 1, k = 1",
+      "output": "0",
+      "explanation": "The opening row is a single 0."
+    },
+    {
+      "input": "n = 2, k = 1",
+      "output": "0",
+      "explanation": "The second row starts with 0."
+    },
+    {
+      "input": "n = 2, k = 2",
+      "output": "1",
+      "explanation": "The second row ends with 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int kthGrammar(int n, int k) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def kthGrammar(self, n: int, k: int) -> int:\n        return 0\n",
+    "cpp": "class Solution {\npublic:\n    int kthGrammar(int n, int k) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int KthGrammar(int n, int k)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn kth_grammar(n: i32, k: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc KthGrammar(n int, k int) int {\n    return 0\n}",
+    "typescript": "export function kthGrammar(n: number, k: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int $k\n     * @return int\n     */\n    public function kthGrammar($n, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 1,
+      "k": 1
+    },
+    {
+      "n": 2,
+      "k": 1
+    },
+    {
+      "n": 2,
+      "k": 2
+    }
+  ],
+  "functionName": "kthGrammar",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Each position inherits from its parent at index (k+1)/2 in the previous row; an even k flips the parent value.",
+    "Equivalently the answer equals the parity of the number of ones in the binary form of k-1.",
+    "Recursion or a simple loop over the bits both run in O(n) time."
+  ]
+}

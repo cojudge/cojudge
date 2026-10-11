@@ -1,13 +1,6 @@
-Design an algorithm that collects daily price quotes for some stock and returns
-the span of that stock's price for the current day.
+Imagine receiving one stock price per day in sequence. For the current day, its span is the length of the longest suffix ending that day in which every price is at most today's price — equivalently, walk backward from today while prices stay less than or equal to today's price and count those days.
 
-The span of the stock's price in one day is the maximum number of consecutive
-days (starting from that day and going backward) for which the stock price was
-less than or equal to the price of that day.
-
-Given the full stream `prices` in order, return an array `spans` where
-`spans[i]` is the answer that `next(prices[i])` would return if the prices
-arrived one by one.
+This task uses a batched form: you receive the whole sequence `prices` at once. Produce the array `spans`, where `spans[i]` equals what a streaming `next(prices[i])` call would have answered had the prices been fed in one after another.
 
 **Constraints:**
 

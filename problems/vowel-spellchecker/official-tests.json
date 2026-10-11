@@ -1,0 +1,114 @@
+[
+  {
+    "wordlist": "[\"KiTe\",\"kite\",\"hare\",\"Hare\"]",
+    "queries": "[\"kite\",\"Kite\",\"KiTe\",\"Hare\",\"HARE\",\"Hear\",\"hear\",\"keti\",\"keet\",\"keto\"]"
+  },
+  {
+    "wordlist": "[\"yellow\"]",
+    "queries": "[\"YellOw\"]"
+  },
+  {
+    "wordlist": "[\"hello\",\"world\"]",
+    "queries": "[\"Hello\",\"WORLD\",\"hallo\",\"warld\",\"xyz\"]"
+  },
+  {
+    "wordlist": "[\"ae\",\"aa\"]",
+    "queries": "[\"aa\",\"ae\",\"oe\"]"
+  },
+  {
+    "wordlist": "[\"kite\",\"Kite\",\"KiTe\"]",
+    "queries": "[\"kite\",\"KITE\",\"kete\",\"keto\"]"
+  },
+  {
+    "wordlist": "[\"YellOw\"]",
+    "queries": "[\"yellow\",\"YELLOW\",\"YellOw\"]"
+  },
+  {
+    "wordlist": "[\"a\",\"e\",\"i\",\"o\",\"u\"]",
+    "queries": "[\"A\",\"E\",\"b\",\"I\",\"O\",\"U\"]"
+  },
+  {
+    "wordlist": "[\"abc\",\"def\"]",
+    "queries": "[\"ABC\",\"DEF\",\"abf\",\"deg\",\"ghi\"]"
+  },
+  {
+    "wordlist": "[\"Foo\",\"bar\",\"BAR\"]",
+    "queries": "[\"foo\",\"Foo\",\"BAR\",\"bar\",\"Bar\",\"far\",\"bor\"]"
+  },
+  {
+    "wordlist": "[\"mno\",\"mno\"]",
+    "queries": "[\"MNO\",\"mno\",\"mne\"]"
+  },
+  {
+    "wordlist": "[\"apple\",\"apply\"]",
+    "queries": "[\"Apple\",\"APPLE\",\"epple\",\"applo\",\"appla\"]"
+  },
+  {
+    "wordlist": "[\"x\"]",
+    "queries": "[\"X\",\"x\",\"y\",\"e\"]"
+  },
+  {
+    "wordlist": "[\"Open\",\"open\"]",
+    "queries": "[\"OPEN\",\"apen\",\"opin\",\"open\"]"
+  },
+  {
+    "wordlist": "[\"cat\",\"bat\",\"rat\"]",
+    "queries": "[\"CAT\",\"cut\",\"BET\",\"rot\",\"dog\"]"
+  },
+  {
+    "wordlist": "[\"spell\",\"checker\"]",
+    "queries": "[\"SPELL\",\"spell\",\"spall\",\"CHECKER\",\"chacker\",\"checkor\"]"
+  },
+  {
+    "wordlist": "[\"Aeiou\"]",
+    "queries": "[\"aeiou\",\"AEIOU\",\"Aeiou\",\"ooooo\"]"
+  },
+  {
+    "wordlist": "[\"bcdfg\"]",
+    "queries": "[\"BCDFG\",\"bcdfg\",\"bedfg\"]"
+  },
+  {
+    "wordlist": "[\"programming\",\"contest\"]",
+    "queries": "[\"PROGRAMMING\",\"prigramming\",\"CONTEST\",\"cuntest\",\"xyz\"]"
+  },
+  {
+    "wordlist": "[\"z\"]",
+    "queries": "[\"Z\",\"a\",\"e\"]"
+  },
+  {
+    "wordlist": "[\"same\",\"SAME\"]",
+    "queries": "[\"same\",\"Same\",\"SAME\",\"seme\",\"soma\"]"
+  },
+  {
+    "wordlist": "[\"up\",\"down\"]",
+    "queries": "[\"UP\",\"Down\",\"DOWN\",\"ap\",\"dawn\"]"
+  },
+  {
+    "wordlist": "[\"left\",\"right\"]",
+    "queries": "[\"LEFT\",\"lift\",\"RIGHT\",\"roght\",\"reft\"]"
+  },
+  {
+    "wordlist": "[\"one\",\"two\",\"three\"]",
+    "queries": "[\"ONE\",\"ane\",\"TWO\",\"thee\",\"THREE\",\"thrae\",\"four\"]"
+  },
+  {
+    "wordlist": "[\"qwerty\"]",
+    "queries": "[\"QWERTY\",\"qwerty\",\"qwarty\",\"qwerti\"]"
+  },
+  {
+    "wordlist": "[\"hello\"]",
+    "queries": "[]"
+  },
+  {
+    "wordlist": "[]",
+    "queries": "[\"hello\",\"world\"]"
+  },
+  {
+    "wordlist": "[\"Abc\",\"aBc\",\"abC\"]",
+    "queries": "[\"abc\",\"ABC\",\"Abc\",\"ebc\",\"obc\"]"
+  },
+  {
+    "wordlist": "[\"vowel\",\"VOWEL\"]",
+    "queries": "[\"Vowel\",\"vowel\",\"VOWEL\",\"vawel\",\"viwel\",\"vowelx\"]"
+  }
+]

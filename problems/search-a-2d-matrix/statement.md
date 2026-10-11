@@ -1,9 +1,11 @@
-Given a nonempty rectangular integer matrix and an integer `target`, return `true` if `target` appears in the matrix. Otherwise, return `false`.
+You are handed a rectangular integer table that is never empty, together with an integer `target`. Report whether `target` occurs anywhere inside the table: answer `true` when it does and `false` when it does not.
 
-The matrix is globally sorted:
+The table obeys one strict global ordering:
 
-- Every row is sorted in nondecreasing order.
-- The first value of each row after the first is greater than the last value of the preceding row.
+- each row runs left to right in nondecreasing order;
+- for every row past the first, its opening entry is strictly larger than the closing entry of the row directly above it.
+
+Put differently, reading the rows one after another starting from the top left produces a single fully sorted sequence.
 
 **Constraints:**
 
@@ -12,4 +14,4 @@ The matrix is globally sorted:
 - `-10^4 <= matrix[i][j], target <= 10^4`
 - The matrix satisfies the global ordering described above.
 
-**Portable interface:** Implement `searchMatrix(matrix, target)` directly. The judge supplies the rectangular matrix in each language's native two-dimensional integer-array representation.
+**Judge adaptation:** Code `searchMatrix(matrix, target)` directly in this repository. The test harness in each language passes the rectangle using that language's usual nested integer-array type.

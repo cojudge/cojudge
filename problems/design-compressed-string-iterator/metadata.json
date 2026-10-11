@@ -1,0 +1,66 @@
+{
+  "id": "design-compressed-string-iterator",
+  "title": "640. Design Compressed String Iterator",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/design-compressed-string-iterator/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "compressed = \"L1e2t1C1o1d1e1\", operations = [\"next\",\"next\",\"next\",\"next\",\"next\",\"hasNext\",\"next\",\"hasNext\"]",
+      "output": "[\"L\",\"e\",\"e\",\"t\",\"C\",\"true\",\"o\",\"true\"]",
+      "explanation": "Letters expand to L,e,e,t,C,o,d,e; queries consume them in order."
+    },
+    {
+      "input": "compressed = \"x3\", operations = [\"next\",\"next\",\"next\",\"next\",\"hasNext\"]",
+      "output": "[\"x\",\"x\",\"x\",\"\",\"false\"]",
+      "explanation": "After three x values the stream is empty, so next gives an empty string."
+    },
+    {
+      "input": "compressed = \"a10\", operations = [\"hasNext\",\"next\",\"hasNext\"]",
+      "output": "[\"true\",\"a\",\"true\"]",
+      "explanation": "Ten copies remain; one next still leaves more."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> runCompressedIterator(String compressed, String[] operations) {\n        return new java.util.ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runCompressedIterator(self, compressed: str, operations: List[str]) -> List[str]:\n        pass",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> runCompressedIterator(string compressed, vector<string>& operations) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<string> RunCompressedIterator(string compressed, string[] operations)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_compressed_iterator(compressed: String, operations: Vec<String>) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunCompressedIterator(compressed string, operations []string) []string {\n    return []string{}\n}",
+    "typescript": "export function runCompressedIterator(compressed: string, operations: string[]): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $compressed\n     * @param string[] $operations\n     * @return string[]\n     */\n    public function runCompressedIterator($compressed, $operations) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "compressed": "L1e2t1C1o1d1e1",
+      "operations": "[\"next\",\"next\",\"next\",\"next\",\"next\",\"hasNext\",\"next\",\"hasNext\"]"
+    },
+    {
+      "compressed": "x3",
+      "operations": "[\"next\",\"next\",\"next\",\"next\",\"hasNext\"]"
+    },
+    {
+      "compressed": "a10",
+      "operations": "[\"hasNext\",\"next\",\"hasNext\"]"
+    }
+  ],
+  "functionName": "runCompressedIterator",
+  "params": [
+    {
+      "name": "compressed",
+      "type": "string"
+    },
+    {
+      "name": "operations",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Parse letter-plus-count runs once into queues.",
+    "Keep a pointer plus remaining count for the current run.",
+    "next emits the current letter or an empty string when empty; hasNext emits true/false strings.",
+    "Adaptation: implement runCompressedIterator(compressed, operations) returning one string per operation."
+  ]
+}

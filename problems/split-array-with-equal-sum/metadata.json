@@ -1,0 +1,58 @@
+{
+  "id": "split-array-with-equal-sum",
+  "title": "605. Split Array with Equal Sum",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/split-array-with-equal-sum/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,2,1,2,1,2,1]",
+      "output": "true",
+      "explanation": "Separators at 1,3,5 give four sums of 1."
+    },
+    {
+      "input": "nums = [1,2,1,2,1,2,1,2]",
+      "output": "false",
+      "explanation": "No valid triple exists."
+    },
+    {
+      "input": "nums = [0,0,0,0,0,0,0]",
+      "output": "true",
+      "explanation": "Zero blocks everywhere."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean splitArray(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def splitArray(self, nums: List[int]) -> bool:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool splitArray(vector<int>& nums) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool SplitArray(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn split_array(nums: Vec<i32>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc SplitArray(nums []int) bool {\n    \n}",
+    "typescript": "export function splitArray(nums: number[]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return bool\n     */\n    public function splitArray($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,1,2,1,2,1]"
+    },
+    {
+      "nums": "[1,2,1,2,1,2,1,2]"
+    },
+    {
+      "nums": "[0,0,0,0,0,0,0]"
+    }
+  ],
+  "functionName": "splitArray",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Precompute prefix sums so any block sum is O(1).",
+    "Fix the middle separator j, collect left equal-sum candidates in a set, then test right pairs against it.",
+    "Arrays shorter than 7 can never satisfy the spacing rules."
+  ]
+}

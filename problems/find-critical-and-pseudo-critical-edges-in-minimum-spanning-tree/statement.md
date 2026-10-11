@@ -1,8 +1,8 @@
-Given a weighted undirected connected graph with `n` vertices numbered from `0` to `n - 1`, and an array `edges` where `edges[i] = [ai, bi, weighti]` represents a bidirectional and weighted edge between nodes `ai` and `bi`. A minimum spanning tree (MST) is a subset of the graph's edges that connects all vertices without cycles and with the minimum possible total edge weight.
+Consider a connected, undirected, weighted graph holding `n` vertices labeled `0` through `n - 1`. Its edges arrive as an array `edges`, where `edges[i] = [ai, bi, weighti]` describes a two-way link between `ai` and `bi` carrying weight `weighti`. A minimum spanning tree (MST) is a cycle-free collection of edges that still links every vertex while keeping the summed weight as low as achievable.
 
-Find all the critical and pseudo-critical edges in the given graph's minimum spanning tree (MST). An MST edge whose deletion from the graph would cause the MST weight to increase is a critical edge. On the other hand, a pseudo-critical edge is that which can appear in some MSTs but not all.
+Classify the edges of this graph's MSTs into two groups: an MST edge is critical when removing it from the graph forces every spanning tree to become strictly heavier than the optimum; it is pseudo-critical when it is absent from at least one MST yet present in a different MST of the same optimal weight.
 
-Note that you can return the indices of the edges in any order.
+Report the original positions of these edges as two lists. Either ordering of the indices is acceptable.
 
 **Example 1:**
 ```
@@ -22,4 +22,4 @@ Output: [[],[0,1,2,3]]
 - `edges[i].length == 3`
 - `0 <= ai < bi < n`
 - `1 <= weighti <= 1000`
-- All pairs `(ai, bi)` are distinct
+- Every pair `(ai, bi)` appears at most once.

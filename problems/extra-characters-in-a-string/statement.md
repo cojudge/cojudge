@@ -1,13 +1,13 @@
-You are given a **0-indexed** string `s` and a dictionary of words `dictionary`. You have to break `s` into one or more **non-overlapping substrings** such that each substring is present in `dictionary`. There may be some **extra characters** in `s` which are not present in any of the substrings.
+You are handed a string `s` indexed from `0` alongside a word list `dictionary`. Split `s` into one or more chunks that do not overlap, where every kept chunk must show up verbatim in `dictionary`. Characters of `s` that fall outside all kept chunks count as leftover.
 
-Return *the **minimum** number of extra characters left over if you break up `s` optimally*.
+Arrange the split so that the total count of leftover characters is as small as possible, and report that minimum.
 
 **Example 1:**
 
 ```
 Input: s = "leetscode", dictionary = ["leet","code","leetcode"]
 Output: 1
-Explanation: We can break s in two substrings: "leet" from index 0 to 3 and "code" from index 5 to 8. There is only 1 unused character (at index 4), so we return 1.
+Explanation: Keep "leet" covering indices 0 through 3 and "code" covering indices 5 through 8. Only the character at index 4 stays unused, giving 1.
 ```
 
 **Example 2:**
@@ -15,7 +15,7 @@ Explanation: We can break s in two substrings: "leet" from index 0 to 3 and "cod
 ```
 Input: s = "sayhelloworld", dictionary = ["hello","world"]
 Output: 3
-Explanation: We can break s in two substrings: "hello" from index 3 to 7 and "world" from index 8 to 12. The characters at indices 0, 1, 2 are not used in any substring and thus are considered as extra characters. Hence, we return 3.
+Explanation: Keep "hello" covering indices 3 through 7 and "world" covering indices 8 through 12. The characters at indices 0, 1 and 2 stay unused, giving 3.
 ```
 
 **Constraints:**
@@ -23,5 +23,5 @@ Explanation: We can break s in two substrings: "hello" from index 3 to 7 and "wo
 - `1 <= s.length <= 50`
 - `1 <= dictionary.length <= 50`
 - `1 <= dictionary[i].length <= 50`
-- `dictionary[i]` and `s` consists of only lowercase English letters.
-- `dictionary` contains distinct words
+- `dictionary[i]` and `s` consist of only lowercase English letters.
+- `dictionary` holds distinct words.

@@ -1,0 +1,56 @@
+{
+  "id": "set-mismatch",
+  "title": "667. Set Mismatch",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/set-mismatch/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,2,2,4]",
+      "output": "[2,3]",
+      "explanation": "2 occurs twice and 3 never occurs."
+    },
+    {
+      "input": "nums = [1,1]",
+      "output": "[1,2]"
+    },
+    {
+      "input": "nums = [3,2,2]",
+      "output": "[2,1]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] findErrorNums(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findErrorNums(self, nums: List[int]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> findErrorNums(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public int[] FindErrorNums(int[] nums) \n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_error_nums(nums: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc FindErrorNums(nums []int) []int {\n    return nil\n}",
+    "typescript": "export function findErrorNums(nums: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function findErrorNums($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,2,4]"
+    },
+    {
+      "nums": "[1,1]"
+    },
+    {
+      "nums": "[3,2,2]"
+    }
+  ],
+  "functionName": "findErrorNums",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Count occurrences once; the value seen twice is the duplicate.",
+    "The missing value is the one count of zero, or n(n+1)/2 minus the set sum.",
+    "Return the pair as [duplicate, missing] in that order."
+  ]
+}

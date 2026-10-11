@@ -1,0 +1,60 @@
+{
+  "id": "k-th-smallest-in-lexicographical-order",
+  "title": "508. K-th Smallest in Lexicographical Order",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/k-th-smallest-in-lexicographical-order/",
+  "category": "trie",
+  "examples": [
+    {
+      "input": "n = 13, k = 2",
+      "output": "10",
+      "explanation": "Dictionary order begins 1, 10, 11, 12, 13, 2, .... The second entry is 10."
+    },
+    {
+      "input": "n = 1, k = 1",
+      "output": "1",
+      "explanation": "Only one value exists."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findKthNumber(int n, int k) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def findKthNumber(self, n: int, k: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int findKthNumber(int n, int k) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int FindKthNumber(int n, int k)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_kth_number(n: i32, k: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FindKthNumber(n int, k int) int {\n    return 0\n}",
+    "typescript": "export function findKthNumber(n: number, k: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int $k\n     * @return int\n     */\n    public function findKthNumber($n, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 13,
+      "k": 2
+    },
+    {
+      "n": 1,
+      "k": 1
+    },
+    {
+      "n": 13,
+      "k": 5
+    }
+  ],
+  "functionName": "findKthNumber",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Think of numbers as a ten-way tree where children of x are x*10 through x*10+9.",
+    "Count how many values sit under a prefix without visiting each one, then skip whole subtrees or dive deeper.",
+    "Decrease k as you consume prefixes or descend, stopping when k reaches zero."
+  ]
+}

@@ -1,10 +1,6 @@
-You have a lock with 4 circular wheels. Each wheel has 10 slots: `'0','1','2','3','4','5','6','7','8','9'`. The wheels can rotate freely and wrap around.
+Picture a combination lock with four round dials, each showing one of `'0'` through `'9'`. A dial turned past `'9'` wraps to `'0'`, and turned below `'0'` wraps to `'9'`. One move consists of rotating a single dial forward or backward by one position.
 
-The lock initially starts at `'0000'`, a string representing the state of the 4 wheels.
-
-You are given a list of `deadends` dead ends, meaning if the lock displays any of these codes, the wheels of the lock will stop turning and you will be unable to open it.
-
-Given a `target` representing the combination which will unlock the lock, return the minimum total number of turns required to open the lock, or `-1` if it is impossible.
+The lock begins at `'0000'`. A set `deadends` lists forbidden codes: stepping onto any of them jams the lock permanently. Starting from the initial state without counting it as a visit if it is blocked, find the fewest moves that reach `target`. Return `-1` when the target can never be reached safely.
 
 **Example 1:**
 ```

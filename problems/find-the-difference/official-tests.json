@@ -1,0 +1,122 @@
+[
+  {
+    "s": "abcd",
+    "t": "abcde"
+  },
+  {
+    "s": "",
+    "t": "y"
+  },
+  {
+    "s": "aaab",
+    "t": "aaaba"
+  },
+  {
+    "s": "a",
+    "t": "aa"
+  },
+  {
+    "s": "a",
+    "t": "ab"
+  },
+  {
+    "s": "ae",
+    "t": "aea"
+  },
+  {
+    "s": "xyz",
+    "t": "xyzz"
+  },
+  {
+    "s": "hello",
+    "t": "hellol"
+  },
+  {
+    "s": "abc",
+    "t": "cabd"
+  },
+  {
+    "s": "q",
+    "t": "qq"
+  },
+  {
+    "s": "qq",
+    "t": "qqq"
+  },
+  {
+    "s": "abcd",
+    "t": "abecd"
+  },
+  {
+    "s": "aabbcc",
+    "t": "aabbccd"
+  },
+  {
+    "s": "z",
+    "t": "zz"
+  },
+  {
+    "s": "m",
+    "t": "nm"
+  },
+  {
+    "s": "mn",
+    "t": "mnm"
+  },
+  {
+    "s": "aaaa",
+    "t": "aaaaa"
+  },
+  {
+    "s": "abcdefg",
+    "t": "abcdefgh"
+  },
+  {
+    "s": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "t": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaz"
+  },
+  {
+    "s": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+    "t": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzyz"
+  },
+  {
+    "s": "abcde",
+    "t": "edcbaf"
+  },
+  {
+    "s": "xxyy",
+    "t": "xxyyx"
+  },
+  {
+    "s": "",
+    "t": "a"
+  },
+  {
+    "s": "",
+    "t": "z"
+  },
+  {
+    "s": "ab",
+    "t": "aab"
+  },
+  {
+    "s": "ab",
+    "t": "abb"
+  },
+  {
+    "s": "code",
+    "t": "coded"
+  },
+  {
+    "s": "test",
+    "t": "testt"
+  },
+  {
+    "s": "u",
+    "t": "vu"
+  },
+  {
+    "s": "pqrs",
+    "t": "pqrst"
+  }
+]

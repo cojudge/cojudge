@@ -1,0 +1,58 @@
+{
+  "id": "smallest-good-base",
+  "title": "547. Smallest Good Base",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/smallest-good-base/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = \"13\"",
+      "output": "\"3\"",
+      "explanation": "13 is 111 in base 3."
+    },
+    {
+      "input": "n = \"4681\"",
+      "output": "\"8\"",
+      "explanation": "4681 is 11111 in base 8."
+    },
+    {
+      "input": "n = \"1000000000000000000\"",
+      "output": "\"999999999999999999\"",
+      "explanation": "Only 11 in base n-1 works."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String smallestGoodBase(String n) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def smallestGoodBase(self, n: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string smallestGoodBase(string n) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string SmallestGoodBase(string n)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn smallest_good_base(n: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc SmallestGoodBase(n string) string {\n    return \"\"\n}",
+    "typescript": "export function smallestGoodBase(n: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $n\n     * @return string\n     */\n    public function smallestGoodBase($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": "13"
+    },
+    {
+      "n": "4681"
+    },
+    {
+      "n": "1000000000000000000"
+    }
+  ],
+  "functionName": "smallestGoodBase",
+  "params": [
+    {
+      "name": "n",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "A longer all-ones run means a smaller base, so try long lengths first.",
+    "For a fixed length, the value grows with the base: binary-search it.",
+    "Accumulate 1+k+...+k^m with early exit once the sum passes n to avoid overflow."
+  ]
+}

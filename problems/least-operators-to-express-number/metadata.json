@@ -1,0 +1,65 @@
+{
+  "id": "least-operators-to-express-number",
+  "title": "950. Least Operators to Express Number",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/least-operators-to-express-number/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "x = 3, target = 19",
+      "output": "5",
+      "explanation": "The flat chain 3*3+3*3+3/3 evaluates to 9+9+1 with 5 operators, and nothing shorter reaches 19."
+    },
+    {
+      "input": "x = 5, target = 501",
+      "output": "8",
+      "explanation": "The chain 5*5*5*5-5*5*5+5/5 evaluates to 625-125+1 with 8 operators, which is optimal."
+    },
+    {
+      "input": "x = 100, target = 100000000",
+      "output": "3",
+      "explanation": "The target equals 100^4, built with 3 multiplications and nothing else."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int leastOpsExpressTarget(int x, int target) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def leastOpsExpressTarget(self, x: int, target: int) -> int:\n        return 0",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int leastOpsExpressTarget(int x, int target) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int LeastOpsExpressTarget(int x, int target)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn least_ops_express_target(x: i32, target: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc LeastOpsExpressTarget(x int, target int) int {\n    return 0\n}",
+    "typescript": "export function leastOpsExpressTarget(x: number, target: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $x\n     * @param int $target\n     * @return int\n     */\n    public function leastOpsExpressTarget($x, $target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "x": 3,
+      "target": 19
+    },
+    {
+      "x": 5,
+      "target": 501
+    },
+    {
+      "x": 100,
+      "target": 100000000
+    }
+  ],
+  "functionName": "leastOpsExpressTarget",
+  "params": [
+    {
+      "name": "x",
+      "type": "int"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Compare building up from the power below the target against overshooting the power above and subtracting.",
+    "Powers of x cost (exponent - 1) multiplications; the value 1 costs one division (x/x).",
+    "Memoize on the remaining value \u2014 only logarithmically many states appear."
+  ]
+}

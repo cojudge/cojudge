@@ -1,10 +1,10 @@
-An undirected graph began as a tree with nodes labeled from `1` to `n`. One
-additional edge was then added between two different nodes, and that edge did
-not already exist in the tree.
+Start from a tree whose vertices carry the labels `1` through `n`. A single
+extra link is then inserted joining two distinct vertices that were not
+already joined directly.
 
-Given the resulting edge list, return an edge that can be removed so that the
-graph is a tree again. If more than one edge on the cycle could be removed,
-return the one that appears last in the input.
+From the resulting edge listing, pick out one edge whose deletion turns the
+graph back into a tree. When the cycle offers several deletable candidates,
+hand back the candidate listed last in the input.
 
 **Constraints:**
 

@@ -1,0 +1,65 @@
+{
+  "id": "prison-cells-after-n-days",
+  "title": "943. Prison Cells After N Days",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/prison-cells-after-n-days/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "cells = [0,1,0,1,1,0,0,1], N = 7",
+      "output": "[0,0,1,1,0,0,0,0]",
+      "explanation": "After seven daily updates the row settles into [0,0,1,1,0,0,0,0]."
+    },
+    {
+      "input": "cells = [1,0,0,1,0,0,1,0], N = 1",
+      "output": "[0,0,0,1,0,0,1,0]",
+      "explanation": "A single update turns each interior cell on exactly when its two neighbours match."
+    },
+    {
+      "input": "cells = [1,1,1,0,1,1,1,1], N = 2",
+      "output": "[0,1,1,1,1,0,0,0]",
+      "explanation": "Two updates in a row propagate the single gap across the row."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] prisonAfterNDays(int[] cells, int n) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def prisonAfterNDays(self, cells: List[int], n: int) -> List[int]:\n        return []",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> prisonAfterNDays(vector<int>& cells, int n) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] PrisonAfterNDays(int[] cells, int n)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn prison_after_n_days(cells: Vec<i32>, n: i32) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc PrisonAfterNDays(cells []int, n int) []int {\n    return nil\n}",
+    "typescript": "export function prisonAfterNDays(cells: number[], n: number): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $cells\n     * @param int $n\n     * @return int[]\n     */\n    public function prisonAfterNDays($cells, $n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "cells": "[0,1,0,1,1,0,0,1]",
+      "n": 7
+    },
+    {
+      "cells": "[1,0,0,1,0,0,1,0]",
+      "n": 1
+    },
+    {
+      "cells": "[1,1,1,0,1,1,1,1]",
+      "n": 2
+    }
+  ],
+  "functionName": "prisonAfterNDays",
+  "params": [
+    {
+      "name": "cells",
+      "type": "int_array"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Only 256 row layouts exist, so the evolution must eventually loop.",
+    "Record the first day each layout appears; on a repeat, skip whole cycles at once.",
+    "The two border cells always clear to 0 after day one."
+  ]
+}

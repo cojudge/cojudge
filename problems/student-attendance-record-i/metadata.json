@@ -1,0 +1,57 @@
+{
+  "id": "student-attendance-record-i",
+  "title": "607. Student Attendance Record I",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/student-attendance-record-i/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"PPALLP\"",
+      "output": "true",
+      "explanation": "One absence, no triple late."
+    },
+    {
+      "input": "s = \"PPALLL\"",
+      "output": "false",
+      "explanation": "Three consecutive lates."
+    },
+    {
+      "input": "s = \"AA\"",
+      "output": "false",
+      "explanation": "Two absences."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean checkRecord(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def checkRecord(self, s: str) -> bool:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool checkRecord(string s) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool CheckRecord(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn check_record(s: String) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc CheckRecord(s string) bool {\n    \n}",
+    "typescript": "export function checkRecord(s: string): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return bool\n     */\n    public function checkRecord($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "PPALLP"
+    },
+    {
+      "s": "PPALLL"
+    },
+    {
+      "s": "AA"
+    }
+  ],
+  "functionName": "checkRecord",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Count how many times A appears; two or more fails immediately.",
+    "Scan for the substring LLL; its presence fails the record."
+  ]
+}

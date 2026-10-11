@@ -1,0 +1,65 @@
+{
+  "id": "maximum-vacation-days",
+  "title": "622. Maximum Vacation Days",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/maximum-vacation-days/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "flights = [[0,1,1],[1,0,1],[1,1,0]], days = [[1,3,1],[6,0,3],[3,3,3]]",
+      "output": "12",
+      "explanation": "Weeks in cities 1, 0, 2 give 6 + 3 + 3."
+    },
+    {
+      "input": "flights = [[0,0,0],[0,0,0],[0,0,0]], days = [[1,1,1],[7,7,7],[7,7,7]]",
+      "output": "3",
+      "explanation": "Stuck in city 0, collecting 1 per week."
+    },
+    {
+      "input": "flights = [[0,1,1],[1,0,1],[1,1,0]], days = [[7,0,0],[0,7,0],[0,0,7]]",
+      "output": "21",
+      "explanation": "Hop 0 -> 1 -> 2 for 7 + 7 + 7."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxVacationDays(int[][] flights, int[][] days) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxVacationDays(self, flights: List[List[int]], days: List[List[int]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int maxVacationDays(vector<vector<int>>& flights, vector<vector<int>>& days) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MaxVacationDays(int[][] flights, int[][] days)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_vacation_days(flights: Vec<Vec<i32>>, days: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MaxVacationDays(flights [][]int, days [][]int) int {\n    return 0\n}",
+    "typescript": "export function maxVacationDays(flights: number[][], days: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $flights\n     * @param int[][] $days\n     * @return int\n     */\n    public function maxVacationDays($flights, $days) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "flights": "[[0,1,1],[1,0,1],[1,1,0]]",
+      "days": "[[1,3,1],[6,0,3],[3,3,3]]"
+    },
+    {
+      "flights": "[[0,0,0],[0,0,0],[0,0,0]]",
+      "days": "[[1,1,1],[7,7,7],[7,7,7]]"
+    },
+    {
+      "flights": "[[0,1,1],[1,0,1],[1,1,0]]",
+      "days": "[[7,0,0],[0,7,0],[0,0,7]]"
+    }
+  ],
+  "functionName": "maxVacationDays",
+  "params": [
+    {
+      "name": "flights",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "days",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Roll a one-dimensional DP over weeks: dp[city] is the best total ending that week in that city.",
+    "Week 0 is reachable from city 0 via a flight or by staying; later weeks transition from any city with a flight in.",
+    "Unreachable states stay at negative infinity and the answer is the best value after the last week."
+  ]
+}

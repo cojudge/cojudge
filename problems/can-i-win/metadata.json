@@ -1,0 +1,64 @@
+{
+  "id": "can-i-win",
+  "title": "529. Can I Win",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/can-i-win/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "maxChoosableInteger = 10, desiredTotal = 11",
+      "output": "false",
+      "explanation": "Whatever the first player picks, the second player can always answer with a number that reaches 11 first."
+    },
+    {
+      "input": "maxChoosableInteger = 10, desiredTotal = 0",
+      "output": "true",
+      "explanation": "The target is already met, so the first player has won without moving."
+    },
+    {
+      "input": "maxChoosableInteger = 10, desiredTotal = 1",
+      "output": "true",
+      "explanation": "The first player picks 1 and reaches the target immediately."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean canIWin(int maxChoosableInteger, int desiredTotal) {\n        \n    }\n}",
+    "python": "class Solution:\n    def canIWin(self, maxChoosableInteger: int, desiredTotal: int) -> bool:\n        pass",
+    "cpp": "class Solution {\npublic:\n    bool canIWin(int maxChoosableInteger, int desiredTotal) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool CanIWin(int maxChoosableInteger, int desiredTotal) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_i_win(maxChoosableInteger: i32, desiredTotal: i32) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc CanIWin(maxChoosableInteger int, desiredTotal int) bool {\n    \n}",
+    "typescript": "export function canIWin(maxChoosableInteger: number, desiredTotal: number): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $maxChoosableInteger\n     * @param int $desiredTotal\n     * @return bool\n     */\n    public function canIWin($maxChoosableInteger, $desiredTotal) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "maxChoosableInteger": 10,
+      "desiredTotal": 11
+    },
+    {
+      "maxChoosableInteger": 10,
+      "desiredTotal": 0
+    },
+    {
+      "maxChoosableInteger": 10,
+      "desiredTotal": 1
+    }
+  ],
+  "functionName": "canIWin",
+  "params": [
+    {
+      "name": "maxChoosableInteger",
+      "type": "int"
+    },
+    {
+      "name": "desiredTotal",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Encode the set of used numbers as a bitmask and memoize game states so each reachable position is solved once.",
+    "If the sum 1 + 2 + ... + max falls short of the target, the first player can never win."
+  ]
+}

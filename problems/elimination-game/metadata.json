@@ -1,0 +1,58 @@
+{
+  "category": "math",
+  "difficulty": "Medium",
+  "examples": [
+    {
+      "explanation": "[1..9] -> [2,4,6,8] -> [2,6] -> [6].",
+      "input": "n = 9",
+      "output": "6"
+    },
+    {
+      "explanation": "A single entry is already the survivor.",
+      "input": "n = 1",
+      "output": "1"
+    },
+    {
+      "explanation": "[1,2,3,4] -> [2,4] -> [2].",
+      "input": "n = 4",
+      "output": "2"
+    }
+  ],
+  "functionName": "lastRemaining",
+  "hints": [
+    "Track the first surviving value, the gap between survivors, and how many remain.",
+    "A leftward sweep always moves the head forward by the gap; a rightward sweep moves it only when the count is odd.",
+    "After each sweep halve the count and double the gap, then flip direction."
+  ],
+  "id": "elimination-game",
+  "link": "https://leetcode.com/problems/elimination-game/",
+  "outputType": "int",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "starterCode": {
+    "cpp": "class Solution {\npublic:\n    int lastRemaining(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int LastRemaining(int n) \n    {\n        return 0;\n    }\n}",
+    "go": "package main\n\nfunc LastRemaining(n int) int {\n    return 0\n}",
+    "java": "class Solution {\n    public int lastRemaining(int n) {\n        return 0;\n    }\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function lastRemaining($n) {\n\n    }\n}",
+    "python": "class Solution:\n    def lastRemaining(self, n: int) -> int:\n        pass",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn last_remaining(n: i32) -> i32 {\n        0\n    }\n}",
+    "typescript": "export function lastRemaining(n: number): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "n": 9
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 4
+    }
+  ],
+  "title": "466. Elimination Game"
+}

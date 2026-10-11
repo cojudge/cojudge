@@ -1,0 +1,65 @@
+{
+  "id": "word-subsets",
+  "title": "904. Word Subsets",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/word-subsets/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "words1 = [\"amazon\",\"apple\",\"facebook\",\"google\",\"leetcode\"], words2 = [\"e\",\"o\"]",
+      "output": "[\"facebook\",\"google\",\"leetcode\"]",
+      "explanation": "These are the words containing at least one e and at least one o."
+    },
+    {
+      "input": "words1 = [\"amazon\",\"apple\",\"facebook\",\"google\",\"leetcode\"], words2 = [\"lo\",\"eo\"]",
+      "output": "[\"google\",\"leetcode\"]",
+      "explanation": "Only these words cover the letter demands of both \"lo\" and \"eo\"."
+    },
+    {
+      "input": "words1 = [\"amazon\",\"apple\",\"facebook\",\"google\",\"leetcode\"], words2 = [\"ec\",\"oc\",\"ceo\"]",
+      "output": "[\"facebook\",\"leetcode\"]",
+      "explanation": "Each of these words contains every letter pattern required by all of words2."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> wordSubsets(String[] words1, String[] words2) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def wordSubsets(self, words1: List[str], words2: List[str]) -> List[str]:\n        ",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> wordSubsets(vector<string>& words1, vector<string>& words2) {\n        \n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<string> WordSubsets(string[] words1, string[] words2) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn word_subsets(words1: Vec<String>, words2: Vec<String>) -> Vec<String> {\n        \n    }\n}",
+    "go": "package main\n\nfunc WordSubsets(words1 []string, words2 []string) []string {\n    \n}",
+    "typescript": "export function wordSubsets(words1: string[], words2: string[]): string[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $words1\n     * @param string[] $words2\n     * @return string[]\n     */\n    public function wordSubsets($words1, $words2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "words1": "[\"amazon\", \"apple\", \"facebook\", \"google\", \"leetcode\"]",
+      "words2": "[\"e\", \"o\"]"
+    },
+    {
+      "words1": "[\"amazon\", \"apple\", \"facebook\", \"google\", \"leetcode\"]",
+      "words2": "[\"lo\", \"eo\"]"
+    },
+    {
+      "words1": "[\"amazon\", \"apple\", \"facebook\", \"google\", \"leetcode\"]",
+      "words2": "[\"ec\", \"oc\", \"ceo\"]"
+    }
+  ],
+  "functionName": "wordSubsets",
+  "params": [
+    {
+      "name": "words1",
+      "type": "string_array"
+    },
+    {
+      "name": "words2",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "A words1 entry is universal when, for every letter, its count there reaches the largest count demanded by any single words2 entry.",
+    "Collapse all of words2 into one demand table holding per-letter maxima, then test each words1 entry against it.",
+    "The order of the returned words does not matter for judging; sorted comparison is used."
+  ]
+}

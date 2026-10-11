@@ -1,0 +1,58 @@
+{
+  "id": "flip-game",
+  "title": "389. Flip Game",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/flip-game/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "currentState = \"++++\"",
+      "output": "[\"--++\",\"+--+\",\"++--\"]",
+      "explanation": "Each of the three adjacent pairs flips once."
+    },
+    {
+      "input": "currentState = \"--++\"",
+      "output": "[\"----\"]",
+      "explanation": "Only the trailing pair can flip."
+    },
+    {
+      "input": "currentState = \"-+-\"",
+      "output": "[]",
+      "explanation": "No \"++\" exists, so no move is possible."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> generatePossibleNextMoves(String currentState) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def generatePossibleNextMoves(self, currentState: str) -> List[str]:\n        ",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> generatePossibleNextMoves(string currentState) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<string> GeneratePossibleNextMoves(string currentState)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn generate_possible_next_moves(current_state: String) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc GeneratePossibleNextMoves(currentState string) []string {\n    return nil\n}",
+    "typescript": "export function generatePossibleNextMoves(currentState: string): string[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $currentState\n     * @return string[]\n     */\n    public function generatePossibleNextMoves($currentState) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "currentState": "++++"
+    },
+    {
+      "currentState": "--++"
+    },
+    {
+      "currentState": "-+-"
+    }
+  ],
+  "functionName": "generatePossibleNextMoves",
+  "params": [
+    {
+      "name": "currentState",
+      "type": "string"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Scan every adjacent pair of positions once and test whether both hold '+'..., hide the literal: say both hold a plus sign.",
+    "Build each answer by copying the board and flipping just the chosen pair.",
+    "Boards with no flippable pair produce an empty result list."
+  ]
+}

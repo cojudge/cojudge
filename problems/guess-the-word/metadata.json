@@ -1,0 +1,83 @@
+{
+  "id": "guess-the-word",
+  "title": "841. Guess the Word",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/guess-the-word/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "wordlist = [\"acckzz\",\"ccbazz\",\"eiowzz\",\"abcczz\"], secret = \"acckzz\"",
+      "output": "\"acckzz\"",
+      "explanation": "Hidden word is the first entry."
+    },
+    {
+      "input": "wordlist = [\"hamada\",\"khaled\"], secret = \"khaled\"",
+      "output": "\"khaled\"",
+      "explanation": "Filtering leaves the secret."
+    },
+    {
+      "input": "wordlist = [\"abcd\",\"efgh\",\"ijkl\"], secret = \"efgh\"",
+      "output": "\"efgh\"",
+      "explanation": "Return the hidden entry."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String runGuess(String[] wordlist, String secret) {\n        return \"\";\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runGuess(self, wordlist: List[str], secret: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string runGuess(vector<string>& wordlist, string secret) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string RunGuess(string[] wordlist, string secret)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_guess(wordlist: Vec<String>, secret: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc RunGuess(wordlist []string, secret string) string {\n    return \"\"\n}",
+    "typescript": "export function runGuess(wordlist: string[], secret: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $wordlist\n     * @param string $secret\n     * @return string\n     */\n    public function runGuess($wordlist, $secret) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "wordlist": [
+        "acckzz",
+        "ccbazz",
+        "eiowzz",
+        "abcczz"
+      ],
+      "secret": "acckzz"
+    },
+    {
+      "wordlist": [
+        "hamada",
+        "khaled"
+      ],
+      "secret": "khaled"
+    },
+    {
+      "wordlist": [
+        "abcd",
+        "efgh",
+        "ijkl"
+      ],
+      "secret": "efgh"
+    },
+    {
+      "wordlist": [
+        "aaaaaa"
+      ],
+      "secret": "aaaaaa"
+    }
+  ],
+  "functionName": "runGuess",
+  "params": [
+    {
+      "name": "wordlist",
+      "type": "string_array"
+    },
+    {
+      "name": "secret",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Score any pair by counting equal positions; this is the value the interactive judge would return.",
+    "After each guess keep only candidates whose score against the guess equals the reported score.",
+    "Pick the guess minimizing the largest score-group (minimax) so the candidate pool shrinks fastest."
+  ]
+}

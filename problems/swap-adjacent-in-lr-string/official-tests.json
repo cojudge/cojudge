@@ -1,0 +1,114 @@
+[
+  {
+    "start": "RXXLRXRXL",
+    "end": "XRLXXRRLX"
+  },
+  {
+    "start": "X",
+    "end": "L"
+  },
+  {
+    "start": "XL",
+    "end": "LX"
+  },
+  {
+    "start": "RX",
+    "end": "XR"
+  },
+  {
+    "start": "LX",
+    "end": "XL"
+  },
+  {
+    "start": "XR",
+    "end": "RX"
+  },
+  {
+    "start": "RXX",
+    "end": "XXR"
+  },
+  {
+    "start": "XXL",
+    "end": "LXX"
+  },
+  {
+    "start": "XXR",
+    "end": "RXX"
+  },
+  {
+    "start": "LXX",
+    "end": "XXL"
+  },
+  {
+    "start": "XXX",
+    "end": "XXX"
+  },
+  {
+    "start": "RRR",
+    "end": "RRR"
+  },
+  {
+    "start": "LLL",
+    "end": "LLL"
+  },
+  {
+    "start": "RLX",
+    "end": "RLX"
+  },
+  {
+    "start": "RXXL",
+    "end": "XRXL"
+  },
+  {
+    "start": "RXXL",
+    "end": "XRLX"
+  },
+  {
+    "start": "RLX",
+    "end": "XRL"
+  },
+  {
+    "start": "XRL",
+    "end": "RLX"
+  },
+  {
+    "start": "RXLX",
+    "end": "XRXL"
+  },
+  {
+    "start": "XLXR",
+    "end": "LXXR"
+  },
+  {
+    "start": "RXLXRX",
+    "end": "XRLXXR"
+  },
+  {
+    "start": "LLRXXR",
+    "end": "LLXRXR"
+  },
+  {
+    "start": "RXL",
+    "end": "LRX"
+  },
+  {
+    "start": "XXRXXLXX",
+    "end": "XXRXXLXX"
+  },
+  {
+    "start": "RXLXLX",
+    "end": "LRXXXL"
+  },
+  {
+    "start": "XLXXRXXL",
+    "end": "LXXXRXLX"
+  },
+  {
+    "start": "RXRXRXLXLX",
+    "end": "XXRRRXLXLX"
+  },
+  {
+    "start": "XXXXXXXXXX",
+    "end": "XXXXXXXXXX"
+  }
+]

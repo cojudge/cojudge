@@ -1,0 +1,61 @@
+{
+  "id": "integer-to-english-words",
+  "title": "372. Integer to English Words",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/integer-to-english-words/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "num = 123",
+      "output": "\"One Hundred Twenty Three\"",
+      "explanation": "123 reads as one hundred twenty three."
+    },
+    {
+      "input": "num = 12345",
+      "output": "\"Twelve Thousand Three Hundred Forty Five\"",
+      "explanation": "Split into 12 thousand and 345."
+    },
+    {
+      "input": "num = 0",
+      "output": "\"Zero\"",
+      "explanation": "Zero is a special case."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String numberToWords(int num) {\n        \n    }\n}",
+    "python": "class Solution:\n    def numberToWords(self, num: int) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string numberToWords(int num) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string NumberToWords(int num) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn number_to_words(num: i32) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc NumberToWords(num int) string {\n    \n}",
+    "typescript": "export function numberToWords(num: number): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $num\n     * @return string\n     */\n    public function numberToWords($num) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "num": 123
+    },
+    {
+      "num": 12345
+    },
+    {
+      "num": 0
+    },
+    {
+      "num": 1000010
+    }
+  ],
+  "functionName": "numberToWords",
+  "params": [
+    {
+      "name": "num",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Split the number into groups of three digits (thousands, millions, billions) and convert each group under 1000 separately.",
+    "Handle zero alone as \"Zero\"; skip any three-digit group that equals zero so no extra scale word appears.",
+    "Use word lists for 0-19 and tens (Twenty, Thirty, ...) plus \"Hundred\" for the sub-thousand helper."
+  ]
+}

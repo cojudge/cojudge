@@ -1,0 +1,64 @@
+{
+  "id": "maximum-average-subarray-ii",
+  "title": "666. Maximum Average Subarray II",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/maximum-average-subarray-ii/",
+  "category": "binary-search",
+  "examples": [
+    {
+      "input": "nums = [1,12,-5,-6,50,3], k = 4",
+      "output": "\"12.75\"",
+      "explanation": "The length-4 block [12,-5,-6,50] averages 12.75, beating every longer block."
+    },
+    {
+      "input": "nums = [5], k = 1",
+      "output": "\"5.0\""
+    },
+    {
+      "input": "nums = [1,2,3,4,5], k = 1",
+      "output": "\"5.0\"",
+      "explanation": "With minimum length 1 the best block is the single largest element."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String findMaxAverage(int[] nums, int k) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findMaxAverage(self, nums: List[int], k: int) -> str:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string findMaxAverage(vector<int>& nums, int k) {\n        return \"\";\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public string FindMaxAverage(int[] nums, int k) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_max_average(nums: Vec<i32>, k: i32) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc FindMaxAverage(nums []int, k int) string {\n    return \"\"\n}",
+    "typescript": "export function findMaxAverage(nums: number[], k: number): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $k\n     * @return string\n     */\n    public function findMaxAverage($nums, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,12,-5,-6,50,3]",
+      "k": 4
+    },
+    {
+      "nums": "[5]",
+      "k": 1
+    },
+    {
+      "nums": "[1,2,3,4,5]",
+      "k": 1
+    }
+  ],
+  "functionName": "findMaxAverage",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "This is a portable adaptation: return the average as a finite, double-parseable decimal string.",
+    "Binary-search the answer: for a candidate mid, check whether any block of length >= k in (nums[i] - mid) has a non-negative sum.",
+    "The check uses prefix sums with the smallest prefix seen at least k steps back; about 50 iterations settle 1e-5 precision."
+  ]
+}

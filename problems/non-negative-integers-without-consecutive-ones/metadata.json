@@ -1,0 +1,58 @@
+{
+  "id": "non-negative-integers-without-consecutive-ones",
+  "title": "639. Non-negative Integers without Consecutive Ones",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/non-negative-integers-without-consecutive-ones/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "n = 5",
+      "output": "5",
+      "explanation": "Values 0,1,2,4,5 qualify; 3 is 11 in binary."
+    },
+    {
+      "input": "n = 1",
+      "output": "2",
+      "explanation": "Both 0 and 1 qualify."
+    },
+    {
+      "input": "n = 2",
+      "output": "3",
+      "explanation": "Values 0,1,2 qualify."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findIntegers(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def findIntegers(self, n: int) -> int:\n        pass",
+    "cpp": "using namespace std;\nclass Solution {\npublic:\n    int findIntegers(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int FindIntegers(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_integers(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FindIntegers(n int) int {\n    return 0\n}",
+    "typescript": "export function findIntegers(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function findIntegers($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 5
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 2
+    }
+  ],
+  "functionName": "findIntegers",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Count binary strings without adjacent ones using Fibonacci numbers.",
+    "Scan bits from high to low, adding block counts when a 1 appears.",
+    "Stop early on consecutive ones; otherwise add one for n itself."
+  ]
+}

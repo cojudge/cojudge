@@ -1,0 +1,65 @@
+{
+  "category": "string",
+  "difficulty": "Easy",
+  "examples": [
+    {
+      "explanation": "Reordering \"abcd\" can produce \"abcd\"; the surplus letter is \"e\".",
+      "input": "s = \"abcd\", t = \"abcde\"",
+      "output": "\"e\""
+    },
+    {
+      "explanation": "The first string is empty, so the only letter of \"t\" is the extra one.",
+      "input": "s = \"\", t = \"y\"",
+      "output": "\"y\""
+    },
+    {
+      "explanation": "Three 'a' letters pair up; one 'a' is left over.",
+      "input": "s = \"aaab\", t = \"aaaba\"",
+      "output": "\"a\""
+    }
+  ],
+  "functionName": "findTheDifference",
+  "hints": [
+    "Adding up character codes of both strings leaves a difference equal to the extra letter.",
+    "XOR-ing all codes cancels paired letters and reveals the surplus one.",
+    "A 26-slot frequency table also works: the letter whose count differs is the answer."
+  ],
+  "id": "find-the-difference",
+  "link": "https://leetcode.com/problems/find-the-difference/",
+  "outputType": "string",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "t",
+      "type": "string"
+    }
+  ],
+  "starterCode": {
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string findTheDifference(string s, string t) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string FindTheDifference(string s, string t) \n    {\n        return \"\";\n    }\n}",
+    "go": "package main\n\nfunc FindTheDifference(s string, t string) string {\n    return \"\"\n}",
+    "java": "class Solution {\n    public String findTheDifference(String s, String t) {\n        return \"\";\n    }\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string $t\n     * @return string\n     */\n    public function findTheDifference($s, $t) {\n\n    }\n}",
+    "python": "class Solution:\n    def findTheDifference(self, s: str, t: str) -> str:\n        pass",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_the_difference(s: String, t: String) -> String {\n        String::new()\n    }\n}",
+    "typescript": "export function findTheDifference(s: string, t: string): string {\n    return \"\";\n}"
+  },
+  "testCases": [
+    {
+      "s": "abcd",
+      "t": "abcde"
+    },
+    {
+      "s": "",
+      "t": "y"
+    },
+    {
+      "s": "aaab",
+      "t": "aaaba"
+    }
+  ],
+  "title": "465. Find the Difference"
+}

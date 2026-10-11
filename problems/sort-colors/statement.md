@@ -1,6 +1,6 @@
-You are given an array `nums` with `n` objects colored red, white, or blue. Sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white, and blue.
+You receive a list `nums` holding `n` items painted red, white, or blue. Place equal colours side by side so that all reds come first, all whites come next, and all blues come last.
 
-Use the integers `0`, `1`, and `2` to represent red, white, and blue respectively. You must solve this without using the library's sort function. For this judge, return the sorted array.
+Red is coded as `0`, white as `1`, and blue as `2`. Do not rely on the standard-library sort. In this judge's functional setup, hand back the arranged list.
 
 **Constraints:**
 

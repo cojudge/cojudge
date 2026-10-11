@@ -1,0 +1,58 @@
+{
+  "id": "find-all-duplicates-in-an-array",
+  "title": "510. Find All Duplicates in an Array",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/find-all-duplicates-in-an-array/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [4,3,2,7,8,2,3,1]",
+      "output": "[2,3]",
+      "explanation": "Values 2 and 3 each occur twice."
+    },
+    {
+      "input": "nums = [1,1,2]",
+      "output": "[1]",
+      "explanation": "Only 1 repeats."
+    },
+    {
+      "input": "nums = [1]",
+      "output": "[]",
+      "explanation": "Nothing repeats."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<Integer> findDuplicates(int[] nums) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findDuplicates(self, nums: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> findDuplicates(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<int> FindDuplicates(int[] nums)\n    {\n        return new List<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_duplicates(nums: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc FindDuplicates(nums []int) []int {\n    return []int{}\n}",
+    "typescript": "export function findDuplicates(nums: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function findDuplicates($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[4,3,2,7,8,2,3,1]"
+    },
+    {
+      "nums": "[1,1,2]"
+    },
+    {
+      "nums": "[1]"
+    }
+  ],
+  "functionName": "findDuplicates",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Track which values have been seen; the second sighting of a value means it is a duplicate.",
+    "Because values lie in 1..n, a boolean table of size n+1 gives O(1) lookups.",
+    "Report each repeated value once even if the input guarantees at most two copies."
+  ]
+}

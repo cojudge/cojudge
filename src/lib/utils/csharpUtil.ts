@@ -85,6 +85,12 @@ public static class CSharpHelper {
         sb.Append("]");
         return sb.ToString();
     }
+
+    public static string DisplayOutput(ListNode[] arr) {
+        var parts = new List<string>();
+        foreach (var h in arr) parts.Add(DisplayOutput(h));
+        return "[" + string.Join(",", parts) + "]";
+    }
     
     public static string DisplayOutput(TreeNode root) {
         if (root == null) return "[]";

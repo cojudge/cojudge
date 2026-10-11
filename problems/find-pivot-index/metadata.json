@@ -1,0 +1,58 @@
+{
+  "id": "find-pivot-index",
+  "title": "731. Find Pivot Index",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/find-pivot-index/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,7,3,6,5,6]",
+      "output": "3",
+      "explanation": "Left of index 3 sums to 11 and right also sums to 11."
+    },
+    {
+      "input": "nums = [1,2,3]",
+      "output": "-1",
+      "explanation": "No position balances both sides."
+    },
+    {
+      "input": "nums = [2,1,-1]",
+      "output": "0",
+      "explanation": "Left of index 0 is 0 and right (1 + -1) is also 0."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int pivotIndex(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def pivotIndex(self, nums: List[int]) -> int:\n        return 0",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int pivotIndex(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int PivotIndex(int[] nums) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn pivot_index(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc PivotIndex(nums []int) int {\n    return 0\n}",
+    "typescript": "export function pivotIndex(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function pivotIndex($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,7,3,6,5,6]"
+    },
+    {
+      "nums": "[1,2,3]"
+    },
+    {
+      "nums": "[2,1,-1]"
+    }
+  ],
+  "functionName": "pivotIndex",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The right sum at i equals total minus left sum minus nums[i].",
+    "Sweep once keeping the left sum and compare against the implied right sum.",
+    "Return the first index that balances; return -1 when none does."
+  ]
+}

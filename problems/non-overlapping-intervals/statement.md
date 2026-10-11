@@ -1,6 +1,6 @@
-Return the minimum number of intervals to remove to make the rest non-overlapping.
+You are given an array `intervals` of start/end pairs. Delete as few of them as possible so that the survivors are pairwise non-overlapping. Return that smallest deletion count.
 
-Note that intervals which only touch at a point are non-overlapping. For example, `[1, 2]` and `[2, 3]` are non-overlapping.
+Two intervals that meet only at an endpoint do not count as overlapping. As an illustration, `[1, 2]` and `[2, 3]` may both be kept.
 
 **Constraints:**
 

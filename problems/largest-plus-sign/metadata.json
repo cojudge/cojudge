@@ -1,0 +1,65 @@
+{
+  "id": "largest-plus-sign",
+  "title": "765. Largest Plus Sign",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/largest-plus-sign/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "n = 5, mines = [[4,2]]",
+      "output": "2",
+      "explanation": "One mine still leaves a center with one-step arms."
+    },
+    {
+      "input": "n = 1, mines = [[0,0]]",
+      "output": "0",
+      "explanation": "No 1-cell remains."
+    },
+    {
+      "input": "n = 3, mines = []",
+      "output": "2",
+      "explanation": "The middle of a full grid reaches one cell each way."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int orderOfLargestPlusSign(int n, int[][] mines) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def orderOfLargestPlusSign(self, n: int, mines: List[List[int]]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int orderOfLargestPlusSign(int n, vector<vector<int>>& mines) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int OrderOfLargestPlusSign(int n, int[][] mines)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn order_of_largest_plus_sign(n: i32, mines: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc OrderOfLargestPlusSign(n int, mines [][]int) int {\n    return 0\n}",
+    "typescript": "export function orderOfLargestPlusSign(n: number, mines: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int[][] $mines\n     * @return int\n     */\n    public function orderOfLargestPlusSign($n, $mines) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 5,
+      "mines": "[[4,2]]"
+    },
+    {
+      "n": 1,
+      "mines": "[[0,0]]"
+    },
+    {
+      "n": 3,
+      "mines": "[]"
+    }
+  ],
+  "functionName": "orderOfLargestPlusSign",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "mines",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Build a banned set from mines, then precompute consecutive-one runs left, right, up, and down for every cell.",
+    "Each direction can be filled in one linear sweep; the plus at (r,c) is the minimum of the four runs.",
+    "Track the maximum of those minima over all cells."
+  ]
+}

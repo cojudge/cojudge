@@ -1,0 +1,58 @@
+{
+  "category": "math",
+  "difficulty": "Medium",
+  "examples": [
+    {
+      "explanation": "8 -> 4 -> 2 -> 1 uses three halvings.",
+      "input": "n = 8",
+      "output": "3"
+    },
+    {
+      "explanation": "7 -> 8 -> 4 -> 2 -> 1 beats going down first.",
+      "input": "n = 7",
+      "output": "4"
+    },
+    {
+      "explanation": "4 -> 2 -> 1.",
+      "input": "n = 4",
+      "output": "2"
+    }
+  ],
+  "functionName": "integerReplacement",
+  "hints": [
+    "Halve every even value immediately.",
+    "For odd values above 3, look at the lowest two bits: ...01 prefers decrement, ...11 prefers increment.",
+    "Treat 3 as a special case where decrementing wins."
+  ],
+  "id": "integer-replacement",
+  "link": "https://leetcode.com/problems/integer-replacement/",
+  "outputType": "int",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "starterCode": {
+    "cpp": "class Solution {\npublic:\n    int integerReplacement(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int IntegerReplacement(int n) \n    {\n        return 0;\n    }\n}",
+    "go": "package main\n\nfunc IntegerReplacement(n int) int {\n    return 0\n}",
+    "java": "class Solution {\n    public int integerReplacement(int n) {\n        return 0;\n    }\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function integerReplacement($n) {\n\n    }\n}",
+    "python": "class Solution:\n    def integerReplacement(self, n: int) -> int:\n        pass",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn integer_replacement(n: i32) -> i32 {\n        0\n    }\n}",
+    "typescript": "export function integerReplacement(n: number): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "n": 8
+    },
+    {
+      "n": 7
+    },
+    {
+      "n": 4
+    }
+  ],
+  "title": "472. Integer Replacement"
+}

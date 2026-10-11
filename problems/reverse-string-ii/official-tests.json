@@ -1,0 +1,114 @@
+[
+  {
+    "s": "abcdefg",
+    "k": 2
+  },
+  {
+    "s": "abcd",
+    "k": 2
+  },
+  {
+    "s": "a",
+    "k": 2
+  },
+  {
+    "s": "ab",
+    "k": 2
+  },
+  {
+    "s": "abc",
+    "k": 2
+  },
+  {
+    "s": "abcdef",
+    "k": 2
+  },
+  {
+    "s": "abcdefgh",
+    "k": 3
+  },
+  {
+    "s": "abcd",
+    "k": 1
+  },
+  {
+    "s": "abcd",
+    "k": 4
+  },
+  {
+    "s": "abcd",
+    "k": 5
+  },
+  {
+    "s": "abcde",
+    "k": 2
+  },
+  {
+    "s": "abcdefg",
+    "k": 3
+  },
+  {
+    "s": "abcdefg",
+    "k": 1
+  },
+  {
+    "s": "abcdefg",
+    "k": 8
+  },
+  {
+    "s": "hyzqyljrnigxvdtnease",
+    "k": 6
+  },
+  {
+    "s": "abcdefghij",
+    "k": 2
+  },
+  {
+    "s": "abcdefghij",
+    "k": 4
+  },
+  {
+    "s": "aaaaa",
+    "k": 2
+  },
+  {
+    "s": "abcdef",
+    "k": 3
+  },
+  {
+    "s": "ab",
+    "k": 1
+  },
+  {
+    "s": "xyz",
+    "k": 2
+  },
+  {
+    "s": "abcdefgh",
+    "k": 2
+  },
+  {
+    "s": "qwerty",
+    "k": 3
+  },
+  {
+    "s": "mnopqr",
+    "k": 10
+  },
+  {
+    "s": "hello",
+    "k": 2
+  },
+  {
+    "s": "world",
+    "k": 3
+  },
+  {
+    "s": "abcdefghijk",
+    "k": 3
+  },
+  {
+    "s": "zzzzzzzz",
+    "k": 3
+  }
+]

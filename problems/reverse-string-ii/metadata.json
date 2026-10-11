@@ -1,0 +1,63 @@
+{
+  "id": "reverse-string-ii",
+  "title": "599. Reverse String II",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/reverse-string-ii/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"abcdefg\", k = 2",
+      "output": "\"bacdfeg\"",
+      "explanation": "Flip the first k of every 2k block."
+    },
+    {
+      "input": "s = \"abcd\", k = 2",
+      "output": "\"bacd\"",
+      "explanation": "First two flipped, last two kept."
+    },
+    {
+      "input": "s = \"a\", k = 2",
+      "output": "\"a\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String reverseStr(String s, int k) {\n        \n    }\n}",
+    "python": "class Solution:\n    def reverseStr(self, s: str, k: int) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string reverseStr(string s, int k) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string ReverseStr(string s, int k) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reverse_str(s: String, k: i32) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc ReverseStr(s string, k int) string {\n    \n}",
+    "typescript": "export function reverseStr(s: string, k: number): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param int $k\n     * @return string\n     */\n    public function reverseStr($s, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "abcdefg",
+      "k": 2
+    },
+    {
+      "s": "abcd",
+      "k": 2
+    },
+    {
+      "s": "a",
+      "k": 2
+    }
+  ],
+  "functionName": "reverseStr",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Step the start index by 2k and reverse the slice [start, min(start+k-1, end)].",
+    "Reversing can be done in place with two pointers moving toward each other."
+  ]
+}

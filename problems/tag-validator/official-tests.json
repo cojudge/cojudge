@@ -1,0 +1,86 @@
+[
+  {
+    "code": "<DIV>This is the first line <![CDATA[<div>]]></DIV>"
+  },
+  {
+    "code": "<DIV>>>  ![cdata[]] <![CDATA[<div>]>]]>]]>>]</DIV>"
+  },
+  {
+    "code": "<A>  <B> </A>   </B>"
+  },
+  {
+    "code": "<B><![CDATA[test]]></B>"
+  },
+  {
+    "code": "<A></A>"
+  },
+  {
+    "code": "<A>hello</A>"
+  },
+  {
+    "code": "<A><B></B></A>"
+  },
+  {
+    "code": "<A><B><C></C></B></A>"
+  },
+  {
+    "code": "<A><![CDATA[<>]]> </A>"
+  },
+  {
+    "code": "plain"
+  },
+  {
+    "code": "<A>"
+  },
+  {
+    "code": "</A>"
+  },
+  {
+    "code": "<A></B>"
+  },
+  {
+    "code": "<A></A><B></B>"
+  },
+  {
+    "code": "text<A></A>"
+  },
+  {
+    "code": "<A></A>text"
+  },
+  {
+    "code": "<a></a>"
+  },
+  {
+    "code": "<ABCDEFGHIJ></ABCDEFGHIJ>"
+  },
+  {
+    "code": "<A><![CDATA[x]]"
+  },
+  {
+    "code": "<A><![CDATA[x]]></A>"
+  },
+  {
+    "code": "<A><![CDATA[reserve]]></A>"
+  },
+  {
+    "code": "<A>  <B>hi<![CDATA[<br>]]></B>  </A>"
+  },
+  {
+    "code": "<X><Y></Y><Z></Z></X>"
+  },
+  {
+    "code": "<T><![CDATA[depth <><> ]]></T>"
+  },
+  {
+    "code": "<>"
+  },
+  {
+    "code": "<A>unclosed<B></A>"
+  },
+  {
+    "code": "<LONGTAGNAME></LONGTAGNAME>"
+  },
+  {
+    "code": "<A></A >"
+  }
+]

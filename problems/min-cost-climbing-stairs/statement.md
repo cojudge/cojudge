@@ -1,8 +1,6 @@
-You are given an integer array `cost`, where `cost[i]` is the cost of stepping on the
-`i`th stair. After paying that cost, you may climb either one or two stairs.
+An array `cost` is given, where `cost[i]` represents the fee charged for standing on step `i`; once that fee is settled you may advance upward by one step or by two steps.
 
-You may start on stair `0` or stair `1`. Return the minimum cost required to reach the
-top, which is just beyond the last stair.
+Climbing may begin at step `0` or at step `1` without paying for any earlier step. Compute the smallest total fee that reaches the summit, where the summit sits one position past the final index.
 
 **Constraints:**
 - `2 <= cost.length <= 1000`

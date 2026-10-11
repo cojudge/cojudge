@@ -1,0 +1,58 @@
+{
+  "id": "minimum-factorization",
+  "title": "649. Minimum Factorization",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/minimum-factorization/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "a = 48",
+      "output": "68",
+      "explanation": "48 splits as 6 x 8; arranging the digits increasingly gives 68, the smallest layout."
+    },
+    {
+      "input": "a = 15",
+      "output": "35",
+      "explanation": "15 splits as 3 x 5, ordered as 35."
+    },
+    {
+      "input": "a = 13",
+      "output": "0",
+      "explanation": "13 is prime above 9, so no digit layout exists."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int smallestFactorization(int a) {\n        \n    }\n}",
+    "python": "class Solution:\n    def smallestFactorization(self, a: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int smallestFactorization(int a) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int SmallestFactorization(int a) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn smallest_factorization(a: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc SmallestFactorization(a int) int {\n    \n}",
+    "typescript": "export function smallestFactorization(a: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $a\n     * @return int\n     */\n    public function smallestFactorization($a) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "a": 48
+    },
+    {
+      "a": 15
+    },
+    {
+      "a": 13
+    }
+  ],
+  "functionName": "smallestFactorization",
+  "params": [
+    {
+      "name": "a",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Single-digit inputs answer themselves; 1 answers 1.",
+    "Pull factors greedily from 9 down to 2 so the digit multiset stays small and sortable.",
+    "If a remainder above 1 survives, the task is impossible (answer 0); otherwise sort digits increasingly and reject overflows past 2^31-1."
+  ]
+}

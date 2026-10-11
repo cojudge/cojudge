@@ -1,0 +1,237 @@
+[
+  {
+    "letters": [
+      "c",
+      "f",
+      "j"
+    ],
+    "target": "a"
+  },
+  {
+    "letters": [
+      "c",
+      "f",
+      "j"
+    ],
+    "target": "c"
+  },
+  {
+    "letters": [
+      "x",
+      "x",
+      "y",
+      "y"
+    ],
+    "target": "z"
+  },
+  {
+    "letters": [
+      "a",
+      "b"
+    ],
+    "target": "a"
+  },
+  {
+    "letters": [
+      "a",
+      "b"
+    ],
+    "target": "b"
+  },
+  {
+    "letters": [
+      "a",
+      "b",
+      "c"
+    ],
+    "target": "b"
+  },
+  {
+    "letters": [
+      "a",
+      "a",
+      "b",
+      "b"
+    ],
+    "target": "a"
+  },
+  {
+    "letters": [
+      "e",
+      "e",
+      "e",
+      "n",
+      "n"
+    ],
+    "target": "e"
+  },
+  {
+    "letters": [
+      "c",
+      "f",
+      "j"
+    ],
+    "target": "d"
+  },
+  {
+    "letters": [
+      "c",
+      "f",
+      "j"
+    ],
+    "target": "g"
+  },
+  {
+    "letters": [
+      "c",
+      "f",
+      "j"
+    ],
+    "target": "j"
+  },
+  {
+    "letters": [
+      "a",
+      "c",
+      "f",
+      "j"
+    ],
+    "target": "b"
+  },
+  {
+    "letters": [
+      "m",
+      "m",
+      "m",
+      "z"
+    ],
+    "target": "m"
+  },
+  {
+    "letters": [
+      "a",
+      "z"
+    ],
+    "target": "y"
+  },
+  {
+    "letters": [
+      "a",
+      "z"
+    ],
+    "target": "z"
+  },
+  {
+    "letters": [
+      "b",
+      "d",
+      "f",
+      "h"
+    ],
+    "target": "a"
+  },
+  {
+    "letters": [
+      "b",
+      "d",
+      "f",
+      "h"
+    ],
+    "target": "e"
+  },
+  {
+    "letters": [
+      "k",
+      "k",
+      "k",
+      "k",
+      "p"
+    ],
+    "target": "k"
+  },
+  {
+    "letters": [
+      "c",
+      "d",
+      "e"
+    ],
+    "target": "a"
+  },
+  {
+    "letters": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "target": "d"
+  },
+  {
+    "letters": [
+      "j",
+      "j",
+      "k"
+    ],
+    "target": "j"
+  },
+  {
+    "letters": [
+      "a",
+      "e",
+      "i",
+      "o",
+      "u"
+    ],
+    "target": "b"
+  },
+  {
+    "letters": [
+      "a",
+      "e",
+      "i",
+      "o",
+      "u"
+    ],
+    "target": "u"
+  },
+  {
+    "letters": [
+      "f",
+      "m",
+      "t"
+    ],
+    "target": "s"
+  },
+  {
+    "letters": [
+      "a",
+      "b"
+    ],
+    "target": "z"
+  },
+  {
+    "letters": [
+      "d",
+      "h",
+      "z"
+    ],
+    "target": "c"
+  },
+  {
+    "letters": [
+      "p",
+      "q",
+      "r"
+    ],
+    "target": "p"
+  },
+  {
+    "letters": [
+      "w",
+      "x",
+      "y",
+      "z"
+    ],
+    "target": "v"
+  }
+]

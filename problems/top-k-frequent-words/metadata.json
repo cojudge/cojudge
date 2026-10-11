@@ -1,0 +1,90 @@
+{
+  "id": "top-k-frequent-words",
+  "title": "707. Top K Frequent Words",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/top-k-frequent-words/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "words = [\"i\",\"love\",\"leetcode\",\"i\",\"love\",\"coding\"], k = 2",
+      "output": "[\"i\",\"love\"]",
+      "explanation": "\"i\" and \"love\" tie at 2 and are dictionary-ordered."
+    },
+    {
+      "input": "words = [\"the\",\"day\",\"is\",\"sunny\",\"the\",\"the\",\"the\",\"sunny\",\"is\",\"is\"], k = 4",
+      "output": "[\"the\",\"is\",\"sunny\",\"day\"]",
+      "explanation": "Frequencies 4, 3, 2, 1."
+    },
+    {
+      "input": "words = [\"a\",\"b\",\"c\",\"a\",\"b\",\"a\"], k = 1",
+      "output": "[\"a\"]",
+      "explanation": "\"a\" is most common."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> topKFrequent(String[] words, int k) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def topKFrequent(self, words: List[str], k: int) -> List[str]:\n        return []\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> topKFrequent(vector<string>& words, int k) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<string> TopKFrequent(string[] words, int k)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn top_k_frequent(words: Vec<String>, k: i32) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc TopKFrequent(words []string, k int) []string {\n    return []string{}\n}",
+    "typescript": "export function topKFrequent(words: string[], k: number): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $words\n     * @param int $k\n     * @return string[]\n     */\n    public function topKFrequent($words, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "words": [
+        "i",
+        "love",
+        "leetcode",
+        "i",
+        "love",
+        "coding"
+      ],
+      "k": 2
+    },
+    {
+      "words": [
+        "the",
+        "day",
+        "is",
+        "sunny",
+        "the",
+        "the",
+        "the",
+        "sunny",
+        "is",
+        "is"
+      ],
+      "k": 4
+    },
+    {
+      "words": [
+        "a",
+        "b",
+        "c",
+        "a",
+        "b",
+        "a"
+      ],
+      "k": 1
+    }
+  ],
+  "functionName": "topKFrequent",
+  "params": [
+    {
+      "name": "words",
+      "type": "string_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Count every word with a hash map first.",
+    "Sort distinct words by falling frequency, using dictionary order to break ties, then take the first k.",
+    "A heap can do this faster, but sorting is clear and easily fast enough for the limits."
+  ]
+}

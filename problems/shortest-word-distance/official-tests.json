@@ -1,0 +1,152 @@
+[
+  {
+    "wordsDict": "[\"practice\",\"makes\",\"perfect\",\"coding\",\"makes\"]",
+    "word1": "coding",
+    "word2": "practice"
+  },
+  {
+    "wordsDict": "[\"practice\",\"makes\",\"perfect\",\"coding\",\"makes\"]",
+    "word1": "makes",
+    "word2": "coding"
+  },
+  {
+    "wordsDict": "[\"a\",\"b\",\"c\",\"a\"]",
+    "word1": "a",
+    "word2": "c"
+  },
+  {
+    "wordsDict": "[\"a\",\"b\"]",
+    "word1": "a",
+    "word2": "b"
+  },
+  {
+    "wordsDict": "[\"a\",\"c\",\"b\",\"a\",\"b\"]",
+    "word1": "a",
+    "word2": "b"
+  },
+  {
+    "wordsDict": "[\"x\",\"y\",\"z\",\"x\",\"y\"]",
+    "word1": "x",
+    "word2": "y"
+  },
+  {
+    "wordsDict": "[\"hello\",\"world\"]",
+    "word1": "hello",
+    "word2": "world"
+  },
+  {
+    "wordsDict": "[\"a\",\"a\",\"b\",\"b\",\"a\"]",
+    "word1": "a",
+    "word2": "b"
+  },
+  {
+    "wordsDict": "[\"one\",\"two\",\"three\",\"four\",\"five\"]",
+    "word1": "one",
+    "word2": "five"
+  },
+  {
+    "wordsDict": "[\"ab\",\"cd\",\"ef\",\"ab\",\"gh\"]",
+    "word1": "ab",
+    "word2": "gh"
+  },
+  {
+    "wordsDict": "[\"cat\",\"dog\",\"cat\",\"bird\"]",
+    "word1": "cat",
+    "word2": "bird"
+  },
+  {
+    "wordsDict": "[\"a\",\"b\",\"a\",\"b\",\"a\",\"b\"]",
+    "word1": "a",
+    "word2": "b"
+  },
+  {
+    "wordsDict": "[\"red\",\"blue\",\"green\",\"red\",\"yellow\"]",
+    "word1": "red",
+    "word2": "yellow"
+  },
+  {
+    "wordsDict": "[\"alpha\",\"beta\",\"gamma\",\"delta\",\"beta\",\"alpha\"]",
+    "word1": "alpha",
+    "word2": "beta"
+  },
+  {
+    "wordsDict": "[\"the\",\"quick\",\"brown\",\"fox\",\"quick\",\"the\"]",
+    "word1": "quick",
+    "word2": "fox"
+  },
+  {
+    "wordsDict": "[\"x\",\"a\",\"b\",\"c\",\"d\",\"y\"]",
+    "word1": "x",
+    "word2": "y"
+  },
+  {
+    "wordsDict": "[\"a\",\"long\",\"list\",\"of\",\"words\",\"here\",\"a\",\"there\"]",
+    "word1": "a",
+    "word2": "there"
+  },
+  {
+    "wordsDict": "[\"foo\",\"bar\",\"baz\",\"foo\",\"bar\"]",
+    "word1": "foo",
+    "word2": "baz"
+  },
+  {
+    "wordsDict": "[\"one\",\"one\",\"two\",\"two\",\"three\"]",
+    "word1": "one",
+    "word2": "three"
+  },
+  {
+    "wordsDict": "[\"sun\",\"moon\",\"stars\",\"sun\",\"moon\"]",
+    "word1": "sun",
+    "word2": "stars"
+  },
+  {
+    "wordsDict": "[\"p\",\"q\",\"r\",\"s\",\"t\",\"u\",\"v\"]",
+    "word1": "p",
+    "word2": "v"
+  },
+  {
+    "wordsDict": "[\"apple\",\"banana\",\"apple\",\"cherry\",\"banana\"]",
+    "word1": "banana",
+    "word2": "cherry"
+  },
+  {
+    "wordsDict": "[\"code\",\"review\",\"test\",\"code\",\"deploy\"]",
+    "word1": "review",
+    "word2": "deploy"
+  },
+  {
+    "wordsDict": "[\"aa\",\"bb\",\"cc\",\"dd\",\"ee\",\"ff\"]",
+    "word1": "cc",
+    "word2": "ff"
+  },
+  {
+    "wordsDict": "[\"king\",\"queen\",\"rook\",\"bishop\",\"knight\"]",
+    "word1": "king",
+    "word2": "knight"
+  },
+  {
+    "wordsDict": "[\"up\",\"down\",\"left\",\"right\",\"up\",\"left\"]",
+    "word1": "down",
+    "word2": "right"
+  },
+  {
+    "wordsDict": "[\"m\",\"n\",\"m\",\"n\",\"o\",\"p\"]",
+    "word1": "m",
+    "word2": "p"
+  },
+  {
+    "wordsDict": "[\"a\",\"b\",\"c\",\"d\",\"e\",\"a\",\"e\"]",
+    "word1": "a",
+    "word2": "e"
+  },
+  {
+    "wordsDict": "[\"first\",\"second\",\"first\",\"third\",\"second\"]",
+    "word1": "first",
+    "word2": "third"
+  },
+  {
+    "wordsDict": "[\"pen\",\"pineapple\",\"apple\",\"pen\"]",
+    "word1": "pen",
+    "word2": "apple"
+  }
+]

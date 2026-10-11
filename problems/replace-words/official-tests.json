@@ -1,0 +1,114 @@
+[
+  {
+    "dictionary": "[\"cat\", \"bat\", \"rat\"]",
+    "sentence": "the cattle was rattled by the battery"
+  },
+  {
+    "dictionary": "[\"a\", \"b\", \"c\"]",
+    "sentence": "aadsfasf absbs bbab cadsfafs"
+  },
+  {
+    "dictionary": "[\"abc\"]",
+    "sentence": "def ghi"
+  },
+  {
+    "dictionary": "[\"car\", \"card\", \"carp\"]",
+    "sentence": "cardiff carpenter car"
+  },
+  {
+    "dictionary": "[\"a\", \"aa\", \"aaa\"]",
+    "sentence": "aaaa aaa aa a"
+  },
+  {
+    "dictionary": "[\"catt\", \"cat\", \"bat\"]",
+    "sentence": "cattle cat bat battalion"
+  },
+  {
+    "dictionary": "[\"e\"]",
+    "sentence": "e e e"
+  },
+  {
+    "dictionary": "[\"abc\", \"abd\"]",
+    "sentence": "abe abf abc abd"
+  },
+  {
+    "dictionary": "[\"hello\", \"world\"]",
+    "sentence": "hello world"
+  },
+  {
+    "dictionary": "[\"a\"]",
+    "sentence": "a b c d e f g"
+  },
+  {
+    "dictionary": "[\"pre\", \"pro\"]",
+    "sentence": "prefix problem proof pram"
+  },
+  {
+    "dictionary": "[\"ran\", \"rann\"]",
+    "sentence": "ranner ran running"
+  },
+  {
+    "dictionary": "[\"x\", \"xy\", \"xyz\"]",
+    "sentence": "xyza xyzab xabc"
+  },
+  {
+    "dictionary": "[\"the\", \"quick\"]",
+    "sentence": "the quick brown fox"
+  },
+  {
+    "dictionary": "[\"f\"]",
+    "sentence": "foobar foo f"
+  },
+  {
+    "dictionary": "[\"ab\", \"bc\", \"cd\"]",
+    "sentence": "abcd bcde cdef"
+  },
+  {
+    "dictionary": "[\"a\", \"ab\", \"abc\"]",
+    "sentence": "abcd abcde abcdef"
+  },
+  {
+    "dictionary": "[\"test\"]",
+    "sentence": "testing tester tested test"
+  },
+  {
+    "dictionary": "[\"z\"]",
+    "sentence": "apple banana cherry"
+  },
+  {
+    "dictionary": "[\"an\", \"ant\", \"anti\"]",
+    "sentence": "anthem antique another ant"
+  },
+  {
+    "dictionary": "[\"d\"]",
+    "sentence": "d dd ddd dddd"
+  },
+  {
+    "dictionary": "[\"sea\", \"seashell\"]",
+    "sentence": "seashore seashells sea"
+  },
+  {
+    "dictionary": "[\"m\", \"mi\", \"mic\"]",
+    "sentence": "micro middle mill"
+  },
+  {
+    "dictionary": "[\"w\"]",
+    "sentence": "w wx wxy wxyz"
+  },
+  {
+    "dictionary": "[\"cat\", \"cater\", \"caterpillar\"]",
+    "sentence": "caterpillars catered cats"
+  },
+  {
+    "dictionary": "[\"b\"]",
+    "sentence": "a bb bbb bbbb"
+  },
+  {
+    "dictionary": "[\"longroot\"]",
+    "sentence": "longroot longrooted short"
+  },
+  {
+    "dictionary": "[\"a\", \"b\", \"c\", \"d\", \"e\"]",
+    "sentence": "abcde bcdef cdefg"
+  }
+]

@@ -1,0 +1,58 @@
+{
+  "id": "encode-n-ary-tree-to-binary-tree",
+  "title": "500. Encode N-ary Tree to Binary Tree",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/encode-n-ary-tree-to-binary-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "data = \"[1,null,3,2,4,null,5,6]\"",
+      "output": "\"[1,null,3,2,4,null,5,6]\"",
+      "explanation": "Encoding to binary and decoding restores the grouping."
+    },
+    {
+      "input": "data = \"[]\"",
+      "output": "\"[]\"",
+      "explanation": "Empty trees survive the round-trip."
+    },
+    {
+      "input": "data = \"[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]\"",
+      "output": "\"[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]\"",
+      "explanation": "The deeper structure is preserved through both conversions."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String encodeDecode(String data) {\n        \n    }\n}",
+    "python": "class Solution:\n    def encodeDecode(self, data: str) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string encodeDecode(string data) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string EncodeDecode(string data) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn encode_decode(data: String) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc EncodeDecode(data string) string {\n    \n}",
+    "typescript": "export function encodeDecode(data: string): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $data\n     * @return string\n     */\n    public function encodeDecode($data) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "data": "[1,null,3,2,4,null,5,6]"
+    },
+    {
+      "data": "[]"
+    },
+    {
+      "data": "[1]"
+    }
+  ],
+  "functionName": "encodeDecode",
+  "params": [
+    {
+      "name": "data",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Parse the N-ary string with a queue, one null-delimited group per node.",
+    "Encode: first child goes left, next sibling goes right, recursively.",
+    "Decode by reversing that mapping, then serialize canonically."
+  ]
+}

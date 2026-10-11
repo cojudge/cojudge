@@ -1,0 +1,68 @@
+{
+  "id": "possible-bipartition",
+  "title": "877. Possible Bipartition",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/possible-bipartition/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "n = 4, dislikes = [[1,2],[1,3],[2,4]]",
+      "output": "true",
+      "explanation": "Put 1 and 4 in one group and 2 and 3 in the other; every rival pair is separated."
+    },
+    {
+      "input": "n = 3, dislikes = [[1,2],[1,3],[2,3]]",
+      "output": "false",
+      "explanation": "All three people pairwise dislike each other, so two groups can never separate every pair."
+    },
+    {
+      "input": "n = 5, dislikes = [[1,2],[2,3],[3,4],[4,5],[1,5]]",
+      "output": "false",
+      "explanation": "The rivalries form a ring of five, an odd cycle that no two-group split can satisfy."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean possibleBipartition(int n, int[][] dislikes) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def possibleBipartition(self, n: int, dislikes: List[List[int]]) -> bool:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool possibleBipartition(int n, vector<vector<int>>& dislikes) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool PossibleBipartition(int n, int[][] dislikes) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn possible_bipartition(n: i32, dislikes: Vec<Vec<i32>>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc PossibleBipartition(n int, dislikes [][]int) bool {\n    \n}",
+    "typescript": "export function possibleBipartition(n: number, dislikes: number[][]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int[][] $dislikes\n     * @return bool\n     */\n    public function possibleBipartition($n, $dislikes) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 4,
+      "dislikes": "[[1,2],[1,3],[2,4]]"
+    },
+    {
+      "n": 3,
+      "dislikes": "[[1,2],[1,3],[2,3]]"
+    },
+    {
+      "n": 5,
+      "dislikes": "[[1,2],[2,3],[3,4],[4,5],[1,5]]"
+    },
+    {
+      "n": 1,
+      "dislikes": "[]"
+    }
+  ],
+  "functionName": "possibleBipartition",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "dislikes",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "View rivalries as graph edges and paint the graph with two colors so neighbors always differ.",
+    "Run BFS/DFS from every unpainted person; a neighbor that already wears the same color proves the split is impossible."
+  ]
+}

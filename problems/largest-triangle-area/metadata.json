@@ -1,0 +1,58 @@
+{
+  "id": "largest-triangle-area",
+  "title": "810. Largest Triangle Area",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/largest-triangle-area/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "points = [[0,0],[0,1],[1,0],[0,2],[2,0]]",
+      "output": "\"2.0\"",
+      "explanation": "The triangle (0,0),(0,2),(2,0) has area 2, which is the largest achievable."
+    },
+    {
+      "input": "points = [[1,0],[0,0],[0,1]]",
+      "output": "\"0.5\"",
+      "explanation": "The only triangle uses the three points and covers half a unit square."
+    },
+    {
+      "input": "points = [[0,0],[1,1],[2,2]]",
+      "output": "\"0.0\"",
+      "explanation": "All points lie on one line, so every triangle is flat."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String largestTriangleArea(int[][] points) {\n        return \"0.0\";\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def largestTriangleArea(self, points: List[List[int]]) -> str:\n        return \"0.0\"\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    string largestTriangleArea(vector<vector<int>>& points) {\n        return \"0.0\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string LargestTriangleArea(int[][] points)\n    {\n        return \"0.0\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn largest_triangle_area(points: Vec<Vec<i32>>) -> String {\n        \"0.0\".to_string()\n    }\n}",
+    "go": "package main\n\nfunc LargestTriangleArea(points [][]int) string {\n    return \"0.0\"\n}",
+    "typescript": "export function largestTriangleArea(points: number[][]): string {\n    return \"0.0\";\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $points\n     * @return string\n     */\n    public function largestTriangleArea($points) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "points": "[[0,0],[0,1],[1,0],[0,2],[2,0]]"
+    },
+    {
+      "points": "[[1,0],[0,0],[0,1]]"
+    },
+    {
+      "points": "[[0,0],[1,1],[2,2]]"
+    }
+  ],
+  "functionName": "largestTriangleArea",
+  "params": [
+    {
+      "name": "points",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "This is a portable adaptation: return the area as a finite, double-parseable decimal string.",
+    "Try every triple of points and keep the largest shoelace value: area = |x1(y2-y3)+x2(y3-y1)+x3(y1-y2)| / 2.",
+    "Three points on one line give zero area and can be ignored."
+  ]
+}

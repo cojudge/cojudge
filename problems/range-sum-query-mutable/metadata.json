@@ -1,0 +1,72 @@
+{
+  "id": "range-sum-query-mutable",
+  "title": "399. Range Sum Query - Mutable",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/range-sum-query-mutable/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,3,5], operations = [\"sumRange\",\"update\",\"sumRange\"], values = [[0,2],[1,2],[0,2]]",
+      "output": "[9,8]",
+      "explanation": "Range sums 9, then 8 after the point update."
+    },
+    {
+      "input": "nums = [7], operations = [\"sumRange\",\"update\",\"sumRange\"], values = [[0,0],[0,4],[0,0]]",
+      "output": "[7,4]",
+      "explanation": "Single cell read, rewritten, re-read."
+    },
+    {
+      "input": "nums = [0,0], operations = [\"update\",\"update\",\"sumRange\"], values = [[0,5],[1,3],[0,1]]",
+      "output": "[8]",
+      "explanation": "Two updates precede the only query."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runNumArray(int[] nums, String[] operations, int[][] values) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runNumArray(self, nums: List[int], operations: List[str], values: List[List[int]]) -> List[int]:\n        ",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runNumArray(vector<int>& nums, vector<string>& operations, vector<vector<int>>& values) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunNumArray(int[] nums, string[] operations, int[][] values)\n    {\n        return Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_num_array(nums: Vec<i32>, operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunNumArray(nums []int, operations []string, values [][]int) []int {\n    return nil\n}",
+    "typescript": "export function runNumArray(nums: number[], operations: string[], values: number[][]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param string[] $operations\n     * @param int[][] $values\n     * @return int[]\n     */\n    public function runNumArray($nums, $operations, $values) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,3,5]",
+      "operations": "[\"sumRange\",\"update\",\"sumRange\"]",
+      "values": "[[0,2],[1,2],[0,2]]"
+    },
+    {
+      "nums": "[7]",
+      "operations": "[\"sumRange\",\"update\",\"sumRange\"]",
+      "values": "[[0,0],[0,4],[0,0]]"
+    },
+    {
+      "nums": "[0,0]",
+      "operations": "[\"update\",\"update\",\"sumRange\"]",
+      "values": "[[0,5],[1,3],[0,1]]"
+    }
+  ],
+  "functionName": "runNumArray",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Replay the script on a plain copy of the array to get a simple (if slower) baseline.",
+    "For full speed, back the array with a segment tree or binary indexed tree for logarithmic updates and queries.",
+    "Only \"sumRange\" steps append to the answer; updates just change stored state."
+  ]
+}

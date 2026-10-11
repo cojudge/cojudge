@@ -1,0 +1,57 @@
+{
+  "id": "palindrome-number",
+  "title": "253. Palindrome Number",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/palindrome-number/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "x = 121",
+      "output": "true",
+      "explanation": "121 is identical when read from either end."
+    },
+    {
+      "input": "x = -121",
+      "output": "false",
+      "explanation": "The minus sign appears only on one side, so it cannot be a palindrome."
+    },
+    {
+      "input": "x = 10",
+      "output": "false",
+      "explanation": "Reversed, the digits form 01, which differs from 10."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isPalindrome(int x) {\n        \n    }\n}",
+    "python": "class Solution:\n    def isPalindrome(self, x: int) -> bool:\n        pass",
+    "cpp": "class Solution {\npublic:\n    bool isPalindrome(int x) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool IsPalindrome(int x) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_palindrome(x: i32) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc IsPalindrome(x int) bool {\n    \n}",
+    "typescript": "export function isPalindrome(x: number): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $x\n     * @return bool\n     */\n    public function isPalindrome($x) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "x": 121
+    },
+    {
+      "x": -121
+    },
+    {
+      "x": 10
+    }
+  ],
+  "functionName": "isPalindrome",
+  "params": [
+    {
+      "name": "x",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Negative numbers are never palindromes; neither are non-zero numbers ending in 0.",
+    "Reverse only half the digits and compare with the remaining half (dropping the middle digit for odd lengths) to avoid overflow."
+  ]
+}

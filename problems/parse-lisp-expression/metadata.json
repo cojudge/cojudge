@@ -1,0 +1,61 @@
+{
+  "id": "parse-lisp-expression",
+  "title": "742. Parse Lisp Expression",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/parse-lisp-expression/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "expression = \"(add 1 2)\"",
+      "output": "3"
+    },
+    {
+      "input": "expression = \"(mult 3 (add 2 3))\"",
+      "output": "15",
+      "explanation": "Inner (add 2 3) is 5; 3 times 5 is 15."
+    },
+    {
+      "input": "expression = \"(let x 2 (mult x 5))\"",
+      "output": "10",
+      "explanation": "x binds to 2, then 2 times 5 is 10."
+    },
+    {
+      "input": "expression = \"(let x 2 y 3 (add x y))\"",
+      "output": "5"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int evaluate(String expression) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def evaluate(self, expression: str) -> int:\n        return 0\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int evaluate(string expression) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int Evaluate(string expression) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn evaluate(expression: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc Evaluate(expression string) int {\n    return 0\n}",
+    "typescript": "export function evaluate(expression: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $expression\n     * @return int\n     */\n    public function evaluate($expression) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "expression": "(add 1 2)"
+    },
+    {
+      "expression": "(mult 3 (add 2 3))"
+    },
+    {
+      "expression": "(let x 2 (mult x 5))"
+    }
+  ],
+  "functionName": "evaluate",
+  "params": [
+    {
+      "name": "expression",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Parse with an index pointer over the string plus a stack of scopes; each let pushes bindings that are discarded at ')'.",
+    "To evaluate a list, read its head token: add and mult take exactly two sub-expressions, let takes pairs plus a trailing body.",
+    "A bare token is either an integer literal or a variable resolved from the innermost scope outward."
+  ]
+}

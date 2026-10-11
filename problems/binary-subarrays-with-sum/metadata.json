@@ -1,0 +1,64 @@
+{
+  "id": "binary-subarrays-with-sum",
+  "title": "917. Binary Subarrays With Sum",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/binary-subarrays-with-sum/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,0,1,0,1], goal = 2",
+      "output": "4",
+      "explanation": "Four slices contain exactly two ones."
+    },
+    {
+      "input": "nums = [0,0,0,0,0], goal = 0",
+      "output": "15",
+      "explanation": "All 15 slices sum to zero."
+    },
+    {
+      "input": "nums = [1,1,1,1,1], goal = 3",
+      "output": "3"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numSubarraysWithSum(int[] nums, int goal) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numSubarraysWithSum(self, nums: List[int], goal: int) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int numSubarraysWithSum(vector<int>& nums, int goal) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int NumSubarraysWithSum(int[] nums, int goal)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_subarrays_with_sum(nums: Vec<i32>, goal: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumSubarraysWithSum(nums []int, goal int) int {\n    return 0\n}",
+    "typescript": "export function numSubarraysWithSum(nums: number[], goal: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $goal\n     * @return int\n     */\n    public function numSubarraysWithSum($nums, $goal) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,0,1,0,1]",
+      "goal": 2
+    },
+    {
+      "nums": "[0,0,0,0,0]",
+      "goal": 0
+    },
+    {
+      "nums": "[1,1,1,1,1]",
+      "goal": 3
+    }
+  ],
+  "functionName": "numSubarraysWithSum",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "goal",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Convert the task to counting prefix sums: a subarray sums to goal when two prefixes differ by goal.",
+    "Keep how many times each running total has appeared.",
+    "Initialize the empty prefix count to one so slices from the start are included."
+  ]
+}

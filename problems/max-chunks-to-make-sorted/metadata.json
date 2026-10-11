@@ -1,0 +1,58 @@
+{
+  "id": "max-chunks-to-make-sorted",
+  "title": "769. Max Chunks To Make Sorted",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/max-chunks-to-make-sorted/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "arr = [4,3,2,1,0]",
+      "output": "1",
+      "explanation": "No early cut keeps values in range."
+    },
+    {
+      "input": "arr = [1,0,2,3,4]",
+      "output": "4",
+      "explanation": "Chunks [1,0], [2], [3], [4] work."
+    },
+    {
+      "input": "arr = [0,1,2]",
+      "output": "3",
+      "explanation": "Sorted input splits into singletons."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxChunksToSorted(int[] arr) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxChunksToSorted(self, arr: List[int]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int maxChunksToSorted(vector<int>& arr) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MaxChunksToSorted(int[] arr)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_chunks_to_sorted(arr: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MaxChunksToSorted(arr []int) int {\n    return 0\n}",
+    "typescript": "export function maxChunksToSorted(arr: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @return int\n     */\n    public function maxChunksToSorted($arr) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "arr": "[4,3,2,1,0]"
+    },
+    {
+      "arr": "[1,0,2,3,4]"
+    },
+    {
+      "arr": "[0,1,2]"
+    }
+  ],
+  "functionName": "maxChunksToSorted",
+  "params": [
+    {
+      "name": "arr",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Because the values are 0..n-1, a prefix can stand alone exactly when its maximum equals its last index.",
+    "Scan once tracking the running maximum; cut after every position where max == index.",
+    "Count those cut points."
+  ]
+}

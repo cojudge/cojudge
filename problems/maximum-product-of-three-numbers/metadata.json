@@ -1,0 +1,57 @@
+{
+  "id": "maximum-product-of-three-numbers",
+  "title": "650. Maximum Product of Three Numbers",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/maximum-product-of-three-numbers/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,2,3]",
+      "output": "6",
+      "explanation": "Only 1*2*3 = 6 exists."
+    },
+    {
+      "input": "nums = [1,2,3,4]",
+      "output": "24",
+      "explanation": "2*3*4 = 24 beats every other triple."
+    },
+    {
+      "input": "nums = [-1,-2,-3]",
+      "output": "-6",
+      "explanation": "The single triple multiplies to -6."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maximumProduct(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maximumProduct(self, nums: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int maximumProduct(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MaximumProduct(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn maximum_product(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MaximumProduct(nums []int) int {\n    \n}",
+    "typescript": "export function maximumProduct(nums: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function maximumProduct($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3]"
+    },
+    {
+      "nums": "[1,2,3,4]"
+    },
+    {
+      "nums": "[-1,-2,-3]"
+    }
+  ],
+  "functionName": "maximumProduct",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Only two patterns can win: three largest values, or the largest value with the two smallest (most negative) values.",
+    "One linear scan tracking the top three maxima and bottom two minima is enough."
+  ]
+}

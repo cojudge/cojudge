@@ -1,0 +1,57 @@
+{
+  "id": "brick-wall",
+  "title": "610. Brick Wall",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/brick-wall/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "wall = [[1,2,2,1],[3,1,2],[1,3,2],[2,4],[3,1,2],[1,3,1,1]]",
+      "output": "2",
+      "explanation": "Best cut follows four boundaries."
+    },
+    {
+      "input": "wall = [[1],[1],[1]]",
+      "output": "3",
+      "explanation": "No inner edges exist."
+    },
+    {
+      "input": "wall = [[1,1],[2]]",
+      "output": "1"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int leastBricks(int[][] wall) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def leastBricks(self, wall: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int leastBricks(vector<vector<int>>& wall) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int LeastBricks(int[][] wall) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn least_bricks(wall: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc LeastBricks(wall [][]int) int {\n    \n}",
+    "typescript": "export function leastBricks(wall: number[][]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $wall\n     * @return int\n     */\n    public function leastBricks($wall) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "wall": "[[1,2,2,1],[3,1,2],[1,3,2],[2,4],[3,1,2],[1,3,1,1]]"
+    },
+    {
+      "wall": "[[1],[1],[1]]"
+    },
+    {
+      "wall": "[[1,1],[2]]"
+    }
+  ],
+  "functionName": "leastBricks",
+  "params": [
+    {
+      "name": "wall",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Convert each row into running prefix sums, ignoring the final outer edge.",
+    "The best cut sits at the most frequent prefix offset; crossed bricks equal rows minus that frequency.",
+    "A hash map from offset to row count finds the optimum in linear time."
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "id": "maximize-distance-to-closest-person",
+  "title": "846. Maximize Distance to Closest Person",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/maximize-distance-to-closest-person/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "seats = [1,0,0,0,1,0,1]",
+      "output": "2",
+      "explanation": "Seat 2 is two away from both sides."
+    },
+    {
+      "input": "seats = [1,0,0,0]",
+      "output": "3",
+      "explanation": "Far end reaches distance 3."
+    },
+    {
+      "input": "seats = [0,1]",
+      "output": "1",
+      "explanation": "Only free chair is adjacent."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxDistToClosest(int[] seats) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxDistToClosest(self, seats: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int maxDistToClosest(vector<int>& seats) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MaxDistToClosest(int[] seats)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_dist_to_closest(seats: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MaxDistToClosest(seats []int) int {\n    return 0\n}",
+    "typescript": "export function maxDistToClosest(seats: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $seats\n     * @return int\n     */\n    public function maxDistToClosest($seats) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "seats": "[1,0,0,0,1,0,1]"
+    },
+    {
+      "seats": "[1,0,0,0]"
+    },
+    {
+      "seats": "[0,1]"
+    },
+    {
+      "seats": "[1,0,1]"
+    }
+  ],
+  "functionName": "maxDistToClosest",
+  "params": [
+    {
+      "name": "seats",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Edge gaps count fully (leading or trailing zeros), while interior gaps split in half rounding up.",
+    "Scan once remembering the previous occupied index to measure each empty stretch.",
+    "Track the maximum over edge stretches and halved interior stretches."
+  ]
+}

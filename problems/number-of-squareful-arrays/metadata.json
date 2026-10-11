@@ -1,0 +1,53 @@
+{
+  "id": "number-of-squareful-arrays",
+  "title": "978. Number of Squareful Arrays",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/number-of-squareful-arrays/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "nums = [1,17,8]",
+      "output": "2",
+      "explanation": "The squareful orderings are [1,8,17] and [17,8,1]."
+    },
+    {
+      "input": "nums = [2,2,2]",
+      "output": "1",
+      "explanation": "Only [2,2,2] exists, and 2 + 2 = 4 is a perfect square."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numSquarefulPerms(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numSquarefulPerms(self, nums: List[int]) -> int:\n        return 0",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int numSquarefulPerms(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int NumSquarefulPerms(int[] nums) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_squareful_perms(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumSquarefulPerms(nums []int) int {\n    return 0\n}",
+    "typescript": "export function numSquarefulPerms(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function numSquarefulPerms($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,17,8]"
+    },
+    {
+      "nums": "[2,2,2]"
+    },
+    {
+      "nums": "[1,1,8,1,8]"
+    }
+  ],
+  "functionName": "numSquarefulPerms",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Build the permutation one slot at a time, only placing a value whose sum with the previous one is a perfect square.",
+    "Sort first and skip a repeated value unless its previous twin is already used, so identical permutations are counted once.",
+    "Adaptation: the input is a plain int_array and the answer is the count of distinct squareful orderings."
+  ]
+}

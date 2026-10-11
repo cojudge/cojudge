@@ -1,0 +1,50 @@
+{
+  "id": "triples-with-bitwise-and-equal-to-zero",
+  "title": "965. Triples With Bitwise AND Equal To Zero",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/triples-with-bitwise-and-equal-to-zero/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [2,1,3]",
+      "output": "12",
+      "explanation": "Twelve ordered index triples have a combined bitwise AND of zero."
+    },
+    {
+      "input": "nums = [0,0,0]",
+      "output": "27",
+      "explanation": "Every one of the 3*3*3 triples qualifies because 0 AND 0 AND 0 is 0."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int countTriplets(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def countTriplets(self, nums: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <unordered_map>\nusing namespace std;\nclass Solution {\npublic:\n    int countTriplets(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int CountTriplets(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_triplets(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc CountTriplets(nums []int) int {\n    \n}",
+    "typescript": "export function countTriplets(nums: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function countTriplets($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[2,1,3]"
+    },
+    {
+      "nums": "[0,0,0]"
+    }
+  ],
+  "functionName": "countTriplets",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Precompute frequencies of all pairwise AND results; there are at most 2^16 distinct values.",
+    "For each pair value p and each element x, the triple qualifies exactly when (p AND x) == 0.",
+    "Multiply pair frequencies by matching third elements instead of enumerating all n^3 triples."
+  ]
+}

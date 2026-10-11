@@ -1,0 +1,58 @@
+{
+  "category": "math",
+  "difficulty": "Medium",
+  "examples": [
+    {
+      "explanation": "The prefix is \"123...\", so position 3 holds 3.",
+      "input": "n = 3",
+      "output": "3"
+    },
+    {
+      "explanation": "Positions 10-11 hold \"10\"; the second is 0.",
+      "input": "n = 11",
+      "output": "0"
+    },
+    {
+      "explanation": "Position 15 is the '2' of 12.",
+      "input": "n = 15",
+      "output": "2"
+    }
+  ],
+  "functionName": "findNthDigit",
+  "hints": [
+    "Group numbers by digit length: 9 one-digit, 90 two-digit, 900 three-digit, and so on.",
+    "Subtract whole groups from n until the target group is found.",
+    "Within the group, locate the exact number and the digit offset inside it."
+  ],
+  "id": "nth-digit",
+  "link": "https://leetcode.com/problems/nth-digit/",
+  "outputType": "int",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "starterCode": {
+    "cpp": "class Solution {\npublic:\n    int findNthDigit(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindNthDigit(int n) \n    {\n        return 0;\n    }\n}",
+    "go": "package main\n\nfunc FindNthDigit(n int) int {\n    return 0\n}",
+    "java": "class Solution {\n    public int findNthDigit(int n) {\n        return 0;\n    }\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function findNthDigit($n) {\n\n    }\n}",
+    "python": "class Solution:\n    def findNthDigit(self, n: int) -> int:\n        pass",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_nth_digit(n: i32) -> i32 {\n        0\n    }\n}",
+    "typescript": "export function findNthDigit(n: number): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "n": 3
+    },
+    {
+      "n": 11
+    },
+    {
+      "n": 15
+    }
+  ],
+  "title": "474. Nth Digit"
+}

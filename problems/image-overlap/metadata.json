@@ -1,0 +1,111 @@
+{
+  "id": "image-overlap",
+  "title": "833. Image Overlap",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/image-overlap/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "img1 = [[1,1,0],[0,1,0],[0,1,0]], img2 = [[0,0,0],[0,1,1],[0,0,1]]",
+      "output": "3",
+      "explanation": "The best shift aligns three ones."
+    },
+    {
+      "input": "img1 = [[1]], img2 = [[1]]",
+      "output": "1"
+    },
+    {
+      "input": "img1 = [[0]], img2 = [[0]]",
+      "output": "0"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int largestOverlap(int[][] img1, int[][] img2) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def largestOverlap(self, img1: List[List[int]], img2: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int largestOverlap(vector<vector<int>>& img1, vector<vector<int>>& img2) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int LargestOverlap(int[][] img1, int[][] img2) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn largest_overlap(img1: Vec<Vec<i32>>, img2: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc LargestOverlap(img1 [][]int, img2 [][]int) int {\n    return 0\n}",
+    "typescript": "export function largestOverlap(img1: number[][], img2: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $img1\n     * @param int[][] $img2\n     * @return int\n     */\n    public function largestOverlap($img1, $img2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "img1": [
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "img2": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "img1": [
+        [
+          1
+        ]
+      ],
+      "img2": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "img1": [
+        [
+          0
+        ]
+      ],
+      "img2": [
+        [
+          0
+        ]
+      ]
+    }
+  ],
+  "functionName": "largestOverlap",
+  "params": [
+    {
+      "name": "img1",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "img2",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Only the positions of ones matter, so collect their coordinates from both matrices first.",
+    "Each pair of ones (one from each matrix) votes for the shift vector that would align them; the most popular vector wins.",
+    "An empty set of ones on either side means the answer is immediately zero."
+  ]
+}

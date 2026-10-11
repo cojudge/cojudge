@@ -1,8 +1,8 @@
-You are given two integer arrays `nums1` and `nums2`, sorted in non-decreasing order, and two integers `m` and `n`, representing the number of elements in `nums1` and `nums2` respectively.
+Two integer arrays `nums1` and `nums2` are provided in non-decreasing order, together with integers `m` and `n` stating how many meaningful entries each one contributes.
 
-`nums1` has a length of `m + n`, where the first `m` elements denote the elements that should be merged, and the last `n` elements are set to `0` and should be ignored. `nums2` has a length of `n`.
+The array `nums1` has total capacity `m + n`: its leading `m` positions contain the values to keep, while its trailing `n` positions are placeholders filled with `0` and carry no information. The array `nums2` holds exactly `n` values.
 
-Merge `nums1` and `nums2` into a single array sorted in non-decreasing order and return the merged array.
+Combine the `m` kept values of `nums1` with the `n` values of `nums2` into one collection ordered from smallest to largest, and return that combined array.
 
 **Constraints:**
 

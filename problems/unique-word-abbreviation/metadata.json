@@ -1,0 +1,65 @@
+{
+  "id": "unique-word-abbreviation",
+  "title": "384. Unique Word Abbreviation",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/unique-word-abbreviation/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "dictionary = [\"deer\",\"door\",\"cake\",\"card\"], words = [\"dear\",\"cart\",\"cane\"]",
+      "output": "[0,1,0]",
+      "explanation": "dear shares d2r with deer/door (0); cart has fresh c2t (1); cane shares c2e with cake (0)."
+    },
+    {
+      "input": "dictionary = [\"hello\"], words = [\"hello\",\"hallo\"]",
+      "output": "[1,0]",
+      "explanation": "hello alone keeps h3o unique; hallo collides with it."
+    },
+    {
+      "input": "dictionary = [\"it\",\"bit\"], words = [\"hit\"]",
+      "output": "[1]",
+      "explanation": "h1t appears in no dictionary word."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] checkAbbr(String[] dictionary, String[] words) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def checkAbbr(self, dictionary: List[str], words: List[str]) -> List[int]:\n        return []",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> checkAbbr(vector<string>& dictionary, vector<string>& words) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] CheckAbbr(string[] dictionary, string[] words)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn check_abbr(dictionary: Vec<String>, words: Vec<String>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc CheckAbbr(dictionary []string, words []string) []int {\n    return []int{}\n}",
+    "typescript": "export function checkAbbr(dictionary: string[], words: string[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $dictionary\n     * @param string[] $words\n     * @return int[]\n     */\n    public function checkAbbr($dictionary, $words) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "dictionary": "[\"deer\",\"door\",\"cake\",\"card\"]",
+      "words": "[\"dear\",\"cart\",\"cane\",\"make\",\"cake\"]"
+    },
+    {
+      "dictionary": "[\"hello\"]",
+      "words": "[\"hello\",\"hallo\"]"
+    },
+    {
+      "dictionary": "[\"it\",\"bit\"]",
+      "words": "[\"hit\"]"
+    }
+  ],
+  "functionName": "checkAbbr",
+  "params": [
+    {
+      "name": "dictionary",
+      "type": "string_array"
+    },
+    {
+      "name": "words",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Adaptation: the ValidWordAbbr class is replaced by checkAbbr(dictionary, words) answering many queries at once (1 unique, 0 otherwise).",
+    "Abbreviate as first letter + (length-2) + last letter; words of length <= 2 map to themselves.",
+    "A query is unique when its abbreviation is absent, or the only dictionary word with it equals the query."
+  ]
+}

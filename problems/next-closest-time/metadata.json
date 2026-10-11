@@ -1,0 +1,58 @@
+{
+  "id": "next-closest-time",
+  "title": "698. Next Closest Time",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/next-closest-time/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "time = \"19:34\"",
+      "output": "\"19:39\"",
+      "explanation": "39 is the next minute whose digits both appear in 19:34."
+    },
+    {
+      "input": "time = \"23:59\"",
+      "output": "\"22:22\"",
+      "explanation": "Wrapping past midnight, 22:22 is the earliest reachable time."
+    },
+    {
+      "input": "time = \"00:00\"",
+      "output": "\"00:00\"",
+      "explanation": "Only digit 0 is available, so the next valid time is the same."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String nextClosestTime(String time) {\n        \n    }\n}",
+    "python": "class Solution:\n    def nextClosestTime(self, time: str) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string nextClosestTime(string time) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string NextClosestTime(string time) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn next_closest_time(time: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc NextClosestTime(time string) string {\n    return \"\"\n}",
+    "typescript": "export function nextClosestTime(time: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $time\n     * @return string\n     */\n    public function nextClosestTime($time) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "time": "19:34"
+    },
+    {
+      "time": "23:59"
+    },
+    {
+      "time": "00:00"
+    }
+  ],
+  "functionName": "nextClosestTime",
+  "params": [
+    {
+      "name": "time",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Collect the distinct digits appearing in the input.",
+    "Step forward minute by minute (wrapping after 23:59) and test whether every digit of the candidate belongs to the set.",
+    "At most 24*60 steps are needed."
+  ]
+}

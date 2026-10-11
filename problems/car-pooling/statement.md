@@ -1,17 +1,18 @@
-There is a car with `capacity` empty seats. The vehicle only drives east (i.e., it cannot turn around and drive west).
+A vehicle with `capacity` vacant seats travels exclusively eastward (reversing toward the west is impossible).
 
-You are given the integer `capacity` and an array `trips` where `trips[i] = [numPassengers[i], from[i], to[i]]` indicates that the `i`-th trip has `numPassengers[i]` passengers and the locations to pick them up and drop them off are `from[i]` and `to[i]` respectively. The locations are given as the number of kilometers due east from the car's initial location.
+A manifest `trips` describes the itinerary, where `trips[i] = [numPassengers[i], from[i], to[i]]` means booking `i` boards `numPassengers[i]` riders at kilometre `from[i]` east of the start and alights them at kilometre `to[i]` east of the start.
 
-Passengers are dropped off before new passengers are picked up at the same location. At every point along the route, the total number of passengers in the car must not exceed `capacity`.
+Whenever boarding and alighting coincide at one kilometre, alighting completes first.
+Along the entire journey the headcount aboard must never surpass `capacity`.
 
-Return `true` if it is possible to pick up and drop off all passengers for all the given trips, or `false` otherwise.
+Decide whether every booking can be honoured: return `true` when feasible, `false` otherwise.
 
 **Example 1:**
 
 ```
 Input: trips = [[2,1,5],[3,3,7]], capacity = 4
 Output: false
-Explanation: At kilometer 1, 2 passengers are picked up, so the car holds 2.
+Explanation: At kilometre 1, 2 riders board, leaving 2 aboard.
 ```
 
 **Example 2:**
@@ -19,7 +20,7 @@ Explanation: At kilometer 1, 2 passengers are picked up, so the car holds 2.
 ```
 Input: trips = [[2,1,5],[3,3,7]], capacity = 5
 Output: true
-Explanation: At kilometer 1, the car holds 2 passengers.
+Explanation: At kilometre 1, the vehicle carries 2 riders.
 ```
 
 **Constraints:**

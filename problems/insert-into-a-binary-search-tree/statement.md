@@ -1,6 +1,6 @@
-You are given the `root` node of a binary search tree (BST) and a `val` to insert into the tree. Return the root node of the BST after the insertion. It is guaranteed that the new value does not exist in the original BST.
+You receive the `root` of a binary search tree (BST) along with an integer `val` that must be added to the structure. Produce the `root` of the tree once the addition is done. The incoming value is guaranteed absent from the starting tree.
 
-Notice that there may exist multiple valid ways for the insertion, as long as the tree remains a BST after insertion. You can return any of them.
+Several placements can preserve BST ordering; returning any tree that is a valid BST containing all old values plus the new one is acceptable.
 
 **Example 1:**
 ```

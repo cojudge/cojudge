@@ -1,0 +1,58 @@
+{
+  "category": "tree",
+  "difficulty": "Medium",
+  "examples": [
+    {
+      "explanation": "Strings starting with '1' come first, then the remaining single digits.",
+      "input": "n = 13",
+      "output": "[1,10,11,12,13,2,3,4,5,6,7,8,9]"
+    },
+    {
+      "explanation": "With only two values, dictionary order matches numeric order.",
+      "input": "n = 2",
+      "output": "[1,2]"
+    },
+    {
+      "explanation": "Single-digit values keep their natural order.",
+      "input": "n = 9",
+      "output": "[1,2,3,4,5,6,7,8,9]"
+    }
+  ],
+  "functionName": "lexicalOrder",
+  "hints": [
+    "Think of numbers 1..n as a ten-way tree where each value x has children x*10 .. x*10+9.",
+    "Walk that tree depth-first: go deeper with x*10 when possible, otherwise step sideways and climb past trailing 9s.",
+    "Keep a single cursor and emit one number per step instead of sorting strings."
+  ],
+  "id": "lexicographical-numbers",
+  "link": "https://leetcode.com/problems/lexicographical-numbers/",
+  "outputType": "int_list",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "starterCode": {
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> lexicalOrder(int n) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<int> LexicalOrder(int n) \n    {\n        return new List<int>();\n    }\n}",
+    "go": "package main\n\nfunc LexicalOrder(n int) []int {\n    return []int{}\n}",
+    "java": "import java.util.*;\nclass Solution {\n    public List<Integer> lexicalOrder(int n) {\n        return new ArrayList<>();\n    }\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int[]\n     */\n    public function lexicalOrder($n) {\n\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def lexicalOrder(self, n: int) -> List[int]:\n        return []\n",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn lexical_order(n: i32) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "typescript": "export function lexicalOrder(n: number): number[] {\n    return [];\n}"
+  },
+  "testCases": [
+    {
+      "n": 13
+    },
+    {
+      "n": 2
+    },
+    {
+      "n": 9
+    }
+  ],
+  "title": "462. Lexicographical Numbers"
+}

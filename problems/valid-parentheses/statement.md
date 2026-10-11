@@ -1,4 +1,4 @@
-Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+You receive a string `s` assembled only from the six symbols `(`, `)`, `{`, `}`, `[` and `]`. Call the arrangement correctly nested when each closing symbol pairs with a previously seen unmatched opener of the identical shape, pairs finish in the reverse of the order in which they were opened, and no opener is left waiting at the end. Return `true` for correctly nested inputs and `false` otherwise.
 
 **Constraints:**
 

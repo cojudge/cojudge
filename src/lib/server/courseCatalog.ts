@@ -6,6 +6,9 @@ export type CourseInfo = {
     description: string;
     'category-order': string[];
     'problems-of-category': Record<string, string[]>;
+    /** Optional per-course display numbers (problem id -> number shown
+     *  in place of the metadata title prefix). */
+    'problem-numbers'?: Record<string, number>;
 };
 
 export type Course = {
@@ -20,6 +23,8 @@ export type ProblemSummary = {
     link?: string;
     category?: string;
     statement?: string;
+    /** Course-specific display number (see CourseInfo['problem-numbers']). */
+    courseNumber?: number;
 };
 
 const COURSE_ID_PATTERN = /^[a-z0-9][a-z0-9_-]*$/i;
@@ -48,11 +53,23 @@ export function parseCourseInfo(value: unknown): CourseInfo | null {
         mappingEntries.push([category, [...problemIds] as string[]]);
     }
 
+    let problemNumbers: Record<string, number> | undefined = undefined;
+    const rawNumbers = value['problem-numbers'];
+    if (rawNumbers !== undefined) {
+        if (!isRecord(rawNumbers)) return null;
+        problemNumbers = {};
+        for (const [id, num] of Object.entries(rawNumbers)) {
+            if (!id.trim() || typeof num !== 'number' || !Number.isInteger(num) || num < 1) return null;
+            problemNumbers[id] = num;
+        }
+    }
+
     return {
         title: value.title,
         description: value.description ?? '',
         'category-order': categoryOrder ? [...categoryOrder] as string[] : [],
-        'problems-of-category': Object.fromEntries(mappingEntries)
+        'problems-of-category': Object.fromEntries(mappingEntries),
+        ...(problemNumbers !== undefined ? { 'problem-numbers': problemNumbers } : {})
     };
 }
 
@@ -100,7 +117,8 @@ export function orderProblemsForCourse(courseInfo: CourseInfo, problems: Problem
         for (const id of mapping[category]) {
             const problem = problemsById.get(id);
             if (!problem || seen.has(id)) continue;
-            ordered.push({ ...problem, category });
+            const courseNumber = courseInfo['problem-numbers']?.[id];
+            ordered.push(courseNumber !== undefined ? { ...problem, category, courseNumber } : { ...problem, category });
             seen.add(id);
         }
     }

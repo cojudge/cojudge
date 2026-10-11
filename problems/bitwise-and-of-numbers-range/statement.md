@@ -1,4 +1,5 @@
-Given two integers `left` and `right` that represent the range `[left, right]`, return the bitwise AND of all numbers in this range, inclusive.
+You receive the endpoints `left` and `right` of a closed interval `[left, right]`.
+Compute the cumulative `AND` formed by combining every integer inside those bounds.
 
 **Examples:**
 

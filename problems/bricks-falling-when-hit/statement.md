@@ -1,0 +1,29 @@
+You are given a wall `grid` of `1`s (bricks) and `0`s (empty). A brick is stable when it sits in the top row or connects to a stable brick through shared sides (up, down, left, right). Each entry of `hits` names a cell whose brick, if present, is removed. After each removal, every brick that is no longer stable drops away.
+
+For every hit in order, report how many bricks fell as a consequence, not counting the directly removed brick itself. A hit on an empty cell causes zero falls.
+
+**Example 1:**
+```
+Input: grid = [[1,0,0,0],[1,1,1,0]], hits = [[1,0]]
+Output: [2]
+Explanation: Removing (1,0) disconnects two bricks above the gap.
+```
+
+**Example 2:**
+```
+Input: grid = [[1,0,0,0],[1,1,0,0]], hits = [[1,1],[1,0]]
+Output: [0,0]
+Explanation: Neither removal disconnects additional bricks.
+```
+
+**Example 3:**
+```
+Input: grid = [[1,1,1],[0,1,0],[0,0,0]], hits = [[0,2],[2,0]]
+Output: [0,0]
+Explanation: The second hit targets an empty cell.
+```
+
+**Constraints:**
+- `1 <= grid.length, grid[0].length <= 50` for these tests (original allows up to 200)
+- `1 <= hits.length <= 100`
+- `hits[i]` is a valid cell coordinate

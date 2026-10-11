@@ -1,0 +1,122 @@
+[
+  {
+    "s": "cbaebabacd",
+    "p": "abc"
+  },
+  {
+    "s": "abab",
+    "p": "ab"
+  },
+  {
+    "s": "aaaa",
+    "p": "aa"
+  },
+  {
+    "s": "abc",
+    "p": "abcd"
+  },
+  {
+    "s": "a",
+    "p": "a"
+  },
+  {
+    "s": "ab",
+    "p": "a"
+  },
+  {
+    "s": "baa",
+    "p": "aa"
+  },
+  {
+    "s": "abababab",
+    "p": "ab"
+  },
+  {
+    "s": "zzzzzz",
+    "p": "abc"
+  },
+  {
+    "s": "abcabcabc",
+    "p": "abc"
+  },
+  {
+    "s": "aabbaa",
+    "p": "aba"
+  },
+  {
+    "s": "aaaaaaaaaa",
+    "p": "aaa"
+  },
+  {
+    "s": "abcdefg",
+    "p": "gfedcba"
+  },
+  {
+    "s": "xyzzxy",
+    "p": "xyz"
+  },
+  {
+    "s": "abacbabc",
+    "p": "abc"
+  },
+  {
+    "s": "aaaaaaaaaa",
+    "p": "a"
+  },
+  {
+    "s": "abc",
+    "p": "abc"
+  },
+  {
+    "s": "abc",
+    "p": "cba"
+  },
+  {
+    "s": "ab",
+    "p": "abc"
+  },
+  {
+    "s": "mississippi",
+    "p": "issi"
+  },
+  {
+    "s": "abcde",
+    "p": "e"
+  },
+  {
+    "s": "abababababababababab",
+    "p": "aba"
+  },
+  {
+    "s": "aaaaabaaaaa",
+    "p": "aaab"
+  },
+  {
+    "s": "xyzxyzxyz",
+    "p": "zyx"
+  },
+  {
+    "s": "abcdefabcdef",
+    "p": "fed"
+  },
+  {
+    "s": "aabbccddaabbccdd",
+    "p": "abcd"
+  },
+  {
+    "s": "qwertyuiopasdfghjklzxcvbnm",
+    "p": "xyz"
+  },
+  {
+    "s": "bbbbbbbbbb",
+    "p": "bbbbb"
+  },
+  {
+    "s": "cbaebabacd",
+    "p": "cbaebabacd"
+  },
+  {
+    "s": "aaabbbcccdddeee",
+    "p": "abcde"
+  }
+]

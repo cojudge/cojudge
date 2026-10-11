@@ -1,0 +1,57 @@
+{
+  "id": "super-washing-machines",
+  "title": "577. Super Washing Machines",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/super-washing-machines/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "machines = [1,0,5]",
+      "output": "3",
+      "explanation": "The average is 2. The left machine needs 1 more and the right one must give 3 away; balancing takes 3 moves."
+    },
+    {
+      "input": "machines = [0,3,0]",
+      "output": "2",
+      "explanation": "The average is 1. Both outer machines pull one garment from the middle, finishing in 2 moves."
+    },
+    {
+      "input": "machines = [0,2,0]",
+      "output": "-1",
+      "explanation": "The total 2 cannot be split evenly across 3 machines."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findMinMoves(int[] machines) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findMinMoves(self, machines: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int findMinMoves(vector<int>& machines) {\n        return -1;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindMinMoves(int[] machines) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_min_moves(machines: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindMinMoves(machines []int) int {\n    \n}",
+    "typescript": "export function findMinMoves(machines: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $machines\n     * @return int\n     */\n    public function findMinMoves($machines) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "machines": "[1,0,5]"
+    },
+    {
+      "machines": "[0,3,0]"
+    },
+    {
+      "machines": "[0,2,0]"
+    }
+  ],
+  "functionName": "findMinMoves",
+  "params": [
+    {
+      "name": "machines",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "If the total is not divisible by n, answer -1; otherwise each machine targets total / n garments.",
+    "Scan left to right tracking the running imbalance; a machine's bottleneck is the larger of its own surplus/deficit and the flow passing through it."
+  ]
+}

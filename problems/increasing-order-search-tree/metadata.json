@@ -1,0 +1,57 @@
+{
+  "id": "increasing-order-search-tree",
+  "title": "887. Increasing Order Search Tree",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/increasing-order-search-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [5,3,6,2,4,null,8,1,null,null,null,7,9]",
+      "output": "[1,null,2,null,3,null,4,null,5,null,6,null,7,null,8,null,9]",
+      "explanation": "Sorted values 1..9 relinked right-only."
+    },
+    {
+      "input": "root = [5,1,7]",
+      "output": "[1,null,5,null,7]",
+      "explanation": "Chain of [1,5,7]."
+    },
+    {
+      "input": "root = [1]",
+      "output": "[1]",
+      "explanation": "Single node unchanged."
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public TreeNode increasingBST(TreeNode root) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\nclass Solution:\n    def increasingBST(self, root):\n        pass",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\nclass Solution {\npublic:\n    TreeNode* increasingBST(TreeNode* root) {\n        \n    }\n};",
+    "csharp": "/*\nDefinition for a binary tree node.\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\npublic class Solution \n{\n    public TreeNode IncreasingBST(TreeNode root) \n    {\n        \n    }\n}",
+    "rust": "// Definition for a binary tree node.\n// #[derive(Debug, PartialEq, Eq)]\n// pub struct TreeNode {\n//   pub val: i32,\n//   pub left: Option<Rc<RefCell<TreeNode>>>,\n//   pub right: Option<Rc<RefCell<TreeNode>>>,\n// }\n//\n// impl TreeNode {\n//   #[inline]\n//   pub fn new(val: i32) -> Self {\n//     TreeNode {\n//       val,\n//       left: None,\n//       right: None\n//     }\n//   }\n// }\nuse std::rc::Rc;\nuse std::cell::RefCell;\npub struct Solution;\n\nimpl Solution {\n    pub fn increasing_bst(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {\n        \n    }\n}",
+    "go": "// Definition for a binary tree node.\n// type TreeNode struct {\n//     Val int\n//     Left *TreeNode\n//     Right *TreeNode\n// }\npackage main\n\nfunc IncreasingBST(root *TreeNode) *TreeNode {\n    \n}",
+    "typescript": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    val: number;\n    left: TreeNode | null;\n    right: TreeNode | null;\n    constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {\n        this.val = val ?? 0;\n        this.left = left ?? null;\n        this.right = right ?? null;\n    }\n}\n*/\nimport { TreeNode } from './TreeNode';\nexport function increasingBST(root: TreeNode | null): TreeNode | null {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param TreeNode|null $root\n     * @return TreeNode|null\n     */\n    public function increasingBST($root) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "root": "[5,3,6,2,4,null,8,1,null,null,null,7,9]"
+    },
+    {
+      "root": "[5,1,7]"
+    },
+    {
+      "root": "[1]"
+    }
+  ],
+  "functionName": "increasingBST",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node"
+    }
+  ],
+  "outputType": "tree_node",
+  "hints": [
+    "Collect values with an in-order walk, which visits a search tree in sorted order.",
+    "Then create fresh nodes in that order, linking each as the right child of the previous one with no left children."
+  ]
+}

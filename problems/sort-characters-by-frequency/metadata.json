@@ -1,0 +1,58 @@
+{
+  "id": "sort-characters-by-frequency",
+  "title": "518. Sort Characters By Frequency",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/sort-characters-by-frequency/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "s = \"tree\"",
+      "output": "\"eert\"",
+      "explanation": "e appears twice, t and r once each."
+    },
+    {
+      "input": "s = \"cccaaa\"",
+      "output": "\"aaaccc\"",
+      "explanation": "Equal frequencies allow either block order."
+    },
+    {
+      "input": "s = \"Aabb\"",
+      "output": "\"bbAa\"",
+      "explanation": "b appears twice, A and a once each."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String frequencySort(String s) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def frequencySort(self, s: str) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string frequencySort(string s) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string FrequencySort(string s)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn frequency_sort(s: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc FrequencySort(s string) string {\n    return \"\"\n}",
+    "typescript": "export function frequencySort(s: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string\n     */\n    public function frequencySort($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "tree"
+    },
+    {
+      "s": "cccaaa"
+    },
+    {
+      "s": "Aabb"
+    }
+  ],
+  "functionName": "frequencySort",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Count each character first; the rest is ordering by those counts.",
+    "Sorting distinct characters by descending count then repeating each by its count is simplest.",
+    "Bucketing by count gives linear time, but sorting distinct letters is fine for the given limits."
+  ]
+}

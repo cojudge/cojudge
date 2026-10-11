@@ -1,0 +1,77 @@
+{
+  "id": "largest-component-size-by-common-factor",
+  "title": "939. Largest Component Size by Common Factor",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/largest-component-size-by-common-factor/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [4,6,15,35]",
+      "output": "4",
+      "explanation": "Factors chain all four together."
+    },
+    {
+      "input": "nums = [20,50,9,63]",
+      "output": "2",
+      "explanation": "Two pairs form two groups of two."
+    },
+    {
+      "input": "nums = [2,3,6,7,4,12,21,39]",
+      "output": "8",
+      "explanation": "Everything connects into one group."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int largestComponentSize(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def largestComponentSize(self, nums: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int largestComponentSize(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public int LargestComponentSize(int[] nums) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn largest_component_size(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc LargestComponentSize(nums []int) int {\n    return 0\n}",
+    "typescript": "export function largestComponentSize(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function largestComponentSize($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": [
+        4,
+        6,
+        15,
+        35
+      ]
+    },
+    {
+      "nums": [
+        20,
+        50,
+        9,
+        63
+      ]
+    },
+    {
+      "nums": [
+        2,
+        3,
+        6,
+        7,
+        4,
+        12,
+        21,
+        39
+      ]
+    }
+  ],
+  "functionName": "largestComponentSize",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Split each number into its distinct prime factors; numbers sharing a prime belong together.",
+    "Union the indices that meet at the same prime with a disjoint-set structure keyed by prime.",
+    "The value 1 has no prime factor and always stays solitary."
+  ]
+}

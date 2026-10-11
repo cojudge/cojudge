@@ -1,0 +1,69 @@
+{
+  "id": "backspace-string-compare",
+  "title": "842. Backspace String Compare",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/backspace-string-compare/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"ab#c\", t = \"ad#c\"",
+      "output": "true",
+      "explanation": "Both reduce to ac."
+    },
+    {
+      "input": "s = \"ab##\", t = \"c#d#\"",
+      "output": "true",
+      "explanation": "Both reduce to empty."
+    },
+    {
+      "input": "s = \"a#c\", t = \"b\"",
+      "output": "false",
+      "explanation": "Results c versus b differ."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean backspaceCompare(String s, String t) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def backspaceCompare(self, s: str, t: str) -> bool:\n        return False\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool backspaceCompare(string s, string t) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool BackspaceCompare(string s, string t)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn backspace_compare(s: String, t: String) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc BackspaceCompare(s string, t string) bool {\n    return false\n}",
+    "typescript": "export function backspaceCompare(s: string, t: string): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string $t\n     * @return bool\n     */\n    public function backspaceCompare($s, $t) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "ab#c",
+      "t": "ad#c"
+    },
+    {
+      "s": "ab##",
+      "t": "c#d#"
+    },
+    {
+      "s": "a#c",
+      "t": "b"
+    },
+    {
+      "s": "a##c",
+      "t": "#a#c"
+    }
+  ],
+  "functionName": "backspaceCompare",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "t",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Simulate each string with a stack-like builder: append letters, pop on '#' when possible.",
+    "Alternatively walk both strings from the end, skipping erased characters with a counter, for O(1) extra space.",
+    "Compare the two reduced forms for equality."
+  ]
+}

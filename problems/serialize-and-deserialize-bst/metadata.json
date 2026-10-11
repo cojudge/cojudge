@@ -1,0 +1,58 @@
+{
+  "id": "serialize-and-deserialize-bst",
+  "title": "517. Serialize and Deserialize BST",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/serialize-and-deserialize-bst/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "data = \"[2,1,3]\"",
+      "output": "\"2,1,3\"",
+      "explanation": "Preorder visits 2, then 1, then 3."
+    },
+    {
+      "input": "data = \"[4,2,7,1,3]\"",
+      "output": "\"4,2,1,3,7\"",
+      "explanation": "Preorder visits 4, then left group 2,1,3, then 7."
+    },
+    {
+      "input": "data = \"[]\"",
+      "output": "\"\"",
+      "explanation": "Empty tree gives empty text."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String serialize(String data) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def serialize(self, data: str) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string serialize(string data) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string Serialize(string data)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn serialize(data: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc Serialize(data string) string {\n    return \"\"\n}",
+    "typescript": "export function serialize(data: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $data\n     * @return string\n     */\n    public function serialize($data) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "data": "[2,1,3]"
+    },
+    {
+      "data": "[4,2,7,1,3]"
+    },
+    {
+      "data": "[]"
+    }
+  ],
+  "functionName": "serialize",
+  "params": [
+    {
+      "name": "data",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "First rebuild the tree from bracket level order with a queue.",
+    "Then emit preorder: node, left, right, skipping nulls.",
+    "Join values with commas; empty input maps to an empty string."
+  ]
+}

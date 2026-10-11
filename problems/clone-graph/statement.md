@@ -1,8 +1,8 @@
-Given a reference of a node in a **connected undirected** graph.
+A pointer to one vertex of a **linked undirected** network is supplied.
 
-Return a **deep copy** (clone) of the graph.
+Produce an independent duplicate (**thorough replica**) of the whole network.
 
-Each node in the graph contains a value (`int`) and a list of its neighbors.
+Every vertex stores an integer payload (`int`) together with its adjacency catalogue.
 
 ```java
 class Node {
@@ -11,11 +11,14 @@ class Node {
 }
 ```
 
-**Test case format:**
+**Evaluation layout:**
 
-For simplicity, each node's value is the same as the node's index (1-indexed). The given `adjList` is a 2D array where `adjList[i]` is an array of all the neighbors of the `i`-th node (1-indexed). Each `adjList[i]` is not sorted.
+To keep cases compact, vertex payloads coincide with vertex ordinals (1-based).
+The supplied `adjList` is a two-dimensional listing in which `adjList[i]` enumerates every neighbour of the `i`-th vertex (1-based).
+No `adjList[i]` arrives in any guaranteed ordering.
 
-Your function receives a reference to the first node of the graph (`Node` with `val = 1`). You must return a reference to the same node in the cloned graph.
+The routine accepts a pointer to the opening vertex of the network (the `Node` whose `val = 1`).
+It must hand back a pointer to the counterpart of that opening vertex inside the duplicated network.
 
 **Constraints:**
 - The number of nodes in the graph is in the range `[0, 100]`.

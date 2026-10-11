@@ -1,6 +1,4 @@
-Given the root of a binary tree, return the preorder traversal of its nodes' values.
-
-Preorder traversal visits nodes in the order: root, left subtree, right subtree.
+Take the `root` of a binary tree and list its node values in preorder sequence: for every subtree, record the subtree's own root value first, then enumerate everything in its left branch, and finally enumerate everything in its right branch.
 
 **Constraints:**
 

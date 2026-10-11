@@ -1,0 +1,73 @@
+{
+  "id": "add-one-row-to-tree",
+  "title": "647. Add One Row to Tree",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/add-one-row-to-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [4,2,6,3,1,5], val = 1, depth = 2",
+      "output": "[4,1,1,2,null,null,6,3,1,5,null]",
+      "explanation": "Every depth-1 node gains a new val-1 child on each side; old subtrees hang below the new row."
+    },
+    {
+      "input": "root = [4,2,null,3,1], val = 1, depth = 3",
+      "output": "[4,2,null,1,1,3,null,null,1]",
+      "explanation": "Nodes at depth 2 each receive the new row; node 2 keeps 3 under its new left child and 1 under its new right child."
+    },
+    {
+      "input": "root = [1], val = 5, depth = 1",
+      "output": "[5,1]",
+      "explanation": "Depth 1 replaces the root with a new node holding 5."
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public TreeNode addOneRow(TreeNode root, int val, int depth) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\nclass Solution:\n    def addOneRow(self, root, val: int, depth: int):\n        pass",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\nclass Solution {\npublic:\n    TreeNode* addOneRow(TreeNode* root, int val, int depth) {\n        \n    }\n};",
+    "csharp": "/*\nDefinition for a binary tree node.\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\npublic class Solution \n{\n    public TreeNode AddOneRow(TreeNode root, int val, int depth) \n    {\n        \n    }\n}",
+    "rust": "// Definition for a binary tree node.\n// #[derive(Debug, PartialEq, Eq)]\n// pub struct TreeNode {\n//   pub val: i32,\n//   pub left: Option<Rc<RefCell<TreeNode>>>,\n//   pub right: Option<Rc<RefCell<TreeNode>>>,\n// }\n//\n// impl TreeNode {\n//   #[inline]\n//   pub fn new(val: i32) -> Self {\n//     TreeNode {\n//       val,\n//       left: None,\n//       right: None\n//     }\n//   }\n// }\nuse std::rc::Rc;\nuse std::cell::RefCell;\npub struct Solution;\n\nimpl Solution {\n    pub fn add_one_row(root: Option<Rc<RefCell<TreeNode>>>, val: i32, depth: i32) -> Option<Rc<RefCell<TreeNode>>> {\n        \n    }\n}",
+    "go": "// Definition for a binary tree node.\n// type TreeNode struct {\n//     Val int\n//     Left *TreeNode\n//     Right *TreeNode\n// }\npackage main\n\nfunc AddOneRow(root *TreeNode, val int, depth int) *TreeNode {\n    \n}",
+    "typescript": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    val: number;\n    left: TreeNode | null;\n    right: TreeNode | null;\n    constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {\n        this.val = val ?? 0;\n        this.left = left ?? null;\n        this.right = right ?? null;\n    }\n}\n*/\nimport { TreeNode } from './TreeNode';\nexport function addOneRow(root: TreeNode | null, val: number, depth: number): TreeNode | null {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param TreeNode|null $root\n     * @param int $val\n     * @param int $depth\n     * @return TreeNode|null\n     */\n    public function addOneRow($root, $val, $depth) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "root": "[4,2,6,3,1,5]",
+      "val": 1,
+      "depth": 2
+    },
+    {
+      "root": "[4,2,null,3,1]",
+      "val": 1,
+      "depth": 3
+    },
+    {
+      "root": "[1]",
+      "val": 5,
+      "depth": 1
+    }
+  ],
+  "functionName": "addOneRow",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    },
+    {
+      "name": "val",
+      "type": "int"
+    },
+    {
+      "name": "depth",
+      "type": "int"
+    }
+  ],
+  "outputType": "tree_node",
+  "hints": [
+    "Depth 1 is special: build a new root holding val with the old tree as its left child.",
+    "Otherwise walk to depth-1 (breadth-first or recursion) and splice a new left and right node under each host.",
+    "The old left subtree becomes the left child of the new left node; the old right subtree becomes the right child of the new right node."
+  ]
+}

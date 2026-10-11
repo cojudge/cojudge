@@ -1,6 +1,6 @@
-Given an array of integers `nums`, sort the array in ascending order and return it.
+You receive an integer list `nums`. Arrange it from least to greatest and hand it back.
 
-You must solve the problem without using any built-in sort functions in `O(n log n)` time complexity and with the smallest space complexity possible.
+Do not call any built-in sorting helper. Your approach must take `O(n log n)` time while using as little extra memory as you can manage.
 
 **Constraints:**
 

@@ -1,0 +1,58 @@
+{
+  "id": "string-compression",
+  "title": "511. String Compression",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/string-compression/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"aabbccc\"",
+      "output": "6",
+      "explanation": "Blocks become a2b2c3 of length 6."
+    },
+    {
+      "input": "s = \"a\"",
+      "output": "1",
+      "explanation": "A single letter stays as a."
+    },
+    {
+      "input": "s = \"abbbbbbbbbbbb\"",
+      "output": "4",
+      "explanation": "The squeezed form is ab11 of length 4."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int compress(String s) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def compress(self, s: str) -> int:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int compress(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int Compress(string s)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn compress(s: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc Compress(s string) int {\n    return 0\n}",
+    "typescript": "export function compress(s: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function compress($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "aabbccc"
+    },
+    {
+      "s": "a"
+    },
+    {
+      "s": "abbbbbbbbbbbb"
+    }
+  ],
+  "functionName": "compress",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Scan for maximal blocks of equal letters.",
+    "A block of size 1 costs 1; a block of size c>1 costs 1 plus the digit count of c.",
+    "Add the cost of every block; no need to build the squeezed text."
+  ]
+}

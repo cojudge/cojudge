@@ -1,0 +1,57 @@
+{
+  "id": "count-unique-characters-of-all-substrings-of-a-given-string",
+  "title": "826. Count Unique Characters of All Substrings of a Given String",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/count-unique-characters-of-all-substrings-of-a-given-string/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"ABC\"",
+      "output": "10",
+      "explanation": "Single letters give 3, pairs give 4, the triple gives 3."
+    },
+    {
+      "input": "s = \"ABA\"",
+      "output": "8",
+      "explanation": "The full string scores only 1 because A repeats."
+    },
+    {
+      "input": "s = \"LEETCODE\"",
+      "output": "92"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int uniqueLetterString(String s) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def uniqueLetterString(self, s: str) -> int:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int uniqueLetterString(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int UniqueLetterString(string s) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn unique_letter_string(s: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc UniqueLetterString(s string) int {\n    return 0\n}",
+    "typescript": "export function uniqueLetterString(s: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function uniqueLetterString($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "ABC"
+    },
+    {
+      "s": "ABA"
+    },
+    {
+      "s": "LEETCODE"
+    }
+  ],
+  "functionName": "uniqueLetterString",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Think per character occurrence: an occurrence at position i with neighbours prev and next is the unique one exactly for starts in (prev, i] and ends in [i, next).",
+    "Keep the last two seen positions for each of the 26 letters and add (i - last1) * (last1 - last2) as you scan.",
+    "After the scan, flush each letter once more using the string length as the virtual next occurrence, taking the total modulo 1e9+7."
+  ]
+}

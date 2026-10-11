@@ -1,0 +1,57 @@
+{
+  "id": "split-concatenated-strings",
+  "title": "611. Split Concatenated Strings",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/split-concatenated-strings/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "strs = [\"abc\",\"xyz\"]",
+      "output": "\"zyxcba\"",
+      "explanation": "Reverse both then cut at z."
+    },
+    {
+      "input": "strs = [\"abc\"]",
+      "output": "\"cba\"",
+      "explanation": "Best rotation of the reversed loop."
+    },
+    {
+      "input": "strs = [\"ab\",\"cd\"]",
+      "output": "\"dcba\""
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public String splitLoopedString(String[] strs) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def splitLoopedString(self, strs: List[str]) -> str:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string splitLoopedString(vector<string>& strs) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string SplitLoopedString(string[] strs) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn split_looped_string(strs: Vec<String>) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc SplitLoopedString(strs []string) string {\n    \n}",
+    "typescript": "export function splitLoopedString(strs: string[]): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $strs\n     * @return string\n     */\n    public function splitLoopedString($strs) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "strs": "[\"abc\",\"xyz\"]"
+    },
+    {
+      "strs": "[\"abc\"]"
+    },
+    {
+      "strs": "[\"ab\",\"cd\"]"
+    }
+  ],
+  "functionName": "splitLoopedString",
+  "params": [
+    {
+      "name": "strs",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "For every string except the one holding the cut, the better of it and its reversal is always optimal, so normalise those first.",
+    "Fix which original string contains the cut, build the middle from the other normalised strings, then try every split of the cut string in both orientations.",
+    "Compare all candidates and keep the lexicographic maximum."
+  ]
+}

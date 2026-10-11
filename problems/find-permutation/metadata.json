@@ -1,0 +1,58 @@
+{
+  "id": "find-permutation",
+  "title": "548. Find Permutation",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/find-permutation/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "s = \"I\"",
+      "output": "[1,2]",
+      "explanation": "Only [1,2] rises."
+    },
+    {
+      "input": "s = \"DI\"",
+      "output": "[2,1,3]",
+      "explanation": "[2,1,3] is the smallest of the two matches."
+    },
+    {
+      "input": "s = \"DDI\"",
+      "output": "[3,2,1,4]",
+      "explanation": "Descending run reverses the first three slots."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] findPermutation(String s) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findPermutation(self, s: str) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> findPermutation(string s) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] FindPermutation(string s)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_permutation(s: String) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc FindPermutation(s string) []int {\n    return []int{}\n}",
+    "typescript": "export function findPermutation(s: string): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int[]\n     */\n    public function findPermutation($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "I"
+    },
+    {
+      "s": "DI"
+    },
+    {
+      "s": "DDI"
+    }
+  ],
+  "functionName": "findPermutation",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Start from 1..n+1, which is already the smallest ordering.",
+    "Each maximal D-block must appear reversed; I slots need no change.",
+    "Scan with two pointers and reverse each D-segment in place."
+  ]
+}

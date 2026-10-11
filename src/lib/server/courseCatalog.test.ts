@@ -7,6 +7,7 @@ import {
     loadMergedProblemSummaries,
     loadProblemSummaries,
     orderProblemsForCourse,
+    parseCourseInfo,
     selectCourse,
     type Course,
     type CourseInfo,
@@ -80,6 +81,52 @@ describe('course catalog', () => {
             { id: 'array-problem', category: 'array' },
             { id: 'extra-problem', category: 'extra' }
         ]);
+    });
+
+    it('attaches per-course problem numbers when provided', () => {
+        const courseInfo: CourseInfo = {
+            title: 'Course',
+            description: '',
+            'category-order': ['array'],
+            'problems-of-category': {
+                array: ['array-problem', 'other-problem']
+            },
+            'problem-numbers': { 'array-problem': 169 }
+        };
+        const problems: ProblemSummary[] = [
+            { id: 'array-problem', title: '155. Majority Element', difficulty: 'Easy' },
+            { id: 'other-problem', title: '12. Other', difficulty: 'Easy' }
+        ];
+
+        expect(orderProblemsForCourse(courseInfo, problems)).toEqual([
+            { id: 'array-problem', title: '155. Majority Element', difficulty: 'Easy', category: 'array', courseNumber: 169 },
+            { id: 'other-problem', title: '12. Other', difficulty: 'Easy', category: 'array' }
+        ]);
+    });
+
+    it('rejects invalid problem-numbers maps', () => {
+        for (const numbers of [{ a: 'x' }, { a: 1.5 }, { a: 0 }, { '': 3 }, ['x']]) {
+            expect(parseCourseInfo({
+                title: 'Course',
+                description: '',
+                'category-order': [],
+                'problems-of-category': {},
+                'problem-numbers': numbers
+            })).toBeNull();
+        }
+        expect(parseCourseInfo({
+            title: 'Course',
+            description: '',
+            'category-order': [],
+            'problems-of-category': {},
+            'problem-numbers': { a: 3 }
+        })).toEqual({
+            title: 'Course',
+            description: '',
+            'category-order': [],
+            'problems-of-category': {},
+            'problem-numbers': { a: 3 }
+        });
     });
 
     async function makeProblemsDir(

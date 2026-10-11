@@ -1,0 +1,65 @@
+{
+  "id": "smallest-range-i",
+  "title": "897. Smallest Range I",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/smallest-range-i/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1], k = 0",
+      "output": "0",
+      "explanation": "Only one element exists, so the score is 0 however it is shifted."
+    },
+    {
+      "input": "nums = [0,10], k = 2",
+      "output": "6",
+      "explanation": "Move 0 up to 2 and 10 down to 8; the spread becomes 8 - 2 = 6, which is the best possible."
+    },
+    {
+      "input": "nums = [1,3,6], k = 3",
+      "output": "0",
+      "explanation": "Shift every value to 4 (1 + 3, 3 + 1, 6 - 2); all equal, so the score is 0."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int smallestRangeI(int[] nums, int k) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def smallestRangeI(self, nums: List[int], k: int) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int smallestRangeI(vector<int>& nums, int k) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int SmallestRangeI(int[] nums, int k) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn smallest_range_i(nums: Vec<i32>, k: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc SmallestRangeI(nums []int, k int) int {\n    \n}",
+    "typescript": "export function smallestRangeI(nums: number[], k: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $k\n     * @return int\n     */\n    public function smallestRangeI($nums, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1]",
+      "k": 0
+    },
+    {
+      "nums": "[0,10]",
+      "k": 2
+    },
+    {
+      "nums": "[1,3,6]",
+      "k": 3
+    }
+  ],
+  "functionName": "smallestRangeI",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Only the smallest and largest values matter: everything else lands between them after shifting.",
+    "Push the minimum up by k and pull the maximum down by k; if they cross, the answer is 0.",
+    "The result is max(0, max(nums) - min(nums) - 2 * k)."
+  ]
+}

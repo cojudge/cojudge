@@ -1,16 +1,16 @@
-Alice and Bob play a game with piles of stones. There are an even number of piles arranged in a row, and each pile has a positive integer number of stones `piles[i]`.
+Alice and Bob compete over a single row of stone piles. The row holds an even count of piles, and `piles[i]` records how many stones sit in the `i`-th pile, always a positive integer.
 
-The objective of the game is to end with the most stones. The total number of stones across all the piles is odd, so there are no ties.
+The combined stone count is odd, so the final totals cannot match.
 
-Alice and Bob take turns, with Alice starting first. Each turn, a player takes the entire pile of stones either from the beginning or from the end of the row. This continues until there are no more piles left, at which point the person with the most stones wins.
+Alice moves first and the two alternate. On every move the player whose turn it is removes one whole pile, choosing freely between the leftmost remaining pile and the rightmost remaining pile. Play proceeds this way until the row is empty; whoever has collected more stones is the winner.
 
-Assuming Alice and Bob play optimally, return `true` if Alice wins the game, or `false` if Bob wins.
+Both sides choose as well as possible. Return `true` when that optimal play leaves Alice ahead, and `false` when it leaves Bob ahead.
 
 **Example 1:**
 ```
 Input: piles = [5,3,4,5]
 Output: true
-Explanation: Alice starts first, and can only take the first 5 or the last 5. Say she takes the first 5, so the row becomes [3, 4, 5]. If Bob takes 3, then the board is [4, 5], and Alice takes 5 and then she wins (10 vs 7). If Bob takes the last 5, then the board is [3, 4], and Alice takes 4 and she wins (9 vs 8).
+Explanation: Alice opens and must commit to one of the 5s on either side. Suppose she removes the left 5, leaving [3, 4, 5]. If Bob then removes 3, the row is [4, 5] and Alice secures 5 next, finishing ahead 10 to 7. If Bob instead removes the right 5, the row is [3, 4] and Alice secures 4 next, finishing ahead 9 to 8.
 ```
 
 **Example 2:**

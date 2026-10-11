@@ -1,0 +1,58 @@
+{
+  "id": "move-zeroes",
+  "title": "381. Move Zeroes",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/move-zeroes/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [0,1,0,3,12]",
+      "output": "[1,3,12,0,0]",
+      "explanation": "Non-zeros keep order [1,3,12]; zeros shift to the end."
+    },
+    {
+      "input": "nums = [0]",
+      "output": "[0]",
+      "explanation": "Single zero stays."
+    },
+    {
+      "input": "nums = [1,0,1]",
+      "output": "[1,1,0]",
+      "explanation": "The zero moves past the trailing 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] moveZeroes(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def moveZeroes(self, nums: List[int]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> moveZeroes(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] MoveZeroes(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn move_zeroes(nums: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc MoveZeroes(nums []int) []int {\n    \n}",
+    "typescript": "export function moveZeroes(nums: number[]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function moveZeroes($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[0,1,0,3,12]"
+    },
+    {
+      "nums": "[0]"
+    },
+    {
+      "nums": "[1,0,1]"
+    }
+  ],
+  "functionName": "moveZeroes",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Adaptation: the original moves zeros in place with void; here return the rearranged array.",
+    "Two pointers: write each non-zero to the next free slot, then fill the tail with zeros.",
+    "Relative order of non-zeros is preserved."
+  ]
+}

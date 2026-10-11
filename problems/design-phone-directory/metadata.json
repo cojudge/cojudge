@@ -1,0 +1,69 @@
+{
+  "id": "design-phone-directory",
+  "title": "455. Design Phone Directory",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/design-phone-directory/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "operations = [\"PhoneDirectory\",\"get\",\"get\",\"check\",\"get\",\"check\",\"release\",\"check\"], args = [[3],[],[],[2],[],[2],[2],[2]]",
+      "output": "[0,1,1,2,0,1]",
+      "explanation": "Smallest-free gets with check/release interleaved."
+    },
+    {
+      "input": "operations = [\"PhoneDirectory\",\"get\",\"check\",\"release\",\"get\"], args = [[1],[],[0],[0],[]]",
+      "output": "[0,0,0]",
+      "explanation": "Single number handed out, checked, released, handed out again."
+    },
+    {
+      "input": "operations = [\"PhoneDirectory\",\"get\",\"get\",\"get\"], args = [[2],[],[],[]]",
+      "output": "[0,1,-1]",
+      "explanation": "Third get finds the pool empty."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runPhoneDirectory(String[] operations, int[][] args) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def runPhoneDirectory(self, operations: List[str], args: List[List[int]]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runPhoneDirectory(vector<string>& operations, vector<vector<int>>& args) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunPhoneDirectory(string[] operations, int[][] args)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_phone_directory(operations: Vec<String>, args: Vec<Vec<i32>>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunPhoneDirectory(operations []string, args [][]int) []int {\n    return []int{}\n}",
+    "typescript": "export function runPhoneDirectory(operations: string[], args: number[][]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[][] $args\n     * @return int[]\n     */\n    public function runPhoneDirectory($operations, $args) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"PhoneDirectory\",\"get\",\"get\",\"check\",\"get\",\"check\",\"release\",\"check\"]",
+      "args": "[[3],[],[],[2],[],[2],[2],[2]]"
+    },
+    {
+      "operations": "[\"PhoneDirectory\",\"get\",\"check\",\"release\",\"get\"]",
+      "args": "[[1],[],[0],[0],[]]"
+    },
+    {
+      "operations": "[\"PhoneDirectory\",\"get\",\"get\",\"get\"]",
+      "args": "[[2],[],[],[]]"
+    },
+    {
+      "operations": "[\"PhoneDirectory\",\"check\",\"release\"]",
+      "args": "[[2],[1],[1]]"
+    }
+  ],
+  "functionName": "runPhoneDirectory",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "args",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Keep a boolean taken/free array plus the count of free numbers.",
+    "get scans from 0 upward for the first free entry; record -1 when the scan fails.",
+    "check maps free to 1 and taken to 0; release only clears a taken entry."
+  ]
+}

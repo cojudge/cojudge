@@ -1,0 +1,57 @@
+{
+  "id": "optimal-division",
+  "title": "609. Optimal Division",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/optimal-division/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "nums = [1000,100,10,2]",
+      "output": "\"1000/(100/10/2)\"",
+      "explanation": "Minimise the divisor tail."
+    },
+    {
+      "input": "nums = [2,3,4]",
+      "output": "\"2/(3/4)\"",
+      "explanation": "Parenthesise the tail."
+    },
+    {
+      "input": "nums = [2]",
+      "output": "\"2\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String optimalDivision(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def optimalDivision(self, nums: List[int]) -> str:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string optimalDivision(vector<int>& nums) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string OptimalDivision(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn optimal_division(nums: Vec<i32>) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc OptimalDivision(nums []int) string {\n    \n}",
+    "typescript": "export function optimalDivision(nums: number[]): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return string\n     */\n    public function optimalDivision($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1000,100,10,2]"
+    },
+    {
+      "nums": "[2,3,4]"
+    },
+    {
+      "nums": "[2]"
+    }
+  ],
+  "functionName": "optimalDivision",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "The numerator should stay as nums[0] and the whole denominator should be as small as possible.",
+    "Chaining divisions left to right already minimises a/b/c/..., so wrap everything after the first element in one pair.",
+    "Handle lengths 1 and 2 separately to avoid useless parentheses."
+  ]
+}

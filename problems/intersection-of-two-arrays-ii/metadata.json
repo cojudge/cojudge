@@ -1,0 +1,55 @@
+{
+  "id": "intersection-of-two-arrays-ii",
+  "title": "430. Intersection of Two Arrays II",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/intersection-of-two-arrays-ii/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums1 = [1,2,2,1], nums2 = [2,2]",
+      "output": "[2,2]",
+      "explanation": "Two copies of 2 exist on both sides, so both are kept."
+    },
+    {
+      "input": "nums1 = [4,9,5], nums2 = [9,4,9,8,4]",
+      "output": "[4,9]",
+      "explanation": "One shared copy of 4 and one of 9 survive; order is free."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] intersect(int[] nums1, int[] nums2) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] Intersect(int[] nums1, int[] nums2)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn intersect(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc Intersect(nums1 []int, nums2 []int) []int {\n    return []int{}\n}",
+    "typescript": "export function intersect(nums1: number[], nums2: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums1\n     * @param int[] $nums2\n     * @return int[]\n     */\n    public function intersect($nums1, $nums2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums1": "[1,2,2,1]",
+      "nums2": "[2,2]"
+    },
+    {
+      "nums1": "[4,9,5]",
+      "nums2": "[9,4,9,8,4]"
+    }
+  ],
+  "functionName": "intersect",
+  "params": [
+    {
+      "name": "nums1",
+      "type": "int_array"
+    },
+    {
+      "name": "nums2",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Count occurrences of the first list in a frequency map.",
+    "Walk the second list, emitting a value while its remaining count is positive and decrementing."
+  ]
+}

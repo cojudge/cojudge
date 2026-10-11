@@ -1,4 +1,4 @@
-Given two strings text1 and text2, return the length of their longest common subsequence. If there is no common subsequence, return 0.
+You receive two strings, text1 and text2. Count how long the longest shared subsequence of the pair can be — that is, the most characters that appear in both strings in the same relative order, though not necessarily side by side. When the pair shares no character in order, give back 0.
 
 **Constraints:**
 

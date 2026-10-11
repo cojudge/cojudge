@@ -85,6 +85,11 @@ def display_output(x: Any) -> str:
     if isinstance(x, bool):
         return 'true' if x else 'false'
     if isinstance(x, list):
+        # Array of linked lists (list_node_array output): render each head
+        # as "[1,2]" so the Java marker can parse it back. Other lists keep
+        # their existing rendering.
+        if len(x) > 0 and all(v is None or (hasattr(v, 'val') and hasattr(v, 'next') and type(v).__name__ == 'ListNode') for v in x):
+            return '[' + ','.join(display_list_node(v) if v is not None else '[]' for v in x) + ']'
         return str(x)
     # Duck-typing for ListNode / TreeNode / GraphNode to avoid module identity issues
     if hasattr(x, 'val') and hasattr(x, 'next') and type(x).__name__ == 'ListNode':

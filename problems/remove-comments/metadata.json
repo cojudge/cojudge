@@ -1,0 +1,58 @@
+{
+  "id": "remove-comments",
+  "title": "729. Remove Comments",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/remove-comments/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "source = [\"/*Test program */\", \"int main()\", \"{ \", \"  // variable declaration \", \"int a, b, c;\", \"/* This is a test\", \"   multiline  \", \"   comment for \", \"   testing */\", \"a = b + c;\", \"}\"]",
+      "output": "[\"int main()\",\"{ \",\"  \",\"int a, b, c;\",\"a = b + c;\",\"}\"]",
+      "explanation": "Block and line comments are stripped; the declaration line keeps its two leading spaces."
+    },
+    {
+      "input": "source = [\"a/*comment\", \"line\", \"more_comment*/b\"]",
+      "output": "[\"ab\"]",
+      "explanation": "A block spanning three lines joins the outer fragments into ab."
+    },
+    {
+      "input": "source = [\"void f(){\", \"// do nothing\", \"}\"]",
+      "output": "[\"void f(){\",\"}\"]",
+      "explanation": "The whole middle line is a line comment and disappears."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> removeComments(String[] source) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def removeComments(self, source: List[str]) -> List[str]:\n        return []",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> removeComments(vector<string>& source) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<string> RemoveComments(string[] source) \n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn remove_comments(source: Vec<String>) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RemoveComments(source []string) []string {\n    return []string{}\n}",
+    "typescript": "export function removeComments(source: string[]): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $source\n     * @return string[]\n     */\n    public function removeComments($source) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "source": "[\"/*Test program */\", \"int main()\", \"{ \", \"  // variable declaration \", \"int a, b, c;\", \"/* This is a test\", \"   multiline  \", \"   comment for \", \"   testing */\", \"a = b + c;\", \"}\"]"
+    },
+    {
+      "source": "[\"a/*comment\", \"line\", \"more_comment*/b\"]"
+    },
+    {
+      "source": "[\"void f(){\", \"// do nothing\", \"}\"]"
+    }
+  ],
+  "functionName": "removeComments",
+  "params": [
+    {
+      "name": "source",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Scan line by line keeping an in-block flag; // ends the line only when outside a block.",
+    "When /* opens outside a block, skip until its matching */ which may sit many lines later.",
+    "Buffer the surviving characters per logical line and emit the buffer only when nonempty and outside a block at line end. Adaptation: input is a string_array and output is a string_list."
+  ]
+}

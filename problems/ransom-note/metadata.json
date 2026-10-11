@@ -1,0 +1,69 @@
+{
+  "id": "ransom-note",
+  "title": "459. Ransom Note",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/ransom-note/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "ransomNote = \"a\", magazine = \"b\"",
+      "output": "false",
+      "explanation": "Letter a is missing."
+    },
+    {
+      "input": "ransomNote = \"aa\", magazine = \"ab\"",
+      "output": "false",
+      "explanation": "Only one a for two needed."
+    },
+    {
+      "input": "ransomNote = \"aa\", magazine = \"aab\"",
+      "output": "true",
+      "explanation": "Two a copies cover the request."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean canConstruct(String ransomNote, String magazine) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def canConstruct(self, ransomNote: str, magazine: str) -> bool:\n        return False\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool canConstruct(string ransomNote, string magazine) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool CanConstruct(string ransomNote, string magazine)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_construct(ransom_note: String, magazine: String) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc CanConstruct(ransomNote string, magazine string) bool {\n    return false\n}",
+    "typescript": "export function canConstruct(ransomNote: string, magazine: string): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $ransomNote\n     * @param string $magazine\n     * @return bool\n     */\n    public function canConstruct($ransomNote, $magazine) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "ransomNote": "a",
+      "magazine": "b"
+    },
+    {
+      "ransomNote": "aa",
+      "magazine": "ab"
+    },
+    {
+      "ransomNote": "aa",
+      "magazine": "aab"
+    },
+    {
+      "ransomNote": "abc",
+      "magazine": "cba"
+    }
+  ],
+  "functionName": "canConstruct",
+  "params": [
+    {
+      "name": "ransomNote",
+      "type": "string"
+    },
+    {
+      "name": "magazine",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Count how many times each letter appears in the magazine.",
+    "Walk the ransom note, spending one copy per letter and failing on shortage.",
+    "A fixed array of 26 counters is enough for lowercase letters."
+  ]
+}

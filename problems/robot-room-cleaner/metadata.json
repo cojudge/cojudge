@@ -1,0 +1,67 @@
+{
+  "id": "robot-room-cleaner",
+  "title": "553. Robot Room Cleaner",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/robot-room-cleaner/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "room = [[1,1,1,1,1,0,1,1],[1,1,1,1,1,0,1,1],[1,0,1,1,1,1,1,1],[0,0,0,1,0,0,0,0],[1,1,1,1,1,1,1,1]], row = 1, col = 3",
+      "output": "33",
+      "explanation": "Thirty-three free cells connect to the start; walls split off the rest."
+    },
+    {
+      "input": "room = [[1]], row = 0, col = 0",
+      "output": "1",
+      "explanation": "Only the starting cell is free and reachable."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int cleanRoom(int[][] room, int row, int col) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def cleanRoom(self, room: List[List[int]], row: int, col: int) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int cleanRoom(vector<vector<int>>& room, int row, int col) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int CleanRoom(int[][] room, int row, int col) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn clean_room(room: Vec<Vec<i32>>, row: i32, col: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc CleanRoom(room [][]int, row int, col int) int {\n    \n}",
+    "typescript": "export function cleanRoom(room: number[][], row: number, col: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $room\n     * @param int $row\n     * @param int $col\n     * @return int\n     */\n    public function cleanRoom($room, $row, $col) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "room": "[[1,1,1,1,1,0,1,1],[1,1,1,1,1,0,1,1],[1,0,1,1,1,1,1,1],[0,0,0,1,0,0,0,0],[1,1,1,1,1,1,1,1]]",
+      "row": 1,
+      "col": 3
+    },
+    {
+      "room": "[[1]]",
+      "row": 0,
+      "col": 0
+    },
+    {
+      "room": "[[1,1,1],[1,1,1],[1,1,1]]",
+      "row": 1,
+      "col": 1
+    }
+  ],
+  "functionName": "cleanRoom",
+  "params": [
+    {
+      "name": "room",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "row",
+      "type": "int"
+    },
+    {
+      "name": "col",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Run a flood fill (breadth-first or depth-first search) from the start through cells containing 1.",
+    "Track visited cells so each free cell is counted once; walls (0) and out-of-bounds neighbors are skipped.",
+    "Adaptation: you do not simulate turns or the Robot API \u2014 just return the size of the connected free region."
+  ]
+}

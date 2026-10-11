@@ -1,0 +1,68 @@
+{
+  "id": "4sum-ii",
+  "title": "521. 4Sum II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/4sum-ii/",
+  "category": "hash-table",
+  "examples": [
+    {
+      "input": "nums1 = [1,2], nums2 = [-2,-1], nums3 = [-1,2], nums4 = [0,2]",
+      "output": "2",
+      "explanation": "Two index tuples sum to zero."
+    },
+    {
+      "input": "nums1 = [0], nums2 = [0], nums3 = [0], nums4 = [0]",
+      "output": "1",
+      "explanation": "The only tuple sums to zero."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def fourSumCount(self, nums1: List[int], nums2: List[int], nums3: List[int], nums4: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int FourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn four_sum_count(nums1: Vec<i32>, nums2: Vec<i32>, nums3: Vec<i32>, nums4: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FourSumCount(nums1 []int, nums2 []int, nums3 []int, nums4 []int) int {\n    return 0\n}",
+    "typescript": "export function fourSumCount(nums1: number[], nums2: number[], nums3: number[], nums4: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums1\n     * @param int[] $nums2\n     * @param int[] $nums3\n     * @param int[] $nums4\n     * @return int\n     */\n    public function fourSumCount($nums1, $nums2, $nums3, $nums4) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums1": "[1,2]",
+      "nums2": "[-2,-1]",
+      "nums3": "[-1,2]",
+      "nums4": "[0,2]"
+    },
+    {
+      "nums1": "[0]",
+      "nums2": "[0]",
+      "nums3": "[0]",
+      "nums4": "[0]"
+    }
+  ],
+  "functionName": "fourSumCount",
+  "params": [
+    {
+      "name": "nums1",
+      "type": "int_array"
+    },
+    {
+      "name": "nums2",
+      "type": "int_array"
+    },
+    {
+      "name": "nums3",
+      "type": "int_array"
+    },
+    {
+      "name": "nums4",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Split into two pair sums: every nums1+nums2 and every nums3+nums4.",
+    "Store frequencies of the first half in a hash map.",
+    "For each second-half sum, look up its negation in the map."
+  ]
+}

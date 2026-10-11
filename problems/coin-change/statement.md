@@ -1,4 +1,6 @@
-Given an integer array of coins representing coins of different denominations and an integer amount representing a total amount of money, return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.
+An integer array `coins` enumerates available token face values, while an integer `amount` states a monetary total to assemble.
+Select a multiset drawn from `coins` (reuse permitted) whose sum equals `amount`, employing as few tokens as possible.
+When no multiset reaches `amount`, report `-1`.
 
 **Constraints:**
 

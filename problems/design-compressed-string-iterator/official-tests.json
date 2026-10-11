@@ -1,0 +1,114 @@
+[
+  {
+    "compressed": "L1e2t1C1o1d1e1",
+    "operations": "[\"next\",\"next\",\"next\",\"next\",\"next\",\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "compressed": "x3",
+    "operations": "[\"next\",\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "compressed": "a10",
+    "operations": "[\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "compressed": "a1",
+    "operations": "[\"next\",\"hasNext\",\"next\"]"
+  },
+  {
+    "compressed": "b2c3",
+    "operations": "[\"next\",\"next\",\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "compressed": "z1",
+    "operations": "[\"hasNext\",\"hasNext\"]"
+  },
+  {
+    "compressed": "m5",
+    "operations": "[\"next\",\"next\",\"hasNext\",\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "compressed": "a2b2",
+    "operations": "[\"hasNext\",\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "compressed": "q12",
+    "operations": "[\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "compressed": "a1b1",
+    "operations": "[\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "compressed": "A1B1C1",
+    "operations": "[\"next\",\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "compressed": "k1",
+    "operations": "[\"next\",\"next\"]"
+  },
+  {
+    "compressed": "t4",
+    "operations": "[\"hasNext\",\"hasNext\",\"next\",\"next\",\"next\",\"next\",\"next\"]"
+  },
+  {
+    "compressed": "w10",
+    "operations": "[\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "compressed": "p3q1",
+    "operations": "[\"next\",\"next\",\"next\",\"next\",\"hasNext\",\"next\"]"
+  },
+  {
+    "compressed": "e1",
+    "operations": "[\"hasNext\",\"next\",\"hasNext\",\"next\"]"
+  },
+  {
+    "compressed": "r2s2t2",
+    "operations": "[\"next\",\"next\",\"next\",\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "compressed": "c100",
+    "operations": "[\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "compressed": "d2e1",
+    "operations": "[\"next\",\"next\",\"next\",\"next\"]"
+  },
+  {
+    "compressed": "f1g10",
+    "operations": "[\"next\",\"next\",\"hasNext\",\"next\"]"
+  },
+  {
+    "compressed": "h7",
+    "operations": "[\"next\",\"next\",\"next\",\"next\",\"next\",\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "compressed": "i1j1k1l1",
+    "operations": "[\"next\",\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "compressed": "n20",
+    "operations": "[\"hasNext\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "compressed": "o2",
+    "operations": "[\"next\",\"hasNext\",\"next\",\"hasNext\",\"next\"]"
+  },
+  {
+    "compressed": "s1t2u3",
+    "operations": "[\"next\",\"next\",\"next\",\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "compressed": "v5w5",
+    "operations": "[\"hasNext\",\"next\",\"next\",\"hasNext\",\"next\"]"
+  },
+  {
+    "compressed": "y9",
+    "operations": "[\"next\",\"next\",\"hasNext\",\"next\"]"
+  },
+  {
+    "compressed": "L2o2p2",
+    "operations": "[\"next\",\"next\",\"next\",\"next\",\"next\",\"next\",\"hasNext\",\"next\"]"
+  }
+]

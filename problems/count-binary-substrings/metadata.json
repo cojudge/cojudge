@@ -1,0 +1,58 @@
+{
+  "id": "count-binary-substrings",
+  "title": "710. Count Binary Substrings",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/count-binary-substrings/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"00110011\"",
+      "output": "6",
+      "explanation": "Six overlapping balanced runs."
+    },
+    {
+      "input": "s = \"10101\"",
+      "output": "4",
+      "explanation": "Four adjacent pairs."
+    },
+    {
+      "input": "s = \"000111\"",
+      "output": "3",
+      "explanation": "Runs of 3 and 3 give 3."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int countBinarySubstrings(String s) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def countBinarySubstrings(self, s: str) -> int:\n        return 0\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int countBinarySubstrings(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int CountBinarySubstrings(string s)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_binary_substrings(s: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc CountBinarySubstrings(s string) int {\n    return 0\n}",
+    "typescript": "export function countBinarySubstrings(s: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function countBinarySubstrings($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "00110011"
+    },
+    {
+      "s": "10101"
+    },
+    {
+      "s": "000111"
+    }
+  ],
+  "functionName": "countBinarySubstrings",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Compress the string into run lengths (for example 00110011 becomes 2,2,2,2).",
+    "Each neighbouring pair of runs contributes the smaller of the two lengths.",
+    "Sum those minima in one linear pass."
+  ]
+}

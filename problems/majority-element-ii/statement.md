@@ -1,6 +1,6 @@
-Given an integer array of size `n`, find all elements that appear more than `n / 3` times.
+Consider an integer array `nums` holding `n` entries. List each distinct number whose total frequency is strictly larger than `n / 3`.
 
-Return the elements in any order.
+The qualifying values may be presented in any sequence.
 
 **Constraints:**
 

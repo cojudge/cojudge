@@ -1,0 +1,57 @@
+{
+  "id": "special-binary-string",
+  "title": "763. Special Binary String",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/special-binary-string/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"11011000\"",
+      "output": "\"11100100\"",
+      "explanation": "Neighboring balanced blocks are swapped recursively to maximize the order."
+    },
+    {
+      "input": "s = \"10\"",
+      "output": "\"10\""
+    },
+    {
+      "input": "s = \"1010\"",
+      "output": "\"1010\"",
+      "explanation": "Identical primitives keep the string unchanged."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String makeLargestSpecial(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def makeLargestSpecial(self, s: str) -> str:\n        pass\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string makeLargestSpecial(string s) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string MakeLargestSpecial(string s)\n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn make_largest_special(s: String) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc MakeLargestSpecial(s string) string {\n    return \"\"\n}",
+    "typescript": "export function makeLargestSpecial(s: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string\n     */\n    public function makeLargestSpecial($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "11011000"
+    },
+    {
+      "s": "10"
+    },
+    {
+      "s": "1010"
+    }
+  ],
+  "functionName": "makeLargestSpecial",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Split s into primitives: scan with a balance counter and cut whenever it returns to zero.",
+    "A primitive has the form 1 + inner + 0; recurse on the inner part, rewrap it, and collect all primitives.",
+    "Sort the rewrapped primitives in descending order and concatenate them."
+  ]
+}

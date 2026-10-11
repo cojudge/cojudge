@@ -1,0 +1,60 @@
+{
+  "id": "strobogrammatic-number-iii",
+  "title": "354. Strobogrammatic Number III",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/strobogrammatic-number-iii/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "low = \"50\", high = \"100\"",
+      "output": "3",
+      "explanation": "The qualifying numbers are 69, 88, and 96."
+    },
+    {
+      "input": "low = \"0\", high = \"0\"",
+      "output": "1",
+      "explanation": "Zero itself is strobogrammatic."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int strobogrammaticInRange(String low, String high) {\n        \n    }\n}",
+    "python": "class Solution:\n    def strobogrammaticInRange(self, low: str, high: str) -> int:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int strobogrammaticInRange(string low, string high) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int StrobogrammaticInRange(string low, string high) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn strobogrammatic_in_range(low: String, high: String) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc StrobogrammaticInRange(low string, high string) int {\n    return 0\n}",
+    "typescript": "export function strobogrammaticInRange(low: string, high: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $low\n     * @param string $high\n     * @return int\n     */\n    public function strobogrammaticInRange($low, $high) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "low": "50",
+      "high": "100"
+    },
+    {
+      "low": "0",
+      "high": "0"
+    },
+    {
+      "low": "1",
+      "high": "10"
+    }
+  ],
+  "functionName": "strobogrammaticInRange",
+  "params": [
+    {
+      "name": "low",
+      "type": "string"
+    },
+    {
+      "name": "high",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Generate strobogrammatic strings for every length between low and high, then keep those within bounds.",
+    "Compare same-length candidates as strings; shorter lengths are always smaller numerically.",
+    "Reuse the outside-in construction, forbidding a leading zero for lengths above 1."
+  ]
+}

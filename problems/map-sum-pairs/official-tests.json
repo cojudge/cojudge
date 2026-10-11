@@ -1,0 +1,142 @@
+[
+  {
+    "operations": "[\"insert\",\"sum\",\"insert\",\"sum\"]",
+    "keys": "[\"apple\",\"ap\",\"app\",\"ap\"]",
+    "vals": "[3,0,2,0]"
+  },
+  {
+    "operations": "[\"insert\",\"insert\",\"sum\"]",
+    "keys": "[\"aa\",\"aa\",\"a\"]",
+    "vals": "[2,3,0]"
+  },
+  {
+    "operations": "[\"insert\",\"sum\"]",
+    "keys": "[\"a\",\"a\"]",
+    "vals": "[5,0]"
+  },
+  {
+    "operations": "[\"insert\",\"sum\"]",
+    "keys": "[\"apple\",\"a\"]",
+    "vals": "[3,0]"
+  },
+  {
+    "operations": "[\"insert\",\"insert\",\"sum\"]",
+    "keys": "[\"apple\",\"apple\",\"apple\"]",
+    "vals": "[2,3,0]"
+  },
+  {
+    "operations": "[\"insert\",\"insert\",\"insert\",\"sum\"]",
+    "keys": "[\"a\",\"b\",\"c\",\"\"]",
+    "vals": "[1,2,3,0]"
+  },
+  {
+    "operations": "[\"insert\",\"sum\",\"sum\"]",
+    "keys": "[\"abcd\",\"ab\",\"abc\"]",
+    "vals": "[4,0,0]"
+  },
+  {
+    "operations": "[\"sum\"]",
+    "keys": "[\"a\"]",
+    "vals": "[0]"
+  },
+  {
+    "operations": "[\"insert\",\"sum\"]",
+    "keys": "[\"x\",\"y\"]",
+    "vals": "[10,0]"
+  },
+  {
+    "operations": "[\"insert\",\"insert\",\"sum\",\"sum\"]",
+    "keys": "[\"aa\",\"ab\",\"a\",\"aa\"]",
+    "vals": "[1,2,0,0]"
+  },
+  {
+    "operations": "[\"insert\",\"sum\",\"insert\",\"sum\",\"insert\",\"sum\"]",
+    "keys": "[\"a\",\"a\",\"aa\",\"a\",\"aaa\",\"a\"]",
+    "vals": "[1,0,2,0,3,0]"
+  },
+  {
+    "operations": "[\"insert\",\"sum\"]",
+    "keys": "[\"hello\",\"hell\"]",
+    "vals": "[5,0]"
+  },
+  {
+    "operations": "[\"insert\",\"insert\",\"sum\"]",
+    "keys": "[\"test\",\"testing\",\"test\"]",
+    "vals": "[1,2,0]"
+  },
+  {
+    "operations": "[\"insert\",\"sum\",\"sum\"]",
+    "keys": "[\"a\",\"\",\"a\"]",
+    "vals": "[7,0,0]"
+  },
+  {
+    "operations": "[\"insert\",\"insert\",\"insert\",\"sum\"]",
+    "keys": "[\"apple\",\"app\",\"ap\",\"ap\"]",
+    "vals": "[3,2,1,0]"
+  },
+  {
+    "operations": "[\"insert\",\"sum\"]",
+    "keys": "[\"z\",\"z\"]",
+    "vals": "[1000,0]"
+  },
+  {
+    "operations": "[\"insert\",\"insert\",\"sum\"]",
+    "keys": "[\"ab\",\"bc\",\"b\"]",
+    "vals": "[5,6,0]"
+  },
+  {
+    "operations": "[\"insert\",\"sum\",\"insert\",\"sum\"]",
+    "keys": "[\"aa\",\"a\",\"aa\",\"a\"]",
+    "vals": "[5,0,10,0]"
+  },
+  {
+    "operations": "[\"insert\",\"insert\",\"sum\",\"insert\",\"sum\"]",
+    "keys": "[\"one\",\"two\",\"t\",\"three\",\"th\"]",
+    "vals": "[1,2,0,3,0]"
+  },
+  {
+    "operations": "[\"insert\",\"sum\"]",
+    "keys": "[\"abc\",\"abcd\"]",
+    "vals": "[5,0]"
+  },
+  {
+    "operations": "[\"insert\",\"insert\",\"sum\"]",
+    "keys": "[\"a\",\"aa\",\"aaa\"]",
+    "vals": "[1,1,0]"
+  },
+  {
+    "operations": "[\"insert\",\"sum\",\"sum\",\"sum\"]",
+    "keys": "[\"apple\",\"ap\",\"app\",\"apple\"]",
+    "vals": "[3,0,0,0]"
+  },
+  {
+    "operations": "[\"insert\",\"insert\",\"insert\",\"sum\",\"sum\"]",
+    "keys": "[\"x\",\"xy\",\"xyz\",\"x\",\"xy\"]",
+    "vals": "[1,2,3,0,0]"
+  },
+  {
+    "operations": "[\"insert\",\"sum\"]",
+    "keys": "[\"prefix\",\"pre\"]",
+    "vals": "[42,0]"
+  },
+  {
+    "operations": "[\"insert\",\"insert\",\"sum\"]",
+    "keys": "[\"key\",\"keyboard\",\"key\"]",
+    "vals": "[10,20,0]"
+  },
+  {
+    "operations": "[\"insert\",\"sum\",\"insert\",\"sum\"]",
+    "keys": "[\"a\",\"b\",\"b\",\"b\"]",
+    "vals": "[1,0,2,0]"
+  },
+  {
+    "operations": "[\"insert\",\"insert\",\"insert\",\"sum\"]",
+    "keys": "[\"aa\",\"aaa\",\"aaaa\",\"aa\"]",
+    "vals": "[1,2,3,0]"
+  },
+  {
+    "operations": "[\"insert\",\"sum\"]",
+    "keys": "[\"m\",\"n\"]",
+    "vals": "[9,0]"
+  }
+]

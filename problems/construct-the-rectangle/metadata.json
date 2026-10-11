@@ -1,0 +1,57 @@
+{
+  "id": "construct-the-rectangle",
+  "title": "556. Construct the Rectangle",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/construct-the-rectangle/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "area = 4",
+      "output": "[2,2]",
+      "explanation": "Among [1,4] and [2,2], the square has the smallest side gap."
+    },
+    {
+      "input": "area = 37",
+      "output": "[37,1]",
+      "explanation": "A prime area only factors as 37 by 1."
+    },
+    {
+      "input": "area = 122122",
+      "output": "[427,286]",
+      "explanation": "This factor pair is the closest to a square."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] constructRectangle(int area) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def constructRectangle(self, area: int) -> List[int]:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> constructRectangle(int area) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] ConstructRectangle(int area) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn construct_rectangle(area: i32) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc ConstructRectangle(area int) []int {\n    \n}",
+    "typescript": "export function constructRectangle(area: number): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $area\n     * @return int[]\n     */\n    public function constructRectangle($area) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "area": 4
+    },
+    {
+      "area": 37
+    },
+    {
+      "area": 122122
+    }
+  ],
+  "functionName": "constructRectangle",
+  "params": [
+    {
+      "name": "area",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "The width can never exceed the square root of the area.",
+    "Scan downward from the integer square root until a divisor is found; the first hit is the answer."
+  ]
+}

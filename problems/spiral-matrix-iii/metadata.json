@@ -1,0 +1,84 @@
+{
+  "id": "spiral-matrix-iii",
+  "title": "876. Spiral Matrix III",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/spiral-matrix-iii/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "rows = 1, cols = 4, rStart = 0, cStart = 0",
+      "output": "[[0,0],[0,1],[0,2],[0,3]]",
+      "explanation": "The single row is swept from left to right."
+    },
+    {
+      "input": "rows = 3, cols = 3, rStart = 0, cStart = 0",
+      "output": "[[0,0],[0,1],[1,1],[1,0],[0,2],[1,2],[2,2],[2,1],[2,0]]",
+      "explanation": "The spiral first covers the top-left 2x2 block, then reaches out to the remaining border cells."
+    },
+    {
+      "input": "rows = 2, cols = 2, rStart = 1, cStart = 1",
+      "output": "[[1,1],[1,0],[0,0],[0,1]]",
+      "explanation": "Starting from the bottom-right corner, the spiral curls around the other three cells."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] spiralMatrixIII(int rows, int cols, int rStart, int cStart) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def spiralMatrixIII(self, rows: int, cols: int, rStart: int, cStart: int) -> List[List[int]]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> spiralMatrixIII(int rows, int cols, int rStart, int cStart) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[][] SpiralMatrixIII(int rows, int cols, int rStart, int cStart) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn spiral_matrix_iii(rows: i32, cols: i32, r_start: i32, c_start: i32) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc SpiralMatrixIII(rows int, cols int, rStart int, cStart int) [][]int {\n    \n}",
+    "typescript": "export function spiralMatrixIII(rows: number, cols: number, rStart: number, cStart: number): number[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $rows\n     * @param int $cols\n     * @param int $rStart\n     * @param int $cStart\n     * @return int[][]\n     */\n    public function spiralMatrixIII($rows, $cols, $rStart, $cStart) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "rows": 1,
+      "cols": 4,
+      "rStart": 0,
+      "cStart": 0
+    },
+    {
+      "rows": 3,
+      "cols": 3,
+      "rStart": 0,
+      "cStart": 0
+    },
+    {
+      "rows": 2,
+      "cols": 2,
+      "rStart": 1,
+      "cStart": 1
+    },
+    {
+      "rows": 5,
+      "cols": 6,
+      "rStart": 1,
+      "cStart": 4
+    }
+  ],
+  "functionName": "spiralMatrixIII",
+  "params": [
+    {
+      "name": "rows",
+      "type": "int"
+    },
+    {
+      "name": "cols",
+      "type": "int"
+    },
+    {
+      "name": "rStart",
+      "type": "int"
+    },
+    {
+      "name": "cStart",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Walk with directions east, south, west, north repeating, using step lengths 1, 1, 2, 2, 3, 3, ...",
+    "Record a cell only when it lands inside the grid, and stop once rows * cols cells are recorded."
+  ]
+}

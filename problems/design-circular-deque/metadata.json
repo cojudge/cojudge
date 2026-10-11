@@ -1,0 +1,60 @@
+{
+  "id": "design-circular-deque",
+  "title": "663. Design Circular Deque",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/design-circular-deque/",
+  "category": "design",
+  "examples": [
+    {
+      "input": "operations = [\"MyCircularDeque\",\"insertLast\",\"insertLast\",\"insertFront\",\"insertFront\",\"getRear\",\"isFull\",\"deleteLast\",\"insertFront\",\"getFront\"], values = [3,1,2,3,4,0,0,0,4,0]",
+      "output": "[1,1,1,0,2,1,1,1,4]",
+      "explanation": "Capacity 3 fills with [3,1,2]; the second insertFront fails; rear is 2 and the deque is full; after deleting the rear, inserting 4 at the front gives [4,3,1]."
+    },
+    {
+      "input": "operations = [\"MyCircularDeque\",\"getFront\",\"getRear\",\"isEmpty\",\"insertFront\",\"isFull\",\"deleteFront\",\"isEmpty\"], values = [2,0,0,0,9,0,0,0]",
+      "output": "[-1,-1,1,1,0,1,1]",
+      "explanation": "An empty deque reads -1 at both ends; after inserting 9 it is neither full nor empty."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runCircularDeque(String[] operations, int[] values) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runCircularDeque(self, operations: List[str], values: List[int]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runCircularDeque(vector<string>& operations, vector<int>& values) {\n        return {};\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public int[] RunCircularDeque(string[] operations, int[] values) \n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_circular_deque(operations: Vec<String>, values: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunCircularDeque(operations []string, values []int) []int {\n    return nil\n}",
+    "typescript": "export function runCircularDeque(operations: string[], values: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[] $values\n     * @return int[]\n     */\n    public function runCircularDeque($operations, $values) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"MyCircularDeque\", \"insertLast\", \"insertLast\", \"insertFront\", \"insertFront\", \"getRear\", \"isFull\", \"deleteLast\", \"insertFront\", \"getFront\"]",
+      "values": "[3,1,2,3,4,0,0,0,4,0]"
+    },
+    {
+      "operations": "[\"MyCircularDeque\", \"getFront\", \"getRear\", \"isEmpty\", \"insertFront\", \"isFull\", \"deleteFront\", \"isEmpty\"]",
+      "values": "[2,0,0,0,9,0,0,0]"
+    },
+    {
+      "operations": "[\"MyCircularDeque\", \"insertFront\", \"getFront\", \"deleteFront\", \"isEmpty\"]",
+      "values": "[1,5,0,0,0]"
+    }
+  ],
+  "functionName": "runCircularDeque",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Hold a fixed buffer with a head index and a count; every end maps to (head + offset) mod k.",
+    "insertFront moves head backward first, insertLast writes at head + count; both fail when count equals k.",
+    "Deletes move head forward or shrink count, and getters answer -1 only when count is zero."
+  ]
+}

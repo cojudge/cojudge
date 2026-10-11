@@ -1,9 +1,6 @@
-You are given two nonempty linked lists representing two non-negative integers.
-The digits are stored in reverse order, and each node contains one digit. Add the
-two numbers and return their sum as a linked list in the same reverse-order form.
+Two non-negative integers are handed to you, each encoded as a non-empty linked list with the least significant digit first: every node stores a single decimal digit, so the head holds the ones place, the next node the tens place, and so on. Compute the arithmetic total of the two encoded integers and hand it back encoded the same way, least significant digit first.
 
-Neither input number has a leading zero in its normal representation, except for
-the number zero itself.
+Written out normally, neither input carries a leading zero, apart from the value zero itself, which is written as the lone digit zero.
 
 **Constraints:**
 

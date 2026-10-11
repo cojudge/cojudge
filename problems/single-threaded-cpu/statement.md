@@ -1,13 +1,13 @@
-You are given `n` tasks labeled from `0` to `n - 1` represented by a 2D integer array `tasks`, where `tasks[i] = [enqueueTimei, processingTimei]` means that the `i`-th task will be available to process at `enqueueTimei` and will take `processingTimei` to finish processing.
+You receive `n` jobs numbered `0` through `n - 1`, packed as a 2D integer table `tasks` where `tasks[i] = [enqueueTimei, processingTimei]`: job `i` shows up at moment `enqueueTimei` and needs `processingTimei` units to finish.
 
-You have a single-threaded CPU that can process at most one task at a time and will act in the following way:
+A single-thread processor handles at most one job at a time under these rules:
 
-- If the CPU is idle and there are no available tasks to process, the CPU remains idle.
-- If the CPU is idle and there are available tasks, the CPU will choose the one with the shortest processing time. If multiple tasks have the same shortest processing time, it will choose the task with the smallest index.
-- Once a task is started, the CPU will process the entire task without stopping.
-- The CPU can finish a task then start a new one instantly.
+- with nothing waiting while idle, it simply waits;
+- once idle with work waiting, it takes the waiting job with the briefest processing span, using the smaller label to break ties;
+- a begun job runs to completion with no pause;
+- finishing one job, it may begin the next immediately with no gap.
 
-Return the order in which the CPU will process the tasks.
+List the labels in the sequence the processor handles them.
 
 **Constraints:**
 

@@ -1,8 +1,8 @@
-You are given an integer array `prices` where `prices[i]` is the price of a given stock on the `i`th day.
+The integer array `prices` quotes one stock day by day, so `prices[i]` is its quote on day `i`.
 
-On each day, you may decide to buy and/or sell the stock. You can only hold at most one share at any time. You can sell and buy multiple times (even on the same day), but never hold more than one share.
+Each day you may buy and/or sell, with the restriction that your hand never holds more than one share. Selling and immediately rebuying — even within the same day — is permitted, so any number of round trips is fair game.
 
-Find and return the maximum profit you can achieve.
+Tally up the greatest combined profit these trips can produce.
 
 **Constraints:**
 

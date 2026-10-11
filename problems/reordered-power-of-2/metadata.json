@@ -1,0 +1,58 @@
+{
+  "id": "reordered-power-of-2",
+  "title": "863. Reordered Power of 2",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/reordered-power-of-2/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 1",
+      "output": "true",
+      "explanation": "1 is a power of two."
+    },
+    {
+      "input": "n = 10",
+      "output": "false",
+      "explanation": "No rearrangement is a power of two."
+    },
+    {
+      "input": "n = 16",
+      "output": "true",
+      "explanation": "16 itself is a power of two."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean reorderedPowerOf2(int n) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def reorderedPowerOf2(self, n: int) -> bool:\n        pass",
+    "cpp": "class Solution {\npublic:\n    bool reorderedPowerOf2(int n) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool ReorderedPowerOf2(int n)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reordered_power_of2(n: i32) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc ReorderedPowerOf2(n int) bool {\n    return false\n}",
+    "typescript": "export function reorderedPowerOf2(n: number): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return bool\n     */\n    public function reorderedPowerOf2($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 1
+    },
+    {
+      "n": 10
+    },
+    {
+      "n": 16
+    }
+  ],
+  "functionName": "reorderedPowerOf2",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Compare sorted digit strings: `n` works exactly when its digit signature matches that of some power of two with the same length.",
+    "Precompute the signatures of all powers of two up to 2^30 once, then each query is a lookup.",
+    "Counting digits avoids enumerating permutations, which would be far too slow."
+  ]
+}

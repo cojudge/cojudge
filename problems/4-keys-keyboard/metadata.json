@@ -1,0 +1,57 @@
+{
+  "id": "4-keys-keyboard",
+  "title": "671. 4 Keys Keyboard",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/4-keys-keyboard/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "n = 3",
+      "output": "3",
+      "explanation": "Type three times."
+    },
+    {
+      "input": "n = 7",
+      "output": "9",
+      "explanation": "Type, type, type, select, copy, paste, paste: 3 -> 6 -> 9."
+    },
+    {
+      "input": "n = 1",
+      "output": "1"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxA(int n) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxA(self, n: int) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int maxA(int n) {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public int MaxA(int n) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_a(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MaxA(n int) int {\n    return 0\n}",
+    "typescript": "export function maxA(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function maxA($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 3
+    },
+    {
+      "n": 7
+    },
+    {
+      "n": 1
+    }
+  ],
+  "functionName": "maxA",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Let dp[i] be the best screen size with i presses; typing once more always gives dp[i-1] + 1.",
+    "Alternatively stop typing at some j, spend 2 presses on select+copy, then paste (i - j - 2) times to reach dp[j] * (i - j - 1).",
+    "Take the best j with at least one paste (j <= i - 3)."
+  ]
+}

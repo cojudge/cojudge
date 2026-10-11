@@ -1,0 +1,58 @@
+{
+  "id": "palindrome-partitioning-ii",
+  "title": "301. Palindrome Partitioning II",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/palindrome-partitioning-ii/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "s = \"aab\"",
+      "output": "1",
+      "explanation": "Splitting as \"aa\" | \"b\" uses one cut and both parts are palindromes."
+    },
+    {
+      "input": "s = \"a\"",
+      "output": "0",
+      "explanation": "A single character is already a palindrome."
+    },
+    {
+      "input": "s = \"ab\"",
+      "output": "1",
+      "explanation": "\"a\" | \"b\" is the only palindromic split."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minCut(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def minCut(self, s: str) -> int:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int minCut(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MinCut(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_cut(s: String) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MinCut(s string) int {\n    \n}",
+    "typescript": "export function minCut(s: string): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function minCut($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "aab"
+    },
+    {
+      "s": "a"
+    },
+    {
+      "s": "ab"
+    }
+  ],
+  "functionName": "minCut",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Expand around every center to mark all palindromic substrings in O(n^2).",
+    "Let dp[i] be the min cuts for the prefix ending at i; extend from each palindrome start.",
+    "A single DP pass with center expansion avoids storing the full n x n table."
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "odd-even-jump",
+  "title": "960. Odd Even Jump",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/odd-even-jump/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "arr = [10,13,12,14,15]",
+      "output": "2",
+      "explanation": "Starting at values 13 and 15 reaches the final index through alternating smallest-larger and largest-smaller hops."
+    },
+    {
+      "input": "arr = [2,3,1,1,4]",
+      "output": "3",
+      "explanation": "Three start positions can hop to the end under the odd/even rules."
+    },
+    {
+      "input": "arr = [5,1,3,4,2]",
+      "output": "3",
+      "explanation": "Three starts succeed; the others get stuck."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int oddEvenJumps(int[] arr) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def oddEvenJumps(self, arr: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <map>\nusing namespace std;\nclass Solution {\npublic:\n    int oddEvenJumps(vector<int>& arr) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int OddEvenJumps(int[] arr) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn odd_even_jumps(arr: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc OddEvenJumps(arr []int) int {\n    \n}",
+    "typescript": "export function oddEvenJumps(arr: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @return int\n     */\n    public function oddEvenJumps($arr) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "arr": "[10,13,12,14,15]"
+    },
+    {
+      "arr": "[2,3,1,1,4]"
+    },
+    {
+      "arr": "[5,1,3,4,2]"
+    }
+  ],
+  "functionName": "oddEvenJumps",
+  "params": [
+    {
+      "name": "arr",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Process positions from right to left while keeping an ordered map from value to nearest index on the right.",
+    "For each position, the odd hop target is the ceiling entry and the even hop target is the floor entry in that map.",
+    "Track two boolean tables (can reach the end on an odd turn / on an even turn) and propagate them through the hop targets."
+  ]
+}

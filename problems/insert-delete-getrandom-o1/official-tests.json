@@ -1,0 +1,102 @@
+[
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"remove\",\"insert\",\"getRandom\",\"remove\",\"insert\",\"getRandom\"]",
+    "values": "[0,1,2,2,0,1,2,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"insert\",\"getRandom\"]",
+    "values": "[0,5,5,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"remove\",\"remove\"]",
+    "values": "[0,3,3,3]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"getRandom\"]",
+    "values": "[0,7,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\"]",
+    "values": "[0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"insert\",\"remove\",\"getRandom\"]",
+    "values": "[0,1,2,1,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"insert\",\"insert\",\"getRandom\"]",
+    "values": "[0,-1,0,1,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"remove\",\"insert\",\"insert\",\"getRandom\"]",
+    "values": "[0,0,0,0,1,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"insert\",\"remove\",\"remove\",\"insert\"]",
+    "values": "[0,4,5,4,5,6]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"getRandom\",\"getRandom\",\"remove\"]",
+    "values": "[0,9,0,0,9]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"insert\",\"insert\",\"remove\",\"getRandom\"]",
+    "values": "[0,1,2,3,2,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"remove\",\"insert\",\"getRandom\"]",
+    "values": "[0,100,100,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"insert\",\"getRandom\",\"remove\",\"getRandom\"]",
+    "values": "[0,8,9,0,8,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"insert\",\"insert\",\"insert\",\"getRandom\"]",
+    "values": "[0,1,2,3,4,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"remove\",\"insert\",\"remove\",\"insert\",\"getRandom\"]",
+    "values": "[0,6,6,6,6,6,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"insert\",\"remove\",\"insert\",\"getRandom\"]",
+    "values": "[0,-5,-5,-5,10,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"getRandom\",\"remove\",\"insert\",\"getRandom\"]",
+    "values": "[0,42,0,42,43,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"insert\",\"insert\",\"remove\",\"remove\",\"getRandom\"]",
+    "values": "[0,11,22,33,22,11,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"remove\",\"remove\",\"insert\",\"getRandom\"]",
+    "values": "[0,0,0,1,1,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"insert\",\"getRandom\",\"getRandom\"]",
+    "values": "[0,2147483647,-2147483648,0,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"insert\",\"remove\",\"getRandom\",\"insert\",\"getRandom\"]",
+    "values": "[0,5,6,5,0,7,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"getRandom\",\"insert\",\"getRandom\",\"remove\",\"getRandom\"]",
+    "values": "[0,1,0,2,0,1,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"remove\",\"remove\",\"insert\",\"getRandom\"]",
+    "values": "[0,1,2,3,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"insert\",\"insert\",\"getRandom\",\"getRandom\"]",
+    "values": "[0,7,7,8,0,0]"
+  },
+  {
+    "operations": "[\"RandomizedSet\",\"insert\",\"remove\",\"getRandom\",\"remove\"]",
+    "values": "[0,1,2,0,1]"
+  }
+]

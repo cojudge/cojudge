@@ -1,0 +1,65 @@
+{
+  "id": "vowel-spellchecker",
+  "title": "952. Vowel Spellchecker",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/vowel-spellchecker/",
+  "category": "hash-table",
+  "examples": [
+    {
+      "input": "wordlist = [\"KiTe\",\"kite\",\"hare\",\"Hare\"], queries = [\"kite\",\"Kite\",\"KiTe\",\"Hare\",\"HARE\",\"Hear\",\"hear\",\"keti\",\"keet\",\"keto\"]",
+      "output": "[\"kite\",\"KiTe\",\"KiTe\",\"Hare\",\"hare\",\"\",\"\",\"KiTe\",\"\",\"KiTe\"]",
+      "explanation": "Exact hits win first ('kite', 'KiTe', 'Hare'); case-insensitive matches resolve 'Kite' and 'HARE'; vowel-tolerant matches catch 'keti' and 'keto'."
+    },
+    {
+      "input": "wordlist = [\"yellow\"], queries = [\"YellOw\"]",
+      "output": "[\"yellow\"]",
+      "explanation": "No exact hit exists, but lowercasing both sides matches 'yellow'."
+    },
+    {
+      "input": "wordlist = [\"hello\",\"world\"], queries = [\"Hello\",\"WORLD\",\"hallo\",\"warld\",\"xyz\"]",
+      "output": "[\"hello\",\"world\",\"hello\",\"world\",\"\"]",
+      "explanation": "'hallo' shares the consonant skeleton of 'hello', while 'xyz' matches nothing and yields an empty string."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> spellchecker(String[] wordlist, String[] queries) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def spellchecker(self, wordlist: List[str], queries: List[str]) -> List[str]:\n        return []",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> spellchecker(vector<string>& wordlist, vector<string>& queries) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<string> Spellchecker(string[] wordlist, string[] queries)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn spellchecker(wordlist: Vec<String>, queries: Vec<String>) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc Spellchecker(wordlist []string, queries []string) []string {\n    return nil\n}",
+    "typescript": "export function spellchecker(wordlist: string[], queries: string[]): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $wordlist\n     * @param string[] $queries\n     * @return string[]\n     */\n    public function spellchecker($wordlist, $queries) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "wordlist": "[\"KiTe\",\"kite\",\"hare\",\"Hare\"]",
+      "queries": "[\"kite\",\"Kite\",\"KiTe\",\"Hare\",\"HARE\",\"Hear\",\"hear\",\"keti\",\"keet\",\"keto\"]"
+    },
+    {
+      "wordlist": "[\"yellow\"]",
+      "queries": "[\"YellOw\"]"
+    },
+    {
+      "wordlist": "[\"hello\",\"world\"]",
+      "queries": "[\"Hello\",\"WORLD\",\"hallo\",\"warld\",\"xyz\"]"
+    }
+  ],
+  "functionName": "spellchecker",
+  "params": [
+    {
+      "name": "wordlist",
+      "type": "string_array"
+    },
+    {
+      "name": "queries",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Build the exact set plus lowercase-first and vowel-masked-first maps in a single pass.",
+    "Keep the first vocabulary word for each masked key; later duplicates must not overwrite it.",
+    "Lowercase before masking so uppercase vowels collapse to the same wildcard."
+  ]
+}

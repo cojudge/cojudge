@@ -1,0 +1,65 @@
+{
+  "category": "string",
+  "difficulty": "Easy",
+  "examples": [
+    {
+      "explanation": "Keep 'a' at 0, 'b' at 2 and 'c' at 5 of t.",
+      "input": "s = \"abc\", t = \"ahbgdc\"",
+      "output": "true"
+    },
+    {
+      "explanation": "After matching 'a', no 'x' appears later in t.",
+      "input": "s = \"axc\", t = \"ahbgdc\"",
+      "output": "false"
+    },
+    {
+      "explanation": "Erasing everything leaves the empty string.",
+      "input": "s = \"\", t = \"ahbgdc\"",
+      "output": "true"
+    }
+  ],
+  "functionName": "isSubsequence",
+  "hints": [
+    "Walk through t once while advancing a pointer into s on matches.",
+    "If the s-pointer reaches the end, every character was found in order.",
+    "This greedy scan is optimal because taking the earliest match never hurts."
+  ],
+  "id": "is-subsequence",
+  "link": "https://leetcode.com/problems/is-subsequence/",
+  "outputType": "boolean",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "t",
+      "type": "string"
+    }
+  ],
+  "starterCode": {
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool isSubsequence(string s, string t) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool IsSubsequence(string s, string t) \n    {\n        return false;\n    }\n}",
+    "go": "package main\n\nfunc IsSubsequence(s string, t string) bool {\n    return false\n}",
+    "java": "class Solution {\n    public boolean isSubsequence(String s, String t) {\n        return false;\n    }\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string $t\n     * @return bool\n     */\n    public function isSubsequence($s, $t) {\n\n    }\n}",
+    "python": "class Solution:\n    def isSubsequence(self, s: str, t: str) -> bool:\n        pass",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_subsequence(s: String, t: String) -> bool {\n        false\n    }\n}",
+    "typescript": "export function isSubsequence(s: string, t: string): boolean {\n    return false;\n}"
+  },
+  "testCases": [
+    {
+      "s": "abc",
+      "t": "ahbgdc"
+    },
+    {
+      "s": "axc",
+      "t": "ahbgdc"
+    },
+    {
+      "s": "",
+      "t": "ahbgdc"
+    }
+  ],
+  "title": "468. Is Subsequence"
+}

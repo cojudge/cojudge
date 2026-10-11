@@ -1,6 +1,6 @@
-Write a function to find the longest common prefix string amongst an array of strings.
+You receive a collection of strings. Identify the longest leading segment that every one of them shares.
 
-If there is no common prefix, return an empty string `""`.
+When the strings share no leading character at all, give back an empty string `""`.
 
 **Constraints:**
 

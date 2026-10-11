@@ -1,0 +1,57 @@
+{
+  "id": "fruit-into-baskets",
+  "title": "893. Fruit Into Baskets",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/fruit-into-baskets/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "fruits = [1,2,1]",
+      "output": "3",
+      "explanation": "Whole row uses two kinds."
+    },
+    {
+      "input": "fruits = [0,1,2,2]",
+      "output": "3",
+      "explanation": "Best stretch is [1,2,2]."
+    },
+    {
+      "input": "fruits = [1,2,3,2,2]",
+      "output": "4",
+      "explanation": "Best stretch is [2,3,2,2]."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int totalFruit(int[] fruits) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def totalFruit(self, fruits: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int totalFruit(vector<int>& fruits) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int TotalFruit(int[] fruits) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn total_fruit(fruits: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc TotalFruit(fruits []int) int {\n    \n}",
+    "typescript": "export function totalFruit(fruits: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $fruits\n     * @return int\n     */\n    public function totalFruit($fruits) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "fruits": "[1,2,1]"
+    },
+    {
+      "fruits": "[0,1,2,2]"
+    },
+    {
+      "fruits": "[1,2,3,2,2]"
+    }
+  ],
+  "functionName": "totalFruit",
+  "params": [
+    {
+      "name": "fruits",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Slide a window with left and right ends, keeping counts of each kind inside.",
+    "When a third distinct kind enters, move the left end forward until only two kinds remain; record the largest window seen."
+  ]
+}

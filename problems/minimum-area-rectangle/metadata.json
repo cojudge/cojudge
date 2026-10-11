@@ -1,0 +1,58 @@
+{
+  "id": "minimum-area-rectangle",
+  "title": "926. Minimum Area Rectangle",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/minimum-area-rectangle/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "points = [[1,1],[1,3],[3,1],[3,3],[2,2]]",
+      "output": "4",
+      "explanation": "The outer four points form a 2 by 2 square."
+    },
+    {
+      "input": "points = [[1,1],[1,3],[3,1],[3,3],[4,1],[4,3]]",
+      "output": "2",
+      "explanation": "Columns 3 and 4 with rows 1 and 3 give area 2."
+    },
+    {
+      "input": "points = [[1,1],[2,2],[3,3]]",
+      "output": "0",
+      "explanation": "No four points align into a rectangle."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minAreaRect(int[][] points) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minAreaRect(self, points: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minAreaRect(vector<vector<int>>& points) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinAreaRect(int[][] points)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_area_rect(points: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinAreaRect(points [][]int) int {\n    return 0\n}",
+    "typescript": "export function minAreaRect(points: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $points\n     * @return int\n     */\n    public function minAreaRect($points) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "points": "[[1,1],[1,3],[3,1],[3,3],[2,2]]"
+    },
+    {
+      "points": "[[1,1],[1,3],[3,1],[3,3],[4,1],[4,3]]"
+    },
+    {
+      "points": "[[1,1],[2,2],[3,3]]"
+    }
+  ],
+  "functionName": "minAreaRect",
+  "params": [
+    {
+      "name": "points",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "A pair of points can be a diagonal only when both x and y differ.",
+    "The other two corners (x1,y2) and (x2,y1) must both exist; a hash set makes this O(1).",
+    "Track the minimum width-times-height; 1 is the smallest possible positive area."
+  ]
+}

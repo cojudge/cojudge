@@ -1,0 +1,58 @@
+{
+  "id": "similar-rgb-color",
+  "title": "798. Similar RGB Color",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/similar-rgb-color/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "color = \"#09f166\"",
+      "output": "\"#11ee66\"",
+      "explanation": "Each channel rounds to its nearest doubled digit."
+    },
+    {
+      "input": "color = \"#000000\"",
+      "output": "\"#000000\"",
+      "explanation": "Already optimal."
+    },
+    {
+      "input": "color = \"#123456\"",
+      "output": "\"#113355\"",
+      "explanation": "Independent per-channel rounding."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String similarRGB(String color) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def similarRGB(self, color: str) -> str:\n        return \"\"",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string similarRGB(string color) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string SimilarRGB(string color) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn similar_rgb(color: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc SimilarRGB(color string) string {\n    return \"\"\n}",
+    "typescript": "export function similarRGB(color: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $color\n     * @return string\n     */\n    public function similarRGB($color) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "color": "#09f166"
+    },
+    {
+      "color": "#000000"
+    },
+    {
+      "color": "#123456"
+    }
+  ],
+  "functionName": "similarRGB",
+  "params": [
+    {
+      "name": "color",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Handle the three channels independently since the total error is a sum of per-channel errors.",
+    "The shorthand values are 0, 17, 34, ..., 255 (multiples of 17); pick the nearest one per channel.",
+    "Compare case-insensitively but always emit lowercase with doubled digits."
+  ]
+}

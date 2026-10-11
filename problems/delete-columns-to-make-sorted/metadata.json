@@ -1,0 +1,68 @@
+{
+  "id": "delete-columns-to-make-sorted",
+  "title": "931. Delete Columns to Make Sorted",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/delete-columns-to-make-sorted/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "strs = [\"cba\",\"daf\",\"ghi\"]",
+      "output": "1",
+      "explanation": "Only the middle column dips."
+    },
+    {
+      "input": "strs = [\"a\",\"b\"]",
+      "output": "0",
+      "explanation": "Single ordered column."
+    },
+    {
+      "input": "strs = [\"zyx\",\"wvu\",\"tsr\"]",
+      "output": "3",
+      "explanation": "All three columns fall."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minDeletionSize(String[] strs) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minDeletionSize(self, strs: List[str]) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minDeletionSize(vector<string>& strs) {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public int MinDeletionSize(string[] strs) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_deletion_size(strs: Vec<String>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinDeletionSize(strs []string) int {\n    return 0\n}",
+    "typescript": "export function minDeletionSize(strs: string[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $strs\n     * @return int\n     */\n    public function minDeletionSize($strs) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "strs": [
+        "cba",
+        "daf",
+        "ghi"
+      ]
+    },
+    {
+      "strs": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "strs": [
+        "zyx",
+        "wvu",
+        "tsr"
+      ]
+    }
+  ],
+  "functionName": "minDeletionSize",
+  "params": [
+    {
+      "name": "strs",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Handle each column on its own: scan its rows from top to bottom.",
+    "Delete the column as soon as any adjacent pair steps down; otherwise keep it."
+  ]
+}

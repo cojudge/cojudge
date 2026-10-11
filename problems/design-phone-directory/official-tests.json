@@ -1,0 +1,122 @@
+[
+  {
+    "operations": "[\"PhoneDirectory\",\"get\",\"get\",\"check\",\"get\",\"check\",\"release\",\"check\"]",
+    "args": "[[3],[],[],[2],[],[2],[2],[2]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"get\",\"check\",\"release\",\"get\"]",
+    "args": "[[1],[],[0],[0],[]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"get\",\"get\",\"get\"]",
+    "args": "[[2],[],[],[]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"check\",\"release\"]",
+    "args": "[[2],[1],[1]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\"]",
+    "args": "[[5]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"get\"]",
+    "args": "[[1],[]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"check\"]",
+    "args": "[[3],[0]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"release\",\"check\"]",
+    "args": "[[2],[0],[0]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"get\",\"release\",\"get\",\"get\"]",
+    "args": "[[2],[],[0],[],[]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"get\",\"get\",\"release\",\"get\"]",
+    "args": "[[3],[],[],[0],[]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"get\",\"get\",\"get\",\"get\"]",
+    "args": "[[3],[],[],[],[]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"check\",\"check\",\"check\"]",
+    "args": "[[3],[0],[1],[2]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"release\",\"release\",\"get\"]",
+    "args": "[[2],[0],[1],[]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"get\",\"release\",\"check\",\"get\"]",
+    "args": "[[4],[],[1],[1],[]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"get\",\"get\",\"release\",\"release\",\"get\",\"get\"]",
+    "args": "[[4],[],[],[0],[1],[],[]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"get\",\"check\",\"check\",\"release\",\"check\"]",
+    "args": "[[5],[],[4],[4],[4],[4]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"get\",\"get\",\"get\",\"release\",\"check\",\"get\"]",
+    "args": "[[2],[],[],[],[1],[1],[]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"check\",\"get\",\"release\",\"check\",\"get\"]",
+    "args": "[[1],[0],[],[0],[0],[]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"get\",\"get\",\"get\",\"get\",\"get\"]",
+    "args": "[[5],[],[],[],[],[]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"get\",\"release\",\"get\",\"release\",\"get\"]",
+    "args": "[[1],[],[0],[],[0],[]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"check\",\"check\",\"get\",\"get\",\"release\",\"check\"]",
+    "args": "[[4],[3],[3],[],[],[0],[0]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"get\",\"get\",\"check\",\"release\",\"check\",\"get\"]",
+    "args": "[[10],[],[],[5],[5],[5],[]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"release\",\"get\",\"get\",\"check\"]",
+    "args": "[[3],[2],[],[],[2]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"get\",\"get\",\"get\",\"release\",\"release\",\"release\",\"get\",\"get\",\"get\"]",
+    "args": "[[3],[],[],[],[0],[1],[2],[],[],[]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"check\",\"release\",\"get\",\"check\",\"release\",\"get\"]",
+    "args": "[[2],[0],[0],[],[0],[0],[]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"get\",\"get\",\"release\",\"check\",\"check\",\"get\"]",
+    "args": "[[6],[],[],[3],[3],[4],[]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"get\",\"check\",\"get\",\"check\",\"release\",\"release\",\"check\"]",
+    "args": "[[4],[],[2],[],[2],[0],[1],[1]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"get\",\"get\",\"get\",\"get\",\"release\",\"get\"]",
+    "args": "[[4],[],[],[],[],[2],[]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"check\",\"get\",\"get\",\"release\",\"get\",\"check\"]",
+    "args": "[[5],[4],[],[],[0],[],[0]]"
+  },
+  {
+    "operations": "[\"PhoneDirectory\",\"get\",\"release\",\"release\",\"check\",\"get\"]",
+    "args": "[[3],[],[1],[1],[1],[]]"
+  }
+]

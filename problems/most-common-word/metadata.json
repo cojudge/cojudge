@@ -1,0 +1,68 @@
+{
+  "id": "most-common-word",
+  "title": "817. Most Common Word",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/most-common-word/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "paragraph = \"Bob hit a ball, the hit BALL flew far after it was hit.\", banned = [\"hit\"]",
+      "output": "\"ball\"",
+      "explanation": "After lowercasing and stripping punctuation, ball appears twice while every other kept word appears once."
+    },
+    {
+      "input": "paragraph = \"a.\", banned = []",
+      "output": "\"a\"",
+      "explanation": "The only word is the answer."
+    },
+    {
+      "input": "paragraph = \"a, a, a, b,b,b,c, c\", banned = [\"a\"]",
+      "output": "\"b\"",
+      "explanation": "Banned words are ignored, leaving b as the most frequent."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String mostCommonWord(String paragraph, String[] banned) {\n        return \"\";\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:\n        pass",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    string mostCommonWord(string paragraph, vector<string>& banned) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string MostCommonWord(string paragraph, string[] banned) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn most_common_word(paragraph: String, banned: Vec<String>) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc MostCommonWord(paragraph string, banned []string) string {\n    return \"\"\n}",
+    "typescript": "export function mostCommonWord(paragraph: string, banned: string[]): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $paragraph\n     * @param string[] $banned\n     * @return string\n     */\n    public function mostCommonWord($paragraph, $banned) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "paragraph": "Bob hit a ball, the hit BALL flew far after it was hit.",
+      "banned": [
+        "hit"
+      ]
+    },
+    {
+      "paragraph": "a.",
+      "banned": []
+    },
+    {
+      "paragraph": "a, a, a, b,b,b,c, c",
+      "banned": [
+        "a"
+      ]
+    }
+  ],
+  "functionName": "mostCommonWord",
+  "params": [
+    {
+      "name": "paragraph",
+      "type": "string"
+    },
+    {
+      "name": "banned",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Lowercase the paragraph and treat every non-letter as a separator before splitting into words.",
+    "Count with a hash map while skipping banned words, then return the word with the highest count."
+  ]
+}

@@ -1,14 +1,14 @@
-A trie (pronounced as "try") or prefix tree is a tree data structure used to efficiently store and retrieve keys in a dataset of strings. There are various applications of this data structure, such as autocomplete and spellchecker.
+A prefix tree, spoken like "try" and often called a trie, organizes a collection of strings so that entries sharing a beginning share structure. Typical uses include predictive text and spelling assistance.
 
-Implement the Trie class:
+Build a class named `Trie` supporting:
 
-- `Trie()` Initializes the trie object.
-- `void insert(String word)` Inserts the string `word` into the trie.
-- `boolean search(String word)` Returns `true` if the string `word` is in the trie (i.e., was inserted before), and `false` otherwise.
-- `boolean startsWith(String prefix)` Returns `true` if there is a previously inserted string `word` that has the prefix `prefix`, and `false` otherwise.
+- `Trie()` Creates a fresh empty structure.
+- `void insert(String word)` Adds the string `word` to the stored collection.
+- `boolean search(String word)` Reports `true` when `word` was added earlier as a complete entry, and `false` otherwise.
+- `boolean startsWith(String prefix)` Reports `true` when some previously added `word` begins with `prefix`, and `false` otherwise.
 
 **Constraints:**
 
 - `1 <= word.length, prefix.length <= 2000`
-- `word` and `prefix` consist only of lowercase English letters.
-- At most `3 * 10^4` calls in total will be made to `insert`, `search`, and `startsWith`.
+- Both `word` and `prefix` use only lowercase English letters.
+- No more than `3 * 10^4` invocations of `insert`, `search`, and `startsWith` occur in total.

@@ -1,0 +1,86 @@
+[
+  {
+    "words": "[\"gin\", \"zen\", \"gig\", \"msg\"]"
+  },
+  {
+    "words": "[\"a\"]"
+  },
+  {
+    "words": "[\"abc\", \"def\", \"ghi\"]"
+  },
+  {
+    "words": "[\"a\", \"b\", \"c\"]"
+  },
+  {
+    "words": "[\"aa\", \"bb\", \"aa\"]"
+  },
+  {
+    "words": "[\"hello\", \"world\"]"
+  },
+  {
+    "words": "[\"a\", \"a\", \"a\"]"
+  },
+  {
+    "words": "[\"gin\", \"gin\", \"gin\"]"
+  },
+  {
+    "words": "[\"zen\", \"zen\", \"gig\"]"
+  },
+  {
+    "words": "[\"abc\", \"abc\", \"def\"]"
+  },
+  {
+    "words": "[\"sos\", \"sos\", \"sos\"]"
+  },
+  {
+    "words": "[\"a\", \"b\"]"
+  },
+  {
+    "words": "[\"z\"]"
+  },
+  {
+    "words": "[\"abcdefghijklmnopqrstuvwxyz\"]"
+  },
+  {
+    "words": "[\"a\", \"aa\", \"aaa\"]"
+  },
+  {
+    "words": "[\"et\", \"ae\"]"
+  },
+  {
+    "words": "[\"rwj\", \"rwj\", \"rwj\", \"rwj\"]"
+  },
+  {
+    "words": "[\"hello\", \"hello\", \"world\", \"world\"]"
+  },
+  {
+    "words": "[\"abc\", \"cba\"]"
+  },
+  {
+    "words": "[\"qwerty\", \"asdf\", \"zxcv\"]"
+  },
+  {
+    "words": "[\"a\", \"e\", \"i\", \"o\", \"u\"]"
+  },
+  {
+    "words": "[\"gin\", \"zen\"]"
+  },
+  {
+    "words": "[\"gig\", \"msg\"]"
+  },
+  {
+    "words": "[\"test\", \"test\", \"test\", \"best\"]"
+  },
+  {
+    "words": "[\"abcdefghijkl\", \"bcdefghijklm\"]"
+  },
+  {
+    "words": "[\"morse\", \"code\", \"words\"]"
+  },
+  {
+    "words": "[\"a\", \"am\", \"ami\"]"
+  },
+  {
+    "words": "[\"zz\", \"yy\", \"xx\"]"
+  }
+]

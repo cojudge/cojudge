@@ -1,0 +1,84 @@
+{
+  "id": "profitable-schemes",
+  "title": "871. Profitable Schemes",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/profitable-schemes/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "n = 5, minProfit = 3, group = [2,2], profit = [2,3]",
+      "output": "2",
+      "explanation": "Running only the second scheme earns 3, and running both earns 5; both plans fit in 5 members."
+    },
+    {
+      "input": "n = 10, minProfit = 5, group = [2,3,5], profit = [6,7,8]",
+      "output": "7",
+      "explanation": "Every non-empty collection earns at least 5 and uses at most 10 members, giving 2^3 - 1 = 7 plans."
+    },
+    {
+      "input": "n = 1, minProfit = 1, group = [1], profit = [1]",
+      "output": "1",
+      "explanation": "The single scheme fits and earns exactly 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int profitableSchemes(int n, int minProfit, int[] group, int[] profit) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def profitableSchemes(self, n: int, minProfit: int, group: List[int], profit: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int profitableSchemes(int n, int minProfit, vector<int>& group, vector<int>& profit) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int ProfitableSchemes(int n, int minProfit, int[] group, int[] profit) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn profitable_schemes(n: i32, min_profit: i32, group: Vec<i32>, profit: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc ProfitableSchemes(n int, minProfit int, group []int, profit []int) int {\n    \n}",
+    "typescript": "export function profitableSchemes(n: number, minProfit: number, group: number[], profit: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int $minProfit\n     * @param int[] $group\n     * @param int[] $profit\n     * @return int\n     */\n    public function profitableSchemes($n, $minProfit, $group, $profit) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 5,
+      "minProfit": 3,
+      "group": "[2,2]",
+      "profit": "[2,3]"
+    },
+    {
+      "n": 10,
+      "minProfit": 5,
+      "group": "[2,3,5]",
+      "profit": "[6,7,8]"
+    },
+    {
+      "n": 1,
+      "minProfit": 1,
+      "group": "[1]",
+      "profit": "[1]"
+    },
+    {
+      "n": 2,
+      "minProfit": 2,
+      "group": "[1,1,1]",
+      "profit": "[1,1,1]"
+    }
+  ],
+  "functionName": "profitableSchemes",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "minProfit",
+      "type": "int"
+    },
+    {
+      "name": "group",
+      "type": "int_array"
+    },
+    {
+      "name": "profit",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Treat this as a knapsack over people and profit: dp[j][p] counts ways using j members to reach profit p.",
+    "Cap every profit at minProfit so the table stays small, iterate members and profit downward per scheme, and take all counts modulo 10^9 + 7."
+  ]
+}

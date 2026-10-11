@@ -1,0 +1,67 @@
+{
+  "id": "shortest-word-distance-ii",
+  "title": "350. Shortest Word Distance II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/shortest-word-distance-ii/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "wordsDict = [\"practice\",\"makes\",\"perfect\",\"coding\",\"makes\"], word1s = [\"coding\",\"makes\"], word2s = [\"practice\",\"coding\"]",
+      "output": "[3,1]",
+      "explanation": "\"coding\" vs \"practice\" are 3 apart; \"makes\" vs \"coding\" are adjacent."
+    },
+    {
+      "input": "wordsDict = [\"a\",\"b\",\"c\",\"a\"], word1s = [\"a\"], word2s = [\"c\"]",
+      "output": "[1]",
+      "explanation": "The closest \"a\" to \"c\" is one position away."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runShortestWordDistance(String[] wordsDict, String[] word1s, String[] word2s) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runShortestWordDistance(self, wordsDict: List[str], word1s: List[str], word2s: List[str]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runShortestWordDistance(vector<string>& wordsDict, vector<string>& word1s, vector<string>& word2s) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] RunShortestWordDistance(string[] wordsDict, string[] word1s, string[] word2s) \n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_shortest_word_distance(words_dict: Vec<String>, word1s: Vec<String>, word2s: Vec<String>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunShortestWordDistance(wordsDict []string, word1s []string, word2s []string) []int {\n    return []int{}\n}",
+    "typescript": "export function runShortestWordDistance(wordsDict: string[], word1s: string[], word2s: string[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $wordsDict\n     * @param string[] $word1s\n     * @param string[] $word2s\n     * @return int[]\n     */\n    public function runShortestWordDistance($wordsDict, $word1s, $word2s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "wordsDict": "[\"practice\",\"makes\",\"perfect\",\"coding\",\"makes\"]",
+      "word1s": "[\"coding\",\"makes\"]",
+      "word2s": "[\"practice\",\"coding\"]"
+    },
+    {
+      "wordsDict": "[\"a\",\"b\",\"c\",\"a\"]",
+      "word1s": "[\"a\"]",
+      "word2s": "[\"c\"]"
+    },
+    {
+      "wordsDict": "[\"a\",\"b\"]",
+      "word1s": "[\"a\",\"b\"]",
+      "word2s": "[\"b\",\"a\"]"
+    }
+  ],
+  "functionName": "runShortestWordDistance",
+  "params": [
+    {
+      "name": "wordsDict",
+      "type": "string_array"
+    },
+    {
+      "name": "word1s",
+      "type": "string_array"
+    },
+    {
+      "name": "word2s",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Precompute the sorted position list of every distinct word once.",
+    "Answer each query by merging its two position lists with a two-pointer walk.",
+    "This mirrors building the WordDistance index in the constructor and reusing it per query."
+  ]
+}

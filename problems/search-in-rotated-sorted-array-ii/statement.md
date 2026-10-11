@@ -1,10 +1,10 @@
-There is an integer array `nums` sorted in non-decreasing order (not necessarily with distinct values).
+Start from an integer list `nums` arranged in nondecreasing order; repeats are allowed.
 
-Before being passed to your function, `nums` is rotated at an unknown pivot index `k` (`0 <= k < nums.length`) such that the resulting array is `[nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]` (0-indexed). For example, `[0,1,2,4,4,4,5,6,6,7]` might be rotated at pivot index `5` and become `[4,5,6,6,7,0,1,2,4,4]`.
+Ahead of your call, the list is turned at some hidden cut point `k` (`0 <= k < nums.length`), yielding `[nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]` (0-indexed). As an illustration, `[0,1,2,4,4,4,5,6,6,7]` cut at position `5` turns into `[4,5,6,6,7,0,1,2,4,4]`.
 
-Given the array `nums` after the rotation and an integer `target`, return `true` if `target` is in `nums`, or `false` if it is not in `nums`.
+Taking the turned list `nums` plus an integer `target`, state whether `target` shows up: answer `true` when it does and `false` otherwise.
 
-You must decrease the overall operation steps as much as possible.
+Try to hold the total number of operations down as far as you can.
 
 **Example 1:**
 ```

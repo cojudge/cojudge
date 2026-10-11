@@ -1,0 +1,58 @@
+{
+  "id": "flip-string-to-monotone-increasing",
+  "title": "913. Flip String to Monotone Increasing",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/flip-string-to-monotone-increasing/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"00110\"",
+      "output": "1",
+      "explanation": "Flip the last '0' to '1'."
+    },
+    {
+      "input": "s = \"010110\"",
+      "output": "2",
+      "explanation": "Two flips reach a block of zeros then ones."
+    },
+    {
+      "input": "s = \"00011000\"",
+      "output": "2",
+      "explanation": "Clearing the two ones leaves all zeros."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minFlipsMonoIncr(String s) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def minFlipsMonoIncr(self, s: str) -> int:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minFlipsMonoIncr(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinFlipsMonoIncr(string s)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_flips_mono_incr(s: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinFlipsMonoIncr(s string) int {\n    return 0\n}",
+    "typescript": "export function minFlipsMonoIncr(s: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function minFlipsMonoIncr($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "00110"
+    },
+    {
+      "s": "010110"
+    },
+    {
+      "s": "00011000"
+    }
+  ],
+  "functionName": "minFlipsMonoIncr",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Every monotone string is zeros then ones, so the split point is the only choice.",
+    "While scanning, remember how many ones have appeared; they are the cost of forcing all zeros.",
+    "For each zero, compare flipping it versus flipping all prior ones."
+  ]
+}

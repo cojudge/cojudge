@@ -1,0 +1,61 @@
+{
+  "id": "convert-a-number-to-hexadecimal",
+  "title": "479. Convert a Number to Hexadecimal",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/convert-a-number-to-hexadecimal/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "num = 26",
+      "output": "\"1a\"",
+      "explanation": "26 equals 1 sixteen plus 10, written 1a."
+    },
+    {
+      "input": "num = -1",
+      "output": "\"ffffffff\"",
+      "explanation": "Negative values use 32-bit two's complement, so -1 becomes eight f digits."
+    },
+    {
+      "input": "num = 0",
+      "output": "\"0\"",
+      "explanation": "Zero maps to a single zero digit."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String toHex(int num) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def toHex(self, num: int) -> str:\n        return \"\"",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string toHex(int num) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string ToHex(int num) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn to_hex(num: i32) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc ToHex(num int) string {\n    return \"\"\n}",
+    "typescript": "export function toHex(num: number): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param int $num\n     * @return string\n     */\n    public function toHex($num) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "num": 26
+    },
+    {
+      "num": -1
+    },
+    {
+      "num": 0
+    },
+    {
+      "num": 16
+    }
+  ],
+  "functionName": "toHex",
+  "params": [
+    {
+      "name": "num",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Handle zero as a special case returning a single zero character.",
+    "Treat the value as an unsigned 32-bit pattern so negatives wrap via two's complement.",
+    "Peel off 4-bit groups from the low end, mapping 0-15 to 0-9a-f, until nothing remains."
+  ]
+}

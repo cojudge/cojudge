@@ -1,0 +1,56 @@
+{
+  "id": "interval-list-intersections",
+  "title": "969. Interval List Intersections",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/interval-list-intersections/",
+  "category": "interval",
+  "examples": [
+    {
+      "input": "firstList = [[0,2],[5,10],[13,23],[24,25]], secondList = [[1,5],[8,12],[15,24],[25,26]]",
+      "output": "[[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]]",
+      "explanation": "Each overlapping pair contributes its shared segment; touching endpoints count as length-zero intersections."
+    },
+    {
+      "input": "firstList = [[1,3],[5,9]], secondList = []",
+      "output": "[]",
+      "explanation": "With one list empty there are no overlaps."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int[][] intervalIntersection(int[][] firstList, int[][] secondList) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def intervalIntersection(self, firstList: List[List[int]], secondList: List[List[int]]) -> List[List[int]]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> intervalIntersection(vector<vector<int>>& firstList, vector<vector<int>>& secondList) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[][] IntervalIntersection(int[][] firstList, int[][] secondList) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn interval_intersection(first_list: Vec<Vec<i32>>, second_list: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc IntervalIntersection(firstList [][]int, secondList [][]int) [][]int {\n    \n}",
+    "typescript": "export function intervalIntersection(firstList: number[][], secondList: number[][]): number[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $firstList\n     * @param int[][] $secondList\n     * @return int[][]\n     */\n    public function intervalIntersection($firstList, $secondList) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "firstList": "[[0,2],[5,10],[13,23],[24,25]]",
+      "secondList": "[[1,5],[8,12],[15,24],[25,26]]"
+    },
+    {
+      "firstList": "[[1,3],[5,9]]",
+      "secondList": "[]"
+    }
+  ],
+  "functionName": "intervalIntersection",
+  "params": [
+    {
+      "name": "firstList",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "secondList",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Walk both sorted lists with two pointers, always advancing the interval that ends first.",
+    "Two intervals [a,b] and [c,d] overlap exactly when max(a,c) <= min(b,d); that pair of extremes is the intersection.",
+    "Each step emits at most one intersection, giving linear time."
+  ]
+}

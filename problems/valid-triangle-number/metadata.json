@@ -1,0 +1,58 @@
+{
+  "id": "valid-triangle-number",
+  "title": "644. Valid Triangle Number",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/valid-triangle-number/",
+  "category": "two-pointer",
+  "examples": [
+    {
+      "input": "nums = [2,2,3,4]",
+      "output": "3",
+      "explanation": "Triples (2,3,4) once and (2,2,3) twice satisfy the side rule, giving 3."
+    },
+    {
+      "input": "nums = [4,2,3,4]",
+      "output": "4",
+      "explanation": "All triples except (2,3,4)? Actually sorting to [2,3,4,4] leaves four valid triples."
+    },
+    {
+      "input": "nums = [1,1,1]",
+      "output": "1",
+      "explanation": "The single triple 1+1>1 is valid."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int triangleNumber(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def triangleNumber(self, nums: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int triangleNumber(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int TriangleNumber(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn triangle_number(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc TriangleNumber(nums []int) int {\n    \n}",
+    "typescript": "export function triangleNumber(nums: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function triangleNumber($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[2,2,3,4]"
+    },
+    {
+      "nums": "[4,2,3,4]"
+    },
+    {
+      "nums": "[1,1,1]"
+    }
+  ],
+  "functionName": "triangleNumber",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sort the lengths first; then the triangle test for a triple reduces to checking the two smaller sides against the largest.",
+    "Fix the largest side and use two pointers on the prefix: when the pair sum beats the largest, every index between them also works.",
+    "Move the right pointer down on success (counting a batch) and the left pointer up otherwise."
+  ]
+}

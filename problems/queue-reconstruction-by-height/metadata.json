@@ -1,0 +1,56 @@
+{
+  "id": "queue-reconstruction-by-height",
+  "title": "480. Queue Reconstruction by Height",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/queue-reconstruction-by-height/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]",
+      "output": "[[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]",
+      "explanation": "Sorting tall-first then slotting each person at their k index rebuilds the line."
+    },
+    {
+      "input": "people = [[6,0],[5,0],[4,0],[3,2],[2,2],[1,4]]",
+      "output": "[[4,0],[5,0],[2,2],[3,2],[1,4],[6,0]]",
+      "explanation": "Shorter people slide into the gaps left by taller ones already placed."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int[][] reconstructQueue(int[][] people) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def reconstructQueue(self, people: List[List[int]]) -> List[List[int]]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[][] ReconstructQueue(int[][] people) \n    {\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reconstruct_queue(people: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc ReconstructQueue(people [][]int) [][]int {\n    \n}",
+    "typescript": "export function reconstructQueue(people: number[][]): number[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $people\n     * @return int[][]\n     */\n    public function reconstructQueue($people) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "people": "[[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]"
+    },
+    {
+      "people": "[[6,0],[5,0],[4,0],[3,2],[2,2],[1,4]]"
+    },
+    {
+      "people": "[[1,0]]"
+    },
+    {
+      "people": "[[2,0],[1,0]]"
+    }
+  ],
+  "functionName": "reconstructQueue",
+  "params": [
+    {
+      "name": "people",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Order people by height descending, breaking ties by k ascending.",
+    "Insert each person at index k of the growing line; taller people already placed are exactly the ones each k counts.",
+    "Insertion into a list gives O(n^2) time, fine for n up to 2000."
+  ]
+}

@@ -1,6 +1,6 @@
-For two strings `s` and `t`, we say "`t` divides `s`" if and only if `s = t + t + t + ... + t + t` (i.e., `t` is concatenated with itself one or more times).
+Call a string `t` a divisor of a string `s` precisely when building `s` is possible by writing `t` consecutively one or more times, i.e. `s = t + t + ... + t`.
 
-Given two strings `str1` and `str2`, return the largest string `x` such that `x` divides both `str1` and `str2`.
+Given two strings `str1` and `str2`, find the longest string `x` that divides each of them.
 
 **Examples:**
 
@@ -22,4 +22,4 @@ Output: ""
 **Constraints:**
 
 - `1 <= str1.length, str2.length <= 1000`
-- `str1` and `str2` consist of English uppercase letters.
+- `str1` and `str2` use only uppercase English letters.

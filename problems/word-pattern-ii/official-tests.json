@@ -1,0 +1,114 @@
+[
+  {
+    "pattern": "abab",
+    "s": "redblueredblue"
+  },
+  {
+    "pattern": "aaaa",
+    "s": "asdasdasdasd"
+  },
+  {
+    "pattern": "aabb",
+    "s": "xyzabcxzyabc"
+  },
+  {
+    "pattern": "a",
+    "s": "x"
+  },
+  {
+    "pattern": "a",
+    "s": ""
+  },
+  {
+    "pattern": "ab",
+    "s": "aa"
+  },
+  {
+    "pattern": "aa",
+    "s": "ab"
+  },
+  {
+    "pattern": "ab",
+    "s": "ab"
+  },
+  {
+    "pattern": "abc",
+    "s": "xyz"
+  },
+  {
+    "pattern": "abc",
+    "s": "xxyyzz"
+  },
+  {
+    "pattern": "aba",
+    "s": "catcatcat"
+  },
+  {
+    "pattern": "abba",
+    "s": "redbluebluered"
+  },
+  {
+    "pattern": "abba",
+    "s": "redblueredblue"
+  },
+  {
+    "pattern": "aaaa",
+    "s": "abcd"
+  },
+  {
+    "pattern": "abcabc",
+    "s": "abccbaabccba"
+  },
+  {
+    "pattern": "abcd",
+    "s": "abcd"
+  },
+  {
+    "pattern": "abca",
+    "s": "redblueredred"
+  },
+  {
+    "pattern": "abca",
+    "s": "redbluegreenred"
+  },
+  {
+    "pattern": "aab",
+    "s": "xxxy"
+  },
+  {
+    "pattern": "aab",
+    "s": "xxyy"
+  },
+  {
+    "pattern": "abbb",
+    "s": "xyyy"
+  },
+  {
+    "pattern": "abbb",
+    "s": "xyyx"
+  },
+  {
+    "pattern": "abcba",
+    "s": "mnomnom"
+  },
+  {
+    "pattern": "abcba",
+    "s": "redblueredblue"
+  },
+  {
+    "pattern": "ab",
+    "s": "qwertyqwerty"
+  },
+  {
+    "pattern": "ba",
+    "s": "qwertyqwerty"
+  },
+  {
+    "pattern": "aaab",
+    "s": "aaab"
+  },
+  {
+    "pattern": "abbbba",
+    "s": "xyyyyyx"
+  }
+]

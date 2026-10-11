@@ -1,0 +1,63 @@
+{
+  "id": "my-calendar-iii",
+  "title": "739. My Calendar III",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/my-calendar-iii/",
+  "category": "design",
+  "examples": [
+    {
+      "input": "operations = [\"MyCalendarThree\",\"book\",\"book\",\"book\",\"book\",\"book\",\"book\"]\nargs = [[],[10,20],[50,60],[10,40],[5,15],[5,10],[25,55]]",
+      "output": "[1,1,2,3,3,3]",
+      "explanation": "Peak overlap climbs to 3 at the fourth booking and stays there."
+    },
+    {
+      "input": "operations = [\"MyCalendarThree\",\"book\",\"book\",\"book\"]\nargs = [[],[0,10],[10,20],[5,15]]",
+      "output": "[1,1,2]"
+    },
+    {
+      "input": "operations = [\"MyCalendarThree\",\"book\"]\nargs = [[],[1,2]]",
+      "output": "[1]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runCalendarThree(String[] operations, int[][] args) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runCalendarThree(self, operations: List[str], args: List[List[int]]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runCalendarThree(vector<string>& operations, vector<vector<int>>& args) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunCalendarThree(string[] operations, int[][] args)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_calendar_three(operations: Vec<String>, args: Vec<Vec<i32>>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunCalendarThree(operations []string, args [][]int) []int {\n    return []int{}\n}",
+    "typescript": "export function runCalendarThree(operations: string[], args: number[][]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[][] $args\n     * @return int[]\n     */\n    public function runCalendarThree($operations, $args) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"MyCalendarThree\",\"book\",\"book\",\"book\",\"book\",\"book\",\"book\"]",
+      "args": "[[],[10,20],[50,60],[10,40],[5,15],[5,10],[25,55]]"
+    },
+    {
+      "operations": "[\"MyCalendarThree\",\"book\",\"book\",\"book\"]",
+      "args": "[[],[0,10],[10,20],[5,15]]"
+    },
+    {
+      "operations": "[\"MyCalendarThree\",\"book\"]",
+      "args": "[[],[1,2]]"
+    }
+  ],
+  "functionName": "runCalendarThree",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "args",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Record +1 at each start and -1 at each end in an ordered map of time deltas.",
+    "After each booking, sweep the deltas in time order with a running total; the maximum is the current peak.",
+    "Half-open slots mean an ending at t frees the point before a slot starting at t begins, which the ordered sweep handles naturally."
+  ]
+}

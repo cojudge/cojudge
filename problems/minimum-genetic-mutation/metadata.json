@@ -1,0 +1,67 @@
+{
+  "id": "minimum-genetic-mutation",
+  "title": "502. Minimum Genetic Mutation",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/minimum-genetic-mutation/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "startGene = \"AACCGGTT\", endGene = \"AACCGGTA\", bank = [\"AACCGGTA\"]",
+      "output": "1",
+      "explanation": "One change at the last position reaches the target."
+    },
+    {
+      "input": "startGene = \"AACCGGTT\", endGene = \"AAACGGTA\", bank = [\"AACCGGTA\",\"AACCGCTA\",\"AAACGGTA\"]",
+      "output": "2",
+      "explanation": "Two single-letter steps via AACCGGTA."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minMutation(String startGene, String endGene, String[] bank) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minMutation(self, startGene: str, endGene: str, bank: List[str]) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int minMutation(string startGene, string endGene, vector<string>& bank) {\n        return -1;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MinMutation(string startGene, string endGene, string[] bank) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_mutation(start_gene: String, end_gene: String, bank: Vec<String>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MinMutation(startGene string, endGene string, bank []string) int {\n    \n}",
+    "typescript": "export function minMutation(startGene: string, endGene: string, bank: string[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $startGene\n     * @param string $endGene\n     * @return int\n     */\n    public function minMutation($startGene, $endGene, $bank) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "startGene": "AACCGGTT",
+      "endGene": "AACCGGTA",
+      "bank": "[\"AACCGGTA\"]"
+    },
+    {
+      "startGene": "AACCGGTT",
+      "endGene": "AAACGGTA",
+      "bank": "[\"AACCGGTA\",\"AACCGCTA\",\"AAACGGTA\"]"
+    },
+    {
+      "startGene": "AAAAACCC",
+      "endGene": "AACCCCCC",
+      "bank": "[\"AAAACCCC\",\"AAACCCCC\",\"AACCCCCC\"]"
+    }
+  ],
+  "functionName": "minMutation",
+  "params": [
+    {
+      "name": "startGene",
+      "type": "string"
+    },
+    {
+      "name": "endGene",
+      "type": "string"
+    },
+    {
+      "name": "bank",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Model valid genes as graph nodes joined when they differ by one letter.",
+    "Breadth-first search from the start yields the fewest steps.",
+    "Stop early when the target is dequeued; unvisited bank entries are unreachable."
+  ]
+}

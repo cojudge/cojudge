@@ -1,0 +1,58 @@
+{
+  "id": "pancake-sorting",
+  "title": "955. Pancake Sorting",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/pancake-sorting/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "arr = [3,2,4,1]",
+      "output": "[4,2,4,3]",
+      "explanation": "Flipping 4, then 2, then 4, then 3 sorts the array: [4,2,4,3] is one valid answer (any sorting sequence is accepted)."
+    },
+    {
+      "input": "arr = [3,2,1]",
+      "output": "[]",
+      "explanation": "A single flip of the whole array reverses it into order, so [3] suffices."
+    },
+    {
+      "input": "arr = [1,2,3]",
+      "output": "[3]",
+      "explanation": "The array is already sorted, so the empty flip sequence is correct."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<Integer> pancakeSort(int[] arr) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def pancakeSort(self, arr: List[int]) -> List[int]:\n        return []",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> pancakeSort(vector<int>& arr) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<int> PancakeSort(int[] arr)\n    {\n        return new List<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn pancake_sort(arr: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc PancakeSort(arr []int) []int {\n    return nil\n}",
+    "typescript": "export function pancakeSort(arr: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @return int[]\n     */\n    public function pancakeSort($arr) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "arr": "[3,2,4,1]"
+    },
+    {
+      "arr": "[3,2,1]"
+    },
+    {
+      "arr": "[1,2,3]"
+    }
+  ],
+  "functionName": "pancakeSort",
+  "params": [
+    {
+      "name": "arr",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Fix the largest remaining pancake first: bring it to the top, then flip the whole prefix.",
+    "Each size costs at most two flips, comfortably inside the 10n budget.",
+    "The judge replays your flips, so any sorting sequence scores full marks."
+  ]
+}

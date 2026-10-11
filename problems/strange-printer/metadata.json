@@ -1,0 +1,58 @@
+{
+  "id": "strange-printer",
+  "title": "683. Strange Printer",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/strange-printer/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "s = \"aaabbb\"",
+      "output": "2",
+      "explanation": "Print all a at once, then overwrite the tail with b."
+    },
+    {
+      "input": "s = \"aba\"",
+      "output": "2",
+      "explanation": "Print aaa first, then paint the middle b."
+    },
+    {
+      "input": "s = \"abc\"",
+      "output": "3",
+      "explanation": "All letters differ, so each needs its own turn."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int strangePrinter(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def strangePrinter(self, s: str) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int strangePrinter(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int StrangePrinter(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn strange_printer(s: String) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc StrangePrinter(s string) int {\n    \n}",
+    "typescript": "export function strangePrinter(s: string): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function strangePrinter($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "aaabbb"
+    },
+    {
+      "s": "aba"
+    },
+    {
+      "s": "abc"
+    }
+  ],
+  "functionName": "strangePrinter",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Squeeze out consecutive repeats first; they never cost extra.",
+    "For interval [l, r], start with solving [l, r-1] plus one turn for s[r].",
+    "When s[k] equals s[r], the turn painting s[r] can share the turn painting s[k]: try dp[l][k] + dp[k+1][r-1]."
+  ]
+}

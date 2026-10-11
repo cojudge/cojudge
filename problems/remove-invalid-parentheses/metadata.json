@@ -1,0 +1,58 @@
+{
+  "id": "remove-invalid-parentheses",
+  "title": "394. Remove Invalid Parentheses",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/remove-invalid-parentheses/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"()())()\"",
+      "output": "[\"(())()\",\"()()()\"]",
+      "explanation": "Removing one bracket yields two balanced variants."
+    },
+    {
+      "input": "s = \"(a)())()\"",
+      "output": "[\"(a())()\",\"(a)()()\"]",
+      "explanation": "The letter is fixed; one bracket is dropped two ways."
+    },
+    {
+      "input": "s = \")(\"",
+      "output": "[\"\"]",
+      "explanation": "Nothing balanced remains except the empty string."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> removeInvalidParentheses(String s) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def removeInvalidParentheses(self, s: str) -> List[str]:\n        ",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> removeInvalidParentheses(string s) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<string> RemoveInvalidParentheses(string s)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn remove_invalid_parentheses(s: String) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RemoveInvalidParentheses(s string) []string {\n    return nil\n}",
+    "typescript": "export function removeInvalidParentheses(s: string): string[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string[]\n     */\n    public function removeInvalidParentheses($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "()())()"
+    },
+    {
+      "s": "(a)())()"
+    },
+    {
+      "s": ")("
+    }
+  ],
+  "functionName": "removeInvalidParentheses",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Breadth-first removal level by level guarantees the first balanced strings found use the fewest deletions.",
+    "Only ever delete bracket characters; letters are part of every candidate.",
+    "Skip deleting a bracket identical to its left neighbour to avoid repeat candidates."
+  ]
+}

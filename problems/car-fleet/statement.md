@@ -1,11 +1,11 @@
-There are `n` cars traveling toward a destination at mile `target`. Car `i`
-starts at `position[i]` and travels at the constant speed `speed[i]`.
+`n` automobiles head toward a finish line posted at mile marker `target`.
+Automobile `i` begins at `position[i]` and maintains the fixed pace `speed[i]`.
 
-A faster car may catch a slower car, but it cannot pass. Once cars meet, they
-form one fleet and continue at the slowest speed in that fleet. A car that
-catches a fleet exactly at the destination belongs to that fleet.
+A quicker automobile is allowed to close the gap to a slower one ahead yet is forbidden from overtaking.
+All automobiles that rendezvous collapse into a single convoy that proceeds onward at the pace of its slowest member.
+An automobile merging into a convoy precisely upon crossing the finish line counts as part of that convoy.
 
-Return the number of car fleets that arrive at the destination.
+Count how many separate convoys cross the finish line.
 
 **Constraints:**
 

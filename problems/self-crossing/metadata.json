@@ -1,0 +1,57 @@
+{
+  "id": "self-crossing",
+  "title": "420. Self Crossing",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/self-crossing/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "distance = [2,1,1,2]",
+      "output": "true",
+      "explanation": "The fourth leg lands back on the first leg's line."
+    },
+    {
+      "input": "distance = [1,2,3,4]",
+      "output": "false",
+      "explanation": "The spiral keeps widening, so no legs meet."
+    },
+    {
+      "input": "distance = [1,1,1,2,1]",
+      "output": "true",
+      "explanation": "A later leg slices through an earlier leg in the compact spiral."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isSelfCrossing(int[] distance) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def isSelfCrossing(self, distance: List[int]) -> bool:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool isSelfCrossing(vector<int>& distance) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool IsSelfCrossing(int[] distance) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_self_crossing(distance: Vec<i32>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc IsSelfCrossing(distance []int) bool {\n    \n}",
+    "typescript": "export function isSelfCrossing(distance: number[]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $distance\n     * @return bool\n     */\n    public function isSelfCrossing($distance) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "distance": "[2,1,1,2]"
+    },
+    {
+      "distance": "[1,2,3,4]"
+    },
+    {
+      "distance": "[1,1,1,2,1]"
+    }
+  ],
+  "functionName": "isSelfCrossing",
+  "params": [
+    {
+      "name": "distance",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Only the last few legs can meet the current one, so check local patterns at i >= 3, 4, 5.",
+    "Compare lengths: a leg crosses when it reaches past the line two steps back while the middle leg overlaps."
+  ]
+}

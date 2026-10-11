@@ -1,6 +1,6 @@
-Given an array `nums` of size `n`, return the majority element.
+You receive an array `nums` holding `n` entries. Identify the majority element.
 
-The majority element is the element that appears more than `n / 2` times. You may assume that the majority element always exists in the array.
+That means the value showing up strictly more than `n / 2` times. The input is guaranteed to hold such a value.
 
 **Constraints:**
 

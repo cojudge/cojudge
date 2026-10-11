@@ -1,0 +1,61 @@
+{
+  "id": "mini-parser",
+  "title": "461. Mini Parser",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/mini-parser/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"324\"",
+      "output": "\"324\"",
+      "explanation": "Single integer round-trips."
+    },
+    {
+      "input": "s = \"[123,[456,[789]]]\"",
+      "output": "\"[123,[456,[789]]]\"",
+      "explanation": "Nesting preserved."
+    },
+    {
+      "input": "s = \"[123,456,[789,[]]]\"",
+      "output": "\"[123,456,[789,[]]]\"",
+      "explanation": "Empty list survives."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String deserialize(String s) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def deserialize(self, s: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string deserialize(string s) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string Deserialize(string s)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn deserialize(s: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc Deserialize(s string) string {\n    return \"\"\n}",
+    "typescript": "export function deserialize(s: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string\n     */\n    public function deserialize($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "324"
+    },
+    {
+      "s": "[123,[456,[789]]]"
+    },
+    {
+      "s": "[123,456,[789,[]]]"
+    },
+    {
+      "s": "[]"
+    }
+  ],
+  "functionName": "deserialize",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "A lone number with no brackets is its own answer.",
+    "Otherwise scan with a stack: push a new list on '[', close it on ']', and flush numbers on ',' or ']' boundaries.",
+    "Re-serialize the parsed tree canonically instead of echoing the raw input."
+  ]
+}

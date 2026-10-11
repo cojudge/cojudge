@@ -1,0 +1,58 @@
+{
+  "id": "best-meeting-point",
+  "title": "391. Best Meeting Point",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/best-meeting-point/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "grid = [[1,0,0,0,1],[0,0,0,0,0],[0,0,1,0,0]]",
+      "output": "6",
+      "explanation": "Meeting at row 0, column 2 costs 2 + 2 + 2."
+    },
+    {
+      "input": "grid = [[1,1]]",
+      "output": "1",
+      "explanation": "One friend walks a single step."
+    },
+    {
+      "input": "grid = [[1]]",
+      "output": "0",
+      "explanation": "Nobody needs to travel."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minTotalDistance(int[][] grid) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minTotalDistance(self, grid: List[List[int]]) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minTotalDistance(vector<vector<int>>& grid) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinTotalDistance(int[][] grid)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_total_distance(grid: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinTotalDistance(grid [][]int) int {\n    return 0\n}",
+    "typescript": "export function minTotalDistance(grid: number[][]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $grid\n     * @return int\n     */\n    public function minTotalDistance($grid) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "grid": "[[1,0,0,0,1],[0,0,0,0,0],[0,0,1,0,0]]"
+    },
+    {
+      "grid": "[[1,1]]"
+    },
+    {
+      "grid": "[[1]]"
+    }
+  ],
+  "functionName": "minTotalDistance",
+  "params": [
+    {
+      "name": "grid",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Manhattan distance splits into an independent row part plus a column part.",
+    "On a line, the point minimising the sum of absolute deviations is the median.",
+    "Collect friend rows in sorted order by scanning row by row, and friend columns by scanning column by column."
+  ]
+}

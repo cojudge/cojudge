@@ -1,0 +1,86 @@
+[
+  {
+    "s": "Hello, my name is John"
+  },
+  {
+    "s": "Hello"
+  },
+  {
+    "s": "   extra   gaps   "
+  },
+  {
+    "s": ""
+  },
+  {
+    "s": "    "
+  },
+  {
+    "s": "a"
+  },
+  {
+    "s": " a"
+  },
+  {
+    "s": "a "
+  },
+  {
+    "s": "a  b"
+  },
+  {
+    "s": "Hello, my name is John!"
+  },
+  {
+    "s": "a,b c@d e#f"
+  },
+  {
+    "s": "one two  three   four"
+  },
+  {
+    "s": "x"
+  },
+  {
+    "s": "  a  "
+  },
+  {
+    "s": "ab cd ef gh"
+  },
+  {
+    "s": "hello world"
+  },
+  {
+    "s": "a b c d e"
+  },
+  {
+    "s": "   hello   world   "
+  },
+  {
+    "s": "test"
+  },
+  {
+    "s": "a,b,c"
+  },
+  {
+    "s": "  leading"
+  },
+  {
+    "s": "trailing  "
+  },
+  {
+    "s": "multiple   spaces   here"
+  },
+  {
+    "s": "123 456 789"
+  },
+  {
+    "s": "Hello World Foo Bar Baz"
+  },
+  {
+    "s": ", , ,"
+  },
+  {
+    "s": "a b"
+  },
+  {
+    "s": "word1 word2 word3 word4 word5 word6"
+  }
+]

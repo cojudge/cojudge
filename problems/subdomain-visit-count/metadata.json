@@ -1,0 +1,61 @@
+{
+  "id": "subdomain-visit-count",
+  "title": "809. Subdomain Visit Count",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/subdomain-visit-count/",
+  "category": "hash-table",
+  "examples": [
+    {
+      "input": "cpdomains = [\"9001 discuss.leetcode.com\"]",
+      "output": "[\"9001 discuss.leetcode.com\",\"9001 leetcode.com\",\"9001 com\"]",
+      "explanation": "The single entry contributes its count to itself and to each parent suffix."
+    },
+    {
+      "input": "cpdomains = [\"900 google.mail.com\", \"50 yahoo.com\", \"1 intel.mail.com\", \"5 wiki.org\"]",
+      "output": "[\"901 mail.com\",\"50 yahoo.com\",\"900 google.mail.com\",\"5 wiki.org\",\"5 org\",\"1 intel.mail.com\",\"951 com\"] (order may vary)",
+      "explanation": "Counts for shared suffixes such as com and mail.com are summed across entries."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\n\nclass Solution {\n    public List<String> subdomainVisits(String[] cpdomains) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def subdomainVisits(self, cpdomains: List[str]) -> List[str]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> subdomainVisits(vector<string>& cpdomains) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\n\npublic class Solution\n{\n    public List<string> SubdomainVisits(string[] cpdomains)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn subdomain_visits(cpdomains: Vec<String>) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc SubdomainVisits(cpdomains []string) []string {\n    return []string{}\n}",
+    "typescript": "export function subdomainVisits(cpdomains: string[]): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $cpdomains\n     * @return string[]\n     */\n    public function subdomainVisits($cpdomains) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "cpdomains": [
+        "9001 discuss.leetcode.com"
+      ]
+    },
+    {
+      "cpdomains": [
+        "900 google.mail.com",
+        "50 yahoo.com",
+        "1 intel.mail.com",
+        "5 wiki.org"
+      ]
+    },
+    {
+      "cpdomains": [
+        "1 com"
+      ]
+    }
+  ],
+  "functionName": "subdomainVisits",
+  "params": [
+    {
+      "name": "cpdomains",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Split each entry at the first space to separate the visit count from the full domain.",
+    "Break the domain at every dot and accumulate the count for each suffix in a hash map."
+  ]
+}

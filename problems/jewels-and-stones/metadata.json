@@ -1,0 +1,64 @@
+{
+  "id": "jewels-and-stones",
+  "title": "771. Jewels and Stones",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/jewels-and-stones/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "jewels = \"aA\", stones = \"aAAbbbb\"",
+      "output": "3",
+      "explanation": "Three stones match the jewel kinds."
+    },
+    {
+      "input": "jewels = \"z\", stones = \"ZZ\"",
+      "output": "0",
+      "explanation": "Case mismatch means no match."
+    },
+    {
+      "input": "jewels = \"abc\", stones = \"aabbccdd\"",
+      "output": "6",
+      "explanation": "Six stones use jewel letters."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numJewelsInStones(String jewels, String stones) {\n        \n    }\n}",
+    "python": "class Solution:\n    def numJewelsInStones(self, jewels: str, stones: str) -> int:\n        pass\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int numJewelsInStones(string jewels, string stones) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int NumJewelsInStones(string jewels, string stones)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_jewels_in_stones(jewels: String, stones: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumJewelsInStones(jewels string, stones string) int {\n    return 0\n}",
+    "typescript": "export function numJewelsInStones(jewels: string, stones: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $jewels\n     * @param string $stones\n     * @return int\n     */\n    public function numJewelsInStones($jewels, $stones) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "jewels": "aA",
+      "stones": "aAAbbbb"
+    },
+    {
+      "jewels": "z",
+      "stones": "ZZ"
+    },
+    {
+      "jewels": "abc",
+      "stones": "aabbccdd"
+    }
+  ],
+  "functionName": "numJewelsInStones",
+  "params": [
+    {
+      "name": "jewels",
+      "type": "string"
+    },
+    {
+      "name": "stones",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Put the jewel characters into a set for constant-time lookup.",
+    "Then count how many stone characters belong to that set, keeping case sensitivity."
+  ]
+}

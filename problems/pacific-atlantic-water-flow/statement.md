@@ -1,4 +1,6 @@
-Given an m x n matrix heights where heights[r][c] is the height at (r, c). Water can flow from a cell to an adjacent cell (up, down, left, or right) if the adjacent cell's height is less than or equal to the current cell's height. Cells on the top and left edges border the **Pacific Ocean**, and cells on the bottom and right edges border the **Atlantic Ocean**. Return all coordinates where water can flow to **both** oceans.
+You are given a rectangular grid `heights` with `m` rows and `n` columns, where `heights[r][c]` records the elevation of that square. Rain falling on a square drains into one of the four orthogonal neighbors whenever the neighbor is at the same elevation or lower; by repeating such steps, water can travel across the grid.
+
+Squares along the upper border and the left border drain toward the Pacific Ocean, while squares along the lower border and the right border drain toward the Atlantic Ocean. Collect every position from which descending routes lead to both oceans.
 
 ![Pacific Atlantic Water Flow](/api/problems/pacific-atlantic-water-flow/asset/example.png)
 

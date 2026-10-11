@@ -1,0 +1,53 @@
+{
+  "id": "all-possible-full-binary-trees",
+  "title": "885. All Possible Full Binary Trees",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/all-possible-full-binary-trees/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "n = 7",
+      "output": "[\"[0,0,0,null,null,0,0,null,null,0,0]\",\"[0,0,0,null,null,0,0,0,0]\",\"[0,0,0,0,0,0,0]\",\"[0,0,0,0,0,null,null,null,null,0,0]\",\"[0,0,0,0,0,null,null,0,0]\"] (order may vary)",
+      "explanation": "Five full shapes on seven nodes in BFS form."
+    },
+    {
+      "input": "n = 3",
+      "output": "[\"[0,0,0]\"]",
+      "explanation": "A root with two leaves is the only shape."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> allPossibleFBT(int n) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def allPossibleFBT(self, n: int) -> List[str]:\n        return []",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> allPossibleFBT(int n) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<string> AllPossibleFBT(int n)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn all_possible_fbt(n: i32) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc AllPossibleFBT(n int) []string {\n    return []string{}\n}",
+    "typescript": "export function allPossibleFBT(n: number): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return string[]\n     */\n    public function allPossibleFBT($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 7
+    },
+    {
+      "n": 3
+    },
+    {
+      "n": 1
+    }
+  ],
+  "functionName": "allPossibleFBT",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Even counts can never form a full tree; only odd n yields answers.",
+    "For odd n, try every odd left size L and right size n-1-L, then pair each left shape with each right shape under a fresh root.",
+    "Memoize results per size and serialize each finished tree with BFS, trimming trailing nulls, then compare sorted lists."
+  ]
+}

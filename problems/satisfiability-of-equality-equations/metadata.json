@@ -1,0 +1,58 @@
+{
+  "id": "satisfiability-of-equality-equations",
+  "title": "973. Satisfiability of Equality Equations",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/satisfiability-of-equality-equations/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "equations = [\"a==b\",\"b!=a\"]",
+      "output": "false",
+      "explanation": "a and b cannot be equal and different simultaneously."
+    },
+    {
+      "input": "equations = [\"b==a\",\"a==b\"]",
+      "output": "true",
+      "explanation": "Setting both to the same value satisfies each equation."
+    },
+    {
+      "input": "equations = [\"a==b\",\"b!=c\",\"c==a\"]",
+      "output": "false",
+      "explanation": "The equalities force a, b and c together, contradicting b!=c."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean equationsPossible(String[] equations) {\n        return false;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def equationsPossible(self, equations: List[str]) -> bool:\n        return False",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool equationsPossible(vector<string>& equations) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool EquationsPossible(string[] equations) \n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn equations_possible(equations: Vec<String>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc EquationsPossible(equations []string) bool {\n    return false\n}",
+    "typescript": "export function equationsPossible(equations: string[]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $equations\n     * @return bool\n     */\n    public function equationsPossible($equations) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "equations": "[\"a==b\",\"b!=a\"]"
+    },
+    {
+      "equations": "[\"b==a\",\"a==b\"]"
+    },
+    {
+      "equations": "[\"a==b\",\"b!=c\",\"c==a\"]"
+    }
+  ],
+  "functionName": "equationsPossible",
+  "params": [
+    {
+      "name": "equations",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Handle all == equations first by merging the two sides into shared groups with a union-find structure.",
+    "Then check every != equation: if both sides landed in the same group, the system is contradictory.",
+    "Only 26 variables exist, so the union-find arrays stay tiny."
+  ]
+}

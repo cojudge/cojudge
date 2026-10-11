@@ -1,0 +1,245 @@
+[
+  {
+    "words": [
+      "apple"
+    ],
+    "pref": "a",
+    "suff": "e"
+  },
+  {
+    "words": [
+      "apple"
+    ],
+    "pref": "b",
+    "suff": "e"
+  },
+  {
+    "words": [
+      "apple",
+      "apply",
+      "ape"
+    ],
+    "pref": "ap",
+    "suff": "e"
+  },
+  {
+    "words": [
+      "apple",
+      "apricot",
+      "banana"
+    ],
+    "pref": "a",
+    "suff": "e"
+  },
+  {
+    "words": [
+      "test",
+      "testing",
+      "tester"
+    ],
+    "pref": "test",
+    "suff": "er"
+  },
+  {
+    "words": [
+      "abc",
+      "abcd",
+      "abcde"
+    ],
+    "pref": "ab",
+    "suff": "d"
+  },
+  {
+    "words": [
+      "a",
+      "aa",
+      "aaa"
+    ],
+    "pref": "a",
+    "suff": "a"
+  },
+  {
+    "words": [
+      "cat",
+      "car",
+      "cart"
+    ],
+    "pref": "ca",
+    "suff": "t"
+  },
+  {
+    "words": [
+      "hello",
+      "world"
+    ],
+    "pref": "h",
+    "suff": "o"
+  },
+  {
+    "words": [
+      "hello",
+      "world"
+    ],
+    "pref": "w",
+    "suff": "d"
+  },
+  {
+    "words": [
+      "hello",
+      "world"
+    ],
+    "pref": "x",
+    "suff": "y"
+  },
+  {
+    "words": [
+      "ab",
+      "ba",
+      "aba"
+    ],
+    "pref": "a",
+    "suff": "a"
+  },
+  {
+    "words": [
+      "prefix",
+      "suffix",
+      "fix"
+    ],
+    "pref": "fix",
+    "suff": "fix"
+  },
+  {
+    "words": [
+      "aaaa",
+      "aaab",
+      "aabb"
+    ],
+    "pref": "aa",
+    "suff": "bb"
+  },
+  {
+    "words": [
+      "dog",
+      "cat",
+      "bird"
+    ],
+    "pref": "d",
+    "suff": "g"
+  },
+  {
+    "words": [
+      "dog",
+      "cat",
+      "bird"
+    ],
+    "pref": "c",
+    "suff": "t"
+  },
+  {
+    "words": [
+      "dog",
+      "cat",
+      "bird"
+    ],
+    "pref": "b",
+    "suff": "d"
+  },
+  {
+    "words": [
+      "apple",
+      "apple"
+    ],
+    "pref": "a",
+    "suff": "e"
+  },
+  {
+    "words": [
+      "x",
+      "y",
+      "z"
+    ],
+    "pref": "x",
+    "suff": "x"
+  },
+  {
+    "words": [
+      "x",
+      "y",
+      "z"
+    ],
+    "pref": "y",
+    "suff": "y"
+  },
+  {
+    "words": [
+      "x",
+      "y",
+      "z"
+    ],
+    "pref": "a",
+    "suff": "a"
+  },
+  {
+    "words": [
+      "abcdefg",
+      "abcxyzg",
+      "abczzzg"
+    ],
+    "pref": "abc",
+    "suff": "g"
+  },
+  {
+    "words": [
+      "one",
+      "two",
+      "three"
+    ],
+    "pref": "t",
+    "suff": "o"
+  },
+  {
+    "words": [
+      "same",
+      "same",
+      "same"
+    ],
+    "pref": "s",
+    "suff": "e"
+  },
+  {
+    "words": [
+      "a",
+      "b",
+      "c"
+    ],
+    "pref": "a",
+    "suff": "b"
+  },
+  {
+    "words": [
+      "ababa",
+      "babab"
+    ],
+    "pref": "aba",
+    "suff": "aba"
+  },
+  {
+    "words": [
+      "word",
+      "words",
+      "wordy"
+    ],
+    "pref": "word",
+    "suff": "s"
+  },
+  {
+    "words": [
+      "alpha",
+      "beta",
+      "gamma"
+    ],
+    "pref": "a",
+    "suff": "a"
+  }
+]

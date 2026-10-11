@@ -1,0 +1,86 @@
+[
+  {
+    "words": "[\"w\",\"wo\",\"wor\",\"worl\",\"world\"]"
+  },
+  {
+    "words": "[\"a\",\"banana\",\"app\",\"appl\",\"ap\",\"apply\",\"apple\"]"
+  },
+  {
+    "words": "[\"abc\",\"bcd\"]"
+  },
+  {
+    "words": "[\"a\"]"
+  },
+  {
+    "words": "[\"b\",\"a\"]"
+  },
+  {
+    "words": "[\"t\",\"ti\",\"tig\",\"tige\",\"tiger\",\"e\",\"en\",\"eng\",\"engi\",\"engin\",\"engine\"]"
+  },
+  {
+    "words": "[\"m\",\"mo\",\"mou\",\"mous\",\"mouse\"]"
+  },
+  {
+    "words": "[\"a\",\"b\",\"c\"]"
+  },
+  {
+    "words": "[\"ab\",\"a\"]"
+  },
+  {
+    "words": "[\"a\",\"ab\",\"abc\",\"abcd\",\"abcde\"]"
+  },
+  {
+    "words": "[\"z\",\"zz\",\"zzz\"]"
+  },
+  {
+    "words": "[\"hello\",\"hell\",\"hel\",\"he\",\"h\"]"
+  },
+  {
+    "words": "[\"cat\",\"cats\",\"catsdogcats\",\"dog\",\"dogcatsdog\",\"hippopotamuses\",\"rat\",\"ratcatdogcat\"]"
+  },
+  {
+    "words": "[\"a\",\"ar\",\"arc\",\"arct\",\"arctic\"]"
+  },
+  {
+    "words": "[\"b\",\"br\",\"bra\",\"bran\",\"brand\"]"
+  },
+  {
+    "words": "[\"x\",\"xx\",\"xxx\",\"xxxx\",\"xxxxx\",\"y\"]"
+  },
+  {
+    "words": "[\"ap\",\"app\",\"apple\",\"apply\"]"
+  },
+  {
+    "words": "[\"k\",\"ki\",\"kit\",\"kitt\",\"kitte\",\"kitten\"]"
+  },
+  {
+    "words": "[\"a\",\"aa\",\"aaa\",\"aaaa\",\"b\",\"bb\",\"bbb\"]"
+  },
+  {
+    "words": "[\"og\",\"ogu\",\"oguz\",\"oguzh\",\"oguzha\",\"oguzhan\"]"
+  },
+  {
+    "words": "[\"c\",\"ca\",\"cat\",\"cats\"]"
+  },
+  {
+    "words": "[\"d\",\"do\",\"dog\",\"dogs\"]"
+  },
+  {
+    "words": "[\"p\",\"pp\",\"ppp\",\"pppp\"]"
+  },
+  {
+    "words": "[\"a\",\"ab\",\"abc\",\"abd\",\"abde\"]"
+  },
+  {
+    "words": "[\"v\",\"vo\",\"vot\",\"vote\",\"voter\"]"
+  },
+  {
+    "words": "[\"s\",\"st\",\"str\",\"stri\",\"strin\",\"string\"]"
+  },
+  {
+    "words": "[\"aa\",\"a\"]"
+  },
+  {
+    "words": "[\"q\",\"qr\",\"qrs\",\"qrst\",\"qrstu\"]"
+  }
+]

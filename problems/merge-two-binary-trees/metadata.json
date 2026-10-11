@@ -1,0 +1,66 @@
+{
+  "id": "merge-two-binary-trees",
+  "title": "646. Merge Two Binary Trees",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/merge-two-binary-trees/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root1 = [1,3,2,5], root2 = [2,1,3,null,4,null,7]",
+      "output": "[3,4,5,5,4,null,7]",
+      "explanation": "Overlapping values add (1+2=3, 3+1=4, 2+3=5); lone subtrees are kept as-is."
+    },
+    {
+      "input": "root1 = [1], root2 = [1,2]",
+      "output": "[2,2]",
+      "explanation": "Roots add to 2; the extra left child 2 is carried over."
+    },
+    {
+      "input": "root1 = [], root2 = []",
+      "output": "[]",
+      "explanation": "Two empty trees merge to empty."
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\nclass Solution:\n    def mergeTrees(self, root1, root2):\n        pass",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\nclass Solution {\npublic:\n    TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) {\n        \n    }\n};",
+    "csharp": "/*\nDefinition for a binary tree node.\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\npublic class Solution \n{\n    public TreeNode MergeTrees(TreeNode root1, TreeNode root2) \n    {\n        \n    }\n}",
+    "rust": "// Definition for a binary tree node.\n// #[derive(Debug, PartialEq, Eq)]\n// pub struct TreeNode {\n//   pub val: i32,\n//   pub left: Option<Rc<RefCell<TreeNode>>>,\n//   pub right: Option<Rc<RefCell<TreeNode>>>,\n// }\n//\n// impl TreeNode {\n//   #[inline]\n//   pub fn new(val: i32) -> Self {\n//     TreeNode {\n//       val,\n//       left: None,\n//       right: None\n//     }\n//   }\n// }\nuse std::rc::Rc;\nuse std::cell::RefCell;\npub struct Solution;\n\nimpl Solution {\n    pub fn merge_trees(root1: Option<Rc<RefCell<TreeNode>>>, root2: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {\n        \n    }\n}",
+    "go": "// Definition for a binary tree node.\n// type TreeNode struct {\n//     Val int\n//     Left *TreeNode\n//     Right *TreeNode\n// }\npackage main\n\nfunc MergeTrees(root1 *TreeNode, root2 *TreeNode) *TreeNode {\n    \n}",
+    "typescript": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    val: number;\n    left: TreeNode | null;\n    right: TreeNode | null;\n    constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {\n        this.val = val ?? 0;\n        this.left = left ?? null;\n        this.right = right ?? null;\n    }\n}\n*/\nimport { TreeNode } from './TreeNode';\nexport function mergeTrees(root1: TreeNode | null, root2: TreeNode | null): TreeNode | null {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param TreeNode|null $root1\n     * @param TreeNode|null $root2\n     * @return TreeNode|null\n     */\n    public function mergeTrees($root1, $root2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "root1": "[1,3,2,5]",
+      "root2": "[2,1,3,null,4,null,7]"
+    },
+    {
+      "root1": "[1]",
+      "root2": "[1,2]"
+    },
+    {
+      "root1": "[]",
+      "root2": "[]"
+    }
+  ],
+  "functionName": "mergeTrees",
+  "params": [
+    {
+      "name": "root1",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    },
+    {
+      "name": "root2",
+      "type": "tree_node"
+    }
+  ],
+  "outputType": "tree_node",
+  "hints": [
+    "Handle the empty cases first: missing on one side means returning the other side.",
+    "Otherwise add the two values and recurse on the left pair and the right pair.",
+    "Build fresh nodes (or reuse carefully) so the checker comparing shapes sees the summed tree."
+  ]
+}

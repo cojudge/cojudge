@@ -1,0 +1,53 @@
+{
+  "id": "diagonal-traverse",
+  "title": "561. Diagonal Traverse",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/diagonal-traverse/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "mat = [[1,2,3],[4,5,6],[7,8,9]]",
+      "output": "[1,2,4,7,5,3,6,8,9]",
+      "explanation": "Diagonals are visited as [1], [2,4], [7,5,3], [6,8], [9] with alternating directions."
+    },
+    {
+      "input": "mat = [[1,2],[3,4]]",
+      "output": "[1,2,3,4]",
+      "explanation": "The two middle cells form one diagonal visited bottom-up after the start."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] findDiagonalOrder(int[][] mat) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findDiagonalOrder(self, mat: List[List[int]]) -> List[int]:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> findDiagonalOrder(vector<vector<int>>& mat) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] FindDiagonalOrder(int[][] mat) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_diagonal_order(mat: Vec<Vec<i32>>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindDiagonalOrder(mat [][]int) []int {\n    \n}",
+    "typescript": "export function findDiagonalOrder(mat: number[][]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $mat\n     * @return int[]\n     */\n    public function findDiagonalOrder($mat) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "mat": "[[1,2,3],[4,5,6],[7,8,9]]"
+    },
+    {
+      "mat": "[[1,2],[3,4]]"
+    },
+    {
+      "mat": "[[5]]"
+    }
+  ],
+  "functionName": "findDiagonalOrder",
+  "params": [
+    {
+      "name": "mat",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Simulate position plus a direction flag instead of precomputing diagonals.",
+    "Hitting the right or top border while moving up-right means stepping right or down and flipping to down-left (mirror for the other direction).",
+    "Single-row and single-column grids are just linear walks; the same border rules handle them."
+  ]
+}

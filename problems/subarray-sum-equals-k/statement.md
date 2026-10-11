@@ -1,6 +1,6 @@
-Given an array of integers `nums` and an integer `k`, return the total number of subarrays whose sum equals `k`.
+You receive an integer list `nums` together with an integer `k`. Count how many contiguous, non-empty slices of `nums` add up to exactly `k`, and return that count.
 
-A subarray is a contiguous non-empty sequence of elements within an array.
+Here a slice means a run of neighboring entries taken straight from `nums` with nothing skipped.
 
 **Constraints:**
 

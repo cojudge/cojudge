@@ -1,0 +1,208 @@
+[
+  {
+    "stickers": [
+      "with",
+      "example",
+      "science"
+    ],
+    "target": "thehat"
+  },
+  {
+    "stickers": [
+      "notice",
+      "possible"
+    ],
+    "target": "basicbasic"
+  },
+  {
+    "stickers": [
+      "these",
+      "guess",
+      "about",
+      "garden",
+      "him"
+    ],
+    "target": "atomher"
+  },
+  {
+    "stickers": [
+      "a",
+      "b",
+      "c"
+    ],
+    "target": "abc"
+  },
+  {
+    "stickers": [
+      "ab",
+      "bc"
+    ],
+    "target": "abc"
+  },
+  {
+    "stickers": [
+      "ab",
+      "bc"
+    ],
+    "target": "abcd"
+  },
+  {
+    "stickers": [
+      "aaaa",
+      "bbbb"
+    ],
+    "target": "aabb"
+  },
+  {
+    "stickers": [
+      "aaaa",
+      "bbbb"
+    ],
+    "target": "aaabbb"
+  },
+  {
+    "stickers": [
+      "hello",
+      "world"
+    ],
+    "target": "helloworld"
+  },
+  {
+    "stickers": [
+      "one",
+      "two",
+      "three"
+    ],
+    "target": "onetwo"
+  },
+  {
+    "stickers": [
+      "abc",
+      "def"
+    ],
+    "target": "abcdef"
+  },
+  {
+    "stickers": [
+      "abc",
+      "def"
+    ],
+    "target": "abcabc"
+  },
+  {
+    "stickers": [
+      "a"
+    ],
+    "target": "aaaaa"
+  },
+  {
+    "stickers": [
+      "ab",
+      "ba"
+    ],
+    "target": "ababab"
+  },
+  {
+    "stickers": [
+      "xyz"
+    ],
+    "target": "abc"
+  },
+  {
+    "stickers": [
+      "fresh",
+      "cheese",
+      "sandwich"
+    ],
+    "target": "cheese"
+  },
+  {
+    "stickers": [
+      "aaaaa",
+      "bbbbb",
+      "ccccc"
+    ],
+    "target": "abc"
+  },
+  {
+    "stickers": [
+      "aaaaa",
+      "bbbbb"
+    ],
+    "target": "ababa"
+  },
+  {
+    "stickers": [
+      "hat",
+      "that",
+      "the"
+    ],
+    "target": "thethehat"
+  },
+  {
+    "stickers": [
+      "control",
+      "heart",
+      "three"
+    ],
+    "target": "thethe"
+  },
+  {
+    "stickers": [
+      "a",
+      "aa",
+      "aaa"
+    ],
+    "target": "aaaaaa"
+  },
+  {
+    "stickers": [
+      "word",
+      "world",
+      "hold"
+    ],
+    "target": "helloworld"
+  },
+  {
+    "stickers": [
+      "cat",
+      "dog",
+      "bird"
+    ],
+    "target": "catdog"
+  },
+  {
+    "stickers": [
+      "cat",
+      "dog"
+    ],
+    "target": "catcatdog"
+  },
+  {
+    "stickers": [
+      "ab",
+      "cd",
+      "ef"
+    ],
+    "target": "abcdef"
+  },
+  {
+    "stickers": [
+      "ab",
+      "cd"
+    ],
+    "target": "aabbccdd"
+  },
+  {
+    "stickers": [
+      "solo"
+    ],
+    "target": "solo"
+  },
+  {
+    "stickers": [
+      "solo"
+    ],
+    "target": "olos"
+  }
+]

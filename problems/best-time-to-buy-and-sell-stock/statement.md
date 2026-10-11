@@ -1,4 +1,4 @@
-You are given an array `prices` where prices[i] is the price of a given stock on the i-th day. Find the maximum profit you can achieve. You may complete at most one transaction (i.e., buy one and sell one share of the stock). Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+The array `prices` quotes one stock across successive days, with `prices[i]` being its quote on day `i`. You are allowed a single round trip at most: purchase one share on some day and, if you wish, unload it on a later day. Report the largest profit such a trip can lock in; when every possible trip would lose money, settle for `0` by trading nothing.
 
 **Constraints:**
 

@@ -1,0 +1,209 @@
+[
+  {
+    "words": [
+      "alex",
+      "loves",
+      "leetcode"
+    ]
+  },
+  {
+    "words": [
+      "catg",
+      "ctaagt",
+      "gcta",
+      "ttca",
+      "atgcatc"
+    ]
+  },
+  {
+    "words": [
+      "abc",
+      "bcd",
+      "cde"
+    ]
+  },
+  {
+    "words": [
+      "abcd",
+      "cdef",
+      "efgh"
+    ]
+  },
+  {
+    "words": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "words": [
+      "abc",
+      "def",
+      "ghi"
+    ]
+  },
+  {
+    "words": [
+      "ab",
+      "bc",
+      "cd",
+      "de"
+    ]
+  },
+  {
+    "words": [
+      "gta",
+      "agt",
+      "tag"
+    ]
+  },
+  {
+    "words": [
+      "cat",
+      "atc",
+      "tca"
+    ]
+  },
+  {
+    "words": [
+      "abcde",
+      "cdefg",
+      "efghi"
+    ]
+  },
+  {
+    "words": [
+      "word",
+      "ordw",
+      "rdwo"
+    ]
+  },
+  {
+    "words": [
+      "ab",
+      "cd",
+      "ef",
+      "gh"
+    ]
+  },
+  {
+    "words": [
+      "abc",
+      "cde",
+      "efg",
+      "ghi"
+    ]
+  },
+  {
+    "words": [
+      "aab",
+      "abb",
+      "bba",
+      "baa"
+    ]
+  },
+  {
+    "words": [
+      "xyz",
+      "yzx",
+      "zxy"
+    ]
+  },
+  {
+    "words": [
+      "qwe",
+      "wer",
+      "ert",
+      "rty"
+    ]
+  },
+  {
+    "words": [
+      "abcd",
+      "bcde",
+      "cdef",
+      "defg",
+      "efgh"
+    ]
+  },
+  {
+    "words": [
+      "hello",
+      "llohe",
+      "ohell"
+    ]
+  },
+  {
+    "words": [
+      "abca",
+      "bcab",
+      "cabc"
+    ]
+  },
+  {
+    "words": [
+      "taco",
+      "acot",
+      "cota"
+    ]
+  },
+  {
+    "words": [
+      "abcdef",
+      "defghi",
+      "ghijkl"
+    ]
+  },
+  {
+    "words": [
+      "ab",
+      "ba"
+    ]
+  },
+  {
+    "words": [
+      "abc",
+      "bca",
+      "cab"
+    ]
+  },
+  {
+    "words": [
+      "mno",
+      "nop",
+      "opq",
+      "pqr"
+    ]
+  },
+  {
+    "words": [
+      "aaaaab",
+      "aaaaba",
+      "aaabaa"
+    ]
+  },
+  {
+    "words": [
+      "cat",
+      "dog",
+      "bird"
+    ]
+  },
+  {
+    "words": [
+      "abca",
+      "cabc",
+      "bcab",
+      "cabb"
+    ]
+  },
+  {
+    "words": [
+      "ef",
+      "fg",
+      "gh",
+      "he"
+    ]
+  }
+]

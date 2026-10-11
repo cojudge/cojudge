@@ -1,0 +1,65 @@
+{
+  "id": "zuma-game",
+  "title": "552. Zuma Game",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/zuma-game/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "board = \"WRRBBW\", hand = \"RB\"",
+      "output": "-1",
+      "explanation": "No insertion order empties the row with these two hand balls."
+    },
+    {
+      "input": "board = \"WWRRBBWW\", hand = \"WRBRW\"",
+      "output": "2",
+      "explanation": "Two well placed insertions trigger cascading deletions that clear the row."
+    },
+    {
+      "input": "board = \"G\", hand = \"GGGGG\"",
+      "output": "2",
+      "explanation": "Adding two more G balls makes three in a row, which are then removed."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findMinStep(String board, String hand) {\n        \n    }\n}",
+    "python": "class Solution:\n    def findMinStep(self, board: str, hand: str) -> int:\n        pass\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int findMinStep(string board, string hand) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindMinStep(string board, string hand) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_min_step(board: String, hand: String) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindMinStep(board string, hand string) int {\n    \n}",
+    "typescript": "export function findMinStep(board: string, hand: string): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $board\n     * @param string $hand\n     * @return int\n     */\n    public function findMinStep($board, $hand) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "board": "WRRBBW",
+      "hand": "RB"
+    },
+    {
+      "board": "WWRRBBWW",
+      "hand": "WRBRW"
+    },
+    {
+      "board": "G",
+      "hand": "GGGGG"
+    }
+  ],
+  "functionName": "findMinStep",
+  "params": [
+    {
+      "name": "board",
+      "type": "string"
+    },
+    {
+      "name": "hand",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Search over game states with breadth-first or depth-first search plus memoization; the state is the current row together with remaining hand counts.",
+    "Only insertions next to an equal-colored ball can be useful, and identical resulting rows from different gaps need be tried once.",
+    "Write a helper that repeatedly deletes every run of length three or more until the row is stable."
+  ]
+}

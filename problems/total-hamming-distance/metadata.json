@@ -1,0 +1,58 @@
+{
+  "id": "total-hamming-distance",
+  "title": "541. Total Hamming Distance",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/total-hamming-distance/",
+  "category": "binary",
+  "examples": [
+    {
+      "input": "nums = [4,14,2]",
+      "output": "6",
+      "explanation": "Each pair differs in 2 bit slots, totalling 6."
+    },
+    {
+      "input": "nums = [4,14,4]",
+      "output": "4",
+      "explanation": "Equal entries contribute 0; each 4 vs 14 contributes 2."
+    },
+    {
+      "input": "nums = [1,2,3]",
+      "output": "4",
+      "explanation": "Pair gaps sum to 4."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int totalHammingDistance(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def totalHammingDistance(self, nums: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int totalHammingDistance(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int TotalHammingDistance(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn total_hamming_distance(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc TotalHammingDistance(nums []int) int {\n    return 0\n}",
+    "typescript": "export function totalHammingDistance(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function totalHammingDistance($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[4,14,2]"
+    },
+    {
+      "nums": "[4,14,4]"
+    },
+    {
+      "nums": "[1,2,3]"
+    }
+  ],
+  "functionName": "totalHammingDistance",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Handle each bit column on its own instead of each pair.",
+    "If ones columns hold c ones among n numbers, that column adds c*(n-c).",
+    "Thirty-one columns cover values up to 10^9."
+  ]
+}

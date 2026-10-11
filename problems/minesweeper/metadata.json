@@ -1,0 +1,56 @@
+{
+  "id": "minesweeper",
+  "title": "588. Minesweeper",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/minesweeper/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "board = [[\"E\",\"E\",\"E\",\"E\",\"E\"],[\"E\",\"E\",\"M\",\"E\",\"E\"],[\"E\",\"E\",\"E\",\"E\",\"E\"],[\"E\",\"E\",\"E\",\"E\",\"E\"]], click = [3,0]",
+      "output": "[\"B1E1B\",\"B1M1B\",\"B111B\",\"BBBBB\"]",
+      "explanation": "A blank region floods outward until it touches numbered squares bordering the mine."
+    },
+    {
+      "input": "board = [[\"B\",\"1\",\"E\",\"1\",\"B\"],[\"B\",\"1\",\"M\",\"1\",\"B\"],[\"B\",\"1\",\"1\",\"1\",\"B\"],[\"B\",\"B\",\"B\",\"B\",\"B\"]], click = [1,2]",
+      "output": "[\"B1E1B\",\"B1X1B\",\"B111B\",\"BBBBB\"]",
+      "explanation": "The clicked square hides a mine, so it is marked X."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> updateBoard(char[][] board, int[] click) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def updateBoard(self, board: List[List[str]], click: List[int]) -> List[str]:\n        return []\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> updateBoard(vector<vector<char>>& board, vector<int>& click) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<string> UpdateBoard(char[][] board, int[] click) \n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn update_board(board: String, click: Vec<i32>) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc UpdateBoard(board [][]byte, click []int) []string {\n    return []string{}\n}",
+    "typescript": "export function updateBoard(board: string[][], click: number[]): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[][] $board\n     * @param int[] $click\n     * @return string[]\n     */\n    public function updateBoard($board, $click) {\n        return [];\n    }\n}"
+  },
+  "testCases": [
+    {
+      "board": "[[\"E\",\"E\",\"E\",\"E\",\"E\"],[\"E\",\"E\",\"M\",\"E\",\"E\"],[\"E\",\"E\",\"E\",\"E\",\"E\"],[\"E\",\"E\",\"E\",\"E\",\"E\"]]",
+      "click": "[3,0]"
+    },
+    {
+      "board": "[[\"B\",\"1\",\"E\",\"1\",\"B\"],[\"B\",\"1\",\"M\",\"1\",\"B\"],[\"B\",\"1\",\"1\",\"1\",\"B\"],[\"B\",\"B\",\"B\",\"B\",\"B\"]]",
+      "click": "[1,2]"
+    }
+  ],
+  "functionName": "updateBoard",
+  "params": [
+    {
+      "name": "board",
+      "type": "char_array_2d"
+    },
+    {
+      "name": "click",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Handle the mine click first: M becomes X with no further changes.",
+    "For an empty square, count mines in all 8 neighboring cells before deciding between a digit and B.",
+    "Only blank (zero-neighbor) squares trigger recursion into still-unrevealed E neighbors; join each finished row into one answer string. Adaptation: the board is a char_array_2d input while the updated board is returned as row strings (string_list). Rust note: the board arrives as its encoded string; parse it before solving."
+  ]
+}

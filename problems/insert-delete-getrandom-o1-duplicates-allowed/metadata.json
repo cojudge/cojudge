@@ -1,0 +1,69 @@
+{
+  "id": "insert-delete-getrandom-o1-duplicates-allowed",
+  "title": "457. Insert Delete GetRandom O(1) - Duplicates Allowed",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/insert-delete-getrandom-o1-duplicates-allowed/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "operations = [\"RandomizedCollection\",\"insert\",\"insert\",\"insert\",\"getRandom\",\"remove\",\"getRandom\"], values = [0,1,1,2,0,1,0]",
+      "output": "[1,0,1,X,1,Y] (X in {1,1,2}; Y in {1,2})",
+      "explanation": "Sampling entries may be any held value."
+    },
+    {
+      "input": "operations = [\"RandomizedCollection\",\"insert\",\"remove\",\"remove\"], values = [0,4,4,4]",
+      "output": "[1,1,0]",
+      "explanation": "Second removal misses."
+    },
+    {
+      "input": "operations = [\"RandomizedCollection\",\"insert\",\"insert\",\"remove\"], values = [0,2,2,2]",
+      "output": "[1,0,1]",
+      "explanation": "One copy of 2 remains after removal."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runRandomizedCollection(String[] operations, int[] values) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def runRandomizedCollection(self, operations: List[str], values: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runRandomizedCollection(vector<string>& operations, vector<int>& values) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunRandomizedCollection(string[] operations, int[] values)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_randomized_collection(operations: Vec<String>, values: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunRandomizedCollection(operations []string, values []int) []int {\n    return []int{}\n}",
+    "typescript": "export function runRandomizedCollection(operations: string[], values: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[] $values\n     * @return int[]\n     */\n    public function runRandomizedCollection($operations, $values) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"RandomizedCollection\",\"insert\",\"insert\",\"insert\",\"getRandom\",\"remove\",\"getRandom\"]",
+      "values": "[0,1,1,2,0,1,0]"
+    },
+    {
+      "operations": "[\"RandomizedCollection\",\"insert\",\"remove\",\"remove\"]",
+      "values": "[0,4,4,4]"
+    },
+    {
+      "operations": "[\"RandomizedCollection\",\"insert\",\"insert\",\"remove\"]",
+      "values": "[0,2,2,2]"
+    },
+    {
+      "operations": "[\"RandomizedCollection\",\"insert\",\"getRandom\"]",
+      "values": "[0,9,0]"
+    }
+  ],
+  "functionName": "runRandomizedCollection",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Keep a list of values plus, per value, the set of list positions holding it.",
+    "Insertion appends and records the new index; removal swaps the chosen index with the tail and fixes both index sets.",
+    "Sampling draws a uniform list position; the judge accepts any held value."
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "id": "maximum-distance-in-arrays",
+  "title": "648. Maximum Distance in Arrays",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/maximum-distance-in-arrays/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "arrays = [[1,2,3],[4,5],[1,2,3]]",
+      "output": "4",
+      "explanation": "Pick 1 from the first array and 5 from the second; |1-5| = 4 is best."
+    },
+    {
+      "input": "arrays = [[1],[1]]",
+      "output": "0",
+      "explanation": "Only 1 and 1 are available, so the gap is 0."
+    },
+    {
+      "input": "arrays = [[1,4],[2,5]]",
+      "output": "4",
+      "explanation": "Pair 1 from the first array with 5 from the second for a gap of 4."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxDistance(int[][] arrays) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxDistance(self, arrays: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int maxDistance(vector<vector<int>>& arrays) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MaxDistance(int[][] arrays) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_distance(arrays: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MaxDistance(arrays [][]int) int {\n    \n}",
+    "typescript": "export function maxDistance(arrays: number[][]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $arrays\n     * @return int\n     */\n    public function maxDistance($arrays) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "arrays": "[[1,2,3],[4,5],[1,2,3]]"
+    },
+    {
+      "arrays": "[[1],[1]]"
+    },
+    {
+      "arrays": "[[1,4],[0,5]]"
+    }
+  ],
+  "functionName": "maxDistance",
+  "params": [
+    {
+      "name": "arrays",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Each array is sorted, so only its first and last entries can matter for extremes.",
+    "Track the smallest first-element and largest last-element seen so far while sweeping left to right.",
+    "For the current array, test its last against the running minimum and its first against the running maximum before folding it in; this guarantees different arrays.",
+    "Adaptation: the nested input maps to int_array_2d in this judge."
+  ]
+}

@@ -1,0 +1,80 @@
+[
+  {
+    "nestedList": "[[1,1],2,[1,1]]"
+  },
+  {
+    "nestedList": "[1,[4,[6]]]"
+  },
+  {
+    "nestedList": "[1]"
+  },
+  {
+    "nestedList": "[]"
+  },
+  {
+    "nestedList": "[2]"
+  },
+  {
+    "nestedList": "[0]"
+  },
+  {
+    "nestedList": "[10,20]"
+  },
+  {
+    "nestedList": "[1,2,3]"
+  },
+  {
+    "nestedList": "[[1],[2],[3]]"
+  },
+  {
+    "nestedList": "[[[1]]]"
+  },
+  {
+    "nestedList": "[[[[5]]]]"
+  },
+  {
+    "nestedList": "[3,[2,[1]]]"
+  },
+  {
+    "nestedList": "[1,[2,[3,[4]]]]"
+  },
+  {
+    "nestedList": "[5,5,5,5]"
+  },
+  {
+    "nestedList": "[100]"
+  },
+  {
+    "nestedList": "[1,[1,[1,[1]]]]"
+  },
+  {
+    "nestedList": "[[2,2],3]"
+  },
+  {
+    "nestedList": "[4,[3,[2,[1]]]]"
+  },
+  {
+    "nestedList": "[1,2,[3,4],[5,6]]"
+  },
+  {
+    "nestedList": "[[10]]"
+  },
+  {
+    "nestedList": "[0,0,0]"
+  },
+  {
+    "nestedList": "[7,[3],2]"
+  },
+  {
+    "nestedList": "[12,34]"
+  },
+  {
+    "nestedList": "[1,[2],3,[4],5]"
+  },
+  {
+    "nestedList": "[9,[9,[9]]]"
+  },
+  {
+    "nestedList": "[6,6,6,[6,6,6]]"
+  }
+]

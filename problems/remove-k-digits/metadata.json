@@ -1,0 +1,65 @@
+{
+  "category": "string",
+  "difficulty": "Medium",
+  "examples": [
+    {
+      "explanation": "Dropping '4', '3' and one '2' leaves \"1219\".",
+      "input": "num = \"1432219\", k = 3",
+      "output": "\"1219\""
+    },
+    {
+      "explanation": "Removing the leading '1' gives \"0200\", normalized to \"200\".",
+      "input": "num = \"10200\", k = 1",
+      "output": "\"200\""
+    },
+    {
+      "explanation": "Deleting everything leaves nothing, reported as \"0\".",
+      "input": "num = \"10\", k = 2",
+      "output": "\"0\""
+    }
+  ],
+  "functionName": "removeKdigits",
+  "hints": [
+    "Build the answer left to right, discarding a previous larger digit whenever a smaller one arrives and deletions remain.",
+    "If deletions remain after the scan, drop from the right end.",
+    "Strip leading zeros at the end; an empty result means \"0\"."
+  ],
+  "id": "remove-k-digits",
+  "link": "https://leetcode.com/problems/remove-k-digits/",
+  "outputType": "string",
+  "params": [
+    {
+      "name": "num",
+      "type": "string"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "starterCode": {
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string removeKdigits(string num, int k) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string RemoveKdigits(string num, int k) \n    {\n        return \"\";\n    }\n}",
+    "go": "package main\n\nfunc RemoveKdigits(num string, k int) string {\n    return \"\"\n}",
+    "java": "class Solution {\n    public String removeKdigits(String num, int k) {\n        return \"\";\n    }\n}",
+    "php": "class Solution {\n    /**\n     * @param string $num\n     * @param int $k\n     * @return string\n     */\n    public function removeKdigits($num, $k) {\n\n    }\n}",
+    "python": "class Solution:\n    def removeKdigits(self, num: str, k: int) -> str:\n        pass",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn remove_kdigits(num: String, k: i32) -> String {\n        String::new()\n    }\n}",
+    "typescript": "export function removeKdigits(num: string, k: number): string {\n    return \"\";\n}"
+  },
+  "testCases": [
+    {
+      "k": 3,
+      "num": "1432219"
+    },
+    {
+      "k": 1,
+      "num": "10200"
+    },
+    {
+      "k": 2,
+      "num": "10"
+    }
+  ],
+  "title": "476. Remove K Digits"
+}

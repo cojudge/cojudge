@@ -1,0 +1,93 @@
+[
+  {
+    "s": "abab"
+  },
+  {
+    "s": "aba"
+  },
+  {
+    "s": "abcabcabcabc"
+  },
+  {
+    "s": "a"
+  },
+  {
+    "s": "aa"
+  },
+  {
+    "s": "aaa"
+  },
+  {
+    "s": "abcd"
+  },
+  {
+    "s": "ababab"
+  },
+  {
+    "s": "abcab"
+  },
+  {
+    "s": "zzzzzz"
+  },
+  {
+    "s": "abcdabcd"
+  },
+  {
+    "s": "abcabcab"
+  },
+  {
+    "s": "abababa"
+  },
+  {
+    "s": "aabcaabcaabc"
+  },
+  {
+    "s": "aabaaba"
+  },
+  {
+    "s": "@javascript:\"ab\".repeat(5000)",
+    "_isLargeTest": true
+  },
+  {
+    "s": "abcabc"
+  },
+  {
+    "s": "abababab"
+  },
+  {
+    "s": "aaaa"
+  },
+  {
+    "s": "abac"
+  },
+  {
+    "s": "xyzxyzxyz"
+  },
+  {
+    "s": "abcabcd"
+  },
+  {
+    "s": "aaaaabaaaaab"
+  },
+  {
+    "s": "aabbccaabbcc"
+  },
+  {
+    "s": "abcdabc"
+  },
+  {
+    "s": "qwerqwer"
+  },
+  {
+    "s": "ababa"
+  },
+  {
+    "s": "zzzzzzzz"
+  },
+  {
+    "s": "abcdeabcdeabcde"
+  },
+  {
+    "s": "abccabccabcc"
+  }
+]

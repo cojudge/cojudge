@@ -1,4 +1,4 @@
-Given the root of a binary tree, invert the tree, and return its root.
+Starting from the `root` of a binary tree, exchange every left and right child throughout the structure to create its mirror image, then return the `root` of the mirrored tree.
 
 **Constraints:**
 

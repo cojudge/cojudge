@@ -1,0 +1,142 @@
+[
+  {
+    "root": "[1,2]",
+    "operations": "[\"insert\", \"insert\", \"getRoot\"]",
+    "values": "[3,4,0]"
+  },
+  {
+    "root": "[1]",
+    "operations": "[\"insert\", \"getRoot\", \"insert\"]",
+    "values": "[2,0,3]"
+  },
+  {
+    "root": "[1,2,3,4,5,6]",
+    "operations": "[\"insert\", \"insert\", \"getRoot\"]",
+    "values": "[7,8,0]"
+  },
+  {
+    "root": "[4, 3, 1, 6, 7, 8, 2, 9, 5]",
+    "operations": "[\"insert\", \"getRoot\", \"insert\", \"insert\"]",
+    "values": "[20, 20, 7, 20]"
+  },
+  {
+    "root": "[1]",
+    "operations": "[\"insert\", \"insert\", \"getRoot\"]",
+    "values": "[7, 20, 7]"
+  },
+  {
+    "root": "[2, 1]",
+    "operations": "[\"getRoot\", \"getRoot\", \"getRoot\", \"insert\"]",
+    "values": "[12, 7, 16, 4]"
+  },
+  {
+    "root": "[1, 2]",
+    "operations": "[\"getRoot\", \"getRoot\", \"insert\", \"getRoot\", \"getRoot\"]",
+    "values": "[6, 5, 3, 11, 11]"
+  },
+  {
+    "root": "[1]",
+    "operations": "[\"getRoot\", \"insert\", \"getRoot\"]",
+    "values": "[16, 4, 12]"
+  },
+  {
+    "root": "[2, 3, 6, 4, 5, 1]",
+    "operations": "[\"insert\", \"getRoot\", \"insert\", \"insert\", \"insert\"]",
+    "values": "[19, 10, 4, 9, 15]"
+  },
+  {
+    "root": "[4, 5, 7, 6, 3, 2, 1]",
+    "operations": "[\"insert\", \"getRoot\"]",
+    "values": "[19, 17]"
+  },
+  {
+    "root": "[3, 5, 1, 4, 2]",
+    "operations": "[\"getRoot\", \"insert\", \"insert\", \"getRoot\", \"insert\"]",
+    "values": "[14, 13, 0, 13, 7]"
+  },
+  {
+    "root": "[1, 2]",
+    "operations": "[\"getRoot\", \"getRoot\", \"insert\"]",
+    "values": "[9, 17, 0]"
+  },
+  {
+    "root": "[1]",
+    "operations": "[\"insert\", \"getRoot\", \"insert\"]",
+    "values": "[20, 5, 6]"
+  },
+  {
+    "root": "[2, 1, 3]",
+    "operations": "[\"insert\", \"getRoot\"]",
+    "values": "[14, 8]"
+  },
+  {
+    "root": "[1, 7, 5, 4, 6, 2, 3]",
+    "operations": "[\"insert\"]",
+    "values": "[17]"
+  },
+  {
+    "root": "[5, 1, 2, 4, 3]",
+    "operations": "[\"insert\", \"getRoot\", \"insert\"]",
+    "values": "[3, 0, 0]"
+  },
+  {
+    "root": "[4, 1, 2, 3]",
+    "operations": "[\"getRoot\", \"getRoot\", \"getRoot\", \"getRoot\", \"insert\", \"getRoot\"]",
+    "values": "[10, 20, 3, 14, 20, 11]"
+  },
+  {
+    "root": "[1]",
+    "operations": "[\"getRoot\", \"getRoot\", \"insert\", \"insert\", \"insert\"]",
+    "values": "[16, 2, 9, 0, 14]"
+  },
+  {
+    "root": "[1, 3, 2]",
+    "operations": "[\"insert\", \"getRoot\", \"getRoot\", \"insert\", \"getRoot\"]",
+    "values": "[14, 3, 12, 4, 9]"
+  },
+  {
+    "root": "[2, 1, 3]",
+    "operations": "[\"insert\"]",
+    "values": "[7]"
+  },
+  {
+    "root": "[1]",
+    "operations": "[\"insert\"]",
+    "values": "[0]"
+  },
+  {
+    "root": "[2, 4, 1, 3]",
+    "operations": "[\"insert\", \"getRoot\"]",
+    "values": "[13, 19]"
+  },
+  {
+    "root": "[6, 3, 5, 2, 1, 4]",
+    "operations": "[\"insert\", \"getRoot\"]",
+    "values": "[14, 6]"
+  },
+  {
+    "root": "[1]",
+    "operations": "[\"getRoot\", \"insert\", \"getRoot\", \"insert\", \"insert\"]",
+    "values": "[20, 4, 13, 10, 12]"
+  },
+  {
+    "root": "[4, 2, 3, 1, 5]",
+    "operations": "[\"getRoot\", \"getRoot\", \"insert\", \"getRoot\", \"getRoot\"]",
+    "values": "[4, 7, 20, 5, 4]"
+  },
+  {
+    "root": "[3, 2, 5, 1, 4]",
+    "operations": "[\"insert\", \"getRoot\", \"getRoot\"]",
+    "values": "[4, 19, 6]"
+  },
+  {
+    "root": "[2, 4, 3, 5, 1]",
+    "operations": "[\"insert\"]",
+    "values": "[11]"
+  },
+  {
+    "root": "[2, 1]",
+    "operations": "[\"getRoot\", \"getRoot\", \"insert\", \"getRoot\", \"getRoot\"]",
+    "values": "[11, 20, 19, 4, 10]"
+  }
+]

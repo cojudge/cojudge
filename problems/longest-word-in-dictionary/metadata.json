@@ -1,0 +1,58 @@
+{
+  "id": "longest-word-in-dictionary",
+  "title": "728. Longest Word in Dictionary",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/longest-word-in-dictionary/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "words = [\"w\",\"wo\",\"wor\",\"worl\",\"world\"]",
+      "output": "\"world\"",
+      "explanation": "Each prefix of world appears, so the full word is buildable and longest."
+    },
+    {
+      "input": "words = [\"a\",\"banana\",\"app\",\"appl\",\"ap\",\"apply\",\"apple\"]",
+      "output": "\"apple\"",
+      "explanation": "Both apple and apply are buildable at length 5; apple is alphabetically smaller."
+    },
+    {
+      "input": "words = [\"abc\",\"bcd\"]",
+      "output": "\"\"",
+      "explanation": "No single-letter word exists, so nothing is buildable."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String longestWord(String[] words) {\n        return \"\";\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def longestWord(self, words: List[str]) -> str:\n        return \"\"",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string longestWord(vector<string>& words) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string LongestWord(string[] words) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn longest_word(words: Vec<String>) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc LongestWord(words []string) string {\n    return \"\"\n}",
+    "typescript": "export function longestWord(words: string[]): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $words\n     * @return string\n     */\n    public function longestWord($words) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "words": "[\"w\",\"wo\",\"wor\",\"worl\",\"world\"]"
+    },
+    {
+      "words": "[\"a\",\"banana\",\"app\",\"appl\",\"ap\",\"apply\",\"apple\"]"
+    },
+    {
+      "words": "[\"abc\",\"bcd\"]"
+    }
+  ],
+  "functionName": "longestWord",
+  "params": [
+    {
+      "name": "words",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "A word is buildable exactly when every one of its prefixes occurs in the set.",
+    "Check words from longest to shortest (ties alphabetically) and return the first buildable one, or sort ascending and track the best.",
+    "A trie also works, but a hash set of words plus prefix scans is simplest."
+  ]
+}

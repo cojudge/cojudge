@@ -1,0 +1,57 @@
+{
+  "id": "nested-list-weight-sum",
+  "title": "422. Nested List Weight Sum",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/nested-list-weight-sum/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "nestedList = \"[[1,1],2,[1,1]]\"",
+      "output": "10",
+      "explanation": "Four 1s at depth 2 plus one 2 at depth 1 total 10."
+    },
+    {
+      "input": "nestedList = \"[1,[4,[6]]]\"",
+      "output": "27",
+      "explanation": "1*1 + 4*2 + 6*3 equals 27."
+    },
+    {
+      "input": "nestedList = \"[0]\"",
+      "output": "0",
+      "explanation": "Zero contributes nothing regardless of depth."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int depthSum(String nestedList) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def depthSum(self, nestedList: str) -> int:\n        return 0",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int depthSum(string nestedList) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int DepthSum(string nestedList)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn depth_sum(nested_list: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc DepthSum(nestedList string) int {\n    return 0\n}",
+    "typescript": "export function depthSum(nestedList: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $nestedList\n     * @return int\n     */\n    public function depthSum($nestedList) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nestedList": "[[1,1],2,[1,1]]"
+    },
+    {
+      "nestedList": "[1,[4,[6]]]"
+    },
+    {
+      "nestedList": "[0]"
+    }
+  ],
+  "functionName": "depthSum",
+  "params": [
+    {
+      "name": "nestedList",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Scan the characters while tracking current bracket depth.",
+    "Accumulate multi-digit (and negative) numbers, then add value * depth."
+  ]
+}

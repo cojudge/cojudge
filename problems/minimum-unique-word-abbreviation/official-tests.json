@@ -1,0 +1,185 @@
+[
+  {
+    "target": "apple",
+    "dictionary": [
+      "blade"
+    ]
+  },
+  {
+    "target": "apple",
+    "dictionary": [
+      "plain",
+      "amber",
+      "blade"
+    ]
+  },
+  {
+    "target": "a",
+    "dictionary": []
+  },
+  {
+    "target": "abc",
+    "dictionary": [
+      "def"
+    ]
+  },
+  {
+    "target": "abc",
+    "dictionary": [
+      "abd"
+    ]
+  },
+  {
+    "target": "ab",
+    "dictionary": [
+      "aa",
+      "bb"
+    ]
+  },
+  {
+    "target": "word",
+    "dictionary": [
+      "wore"
+    ]
+  },
+  {
+    "target": "word",
+    "dictionary": [
+      "wore",
+      "work"
+    ]
+  },
+  {
+    "target": "hello",
+    "dictionary": [
+      "hella"
+    ]
+  },
+  {
+    "target": "hello",
+    "dictionary": [
+      "hallo",
+      "hollo"
+    ]
+  },
+  {
+    "target": "abcde",
+    "dictionary": []
+  },
+  {
+    "target": "abcde",
+    "dictionary": [
+      "abcdf"
+    ]
+  },
+  {
+    "target": "abcdef",
+    "dictionary": [
+      "abcdeg",
+      "abcdeh"
+    ]
+  },
+  {
+    "target": "test",
+    "dictionary": [
+      "tent",
+      "text"
+    ]
+  },
+  {
+    "target": "abcd",
+    "dictionary": [
+      "abce",
+      "abcf"
+    ]
+  },
+  {
+    "target": "aaaa",
+    "dictionary": [
+      "aaab"
+    ]
+  },
+  {
+    "target": "abcd",
+    "dictionary": []
+  },
+  {
+    "target": "ab",
+    "dictionary": []
+  },
+  {
+    "target": "abc",
+    "dictionary": []
+  },
+  {
+    "target": "abcd",
+    "dictionary": [
+      "wxyz"
+    ]
+  },
+  {
+    "target": "apple",
+    "dictionary": [
+      "apply"
+    ]
+  },
+  {
+    "target": "apple",
+    "dictionary": [
+      "apply",
+      "amply"
+    ]
+  },
+  {
+    "target": "dog",
+    "dictionary": [
+      "dig",
+      "dug"
+    ]
+  },
+  {
+    "target": "binary",
+    "dictionary": [
+      "binarz"
+    ]
+  },
+  {
+    "target": "love",
+    "dictionary": [
+      "live",
+      "lave"
+    ]
+  },
+  {
+    "target": "code",
+    "dictionary": [
+      "codd"
+    ]
+  },
+  {
+    "target": "abcd",
+    "dictionary": [
+      "abce"
+    ]
+  },
+  {
+    "target": "abc",
+    "dictionary": [
+      "abd",
+      "abe"
+    ]
+  },
+  {
+    "target": "plain",
+    "dictionary": [
+      "plane",
+      "plank"
+    ]
+  },
+  {
+    "target": "abcdefg",
+    "dictionary": [
+      "abcdefh"
+    ]
+  }
+]

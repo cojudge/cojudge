@@ -1,0 +1,118 @@
+[
+  {
+    "nums": "[1,2,3]",
+    "operations": "[\"next\",\"peek\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[1]",
+    "operations": "[\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[1,2]",
+    "operations": "[\"peek\",\"peek\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[5,6,7,8]",
+    "operations": "[\"next\",\"hasNext\",\"peek\",\"next\",\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[1,2]",
+    "operations": "[\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[1,2,3,4]",
+    "operations": "[\"peek\",\"next\",\"peek\",\"next\",\"peek\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[10]",
+    "operations": "[\"peek\",\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[1,2,3]",
+    "operations": "[\"hasNext\",\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[4,5]",
+    "operations": "[\"next\",\"hasNext\",\"hasNext\"]"
+  },
+  {
+    "nums": "[1,2,3,4,5]",
+    "operations": "[\"next\",\"next\",\"peek\",\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[7]",
+    "operations": "[\"hasNext\"]"
+  },
+  {
+    "nums": "[7]",
+    "operations": "[\"peek\"]"
+  },
+  {
+    "nums": "[7]",
+    "operations": "[\"next\"]"
+  },
+  {
+    "nums": "[1,2]",
+    "operations": "[\"peek\",\"next\",\"peek\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[3,1,2]",
+    "operations": "[\"next\",\"peek\",\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[2,4,6]",
+    "operations": "[\"peek\",\"next\",\"hasNext\",\"next\",\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[9,8,7]",
+    "operations": "[\"hasNext\",\"peek\",\"peek\",\"next\",\"next\",\"peek\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[1,2,3,4,5,6]",
+    "operations": "[\"next\",\"next\",\"next\",\"hasNext\",\"peek\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[5]",
+    "operations": "[\"hasNext\",\"peek\",\"next\",\"hasNext\",\"hasNext\"]"
+  },
+  {
+    "nums": "[1,1,1]",
+    "operations": "[\"peek\",\"next\",\"peek\",\"next\",\"peek\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[10,20]",
+    "operations": "[\"next\",\"peek\",\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[3,3,3,3]",
+    "operations": "[\"hasNext\",\"next\",\"hasNext\",\"next\",\"hasNext\",\"next\",\"peek\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[100,200,300]",
+    "operations": "[\"next\",\"hasNext\",\"hasNext\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[1,2,3]",
+    "operations": "[\"peek\",\"hasNext\",\"next\",\"hasNext\",\"peek\",\"next\",\"peek\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[8,9]",
+    "operations": "[\"hasNext\",\"hasNext\",\"hasNext\",\"next\",\"peek\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[4]",
+    "operations": "[\"peek\",\"peek\",\"peek\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[6,7,8,9,10]",
+    "operations": "[\"peek\",\"next\",\"peek\",\"next\",\"peek\",\"next\",\"peek\",\"next\",\"peek\",\"next\",\"hasNext\"]"
+  },
+  {
+    "nums": "[11,22]",
+    "operations": "[\"next\",\"next\",\"hasNext\",\"hasNext\"]"
+  },
+  {
+    "nums": "[0,1]",
+    "operations": "[\"peek\",\"next\",\"hasNext\",\"next\",\"hasNext\"]"
+  }
+]

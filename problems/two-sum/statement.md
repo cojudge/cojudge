@@ -1,4 +1,4 @@
-Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`. If no such pair exists, return an empty array.
+Given a list of integers `nums` and an integer `target`, locate two positions whose values total `target` and return those positions. When the list holds no such pair, return an empty list instead.
 
 **Constraints:**
 - 2 <= nums.length <= 10^4

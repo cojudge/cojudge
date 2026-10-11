@@ -1,0 +1,65 @@
+{
+  "id": "continuous-subarray-sum",
+  "title": "582. Continuous Subarray Sum",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/continuous-subarray-sum/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [23,2,4,6,7], k = 6",
+      "output": "true",
+      "explanation": "The slice [2,4] sums to 6, a multiple of 6."
+    },
+    {
+      "input": "nums = [23,2,6,4,7], k = 6",
+      "output": "true",
+      "explanation": "The whole array sums to 42, which is 7 times 6."
+    },
+    {
+      "input": "nums = [23,2,6,4,7], k = 13",
+      "output": "false",
+      "explanation": "No slice of length 2 or more sums to a multiple of 13."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean checkSubarraySum(int[] nums, int k) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def checkSubarraySum(self, nums: List[int], k: int) -> bool:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool checkSubarraySum(vector<int>& nums, int k) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool CheckSubarraySum(int[] nums, int k) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn check_subarray_sum(nums: Vec<i32>, k: i32) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc CheckSubarraySum(nums []int, k int) bool {\n    \n}",
+    "typescript": "export function checkSubarraySum(nums: number[], k: number): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $k\n     * @return bool\n     */\n    public function checkSubarraySum($nums, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[23,2,4,6,7]",
+      "k": 6
+    },
+    {
+      "nums": "[23,2,6,4,7]",
+      "k": 6
+    },
+    {
+      "nums": "[23,2,6,4,7]",
+      "k": 13
+    }
+  ],
+  "functionName": "checkSubarraySum",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Track prefix sums modulo k: if the same remainder appears at two positions at least two apart, the slice between them is good.",
+    "Remember the first index where each remainder occurs; a repeat with distance 2 or more is a success.",
+    "When k is zero there is no modulo to take, so look for a repeated raw prefix sum instead."
+  ]
+}

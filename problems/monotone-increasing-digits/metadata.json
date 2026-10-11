@@ -1,0 +1,57 @@
+{
+  "id": "monotone-increasing-digits",
+  "title": "744. Monotone Increasing Digits",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/monotone-increasing-digits/",
+  "category": "greedy",
+  "examples": [
+    {
+      "input": "n = 10",
+      "output": "9",
+      "explanation": "10 dips at the last digit, so 9 is the answer."
+    },
+    {
+      "input": "n = 1234",
+      "output": "1234"
+    },
+    {
+      "input": "n = 332",
+      "output": "299",
+      "explanation": "Borrow at the first dip, then set the tail to 9."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int monotoneIncreasingDigits(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def monotoneIncreasingDigits(self, n: int) -> int:\n        return 0\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int monotoneIncreasingDigits(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MonotoneIncreasingDigits(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn monotone_increasing_digits(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MonotoneIncreasingDigits(n int) int {\n    return 0\n}",
+    "typescript": "export function monotoneIncreasingDigits(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function monotoneIncreasingDigits($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 10
+    },
+    {
+      "n": 1234
+    },
+    {
+      "n": 332
+    }
+  ],
+  "functionName": "monotoneIncreasingDigits",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Work on the digit array from right to left, marking the first position (from the left) where a dip occurs.",
+    "When digits[i] > digits[i+1], lower digits[i] by one and remember that the tail from i+1 onward must become 9s.",
+    "Scanning right to left propagates the borrow through runs like 332 -> 322 -> 299."
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "id": "find-the-shortest-superstring",
+  "title": "930. Find the Shortest Superstring",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/find-the-shortest-superstring/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "words = [\"alex\",\"loves\",\"leetcode\"]",
+      "output": "\"alexlovesleetcode\"",
+      "explanation": "No overlaps, so concatenation in any order is best."
+    },
+    {
+      "input": "words = [\"catg\",\"ctaagt\",\"gcta\",\"ttca\",\"atgcatc\"]",
+      "output": "\"gctaagttcatgcatc\"",
+      "explanation": "Best overlaps chain all words into 16 characters."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String shortestSuperstring(String[] words) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def shortestSuperstring(self, words: List[str]) -> str:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string shortestSuperstring(vector<string>& words) {\n        return \"\";\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public string ShortestSuperstring(string[] words) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn shortest_superstring(words: Vec<String>) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc ShortestSuperstring(words []string) string {\n    return \"\"\n}",
+    "typescript": "export function shortestSuperstring(words: string[]): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $words\n     * @return string\n     */\n    public function shortestSuperstring($words) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "words": [
+        "alex",
+        "loves",
+        "leetcode"
+      ]
+    },
+    {
+      "words": [
+        "catg",
+        "ctaagt",
+        "gcta",
+        "ttca",
+        "atgcatc"
+      ]
+    },
+    {
+      "words": [
+        "abc",
+        "bcd",
+        "cde"
+      ]
+    }
+  ],
+  "functionName": "shortestSuperstring",
+  "params": [
+    {
+      "name": "words",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Precompute for every ordered pair how many trailing characters of the first equal the leading characters of the second.",
+    "Run a travelling-salesman style dynamic program over subsets: the state is (used set, last word) holding the best string so far.",
+    "Extend each state with every unused word using the precomputed overlap, keeping the shortest candidate (ties broken arbitrarily)."
+  ]
+}

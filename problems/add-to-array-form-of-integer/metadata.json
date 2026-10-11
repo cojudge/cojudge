@@ -1,0 +1,65 @@
+{
+  "id": "add-to-array-form-of-integer",
+  "title": "972. Add to Array-Form of Integer",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/add-to-array-form-of-integer/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "num = [1,2,0,0], k = 34",
+      "output": "[1,2,3,4]",
+      "explanation": "1200 + 34 = 1234."
+    },
+    {
+      "input": "num = [2,7,4], k = 181",
+      "output": "[4,5,5]",
+      "explanation": "274 + 181 = 455."
+    },
+    {
+      "input": "num = [2,1,5], k = 806",
+      "output": "[1,0,2,1]",
+      "explanation": "215 + 806 = 1021."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<Integer> addToArrayForm(int[] num, int k) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def addToArrayForm(self, num: List[int], k: int) -> List[int]:\n        return []",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> addToArrayForm(vector<int>& num, int k) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<int> AddToArrayForm(int[] num, int k) \n    {\n        return new List<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn add_to_array_form(num: Vec<i32>, k: i32) -> Vec<i32> {\n        Vec::new()\n    }\n}",
+    "go": "package main\n\nfunc AddToArrayForm(num []int, k int) []int {\n    return []int{}\n}",
+    "typescript": "export function addToArrayForm(num: number[], k: number): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $num\n     * @param int $k\n     * @return int[]\n     */\n    public function addToArrayForm($num, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "num": "[1,2,0,0]",
+      "k": 34
+    },
+    {
+      "num": "[2,7,4]",
+      "k": 181
+    },
+    {
+      "num": "[2,1,5]",
+      "k": 806
+    }
+  ],
+  "functionName": "addToArrayForm",
+  "params": [
+    {
+      "name": "num",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Add from the least significant digit, carrying the value of k along as you move left.",
+    "Keep emitting digits while digits of num or a nonzero carry remain; a leftover carry may add a new leading digit.",
+    "Collect the digits backwards and reverse them at the end."
+  ]
+}

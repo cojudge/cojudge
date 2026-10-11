@@ -1,0 +1,72 @@
+{
+  "id": "trim-a-binary-search-tree",
+  "title": "688. Trim a Binary Search Tree",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/trim-a-binary-search-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [1,0,2], low = 1, high = 2",
+      "output": "[1,null,2]",
+      "explanation": "The node 0 falls below the kept interval and is dropped; its parent links directly to the surviving right child."
+    },
+    {
+      "input": "root = [3,0,4,null,2,null,null,1], low = 1, high = 3",
+      "output": "[3,2,null,1]",
+      "explanation": "Values outside [1,3] are removed while the relative order of the survivors is preserved."
+    },
+    {
+      "input": "root = [], low = 1, high = 2",
+      "output": "[]"
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public TreeNode trimBST(TreeNode root, int low, int high) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\nclass Solution:\n    def trimBST(self, root, low: int, high: int):\n        pass",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    TreeNode* trimBST(TreeNode* root, int low, int high) {\n        return nullptr;\n    }\n};",
+    "csharp": "/*\nDefinition for a binary tree node.\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\n\npublic class Solution \n{\n    public TreeNode TrimBST(TreeNode root, int low, int high) \n    {\n        return null;\n    }\n}",
+    "rust": "// Definition for a binary tree node.\n// #[derive(Debug, PartialEq, Eq)]\n// pub struct TreeNode {\n//   pub val: i32,\n//   pub left: Option<Rc<RefCell<TreeNode>>>,\n//   pub right: Option<Rc<RefCell<TreeNode>>>,\n// }\nuse std::rc::Rc;\nuse std::cell::RefCell;\npub struct Solution;\n\nimpl Solution {\n    pub fn trim_bst(root: Option<Rc<RefCell<TreeNode>>>, low: i32, high: i32) -> Option<Rc<RefCell<TreeNode>>> {\n        None\n    }\n}",
+    "go": "package main\n\n// Definition for a binary tree node.\n// type TreeNode struct {\n//     Val int\n//     Left *TreeNode\n//     Right *TreeNode\n// }\n\nfunc TrimBST(root *TreeNode, low int, high int) *TreeNode {\n    return nil\n}",
+    "typescript": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    val: number;\n    left: TreeNode | null;\n    right: TreeNode | null;\n    constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {\n        this.val = val ?? 0;\n        this.left = left ?? null;\n        this.right = right ?? null;\n    }\n}\n*/\nimport { TreeNode } from './TreeNode';\nexport function trimBST(root: TreeNode | null, low: number, high: number): TreeNode | null {\n    return null;\n}",
+    "php": "class Solution {\n    /**\n     * @param TreeNode|null $root\n     * @param int $low\n     * @param int $high\n     * @return TreeNode|null\n     */\n    public function trimBST($root, $low, $high) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "root": "[1,0,2]",
+      "low": 1,
+      "high": 2
+    },
+    {
+      "root": "[3,0,4,null,2,null,null,1]",
+      "low": 1,
+      "high": 3
+    },
+    {
+      "root": "[]",
+      "low": 1,
+      "high": 2
+    }
+  ],
+  "functionName": "trimBST",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    },
+    {
+      "name": "low",
+      "type": "int"
+    },
+    {
+      "name": "high",
+      "type": "int"
+    }
+  ],
+  "outputType": "tree_node",
+  "hints": [
+    "Use the ordering guarantee: when the current value is too small the whole left subtree can be skipped.",
+    "When the current value is too large the whole right subtree can be skipped.",
+    "Otherwise trim both sides recursively and reattach them."
+  ]
+}

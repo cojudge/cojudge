@@ -1,0 +1,57 @@
+{
+  "id": "circular-array-loop",
+  "title": "524. Circular Array Loop",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/circular-array-loop/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [2,-1,1,2,2]",
+      "output": "true",
+      "explanation": "Starting at index 0, the jumps visit 0 -> 2 -> 3 -> 0, a loop of length 3 where every jump is forward."
+    },
+    {
+      "input": "nums = [-1,2]",
+      "output": "false",
+      "explanation": "From index 0 the jump goes backward to index 1, but from index 1 the jump goes forward to index 0, so the directions mix and no valid loop exists."
+    },
+    {
+      "input": "nums = [-2,1,-1,-2,-2]",
+      "output": "false",
+      "explanation": "Every walk either changes direction or collapses onto a single index, so there is no loop of length greater than 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean circularArrayLoop(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def circularArrayLoop(self, nums: List[int]) -> bool:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool circularArrayLoop(vector<int>& nums) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool CircularArrayLoop(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn circular_array_loop(nums: Vec<i32>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc CircularArrayLoop(nums []int) bool {\n    \n}",
+    "typescript": "export function circularArrayLoop(nums: number[]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return bool\n     */\n    public function circularArrayLoop($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[2,-1,1,2,2]"
+    },
+    {
+      "nums": "[-1,2]"
+    },
+    {
+      "nums": "[-2,1,-1,-2,-2]"
+    }
+  ],
+  "functionName": "circularArrayLoop",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "From each start index, walk forward following the jumps while every step keeps the starting direction.",
+    "A walk that revisits one of its own indices (with a real move, not a self-loop) proves a valid cycle exists."
+  ]
+}

@@ -1,6 +1,6 @@
-Given an `m x n` integer matrix, if an element is `0`, set its entire row and column to `0`.
+You are shown an `m x n` table of integers. Wherever a cell holds `0`, change every cell in that same row and every cell in that same column to `0`.
 
-Return the matrix after applying this operation.
+Hand back the table once all such changes have been applied together.
 
 **Constraints:**
 - `m == matrix.length`

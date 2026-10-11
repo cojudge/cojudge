@@ -1,6 +1,6 @@
-You are given an `n x n` 2D matrix representing an image. Rotate the image by 90 degrees clockwise.
+You receive an `n x n` 2D matrix standing in for a picture. Spin that picture 90 degrees clockwise.
 
-Return the rotated matrix.
+Hand back the spun matrix.
 
 **Constraints:**
 - `n == matrix.length == matrix[i].length`

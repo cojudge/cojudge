@@ -1,0 +1,68 @@
+{
+  "id": "unique-email-addresses",
+  "title": "916. Unique Email Addresses",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/unique-email-addresses/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "emails = [\"test.email+alex@leetcode.com\",\"test.e.mail+bob.cathy@leetcode.com\",\"testemail+david@lee.tcode.com\"]",
+      "output": "2",
+      "explanation": "The first two both become \"testemail@leetcode.com\"."
+    },
+    {
+      "input": "emails = [\"a@leetcode.com\",\"b@leetcode.com\",\"c@leetcode.com\"]",
+      "output": "3"
+    },
+    {
+      "input": "emails = [\"test.email+alex@leetcode.com\",\"test.email.leet+alex@code.com\"]",
+      "output": "2",
+      "explanation": "Different domains keep them distinct."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numUniqueEmails(String[] emails) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numUniqueEmails(self, emails: List[str]) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int numUniqueEmails(vector<string>& emails) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int NumUniqueEmails(string[] emails)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_unique_emails(emails: Vec<String>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumUniqueEmails(emails []string) int {\n    return 0\n}",
+    "typescript": "export function numUniqueEmails(emails: string[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $emails\n     * @return int\n     */\n    public function numUniqueEmails($emails) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "emails": [
+        "test.email+alex@leetcode.com",
+        "test.e.mail+bob.cathy@leetcode.com",
+        "testemail+david@lee.tcode.com"
+      ]
+    },
+    {
+      "emails": [
+        "a@leetcode.com",
+        "b@leetcode.com",
+        "c@leetcode.com"
+      ]
+    },
+    {
+      "emails": [
+        "test.email+alex@leetcode.com",
+        "test.email.leet+alex@code.com"
+      ]
+    }
+  ],
+  "functionName": "numUniqueEmails",
+  "params": [
+    {
+      "name": "emails",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Split each address once at '@' to separate local and domain handling.",
+    "In the local part, keep characters before '+' and drop every '.'; the domain never changes.",
+    "Collect normalized strings in a set and return its size."
+  ]
+}

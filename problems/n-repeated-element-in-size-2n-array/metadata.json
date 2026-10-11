@@ -1,0 +1,57 @@
+{
+  "id": "n-repeated-element-in-size-2n-array",
+  "title": "947. N-Repeated Element in Size 2N Array",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/n-repeated-element-in-size-2n-array/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,2,3,3]",
+      "output": "3",
+      "explanation": "The value 3 fills half the slots while every other value appears once."
+    },
+    {
+      "input": "nums = [2,1,2,5,3,2]",
+      "output": "2",
+      "explanation": "Here 2 is the element occupying exactly half the array."
+    },
+    {
+      "input": "nums = [5,1,5,2,5,3,5,4]",
+      "output": "5",
+      "explanation": "Four of the eight entries are 5, so 5 is the repeated element."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int repeatedNTimes(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def repeatedNTimes(self, nums: List[int]) -> int:\n        return 0",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int repeatedNTimes(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int RepeatedNTimes(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn repeated_n_times(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc RepeatedNTimes(nums []int) int {\n    return 0\n}",
+    "typescript": "export function repeatedNTimes(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function repeatedNTimes($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3,3]"
+    },
+    {
+      "nums": "[2,1,2,5,3,2]"
+    },
+    {
+      "nums": "[5,1,5,2,5,3,5,4]"
+    }
+  ],
+  "functionName": "repeatedNTimes",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Only one value appears more than once, so frequency counting finds it.",
+    "A value repeating N times must also sit close to one of its copies; comparing nearby entries works too."
+  ]
+}

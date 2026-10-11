@@ -1,0 +1,64 @@
+{
+  "id": "exclusive-time-of-functions",
+  "title": "658. Exclusive Time of Functions",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/exclusive-time-of-functions/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "n = 2, logs = [\"0:start:0\",\"1:start:2\",\"1:end:5\",\"0:end:6\"]",
+      "output": "[3,4]",
+      "explanation": "Function 0 runs during [0,1] and [6,6] (3 units); function 1 runs during [2,5] (4 units)."
+    },
+    {
+      "input": "n = 1, logs = [\"0:start:0\",\"0:start:2\",\"0:end:5\",\"0:start:6\",\"0:end:6\",\"0:end:7\"]",
+      "output": "[8]",
+      "explanation": "Nested and sequential self-calls merge to 8 units over [0,7]."
+    },
+    {
+      "input": "n = 2, logs = [\"0:start:0\",\"0:end:0\",\"1:start:1\",\"1:end:1\"]",
+      "output": "[1,1]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] exclusiveTime(int n, String[] logs) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def exclusiveTime(self, n: int, logs: List[str]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> exclusiveTime(int n, vector<string>& logs) {\n        return {};\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public int[] ExclusiveTime(int n, string[] logs) \n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn exclusive_time(n: i32, logs: Vec<String>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc ExclusiveTime(n int, logs []string) []int {\n    return nil\n}",
+    "typescript": "export function exclusiveTime(n: number, logs: string[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param string[] $logs\n     * @return int[]\n     */\n    public function exclusiveTime($n, $logs) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 2,
+      "logs": "[\"0:start:0\", \"1:start:2\", \"1:end:5\", \"0:end:6\"]"
+    },
+    {
+      "n": 1,
+      "logs": "[\"0:start:0\", \"0:start:2\", \"0:end:5\", \"0:start:6\", \"0:end:6\", \"0:end:7\"]"
+    },
+    {
+      "n": 2,
+      "logs": "[\"0:start:0\", \"0:end:0\", \"1:start:1\", \"1:end:1\"]"
+    }
+  ],
+  "functionName": "exclusiveTime",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "logs",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Push each started function onto a stack and remember the timestamp of the previous log.",
+    "On a start event, credit the gap since the previous stamp to the function on top, then push the new id.",
+    "On an end event, credit the inclusive gap (stamp - previous + 1) to the popped id and move the cursor past the stamp."
+  ]
+}

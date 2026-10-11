@@ -1,4 +1,4 @@
-Given an m×n matrix, return all elements of the matrix in spiral order.
+You receive a rectangular `m x n` table. Collect its entries by walking around the outside clockwise and spiralling inward, and hand back that visiting sequence.
 
 **Constraints:**
 

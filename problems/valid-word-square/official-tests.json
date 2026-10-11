@@ -1,0 +1,92 @@
+[
+  {
+    "words": "[\"abcd\",\"bnrt\",\"crmy\",\"dtye\"]"
+  },
+  {
+    "words": "[\"ball\",\"area\",\"read\",\"lady\"]"
+  },
+  {
+    "words": "[\"abcd\",\"bnrt\",\"crm\",\"dt\"]"
+  },
+  {
+    "words": "[\"a\"]"
+  },
+  {
+    "words": "[\"ab\",\"ba\"]"
+  },
+  {
+    "words": "[\"ab\",\"bc\"]"
+  },
+  {
+    "words": "[\"abc\",\"b\"]"
+  },
+  {
+    "words": "[\"aaa\",\"aaa\",\"aaa\"]"
+  },
+  {
+    "words": "[\"abcd\",\"bnrt\",\"crmy\",\"dty\"]"
+  },
+  {
+    "words": "[\"abcd\",\"bnrt\",\"crmy\",\"dtye\",\"e\"]"
+  },
+  {
+    "words": "[\"a\",\"b\",\"c\"]"
+  },
+  {
+    "words": "[\"ab\",\"b\"]"
+  },
+  {
+    "words": "[\"o\"]"
+  },
+  {
+    "words": "[\"xy\",\"yx\",\"zz\"]"
+  },
+  {
+    "words": "[\"abc\",\"bca\",\"cab\"]"
+  },
+  {
+    "words": "[\"abcd\",\"bnrt\",\"crmy\",\"dtyex\"]"
+  },
+  {
+    "words": "[\"aa\",\"aa\"]"
+  },
+  {
+    "words": "[\"ab\",\"ba\",\"ab\"]"
+  },
+  {
+    "words": "[\"q\"]"
+  },
+  {
+    "words": "[\"abcde\",\"bcdef\",\"cdefg\",\"defgh\",\"efghi\"]"
+  },
+  {
+    "words": "[\"abc\",\"bcd\",\"cde\"]"
+  },
+  {
+    "words": "[\"ab\",\"ab\"]"
+  },
+  {
+    "words": "[\"a\",\"a\"]"
+  },
+  {
+    "words": "[\"abc\",\"bca\"]"
+  },
+  {
+    "words": "[\"aa\",\"ab\"]"
+  },
+  {
+    "words": "[\"abcd\",\"bnrt\",\"crmy\"]"
+  },
+  {
+    "words": "[\"aaa\",\"aaa\"]"
+  },
+  {
+    "words": "[\"aba\",\"bab\",\"aba\"]"
+  },
+  {
+    "words": "[\"ab\",\"ba\",\"ab\",\"ba\"]"
+  },
+  {
+    "words": "[\"x\",\"y\"]"
+  }
+]

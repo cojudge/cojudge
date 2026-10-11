@@ -1,4 +1,4 @@
-Given two strings s and t, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string "".
+You are given two strings `s` and `t`. Find the shortest contiguous portion of `s` that contains every character of `t`, counting repeated letters separately. In other words, the chosen portion must supply at least as many copies of each distinct character as appear in `t`. Return that shortest portion, or the empty string `""` when no portion satisfies the requirement.
 
 **Constraints:**
 

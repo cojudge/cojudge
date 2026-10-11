@@ -1,4 +1,4 @@
-Given an integer array `nums`, find a subarray that has the largest product, and return the product.
+An integer array `nums` is supplied. Among all contiguous blocks inside it, determine the greatest achievable product, and output that product.
 
 **Constraints:**
 

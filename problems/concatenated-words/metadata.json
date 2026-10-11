@@ -1,0 +1,58 @@
+{
+  "id": "concatenated-words",
+  "title": "537. Concatenated Words",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/concatenated-words/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "words = [\"cat\",\"cats\",\"catsdogcats\",\"dog\",\"dogcatsdog\",\"hippopotamuses\",\"rat\",\"ratcatdogcat\"]",
+      "output": "[\"catsdogcats\",\"dogcatsdog\",\"ratcatdogcat\"]",
+      "explanation": "\"catsdogcats\" is \"cats\"+\"dog\"+\"cats\"; \"dogcatsdog\" is \"dog\"+\"cats\"+\"dog\"; \"ratcatdogcat\" is \"rat\"+\"cat\"+\"dog\"+\"cat\"."
+    },
+    {
+      "input": "words = [\"cat\",\"dog\",\"catdog\"]",
+      "output": "[\"catdog\"]",
+      "explanation": "Only \"catdog\" breaks into listed pieces \"cat\" and \"dog\"."
+    },
+    {
+      "input": "words = [\"hello\",\"world\"]",
+      "output": "[]",
+      "explanation": "No word can be assembled from other entries."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> findAllConcatenatedWordsInADict(String[] words) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findAllConcatenatedWordsInADict(self, words: List[str]) -> List[str]:\n        return []\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<string> FindAllConcatenatedWordsInADict(string[] words)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_all_concatenated_words_in_a_dict(words: Vec<String>) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc FindAllConcatenatedWordsInADict(words []string) []string {\n    return []string{}\n}",
+    "typescript": "export function findAllConcatenatedWordsInADict(words: string[]): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $words\n     * @return string[]\n     */\n    public function findAllConcatenatedWordsInADict($words) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "words": "[\"cat\",\"cats\",\"catsdogcats\",\"dog\",\"dogcatsdog\",\"hippopotamuses\",\"rat\",\"ratcatdogcat\"]"
+    },
+    {
+      "words": "[\"cat\",\"dog\",\"catdog\"]"
+    },
+    {
+      "words": "[\"hello\",\"world\"]"
+    }
+  ],
+  "functionName": "findAllConcatenatedWordsInADict",
+  "params": [
+    {
+      "name": "words",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Sort words by length and only build from strictly shorter words seen so far.",
+    "Each candidate is a word-break check against the shorter-word set.",
+    "Compare outputs as sets: order does not matter."
+  ]
+}

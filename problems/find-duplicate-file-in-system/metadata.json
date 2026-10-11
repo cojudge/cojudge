@@ -1,0 +1,69 @@
+{
+  "id": "find-duplicate-file-in-system",
+  "title": "643. Find Duplicate File in System",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/find-duplicate-file-in-system/",
+  "category": "hash-table",
+  "examples": [
+    {
+      "input": "paths = [\"root/a 1.txt(abcd) 2.txt(efgh)\",\"root/c 3.txt(abcd)\",\"root/c/d 4.txt(efgh)\",\"root 4.txt(efgh)\"]",
+      "output": "[[\"root/a/2.txt\",\"root/c/d/4.txt\",\"root/4.txt\"],[\"root/a/1.txt\",\"root/c/3.txt\"]] (order may vary)",
+      "explanation": "Files holding abcd form one group; files holding efgh form another."
+    },
+    {
+      "input": "paths = [\"root/a 1.txt(abcd) 2.txt(efgh)\",\"root/c 3.txt(abcd) 4.txt(efgh)\"]",
+      "output": "[[\"root/a/1.txt\",\"root/c/3.txt\"],[\"root/a/2.txt\",\"root/c/4.txt\"]] (order may vary)",
+      "explanation": "Each content value appears twice, so two groups are reported."
+    },
+    {
+      "input": "paths = [\"root/a 1.txt(abcd)\"]",
+      "output": "[]",
+      "explanation": "A single file has no partner, so nothing is reported."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<List<String>> findDuplicate(String[] paths) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findDuplicate(self, paths: List[str]) -> List[List[str]]:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<string>> findDuplicate(vector<string>& paths) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<List<string>> FindDuplicate(string[] paths) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_duplicate(paths: Vec<String>) -> Vec<Vec<String>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindDuplicate(paths []string) [][]string {\n    \n}",
+    "typescript": "export function findDuplicate(paths: string[]): string[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $paths\n     * @return string[][]\n     */\n    public function findDuplicate($paths) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "paths": [
+        "root/a 1.txt(abcd) 2.txt(efgh)",
+        "root/c 3.txt(abcd)",
+        "root/c/d 4.txt(efgh)",
+        "root 4.txt(efgh)"
+      ]
+    },
+    {
+      "paths": [
+        "root/a 1.txt(abcd) 2.txt(efgh)",
+        "root/c 3.txt(abcd) 4.txt(efgh)"
+      ]
+    },
+    {
+      "paths": [
+        "root/a 1.txt(abcd)"
+      ]
+    }
+  ],
+  "functionName": "findDuplicate",
+  "params": [
+    {
+      "name": "paths",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list_2d",
+  "hints": [
+    "Split each entry on spaces: the first token is the folder, later tokens look like name(content).",
+    "Key a hash map by the content text and push dir + '/' + name into that bucket.",
+    "Return only buckets holding two or more paths; lone files are not duplicates.",
+    "Adaptation: the input list maps to string_array and the grouped output maps to string_list_2d in this judge."
+  ]
+}

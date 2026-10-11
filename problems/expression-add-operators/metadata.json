@@ -1,0 +1,65 @@
+{
+  "id": "expression-add-operators",
+  "title": "380. Expression Add Operators",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/expression-add-operators/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "num = \"123\", target = 6",
+      "output": "[\"1+2+3\",\"1*2*3\"]",
+      "explanation": "Both expressions evaluate to 6 (order may vary)."
+    },
+    {
+      "input": "num = \"232\", target = 8",
+      "output": "[\"2+3*2\",\"2*3+2\"]",
+      "explanation": "Multiplication binds tighter than addition."
+    },
+    {
+      "input": "num = \"3456237490\", target = 9191",
+      "output": "[]",
+      "explanation": "No insertion reaches the target."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\n\nclass Solution {\n    public List<String> addOperators(String num, int target) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def addOperators(self, num: str, target: int) -> List[str]:\n        return []",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> addOperators(string num, int target) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\n\npublic class Solution {\n    public List<string> AddOperators(string num, int target) {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn add_operators(num: String, target: i32) -> Vec<String> {\n        Vec::new()\n    }\n}",
+    "go": "package main\n\nfunc AddOperators(num string, target int) []string {\n    return []string{}\n}",
+    "typescript": "export function addOperators(num: string, target: number): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $num\n     * @param int $target\n     * @return string[]\n     */\n    public function addOperators($num, $target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "num": "123",
+      "target": 6
+    },
+    {
+      "num": "232",
+      "target": 8
+    },
+    {
+      "num": "105",
+      "target": 5
+    }
+  ],
+  "functionName": "addOperators",
+  "params": [
+    {
+      "name": "num",
+      "type": "string"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Backtrack over split positions, carrying the running value plus the last operand to handle * precedence.",
+    "Skip any multi-digit chunk with a leading zero.",
+    "Use long arithmetic since intermediate products can exceed int range."
+  ]
+}

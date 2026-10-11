@@ -1,0 +1,56 @@
+{
+  "id": "output-contest-matches",
+  "title": "601. Output Contest Matches",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/output-contest-matches/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "n = 4",
+      "output": "\"((1,4),(2,3))\"",
+      "explanation": "Two semifinals wrapped in a final."
+    },
+    {
+      "input": "n = 8",
+      "output": "\"(((1,8),(4,5)),((2,7),(3,6)))\"",
+      "explanation": "Three rounds of nesting."
+    },
+    {
+      "input": "n = 2",
+      "output": "\"(1,2)\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String findContestMatch(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def findContestMatch(self, n: int) -> str:\n        pass",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    string findContestMatch(int n) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string FindContestMatch(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_contest_match(n: i32) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindContestMatch(n int) string {\n    \n}",
+    "typescript": "export function findContestMatch(n: number): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return string\n     */\n    public function findContestMatch($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 4
+    },
+    {
+      "n": 8
+    },
+    {
+      "n": 2
+    }
+  ],
+  "functionName": "findContestMatch",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Keep an array of bracket strings starting as \"1\"..\"n\" and repeatedly fold it: new[i] = \"(\" + cur[i] + \",\" + cur[size-1-i] + \")\".",
+    "Halve the active size after each round until one string remains."
+  ]
+}

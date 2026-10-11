@@ -1,0 +1,142 @@
+[
+  {
+    "sentence1": "[\"great\",\"acting\",\"skills\"]",
+    "sentence2": "[\"fine\",\"drama\",\"talent\"]",
+    "similarPairs": "[[\"great\",\"fine\"],[\"drama\",\"acting\"],[\"skills\",\"talent\"]]"
+  },
+  {
+    "sentence1": "[\"great\"]",
+    "sentence2": "[\"great\"]",
+    "similarPairs": "[]"
+  },
+  {
+    "sentence1": "[\"great\"]",
+    "sentence2": "[\"fine\"]",
+    "similarPairs": "[[\"great\",\"good\"]]"
+  },
+  {
+    "sentence1": "[\"a\",\"b\"]",
+    "sentence2": "[\"a\",\"b\"]",
+    "similarPairs": "[]"
+  },
+  {
+    "sentence1": "[\"a\",\"b\"]",
+    "sentence2": "[\"a\",\"c\"]",
+    "similarPairs": "[[\"b\",\"c\"]]"
+  },
+  {
+    "sentence1": "[\"a\",\"b\",\"c\"]",
+    "sentence2": "[\"a\",\"b\"]",
+    "similarPairs": "[]"
+  },
+  {
+    "sentence1": "[\"one\",\"two\"]",
+    "sentence2": "[\"one\",\"too\"]",
+    "similarPairs": "[[\"two\",\"too\"]]"
+  },
+  {
+    "sentence1": "[\"x\",\"y\"]",
+    "sentence2": "[\"y\",\"x\"]",
+    "similarPairs": "[[\"x\",\"y\"]]"
+  },
+  {
+    "sentence1": "[\"a\",\"b\",\"c\"]",
+    "sentence2": "[\"d\",\"e\",\"f\"]",
+    "similarPairs": "[[\"a\",\"d\"],[\"b\",\"e\"]]"
+  },
+  {
+    "sentence1": "[\"eat\",\"sleep\"]",
+    "sentence2": "[\"dine\",\"rest\"]",
+    "similarPairs": "[[\"eat\",\"dine\"],[\"sleep\",\"rest\"]]"
+  },
+  {
+    "sentence1": "[\"a\"]",
+    "sentence2": "[\"b\"]",
+    "similarPairs": "[[\"b\",\"a\"]]"
+  },
+  {
+    "sentence1": "[\"ab\",\"cd\"]",
+    "sentence2": "[\"ab\",\"dc\"]",
+    "similarPairs": "[[\"cd\",\"dc\"],[\"dc\",\"cd\"]]"
+  },
+  {
+    "sentence1": "[\"p\",\"q\",\"r\"]",
+    "sentence2": "[\"p\",\"q\",\"r\"]",
+    "similarPairs": "[[\"a\",\"b\"]]"
+  },
+  {
+    "sentence1": "[\"dog\",\"cat\"]",
+    "sentence2": "[\"dog\",\"dog\"]",
+    "similarPairs": "[[\"cat\",\"dog\"]]"
+  },
+  {
+    "sentence1": "[\"i\",\"love\",\"cats\"]",
+    "sentence2": "[\"i\",\"adore\",\"cats\"]",
+    "similarPairs": "[[\"love\",\"adore\"]]"
+  },
+  {
+    "sentence1": "[\"a\",\"a\",\"a\"]",
+    "sentence2": "[\"b\",\"b\",\"b\"]",
+    "similarPairs": "[[\"a\",\"b\"]]"
+  },
+  {
+    "sentence1": "[\"a\",\"a\",\"a\"]",
+    "sentence2": "[\"b\",\"b\",\"c\"]",
+    "similarPairs": "[[\"a\",\"b\"]]"
+  },
+  {
+    "sentence1": "[\"red\",\"blue\"]",
+    "sentence2": "[\"rouge\",\"bleu\"]",
+    "similarPairs": "[[\"red\",\"rouge\"]]"
+  },
+  {
+    "sentence1": "[\"same\",\"same\"]",
+    "sentence2": "[\"same\",\"same\"]",
+    "similarPairs": "[[\"x\",\"y\"],[\"y\",\"z\"]]"
+  },
+  {
+    "sentence1": "[\"m\",\"n\"]",
+    "sentence2": "[\"n\",\"m\"]",
+    "similarPairs": "[]"
+  },
+  {
+    "sentence1": "[\"aa\",\"bb\"]",
+    "sentence2": "[\"bb\",\"aa\"]",
+    "similarPairs": "[[\"aa\",\"bb\"]]"
+  },
+  {
+    "sentence1": "[\"hello\",\"world\"]",
+    "sentence2": "[\"hello\",\"there\"]",
+    "similarPairs": "[[\"world\",\"there\"]]"
+  },
+  {
+    "sentence1": "[\"a\",\"b\",\"c\",\"d\"]",
+    "sentence2": "[\"w\",\"x\",\"y\",\"z\"]",
+    "similarPairs": "[[\"a\",\"w\"],[\"b\",\"x\"],[\"c\",\"y\"],[\"d\",\"z\"]]"
+  },
+  {
+    "sentence1": "[\"a\",\"b\",\"c\",\"d\"]",
+    "sentence2": "[\"w\",\"x\",\"y\",\"z\"]",
+    "similarPairs": "[[\"a\",\"w\"],[\"b\",\"x\"],[\"c\",\"y\"]]"
+  },
+  {
+    "sentence1": "[\"sun\",\"moon\"]",
+    "sentence2": "[\"star\",\"moon\"]",
+    "similarPairs": "[[\"sun\",\"star\"],[\"star\",\"sun\"]]"
+  },
+  {
+    "sentence1": "[\"one\"]",
+    "sentence2": "[\"one\",\"two\"]",
+    "similarPairs": "[[\"one\",\"one\"]]"
+  },
+  {
+    "sentence1": "[\"k\",\"l\",\"m\"]",
+    "sentence2": "[\"k\",\"l\",\"m\"]",
+    "similarPairs": "[]"
+  },
+  {
+    "sentence1": "[\"alpha\",\"beta\"]",
+    "sentence2": "[\"gamma\",\"delta\"]",
+    "similarPairs": "[[\"alpha\",\"gamma\"],[\"beta\",\"delta\"],[\"alpha\",\"beta\"]]"
+  }
+]

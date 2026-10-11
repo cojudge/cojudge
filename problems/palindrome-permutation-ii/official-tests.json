@@ -1,0 +1,80 @@
+[
+  {
+    "s": "aabb"
+  },
+  {
+    "s": "abc"
+  },
+  {
+    "s": "aaa"
+  },
+  {
+    "s": "aab"
+  },
+  {
+    "s": "a"
+  },
+  {
+    "s": "aa"
+  },
+  {
+    "s": "ab"
+  },
+  {
+    "s": "aabbcc"
+  },
+  {
+    "s": "aabbc"
+  },
+  {
+    "s": "abcba"
+  },
+  {
+    "s": "aaaa"
+  },
+  {
+    "s": "abcd"
+  },
+  {
+    "s": "aabbccd"
+  },
+  {
+    "s": "racecar"
+  },
+  {
+    "s": "aaabb"
+  },
+  {
+    "s": "abccba"
+  },
+  {
+    "s": "abcdcba"
+  },
+  {
+    "s": "aabcdefaa"
+  },
+  {
+    "s": "zzz"
+  },
+  {
+    "s": "ababa"
+  },
+  {
+    "s": "aabbaa"
+  },
+  {
+    "s": "abcabc"
+  },
+  {
+    "s": "abccaa"
+  },
+  {
+    "s": "aabbccdd"
+  },
+  {
+    "s": "abcdefgh"
+  },
+  {
+    "s": "aaabbbccc"
+  }
+]

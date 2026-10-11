@@ -1,0 +1,61 @@
+{
+  "id": "ugly-number-ii",
+  "title": "366. Ugly Number II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/ugly-number-ii/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "n = 10",
+      "output": "12",
+      "explanation": "The first ten ugly numbers are [1,2,3,4,5,6,8,9,10,12], so the tenth is 12."
+    },
+    {
+      "input": "n = 1",
+      "output": "1",
+      "explanation": "1 is the first ugly number."
+    },
+    {
+      "input": "n = 11",
+      "output": "15",
+      "explanation": "After 12 comes 15, since 11, 13 and 14 all contain other prime factors."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int nthUglyNumber(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def nthUglyNumber(self, n: int) -> int:\n        return 0\n",
+    "cpp": "class Solution {\npublic:\n    int nthUglyNumber(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int NthUglyNumber(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn nth_ugly_number(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NthUglyNumber(n int) int {\n    return 0\n}",
+    "typescript": "export function nthUglyNumber(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function nthUglyNumber($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 10
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 11
+    },
+    {
+      "n": 7
+    }
+  ],
+  "functionName": "nthUglyNumber",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Every ugly number after 1 is twice, three times or five times an earlier ugly number.",
+    "Keep three pointers into the built list for multiples of 2, 3 and 5, and always take the smallest candidate next.",
+    "Advance every pointer whose candidate equals the chosen value so duplicates appear only once."
+  ]
+}

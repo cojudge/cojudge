@@ -1,0 +1,58 @@
+{
+  "id": "transform-to-chessboard",
+  "title": "781. Transform to Chessboard",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/transform-to-chessboard/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "board = [[\"0\",\"1\",\"1\",\"0\"],[\"0\",\"1\",\"1\",\"0\"],[\"1\",\"0\",\"0\",\"1\"],[\"1\",\"0\",\"0\",\"1\"]]",
+      "output": "2",
+      "explanation": "One row swap plus one column swap reaches an alternating board."
+    },
+    {
+      "input": "board = [[\"0\",\"1\"],[\"1\",\"0\"]]",
+      "output": "0",
+      "explanation": "Neighbors already alternate."
+    },
+    {
+      "input": "board = [[\"1\",\"0\"],[\"1\",\"0\"]]",
+      "output": "-1",
+      "explanation": "The first column cannot be made alternating."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int movesToChessboard(char[][] board) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def movesToChessboard(self, board: List[List[str]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int movesToChessboard(vector<vector<char>>& board) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MovesToChessboard(char[][] board) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn moves_to_chessboard(board: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MovesToChessboard(board [][]byte) int {\n    return 0\n}",
+    "typescript": "export function movesToChessboard(board: string[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[][] $board\n     * @return int\n     */\n    public function movesToChessboard($board) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "board": "[[\"0\",\"1\",\"1\",\"0\"],[\"0\",\"1\",\"1\",\"0\"],[\"1\",\"0\",\"0\",\"1\"],[\"1\",\"0\",\"0\",\"1\"]]"
+    },
+    {
+      "board": "[[\"0\",\"1\"],[\"1\",\"0\"]]"
+    },
+    {
+      "board": "[[\"1\",\"0\"],[\"1\",\"0\"]]"
+    }
+  ],
+  "functionName": "movesToChessboard",
+  "params": [
+    {
+      "name": "board",
+      "type": "char_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Every row must equal the first row or its exact opposite; the same holds for columns, otherwise return -1.",
+    "Count ones in the first row and column: each must be n/2 or (n+1)/2.",
+    "Mismatches against the two alternating edge patterns divided by two give row and column swaps; for odd n pick the pattern with an even mismatch count."
+  ]
+}

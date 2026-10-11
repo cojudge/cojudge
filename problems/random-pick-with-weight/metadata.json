@@ -1,0 +1,65 @@
+{
+  "id": "random-pick-with-weight",
+  "title": "587. Random Pick with Weight",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/random-pick-with-weight/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "weights = [1,3], calls = [0,1,2,3]",
+      "output": "[0,1,1,1]",
+      "explanation": "Index 0 owns position 0; index 1 owns positions 1-3."
+    },
+    {
+      "input": "weights = [2,5,3], calls = [0,2,7,9]",
+      "output": "[0,1,2,2]",
+      "explanation": "Positions 0, 2, 7, 9 land on segments 0, 1, 2, 2."
+    },
+    {
+      "input": "weights = [5], calls = [100,-3]",
+      "output": "[0,0]",
+      "explanation": "A single index owns every position."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runWeightedPick(int[] weights, int[] calls) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runWeightedPick(self, weights: List[int], calls: List[int]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runWeightedPick(vector<int>& weights, vector<int>& calls) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] RunWeightedPick(int[] weights, int[] calls) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_weighted_pick(weights: Vec<i32>, calls: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc RunWeightedPick(weights []int, calls []int) []int {\n    \n}",
+    "typescript": "export function runWeightedPick(weights: number[], calls: number[]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $weights\n     * @param int[] $calls\n     * @return int[]\n     */\n    public function runWeightedPick($weights, $calls) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "weights": "[1,3]",
+      "calls": "[0,1,2,3]"
+    },
+    {
+      "weights": "[2,5,3]",
+      "calls": "[0,2,7,9]"
+    },
+    {
+      "weights": "[5]",
+      "calls": "[100,-3]"
+    }
+  ],
+  "functionName": "runWeightedPick",
+  "params": [
+    {
+      "name": "weights",
+      "type": "int_array"
+    },
+    {
+      "name": "calls",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Build prefix sums once; each draw reduces to finding the first prefix strictly greater than the wrapped position.",
+    "Recover the position with a non-negative modulo: ((c % total) + total) % total.",
+    "A binary search over the prefix array answers each draw in O(log n)."
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "id": "equal-rational-numbers",
+  "title": "958. Equal Rational Numbers",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/equal-rational-numbers/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"0.(52)\", t = \"0.5(25)\"",
+      "output": "true",
+      "explanation": "Both spellings expand to 0.525252..., so they name the same value."
+    },
+    {
+      "input": "s = \"0.1666(6)\", t = \"0.166(66)\"",
+      "output": "true",
+      "explanation": "Both spellings expand to 0.166666..., so they match."
+    },
+    {
+      "input": "s = \"0.9(9)\", t = \"1.\"",
+      "output": "true",
+      "explanation": "A trailing infinite run of 9s carries over, giving 0.999... which equals 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isRationalEqual(String s, String t) {\n        \n    }\n}",
+    "python": "class Solution:\n    def isRationalEqual(self, s: str, t: str) -> bool:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool isRationalEqual(string s, string t) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool IsRationalEqual(string s, string t) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_rational_equal(s: String, t: String) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc IsRationalEqual(s string, t string) bool {\n    \n}",
+    "typescript": "export function isRationalEqual(s: string, t: string): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string $t\n     * @return bool\n     */\n    public function isRationalEqual($s, $t) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "0.(52)",
+      "t": "0.5(25)"
+    },
+    {
+      "s": "0.1666(6)",
+      "t": "0.166(66)"
+    },
+    {
+      "s": "0.9(9)",
+      "t": "1."
+    }
+  ],
+  "functionName": "isRationalEqual",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "t",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Split each spelling into integer part, non-repeating decimals, and parenthesized repeating block.",
+    "Convert each spelling to an exact fraction: with a non-repeat length a and repeat length b, the denominator involves 10^a * (10^b - 1).",
+    "Compare the two fractions by cross multiplication instead of floating point."
+  ]
+}

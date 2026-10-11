@@ -1,0 +1,115 @@
+[
+  {
+    "operations": "[\"MyCircularDeque\", \"insertLast\", \"insertLast\", \"insertFront\", \"insertFront\", \"getRear\", \"isFull\", \"deleteLast\", \"insertFront\", \"getFront\"]",
+    "values": "[3,1,2,3,4,0,0,0,4,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"getFront\", \"getRear\", \"isEmpty\", \"insertFront\", \"isFull\", \"deleteFront\", \"isEmpty\"]",
+    "values": "[2,0,0,0,9,0,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertFront\", \"getFront\", \"deleteFront\", \"isEmpty\"]",
+    "values": "[1,5,0,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertFront\", \"insertLast\", \"getFront\", \"getRear\", \"deleteFront\", \"getFront\", \"deleteLast\", \"isEmpty\"]",
+    "values": "[2,1,2,0,0,0,0,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertLast\", \"insertLast\", \"isFull\", \"insertLast\", \"getRear\", \"deleteFront\", \"insertFront\", \"getFront\"]",
+    "values": "[2,1,2,0,3,0,0,4,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"deleteFront\", \"deleteLast\", \"getFront\", \"getRear\"]",
+    "values": "[3,0,0,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertFront\", \"insertFront\", \"insertFront\", \"isFull\", \"getFront\", \"getRear\"]",
+    "values": "[3,1,2,3,0,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertLast\", \"deleteLast\", \"deleteLast\", \"isEmpty\", \"insertFront\", \"getRear\"]",
+    "values": "[1,7,0,0,0,8,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertFront\", \"deleteLast\", \"insertLast\", \"deleteFront\", \"isEmpty\", \"isFull\"]",
+    "values": "[2,5,0,6,0,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertLast\", \"insertFront\", \"insertLast\", \"getFront\", \"getRear\", \"isFull\", \"deleteFront\", \"deleteLast\", \"getFront\", \"getRear\"]",
+    "values": "[3,1,2,3,0,0,0,0,0,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"isEmpty\", \"isFull\", \"getFront\", \"getRear\"]",
+    "values": "[5,0,0,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertFront\", \"getRear\", \"insertLast\", \"getFront\", \"isFull\"]",
+    "values": "[1,10,0,20,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertLast\", \"insertLast\", \"insertLast\", \"deleteFront\", \"deleteFront\", \"insertFront\", \"insertFront\", \"getFront\", \"getRear\"]",
+    "values": "[4,1,2,3,0,0,4,5,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertFront\", \"insertLast\", \"deleteFront\", \"deleteLast\", \"insertFront\", \"insertLast\", \"isEmpty\", \"isFull\"]",
+    "values": "[2,1,2,0,0,3,4,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertLast\", \"getFront\", \"getRear\", \"deleteLast\", \"getFront\", \"isEmpty\"]",
+    "values": "[3,9,0,0,0,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertFront\", \"insertFront\", \"deleteLast\", \"getRear\", \"insertLast\", \"getFront\"]",
+    "values": "[2,1,2,0,0,3,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertLast\", \"insertLast\", \"deleteFront\", \"insertFront\", \"getRear\", \"getFront\", \"isFull\"]",
+    "values": "[3,5,6,0,7,0,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertFront\", \"isEmpty\", \"isFull\", \"getFront\", \"deleteFront\", \"getFront\"]",
+    "values": "[1,4,0,0,0,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertLast\", \"insertLast\", \"insertLast\", \"insertLast\", \"isFull\", \"getFront\", \"getRear\", \"deleteLast\", \"deleteFront\", \"getFront\"]",
+    "values": "[3,1,2,3,4,0,0,0,0,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertFront\", \"deleteFront\", \"insertFront\", \"deleteFront\", \"insertFront\", \"getFront\", \"getRear\"]",
+    "values": "[1,1,0,2,0,3,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertLast\", \"insertFront\", \"getFront\", \"getRear\", \"deleteLast\", \"deleteFront\", \"isEmpty\", \"isFull\"]",
+    "values": "[2,10,20,0,0,0,0,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertFront\", \"insertFront\", \"insertFront\", \"deleteLast\", \"deleteLast\", \"deleteLast\", \"deleteLast\", \"isEmpty\"]",
+    "values": "[2,1,2,3,0,0,0,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertLast\", \"getRear\", \"deleteFront\", \"getFront\", \"insertFront\", \"getRear\", \"isFull\"]",
+    "values": "[5,100,0,0,0,200,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertFront\", \"insertLast\", \"insertFront\", \"insertLast\", \"getFront\", \"getRear\", \"isFull\", \"isEmpty\"]",
+    "values": "[4,1,2,3,4,0,0,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertLast\", \"deleteFront\", \"isEmpty\", \"insertFront\", \"getFront\", \"getRear\", \"isFull\", \"deleteLast\"]",
+    "values": "[1,42,0,0,7,0,0,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertFront\", \"insertFront\", \"deleteFront\", \"insertLast\", \"getFront\", \"getRear\", \"isFull\", \"isEmpty\"]",
+    "values": "[3,0,1000,0,500,0,0,0,0]"
+  },
+  {
+    "operations": "[\"MyCircularDeque\", \"insertLast\", \"insertLast\", \"insertLast\", \"isFull\", \"deleteFront\", \"insertLast\", \"isFull\", \"getRear\"]",
+    "values": "[2,1,2,3,0,0,3,0,0]"
+  },
+  {
+    "operations": "@javascript:JSON.stringify(['MyCircularDeque',...Array(1200).fill('insertLast'),...Array(800).fill('deleteFront'),...Array(400).fill('insertFront'),'getFront','getRear','isFull','isEmpty'])",
+    "values": "@javascript:JSON.stringify([1000,...Array.from({length:1200},(_,i)=>i%1001),...Array(800).fill(0),...Array.from({length:400},(_,i)=>(i*7)%1001),0,0,0,0])",
+    "_isLargeTest": true
+  }
+]

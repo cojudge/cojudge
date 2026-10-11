@@ -1,13 +1,13 @@
-Given two integers `n` and `k`, return *all possible combinations of `k` numbers chosen from the range* `[1, n]`.
+Supplied with two integers `n` and `k`, assemble every `k`-element subset drawn from the interval `[1, n]`.
 
-You may return the answer in **any order**.
+The collection may be emitted in whatever sequence is convenient.
 
 **Example 1:**
 
 ```
 Input: n = 4, k = 2
 Output: [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]
-Explanation: There are 4 choose 2 = 6 total combinations.
+Explanation: 4 choose 2 yields 6 subsets in total.
 ```
 
 **Example 2:**
@@ -15,7 +15,7 @@ Explanation: There are 4 choose 2 = 6 total combinations.
 ```
 Input: n = 1, k = 1
 Output: [[1]]
-Explanation: There is 1 choose 1 = 1 total combination.
+Explanation: 1 choose 1 yields a lone subset.
 ```
 
 **Constraints:**

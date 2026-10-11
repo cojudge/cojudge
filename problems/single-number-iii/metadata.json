@@ -1,0 +1,60 @@
+{
+  "id": "single-number-iii",
+  "title": "364. Single Number III",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/single-number-iii/",
+  "category": "bit-manipulation",
+  "examples": [
+    {
+      "input": "nums = [1,2,1,3,2,5]",
+      "output": "[3,5]",
+      "explanation": "1 and 2 each appear twice, leaving 3 and 5. Returning [5,3] is also accepted."
+    },
+    {
+      "input": "nums = [-1,0]",
+      "output": "[-1,0]",
+      "explanation": "Both values appear once, so both are returned."
+    },
+    {
+      "input": "nums = [0,1]",
+      "output": "[1,0]",
+      "explanation": "Either order is accepted."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] singleNumber(int[] nums) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def singleNumber(self, nums: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> singleNumber(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] SingleNumber(int[] nums)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn single_number(nums: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc SingleNumber(nums []int) []int {\n    return []int{}\n}",
+    "typescript": "export function singleNumber(nums: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function singleNumber($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,1,3,2,5]"
+    },
+    {
+      "nums": "[-1,0]"
+    },
+    {
+      "nums": "[0,1]"
+    },
+    {
+      "nums": "[2,4,2,4,3,5]"
+    }
+  ],
+  "functionName": "singleNumber",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Xor all values to get the xor of the two answers, then isolate any set bit where they differ.",
+    "Split the array by that bit and xor each group separately to recover the two values."
+  ]
+}

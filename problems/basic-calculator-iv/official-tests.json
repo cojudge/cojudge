@@ -1,0 +1,162 @@
+[
+  {
+    "expression": "e + 8 - a + 5",
+    "evalvars": [
+      "e"
+    ],
+    "evalints": "[1]"
+  },
+  {
+    "expression": "e - 8 + temperature - pressure",
+    "evalvars": [
+      "e",
+      "temperature"
+    ],
+    "evalints": "[1,12]"
+  },
+  {
+    "expression": "(e + 8) * (e - 8)",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "7 - 7",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "a * b * c + b * a * c * 4",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "x + 1",
+    "evalvars": [
+      "x"
+    ],
+    "evalints": "[5]"
+  },
+  {
+    "expression": "x * x - x",
+    "evalvars": [
+      "x"
+    ],
+    "evalints": "[3]"
+  },
+  {
+    "expression": "(a - b) * (b - c)",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "2 * 3 + 4",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "a + b + c",
+    "evalvars": [
+      "b"
+    ],
+    "evalints": "[2]"
+  },
+  {
+    "expression": "a * (b + c)",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "(a + b) * (a + b)",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "e * e * e",
+    "evalvars": [
+      "e"
+    ],
+    "evalints": "[2]"
+  },
+  {
+    "expression": "x - y",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "5",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "abc + abc",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "a * b + c * d",
+    "evalvars": [
+      "a",
+      "c"
+    ],
+    "evalints": "[2,3]"
+  },
+  {
+    "expression": "(x + 1) * (x + 1)",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "a - a",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "2 * (3 + 4)",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "foo * bar - foo * bar",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "(a + 2) * (b + 3)",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "x * y * z",
+    "evalvars": [
+      "y"
+    ],
+    "evalints": "[0]"
+  },
+  {
+    "expression": "10 - 3 * 2",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "(a - b) * (a - b)",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "m + n * 2 - m",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "a * (b * (c + d))",
+    "evalvars": [],
+    "evalints": "[]"
+  },
+  {
+    "expression": "z + z + z",
+    "evalvars": [
+      "z"
+    ],
+    "evalints": "[1]"
+  }
+]

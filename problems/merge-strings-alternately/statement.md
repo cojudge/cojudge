@@ -1,6 +1,6 @@
-You are given two strings `word1` and `word2`. Merge the strings by adding letters in alternating order, starting with `word1`. If a string is longer than the other, append the additional letters onto the end of the merged string.
+Two strings `word1` and `word2` are provided. Construct a new string by taking characters in turn, beginning with the first character of `word1`, then the first character of `word2`, then the second character of `word1`, and so on. Once the shorter input runs out, attach whatever remains of the longer input to the tail of the result.
 
-Return the merged string.
+Output the string built this way.
 
 **Constraints:**
 

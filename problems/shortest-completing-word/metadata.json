@@ -1,0 +1,79 @@
+{
+  "id": "shortest-completing-word",
+  "title": "751. Shortest Completing Word",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/shortest-completing-word/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "licensePlate = \"1s3 PSt\", words = [\"step\",\"steps\",\"stripe\",\"stepple\"]",
+      "output": "\"steps\"",
+      "explanation": "Shortest word covering s, p, s, t."
+    },
+    {
+      "input": "licensePlate = \"1s3 456\", words = [\"looks\",\"pest\",\"stew\",\"show\"]",
+      "output": "\"pest\"",
+      "explanation": "Only s is needed; pest is earliest among length-4 fits."
+    },
+    {
+      "input": "licensePlate = \"aBc 12c\", words = [\"abccdef\",\"caaacab\",\"cbca\"]",
+      "output": "\"cbca\"",
+      "explanation": "Needs a, b, c twice; cbca is shortest."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String shortestCompletingWord(String licensePlate, String[] words) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def shortestCompletingWord(self, licensePlate: str, words: List[str]) -> str:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string shortestCompletingWord(string licensePlate, vector<string>& words) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string ShortestCompletingWord(string licensePlate, string[] words) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn shortest_completing_word(license_plate: String, words: Vec<String>) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc ShortestCompletingWord(licensePlate string, words []string) string {\n    return \"\"\n}",
+    "typescript": "export function shortestCompletingWord(licensePlate: string, words: string[]): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $licensePlate\n     * @param string[] $words\n     * @return string\n     */\n    public function shortestCompletingWord($licensePlate, $words) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "licensePlate": "1s3 PSt",
+      "words": [
+        "step",
+        "steps",
+        "stripe",
+        "stepple"
+      ]
+    },
+    {
+      "licensePlate": "1s3 456",
+      "words": [
+        "looks",
+        "pest",
+        "stew",
+        "show"
+      ]
+    },
+    {
+      "licensePlate": "aBc 12c",
+      "words": [
+        "abccdef",
+        "caaacab",
+        "cbca"
+      ]
+    }
+  ],
+  "functionName": "shortestCompletingWord",
+  "params": [
+    {
+      "name": "licensePlate",
+      "type": "string"
+    },
+    {
+      "name": "words",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Count plate letters case-insensitively and ignore everything that is not a letter.",
+    "A word qualifies when each of its 26 letter counts meets or beats the plate counts.",
+    "Track the best word seen so far, replacing it only on a strictly shorter qualifier to keep the earliest tie."
+  ]
+}

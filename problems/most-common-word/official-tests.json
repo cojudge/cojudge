@@ -1,0 +1,156 @@
+[
+  {
+    "paragraph": "Bob hit a ball, the hit BALL flew far after it was hit.",
+    "banned": [
+      "hit"
+    ]
+  },
+  {
+    "paragraph": "a.",
+    "banned": []
+  },
+  {
+    "paragraph": "a, a, a, b,b,b,c, c",
+    "banned": [
+      "a"
+    ]
+  },
+  {
+    "paragraph": "Bob!",
+    "banned": []
+  },
+  {
+    "paragraph": "a b c d e",
+    "banned": [
+      "a",
+      "b"
+    ]
+  },
+  {
+    "paragraph": "Hello hello HELLO world!",
+    "banned": [
+      "world"
+    ]
+  },
+  {
+    "paragraph": "dog cat dog dog cat bird",
+    "banned": [
+      "cat"
+    ]
+  },
+  {
+    "paragraph": "a!b?c;d:e,f'g",
+    "banned": []
+  },
+  {
+    "paragraph": "one two two three three three",
+    "banned": []
+  },
+  {
+    "paragraph": "x y z x y x",
+    "banned": [
+      "y"
+    ]
+  },
+  {
+    "paragraph": "Apple apple banana!",
+    "banned": [
+      "banana"
+    ]
+  },
+  {
+    "paragraph": "it was the best of times it was the worst of times",
+    "banned": [
+      "it",
+      "was",
+      "the",
+      "of"
+    ]
+  },
+  {
+    "paragraph": "a a b b c c c",
+    "banned": []
+  },
+  {
+    "paragraph": "Testing, testing: 1 2 3 testing!",
+    "banned": []
+  },
+  {
+    "paragraph": "sun moon sun stars moon sun",
+    "banned": [
+      "moon"
+    ]
+  },
+  {
+    "paragraph": "aa bb aa bb cc",
+    "banned": [
+      "cc"
+    ]
+  },
+  {
+    "paragraph": "Bob bob BOB bobby!",
+    "banned": [
+      "bobby"
+    ]
+  },
+  {
+    "paragraph": "w!w!w!x!x!y",
+    "banned": []
+  },
+  {
+    "paragraph": "The quick brown fox jumps over the lazy dog",
+    "banned": [
+      "the"
+    ]
+  },
+  {
+    "paragraph": "a...b...a...c...a",
+    "banned": [
+      "b",
+      "c"
+    ]
+  },
+  {
+    "paragraph": "hit hit hit ball ball",
+    "banned": []
+  },
+  {
+    "paragraph": "Practice makes perfect practice!",
+    "banned": [
+      "makes"
+    ]
+  },
+  {
+    "paragraph": "one!two?three,one;two:one.",
+    "banned": []
+  },
+  {
+    "paragraph": "abc def abc ghi abc",
+    "banned": [
+      "def",
+      "ghi"
+    ]
+  },
+  {
+    "paragraph": "Zz zz ZZ z",
+    "banned": []
+  },
+  {
+    "paragraph": "lorem ipsum lorem dolor ipsum lorem",
+    "banned": [
+      "ipsum"
+    ]
+  },
+  {
+    "paragraph": "a b a c a d a e",
+    "banned": [
+      "e"
+    ]
+  },
+  {
+    "paragraph": "Ends with word test",
+    "banned": [
+      "with"
+    ]
+  }
+]

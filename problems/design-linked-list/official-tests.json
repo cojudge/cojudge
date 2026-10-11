@@ -1,0 +1,114 @@
+[
+  {
+    "operations": "[\"MyLinkedList\",\"addAtHead\",\"addAtTail\",\"addAtIndex\",\"get\",\"deleteAtIndex\",\"get\"]",
+    "args": "[[],[1],[3],[1,2],[1],[1],[1]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtHead\",\"get\"]",
+    "args": "[[],[5],[0]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"get\",\"addAtIndex\",\"get\"]",
+    "args": "[[],[0],[5,10],[0]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtHead\",\"addAtHead\",\"get\",\"get\"]",
+    "args": "[[],[2],[1],[0],[1]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtTail\",\"addAtTail\",\"get\"]",
+    "args": "[[],[1],[2],[1]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtHead\",\"deleteAtIndex\",\"get\"]",
+    "args": "[[],[1],[0],[0]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtIndex\",\"addAtIndex\",\"get\",\"get\"]",
+    "args": "[[],[0,10],[1,20],[0],[1]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtTail\",\"addAtIndex\",\"get\"]",
+    "args": "[[],[1],[5,2],[2]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"get\"]",
+    "args": "[[],[0]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtHead\",\"addAtHead\",\"addAtHead\",\"get\",\"get\",\"get\"]",
+    "args": "[[],[3],[2],[1],[0],[1],[2]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtTail\",\"deleteAtIndex\",\"deleteAtIndex\",\"get\"]",
+    "args": "[[],[1],[0],[0],[0]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtIndex\",\"get\"]",
+    "args": "[[],[-1,5],[0]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtHead\",\"addAtTail\",\"deleteAtIndex\",\"get\",\"get\"]",
+    "args": "[[],[1],[2],[5],[0],[1]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtHead\",\"addAtIndex\",\"get\"]",
+    "args": "[[],[10],[0,20],[0]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtTail\",\"addAtTail\",\"addAtTail\",\"deleteAtIndex\",\"get\"]",
+    "args": "[[],[1],[2],[3],[1],[1]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtHead\",\"get\",\"get\"]",
+    "args": "[[],[7],[0],[1]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtIndex\",\"addAtIndex\",\"addAtIndex\",\"get\"]",
+    "args": "[[],[0,1],[1,2],[2,3],[2]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtTail\",\"get\",\"deleteAtIndex\",\"get\",\"addAtHead\",\"get\"]",
+    "args": "[[],[5],[0],[0],[0],[9],[0]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtHead\",\"addAtHead\",\"deleteAtIndex\",\"get\"]",
+    "args": "[[],[1],[2],[1],[0]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtTail\",\"addAtTail\",\"addAtIndex\",\"get\",\"get\",\"get\"]",
+    "args": "[[],[10],[20],[1,15],[0],[1],[2]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtHead\",\"deleteAtIndex\",\"deleteAtIndex\",\"get\"]",
+    "args": "[[],[1],[0],[0],[0]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtIndex\",\"get\",\"addAtTail\",\"get\"]",
+    "args": "[[],[2,100],[0],[50],[1]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtHead\",\"addAtTail\",\"addAtTail\",\"get\",\"deleteAtIndex\",\"get\",\"get\"]",
+    "args": "[[],[1],[2],[3],[2],[0],[0],[1]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtHead\",\"addAtHead\",\"addAtHead\",\"addAtHead\",\"get\"]",
+    "args": "[[],[4],[3],[2],[1],[3]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"deleteAtIndex\",\"get\"]",
+    "args": "[[],[0],[0]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtTail\",\"addAtIndex\",\"deleteAtIndex\",\"get\",\"get\"]",
+    "args": "[[],[0],[0,1],[1],[0],[1]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtHead\",\"addAtTail\",\"get\",\"get\",\"deleteAtIndex\",\"get\"]",
+    "args": "[[],[100],[200],[0],[1],[1],[1]]"
+  },
+  {
+    "operations": "[\"MyLinkedList\",\"addAtIndex\",\"addAtIndex\",\"get\",\"deleteAtIndex\",\"get\"]",
+    "args": "[[],[0,5],[0,6],[0],[0],[0]]"
+  }
+]

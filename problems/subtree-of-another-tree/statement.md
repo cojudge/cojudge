@@ -1,4 +1,4 @@
-Given the roots of two binary trees root and subRoot, return true if there is a subtree of root with the same structure and node values of subRoot and false otherwise. A subtree of a binary tree is a tree that consists of a node in a tree and all of this node's descendants.
+You are handed the roots of two binary trees, `root` and `subRoot`. Decide whether `root` contains a portion that coincides with `subRoot` in both layout and stored values, returning `true` when such a portion exists and `false` otherwise. By portion is meant some node of the larger tree taken together with every descendant below it.
 
 **Constraints:**
 

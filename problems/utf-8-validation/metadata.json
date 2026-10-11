@@ -1,0 +1,58 @@
+{
+  "category": "array",
+  "difficulty": "Medium",
+  "examples": [
+    {
+      "explanation": "11000101 10000010 00000001: a two-byte symbol plus a one-byte symbol.",
+      "input": "data = [197,130,1]",
+      "output": "true"
+    },
+    {
+      "explanation": "The third byte 00000100 does not start with 10, breaking the symbol.",
+      "input": "data = [235,140,4]",
+      "output": "false"
+    },
+    {
+      "explanation": "11111111 has eight leading ones, which starts no valid symbol.",
+      "input": "data = [255]",
+      "output": "false"
+    }
+  ],
+  "functionName": "validUtf8",
+  "hints": [
+    "Examine only the low 8 bits of each integer.",
+    "Count leading ones of a symbol start to learn how many trailing bytes to demand.",
+    "Each trailing byte must have the form 10xxxxxx; a lone 10xxxxxx or a 11111xxx start fails."
+  ],
+  "id": "utf-8-validation",
+  "link": "https://leetcode.com/problems/utf-8-validation/",
+  "outputType": "boolean",
+  "params": [
+    {
+      "name": "data",
+      "type": "int_array"
+    }
+  ],
+  "starterCode": {
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool validUtf8(vector<int>& data) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool ValidUtf8(int[] data) \n    {\n        return false;\n    }\n}",
+    "go": "package main\n\nfunc ValidUtf8(data []int) bool {\n    return false\n}",
+    "java": "class Solution {\n    public boolean validUtf8(int[] data) {\n        return false;\n    }\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $data\n     * @return bool\n     */\n    public function validUtf8($data) {\n\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def validUtf8(self, data: List[int]) -> bool:\n        pass",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn valid_utf8(data: Vec<i32>) -> bool {\n        false\n    }\n}",
+    "typescript": "export function validUtf8(data: number[]): boolean {\n    return false;\n}"
+  },
+  "testCases": [
+    {
+      "data": "[197,130,1]"
+    },
+    {
+      "data": "[235,140,4]"
+    },
+    {
+      "data": "[255]"
+    }
+  ],
+  "title": "469. UTF-8 Validation"
+}

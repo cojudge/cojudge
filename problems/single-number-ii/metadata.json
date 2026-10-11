@@ -1,0 +1,53 @@
+{
+  "id": "single-number-ii",
+  "title": "302. Single Number II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/single-number-ii/",
+  "category": "binary",
+  "examples": [
+    {
+      "input": "nums = [2,2,3,2]",
+      "output": "3",
+      "explanation": "2 appears three times while 3 appears once."
+    },
+    {
+      "input": "nums = [0,1,0,1,0,1,99]",
+      "output": "99",
+      "explanation": "0 and 1 each appear three times; 99 is the single one."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int singleNumber(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def singleNumber(self, nums: List[int]) -> int:\n        return 0",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int singleNumber(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int SingleNumber(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn single_number(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc SingleNumber(nums []int) int {\n    return 0\n}",
+    "typescript": "export function singleNumber(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function singleNumber($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[2,2,3,2]"
+    },
+    {
+      "nums": "[0,1,0,1,0,1,99]"
+    },
+    {
+      "nums": "[1]"
+    }
+  ],
+  "functionName": "singleNumber",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Count set bits per position: bits whose count is not a multiple of 3 belong to the answer.",
+    "A two-variable bit state machine (ones, twos) achieves O(1) space without per-bit loops.",
+    "Remember to handle negative numbers via 32-bit two's complement behavior."
+  ]
+}

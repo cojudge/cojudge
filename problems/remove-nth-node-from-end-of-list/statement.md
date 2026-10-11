@@ -1,4 +1,4 @@
-Remove the nth node from the end of a singly linked list and return its head.
+Take a singly linked list, drop its nth node counting back from the tail, and hand back the head of the resulting list.
 
 **Constraints:**
 

@@ -1,0 +1,60 @@
+{
+  "id": "implement-magic-dictionary",
+  "title": "695. Implement Magic Dictionary",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/implement-magic-dictionary/",
+  "category": "trie",
+  "examples": [
+    {
+      "input": "operations = [\"buildDict\",\"search\",\"search\",\"search\",\"search\"], words = [\"hello|leetcode\",\"hello\",\"hhllo\",\"hell\",\"leetcoded\"]",
+      "output": "[0,1,0,0]",
+      "explanation": "Only hhllo differs by exactly one letter from a stored word of equal length."
+    },
+    {
+      "input": "operations = [\"buildDict\",\"search\",\"search\"], words = [\"hello|hallo\",\"hello\",\"hallo\"]",
+      "output": "[1,1]",
+      "explanation": "hello matches hallo with one change and vice versa."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runMagicDictionary(String[] operations, String[] words) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runMagicDictionary(self, operations: List[str], words: List[str]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runMagicDictionary(vector<string>& operations, vector<string>& words) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] RunMagicDictionary(string[] operations, string[] words) \n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_magic_dictionary(operations: Vec<String>, words: Vec<String>) -> Vec<i32> {\n        Vec::new()\n    }\n}",
+    "go": "package main\n\nfunc RunMagicDictionary(operations []string, words []string) []int {\n    return nil\n}",
+    "typescript": "export function runMagicDictionary(operations: string[], words: string[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param string[] $words\n     * @return int[]\n     */\n    public function runMagicDictionary($operations, $words) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"buildDict\",\"search\",\"search\",\"search\",\"search\"]",
+      "words": "[\"hello|leetcode\",\"hello\",\"hhllo\",\"hell\",\"leetcoded\"]"
+    },
+    {
+      "operations": "[\"buildDict\",\"search\",\"search\"]",
+      "words": "[\"hello|hallo\",\"hello\",\"hallo\"]"
+    },
+    {
+      "operations": "[\"buildDict\",\"search\"]",
+      "words": "[\"a|b\",\"c\"]"
+    }
+  ],
+  "functionName": "runMagicDictionary",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "words",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "A search succeeds when some stored word has equal length and differs in exactly one position.",
+    "Design adaptation: this task uses runMagicDictionary(operations, words) instead of a class; for buildDict, words[i] packs the whole dictionary with '|' separators, while for search it holds the single query.",
+    "Compare each query against stored words of the same length and count mismatches with early exit past one."
+  ]
+}

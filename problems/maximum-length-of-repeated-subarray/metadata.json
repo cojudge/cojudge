@@ -1,0 +1,65 @@
+{
+  "id": "maximum-length-of-repeated-subarray",
+  "title": "726. Maximum Length of Repeated Subarray",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/maximum-length-of-repeated-subarray/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "nums1 = [1,2,3,2,1], nums2 = [3,2,1,4,7]",
+      "output": "3",
+      "explanation": "The shared window [3,2,1] of length 3 is the longest."
+    },
+    {
+      "input": "nums1 = [0,0,0,0,0], nums2 = [0,0,0,0,0]",
+      "output": "5",
+      "explanation": "Identical arrays share their full length."
+    },
+    {
+      "input": "nums1 = [1,2,3], nums2 = [4,5,6]",
+      "output": "0",
+      "explanation": "No value overlaps, so nothing repeats."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findLength(int[] nums1, int[] nums2) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findLength(self, nums1: List[int], nums2: List[int]) -> int:\n        return 0",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int findLength(vector<int>& nums1, vector<int>& nums2) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindLength(int[] nums1, int[] nums2) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_length(nums1: Vec<i32>, nums2: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FindLength(nums1 []int, nums2 []int) int {\n    return 0\n}",
+    "typescript": "export function findLength(nums1: number[], nums2: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums1\n     * @param int[] $nums2\n     * @return int\n     */\n    public function findLength($nums1, $nums2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums1": "[1,2,3,2,1]",
+      "nums2": "[3,2,1,4,7]"
+    },
+    {
+      "nums1": "[0,0,0,0,0]",
+      "nums2": "[0,0,0,0,0]"
+    },
+    {
+      "nums1": "[1,2,3]",
+      "nums2": "[4,5,6]"
+    }
+  ],
+  "functionName": "findLength",
+  "params": [
+    {
+      "name": "nums1",
+      "type": "int_array"
+    },
+    {
+      "name": "nums2",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Let dp[i][j] be the length of the shared suffix ending at nums1[i-1] and nums2[j-1].",
+    "Equal endpoints extend the diagonal value by one; mismatches reset to zero.",
+    "Track the maximum cell seen during the fill."
+  ]
+}

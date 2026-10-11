@@ -1,0 +1,114 @@
+[
+  {
+    "haystack": "sadbutsad",
+    "needle": "sad"
+  },
+  {
+    "haystack": "leetcode",
+    "needle": "leeto"
+  },
+  {
+    "haystack": "hello",
+    "needle": "ll"
+  },
+  {
+    "haystack": "aaaaa",
+    "needle": "bba"
+  },
+  {
+    "haystack": "mississippi",
+    "needle": "issip"
+  },
+  {
+    "haystack": "a",
+    "needle": "a"
+  },
+  {
+    "haystack": "a",
+    "needle": "b"
+  },
+  {
+    "haystack": "abc",
+    "needle": "c"
+  },
+  {
+    "haystack": "abc",
+    "needle": "abc"
+  },
+  {
+    "haystack": "abc",
+    "needle": "abcd"
+  },
+  {
+    "haystack": "aaa",
+    "needle": "aaaa"
+  },
+  {
+    "haystack": "mississippi",
+    "needle": "pi"
+  },
+  {
+    "haystack": "abababab",
+    "needle": "abab"
+  },
+  {
+    "haystack": "bacbababa",
+    "needle": "baba"
+  },
+  {
+    "haystack": "aaaab",
+    "needle": "aaab"
+  },
+  {
+    "haystack": "abcdef",
+    "needle": "def"
+  },
+  {
+    "haystack": "abcdef",
+    "needle": "abc"
+  },
+  {
+    "haystack": "xyzxyzxyz",
+    "needle": "yzx"
+  },
+  {
+    "haystack": "aaaaaaaaaab",
+    "needle": "aaab"
+  },
+  {
+    "haystack": "ab",
+    "needle": "b"
+  },
+  {
+    "haystack": "ba",
+    "needle": "a"
+  },
+  {
+    "haystack": "qwerty",
+    "needle": "y"
+  },
+  {
+    "haystack": "qwerty",
+    "needle": "q"
+  },
+  {
+    "haystack": "abcabcabc",
+    "needle": "cab"
+  },
+  {
+    "haystack": "aaaaaa",
+    "needle": "aaa"
+  },
+  {
+    "haystack": "z",
+    "needle": "zz"
+  },
+  {
+    "haystack": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+    "needle": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"
+  },
+  {
+    "haystack": "thequickbrownfox",
+    "needle": "brown"
+  }
+]

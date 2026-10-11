@@ -1,0 +1,58 @@
+{
+  "id": "1-bit-and-2-bit-characters",
+  "title": "725. 1-bit and 2-bit Characters",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/1-bit-and-2-bit-characters/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "bits = [1,0,0]",
+      "output": "true",
+      "explanation": "The encoding splits as 10 then 0, so the final symbol uses one bit."
+    },
+    {
+      "input": "bits = [1,1,1,0]",
+      "output": "false",
+      "explanation": "The only split is 11 then 10, leaving a two-bit tail."
+    },
+    {
+      "input": "bits = [0]",
+      "output": "true",
+      "explanation": "A lone zero is a one-bit symbol."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isOneBitCharacter(int[] bits) {\n        return false;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def isOneBitCharacter(self, bits: List[int]) -> bool:\n        return False",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool isOneBitCharacter(vector<int>& bits) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool IsOneBitCharacter(int[] bits) \n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_one_bit_character(bits: Vec<i32>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc IsOneBitCharacter(bits []int) bool {\n    return false\n}",
+    "typescript": "export function isOneBitCharacter(bits: number[]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $bits\n     * @return bool\n     */\n    public function isOneBitCharacter($bits) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "bits": "[1,0,0]"
+    },
+    {
+      "bits": "[1,1,1,0]"
+    },
+    {
+      "bits": "[0]"
+    }
+  ],
+  "functionName": "isOneBitCharacter",
+  "params": [
+    {
+      "name": "bits",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "A 1 always starts a two-bit symbol and consumes the next bit; a 0 stands alone.",
+    "Walk from the front jumping 1 or 2 steps and see where you land relative to the last index.",
+    "The answer is true exactly when the walk ends on the final position, not before it."
+  ]
+}

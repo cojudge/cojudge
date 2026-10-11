@@ -1,0 +1,58 @@
+{
+  "id": "nim-game",
+  "title": "388. Nim Game",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/nim-game/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "n = 4",
+      "output": "false",
+      "explanation": "Any first move leaves a winning reply for the opponent."
+    },
+    {
+      "input": "n = 1",
+      "output": "true",
+      "explanation": "Take the last stone at once."
+    },
+    {
+      "input": "n = 2",
+      "output": "true",
+      "explanation": "Take both stones at once."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean canWinNim(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def canWinNim(self, n: int) -> bool:\n        ",
+    "cpp": "\nclass Solution {\npublic:\n    bool canWinNim(int n) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool CanWinNim(int n)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_win_nim(n: i32) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc CanWinNim(n int) bool {\n    return false\n}",
+    "typescript": "export function canWinNim(n: number): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return bool\n     */\n    public function canWinNim($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 4
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 2
+    }
+  ],
+  "functionName": "canWinNim",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Work out small piles by hand: 1, 2, 3 are wins; 4 is a loss; 5, 6, 7 are wins again.",
+    "A pile is losing exactly when the opponent can always return it to another losing pile.",
+    "Look for the repeating pattern in the pile size to get an O(1) rule."
+  ]
+}

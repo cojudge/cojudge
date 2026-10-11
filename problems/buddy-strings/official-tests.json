@@ -1,0 +1,114 @@
+[
+  {
+    "s": "ab",
+    "goal": "ba"
+  },
+  {
+    "s": "ab",
+    "goal": "ab"
+  },
+  {
+    "s": "aa",
+    "goal": "aa"
+  },
+  {
+    "s": "aaaaaaabc",
+    "goal": "aaaaaaacb"
+  },
+  {
+    "s": "abcd",
+    "goal": "badc"
+  },
+  {
+    "s": "abcd",
+    "goal": "abdc"
+  },
+  {
+    "s": "abcaa",
+    "goal": "abcba"
+  },
+  {
+    "s": "abc",
+    "goal": "acb"
+  },
+  {
+    "s": "a",
+    "goal": "a"
+  },
+  {
+    "s": "a",
+    "goal": "b"
+  },
+  {
+    "s": "ab",
+    "goal": "ca"
+  },
+  {
+    "s": "abcde",
+    "goal": "abced"
+  },
+  {
+    "s": "abcd",
+    "goal": "abcd"
+  },
+  {
+    "s": "aabb",
+    "goal": "bbaa"
+  },
+  {
+    "s": "abac",
+    "goal": "abad"
+  },
+  {
+    "s": "xyzw",
+    "goal": "xzyw"
+  },
+  {
+    "s": "hello",
+    "goal": "holle"
+  },
+  {
+    "s": "abcabc",
+    "goal": "abcabc"
+  },
+  {
+    "s": "ab",
+    "goal": "bb"
+  },
+  {
+    "s": "aaab",
+    "goal": "aaab"
+  },
+  {
+    "s": "abc",
+    "goal": "def"
+  },
+  {
+    "s": "abcd",
+    "goal": "dcba"
+  },
+  {
+    "s": "abca",
+    "goal": "abca"
+  },
+  {
+    "s": "zzxy",
+    "goal": "zzyx"
+  },
+  {
+    "s": "abcdef",
+    "goal": "abcfed"
+  },
+  {
+    "s": "aab",
+    "goal": "aba"
+  },
+  {
+    "s": "abcde",
+    "goal": "edcba"
+  },
+  {
+    "s": "qwerty",
+    "goal": "qwerty"
+  }
+]

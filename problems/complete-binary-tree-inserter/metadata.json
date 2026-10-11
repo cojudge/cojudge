@@ -1,0 +1,72 @@
+{
+  "id": "complete-binary-tree-inserter",
+  "title": "906. Complete Binary Tree Inserter",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/complete-binary-tree-inserter/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [1,2], operations = [\"insert\",\"insert\",\"getRoot\"], values = [3,4,0]",
+      "output": "[1,2,1]",
+      "explanation": "Inserting 3 under parent 1 and 4 under parent 2 keeps the tree complete; getRoot reports 1."
+    },
+    {
+      "input": "root = [1], operations = [\"insert\",\"getRoot\",\"insert\"], values = [2,0,3]",
+      "output": "[1,1,1]",
+      "explanation": "Both insertions attach to the root, whose value stays 1."
+    },
+    {
+      "input": "root = [1,2,3,4,5,6], operations = [\"insert\",\"insert\",\"getRoot\"], values = [7,8,0]",
+      "output": "[3,4,1]",
+      "explanation": "Node 7 fills the right child of 3 and node 8 the left child of 4."
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public int[] runCbtInserter(TreeNode root, String[] operations, int[] values) {\n        return new int[0];\n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nfrom typing import List\n\nclass Solution:\n    def runCbtInserter(self, root, operations: List[str], values: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\n#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runCbtInserter(TreeNode* root, vector<string>& operations, vector<int>& values) {\n        return {};\n    }\n};",
+    "csharp": "/*\nDefinition for a binary tree node.\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\npublic class Solution\n{\n    public int[] RunCbtInserter(TreeNode root, string[] operations, int[] values)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "// Definition for a binary tree node.\n// #[derive(Debug, PartialEq, Eq)]\n// pub struct TreeNode {\n//   pub val: i32,\n//   pub left: Option<Rc<RefCell<TreeNode>>>,\n//   pub right: Option<Rc<RefCell<TreeNode>>>,\n// }\nuse std::rc::Rc;\nuse std::cell::RefCell;\n\npub struct Solution;\n\nimpl Solution {\n    pub fn run_cbt_inserter(root: Option<Rc<RefCell<TreeNode>>>, operations: Vec<String>, values: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "// Definition for a binary tree node.\n// type TreeNode struct {\n//     Val int\n//     Left *TreeNode\n//     Right *TreeNode\n// }\npackage main\n\nfunc RunCbtInserter(root *TreeNode, operations []string, values []int) []int {\n    return []int{}\n}",
+    "typescript": "// Definition for a binary tree node.\n// class TreeNode {\n//     val: number\n//     left: TreeNode | null\n//     right: TreeNode | null\n//     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {\n//         this.val = val ?? 0;\n//         this.left = left ?? null;\n//         this.right = right ?? null;\n//     }\n// }\nimport { TreeNode } from './TreeNode';\nexport function runCbtInserter(root: TreeNode | null, operations: string[], values: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param TreeNode|null $root\n     * @param string[] $operations\n     * @param int[] $values\n     * @return int[]\n     */\n    public function runCbtInserter($root, $operations, $values) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "root": "[1,2]",
+      "operations": "[\"insert\", \"insert\", \"getRoot\"]",
+      "values": "[3,4,0]"
+    },
+    {
+      "root": "[1]",
+      "operations": "[\"insert\", \"getRoot\", \"insert\"]",
+      "values": "[2,0,3]"
+    },
+    {
+      "root": "[1,2,3,4,5,6]",
+      "operations": "[\"insert\", \"insert\", \"getRoot\"]",
+      "values": "[7,8,0]"
+    }
+  ],
+  "functionName": "runCbtInserter",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node"
+    },
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "A complete tree fills level by level, so insertions always target the earliest node (in level order) missing a child.",
+    "Keep a queue of such candidate parents: use the head for each insert, drop it once both children exist, and append every new node.",
+    "Adaptation note: the original class interaction is flattened here into one batch call over operation traces."
+  ]
+}

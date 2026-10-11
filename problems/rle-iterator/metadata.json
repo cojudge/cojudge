@@ -1,0 +1,71 @@
+{
+  "id": "rle-iterator",
+  "title": "890. RLE Iterator",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/rle-iterator/",
+  "category": "design",
+  "examples": [
+    {
+      "input": "encoding = [3,8,0,9,2,5], operations = [\"next\",\"next\",\"next\",\"next\"], values = [2,1,1,2]",
+      "output": "[8,8,5,-1]",
+      "explanation": "Unfolds to [8,8,8,5,5]; consuming 2,1,1,2 gives 8,8,5,-1."
+    },
+    {
+      "input": "encoding = [1,5], operations = [\"next\",\"next\"], values = [1,1]",
+      "output": "[5,-1]",
+      "explanation": "One 5 then exhaustion."
+    },
+    {
+      "input": "encoding = [0,1,2,2], operations = [\"next\",\"next\"], values = [1,2]",
+      "output": "[2,2]",
+      "explanation": "Zero-count skipped."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runRle(int[] encoding, String[] operations, int[] values) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runRle(self, encoding: List[int], operations: List[str], values: List[int]) -> List[int]:\n        return []",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runRle(vector<int>& encoding, vector<string>& operations, vector<int>& values) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunRle(int[] encoding, string[] operations, int[] values)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_rle(encoding: Vec<i32>, operations: Vec<String>, values: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunRle(encoding []int, operations []string, values []int) []int {\n    return []int{}\n}",
+    "typescript": "export function runRle(encoding: number[], operations: string[], values: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $encoding\n     * @param string[] $operations\n     * @param int[] $values\n     * @return int[]\n     */\n    public function runRle($encoding, $operations, $values) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "encoding": "[3,8,0,9,2,5]",
+      "operations": "[\"next\",\"next\",\"next\",\"next\"]",
+      "values": "[2,1,1,2]"
+    },
+    {
+      "encoding": "[1,5]",
+      "operations": "[\"next\",\"next\"]",
+      "values": "[1,1]"
+    },
+    {
+      "encoding": "[0,1,2,2]",
+      "operations": "[\"next\",\"next\"]",
+      "values": "[1,2]"
+    }
+  ],
+  "functionName": "runRle",
+  "params": [
+    {
+      "name": "encoding",
+      "type": "int_array"
+    },
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Keep an index into the pair list plus the remaining count of the current value; skip zero-count pairs eagerly.",
+    "For next(n), subtract from the current remainder while n exceeds it, advancing the pair pointer until n fits or the pairs run out."
+  ]
+}

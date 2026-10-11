@@ -1,0 +1,57 @@
+{
+  "id": "score-of-parentheses",
+  "title": "852. Score of Parentheses",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/score-of-parentheses/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "s = \"()\"",
+      "output": "1",
+      "explanation": "A single pair is worth one."
+    },
+    {
+      "input": "s = \"(())\"",
+      "output": "2",
+      "explanation": "The inner pair scores 1, and the outer layer doubles it."
+    },
+    {
+      "input": "s = \"()()\"",
+      "output": "2",
+      "explanation": "Two adjacent pairs each score 1, and 1 + 1 = 2."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int scoreOfParentheses(String s) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def scoreOfParentheses(self, s: str) -> int:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int scoreOfParentheses(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int ScoreOfParentheses(string s) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn score_of_parentheses(s: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc ScoreOfParentheses(s string) int {\n    return 0\n}",
+    "typescript": "export function scoreOfParentheses(s: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function scoreOfParentheses($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "()"
+    },
+    {
+      "s": "(())"
+    },
+    {
+      "s": "()()"
+    }
+  ],
+  "functionName": "scoreOfParentheses",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Track nesting depth: a pair `()` that closes at its own depth contributes a power of two determined by how deeply it sits.",
+    "A stack holding the running total of each open level lets you add the inner score doubled into the outer level, or use a depth counter and add `1 << depth` for every primitive `()`."
+  ]
+}

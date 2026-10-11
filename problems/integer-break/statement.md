@@ -1,6 +1,6 @@
-Given an integer `n`, break it into the sum of `k` positive integers, where `k >= 2`, and maximize the product of those integers.
+Take an integer `n` and express it as a sum of `k` positive integers with `k >= 2`. Among all such decompositions, make the product of the parts as large as possible.
 
-Return the maximum product you can get.
+Return that largest attainable product.
 
 **Example 1:**
 ```

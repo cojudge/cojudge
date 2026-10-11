@@ -1,6 +1,6 @@
-At a lemonade stand, each lemonade costs $5. Customers stand in a queue and pay with a $5, $10, or $20 bill. You must provide correct change so each customer effectively pays $5. You start with no change.
+A drink stand sells each lemonade for $5. Patrons arrive one after another, each handing over a $5, $10, or $20 bill, and each must end up having paid exactly $5. The register begins empty, holding no bills for making change.
 
-Given an integer array `bills` where `bills[i]` is the bill the `i`-th customer pays, return `true` if you can provide every customer with correct change, or `false` otherwise.
+You receive the integer array `bills`, where `bills[i]` is what the `i`-th patron in line hands over. Decide whether change can be handed back correctly to the whole line: return `true` when every patron can be served, or `false` otherwise.
 
 **Example 1:**
 ```

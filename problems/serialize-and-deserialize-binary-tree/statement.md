@@ -1,8 +1,8 @@
-Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
+Turning a data structure into a bit stream so it can be saved to a file or buffer, or sent over a link and rebuilt later on the same or another machine, is called serialization.
 
-Design an algorithm to serialize and deserialize a **binary tree**. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.
+Build a pair of routines for a **binary tree**: one that flattens a tree into a string, and one that rebuilds the starting tree shape from that string. You may pick any string layout you like, as long as a round trip restores the original tree.
 
-**Clarification:** The input/output format is the same as how LeetCode serializes a binary tree. You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.
+**Note on the judge:** The harness reads and displays trees with the same level-order listing style that LeetCode uses. Your internal encoding does not have to copy that style — feel free to invent your own scheme.
 
 **Constraints:**
 - The number of nodes in the tree is in the range `[0, 10^4]`.
