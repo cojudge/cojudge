@@ -11,26 +11,6 @@ been seen. For example, seeing `1, 3, 7, 2, 6` leaves the covered set
 `runSummaryRanges(values)` that consumes the whole arrival sequence and returns
 the final summary intervals, sorted by start.
 
-**Example 1:**
-```
-Input: values = [1,3,7,2,6]
-Output: [[1,3],[6,7]]
-Explanation: The distinct values are 1, 2, 3, 6 and 7, forming two blocks.
-```
-
-**Example 2:**
-```
-Input: values = [1]
-Output: [[1,1]]
-```
-
-**Example 3:**
-```
-Input: values = [5,4,3,2,1]
-Output: [[1,5]]
-Explanation: Consecutive arrivals in reverse still merge into one block.
-```
-
 **Constraints:**
 - `0 <= values.length <= 10000`
 - `0 <= values[i] <= 10000`

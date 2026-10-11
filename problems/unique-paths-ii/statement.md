@@ -6,22 +6,6 @@ Count how many distinct admissible routes reach the destination.
 
 The test data is constructed so the count never exceeds `2 * 10^9`.
 
-**Example 1:**
-```
-Input: obstacleGrid = [[0,0,0],[0,1,0],[0,0,0]]
-Output: 2
-Explanation: A single blocked cell sits at the center of the 3x3 board above.
-The destination can be reached in two fashions:
-1. Right -> Right -> Down -> Down
-2. Down -> Down -> Right -> Right
-```
-
-**Example 2:**
-```
-Input: obstacleGrid = [[0,1],[0,0]]
-Output: 1
-```
-
 **Constraints:**
 - m == obstacleGrid.length
 - n == obstacleGrid[i].length

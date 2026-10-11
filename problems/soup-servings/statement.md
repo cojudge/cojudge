@@ -4,27 +4,6 @@ The process stops as soon as at least one pot becomes empty. We want the chance 
 
 Return that probability as a decimal string (for example `"0.625"`). Answers within a tiny tolerance are accepted.
 
-**Example 1:**
-```
-Input: n = 50
-Output: "0.625"
-Explanation: Five sixteenths of paths empty together, contributing half weight.
-```
-
-**Example 2:**
-```
-Input: n = 100
-Output: "0.71875"
-Explanation: A larger start favours A emptying first.
-```
-
-**Example 3:**
-```
-Input: n = 0
-Output: "0.5"
-Explanation: Both pots start empty, counted as half.
-```
-
 **Constraints:**
 - `0 <= n <= 10^9`
 - This is a portable adaptation: the floating answer is exchanged as a decimal string with tolerance 1e-9 absolute plus 1e-5 relative.

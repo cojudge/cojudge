@@ -2,27 +2,6 @@ An N-ary tree and a binary tree can stand in for each other through the left-chi
 
 The N-ary tree arrives as a string `data` in breadth order with `null` separating sibling groups (for example `[1,null,3,2,4,null,5,6]`). Write `encodeDecode`, which parses that string into an N-ary tree, converts it to binary via the encoding above, converts back to N-ary, and returns the canonical N-ary string. Correct code returns the canonical form of its input.
 
-**Example 1:**
-```
-Input: data = "[1,null,3,2,4,null,5,6]"
-Output: "[1,null,3,2,4,null,5,6]"
-Explanation: Encoding to binary and decoding restores the same grouping.
-```
-
-**Example 2:**
-```
-Input: data = "[]"
-Output: "[]"
-Explanation: Empty trees survive the round-trip.
-```
-
-**Example 3:**
-```
-Input: data = "[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]"
-Output: "[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]"
-Explanation: The deeper structure is preserved through both conversions.
-```
-
 **Constraints:**
 - Node count lies in `[0, 10^4]`.
 - Values are integers.

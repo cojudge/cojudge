@@ -4,20 +4,6 @@ Given numeric strings `low` and `high` (neither has leading zeros except the num
 
 Return that count.
 
-**Example 1:**
-```
-Input: low = "50", high = "100"
-Output: 3
-Explanation: The qualifying numbers are 69, 88, and 96.
-```
-
-**Example 2:**
-```
-Input: low = "0", high = "0"
-Output: 1
-Explanation: Zero itself is strobogrammatic.
-```
-
 **Constraints:**
 - `1 <= low.length, high.length <= 15`
 - `low` and `high` hold digits only, with no leading zeros except `"0"`.

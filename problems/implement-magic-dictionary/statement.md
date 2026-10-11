@@ -8,21 +8,6 @@ Calling convention:
 
 Return the list of `1/0` answers for the search calls in order.
 
-**Example 1:**
-```
-Input: operations = ["buildDict","search","search","search","search"]
-       words = ["hello|leetcode","hello","hhllo","hell","leetcoded"]
-Output: [0,1,0,0]
-Explanation: hhllo differs from hello in one spot; the others have no one-change partner.
-```
-
-**Example 2:**
-```
-Input: operations = ["buildDict","search","search"]
-       words = ["hello|hallo","hello","hallo"]
-Output: [1,1]
-```
-
 **Constraints:**
 - Operation count per test is between 1 and 20.
 - Words use lowercase letters; packed dictionaries use '|' only as a separator.

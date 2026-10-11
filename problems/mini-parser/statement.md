@@ -4,27 +4,6 @@ You receive a string `s` that encodes either a single integer (for example `"324
 
 *Portable adaptation:* the classic version returns a `NestedInteger` object graph, which this judge cannot express; returning the canonical string captures the same parsing work and is compared structurally, so harmless spelling differences that parse to the same shape are still accepted.
 
-**Example 1:**
-```
-Input: s = "324"
-Output: "324"
-Explanation: A lone integer normalizes to itself.
-```
-
-**Example 2:**
-```
-Input: s = "[123,[456,[789]]]"
-Output: "[123,[456,[789]]]"
-Explanation: The nested shape re-serializes unchanged.
-```
-
-**Example 3:**
-```
-Input: s = "[123,456,[789,[]]]"
-Output: "[123,456,[789,[]]]"
-Explanation: Empty lists and multiple entries survive the round trip.
-```
-
 **Constraints:**
 - `1 <= s.length <= 5 * 10^4`
 - `s` holds only digits, `-`, `,`, `[`, `]`.

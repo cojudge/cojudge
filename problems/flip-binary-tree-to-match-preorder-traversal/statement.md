@@ -10,27 +10,6 @@ To determine the flips, traverse the tree in preorder while reading `voyage` fro
 - If the node has a left child and that child does not equal the next voyage entry, flip the node (record its value) and traverse the right child before the left child.
 - Otherwise traverse left before right as usual.
 
-**Example 1:**
-```
-Input: root = [1,2], voyage = [2,1]
-Output: [-1]
-Explanation: The root stays fixed, so a voyage beginning with 2 is unreachable.
-```
-
-**Example 2:**
-```
-Input: root = [1,2,3], voyage = [1,3,2]
-Output: [1]
-Explanation: Exchanging the children of 1 produces preorder 1, 3, 2.
-```
-
-**Example 3:**
-```
-Input: root = [1,2,3], voyage = [1,2,3]
-Output: []
-Explanation: The natural preorder already matches, so no flip is recorded.
-```
-
 **Constraints:**
 - `1 <= number of nodes <= 100`
 - `1 <= node values, voyage[i] <= 100`

@@ -7,24 +7,6 @@ An undirected graph is given as adjacency lists `graph`, where `graph[i]` holds 
 
 Return `1` when the mouse can force a win, `2` when the cat can force a win, and `0` for a draw under optimal play.
 
-**Example 1:**
-```
-Input: graph = [[2,5],[3],[3,4,5],[1,2],[2],[0,2]]
-Output: 0
-```
-
-**Example 2:**
-```
-Input: graph = [[1,3],[0],[3],[0,2]]
-Output: 1
-```
-
-**Example 3:**
-```
-Input: graph = [[1],[0,2],[1,3],[2]]
-Output: 2
-```
-
 **Constraints:**
 - `4 <= graph.length <= 50`
 - Every neighbor list is non-empty and every neighbor index is valid

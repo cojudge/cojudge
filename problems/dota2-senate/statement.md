@@ -9,22 +9,6 @@ You receive a string `senate` whose `i`-th character records the faction of the 
 
 Assume every senator votes with full foresight and always chooses the line most favorable to their own faction. Determine which faction ends up declaring the outcome. Respond with `"Radiant"` or `"Dire"`.
 
-**Example 1:**
-
-```
-Input: senate = "RD"
-Output: "Radiant"
-Explanation: The opening Radiant senator removes the voting rights of the following senator during the first round.
-```
-
-**Example 2:**
-
-```
-Input: senate = "RDD"
-Output: "Dire"
-Explanation: The opening Radiant member blocks the next member's rights in the first round, after which the remaining Dire members take control.
-```
-
 **Constraints:**
 
 - `n == senate.length`

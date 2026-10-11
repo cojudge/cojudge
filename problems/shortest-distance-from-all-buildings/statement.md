@@ -4,27 +4,6 @@ Starting from a candidate empty cell, the travel cost to a building is the lengt
 
 Find the empty cell with the smallest total cost and return that cost. If no empty cell can reach all buildings, return `-1`.
 
-**Example 1:**
-```
-Input: grid = [[1,0,2,0,1],[0,0,0,0,0],[0,0,1,0,0]]
-Output: 7
-Explanation: From cell (1,2) the distances to the three buildings are 3, 3 and 1, totalling 7, which beats every other empty cell.
-```
-
-**Example 2:**
-```
-Input: grid = [[1,0],[0,1]]
-Output: 2
-Explanation: Either empty cell sits one step from each of the two buildings, for a total of 2.
-```
-
-**Example 3:**
-```
-Input: grid = [[1]]
-Output: -1
-Explanation: There is no empty land to build on.
-```
-
 **Constraints:**
 - `m == grid.length`, `n == grid[i].length`
 - `1 <= m, n <= 50`

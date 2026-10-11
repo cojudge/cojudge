@@ -2,24 +2,6 @@ You are given `k` sorted integer lists. Find the narrowest interval `[a, b]` tha
 
 Compare candidates by width `b - a` first; when widths tie, prefer the smaller start `a`. Return the winning pair.
 
-**Example 1:**
-```
-Input: nums = [[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]
-Output: [20,24]
-```
-
-**Example 2:**
-```
-Input: nums = [[1,2,3],[1,2,3],[1,2,3]]
-Output: [1,1]
-```
-
-**Example 3:**
-```
-Input: nums = [[10,10],[11,11]]
-Output: [10,11]
-```
-
 **Constraints:**
 - At least one list is present; each list is sorted increasingly.
 - Values fit comfortably in 32-bit signed range.

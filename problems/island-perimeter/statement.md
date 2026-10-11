@@ -4,24 +4,6 @@ Treat cells as linked across shared sides, not corners. The map is ringed entire
 
 That island encloses no isolated water: no water cell inside its boundary is cut off from the surrounding water. Picture every cell as a 1-by-1 square, with the whole rectangle no taller or wider than 100 cells. Compute the length of the island's outline.
 
-**Example 1:**
-```
-Input: grid = [[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]]
-Output: 16
-```
-
-**Example 2:**
-```
-Input: grid = [[1]]
-Output: 4
-```
-
-**Example 3:**
-```
-Input: grid = [[1,0]]
-Output: 4
-```
-
 **Constraints:**
 - `row == grid.length`
 - `col == grid[i].length`

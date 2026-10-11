@@ -4,27 +4,6 @@ An axis-aligned corner rectangle is a choice of two different rows `r1 < r2` and
 
 Return how many such rectangles appear in the grid.
 
-**Example 1:**
-```
-Input: grid = [[1,0,0,1,0],[0,0,1,0,1],[0,0,0,1,0],[1,0,1,0,1]]
-Output: 1
-Explanation: Only rows 1 and 3 together with columns 2 and 4 have ones at all four crossings.
-```
-
-**Example 2:**
-```
-Input: grid = [[1,1,1],[1,1,1],[1,1,1]]
-Output: 9
-Explanation: Any pair of the 3 rows with any pair of the 3 columns works, giving 3 times 3 rectangles.
-```
-
-**Example 3:**
-```
-Input: grid = [[1,1,1,1]]
-Output: 0
-Explanation: A single row can never supply two different rows.
-```
-
 **Constraints:**
 - `m == grid.length`, `n == grid[i].length`
 - `1 <= m <= 200`

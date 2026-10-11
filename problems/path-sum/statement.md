@@ -4,27 +4,6 @@ Start at the root with the full target. At each step, subtract the current node'
 
 Return `true` if at least one qualifying leaf route exists, otherwise `false`.
 
-**Example 1:**
-```
-Input: root = [5,4,8,11,null,13,4,7,2,null,null,null,1], targetSum = 22
-Output: true
-Explanation: 5 + 4 + 11 + 2 = 22 along a leaf-ending chain.
-```
-
-**Example 2:**
-```
-Input: root = [1,2,3], targetSum = 5
-Output: false
-Explanation: Leaf sums are 3 and 4; neither equals 5.
-```
-
-**Example 3:**
-```
-Input: root = [], targetSum = 0
-Output: false
-Explanation: No route exists in an empty tree.
-```
-
 **Constraints:**
 - `0 <= number of nodes <= 5000`
 - `-1000 <= Node.val <= 1000`

@@ -12,29 +12,6 @@ report `-1`.
 Note on types: the grid arrives as characters `'0'` and `'1'`, not as
 numbers, so compare symbols directly.
 
-**Example 1:**
-```
-Input: board = [["0","1","1","0"],["0","1","1","0"],["1","0","0","1"],["1","0","0","1"]]
-Output: 2
-Explanation: One row exchange plus one column exchange is enough to reach
-an alternating layout, and one move alone cannot fix it.
-```
-
-**Example 2:**
-```
-Input: board = [["0","1"],["1","0"]]
-Output: 0
-Explanation: Neighbors already alternate, so zero moves are needed.
-```
-
-**Example 3:**
-```
-Input: board = [["1","0"],["1","0"]]
-Output: -1
-Explanation: Both rows start with 1, so the first column can never be made
-to alternate; the task is impossible.
-```
-
 **Constraints:**
 - `n == board.length`
 - `n == board[i].length`

@@ -4,34 +4,6 @@ Encoding a slice is worthwhile only when the `k[...]` form is strictly shorter t
 
 Return an encoding of the whole string with the minimum possible length.
 
-**Example 1:**
-```
-Input: s = "aaa"
-Output: "aaa"
-Explanation: Encoding as "3[a]" would be longer (4 vs 3), so the original string stays.
-```
-
-**Example 2:**
-```
-Input: s = "aaaaa"
-Output: "5[a]"
-Explanation: Five copies of "a" compress to "5[a]".
-```
-
-**Example 3:**
-```
-Input: s = "ababab"
-Output: "3[ab]"
-Explanation: Three copies of "ab" compress to "3[ab]".
-```
-
-**Example 4:**
-```
-Input: s = "abbbabbbcabbbabbbc"
-Output: "2[2[abbb]c]"
-Explanation: The inner block "abbbabbbc" first compresses to "2[abbb]c", and doubling it gives the shortest form.
-```
-
 **Constraints:**
 - `1 <= s.length <= 150`
 - `s` consists of lowercase English letters.

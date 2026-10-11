@@ -4,24 +4,6 @@ Compression follows the pattern `k[encoded_string]`: the bracketed segment is wr
 
 Treat every input as correctly formed: there is no stray spacing, all brackets pair up properly, the payload before expansion holds no digits, and digits appear solely as those repetition counts `k`.
 
-**Example 1:**
-```
-Input: s = "3[a]2[bc]"
-Output: "aaabcbc"
-```
-
-**Example 2:**
-```
-Input: s = "3[a2[c]]"
-Output: "accaccacc"
-```
-
-**Example 3:**
-```
-Input: s = "2[abc]3[cd]ef"
-Output: "abcabccdcdcdef"
-```
-
 **Constraints:**
 - `1 <= s.length <= 30`
 - `s` consists of lowercase English letters, digits, and square brackets `[]`.

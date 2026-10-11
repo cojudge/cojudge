@@ -8,26 +8,6 @@ Implement `runCalendarThree(operations, args)`:
 - `args[i]` is `[]` for creation and `[start, end]` for a booking.
 - Return one integer per booking (creation excluded): the peak overlap after that booking is stored.
 
-**Example 1:**
-```
-Input: operations = ["MyCalendarThree","book","book","book","book","book","book"], args = [[],[10,20],[50,60],[10,40],[5,15],[5,10],[25,55]]
-Output: [1,1,2,3,3,3]
-Explanation: Overlaps build up: the fourth booking triple-covers [10,15), and later bookings never exceed three.
-```
-
-**Example 2:**
-```
-Input: operations = ["MyCalendarThree","book","book","book"], args = [[],[0,10],[10,20],[5,15]]
-Output: [1,1,2]
-Explanation: Only the last booking creates a double overlap.
-```
-
-**Example 3:**
-```
-Input: operations = ["MyCalendarThree","book"], args = [[],[1,2]]
-Output: [1]
-```
-
 **Constraints:**
 - `1 <= operations.length <= 400`
 - `0 <= start < end <= 10^9`

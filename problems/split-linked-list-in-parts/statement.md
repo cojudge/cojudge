@@ -9,27 +9,6 @@ Follow these rules when describing the groups:
 
 Return the `k` groups in order, where each group is represented by the head of its chain (an empty group is represented by an empty chain).
 
-**Example 1:**
-```
-Input: head = [1,2,3], k = 5
-Output: [[1],[2],[3],[],[]]
-Explanation: 3 values across 5 groups gives three groups of length 1 followed by two empty groups.
-```
-
-**Example 2:**
-```
-Input: head = [1,2,3,4,5,6,7,8,9,10], k = 3
-Output: [[1,2,3,4],[5,6,7],[8,9,10]]
-Explanation: 10 values across 3 groups gives sizes 4, 3, 3; the first group absorbs the extra value.
-```
-
-**Example 3:**
-```
-Input: head = [1,2,3,4], k = 2
-Output: [[1,2],[3,4]]
-Explanation: The list splits evenly into two groups of 2.
-```
-
 **Constraints:**
 - `0 <= n <= 1000`
 - `1 <= k <= 50`

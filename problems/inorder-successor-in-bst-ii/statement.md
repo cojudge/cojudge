@@ -4,27 +4,6 @@ A binary search tree stores pairwise different values with the usual ordering: e
 
 Given this encoding and a target value `p` present in the tree, return the value of the node visited straight after `p` in inorder order. Return `-1` when `p` is the largest value (or when the tree is empty / `p` is absent).
 
-**Example 1:**
-```
-Input: root = [2,1,3], parents = [null,2,2], p = 1
-Output: 2
-Explanation: Inorder visits 1, 2, 3, so the node after 1 holds 2.
-```
-
-**Example 2:**
-```
-Input: root = [2,1,3], parents = [null,2,2], p = 3
-Output: -1
-Explanation: 3 is the largest value, hence has no successor.
-```
-
-**Example 3:**
-```
-Input: root = [5,3,6,2,4,null,null,1], parents = [null,5,5,3,3,2], p = 3
-Output: 4
-Explanation: The inorder order is 1, 2, 3, 4, 5, 6, so 4 follows 3.
-```
-
 **Constraints:**
 - `0 <= number of nodes <= 10^4`
 - `-10^5 <= Node.val <= 10^5`

@@ -4,27 +4,6 @@ Decide whether the very last symbol occupies a single bit. In other words, walk 
 
 Return `true` when the tail symbol is one bit long, else `false`.
 
-**Example 1:**
-```
-Input: bits = [1,0,0]
-Output: true
-Explanation: Read 10 first, leaving a lone 0 at the end.
-```
-
-**Example 2:**
-```
-Input: bits = [1,1,1,0]
-Output: false
-Explanation: Read 11 first, leaving 10 as the final two-bit symbol.
-```
-
-**Example 3:**
-```
-Input: bits = [0]
-Output: true
-Explanation: The single zero must be a one-bit symbol.
-```
-
 **Constraints:**
 - `1 <= bits.length <= 1000`
 - Each entry is `0` or `1`, and the last entry is `0`.

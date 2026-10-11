@@ -7,27 +7,6 @@ Model a tiny file tree that starts with only the root `/`. Four calls exist: lis
 - `addContentToFile(filePath, text)`: create parents when needed, then append `text`.
 - `readContentFromFile(filePath)`: return the stored text.
 
-**Example 1:**
-```
-Input: operations = ["FileSystem","mkdir","ls","addContentToFile","readContentFromFile","ls"], paths = ["/","/a/b/c","/","/a/b/c/d","/a/b/c/d","/a/b/c"], contents = ["","","","hello","",""]
-Output: [["a"],["hello"],["d"]]
-Explanation: Listing root shows a; reading the file gives hello; listing its folder shows d.
-```
-
-**Example 2:**
-```
-Input: operations = ["FileSystem","mkdir","ls","addContentToFile","ls","readContentFromFile"], paths = ["/","/x/y","/","/x/y/f","/x/y","/x/y/f"], contents = ["","","","data","",""]
-Output: [["x"],["f"],["data"]]
-Explanation: Root holds x; the folder holds f; the file holds data.
-```
-
-**Example 3:**
-```
-Input: operations = ["FileSystem","ls"], paths = ["/"], contents = [""]
-Output: [[]]
-Explanation: An empty tree lists nothing.
-```
-
 **Constraints:**
 - `1 <= operations.length <= 500`, all three arrays share that length.
 - Paths use `/`-separated lowercase names; content is lowercase text.

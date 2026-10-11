@@ -8,21 +8,6 @@ Choose up to `k` different ventures in a feasible sequence to leave your holding
 
 The result is guaranteed to fit in a 32-bit signed integer.
 
-**Example 1:**
-
-```
-Input: k = 2, w = 0, profits = [1,2,3], capital = [0,1,1]
-Output: 4
-Explanation: Beginning with 0 capital, only the venture indexed 0 is initially reachable.
-```
-
-**Example 2:**
-
-```
-Input: k = 3, w = 0, profits = [1,2,3], capital = [0,1,2]
-Output: 6
-```
-
 **Constraints:**
 
 - `1 <= k <= 10^5`

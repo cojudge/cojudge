@@ -4,20 +4,6 @@ The distance between index `i` and index `j` is `|i - j|`. Consider every occurr
 
 Return that minimum distance.
 
-**Example 1:**
-```
-Input: wordsDict = ["practice","makes","perfect","coding","makes"], word1 = "coding", word2 = "practice"
-Output: 3
-Explanation: "coding" is at index 3 and "practice" at index 0, so the gap is 3.
-```
-
-**Example 2:**
-```
-Input: wordsDict = ["practice","makes","perfect","coding","makes"], word1 = "makes", word2 = "coding"
-Output: 1
-Explanation: "makes" at index 4 and "coding" at index 3 are adjacent.
-```
-
 **Constraints:**
 - `1 <= wordsDict.length <= 300`
 - `1 <= wordsDict[i].length <= 100`

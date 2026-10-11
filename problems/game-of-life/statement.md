@@ -8,16 +8,6 @@ exactly three becomes live.
 **Adaptation:** instead of a void in-place update, implement
 `gameOfLife(board)` returning the next-state board.
 
-**Examples:**
-```
-Input: board = [[0,1,0],[0,0,1],[1,1,1],[0,0,0]]
-Output: [[0,0,0],[1,0,1],[0,1,1],[0,1,0]]
-```
-```
-Input: board = [[1,1],[1,0]]
-Output: [[1,1],[1,1]]
-```
-
 **Constraints:**
 - `1 <= m, n <= 25`
 - `board[i][j]` is `0` or `1`.

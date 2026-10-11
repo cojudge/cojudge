@@ -4,20 +4,6 @@ Mark every occurrence of any keyword inside `s`, including overlaps. Then merge 
 
 Return the tagged string.
 
-**Example 1:**
-```
-Input: words = ["ab","bc"], s = "aabcd"
-Output: "a<b>abc</b>d"
-Explanation: "ab" appears at index 1 and "bc" at index 2; their spans join into indices 1-3, so one tag pair covers "abc".
-```
-
-**Example 2:**
-```
-Input: words = ["ab","cb"], s = "aabcd"
-Output: "a<b>ab</b>cd"
-Explanation: Only "ab" at index 1 matches, so indices 1-2 form a lone bold group.
-```
-
 **Constraints:**
 - `1 <= s.length <= 500`
 - `0 <= words.length <= 50`

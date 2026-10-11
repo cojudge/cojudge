@@ -12,18 +12,6 @@ The placement must additionally respect both families of precedence rules:
 
 Produce any grid meeting all of the above; when the requirements conflict, produce a vacuous grid.
 
-**Example 1:**
-```
-Input: k = 3, rowConditions = [[1,2],[3,2]], colConditions = [[2,1],[3,2]]
-Output: [[3,0,0],[0,0,1],[0,2,0]]
-```
-
-**Example 2:**
-```
-Input: k = 3, rowConditions = [[1,2],[2,3],[3,1],[2,3]], colConditions = [[2,1]]
-Output: []
-```
-
 **Constraints:**
 - `2 <= k <= 400`
 - `1 <= rowConditions.length, colConditions.length <= 10^4`

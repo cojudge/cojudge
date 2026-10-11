@@ -6,27 +6,6 @@ Two rules apply:
 
 Return the abbreviations in the same order as the input words.
 
-**Example 1:**
-```
-Input: words = ["like","god","internal","me","internet","interval","intension","face","intrusion"]
-Output: ["l2e","god","internal","me","i6t","interval","inte4n","f2e","intr4n"]
-Explanation: "like" shortens to "l2e". "internal" and "interval" keep colliding until the full word is needed, so both stay unshortened. "intension" and "intrusion" separate once the prefix reaches 4 and 3 letters respectively.
-```
-
-**Example 2:**
-```
-Input: words = ["abcdef","abcdeg"]
-Output: ["a4f","a4g"]
-Explanation: One-letter prefixes already separate the two words.
-```
-
-**Example 3:**
-```
-Input: words = ["word","world","would"]
-Output: ["w2d","world","would"]
-Explanation: "world" and "would" both start as "w3d" and then "wo2d"; growing their prefixes once more would not shorten them, so both fall back to their full forms, which are already unique.
-```
-
 **Constraints:**
 - `1 <= words.length <= 400`
 - `1 <= words[i].length <= 400`

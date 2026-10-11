@@ -9,18 +9,6 @@ Bookings occupy rooms according to these rules:
 
 Count how many bookings each room hosts, and output the label of the room with the highest count. Break ties toward the smaller label.
 
-**Example 1:**
-```
-Input: n = 2, meetings = [[0,10],[1,5],[2,7],[3,4]]
-Output: 0
-```
-
-**Example 2:**
-```
-Input: n = 3, meetings = [[1,20],[2,10],[3,5],[4,9],[6,8]]
-Output: 1
-```
-
 **Constraints:**
 - `1 <= n <= 100`
 - `1 <= meetings.length <= 10^5`

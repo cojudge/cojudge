@@ -4,19 +4,6 @@ The inorder walk lists each subtree as left, root, right. The postorder walk lis
 
 All values are unique, and both lists describe the same tree. Return its root.
 
-**Example 1:**
-```
-Input: inorder = [9,3,15,20,7], postorder = [9,15,7,20,3]
-Output: [3,9,20,null,null,15,7]
-Explanation: Postorder ends with 3, the root. In inorder, 3 separates [9] (left) from [15,20,7] (right). Recursing restores the full tree.
-```
-
-**Example 2:**
-```
-Input: inorder = [-1], postorder = [-1]
-Output: [-1]
-```
-
 **Constraints:**
 - `1 <= inorder.length <= 3000`
 - `postorder.length == inorder.length`

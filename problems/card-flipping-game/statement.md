@@ -4,27 +4,6 @@ Find the smallest good value among all numbers appearing on either side. Return 
 
 Adaptation note: this task uses portable `int_array` inputs and an `int` output.
 
-**Example 1:**
-```
-Input: fronts = [1,2,4,4,7], backs = [1,3,4,1,3]
-Output: 2
-Explanation: 1 is double on card 0 and 4 is double on card 2, so both are out; 2 is the smallest survivor.
-```
-
-**Example 2:**
-```
-Input: fronts = [1], backs = [1]
-Output: 0
-Explanation: The sole value is double-sided, leaving nothing.
-```
-
-**Example 3:**
-```
-Input: fronts = [2,3], backs = [4,5]
-Output: 2
-Explanation: No card repeats a value, so the global minimum 2 wins.
-```
-
 **Constraints:**
 - `1 <= fronts.length == backs.length <= 1000`
 - `1 <= fronts[i], backs[i] <= 2000`

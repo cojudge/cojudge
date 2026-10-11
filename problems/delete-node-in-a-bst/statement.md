@@ -4,25 +4,6 @@ Conceptually the removal proceeds in two phases:
 1. Locate the node storing the key.
 2. When it is present, unlink it while keeping the binary search tree ordering intact.
 
-**Example 1:**
-```
-Input: root = [5,3,6,2,4,null,7], key = 3
-Output: [5,4,6,2,null,null,7]
-Explanation: The displayed tree is one acceptable outcome; [5,2,6,null,4,null,7] is another.
-```
-
-**Example 2:**
-```
-Input: root = [5,3,6,2,4,null,7], key = 0
-Output: [5,3,6,2,4,null,7]
-```
-
-**Example 3:**
-```
-Input: root = [], key = 0
-Output: []
-```
-
 **Constraints:**
 - The number of nodes in the tree is in the range `[0, 10^4]`
 - `-10^5 <= Node.val <= 10^5`

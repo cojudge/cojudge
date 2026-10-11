@@ -15,23 +15,6 @@ AB -> 28
 ...
 ```
 
-**Examples:**
-
-```
-Input: columnNumber = 1
-Output: "A"
-```
-
-```
-Input: columnNumber = 28
-Output: "AB"
-```
-
-```
-Input: columnNumber = 701
-Output: "ZY"
-```
-
 **Constraints:**
 
 - `1 <= columnNumber <= 2^31 - 1`

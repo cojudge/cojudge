@@ -2,27 +2,6 @@ A circular linked list is sorted when its values increase around the ring except
 
 Insert a new value `insertVal` so the ring stays sorted, and return the linear encoding that starts from the original head (or the single new value when the input was empty). The head itself never changes unless the list was empty.
 
-**Example 1:**
-```
-Input: head = [3,4,1], insertVal = 2
-Output: [3,4,1,2]
-Explanation: Value 2 fits between 1 and 3, keeping the ring sorted.
-```
-
-**Example 2:**
-```
-Input: head = [], insertVal = 1
-Output: [1]
-Explanation: A lone node points to itself.
-```
-
-**Example 3:**
-```
-Input: head = [1], insertVal = 0
-Output: [1,0]
-Explanation: Starting from 1, the ring becomes 1 -> 0 -> 1.
-```
-
 **Constraints:**
 - `0 <= head.length <= 1000`
 - `-1000 <= Node.val, insertVal <= 1000`

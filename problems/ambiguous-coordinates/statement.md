@@ -4,27 +4,6 @@ A half without a dot is legal when it is exactly `"0"` or does not start with `0
 
 Adaptation note: this task uses the portable `string_list` output type; ordering is ignored during judging (lists are compared sorted).
 
-**Example 1:**
-```
-Input: s = "(123)"
-Output: ["(1, 23)","(1, 2.3)","(12, 3)","(1.2, 3)"] (order may vary)
-Explanation: Cuts 1|23 and 12|3 each admit an integer and one decimal spelling.
-```
-
-**Example 2:**
-```
-Input: s = "(00011)"
-Output: ["(0.001, 1)"]
-Explanation: Zero-placement rules eliminate all but one combination.
-```
-
-**Example 3:**
-```
-Input: s = "(0123)"
-Output: ["(0, 123)","(0, 12.3)","(0, 1.23)","(0.1, 23)","(0.1, 2.3)","(0.12, 3)"] (order may vary)
-Explanation: The left side can only be 0 or 0.xxx; the right side varies.
-```
-
 **Constraints:**
 - `4 <= s.length <= 12`
 - `s` starts with `(` and ends with `)`.

@@ -2,27 +2,6 @@ Two strings `s` and `t` are called isomorphic when the characters of one can be 
 
 Decide whether `s` and `t` are isomorphic.
 
-**Example 1:**
-```
-Input: s = "egg", t = "add"
-Output: true
-Explanation: 'e' always becomes 'a' and 'g' always becomes 'd'.
-```
-
-**Example 2:**
-```
-Input: s = "foo", t = "bar"
-Output: false
-Explanation: Both 'o's would need to become different letters ('a' and 'r'), which is impossible.
-```
-
-**Example 3:**
-```
-Input: s = "paper", t = "title"
-Output: true
-Explanation: The renaming p->t, a->i, e->l, r->e is consistent in both directions.
-```
-
 **Constraints:**
 - `1 <= s.length <= 5 * 10^4`
 - `s.length == t.length`

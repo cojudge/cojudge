@@ -8,27 +8,6 @@ You are given a row index `n` (counting from 1) and a position `k`
 (counting from 1 inside that row). Report the symbol that appears at that
 spot.
 
-**Example 1:**
-```
-Input: n = 1, k = 1
-Output: 0
-Explanation: The opening row is just [0].
-```
-
-**Example 2:**
-```
-Input: n = 2, k = 1
-Output: 0
-Explanation: The second row is [0,1], whose first entry is 0.
-```
-
-**Example 3:**
-```
-Input: n = 2, k = 2
-Output: 1
-Explanation: The second row is [0,1], whose second entry is 1.
-```
-
 **Constraints:**
 - `1 <= n <= 30`
 - `1 <= k <= 2^(n-1)`

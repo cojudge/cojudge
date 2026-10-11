@@ -4,34 +4,6 @@ To picture the ordering, write the characters diagonally down and then diagonall
 
 Return the string obtained by concatenating the rows in order.
 
-**Example 1:**
-```
-Input: s = "PAYPALISHIRING", numRows = 3
-Output: "PAHNAPLSIIGYIR"
-Explanation: The layout is:
-P   A   H   N
-A P L S I I G
-Y   I   R
-Reading each row gives "PAHN", "APLSIIG" and "YIR".
-```
-
-**Example 2:**
-```
-Input: s = "PAYPALISHIRING", numRows = 4
-Output: "PINALSIGYAHRPI"
-Explanation: The layout is:
-P     I    N
-A   L S  I G
-Y A   H R
-P     I
-```
-
-**Example 3:**
-```
-Input: s = "A", numRows = 1
-Output: "A"
-```
-
 **Constraints:**
 - `1 <= s.length <= 1000`
 - `s` consists of English letters, `,` and `.`

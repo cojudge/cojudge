@@ -6,27 +6,6 @@ Return one answer per entry of `calls`. The judge accepts any output whose entri
 
 *Adaptation note:* the function is named `runBlacklist` and takes `(n, blacklist, calls)` so every supported type stays within the allowed set. Correctness is validity-only.
 
-**Example 1:**
-```
-Input: n = 7, blacklist = [2,3,5], calls = [0,1,2,3]
-Output: [0,1,6,4]
-Explanation: Free numbers are 0, 1, 4 and 6. With tail remapping the draws land on 0, 1, 6 and 4.
-```
-
-**Example 2:**
-```
-Input: n = 4, blacklist = [2], calls = [0,1,2]
-Output: [0,1,3]
-Explanation: Free numbers are 0, 1 and 3; the last draw skips the blocked 2.
-```
-
-**Example 3:**
-```
-Input: n = 1, blacklist = [], calls = [5,-3]
-Output: [0,0]
-Explanation: Only 0 exists, so every draw answers 0.
-```
-
 **Constraints:**
 - `1 <= n <= 10^9`
 - `0 <= blacklist.length < n`

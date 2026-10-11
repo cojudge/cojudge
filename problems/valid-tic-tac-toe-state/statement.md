@@ -4,34 +4,6 @@ The opening move is always made by `X`, and the two sides then alternate strictl
 
 Decide whether the supplied layout could have arisen from a legal game played under these rules.
 
-**Example 1:**
-```
-Input: board = ["O--","---","---"]
-Output: false
-Explanation: The first mark must be X, so a board whose only mark is O cannot occur.
-```
-
-**Example 2:**
-```
-Input: board = ["XOX","-X-","---"]
-Output: false
-Explanation: The counts are X = 4 and O = 1, which breaks the alternation requirement that X equals O or exceeds it by exactly one.
-```
-
-**Example 3:**
-```
-Input: board = ["XXX","---","OOO"]
-Output: false
-Explanation: Both sides show a complete line, but the game would have stopped after the first one.
-```
-
-**Example 4:**
-```
-Input: board = ["XOX","O-O","XOX"]
-Output: true
-Explanation: Counts are X = 5 and O = 4 with no winning line, which matches a full drawn game.
-```
-
 **Constraints:**
 - `board.length == 3`
 - `board[i].length == 3`

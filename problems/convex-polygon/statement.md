@@ -4,20 +4,6 @@ A polygon is convex when its boundary always turns the same way: walking along t
 
 Return `true` if the polygon is convex, and `false` otherwise.
 
-**Example 1:**
-```
-Input: polygon = [[0,0],[0,1],[1,1],[1,0]]
-Output: true
-Explanation: A unit square: every consecutive turn bends the same way.
-```
-
-**Example 2:**
-```
-Input: polygon = [[0,0],[0,10],[10,10],[10,0],[5,5]]
-Output: false
-Explanation: The last vertex dents inward, so one turn bends the opposite way from the rest.
-```
-
 **Constraints:**
 - `3 <= polygon.length <= 10^4`
 - `-10^4 <= polygon[i][0], polygon[i][1] <= 10^4`

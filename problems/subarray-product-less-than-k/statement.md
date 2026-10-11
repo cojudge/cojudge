@@ -4,27 +4,6 @@ Every entry of `nums` is positive, so products grow when the window widens and s
 
 Return the total number of qualifying subarrays.
 
-**Example 1:**
-```
-Input: nums = [10,5,2,6], k = 100
-Output: 8
-Explanation: The valid windows are [10], [5], [2], [6], [10,5], [5,2], [2,6] and [5,2,6].
-```
-
-**Example 2:**
-```
-Input: nums = [1,2,3], k = 0
-Output: 0
-Explanation: Positive products can never drop below zero.
-```
-
-**Example 3:**
-```
-Input: nums = [1,1,1], k = 2
-Output: 6
-Explanation: All 3 singles, both pairs and the triple qualify.
-```
-
 **Constraints:**
 - `1 <= nums.length <= 3 * 10^4`
 - `1 <= nums[i] <= 1000`

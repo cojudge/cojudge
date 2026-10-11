@@ -11,27 +11,6 @@ Rather than building a class, implement `runCalendar(operations, args)`:
 - `args[i]` is the argument list for that call: `[]` for creation and `[start, end]` for a booking.
 - Return one integer per booking call (skipping the creation entry): `1` when the booking is accepted and `0` when it is rejected.
 
-**Example 1:**
-```
-Input: operations = ["MyCalendar","book","book","book"], args = [[],[10,20],[15,25],[20,30]]
-Output: [1,0,1]
-Explanation: [10,20) is stored. [15,25) clashes with it and is refused. [20,30) only touches the first slot at 20, so it is stored.
-```
-
-**Example 2:**
-```
-Input: operations = ["MyCalendar","book","book"], args = [[],[5,10],[10,15]]
-Output: [1,1]
-Explanation: Touching at 10 is allowed, so both succeed.
-```
-
-**Example 3:**
-```
-Input: operations = ["MyCalendar","book","book"], args = [[],[0,5],[3,7]]
-Output: [1,0]
-Explanation: The second request overlaps the first and is refused.
-```
-
 **Constraints:**
 - `1 <= operations.length <= 1000`
 - `0 <= start < end <= 10^9`

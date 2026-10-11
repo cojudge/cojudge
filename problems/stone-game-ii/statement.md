@@ -8,19 +8,6 @@ Removal continues until no pile remains.
 
 Both competitors choose optimally. Return the largest total Alice can finish with.
 
-**Example 1:**
-```
-Input: piles = [2,7,9,4,4]
-Output: 10
-Explanation: Opening with one pile lets Bob respond with two piles, after which Alice collects two more piles, giving her 2 + 4 + 4 = 10 in all. Opening with two piles lets Bob answer with three piles, holding Alice to 2 + 7 = 9. Opening with three piles lets Bob sweep the last four piles, again holding Alice to 9. Hence 10 is the best Alice can secure.
-```
-
-**Example 2:**
-```
-Input: piles = [1,2,3,4,5,100]
-Output: 104
-```
-
 **Constraints:**
 - 1 ≤ piles.length ≤ 100
 - 1 ≤ piles[i] ≤ 10<sup>4</sup>

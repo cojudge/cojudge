@@ -2,19 +2,6 @@ Place `n` queens on an `n x n` board so that no two queens share a row, column, 
 
 For a given board size `n`, count how many different valid arrangements exist. Two arrangements differ when at least one queen occupies a different square.
 
-**Example 1:**
-```
-Input: n = 4
-Output: 2
-Explanation: The 4 x 4 board admits two different valid placements.
-```
-
-**Example 2:**
-```
-Input: n = 1
-Output: 1
-```
-
 **Constraints:**
 
 - `1 <= n <= 9`

@@ -6,18 +6,6 @@ Taking the turned list `nums` plus an integer `target`, state whether `target` s
 
 Try to hold the total number of operations down as far as you can.
 
-**Example 1:**
-```
-Input: nums = [2,5,6,0,0,1,2], target = 0
-Output: true
-```
-
-**Example 2:**
-```
-Input: nums = [2,5,6,0,0,1,2], target = 3
-Output: false
-```
-
 **Constraints:**
 - `1 <= nums.length <= 5000`
 - `-10^4 <= nums[i] <= 10^4`

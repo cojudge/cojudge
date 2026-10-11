@@ -4,27 +4,6 @@ The encoding used here lists values in breadth order with `null` separating each
 
 Write a function `codecRoundTrip` that accepts one such string `data`, parses it into an N-ary tree, serializes the tree back with the same grouping rule, parses once more and serializes again, then returns the final string. A correct implementation returns the canonical form of its input.
 
-**Example 1:**
-```
-Input: data = "[1,null,3,2,4,null,5,6]"
-Output: "[1,null,3,2,4,null,5,6]"
-Explanation: Parsing and re-serializing preserves the grouping.
-```
-
-**Example 2:**
-```
-Input: data = "[]"
-Output: "[]"
-Explanation: The empty tree round-trips to itself.
-```
-
-**Example 3:**
-```
-Input: data = "[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]"
-Output: "[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]"
-Explanation: A deeper tree survives the double round-trip unchanged.
-```
-
 **Constraints:**
 - The node count lies in `[0, 10^4]`.
 - Node values are integers.

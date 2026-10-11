@@ -12,27 +12,6 @@ Return the smallest number of moves needed to collect every key present in the g
 
 Adaptation note: the grid is passed as a string array (one string per row) and the answer is an integer, using only the allowed `string_array` and `int` types.
 
-**Example 1:**
-```
-Input: grid = ["@.a..","###.#","b.A.B"]
-Output: 8
-Explanation: One shortest walk needs eight steps to gather both keys.
-```
-
-**Example 2:**
-```
-Input: grid = ["@..aA","..B#.","....b"]
-Output: 6
-Explanation: Six moves suffice to gather both keys in this layout.
-```
-
-**Example 3:**
-```
-Input: grid = ["@Aa"]
-Output: -1
-Explanation: The key sits behind its own lock with no way around.
-```
-
 **Constraints:**
 - `1 <= grid.length <= 30`
 - `1 <= grid[i].length <= 30`

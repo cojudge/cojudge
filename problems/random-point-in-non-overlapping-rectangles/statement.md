@@ -4,22 +4,6 @@ The original challenge asks for a class that returns a uniformly random covered 
 
 The checker does not test randomness or distribution — it only verifies containment. Hence returning a corner of the first rectangle is accepted, as is any other covered point.
 
-**Example 1:**
-```
-Input: rects = [[-2,-2,1,1],[2,2,4,6]]
-Output: [0,0]
-Explanation: Both [0,0] (first rectangle) and [3,3] (second rectangle) are valid answers.
-```
-
-**Example 2:**
-```
-Input: rects = [[0,0,0,0]]
-Output: [0,0]
-Explanation: The single-cell rectangle covers exactly one point.
-```
-
-**Adaptation note:** The LeetCode class `Solution(rects)` plus `pick()` becomes the function `pickPoint(rects)` here, and `isCorrect` checks containment instead of uniformity. Documented as required for non-standard types.
-
 **Constraints:**
 - `1 <= rects.length <= 100`
 - Each rectangle has 4 entries with `a < x` or `a == x` allowed only for degenerate single points; generally `a <= x` and `b <= y`
