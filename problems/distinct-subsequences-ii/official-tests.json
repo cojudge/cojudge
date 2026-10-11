@@ -1,0 +1,86 @@
+[
+  {
+    "s": "abc"
+  },
+  {
+    "s": "aba"
+  },
+  {
+    "s": "aaa"
+  },
+  {
+    "s": "a"
+  },
+  {
+    "s": "z"
+  },
+  {
+    "s": "ab"
+  },
+  {
+    "s": "aa"
+  },
+  {
+    "s": "abcdef"
+  },
+  {
+    "s": "aaaa"
+  },
+  {
+    "s": "abab"
+  },
+  {
+    "s": "abcabc"
+  },
+  {
+    "s": "leetcode"
+  },
+  {
+    "s": "aaaaa"
+  },
+  {
+    "s": "ababa"
+  },
+  {
+    "s": "xyzzy"
+  },
+  {
+    "s": "abcdefg"
+  },
+  {
+    "s": "aab"
+  },
+  {
+    "s": "abb"
+  },
+  {
+    "s": "abcdabcd"
+  },
+  {
+    "s": "zzzzz"
+  },
+  {
+    "s": "abcde"
+  },
+  {
+    "s": "aabbcc"
+  },
+  {
+    "s": "abccba"
+  },
+  {
+    "s": "hello"
+  },
+  {
+    "s": "banana"
+  },
+  {
+    "s": "mississippi"
+  },
+  {
+    "s": "abcdefghij"
+  },
+  {
+    "s": "aabbccddee"
+  }
+]

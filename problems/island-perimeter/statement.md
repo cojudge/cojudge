@@ -1,8 +1,8 @@
-You are given `row x col` `grid` representing a map where `grid[i][j] = 1` represents land and `grid[i][j] = 0` represents water.
+You are handed a `row x col` matrix `grid` describing a map, where `grid[i][j] = 1` marks ground and `grid[i][j] = 0` marks water.
 
-Grid cells are connected horizontally/vertically (not diagonally). The grid is completely surrounded by water, and there is exactly one island (i.e., one or more connected land cells).
+Treat cells as linked across shared sides, not corners. The map is ringed entirely by water and holds a single island — one connected cluster of ground cells.
 
-The island does not have "lakes", meaning the water inside is not connected to the water around the island. One cell is a square with side length 1. The grid is rectangular, width and height do not exceed 100. Determine the perimeter of the island.
+That island encloses no isolated water: no water cell inside its boundary is cut off from the surrounding water. Picture every cell as a 1-by-1 square, with the whole rectangle no taller or wider than 100 cells. Compute the length of the island's outline.
 
 **Example 1:**
 ```

@@ -1,0 +1,65 @@
+{
+  "id": "encode-string-with-shortest-length",
+  "title": "536. Encode String with Shortest Length",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/encode-string-with-shortest-length/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "s = \"aaa\"",
+      "output": "\"aaa\"",
+      "explanation": "Encoding as \"3[a]\" would be longer (4 vs 3), so the original string stays."
+    },
+    {
+      "input": "s = \"aaaaa\"",
+      "output": "\"5[a]\"",
+      "explanation": "Five copies of \"a\" compress to \"5[a]\"."
+    },
+    {
+      "input": "s = \"ababab\"",
+      "output": "\"3[ab]\"",
+      "explanation": "Three copies of \"ab\" compress to \"3[ab]\"."
+    },
+    {
+      "input": "s = \"abbbabbbcabbbabbbc\"",
+      "output": "\"2[2[abbb]c]\"",
+      "explanation": "The inner block \"abbbabbbc\" first compresses to \"2[abbb]c\", and doubling it gives the shortest form."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String encode(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def encode(self, s: str) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string encode(string s) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string Encode(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn encode(s: String) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc Encode(s string) string {\n    \n}",
+    "typescript": "export function encode(s: string): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string\n     */\n    public function encode($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "aaa"
+    },
+    {
+      "s": "aaaaa"
+    },
+    {
+      "s": "ababab"
+    },
+    {
+      "s": "abbbabbbcabbbabbbc"
+    }
+  ],
+  "functionName": "encode",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Let dp[i][j] be the shortest encoding of the slice s[i..j]: split it at every k and keep the best concatenation.",
+    "Also test whether the whole slice is a repetition of a smaller block, using the doubled-string trick to find the period."
+  ]
+}

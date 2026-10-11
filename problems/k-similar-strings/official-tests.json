@@ -1,0 +1,114 @@
+[
+  {
+    "s1": "ab",
+    "s2": "ba"
+  },
+  {
+    "s1": "abc",
+    "s2": "bca"
+  },
+  {
+    "s1": "abac",
+    "s2": "baca"
+  },
+  {
+    "s1": "aabc",
+    "s2": "abca"
+  },
+  {
+    "s1": "a",
+    "s2": "a"
+  },
+  {
+    "s1": "ab",
+    "s2": "ab"
+  },
+  {
+    "s1": "abc",
+    "s2": "abc"
+  },
+  {
+    "s1": "abc",
+    "s2": "acb"
+  },
+  {
+    "s1": "abcd",
+    "s2": "badc"
+  },
+  {
+    "s1": "abcd",
+    "s2": "dcba"
+  },
+  {
+    "s1": "aabb",
+    "s2": "bbaa"
+  },
+  {
+    "s1": "abac",
+    "s2": "acab"
+  },
+  {
+    "s1": "abcde",
+    "s2": "edcba"
+  },
+  {
+    "s1": "aabbc",
+    "s2": "bbcaa"
+  },
+  {
+    "s1": "abcab",
+    "s2": "bacba"
+  },
+  {
+    "s1": "abcdef",
+    "s2": "fedcba"
+  },
+  {
+    "s1": "aaabbb",
+    "s2": "bbbaaa"
+  },
+  {
+    "s1": "abcdab",
+    "s2": "badcba"
+  },
+  {
+    "s1": "abccba",
+    "s2": "abccba"
+  },
+  {
+    "s1": "abcabc",
+    "s2": "cbaabc"
+  },
+  {
+    "s1": "aabbcc",
+    "s2": "ccbbaa"
+  },
+  {
+    "s1": "ab",
+    "s2": "ba"
+  },
+  {
+    "s1": "aa",
+    "s2": "aa"
+  },
+  {
+    "s1": "abcd",
+    "s2": "abcd"
+  },
+  {
+    "s1": "bac",
+    "s2": "abc"
+  },
+  {
+    "s1": "cba",
+    "s2": "abc"
+  },
+  {
+    "s1": "abca",
+    "s2": "acab"
+  },
+  {
+    "s1": "aabb",
+    "s2": "abab"
+  }
+]

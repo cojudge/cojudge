@@ -1,0 +1,65 @@
+{
+  "id": "employee-importance",
+  "title": "705. Employee Importance",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/employee-importance/",
+  "category": "hash-table",
+  "examples": [
+    {
+      "input": "employees = [[1,5,2,3],[2,3],[3,3]], id = 1",
+      "output": "11",
+      "explanation": "5 + 3 + 3 = 11."
+    },
+    {
+      "input": "employees = [[1,2,2],[2,3]], id = 2",
+      "output": "3",
+      "explanation": "No reports, so 3."
+    },
+    {
+      "input": "employees = [[10,4,20,30],[20,2],[30,6,40],[40,1]], id = 10",
+      "output": "13",
+      "explanation": "4 + 2 + 6 + 1 = 13."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int getImportance(int[][] employees, int id) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def getImportance(self, employees: List[List[int]], id: int) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int getImportance(vector<vector<int>>& employees, int id) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int GetImportance(int[][] employees, int id)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn get_importance(employees: Vec<Vec<i32>>, id: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc GetImportance(employees [][]int, id int) int {\n    return 0\n}",
+    "typescript": "export function getImportance(employees: number[][], id: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $employees\n     * @param int $id\n     * @return int\n     */\n    public function getImportance($employees, $id) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "employees": "[[1,5,2,3],[2,3],[3,3]]",
+      "id": 1
+    },
+    {
+      "employees": "[[1,2,2],[2,3]]",
+      "id": 2
+    },
+    {
+      "employees": "[[10,4,20,30],[20,2],[30,6,40],[40,1]]",
+      "id": 10
+    }
+  ],
+  "functionName": "getImportance",
+  "params": [
+    {
+      "name": "employees",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "id",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Adaptation: each employee is one integer row [id, importance, sub1, sub2, ...]; build a map from id to its row.",
+    "Walk from the queried id with a stack or queue, adding importance and pushing all listed subordinates.",
+    "A visited set guards against accidental repeats."
+  ]
+}

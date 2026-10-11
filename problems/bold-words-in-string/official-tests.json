@@ -1,0 +1,188 @@
+[
+  {
+    "words": [
+      "ab",
+      "bc"
+    ],
+    "s": "aabcd"
+  },
+  {
+    "words": [
+      "ab",
+      "cb"
+    ],
+    "s": "aabcd"
+  },
+  {
+    "words": [],
+    "s": "abc"
+  },
+  {
+    "words": [
+      "a"
+    ],
+    "s": "a"
+  },
+  {
+    "words": [
+      "ab"
+    ],
+    "s": "ab"
+  },
+  {
+    "words": [
+      "aa",
+      "bb"
+    ],
+    "s": "aabb"
+  },
+  {
+    "words": [
+      "aaa",
+      "aab",
+      "bc"
+    ],
+    "s": "aaabbcc"
+  },
+  {
+    "words": [
+      "abc"
+    ],
+    "s": "abcabc"
+  },
+  {
+    "words": [
+      "ab",
+      "bc",
+      "cd"
+    ],
+    "s": "abcd"
+  },
+  {
+    "words": [
+      "a",
+      "b",
+      "c"
+    ],
+    "s": "abc"
+  },
+  {
+    "words": [
+      "xyz"
+    ],
+    "s": "abc"
+  },
+  {
+    "words": [
+      "ab"
+    ],
+    "s": "aabbaa"
+  },
+  {
+    "words": [
+      "aa"
+    ],
+    "s": "aaaa"
+  },
+  {
+    "words": [
+      "ab",
+      "ba"
+    ],
+    "s": "abababa"
+  },
+  {
+    "words": [
+      "hello"
+    ],
+    "s": "hellohello"
+  },
+  {
+    "words": [
+      "a",
+      "aa",
+      "aaa"
+    ],
+    "s": "aaaaa"
+  },
+  {
+    "words": [
+      "abc",
+      "bcd",
+      "cde"
+    ],
+    "s": "abcde"
+  },
+  {
+    "words": [
+      "ab",
+      "cd"
+    ],
+    "s": "abcd"
+  },
+  {
+    "words": [
+      "ab",
+      "cd"
+    ],
+    "s": "abxcd"
+  },
+  {
+    "words": [
+      "e"
+    ],
+    "s": "eeee"
+  },
+  {
+    "words": [
+      "long"
+    ],
+    "s": "short"
+  },
+  {
+    "words": [
+      "s"
+    ],
+    "s": "mississippi"
+  },
+  {
+    "words": [
+      "is",
+      "si"
+    ],
+    "s": "mississippi"
+  },
+  {
+    "words": [
+      "ab"
+    ],
+    "s": "c"
+  },
+  {
+    "words": [
+      "a"
+    ],
+    "s": "bbbb"
+  },
+  {
+    "words": [
+      "abc",
+      "def"
+    ],
+    "s": "abcdef"
+  },
+  {
+    "words": [
+      "abc",
+      "def"
+    ],
+    "s": "abcxdef"
+  },
+  {
+    "words": [
+      "aa",
+      "aaa"
+    ],
+    "s": "aaaaaa"
+  }
+]

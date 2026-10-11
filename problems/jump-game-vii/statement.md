@@ -1,16 +1,16 @@
-You are given a **0-indexed** binary string `s` and two integers `minJump` and `maxJump`. In the beginning, you are standing at index `0`, which is equal to `'0'`. You can move from index `i` to index `j` if the following conditions are fulfilled:
+You start on position `0` of a binary string `s` indexed from zero; that starting character is `'0'`. Two integers `minJump` and `maxJump` bound each leap. A leap from position `i` to position `j` is allowed exactly when:
 
 - `i + minJump <= j <= min(i + maxJump, s.length - 1)`, and
 - `s[j] == '0'`.
 
-Return `true` if you can reach index `s.length - 1` in `s`, or `false` otherwise.
+Decide whether position `s.length - 1` can be reached through a chain of allowed leaps.
 
 **Example 1:**
 
 ```
 Input: s = "011010", minJump = 2, maxJump = 3
 Output: true
-Explanation: In the first step, move from index 0 to index 3.
+Explanation: One valid route first leaps from index 0 to index 3.
 ```
 
 **Example 2:**

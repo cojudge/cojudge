@@ -1,0 +1,56 @@
+{
+  "id": "valid-perfect-square",
+  "title": "446. Valid Perfect Square",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/valid-perfect-square/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "num = 16",
+      "output": "true",
+      "explanation": "4 * 4 equals 16."
+    },
+    {
+      "input": "num = 14",
+      "output": "false",
+      "explanation": "No integer squares to 14."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isPerfectSquare(int num) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def isPerfectSquare(self, num: int) -> bool:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool isPerfectSquare(int num) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool IsPerfectSquare(int num) \n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_perfect_square(num: i32) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc IsPerfectSquare(num int) bool {\n    \n}",
+    "typescript": "export function isPerfectSquare(num: number): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $num\n     * @return bool\n     */\n    public function isPerfectSquare($num) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "num": 16
+    },
+    {
+      "num": 14
+    },
+    {
+      "num": 1
+    },
+    {
+      "num": 25
+    }
+  ],
+  "functionName": "isPerfectSquare",
+  "params": [
+    {
+      "name": "num",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Binary search the candidate root between 1 and num / 2.",
+    "Compare with mid * mid using 64-bit arithmetic to avoid overflow.",
+    "Alternatively subtract consecutive odd numbers 1, 3, 5, ... until reaching zero or below."
+  ]
+}

@@ -1,6 +1,6 @@
-You are given inclusive intervals where `intervals[i] = [left, right]` and an array `queries`. The size of an interval is `right - left + 1`.
+You are given a collection of closed intervals with `intervals[i] = [left, right]`, plus an array `queries`. Define the length of an interval as `right - left + 1`.
 
-For each query, return the size of the smallest interval that contains it. If no interval contains a query, return `-1` for that position. Answers must follow the original order of `queries`.
+For every query value, identify the shortest interval from the collection that covers it (that is, `left <= query <= right`). When several intervals cover the same query, keep the one with the smallest length; when none covers it, record `-1` for that query. Collect these answers in an array that preserves the incoming order of `queries`.
 
 **Constraints:**
 

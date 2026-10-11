@@ -1,10 +1,10 @@
-Given an array `nums` of `n` integers, return an array of all the unique quadruplets `[nums[a], nums[b], nums[c], nums[d]]` such that:
+You receive an array `nums` of `n` integers plus an integer `target`. Gather every quadruplet of values `[nums[a], nums[b], nums[c], nums[d]]` picked from four pairwise-distinct positions:
 
-- 0 ≤ a, b, c, d < n
-- a, b, c, and d are distinct.
-- nums[a] + nums[b] + nums[c] + nums[d] == target
+- each index satisfies 0 ≤ a, b, c, d < n
+- the four indices are all different from one another
+- the four chosen elements add up to exactly `target`: nums[a] + nums[b] + nums[c] + nums[d] == target
 
-You may return the answer in any order.
+The collected quadruplets may come back in any order.
 
 **Constraints:**
 

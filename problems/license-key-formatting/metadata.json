@@ -1,0 +1,65 @@
+{
+  "id": "license-key-formatting",
+  "title": "546. License Key Formatting",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/license-key-formatting/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"5F3Z-2e-9-w\", k = 4",
+      "output": "\"5F3Z-2E9W\"",
+      "explanation": "Cleaned 5F3Z2E9W splits into two groups of 4."
+    },
+    {
+      "input": "s = \"2-5g-3-J\", k = 2",
+      "output": "\"2-5G-3J\"",
+      "explanation": "Cleaned 25G3J groups from the right into 2-5G-3J."
+    },
+    {
+      "input": "s = \"---a-a-a-\", k = 1",
+      "output": "\"A-A-A\"",
+      "explanation": "Each character stands alone."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String licenseKeyFormatting(String s, int k) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def licenseKeyFormatting(self, s: str, k: int) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string licenseKeyFormatting(string s, int k) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string LicenseKeyFormatting(string s, int k)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn license_key_formatting(s: String, k: i32) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc LicenseKeyFormatting(s string, k int) string {\n    return \"\"\n}",
+    "typescript": "export function licenseKeyFormatting(s: string, k: number): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param int $k\n     * @return string\n     */\n    public function licenseKeyFormatting($s, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "5F3Z-2e-9-w",
+      "k": 4
+    },
+    {
+      "s": "2-5g-3-J",
+      "k": 2
+    },
+    {
+      "s": "---a-a-a-",
+      "k": 1
+    }
+  ],
+  "functionName": "licenseKeyFormatting",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Strip dashes and uppercase in one pass.",
+    "Build the result backwards so full k-sized groups form naturally.",
+    "The first group is whatever remains; it must hold at least one character."
+  ]
+}

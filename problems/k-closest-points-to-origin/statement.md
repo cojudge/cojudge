@@ -1,8 +1,8 @@
-Given an array of points where `points[i] = [x_i, y_i]` and an integer `k`, return any `k` points closest to the origin `(0, 0)`.
+You receive a list `points` where `points[i] = [x_i, y_i]`, plus an integer `k`. Select `k` entries lying nearest to the coordinate origin `(0, 0)` and return them.
 
-The distance of `[x, y]` from the origin is `sqrt(x^2 + y^2)`. You may compare squared distances instead of computing square roots. The returned points may be in any order. If several points tie at the cutoff distance, any choice of enough tied input points is accepted.
+Measure nearness by `sqrt(x^2 + y^2)`; because squaring preserves order you may rank by `x^2 + y^2` directly. Result order is unrestricted. When multiple inputs share the boundary distance, returning any sufficient subset of those tied entries is fine.
 
-Every row in `points` contains exactly two integers.
+Each entry of `points` holds precisely two integers.
 
 **Constraints:**
 

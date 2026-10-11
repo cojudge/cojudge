@@ -1,18 +1,13 @@
-You are given an absolute path for a Unix-style file system, which always begins
-with a slash `/`. Transform this absolute path into its simplified canonical
-path.
+You receive a Unix-style absolute path, which by definition opens with `/`. Reduce it to its shortened canonical equivalent.
 
-The rules are:
+Apply these interpretations:
 
-- A single period `.` represents the current directory.
-- A double period `..` represents the previous/parent directory.
-- Multiple consecutive slashes such as `//` are treated as a single slash `/`.
-- Any sequence of periods that does not match the rules above (for example
-  `...`) is a valid directory name.
+- one dot `.` stands for the present folder;
+- two dots `..` stand for stepping up to the enclosing folder;
+- runs of slashes such as `//` collapse into a single `/`;
+- any other dot run, for instance `...`, counts as an ordinary folder name rather than a special token.
 
-The canonical path must start with a single slash `/`, separate directories
-with exactly one slash, not end with a slash (unless it is the root), and not
-contain `.` or `..`.
+The shortened result must open with exactly one `/`, join folders with a single `/`, never close with `/` (except for the lone root `/` itself), and leave out any `.` or `..` pieces.
 
 **Constraints:**
 

@@ -1,0 +1,59 @@
+{
+  "id": "n-ary-tree-postorder-traversal",
+  "title": "632. N-ary Tree Postorder Traversal",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/n-ary-tree-postorder-traversal/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "data = \"[1,null,3,2,4,null,5,6]\"",
+      "output": "[5,6,3,2,4,1]",
+      "explanation": "Children come before their parent, left to right."
+    },
+    {
+      "input": "data = \"[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]\"",
+      "output": "[6,11,7,2,12,8,3,13,9,4,14,10,5,1]",
+      "explanation": "Every subtree is fully listed before its root."
+    },
+    {
+      "input": "data = \"[]\"",
+      "output": "[]",
+      "explanation": "No nodes means no visits."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<Integer> postorder(String data) {\n        return new java.util.ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def postorder(self, data: str) -> List[int]:\n        pass",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> postorder(string data) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<int> Postorder(string data)\n    {\n        return new List<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn postorder(data: String) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc Postorder(data string) []int {\n    return []int{}\n}",
+    "typescript": "export function postorder(data: string): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $data\n     * @return int[]\n     */\n    public function postorder($data) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "data": "[1,null,3,2,4,null,5,6]"
+    },
+    {
+      "data": "[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]"
+    },
+    {
+      "data": "[]"
+    }
+  ],
+  "functionName": "postorder",
+  "params": [
+    {
+      "name": "data",
+      "type": "string"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Rebuild the tree from the bracket string with a queue first.",
+    "Walk depth-first, emitting a node only after all its children.",
+    "An empty input yields an empty list.",
+    "Adaptation: the N-ary Node input is encoded as a level-order string; output maps to int_list."
+  ]
+}

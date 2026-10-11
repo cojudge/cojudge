@@ -1,0 +1,73 @@
+{
+  "id": "design-in-memory-file-system",
+  "title": "630. Design In-Memory File System",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/design-in-memory-file-system/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "operations = [\"FileSystem\",\"mkdir\",\"ls\",\"addContentToFile\",\"readContentFromFile\",\"ls\"], paths = [\"/\",\"/a/b/c\",\"/\",\"/a/b/c/d\",\"/a/b/c/d\",\"/a/b/c\"], contents = [\"\",\"\",\"\",\"hello\",\"\",\"\"]",
+      "output": "[[\"a\"],[\"hello\"],[\"d\"]]",
+      "explanation": "Listing root shows a; reading the file gives hello; listing its folder shows d."
+    },
+    {
+      "input": "operations = [\"FileSystem\",\"mkdir\",\"ls\",\"addContentToFile\",\"ls\",\"readContentFromFile\"], paths = [\"/\",\"/x/y\",\"/\",\"/x/y/f\",\"/x/y\",\"/x/y/f\"], contents = [\"\",\"\",\"\",\"data\",\"\",\"\"]",
+      "output": "[[\"x\"],[\"f\"],[\"data\"]]",
+      "explanation": "Root holds x; the folder holds f; the file holds data."
+    },
+    {
+      "input": "operations = [\"FileSystem\",\"ls\"], paths = [\"/\"], contents = [\"\"]",
+      "output": "[[]]",
+      "explanation": "An empty tree lists nothing."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<List<String>> runFileSystem(String[] operations, String[] paths, String[] contents) {\n        return new java.util.ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runFileSystem(self, operations: List[str], paths: List[str], contents: List[str]) -> List[List[str]]:\n        pass",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<string>> runFileSystem(vector<string>& operations, vector<string>& paths, vector<string>& contents) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<List<string>> RunFileSystem(string[] operations, string[] paths, string[] contents)\n    {\n        return new List<List<string>>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_file_system(operations: Vec<String>, paths: Vec<String>, contents: Vec<String>) -> Vec<Vec<String>> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunFileSystem(operations []string, paths []string, contents []string) [][]string {\n    return [][]string{}\n}",
+    "typescript": "export function runFileSystem(operations: string[], paths: string[], contents: string[]): string[][] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param string[] $paths\n     * @param string[] $contents\n     * @return string[][]\n     */\n    public function runFileSystem($operations, $paths, $contents) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"FileSystem\",\"mkdir\",\"ls\",\"addContentToFile\",\"readContentFromFile\",\"ls\"]",
+      "paths": "[\"/\",\"/a/b/c\",\"/\",\"/a/b/c/d\",\"/a/b/c/d\",\"/a/b/c\"]",
+      "contents": "[\"\",\"\",\"\",\"hello\",\"\",\"\"]"
+    },
+    {
+      "operations": "[\"FileSystem\",\"mkdir\",\"ls\",\"addContentToFile\",\"ls\",\"readContentFromFile\"]",
+      "paths": "[\"/\",\"/x/y\",\"/\",\"/x/y/f\",\"/x/y\",\"/x/y/f\"]",
+      "contents": "[\"\",\"\",\"\",\"data\",\"\",\"\"]"
+    },
+    {
+      "operations": "[\"FileSystem\",\"ls\"]",
+      "paths": "[\"/\"]",
+      "contents": "[\"\"]"
+    }
+  ],
+  "functionName": "runFileSystem",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "paths",
+      "type": "string_array"
+    },
+    {
+      "name": "contents",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list_2d",
+  "hints": [
+    "Keep a set of directory paths plus a map from file path to its text.",
+    "mkdir adds every missing prefix; adding content creates parent dirs first and appends.",
+    "ls on a file returns its name; ls on a directory returns sorted immediate children.",
+    "Adaptation: implement runFileSystem(operations, paths, contents); void calls produce no rows, while ls and read each append one row."
+  ]
+}

@@ -97,6 +97,12 @@ func displayOutput(x interface{}) string {
             res = append(res, strconv.Itoa(cur.Val))
         }
         return "[" + strings.Join(res, ",") + "]"
+    case []*ListNode:
+        parts := make([]string, len(v))
+        for i, n := range v {
+            parts[i] = displayOutput(n)
+        }
+        return "[" + strings.Join(parts, ",") + "]"
     case *TreeNode:
         if v == nil {
             return "[]"

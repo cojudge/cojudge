@@ -1,0 +1,58 @@
+{
+  "id": "tag-validator",
+  "title": "633. Tag Validator",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/tag-validator/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "code = \"<DIV>This is the first line <![CDATA[<div>]]></DIV>\"",
+      "output": "true",
+      "explanation": "One outer block wraps text plus a CDATA chunk."
+    },
+    {
+      "input": "code = \"<DIV>>>  ![cdata[]] <![CDATA[<div>]>]]>]]>>]</DIV>\"",
+      "output": "true",
+      "explanation": "Nested-looking symbols inside CDATA do not break parsing."
+    },
+    {
+      "input": "code = \"<A>  <B> </A>   </B>\"",
+      "output": "false",
+      "explanation": "Closing order does not match opening order."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isValid(String code) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def isValid(self, code: str) -> bool:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool isValid(string code) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool IsValid(string code)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_valid(code: String) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc IsValid(code string) bool {\n    return false\n}",
+    "typescript": "export function isValid(code: string): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $code\n     * @return bool\n     */\n    public function isValid($code) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "code": "<DIV>This is the first line <![CDATA[<div>]]></DIV>"
+    },
+    {
+      "code": "<DIV>>>  ![cdata[]] <![CDATA[<div>]>]]>]]>>]</DIV>"
+    },
+    {
+      "code": "<A>  <B> </A>   </B>"
+    }
+  ],
+  "functionName": "isValid",
+  "params": [
+    {
+      "name": "code",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "The whole string must be exactly one outer tag pair with nothing outside it.",
+    "Track open tags on a stack; CDATA sections only count when the stack is non-empty.",
+    "Tag names use 1-9 uppercase letters; CDATA opens with <![CDATA[ and closes with ]]> ."
+  ]
+}

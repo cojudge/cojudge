@@ -1,0 +1,177 @@
+[
+  {
+    "emails": [
+      "test.email+alex@leetcode.com",
+      "test.e.mail+bob.cathy@leetcode.com",
+      "testemail+david@lee.tcode.com"
+    ]
+  },
+  {
+    "emails": [
+      "a@leetcode.com",
+      "b@leetcode.com",
+      "c@leetcode.com"
+    ]
+  },
+  {
+    "emails": [
+      "test.email+alex@leetcode.com",
+      "test.email.leet+alex@code.com"
+    ]
+  },
+  {
+    "emails": [
+      "a@b.com"
+    ]
+  },
+  {
+    "emails": [
+      "a+b@b.com",
+      "a@b.com"
+    ]
+  },
+  {
+    "emails": [
+      "a.b@b.com",
+      "ab@b.com"
+    ]
+  },
+  {
+    "emails": [
+      "a.b+c@b.com",
+      "ab@b.com"
+    ]
+  },
+  {
+    "emails": [
+      "x@y.com",
+      "x@y.com"
+    ]
+  },
+  {
+    "emails": [
+      "ab.cd+ef@xy.com",
+      "abcd@xy.com",
+      "ab.cd@xy.com"
+    ]
+  },
+  {
+    "emails": [
+      "foo.bar+baz@qux.com",
+      "foobar@qux.com"
+    ]
+  },
+  {
+    "emails": [
+      "a.a.a@x.com",
+      "aaa@x.com"
+    ]
+  },
+  {
+    "emails": [
+      "a+a+a@x.com",
+      "a@x.com"
+    ]
+  },
+  {
+    "emails": [
+      "m.y+name@email.com",
+      "my@email.com",
+      "my+spam@email.com"
+    ]
+  },
+  {
+    "emails": [
+      "test@leetcode.com",
+      "test@lee.tcode.com"
+    ]
+  },
+  {
+    "emails": [
+      "a@b.com",
+      "a+b@b.com",
+      "a.b@b.com",
+      "a.b+c@b.com"
+    ]
+  },
+  {
+    "emails": [
+      "z@z.com",
+      "z.+1@z.com"
+    ]
+  },
+  {
+    "emails": [
+      "123+456@789.com",
+      "123@789.com"
+    ]
+  },
+  {
+    "emails": [
+      "a.b.c.d@x.com",
+      "abcd@x.com"
+    ]
+  },
+  {
+    "emails": [
+      "q+w.e+r@w.com",
+      "qw@w.com"
+    ]
+  },
+  {
+    "emails": [
+      "u@v.com",
+      "u+@v.com"
+    ]
+  },
+  {
+    "emails": [
+      "dot.dot@dom.com",
+      "dotdot@dom.com"
+    ]
+  },
+  {
+    "emails": [
+      "plus+plus@dom.com",
+      "plus@dom.com"
+    ]
+  },
+  {
+    "emails": [
+      "A@b.com"
+    ]
+  },
+  {
+    "emails": [
+      "a@b.com",
+      "A@b.com"
+    ]
+  },
+  {
+    "emails": [
+      "first.last@x.com",
+      "firstlast@x.com",
+      "first+last@x.com"
+    ]
+  },
+  {
+    "emails": [
+      "aa@bb.com",
+      "aa+bb@bb.com",
+      "a.a@bb.com"
+    ]
+  },
+  {
+    "emails": [
+      "k.k.k+k@e.com",
+      "kkk@e.com"
+    ]
+  },
+  {
+    "emails": [
+      "solo@mail.com",
+      "solo+1@mail.com",
+      "s.o.l.o@mail.com"
+    ]
+  }
+]

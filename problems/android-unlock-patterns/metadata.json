@@ -1,0 +1,65 @@
+{
+  "id": "android-unlock-patterns",
+  "title": "431. Android Unlock Patterns",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/android-unlock-patterns/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "m = 1, n = 1",
+      "output": "9",
+      "explanation": "Nine choices for a single dot."
+    },
+    {
+      "input": "m = 1, n = 2",
+      "output": "65",
+      "explanation": "9 singles plus 56 valid ordered pairs."
+    },
+    {
+      "input": "m = 2, n = 2",
+      "output": "56",
+      "explanation": "Only the valid two-hop patterns count."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numberOfPatterns(int m, int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def numberOfPatterns(self, m: int, n: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int numberOfPatterns(int m, int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int NumberOfPatterns(int m, int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn number_of_patterns(m: i32, n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumberOfPatterns(m int, n int) int {\n    return 0\n}",
+    "typescript": "export function numberOfPatterns(m: number, n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $m\n     * @param int $n\n     * @return int\n     */\n    public function numberOfPatterns($m, $n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "m": 1,
+      "n": 1
+    },
+    {
+      "m": 1,
+      "n": 2
+    },
+    {
+      "m": 2,
+      "n": 2
+    }
+  ],
+  "functionName": "numberOfPatterns",
+  "params": [
+    {
+      "name": "m",
+      "type": "int"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Precompute the jumped dot for every ordered pair (most pairs need none).",
+    "Depth-first search over used-dot masks, adding to the total whenever length reaches [m, n].",
+    "Exploit symmetry: corners (1,3,7,9) match, edges (2,4,6,8) match, center (5) is unique."
+  ]
+}

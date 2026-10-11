@@ -1,0 +1,64 @@
+{
+  "id": "long-pressed-name",
+  "title": "912. Long Pressed Name",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/long-pressed-name/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "name = \"alex\", typed = \"aaleex\"",
+      "output": "true",
+      "explanation": "The letters 'a' and 'e' were held a little longer."
+    },
+    {
+      "input": "name = \"saeed\", typed = \"ssaaedd\"",
+      "output": "false",
+      "explanation": "The count of 'e' does not line up."
+    },
+    {
+      "input": "name = \"leelee\", typed = \"lleeelee\"",
+      "output": "true"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isLongPressedName(String name, String typed) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def isLongPressedName(self, name: str, typed: str) -> bool:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool isLongPressedName(string name, string typed) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool IsLongPressedName(string name, string typed)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_long_pressed_name(name: String, typed: String) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc IsLongPressedName(name string, typed string) bool {\n    return false\n}",
+    "typescript": "export function isLongPressedName(name: string, typed: string): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $name\n     * @param string $typed\n     * @return bool\n     */\n    public function isLongPressedName($name, $typed) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "name": "alex",
+      "typed": "aaleex"
+    },
+    {
+      "name": "saeed",
+      "typed": "ssaaedd"
+    },
+    {
+      "name": "leelee",
+      "typed": "lleeelee"
+    }
+  ],
+  "functionName": "isLongPressedName",
+  "params": [
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "typed",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Track one index into the intended name while scanning the typed text from left to right.",
+    "A typed character either consumes the next needed name character or repeats the previous typed character.",
+    "If the scan ends with unmatched name characters left over, the answer is false."
+  ]
+}

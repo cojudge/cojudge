@@ -1,0 +1,64 @@
+{
+  "id": "find-anagram-mappings",
+  "title": "762. Find Anagram Mappings",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/find-anagram-mappings/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums1 = [12,28,46,32,50], nums2 = [50,12,32,46,28]",
+      "output": "[1,4,3,2,0]",
+      "explanation": "Each value in nums1 is paired with an equal value in nums2; repeated values may use any matching slot."
+    },
+    {
+      "input": "nums1 = [84,46], nums2 = [84,46]",
+      "output": "[0,1]"
+    },
+    {
+      "input": "nums1 = [1,1,2], nums2 = [2,1,1]",
+      "output": "[1,2,0]",
+      "explanation": "The two 1s share nums2 slots 1 and 2 in either order."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] anagramMappings(int[] nums1, int[] nums2) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def anagramMappings(self, nums1: List[int], nums2: List[int]) -> List[int]:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> anagramMappings(vector<int>& nums1, vector<int>& nums2) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] AnagramMappings(int[] nums1, int[] nums2)\n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn anagram_mappings(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc AnagramMappings(nums1 []int, nums2 []int) []int {\n    \n}",
+    "typescript": "export function anagramMappings(nums1: number[], nums2: number[]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums1\n     * @param int[] $nums2\n     * @return int[]\n     */\n    public function anagramMappings($nums1, $nums2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums1": "[12,28,46,32,50]",
+      "nums2": "[50,12,32,46,28]"
+    },
+    {
+      "nums1": "[84,46]",
+      "nums2": "[84,46]"
+    },
+    {
+      "nums1": "[1,1,2]",
+      "nums2": "[2,1,1]"
+    }
+  ],
+  "functionName": "anagramMappings",
+  "params": [
+    {
+      "name": "nums1",
+      "type": "int_array"
+    },
+    {
+      "name": "nums2",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Record every position of each value in the second array, for example with a map from value to a queue of indices.",
+    "Then walk the first array once, popping one stored index for each value.",
+    "The checker accepts any pairing of equal values, so duplicates need no special ordering."
+  ]
+}

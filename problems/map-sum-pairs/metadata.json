@@ -1,0 +1,67 @@
+{
+  "id": "map-sum-pairs",
+  "title": "696. Map Sum Pairs",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/map-sum-pairs/",
+  "category": "hash-table",
+  "examples": [
+    {
+      "input": "operations = [\"insert\",\"sum\",\"insert\",\"sum\"], keys = [\"apple\",\"ap\",\"app\",\"ap\"], vals = [3,0,2,0]",
+      "output": "[3,5]",
+      "explanation": "After apple=3, prefix ap sums to 3. After app=2, prefix ap sums to 3+2=5."
+    },
+    {
+      "input": "operations = [\"insert\",\"insert\",\"sum\"], keys = [\"aa\",\"aa\",\"a\"], vals = [2,3,0]",
+      "output": "[3]",
+      "explanation": "The second insert overwrites aa to 3, so prefix a sums to 3."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runMapSum(String[] operations, String[] keys, int[] vals) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runMapSum(self, operations: List[str], keys: List[str], vals: List[int]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runMapSum(vector<string>& operations, vector<string>& keys, vector<int>& vals) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] RunMapSum(string[] operations, string[] keys, int[] vals) \n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_map_sum(operations: Vec<String>, keys: Vec<String>, vals: Vec<i32>) -> Vec<i32> {\n        Vec::new()\n    }\n}",
+    "go": "package main\n\nfunc RunMapSum(operations []string, keys []string, vals []int) []int {\n    return nil\n}",
+    "typescript": "export function runMapSum(operations: string[], keys: string[], vals: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param string[] $keys\n     * @param int[] $vals\n     * @return int[]\n     */\n    public function runMapSum($operations, $keys, $vals) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"insert\",\"sum\",\"insert\",\"sum\"]",
+      "keys": "[\"apple\",\"ap\",\"app\",\"ap\"]",
+      "vals": "[3,0,2,0]"
+    },
+    {
+      "operations": "[\"insert\",\"insert\",\"sum\"]",
+      "keys": "[\"aa\",\"aa\",\"a\"]",
+      "vals": "[2,3,0]"
+    },
+    {
+      "operations": "[\"insert\",\"sum\"]",
+      "keys": "[\"a\",\"a\"]",
+      "vals": "[5,0]"
+    }
+  ],
+  "functionName": "runMapSum",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "keys",
+      "type": "string_array"
+    },
+    {
+      "name": "vals",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Design adaptation: implement runMapSum(operations, keys, vals); insert uses keys[i]/vals[i], sum uses keys[i] as the prefix and ignores vals[i].",
+    "Keep a map from full key to its current value; overwrites replace the old value.",
+    "A sum scans all stored keys with the given prefix and adds their values."
+  ]
+}

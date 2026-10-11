@@ -1,0 +1,114 @@
+[
+  {
+    "maxChoosableInteger": 10,
+    "desiredTotal": 11
+  },
+  {
+    "maxChoosableInteger": 10,
+    "desiredTotal": 0
+  },
+  {
+    "maxChoosableInteger": 10,
+    "desiredTotal": 1
+  },
+  {
+    "maxChoosableInteger": 5,
+    "desiredTotal": 50
+  },
+  {
+    "maxChoosableInteger": 3,
+    "desiredTotal": 6
+  },
+  {
+    "maxChoosableInteger": 4,
+    "desiredTotal": 6
+  },
+  {
+    "maxChoosableInteger": 8,
+    "desiredTotal": 5
+  },
+  {
+    "maxChoosableInteger": 1,
+    "desiredTotal": 1
+  },
+  {
+    "maxChoosableInteger": 1,
+    "desiredTotal": 2
+  },
+  {
+    "maxChoosableInteger": 2,
+    "desiredTotal": 3
+  },
+  {
+    "maxChoosableInteger": 3,
+    "desiredTotal": 5
+  },
+  {
+    "maxChoosableInteger": 7,
+    "desiredTotal": 16
+  },
+  {
+    "maxChoosableInteger": 12,
+    "desiredTotal": 36
+  },
+  {
+    "maxChoosableInteger": 20,
+    "desiredTotal": 40
+  },
+  {
+    "maxChoosableInteger": 3,
+    "desiredTotal": 2
+  },
+  {
+    "maxChoosableInteger": 4,
+    "desiredTotal": 10
+  },
+  {
+    "maxChoosableInteger": 5,
+    "desiredTotal": 10
+  },
+  {
+    "maxChoosableInteger": 6,
+    "desiredTotal": 15
+  },
+  {
+    "maxChoosableInteger": 7,
+    "desiredTotal": 10
+  },
+  {
+    "maxChoosableInteger": 8,
+    "desiredTotal": 12
+  },
+  {
+    "maxChoosableInteger": 10,
+    "desiredTotal": 40
+  },
+  {
+    "maxChoosableInteger": 10,
+    "desiredTotal": 55
+  },
+  {
+    "maxChoosableInteger": 20,
+    "desiredTotal": 1
+  },
+  {
+    "maxChoosableInteger": 20,
+    "desiredTotal": 300
+  },
+  {
+    "maxChoosableInteger": 5,
+    "desiredTotal": 15
+  },
+  {
+    "maxChoosableInteger": 6,
+    "desiredTotal": 21
+  },
+  {
+    "maxChoosableInteger": 10,
+    "desiredTotal": 5
+  },
+  {
+    "maxChoosableInteger": 4,
+    "desiredTotal": 4
+  }
+]

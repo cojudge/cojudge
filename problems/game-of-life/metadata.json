@@ -1,0 +1,58 @@
+{
+  "id": "game-of-life",
+  "title": "385. Game of Life",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/game-of-life/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "board = [[0,1,0],[0,0,1],[1,1,1],[0,0,0]]",
+      "output": "[[0,0,0],[1,0,1],[0,1,1],[0,1,0]]",
+      "explanation": "Standard glider step computed simultaneously from live-neighbor counts."
+    },
+    {
+      "input": "board = [[1,1],[1,0]]",
+      "output": "[[1,1],[1,1]]",
+      "explanation": "Three live cells around the dead corner bring it to life."
+    },
+    {
+      "input": "board = [[0]]",
+      "output": "[[0]]",
+      "explanation": "A lone dead cell stays dead."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] gameOfLife(int[][] board) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def gameOfLife(self, board: List[List[int]]) -> List[List[int]]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> gameOfLife(vector<vector<int>>& board) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[][] GameOfLife(int[][] board) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn game_of_life(board: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc GameOfLife(board [][]int) [][]int {\n    \n}",
+    "typescript": "export function gameOfLife(board: number[][]): number[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $board\n     * @return int[][]\n     */\n    public function gameOfLife($board) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "board": "[[0,1,0],[0,0,1],[1,1,1],[0,0,0]]"
+    },
+    {
+      "board": "[[1,1],[1,0]]"
+    },
+    {
+      "board": "[[0]]"
+    }
+  ],
+  "functionName": "gameOfLife",
+  "params": [
+    {
+      "name": "board",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Adaptation: the original updates in place with void; here return the next board.",
+    "Count the eight neighbors for each cell from a snapshot before writing any change.",
+    "Live survives with 2-3 neighbors; dead becomes live with exactly 3."
+  ]
+}

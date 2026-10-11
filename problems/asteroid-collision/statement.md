@@ -1,11 +1,6 @@
-We are given an array `asteroids` of integers representing asteroids in a row.
-For each asteroid, the absolute value represents its size, and the sign
-represents its direction (positive meaning right, negative meaning left).
-Each asteroid moves at the same speed.
+A single-file line of space rocks is described by the array `asteroids`: the magnitude of each entry gives that rock's size, while its sign gives its travel direction — a positive value drifts right and a negative value drifts left. Every rock advances at an identical pace.
 
-Find out the state of the asteroids after all collisions. If two asteroids
-meet, the smaller one will explode. If both are the same size, both will
-explode. Two asteroids moving in the same direction will never meet.
+Simulate the line until nothing else can crash and report the survivors in their original left-to-right order. Whenever two rocks travelling toward each other connect, the lighter one shatters; when both weigh the same, each shatters. Rocks already heading the same way never catch up to one another, so they never connect.
 
 **Constraints:**
 

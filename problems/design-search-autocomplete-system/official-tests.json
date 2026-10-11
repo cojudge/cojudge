@@ -1,0 +1,114 @@
+[
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\", \"input\", \"input\"]",
+    "values": "[\"i love you:5;island:3;ironman:2;i love leetcode:2\", \"i\", \" \", \"a\", \"#\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\"]",
+    "values": "[\"abc:2;abd:2;abe:2\", \"a\", \"b\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\"]",
+    "values": "[\"\", \"z\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\", \"input\"]",
+    "values": "[\"i love you:5\", \"i\", \" \", \"#\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\", \"input\", \"input\", \"input\"]",
+    "values": "[\"a:1;b:1\", \"a\", \"#\", \"b\", \"#\", \"a\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\"]",
+    "values": "[\"hello:3;hell:2;heaven:2\", \"h\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\"]",
+    "values": "[\"hello:3;hell:2;heaven:2\", \"h\", \"e\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\", \"input\"]",
+    "values": "[\"ab:1;ac:1;ad:1;ae:1\", \"a\", \"b\", \"#\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\"]",
+    "values": "[\"x:5;xy:4;xyz:3\", \"x\", \"y\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\", \"input\", \"input\"]",
+    "values": "[\"code:2\", \"c\", \"o\", \"d\", \"e\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\"]",
+    "values": "[\"b:2;a:2;c:2\", \"a\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\", \"input\"]",
+    "values": "[\"aa:1\", \"a\", \"a\", \"#\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\"]",
+    "values": "[\"i love coding:3;i love coffee:3\", \"i\", \" \"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\", \"input\", \"input\", \"input\", \"input\"]",
+    "values": "[\"t:1\", \"t\", \"e\", \"s\", \"t\", \"#\", \"t\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\"]",
+    "values": "[\"ab c:2;ab d:2\", \"a\", \"b\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\", \"input\"]",
+    "values": "[\"ab c:2;ab d:2\", \"a\", \"b\", \" \"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\"]",
+    "values": "[\"z:1;za:1;zz:1;zb:1\", \"z\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\", \"input\"]",
+    "values": "[\"p:3;q:2\", \"p\", \"#\", \"p\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\", \"input\", \"input\"]",
+    "values": "[\"one:1;two:1\", \"o\", \"n\", \"e\", \"#\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\"]",
+    "values": "[\"apple:5;app:3;application:2\", \"a\", \"p\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\", \"input\"]",
+    "values": "[\"apple:5;app:3;application:2\", \"a\", \"p\", \"p\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\", \"input\", \"input\", \"input\"]",
+    "values": "[\"hi:1\", \"h\", \"i\", \"#\", \"h\", \"i\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\"]",
+    "values": "[\"m:2;n:2;o:2;p:2\", \"m\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\", \"input\"]",
+    "values": "[\"ab:3;abc:2;abcd:1\", \"a\", \"b\", \"c\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\"]",
+    "values": "[\"same:1;same hot:1\", \"s\", \"a\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\", \"input\", \"input\"]",
+    "values": "[\"k:1\", \"k\", \"#\", \"k\", \" \"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\", \"input\"]",
+    "values": "[\"dog:4;deer:2;deal:2\", \"d\", \"e\", \"a\"]"
+  },
+  {
+    "operations": "[\"AutocompleteSystem\", \"input\", \"input\", \"input\", \"input\", \"input\", \"input\", \"input\"]",
+    "values": "[\"a:2;ab:1\", \"a\", \"b\", \"#\", \"a\", \"b\", \"#\", \"a\"]"
+  }
+]

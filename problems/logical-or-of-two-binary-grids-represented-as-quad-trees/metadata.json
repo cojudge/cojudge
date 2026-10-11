@@ -1,0 +1,65 @@
+{
+  "id": "logical-or-of-two-binary-grids-represented-as-quad-trees",
+  "title": "614. Logical OR of Two Binary Grids Represented as Quad-Trees",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/logical-or-of-two-binary-grids-represented-as-quad-trees/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "quadTree1 = [[1,1]], quadTree2 = [[1,0]]",
+      "output": "[[1,1]]",
+      "explanation": "True OR False is True."
+    },
+    {
+      "input": "quadTree1 = [[0,1],[1,0],[1,1],[1,1],[1,0]], quadTree2 = [[1,0]]",
+      "output": "[[0,1],[1,0],[1,1],[1,1],[1,0]]",
+      "explanation": "OR with all-False keeps the first grid."
+    },
+    {
+      "input": "quadTree1 = [[0,1],[1,0],[1,1],[1,1],[1,0]], quadTree2 = [[1,1]]",
+      "output": "[[1,1]]",
+      "explanation": "OR with all-True gives all-True."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] intersect(int[][] quadTree1, int[][] quadTree2) {\n        return null;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def intersect(self, quadTree1: List[List[int]], quadTree2: List[List[int]]) -> List[List[int]]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> intersect(vector<vector<int>>& quadTree1, vector<vector<int>>& quadTree2) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[][] Intersect(int[][] quadTree1, int[][] quadTree2)\n    {\n        return null;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn intersect(quad_tree1: Vec<Vec<i32>>, quad_tree2: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc Intersect(quadTree1 [][]int, quadTree2 [][]int) [][]int {\n    return nil\n}",
+    "typescript": "export function intersect(quadTree1: number[][], quadTree2: number[][]): number[][] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $quadTree1\n     * @param int[][] $quadTree2\n     * @return int[][]\n     */\n    public function intersect($quadTree1, $quadTree2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "quadTree1": "[[1,1]]",
+      "quadTree2": "[[1,1]]"
+    },
+    {
+      "quadTree1": "[[1,1]]",
+      "quadTree2": "[[1,0]]"
+    },
+    {
+      "quadTree1": "[[1,0]]",
+      "quadTree2": "[[1,0]]"
+    }
+  ],
+  "functionName": "intersect",
+  "params": [
+    {
+      "name": "quadTree1",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "quadTree2",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Rebuild both node trees from the BFS lists: leaves stop, internal nodes take the next four entries as children.",
+    "A leaf True dominates (result leaf True); a leaf False defers to the other subtree.",
+    "When both sides are internal, merge the four child pairs, then collapse uniform leaf children into one leaf."
+  ]
+}

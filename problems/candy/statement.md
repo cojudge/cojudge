@@ -1,20 +1,20 @@
-There are `n` children standing in a line.
+`n` youngsters form a single queue.
 
-Each child is assigned a rating value given in the integer array `ratings`.
+An integer array `ratings` assigns each youngster a score.
 
-You are giving candies to these children subjected to the following requirements:
+Sweets are handed out under both of these stipulations:
 
-- Each child must have at least one candy.
-- Children with a higher rating get more candies than their neighbors.
+- Every youngster collects at least one sweet.
+- Whenever one youngster's score exceeds an immediate neighbour's score, the higher-scored youngster collects strictly more sweets than that neighbour.
 
-Return the **minimum** number of candies you need to have to distribute the candies to the children.
+Report the least total quantity of sweets sufficient to satisfy the whole queue.
 
 **Example 1:**
 
 ```
 Input: ratings = [1,0,2]
 Output: 5
-Explanation: You can allocate to the first, second and third child with 2, 1, 2 candies respectively.
+Explanation: Hand the first, second and third youngster 2, 1 and 2 sweets in turn.
 ```
 
 **Example 2:**
@@ -22,7 +22,7 @@ Explanation: You can allocate to the first, second and third child with 2, 1, 2 
 ```
 Input: ratings = [1,2,2]
 Output: 4
-Explanation: You can allocate to the first, second and third child with 1, 2, 1 candies respectively.
+Explanation: Hand the first, second and third youngster 1, 2 and 1 sweets in turn.
 ```
 
 **Constraints:**

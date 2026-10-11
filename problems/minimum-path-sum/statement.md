@@ -1,12 +1,10 @@
-Given a `m x n` grid filled with non-negative numbers, find a path from top left to bottom right, which minimizes the sum of all numbers along its path.
-
-Note: You can only move either down or right at any point in time.
+You are given an `m x n` table `grid` whose entries are all zero or positive. Starting in the upper-left corner, you must reach the lower-right corner, stepping only one cell downward or one cell rightward at a time. Among all such monotone routes, find the one whose visited cells add up to the smallest total, and return that total.
 
 **Example 1:**
 ```
 Input: grid = [[1,3,1],[1,5,1],[4,2,1]]
 Output: 7
-Explanation: Because the path 1 → 3 → 1 → 1 → 1 minimizes the sum.
+Explanation: The route visiting 1 → 3 → 1 → 1 → 1 gives the smallest possible total.
 ```
 
 **Example 2:**

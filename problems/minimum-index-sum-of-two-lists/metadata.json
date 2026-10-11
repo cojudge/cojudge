@@ -1,0 +1,65 @@
+{
+  "id": "minimum-index-sum-of-two-lists",
+  "title": "638. Minimum Index Sum of Two Lists",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/minimum-index-sum-of-two-lists/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "list1 = [\"Shogun\",\"Tapioca Express\",\"Burger King\",\"KFC\"], list2 = [\"Piatti\",\"The Grill at Torrey Pines\",\"Hungry Hunter Steakhouse\",\"Shogun\"]",
+      "output": "[\"Shogun\"]",
+      "explanation": "Only Shogun appears in both."
+    },
+    {
+      "input": "list1 = [\"Shogun\",\"Tapioca Express\",\"Burger King\",\"KFC\"], list2 = [\"KFC\",\"Shogun\",\"Burger King\"]",
+      "output": "[\"Shogun\"]",
+      "explanation": "Sums are 3, 4 and 4, so Shogun wins alone."
+    },
+    {
+      "input": "list1 = [\"happy\",\"sad\",\"good\"], list2 = [\"sad\",\"happy\",\"good\"]",
+      "output": "[\"sad\",\"happy\"]",
+      "explanation": "Sad and happy both sum to 1."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> findRestaurant(String[] list1, String[] list2) {\n        return new java.util.ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findRestaurant(self, list1: List[str], list2: List[str]) -> List[str]:\n        pass",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> findRestaurant(vector<string>& list1, vector<string>& list2) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<string> FindRestaurant(string[] list1, string[] list2)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_restaurant(list1: Vec<String>, list2: Vec<String>) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc FindRestaurant(list1 []string, list2 []string) []string {\n    return []string{}\n}",
+    "typescript": "export function findRestaurant(list1: string[], list2: string[]): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $list1\n     * @param string[] $list2\n     * @return string[]\n     */\n    public function findRestaurant($list1, $list2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "list1": "[\"Shogun\",\"Tapioca Express\",\"Burger King\",\"KFC\"]",
+      "list2": "[\"Piatti\",\"The Grill at Torrey Pines\",\"Hungry Hunter Steakhouse\",\"Shogun\"]"
+    },
+    {
+      "list1": "[\"Shogun\",\"Tapioca Express\",\"Burger King\",\"KFC\"]",
+      "list2": "[\"KFC\",\"Shogun\",\"Burger King\"]"
+    },
+    {
+      "list1": "[\"happy\",\"sad\",\"good\"]",
+      "list2": "[\"sad\",\"happy\",\"good\"]"
+    }
+  ],
+  "functionName": "findRestaurant",
+  "params": [
+    {
+      "name": "list1",
+      "type": "string_array"
+    },
+    {
+      "name": "list2",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Index the second list for O(1) lookups.",
+    "Scan the first list, adding indices for shared names and tracking the smallest sum.",
+    "Collect every shared name reaching that minimum."
+  ]
+}

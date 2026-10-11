@@ -1,0 +1,60 @@
+{
+  "id": "all-oone-data-structure",
+  "title": "501. All Oone Data Structure",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/all-oone-data-structure/",
+  "category": "design",
+  "examples": [
+    {
+      "input": "operations = [\"AllOne\",\"inc\",\"inc\",\"getMaxKey\",\"getMinKey\",\"inc\",\"getMaxKey\",\"getMinKey\"]\nvalues = [\"\",\"hello\",\"hello\",\"\",\"\",\"leet\",\"\",\"\"]",
+      "output": "[\"null\",\"null\",\"null\",\"hello\",\"hello\",\"null\",\"hello\",\"hello\"]",
+      "explanation": "hello reaches 2, then leet joins at 1; extremes are tie-checked."
+    },
+    {
+      "input": "operations = [\"AllOne\",\"inc\",\"inc\",\"inc\",\"getMaxKey\",\"getMinKey\",\"dec\",\"getMaxKey\",\"getMinKey\"]\nvalues = [\"\",\"a\",\"b\",\"b\",\"\",\"\",\"b\",\"\",\"\"]",
+      "output": "[\"null\",\"null\",\"null\",\"null\",\"b\",\"a\",\"null\",\"b\",\"a\"]",
+      "explanation": "Counts a:1, b:2 give max b and min a; after decrement both tie."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> runAllOne(String[] operations, String[] values) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runAllOne(self, operations: List[str], values: List[str]) -> List[str]:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> runAllOne(vector<string>& operations, vector<string>& values) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<string> RunAllOne(string[] operations, string[] values) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_all_one(operations: Vec<String>, values: Vec<String>) -> Vec<String> {\n        \n    }\n}",
+    "go": "package main\n\nfunc RunAllOne(operations []string, values []string) []string {\n    \n}",
+    "typescript": "export function runAllOne(operations: string[], values: string[]): string[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param string[] $values\n     * @return string[]\n     */\n    public function runAllOne($operations, $values) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"AllOne\",\"inc\",\"inc\",\"getMaxKey\",\"getMinKey\",\"inc\",\"getMaxKey\",\"getMinKey\"]",
+      "values": "[\"\",\"hello\",\"hello\",\"\",\"\",\"leet\",\"\",\"\"]"
+    },
+    {
+      "operations": "[\"AllOne\",\"inc\",\"inc\",\"inc\",\"getMaxKey\",\"getMinKey\",\"dec\",\"getMaxKey\",\"getMinKey\"]",
+      "values": "[\"\",\"a\",\"b\",\"b\",\"\",\"\",\"b\",\"\",\"\"]"
+    },
+    {
+      "operations": "[\"AllOne\",\"getMaxKey\",\"getMinKey\"]",
+      "values": "[\"\",\"\",\"\"]"
+    }
+  ],
+  "functionName": "runAllOne",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Keep a map from key to count plus a map from count to the set of keys at that count.",
+    "Track the current min and max counts incrementally, or derive them from the ordered count map.",
+    "Ties may return any key at the extreme count; empty structures answer with an empty string."
+  ]
+}

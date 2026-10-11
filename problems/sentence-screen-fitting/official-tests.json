@@ -1,0 +1,256 @@
+[
+  {
+    "sentence": [
+      "hello",
+      "world"
+    ],
+    "rows": 2,
+    "cols": 8
+  },
+  {
+    "sentence": [
+      "a",
+      "bcd",
+      "e"
+    ],
+    "rows": 3,
+    "cols": 6
+  },
+  {
+    "sentence": [
+      "i",
+      "had",
+      "apple",
+      "pie"
+    ],
+    "rows": 4,
+    "cols": 5
+  },
+  {
+    "sentence": [
+      "a"
+    ],
+    "rows": 1,
+    "cols": 1
+  },
+  {
+    "sentence": [
+      "a"
+    ],
+    "rows": 2,
+    "cols": 2
+  },
+  {
+    "sentence": [
+      "ab",
+      "cd"
+    ],
+    "rows": 1,
+    "cols": 5
+  },
+  {
+    "sentence": [
+      "ab",
+      "cd"
+    ],
+    "rows": 2,
+    "cols": 2
+  },
+  {
+    "sentence": [
+      "hello"
+    ],
+    "rows": 10,
+    "cols": 5
+  },
+  {
+    "sentence": [
+      "a",
+      "b",
+      "c"
+    ],
+    "rows": 3,
+    "cols": 3
+  },
+  {
+    "sentence": [
+      "a",
+      "b",
+      "c"
+    ],
+    "rows": 5,
+    "cols": 5
+  },
+  {
+    "sentence": [
+      "try",
+      "to",
+      "be",
+      "better"
+    ],
+    "rows": 5,
+    "cols": 6
+  },
+  {
+    "sentence": [
+      "fizz",
+      "buzz"
+    ],
+    "rows": 10,
+    "cols": 10
+  },
+  {
+    "sentence": [
+      "a",
+      "bb",
+      "ccc"
+    ],
+    "rows": 4,
+    "cols": 4
+  },
+  {
+    "sentence": [
+      "hello",
+      "world",
+      "foo"
+    ],
+    "rows": 3,
+    "cols": 11
+  },
+  {
+    "sentence": [
+      "a"
+    ],
+    "rows": 100,
+    "cols": 1
+  },
+  {
+    "sentence": [
+      "abc",
+      "de",
+      "f"
+    ],
+    "rows": 7,
+    "cols": 7
+  },
+  {
+    "sentence": [
+      "one"
+    ],
+    "rows": 1,
+    "cols": 3
+  },
+  {
+    "sentence": [
+      "one",
+      "two"
+    ],
+    "rows": 2,
+    "cols": 7
+  },
+  {
+    "sentence": [
+      "x",
+      "y",
+      "z"
+    ],
+    "rows": 10,
+    "cols": 1
+  },
+  {
+    "sentence": [
+      "longword"
+    ],
+    "rows": 3,
+    "cols": 8
+  },
+  {
+    "sentence": [
+      "a",
+      "b"
+    ],
+    "rows": 100,
+    "cols": 100
+  },
+  {
+    "sentence": [
+      "sentence",
+      "screen",
+      "fitting"
+    ],
+    "rows": 5,
+    "cols": 10
+  },
+  {
+    "sentence": [
+      "i",
+      "love",
+      "cojudge"
+    ],
+    "rows": 6,
+    "cols": 8
+  },
+  {
+    "sentence": [
+      "ab",
+      "cde",
+      "f"
+    ],
+    "rows": 8,
+    "cols": 6
+  },
+  {
+    "sentence": [
+      "hello",
+      "world"
+    ],
+    "rows": 1,
+    "cols": 11
+  },
+  {
+    "sentence": [
+      "a",
+      "bcd",
+      "e"
+    ],
+    "rows": 4,
+    "cols": 6
+  },
+  {
+    "sentence": [
+      "apple",
+      "pie"
+    ],
+    "rows": 2,
+    "cols": 9
+  },
+  {
+    "sentence": [
+      "aa",
+      "bb",
+      "cc"
+    ],
+    "rows": 6,
+    "cols": 6
+  },
+  {
+    "sentence": [
+      "q",
+      "w",
+      "e",
+      "r",
+      "t"
+    ],
+    "rows": 9,
+    "cols": 4
+  },
+  {
+    "sentence": [
+      "fit",
+      "the",
+      "screen"
+    ],
+    "rows": 10,
+    "cols": 8
+  }
+]

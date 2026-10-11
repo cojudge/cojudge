@@ -1,0 +1,68 @@
+{
+  "id": "flatten-2d-vector",
+  "title": "357. Flatten 2D Vector",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/flatten-2d-vector/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "vec = [[1,2],[3],[4]], operations = [\"next\",\"next\",\"next\",\"hasNext\",\"hasNext\",\"next\",\"hasNext\"]",
+      "output": "[1,2,3,1,1,4,0]",
+      "explanation": "Flattened order is [1,2,3,4]. The first three calls give 1, 2 and 3; values remain so both checks are 1; the next call gives 4; nothing remains so the last check is 0."
+    },
+    {
+      "input": "vec = [[],[1],[],[2,3]], operations = [\"hasNext\",\"next\",\"next\",\"next\",\"hasNext\"]",
+      "output": "[1,1,2,3,0]",
+      "explanation": "Empty rows are skipped, so flattened order is [1,2,3]."
+    },
+    {
+      "input": "vec = [[],[]], operations = [\"hasNext\",\"hasNext\"]",
+      "output": "[0,0]",
+      "explanation": "Both rows are empty, so no value ever becomes available."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runVector2D(int[][] vec, String[] operations) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def runVector2D(self, vec: List[List[int]], operations: List[str]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runVector2D(vector<vector<int>>& vec, vector<string>& operations) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunVector2D(int[][] vec, string[] operations)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_vector2_d(vec: Vec<Vec<i32>>, operations: Vec<String>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunVector2D(vec [][]int, operations []string) []int {\n    return []int{}\n}",
+    "typescript": "export function runVector2D(vec: number[][], operations: string[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $vec\n     * @param string[] $operations\n     * @return int[]\n     */\n    public function runVector2D($vec, $operations) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "vec": "[[1,2],[3],[4]]",
+      "operations": "[\"next\",\"next\",\"next\",\"hasNext\",\"hasNext\",\"next\",\"hasNext\"]"
+    },
+    {
+      "vec": "[[],[1],[],[2,3]]",
+      "operations": "[\"hasNext\",\"next\",\"next\",\"next\",\"hasNext\"]"
+    },
+    {
+      "vec": "[[],[]]",
+      "operations": "[\"hasNext\",\"hasNext\"]"
+    },
+    {
+      "vec": "[[5]]",
+      "operations": "[\"hasNext\",\"next\",\"hasNext\"]"
+    }
+  ],
+  "functionName": "runVector2D",
+  "params": [
+    {
+      "name": "vec",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "operations",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Flatten the input once into a single list, skipping empty rows, then serve operations with an index pointer.",
+    "Alternatively keep a row and column cursor and advance it past empty rows before answering each operation."
+  ]
+}

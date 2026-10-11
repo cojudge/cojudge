@@ -1,0 +1,106 @@
+[
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\",\"next\"]",
+    "args": "[[3],[1],[10],[3],[5]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\"]",
+    "args": "[[1],[4],[5]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\"]",
+    "args": "[[2],[-1],[3],[5]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\"]",
+    "args": "[[3],[7]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\"]",
+    "args": "[[1],[1],[2],[3]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\",\"next\",\"next\"]",
+    "args": "[[2],[1],[2],[3],[4],[5]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\"]",
+    "args": "[[5],[0],[0]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\"]",
+    "args": "[[3],[0],[0],[0]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\"]",
+    "args": "[[2],[100000],[100000]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\"]",
+    "args": "[[2],[-100000],[-100000]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\",\"next\"]",
+    "args": "[[4],[1],[2],[3],[4]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\"]",
+    "args": "[[10],[5],[5],[5]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\",\"next\"]",
+    "args": "[[2],[3],[1],[4],[1]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\"]",
+    "args": "[[1],[-5]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\"]",
+    "args": "[[3],[2],[2],[2]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\",\"next\",\"next\",\"next\"]",
+    "args": "[[3],[1],[2],[3],[4],[5],[6]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\"]",
+    "args": "[[1000],[1],[2]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\"]",
+    "args": "[[2],[0],[10],[0]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\"]",
+    "args": "[[5],[1],[1],[1]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\",\"next\"]",
+    "args": "[[1],[10],[20],[30],[40]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\"]",
+    "args": "[[4],[-2],[4],[-2]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\"]",
+    "args": "[[3],[-3],[3]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\",\"next\",\"next\"]",
+    "args": "[[5],[2],[4],[6],[8],[10]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\"]",
+    "args": "[[100],[42]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\"]",
+    "args": "[[2],[7],[7],[7]]"
+  },
+  {
+    "operations": "[\"MovingAverage\",\"next\",\"next\",\"next\",\"next\"]",
+    "args": "[[3],[5],[5],[5],[5]]"
+  }
+]

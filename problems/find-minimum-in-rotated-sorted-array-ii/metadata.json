@@ -1,0 +1,53 @@
+{
+  "id": "find-minimum-in-rotated-sorted-array-ii",
+  "title": "308. Find Minimum in Rotated Sorted Array II",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,3,5]",
+      "output": "1",
+      "explanation": "The array is already sorted, so the first element is minimal."
+    },
+    {
+      "input": "nums = [2,2,2,0,1]",
+      "output": "0",
+      "explanation": "Rotation moved the minimum 0 into the middle."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findMin(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findMin(self, nums: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int findMin(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindMin(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_min(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindMin(nums []int) int {\n    \n}",
+    "typescript": "export function findMin(nums: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function findMin($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,3,5]"
+    },
+    {
+      "nums": "[2,2,2,0,1]"
+    },
+    {
+      "nums": "[1]"
+    }
+  ],
+  "functionName": "findMin",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Compare the middle element with the right end to decide which half holds the minimum.",
+    "When they are equal, shrink the right end by one since duplicates give no information.",
+    "Otherwise the classic rotated-array binary search choice applies."
+  ]
+}

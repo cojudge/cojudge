@@ -1,0 +1,56 @@
+{
+  "id": "sum-of-even-numbers-after-queries",
+  "title": "968. Sum of Even Numbers After Queries",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/sum-of-even-numbers-after-queries/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,2,3,4], queries = [[1,0],[-3,1],[-4,0],[2,3]]",
+      "output": "[8,6,2,4]",
+      "explanation": "After each addition the even total becomes 8, then 6, then 2, then 4."
+    },
+    {
+      "input": "nums = [1], queries = [[4,0]]",
+      "output": "[0]",
+      "explanation": "The single entry becomes 5 (odd), so the even total is 0."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] sumEvenAfterQueries(int[] nums, int[][] queries) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def sumEvenAfterQueries(self, nums: List[int], queries: List[List[int]]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> sumEvenAfterQueries(vector<int>& nums, vector<vector<int>>& queries) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] SumEvenAfterQueries(int[] nums, int[][] queries) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn sum_even_after_queries(nums: Vec<i32>, queries: Vec<Vec<i32>>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc SumEvenAfterQueries(nums []int, queries [][]int) []int {\n    \n}",
+    "typescript": "export function sumEvenAfterQueries(nums: number[], queries: number[][]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int[][] $queries\n     * @return int[]\n     */\n    public function sumEvenAfterQueries($nums, $queries) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3,4]",
+      "queries": "[[1,0],[-3,1],[-4,0],[2,3]]"
+    },
+    {
+      "nums": "[1]",
+      "queries": "[[4,0]]"
+    }
+  ],
+  "functionName": "sumEvenAfterQueries",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "queries",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Maintain the sum of currently even entries instead of rescanning the array per query.",
+    "Before applying queries[i] = [val, idx], subtract nums[idx] from the total if it is even.",
+    "After the update, add nums[idx] back if it is even, and record the total."
+  ]
+}

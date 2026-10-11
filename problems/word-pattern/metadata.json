@@ -1,0 +1,65 @@
+{
+  "id": "word-pattern",
+  "title": "386. Word Pattern",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/word-pattern/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "pattern = \"abba\", s = \"dog cat cat dog\"",
+      "output": "true",
+      "explanation": "a maps to dog and b maps to cat bijectively."
+    },
+    {
+      "input": "pattern = \"abba\", s = \"dog cat cat fish\"",
+      "output": "false",
+      "explanation": "The last fish breaks the a-dog pairing."
+    },
+    {
+      "input": "pattern = \"aaaa\", s = \"dog cat cat dog\"",
+      "output": "false",
+      "explanation": "One letter cannot map to two different words."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean wordPattern(String pattern, String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def wordPattern(self, pattern: str, s: str) -> bool:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool wordPattern(string pattern, string s) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool WordPattern(string pattern, string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn word_pattern(pattern: String, s: String) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc WordPattern(pattern string, s string) bool {\n    \n}",
+    "typescript": "export function wordPattern(pattern: string, s: string): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $pattern\n     * @param string $s\n     * @return bool\n     */\n    public function wordPattern($pattern, $s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "pattern": "abba",
+      "s": "dog cat cat dog"
+    },
+    {
+      "pattern": "abba",
+      "s": "dog cat cat fish"
+    },
+    {
+      "pattern": "aaaa",
+      "s": "dog cat cat dog"
+    }
+  ],
+  "functionName": "wordPattern",
+  "params": [
+    {
+      "name": "pattern",
+      "type": "string"
+    },
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Split s on single spaces; lengths of pattern and word list must match.",
+    "Enforce a bijection with two maps (letter->word and word->letter).",
+    "Reject when one side would map to two different partners."
+  ]
+}

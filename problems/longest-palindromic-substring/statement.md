@@ -1,4 +1,4 @@
-Given a string s, return the longest palindromic substring in s.
+You receive a string s. Locate the longest block within it that reads identically forwards and backwards, and give that block back.
 
 **Constraints:**
 

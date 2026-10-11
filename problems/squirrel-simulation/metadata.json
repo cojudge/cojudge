@@ -1,0 +1,86 @@
+{
+  "id": "squirrel-simulation",
+  "title": "623. Squirrel Simulation",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/squirrel-simulation/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "height = 5, width = 7, tree = [2,2], squirrel = [4,4], nuts = [[3,0],[2,5]]",
+      "output": "12",
+      "explanation": "Round trips cost 12 and no first pick saves extra."
+    },
+    {
+      "input": "height = 1, width = 3, tree = [0,1], squirrel = [0,0], nuts = [[0,2]]",
+      "output": "3",
+      "explanation": "Fetch over distance 2, carry home over distance 1."
+    },
+    {
+      "input": "height = 4, width = 4, tree = [0,0], squirrel = [3,3], nuts = [[1,1],[2,2]]",
+      "output": "10",
+      "explanation": "Round trips cost 12; fetching (2,2) first saves 2."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minDistance(int height, int width, int[] tree, int[] squirrel, int[][] nuts) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minDistance(self, height: int, width: int, tree: List[int], squirrel: List[int], nuts: List[List[int]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int minDistance(int height, int width, vector<int>& tree, vector<int>& squirrel, vector<vector<int>>& nuts) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinDistance(int height, int width, int[] tree, int[] squirrel, int[][] nuts)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_distance(height: i32, width: i32, tree: Vec<i32>, squirrel: Vec<i32>, nuts: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinDistance(height int, width int, tree []int, squirrel []int, nuts [][]int) int {\n    return 0\n}",
+    "typescript": "export function minDistance(height: number, width: number, tree: number[], squirrel: number[], nuts: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $height\n     * @param int $width\n     * @param int[] $tree\n     * @param int[] $squirrel\n     * @param int[][] $nuts\n     * @return int\n     */\n    public function minDistance($height, $width, $tree, $squirrel, $nuts) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "height": 5,
+      "width": 7,
+      "tree": "[2,2]",
+      "squirrel": "[4,4]",
+      "nuts": "[[3,0],[2,5]]"
+    },
+    {
+      "height": 1,
+      "width": 3,
+      "tree": "[0,1]",
+      "squirrel": "[0,0]",
+      "nuts": "[[0,2]]"
+    },
+    {
+      "height": 4,
+      "width": 4,
+      "tree": "[0,0]",
+      "squirrel": "[3,3]",
+      "nuts": "[[1,1],[2,2]]"
+    }
+  ],
+  "functionName": "minDistance",
+  "params": [
+    {
+      "name": "height",
+      "type": "int"
+    },
+    {
+      "name": "width",
+      "type": "int"
+    },
+    {
+      "name": "tree",
+      "type": "int_array"
+    },
+    {
+      "name": "squirrel",
+      "type": "int_array"
+    },
+    {
+      "name": "nuts",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sum twice the tree-to-nut Manhattan distance over all nuts as the baseline.",
+    "Choosing nut i first replaces one tree leg with a squirrel leg, changing the total by dist(squirrel,i) - dist(tree,i).",
+    "Take the minimum such adjustment over all nuts and add it to the baseline."
+  ]
+}

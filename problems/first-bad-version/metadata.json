@@ -1,0 +1,65 @@
+{
+  "id": "first-bad-version",
+  "title": "377. First Bad Version",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/first-bad-version/",
+  "category": "binary-search",
+  "examples": [
+    {
+      "input": "n = 5, bad = 4",
+      "output": "4",
+      "explanation": "Versions 4 and 5 are bad; 4 is first."
+    },
+    {
+      "input": "n = 1, bad = 1",
+      "output": "1",
+      "explanation": "The only version is bad."
+    },
+    {
+      "input": "n = 10, bad = 7",
+      "output": "7",
+      "explanation": "Versions 7..10 are bad; 7 is first."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int firstBadVersion(int n, int bad) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def firstBadVersion(self, n: int, bad: int) -> int:\n        return 0",
+    "cpp": "class Solution {\npublic:\n    int firstBadVersion(int n, int bad) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int FirstBadVersion(int n, int bad)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn first_bad_version(n: i32, bad: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FirstBadVersion(n int, bad int) int {\n    return 0\n}",
+    "typescript": "export function firstBadVersion(n: number, bad: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int $bad\n     * @return int\n     */\n    public function firstBadVersion($n, $bad) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 5,
+      "bad": 4
+    },
+    {
+      "n": 1,
+      "bad": 1
+    },
+    {
+      "n": 10,
+      "bad": 7
+    }
+  ],
+  "functionName": "firstBadVersion",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "bad",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Adaptation: the hidden API isBadVersion(v) is simulated as v >= bad; both n and bad are given.",
+    "Binary-search [1, n] for the first v with v >= bad.",
+    "Use mid = left + (right - left) / 2 to avoid overflow."
+  ]
+}

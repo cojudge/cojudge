@@ -1,0 +1,58 @@
+{
+  "id": "smallest-string-starting-from-leaf",
+  "title": "971. Smallest String Starting From Leaf",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/smallest-string-starting-from-leaf/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [0,1,2,3,4,3,4]",
+      "output": "\"dba\"",
+      "explanation": "Leaf-to-root strings include dba, eba and others; dba is the smallest."
+    },
+    {
+      "input": "root = [25,1,3,1,3,0,2]",
+      "output": "\"adz\"",
+      "explanation": "The covering leaf strings are compared; adz is minimal."
+    },
+    {
+      "input": "root = [2,2,1,null,1,0,null,0]",
+      "output": "\"abc\"",
+      "explanation": "Only a few root paths exist and abc is the smallest leaf-up spelling."
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public String smallestFromLeaf(TreeNode root) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def smallestFromLeaf(self, root) -> str:\n        pass",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string smallestFromLeaf(TreeNode* root) {\n        return \"\";\n    }\n};",
+    "csharp": "/*\nDefinition for a binary tree node.\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\npublic class Solution \n{\n    public string SmallestFromLeaf(TreeNode root) \n    {\n        \n    }\n}",
+    "rust": "// Definition for a binary tree node.\n// #[derive(Debug, PartialEq, Eq)]\n// pub struct TreeNode {\n//   pub val: i32,\n//   pub left: Option<Rc<RefCell<TreeNode>>>,\n//   pub right: Option<Rc<RefCell<TreeNode>>>,\n// }\nuse std::rc::Rc;\nuse std::cell::RefCell;\npub struct Solution;\n\nimpl Solution {\n    pub fn smallest_from_leaf(root: Option<Rc<RefCell<TreeNode>>>) -> String {\n        \n    }\n}",
+    "go": "// Definition for a binary tree node.\n// type TreeNode struct {\n//     Val int\n//     Left *TreeNode\n//     Right *TreeNode\n// }\npackage main\n\nfunc SmallestFromLeaf(root *TreeNode) string {\n    \n}",
+    "typescript": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    val: number;\n    left: TreeNode | null;\n    right: TreeNode | null;\n    constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {\n        this.val = val ?? 0;\n        this.left = left ?? null;\n        this.right = right ?? null;\n    }\n}\n*/\nimport { TreeNode } from './TreeNode';\nexport function smallestFromLeaf(root: TreeNode | null): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param TreeNode|null $root\n     * @return string\n     */\n    public function smallestFromLeaf($root) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "root": "[0,1,2,3,4,3,4]"
+    },
+    {
+      "root": "[25,1,3,1,3,0,2]"
+    },
+    {
+      "root": "[2,2,1,null,1,0,null,0]"
+    }
+  ],
+  "functionName": "smallestFromLeaf",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Map node values 0..25 to letters a..z and read each root-to-leaf path backwards (leaf first).",
+    "Depth-first search carrying the current root-to-leaf character path lets you build each candidate at the leaf.",
+    "Keep the lexicographically smallest candidate across all leaves."
+  ]
+}

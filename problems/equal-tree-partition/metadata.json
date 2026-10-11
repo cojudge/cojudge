@@ -1,0 +1,53 @@
+{
+  "id": "equal-tree-partition",
+  "title": "682. Equal Tree Partition",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/equal-tree-partition/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [5,10,10,null,null,2,3]",
+      "output": "true",
+      "explanation": "Cutting the edge to the right child splits 25 into 10 + 15? Actually left 10 plus right 15? The right branch sums to 15 and the remainder 15? Total 30 halves into 15 and 15."
+    },
+    {
+      "input": "root = [1,2,10,null,null,2,20]",
+      "output": "false",
+      "explanation": "Total 35 is odd, so no single cut can halve it."
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public boolean checkEqualTree(TreeNode root) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\nclass Solution:\n    def checkEqualTree(self, root) -> bool:\n        pass",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool checkEqualTree(TreeNode* root) {\n        return false;\n    }\n};",
+    "csharp": "/*\nDefinition for a binary tree node.\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\npublic class Solution \n{\n    public bool CheckEqualTree(TreeNode root) \n    {\n        \n    }\n}",
+    "rust": "// Definition for a binary tree node.\n// #[derive(Debug, PartialEq, Eq)]\n// pub struct TreeNode {\n//   pub val: i32,\n//   pub left: Option<Rc<RefCell<TreeNode>>>,\n//   pub right: Option<Rc<RefCell<TreeNode>>>,\n// }\n//\n// impl TreeNode {\n//   #[inline]\n//   pub fn new(val: i32) -> Self {\n//     TreeNode {\n//       val,\n//       left: None,\n//       right: None\n//     }\n//   }\n// }\nuse std::rc::Rc;\nuse std::cell::RefCell;\npub struct Solution;\n\nimpl Solution {\n    pub fn check_equal_tree(root: Option<Rc<RefCell<TreeNode>>>) -> bool {\n        \n    }\n}",
+    "go": "// Definition for a binary tree node.\n// type TreeNode struct {\n//     Val int\n//     Left *TreeNode\n//     Right *TreeNode\n// }\npackage main\n\nfunc CheckEqualTree(root *TreeNode) bool {\n    \n}",
+    "typescript": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    val: number;\n    left: TreeNode | null;\n    right: TreeNode | null;\n    constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {\n        this.val = val ?? 0;\n        this.left = left ?? null;\n        this.right = right ?? null;\n    }\n}\n*/\nimport { TreeNode } from './TreeNode';\n\nexport function checkEqualTree(root: TreeNode | null): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param TreeNode|null $root\n     * @return bool\n     */\n    public function checkEqualTree($root) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "root": "[5,10,10,null,null,2,3]"
+    },
+    {
+      "root": "[1,2,10,null,null,2,20]"
+    },
+    {
+      "root": "[0]"
+    }
+  ],
+  "functionName": "checkEqualTree",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Add up the whole tree first; a valid cut needs total to be even.",
+    "A cut works exactly when some proper branch sums to total / 2.",
+    "Collect branch sums with one post-order walk, excluding the full tree itself."
+  ]
+}

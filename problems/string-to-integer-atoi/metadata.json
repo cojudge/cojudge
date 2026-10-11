@@ -1,0 +1,57 @@
+{
+  "id": "string-to-integer-atoi",
+  "title": "252. String to Integer (atoi)",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/string-to-integer-atoi/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"42\"",
+      "output": "42",
+      "explanation": "The string starts directly with digits, giving 42."
+    },
+    {
+      "input": "s = \"   -042\"",
+      "output": "-42",
+      "explanation": "Spaces are skipped, the minus sign is applied, and 042 parses to 42."
+    },
+    {
+      "input": "s = \"1337c0d3\"",
+      "output": "1337",
+      "explanation": "Reading stops at the first non-digit, so the result is 1337."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int myAtoi(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def myAtoi(self, s: str) -> int:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int myAtoi(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MyAtoi(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn my_atoi(s: String) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MyAtoi(s string) int {\n    \n}",
+    "typescript": "export function myAtoi(s: string): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function myAtoi($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "42"
+    },
+    {
+      "s": "   -042"
+    },
+    {
+      "s": "1337c0d3"
+    }
+  ],
+  "functionName": "myAtoi",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Walk the string with an index: first spaces, then an optional sign, then digits. Anything else ends the parse.",
+    "Accumulate into a wider (64-bit) variable or check the bounds before each multiply-and-add so overflow clamps correctly."
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "id": "range-sum-query-2d-mutable",
+  "title": "400. Range Sum Query 2D - Mutable",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/range-sum-query-2d-mutable/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "matrix = [[3,0,1,4,2],[5,6,3,2,1],[1,2,0,1,5],[4,1,0,1,7],[1,0,3,0,5]], operations = [\"sumRegion\",\"update\",\"sumRegion\"], values = [[2,1,4,3],[3,2,2],[2,1,4,3]]",
+      "output": "[8,10]",
+      "explanation": "Rectangle sums 8, then 10 after the point update."
+    },
+    {
+      "input": "matrix = [[1]], operations = [\"sumRegion\",\"update\",\"sumRegion\"], values = [[0,0,0,0],[0,0,5],[0,0,0,0]]",
+      "output": "[1,5]",
+      "explanation": "Single cell read, rewritten, re-read."
+    },
+    {
+      "input": "matrix = [[1,2],[3,4]], operations = [\"sumRegion\",\"update\",\"sumRegion\"], values = [[0,0,1,1],[0,0,10],[0,0,0,0]]",
+      "output": "[10,10]",
+      "explanation": "Full-frame sum, then the updated corner alone."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runNumMatrix(int[][] matrix, String[] operations, int[][] values) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runNumMatrix(self, matrix: List[List[int]], operations: List[str], values: List[List[int]]) -> List[int]:\n        ",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runNumMatrix(vector<vector<int>>& matrix, vector<string>& operations, vector<vector<int>>& values) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunNumMatrix(int[][] matrix, string[] operations, int[][] values)\n    {\n        return Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_num_matrix(matrix: Vec<Vec<i32>>, operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunNumMatrix(matrix [][]int, operations []string, values [][]int) []int {\n    return nil\n}",
+    "typescript": "export function runNumMatrix(matrix: number[][], operations: string[], values: number[][]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $matrix\n     * @param string[] $operations\n     * @param int[][] $values\n     * @return int[]\n     */\n    public function runNumMatrix($matrix, $operations, $values) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "matrix": "[[3,0,1,4,2],[5,6,3,2,1],[1,2,0,1,5],[4,1,0,1,7],[1,0,3,0,5]]",
+      "operations": "[\"sumRegion\",\"update\",\"sumRegion\"]",
+      "values": "[[2,1,4,3],[3,2,2],[2,1,4,3]]"
+    },
+    {
+      "matrix": "[[1]]",
+      "operations": "[\"sumRegion\",\"update\",\"sumRegion\"]",
+      "values": "[[0,0,0,0],[0,0,5],[0,0,0,0]]"
+    },
+    {
+      "matrix": "[[1,2],[3,4]]",
+      "operations": "[\"sumRegion\",\"update\",\"sumRegion\"]",
+      "values": "[[0,0,1,1],[0,0,10],[0,0,0,0]]"
+    }
+  ],
+  "functionName": "runNumMatrix",
+  "params": [
+    {
+      "name": "matrix",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Replay the script on a copy of the matrix, summing each requested rectangle cell by cell for a simple baseline.",
+    "For full speed, back the matrix with a 2D binary indexed tree or 2D segment tree.",
+    "Only \"sumRegion\" steps append to the answer; updates just change stored state."
+  ]
+}

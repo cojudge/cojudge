@@ -1,0 +1,58 @@
+{
+  "id": "falling-squares",
+  "title": "712. Falling Squares",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/falling-squares/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "positions = [[1,2],[2,3],[6,1]]",
+      "output": "[2,5,5]",
+      "explanation": "Heights evolve 2 then 5 then stay 5."
+    },
+    {
+      "input": "positions = [[100,100],[200,100]]",
+      "output": "[100,100]",
+      "explanation": "Disjoint squares keep height 100."
+    },
+    {
+      "input": "positions = [[0,2],[1,2],[3,1]]",
+      "output": "[2,4,4]",
+      "explanation": "Second square stacks to 4."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int[] fallingSquares(int[][] positions) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def fallingSquares(self, positions: List[List[int]]) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> fallingSquares(vector<vector<int>>& positions) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] FallingSquares(int[][] positions)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn falling_squares(positions: Vec<Vec<i32>>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc FallingSquares(positions [][]int) []int {\n    return []int{}\n}",
+    "typescript": "export function fallingSquares(positions: number[][]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $positions\n     * @return int[]\n     */\n    public function fallingSquares($positions) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "positions": "[[1,2],[2,3],[6,1]]"
+    },
+    {
+      "positions": "[[100,100],[200,100]]"
+    },
+    {
+      "positions": "[[0,2],[1,2],[3,1]]"
+    }
+  ],
+  "functionName": "fallingSquares",
+  "params": [
+    {
+      "name": "positions",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Remember each placed square as [left, right, top] and compare intervals for overlap.",
+    "A new square of side s sits on the highest top among overlapping squares (or 0), reaching base + s.",
+    "Track the running global maximum after every drop."
+  ]
+}

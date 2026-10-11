@@ -1,4 +1,4 @@
-Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+Take two strings, `s` and `t`. Report `true` when `t` rearranges the letters of `s`, and `false` otherwise.
 
 **Constraints:**
 

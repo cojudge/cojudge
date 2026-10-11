@@ -1,8 +1,9 @@
-Given an integer array `nums` of length `n`, you want to create an array `ans` of length `2n` where `ans[i] == nums[i]` and `ans[i + n] == nums[i]` for `0 <= i < n` (0-indexed).
+An integer array `nums` holding `n` entries is supplied.
+Fabricate an array `ans` twice as long (`2n`), defined (using 0-based positions) by `ans[i] == nums[i]` together with `ans[i + n] == nums[i]` for each `0 <= i < n`.
 
-Specifically, `ans` is the concatenation of two `nums` arrays.
+Put differently, `ans` places two successive copies of `nums` back to back.
 
-Return the array `ans`.
+Hand back `ans`.
 
 **Constraints:**
 

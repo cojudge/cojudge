@@ -1,0 +1,58 @@
+{
+  "id": "shortest-path-to-get-all-keys",
+  "title": "859. Shortest Path to Get All Keys",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/shortest-path-to-get-all-keys/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "grid = [\"@.a..\",\"###.#\",\"b.A.B\"]",
+      "output": "8",
+      "explanation": "One shortest walk needs eight steps."
+    },
+    {
+      "input": "grid = [\"@..aA\",\"..B#.\",\"....b\"]",
+      "output": "6",
+      "explanation": "Six moves suffice."
+    },
+    {
+      "input": "grid = [\"@Aa\"]",
+      "output": "-1",
+      "explanation": "The key is unreachable."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int shortestPathAllKeys(String[] grid) {\n        return -1;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def shortestPathAllKeys(self, grid: List[str]) -> int:\n        pass",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int shortestPathAllKeys(vector<string>& grid) {\n        return -1;\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public int ShortestPathAllKeys(string[] grid)\n    {\n        return -1;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn shortest_path_all_keys(grid: Vec<String>) -> i32 {\n        -1\n    }\n}",
+    "go": "package main\n\nfunc ShortestPathAllKeys(grid []string) int {\n    return -1\n}",
+    "typescript": "export function shortestPathAllKeys(grid: string[]): number {\n    return -1;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $grid\n     * @return int\n     */\n    public function shortestPathAllKeys($grid) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "grid": "[\"@.a..\",\"###.#\",\"b.A.B\"]"
+    },
+    {
+      "grid": "[\"@..aA\",\"..B#.\",\"....b\"]"
+    },
+    {
+      "grid": "[\"@Aa\"]"
+    }
+  ],
+  "functionName": "shortestPathAllKeys",
+  "params": [
+    {
+      "name": "grid",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Treat (row, col, key-mask) as the full state, since the same cell with different keys allows different futures.",
+    "Run breadth-first search from the start state; the first time you pop a state holding all keys, its distance is optimal.",
+    "Precompute the target mask from the count of distinct keys, and check doors with bit tests before entering."
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "id": "shuffle-an-array",
+  "title": "460. Shuffle an Array",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/shuffle-an-array/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,2,3]",
+      "output": "[2,1,3]",
+      "explanation": "Any permutation with the same values is valid."
+    },
+    {
+      "input": "nums = [5]",
+      "output": "[5]",
+      "explanation": "Only one arrangement exists."
+    },
+    {
+      "input": "nums = [1,2,3,4]",
+      "output": "[3,1,4,2]",
+      "explanation": "Same multiset in a new order."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] shuffleArray(int[] nums) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def shuffleArray(self, nums: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> shuffleArray(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] ShuffleArray(int[] nums)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn shuffle_array(nums: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc ShuffleArray(nums []int) []int {\n    return []int{}\n}",
+    "typescript": "export function shuffleArray(nums: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function shuffleArray($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3]"
+    },
+    {
+      "nums": "[5]"
+    },
+    {
+      "nums": "[1,2,3,4]"
+    },
+    {
+      "nums": "[10,20]"
+    }
+  ],
+  "functionName": "shuffleArray",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Fisher-Yates: walk from the end, swapping each slot with a uniform earlier-or-equal slot.",
+    "Clone the input first so the caller's array is never mutated.",
+    "The judge checks permutation equality, not the shuffle distribution."
+  ]
+}

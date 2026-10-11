@@ -1,0 +1,67 @@
+{
+  "id": "the-maze-iii",
+  "title": "562. The Maze III",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/the-maze-iii/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "maze = [[0,0,0,0,0],[1,1,0,0,1],[0,0,0,0,0],[0,1,0,0,1],[0,1,0,0,0]], ball = [4,3], hole = [0,1]",
+      "output": "\"lul\"",
+      "explanation": "Rolling left, up and left in three segments reaches the hole with minimal distance."
+    },
+    {
+      "input": "maze = [[0,0,0,0,0],[1,1,0,0,1],[0,0,0,0,0],[0,1,0,0,1],[0,1,0,0,0]], ball = [4,3], hole = [3,0]",
+      "output": "\"impossible\"",
+      "explanation": "The hole sits in a pocket no rolling path can stop in."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String findShortestWay(int[][] maze, int[] ball, int[] hole) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findShortestWay(self, maze: List[List[int]], ball: List[int], hole: List[int]) -> str:\n        pass\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string findShortestWay(vector<vector<int>>& maze, vector<int>& ball, vector<int>& hole) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string FindShortestWay(int[][] maze, int[] ball, int[] hole) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_shortest_way(maze: Vec<Vec<i32>>, ball: Vec<i32>, hole: Vec<i32>) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindShortestWay(maze [][]int, ball []int, hole []int) string {\n    \n}",
+    "typescript": "export function findShortestWay(maze: number[][], ball: number[], hole: number[]): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $maze\n     * @param int[] $ball\n     * @param int[] $hole\n     * @return string\n     */\n    public function findShortestWay($maze, $ball, $hole) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "maze": "[[0,0,0,0,0],[1,1,0,0,1],[0,0,0,0,0],[0,1,0,0,1],[0,1,0,0,0]]",
+      "ball": "[4,3]",
+      "hole": "[0,1]"
+    },
+    {
+      "maze": "[[0,0,0,0,0],[1,1,0,0,1],[0,0,0,0,0],[0,1,0,0,1],[0,1,0,0,0]]",
+      "ball": "[4,3]",
+      "hole": "[3,0]"
+    },
+    {
+      "maze": "[[0,0,0,0,0],[1,1,0,0,1],[0,0,0,0,0],[0,1,0,0,1],[0,1,0,0,0]]",
+      "ball": "[0,0]",
+      "hole": "[4,4]"
+    }
+  ],
+  "functionName": "findShortestWay",
+  "params": [
+    {
+      "name": "maze",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "ball",
+      "type": "int_array"
+    },
+    {
+      "name": "hole",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Treat stopping cells as nodes and rolling segments as weighted edges; Dijkstra over (distance, path) finds the optimum.",
+    "Stop a roll early as soon as the hole is entered, counting only steps up to the hole.",
+    "Order the priority queue by distance first and direction string second to get the lexicographically smallest shortest path."
+  ]
+}

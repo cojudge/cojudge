@@ -1,0 +1,65 @@
+{
+  "id": "coin-path",
+  "title": "676. Coin Path",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/coin-path/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "coins = [1,2,4,-1,2], maxJump = 2",
+      "output": "[1,3,5]",
+      "explanation": "Hop 1 -> 3 -> 5 with total 1+4+2 = 7, the cheapest reachable route; jumps never exceed 2."
+    },
+    {
+      "input": "coins = [1,2,4,-1,2], maxJump = 1",
+      "output": "[]",
+      "explanation": "The blocked cell at index 4 cannot be skipped with steps of 1, so the end is unreachable."
+    },
+    {
+      "input": "coins = [1,-1,2], maxJump = 2",
+      "output": "[1,3]",
+      "explanation": "Jump directly over the blocked middle cell."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<Integer> cheapestJump(int[] coins, int maxJump) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def cheapestJump(self, coins: List[int], maxJump: int) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> cheapestJump(vector<int>& coins, int maxJump) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<int> CheapestJump(int[] coins, int maxJump) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn cheapest_jump(coins: Vec<i32>, max_jump: i32) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc CheapestJump(coins []int, maxJump int) []int {\n    \n}",
+    "typescript": "export function cheapestJump(coins: number[], maxJump: number): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $coins\n     * @param int $maxJump\n     * @return int[]\n     */\n    public function cheapestJump($coins, $maxJump) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "coins": "[1,2,4,-1,2]",
+      "maxJump": 2
+    },
+    {
+      "coins": "[1,2,4,-1,2]",
+      "maxJump": 1
+    },
+    {
+      "coins": "[0,0,0,0,0]",
+      "maxJump": 2
+    }
+  ],
+  "functionName": "cheapestJump",
+  "params": [
+    {
+      "name": "coins",
+      "type": "int_array"
+    },
+    {
+      "name": "maxJump",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Work backwards: the best cost from i is coins[i] plus the best reachable cost within i+1..i+maxJump.",
+    "Blocked cells (-1) are never landable; the destination must also be landable.",
+    "On cost ties keep the lexicographically smaller full path, comparing suffixes element by element."
+  ]
+}

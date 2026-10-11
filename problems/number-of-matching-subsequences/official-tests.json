@@ -1,0 +1,114 @@
+[
+  {
+    "s": "abcde",
+    "words": "[\"a\",\"bb\",\"acd\",\"ace\"]"
+  },
+  {
+    "s": "dsahjpjauf",
+    "words": "[\"ahjpjau\",\"ja\",\"ahbwzgqnuk\",\"tnmlanowax\"]"
+  },
+  {
+    "s": "abcd",
+    "words": "[\"abc\",\"abd\",\"acd\",\"bcd\",\"abcde\"]"
+  },
+  {
+    "s": "a",
+    "words": "[\"a\",\"b\",\"c\"]"
+  },
+  {
+    "s": "aaaaa",
+    "words": "[\"a\",\"aa\",\"aaa\",\"aaaa\",\"aaaaa\",\"aaaaaa\"]"
+  },
+  {
+    "s": "abc",
+    "words": "[\"abc\",\"acb\",\"bac\",\"cba\"]"
+  },
+  {
+    "s": "xyz",
+    "words": "[\"x\",\"y\",\"z\",\"xy\",\"yz\",\"xyz\",\"w\"]"
+  },
+  {
+    "s": "abcdef",
+    "words": "[\"ace\",\"bdf\",\"abcdef\",\"fedcba\",\"ab\"]"
+  },
+  {
+    "s": "ababa",
+    "words": "[\"aba\",\"bab\",\"aa\",\"bb\",\"abab\"]"
+  },
+  {
+    "s": "hello",
+    "words": "[\"h\",\"e\",\"l\",\"o\",\"he\",\"lo\",\"hello\",\"olleh\"]"
+  },
+  {
+    "s": "abcdefghij",
+    "words": "[\"aij\",\"abc\",\"jih\",\"abcdefghij\",\"abcdefghijk\"]"
+  },
+  {
+    "s": "zzzzzz",
+    "words": "[\"z\",\"zz\",\"zzz\",\"a\"]"
+  },
+  {
+    "s": "abcde",
+    "words": "[\"e\",\"d\",\"c\",\"b\",\"a\",\"edcba\"]"
+  },
+  {
+    "s": "aabbcc",
+    "words": "[\"abc\",\"acb\",\"aabbcc\",\"aaabbbccc\"]"
+  },
+  {
+    "s": "mississippi",
+    "words": "[\"mis\",\"sip\",\"pip\",\"mississippi\",\"iii\"]"
+  },
+  {
+    "s": "abcdabcd",
+    "words": "[\"abcd\",\"aabbccdd\",\"abab\",\"cdcd\"]"
+  },
+  {
+    "s": "qwerty",
+    "words": "[\"qwe\",\"rty\",\"qy\",\"qwety\",\"ytrewq\"]"
+  },
+  {
+    "s": "aaaaabbbbbccccc",
+    "words": "[\"abc\",\"acb\",\"aabbcc\",\"abcabc\"]"
+  },
+  {
+    "s": "abcabcabc",
+    "words": "[\"abc\",\"aaa\",\"bbb\",\"ccc\",\"abcabcabc\"]"
+  },
+  {
+    "s": "thequickbrownfox",
+    "words": "[\"the\",\"quick\",\"brown\",\"fox\",\"thefox\",\"xof\"]"
+  },
+  {
+    "s": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "words": "[\"a\",\"aa\",\"aaa\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+  },
+  {
+    "s": "abcdefghijklmnopqrstuvwxyz",
+    "words": "[\"abc\",\"xyz\",\"acegik\",\"zyx\",\"mnop\"]"
+  },
+  {
+    "s": "ab",
+    "words": "[\"a\",\"b\",\"ab\",\"ba\",\"aa\",\"bb\"]"
+  },
+  {
+    "s": "leetcode",
+    "words": "[\"let\",\"code\",\"lee\",\"eetcode\",\"edoc\"]"
+  },
+  {
+    "s": "subsequence",
+    "words": "[\"sub\",\"sequence\",\"subsequence\",\"een\",\"qus\"]"
+  },
+  {
+    "s": "aaaabbbb",
+    "words": "[\"ab\",\"aab\",\"abb\",\"aaabbb\",\"bbaa\"]"
+  },
+  {
+    "s": "xyzxyzxyz",
+    "words": "[\"xyz\",\"xzy\",\"xxxyyyzzz\",\"zzz\"]"
+  },
+  {
+    "s": "abcdefghijklmnopqrst",
+    "words": "[\"aceg\",\"bdfh\",\"abcdefghijklmnopqrst\",\"tsrq\"]"
+  }
+]

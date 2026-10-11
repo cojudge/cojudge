@@ -1,6 +1,6 @@
-Given an integer array `nums` and an integer `val`, remove all occurrences of `val` in `nums` in-place. The order of the elements may be changed. Then return the number of elements in `nums` which are not equal to `val`.
+You receive an integer array `nums` together with an integer `val`. Erase every occurrence of `val` directly inside `nums`; the surviving entries may finish in any order. Then report how many entries of `nums` differ from `val`.
 
-Consider the number of elements in `nums` which are not equal to `val` to be `k`. To get accepted, you need to change the array `nums` such that the first `k` elements of `nums` contain the elements which are not equal to `val`, and return `k`. The remaining elements beyond `k` are not important.
+Denote that survivor count by `k`. For acceptance, rearrange `nums` so its first `k` slots store exactly the entries that differ from `val`, and return `k`. Whatever sits past position `k` is irrelevant.
 
 **Constraints:**
 

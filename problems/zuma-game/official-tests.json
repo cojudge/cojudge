@@ -1,0 +1,114 @@
+[
+  {
+    "board": "WRRBBW",
+    "hand": "RB"
+  },
+  {
+    "board": "WWRRBBWW",
+    "hand": "WRBRW"
+  },
+  {
+    "board": "G",
+    "hand": "GGGGG"
+  },
+  {
+    "board": "RR",
+    "hand": "RR"
+  },
+  {
+    "board": "R",
+    "hand": "R"
+  },
+  {
+    "board": "R",
+    "hand": "RR"
+  },
+  {
+    "board": "Y",
+    "hand": "YY"
+  },
+  {
+    "board": "RB",
+    "hand": "RB"
+  },
+  {
+    "board": "RRYBB",
+    "hand": "RYB"
+  },
+  {
+    "board": "WW",
+    "hand": "WW"
+  },
+  {
+    "board": "RRWW",
+    "hand": "RW"
+  },
+  {
+    "board": "YWWY",
+    "hand": "YW"
+  },
+  {
+    "board": "BB",
+    "hand": "BBB"
+  },
+  {
+    "board": "RYYR",
+    "hand": "RY"
+  },
+  {
+    "board": "WBRY",
+    "hand": "WBRY"
+  },
+  {
+    "board": "GG",
+    "hand": "GGG"
+  },
+  {
+    "board": "RRBB",
+    "hand": "RB"
+  },
+  {
+    "board": "YBBR",
+    "hand": "YBR"
+  },
+  {
+    "board": "W",
+    "hand": "W"
+  },
+  {
+    "board": "W",
+    "hand": "WW"
+  },
+  {
+    "board": "RW",
+    "hand": "RRW"
+  },
+  {
+    "board": "YYRR",
+    "hand": "YR"
+  },
+  {
+    "board": "BBRY",
+    "hand": "BRY"
+  },
+  {
+    "board": "RBRBR",
+    "hand": "RBB"
+  },
+  {
+    "board": "WWYWW",
+    "hand": "YW"
+  },
+  {
+    "board": "RGBW",
+    "hand": "RGBW"
+  },
+  {
+    "board": "RRY",
+    "hand": "RY"
+  },
+  {
+    "board": "BWWB",
+    "hand": "WB"
+  }
+]

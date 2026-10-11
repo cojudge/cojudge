@@ -1,4 +1,4 @@
-Given an integer array `nums`, return an array `answer` such that `answer[i]` is equal to the product of all the elements of `nums` except `nums[i]`. The product of any prefix or suffix of `nums` is guaranteed to fit in a 32-bit integer.
+Your input is an integer array `nums`. Build and return an array `answer` where each slot `answer[i]` holds the product of every entry of `nums` apart from `nums[i]` itself. Every prefix or suffix product of `nums` is promised to fit inside a 32-bit integer.
 
 **Constraints:**
 

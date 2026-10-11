@@ -1,0 +1,58 @@
+{
+  "id": "degree-of-an-array",
+  "title": "711. Degree of an Array",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/degree-of-an-array/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,2,2,3,1]",
+      "output": "2",
+      "explanation": "Slice [2,2] matches degree 2."
+    },
+    {
+      "input": "nums = [1,2,2,3,1,4,2]",
+      "output": "6",
+      "explanation": "Span of 2 from index 1 to 6."
+    },
+    {
+      "input": "nums = [1,1,2,2,2,1]",
+      "output": "3",
+      "explanation": "Middle [2,2,2]."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findShortestSubArray(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findShortestSubArray(self, nums: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int findShortestSubArray(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int FindShortestSubArray(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_shortest_sub_array(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FindShortestSubArray(nums []int) int {\n    return 0\n}",
+    "typescript": "export function findShortestSubArray(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function findShortestSubArray($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,2,3,1]"
+    },
+    {
+      "nums": "[1,2,2,3,1,4,2]"
+    },
+    {
+      "nums": "[1,1,2,2,2,1]"
+    }
+  ],
+  "functionName": "findShortestSubArray",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Record for each value its total count plus its first and last positions.",
+    "The overall degree is the maximum count; only values reaching it can decide the answer.",
+    "Among those, the shortest span is last minus first plus one."
+  ]
+}

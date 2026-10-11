@@ -156,6 +156,13 @@ impl CojudgeDisplay for Option<Box<ListNode>> {
     }
 }
 
+impl CojudgeDisplay for Vec<Option<Box<ListNode>>> {
+    fn to_cojudge_string(&self) -> String {
+        let parts: Vec<String> = self.iter().map(|o| o.to_cojudge_string()).collect();
+        format!("[{}]", parts.join(","))
+    }
+}
+
 impl CojudgeDisplay for () {
     fn to_cojudge_string(&self) -> String { "void".to_string() }
 }

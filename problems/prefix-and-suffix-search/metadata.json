@@ -1,0 +1,81 @@
+{
+  "id": "prefix-and-suffix-search",
+  "title": "749. Prefix and Suffix Search",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/prefix-and-suffix-search/",
+  "category": "trie",
+  "examples": [
+    {
+      "input": "words = [\"apple\"], pref = \"a\", suff = \"e\"",
+      "output": "0",
+      "explanation": "Index 0 fits both ends."
+    },
+    {
+      "input": "words = [\"apple\",\"apply\",\"ape\"], pref = \"ap\", suff = \"e\"",
+      "output": "2",
+      "explanation": "Indices 0 and 2 fit; return the larger."
+    },
+    {
+      "input": "words = [\"hello\",\"world\"], pref = \"x\", suff = \"y\"",
+      "output": "-1",
+      "explanation": "No word fits."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int wordFilter(String[] words, String pref, String suff) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def wordFilter(self, words: List[str], pref: str, suff: str) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int wordFilter(vector<string>& words, string pref, string suff) {\n        return -1;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int WordFilter(string[] words, string pref, string suff) \n    {\n        return -1;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn word_filter(words: Vec<String>, pref: String, suff: String) -> i32 {\n        -1\n    }\n}",
+    "go": "package main\n\nfunc WordFilter(words []string, pref string, suff string) int {\n    return -1\n}",
+    "typescript": "export function wordFilter(words: string[], pref: string, suff: string): number {\n    return -1;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $words\n     * @param string $pref\n     * @param string $suff\n     * @return int\n     */\n    public function wordFilter($words, $pref, $suff) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "words": [
+        "apple"
+      ],
+      "pref": "a",
+      "suff": "e"
+    },
+    {
+      "words": [
+        "apple",
+        "apply",
+        "ape"
+      ],
+      "pref": "ap",
+      "suff": "e"
+    },
+    {
+      "words": [
+        "hello",
+        "world"
+      ],
+      "pref": "x",
+      "suff": "y"
+    }
+  ],
+  "functionName": "wordFilter",
+  "params": [
+    {
+      "name": "words",
+      "type": "string_array"
+    },
+    {
+      "name": "pref",
+      "type": "string"
+    },
+    {
+      "name": "suff",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Scanning indices from the end downward lets you return the first fit, which is automatically the largest.",
+    "A word fits when it starts with pref and ends with suff; both checks are linear in the word length.",
+    "For many repeated queries a combined prefix-suffix map or trie pays off, but a single scan is enough for one query."
+  ]
+}

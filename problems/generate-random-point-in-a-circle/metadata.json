@@ -1,0 +1,67 @@
+{
+  "id": "generate-random-point-in-a-circle",
+  "title": "542. Generate Random Point in a Circle",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/generate-random-point-in-a-circle/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "radius = \"1.0\", xCenter = \"0.0\", yCenter = \"0.0\"",
+      "output": "[\"0.0\",\"0.0\"]",
+      "explanation": "The center is distance 0 from itself, so it is always a valid (though not random) answer; any point with x^2+y^2<=1 also passes."
+    },
+    {
+      "input": "radius = \"2.0\", xCenter = \"3.0\", yCenter = \"-1.0\"",
+      "output": "[\"3.0\",\"-1.0\"]",
+      "explanation": "Returning the center is valid; any point within 2.0 of (3.0,-1.0) is accepted."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> randPoint(String radius, String xCenter, String yCenter) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def randPoint(self, radius: str, xCenter: str, yCenter: str) -> List[str]:\n        return []\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> randPoint(string radius, string xCenter, string yCenter) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<string> RandPoint(string radius, string xCenter, string yCenter)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn rand_point(radius: String, x_center: String, y_center: String) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RandPoint(radius string, xCenter string, yCenter string) []string {\n    return []string{}\n}",
+    "typescript": "export function randPoint(radius: string, xCenter: string, yCenter: string): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $radius\n     * @param string $xCenter\n     * @param string $yCenter\n     * @return string[]\n     */\n    public function randPoint($radius, $xCenter, $yCenter) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "radius": "1.0",
+      "xCenter": "0.0",
+      "yCenter": "0.0"
+    },
+    {
+      "radius": "2.0",
+      "xCenter": "3.0",
+      "yCenter": "-1.0"
+    },
+    {
+      "radius": "0.5",
+      "xCenter": "1.5",
+      "yCenter": "2.5"
+    }
+  ],
+  "functionName": "randPoint",
+  "params": [
+    {
+      "name": "radius",
+      "type": "string"
+    },
+    {
+      "name": "xCenter",
+      "type": "string"
+    },
+    {
+      "name": "yCenter",
+      "type": "string"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Adaptation: doubles are carried as decimal strings; return the point as two decimal strings.",
+    "Sample uniformly by area: radius scales with sqrt(u) and angle is uniform in [0, 2*pi).",
+    "The checker only verifies distance <= radius + tolerance, using a fixed reference seed."
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "id": "can-place-flowers",
+  "title": "641. Can Place Flowers",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/can-place-flowers/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "flowerbed = [1,0,0,0,1], n = 1",
+      "output": "true",
+      "explanation": "The middle gap fits one flower."
+    },
+    {
+      "input": "flowerbed = [1,0,0,0,1], n = 2",
+      "output": "false",
+      "explanation": "Only one gap exists."
+    },
+    {
+      "input": "flowerbed = [0,0,0], n = 2",
+      "output": "true",
+      "explanation": "Both ends can be used."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean canPlaceFlowers(int[] flowerbed, int n) {\n        return false;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool canPlaceFlowers(vector<int>& flowerbed, int n) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool CanPlaceFlowers(int[] flowerbed, int n)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_place_flowers(flowerbed: Vec<i32>, n: i32) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc CanPlaceFlowers(flowerbed []int, n int) bool {\n    return false\n}",
+    "typescript": "export function canPlaceFlowers(flowerbed: number[], n: number): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $flowerbed\n     * @param int $n\n     * @return bool\n     */\n    public function canPlaceFlowers($flowerbed, $n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "flowerbed": "[1,0,0,0,1]",
+      "n": 1
+    },
+    {
+      "flowerbed": "[1,0,0,0,1]",
+      "n": 2
+    },
+    {
+      "flowerbed": "[0,0,0]",
+      "n": 2
+    }
+  ],
+  "functionName": "canPlaceFlowers",
+  "params": [
+    {
+      "name": "flowerbed",
+      "type": "int_array"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "A spot works when it and both neighbors are empty (edges need one neighbor).",
+    "Walk once, planting greedily; planting early never hurts.",
+    "Stop early once n flowers are placed."
+  ]
+}

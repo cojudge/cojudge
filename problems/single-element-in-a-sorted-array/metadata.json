@@ -1,0 +1,58 @@
+{
+  "id": "single-element-in-a-sorted-array",
+  "title": "598. Single Element in a Sorted Array",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/single-element-in-a-sorted-array/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,1,2,3,3,4,4,8,8]",
+      "output": "2",
+      "explanation": "Only 2 appears once."
+    },
+    {
+      "input": "nums = [3,3,7,7,10,11,11]",
+      "output": "10",
+      "explanation": "The unpaired entry is 10."
+    },
+    {
+      "input": "nums = [1]",
+      "output": "1",
+      "explanation": "Single-element array."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int singleNonDuplicate(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def singleNonDuplicate(self, nums: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int singleNonDuplicate(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int SingleNonDuplicate(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn single_non_duplicate(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc SingleNonDuplicate(nums []int) int {\n    \n}",
+    "typescript": "export function singleNonDuplicate(nums: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function singleNonDuplicate($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,1,2,3,3,4,4,8,8]"
+    },
+    {
+      "nums": "[3,3,7,7,10,11,11]"
+    },
+    {
+      "nums": "[1]"
+    }
+  ],
+  "functionName": "singleNonDuplicate",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Pairs normally start at even indices; the single element shifts that alignment.",
+    "Binary search on even midpoints: if nums[mid] equals nums[mid+1] the single is to the right, else to the left.",
+    "Always force the midpoint to be even before comparing with its neighbour."
+  ]
+}

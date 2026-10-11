@@ -1,0 +1,57 @@
+{
+  "id": "sum-of-subarray-minimums",
+  "title": "896. Sum of Subarray Minimums",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/sum-of-subarray-minimums/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "arr = [3,1,2,4]",
+      "output": "17",
+      "explanation": "Ten slice minima sum to 17."
+    },
+    {
+      "input": "arr = [11,81,94,43,3]",
+      "output": "444",
+      "explanation": "All slice minima sum to 444."
+    },
+    {
+      "input": "arr = [1,2,3]",
+      "output": "10",
+      "explanation": "Minima 1,2,3,1,2,1 total 10."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int sumSubarrayMins(int[] arr) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def sumSubarrayMins(self, arr: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int sumSubarrayMins(vector<int>& arr) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int SumSubarrayMins(int[] arr) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn sum_subarray_mins(arr: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc SumSubarrayMins(arr []int) int {\n    \n}",
+    "typescript": "export function sumSubarrayMins(arr: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @return int\n     */\n    public function sumSubarrayMins($arr) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "arr": "[3,1,2,4]"
+    },
+    {
+      "arr": "[11,81,94,43,3]"
+    },
+    {
+      "arr": "[1,2,3]"
+    }
+  ],
+  "functionName": "sumSubarrayMins",
+  "params": [
+    {
+      "name": "arr",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Each position serves as the minimum for a rectangle of subarrays bounded by the previous strictly smaller element and the next smaller-or-equal element.",
+    "Use a monotone increasing stack to find those borders in linear time, then add arr[i] * leftCount * rightCount."
+  ]
+}

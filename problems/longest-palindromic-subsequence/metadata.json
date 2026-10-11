@@ -1,0 +1,57 @@
+{
+  "id": "longest-palindromic-subsequence",
+  "title": "576. Longest Palindromic Subsequence",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/longest-palindromic-subsequence/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "s = \"bbbab\"",
+      "output": "4",
+      "explanation": "Skipping one 'a' leaves \"bbbb\", a palindrome of length 4."
+    },
+    {
+      "input": "s = \"cbbd\"",
+      "output": "2",
+      "explanation": "\"bb\" is the longest palindromic subsequence."
+    },
+    {
+      "input": "s = \"a\"",
+      "output": "1",
+      "explanation": "A single character is always a palindrome."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int longestPalindromeSubseq(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def longestPalindromeSubseq(self, s: str) -> int:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int longestPalindromeSubseq(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int LongestPalindromeSubseq(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn longest_palindrome_subseq(s: String) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc LongestPalindromeSubseq(s string) int {\n    \n}",
+    "typescript": "export function longestPalindromeSubseq(s: string): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function longestPalindromeSubseq($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "bbbab"
+    },
+    {
+      "s": "cbbd"
+    },
+    {
+      "s": "a"
+    }
+  ],
+  "functionName": "longestPalindromeSubseq",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Let dp[i][j] cover the substring s[i..j]; matching ends extend the inner answer by 2, mismatched ends take the better of the two shrunk intervals.",
+    "Fill the table by increasing substring length so inner results are ready, keeping only one row to save memory."
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "id": "number-of-distinct-islands-ii",
+  "title": "719. Number of Distinct Islands II",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/number-of-distinct-islands-ii/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "grid = [[1,1,0,0,0],[1,0,0,0,0],[0,0,0,0,1],[0,0,0,1,1]]",
+      "output": "1",
+      "explanation": "Two L-shaped islands of different sizes? Actually both single-plus-one shapes are rotations of each other, so they count as one shape."
+    },
+    {
+      "input": "grid = [[1,1,0,0,0],[1,1,0,0,0],[0,0,0,1,1],[0,0,0,1,1]]",
+      "output": "1",
+      "explanation": "Two 2x2 squares are identical under translation, so there is one distinct shape."
+    },
+    {
+      "input": "grid = [[1,0,0],[0,1,1],[0,0,0]]",
+      "output": "2",
+      "explanation": "A single cell and a domino are different even after rotation or reflection."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numDistinctIslands2(int[][] grid) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numDistinctIslands2(self, grid: List[List[int]]) -> int:\n        return 0",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int numDistinctIslands2(vector<vector<int>>& grid) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int NumDistinctIslands2(int[][] grid) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_distinct_islands2(grid: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumDistinctIslands2(grid [][]int) int {\n    return 0\n}",
+    "typescript": "export function numDistinctIslands2(grid: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $grid\n     * @return int\n     */\n    public function numDistinctIslands2($grid) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "grid": [
+        [
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "grid": [
+        [
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "grid": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    }
+  ],
+  "functionName": "numDistinctIslands2",
+  "params": [
+    {
+      "name": "grid",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Collect each island with flood fill, then normalize: translate points so the minimum is at the origin and sort them.",
+    "Generate all 8 rotations/reflections of the point set and keep the lexicographically smallest normalized encoding as the canonical key.",
+    "Count distinct canonical keys in a hash set."
+  ]
+}

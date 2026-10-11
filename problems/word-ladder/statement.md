@@ -1,9 +1,6 @@
-A transformation sequence from `beginWord` to `endWord` changes exactly one
-letter at a time. Every transformed word after `beginWord` must appear in
-`wordList`.
+You are given a starting string `beginWord`, a destination string `endWord`, and a pool of strings `wordList`. Consider chains that open with `beginWord` and finish at `endWord`, alter precisely one letter between consecutive links, and draw every link after the first from `wordList`.
 
-Return the number of words in the shortest transformation sequence, including
-both endpoints. Return `0` if no such sequence exists.
+Among all such chains, return how many strings the briefest one holds, counting both the opening and the closing string. When the two ends cannot be connected this way, return `0`.
 
 **Constraints:**
 

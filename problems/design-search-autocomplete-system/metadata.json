@@ -1,0 +1,60 @@
+{
+  "id": "design-search-autocomplete-system",
+  "title": "664. Design Search Autocomplete System",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/design-search-autocomplete-system/",
+  "category": "trie",
+  "examples": [
+    {
+      "input": "operations = [\"AutocompleteSystem\",\"input\",\"input\",\"input\",\"input\"], values = [\"i love you:5;island:3;ironman:2;i love leetcode:2\", \"i\", \" \", \"a\", \"#\"]",
+      "output": "[[\"i love you\",\"island\",\"i love leetcode\"],[\"i love you\",\"i love leetcode\"],[],[]]",
+      "explanation": "Prefix \"i\" matches three sentences by heat; \"i \" narrows to two; \"i a\" matches nothing; \"#\" stores \"i a\"."
+    },
+    {
+      "input": "operations = [\"AutocompleteSystem\",\"input\",\"input\"], values = [\"abc:2;abd:2;abe:2\", \"a\", \"b\"]",
+      "output": "[[\"abc\",\"abd\",\"abe\"],[\"abc\",\"abd\",\"abe\"]]",
+      "explanation": "Tied heats fall back to ASCII order."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<List<String>> runAutocomplete(String[] operations, String[] values) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runAutocomplete(self, operations: List[str], values: List[str]) -> List[List[str]]:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<string>> runAutocomplete(vector<string>& operations, vector<string>& values) {\n        return {};\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public List<List<string>> RunAutocomplete(string[] operations, string[] values) \n    {\n        return new List<List<string>>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_autocomplete(operations: Vec<String>, values: Vec<String>) -> Vec<Vec<String>> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunAutocomplete(operations []string, values []string) [][]string {\n    return nil\n}",
+    "typescript": "export function runAutocomplete(operations: string[], values: string[]): string[][] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param string[] $values\n     * @return string[][]\n     */\n    public function runAutocomplete($operations, $values) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"AutocompleteSystem\", \"input\", \"input\", \"input\", \"input\"]",
+      "values": "[\"i love you:5;island:3;ironman:2;i love leetcode:2\", \"i\", \" \", \"a\", \"#\"]"
+    },
+    {
+      "operations": "[\"AutocompleteSystem\", \"input\", \"input\"]",
+      "values": "[\"abc:2;abd:2;abe:2\", \"a\", \"b\"]"
+    },
+    {
+      "operations": "[\"AutocompleteSystem\", \"input\"]",
+      "values": "[\"\", \"z\"]"
+    }
+  ],
+  "functionName": "runAutocomplete",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list_2d",
+  "hints": [
+    "Keep a map from sentence to heat plus a live prefix buffer; preload parses on ':' and ';'.",
+    "For a normal character, extend the prefix and collect every stored sentence starting with it.",
+    "Sort candidates by heat descending then ASCII ascending, keep three; '#' commits the prefix and resets it."
+  ]
+}

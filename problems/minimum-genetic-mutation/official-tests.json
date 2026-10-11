@@ -1,0 +1,142 @@
+[
+  {
+    "startGene": "AACCGGTT",
+    "endGene": "AACCGGTA",
+    "bank": "[\"AACCGGTA\"]"
+  },
+  {
+    "startGene": "AACCGGTT",
+    "endGene": "AAACGGTA",
+    "bank": "[\"AACCGGTA\",\"AACCGCTA\",\"AAACGGTA\"]"
+  },
+  {
+    "startGene": "AAAAACCC",
+    "endGene": "AACCCCCC",
+    "bank": "[\"AAAACCCC\",\"AAACCCCC\",\"AACCCCCC\"]"
+  },
+  {
+    "startGene": "AACCGGTT",
+    "endGene": "AACCGGTT",
+    "bank": "[]"
+  },
+  {
+    "startGene": "AACCGGTT",
+    "endGene": "AAACGGTA",
+    "bank": "[]"
+  },
+  {
+    "startGene": "AAAAAAAA",
+    "endGene": "CCCCCCCC",
+    "bank": "[\"AAAAAAAA\",\"AAAAAAAC\",\"AAAAAACC\",\"AAAAACCC\",\"AAAACCCC\",\"AAACCCCC\",\"AACCCCCC\",\"ACCCCCCC\",\"CCCCCCCC\"]"
+  },
+  {
+    "startGene": "AACCGGTT",
+    "endGene": "AACCGGTA",
+    "bank": "[]"
+  },
+  {
+    "startGene": "AAAACCCC",
+    "endGene": "CCCCCCCC",
+    "bank": "[\"AAAACCCA\",\"AAACCCAA\",\"AACCCCCA\",\"AACCCCCC\",\"ACCCCCCC\",\"CCCCCCCC\",\"AAACCCCC\",\"AAAACCCC\"]"
+  },
+  {
+    "startGene": "AAAAAAAA",
+    "endGene": "AAAAAAAA",
+    "bank": "[\"AAAAAAAA\"]"
+  },
+  {
+    "startGene": "AACCGGTT",
+    "endGene": "TTCCGGAA",
+    "bank": "[\"AACCGGTA\",\"AACCGCTA\",\"AAACGGTA\"]"
+  },
+  {
+    "startGene": "AAAAACCC",
+    "endGene": "AAAACCCC",
+    "bank": "[\"AAAACCCC\"]"
+  },
+  {
+    "startGene": "AACCGGTT",
+    "endGene": "AACCGGTA",
+    "bank": "[\"AACCGGTA\",\"AACCGGTT\"]"
+  },
+  {
+    "startGene": "AACCGGTT",
+    "endGene": "AACCGCTA",
+    "bank": "[\"AACCGGTA\",\"AACCGCTA\"]"
+  },
+  {
+    "startGene": "AAAAAAAA",
+    "endGene": "AAACAAAA",
+    "bank": "[\"AAACAAAA\"]"
+  },
+  {
+    "startGene": "CCCCCCCC",
+    "endGene": "CCCCCCCA",
+    "bank": "[\"CCCCCCCA\"]"
+  },
+  {
+    "startGene": "AACCGGTT",
+    "endGene": "AACCGGTT",
+    "bank": "[\"AACCGGTT\"]"
+  },
+  {
+    "startGene": "AAAAAAAA",
+    "endGene": "TTTTTTTT",
+    "bank": "[\"AAAAAAAT\",\"AAAAAATT\",\"AAAATTTT\",\"AAATTTTT\",\"AATTTTTT\",\"ATTTTTTT\",\"TTTTTTTT\"]"
+  },
+  {
+    "startGene": "GGGGGGGG",
+    "endGene": "GGGGGGTT",
+    "bank": "[\"GGGGGGGT\",\"GGGGGGTT\"]"
+  },
+  {
+    "startGene": "ACGTACGT",
+    "endGene": "ACGTACGA",
+    "bank": "[\"ACGTACGA\"]"
+  },
+  {
+    "startGene": "ACGTACGT",
+    "endGene": "TGCAACGT",
+    "bank": "[\"ACGTACGT\",\"TGCAACGT\"]"
+  },
+  {
+    "startGene": "AAAAAAAA",
+    "endGene": "CCCCCCCC",
+    "bank": "[\"CCCCCCCC\"]"
+  },
+  {
+    "startGene": "TTTTTTTT",
+    "endGene": "TTTTTTTT",
+    "bank": "[]"
+  },
+  {
+    "startGene": "AACCGGTT",
+    "endGene": "AACCGGTA",
+    "bank": "[\"AACCGGTA\",\"AACCGCTA\",\"AAACGGTA\",\"AACCGGTT\"]"
+  },
+  {
+    "startGene": "GATTACAA",
+    "endGene": "GATTACAT",
+    "bank": "[\"GATTACAT\"]"
+  },
+  {
+    "startGene": "AAAAAAAC",
+    "endGene": "AAAAAAAG",
+    "bank": "[\"AAAAAAAG\"]"
+  },
+  {
+    "startGene": "CCCGGGTT",
+    "endGene": "CCCGGGTA",
+    "bank": "[\"CCCGGGTA\"]"
+  },
+  {
+    "startGene": "ATATATAT",
+    "endGene": "ATATATAA",
+    "bank": "[\"ATATATAA\"]"
+  },
+  {
+    "startGene": "GGGGGGGG",
+    "endGene": "AAAAAAAA",
+    "bank": "[\"GGGGGGGA\",\"GGGGGGAA\",\"GGGGGAAA\",\"GGGGAAAA\",\"GGGAAAAA\",\"GGAAAAAA\",\"GAAAAAAA\",\"AAAAAAAA\"]"
+  }
+]

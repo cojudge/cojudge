@@ -1,0 +1,52 @@
+{
+  "id": "reverse-vowels-of-a-string",
+  "title": "426. Reverse Vowels of a String",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/reverse-vowels-of-a-string/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"IceCreAm\"",
+      "output": "\"AceCreIm\"",
+      "explanation": "The four vowels I,e,e,A are written back as A,e,e,I."
+    },
+    {
+      "input": "s = \"leetcode\"",
+      "output": "\"leotcede\"",
+      "explanation": "The vowels e,e,o,e are written back as e,o,e,e."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String reverseVowels(String s) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def reverseVowels(self, s: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string reverseVowels(string s) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string ReverseVowels(string s) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reverse_vowels(s: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc ReverseVowels(s string) string {\n    return \"\"\n}",
+    "typescript": "export function reverseVowels(s: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string\n     */\n    public function reverseVowels($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "IceCreAm"
+    },
+    {
+      "s": "leetcode"
+    },
+    {
+      "s": "aA"
+    }
+  ],
+  "functionName": "reverseVowels",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Walk in from both ends, skipping non-vowels, and exchange vowels when both pointers land on one.",
+    "Test vowel membership case-insensitively against the set {a,e,i,o,u}."
+  ]
+}

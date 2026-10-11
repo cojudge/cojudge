@@ -1,0 +1,56 @@
+{
+  "id": "line-reflection",
+  "title": "435. Line Reflection",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/line-reflection/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "points = [[1,1],[-1,1]]",
+      "output": "true",
+      "explanation": "The line x = 0 reflects each point onto the other."
+    },
+    {
+      "input": "points = [[1,1],[-1,-1]]",
+      "output": "false",
+      "explanation": "The mirror of (1,1) across any vertical line through these x values would be (-1,1), which is absent."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isReflected(int[][] points) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def isReflected(self, points: List[List[int]]) -> bool:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool isReflected(vector<vector<int>>& points) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool IsReflected(int[][] points) \n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_reflected(points: Vec<Vec<i32>>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc IsReflected(points [][]int) bool {\n    \n}",
+    "typescript": "export function isReflected(points: number[][]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $points\n     * @return bool\n     */\n    public function isReflected($points) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "points": "[[1,1],[-1,1]]"
+    },
+    {
+      "points": "[[1,1],[-1,-1]]"
+    },
+    {
+      "points": "[[0,0]]"
+    },
+    {
+      "points": "[[1,1],[2,1],[0,1]]"
+    }
+  ],
+  "functionName": "isReflected",
+  "params": [
+    {
+      "name": "points",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "If a mirror exists, it must sit halfway between the smallest and largest x values.",
+    "Store all points in a hash set, then check the mirror partner of each point.",
+    "Use the sum minX + maxX to avoid fractions: the partner of x is (minX + maxX - x)."
+  ]
+}

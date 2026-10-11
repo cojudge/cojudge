@@ -1,0 +1,92 @@
+[
+  {
+    "input": "dir|\tsubdir1|\tsubdir2|\t\tfile.ext"
+  },
+  {
+    "input": "dir|\tsubdir1|\t\tfile1.ext|\t\tsubsubdir1|\tsubdir2|\t\tsubsubdir2|\t\t\tfile2.ext"
+  },
+  {
+    "input": "a"
+  },
+  {
+    "input": "file.txt"
+  },
+  {
+    "input": "dir|\tfile.txt"
+  },
+  {
+    "input": "a|\tb|\t\tc.txt|\taaaa.txt"
+  },
+  {
+    "input": "dir|\tsubdir1|\t\tfile1.ext|\t\tsubsubdir1"
+  },
+  {
+    "input": "a|\tb.txt|\ta"
+  },
+  {
+    "input": "root|\ta|\t\tb|\t\t\tc.doc"
+  },
+  {
+    "input": "x|\ty"
+  },
+  {
+    "input": "my dir|\tmy subdir|\t\tmy file.ext"
+  },
+  {
+    "input": "d1|\td2|\t\td3|\t\t\tf.txt"
+  },
+  {
+    "input": "a.txt|\tb"
+  },
+  {
+    "input": "a|\tb|\tc|\t\td.txt"
+  },
+  {
+    "input": "folder|\tsub folder 1|\t\t doc.txt"
+  },
+  {
+    "input": "r|\ta.txt|\tb.txt|\tc.txt"
+  },
+  {
+    "input": "top|\tmid one|\t\tdeep file name.ext|\tmid two"
+  },
+  {
+    "input": "a|\tb|\t\tc|\t\t\td|\t\t\t\te.f"
+  },
+  {
+    "input": "dir1|\tdir2|\t\tdir3|\t\t\tverylongfilename.extension"
+  },
+  {
+    "input": "f.e"
+  },
+  {
+    "input": "ab|\tcd.txt|\tef|\t\tgh.txt"
+  },
+  {
+    "input": "one|\ttwo three|\t\tfour five six.txt"
+  },
+  {
+    "input": "d|\te.txt|\tf|\t\tg.txt|\t\t\th.txt"
+  },
+  {
+    "input": "a b c|\td e f.txt"
+  },
+  {
+    "input": "zzz|\ta|\t\tb.txt|\tc|\t\td.txt|\t\t\te.txt"
+  },
+  {
+    "input": "dir|\tsubdir1|\t\tfile with spaces.ext"
+  },
+  {
+    "input": "A1|\tB2|\t\tC3.D4"
+  },
+  {
+    "input": "longdirname123|\tshort.txt"
+  },
+  {
+    "input": "p|\tq.txt|\tr|\t\ts.txt"
+  },
+  {
+    "input": "m|\tn.txt"
+  }
+]

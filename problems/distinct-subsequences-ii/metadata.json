@@ -1,0 +1,58 @@
+{
+  "id": "distinct-subsequences-ii",
+  "title": "927. Distinct Subsequences II",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/distinct-subsequences-ii/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"abc\"",
+      "output": "7",
+      "explanation": "All 7 non-empty picks differ."
+    },
+    {
+      "input": "s = \"aba\"",
+      "output": "6",
+      "explanation": "Texts are a, b, ab, aa, ba, aba."
+    },
+    {
+      "input": "s = \"aaa\"",
+      "output": "3",
+      "explanation": "Only a, aa, aaa."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int distinctSubseqII(String s) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def distinctSubseqII(self, s: str) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int distinctSubseqII(string s) {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public int DistinctSubseqII(string s) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn distinct_subseq_ii(s: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc DistinctSubseqII(s string) int {\n    return 0\n}",
+    "typescript": "export function distinctSubseqII(s: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function distinctSubseqII($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "abc"
+    },
+    {
+      "s": "aba"
+    },
+    {
+      "s": "aaa"
+    }
+  ],
+  "functionName": "distinctSubseqII",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Track all subsequences including the empty one, then subtract it at the end.",
+    "Appending a new character doubles the count, but texts already created at its previous appearance must be subtracted once to avoid double counting.",
+    "Keep the running total before each first-seen letter so repeats can be corrected with modular arithmetic."
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "category": "array",
+  "difficulty": "Medium",
+  "examples": [
+    {
+      "explanation": "The four spins score 25, 16, 23 and 26; the best is 26.",
+      "input": "nums = [4,3,2,6]",
+      "output": "26"
+    },
+    {
+      "explanation": "A single entry always scores 0.",
+      "input": "nums = [100]",
+      "output": "0"
+    },
+    {
+      "explanation": "Scores are 8, 5 and 5; the best is 8.",
+      "input": "nums = [1,2,3]",
+      "output": "8"
+    }
+  ],
+  "functionName": "maxRotateFunction",
+  "hints": [
+    "Write F(k) in terms of F(k-1): every entry shifts one slot up except the wrapped one.",
+    "F(k) = F(k-1) + total - n * last_moved, where total is the array sum.",
+    "Start from the directly computed F(0) and iterate."
+  ],
+  "id": "rotate-function",
+  "link": "https://leetcode.com/problems/rotate-function/",
+  "outputType": "int",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "starterCode": {
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int maxRotateFunction(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MaxRotateFunction(int[] nums) \n    {\n        return 0;\n    }\n}",
+    "go": "package main\n\nfunc MaxRotateFunction(nums []int) int {\n    return 0\n}",
+    "java": "class Solution {\n    public int maxRotateFunction(int[] nums) {\n        return 0;\n    }\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function maxRotateFunction($nums) {\n\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxRotateFunction(self, nums: List[int]) -> int:\n        pass",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_rotate_function(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "typescript": "export function maxRotateFunction(nums: number[]): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[4,3,2,6]"
+    },
+    {
+      "nums": "[100]"
+    },
+    {
+      "nums": "[1,2,3]"
+    }
+  ],
+  "title": "471. Rotate Function"
+}

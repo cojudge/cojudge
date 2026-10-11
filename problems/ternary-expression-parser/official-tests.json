@@ -1,0 +1,92 @@
+[
+  {
+    "expression": "T?2:3"
+  },
+  {
+    "expression": "F?1:T?4:5"
+  },
+  {
+    "expression": "T?T?F:5:3"
+  },
+  {
+    "expression": "F"
+  },
+  {
+    "expression": "T"
+  },
+  {
+    "expression": "F?T:F"
+  },
+  {
+    "expression": "T?F:T"
+  },
+  {
+    "expression": "T?1:F?2:3"
+  },
+  {
+    "expression": "F?1:F?2:3"
+  },
+  {
+    "expression": "T?T?T?1:2:3:4"
+  },
+  {
+    "expression": "F?T?1:2:F?3:4"
+  },
+  {
+    "expression": "T?9:0"
+  },
+  {
+    "expression": "F?9:0"
+  },
+  {
+    "expression": "T?F?1:2:T?3:4"
+  },
+  {
+    "expression": "F?F?1:2:T?3:4"
+  },
+  {
+    "expression": "T?T?F?1:2:3:4"
+  },
+  {
+    "expression": "5"
+  },
+  {
+    "expression": "T?T:F"
+  },
+  {
+    "expression": "F?T?F?1:2:3:4"
+  },
+  {
+    "expression": "T?F?F?1:2:3:T?4:5"
+  },
+  {
+    "expression": "T?T?1:2:3"
+  },
+  {
+    "expression": "F?T?1:2:3"
+  },
+  {
+    "expression": "T?F?1:2:F?3:4"
+  },
+  {
+    "expression": "F?F?1:2:F?3:4"
+  },
+  {
+    "expression": "T?0:1"
+  },
+  {
+    "expression": "F?0:1"
+  },
+  {
+    "expression": "T?T?T?T?1:2:3:4:5"
+  },
+  {
+    "expression": "F?1:2"
+  },
+  {
+    "expression": "T?1:2"
+  },
+  {
+    "expression": "T?F:F"
+  }
+]

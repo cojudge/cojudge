@@ -1,0 +1,142 @@
+[
+  {
+    "target": 1,
+    "startFuel": 1,
+    "stations": "[]"
+  },
+  {
+    "target": 100,
+    "startFuel": 1,
+    "stations": "[[10,100]]"
+  },
+  {
+    "target": 100,
+    "startFuel": 10,
+    "stations": "[[10,60],[20,30],[30,30],[60,40]]"
+  },
+  {
+    "target": 10,
+    "startFuel": 10,
+    "stations": "[]"
+  },
+  {
+    "target": 10,
+    "startFuel": 5,
+    "stations": "[[5,5]]"
+  },
+  {
+    "target": 20,
+    "startFuel": 5,
+    "stations": "[[5,5],[10,5],[15,5]]"
+  },
+  {
+    "target": 100,
+    "startFuel": 50,
+    "stations": "[[25,25],[50,50]]"
+  },
+  {
+    "target": 100,
+    "startFuel": 25,
+    "stations": "[[25,25],[50,25],[75,25]]"
+  },
+  {
+    "target": 50,
+    "startFuel": 10,
+    "stations": "[[10,10],[20,10],[30,10],[40,10]]"
+  },
+  {
+    "target": 1000,
+    "startFuel": 100,
+    "stations": "[[100,100],[200,100],[300,100],[400,100],[500,100],[600,100]]"
+  },
+  {
+    "target": 100,
+    "startFuel": 10,
+    "stations": "[[10,10],[20,10],[30,10],[40,10],[50,10],[60,10]]"
+  },
+  {
+    "target": 15,
+    "startFuel": 3,
+    "stations": "[[3,5],[6,5],[9,5]]"
+  },
+  {
+    "target": 200,
+    "startFuel": 50,
+    "stations": "[[50,50],[100,50],[150,50]]"
+  },
+  {
+    "target": 120,
+    "startFuel": 10,
+    "stations": "[[10,90],[20,10],[90,10]]"
+  },
+  {
+    "target": 500,
+    "startFuel": 100,
+    "stations": "[[100,200],[200,100],[300,100]]"
+  },
+  {
+    "target": 60,
+    "startFuel": 30,
+    "stations": "[[30,30]]"
+  },
+  {
+    "target": 60,
+    "startFuel": 20,
+    "stations": "[[20,20],[40,20]]"
+  },
+  {
+    "target": 100,
+    "startFuel": 1,
+    "stations": "[]"
+  },
+  {
+    "target": 2,
+    "startFuel": 1,
+    "stations": "[[1,1]]"
+  },
+  {
+    "target": 100,
+    "startFuel": 99,
+    "stations": "[[1,1],[50,1]]"
+  },
+  {
+    "target": 100,
+    "startFuel": 10,
+    "stations": "[[10,90]]"
+  },
+  {
+    "target": 100,
+    "startFuel": 10,
+    "stations": "[[20,20],[40,40],[60,20]]"
+  },
+  {
+    "target": 1000,
+    "startFuel": 1000,
+    "stations": "[]"
+  },
+  {
+    "target": 100,
+    "startFuel": 50,
+    "stations": "[[10,10],[20,10],[30,10]]"
+  },
+  {
+    "target": 30,
+    "startFuel": 10,
+    "stations": "[[10,10],[15,10],[25,10]]"
+  },
+  {
+    "target": 40,
+    "startFuel": 10,
+    "stations": "[[10,30],[20,10],[30,10]]"
+  },
+  {
+    "target": 90,
+    "startFuel": 10,
+    "stations": "[[10,10],[20,10],[30,80]]"
+  },
+  {
+    "target": 150,
+    "startFuel": 30,
+    "stations": "[[30,30],[60,30],[90,30],[120,30]]"
+  }
+]

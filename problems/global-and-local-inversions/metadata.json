@@ -1,0 +1,58 @@
+{
+  "id": "global-and-local-inversions",
+  "title": "775. Global and Local Inversions",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/global-and-local-inversions/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,0,2]",
+      "output": "true",
+      "explanation": "One global and one local inversion coincide."
+    },
+    {
+      "input": "nums = [1,2,0]",
+      "output": "false",
+      "explanation": "Two globals but one local."
+    },
+    {
+      "input": "nums = [0,2,1]",
+      "output": "true",
+      "explanation": "A single adjacent swap."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isIdealPermutation(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def isIdealPermutation(self, nums: List[int]) -> bool:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool isIdealPermutation(vector<int>& nums) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool IsIdealPermutation(int[] nums)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_ideal_permutation(nums: Vec<i32>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc IsIdealPermutation(nums []int) bool {\n    return false\n}",
+    "typescript": "export function isIdealPermutation(nums: number[]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return bool\n     */\n    public function isIdealPermutation($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,0,2]"
+    },
+    {
+      "nums": "[1,2,0]"
+    },
+    {
+      "nums": "[0,2,1]"
+    }
+  ],
+  "functionName": "isIdealPermutation",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Extra global inversions always span at least two positions, so compare each prefix maximum with later values.",
+    "Track the maximum of nums[0..i-2] while scanning i from 2 upward; if it ever exceeds nums[i], a non-local inversion exists.",
+    "Equivalently, an ideal permutation satisfies |nums[i] - i| <= 1 for every index."
+  ]
+}

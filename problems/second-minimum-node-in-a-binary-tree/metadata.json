@@ -1,0 +1,59 @@
+{
+  "id": "second-minimum-node-in-a-binary-tree",
+  "title": "690. Second Minimum Node in a Binary Tree",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/second-minimum-node-in-a-binary-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [2,2,5,null,null,5,7]",
+      "output": "5",
+      "explanation": "The smallest value is 2 and the next distinct value present is 5."
+    },
+    {
+      "input": "root = [2,2,2]",
+      "output": "-1",
+      "explanation": "Every node stores 2, so no second distinct value exists."
+    },
+    {
+      "input": "root = [5,8,5]",
+      "output": "8",
+      "explanation": "Values present are 5 and 8; the second minimum is 8."
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public int findSecondMinimumValue(TreeNode root) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\nclass Solution:\n    def findSecondMinimumValue(self, root) -> int:\n        pass",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int findSecondMinimumValue(TreeNode* root) {\n        return 0;\n    }\n};",
+    "csharp": "/*\nDefinition for a binary tree node.\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\n\npublic class Solution \n{\n    public int FindSecondMinimumValue(TreeNode root) \n    {\n        return 0;\n    }\n}",
+    "rust": "// Definition for a binary tree node.\n// #[derive(Debug, PartialEq, Eq)]\n// pub struct TreeNode {\n//   pub val: i32,\n//   pub left: Option<Rc<RefCell<TreeNode>>>,\n//   pub right: Option<Rc<RefCell<TreeNode>>>,\n// }\nuse std::rc::Rc;\nuse std::cell::RefCell;\npub struct Solution;\n\nimpl Solution {\n    pub fn find_second_minimum_value(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\n// Definition for a binary tree node.\n// type TreeNode struct {\n//     Val int\n//     Left *TreeNode\n//     Right *TreeNode\n// }\n\nfunc FindSecondMinimumValue(root *TreeNode) int {\n    return 0\n}",
+    "typescript": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    val: number;\n    left: TreeNode | null;\n    right: TreeNode | null;\n    constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {\n        this.val = val ?? 0;\n        this.left = left ?? null;\n        this.right = right ?? null;\n    }\n}\n*/\nimport { TreeNode } from './TreeNode';\nexport function findSecondMinimumValue(root: TreeNode | null): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param TreeNode|null $root\n     * @return int\n     */\n    public function findSecondMinimumValue($root) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "root": "[2,2,5,null,null,5,7]"
+    },
+    {
+      "root": "[2,2,2]"
+    },
+    {
+      "root": "[5,8,5]"
+    }
+  ],
+  "functionName": "findSecondMinimumValue",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The root always carries the global minimum in this special tree.",
+    "Walk the tree and track the smallest value strictly larger than the root value.",
+    "Return -1 when every node equals the root value."
+  ]
+}

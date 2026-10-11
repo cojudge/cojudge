@@ -1,0 +1,65 @@
+{
+  "id": "shortest-subarray-with-sum-at-least-k",
+  "title": "857. Shortest Subarray with Sum at Least K",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1], k = 1",
+      "output": "1",
+      "explanation": "The whole array sums to 1 with length 1."
+    },
+    {
+      "input": "nums = [1,2], k = 4",
+      "output": "-1",
+      "explanation": "The total 3 is below 4."
+    },
+    {
+      "input": "nums = [2,-1,2], k = 3",
+      "output": "3",
+      "explanation": "Only the full array reaches 3."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int shortestSubarray(int[] nums, int k) {\n        return -1;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def shortestSubarray(self, nums: List[int], k: int) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int shortestSubarray(vector<int>& nums, int k) {\n        return -1;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int ShortestSubarray(int[] nums, int k)\n    {\n        return -1;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn shortest_subarray(nums: Vec<i32>, k: i32) -> i32 {\n        -1\n    }\n}",
+    "go": "package main\n\nfunc ShortestSubarray(nums []int, k int) int {\n    return -1\n}",
+    "typescript": "export function shortestSubarray(nums: number[], k: number): number {\n    return -1;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $k\n     * @return int\n     */\n    public function shortestSubarray($nums, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1]",
+      "k": 1
+    },
+    {
+      "nums": "[1,2]",
+      "k": 4
+    },
+    {
+      "nums": "[2,-1,2]",
+      "k": 3
+    }
+  ],
+  "functionName": "shortestSubarray",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Prefix sums turn any segment sum into a difference of two prefixes; the task becomes finding close indices with a large enough rise.",
+    "Keep candidate start positions in a deque ordered by increasing prefix value, discarding dominated entries to preserve monotonicity.",
+    "For each new prefix, pop from the front while the window already reaches `k` to record the shortest length, then maintain the monotonic order at the back."
+  ]
+}

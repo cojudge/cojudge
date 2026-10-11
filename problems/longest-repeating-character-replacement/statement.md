@@ -1,4 +1,4 @@
-You are given a string s and an integer k. You can replace at most k characters in the string to any other uppercase character. Return the length of the longest substring containing the same letter after at most k replacements.
+You receive a string s plus an integer k. You may switch up to k positions in the string to any other capital letter. After those edits, report the greatest length of a block made up of a single repeated letter.
 
 **Constraints:**
 

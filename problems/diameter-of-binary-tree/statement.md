@@ -1,10 +1,8 @@
-Given the root of a binary tree, return the tree's diameter.
+You are handed the `root` of a binary tree. Compute how wide the tree stretches, reported as its diameter.
 
-The diameter is the length of the longest path between any two nodes. The path
-may or may not pass through the root, and its length is measured by the number of
-edges between its endpoints.
+Here the diameter means the greatest number of edges found on any route joining two nodes of the tree. That route does not have to include the root; what matters is only the count of edges from one endpoint to the other.
 
 **Constraints:**
 
-- The tree contains between `1` and `10000` nodes.
-- `-100 <= node.val <= 100`
+- The count of nodes in the tree is between `1` and `10000` inclusive.
+- Every node's stored value satisfies `-100 <= node.val <= 100`.

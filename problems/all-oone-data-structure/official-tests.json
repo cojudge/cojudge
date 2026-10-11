@@ -1,0 +1,114 @@
+[
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"getMaxKey\",\"getMinKey\",\"inc\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"hello\",\"hello\",\"\",\"\",\"leet\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"inc\",\"getMaxKey\",\"getMinKey\",\"dec\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"a\",\"b\",\"b\",\"\",\"\",\"b\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"getMaxKey\",\"getMinKey\",\"dec\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"x\",\"\",\"\",\"x\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"inc\",\"inc\",\"getMaxKey\",\"getMinKey\",\"dec\",\"dec\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"a\",\"a\",\"b\",\"c\",\"\",\"\",\"b\",\"c\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"dec\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"hello\",\"world\",\"hello\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"inc\",\"getMinKey\",\"dec\",\"getMinKey\"]",
+    "values": "[\"\",\"a\",\"b\",\"c\",\"\",\"a\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"getMaxKey\",\"inc\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"k\",\"\",\"k\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"inc\",\"inc\",\"inc\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"p\",\"q\",\"p\",\"q\",\"p\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"dec\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"solo\",\"solo\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"getMaxKey\",\"getMinKey\",\"dec\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"a\",\"a\",\"\",\"\",\"a\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"inc\",\"inc\",\"getMaxKey\",\"getMinKey\",\"dec\",\"getMaxKey\"]",
+    "values": "[\"\",\"x\",\"y\",\"y\",\"z\",\"\",\"\",\"y\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"inc\",\"getMaxKey\",\"getMinKey\",\"dec\",\"dec\",\"dec\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"a\",\"b\",\"c\",\"\",\"\",\"a\",\"b\",\"c\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"inc\",\"getMaxKey\",\"inc\",\"getMinKey\",\"dec\",\"getMaxKey\"]",
+    "values": "[\"\",\"k\",\"k\",\"k\",\"\",\"m\",\"\",\"k\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"getMaxKey\",\"dec\",\"getMaxKey\",\"inc\",\"getMinKey\"]",
+    "values": "[\"\",\"a\",\"\",\"a\",\"\",\"b\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"inc\",\"inc\",\"inc\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"aa\",\"bb\",\"aa\",\"bb\",\"cc\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"dec\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"foo\",\"bar\",\"foo\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"inc\",\"inc\",\"getMaxKey\",\"getMinKey\",\"dec\",\"dec\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"a\",\"a\",\"a\",\"b\",\"\",\"\",\"a\",\"a\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"getMinKey\",\"getMaxKey\",\"inc\",\"getMaxKey\",\"dec\",\"getMinKey\"]",
+    "values": "[\"\",\"z\",\"\",\"\",\"z\",\"\",\"z\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"inc\",\"inc\",\"inc\",\"inc\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"m\",\"n\",\"o\",\"m\",\"n\",\"m\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"dec\",\"inc\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"a\",\"b\",\"b\",\"c\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"dec\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"a\",\"a\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"dec\",\"inc\",\"inc\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"ab\",\"ab\",\"ab\",\"cd\",\"cd\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"inc\",\"dec\",\"dec\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"x\",\"y\",\"z\",\"x\",\"y\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"inc\",\"dec\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"key\",\"key\",\"other\",\"other\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"inc\",\"inc\",\"inc\",\"inc\",\"getMaxKey\",\"getMinKey\",\"dec\",\"getMaxKey\"]",
+    "values": "[\"\",\"a\",\"b\",\"b\",\"c\",\"c\",\"c\",\"\",\"\",\"c\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"inc\",\"inc\",\"inc\",\"getMaxKey\",\"getMinKey\",\"dec\",\"dec\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"q\",\"w\",\"e\",\"r\",\"\",\"\",\"q\",\"w\",\"\",\"\"]"
+  },
+  {
+    "operations": "[\"AllOne\",\"inc\",\"dec\",\"inc\",\"dec\",\"inc\",\"getMaxKey\",\"getMinKey\"]",
+    "values": "[\"\",\"a\",\"a\",\"b\",\"b\",\"c\",\"\",\"\"]"
+  }
+]

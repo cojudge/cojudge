@@ -1,0 +1,142 @@
+[
+  {
+    "operations": "[\"FileSystem\", \"mkdir\", \"ls\", \"addContentToFile\", \"readContentFromFile\", \"ls\"]",
+    "paths": "[\"/\", \"/a/b/c\", \"/\", \"/a/b/c/d\", \"/a/b/c/d\", \"/a/b/c\"]",
+    "contents": "[\"\", \"\", \"\", \"hello\", \"\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"mkdir\", \"ls\", \"addContentToFile\", \"ls\", \"readContentFromFile\"]",
+    "paths": "[\"/\", \"/x/y\", \"/\", \"/x/y/f\", \"/x/y\", \"/x/y/f\"]",
+    "contents": "[\"\", \"\", \"\", \"data\", \"\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"ls\"]",
+    "paths": "[\"/\"]",
+    "contents": "[\"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"mkdir\", \"ls\"]",
+    "paths": "[\"/\", \"/a\", \"/\"]",
+    "contents": "[\"\", \"\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"mkdir\", \"mkdir\", \"ls\"]",
+    "paths": "[\"/\", \"/a/b\", \"/a/c\", \"/a\"]",
+    "contents": "[\"\", \"\", \"\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"addContentToFile\", \"readContentFromFile\"]",
+    "paths": "[\"/\", \"/f\", \"/f\"]",
+    "contents": "[\"\", \"hello\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"addContentToFile\", \"addContentToFile\", \"readContentFromFile\"]",
+    "paths": "[\"/\", \"/f\", \"/f\", \"/f\"]",
+    "contents": "[\"\", \"ab\", \"cd\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"mkdir\", \"addContentToFile\", \"ls\", \"ls\"]",
+    "paths": "[\"/\", \"/a\", \"/a/f\", \"/a\", \"/a/f\"]",
+    "contents": "[\"\", \"\", \"hi\", \"\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"mkdir\", \"addContentToFile\", \"readContentFromFile\", \"addContentToFile\", \"readContentFromFile\"]",
+    "paths": "[\"/\", \"/d\", \"/d/f\", \"/d/f\", \"/d/f\", \"/d/f\"]",
+    "contents": "[\"\", \"\", \"x\", \"\", \"y\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"mkdir\", \"ls\", \"ls\"]",
+    "paths": "[\"/\", \"/a/b/c\", \"/a\", \"/a/b\"]",
+    "contents": "[\"\", \"\", \"\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"addContentToFile\", \"ls\", \"ls\"]",
+    "paths": "[\"/\", \"/a\", \"/\", \"/a\"]",
+    "contents": "[\"\", \"x\", \"\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"mkdir\", \"addContentToFile\", \"addContentToFile\", \"ls\"]",
+    "paths": "[\"/\", \"/m\", \"/m/a\", \"/m/b\", \"/m\"]",
+    "contents": "[\"\", \"\", \"1\", \"2\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"mkdir\", \"addContentToFile\", \"readContentFromFile\"]",
+    "paths": "[\"/\", \"/p/q\", \"/p/q/r\", \"/p/q/r\"]",
+    "contents": "[\"\", \"\", \"zzz\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"ls\", \"mkdir\", \"ls\"]",
+    "paths": "[\"/\", \"/\", \"/z\", \"/\"]",
+    "contents": "[\"\", \"\", \"\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"mkdir\", \"mkdir\", \"mkdir\", \"ls\"]",
+    "paths": "[\"/\", \"/b\", \"/a\", \"/c\", \"/\"]",
+    "contents": "[\"\", \"\", \"\", \"\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"addContentToFile\", \"addContentToFile\", \"ls\", \"readContentFromFile\"]",
+    "paths": "[\"/\", \"/d/f1\", \"/d/f2\", \"/d\", \"/d/f1\"]",
+    "contents": "[\"\", \"aa\", \"bb\", \"\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"mkdir\", \"ls\", \"addContentToFile\", \"ls\"]",
+    "paths": "[\"/\", \"/k\", \"/k\", \"/k/file\", \"/k\"]",
+    "contents": "[\"\", \"\", \"\", \"v\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"mkdir\", \"addContentToFile\", \"ls\"]",
+    "paths": "[\"/\", \"/a/a/a\", \"/a/a/a/f\", \"/a/a\"]",
+    "contents": "[\"\", \"\", \"q\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"addContentToFile\", \"readContentFromFile\", \"ls\"]",
+    "paths": "[\"/\", \"/x\", \"/x\", \"/\"]",
+    "contents": "[\"\", \"hey\", \"\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"mkdir\", \"mkdir\", \"ls\", \"ls\"]",
+    "paths": "[\"/\", \"/a/b\", \"/a/b/c\", \"/a/b\", \"/\"]",
+    "contents": "[\"\", \"\", \"\", \"\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"mkdir\", \"addContentToFile\", \"ls\", \"readContentFromFile\"]",
+    "paths": "[\"/\", \"/w\", \"/w/f\", \"/\", \"/w/f\"]",
+    "contents": "[\"\", \"\", \"abc\", \"\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"addContentToFile\", \"ls\", \"readContentFromFile\"]",
+    "paths": "[\"/\", \"/m/n/o\", \"/m/n\", \"/m/n/o\"]",
+    "contents": "[\"\", \"t\", \"\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"mkdir\", \"mkdir\", \"addContentToFile\", \"ls\", \"ls\"]",
+    "paths": "[\"/\", \"/d1\", \"/d2\", \"/d1/f\", \"/\", \"/d1\"]",
+    "contents": "[\"\", \"\", \"\", \"c\", \"\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"mkdir\", \"ls\", \"mkdir\", \"ls\"]",
+    "paths": "[\"/\", \"/a\", \"/\", \"/a/b\", \"/a\"]",
+    "contents": "[\"\", \"\", \"\", \"\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"addContentToFile\", \"addContentToFile\", \"addContentToFile\", \"readContentFromFile\"]",
+    "paths": "[\"/\", \"/f\", \"/f\", \"/f\", \"/f\"]",
+    "contents": "[\"\", \"a\", \"b\", \"c\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"mkdir\", \"addContentToFile\", \"ls\", \"ls\", \"readContentFromFile\"]",
+    "paths": "[\"/\", \"/s\", \"/s/a\", \"/s\", \"/s/a\", \"/s/a\"]",
+    "contents": "[\"\", \"\", \"x\", \"\", \"\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"ls\", \"ls\", \"mkdir\", \"ls\"]",
+    "paths": "[\"/\", \"/\", \"/\", \"/q\", \"/\"]",
+    "contents": "[\"\", \"\", \"\", \"\", \"\"]"
+  },
+  {
+    "operations": "[\"FileSystem\", \"mkdir\", \"addContentToFile\", \"readContentFromFile\", \"ls\", \"ls\"]",
+    "paths": "[\"/\", \"/u/v\", \"/u/v/w\", \"/u/v/w\", \"/u/v\", \"/\"]",
+    "contents": "[\"\", \"\", \"k\", \"\", \"\", \"\"]"
+  }
+]

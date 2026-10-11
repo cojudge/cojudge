@@ -1,0 +1,58 @@
+{
+  "id": "all-paths-from-source-to-target",
+  "title": "795. All Paths From Source to Target",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/all-paths-from-source-to-target/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "graph = [[1,2],[3],[3],[]]",
+      "output": "[[0,1,3],[0,2,3]]",
+      "explanation": "Two ways reach the final vertex."
+    },
+    {
+      "input": "graph = [[4,3,1],[3,2,4],[3],[4],[]]",
+      "output": "[[0,4],[0,3,4],[0,1,3,4],[0,1,2,3,4],[0,1,4]]",
+      "explanation": "Five routes connect start to finish."
+    },
+    {
+      "input": "graph = [[1],[]]",
+      "output": "[[0,1]]",
+      "explanation": "The lone edge is the answer."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:\n        return []",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<List<int>> AllPathsSourceTarget(int[][] graph) \n    {\n        return new List<List<int>>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn all_paths_source_target(graph: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc AllPathsSourceTarget(graph [][]int) [][]int {\n    return nil\n}",
+    "typescript": "export function allPathsSourceTarget(graph: number[][]): number[][] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $graph\n     * @return int[][]\n     */\n    public function allPathsSourceTarget($graph) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "graph": "[[1, 2], [3], [3], []]"
+    },
+    {
+      "graph": "[[4, 3, 1], [3, 2, 4], [3], [4], []]"
+    },
+    {
+      "graph": "[[1], []]"
+    }
+  ],
+  "functionName": "allPathsSourceTarget",
+  "params": [
+    {
+      "name": "graph",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_list_2d",
+  "hints": [
+    "Depth-first search from 0 carrying the current path naturally enumerates every route.",
+    "Append a copy of the path once the final vertex is reached, then backtrack.",
+    "Adaptation: the nested input maps to int_array_2d and the nested output maps to int_list_2d in this judge."
+  ]
+}

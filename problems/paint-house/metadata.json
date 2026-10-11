@@ -1,0 +1,60 @@
+{
+  "id": "paint-house",
+  "title": "360. Paint House",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/paint-house/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "costs = [[17,2,17],[16,16,5],[14,3,19]]",
+      "output": "10",
+      "explanation": "Paint house 0 blue (2), house 1 green (5) and house 2 blue (3) for 2 + 5 + 3 = 10."
+    },
+    {
+      "input": "costs = [[7,6,2]]",
+      "output": "2",
+      "explanation": "With one house, pick the cheapest color, which costs 2."
+    },
+    {
+      "input": "costs = [[1,5,3],[2,9,4]]",
+      "output": "5",
+      "explanation": "Paint house 0 red (1) and house 1 green (4) for 1 + 4 = 5."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minCost(int[][] costs) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def minCost(self, costs: List[List[int]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minCost(vector<vector<int>>& costs) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinCost(int[][] costs)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_cost(costs: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinCost(costs [][]int) int {\n    return 0\n}",
+    "typescript": "export function minCost(costs: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $costs\n     * @return int\n     */\n    public function minCost($costs) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "costs": "[[17,2,17],[16,16,5],[14,3,19]]"
+    },
+    {
+      "costs": "[[7,6,2]]"
+    },
+    {
+      "costs": "[[1,5,3],[2,9,4]]"
+    },
+    {
+      "costs": "[[5,8,6],[19,14,13],[7,5,12],[14,15,17],[3,20,10]]"
+    }
+  ],
+  "functionName": "minCost",
+  "params": [
+    {
+      "name": "costs",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Track the cheapest total ending with each color after every house.",
+    "Each new total adds the current painting cost to the better of the two totals that used a different color before."
+  ]
+}

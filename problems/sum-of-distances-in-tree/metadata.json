@@ -1,0 +1,89 @@
+{
+  "id": "sum-of-distances-in-tree",
+  "title": "832. Sum of Distances in Tree",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/sum-of-distances-in-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "n = 6, edges = [[0,1],[0,2],[2,3],[2,4],[2,5]]",
+      "output": "[8,12,6,10,10,10]",
+      "explanation": "Node 2 is the most central with total 6."
+    },
+    {
+      "input": "n = 1, edges = []",
+      "output": "[0]"
+    },
+    {
+      "input": "n = 2, edges = [[1,0]]",
+      "output": "[1,1]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] sumOfDistancesInTree(int n, int[][] edges) {\n        return null;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def sumOfDistancesInTree(self, n: int, edges: List[List[int]]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> sumOfDistancesInTree(int n, vector<vector<int>>& edges) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] SumOfDistancesInTree(int n, int[][] edges) \n    {\n        return null;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn sum_of_distances_in_tree(n: i32, edges: Vec<Vec<i32>>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc SumOfDistancesInTree(n int, edges [][]int) []int {\n    return nil\n}",
+    "typescript": "export function sumOfDistancesInTree(n: number, edges: number[][]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int[][] $edges\n     * @return int[]\n     */\n    public function sumOfDistancesInTree($n, $edges) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 6,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ]
+      ]
+    },
+    {
+      "n": 1,
+      "edges": []
+    },
+    {
+      "n": 2,
+      "edges": [
+        [
+          1,
+          0
+        ]
+      ]
+    }
+  ],
+  "functionName": "sumOfDistancesInTree",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "edges",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Root the tree at 0: a bottom-up pass counts subtree sizes and the distance sums inside each subtree.",
+    "Reroot with the relation childAnswer = parentAnswer - subtreeSize[child] + (n - subtreeSize[child]), since moving the root across one edge shortens paths into the child subtree and lengthens all others.",
+    "A second top-down pass propagates the root answer to every node in linear time."
+  ]
+}

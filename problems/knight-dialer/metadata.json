@@ -1,0 +1,57 @@
+{
+  "id": "knight-dialer",
+  "title": "922. Knight Dialer",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/knight-dialer/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "n = 1",
+      "output": "10",
+      "explanation": "Each single digit is one number."
+    },
+    {
+      "input": "n = 2",
+      "output": "20",
+      "explanation": "Summing jumps from every start gives twenty pairs."
+    },
+    {
+      "input": "n = 3",
+      "output": "46"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int knightDialer(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def knightDialer(self, n: int) -> int:\n        pass",
+    "cpp": "\nclass Solution {\npublic:\n    int knightDialer(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int KnightDialer(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn knight_dialer(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc KnightDialer(n int) int {\n    return 0\n}",
+    "typescript": "export function knightDialer(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function knightDialer($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 1
+    },
+    {
+      "n": 2
+    },
+    {
+      "n": 3
+    }
+  ],
+  "functionName": "knightDialer",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Model the pad as a graph: each digit points to its knight neighbors (5 points nowhere).",
+    "Dynamic programming over positions: new ways on a digit equal the sum of ways on its predecessors.",
+    "Apply the 1e9+7 modulus at every addition."
+  ]
+}

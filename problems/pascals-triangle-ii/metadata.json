@@ -1,0 +1,64 @@
+{
+  "id": "pascals-triangle-ii",
+  "title": "296. Pascal's Triangle II",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/pascals-triangle-ii/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "rowIndex = 3",
+      "output": "[1,3,3,1]",
+      "explanation": "The fourth (0-based third) row is [1,3,3,1]."
+    },
+    {
+      "input": "rowIndex = 0",
+      "output": "[1]",
+      "explanation": "Row 0 holds just the apex."
+    },
+    {
+      "input": "rowIndex = 1",
+      "output": "[1,1]",
+      "explanation": "Row 1 holds two ones."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] getRow(int rowIndex) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def getRow(self, rowIndex: int) -> List[int]:\n        pass\n",
+    "cpp": "class Solution {\npublic:\n    vector<int> getRow(int rowIndex) {\n        \n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] GetRow(int rowIndex) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn get_row(row_index: i32) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc GetRow(rowIndex int) []int {\n    \n}",
+    "typescript": "export function getRow(rowIndex: number): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $rowIndex\n     * @return int[]\n     */\n    public function getRow($rowIndex) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "rowIndex": 3
+    },
+    {
+      "rowIndex": 0
+    },
+    {
+      "rowIndex": 1
+    },
+    {
+      "rowIndex": 5
+    },
+    {
+      "rowIndex": 10
+    }
+  ],
+  "functionName": "getRow",
+  "params": [
+    {
+      "name": "rowIndex",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Build only one row in place by updating it from right to left so needed values are not overwritten.",
+    "Row edges stay 1; each interior entry is the sum of the two values above it.",
+    "Adaptation: the value list maps to int_array in this judge."
+  ]
+}

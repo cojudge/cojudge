@@ -1,0 +1,57 @@
+{
+  "id": "swap-nodes-in-pairs",
+  "title": "256. Swap Nodes in Pairs",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/swap-nodes-in-pairs/",
+  "category": "linked-list",
+  "examples": [
+    {
+      "input": "head = [1,2,3,4]",
+      "output": "[2,1,4,3]",
+      "explanation": "Nodes 1 and 2 trade places, and nodes 3 and 4 trade places."
+    },
+    {
+      "input": "head = []",
+      "output": "[]",
+      "explanation": "An empty list has nothing to swap."
+    },
+    {
+      "input": "head = [1]",
+      "output": "[1]",
+      "explanation": "A single node has no partner, so the list is unchanged."
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for singly-linked list. \nListNode {\n    int val;\n    ListNode next;\n    ListNode() {}\n    ListNode(int val) { this.val = val; }\n    ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n}\n*/\nclass Solution {\n    public ListNode swapPairs(ListNode head) {\n        \n    }\n}",
+    "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\nclass Solution:\n    def swapPairs(self, head):\n        pass\n",
+    "cpp": "/*\nDefinition for singly-linked list.\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode(): val(0), next(nullptr) {}\n    ListNode(int x): val(x), next(nullptr) {}\n    ListNode(int x, ListNode* next): val(x), next(next) {}\n};\n*/\nclass Solution {\npublic:\n    ListNode* swapPairs(ListNode* head) {\n        return nullptr;\n    }\n};",
+    "csharp": "/*\nDefinition for singly-linked list.\npublic class ListNode {\n    public int val;\n    public ListNode next;\n    public ListNode(int val=0, ListNode next=null) {\n        this.val = val;\n        this.next = next;\n    }\n}\n*/\npublic class Solution \n{\n    public ListNode SwapPairs(ListNode head) \n    {\n        \n    }\n}",
+    "rust": "// Definition for singly-linked list.\n// #[derive(PartialEq, Eq, Clone, Debug)]\n// pub struct ListNode {\n//   pub val: i32,\n//   pub next: Option<Box<ListNode>>\n// }\n// \n// impl ListNode {\n//   #[inline]\n//   fn new(val: i32) -> Self {\n//     ListNode {\n//       next: None,\n//       val\n//     }\n//   }\n// }\n\npub struct Solution;\n\nimpl Solution {\n    pub fn swap_pairs(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {\n        \n    }\n}",
+    "go": "package main\n\n/*\nDefinition for singly-linked list.\ntype ListNode struct {\n    Val int\n    Next *ListNode\n}\n*/\n\nfunc SwapPairs(head *ListNode) *ListNode {\n    \n}",
+    "typescript": "// Definition for singly-linked list.\n// class ListNode {\n//     val: number\n//     next: ListNode | null\n//     constructor(val?: number, next?: ListNode | null) {\n//         this.val = (val === undefined ? 0 : val)\n//         this.next = (next === undefined ? null : next)\n//     }\n// }\nimport { ListNode } from './ListNode';\nexport function swapPairs(head: ListNode | null): ListNode | null {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param ListNode|null $head\n     * @return ListNode|null\n     */\n    public function swapPairs($head) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "head": "[1,2,3,4]"
+    },
+    {
+      "head": "[]"
+    },
+    {
+      "head": "[1]"
+    }
+  ],
+  "functionName": "swapPairs",
+  "params": [
+    {
+      "name": "head",
+      "type": "list_node"
+    }
+  ],
+  "outputType": "list_node",
+  "hints": [
+    "Place a dummy node before the head so the first pair is handled exactly like every other pair.",
+    "For each pair (a, b), point the previous node to b, b back to a, and a forward to the rest; then advance two steps."
+  ]
+}

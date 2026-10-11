@@ -1,0 +1,122 @@
+[
+  {
+    "s": "aa",
+    "p": "a"
+  },
+  {
+    "s": "aa",
+    "p": "*"
+  },
+  {
+    "s": "cb",
+    "p": "?a"
+  },
+  {
+    "s": "adceb",
+    "p": "*a*b"
+  },
+  {
+    "s": "acdcb",
+    "p": "a*c?b"
+  },
+  {
+    "s": "ab",
+    "p": "?*"
+  },
+  {
+    "s": "aab",
+    "p": "c*a*b"
+  },
+  {
+    "s": "abc",
+    "p": "abc"
+  },
+  {
+    "s": "abc",
+    "p": "a?c"
+  },
+  {
+    "s": "abc",
+    "p": "a*d"
+  },
+  {
+    "s": "",
+    "p": ""
+  },
+  {
+    "s": "a",
+    "p": ""
+  },
+  {
+    "s": "",
+    "p": "a"
+  },
+  {
+    "s": "",
+    "p": "*"
+  },
+  {
+    "s": "",
+    "p": "?"
+  },
+  {
+    "s": "ho",
+    "p": "ho**"
+  },
+  {
+    "s": "ho",
+    "p": "**ho"
+  },
+  {
+    "s": "abcdef",
+    "p": "a*f"
+  },
+  {
+    "s": "abcdef",
+    "p": "a*e"
+  },
+  {
+    "s": "aaaa",
+    "p": "***a"
+  },
+  {
+    "s": "aaabbbaab",
+    "p": "a*******b"
+  },
+  {
+    "s": "abefcdgiescdfimde",
+    "p": "ab*cd*ef*"
+  },
+  {
+    "s": "abcabczzzde",
+    "p": "*abc???def*"
+  },
+  {
+    "s": "mississippi",
+    "p": "m??*ss*?i*pi"
+  },
+  {
+    "s": "abcccd",
+    "p": "*ccd"
+  },
+  {
+    "s": "abcccd",
+    "p": "*c?d"
+  },
+  {
+    "s": "abcd",
+    "p": "****"
+  },
+  {
+    "s": "abcd",
+    "p": "a***d"
+  },
+  {
+    "s": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "p": "*aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*"
+  },
+  {
+    "s": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "p": "a*b*a*b"
+  }
+]

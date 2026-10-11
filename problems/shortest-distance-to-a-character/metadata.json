@@ -1,0 +1,64 @@
+{
+  "id": "shortest-distance-to-a-character",
+  "title": "819. Shortest Distance to a Character",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/shortest-distance-to-a-character/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "s = \"loveleetcode\", c = \"e\"",
+      "output": "[3,2,1,0,1,0,0,1,2,2,1,0]",
+      "explanation": "Each position reports how far it is from the nearest e."
+    },
+    {
+      "input": "s = \"aaab\", c = \"b\"",
+      "output": "[3,2,1,0]",
+      "explanation": "Distances shrink as the scan nears the final b."
+    },
+    {
+      "input": "s = \"ab\", c = \"a\"",
+      "output": "[0,1]",
+      "explanation": "The first cell holds the target itself."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] shortestToChar(String s, String c) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def shortestToChar(self, s: str, c: str) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> shortestToChar(string s, string c) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] ShortestToChar(string s, string c)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn shortest_to_char(s: String, c: String) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc ShortestToChar(s string, c string) []int {\n    return []int{}\n}",
+    "typescript": "export function shortestToChar(s: string, c: string): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string $c\n     * @return int[]\n     */\n    public function shortestToChar($s, $c) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "loveleetcode",
+      "c": "e"
+    },
+    {
+      "s": "aaab",
+      "c": "b"
+    },
+    {
+      "s": "ab",
+      "c": "a"
+    }
+  ],
+  "functionName": "shortestToChar",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "c",
+      "type": "string"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Adaptation: the target character is passed as a one-letter string; use its first character.",
+    "Sweep left to right tracking the last seen target, then right to left tracking the next one, keeping the closer of the two."
+  ]
+}

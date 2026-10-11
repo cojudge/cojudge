@@ -1,0 +1,60 @@
+{
+  "id": "verify-preorder-sequence-in-binary-search-tree",
+  "title": "359. Verify Preorder Sequence in Binary Search Tree",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/verify-preorder-sequence-in-binary-search-tree/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "preorder = [5,2,1,3,6]",
+      "output": "true",
+      "explanation": "Root 5 with left child 2 (children 1 and 3) and right child 6 produces this order."
+    },
+    {
+      "input": "preorder = [5,2,6,1,3]",
+      "output": "false",
+      "explanation": "After 6 enters the right subtree of 5, the later value 1 cannot return to the left side."
+    },
+    {
+      "input": "preorder = [1]",
+      "output": "true",
+      "explanation": "A single node always forms a valid walk."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean verifyPreorder(int[] preorder) {\n        return false;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def verifyPreorder(self, preorder: List[int]) -> bool:\n        return False\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool verifyPreorder(vector<int>& preorder) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool VerifyPreorder(int[] preorder)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn verify_preorder(preorder: Vec<i32>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc VerifyPreorder(preorder []int) bool {\n    return false\n}",
+    "typescript": "export function verifyPreorder(preorder: number[]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $preorder\n     * @return bool\n     */\n    public function verifyPreorder($preorder) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "preorder": "[5,2,1,3,6]"
+    },
+    {
+      "preorder": "[5,2,6,1,3]"
+    },
+    {
+      "preorder": "[1]"
+    },
+    {
+      "preorder": "[4,2,1,3,6,5,7]"
+    }
+  ],
+  "functionName": "verifyPreorder",
+  "params": [
+    {
+      "name": "preorder",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Track the smallest value allowed for the next entry; it rises whenever the walk moves into a right subtree.",
+    "Keep a stack of ancestors and pop while the current value is larger, updating the lower bound to the last popped value."
+  ]
+}

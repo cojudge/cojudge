@@ -1,0 +1,91 @@
+{
+  "id": "sentence-screen-fitting",
+  "title": "489. Sentence Screen Fitting",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/sentence-screen-fitting/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "sentence = [\"hello\",\"world\"], rows = 2, cols = 8",
+      "output": "1",
+      "explanation": "Each row holds one word plus trailing spaces, fitting the sentence once."
+    },
+    {
+      "input": "sentence = [\"a\",\"bcd\",\"e\"], rows = 3, cols = 6",
+      "output": "2",
+      "explanation": "Rows pack as a-bcd-e twice with the given width."
+    },
+    {
+      "input": "sentence = [\"i\",\"had\",\"apple\",\"pie\"], rows = 4, cols = 5",
+      "output": "1",
+      "explanation": "Four narrow rows together spell the sentence once."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int wordsTyping(String[] sentence, int rows, int cols) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def wordsTyping(self, sentence: List[str], rows: int, cols: int) -> int:\n        return 0",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int wordsTyping(vector<string>& sentence, int rows, int cols) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int WordsTyping(string[] sentence, int rows, int cols) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn words_typing(sentence: Vec<String>, rows: i32, cols: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc WordsTyping(sentence []string, rows int, cols int) int {\n    return 0\n}",
+    "typescript": "export function wordsTyping(sentence: string[], rows: number, cols: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $sentence\n     * @param int $rows\n     * @param int $cols\n     * @return int\n     */\n    public function wordsTyping($sentence, $rows, $cols) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "sentence": [
+        "hello",
+        "world"
+      ],
+      "rows": 2,
+      "cols": 8
+    },
+    {
+      "sentence": [
+        "a",
+        "bcd",
+        "e"
+      ],
+      "rows": 3,
+      "cols": 6
+    },
+    {
+      "sentence": [
+        "i",
+        "had",
+        "apple",
+        "pie"
+      ],
+      "rows": 4,
+      "cols": 5
+    },
+    {
+      "sentence": [
+        "a"
+      ],
+      "rows": 1,
+      "cols": 1
+    }
+  ],
+  "functionName": "wordsTyping",
+  "params": [
+    {
+      "name": "sentence",
+      "type": "string_array"
+    },
+    {
+      "name": "rows",
+      "type": "int"
+    },
+    {
+      "name": "cols",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Join the sentence with single spaces plus a trailing space to form one repeating cycle.",
+    "Advance a cursor by cols per row; when it lands mid-word, back up to the word start.",
+    "Total fitted sentences equal the cursor position divided by the cycle length."
+  ]
+}

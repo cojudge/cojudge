@@ -1,4 +1,4 @@
-Merge two sorted singly linked lists and return it as a sorted list.
+Two singly linked lists `list1` and `list2`, each already arranged from smallest to largest, are given. Interleave their nodes into one list that stays ordered increasingly, and return its head.
 
 **Constraints:**
 

@@ -1,0 +1,53 @@
+{
+  "id": "maximum-xor-of-two-numbers-in-an-array",
+  "title": "492. Maximum XOR of Two Numbers in an Array",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [3,10,5,25,2,8]",
+      "output": "28",
+      "explanation": "5 XOR 25 equals 28, and no pair reaches a larger value."
+    },
+    {
+      "input": "nums = [14,70,53,83,49,91,36,80,92,51,66,70]",
+      "output": "127",
+      "explanation": "Some pair in the list XORs to 127, which is the best achievable score."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findMaximumXOR(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findMaximumXOR(self, nums: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int findMaximumXOR(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindMaximumXOR(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_maximum_xor(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindMaximumXOR(nums []int) int {\n    \n}",
+    "typescript": "export function findMaximumXOR(nums: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function findMaximumXOR($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[3,10,5,25,2,8]"
+    },
+    {
+      "nums": "[14,70,53,83,49,91,36,80,92,51,66,70]"
+    },
+    {
+      "nums": "[0]"
+    }
+  ],
+  "functionName": "findMaximumXOR",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Think bit by bit from the most significant position downward, keeping the set of prefixes seen so far.",
+    "A binary trie of the numbers lets you greedily walk toward the opposite bit at each level.",
+    "Trying to build the answer greedily works: check whether a candidate prefix pattern is attainable from pairs of number prefixes."
+  ]
+}

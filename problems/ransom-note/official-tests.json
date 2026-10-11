@@ -1,0 +1,122 @@
+[
+  {
+    "ransomNote": "a",
+    "magazine": "b"
+  },
+  {
+    "ransomNote": "aa",
+    "magazine": "ab"
+  },
+  {
+    "ransomNote": "aa",
+    "magazine": "aab"
+  },
+  {
+    "ransomNote": "abc",
+    "magazine": "cba"
+  },
+  {
+    "ransomNote": "a",
+    "magazine": "a"
+  },
+  {
+    "ransomNote": "ab",
+    "magazine": "ba"
+  },
+  {
+    "ransomNote": "abc",
+    "magazine": "ab"
+  },
+  {
+    "ransomNote": "hello",
+    "magazine": "helloworld"
+  },
+  {
+    "ransomNote": "helloworldx",
+    "magazine": "helloworld"
+  },
+  {
+    "ransomNote": "zzzz",
+    "magazine": "zzzzzzzz"
+  },
+  {
+    "ransomNote": "abcde",
+    "magazine": "edcba"
+  },
+  {
+    "ransomNote": "aabbcc",
+    "magazine": "abcabc"
+  },
+  {
+    "ransomNote": "aaabbb",
+    "magazine": "aabbb"
+  },
+  {
+    "ransomNote": "xyz",
+    "magazine": "xyyzz"
+  },
+  {
+    "ransomNote": "mississippi",
+    "magazine": "mississippii"
+  },
+  {
+    "ransomNote": "mississippii",
+    "magazine": "mississippi"
+  },
+  {
+    "ransomNote": "qwerty",
+    "magazine": "ytrewq"
+  },
+  {
+    "ransomNote": "aaaa",
+    "magazine": "aaa"
+  },
+  {
+    "ransomNote": "b",
+    "magazine": "a"
+  },
+  {
+    "ransomNote": "abc",
+    "magazine": "def"
+  },
+  {
+    "ransomNote": "aab",
+    "magazine": "aba"
+  },
+  {
+    "ransomNote": "abcd",
+    "magazine": "abcde"
+  },
+  {
+    "ransomNote": "abcde",
+    "magazine": "abcd"
+  },
+  {
+    "ransomNote": "note",
+    "magazine": "tonex"
+  },
+  {
+    "ransomNote": "python",
+    "magazine": "typhon"
+  },
+  {
+    "ransomNote": "leetcode",
+    "magazine": "codeleet"
+  },
+  {
+    "ransomNote": "aa",
+    "magazine": "aa"
+  },
+  {
+    "ransomNote": "ab",
+    "magazine": "a"
+  },
+  {
+    "ransomNote": "abcabc",
+    "magazine": "aabbcc"
+  },
+  {
+    "ransomNote": "z",
+    "magazine": "abcdefghijklmnopqrstuvwxyz"
+  }
+]

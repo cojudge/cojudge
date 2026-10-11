@@ -1,4 +1,4 @@
-Given a string s, find the length of the longest substring without repeating characters.
+You receive a string s. Measure the greatest length of a continuous block inside it in which every character occurs only once.
 
 **Constraints:**
 

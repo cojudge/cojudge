@@ -1,0 +1,65 @@
+{
+  "id": "bulls-and-cows",
+  "title": "393. Bulls and Cows",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/bulls-and-cows/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "secret = \"1807\", guess = \"7810\"",
+      "output": "\"1A3B\"",
+      "explanation": "One digit lines up; three others are displaced matches."
+    },
+    {
+      "input": "secret = \"1123\", guess = \"0111\"",
+      "output": "\"1A1B\"",
+      "explanation": "One bull plus one reusable '1' elsewhere."
+    },
+    {
+      "input": "secret = \"11\", guess = \"10\"",
+      "output": "\"1A0B\"",
+      "explanation": "Only the first position matches."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String getHint(String secret, String guess) {\n        \n    }\n}",
+    "python": "class Solution:\n    def getHint(self, secret: str, guess: str) -> str:\n        ",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string getHint(string secret, string guess) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string GetHint(string secret, string guess)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn get_hint(secret: String, guess: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc GetHint(secret string, guess string) string {\n    return \"\"\n}",
+    "typescript": "export function getHint(secret: string, guess: string): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $secret\n     * @param string $guess\n     * @return string\n     */\n    public function getHint($secret, $guess) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "secret": "1807",
+      "guess": "7810"
+    },
+    {
+      "secret": "1123",
+      "guess": "0111"
+    },
+    {
+      "secret": "11",
+      "guess": "10"
+    }
+  ],
+  "functionName": "getHint",
+  "params": [
+    {
+      "name": "secret",
+      "type": "string"
+    },
+    {
+      "name": "guess",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "First sweep the positions once to count bulls and set those spots aside.",
+    "For the remaining spots, count how many of each digit each string still holds.",
+    "Each digit contributes the smaller of its two leftover counts to the cow total."
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "id": "number-of-islands-ii",
+  "title": "397. Number of Islands II",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/number-of-islands-ii/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "m = 3, n = 3, positions = [[0,0],[0,1],[1,2],[2,1]]",
+      "output": "[1,1,2,3]",
+      "explanation": "Counts evolve as cells join or seed islands."
+    },
+    {
+      "input": "m = 1, n = 1, positions = [[0,0]]",
+      "output": "[1]",
+      "explanation": "A lone cell is one island."
+    },
+    {
+      "input": "m = 2, n = 2, positions = [[0,0],[1,1],[0,1]]",
+      "output": "[1,2,1]",
+      "explanation": "The final cell merges two islands."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<Integer> numIslands2(int m, int n, int[][] positions) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numIslands2(self, m: int, n: int, positions: List[List[int]]) -> List[int]:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> numIslands2(int m, int n, vector<vector<int>>& positions) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<int> NumIslands2(int m, int n, int[][] positions)\n    {\n        return new List<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_islands2(m: i32, n: i32, positions: Vec<Vec<i32>>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc NumIslands2(m int, n int, positions [][]int) []int {\n    return nil\n}",
+    "typescript": "export function numIslands2(m: number, n: number, positions: number[][]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $m\n     * @param int $n\n     * @param int[][] $positions\n     * @return int[]\n     */\n    public function numIslands2($m, $n, $positions) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "m": 3,
+      "n": 3,
+      "positions": "[[0,0],[0,1],[1,2],[2,1]]"
+    },
+    {
+      "m": 1,
+      "n": 1,
+      "positions": "[[0,0]]"
+    },
+    {
+      "m": 2,
+      "n": 2,
+      "positions": "[[0,0],[1,1],[0,1]]"
+    }
+  ],
+  "functionName": "numIslands2",
+  "params": [
+    {
+      "name": "m",
+      "type": "int"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "positions",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Track connected land with a union-find structure that only adds cells.",
+    "Each new cell starts as its own island, then merges with up to four land neighbours.",
+    "Re-adding an existing cell keeps the current count; record it and move on."
+  ]
+}

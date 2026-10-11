@@ -1,4 +1,5 @@
-Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.
+Two integer arrays `preorder` and `inorder` capture traversals of a common binary tree: `preorder` lists vertices in root-left-right order, while `inorder` lists them in left-root-right order.
+Rebuild the underlying tree and hand back its root.
 
 **Constraints:**
 

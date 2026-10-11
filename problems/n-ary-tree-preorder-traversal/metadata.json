@@ -1,0 +1,59 @@
+{
+  "id": "n-ary-tree-preorder-traversal",
+  "title": "631. N-ary Tree Preorder Traversal",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/n-ary-tree-preorder-traversal/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "data = \"[1,null,3,2,4,null,5,6]\"",
+      "output": "[1,3,5,6,2,4]",
+      "explanation": "Visit the root, then each child subtree left to right."
+    },
+    {
+      "input": "data = \"[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]\"",
+      "output": "[1,2,6,7,11,3,8,12,4,9,13,5,10,14]",
+      "explanation": "Depth-first order follows child order at every node."
+    },
+    {
+      "input": "data = \"[]\"",
+      "output": "[]",
+      "explanation": "No nodes means no visits."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<Integer> preorder(String data) {\n        return new java.util.ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def preorder(self, data: str) -> List[int]:\n        pass",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> preorder(string data) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<int> Preorder(string data)\n    {\n        return new List<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn preorder(data: String) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc Preorder(data string) []int {\n    return []int{}\n}",
+    "typescript": "export function preorder(data: string): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $data\n     * @return int[]\n     */\n    public function preorder($data) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "data": "[1,null,3,2,4,null,5,6]"
+    },
+    {
+      "data": "[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]"
+    },
+    {
+      "data": "[]"
+    }
+  ],
+  "functionName": "preorder",
+  "params": [
+    {
+      "name": "data",
+      "type": "string"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Rebuild the tree from the bracket string: each null-terminated group belongs to the next queued node.",
+    "Walk depth-first, emitting a node before its children.",
+    "An empty input yields an empty list.",
+    "Adaptation: the N-ary Node input is encoded as a level-order string; output maps to int_list."
+  ]
+}

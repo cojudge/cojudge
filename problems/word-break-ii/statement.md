@@ -1,6 +1,6 @@
-Given a string `s` and a dictionary of strings `wordDict`, add spaces in `s` to construct a sentence where each word is a valid dictionary word. Return all such possible sentences in **any order**.
+You are given a string `s` plus a list of strings `wordDict`. Place blanks into `s` so that it becomes a blank-separated sentence in which every token shows up in `wordDict`, and gather every distinct sentence obtainable this way. Return the whole collection in any sequence.
 
-**Note** that the same word in the dictionary may be reused multiple times in the segmentation.
+A single dictionary entry may be drawn on repeatedly inside one sentence.
 
 **Example 1:**
 

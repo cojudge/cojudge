@@ -1,17 +1,17 @@
-Given the head of a linked list `head`, in which each node contains an integer value.
+You are given the first node `head` of a singly linked list whose nodes each store an integer.
 
-Between every pair of adjacent nodes, insert a new node with a value equal to the greatest common divisor of them.
+For every neighboring pair in the current chain, splice in a fresh node positioned between them whose stored value equals the greatest common divisor of the two neighbors' values.
 
-Return the linked list after insertion.
+Hand back the head of the chain once all insertions are complete.
 
-The greatest common divisor of two numbers is the largest positive integer that evenly divides both numbers.
+Recall that the greatest common divisor of a pair is the biggest positive integer dividing both values without remainder.
 
 **Examples:**
 
 ```
 Input: head = [18,6,10,3]
 Output: [18,6,6,2,10,1,3]
-Explanation: gcd(18,6) = 6, gcd(6,10) = 2, gcd(10,3) = 1 are inserted between the adjacent nodes.
+Explanation: The inserted values are gcd(18,6) = 6, gcd(6,10) = 2, and gcd(10,3) = 1, each placed between its pair.
 ```
 
 ```

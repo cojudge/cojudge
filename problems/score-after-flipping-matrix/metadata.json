@@ -1,0 +1,58 @@
+{
+  "id": "score-after-flipping-matrix",
+  "title": "856. Score After Flipping Matrix",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/score-after-flipping-matrix/",
+  "category": "greedy",
+  "examples": [
+    {
+      "input": "grid = [[0,0,1,1],[1,0,1,0],[1,1,0,0]]",
+      "output": "39",
+      "explanation": "Rows become 1111, 1001 and 1011 after optimal flips, totaling 39."
+    },
+    {
+      "input": "grid = [[0]]",
+      "output": "1",
+      "explanation": "Flip the single cell to 1."
+    },
+    {
+      "input": "grid = [[0,1],[1,1]]",
+      "output": "5",
+      "explanation": "Rows become 10 and 11, scoring 2 + 3 = 5."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int matrixScore(int[][] grid) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def matrixScore(self, grid: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int matrixScore(vector<vector<int>>& grid) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MatrixScore(int[][] grid)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn matrix_score(grid: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MatrixScore(grid [][]int) int {\n    return 0\n}",
+    "typescript": "export function matrixScore(grid: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $grid\n     * @return int\n     */\n    public function matrixScore($grid) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "grid": "[[0,0,1,1],[1,0,1,0],[1,1,0,0]]"
+    },
+    {
+      "grid": "[[0]]"
+    },
+    {
+      "grid": "[[0,1],[1,1]]"
+    }
+  ],
+  "functionName": "matrixScore",
+  "params": [
+    {
+      "name": "grid",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The leftmost column carries the largest weight, so first make every entry there a 1 using row flips; that choice never harms optimality.",
+    "Once the leading column is fixed, each remaining column can be decided independently by picking the majority value to maximize its contribution.",
+    "A column with `c` ones among `m` rows contributes `max(c, m - c) * 2^(n-1-j)` after the optimal column flip."
+  ]
+}

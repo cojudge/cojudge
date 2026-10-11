@@ -1,0 +1,59 @@
+{
+  "id": "3sum-closest",
+  "title": "255. 3Sum Closest",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/3sum-closest/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [-1,2,1,-4], target = 1",
+      "output": "2",
+      "explanation": "The triple (-1, 2, 1) sums to 2, the closest achievable total to 1."
+    },
+    {
+      "input": "nums = [0,0,0], target = 1",
+      "output": "0",
+      "explanation": "The only triple sums to 0."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int threeSumClosest(int[] nums, int target) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def threeSumClosest(self, nums: List[int], target: int) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int threeSumClosest(vector<int>& nums, int target) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int ThreeSumClosest(int[] nums, int target) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn three_sum_closest(nums: Vec<i32>, target: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc ThreeSumClosest(nums []int, target int) int {\n    \n}",
+    "typescript": "export function threeSumClosest(nums: number[], target: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $target\n     * @return int\n     */\n    public function threeSumClosest($nums, $target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[-1,2,1,-4]",
+      "target": 1
+    },
+    {
+      "nums": "[0,0,0]",
+      "target": 1
+    },
+    {
+      "nums": "[1,1,1,0]",
+      "target": -100
+    }
+  ],
+  "functionName": "threeSumClosest",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sort the array first; then for each fixed first element, sweep the other two with inward-moving pointers.",
+    "Track the best total seen so far and move the left pointer up when the sum is below target, else move the right pointer down."
+  ]
+}

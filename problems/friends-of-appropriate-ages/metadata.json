@@ -1,0 +1,70 @@
+{
+  "id": "friends-of-appropriate-ages",
+  "title": "823. Friends Of Appropriate Ages",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/friends-of-appropriate-ages/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "ages = [16,16]",
+      "output": "2",
+      "explanation": "Both ordered pairs pass every rule."
+    },
+    {
+      "input": "ages = [16,17,18]",
+      "output": "2",
+      "explanation": "Only the pairs (17,16) and (18,17) survive."
+    },
+    {
+      "input": "ages = [20,30,100,110,120]",
+      "output": "3"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numFriendRequests(int[] ages) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numFriendRequests(self, ages: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int numFriendRequests(vector<int>& ages) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int NumFriendRequests(int[] ages) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_friend_requests(ages: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumFriendRequests(ages []int) int {\n    return 0\n}",
+    "typescript": "export function numFriendRequests(ages: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $ages\n     * @return int\n     */\n    public function numFriendRequests($ages) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "ages": [
+        16,
+        16
+      ]
+    },
+    {
+      "ages": [
+        16,
+        17,
+        18
+      ]
+    },
+    {
+      "ages": [
+        20,
+        30,
+        100,
+        110,
+        120
+      ]
+    }
+  ],
+  "functionName": "numFriendRequests",
+  "params": [
+    {
+      "name": "ages",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Ages are bounded by 120, so count how many people have each age and evaluate pairs of distinct age values once.",
+    "For equal ages, multiply the count by one less than itself since nobody sends to themselves.",
+    "Check the three blocking rules in order and skip the pair as soon as any rule fires."
+  ]
+}

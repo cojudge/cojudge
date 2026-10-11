@@ -1,0 +1,58 @@
+{
+  "id": "valid-tic-tac-toe-state",
+  "title": "792. Valid Tic-Tac-Toe State",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/valid-tic-tac-toe-state/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "board = [\"O--\",\"---\",\"---\"]",
+      "output": "false",
+      "explanation": "The first mark must be X, so a lone O is impossible."
+    },
+    {
+      "input": "board = [\"XOX\",\"-X-\",\"---\"]",
+      "output": "false",
+      "explanation": "Four X against one O violates strict alternation."
+    },
+    {
+      "input": "board = [\"XOX\",\"O-O\",\"XOX\"]",
+      "output": "true",
+      "explanation": "Five X and four O with no line is a complete draw."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean validTicTacToe(String[] board) {\n        return false;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def validTicTacToe(self, board: List[str]) -> bool:\n        return False",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool validTicTacToe(vector<string>& board) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool ValidTicTacToe(string[] board) \n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn valid_tic_tac_toe(board: Vec<String>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc ValidTicTacToe(board []string) bool {\n    return false\n}",
+    "typescript": "export function validTicTacToe(board: string[]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $board\n     * @return bool\n     */\n    public function validTicTacToe($board) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "board": "[\"O--\", \"---\", \"---\"]"
+    },
+    {
+      "board": "[\"XOX\", \"-X-\", \"---\"]"
+    },
+    {
+      "board": "[\"XOX\", \"O-O\", \"XOX\"]"
+    }
+  ],
+  "functionName": "validTicTacToe",
+  "params": [
+    {
+      "name": "board",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Count the marks first: O can never outnumber X, and X can lead by at most one because X moves first.",
+    "Scan the eight possible lines for an X win and an O win; both winning together is always illegal.",
+    "An X win needs exactly one extra X, while an O win needs equal counts, since the winner made the final move. Adaptation: empty is '-'."
+  ]
+}

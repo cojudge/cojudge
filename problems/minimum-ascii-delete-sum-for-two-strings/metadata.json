@@ -1,0 +1,65 @@
+{
+  "id": "minimum-ascii-delete-sum-for-two-strings",
+  "title": "720. Minimum ASCII Delete Sum for Two Strings",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "s1 = \"sea\", s2 = \"eat\"",
+      "output": "231",
+      "explanation": "Delete s from sea (115) and t from eat (116); the shared eat remains, costing 231."
+    },
+    {
+      "input": "s1 = \"delete\", s2 = \"leet\"",
+      "output": "403",
+      "explanation": "Keep the shared leet and remove the extra d and extra e costs, totaling 403."
+    },
+    {
+      "input": "s1 = \"a\", s2 = \"b\"",
+      "output": "195",
+      "explanation": "No character matches, so both letters are removed: 97 + 98."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minimumDeleteSum(String s1, String s2) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def minimumDeleteSum(self, s1: str, s2: str) -> int:\n        return 0",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int minimumDeleteSum(string s1, string s2) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MinimumDeleteSum(string s1, string s2) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn minimum_delete_sum(s1: String, s2: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinimumDeleteSum(s1 string, s2 string) int {\n    return 0\n}",
+    "typescript": "export function minimumDeleteSum(s1: string, s2: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s1\n     * @param string $s2\n     * @return int\n     */\n    public function minimumDeleteSum($s1, $s2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s1": "sea",
+      "s2": "eat"
+    },
+    {
+      "s1": "delete",
+      "s2": "leet"
+    },
+    {
+      "s1": "a",
+      "s2": "b"
+    }
+  ],
+  "functionName": "minimumDeleteSum",
+  "params": [
+    {
+      "name": "s1",
+      "type": "string"
+    },
+    {
+      "name": "s2",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Think of the kept characters as a common subsequence; minimizing deletions equals maximizing kept ASCII sum.",
+    "Use a 2D table where cell (i,j) holds the cheapest cost for the two prefixes ending there.",
+    "When the current letters match, carry the diagonal value; otherwise drop the cheaper of the two single-side deletions."
+  ]
+}

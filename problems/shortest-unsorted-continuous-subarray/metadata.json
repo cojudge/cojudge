@@ -1,0 +1,58 @@
+{
+  "id": "shortest-unsorted-continuous-subarray",
+  "title": "626. Shortest Unsorted Continuous Subarray",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/shortest-unsorted-continuous-subarray/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [2,6,4,8,10,9,15]",
+      "output": "5",
+      "explanation": "Sorting indices 1..5 repairs the array."
+    },
+    {
+      "input": "nums = [1,2,3,4]",
+      "output": "0",
+      "explanation": "Already sorted needs no window."
+    },
+    {
+      "input": "nums = [1]",
+      "output": "0",
+      "explanation": "A single element is trivially sorted."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findUnsortedSubarray(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findUnsortedSubarray(self, nums: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int findUnsortedSubarray(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int FindUnsortedSubarray(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_unsorted_subarray(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FindUnsortedSubarray(nums []int) int {\n    return 0\n}",
+    "typescript": "export function findUnsortedSubarray(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function findUnsortedSubarray($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[2,6,4,8,10,9,15]"
+    },
+    {
+      "nums": "[1,2,3,4]"
+    },
+    {
+      "nums": "[1]"
+    }
+  ],
+  "functionName": "findUnsortedSubarray",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sort a copy and compare with the original to find mismatching positions.",
+    "The first mismatch from the left and the first from the right bound the window.",
+    "With no mismatches the answer is 0; otherwise it is right - left + 1."
+  ]
+}

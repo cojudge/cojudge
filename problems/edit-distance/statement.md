@@ -1,9 +1,7 @@
-Given two strings `word1` and `word2`, return the minimum number of operations needed
-to convert `word1` into `word2`.
+Take two strings `word1` and `word2`. Determine the smallest count of single-character edits that turns `word1` into `word2`.
 
-In one operation, you may insert one character, delete one character, or replace one
-character.
+Each edit must be one of the following: add a single character at any position, remove a single character, or swap one character for a different one.
 
 **Constraints:**
-- `0 <= word1.length, word2.length <= 500`
-- `word1` and `word2` contain only lowercase English letters.
+- Lengths obey `0 <= word1.length, word2.length <= 500`.
+- `word1` and `word2` use only lowercase English letters.

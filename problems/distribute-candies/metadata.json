@@ -1,0 +1,58 @@
+{
+  "id": "distribute-candies",
+  "title": "624. Distribute Candies",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/distribute-candies/",
+  "category": "hash-table",
+  "examples": [
+    {
+      "input": "candyType = [1,1,2,2,3,3]",
+      "output": "3",
+      "explanation": "Three takes cover all three types."
+    },
+    {
+      "input": "candyType = [1,1,2,3]",
+      "output": "2",
+      "explanation": "Two takes cover at most two types."
+    },
+    {
+      "input": "candyType = [6,6,6,6]",
+      "output": "1",
+      "explanation": "Only one type exists."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int distributeCandies(int[] candyType) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def distributeCandies(self, candyType: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int distributeCandies(vector<int>& candyType) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int DistributeCandies(int[] candyType)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn distribute_candies(candy_type: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc DistributeCandies(candyType []int) int {\n    return 0\n}",
+    "typescript": "export function distributeCandies(candyType: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $candyType\n     * @return int\n     */\n    public function distributeCandies($candyType) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "candyType": "[1,1,2,2,3,3]"
+    },
+    {
+      "candyType": "[1,1,2,3]"
+    },
+    {
+      "candyType": "[6,6,6,6]"
+    }
+  ],
+  "functionName": "distributeCandies",
+  "params": [
+    {
+      "name": "candyType",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Count the distinct candy types with a set.",
+    "Alice's share size is exactly half the array length.",
+    "The answer is the smaller of the distinct count and the share size."
+  ]
+}

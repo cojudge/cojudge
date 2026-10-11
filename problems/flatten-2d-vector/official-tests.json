@@ -1,0 +1,114 @@
+[
+  {
+    "vec": "[[1,2],[3],[4]]",
+    "operations": "[\"next\",\"next\",\"next\",\"hasNext\",\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[],[1],[],[2,3]]",
+    "operations": "[\"hasNext\",\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[],[]]",
+    "operations": "[\"hasNext\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[5]]",
+    "operations": "[\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[1]]",
+    "operations": "[\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[1,2,3]]",
+    "operations": "[\"next\",\"hasNext\",\"next\",\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[1],[2],[3],[4],[5]]",
+    "operations": "[\"next\",\"next\",\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[],[],[7,8]]",
+    "operations": "[\"hasNext\",\"next\",\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[0,-1],[100]]",
+    "operations": "[\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[]",
+    "operations": "[\"hasNext\"]"
+  },
+  {
+    "vec": "[[1,2],[3,4],[5,6]]",
+    "operations": "[\"next\",\"next\",\"hasNext\",\"next\",\"next\",\"hasNext\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[10,20,30,40]]",
+    "operations": "[\"hasNext\",\"next\",\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[1],[],[2]]",
+    "operations": "[\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[-5,0,5],[],[-10,10]]",
+    "operations": "[\"next\",\"next\",\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[3,3,3],[3]]",
+    "operations": "[\"hasNext\",\"hasNext\",\"next\",\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[10000],[-10000]]",
+    "operations": "[\"next\",\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[1,2],[],[],[3]]",
+    "operations": "[\"next\",\"next\",\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[9]]",
+    "operations": "[\"hasNext\"]"
+  },
+  {
+    "vec": "[[1,2,3,4,5,6,7,8,9,10]]",
+    "operations": "[\"next\",\"next\",\"next\",\"next\",\"next\",\"next\",\"next\",\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[1],[2,3,4],[5]]",
+    "operations": "[\"hasNext\",\"next\",\"hasNext\",\"next\",\"hasNext\",\"next\",\"hasNext\",\"next\",\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[0],[0],[0]]",
+    "operations": "[\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[42,43],[44]]",
+    "operations": "[\"next\",\"hasNext\",\"next\",\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[],[],[],[]]",
+    "operations": "[\"hasNext\",\"hasNext\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[-10000,10000]]",
+    "operations": "[\"next\",\"hasNext\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[1,2,3],[],[]]",
+    "operations": "[\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[],[0],[]]",
+    "operations": "[\"hasNext\",\"hasNext\",\"next\",\"hasNext\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[6],[7],[8],[9]]",
+    "operations": "[\"hasNext\",\"next\",\"next\",\"next\",\"next\",\"hasNext\"]"
+  },
+  {
+    "vec": "[[-1,0],[],[1],[],[2,-2]]",
+    "operations": "[\"next\",\"hasNext\",\"next\",\"next\",\"hasNext\",\"next\",\"next\",\"hasNext\"]"
+  }
+]

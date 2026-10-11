@@ -1,0 +1,53 @@
+{
+  "id": "unique-binary-search-trees-ii",
+  "title": "280. Unique Binary Search Trees II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/unique-binary-search-trees-ii/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "n = 3",
+      "output": "[\"[1,null,2,null,3]\",\"[1,null,3,2]\",\"[2,1,3]\",\"[3,1,null,null,2]\",\"[3,2,null,1]\"] (order may vary)",
+      "explanation": "All five BST shapes over 1..3 are returned in BFS form."
+    },
+    {
+      "input": "n = 1",
+      "output": "[\"[1]\"]",
+      "explanation": "A single node is the only tree."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> generateTrees(int n) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def generateTrees(self, n: int) -> List[str]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> generateTrees(int n) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<string> GenerateTrees(int n)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn generate_trees(n: i32) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc GenerateTrees(n int) []string {\n    return []string{}\n}",
+    "typescript": "export function generateTrees(n: number): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return string[]\n     */\n    public function generateTrees($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 3
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 2
+    }
+  ],
+  "functionName": "generateTrees",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "For each root value r in [start, end], combine every left tree from [start, r-1] with every right tree from [r+1, end].",
+    "The empty interval yields a single null option so leaf parents still form.",
+    "Serialize each finished TreeNode with BFS (null placeholders, trim trailing nulls) and compare sorted lists."
+  ]
+}

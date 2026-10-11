@@ -1,0 +1,57 @@
+{
+  "id": "maximum-length-of-pair-chain",
+  "title": "668. Maximum Length of Pair Chain",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/maximum-length-of-pair-chain/",
+  "category": "greedy",
+  "examples": [
+    {
+      "input": "pairs = [[1,2],[2,3],[3,4]]",
+      "output": "2",
+      "explanation": "[1,2] then [3,4] is valid, but [1,2] then [2,3] is not since 2 is not less than 2."
+    },
+    {
+      "input": "pairs = [[1,2],[7,8],[4,5]]",
+      "output": "3",
+      "explanation": "Ordering as [1,2], [4,5], [7,8] chains all three."
+    },
+    {
+      "input": "pairs = [[1,2]]",
+      "output": "1"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findLongestChain(int[][] pairs) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findLongestChain(self, pairs: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int findLongestChain(vector<vector<int>>& pairs) {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public int FindLongestChain(int[][] pairs) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_longest_chain(pairs: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FindLongestChain(pairs [][]int) int {\n    return 0\n}",
+    "typescript": "export function findLongestChain(pairs: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $pairs\n     * @return int\n     */\n    public function findLongestChain($pairs) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "pairs": "[[1,2],[2,3],[3,4]]"
+    },
+    {
+      "pairs": "[[1,2],[7,8],[4,5]]"
+    },
+    {
+      "pairs": "[[1,2]]"
+    }
+  ],
+  "functionName": "findLongestChain",
+  "params": [
+    {
+      "name": "pairs",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sort all pairs by their second entry ascending.",
+    "Greedily take each pair whose first entry exceeds the last taken second entry.",
+    "Earliest finishers leave the most room, so this greedy pass is optimal."
+  ]
+}

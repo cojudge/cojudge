@@ -1,0 +1,58 @@
+{
+  "id": "wiggle-sort",
+  "title": "378. Wiggle Sort",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/wiggle-sort/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [3,5,2,1,6,4]",
+      "output": "[3,5,1,6,2,4]",
+      "explanation": "One valid wiggle is [3,5,1,6,2,4] with 3<=5>=1<=6>=2<=4."
+    },
+    {
+      "input": "nums = [6,6,5,6,3,8]",
+      "output": "[6,6,3,6,5,8]",
+      "explanation": "[6,6,3,6,5,8] satisfies the wiggle inequalities."
+    },
+    {
+      "input": "nums = [1]",
+      "output": "[1]",
+      "explanation": "A single element already wiggles."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] wiggleSort(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def wiggleSort(self, nums: List[int]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> wiggleSort(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] WiggleSort(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn wiggle_sort(nums: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc WiggleSort(nums []int) []int {\n    \n}",
+    "typescript": "export function wiggleSort(nums: number[]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function wiggleSort($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[3,5,2,1,6,4]"
+    },
+    {
+      "nums": "[6,6,5,6,3,8]"
+    },
+    {
+      "nums": "[1]"
+    }
+  ],
+  "functionName": "wiggleSort",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Adaptation: the original asks for in-place void; here return the reordered array.",
+    "Scan once: for even i require nums[i] <= nums[i+1], for odd i require nums[i] >= nums[i+1]; swap when violated.",
+    "Any permutation with the wiggle property is accepted."
+  ]
+}

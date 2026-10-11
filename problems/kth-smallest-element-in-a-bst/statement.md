@@ -1,4 +1,4 @@
-Given the root of a binary search tree and an integer k, return the kth smallest value (1-indexed) of all the values of the nodes in the tree.
+You are given the `root` of a binary search tree together with an integer `k`. Return the value occupying the `k`-th place (counting from 1) when all node values are listed from smallest to largest.
 
 **Constraints:**
 

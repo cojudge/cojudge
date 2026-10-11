@@ -1,0 +1,292 @@
+[
+  {
+    "words": [
+      "i",
+      "love",
+      "leetcode",
+      "i",
+      "love",
+      "coding"
+    ],
+    "k": 2
+  },
+  {
+    "words": [
+      "the",
+      "day",
+      "is",
+      "sunny",
+      "the",
+      "the",
+      "the",
+      "sunny",
+      "is",
+      "is"
+    ],
+    "k": 4
+  },
+  {
+    "words": [
+      "a",
+      "b",
+      "c",
+      "a",
+      "b",
+      "a"
+    ],
+    "k": 1
+  },
+  {
+    "words": [
+      "a"
+    ],
+    "k": 1
+  },
+  {
+    "words": [
+      "apple",
+      "banana",
+      "apple",
+      "banana",
+      "cherry"
+    ],
+    "k": 2
+  },
+  {
+    "words": [
+      "z",
+      "y",
+      "x",
+      "z",
+      "y",
+      "z"
+    ],
+    "k": 3
+  },
+  {
+    "words": [
+      "cat",
+      "dog",
+      "cat",
+      "bird",
+      "dog",
+      "cat"
+    ],
+    "k": 2
+  },
+  {
+    "words": [
+      "aa",
+      "bb",
+      "cc",
+      "dd"
+    ],
+    "k": 2
+  },
+  {
+    "words": [
+      "b",
+      "a",
+      "c",
+      "b",
+      "a",
+      "b"
+    ],
+    "k": 2
+  },
+  {
+    "words": [
+      "hello",
+      "hello",
+      "world"
+    ],
+    "k": 1
+  },
+  {
+    "words": [
+      "one",
+      "two",
+      "three",
+      "one",
+      "two",
+      "one"
+    ],
+    "k": 3
+  },
+  {
+    "words": [
+      "x",
+      "x",
+      "x",
+      "y",
+      "y",
+      "z"
+    ],
+    "k": 2
+  },
+  {
+    "words": [
+      "train",
+      "plane",
+      "train",
+      "car",
+      "plane",
+      "train"
+    ],
+    "k": 1
+  },
+  {
+    "words": [
+      "a",
+      "b",
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "k": 3
+  },
+  {
+    "words": [
+      "foo",
+      "bar",
+      "baz",
+      "foo",
+      "bar",
+      "foo"
+    ],
+    "k": 3
+  },
+  {
+    "words": [
+      "m",
+      "n",
+      "m",
+      "n",
+      "o",
+      "o"
+    ],
+    "k": 3
+  },
+  {
+    "words": [
+      "alpha",
+      "beta",
+      "gamma",
+      "alpha",
+      "beta",
+      "alpha"
+    ],
+    "k": 2
+  },
+  {
+    "words": [
+      "dog",
+      "cat",
+      "dog",
+      "cat",
+      "bird"
+    ],
+    "k": 1
+  },
+  {
+    "words": [
+      "a",
+      "a",
+      "b",
+      "b",
+      "c"
+    ],
+    "k": 2
+  },
+  {
+    "words": [
+      "word"
+    ],
+    "k": 1
+  },
+  {
+    "words": [
+      "aa",
+      "aa",
+      "ab",
+      "ab",
+      "ac"
+    ],
+    "k": 2
+  },
+  {
+    "words": [
+      "sun",
+      "moon",
+      "sun",
+      "star",
+      "moon",
+      "sun"
+    ],
+    "k": 2
+  },
+  {
+    "words": [
+      "p",
+      "q",
+      "r",
+      "p",
+      "q",
+      "p"
+    ],
+    "k": 3
+  },
+  {
+    "words": [
+      "red",
+      "blue",
+      "green",
+      "red",
+      "red",
+      "blue"
+    ],
+    "k": 2
+  },
+  {
+    "words": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "a",
+      "b",
+      "a"
+    ],
+    "k": 3
+  },
+  {
+    "words": [
+      "test",
+      "test",
+      "quiz",
+      "quiz",
+      "exam"
+    ],
+    "k": 2
+  },
+  {
+    "words": [
+      "one",
+      "one",
+      "two"
+    ],
+    "k": 2
+  },
+  {
+    "words": [
+      "k",
+      "j",
+      "k",
+      "j",
+      "i"
+    ],
+    "k": 3
+  }
+]

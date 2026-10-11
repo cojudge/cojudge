@@ -1,0 +1,26 @@
+Given a non-negative integer `c`, decide whether two integer squares add up to it. That is, do there exist integers `a >= 0` and `b >= 0` with `a*a + b*b = c`?
+
+Return true when such a pair exists and false otherwise.
+
+**Example 1:**
+```
+Input: c = 5
+Output: true
+Explanation: 1 + 4 = 5.
+```
+
+**Example 2:**
+```
+Input: c = 3
+Output: false
+```
+
+**Example 3:**
+```
+Input: c = 4
+Output: true
+Explanation: 0 + 4 = 4.
+```
+
+**Constraints:**
+- `0 <= c <= 2^31 - 1`

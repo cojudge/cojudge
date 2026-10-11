@@ -1,0 +1,69 @@
+{
+  "id": "k-similar-strings",
+  "title": "850. K-Similar Strings",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/k-similar-strings/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s1 = \"ab\", s2 = \"ba\"",
+      "output": "1",
+      "explanation": "One swap suffices."
+    },
+    {
+      "input": "s1 = \"abc\", s2 = \"bca\"",
+      "output": "2",
+      "explanation": "Two swaps rotate the letters."
+    },
+    {
+      "input": "s1 = \"abac\", s2 = \"baca\"",
+      "output": "2",
+      "explanation": "Two swaps align all spots."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int kSimilarity(String s1, String s2) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def kSimilarity(self, s1: str, s2: str) -> int:\n        return 0\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int kSimilarity(string s1, string s2) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int KSimilarity(string s1, string s2)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn k_similarity(s1: String, s2: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc KSimilarity(s1 string, s2 string) int {\n    return 0\n}",
+    "typescript": "export function kSimilarity(s1: string, s2: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s1\n     * @param string $s2\n     * @return int\n     */\n    public function kSimilarity($s1, $s2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s1": "ab",
+      "s2": "ba"
+    },
+    {
+      "s1": "abc",
+      "s2": "bca"
+    },
+    {
+      "s1": "abac",
+      "s2": "baca"
+    },
+    {
+      "s1": "aabc",
+      "s2": "abca"
+    }
+  ],
+  "functionName": "kSimilarity",
+  "params": [
+    {
+      "name": "s1",
+      "type": "string"
+    },
+    {
+      "name": "s2",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Breadth-first search over strings works: each level is one more swap, and the first visit to s2 is optimal.",
+    "Prune hard: only swap the first mismatched index i with a later j where s1[j] equals s2[i].",
+    "Skip already-seen strings with a visited set to keep the queue small."
+  ]
+}

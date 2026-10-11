@@ -1,0 +1,79 @@
+{
+  "id": "knight-probability-in-chessboard",
+  "title": "703. Knight Probability in Chessboard",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/knight-probability-in-chessboard/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "n = 3, k = 2, row = 0, column = 0",
+      "output": "\"0.0625\"",
+      "explanation": "Two first jumps survive and the total survival chance is 1/16."
+    },
+    {
+      "input": "n = 1, k = 0, row = 0, column = 0",
+      "output": "\"1.0\"",
+      "explanation": "No jumps means certain survival."
+    },
+    {
+      "input": "n = 1, k = 1, row = 0, column = 0",
+      "output": "\"0.0\"",
+      "explanation": "All jumps leave a 1x1 board."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String knightProbability(int n, int k, int row, int column) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def knightProbability(self, n: int, k: int, row: int, column: int) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string knightProbability(int n, int k, int row, int column) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string KnightProbability(int n, int k, int row, int column)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn knight_probability(n: i32, k: i32, row: i32, column: i32) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc KnightProbability(n int, k int, row int, column int) string {\n    return \"\"\n}",
+    "typescript": "export function knightProbability(n: number, k: number, row: number, column: number): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int $k\n     * @param int $row\n     * @param int $column\n     * @return string\n     */\n    public function knightProbability($n, $k, $row, $column) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 3,
+      "k": 2,
+      "row": 0,
+      "column": 0
+    },
+    {
+      "n": 1,
+      "k": 0,
+      "row": 0,
+      "column": 0
+    },
+    {
+      "n": 1,
+      "k": 1,
+      "row": 0,
+      "column": 0
+    }
+  ],
+  "functionName": "knightProbability",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    },
+    {
+      "name": "row",
+      "type": "int"
+    },
+    {
+      "name": "column",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "This is a portable adaptation: return the probability as a finite decimal string; the checker allows 1e-9 absolute plus 1e-5 relative error.",
+    "Keep a table of survival likelihoods per square and roll it forward one jump at a time, spreading each square's mass over its valid knight neighbours divided by 8.",
+    "Only two layers are needed; the answer is the sum of the final layer."
+  ]
+}

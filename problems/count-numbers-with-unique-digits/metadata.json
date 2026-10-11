@@ -1,0 +1,59 @@
+{
+  "id": "count-numbers-with-unique-digits",
+  "title": "436. Count Numbers with Unique Digits",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/count-numbers-with-unique-digits/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 2",
+      "output": "91",
+      "explanation": "All numbers from 0 to 99 except 11, 22, 33, 44, 55, 66, 77, 88 and 99 have distinct digits."
+    },
+    {
+      "input": "n = 0",
+      "output": "1"
+    },
+    {
+      "input": "n = 1",
+      "output": "10"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int countNumbersWithUniqueDigits(int n) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def countNumbersWithUniqueDigits(self, n: int) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int countNumbersWithUniqueDigits(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int CountNumbersWithUniqueDigits(int n) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_numbers_with_unique_digits(n: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc CountNumbersWithUniqueDigits(n int) int {\n    \n}",
+    "typescript": "export function countNumbersWithUniqueDigits(n: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function countNumbersWithUniqueDigits($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 2
+    },
+    {
+      "n": 0
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 3
+    }
+  ],
+  "functionName": "countNumbersWithUniqueDigits",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Count numbers by exact length: the first digit has 9 choices (no leading zero) and each later digit has one fewer choice.",
+    "Add the length-1 counts for all lengths from 1 up to n, plus 1 for zero itself.",
+    "Lengths beyond 10 cannot have unique digits, but n is at most 8 here."
+  ]
+}

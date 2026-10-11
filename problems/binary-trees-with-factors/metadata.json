@@ -1,0 +1,57 @@
+{
+  "id": "binary-trees-with-factors",
+  "title": "821. Binary Trees With Factors",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/binary-trees-with-factors/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "arr = [2,4]",
+      "output": "3",
+      "explanation": "Trees are the single nodes 2 and 4 plus the tree with root 4 and children 2,2."
+    },
+    {
+      "input": "arr = [2,4,5,10]",
+      "output": "7",
+      "explanation": "Four singletons plus trees rooted at 4 (2,2), at 10 (2,5) and at 10 (5,2)."
+    },
+    {
+      "input": "arr = [2,3]",
+      "output": "2",
+      "explanation": "No product of two entries lands back in the set, so only singletons exist."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numFactoredBinaryTrees(int[] arr) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numFactoredBinaryTrees(self, arr: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int numFactoredBinaryTrees(vector<int>& arr) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int NumFactoredBinaryTrees(int[] arr)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_factored_binary_trees(arr: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumFactoredBinaryTrees(arr []int) int {\n    return 0\n}",
+    "typescript": "export function numFactoredBinaryTrees(arr: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @return int\n     */\n    public function numFactoredBinaryTrees($arr) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "arr": "[2,4]"
+    },
+    {
+      "arr": "[2,4,5,10]"
+    },
+    {
+      "arr": "[2,3]"
+    }
+  ],
+  "functionName": "numFactoredBinaryTrees",
+  "params": [
+    {
+      "name": "arr",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sort the values so every factor pair of a root has already been counted.",
+    "For each root, add dp[left] * dp[right] over all factor pairs left*right == root, starting from 1 for the singleton."
+  ]
+}

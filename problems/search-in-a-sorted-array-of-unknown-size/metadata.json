@@ -1,0 +1,65 @@
+{
+  "id": "search-in-a-sorted-array-of-unknown-size",
+  "title": "714. Search in a Sorted Array of Unknown Size",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/search-in-a-sorted-array-of-unknown-size/",
+  "category": "binary-search",
+  "examples": [
+    {
+      "input": "arr = [-1,0,3,5,9,12], target = 9",
+      "output": "4",
+      "explanation": "9 at index 4."
+    },
+    {
+      "input": "arr = [-1,0,3,5,9,12], target = 2",
+      "output": "-1",
+      "explanation": "2 absent."
+    },
+    {
+      "input": "arr = [1,2,3,4,5], target = 1",
+      "output": "0",
+      "explanation": "First entry."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int search(int[] arr, int target) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def search(self, arr: List[int], target: int) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int search(vector<int>& arr, int target) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int Search(int[] arr, int target)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn search(arr: Vec<i32>, target: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc Search(arr []int, target int) int {\n    return 0\n}",
+    "typescript": "export function search(arr: number[], target: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @param int $target\n     * @return int\n     */\n    public function search($arr, $target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "arr": "[-1,0,3,5,9,12]",
+      "target": 9
+    },
+    {
+      "arr": "[-1,0,3,5,9,12]",
+      "target": 2
+    },
+    {
+      "arr": "[1,2,3,4,5]",
+      "target": 1
+    }
+  ],
+  "functionName": "search",
+  "params": [
+    {
+      "name": "arr",
+      "type": "int_array"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Adaptation: the array is supplied whole (sorted, bound 10000); out-of-range sentinel 2147483647 never needs reading.",
+    "Grow an index exponentially (1, 2, 4, 8, ...) until it passes the array end or the value reaches target, then binary-search that window.",
+    "A plain binary search over the whole array is also accepted and runs in O(log n)."
+  ]
+}

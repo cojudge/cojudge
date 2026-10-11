@@ -1,0 +1,58 @@
+{
+  "id": "largest-number-at-least-twice-of-others",
+  "title": "750. Largest Number At Least Twice of Others",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/largest-number-at-least-twice-of-others/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [3,6,1,0]",
+      "output": "1",
+      "explanation": "6 at index 1 is at least twice every other value."
+    },
+    {
+      "input": "nums = [1,2,3,4]",
+      "output": "-1",
+      "explanation": "4 is less than twice 3."
+    },
+    {
+      "input": "nums = [10,5,3]",
+      "output": "0",
+      "explanation": "10 at index 0 doubles 5 and more."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int dominantIndex(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def dominantIndex(self, nums: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int dominantIndex(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int DominantIndex(int[] nums) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn dominant_index(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc DominantIndex(nums []int) int {\n    return 0\n}",
+    "typescript": "export function dominantIndex(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function dominantIndex($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[3,6,1,0]"
+    },
+    {
+      "nums": "[1,2,3,4]"
+    },
+    {
+      "nums": "[10,5,3]"
+    }
+  ],
+  "functionName": "dominantIndex",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Make one pass to find the maximum value and remember its position.",
+    "Make a second pass comparing the maximum against twice each other entry; any failure means -1.",
+    "Comparing with 2*x avoids fractions entirely."
+  ]
+}

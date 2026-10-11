@@ -1,0 +1,58 @@
+{
+  "id": "set-intersection-size-at-least-two",
+  "title": "759. Set Intersection Size At Least Two",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/set-intersection-size-at-least-two/",
+  "category": "greedy",
+  "examples": [
+    {
+      "input": "intervals = [[1,3],[3,7],[8,9]]",
+      "output": "5",
+      "explanation": "E.g. [2,3,4,8,9] works and 4 never suffice."
+    },
+    {
+      "input": "intervals = [[1,3],[1,4],[2,5],[3,5]]",
+      "output": "3",
+      "explanation": "E.g. [2,3,4] works."
+    },
+    {
+      "input": "intervals = [[1,2],[2,3],[2,4],[4,5]]",
+      "output": "5",
+      "explanation": "Only [1,2,3,4,5] works."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int intersectionSizeTwo(int[][] intervals) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def intersectionSizeTwo(self, intervals: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int intersectionSizeTwo(vector<vector<int>>& intervals) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int IntersectionSizeTwo(int[][] intervals) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn intersection_size_two(intervals: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc IntersectionSizeTwo(intervals [][]int) int {\n    return 0\n}",
+    "typescript": "export function intersectionSizeTwo(intervals: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $intervals\n     * @return int\n     */\n    public function intersectionSizeTwo($intervals) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "intervals": "[[1,3],[3,7],[8,9]]"
+    },
+    {
+      "intervals": "[[1,3],[1,4],[2,5],[3,5]]"
+    },
+    {
+      "intervals": "[[1,2],[2,3],[2,4],[4,5]]"
+    }
+  ],
+  "functionName": "intersectionSizeTwo",
+  "params": [
+    {
+      "name": "intervals",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sort intervals by right end ascending, breaking ties by left end descending, so tighter intervals are handled first.",
+    "Always place needed points as far right as possible: reuse the two kept points when they already cover the interval.",
+    "Keep only the two largest chosen points; earlier ones can never help future intervals more than these."
+  ]
+}

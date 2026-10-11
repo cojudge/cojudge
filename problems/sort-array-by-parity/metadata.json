@@ -1,0 +1,57 @@
+{
+  "id": "sort-array-by-parity",
+  "title": "894. Sort Array By Parity",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/sort-array-by-parity/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [3,1,2,4]",
+      "output": "[2,4,3,1]",
+      "explanation": "Evens first in any order."
+    },
+    {
+      "input": "nums = [0]",
+      "output": "[0]",
+      "explanation": "Single even."
+    },
+    {
+      "input": "nums = [1,3,5,2,4]",
+      "output": "[2,4,1,3,5]",
+      "explanation": "Evens ahead."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] sortArrayByParity(int[] nums) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def sortArrayByParity(self, nums: List[int]) -> List[int]:\n        return []",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> sortArrayByParity(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] SortArrayByParity(int[] nums)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn sort_array_by_parity(nums: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc SortArrayByParity(nums []int) []int {\n    return []int{}\n}",
+    "typescript": "export function sortArrayByParity(nums: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function sortArrayByParity($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[3,1,2,4]"
+    },
+    {
+      "nums": "[0]"
+    },
+    {
+      "nums": "[1,3,5,2,4]"
+    }
+  ],
+  "functionName": "sortArrayByParity",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Use two pointers: one seeking an odd from the front and one seeking an even from the back, then swap.",
+    "Alternatively, collect evens and odds in two passes and concatenate them."
+  ]
+}

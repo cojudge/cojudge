@@ -1,15 +1,13 @@
-You are keeping the scores for a baseball game with strange rules. At the beginning of the game, you start with an empty record.
+You are scor­ing an odd baseball match, starting from a blank scoresheet. Process the entries of the string list `operations` one after another, updating a running record as follows:
 
-You are given a list of strings `operations`, where `operations[i]` is the `i`th operation you must apply to the record and is one of the following:
+- a numeric string `x`: append a fresh score of `x` to the record.
+- `'+'`: append a fresh score equal to the total of the two most recent recorded scores.
+- `'D'`: append a fresh score worth twice the most recent recorded score.
+- `'C'`: erase the most recent recorded score, as if it had never happened.
 
-- An integer `x`: record a new score of `x`.
-- `'+'`: record a new score that is the sum of the previous two scores.
-- `'D'`: record a new score that is the double of the previous score.
-- `'C'`: invalidate the previous score, removing it from the record.
+After the whole list has been consumed, add together every score still left on the record and return that total.
 
-Return the sum of all the scores on the record after applying all the operations.
-
-The test cases are generated such that the answer and all intermediate calculations fit in a 32-bit integer and that all operations are valid.
+Every generated case keeps each intermediate value and the final answer inside a 32-bit signed integer, and every requested operation is guaranteed to be applicable when it appears.
 
 **Constraints:**
 

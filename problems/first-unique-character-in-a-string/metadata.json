@@ -1,0 +1,58 @@
+{
+  "category": "string",
+  "difficulty": "Easy",
+  "examples": [
+    {
+      "explanation": "'l' occurs once at index 0; 'e' repeats.",
+      "input": "s = \"leetcode\"",
+      "output": "0"
+    },
+    {
+      "explanation": "'l', 'o' and 'e' repeat; the first singleton is 'v' at index 2.",
+      "input": "s = \"loveleetcode\"",
+      "output": "2"
+    },
+    {
+      "explanation": "Both letters appear twice, so there is no singleton.",
+      "input": "s = \"aabb\"",
+      "output": "-1"
+    }
+  ],
+  "functionName": "firstUniqChar",
+  "hints": [
+    "Count how many times each of the 26 letters occurs in one pass.",
+    "Make a second left-to-right pass and stop at the first letter whose count is 1.",
+    "Two linear passes beat checking every pair of positions."
+  ],
+  "id": "first-unique-character-in-a-string",
+  "link": "https://leetcode.com/problems/first-unique-character-in-a-string/",
+  "outputType": "int",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "starterCode": {
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int firstUniqChar(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FirstUniqChar(string s) \n    {\n        return 0;\n    }\n}",
+    "go": "package main\n\nfunc FirstUniqChar(s string) int {\n    return 0\n}",
+    "java": "class Solution {\n    public int firstUniqChar(String s) {\n        return 0;\n    }\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function firstUniqChar($s) {\n\n    }\n}",
+    "python": "class Solution:\n    def firstUniqChar(self, s: str) -> int:\n        pass",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn first_uniq_char(s: String) -> i32 {\n        0\n    }\n}",
+    "typescript": "export function firstUniqChar(s: string): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "s": "leetcode"
+    },
+    {
+      "s": "loveleetcode"
+    },
+    {
+      "s": "aabb"
+    }
+  ],
+  "title": "463. First Unique Character in a String"
+}

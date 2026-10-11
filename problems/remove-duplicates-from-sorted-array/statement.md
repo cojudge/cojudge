@@ -1,6 +1,6 @@
-Given an integer array `nums` sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same.
+You are given an integer array `nums` arranged in non-decreasing order. Squeeze out the repeats directly inside the array so that every distinct value survives exactly once, leaving the survivors in their original relative order.
 
-Consider the number of unique elements in `nums` to be `k`. After removing duplicates, return the number of unique elements `k`. The first `k` elements of `nums` should contain the unique numbers in sorted order.
+Call the count of distinct values `k`. Hand back `k`. The first `k` slots of `nums` must then hold those distinct values from smallest to largest.
 
 **Constraints:**
 

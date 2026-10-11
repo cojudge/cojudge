@@ -1,8 +1,8 @@
-Given an integer array `arr`, return the length of a maximum size **turbulent subarray** of `arr`.
+You receive an integer array `arr`. Report the extent of the largest **turbulent subarray** inside `arr`.
 
-A subarray is **turbulent** if the comparison sign flips between each adjacent pair of elements in the subarray.
+Call a subarray **turbulent** when the direction of comparison reverses at every neighboring pair within it.
 
-More formally, a subarray `[arr[i], arr[i + 1], ..., arr[j]]` of `arr` is said to be turbulent if and only if:
+In precise terms, a slice `[arr[i], arr[i + 1], ..., arr[j]]` of `arr` counts as turbulent exactly when one of these patterns holds:
 
 - For `i <= k < j`:
   - `arr[k] > arr[k + 1]` when `k` is **odd**, and

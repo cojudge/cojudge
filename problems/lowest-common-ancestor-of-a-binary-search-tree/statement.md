@@ -1,4 +1,4 @@
-Given a binary search tree (BST), find the lowest common ancestor (LCA) node of two given nodes in the BST. All node valuues are unique.
+You receive a binary search tree (BST) together with two of its nodes. Locate the deepest node that sits above both of them — their lowest common ancestor (LCA). Every value in the tree is distinct.
 
 **Constraints:**
 

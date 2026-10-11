@@ -1,0 +1,65 @@
+{
+  "id": "rotate-string",
+  "title": "794. Rotate String",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/rotate-string/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"abcde\", goal = \"cdeab\"",
+      "output": "true",
+      "explanation": "Two left moves produce the target."
+    },
+    {
+      "input": "s = \"abcde\", goal = \"abced\"",
+      "output": "false",
+      "explanation": "No rotation matches."
+    },
+    {
+      "input": "s = \"a\", goal = \"a\"",
+      "output": "true",
+      "explanation": "Zero moves already match."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean rotateString(String s, String goal) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def rotateString(self, s: str, goal: str) -> bool:\n        return False",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool rotateString(string s, string goal) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool RotateString(string s, string goal) \n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn rotate_string(s: String, goal: String) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc RotateString(s string, goal string) bool {\n    return false\n}",
+    "typescript": "export function rotateString(s: string, goal: string): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string $goal\n     * @return bool\n     */\n    public function rotateString($s, $goal) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "abcde",
+      "goal": "cdeab"
+    },
+    {
+      "s": "abcde",
+      "goal": "abced"
+    },
+    {
+      "s": "a",
+      "goal": "a"
+    }
+  ],
+  "functionName": "rotateString",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "goal",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Lengths must agree first; different lengths can never match.",
+    "Every rotation of s appears as a length-m substring of s + s.",
+    "Checking whether goal occurs inside s + s settles the question."
+  ]
+}

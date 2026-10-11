@@ -1,0 +1,65 @@
+{
+  "id": "bricks-falling-when-hit",
+  "title": "801. Bricks Falling When Hit",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/bricks-falling-when-hit/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "grid = [[1,0,0,0],[1,1,1,0]], hits = [[1,0]]",
+      "output": "[2]",
+      "explanation": "Two bricks lose their top connection."
+    },
+    {
+      "input": "grid = [[1,0,0,0],[1,1,0,0]], hits = [[1,1],[1,0]]",
+      "output": "[0,0]",
+      "explanation": "No extra bricks fall."
+    },
+    {
+      "input": "grid = [[1,1,1],[0,1,0],[0,0,0]], hits = [[0,2],[2,0]]",
+      "output": "[0,0]",
+      "explanation": "Empty-cell hit gives zero."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] hitBricks(int[][] grid, int[][] hits) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def hitBricks(self, grid: List[List[int]], hits: List[List[int]]) -> List[int]:\n        return []",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> hitBricks(vector<vector<int>>& grid, vector<vector<int>>& hits) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] HitBricks(int[][] grid, int[][] hits) \n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn hit_bricks(grid: Vec<Vec<i32>>, hits: Vec<Vec<i32>>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc HitBricks(grid [][]int, hits [][]int) []int {\n    return nil\n}",
+    "typescript": "export function hitBricks(grid: number[][], hits: number[][]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $grid\n     * @param int[][] $hits\n     * @return int[]\n     */\n    public function hitBricks($grid, $hits) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "grid": "[[1, 0, 0, 0], [1, 1, 1, 0]]",
+      "hits": "[[1, 0]]"
+    },
+    {
+      "grid": "[[1, 0, 0, 0], [1, 1, 0, 0]]",
+      "hits": "[[1, 1], [1, 0]]"
+    },
+    {
+      "grid": "[[1, 1, 1], [0, 1, 0], [0, 0, 0]]",
+      "hits": "[[0, 2], [2, 0]]"
+    }
+  ],
+  "functionName": "hitBricks",
+  "params": [
+    {
+      "name": "grid",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "hits",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "A brick survives exactly when a four-directional path of bricks reaches the top row.",
+    "Recompute the top-connected count after each removal with a flood fill from the first row.",
+    "Fallen bricks equal the drop in connected count minus one for the erased brick, floored at zero."
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "id": "self-dividing-numbers",
+  "title": "735. Self Dividing Numbers",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/self-dividing-numbers/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "left = 1, right = 22",
+      "output": "[1,2,3,4,5,6,7,8,9,11,12,15,22]",
+      "explanation": "Values with a zero digit or a non-dividing digit are left out."
+    },
+    {
+      "input": "left = 47, right = 85",
+      "output": "[48,55,66,77]"
+    },
+    {
+      "input": "left = 1, right = 1",
+      "output": "[1]"
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<Integer> selfDividingNumbers(int left, int right) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def selfDividingNumbers(self, left: int, right: int) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> selfDividingNumbers(int left, int right) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<int> SelfDividingNumbers(int left, int right) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn self_dividing_numbers(left: i32, right: i32) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc SelfDividingNumbers(left int, right int) []int {\n    return []int{}\n}",
+    "typescript": "export function selfDividingNumbers(left: number, right: number): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int $left\n     * @param int $right\n     * @return int[]\n     */\n    public function selfDividingNumbers($left, $right) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "left": 1,
+      "right": 22
+    },
+    {
+      "left": 47,
+      "right": 85
+    },
+    {
+      "left": 1,
+      "right": 1
+    }
+  ],
+  "functionName": "selfDividingNumbers",
+  "params": [
+    {
+      "name": "left",
+      "type": "int"
+    },
+    {
+      "name": "right",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Test each candidate by repeatedly taking x % 10 as the current digit and x / 10 as the remainder.",
+    "Reject immediately on a zero digit; otherwise require num % digit == 0 for every digit.",
+    "The interval holds at most 10000 values, so a direct scan is fast enough."
+  ]
+}

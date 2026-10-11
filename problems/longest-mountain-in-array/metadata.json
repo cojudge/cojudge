@@ -1,0 +1,61 @@
+{
+  "id": "longest-mountain-in-array",
+  "title": "843. Longest Mountain in Array",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/longest-mountain-in-array/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "arr = [2,1,4,7,3,2,5]",
+      "output": "5",
+      "explanation": "Run [1,4,7,3,2] is the longest mountain."
+    },
+    {
+      "input": "arr = [2,2,2]",
+      "output": "0",
+      "explanation": "No strict up-down run exists."
+    },
+    {
+      "input": "arr = [0,1,2,3,4,5,4,3,2,1,0]",
+      "output": "11",
+      "explanation": "Entire array is one mountain."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int longestMountain(int[] arr) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def longestMountain(self, arr: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int longestMountain(vector<int>& arr) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int LongestMountain(int[] arr)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn longest_mountain(arr: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc LongestMountain(arr []int) int {\n    return 0\n}",
+    "typescript": "export function longestMountain(arr: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @return int\n     */\n    public function longestMountain($arr) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "arr": "[2,1,4,7,3,2,5]"
+    },
+    {
+      "arr": "[2,2,2]"
+    },
+    {
+      "arr": "[0,1,2,3,4,5,4,3,2,1,0]"
+    },
+    {
+      "arr": "[1,2,3,2,1]"
+    }
+  ],
+  "functionName": "longestMountain",
+  "params": [
+    {
+      "name": "arr",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Walk peaks: at each index higher than both neighbours, expand left while strictly rising and right while strictly falling.",
+    "Alternatively do one pass tracking the current climb length and descent length, resetting on flat steps.",
+    "Only count spans with both an upward and a downward part and total length at least three."
+  ]
+}

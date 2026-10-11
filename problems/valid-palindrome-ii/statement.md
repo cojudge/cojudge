@@ -1,4 +1,4 @@
-Given a string `s`, return true if the `s` can be palindrome after deleting at most one character from it.
+You are handed a string `s`. Decide whether removing at most one character — either none at all or exactly one at any position — can leave behind a string that reads identically forward and backward. Return `true` when the input is already mirror-symmetric or becomes so after a single deletion, and `false` otherwise.
 
 **Constraints:**
 

@@ -1,0 +1,57 @@
+{
+  "id": "count-and-say",
+  "title": "264. Count and Say",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/count-and-say/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "n = 4",
+      "output": "\"1211\"",
+      "explanation": "The chain runs \"1\" -> \"11\" -> \"21\" -> \"1211\"."
+    },
+    {
+      "input": "n = 1",
+      "output": "\"1\"",
+      "explanation": "The sequence starts with \"1\"."
+    },
+    {
+      "input": "n = 5",
+      "output": "\"111221\"",
+      "explanation": "Reading \"1211\" aloud gives one 1, one 2, then two 1s."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String countAndSay(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def countAndSay(self, n: int) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string countAndSay(int n) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string CountAndSay(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_and_say(n: i32) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc CountAndSay(n int) string {\n    \n}",
+    "typescript": "export function countAndSay(n: number): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return string\n     */\n    public function countAndSay($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 4
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 5
+    }
+  ],
+  "functionName": "countAndSay",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Build term k+1 from term k by scanning it once and counting each maximal run of equal characters.",
+    "Append the count (as decimal text) and then the digit for every run; repeat n-1 times starting from \"1\"."
+  ]
+}

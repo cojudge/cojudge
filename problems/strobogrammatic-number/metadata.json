@@ -1,0 +1,63 @@
+{
+  "id": "strobogrammatic-number",
+  "title": "352. Strobogrammatic Number",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/strobogrammatic-number/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "num = \"69\"",
+      "output": "true",
+      "explanation": "Rotating gives \"69\" back."
+    },
+    {
+      "input": "num = \"88\"",
+      "output": "true",
+      "explanation": "Each 8 rotates to itself, mirrored correctly."
+    },
+    {
+      "input": "num = \"962\"",
+      "output": "false",
+      "explanation": "The digit 2 has no valid rotation."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isStrobogrammatic(String num) {\n        \n    }\n}",
+    "python": "class Solution:\n    def isStrobogrammatic(self, num: str) -> bool:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool isStrobogrammatic(string num) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool IsStrobogrammatic(string num) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_strobogrammatic(num: String) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc IsStrobogrammatic(num string) bool {\n    \n}",
+    "typescript": "export function isStrobogrammatic(num: string): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $num\n     * @return bool\n     */\n    public function isStrobogrammatic($num) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "num": "69"
+    },
+    {
+      "num": "88"
+    },
+    {
+      "num": "962"
+    },
+    {
+      "num": "1"
+    },
+    {
+      "num": "2"
+    }
+  ],
+  "functionName": "isStrobogrammatic",
+  "params": [
+    {
+      "name": "num",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Compare characters from both ends using the rotation pairs 0-0, 1-1, 6-9, 8-8, 9-6.",
+    "Any character outside those pairs immediately disqualifies the string."
+  ]
+}

@@ -1,0 +1,114 @@
+[
+  {
+    "operations": "[\"buildDict\",\"search\",\"search\",\"search\",\"search\"]",
+    "words": "[\"hello|leetcode\",\"hello\",\"hhllo\",\"hell\",\"leetcoded\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\",\"search\"]",
+    "words": "[\"hello|hallo\",\"hello\",\"hallo\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\"]",
+    "words": "[\"a|b\",\"c\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\",\"search\"]",
+    "words": "[\"judge|hudge\",\"judge\",\"hudge\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\"]",
+    "words": "[\"hello\",\"hello\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\"]",
+    "words": "[\"hello\",\"hhllo\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\"]",
+    "words": "[\"\",\"hello\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\",\"search\"]",
+    "words": "[\"a|b|c\",\"a\",\"d\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"buildDict\",\"search\"]",
+    "words": "[\"a|b\",\"c|d\",\"c\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\",\"search\",\"search\"]",
+    "words": "[\"apple|apply\",\"apple\",\"apply\",\"appla\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\"]",
+    "words": "[\"ab|ba\",\"ab\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\"]",
+    "words": "[\"ab|ba\",\"aa\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\",\"search\"]",
+    "words": "[\"x|y|z\",\"x\",\"xy\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\"]",
+    "words": "[\"longword|longwork\",\"longword\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\",\"search\"]",
+    "words": "[\"cat|dog\",\"cot\",\"cog\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\"]",
+    "words": "[\"aaa|aab\",\"aba\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\",\"search\"]",
+    "words": "[\"hello|world\",\"hella\",\"worla\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\"]",
+    "words": "[\"a\",\"b\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\"]",
+    "words": "[\"a\",\"a\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\",\"search\",\"search\",\"search\"]",
+    "words": "[\"ab|cd|ef\",\"ab\",\"ac\",\"cd\",\"ce\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\"]",
+    "words": "[\"abcdefghijklmnopqrstuvwxyz|abcdefghijklmnopqrstuvwxyy\",\"abcdefghijklmnopqrstuvwxyz\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\",\"search\"]",
+    "words": "[\"one|two|three\",\"one\",\"four\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\"]",
+    "words": "[\"same|same\",\"same\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\"]",
+    "words": "[\"same|some\",\"same\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\",\"search\"]",
+    "words": "[\"p|q|r|s|t\",\"p\",\"u\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\",\"search\"]",
+    "words": "[\"magic|magik\",\"magic\",\"magix\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\"]",
+    "words": "[\"hello|hella|hellb\",\"hellc\"]"
+  },
+  {
+    "operations": "[\"buildDict\",\"search\",\"search\"]",
+    "words": "[\"ab|ac\",\"ab\",\"ad\"]"
+  }
+]

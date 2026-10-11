@@ -1,0 +1,58 @@
+{
+  "id": "encode-and-decode-tinyurl",
+  "title": "593. Encode and Decode TinyURL",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/encode-and-decode-tinyurl/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "url = \"https://leetcode.com/problems/design-tinyurl\"",
+      "output": "\"https://leetcode.com/problems/design-tinyurl\"",
+      "explanation": "Encoding then decoding restores the original address."
+    },
+    {
+      "input": "url = \"https://example.com/a/long/path?q=1\"",
+      "output": "\"https://example.com/a/long/path?q=1\"",
+      "explanation": "Query strings survive the round trip untouched."
+    },
+    {
+      "input": "url = \"http://x.co\"",
+      "output": "\"http://x.co\"",
+      "explanation": "Short addresses round-trip as well."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public String codecRoundTrip(String url) {\n        \n    }\n}",
+    "python": "class Solution:\n    def codecRoundTrip(self, url: str) -> str:\n        pass",
+    "cpp": "#include <string>\n#include <unordered_map>\nusing namespace std;\nclass Solution {\npublic:\n    string codecRoundTrip(string url) {\n        return \"\";\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public string CodecRoundTrip(string url) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn codec_round_trip(url: String) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc CodecRoundTrip(url string) string {\n    \n}",
+    "typescript": "export function codecRoundTrip(url: string): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $url\n     * @return string\n     */\n    public function codecRoundTrip($url) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "url": "https://leetcode.com/problems/design-tinyurl"
+    },
+    {
+      "url": "https://example.com/a/long/path?q=1"
+    },
+    {
+      "url": "http://x.co"
+    }
+  ],
+  "functionName": "codecRoundTrip",
+  "params": [
+    {
+      "name": "url",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Model the service with a small helper class holding two hash maps plus a counter for fresh codes.",
+    "Encode must be idempotent: an already-seen URL gets its earlier short link instead of a new one.",
+    "Decode by removing the fixed prefix and looking the code up; the round trip then equals the input."
+  ]
+}

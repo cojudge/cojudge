@@ -1,0 +1,69 @@
+{
+  "id": "exam-room",
+  "title": "851. Exam Room",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/exam-room/",
+  "category": "design",
+  "examples": [
+    {
+      "input": "operations = [\"ExamRoom\",\"seat\",\"seat\",\"seat\",\"leave\",\"seat\"]\nvalues = [10,0,0,0,4,0]",
+      "output": "[0,9,4,4]",
+      "explanation": "Seats spread to ends then middle; freed 4 is retaken."
+    },
+    {
+      "input": "operations = [\"ExamRoom\",\"seat\",\"seat\",\"leave\",\"seat\"]\nvalues = [4,0,0,0,0]",
+      "output": "[0,3,0]",
+      "explanation": "Take 0 and 3, free 0, then retake 0."
+    },
+    {
+      "input": "operations = [\"ExamRoom\",\"seat\"]\nvalues = [1,0]",
+      "output": "[0]",
+      "explanation": "Only seat available."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runExamRoom(String[] operations, int[] values) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runExamRoom(self, operations: List[str], values: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runExamRoom(vector<string>& operations, vector<int>& values) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunExamRoom(string[] operations, int[] values)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_exam_room(operations: Vec<String>, values: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunExamRoom(operations []string, values []int) []int {\n    return []int{}\n}",
+    "typescript": "export function runExamRoom(operations: string[], values: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[] $values\n     * @return int[]\n     */\n    public function runExamRoom($operations, $values) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"ExamRoom\",\"seat\",\"seat\",\"seat\",\"leave\",\"seat\"]",
+      "values": "[10,0,0,0,4,0]"
+    },
+    {
+      "operations": "[\"ExamRoom\",\"seat\",\"seat\",\"leave\",\"seat\"]",
+      "values": "[4,0,0,0,0]"
+    },
+    {
+      "operations": "[\"ExamRoom\",\"seat\"]",
+      "values": "[1,0]"
+    },
+    {
+      "operations": "[\"ExamRoom\",\"seat\",\"seat\",\"seat\"]",
+      "values": "[10,0,0,0]"
+    }
+  ],
+  "functionName": "runExamRoom",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Keep occupied seats in an ordered set; the best seat always lies at an end or midway between two neighbours.",
+    "For an interior gap (a,b) the candidate is (a+b)//2 with distance (b-a)//2; for edges use 0 or N-1 directly.",
+    "Scan all gaps per seat() call: with few operations this linear scan is simplest and fast enough."
+  ]
+}

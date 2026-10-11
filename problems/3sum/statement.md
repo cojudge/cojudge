@@ -1,4 +1,4 @@
-Given an integer array `nums`, return all the triplets `[nums[i], nums[j], nums[k]]` such that `i != j`, `i != k` and `j != k` and `nums[i] + nums[j] + nums[k] == 0`.
+Your input is an integer array `nums`. Collect every triple of entries sitting at three pairwise-different positions `i`, `j`, `k` whose values cancel out, i.e. `nums[i] + nums[j] + nums[k] == 0`, and return each hit as the value triple `[nums[i], nums[j], nums[k]]`.
 
 **Constraints:**
 

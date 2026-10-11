@@ -1,0 +1,50 @@
+{
+  "id": "largest-perimeter-triangle",
+  "title": "961. Largest Perimeter Triangle",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/largest-perimeter-triangle/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [2,1,2]",
+      "output": "5",
+      "explanation": "The three sticks form a valid triangle with perimeter 2+1+2 = 5."
+    },
+    {
+      "input": "nums = [1,2,1,10]",
+      "output": "0",
+      "explanation": "No triple satisfies the triangle rule, so the answer is 0."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int largestPerimeter(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def largestPerimeter(self, nums: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <algorithm>\nusing namespace std;\nclass Solution {\npublic:\n    int largestPerimeter(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int LargestPerimeter(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn largest_perimeter(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc LargestPerimeter(nums []int) int {\n    \n}",
+    "typescript": "export function largestPerimeter(nums: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function largestPerimeter($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[2,1,2]"
+    },
+    {
+      "nums": "[1,2,1,10]"
+    }
+  ],
+  "functionName": "largestPerimeter",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sort the sticks so any candidate triple appears as three consecutive values.",
+    "Scan from the largest end: the first consecutive triple with small + middle > large gives the maximum perimeter.",
+    "Return 0 when the scan finishes without finding such a triple."
+  ]
+}

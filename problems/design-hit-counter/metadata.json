@@ -1,0 +1,64 @@
+{
+  "id": "design-hit-counter",
+  "title": "441. Design Hit Counter",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/design-hit-counter/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "operations = [\"HitCounter\",\"hit\",\"hit\",\"hit\",\"getHits\",\"hit\",\"getHits\",\"getHits\"], timestamps = [0,1,2,3,4,300,300,301]",
+      "output": "[3,4,3]",
+      "explanation": "At time 4 there are 3 fresh hits; at 300 there are 4; at 301 the oldest has expired leaving 3."
+    },
+    {
+      "input": "operations = [\"HitCounter\",\"hit\",\"getHits\",\"getHits\"], timestamps = [0,5,5,305]",
+      "output": "[1,0]",
+      "explanation": "The single hit counts at time 5 but has expired by time 305."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runHitCounter(String[] operations, int[] timestamps) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runHitCounter(self, operations: List[str], timestamps: List[int]) -> List[int]:\n        pass",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runHitCounter(vector<string>& operations, vector<int>& timestamps) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] RunHitCounter(string[] operations, int[] timestamps) \n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_hit_counter(operations: Vec<String>, timestamps: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc RunHitCounter(operations []string, timestamps []int) []int {\n    \n}",
+    "typescript": "export function runHitCounter(operations: string[], timestamps: number[]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[] $timestamps\n     * @return int[]\n     */\n    public function runHitCounter($operations, $timestamps) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"HitCounter\",\"hit\",\"hit\",\"hit\",\"getHits\",\"hit\",\"getHits\",\"getHits\"]",
+      "timestamps": "[0,1,2,3,4,300,300,301]"
+    },
+    {
+      "operations": "[\"HitCounter\",\"hit\",\"getHits\",\"getHits\"]",
+      "timestamps": "[0,5,5,305]"
+    },
+    {
+      "operations": "[\"HitCounter\",\"getHits\"]",
+      "timestamps": "[0,100]"
+    },
+    {
+      "operations": "[\"HitCounter\",\"hit\",\"hit\",\"getHits\"]",
+      "timestamps": "[0,1,1,301]"
+    }
+  ],
+  "functionName": "runHitCounter",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "timestamps",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Keep hits in a queue in arrival order; timestamps never decrease.",
+    "Before each query, drop every hit at or below T - 300.",
+    "The queue size after cleanup is the answer; constructor entries produce no output."
+  ]
+}

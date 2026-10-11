@@ -1,0 +1,86 @@
+[
+  {
+    "expression": "(add 1 2)"
+  },
+  {
+    "expression": "(mult 3 (add 2 3))"
+  },
+  {
+    "expression": "(let x 2 (mult x 5))"
+  },
+  {
+    "expression": "(let x 2 y 3 (add x y))"
+  },
+  {
+    "expression": "(let x 1 y 2 x 3 (add x y))"
+  },
+  {
+    "expression": "(let x 3 x 2 x 1 (add x x))"
+  },
+  {
+    "expression": "(add 0 0)"
+  },
+  {
+    "expression": "(mult -2 4)"
+  },
+  {
+    "expression": "(let a 5 (add a a))"
+  },
+  {
+    "expression": "(let x 2 (add (let x 3 (add x x)) x))"
+  },
+  {
+    "expression": "(mult 1 1)"
+  },
+  {
+    "expression": "(let x -2 (mult x x))"
+  },
+  {
+    "expression": "(add (mult 2 3) (mult 4 5))"
+  },
+  {
+    "expression": "(let x 7 (let y 8 (add x y)))"
+  },
+  {
+    "expression": "(let x 1 (add x (let x 2 (add x x))))"
+  },
+  {
+    "expression": "7"
+  },
+  {
+    "expression": "-12"
+  },
+  {
+    "expression": "(let a 1 b 2 c 3 (add a (add b c)))"
+  },
+  {
+    "expression": "(mult (add 1 1) (add 1 1))"
+  },
+  {
+    "expression": "(let x 5 (mult x (let x 6 (add x 1))))"
+  },
+  {
+    "expression": "(add -1 -2)"
+  },
+  {
+    "expression": "(let x 0 (add x 10))"
+  },
+  {
+    "expression": "(let ab 3 ba 4 (mult ab ba))"
+  },
+  {
+    "expression": "(let x 2 y (add x 3) (mult x y))"
+  },
+  {
+    "expression": "(add (let x 1 x) 2)"
+  },
+  {
+    "expression": "(mult (let a 2 a) (let b 3 b))"
+  },
+  {
+    "expression": "(let x 10 (let x 20 (add x 1)))"
+  },
+  {
+    "expression": "(let x 1 y (let x 2 x) (add x y))"
+  }
+]

@@ -1,0 +1,61 @@
+{
+  "id": "ternary-expression-parser",
+  "title": "507. Ternary Expression Parser",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/ternary-expression-parser/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "expression = \"T?2:3\"",
+      "output": "\"2\"",
+      "explanation": "The condition is true, so the true branch 2 is picked."
+    },
+    {
+      "input": "expression = \"F?1:T?4:5\"",
+      "output": "\"4\"",
+      "explanation": "The outer condition is false, so the inner true choice T?4:5 gives 4."
+    },
+    {
+      "input": "expression = \"T?T?F:5:3\"",
+      "output": "\"F\"",
+      "explanation": "The inner T?F:5 is F, leaving T?F:3 which is F."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String parseTernary(String expression) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def parseTernary(self, expression: str) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string parseTernary(string expression) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string ParseTernary(string expression) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn parse_ternary(expression: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc ParseTernary(expression string) string {\n    return \"\"\n}",
+    "typescript": "export function parseTernary(expression: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $expression\n     * @return string\n     */\n    public function parseTernary($expression) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "expression": "T?2:3"
+    },
+    {
+      "expression": "F?1:T?4:5"
+    },
+    {
+      "expression": "T?T?F:5:3"
+    },
+    {
+      "expression": "F"
+    }
+  ],
+  "functionName": "parseTernary",
+  "params": [
+    {
+      "name": "expression",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Choices group from the right, so scanning from right to left turns nesting into a simple stack process.",
+    "Push plain values and colons; when you meet '?', pop the true value, the colon, and the false value, then push back the picked one.",
+    "The character just before '?' is the condition: 'T' keeps the first value, 'F' keeps the second."
+  ]
+}

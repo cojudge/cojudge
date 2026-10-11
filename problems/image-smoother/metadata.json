@@ -1,0 +1,53 @@
+{
+  "id": "image-smoother",
+  "title": "680. Image Smoother",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/image-smoother/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "img = [[1,1,1],[1,0,1],[1,1,1]]",
+      "output": "[[0,0,0],[0,0,0],[0,0,0]]",
+      "explanation": "Each corner averages 3 neighbours, each edge 6, and the center 9; all floors are 0."
+    },
+    {
+      "input": "img = [[100,200,100],[200,50,200],[100,200,100]]",
+      "output": "[[137,141,137],[141,150,141],[137,141,137]]",
+      "explanation": "Averages include the cell plus every valid neighbour, rounded down."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] imageSmoother(int[][] img) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def imageSmoother(self, img: List[List[int]]) -> List[List[int]]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> imageSmoother(vector<vector<int>>& img) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[][] ImageSmoother(int[][] img) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn image_smoother(img: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc ImageSmoother(img [][]int) [][]int {\n    \n}",
+    "typescript": "export function imageSmoother(img: number[][]): number[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $img\n     * @return int[][]\n     */\n    public function imageSmoother($img) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "img": "[[1,1,1],[1,0,1],[1,1,1]]"
+    },
+    {
+      "img": "[[100,200,100],[200,50,200],[100,200,100]]"
+    },
+    {
+      "img": "[[1]]"
+    }
+  ],
+  "functionName": "imageSmoother",
+  "params": [
+    {
+      "name": "img",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Compute every output cell from the original grid, not from partly smoothed values.",
+    "Loop over the 3x3 window offsets (-1..1) and keep only in-bounds neighbours.",
+    "Integer division already floors the average."
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "category": "binary",
+  "difficulty": "Easy",
+  "examples": [
+    {
+      "explanation": "One lit lamp sets either one minute bit or one hour bit.",
+      "input": "turnedOn = 1",
+      "output": "[\"0:01\",\"0:02\",\"0:04\",\"0:08\",\"0:16\",\"0:32\",\"1:00\",\"2:00\",\"4:00\",\"8:00\"]"
+    },
+    {
+      "explanation": "At most 8 lamps can ever be lit, so 9 has no reading.",
+      "input": "turnedOn = 9",
+      "output": "[]"
+    },
+    {
+      "explanation": "With nothing lit the watch reads 0:00.",
+      "input": "turnedOn = 0",
+      "output": "[\"0:00\"]"
+    }
+  ],
+  "functionName": "readBinaryWatch",
+  "hints": [
+    "Try every hour 0..11 and minute 0..59 and count set bits.",
+    "A pair fits when the two popcounts add up to turnedOn.",
+    "Format minutes with two digits via %02d-style padding."
+  ],
+  "id": "binary-watch",
+  "link": "https://leetcode.com/problems/binary-watch/",
+  "outputType": "string_list",
+  "params": [
+    {
+      "name": "turnedOn",
+      "type": "int"
+    }
+  ],
+  "starterCode": {
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> readBinaryWatch(int turnedOn) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<string> ReadBinaryWatch(int turnedOn) \n    {\n        return new List<string>();\n    }\n}",
+    "go": "package main\n\nfunc ReadBinaryWatch(turnedOn int) []string {\n    return []string{}\n}",
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> readBinaryWatch(int turnedOn) {\n        return new ArrayList<>();\n    }\n}",
+    "php": "class Solution {\n    /**\n     * @param int $turnedOn\n     * @return string[]\n     */\n    public function readBinaryWatch($turnedOn) {\n\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def readBinaryWatch(self, turnedOn: int) -> List[str]:\n        return []\n",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn read_binary_watch(turned_on: i32) -> Vec<String> {\n        vec![]\n    }\n}",
+    "typescript": "export function readBinaryWatch(turnedOn: number): string[] {\n    return [];\n}"
+  },
+  "testCases": [
+    {
+      "turnedOn": 1
+    },
+    {
+      "turnedOn": 9
+    },
+    {
+      "turnedOn": 0
+    }
+  ],
+  "title": "475. Binary Watch"
+}

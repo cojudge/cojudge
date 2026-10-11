@@ -1,0 +1,58 @@
+{
+  "id": "rotated-digits",
+  "title": "786. Rotated Digits",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/rotated-digits/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 10",
+      "output": "4",
+      "explanation": "Values 2, 5, 6, and 9 qualify."
+    },
+    {
+      "input": "n = 1",
+      "output": "0",
+      "explanation": "The number 1 spins to itself."
+    },
+    {
+      "input": "n = 20",
+      "output": "9",
+      "explanation": "Nine values up to 20 change under rotation."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int rotatedDigits(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def rotatedDigits(self, n: int) -> int:\n        return 0\n",
+    "cpp": "class Solution {\npublic:\n    int rotatedDigits(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int RotatedDigits(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn rotated_digits(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc RotatedDigits(n int) int {\n    return 0\n}",
+    "typescript": "export function rotatedDigits(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function rotatedDigits($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 10
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 20
+    }
+  ],
+  "functionName": "rotatedDigits",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Check each number digit by digit: reject on 3, 4, or 7, and require at least one of 2, 5, 6, 9.",
+    "A lookup table for the ten digits keeps the inner test tiny.",
+    "With n capped at 10000, a straight scan from 1 to n is fast enough."
+  ]
+}

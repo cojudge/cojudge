@@ -1,9 +1,10 @@
-Given a 1-indexed array of integers `numbers` that is already sorted in
-non-decreasing order, find two distinct numbers whose sum is `target`.
+You receive `numbers`, a 1-indexed integer list already arranged from smallest
+to largest, plus a `target` value. Identify two separate entries that add to
+`target`.
 
-Return their indices as `[index1, index2]`, where
-`1 <= index1 < index2 <= numbers.length`. Every input has exactly one solution,
-and the same element may not be used twice.
+Give back the pair as `[index1, index2]` with
+`1 <= index1 < index2 <= numbers.length`. Each test case contains exactly one
+valid pair, and no entry may be paired with itself.
 
 **Constraints:**
 

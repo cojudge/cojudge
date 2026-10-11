@@ -1,4 +1,4 @@
-Merge k sorted linked lists and return it as one sorted list.
+You receive `k` linked lists, each already ordered increasingly. Weave all of their nodes into a single linked list that remains ordered increasingly, and return its head.
 
 **Constraints:**
 

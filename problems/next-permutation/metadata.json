@@ -1,0 +1,57 @@
+{
+  "id": "next-permutation",
+  "title": "260. Next Permutation",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/next-permutation/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,2,3]",
+      "output": "[1,3,2]",
+      "explanation": "Among orderings above [1,2,3], [1,3,2] is the smallest."
+    },
+    {
+      "input": "nums = [3,2,1]",
+      "output": "[1,2,3]",
+      "explanation": "[3,2,1] is the largest ordering, so wrap to the smallest."
+    },
+    {
+      "input": "nums = [1,1,5]",
+      "output": "[1,5,1]",
+      "explanation": "With duplicates included, [1,5,1] is the next larger ordering."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] nextPermutation(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def nextPermutation(self, nums: List[int]) -> List[int]:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> nextPermutation(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] NextPermutation(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn next_permutation(nums: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc NextPermutation(nums []int) []int {\n    \n}",
+    "typescript": "export function nextPermutation(nums: number[]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function nextPermutation($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3]"
+    },
+    {
+      "nums": "[3,2,1]"
+    },
+    {
+      "nums": "[1,1,5]"
+    }
+  ],
+  "functionName": "nextPermutation",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Scan from the right for the first position that is smaller than its successor (the pivot); everything right of it is descending.",
+    "Swap the pivot with the smallest element to its right that is larger than it, then reverse the suffix into ascending order."
+  ]
+}

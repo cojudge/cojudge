@@ -1,0 +1,86 @@
+[
+  {
+    "strings": "[\"abc\",\"bcd\",\"acef\",\"xyz\",\"az\",\"ba\",\"a\",\"z\"]"
+  },
+  {
+    "strings": "[\"a\"]"
+  },
+  {
+    "strings": "[\"abc\",\"bcd\"]"
+  },
+  {
+    "strings": "[\"a\",\"z\"]"
+  },
+  {
+    "strings": "[\"az\",\"ba\"]"
+  },
+  {
+    "strings": "[\"abc\",\"def\",\"ghi\"]"
+  },
+  {
+    "strings": "[\"acef\",\"bzdf\"]"
+  },
+  {
+    "strings": "[\"ab\",\"bc\",\"cd\",\"za\"]"
+  },
+  {
+    "strings": "[\"a\",\"b\",\"c\"]"
+  },
+  {
+    "strings": "[\"fpb\",\"nsd\"]"
+  },
+  {
+    "strings": "[\"hsulvzcy\",\"oclwdhuu\",\"q\"]"
+  },
+{
+  "strings": "[\"bcd\",\"xyz\",\"ijk\"]"
+},
+{
+  "strings": "[\"ab\",\"cd\",\"yz\"]"
+},
+{
+  "strings": "[\"abc\",\"bcd\",\"cde\",\"def\"]"
+},
+{
+  "strings": "[\"alone\"]"
+},
+{
+  "strings": "[\"aa\",\"bb\",\"cc\"]"
+},
+{
+  "strings": "[\"abc\",\"az\",\"a\"]"
+},
+{
+  "strings": "[\"mnop\",\"qrst\",\"abcd\"]"
+},
+{
+  "strings": "[\"xyz\",\"yza\",\"zab\"]"
+},
+{
+  "strings": "[\"q\",\"w\",\"e\",\"r\"]"
+},
+{
+  "strings": "[\"ab\",\"ba\"]"
+},
+{
+  "strings": "[\"abcde\",\"bcdef\",\"cdefg\"]"
+},
+{
+  "strings": "[\"zzz\",\"aaa\"]"
+},
+{
+  "strings": "[\"hello\",\"ifmmp\"]"
+},
+{
+  "strings": "[\"abc\",\"def\",\"xyz\",\"az\"]"
+},
+{
+  "strings": "[\"a\",\"b\",\"aa\",\"bb\"]"
+},
+{
+  "strings": "[\"kite\",\"mjuf\"]"
+},
+{
+  "strings": "[\"xyzabc\",\"yzabcd\"]"
+}
+]

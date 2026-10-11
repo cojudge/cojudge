@@ -1,0 +1,58 @@
+{
+  "id": "find-the-closest-palindrome",
+  "title": "619. Find the Closest Palindrome",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/find-the-closest-palindrome/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = \"123\"",
+      "output": "\"121\"",
+      "explanation": "121 and 131 tie at distance 2; the smaller wins."
+    },
+    {
+      "input": "n = \"1\"",
+      "output": "\"0\"",
+      "explanation": "The nearest palindrome besides 1 itself is 0."
+    },
+    {
+      "input": "n = \"99\"",
+      "output": "\"101\"",
+      "explanation": "101 (gap 2) beats 88 (gap 11)."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String nearestPalindromic(String n) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def nearestPalindromic(self, n: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string nearestPalindromic(string n) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string NearestPalindromic(string n)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn nearest_palindromic(n: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc NearestPalindromic(n string) string {\n    return \"\"\n}",
+    "typescript": "export function nearestPalindromic(n: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $n\n     * @return string\n     */\n    public function nearestPalindromic($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": "123"
+    },
+    {
+      "n": "1"
+    },
+    {
+      "n": "9"
+    }
+  ],
+  "functionName": "nearestPalindromic",
+  "params": [
+    {
+      "name": "n",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Mirror the first half onto the second half; also try the prefix plus and minus one before mirroring.",
+    "Add the length-change candidates 10^k + 1 and 10^(k-1) - 1 for inputs like 1000 or 999.",
+    "Drop the input itself from the candidates, then keep the smallest gap, preferring the smaller value on ties."
+  ]
+}

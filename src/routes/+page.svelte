@@ -399,12 +399,15 @@
     type SortDir = "asc" | "desc";
     let groupSort: Record<string, { key: SortKey; dir: SortDir }> = {};
 
-    // Nicely format category labels (e.g., "two-pointers" -> "Two Pointers")
+    // Nicely format category labels (e.g., "two-pointers" -> "Two Pointers").
+    // Keep digit-digit ranges intact (e.g., "1-100" stays "1-100").
     const pretty = (s?: string) => {
-        const label = (s && s.trim().length > 0 ? s : "uncategorized").replace(
-            /[-_]+/g,
-            " ",
-        );
+        const raw = s && s.trim().length > 0 ? s : "uncategorized";
+        const label = raw.replace(/[-_]+/g, (m, offset: number, full: string) => {
+            const before = full[offset - 1] ?? "";
+            const after = full[offset + (m as string).length] ?? "";
+            return /\d/.test(before) && /\d/.test(after) ? m : " ";
+        });
         return label.replace(/\b\w/g, (c) => c.toUpperCase());
     };
 

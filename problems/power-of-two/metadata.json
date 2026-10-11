@@ -1,0 +1,57 @@
+{
+  "id": "power-of-two",
+  "title": "342. Power of Two",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/power-of-two/",
+  "category": "binary",
+  "examples": [
+    {
+      "input": "n = 1",
+      "output": "true",
+      "explanation": "2^0 equals 1."
+    },
+    {
+      "input": "n = 16",
+      "output": "true",
+      "explanation": "2^4 equals 16."
+    },
+    {
+      "input": "n = 3",
+      "output": "false",
+      "explanation": "No integer power of two equals 3."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isPowerOfTwo(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def isPowerOfTwo(self, n: int) -> bool:\n        pass",
+    "cpp": "class Solution {\npublic:\n    bool isPowerOfTwo(int n) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool IsPowerOfTwo(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_power_of_two(n: i32) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc IsPowerOfTwo(n int) bool {\n    \n}",
+    "typescript": "export function isPowerOfTwo(n: number): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return bool\n     */\n    public function isPowerOfTwo($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 1
+    },
+    {
+      "n": 16
+    },
+    {
+      "n": 3
+    }
+  ],
+  "functionName": "isPowerOfTwo",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "A positive power of two has exactly one bit set in binary.",
+    "For n > 0, the expression (n & (n - 1)) == 0 detects a single set bit."
+  ]
+}

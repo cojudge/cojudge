@@ -1,0 +1,58 @@
+{
+  "id": "24-game",
+  "title": "697. 24 Game",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/24-game/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "cards = [4,1,8,7]",
+      "output": "true",
+      "explanation": "(8 - 4) * (7 - 1) equals 24."
+    },
+    {
+      "input": "cards = [1,2,1,2]",
+      "output": "false",
+      "explanation": "No arrangement of the four values reaches 24."
+    },
+    {
+      "input": "cards = [3,3,8,8]",
+      "output": "true",
+      "explanation": "8 divided by (3 - 8/3) equals 24."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean judgePoint24(int[] cards) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def judgePoint24(self, cards: List[int]) -> bool:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool judgePoint24(vector<int>& cards) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool JudgePoint24(int[] cards) \n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn judge_point24(cards: Vec<i32>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc JudgePoint24(cards []int) bool {\n    return false\n}",
+    "typescript": "export function judgePoint24(cards: number[]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $cards\n     * @return bool\n     */\n    public function judgePoint24($cards) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "cards": "[4,1,8,7]"
+    },
+    {
+      "cards": "[1,2,1,2]"
+    },
+    {
+      "cards": "[3,3,8,8]"
+    }
+  ],
+  "functionName": "judgePoint24",
+  "params": [
+    {
+      "name": "cards",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Try every order of combining pairs with +, -, *, / in a depth-first search.",
+    "Floating comparisons need a small tolerance (1e-6); document that divisions use doubles.",
+    "Prune symmetric branches but keep both subtraction and division orders."
+  ]
+}

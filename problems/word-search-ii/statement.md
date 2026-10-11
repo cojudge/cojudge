@@ -1,4 +1,4 @@
-Given an m x n board of characters and a list of strings words, return all words on the board. Each word must be constructed from letters of sequentially adjacent cells (horizontally or vertically). The same letter cell may not be used more than once in a word.
+You receive a character grid `board` with `m` rows and `n` columns, together with a list of strings `words`. Collect every entry of `words` that can be traced on the grid by walking from cell to orthogonally touching cell (upward, downward, leftward, or rightward) in letter order, never stepping onto one cell twice while tracing a single entry. Return the subset of entries for which at least one such walk exists.
 
 **Constraints:**
 

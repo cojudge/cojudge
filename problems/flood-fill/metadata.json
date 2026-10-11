@@ -1,0 +1,77 @@
+{
+  "id": "flood-fill",
+  "title": "740. Flood Fill",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/flood-fill/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, color = 2",
+      "output": "[[2,2,2],[2,2,0],[2,0,1]]",
+      "explanation": "The 4-connected block of 1s is repainted to 2."
+    },
+    {
+      "input": "image = [[0,0,0],[0,0,0]], sr = 0, sc = 0, color = 0",
+      "output": "[[0,0,0],[0,0,0]]"
+    },
+    {
+      "input": "image = [[1,2,1],[2,1,2],[1,2,1]], sr = 1, sc = 1, color = 9",
+      "output": "[[1,2,1],[2,9,2],[1,2,1]]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] floodFill(int[][] image, int sr, int sc, int color) {\n        return image;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:\n        return image\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {\n        return image;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[][] FloodFill(int[][] image, int sr, int sc, int color)\n    {\n        return image;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn flood_fill(image: Vec<Vec<i32>>, sr: i32, sc: i32, color: i32) -> Vec<Vec<i32>> {\n        image\n    }\n}",
+    "go": "package main\n\nfunc FloodFill(image [][]int, sr int, sc int, color int) [][]int {\n    return image\n}",
+    "typescript": "export function floodFill(image: number[][], sr: number, sc: number, color: number): number[][] {\n    return image;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $image\n     * @param int $sr\n     * @param int $sc\n     * @param int $color\n     * @return int[][]\n     */\n    public function floodFill($image, $sr, $sc, $color) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "image": "[[1,1,1],[1,1,0],[1,0,1]]",
+      "sr": 1,
+      "sc": 1,
+      "color": 2
+    },
+    {
+      "image": "[[0,0,0],[0,0,0]]",
+      "sr": 0,
+      "sc": 0,
+      "color": 0
+    },
+    {
+      "image": "[[1,2,1],[2,1,2],[1,2,1]]",
+      "sr": 1,
+      "sc": 1,
+      "color": 9
+    }
+  ],
+  "functionName": "floodFill",
+  "params": [
+    {
+      "name": "image",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "sr",
+      "type": "int"
+    },
+    {
+      "name": "sc",
+      "type": "int"
+    },
+    {
+      "name": "color",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Remember the starting cell's original color first; if it already equals the new color, return immediately.",
+    "Explore with depth-first or breadth-first search, stepping only to in-bounds neighbours holding the original color.",
+    "Recolor on visit so cells are never processed twice."
+  ]
+}

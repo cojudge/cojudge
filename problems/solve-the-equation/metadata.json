@@ -1,0 +1,56 @@
+{
+  "id": "solve-the-equation",
+  "title": "662. Solve the Equation",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/solve-the-equation/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "equation = \"x+5-3+x=6+x-2\"",
+      "output": "\"x=2\"",
+      "explanation": "The left side groups to 2x+2 and the right side to x+4, so x = 2."
+    },
+    {
+      "input": "equation = \"x=x\"",
+      "output": "\"Infinite solutions\""
+    },
+    {
+      "input": "equation = \"2x=x\"",
+      "output": "\"x=0\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String solveEquation(String equation) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def solveEquation(self, equation: str) -> str:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string solveEquation(string equation) {\n        return \"\";\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public string SolveEquation(string equation) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn solve_equation(equation: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc SolveEquation(equation string) string {\n    return \"\"\n}",
+    "typescript": "export function solveEquation(equation: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $equation\n     * @return string\n     */\n    public function solveEquation($equation) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "equation": "x+5-3+x=6+x-2"
+    },
+    {
+      "equation": "x=x"
+    },
+    {
+      "equation": "2x=x"
+    }
+  ],
+  "functionName": "solveEquation",
+  "params": [
+    {
+      "name": "equation",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Parse each side separately into (x-coefficient, constant) by scanning sign by sign.",
+    "A missing number before x means 1; a lone sign before x means +1 or -1.",
+    "Move everything to one side: (lc - rc) * x = rconst - lconst, then branch on a zero coefficient."
+  ]
+}

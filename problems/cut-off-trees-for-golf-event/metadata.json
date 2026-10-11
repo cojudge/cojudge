@@ -1,0 +1,59 @@
+{
+  "id": "cut-off-trees-for-golf-event",
+  "title": "694. Cut Off Trees for Golf Event",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/cut-off-trees-for-golf-event/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "forest = [[1,2,3],[0,0,4],[7,6,5]]",
+      "output": "6",
+      "explanation": "Visit heights 2,3,4,5,6,7 in order; the shortest walk uses 6 steps."
+    },
+    {
+      "input": "forest = [[1,2,3],[0,0,0],[7,6,5]]",
+      "output": "-1",
+      "explanation": "The middle wall disconnects the lower trees, so the tour is impossible."
+    },
+    {
+      "input": "forest = [[2,3,4],[0,0,5],[8,7,6]]",
+      "output": "6",
+      "explanation": "Start on height 2, then walk to 3,4,5,6,7,8 with 6 moves."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int cutOffTree(int[][] forest) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def cutOffTree(self, forest: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int cutOffTree(vector<vector<int>>& forest) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int CutOffTree(int[][] forest) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn cut_off_tree(forest: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc CutOffTree(forest [][]int) int {\n    return 0\n}",
+    "typescript": "export function cutOffTree(forest: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $forest\n     * @return int\n     */\n    public function cutOffTree($forest) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "forest": "[[1,2,3],[0,0,4],[7,6,5]]"
+    },
+    {
+      "forest": "[[1,2,3],[0,0,0],[7,6,5]]"
+    },
+    {
+      "forest": "[[2,3,4],[0,0,5],[8,7,6]]"
+    }
+  ],
+  "functionName": "cutOffTree",
+  "params": [
+    {
+      "name": "forest",
+      "type": "int_array_2d",
+      "visualizeType": "matrix"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Collect every cell above 1 and sort those trees by height; that is the visiting order.",
+    "Between consecutive targets run breadth-first search avoiding 0 cells.",
+    "Adaptation note: forest grids use int_array_2d where 0 blocks, 1 is open ground, and values above 1 are tree heights to cut in ascending order."
+  ]
+}

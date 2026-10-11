@@ -1,4 +1,4 @@
-Given a collection of numbers, `nums`, that might contain duplicates, return *all possible unique permutations* in **any order**.
+You are handed an array `nums` whose entries may repeat. List every distinct ordering of its elements, each ordering exactly once, and return the collection in whatever sequence you prefer.
 
 **Example 1:**
 

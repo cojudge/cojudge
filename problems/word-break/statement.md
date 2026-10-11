@@ -1,4 +1,4 @@
-Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a sequence of one or more dictionary words. The same word may be reused multiple times.
+You receive a string `s` together with a list of strings `wordDict`. Decide whether `s` can be tiled end to end by a chain of one or more pieces such that every piece appears in `wordDict`. Entries from the list may be drawn on any number of times. Return `true` when at least one such tiling exists, and `false` otherwise.
 
 **Constraints:**
 

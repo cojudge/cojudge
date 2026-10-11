@@ -1,0 +1,61 @@
+{
+  "id": "find-the-celebrity",
+  "title": "376. Find the Celebrity",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/find-the-celebrity/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "graph = [[1,1,0],[0,1,0],[1,1,1]]",
+      "output": "1",
+      "explanation": "Person 1 is known by 0 and 2 while knowing nobody else."
+    },
+    {
+      "input": "graph = [[1,0,1],[1,1,0],[0,1,1]]",
+      "output": "-1",
+      "explanation": "No person satisfies both celebrity conditions."
+    },
+    {
+      "input": "graph = [[1,0],[1,1]]",
+      "output": "0",
+      "explanation": "Person 0 knows nobody else and person 1 knows 0."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findCelebrity(int[][] graph) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findCelebrity(self, graph: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int findCelebrity(vector<vector<int>>& graph) {\n        return -1;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindCelebrity(int[][] graph) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_celebrity(graph: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindCelebrity(graph [][]int) int {\n    \n}",
+    "typescript": "export function findCelebrity(graph: number[][]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $graph\n     * @return int\n     */\n    public function findCelebrity($graph) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "graph": "[[1,1,0],[0,1,0],[1,1,1]]"
+    },
+    {
+      "graph": "[[1,0,1],[1,1,0],[0,1,1]]"
+    },
+    {
+      "graph": "[[1,0],[1,1]]"
+    },
+    {
+      "graph": "[[1]]"
+    }
+  ],
+  "functionName": "findCelebrity",
+  "params": [
+    {
+      "name": "graph",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Adaptation: the knows API is given as an adjacency matrix graph where graph[i][j] is 1 when i knows j (diagonal ignored).",
+    "Eliminate non-candidates: if candidate knows i, candidate cannot be the celebrity so move to i.",
+    "Verify the survivor knows nobody else and is known by everyone; else return -1."
+  ]
+}

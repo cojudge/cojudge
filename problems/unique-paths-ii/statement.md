@@ -1,17 +1,17 @@
-You are given an `m x n` integer array `grid`. There is a robot initially located at the top-left corner (i.e., `grid[0][0]`). The robot tries to move to the bottom-right corner (i.e., `grid[m - 1][n - 1]`). The robot can only move either down or right at any point in time.
+An `m x n` integer board named `grid` holds an automaton that begins in the upper-left cell (`grid[0][0]`) and aims for the lower-right cell (`grid[m - 1][n - 1]`). At each step the automaton may advance only downward or rightward.
 
-An obstacle and space are marked as `1` or `0` respectively in `grid`. A path that the robot takes cannot include any square that is an obstacle.
+Cells of `grid` hold `1` for a blocked cell and `0` for a free cell. No traveled route may pass through a blocked cell.
 
-Return the number of possible unique paths that the robot can take to reach the bottom-right corner.
+Count how many distinct admissible routes reach the destination.
 
-The testcases are generated so that the answer will be less than or equal to `2 * 10^9`.
+The test data is constructed so the count never exceeds `2 * 10^9`.
 
 **Example 1:**
 ```
 Input: obstacleGrid = [[0,0,0],[0,1,0],[0,0,0]]
 Output: 2
-Explanation: There is one obstacle in the middle of the 3x3 grid above.
-There are two ways to reach the bottom-right corner:
+Explanation: A single blocked cell sits at the center of the 3x3 board above.
+The destination can be reached in two fashions:
 1. Right -> Right -> Down -> Down
 2. Down -> Down -> Right -> Right
 ```

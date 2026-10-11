@@ -1,0 +1,114 @@
+[
+  {
+    "words1": "[\"amazon\", \"apple\", \"facebook\", \"google\", \"leetcode\"]",
+    "words2": "[\"e\", \"o\"]"
+  },
+  {
+    "words1": "[\"amazon\", \"apple\", \"facebook\", \"google\", \"leetcode\"]",
+    "words2": "[\"l\", \"e\"]"
+  },
+  {
+    "words1": "[\"amazon\", \"apple\", \"facebook\", \"google\", \"leetcode\"]",
+    "words2": "[\"e\", \"oo\"]"
+  },
+  {
+    "words1": "[\"amazon\", \"apple\", \"facebook\", \"google\", \"leetcode\"]",
+    "words2": "[\"lo\", \"eo\"]"
+  },
+  {
+    "words1": "[\"amazon\", \"apple\", \"facebook\", \"google\", \"leetcode\"]",
+    "words2": "[\"ec\", \"oc\", \"ceo\"]"
+  },
+  {
+    "words1": "[\"eaee\", \"beccd\", \"c\", \"dcbeabeb\", \"cae\", \"dbbeddd\"]",
+    "words2": "[\"eabc\", \"daad\"]"
+  },
+  {
+    "words1": "[\"bb\", \"ba\", \"baeabee\", \"cdce\", \"eecdae\"]",
+    "words2": "[\"d\", \"e\", \"ab\"]"
+  },
+  {
+    "words1": "[\"dbecaeb\", \"bcedb\", \"dbabaec\", \"abee\", \"eede\", \"dcdebab\"]",
+    "words2": "[\"ddbd\"]"
+  },
+  {
+    "words1": "[\"bbbba\", \"e\", \"ebbb\", \"bbd\", \"e\", \"bbcdadc\"]",
+    "words2": "[\"eaba\", \"b\", \"ad\"]"
+  },
+  {
+    "words1": "[\"aec\"]",
+    "words2": "[\"ab\", \"aeb\", \"db\"]"
+  },
+  {
+    "words1": "[\"cbcbacbd\", \"cdca\", \"b\", \"eb\", \"eacadadc\", \"ebec\"]",
+    "words2": "[\"ad\"]"
+  },
+  {
+    "words1": "[\"ddebb\", \"dbe\", \"eec\", \"bba\", \"ebcacc\"]",
+    "words2": "[\"cead\"]"
+  },
+  {
+    "words1": "[\"b\", \"adabddba\", \"cddea\", \"cbecab\", \"debeda\"]",
+    "words2": "[\"d\", \"daa\", \"d\"]"
+  },
+  {
+    "words1": "[\"c\", \"dbcd\", \"cedabdb\", \"bcdabcbb\", \"cdcddc\"]",
+    "words2": "[\"bda\"]"
+  },
+  {
+    "words1": "[\"cebeb\", \"eadbc\"]",
+    "words2": "[\"db\", \"edbc\", \"abcc\"]"
+  },
+  {
+    "words1": "[\"eda\", \"ddeaddcb\", \"eb\"]",
+    "words2": "[\"a\", \"ded\", \"a\"]"
+  },
+  {
+    "words1": "[\"cabce\", \"ec\", \"a\", \"cecba\"]",
+    "words2": "[\"dced\"]"
+  },
+  {
+    "words1": "[\"aebceec\", \"cba\", \"caacb\", \"aeece\", \"e\"]",
+    "words2": "[\"ed\", \"ddca\"]"
+  },
+  {
+    "words1": "[\"b\", \"aaadc\", \"dee\", \"cbeebd\", \"bdcacddc\"]",
+    "words2": "[\"cd\", \"ed\", \"eee\"]"
+  },
+  {
+    "words1": "[\"eecbc\", \"ddaadd\", \"a\"]",
+    "words2": "[\"ed\"]"
+  },
+  {
+    "words1": "[\"bdccaa\", \"ceadbb\", \"dccaabce\", \"ac\", \"bdd\", \"ebeb\"]",
+    "words2": "[\"a\"]"
+  },
+  {
+    "words1": "[\"da\"]",
+    "words2": "[\"ebb\", \"d\", \"abce\"]"
+  },
+  {
+    "words1": "[\"cde\", \"b\", \"cabcbccb\", \"dceabae\", \"ddbeedb\", \"a\"]",
+    "words2": "[\"cc\", \"dedc\"]"
+  },
+  {
+    "words1": "[\"ebeeecb\", \"b\", \"cdddcd\", \"bbaeed\"]",
+    "words2": "[\"dd\"]"
+  },
+  {
+    "words1": "[\"daecec\"]",
+    "words2": "[\"ecca\", \"acbe\", \"ccb\"]"
+  },
+  {
+    "words1": "[\"cbedadae\", \"ca\"]",
+    "words2": "[\"ceb\", \"acd\", \"dc\"]"
+  },
+  {
+    "words1": "[\"ee\", \"eaecc\"]",
+    "words2": "[\"ecb\", \"be\"]"
+  },
+  {
+    "words1": "[\"deadbea\", \"eecdd\", \"cbebe\", \"dadd\", \"bbac\", \"ccaecaee\"]",
+    "words2": "[\"caba\", \"d\"]"
+  }
+]

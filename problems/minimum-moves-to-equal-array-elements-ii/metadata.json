@@ -1,0 +1,49 @@
+{
+  "id": "minimum-moves-to-equal-array-elements-ii",
+  "title": "528. Minimum Moves to Equal Array Elements II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "nums = [1,2,3]",
+      "output": "2",
+      "explanation": "Equalize at 2: one move raises 1 to 2 and one move lowers 3 to 2."
+    },
+    {
+      "input": "nums = [1,10,2,9]",
+      "output": "16",
+      "explanation": "Equalizing at any value between 2 and 9 costs 16 moves; for example target 5 needs 4 + 5 + 3 + 4 moves."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minMoves2(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minMoves2(self, nums: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minMoves2(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MinMoves2(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_moves2(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MinMoves2(nums []int) int {\n    \n}",
+    "typescript": "export function minMoves2(nums: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function minMoves2($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3]"
+    },
+    {
+      "nums": "[1,10,2,9]"
+    }
+  ],
+  "functionName": "minMoves2",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The total travel distance is minimized by picking a median of the array as the common target.",
+    "Sort the array, take the middle element, and add up absolute differences to it."
+  ]
+}

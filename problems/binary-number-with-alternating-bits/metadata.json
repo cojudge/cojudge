@@ -1,0 +1,57 @@
+{
+  "id": "binary-number-with-alternating-bits",
+  "title": "708. Binary Number with Alternating Bits",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/binary-number-with-alternating-bits/",
+  "category": "bit-manipulation",
+  "examples": [
+    {
+      "input": "n = 5",
+      "output": "true",
+      "explanation": "101 alternates."
+    },
+    {
+      "input": "n = 7",
+      "output": "false",
+      "explanation": "111 does not."
+    },
+    {
+      "input": "n = 10",
+      "output": "true",
+      "explanation": "1010 alternates."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean hasAlternatingBits(int n) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def hasAlternatingBits(self, n: int) -> bool:\n        return False\n",
+    "cpp": "class Solution {\npublic:\n    bool hasAlternatingBits(int n) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool HasAlternatingBits(int n)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn has_alternating_bits(n: i32) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc HasAlternatingBits(n int) bool {\n    return false\n}",
+    "typescript": "export function hasAlternatingBits(n: number): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return bool\n     */\n    public function hasAlternatingBits($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 5
+    },
+    {
+      "n": 7
+    },
+    {
+      "n": 10
+    }
+  ],
+  "functionName": "hasAlternatingBits",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Compare each bit with the previous one while shifting right.",
+    "Alternatively, n ^ (n >> 1) should be of the form 0b111...1 for alternating values."
+  ]
+}

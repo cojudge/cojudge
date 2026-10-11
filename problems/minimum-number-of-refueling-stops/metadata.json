@@ -1,0 +1,72 @@
+{
+  "id": "minimum-number-of-refueling-stops",
+  "title": "865. Minimum Number of Refueling Stops",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/minimum-number-of-refueling-stops/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "target = 1, startFuel = 1, stations = []",
+      "output": "0",
+      "explanation": "Reached without stopping."
+    },
+    {
+      "input": "target = 100, startFuel = 1, stations = [[10,100]]",
+      "output": "-1",
+      "explanation": "Run out before the station."
+    },
+    {
+      "input": "target = 100, startFuel = 10, stations = [[10,60],[20,30],[30,30],[60,40]]",
+      "output": "2",
+      "explanation": "Two well-chosen stops suffice."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int minRefuelStops(int target, int startFuel, int[][] stations) {\n        return -1;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minRefuelStops(self, target: int, startFuel: int, stations: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) {\n        return -1;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinRefuelStops(int target, int startFuel, int[][] stations)\n    {\n        return -1;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_refuel_stops(target: i32, start_fuel: i32, stations: Vec<Vec<i32>>) -> i32 {\n        -1\n    }\n}",
+    "go": "package main\n\nfunc MinRefuelStops(target int, startFuel int, stations [][]int) int {\n    return -1\n}",
+    "typescript": "export function minRefuelStops(target: number, startFuel: number, stations: number[][]): number {\n    return -1;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $target\n     * @param int $startFuel\n     * @param int[][] $stations\n     * @return int\n     */\n    public function minRefuelStops($target, $startFuel, $stations) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "target": 1,
+      "startFuel": 1,
+      "stations": "[]"
+    },
+    {
+      "target": 100,
+      "startFuel": 1,
+      "stations": "[[10,100]]"
+    },
+    {
+      "target": 100,
+      "startFuel": 10,
+      "stations": "[[10,60],[20,30],[30,30],[60,40]]"
+    }
+  ],
+  "functionName": "minRefuelStops",
+  "params": [
+    {
+      "name": "target",
+      "type": "int"
+    },
+    {
+      "name": "startFuel",
+      "type": "int"
+    },
+    {
+      "name": "stations",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Think of fuel as reach: always drive as far as current fuel allows, refueling only when stuck.",
+    "Keep every passed station's fuel in a max-heap; when you cannot reach the next point, pop the largest past offer.",
+    "Each pop corresponds to one optimal stop, and empty heap with insufficient reach means impossibility."
+  ]
+}

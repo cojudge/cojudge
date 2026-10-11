@@ -1,0 +1,72 @@
+{
+  "id": "lowest-common-ancestor-of-a-binary-tree",
+  "title": "345. Lowest Common Ancestor of a Binary Tree",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1",
+      "output": "[3,5,1,6,2,0,8,null,null,7,4]",
+      "explanation": "Nodes 5 and 1 sit in opposite subtrees of 3, so the ancestor is 3."
+    },
+    {
+      "input": "root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4",
+      "output": "[5,6,2,null,null,7,4]",
+      "explanation": "Node 4 is inside the subtree of 5, so the ancestor is 5 itself."
+    },
+    {
+      "input": "root = [1,2], p = 1, q = 2",
+      "output": "[1,2]",
+      "explanation": "Node 2 is a direct child of 1, so the ancestor is 1."
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode(int x) { val = x; }\n}\n*/\nclass Solution {\n    public TreeNode lowestCommonAncestor(TreeNode root, int p, int q) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, x):\n#         self.val = x\n#         self.left = None\n#         self.right = None\n\nclass Solution:\n    def lowestCommonAncestor(self, root, p: int, q: int):\n        pass",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(int x) : val(x), left(NULL), right(NULL) {}\n};\n*/\nclass Solution {\npublic:\n    TreeNode* lowestCommonAncestor(TreeNode* root, int p, int q) {\n        \n    }\n};",
+    "csharp": "/*\nDefinition for a binary tree node.\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int x) { val = x; }\n}\n*/\npublic class Solution \n{\n    public TreeNode LowestCommonAncestor(TreeNode root, int p, int q) \n    {\n        \n    }\n}",
+    "rust": "// Definition for a binary tree node.\n// #[derive(Debug, PartialEq, Eq)]\n// pub struct TreeNode {\n//   pub val: i32,\n//   pub left: Option<Rc<RefCell<TreeNode>>>,\n//   pub right: Option<Rc<RefCell<TreeNode>>>,\n// }\nuse std::rc::Rc;\nuse std::cell::RefCell;\npub struct Solution;\n\nimpl Solution {\n    pub fn lowest_common_ancestor(root: Option<Rc<RefCell<TreeNode>>>, p: i32, q: i32) -> Option<Rc<RefCell<TreeNode>>> {\n        \n    }\n}",
+    "go": "// Definition for a binary tree node.\n// type TreeNode struct {\n//     Val int\n//     Left *TreeNode\n//     Right *TreeNode\n// }\npackage main\n\nfunc LowestCommonAncestor(root *TreeNode, p int, q int) *TreeNode {\n    \n}",
+    "typescript": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    val: number\n    left: TreeNode | null\n    right: TreeNode | null\n    constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {\n        this.val = (val===undefined ? 0 : val)\n        this.left = (left===undefined ? null : left)\n        this.right = (right===undefined ? null : right)\n    }\n}\n*/\nimport { TreeNode } from './TreeNode';\nexport function lowestCommonAncestor(root: TreeNode | null, p: number, q: number): TreeNode | null {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param TreeNode|null $root\n     * @param int $p\n     * @param int $q\n     * @return TreeNode|null\n     */\n    public function lowestCommonAncestor($root, $p, $q) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "root": "[3,5,1,6,2,0,8,null,null,7,4]",
+      "p": 5,
+      "q": 1
+    },
+    {
+      "root": "[3,5,1,6,2,0,8,null,null,7,4]",
+      "p": 5,
+      "q": 4
+    },
+    {
+      "root": "[1,2]",
+      "p": 1,
+      "q": 2
+    }
+  ],
+  "functionName": "lowestCommonAncestor",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    },
+    {
+      "name": "p",
+      "type": "int"
+    },
+    {
+      "name": "q",
+      "type": "int"
+    }
+  ],
+  "outputType": "tree_node",
+  "hints": [
+    "Recurse: when the current node holds p or q, report it upward.",
+    "When the left and right subtrees each report a hit, the current node is the ancestor."
+  ]
+}

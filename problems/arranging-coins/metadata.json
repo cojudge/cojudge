@@ -1,0 +1,53 @@
+{
+  "id": "arranging-coins",
+  "title": "509. Arranging Coins",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/arranging-coins/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 5",
+      "output": "2",
+      "explanation": "Rows of 1 and 2 use 3 coins; 2 remain, too few for row 3."
+    },
+    {
+      "input": "n = 8",
+      "output": "3",
+      "explanation": "Rows of 1, 2 and 3 use 6 coins; 2 remain, too few for row 4."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int arrangeCoins(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def arrangeCoins(self, n: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int arrangeCoins(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int ArrangeCoins(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn arrange_coins(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc ArrangeCoins(n int) int {\n    return 0\n}",
+    "typescript": "export function arrangeCoins(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function arrangeCoins($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 5
+    },
+    {
+      "n": 8
+    },
+    {
+      "n": 1
+    }
+  ],
+  "functionName": "arrangeCoins",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Rows 1 through k need k*(k+1)/2 coins in total.",
+    "Solve k*(k+1)/2 <= n directly with the quadratic formula.",
+    "Use 64-bit math for 8*n to avoid overflow, then floor the result."
+  ]
+}

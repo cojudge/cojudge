@@ -1,0 +1,66 @@
+{
+  "id": "short-encoding-of-words",
+  "title": "818. Short Encoding of Words",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/short-encoding-of-words/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "words = [\"time\", \"me\", \"bell\"]",
+      "output": "10",
+      "explanation": "The string \"time#bell#\" holds every word as a #-terminated suffix and has length 10."
+    },
+    {
+      "input": "words = [\"t\"]",
+      "output": "2",
+      "explanation": "The encoding \"t#\" has length 2."
+    },
+    {
+      "input": "words = [\"me\", \"time\"]",
+      "output": "5",
+      "explanation": "me is already a suffix of time, so \"time#\" alone suffices."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minimumLengthEncoding(String[] words) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minimumLengthEncoding(self, words: List[str]) -> int:\n        return 0\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int minimumLengthEncoding(vector<string>& words) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MinimumLengthEncoding(string[] words) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn minimum_length_encoding(words: Vec<String>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinimumLengthEncoding(words []string) int {\n    return 0\n}",
+    "typescript": "export function minimumLengthEncoding(words: string[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $words\n     * @return int\n     */\n    public function minimumLengthEncoding($words) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "words": [
+        "time",
+        "me",
+        "bell"
+      ]
+    },
+    {
+      "words": [
+        "t"
+      ]
+    },
+    {
+      "words": [
+        "me",
+        "time"
+      ]
+    }
+  ],
+  "functionName": "minimumLengthEncoding",
+  "params": [
+    {
+      "name": "words",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "A word that appears as the tail of a longer word never needs its own #-block.",
+    "Collect distinct words in a set, delete every proper suffix of every word, then sum length+1 over survivors."
+  ]
+}

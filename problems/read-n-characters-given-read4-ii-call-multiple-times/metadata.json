@@ -1,0 +1,60 @@
+{
+  "id": "read-n-characters-given-read4-ii-call-multiple-times",
+  "title": "311. Read N Characters Given Read4 II - Call Multiple Times",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/read-n-characters-given-read4-ii-call-multiple-times/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "file = \"abc\", queries = [1,2,1]",
+      "output": "[\"a\",\"bc\",\"\"]",
+      "explanation": "First call takes \"a\", second takes \"bc\", and the third finds nothing left."
+    },
+    {
+      "input": "file = \"abc\", queries = [4,1]",
+      "output": "[\"abc\",\"\"]",
+      "explanation": "The first call drains the file; the second returns empty."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> read(String file, int[] queries) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def read(self, file: str, queries: List[int]) -> List[str]:\n        return []",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> read(string file, vector<int>& queries) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<string> Read(string file, int[] queries) \n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn read(file: String, queries: Vec<i32>) -> Vec<String> {\n        Vec::new()\n    }\n}",
+    "go": "package main\n\nfunc Read(file string, queries []int) []string {\n    return []string{}\n}",
+    "typescript": "export function read(file: string, queries: number[]): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $file\n     * @param int[] $queries\n     * @return string[]\n     */\n    public function read($file, $queries) {\n        return [];\n    }\n}"
+  },
+  "testCases": [
+    {
+      "file": "abc",
+      "queries": "[1,2,1]"
+    },
+    {
+      "file": "abc",
+      "queries": "[4,1]"
+    },
+    {
+      "file": "abcde",
+      "queries": "[5]"
+    }
+  ],
+  "functionName": "read",
+  "params": [
+    {
+      "name": "file",
+      "type": "string"
+    },
+    {
+      "name": "queries",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Keep one position pointer shared across all queries.",
+    "Each query takes file[pos:pos+q] and advances pos by the taken amount.",
+    "Once pos reaches the end, all later queries return empty strings."
+  ]
+}

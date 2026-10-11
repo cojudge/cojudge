@@ -1,0 +1,114 @@
+[
+  {
+    "s": "loveleetcode",
+    "c": "e"
+  },
+  {
+    "s": "aaab",
+    "c": "b"
+  },
+  {
+    "s": "ab",
+    "c": "a"
+  },
+  {
+    "s": "a",
+    "c": "a"
+  },
+  {
+    "s": "abcde",
+    "c": "c"
+  },
+  {
+    "s": "aaaaa",
+    "c": "a"
+  },
+  {
+    "s": "ababa",
+    "c": "b"
+  },
+  {
+    "s": "z",
+    "c": "z"
+  },
+  {
+    "s": "abcdef",
+    "c": "a"
+  },
+  {
+    "s": "abcdef",
+    "c": "f"
+  },
+  {
+    "s": "hello",
+    "c": "l"
+  },
+  {
+    "s": "mississippi",
+    "c": "s"
+  },
+  {
+    "s": "abcba",
+    "c": "b"
+  },
+  {
+    "s": "qwerty",
+    "c": "q"
+  },
+  {
+    "s": "qwerty",
+    "c": "y"
+  },
+  {
+    "s": "abccba",
+    "c": "c"
+  },
+  {
+    "s": "xyzxyz",
+    "c": "z"
+  },
+  {
+    "s": "aaaaabaaaaa",
+    "c": "b"
+  },
+  {
+    "s": "abcdefghij",
+    "c": "e"
+  },
+  {
+    "s": "pop",
+    "c": "p"
+  },
+  {
+    "s": "noon",
+    "c": "o"
+  },
+  {
+    "s": "abcdabcd",
+    "c": "d"
+  },
+  {
+    "s": "eeee",
+    "c": "e"
+  },
+  {
+    "s": "abdefghijkl",
+    "c": "l"
+  },
+  {
+    "s": "mnopqr",
+    "c": "m"
+  },
+  {
+    "s": "banana",
+    "c": "a"
+  },
+  {
+    "s": "banana",
+    "c": "n"
+  },
+  {
+    "s": "teststring",
+    "c": "t"
+  }
+]

@@ -1,0 +1,60 @@
+{
+  "id": "paint-house-ii",
+  "title": "367. Paint House II",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/paint-house-ii/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "costs = [[1,5,3],[2,9,4]]",
+      "output": "5",
+      "explanation": "Paint house 0 with color 0 (1) and house 1 with color 2 (4) for 1 + 4 = 5."
+    },
+    {
+      "input": "costs = [[1,3],[2,4]]",
+      "output": "5",
+      "explanation": "Either 1 + 4 or 3 + 2 gives 5 while keeping neighbors different."
+    },
+    {
+      "input": "costs = [[7,6,2]]",
+      "output": "2",
+      "explanation": "With one house, pick the cheapest of its colors."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minCostII(int[][] costs) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def minCostII(self, costs: List[List[int]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minCostII(vector<vector<int>>& costs) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinCostII(int[][] costs)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_cost_ii(costs: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinCostII(costs [][]int) int {\n    return 0\n}",
+    "typescript": "export function minCostII(costs: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $costs\n     * @return int\n     */\n    public function minCostII($costs) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "costs": "[[1,5,3],[2,9,4]]"
+    },
+    {
+      "costs": "[[1,3],[2,4]]"
+    },
+    {
+      "costs": "[[7,6,2]]"
+    },
+    {
+      "costs": "[[8,4,4,4],[4,8,8,8],[8,8,4,8]]"
+    }
+  ],
+  "functionName": "minCostII",
+  "params": [
+    {
+      "name": "costs",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "For each house, only the smallest and second-smallest totals from the previous house matter.",
+    "A color reuses the smallest previous total unless it used the same color, in which case it falls back to the second smallest."
+  ]
+}

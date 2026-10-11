@@ -1,0 +1,189 @@
+[
+  {
+    "s": "abcxyz123",
+    "dict": [
+      "abc",
+      "123"
+    ]
+  },
+  {
+    "s": "aaabbcc",
+    "dict": [
+      "aaa",
+      "aab",
+      "bc"
+    ]
+  },
+  {
+    "s": "abc",
+    "dict": [
+      "xyz"
+    ]
+  },
+  {
+    "s": "a",
+    "dict": [
+      "a"
+    ]
+  },
+  {
+    "s": "aa",
+    "dict": [
+      "a"
+    ]
+  },
+  {
+    "s": "aa",
+    "dict": [
+      "aa"
+    ]
+  },
+  {
+    "s": "abc",
+    "dict": [
+      "abc"
+    ]
+  },
+  {
+    "s": "abcdef",
+    "dict": [
+      "bcd"
+    ]
+  },
+  {
+    "s": "abcdef",
+    "dict": [
+      "ab",
+      "cd",
+      "ef"
+    ]
+  },
+  {
+    "s": "abcdef",
+    "dict": [
+      "ab",
+      "bc",
+      "cd"
+    ]
+  },
+  {
+    "s": "aaaa",
+    "dict": [
+      "aa"
+    ]
+  },
+  {
+    "s": "abcabc",
+    "dict": [
+      "abc"
+    ]
+  },
+  {
+    "s": "xyz",
+    "dict": [
+      "x",
+      "y",
+      "z"
+    ]
+  },
+  {
+    "s": "hello",
+    "dict": [
+      "hell",
+      "ello"
+    ]
+  },
+  {
+    "s": "mississippi",
+    "dict": [
+      "is",
+      "si"
+    ]
+  },
+  {
+    "s": "abc",
+    "dict": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "s": "abcde",
+    "dict": [
+      "cde",
+      "abc"
+    ]
+  },
+  {
+    "s": "qwerty",
+    "dict": [
+      "qw",
+      "erty"
+    ]
+  },
+  {
+    "s": "ababa",
+    "dict": [
+      "aba"
+    ]
+  },
+  {
+    "s": "testtest",
+    "dict": [
+      "test"
+    ]
+  },
+  {
+    "s": "a",
+    "dict": [
+      "b"
+    ]
+  },
+  {
+    "s": "abc",
+    "dict": [
+      "abcd"
+    ]
+  },
+  {
+    "s": "aaabbb",
+    "dict": [
+      "aa",
+      "bb"
+    ]
+  },
+  {
+    "s": "abcd",
+    "dict": [
+      "ab",
+      "cd"
+    ]
+  },
+  {
+    "s": "abcd",
+    "dict": [
+      "bc"
+    ]
+  },
+  {
+    "s": "zzzz",
+    "dict": [
+      "zz",
+      "zzz"
+    ]
+  },
+  {
+    "s": "helloworld",
+    "dict": [
+      "low",
+      "owo"
+    ]
+  },
+  {
+    "s": "abcxyz",
+    "dict": [
+      "abcxyz"
+    ]
+  }
+]

@@ -1,0 +1,86 @@
+[
+  {
+    "expression": "2-1-1"
+  },
+  {
+    "expression": "2*3-4*5"
+  },
+  {
+    "expression": "5"
+  },
+  {
+    "expression": "0"
+  },
+  {
+    "expression": "2+3"
+  },
+  {
+    "expression": "2*3"
+  },
+  {
+    "expression": "2-1"
+  },
+  {
+    "expression": "11"
+  },
+  {
+    "expression": "10+5"
+  },
+  {
+    "expression": "2+3*4"
+  },
+  {
+    "expression": "2*3-4"
+  },
+  {
+    "expression": "1+1+1"
+  },
+  {
+    "expression": "2*2*2"
+  },
+  {
+    "expression": "9-9-9"
+  },
+  {
+    "expression": "1+2+3+4"
+  },
+  {
+    "expression": "3+2*2"
+  },
+  {
+    "expression": "99*99"
+  },
+  {
+    "expression": "0+0"
+  },
+  {
+    "expression": "15-10+5"
+  },
+{
+  "expression": "3+5*2"
+},
+{
+  "expression": "10-5*2"
+},
+{
+  "expression": "1*2+3*4"
+},
+{
+  "expression": "4-2*3"
+},
+{
+  "expression": "6+6-6"
+},
+{
+  "expression": "12*3-4"
+},
+{
+  "expression": "5*5+5*5"
+},
+{
+  "expression": "8-3+2"
+},
+{
+  "expression": "7*7-7+7"
+}
+]

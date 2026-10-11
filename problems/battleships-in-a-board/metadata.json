@@ -1,0 +1,61 @@
+{
+  "id": "battleships-in-a-board",
+  "title": "490. Battleships in a Board",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/battleships-in-a-board/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "board = [[\"X\",\".\",\".\",\"X\"],[\".\",\".\",\".\",\"X\"],[\".\",\".\",\".\",\"X\"]]",
+      "output": "2",
+      "explanation": "One lone X plus one vertical ship of length 3 make two battleships."
+    },
+    {
+      "input": "board = [[\".\"]]",
+      "output": "0",
+      "explanation": "No X cells means no ships."
+    },
+    {
+      "input": "board = [[\"X\"]]",
+      "output": "1",
+      "explanation": "A single X is one ship."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int countBattleships(char[][] board) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def countBattleships(self, board: List[List[str]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int countBattleships(vector<vector<char>>& board) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int CountBattleships(char[][] board) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_battleships(board: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc CountBattleships(board [][]byte) int {\n    return 0\n}",
+    "typescript": "export function countBattleships(board: string[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[][] $board\n     * @return int\n     */\n    public function countBattleships($board) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "board": "[[\"X\",\".\",\".\",\"X\"],[\".\",\".\",\".\",\"X\"],[\".\",\".\",\".\",\"X\"]]"
+    },
+    {
+      "board": "[[\"X\",\".\"],[\".\",\"X\"]]"
+    },
+    {
+      "board": "[[\".\"]]"
+    },
+    {
+      "board": "[[\"X\"]]"
+    }
+  ],
+  "functionName": "countBattleships",
+  "params": [
+    {
+      "name": "board",
+      "type": "char_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Ships are straight lines with at least one empty cell gap, never touching side by side.",
+    "Count only the top-left cell of each ship: an X with no X above and no X to the left.",
+    "This single pass needs O(1) extra memory."
+  ]
+}

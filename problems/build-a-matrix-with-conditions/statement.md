@@ -1,16 +1,16 @@
-You are given a positive integer `k`. You are also given:
-- a 2D integer array `rowConditions` of size `n` where `rowConditions[i] = [abovei, belowi]`, and
-- a 2D integer array `colConditions` of size `m` where `colConditions[i] = [lefti, righti]`.
+Take a positive integer `k` alongside two collections of precedence pairs:
+- a 2D integer array `rowConditions` holding `n` pairs shaped `rowConditions[i] = [abovei, belowi]`, plus
+- a 2D integer array `colConditions` holding `m` pairs shaped `colConditions[i] = [lefti, righti]`.
 
-The two arrays contain integers from `1` to `k`.
+Every entry appearing in either collection lies between `1` and `k` inclusive.
 
-You have to build a `k x k` matrix that contains each of the numbers from `1` to `k` exactly once. The remaining cells should have the value `0`.
+Assemble a `k x k` grid holding each integer `1` through `k` a single time, filling every unused position with `0`.
 
-The matrix should also satisfy the following conditions:
-- The number `abovei` should appear in a row that is strictly above the row at which the number `belowi` appears for all `i` from `0` to `n - 1`.
-- The number `lefti` should appear in a column that is strictly left of the column at which the number `righti` appears for all `i` from `0` to `m - 1`.
+The placement must additionally respect both families of precedence rules:
+- For each `i` from `0` to `n - 1`, the cell holding `abovei` sits in a strictly earlier row than the cell holding `belowi`.
+- For each `i` from `0` to `m - 1`, the cell holding `lefti` sits in a strictly earlier column than the cell holding `righti`.
 
-Return any matrix that satisfies the conditions. If no answer exists, return an empty matrix.
+Produce any grid meeting all of the above; when the requirements conflict, produce a vacuous grid.
 
 **Example 1:**
 ```

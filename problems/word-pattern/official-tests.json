@@ -1,0 +1,122 @@
+[
+  {
+    "pattern": "abba",
+    "s": "dog cat cat dog"
+  },
+  {
+    "pattern": "abba",
+    "s": "dog cat cat fish"
+  },
+  {
+    "pattern": "aaaa",
+    "s": "dog cat cat dog"
+  },
+  {
+    "pattern": "abba",
+    "s": "dog dog dog dog"
+  },
+  {
+    "pattern": "a",
+    "s": "x"
+  },
+  {
+    "pattern": "ab",
+    "s": "dog cat"
+  },
+  {
+    "pattern": "abc",
+    "s": "dog cat fish"
+  },
+  {
+    "pattern": "abc",
+    "s": "dog cat dog"
+  },
+  {
+    "pattern": "abba",
+    "s": "dog cat cat dog extra"
+  },
+  {
+    "pattern": "a",
+    "s": "a a a a"
+  },
+  {
+    "pattern": "abca",
+    "s": "dog cat fish dog"
+  },
+  {
+    "pattern": "abcd",
+    "s": "one two three four"
+  },
+  {
+    "pattern": "aaaa",
+    "s": "dog dog dog dog"
+  },
+  {
+    "pattern": "ab",
+    "s": "dog dog"
+  },
+  {
+    "pattern": "aa",
+    "s": "dog cat"
+  },
+  {
+    "pattern": "abc",
+    "s": "b c a"
+  },
+  {
+    "pattern": "aba",
+    "s": "dog cat dog"
+  },
+  {
+    "pattern": "aba",
+    "s": "dog cat cat"
+  },
+  {
+    "pattern": "a",
+    "s": "a"
+  },
+  {
+    "pattern": "abba",
+    "s": "cat dog dog cat"
+  },
+  {
+    "pattern": "ab",
+    "s": "dog fish"
+  },
+  {
+    "pattern": "aa",
+    "s": "dog dog"
+  },
+  {
+    "pattern": "ab",
+    "s": "dog cat cat"
+  },
+  {
+    "pattern": "abcba",
+    "s": "a b c b a"
+  },
+  {
+    "pattern": "abc",
+    "s": "a a a"
+  },
+  {
+    "pattern": "abbc",
+    "s": "dog cat cat dog"
+  },
+  {
+    "pattern": "abcd",
+    "s": "a b c d"
+  },
+  {
+    "pattern": "aaaa",
+    "s": "a a a"
+  },
+  {
+    "pattern": "xyz",
+    "s": "foo bar baz"
+  },
+  {
+    "pattern": "abab",
+    "s": "dog cat dog cat"
+  }
+]

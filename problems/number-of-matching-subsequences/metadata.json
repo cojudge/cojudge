@@ -1,0 +1,65 @@
+{
+  "id": "number-of-matching-subsequences",
+  "title": "790. Number of Matching Subsequences",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/number-of-matching-subsequences/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"abcde\", words = [\"a\",\"bb\",\"acd\",\"ace\"]",
+      "output": "3",
+      "explanation": "Three candidates embed as subsequences."
+    },
+    {
+      "input": "s = \"dsahjpjauf\", words = [\"ahjpjau\",\"ja\",\"ahbwzgqnuk\",\"tnmlanowax\"]",
+      "output": "2",
+      "explanation": "The first two candidates trace through s."
+    },
+    {
+      "input": "s = \"abcd\", words = [\"abc\",\"abd\",\"acd\",\"bcd\",\"abcde\"]",
+      "output": "4",
+      "explanation": "All length-3 deletions work; the longer word fails."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numMatchingSubseq(String s, String[] words) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numMatchingSubseq(self, s: str, words: List[str]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int numMatchingSubseq(string s, vector<string>& words) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int NumMatchingSubseq(string s, string[] words) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_matching_subseq(s: String, words: Vec<String>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumMatchingSubseq(s string, words []string) int {\n    return 0\n}",
+    "typescript": "export function numMatchingSubseq(s: string, words: string[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string[] $words\n     * @return int\n     */\n    public function numMatchingSubseq($s, $words) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "abcde",
+      "words": "[\"a\",\"bb\",\"acd\",\"ace\"]"
+    },
+    {
+      "s": "dsahjpjauf",
+      "words": "[\"ahjpjau\",\"ja\",\"ahbwzgqnuk\",\"tnmlanowax\"]"
+    },
+    {
+      "s": "abcd",
+      "words": "[\"abc\",\"abd\",\"acd\",\"bcd\",\"abcde\"]"
+    }
+  ],
+  "functionName": "numMatchingSubseq",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "words",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Precompute for each position in s the next occurrence of every letter so each word scans in O(word length).",
+    "Alternatively bucket words by their current needed character and stream once through s.",
+    "A plain two-pointer check per word is also fast enough for the given limits."
+  ]
+}

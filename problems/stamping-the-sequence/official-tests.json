@@ -1,0 +1,114 @@
+[
+  {
+    "stamp": "abc",
+    "target": "ababc"
+  },
+  {
+    "stamp": "abca",
+    "target": "aabcaca"
+  },
+  {
+    "stamp": "abc",
+    "target": "acabc"
+  },
+  {
+    "stamp": "a",
+    "target": "a"
+  },
+  {
+    "stamp": "a",
+    "target": "aa"
+  },
+  {
+    "stamp": "a",
+    "target": "b"
+  },
+  {
+    "stamp": "ab",
+    "target": "abab"
+  },
+  {
+    "stamp": "ab",
+    "target": "ba"
+  },
+  {
+    "stamp": "abc",
+    "target": "abc"
+  },
+  {
+    "stamp": "abc",
+    "target": "ababcabc"
+  },
+  {
+    "stamp": "abca",
+    "target": "abca"
+  },
+  {
+    "stamp": "ffebb",
+    "target": "ffebb"
+  },
+  {
+    "stamp": "oz",
+    "target": "ozoz"
+  },
+  {
+    "stamp": "abc",
+    "target": "aabc"
+  },
+  {
+    "stamp": "ab",
+    "target": "aab"
+  },
+  {
+    "stamp": "a",
+    "target": "aaa"
+  },
+  {
+    "stamp": "aa",
+    "target": "aaa"
+  },
+  {
+    "stamp": "ab",
+    "target": "abb"
+  },
+  {
+    "stamp": "abcde",
+    "target": "abc"
+  },
+  {
+    "stamp": "abcdef",
+    "target": "abc"
+  },
+  {
+    "stamp": "xy",
+    "target": "xyxyxy"
+  },
+  {
+    "stamp": "de",
+    "target": "abcde"
+  },
+  {
+    "stamp": "l",
+    "target": "l"
+  },
+  {
+    "stamp": "ab",
+    "target": "ababab"
+  },
+  {
+    "stamp": "ab",
+    "target": "ababa"
+  },
+  {
+    "stamp": "abc",
+    "target": "abcabc"
+  },
+  {
+    "stamp": "abcd",
+    "target": "abcdbcd"
+  },
+  {
+    "stamp": "z",
+    "target": "zzzz"
+  }
+]

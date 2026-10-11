@@ -1,0 +1,58 @@
+{
+  "id": "best-time-to-buy-and-sell-stock-iii",
+  "title": "298. Best Time to Buy and Sell Stock III",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "prices = [3,3,5,0,0,3,1,4]",
+      "output": "6",
+      "explanation": "Buy at 0, sell at 3, then buy at 1 and sell at 4 for 3 + 3 = 6."
+    },
+    {
+      "input": "prices = [1,2,3,4,5]",
+      "output": "4",
+      "explanation": "One trade from 1 to 5 already gives 4; a second trade adds nothing."
+    },
+    {
+      "input": "prices = [7,6,4,3,1]",
+      "output": "0",
+      "explanation": "Prices only fall, so skipping all trades is best."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxProfit(int[] prices) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxProfit(self, prices: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int maxProfit(vector<int>& prices) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MaxProfit(int[] prices) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_profit(prices: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MaxProfit(prices []int) int {\n    \n}",
+    "typescript": "export function maxProfit(prices: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $prices\n     * @return int\n     */\n    public function maxProfit($prices) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "prices": "[3,3,5,0,0,3,1,4]"
+    },
+    {
+      "prices": "[1,2,3,4,5]"
+    },
+    {
+      "prices": "[7,6,4,3,1]"
+    }
+  ],
+  "functionName": "maxProfit",
+  "params": [
+    {
+      "name": "prices",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Track four states in one pass: first buy, first sell, second buy, second sell.",
+    "Update them in order so the second buy can reuse profit from the first sell.",
+    "Splitting at each day into best-left plus best-right profit also works."
+  ]
+}

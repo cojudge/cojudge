@@ -1,6 +1,6 @@
-In an alien language, they use English lowercase letters but possibly in a different order. The order of the alphabet is some permutation given by `order`.
+Suppose a foreign tongue writes with the usual English lowercase letters, yet arranges its alphabet in a different sequence captured by the permutation string `order`.
 
-Given a sequence of words written in the alien language, and the order of the alphabet, return `true` if and only if the given words are sorted lexicographically in this alien language.
+You are handed a list `words` written in that tongue. Return `true` exactly when the list advances in non-decreasing dictionary sequence under the foreign alphabet ordering, and `false` otherwise. In particular, whenever one entry forms a prefix of the following entry, the shorter entry is required to come first.
 
 **Example 1:**
 ```

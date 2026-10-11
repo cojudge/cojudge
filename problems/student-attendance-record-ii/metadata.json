@@ -1,0 +1,58 @@
+{
+  "id": "student-attendance-record-ii",
+  "title": "608. Student Attendance Record II",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/student-attendance-record-ii/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "n = 2",
+      "output": "8",
+      "explanation": "Only AA excluded."
+    },
+    {
+      "input": "n = 1",
+      "output": "3",
+      "explanation": "All single letters qualify."
+    },
+    {
+      "input": "n = 10101",
+      "output": "183236316",
+      "explanation": "Modulo result."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int checkRecord(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def checkRecord(self, n: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int checkRecord(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int CheckRecord(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn check_record(n: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc CheckRecord(n int) int {\n    \n}",
+    "typescript": "export function checkRecord(n: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function checkRecord($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 2
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 10101
+    }
+  ],
+  "functionName": "checkRecord",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Track six states: whether an A has been used (0/1) crossed with trailing L count (0/1/2).",
+    "Each day extend states with P (resets trailing L), A (if unused), or L (if fewer than two trailing).",
+    "Apply modulo 1e9+7 at every addition."
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "id": "132-pattern",
+  "title": "523. 132 Pattern",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/132-pattern/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "nums = [1,2,3,4]",
+      "output": "false",
+      "explanation": "Every triple is increasing, so no middle value sits strictly between a smaller earlier value and a larger middle value."
+    },
+    {
+      "input": "nums = [3,1,4,2]",
+      "output": "true",
+      "explanation": "Indices 1, 2, 3 hold values 1, 4, 2, and 1 < 2 < 4."
+    },
+    {
+      "input": "nums = [-1,3,2,0]",
+      "output": "true",
+      "explanation": "The values -1, 3, 2 at indices 0, 1, 2 satisfy -1 < 2 < 3."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean find132pattern(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def find132pattern(self, nums: List[int]) -> bool:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool find132pattern(vector<int>& nums) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool Find132pattern(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find132pattern(nums: Vec<i32>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc Find132pattern(nums []int) bool {\n    \n}",
+    "typescript": "export function find132pattern(nums: number[]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return bool\n     */\n    public function find132pattern($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3,4]"
+    },
+    {
+      "nums": "[3,1,4,2]"
+    },
+    {
+      "nums": "[-1,3,2,0]"
+    }
+  ],
+  "functionName": "find132pattern",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Scan from right to left while keeping candidates for the middle value on a decreasing stack.",
+    "Track the largest value popped so far as the best achievable `nums[k]`; any earlier smaller value completes the pattern."
+  ]
+}

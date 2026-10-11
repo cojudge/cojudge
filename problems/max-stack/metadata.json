@@ -1,0 +1,65 @@
+{
+  "id": "max-stack",
+  "title": "724. Max Stack",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/max-stack/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "operations = [\"push\",\"push\",\"push\",\"top\",\"popMax\",\"top\",\"peekMax\",\"pop\",\"top\"], values = [5,1,5,0,0,0,0,0,0]",
+      "output": "[5,5,1,5,1,5]",
+      "explanation": "Pushes 5,1,5. Top is 5; popMax removes the upper 5; top is 1; peekMax is 5; pop removes 1; top is 5."
+    },
+    {
+      "input": "operations = [\"push\",\"push\",\"popMax\",\"top\"], values = [1,2,0,0]",
+      "output": "[2,1]",
+      "explanation": "Push 1 then 2; popMax removes 2; top is 1."
+    },
+    {
+      "input": "operations = [\"push\",\"push\",\"peekMax\",\"pop\",\"peekMax\"], values = [2,7,0,0,0]",
+      "output": "[7,7,2]",
+      "explanation": "Push 2 then 7; max is 7; pop removes 7; max becomes 2."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runMaxStack(String[] operations, int[] values) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runMaxStack(self, operations: List[str], values: List[int]) -> List[int]:\n        return []",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runMaxStack(vector<string>& operations, vector<int>& values) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] RunMaxStack(string[] operations, int[] values) \n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_max_stack(operations: Vec<String>, values: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunMaxStack(operations []string, values []int) []int {\n    return []int{}\n}",
+    "typescript": "export function runMaxStack(operations: string[], values: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[] $values\n     * @return int[]\n     */\n    public function runMaxStack($operations, $values) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"push\",\"push\",\"push\",\"top\",\"popMax\",\"top\",\"peekMax\",\"pop\",\"top\"]",
+      "values": "[5,1,5,0,0,0,0,0,0]"
+    },
+    {
+      "operations": "[\"push\",\"push\",\"peekMax\",\"pop\",\"peekMax\"]",
+      "values": "[2,7,0,0,0]"
+    },
+    {
+      "operations": "[\"push\",\"push\",\"top\",\"pop\",\"top\"]",
+      "values": "[4,4,0,0,0]"
+    }
+  ],
+  "functionName": "runMaxStack",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Keep a plain list as the stack; scanning for the maximum is fine for correctness and keeps the reference simple.",
+    "popMax must delete the topmost copy of the maximum, not just any copy.",
+    "Only pop, top, peekMax and popMax append answers; push only mutates. Adaptation: operations and values run in parallel (0 marks no argument)."
+  ]
+}

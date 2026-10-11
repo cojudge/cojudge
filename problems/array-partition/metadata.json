@@ -1,0 +1,58 @@
+{
+  "id": "array-partition",
+  "title": "616. Array Partition",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/array-partition/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,4,3,2]",
+      "output": "4",
+      "explanation": "Pairs (1,2) and (3,4) give 1 + 3."
+    },
+    {
+      "input": "nums = [6,2,6,5,1,2]",
+      "output": "9",
+      "explanation": "Pairs (1,2), (2,5), (6,6) give 1 + 2 + 6."
+    },
+    {
+      "input": "nums = [1,2]",
+      "output": "1",
+      "explanation": "The single pair contributes 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int arrayPairSum(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def arrayPairSum(self, nums: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int arrayPairSum(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int ArrayPairSum(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn array_pair_sum(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc ArrayPairSum(nums []int) int {\n    return 0\n}",
+    "typescript": "export function arrayPairSum(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function arrayPairSum($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,4,3,2]"
+    },
+    {
+      "nums": "[6,2,6,5,1,2]"
+    },
+    {
+      "nums": "[1,2]"
+    }
+  ],
+  "functionName": "arrayPairSum",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sort the array so neighbors are as close in value as possible.",
+    "Pair adjacent elements; each pair's minimum is the element at the even index.",
+    "Adding up indices 0, 2, 4, ... of the sorted array gives the optimum."
+  ]
+}

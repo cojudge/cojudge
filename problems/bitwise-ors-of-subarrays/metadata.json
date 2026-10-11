@@ -1,0 +1,57 @@
+{
+  "id": "bitwise-ors-of-subarrays",
+  "title": "888. Bitwise ORs of Subarrays",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/bitwise-ors-of-subarrays/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "arr = [0]",
+      "output": "1",
+      "explanation": "Only 0 is reachable."
+    },
+    {
+      "input": "arr = [1,1,2]",
+      "output": "3",
+      "explanation": "Reachable ORs are 1, 2, 3."
+    },
+    {
+      "input": "arr = [1,2,4]",
+      "output": "6",
+      "explanation": "Reachable ORs are 1, 2, 3, 4, 6, 7."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int subarrayBitwiseORs(int[] arr) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def subarrayBitwiseORs(self, arr: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int subarrayBitwiseORs(vector<int>& arr) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int SubarrayBitwiseORs(int[] arr) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn subarray_bitwise_o_rs(arr: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc SubarrayBitwiseORs(arr []int) int {\n    \n}",
+    "typescript": "export function subarrayBitwiseORs(arr: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @return int\n     */\n    public function subarrayBitwiseORs($arr) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "arr": "[0]"
+    },
+    {
+      "arr": "[1,1,2]"
+    },
+    {
+      "arr": "[1,2,4]"
+    }
+  ],
+  "functionName": "subarrayBitwiseORs",
+  "params": [
+    {
+      "name": "arr",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Keep the set of ORs for blocks ending at the previous position; each new element extends them.",
+    "That set stays tiny (at most ~30 values) because ORs can only gain bits, so the total work is linear."
+  ]
+}

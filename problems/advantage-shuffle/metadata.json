@@ -1,0 +1,65 @@
+{
+  "id": "advantage-shuffle",
+  "title": "864. Advantage Shuffle",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/advantage-shuffle/",
+  "category": "greedy",
+  "examples": [
+    {
+      "input": "nums1 = [2,7,11,15], nums2 = [1,10,4,11]",
+      "output": "[2,11,7,15]",
+      "explanation": "All four positions beat the opponent."
+    },
+    {
+      "input": "nums1 = [12,24,8,32], nums2 = [13,25,32,11]",
+      "output": "[24,32,8,12]",
+      "explanation": "Three positions beat the opponent, optimal."
+    },
+    {
+      "input": "nums1 = [1,1], nums2 = [1,1]",
+      "output": "[1,1]",
+      "explanation": "No position can beat."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int[] advantageCount(int[] nums1, int[] nums2) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def advantageCount(self, nums1: List[int], nums2: List[int]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> advantageCount(vector<int>& nums1, vector<int>& nums2) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] AdvantageCount(int[] nums1, int[] nums2)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn advantage_count(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {\n        Vec::new()\n    }\n}",
+    "go": "package main\n\nfunc AdvantageCount(nums1 []int, nums2 []int) []int {\n    return []int{}\n}",
+    "typescript": "export function advantageCount(nums1: number[], nums2: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums1\n     * @param int[] $nums2\n     * @return int[]\n     */\n    public function advantageCount($nums1, $nums2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums1": "[2,7,11,15]",
+      "nums2": "[1,10,4,11]"
+    },
+    {
+      "nums1": "[12,24,8,32]",
+      "nums2": "[13,25,32,11]"
+    },
+    {
+      "nums1": "[1,1]",
+      "nums2": "[1,1]"
+    }
+  ],
+  "functionName": "advantageCount",
+  "params": [
+    {
+      "name": "nums1",
+      "type": "int_array"
+    },
+    {
+      "name": "nums2",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Sort one copy of `nums1` and pair each `nums2` value with its original index, then handle the opponent's values from smallest to largest.",
+    "For each opponent value in order, play the smallest remaining card that beats it; if none beats it, sacrifice the smallest remaining card.",
+    "A balanced multiset with lower-bound search, or two pointers over sorted arrays with a deque assignment, implements this greedy choice."
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "snakes-and-ladders",
+  "title": "898. Snakes and Ladders",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/snakes-and-ladders/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "board = [[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,35,-1,-1,13,-1],[-1,-1,-1,-1,-1,-1],[-1,15,-1,-1,-1,-1]]",
+      "output": "4",
+      "explanation": "Climb the ladder from square 2 to 15, then advance and ride the remaining jumps to reach square 36 in 4 throws."
+    },
+    {
+      "input": "board = [[-1,-1],[-1,3]]",
+      "output": "1",
+      "explanation": "Roll from square 1 to square 2, whose ladder leads directly to square 4."
+    },
+    {
+      "input": "board = [[-1,-1,-1],[-1,-1,-1],[-1,-1,-1]]",
+      "output": "2",
+      "explanation": "With no snakes or ladders, two throws of 6 reach square 9 (1 -> 7 -> 9)."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int snakesAndLadders(int[][] board) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def snakesAndLadders(self, board: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int snakesAndLadders(vector<vector<int>>& board) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int SnakesAndLadders(int[][] board) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn snakes_and_ladders(board: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc SnakesAndLadders(board [][]int) int {\n    \n}",
+    "typescript": "export function snakesAndLadders(board: number[][]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $board\n     * @return int\n     */\n    public function snakesAndLadders($board) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "board": "[[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,35,-1,-1,13,-1],[-1,-1,-1,-1,-1,-1],[-1,15,-1,-1,-1,-1]]"
+    },
+    {
+      "board": "[[-1,-1],[-1,3]]"
+    },
+    {
+      "board": "[[-1,-1,-1],[-1,-1,-1],[-1,-1,-1]]"
+    }
+  ],
+  "functionName": "snakesAndLadders",
+  "params": [
+    {
+      "name": "board",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Number the squares from 1 at the bottom-left, snaking back and forth each row, so every cell maps to exactly one square.",
+    "From each square the reachable squares are the next 1 to 6 labels (capped at n squared), following any snake or ladder immediately.",
+    "Breadth-first search over squares gives the fewest throws; return -1 when the last square is never reached."
+  ]
+}

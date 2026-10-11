@@ -1,0 +1,57 @@
+{
+  "id": "number-of-atoms",
+  "title": "733. Number of Atoms",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/number-of-atoms/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "formula = \"H2O\"",
+      "output": "\"H2O\"",
+      "explanation": "Two H and one O; the count 1 is hidden."
+    },
+    {
+      "input": "formula = \"Mg(OH)2\"",
+      "output": "\"H2MgO2\"",
+      "explanation": "Doubling (OH) yields H2, Mg and O2 in sorted order."
+    },
+    {
+      "input": "formula = \"K4(ON(SO3)2)2\"",
+      "output": "\"K4N2O14S4\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String countOfAtoms(String formula) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def countOfAtoms(self, formula: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string countOfAtoms(string formula) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string CountOfAtoms(string formula) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_of_atoms(formula: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc CountOfAtoms(formula string) string {\n    return \"\"\n}",
+    "typescript": "export function countOfAtoms(formula: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $formula\n     * @return string\n     */\n    public function countOfAtoms($formula) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "formula": "H2O"
+    },
+    {
+      "formula": "Mg(OH)2"
+    },
+    {
+      "formula": "K4(ON(SO3)2)2"
+    }
+  ],
+  "functionName": "countOfAtoms",
+  "params": [
+    {
+      "name": "formula",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Scan with a stack of count maps: push a fresh map on '(' and pop on ')', multiplying the popped counts before merging.",
+    "Parse element names as one uppercase letter plus following lowercase letters, then read the optional digits as the multiplier.",
+    "Sort the final keys alphabetically and skip the digit 1 when building the answer."
+  ]
+}

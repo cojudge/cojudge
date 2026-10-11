@@ -1,10 +1,10 @@
-You are given an array of variable pairs `equations` and an array of real numbers `values`, where `equations[i] = [Ai, Bi]` and `values[i]` represent the equation `Ai / Bi = values[i]`. Each `Ai` or `Bi` is a string that represents a single variable.
+You obtain a list of variable pairs `equations` together with a list of real numbers `values`, where `equations[i] = [Ai, Bi]` paired with `values[i]` states the relation `Ai / Bi = values[i]`. Every `Ai` or `Bi` denotes one variable by name.
 
-You are also given some `queries`, where `queries[j] = [Cj, Dj]` represents the `j`-th query asking for the answer of `Cj / Dj = ?`.
+You also obtain a batch of `queries`, where `queries[j] = [Cj, Dj]` poses the `j`-th request for the value of `Cj / Dj = ?`.
 
-Return the answers to all queries. If a single answer cannot be determined, return `-1.0`.
+Compute a response for every query in order. Whenever a requested ratio cannot be deduced from the supplied relations, answer `-1.0` for that position.
 
-**Note:** The input is always valid. You may assume that evaluating the queries will not result in division by zero and that there is no contradiction. Also, Cojudge encodes `values` and answers as decimal strings (e.g. `"2.0"`, `"-1.00000"`).
+**Note:** Every supplied input is consistent: no query forces division by zero and the relations contain no conflicts. Because decimal handling differs here, Cojudge passes `values` and expected answers around as decimal strings (for instance `"2.0"`, `"-1.00000"`).
 
 **Example 1:**
 ```

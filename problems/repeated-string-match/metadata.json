@@ -1,0 +1,65 @@
+{
+  "id": "repeated-string-match",
+  "title": "701. Repeated String Match",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/repeated-string-match/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "a = \"abcd\", b = \"cdabcdab\"",
+      "output": "3",
+      "explanation": "Repeating abcd three times gives abcdabcdabcd, which contains cdabcdab."
+    },
+    {
+      "input": "a = \"a\", b = \"aa\"",
+      "output": "2",
+      "explanation": "Two copies are needed to cover aa."
+    },
+    {
+      "input": "a = \"abc\", b = \"wxyz\"",
+      "output": "-1",
+      "explanation": "No amount of repetition introduces w."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int repeatedStringMatch(String a, String b) {\n        \n    }\n}",
+    "python": "class Solution:\n    def repeatedStringMatch(self, a: str, b: str) -> int:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int repeatedStringMatch(string a, string b) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int RepeatedStringMatch(string a, string b) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn repeated_string_match(a: String, b: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc RepeatedStringMatch(a string, b string) int {\n    return 0\n}",
+    "typescript": "export function repeatedStringMatch(a: string, b: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $a\n     * @param string $b\n     * @return int\n     */\n    public function repeatedStringMatch($a, $b) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "a": "abcd",
+      "b": "cdabcdab"
+    },
+    {
+      "a": "a",
+      "b": "aa"
+    },
+    {
+      "a": "abc",
+      "b": "wxyz"
+    }
+  ],
+  "functionName": "repeatedStringMatch",
+  "params": [
+    {
+      "name": "a",
+      "type": "string"
+    },
+    {
+      "name": "b",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Repeat a until the built string is at least as long as b.",
+    "Check containment; if it fails, one extra copy is the only longer case worth testing.",
+    "Return -1 when even that extended string lacks b."
+  ]
+}

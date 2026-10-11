@@ -1,0 +1,198 @@
+[
+  {
+    "m": 2,
+    "n": 2,
+    "maxMove": 2,
+    "startRow": 0,
+    "startColumn": 0
+  },
+  {
+    "m": 1,
+    "n": 3,
+    "maxMove": 3,
+    "startRow": 0,
+    "startColumn": 1
+  },
+  {
+    "m": 1,
+    "n": 1,
+    "maxMove": 1,
+    "startRow": 0,
+    "startColumn": 0
+  },
+  {
+    "m": 1,
+    "n": 1,
+    "maxMove": 0,
+    "startRow": 0,
+    "startColumn": 0
+  },
+  {
+    "m": 2,
+    "n": 2,
+    "maxMove": 0,
+    "startRow": 1,
+    "startColumn": 1
+  },
+  {
+    "m": 3,
+    "n": 3,
+    "maxMove": 1,
+    "startRow": 1,
+    "startColumn": 1
+  },
+  {
+    "m": 2,
+    "n": 3,
+    "maxMove": 4,
+    "startRow": 0,
+    "startColumn": 1
+  },
+  {
+    "m": 3,
+    "n": 2,
+    "maxMove": 3,
+    "startRow": 2,
+    "startColumn": 0
+  },
+  {
+    "m": 5,
+    "n": 5,
+    "maxMove": 5,
+    "startRow": 2,
+    "startColumn": 2
+  },
+  {
+    "m": 5,
+    "n": 4,
+    "maxMove": 3,
+    "startRow": 0,
+    "startColumn": 2
+  },
+  {
+    "m": 4,
+    "n": 5,
+    "maxMove": 1,
+    "startRow": 1,
+    "startColumn": 2
+  },
+  {
+    "m": 4,
+    "n": 3,
+    "maxMove": 2,
+    "startRow": 0,
+    "startColumn": 1
+  },
+  {
+    "m": 5,
+    "n": 3,
+    "maxMove": 3,
+    "startRow": 2,
+    "startColumn": 2
+  },
+  {
+    "m": 4,
+    "n": 2,
+    "maxMove": 2,
+    "startRow": 3,
+    "startColumn": 1
+  },
+  {
+    "m": 4,
+    "n": 3,
+    "maxMove": 1,
+    "startRow": 1,
+    "startColumn": 1
+  },
+  {
+    "m": 3,
+    "n": 5,
+    "maxMove": 6,
+    "startRow": 1,
+    "startColumn": 2
+  },
+  {
+    "m": 1,
+    "n": 5,
+    "maxMove": 7,
+    "startRow": 0,
+    "startColumn": 3
+  },
+  {
+    "m": 5,
+    "n": 2,
+    "maxMove": 4,
+    "startRow": 3,
+    "startColumn": 1
+  },
+  {
+    "m": 5,
+    "n": 2,
+    "maxMove": 0,
+    "startRow": 1,
+    "startColumn": 1
+  },
+  {
+    "m": 1,
+    "n": 3,
+    "maxMove": 4,
+    "startRow": 0,
+    "startColumn": 1
+  },
+  {
+    "m": 5,
+    "n": 1,
+    "maxMove": 1,
+    "startRow": 1,
+    "startColumn": 0
+  },
+  {
+    "m": 5,
+    "n": 4,
+    "maxMove": 4,
+    "startRow": 2,
+    "startColumn": 1
+  },
+  {
+    "m": 4,
+    "n": 4,
+    "maxMove": 3,
+    "startRow": 3,
+    "startColumn": 2
+  },
+  {
+    "m": 2,
+    "n": 4,
+    "maxMove": 5,
+    "startRow": 1,
+    "startColumn": 1
+  },
+  {
+    "m": 2,
+    "n": 4,
+    "maxMove": 4,
+    "startRow": 0,
+    "startColumn": 2
+  },
+  {
+    "m": 1,
+    "n": 3,
+    "maxMove": 4,
+    "startRow": 0,
+    "startColumn": 1
+  },
+  {
+    "m": 4,
+    "n": 2,
+    "maxMove": 2,
+    "startRow": 1,
+    "startColumn": 1
+  },
+  {
+    "m": 5,
+    "n": 4,
+    "maxMove": 1,
+    "startRow": 2,
+    "startColumn": 1
+  }
+]

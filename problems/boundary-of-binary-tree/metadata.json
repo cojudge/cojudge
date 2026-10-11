@@ -1,0 +1,58 @@
+{
+  "id": "boundary-of-binary-tree",
+  "title": "602. Boundary of Binary Tree",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/boundary-of-binary-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [1,null,2,3,4]",
+      "output": "[1,3,4,2]",
+      "explanation": "Root, leaves, then reversed right edge."
+    },
+    {
+      "input": "root = [1,2,3,4,5,6,null,null,null,7,8,9,10]",
+      "output": "[1,2,4,7,8,9,10,6,3]",
+      "explanation": "Left edge plus leaves plus right edge."
+    },
+    {
+      "input": "root = [1]",
+      "output": "[1]",
+      "explanation": "Single node listed once."
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nimport java.util.*;\nclass Solution {\n    public List<Integer> boundaryOfBinaryTree(TreeNode root) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nfrom typing import List\nclass Solution:\n    def boundaryOfBinaryTree(self, root) -> List[int]:\n        return []\n",
+    "cpp": "/*\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> boundaryOfBinaryTree(TreeNode* root) {\n        return {};\n    }\n};",
+    "csharp": "/*\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\nusing System.Collections.Generic;\npublic class Solution\n{\n    public List<int> BoundaryOfBinaryTree(TreeNode root)\n    {\n        return new List<int>();\n    }\n}",
+    "rust": "// Definition for a binary tree node.\n// #[derive(Debug, PartialEq, Eq)]\n// pub struct TreeNode {\n//   pub val: i32,\n//   pub left: Option<Rc<RefCell<TreeNode>>>,\n//   pub right: Option<Rc<RefCell<TreeNode>>>,\n// }\n//\n// impl TreeNode {\n//   #[inline]\n//   pub fn new(val: i32) -> Self {\n//     TreeNode {\n//       val,\n//       left: None,\n//       right: None\n//     }\n//   }\n// }\nuse std::rc::Rc;\nuse std::cell::RefCell;\npub struct Solution;\n\nimpl Solution {\n    pub fn boundary_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "// Definition for a binary tree node.\n// type TreeNode struct {\n//     Val int\n//     Left *TreeNode\n//     Right *TreeNode\n// }\npackage main\n\nfunc BoundaryOfBinaryTree(root *TreeNode) []int {\n    return nil\n}",
+    "typescript": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    val: number;\n    left: TreeNode | null;\n    right: TreeNode | null;\n    constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {\n        this.val = val ?? 0;\n        this.left = left ?? null;\n        this.right = right ?? null;\n    }\n}\n*/\nimport { TreeNode } from './TreeNode';\nexport function boundaryOfBinaryTree(root: TreeNode | null): number[] {\n    return [];\n}",
+    "php": "/**\n * Definition for a binary tree node.\n * class TreeNode {\n *     public $val = 0;\n *     public $left = null;\n *     public $right = null;\n *     function __construct($val = 0, $left = null, $right = null) {\n *         $this->val = $val;\n *         $this->left = $left;\n *         $this->right = $right;\n *     }\n * }\n */\nclass Solution {\n    /**\n     * @param TreeNode|null $root\n     * @return int[]\n     */\n    public function boundaryOfBinaryTree($root) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "root": "[1,null,2,3,4]"
+    },
+    {
+      "root": "[1,2,3,4,5,6,null,null,null,7,8,9,10]"
+    },
+    {
+      "root": "[1]"
+    }
+  ],
+  "functionName": "boundaryOfBinaryTree",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Handle the empty tree and the single-leaf root as special cases first.",
+    "Walk the left edge preferring left children and skipping leaves; mirror this on the right but reverse the collected order.",
+    "Collect leaves with a left-to-right depth-first walk so each leaf appears exactly once."
+  ]
+}

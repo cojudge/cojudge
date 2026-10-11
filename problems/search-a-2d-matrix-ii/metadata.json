@@ -1,0 +1,60 @@
+{
+  "id": "search-a-2d-matrix-ii",
+  "title": "347. Search a 2D Matrix II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/search-a-2d-matrix-ii/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "matrix = [[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]], target = 5",
+      "output": "true",
+      "explanation": "The value 5 sits at row 1, column 1."
+    },
+    {
+      "input": "matrix = [[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]], target = 20",
+      "output": "false",
+      "explanation": "No cell holds the value 20."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean searchMatrix(int[][] matrix, int target) {\n        return false;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:\n        return False\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool searchMatrix(vector<vector<int>>& matrix, int target) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool SearchMatrix(int[][] matrix, int target)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn search_matrix(matrix: Vec<Vec<i32>>, target: i32) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc SearchMatrix(matrix [][]int, target int) bool {\n    return false\n}",
+    "typescript": "export function searchMatrix(matrix: number[][], target: number): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $matrix\n     * @param int $target\n     * @return bool\n     */\n    public function searchMatrix($matrix, $target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "matrix": "[[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]]",
+      "target": 5
+    },
+    {
+      "matrix": "[[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]]",
+      "target": 20
+    },
+    {
+      "matrix": "[[-5]]",
+      "target": -5
+    }
+  ],
+  "functionName": "searchMatrix",
+  "params": [
+    {
+      "name": "matrix",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Start at the top-right corner: moving left decreases the value, moving down increases it.",
+    "Compare the current cell with the target and step left on overshoot, down on undershoot.",
+    "Leaving the matrix bounds means the target is absent."
+  ]
+}

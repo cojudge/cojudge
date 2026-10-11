@@ -1,0 +1,59 @@
+{
+  "id": "redundant-connection-ii",
+  "title": "700. Redundant Connection II",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/redundant-connection-ii/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "edges = [[1,2],[1,3],[2,3]]",
+      "output": "[2,3]",
+      "explanation": "Removing [2,3] leaves every node with one parent and no cycle."
+    },
+    {
+      "input": "edges = [[1,2],[2,3],[3,4],[4,1],[1,5]]",
+      "output": "[4,1]",
+      "explanation": "Removing [4,1] breaks the directed cycle while keeping the tree rooted."
+    },
+    {
+      "input": "edges = [[2,1],[3,1],[4,2],[1,4]]",
+      "output": "[2,1]",
+      "explanation": "Node 1 has two parents; dropping the earlier of the conflicting edges fixes both issues."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] findRedundantDirectedConnection(int[][] edges) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findRedundantDirectedConnection(self, edges: List[List[int]]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> findRedundantDirectedConnection(vector<vector<int>>& edges) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] FindRedundantDirectedConnection(int[][] edges) \n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_redundant_directed_connection(edges: Vec<Vec<i32>>) -> Vec<i32> {\n        Vec::new()\n    }\n}",
+    "go": "package main\n\nfunc FindRedundantDirectedConnection(edges [][]int) []int {\n    return nil\n}",
+    "typescript": "export function findRedundantDirectedConnection(edges: number[][]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $edges\n     * @return int[]\n     */\n    public function findRedundantDirectedConnection($edges) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "edges": "[[1,2],[1,3],[2,3]]"
+    },
+    {
+      "edges": "[[1,2],[2,3],[3,4],[4,1],[1,5]]"
+    },
+    {
+      "edges": "[[2,1],[3,1],[4,2],[1,4]]"
+    }
+  ],
+  "functionName": "findRedundantDirectedConnection",
+  "params": [
+    {
+      "name": "edges",
+      "type": "int_array_2d",
+      "visualizeType": "undirected_edges"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "A valid rooted tree gives every node exactly one parent; find a node with two parents if it exists.",
+    "Try removing each of the two conflicting edges and check whether the rest is acyclic with union-find.",
+    "With no double parent, the answer is the edge that closes a cycle, i.e. the last edge joining already-connected nodes."
+  ]
+}

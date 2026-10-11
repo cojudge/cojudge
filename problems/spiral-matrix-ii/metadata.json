@@ -1,0 +1,57 @@
+{
+  "id": "spiral-matrix-ii",
+  "title": "267. Spiral Matrix II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/spiral-matrix-ii/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "n = 3",
+      "output": "[[1,2,3],[8,9,4],[7,6,5]]",
+      "explanation": "The outer ring is 1-8 clockwise and the center is 9."
+    },
+    {
+      "input": "n = 1",
+      "output": "[[1]]",
+      "explanation": "A 1x1 grid holds only the value 1."
+    },
+    {
+      "input": "n = 2",
+      "output": "[[1,2],[4,3]]",
+      "explanation": "Going right gives 1, 2, then down to 3 and left to 4."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] generateMatrix(int n) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def generateMatrix(self, n: int) -> List[List[int]]:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> generateMatrix(int n) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[][] GenerateMatrix(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn generate_matrix(n: i32) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc GenerateMatrix(n int) [][]int {\n    \n}",
+    "typescript": "export function generateMatrix(n: number): number[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int[][]\n     */\n    public function generateMatrix($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 3
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 2
+    }
+  ],
+  "functionName": "generateMatrix",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Maintain four boundaries (top, bottom, left, right) and fill one edge at a time, shrinking the boundary after each edge.",
+    "Place numbers 1 to n*n in order; the loop ends when the top boundary passes the bottom or the left passes the right."
+  ]
+}

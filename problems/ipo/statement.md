@@ -1,19 +1,19 @@
-Suppose LeetCode will start its IPO soon. In order to sell a good price of its shares to Venture Capital, LeetCode would like to work on some projects to increase its capital before the IPO. Since it has limited resources, it can only finish at most `k` distinct projects before the IPO. Help LeetCode design the best way to maximize its total capital after finishing at most `k` distinct projects.
+A firm wants to grow its funds before going public by completing selected ventures. It can complete no more than `k` different ventures.
 
-You are given `n` projects where the `i`-th project has a pure profit `profits[i]` and a minimum capital of `capital[i]` is needed to start it.
+There are `n` candidate ventures, where venture `i` yields a net gain of `profits[i]` and requires holding at least `capital[i]` before it may begin.
 
-Initially, you have `w` capital. When you finish a project, you will obtain its pure profit and the profit will be added to your total capital.
+You begin with `w` in capital. Completing a venture adds its gain to your holdings.
 
-Pick a list of **at most** `k` distinct projects from given projects to maximize your final capital, and return the **final maximized capital**.
+Choose up to `k` different ventures in a feasible sequence to leave your holdings as large as possible, and return that final holding amount.
 
-The answer is guaranteed to fit in a 32-bit signed integer.
+The result is guaranteed to fit in a 32-bit signed integer.
 
 **Example 1:**
 
 ```
 Input: k = 2, w = 0, profits = [1,2,3], capital = [0,1,1]
 Output: 4
-Explanation: Since your initial capital is 0, you can only start the project indexed 0.
+Explanation: Beginning with 0 capital, only the venture indexed 0 is initially reachable.
 ```
 
 **Example 2:**

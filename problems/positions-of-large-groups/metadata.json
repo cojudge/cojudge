@@ -1,0 +1,57 @@
+{
+  "id": "positions-of-large-groups",
+  "title": "828. Positions of Large Groups",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/positions-of-large-groups/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"abbxxxxzzy\"",
+      "output": "[[3,6]]",
+      "explanation": "Only the run of x's qualifies."
+    },
+    {
+      "input": "s = \"abc\"",
+      "output": "[]",
+      "explanation": "Every run has length 1."
+    },
+    {
+      "input": "s = \"abcdddeeeeaabbbcd\"",
+      "output": "[[3,5],[6,9],[12,14]]"
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<List<Integer>> largeGroupPositions(String s) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def largeGroupPositions(self, s: str) -> List[List[int]]:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> largeGroupPositions(string s) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<List<int>> LargeGroupPositions(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn large_group_positions(s: String) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc LargeGroupPositions(s string) [][]int {\n    \n}",
+    "typescript": "export function largeGroupPositions(s: string): number[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int[][]\n     */\n    public function largeGroupPositions($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "abbxxxxzzy"
+    },
+    {
+      "s": "abc"
+    },
+    {
+      "s": "abcdddeeeeaabbbcd"
+    }
+  ],
+  "functionName": "largeGroupPositions",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int_list_2d",
+  "hints": [
+    "Walk the string once, tracking where the current run of equal letters started.",
+    "A run ends when the next character differs or the string ends; record it only if its length is 3 or more.",
+    "Pairs are naturally produced in increasing order, so no extra sorting is needed."
+  ]
+}

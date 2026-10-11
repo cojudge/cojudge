@@ -1,0 +1,57 @@
+{
+  "id": "basic-calculator-iii",
+  "title": "772. Basic Calculator III",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/basic-calculator-iii/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "s = \"1+1\"",
+      "output": "2"
+    },
+    {
+      "input": "s = \"6-4/2\"",
+      "output": "4",
+      "explanation": "Division first: 6 - 2 = 4."
+    },
+    {
+      "input": "s = \"2*(5+5*2)/3+(6/2+8)\"",
+      "output": "21",
+      "explanation": "Parentheses, then * and /, then +."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int calculate(String s) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def calculate(self, s: str) -> int:\n        return 0\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int calculate(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int Calculate(string s)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn calculate(s: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc Calculate(s string) int {\n    return 0\n}",
+    "typescript": "export function calculate(s: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function calculate($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "1+1"
+    },
+    {
+      "s": "6-4/2"
+    },
+    {
+      "s": "2*(5+5*2)/3+(6/2+8)"
+    }
+  ],
+  "functionName": "calculate",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Parse with precedence levels: an expression handles + and -, a term handles * and /, and a factor handles numbers, parentheses, and unary signs.",
+    "Portable note: the formula is a plain string; skip spaces and treat a leading - (or one after '(') as negation.",
+    "Integer division must truncate toward zero, which Java and most languages do natively for ints."
+  ]
+}

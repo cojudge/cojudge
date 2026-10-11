@@ -1,0 +1,53 @@
+{
+  "id": "minimum-moves-to-equal-array-elements",
+  "title": "520. Minimum Moves to Equal Array Elements",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/minimum-moves-to-equal-array-elements/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "nums = [1,2,3]",
+      "output": "3",
+      "explanation": "Three moves raise everything to 4."
+    },
+    {
+      "input": "nums = [1,1,1]",
+      "output": "0",
+      "explanation": "Already equal."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minMoves(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minMoves(self, nums: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int minMoves(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinMoves(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_moves(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinMoves(nums []int) int {\n    return 0\n}",
+    "typescript": "export function minMoves(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function minMoves($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3]"
+    },
+    {
+      "nums": "[1,1,1]"
+    },
+    {
+      "nums": "[1,2]"
+    }
+  ],
+  "functionName": "minMoves",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Adding 1 to n-1 entries is the same as subtracting 1 from the one left out.",
+    "So every entry must drop to the current minimum, costing nums[i]-min each.",
+    "The answer is the sum minus min times n."
+  ]
+}

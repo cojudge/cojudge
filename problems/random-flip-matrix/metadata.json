@@ -1,0 +1,72 @@
+{
+  "id": "random-flip-matrix",
+  "title": "578. Random Flip Matrix",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/random-flip-matrix/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "m = 3, n = 1, count = 2",
+      "output": "[[1,0],[2,0]]",
+      "explanation": "Any two of the three cells form a valid answer; one possibility is rows 1 and 2."
+    },
+    {
+      "input": "m = 2, n = 2, count = 4",
+      "output": "[[0,0],[0,1],[1,0],[1,1]]",
+      "explanation": "Asking for the whole board must return each of the four cells once, in any order."
+    },
+    {
+      "input": "m = 1, n = 1, count = 0",
+      "output": "[]",
+      "explanation": "Zero flips produce an empty list."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] runFlip(int m, int n, int count) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runFlip(self, m: int, n: int, count: int) -> List[List[int]]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> runFlip(int m, int n, int count) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[][] RunFlip(int m, int n, int count) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_flip(m: i32, n: i32, count: i32) -> Vec<Vec<i32>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc RunFlip(m int, n int, count int) [][]int {\n    \n}",
+    "typescript": "export function runFlip(m: number, n: number, count: number): number[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $m\n     * @param int $n\n     * @param int $count\n     * @return int[][]\n     */\n    public function runFlip($m, $n, $count) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "m": 3,
+      "n": 1,
+      "count": 2
+    },
+    {
+      "m": 2,
+      "n": 2,
+      "count": 4
+    },
+    {
+      "m": 1,
+      "n": 1,
+      "count": 0
+    }
+  ],
+  "functionName": "runFlip",
+  "params": [
+    {
+      "name": "m",
+      "type": "int"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "count",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Adaptation: the original class streams random flips with reset; here any distinct valid batch of the requested size is accepted.",
+    "A Fisher-Yates style draw over m*n virtual indices with a remap table yields distinct positions without storing the board.",
+    "Convert each drawn index k to [k / n, k % n] coordinates."
+  ]
+}

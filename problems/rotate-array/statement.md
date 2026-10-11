@@ -1,4 +1,4 @@
-Given an integer array `nums`, rotate the array to the right by `k` steps, where `k` is non-negative, and return the rotated array.
+Your input is an integer array `nums` plus a non-negative integer `k`. Shift the array right by `k` places and return the shifted array.
 
 **Constraints:**
 

@@ -1,0 +1,72 @@
+{
+  "id": "ones-and-zeroes",
+  "title": "538. Ones and Zeroes",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/ones-and-zeroes/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "strs = [\"10\",\"0001\",\"111001\",\"1\",\"0\"], m = 5, n = 3",
+      "output": "4",
+      "explanation": "\"10\",\"0001\",\"1\",\"0\" together consume 5 zeroes and 3 ones."
+    },
+    {
+      "input": "strs = [\"10\",\"0\",\"1\"], m = 1, n = 1",
+      "output": "2",
+      "explanation": "Choosing \"0\" and \"1\" exactly fills both budgets."
+    },
+    {
+      "input": "strs = [\"0\",\"0\",\"1\",\"1\"], m = 2, n = 1",
+      "output": "3",
+      "explanation": "Two zeroes plus one one is optimal."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findMaxForm(String[] strs, int m, int n) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findMaxForm(self, strs: List[str], m: int, n: int) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int findMaxForm(vector<string>& strs, int m, int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int FindMaxForm(string[] strs, int m, int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_max_form(strs: Vec<String>, m: i32, n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FindMaxForm(strs []string, m int, n int) int {\n    return 0\n}",
+    "typescript": "export function findMaxForm(strs: string[], m: number, n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $strs\n     * @param int $m\n     * @param int $n\n     * @return int\n     */\n    public function findMaxForm($strs, $m, $n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "strs": "[\"10\",\"0001\",\"111001\",\"1\",\"0\"]",
+      "m": 5,
+      "n": 3
+    },
+    {
+      "strs": "[\"10\",\"0\",\"1\"]",
+      "m": 1,
+      "n": 1
+    },
+    {
+      "strs": "[\"0\",\"0\",\"1\",\"1\"]",
+      "m": 2,
+      "n": 1
+    }
+  ],
+  "functionName": "findMaxForm",
+  "params": [
+    {
+      "name": "strs",
+      "type": "string_array"
+    },
+    {
+      "name": "m",
+      "type": "int"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Count zeroes and ones in each string once up front.",
+    "Treat the two budgets as a 2D 0/1 knapsack and update the table backwards.",
+    "Each string is either skipped or taken if its counts fit."
+  ]
+}

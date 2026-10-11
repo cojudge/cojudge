@@ -1,0 +1,58 @@
+{
+  "id": "contiguous-array",
+  "title": "584. Contiguous Array",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/contiguous-array/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [0,1]",
+      "output": "2",
+      "explanation": "The whole array has one 0 and one 1."
+    },
+    {
+      "input": "nums = [0,1,0]",
+      "output": "2",
+      "explanation": "Both [0,1] and [1,0] are balanced with length 2."
+    },
+    {
+      "input": "nums = [0,0,1,0,0,0,1,1]",
+      "output": "6",
+      "explanation": "The slice [1,0,0,0,1,1] has three 0s and three 1s."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findMaxLength(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findMaxLength(self, nums: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int findMaxLength(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindMaxLength(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_max_length(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindMaxLength(nums []int) int {\n    \n}",
+    "typescript": "export function findMaxLength(nums: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function findMaxLength($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[0,1]"
+    },
+    {
+      "nums": "[0,1,0]"
+    },
+    {
+      "nums": "[0,0,1,0,0,0,1,1]"
+    }
+  ],
+  "functionName": "findMaxLength",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Replace each 0 with -1 so a balanced slice becomes a subarray summing to zero.",
+    "Record the first index where each running total appears; a repeat marks a zero-sum slice.",
+    "Seed the map with total 0 at index -1 so slices starting at the front are measured."
+  ]
+}

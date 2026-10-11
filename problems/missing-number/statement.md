@@ -1,4 +1,4 @@
-Given an array `nums` containing `n` distinct numbers in the range `[0, n]`, return the only number in the range that is missing from the array.
+You are given an array `nums` of length `n` holding distinct integers drawn from `0` through `n` inclusive. Exactly one value in that full range does not appear in the array. Identify and return the absent value.
 
 **Constraints:**
 

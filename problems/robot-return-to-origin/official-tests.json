@@ -1,0 +1,86 @@
+[
+  {
+    "moves": "UD"
+  },
+  {
+    "moves": "LL"
+  },
+  {
+    "moves": "URDL"
+  },
+  {
+    "moves": "U"
+  },
+  {
+    "moves": "D"
+  },
+  {
+    "moves": "L"
+  },
+  {
+    "moves": "R"
+  },
+  {
+    "moves": "UDLR"
+  },
+  {
+    "moves": "UUDD"
+  },
+  {
+    "moves": "RRDDLLUU"
+  },
+  {
+    "moves": "UUU"
+  },
+  {
+    "moves": "DDD"
+  },
+  {
+    "moves": "RRR"
+  },
+  {
+    "moves": "LLL"
+  },
+  {
+    "moves": "UDUDUD"
+  },
+  {
+    "moves": "RLRLRL"
+  },
+  {
+    "moves": "UUDDLLRR"
+  },
+  {
+    "moves": "UUUDDD"
+  },
+  {
+    "moves": "RRRUUULLLDDD"
+  },
+  {
+    "moves": "UDL"
+  },
+  {
+    "moves": "RDLU"
+  },
+  {
+    "moves": "UUUUDDDD"
+  },
+  {
+    "moves": "RLU"
+  },
+  {
+    "moves": "DRUL"
+  },
+  {
+    "moves": "UDD"
+  },
+  {
+    "moves": "LRUDLR"
+  },
+  {
+    "moves": "UUUUDDDDLRLR"
+  },
+  {
+    "moves": "RRUULLDD"
+  }
+]

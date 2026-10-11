@@ -1,14 +1,14 @@
-Given a root node reference of a BST and a key, delete the node with the given key in the BST. Return the root node reference (possibly updated) of the BST.
+You receive a reference to the root of a binary search tree alongside an integer `key`. Excise the node holding `key` from the tree, then return the (possibly new) root reference.
 
-Basically, the deletion can be divided into two stages:
-1. Search for a node to remove.
-2. If the node is found, delete the node.
+Conceptually the removal proceeds in two phases:
+1. Locate the node storing the key.
+2. When it is present, unlink it while keeping the binary search tree ordering intact.
 
 **Example 1:**
 ```
 Input: root = [5,3,6,2,4,null,7], key = 3
 Output: [5,4,6,2,null,null,7]
-Explanation: One valid answer is shown. Another is [5,2,6,null,4,null,7].
+Explanation: The displayed tree is one acceptable outcome; [5,2,6,null,4,null,7] is another.
 ```
 
 **Example 2:**

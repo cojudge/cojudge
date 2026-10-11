@@ -1,0 +1,235 @@
+[
+  {
+    "wordlist": [
+      "acckzz",
+      "ccbazz",
+      "eiowzz",
+      "abcczz"
+    ],
+    "secret": "acckzz"
+  },
+  {
+    "wordlist": [
+      "hamada",
+      "khaled"
+    ],
+    "secret": "khaled"
+  },
+  {
+    "wordlist": [
+      "abcd",
+      "efgh",
+      "ijkl"
+    ],
+    "secret": "efgh"
+  },
+  {
+    "wordlist": [
+      "aaaaaa"
+    ],
+    "secret": "aaaaaa"
+  },
+  {
+    "wordlist": [
+      "abcdef",
+      "abcdeg",
+      "abcdeh"
+    ],
+    "secret": "abcdeg"
+  },
+  {
+    "wordlist": [
+      "wich",
+      "thor",
+      "jamie",
+      "james"
+    ],
+    "secret": "jamie"
+  },
+  {
+    "wordlist": [
+      "aaaa",
+      "bbbb",
+      "cccc"
+    ],
+    "secret": "bbbb"
+  },
+  {
+    "wordlist": [
+      "aa",
+      "bb",
+      "cc"
+    ],
+    "secret": "cc"
+  },
+  {
+    "wordlist": [
+      "abcd",
+      "abce",
+      "abcf",
+      "abcg"
+    ],
+    "secret": "abcg"
+  },
+  {
+    "wordlist": [
+      "hello",
+      "hallo",
+      "hollow"
+    ],
+    "secret": "hallo"
+  },
+  {
+    "wordlist": [
+      "abcdef",
+      "uvwxyz",
+      "qwerty"
+    ],
+    "secret": "qwerty"
+  },
+  {
+    "wordlist": [
+      "aaaa",
+      "aaab",
+      "aaba",
+      "abaa"
+    ],
+    "secret": "aaba"
+  },
+  {
+    "wordlist": [
+      "topcoder",
+      "topcodex",
+      "topcodey"
+    ],
+    "secret": "topcodex"
+  },
+  {
+    "wordlist": [
+      "a",
+      "b",
+      "c"
+    ],
+    "secret": "b"
+  },
+  {
+    "wordlist": [
+      "word",
+      "ward",
+      "warm",
+      "warn"
+    ],
+    "secret": "warm"
+  },
+  {
+    "wordlist": [
+      "aaaaaa",
+      "aaaaab",
+      "aaaabb",
+      "aaabbb"
+    ],
+    "secret": "aaabbb"
+  },
+  {
+    "wordlist": [
+      "abcdef",
+      "abccef",
+      "abcccf"
+    ],
+    "secret": "abcccf"
+  },
+  {
+    "wordlist": [
+      "123456",
+      "123457",
+      "123458"
+    ],
+    "secret": "123457"
+  },
+  {
+    "wordlist": [
+      "apple",
+      "apply",
+      "appel"
+    ],
+    "secret": "apply"
+  },
+  {
+    "wordlist": [
+      "cat",
+      "bat",
+      "rat",
+      "mat"
+    ],
+    "secret": "rat"
+  },
+  {
+    "wordlist": [
+      "aaaa",
+      "aabb",
+      "bbaa",
+      "bbbb"
+    ],
+    "secret": "bbaa"
+  },
+  {
+    "wordlist": [
+      "abcdef",
+      "ghijkl",
+      "mnopqr"
+    ],
+    "secret": "ghijkl"
+  },
+  {
+    "wordlist": [
+      "zzzzzz",
+      "yyyyyy",
+      "xxxxxx"
+    ],
+    "secret": "xxxxxx"
+  },
+  {
+    "wordlist": [
+      "ab",
+      "ac",
+      "ad",
+      "ae"
+    ],
+    "secret": "ad"
+  },
+  {
+    "wordlist": [
+      "code",
+      "mode",
+      "node",
+      "rode"
+    ],
+    "secret": "node"
+  },
+  {
+    "wordlist": [
+      "aaaaa",
+      "aaaab",
+      "aaabb",
+      "aabbb"
+    ],
+    "secret": "aaabb"
+  },
+  {
+    "wordlist": [
+      "game",
+      "fame",
+      "same",
+      "tame"
+    ],
+    "secret": "tame"
+  },
+  {
+    "wordlist": [
+      "secret",
+      "secrex",
+      "secrey"
+    ],
+    "secret": "secrey"
+  }
+]

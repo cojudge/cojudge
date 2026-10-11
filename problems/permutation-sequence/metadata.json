@@ -1,0 +1,65 @@
+{
+  "id": "permutation-sequence",
+  "title": "268. Permutation Sequence",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/permutation-sequence/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 3, k = 3",
+      "output": "\"213\"",
+      "explanation": "The orderings are 123, 132, 213, 231, 312, 321; the 3rd is 213."
+    },
+    {
+      "input": "n = 4, k = 9",
+      "output": "\"2314\"",
+      "explanation": "Among the 24 orderings of 1..4, the 9th in sorted order is 2314."
+    },
+    {
+      "input": "n = 3, k = 1",
+      "output": "\"123\"",
+      "explanation": "The first ordering is the digits in increasing order."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String getPermutation(int n, int k) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def getPermutation(self, n: int, k: int) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string getPermutation(int n, int k) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string GetPermutation(int n, int k)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn get_permutation(n: i32, k: i32) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc GetPermutation(n int, k int) string {\n    return \"\"\n}",
+    "typescript": "export function getPermutation(n: number, k: number): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int $k\n     * @return string\n     */\n    public function getPermutation($n, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 3,
+      "k": 3
+    },
+    {
+      "n": 4,
+      "k": 9
+    },
+    {
+      "n": 3,
+      "k": 1
+    }
+  ],
+  "functionName": "getPermutation",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "There are (n-1)! orderings starting with each choice for the first digit, so divide (k-1) by (n-1)! to pick it.",
+    "Convert k to 0-based, then repeatedly select index k / fact and update k = k % fact with shrinking factorials.",
+    "Keep the remaining digits in a list and remove the chosen digit at each step."
+  ]
+}

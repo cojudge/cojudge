@@ -1,0 +1,60 @@
+{
+  "id": "find-all-anagrams-in-a-string",
+  "title": "506. Find All Anagrams in a String",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/find-all-anagrams-in-a-string/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"cbaebabacd\", p = \"abc\"",
+      "output": "[0,6]",
+      "explanation": "Windows at 0 and 6 rearrange to abc."
+    },
+    {
+      "input": "s = \"abab\", p = \"ab\"",
+      "output": "[0,1,2]",
+      "explanation": "Every length-2 window qualifies."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<Integer> findAnagrams(String s, String p) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findAnagrams(self, s: str, p: str) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> findAnagrams(string s, string p) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<int> FindAnagrams(string s, string p) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_anagrams(s: String, p: String) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindAnagrams(s string, p string) []int {\n    \n}",
+    "typescript": "export function findAnagrams(s: string, p: string): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string $p\n     * @return int[]\n     */\n    public function findAnagrams($s, $p) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "cbaebabacd",
+      "p": "abc"
+    },
+    {
+      "s": "abab",
+      "p": "ab"
+    },
+    {
+      "s": "aaaa",
+      "p": "aa"
+    }
+  ],
+  "functionName": "findAnagrams",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "p",
+      "type": "string"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Compare 26-count signatures of p against each sliding window of s.",
+    "Update the window in O(1) by dropping the leftmost letter and adding the new rightmost one.",
+    "Track how many letter counts currently match to test windows in O(1)."
+  ]
+}

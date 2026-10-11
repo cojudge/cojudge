@@ -1,13 +1,13 @@
-You are given an integer array `matchsticks` where `matchsticks[i]` is the length of the `ith` matchstick. You want to use **all the matchsticks** to make one square. You **should not break** any stick, but you can link them up, and each matchstick must be used **exactly one time**.
+A collection of sticks is described by the integer array `matchsticks`, where the entry `matchsticks[i]` records how long the `ith` stick is. The goal is to arrange every single stick into the border of one square: sticks may be joined end to end, but none may be snapped or shortened, and each stick has to appear in the construction precisely once.
 
-Return `true` if you can make this square and `false` otherwise.
+Decide whether such an arrangement exists: produce `true` when the whole set can form a square, and `false` when it cannot.
 
 **Example 1:**
 
 ```
 Input: matchsticks = [1,1,2,2,2]
 Output: true
-Explanation: You can form a square with side length 2, e.g. sides [2], [2], [2], and [1,1].
+Explanation: A square of side length 2 is possible, with three sides each built from one stick of length 2 and the remaining side built from two sticks of length 1.
 ```
 
 **Example 2:**
@@ -15,7 +15,7 @@ Explanation: You can form a square with side length 2, e.g. sides [2], [2], [2],
 ```
 Input: matchsticks = [3,3,3,3,4]
 Output: false
-Explanation: You cannot find a way to form a square with all the matchsticks.
+Explanation: There is no way to group the complete set of sticks into four sides of equal length.
 ```
 
 **Constraints:**

@@ -1,0 +1,114 @@
+[
+  {
+    "jewels": "aA",
+    "stones": "aAAbbbb"
+  },
+  {
+    "jewels": "z",
+    "stones": "ZZ"
+  },
+  {
+    "jewels": "abc",
+    "stones": "aabbccdd"
+  },
+  {
+    "jewels": "a",
+    "stones": "aaa"
+  },
+  {
+    "jewels": "A",
+    "stones": "aaa"
+  },
+  {
+    "jewels": "ab",
+    "stones": "ABab"
+  },
+  {
+    "jewels": "xyz",
+    "stones": "xyzXYZ"
+  },
+  {
+    "jewels": "q",
+    "stones": "QqQq"
+  },
+  {
+    "jewels": "aeiou",
+    "stones": "hello"
+  },
+  {
+    "jewels": "ABC",
+    "stones": "abcABC"
+  },
+  {
+    "jewels": "m",
+    "stones": "mmmmmmmmmm"
+  },
+  {
+    "jewels": "abC",
+    "stones": "aAbBcC"
+  },
+  {
+    "jewels": "Z",
+    "stones": "z"
+  },
+  {
+    "jewels": "abcdefghijklmnopqrstuvwxyz",
+    "stones": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  },
+  {
+    "jewels": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    "stones": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  },
+  {
+    "jewels": "aBcDeF",
+    "stones": "abcdefABCDEF"
+  },
+  {
+    "jewels": "x",
+    "stones": "y"
+  },
+  {
+    "jewels": "xy",
+    "stones": "xxxyyy"
+  },
+  {
+    "jewels": "pqr",
+    "stones": "ppppqqqqrrrr"
+  },
+  {
+    "jewels": "J",
+    "stones": "jjjjJjjj"
+  },
+  {
+    "jewels": "kK",
+    "stones": "kKkKkK"
+  },
+  {
+    "jewels": "LMN",
+    "stones": "lmnLMNlmn"
+  },
+  {
+    "jewels": "s",
+    "stones": "ssssssssssssssssssssssssssssssssssssssssssssssssss"
+  },
+  {
+    "jewels": "tT",
+    "stones": "t"
+  },
+  {
+    "jewels": "w",
+    "stones": "W"
+  },
+  {
+    "jewels": "abcdef",
+    "stones": "fedcba"
+  },
+  {
+    "jewels": "gG",
+    "stones": "gGgGgGgGgG"
+  },
+  {
+    "jewels": "h",
+    "stones": "hhhhhhhhhhHHHHHHHHHH"
+  }
+]

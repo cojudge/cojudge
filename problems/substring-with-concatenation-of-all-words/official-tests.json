@@ -1,0 +1,114 @@
+[
+  {
+    "s": "barfoothefoobarman",
+    "words": "[\"foo\",\"bar\"]"
+  },
+  {
+    "s": "wordgoodgoodgoodbestword",
+    "words": "[\"word\",\"good\",\"best\",\"word\"]"
+  },
+  {
+    "s": "barfoofoobarthefoobarman",
+    "words": "[\"bar\",\"foo\",\"the\"]"
+  },
+  {
+    "s": "a",
+    "words": "[\"a\"]"
+  },
+  {
+    "s": "aaa",
+    "words": "[\"a\",\"a\"]"
+  },
+  {
+    "s": "aaaa",
+    "words": "[\"aa\",\"aa\"]"
+  },
+  {
+    "s": "foobar",
+    "words": "[\"foo\",\"bar\"]"
+  },
+  {
+    "s": "barfoo",
+    "words": "[\"foo\",\"bar\"]"
+  },
+  {
+    "s": "abc",
+    "words": "[\"ab\",\"cd\"]"
+  },
+  {
+    "s": "abababab",
+    "words": "[\"ab\",\"ab\"]"
+  },
+  {
+    "s": "mississippi",
+    "words": "[\"is\",\"si\"]"
+  },
+  {
+    "s": "aaaaaaaa",
+    "words": "[\"aa\",\"aa\",\"aa\"]"
+  },
+  {
+    "s": "wordwordword",
+    "words": "[\"word\",\"word\"]"
+  },
+  {
+    "s": "abcdabcd",
+    "words": "[\"ab\",\"cd\",\"ab\",\"cd\"]"
+  },
+  {
+    "s": "xyz",
+    "words": "[\"xy\",\"yz\"]"
+  },
+  {
+    "s": "abcdef",
+    "words": "[\"abc\",\"def\"]"
+  },
+  {
+    "s": "defabc",
+    "words": "[\"abc\",\"def\"]"
+  },
+  {
+    "s": "abcabc",
+    "words": "[\"abc\",\"abc\"]"
+  },
+  {
+    "s": "abccbaabccba",
+    "words": "[\"ab\",\"cc\",\"ba\"]"
+  },
+  {
+    "s": "aaaaa",
+    "words": "[\"a\",\"a\",\"a\"]"
+  },
+  {
+    "s": "abcde",
+    "words": "[\"f\"]"
+  },
+  {
+    "s": "tthewoman",
+    "words": "[\"the\",\"man\"]"
+  },
+  {
+    "s": "manbehindtheman",
+    "words": "[\"man\",\"the\"]"
+  },
+  {
+    "s": "foobarthebarfoo",
+    "words": "[\"bar\",\"foo\"]"
+  },
+  {
+    "s": "wordgoodbestword",
+    "words": "[\"word\",\"good\",\"best\"]"
+  },
+  {
+    "s": "ababcdab",
+    "words": "[\"ab\",\"cd\"]"
+  },
+  {
+    "s": "lingmindraboofooowingdingbarrwingmonkeypoundcake",
+    "words": "[\"fooo\",\"barr\",\"wing\",\"ding\",\"wing\"]"
+  },
+  {
+    "s": "abcabcabc",
+    "words": "[\"a\",\"b\",\"c\"]"
+  }
+]

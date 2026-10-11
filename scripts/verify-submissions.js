@@ -16,6 +16,7 @@ const languageFiles = {
   rust: "Solution.rs",
   go: "Solution.go",
   typescript: "Solution.ts",
+  php: "Solution.php",
 };
 const defaultProblems = [
   "two-sum",

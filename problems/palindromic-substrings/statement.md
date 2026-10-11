@@ -1,4 +1,4 @@
-Given a string s, return the number of palindromic substrings in it.
+You are given a string `s`. Count the contiguous blocks that read identically forward and backward. Blocks at different starting or ending positions are counted separately even when their text matches.
 
 **Constraints:**
 

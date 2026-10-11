@@ -34,7 +34,10 @@ export const load: PageServerLoad = async ({ url }) => {
     for (const c of bundledCourses) {
         if (!courses.some((existing) => existing.id === c.id)) courses.push(c);
     }
-    courses.sort((a, b) => a.id.localeCompare(b.id));
+    // Keep LeetCode 1000 (the catch-all archive) as the last tab.
+    courses.sort((a, b) =>
+        (a.id === 'leetcode-1000' ? 1 : 0) - (b.id === 'leetcode-1000' ? 1 : 0) ||
+        a.id.localeCompare(b.id));
     const selectedCourse = selectCourse(courses, url.searchParams.get('course'));
 
     // Single pass over every problem (user copy wins, bundled fills gaps) and

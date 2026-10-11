@@ -1,0 +1,86 @@
+[
+  {
+    "source": "[\"/*Test program */\", \"int main()\", \"{ \", \"  // variable declaration \", \"int a, b, c;\", \"/* This is a test\", \"   multiline  \", \"   comment for \", \"   testing */\", \"a = b + c;\", \"}\"]"
+  },
+  {
+    "source": "[\"a/*comment\", \"line\", \"more_comment*/b\"]"
+  },
+  {
+    "source": "[\"void f(){\", \"// do nothing\", \"}\"]"
+  },
+  {
+    "source": "[\"a//b\", \"c\"]"
+  },
+  {
+    "source": "[\"a/*b*/c\"]"
+  },
+  {
+    "source": "[\"/*a*/int x = 1;\"]"
+  },
+  {
+    "source": "[\"int x = 1;/*comment\"]"
+  },
+  {
+    "source": "[\"// whole line\"]"
+  },
+  {
+    "source": "[\"code\"]"
+  },
+  {
+    "source": "[\"a/*b\", \"c*/d\", \"e\"]"
+  },
+  {
+    "source": "[\"/*\", \"*/a\"]"
+  },
+  {
+    "source": "[\"a\", \"b\", \"c\"]"
+  },
+  {
+    "source": "[\"/*/\", \"x\"]"
+  },
+  {
+    "source": "[\"ab//cd\", \"ef/*gh\", \"ij*/kl\"]"
+  },
+  {
+    "source": "[\"int a = 0; // init\", \"int b = 1;\"]"
+  },
+  {
+    "source": "[\"/*a\", \"b\", \"c*/\"]"
+  },
+  {
+    "source": "[\"x/*y*/z/*w*/v\"]"
+  },
+  {
+    "source": "[\"  // indented\", \"keep\"]"
+  },
+  {
+    "source": "[\"a/*b*c*/d\"]"
+  },
+  {
+    "source": "[\"one\", \"two/*three\", \"four*/five\", \"six\"]"
+  },
+  {
+    "source": "[\"/*start\", \"middle//not-code\", \"end*/done\"]"
+  },
+  {
+    "source": "[\"a/b\", \"c/*d\", \"e//f\", \"g*/h\"]"
+  },
+  {
+    "source": "[\"void f() { /*call*/ return; }\"]"
+  },
+  {
+    "source": "[\"a/*/*b*/c\"]"
+  },
+  {
+    "source": "[\"line1\", \"line2//comment\", \"line3/*block\", \"still block\", \"end*/line4\"]"
+  },
+  {
+    "source": "[\"/*a*/*\", \"b\"]"
+  },
+  {
+    "source": "[\"x\", \"y/*z\"]"
+  },
+  {
+    "source": "[\"p/*q*/\", \"r\"]"
+  }
+]

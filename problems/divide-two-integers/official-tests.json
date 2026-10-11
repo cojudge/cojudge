@@ -1,0 +1,118 @@
+[
+  {
+    "dividend": 10,
+    "divisor": 3
+  },
+  {
+    "dividend": 7,
+    "divisor": -3
+  },
+  {
+    "dividend": 0,
+    "divisor": 1
+  },
+  {
+    "dividend": 1,
+    "divisor": 1
+  },
+  {
+    "dividend": -1,
+    "divisor": 1
+  },
+  {
+    "dividend": -1,
+    "divisor": -1
+  },
+  {
+    "dividend": 2147483647,
+    "divisor": 1
+  },
+  {
+    "dividend": 2147483647,
+    "divisor": 2
+  },
+  {
+    "dividend": -2147483648,
+    "divisor": 1
+  },
+  {
+    "dividend": -2147483648,
+    "divisor": -1
+  },
+  {
+    "dividend": -2147483648,
+    "divisor": 2
+  },
+  {
+    "dividend": -2147483648,
+    "divisor": -2
+  },
+  {
+    "dividend": 2147483647,
+    "divisor": -1
+  },
+  {
+    "dividend": -2147483647,
+    "divisor": -1
+  },
+  {
+    "dividend": 100,
+    "divisor": 10
+  },
+  {
+    "dividend": -100,
+    "divisor": 10
+  },
+  {
+    "dividend": 100,
+    "divisor": -10
+  },
+  {
+    "dividend": -100,
+    "divisor": -10
+  },
+  {
+    "dividend": 1,
+    "divisor": 2
+  },
+  {
+    "dividend": 2,
+    "divisor": 3
+  },
+  {
+    "dividend": -2147483648,
+    "divisor": 3
+  },
+  {
+    "dividend": 2147483647,
+    "divisor": 3
+  },
+  {
+    "dividend": 5,
+    "divisor": 5
+  },
+  {
+    "dividend": -5,
+    "divisor": -5
+  },
+  {
+    "dividend": 12345,
+    "divisor": 1
+  },
+  {
+    "dividend": 12345,
+    "divisor": -12345
+  },
+  {
+    "dividend": 2,
+    "divisor": -2
+  },
+  {
+    "dividend": -2147483648,
+    "divisor": -2147483648
+  },
+  {
+    "dividend": 2147483647,
+    "divisor": 2147483647
+  }
+]

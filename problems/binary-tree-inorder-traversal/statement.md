@@ -1,6 +1,4 @@
-Given the root of a binary tree, return the inorder traversal of its nodes' values.
-
-Inorder traversal visits nodes in the order: left subtree, root, right subtree.
+Take the `root` of a binary tree and list its node values in inorder sequence: for every subtree, first enumerate everything in its left branch, then record the subtree's own root value, and finally enumerate everything in its right branch.
 
 **Constraints:**
 

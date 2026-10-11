@@ -1,0 +1,106 @@
+[
+  {
+    "s": "PAYPALISHIRING",
+    "numRows": 3
+  },
+  {
+    "s": "PAYPALISHIRING",
+    "numRows": 4
+  },
+  {
+    "s": "A",
+    "numRows": 1
+  },
+  {
+    "s": "AB",
+    "numRows": 1
+  },
+  {
+    "s": "ABC",
+    "numRows": 2
+  },
+  {
+    "s": "ABCD",
+    "numRows": 2
+  },
+  {
+    "s": "ABCDE",
+    "numRows": 4
+  },
+  {
+    "s": "HELLO,WORLD.",
+    "numRows": 3
+  },
+  {
+    "s": "ABCDEFGHIJKLMN",
+    "numRows": 5
+  },
+  {
+    "s": "A",
+    "numRows": 1000
+  },
+  {
+    "s": "AB",
+    "numRows": 2
+  },
+  {
+    "s": "PAYPALISHIRING",
+    "numRows": 5
+  },
+  {
+    "s": "ZZZ",
+    "numRows": 2
+  },
+  {
+    "s": "ABCDEF",
+    "numRows": 3
+  },
+  {
+    "s": "ABCDEFG",
+    "numRows": 3
+  },
+  {
+    "s": "A.B,C",
+    "numRows": 2
+  },
+  {
+    "s": "XYZ",
+    "numRows": 5
+  },
+  {
+    "s": "HELLOWORLD",
+    "numRows": 1
+  },
+  {
+    "s": "ABCDEFGHIJ",
+    "numRows": 4
+  },
+  {
+    "s": "AAABBBCCC",
+    "numRows": 2
+  },
+  {
+    "s": "QWERTYUIOPASDFGHJKL",
+    "numRows": 3
+  },
+  {
+    "s": "A,B.C",
+    "numRows": 3
+  },
+  {
+    "s": "SHORT",
+    "numRows": 10
+  },
+  {
+    "s": "REPEATEDREPEATED",
+    "numRows": 6
+  },
+  {
+    "s": ".,.,.,",
+    "numRows": 2
+  },
+  {
+    "s": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+    "numRows": 7
+  }
+]

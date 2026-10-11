@@ -1,0 +1,65 @@
+{
+  "id": "range-module",
+  "title": "723. Range Module",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/range-module/",
+  "category": "interval",
+  "examples": [
+    {
+      "input": "operations = [\"RangeModule\",\"addRange\",\"queryRange\",\"removeRange\",\"queryRange\"], args = [[],[10,20],[10,14],[14,16],[10,14]]",
+      "output": "[1,1]",
+      "explanation": "After tracking 10-20, the query 10-14 is fully covered. Removing 14-16 leaves 10-14 still covered."
+    },
+    {
+      "input": "operations = [\"RangeModule\",\"addRange\",\"addRange\",\"queryRange\"], args = [[],[10,15],[15,20],[10,20]]",
+      "output": "[1]",
+      "explanation": "Two touching ranges merge into 10-20, so the full query succeeds."
+    },
+    {
+      "input": "operations = [\"RangeModule\",\"addRange\",\"removeRange\",\"queryRange\"], args = [[],[5,10],[5,10],[5,10]]",
+      "output": "[0]",
+      "explanation": "Adding then fully removing the same span leaves nothing covered."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runRangeModule(String[] operations, int[][] args) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runRangeModule(self, operations: List[str], args: List[List[int]]) -> List[int]:\n        return []",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runRangeModule(vector<string>& operations, vector<vector<int>>& args) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] RunRangeModule(string[] operations, int[][] args) \n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_range_module(operations: Vec<String>, args: Vec<Vec<i32>>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunRangeModule(operations []string, args [][]int) []int {\n    return []int{}\n}",
+    "typescript": "export function runRangeModule(operations: string[], args: number[][]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[][] $args\n     * @return int[]\n     */\n    public function runRangeModule($operations, $args) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"RangeModule\",\"addRange\",\"queryRange\",\"removeRange\",\"queryRange\"]",
+      "args": "[[],[10,20],[10,14],[14,16],[10,14]]"
+    },
+    {
+      "operations": "[\"RangeModule\",\"addRange\",\"addRange\",\"queryRange\"]",
+      "args": "[[],[10,15],[15,20],[10,20]]"
+    },
+    {
+      "operations": "[\"RangeModule\",\"addRange\",\"removeRange\",\"queryRange\"]",
+      "args": "[[],[5,10],[5,10],[5,10]]"
+    }
+  ],
+  "functionName": "runRangeModule",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "args",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Store disjoint half-open intervals in an ordered map from start to end; merging and splitting stay local to neighbors.",
+    "For addRange, widen the new span over every overlapped entry before inserting once.",
+    "For queryRange, only the interval starting at or before left matters; removal may trim one interval into two pieces. Adaptation: operations and args run in parallel and only queryRange emits output (1 for true, 0 for false)."
+  ]
+}

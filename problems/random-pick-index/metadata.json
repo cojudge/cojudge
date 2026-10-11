@@ -1,0 +1,65 @@
+{
+  "category": "array",
+  "difficulty": "Medium",
+  "examples": [
+    {
+      "explanation": "Valid answers are 2, 3 and 4; any one counts as correct.",
+      "input": "nums = [1,2,3,3,3], target = 3",
+      "output": "2"
+    },
+    {
+      "explanation": "Only index 0 holds the value 1.",
+      "input": "nums = [1,2,3,3,3], target = 1",
+      "output": "0"
+    },
+    {
+      "explanation": "Every index is valid; 1 is one acceptable choice.",
+      "input": "nums = [5,5,5,5], target = 5",
+      "output": "1"
+    }
+  ],
+  "functionName": "pick",
+  "hints": [
+    "Scan for positions holding target; any one of them is accepted by the checker.",
+    "The reference returns the first match, but returning a random match is equally valid.",
+    "Uniform randomness (e.g. reservoir sampling) is needed for the original class version, not for passing here."
+  ],
+  "id": "random-pick-index",
+  "link": "https://leetcode.com/problems/random-pick-index/",
+  "outputType": "int",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "starterCode": {
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int pick(vector<int>& nums, int target) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int Pick(int[] nums, int target) \n    {\n        return 0;\n    }\n}",
+    "go": "package main\n\nfunc Pick(nums []int, target int) int {\n    return 0\n}",
+    "java": "class Solution {\n    public int pick(int[] nums, int target) {\n        return 0;\n    }\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $target\n     * @return int\n     */\n    public function pick($nums, $target) {\n\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def pick(self, nums: List[int], target: int) -> int:\n        pass",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn pick(nums: Vec<i32>, target: i32) -> i32 {\n        0\n    }\n}",
+    "typescript": "export function pick(nums: number[], target: number): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3,3,3]",
+      "target": 3
+    },
+    {
+      "nums": "[1,2,3,3,3]",
+      "target": 1
+    },
+    {
+      "nums": "[5,5,5,5]",
+      "target": 5
+    }
+  ],
+  "title": "473. Random Pick Index"
+}

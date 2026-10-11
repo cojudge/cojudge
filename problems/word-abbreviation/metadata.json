@@ -1,0 +1,58 @@
+{
+  "id": "word-abbreviation",
+  "title": "586. Word Abbreviation",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/word-abbreviation/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "words = [\"like\",\"god\",\"internal\",\"me\",\"internet\",\"interval\",\"intension\",\"face\",\"intrusion\"]",
+      "output": "[\"l2e\",\"god\",\"internal\",\"me\",\"i6t\",\"interval\",\"inte4n\",\"f2e\",\"intr4n\"]",
+      "explanation": "\"internal\" and \"interval\" collide until the full word is needed; \"intension\" and \"intrusion\" separate with longer prefixes."
+    },
+    {
+      "input": "words = [\"abcdef\",\"abcdeg\"]",
+      "output": "[\"a4f\",\"a4g\"]",
+      "explanation": "One-letter prefixes already separate the two words."
+    },
+    {
+      "input": "words = [\"word\",\"world\",\"would\"]",
+      "output": "[\"w2d\",\"world\",\"would\"]",
+      "explanation": "Further prefixes would not shorten \"world\"/\"would\", so both keep full forms that are already unique."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> wordsAbbreviation(String[] words) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def wordsAbbreviation(self, words: List[str]) -> List[str]:\n        return []\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> wordsAbbreviation(vector<string>& words) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<string> WordsAbbreviation(string[] words)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn words_abbreviation(words: Vec<String>) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc WordsAbbreviation(words []string) []string {\n    return []string{}\n}",
+    "typescript": "export function wordsAbbreviation(words: string[]): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $words\n     * @return string[]\n     */\n    public function wordsAbbreviation($words) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "words": "[\"like\",\"god\",\"internal\",\"me\",\"internet\",\"interval\",\"intension\",\"face\",\"intrusion\"]"
+    },
+    {
+      "words": "[\"abcdef\",\"abcdeg\"]"
+    },
+    {
+      "words": "[\"word\",\"world\",\"would\"]"
+    }
+  ],
+  "functionName": "wordsAbbreviation",
+  "params": [
+    {
+      "name": "words",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Start every word with a one-letter prefix abbreviation, keeping the original when it is not shorter.",
+    "Group words by their current abbreviation; any group with more than one member needs longer prefixes.",
+    "Repeat the growth step until every group holds exactly one word."
+  ]
+}

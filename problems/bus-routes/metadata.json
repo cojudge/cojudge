@@ -1,0 +1,71 @@
+{
+  "id": "bus-routes",
+  "title": "813. Bus Routes",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/bus-routes/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "routes = [[1,2,7],[3,6,7]], source = 1, target = 6",
+      "output": "2",
+      "explanation": "Ride the first bus to stop 7, then change to the second bus to reach 6."
+    },
+    {
+      "input": "routes = [[7,12],[4,5,15],[6],[15,19],[9,12,13]], source = 15, target = 12",
+      "output": "-1",
+      "explanation": "No chain of shared stops connects 15 to 12."
+    },
+    {
+      "input": "routes = [[1,2,3]], source = 1, target = 1",
+      "output": "0",
+      "explanation": "Start and destination coincide, so no bus is needed."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numBusesToDestination(int[][] routes, int source, int target) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def numBusesToDestination(self, routes: List[List[int]], source: int, target: int) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int numBusesToDestination(vector<vector<int>>& routes, int source, int target) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int NumBusesToDestination(int[][] routes, int source, int target)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_buses_to_destination(routes: Vec<Vec<i32>>, source: i32, target: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumBusesToDestination(routes [][]int, source int, target int) int {\n    return 0\n}",
+    "typescript": "export function numBusesToDestination(routes: number[][], source: number, target: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $routes\n     * @param int $source\n     * @param int $target\n     * @return int\n     */\n    public function numBusesToDestination($routes, $source, $target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "routes": "[[1,2,7],[3,6,7]]",
+      "source": 1,
+      "target": 6
+    },
+    {
+      "routes": "[[7,12],[4,5,15],[6],[15,19],[9,12,13]]",
+      "source": 15,
+      "target": 12
+    },
+    {
+      "routes": "[[1,2,3]]",
+      "source": 1,
+      "target": 1
+    }
+  ],
+  "functionName": "numBusesToDestination",
+  "params": [
+    {
+      "name": "routes",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "source",
+      "type": "int"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Index every stop to the list of buses serving it, turning transfers into graph edges.",
+    "Breadth-first search over buses (not stops) starting from all buses at the source; the first time a bus reaches the target its depth is the answer."
+  ]
+}

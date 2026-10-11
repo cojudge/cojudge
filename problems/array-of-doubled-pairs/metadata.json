@@ -1,0 +1,73 @@
+{
+  "id": "array-of-doubled-pairs",
+  "title": "940. Array of Doubled Pairs",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/array-of-doubled-pairs/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "arr = [3,1,3,6]",
+      "output": "false",
+      "explanation": "The 1 has no doubling partner."
+    },
+    {
+      "input": "arr = [2,1,2,6]",
+      "output": "false",
+      "explanation": "Leftover values cannot pair up."
+    },
+    {
+      "input": "arr = [4,-2,2,-4]",
+      "output": "true",
+      "explanation": "Pairs (-2,-4) and (2,4)."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean canReorderDoubled(int[] arr) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def canReorderDoubled(self, arr: List[int]) -> bool:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool canReorderDoubled(vector<int>& arr) {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public bool CanReorderDoubled(int[] arr) \n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_reorder_doubled(arr: Vec<i32>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc CanReorderDoubled(arr []int) bool {\n    return false\n}",
+    "typescript": "export function canReorderDoubled(arr: number[]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @return bool\n     */\n    public function canReorderDoubled($arr) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "arr": [
+        3,
+        1,
+        3,
+        6
+      ]
+    },
+    {
+      "arr": [
+        2,
+        1,
+        2,
+        6
+      ]
+    },
+    {
+      "arr": [
+        4,
+        -2,
+        2,
+        -4
+      ]
+    }
+  ],
+  "functionName": "canReorderDoubled",
+  "params": [
+    {
+      "name": "arr",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Count occurrences, then handle values from the smallest absolute value upward so halves are settled before their doubles.",
+    "Each copy of x consumes one copy of 2*x; zeros are special and need an even count.",
+    "Sorting keys by absolute value keeps negative pairs (like -2 with -4) working the same way."
+  ]
+}

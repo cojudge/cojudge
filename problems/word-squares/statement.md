@@ -1,0 +1,25 @@
+You receive a dictionary `words` holding distinct lowercase strings, all sharing one length. A word square is a sequence of that same length where row `k` and column `k` spell the same word for every `k`. In other words, if the sequence is `r0, r1, ..., r_{n-1}`, then the `j`-th letter of `ri` must equal the `j`-th letter of `rj` pattern: the prefix formed by the first `t` rows constrains which word may sit in row `t`.
+
+List every word square you can assemble from `words`. Words may be reused. The order of the returned squares does not matter.
+
+**Example 1:**
+```
+Input: words = ["area","lead","wall","lady","ball"]
+Output: [["wall","area","lead","lady"],["ball","area","lead","lady"]]
+Explanation: Both rows read downward to the same words; for instance "wall","area","lead","lady" has columns "wall","area","lead","lady".
+```
+
+**Example 2:**
+```
+Input: words = ["abat","baba","atan","atal"]
+Output: [["baba","abat","baba","atan"],["baba","abat","baba","atal"]]
+Explanation: Each listed arrangement mirrors along the diagonal.
+```
+
+**Constraints:**
+- `1 <= words.length <= 1000`
+- `1 <= words[i].length <= 5`
+- All words share the same length and are pairwise distinct.
+- All words use lowercase English letters.
+
+Adaptation: the source returns a nested list of strings; here it maps to `string_list_2d`.

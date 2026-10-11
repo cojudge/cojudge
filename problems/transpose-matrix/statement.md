@@ -1,6 +1,6 @@
-Given a 2D integer array `matrix`, return the transpose of `matrix`.
+Take a 2D integer grid `matrix` and produce its mirrored form across the main diagonal.
 
-The transpose of a matrix is the matrix flipped over its main diagonal, switching the matrix's row and column indices.
+Reflecting in this way exchanges the row and column positions of every entry.
 
 **Examples:**
 

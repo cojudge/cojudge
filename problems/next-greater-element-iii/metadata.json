@@ -1,0 +1,58 @@
+{
+  "id": "next-greater-element-iii",
+  "title": "612. Next Greater Element III",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/next-greater-element-iii/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 12",
+      "output": "21",
+      "explanation": "21 is the smallest larger integer using the same digits."
+    },
+    {
+      "input": "n = 21",
+      "output": "-1",
+      "explanation": "Descending digits admit no larger permutation."
+    },
+    {
+      "input": "n = 12443322",
+      "output": "13222344",
+      "explanation": "Pivot swap plus sorted tail yields the next arrangement."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int nextGreaterElement(int n) {\n        return -1;\n    }\n}",
+    "python": "class Solution:\n    def nextGreaterElement(self, n: int) -> int:\n        return -1\n",
+    "cpp": "class Solution {\npublic:\n    int nextGreaterElement(int n) {\n        return -1;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int NextGreaterElement(int n)\n    {\n        return -1;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn next_greater_element(n: i32) -> i32 {\n        -1\n    }\n}",
+    "go": "package main\n\nfunc NextGreaterElement(n int) int {\n    return -1\n}",
+    "typescript": "export function nextGreaterElement(n: number): number {\n    return -1;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function nextGreaterElement($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 12
+    },
+    {
+      "n": 21
+    },
+    {
+      "n": 1234
+    }
+  ],
+  "functionName": "nextGreaterElement",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Scan the digits from right to left to find the first rise (a pivot smaller than its right neighbor).",
+    "Swap the pivot with the smallest digit on its right that is larger than it, then reverse the suffix.",
+    "If the digits never rise, or the result exceeds 2147483647, return -1."
+  ]
+}

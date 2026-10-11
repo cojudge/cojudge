@@ -1,4 +1,6 @@
-You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+A stairway rises `n` treads to its summit.
+From any tread you may advance upward by either a single tread or a pair of treads.
+Tally how many separate step patterns reach the summit.
 
 **Constraints:**
 

@@ -1,9 +1,6 @@
-You are given an array `prices` where `prices[i]` is the price of a stock on day `i`.
-Return the maximum profit you can achieve by completing as many transactions as you
-like.
+The array `prices` lists one stock's daily quote, where `prices[i]` is what the share costs on day `i`. Chain together as many buy-then-sell round trips as you find worthwhile and report the best total profit they can yield.
 
-You may not hold more than one share at a time. After selling a share, you may not buy
-on the next day because that day is a cooldown.
+Two trading rules apply throughout: your hand may carry at most one share at any moment, and the day directly after any sale is a mandatory rest day on which buying is forbidden.
 
 **Constraints:**
 - `1 <= prices.length <= 5000`

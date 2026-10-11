@@ -1,0 +1,65 @@
+{
+  "id": "peeking-iterator",
+  "title": "382. Peeking Iterator",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/peeking-iterator/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,2,3], operations = [\"next\",\"peek\",\"next\",\"next\",\"hasNext\"]",
+      "output": "[1,2,2,3,0]",
+      "explanation": "next gives 1, peek previews 2, next gives 2, next gives 3, then nothing remains (0)."
+    },
+    {
+      "input": "nums = [1], operations = [\"hasNext\",\"next\",\"hasNext\"]",
+      "output": "[1,1,0]",
+      "explanation": "One value present (1), next returns it, then empty (0)."
+    },
+    {
+      "input": "nums = [1,2], operations = [\"peek\",\"peek\",\"next\",\"hasNext\"]",
+      "output": "[1,1,1,1]",
+      "explanation": "Repeated peeks return 1 without advancing; next returns 1; one value remains."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runPeek(int[] nums, String[] operations) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runPeek(self, nums: List[int], operations: List[str]) -> List[int]:\n        return []",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runPeek(vector<int>& nums, vector<string>& operations) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunPeek(int[] nums, string[] operations)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_peek(nums: Vec<i32>, operations: Vec<String>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunPeek(nums []int, operations []string) []int {\n    return []int{}\n}",
+    "typescript": "export function runPeek(nums: number[], operations: string[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param string[] $operations\n     * @return int[]\n     */\n    public function runPeek($nums, $operations) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3]",
+      "operations": "[\"next\",\"peek\",\"next\",\"next\",\"hasNext\"]"
+    },
+    {
+      "nums": "[1]",
+      "operations": "[\"hasNext\",\"next\",\"hasNext\"]"
+    },
+    {
+      "nums": "[1,2]",
+      "operations": "[\"peek\",\"peek\",\"next\",\"hasNext\"]"
+    }
+  ],
+  "functionName": "runPeek",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "operations",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Adaptation: instead of a PeekingIterator class, implement runPeek(nums, operations) simulating the calls.",
+    "Keep an index: next returns nums[i++], peek returns nums[i], hasNext returns 1/0.",
+    "Cache nothing extra; peek never advances."
+  ]
+}

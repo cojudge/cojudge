@@ -1,0 +1,166 @@
+[
+  {
+    "cpdomains": [
+      "9001 discuss.leetcode.com"
+    ]
+  },
+  {
+    "cpdomains": [
+      "900 google.mail.com",
+      "50 yahoo.com",
+      "1 intel.mail.com",
+      "5 wiki.org"
+    ]
+  },
+  {
+    "cpdomains": [
+      "1 com"
+    ]
+  },
+  {
+    "cpdomains": [
+      "5 a.com",
+      "3 b.com"
+    ]
+  },
+  {
+    "cpdomains": [
+      "10 a.b.c"
+    ]
+  },
+  {
+    "cpdomains": [
+      "1 a",
+      "1 b",
+      "1 c"
+    ]
+  },
+  {
+    "cpdomains": [
+      "100 leetcode.com",
+      "100 discuss.leetcode.com"
+    ]
+  },
+  {
+    "cpdomains": [
+      "2 mail.com",
+      "3 com"
+    ]
+  },
+  {
+    "cpdomains": [
+      "7 en.wiki.org"
+    ]
+  },
+  {
+    "cpdomains": [
+      "1 x.y",
+      "2 y"
+    ]
+  },
+  {
+    "cpdomains": [
+      "4 a.b.c.d"
+    ]
+  },
+  {
+    "cpdomains": [
+      "9000 a.com",
+      "50 b.com",
+      "50 c.com"
+    ]
+  },
+  {
+    "cpdomains": [
+      "1 co.uk",
+      "2 uk"
+    ]
+  },
+  {
+    "cpdomains": [
+      "8 alpha.beta.gamma"
+    ]
+  },
+  {
+    "cpdomains": [
+      "3 a.a.a"
+    ]
+  },
+  {
+    "cpdomains": [
+      "6 x.com",
+      "4 y.com",
+      "2 z.org"
+    ]
+  },
+  {
+    "cpdomains": [
+      "12 deep.sub.domain.com"
+    ]
+  },
+  {
+    "cpdomains": [
+      "1 a-b.c-d.com"
+    ]
+  },
+  {
+    "cpdomains": [
+      "20 p.q",
+      "30 q"
+    ]
+  },
+  {
+    "cpdomains": [
+      "5 m.n.o",
+      "5 n.o",
+      "5 o"
+    ]
+  },
+  {
+    "cpdomains": [
+      "100 a0.b1.com"
+    ]
+  },
+  {
+    "cpdomains": [
+      "9 one.two",
+      "9 two"
+    ]
+  },
+  {
+    "cpdomains": [
+      "15 s.t.u.v"
+    ]
+  },
+  {
+    "cpdomains": [
+      "1 aa.bb",
+      "1 bb.cc",
+      "1 cc"
+    ]
+  },
+  {
+    "cpdomains": [
+      "50 x.mail.com",
+      "50 y.mail.com"
+    ]
+  },
+  {
+    "cpdomains": [
+      "11 a.b",
+      "22 b.c",
+      "33 c"
+    ]
+  },
+  {
+    "cpdomains": [
+      "999 vvv.www.com"
+    ]
+  },
+  {
+    "cpdomains": [
+      "4 a.com",
+      "4 a.com"
+    ]
+  }
+]

@@ -1,0 +1,70 @@
+{
+  "id": "poor-pigs",
+  "title": "525. Poor Pigs",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/poor-pigs/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "buckets = 1000, minutesToDie = 15, minutesToTest = 60",
+      "output": "5"
+    },
+    {
+      "input": "buckets = 4, minutesToDie = 15, minutesToTest = 15",
+      "output": "2",
+      "explanation": "With one round of testing each pig has 2 outcomes, and 2 pigs cover 2 * 2 = 4 buckets."
+    },
+    {
+      "input": "buckets = 4, minutesToDie = 15, minutesToTest = 30",
+      "output": "2",
+      "explanation": "Two rounds give each pig 3 outcomes, so 2 pigs cover 3 * 3 = 9 buckets, but 1 pig covers only 3."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int poorPigs(int buckets, int minutesToDie, int minutesToTest) {\n        \n    }\n}",
+    "python": "class Solution:\n    def poorPigs(self, buckets: int, minutesToDie: int, minutesToTest: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int poorPigs(int buckets, int minutesToDie, int minutesToTest) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int PoorPigs(int buckets, int minutesToDie, int minutesToTest) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn poor_pigs(buckets: i32, minutesToDie: i32, minutesToTest: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc PoorPigs(buckets int, minutesToDie int, minutesToTest int) int {\n    \n}",
+    "typescript": "export function poorPigs(buckets: number, minutesToDie: number, minutesToTest: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $buckets\n     * @param int $minutesToDie\n     * @param int $minutesToTest\n     * @return int\n     */\n    public function poorPigs($buckets, $minutesToDie, $minutesToTest) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "buckets": 1000,
+      "minutesToDie": 15,
+      "minutesToTest": 60
+    },
+    {
+      "buckets": 4,
+      "minutesToDie": 15,
+      "minutesToTest": 15
+    },
+    {
+      "buckets": 4,
+      "minutesToDie": 15,
+      "minutesToTest": 30
+    }
+  ],
+  "functionName": "poorPigs",
+  "params": [
+    {
+      "name": "buckets",
+      "type": "int"
+    },
+    {
+      "name": "minutesToDie",
+      "type": "int"
+    },
+    {
+      "name": "minutesToTest",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The number of full test rounds is `minutesToTest / minutesToDie` (integer division), so each pig distinguishes `rounds + 1` outcomes.",
+    "Find the smallest `p` with `(rounds + 1)^p >= buckets`."
+  ]
+}

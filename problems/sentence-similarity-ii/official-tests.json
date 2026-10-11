@@ -1,0 +1,142 @@
+[
+  {
+    "sentence1": "[\"great\",\"acting\",\"skills\"]",
+    "sentence2": "[\"fine\",\"drama\",\"talent\"]",
+    "similarPairs": "[[\"great\",\"good\"],[\"fine\",\"good\"],[\"drama\",\"acting\"],[\"skills\",\"talent\"]]"
+  },
+  {
+    "sentence1": "[\"great\"]",
+    "sentence2": "[\"fine\"]",
+    "similarPairs": "[[\"great\",\"good\"]]"
+  },
+  {
+    "sentence1": "[\"a\",\"b\"]",
+    "sentence2": "[\"a\",\"b\"]",
+    "similarPairs": "[]"
+  },
+  {
+    "sentence1": "[\"a\",\"b\",\"c\"]",
+    "sentence2": "[\"a\",\"c\",\"b\"]",
+    "similarPairs": "[[\"b\",\"c\"]]"
+  },
+  {
+    "sentence1": "[\"a\",\"b\",\"c\"]",
+    "sentence2": "[\"x\",\"y\",\"z\"]",
+    "similarPairs": "[[\"a\",\"x\"],[\"x\",\"m\"],[\"m\",\"y\"],[\"y\",\"b\"]]"
+  },
+  {
+    "sentence1": "[\"one\",\"two\"]",
+    "sentence2": "[\"three\",\"four\"]",
+    "similarPairs": "[[\"one\",\"three\"],[\"two\",\"four\"]]"
+  },
+  {
+    "sentence1": "[\"a\",\"b\"]",
+    "sentence2": "[\"c\",\"d\"]",
+    "similarPairs": "[[\"a\",\"c\"],[\"b\",\"e\"]]"
+  },
+  {
+    "sentence1": "[\"x\",\"y\"]",
+    "sentence2": "[\"y\",\"x\"]",
+    "similarPairs": "[[\"x\",\"y\"]]"
+  },
+  {
+    "sentence1": "[\"p\",\"q\",\"r\"]",
+    "sentence2": "[\"p\",\"s\",\"r\"]",
+    "similarPairs": "[[\"q\",\"s\"],[\"s\",\"t\"],[\"t\",\"q\"]]"
+  },
+  {
+    "sentence1": "[\"m\",\"n\",\"o\"]",
+    "sentence2": "[\"m\",\"n\",\"p\"]",
+    "similarPairs": "[[\"o\",\"n\"]]"
+  },
+  {
+    "sentence1": "[\"a\"]",
+    "sentence2": "[\"z\"]",
+    "similarPairs": "[[\"a\",\"b\"],[\"b\",\"c\"],[\"c\",\"d\"],[\"d\",\"z\"]]"
+  },
+  {
+    "sentence1": "[\"a\"]",
+    "sentence2": "[\"z\"]",
+    "similarPairs": "[[\"a\",\"b\"],[\"c\",\"d\"]]"
+  },
+  {
+    "sentence1": "[\"dog\",\"cat\",\"fish\"]",
+    "sentence2": "[\"pup\",\"kit\",\"fish\"]",
+    "similarPairs": "[[\"dog\",\"pup\"],[\"cat\",\"kit\"]]"
+  },
+  {
+    "sentence1": "[\"i\",\"like\",\"apples\"]",
+    "sentence2": "[\"i\",\"love\",\"oranges\"]",
+    "similarPairs": "[[\"like\",\"love\"],[\"apples\",\"oranges\"]]"
+  },
+  {
+    "sentence1": "[\"a\",\"b\"]",
+    "sentence2": "[\"b\",\"a\"]",
+    "similarPairs": "[]"
+  },
+  {
+    "sentence1": "[\"aa\",\"bb\",\"cc\"]",
+    "sentence2": "[\"cc\",\"bb\",\"aa\"]",
+    "similarPairs": "[[\"aa\",\"cc\"]]"
+  },
+  {
+    "sentence1": "[\"ab\",\"cd\",\"ef\"]",
+    "sentence2": "[\"ab\",\"ef\",\"cd\"]",
+    "similarPairs": "[[\"cd\",\"ef\"]]"
+  },
+  {
+    "sentence1": "[\"u\",\"v\",\"w\"]",
+    "sentence2": "[\"u\",\"v\"]",
+    "similarPairs": "[[\"w\",\"v\"]]"
+  },
+  {
+    "sentence1": "[\"k\",\"k\",\"k\"]",
+    "sentence2": "[\"l\",\"l\",\"l\"]",
+    "similarPairs": "[[\"k\",\"m\"],[\"m\",\"l\"]]"
+  },
+  {
+    "sentence1": "[\"k\",\"k\",\"k\"]",
+    "sentence2": "[\"l\",\"l\",\"m\"]",
+    "similarPairs": "[[\"k\",\"l\"]]"
+  },
+  {
+    "sentence1": "[\"an\",\"example\"]",
+    "sentence2": "[\"a\",\"sample\"]",
+    "similarPairs": "[[\"an\",\"a\"],[\"example\",\"sample\"]]"
+  },
+  {
+    "sentence1": "[\"a\",\"b\",\"c\",\"d\"]",
+    "sentence2": "[\"e\",\"f\",\"g\",\"h\"]",
+    "similarPairs": "[[\"a\",\"e\"],[\"e\",\"b\"],[\"b\",\"f\"],[\"c\",\"g\"],[\"d\",\"h\"]]"
+  },
+  {
+    "sentence1": "[\"x\"]",
+    "sentence2": "[\"x\"]",
+    "similarPairs": "[[\"a\",\"b\"],[\"b\",\"c\"],[\"c\",\"a\"]]"
+  },
+  {
+    "sentence1": "[\"sol\",\"luna\"]",
+    "sentence2": "[\"sun\",\"moon\"]",
+    "similarPairs": "[[\"sol\",\"sun\"],[\"luna\",\"moon\"],[\"sun\",\"star\"]]"
+  },
+  {
+    "sentence1": "[\"t1\",\"t2\"]",
+    "sentence2": "[\"t3\",\"t4\"]",
+    "similarPairs": "[[\"t1\",\"t3\"],[\"t3\",\"t1\"]]"
+  },
+  {
+    "sentence1": "[\"only\"]",
+    "sentence2": "[\"lonely\"]",
+    "similarPairs": "[]"
+  },
+  {
+    "sentence1": "[\"a\",\"b\",\"a\",\"b\"]",
+    "sentence2": "[\"b\",\"a\",\"b\",\"a\"]",
+    "similarPairs": "[[\"a\",\"b\"]]"
+  },
+  {
+    "sentence1": "[\"q\",\"w\",\"e\",\"r\"]",
+    "sentence2": "[\"q\",\"w\",\"e\",\"t\"]",
+    "similarPairs": "[[\"r\",\"s\"],[\"s\",\"t\"],[\"q\",\"r\"]]"
+  }
+]

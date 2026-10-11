@@ -1,0 +1,56 @@
+{
+  "id": "lonely-pixel-ii",
+  "title": "592. Lonely Pixel II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/lonely-pixel-ii/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "picture = [[\"W\",\"B\",\"W\",\"B\",\"B\",\"W\"],[\"W\",\"B\",\"W\",\"B\",\"B\",\"W\"],[\"W\",\"B\",\"W\",\"B\",\"B\",\"W\"],[\"W\",\"W\",\"B\",\"W\",\"B\",\"W\"]], N = 3",
+      "output": "6",
+      "explanation": "Columns 1 and 3 each hold exactly 3 black pixels in identical rows, giving 3 times 2 = 6."
+    },
+    {
+      "input": "picture = [[\"W\",\"B\",\"W\"],[\"B\",\"W\",\"W\"]], N = 1",
+      "output": "2",
+      "explanation": "Both black pixels sit in rows and columns that each hold exactly one black pixel."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findBlackPixel(char[][] picture, int n) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findBlackPixel(self, picture: List[List[str]], n: int) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int findBlackPixel(vector<vector<char>>& picture, int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindBlackPixel(char[][] picture, int n) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_black_pixel(picture: String, n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FindBlackPixel(picture [][]byte, n int) int {\n    return 0\n}",
+    "typescript": "export function findBlackPixel(picture: string[][], n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[][] $picture\n     * @param int $n\n     * @return int\n     */\n    public function findBlackPixel($picture, $n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "picture": "[[\"W\",\"B\",\"W\",\"B\",\"B\",\"W\"],[\"W\",\"B\",\"W\",\"B\",\"B\",\"W\"],[\"W\",\"B\",\"W\",\"B\",\"B\",\"W\"],[\"W\",\"W\",\"B\",\"W\",\"B\",\"W\"]]",
+      "n": 3
+    },
+    {
+      "picture": "[[\"W\",\"B\",\"W\"],[\"B\",\"W\",\"W\"]]",
+      "n": 1
+    }
+  ],
+  "functionName": "findBlackPixel",
+  "params": [
+    {
+      "name": "picture",
+      "type": "char_array_2d"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Precompute each row's black-pixel count and each column's black-pixel count.",
+    "For a candidate pixel, confirm the counts equal N, then scan the column checking row equality.",
+    "Compare rows with a helper or by joining each row into a string key. Rust note: the picture arrives as its encoded string; parse it before counting."
+  ]
+}

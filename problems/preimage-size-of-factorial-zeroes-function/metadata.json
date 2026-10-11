@@ -1,0 +1,58 @@
+{
+  "id": "preimage-size-of-factorial-zeroes-function",
+  "title": "791. Preimage Size of Factorial Zeroes Function",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/preimage-size-of-factorial-zeroes-function/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "k = 0",
+      "output": "5",
+      "explanation": "Values 0 through 4 have zero trailing zeroes."
+    },
+    {
+      "input": "k = 5",
+      "output": "0",
+      "explanation": "The zero count skips from 4 to 6."
+    },
+    {
+      "input": "k = 3",
+      "output": "5",
+      "explanation": "Values 15 through 19 each give three zeroes."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int preimageSizeFZF(int k) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def preimageSizeFZF(self, k: int) -> int:\n        return 0\n",
+    "cpp": "class Solution {\npublic:\n    int preimageSizeFZF(int k) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int PreimageSizeFZF(int k)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn preimage_size_fzf(k: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc PreimageSizeFZF(k int) int {\n    return 0\n}",
+    "typescript": "export function preimageSizeFZF(k: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $k\n     * @return int\n     */\n    public function preimageSizeFZF($k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "k": 0
+    },
+    {
+      "k": 5
+    },
+    {
+      "k": 3
+    }
+  ],
+  "functionName": "preimageSizeFZF",
+  "params": [
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Trailing zeroes of x! equal floor(x/5) + floor(x/25) + floor(x/125) + ... .",
+    "That count function is monotone, so binary-search the smallest x reaching at least k.",
+    "If that x yields exactly k, a full block of five consecutive values shares it; otherwise the answer is 0."
+  ]
+}

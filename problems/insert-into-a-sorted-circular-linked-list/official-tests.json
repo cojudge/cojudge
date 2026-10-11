@@ -1,0 +1,114 @@
+[
+  {
+    "head": "[3,4,1]",
+    "insertVal": 2
+  },
+  {
+    "head": "[]",
+    "insertVal": 1
+  },
+  {
+    "head": "[1]",
+    "insertVal": 0
+  },
+  {
+    "head": "[1]",
+    "insertVal": 2
+  },
+  {
+    "head": "[3,3,3]",
+    "insertVal": 0
+  },
+  {
+    "head": "[3,3,3]",
+    "insertVal": 3
+  },
+  {
+    "head": "[1,2,3,4,5]",
+    "insertVal": 0
+  },
+  {
+    "head": "[1,2,3,4,5]",
+    "insertVal": 6
+  },
+  {
+    "head": "[1,2,3,4,5]",
+    "insertVal": 3
+  },
+  {
+    "head": "[5,1,2,3,4]",
+    "insertVal": 0
+  },
+  {
+    "head": "[5,1,2,3,4]",
+    "insertVal": 6
+  },
+  {
+    "head": "[2,2,2,1,2]",
+    "insertVal": 2
+  },
+  {
+    "head": "[1,3,5]",
+    "insertVal": 4
+  },
+  {
+    "head": "[1,3,5]",
+    "insertVal": 0
+  },
+  {
+    "head": "[1,3,5]",
+    "insertVal": 6
+  },
+  {
+    "head": "[3,5,1]",
+    "insertVal": 4
+  },
+  {
+    "head": "[3,5,1]",
+    "insertVal": 2
+  },
+  {
+    "head": "[1,1,1,1]",
+    "insertVal": 1
+  },
+  {
+    "head": "[2,3,4,1]",
+    "insertVal": 1
+  },
+  {
+    "head": "[2,3,4,1]",
+    "insertVal": 5
+  },
+  {
+    "head": "[10,5,6,7,8,9]",
+    "insertVal": 4
+  },
+  {
+    "head": "[10,5,6,7,8,9]",
+    "insertVal": 11
+  },
+  {
+    "head": "[-5,-3,0,2]",
+    "insertVal": -4
+  },
+  {
+    "head": "[-5,-3,0,2]",
+    "insertVal": 3
+  },
+  {
+    "head": "[1,2]",
+    "insertVal": 1
+  },
+  {
+    "head": "[4,1,2,3]",
+    "insertVal": 0
+  },
+  {
+    "head": "[4,1,2,3]",
+    "insertVal": 4
+  },
+  {
+    "head": "[7,7,7,8,9,1,2]",
+    "insertVal": 7
+  }
+]

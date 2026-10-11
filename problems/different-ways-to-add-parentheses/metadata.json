@@ -1,0 +1,53 @@
+{
+  "id": "different-ways-to-add-parentheses",
+  "title": "348. Different Ways to Add Parentheses",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/different-ways-to-add-parentheses/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "expression = \"2-1-1\"",
+      "output": "[0,2]",
+      "explanation": "(2-1)-1 gives 0, while 2-(1-1) gives 2."
+    },
+    {
+      "input": "expression = \"2*3-4*5\"",
+      "output": "[-34,-14,-10,-10,10]",
+      "explanation": "Parenthesizing as 2*(3-(4*5)) gives -34, and the other groupings give -14, -10, -10, and 10."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<Integer> diffWaysToCompute(String expression) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def diffWaysToCompute(self, expression: str) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> diffWaysToCompute(string expression) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<int> DiffWaysToCompute(string expression) \n    {\n        return new List<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn diff_ways_to_compute(expression: String) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc DiffWaysToCompute(expression string) []int {\n    return []int{}\n}",
+    "typescript": "export function diffWaysToCompute(expression: string): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $expression\n     * @return int[]\n     */\n    public function diffWaysToCompute($expression) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "expression": "2-1-1"
+    },
+    {
+      "expression": "2*3-4*5"
+    },
+    {
+      "expression": "5"
+    }
+  ],
+  "functionName": "diffWaysToCompute",
+  "params": [
+    {
+      "name": "expression",
+      "type": "string"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Treat every operator as a possible last evaluation step and recurse on both sides.",
+    "Combine each left value with each right value through the current operator.",
+    "Memoize results per substring to avoid recomputation."
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "find-the-derangement-of-an-array",
+  "title": "656. Find the Derangement of An Array",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/find-the-derangement-of-an-array/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "n = 3",
+      "output": "2",
+      "explanation": "The derangements of [1,2,3] are [2,3,1] and [3,1,2]."
+    },
+    {
+      "input": "n = 2",
+      "output": "1",
+      "explanation": "Only [2,1] avoids every original slot."
+    },
+    {
+      "input": "n = 1",
+      "output": "0",
+      "explanation": "One element cannot escape its own position."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findDerangement(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def findDerangement(self, n: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int findDerangement(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindDerangement(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_derangement(n: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindDerangement(n int) int {\n    \n}",
+    "typescript": "export function findDerangement(n: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function findDerangement($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 3
+    },
+    {
+      "n": 2
+    },
+    {
+      "n": 1
+    }
+  ],
+  "functionName": "findDerangement",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Let f[i] count derangements of i items with f[0] = 1 and f[1] = 0.",
+    "Placing item 1 into slot j (i-1 choices) splits on where item j goes, giving f[i] = (i-1) * (f[i-1] + f[i-2]).",
+    "Iterate bottom-up with two rolling values, reducing modulo 1000000007 each step."
+  ]
+}

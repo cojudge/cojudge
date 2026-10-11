@@ -1,0 +1,61 @@
+{
+  "id": "shortest-path-visiting-all-nodes",
+  "title": "844. Shortest Path Visiting All Nodes",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/shortest-path-visiting-all-nodes/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "graph = [[1,2,3],[0],[0],[0]]",
+      "output": "4",
+      "explanation": "Tour 1-0-2-0-3 uses four edges."
+    },
+    {
+      "input": "graph = [[1],[0,2,4],[1,3,4],[2],[1,2]]",
+      "output": "4",
+      "explanation": "A four-edge walk covers all five nodes."
+    },
+    {
+      "input": "graph = [[]]",
+      "output": "0",
+      "explanation": "Single node needs no travel."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int shortestPathLength(int[][] graph) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def shortestPathLength(self, graph: List[List[int]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int shortestPathLength(vector<vector<int>>& graph) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int ShortestPathLength(int[][] graph)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn shortest_path_length(graph: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc ShortestPathLength(graph [][]int) int {\n    return 0\n}",
+    "typescript": "export function shortestPathLength(graph: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $graph\n     * @return int\n     */\n    public function shortestPathLength($graph) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "graph": "[[1,2,3],[0],[0],[0]]"
+    },
+    {
+      "graph": "[[1],[0,2,4],[1,3,4],[2],[1,2]]"
+    },
+    {
+      "graph": "[[]]"
+    },
+    {
+      "graph": "[[1],[0]]"
+    }
+  ],
+  "functionName": "shortestPathLength",
+  "params": [
+    {
+      "name": "graph",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Expand the state to (mask, node): which nodes are visited plus the current endpoint.",
+    "Start breadth-first search from every node with its own single-bit mask; the first time the full mask appears is optimal.",
+    "With n up to 12 there are at most n * 2^n states, easily fast enough."
+  ]
+}

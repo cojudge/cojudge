@@ -1,0 +1,57 @@
+{
+  "id": "integer-to-roman",
+  "title": "254. Integer to Roman",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/integer-to-roman/",
+  "category": "hash-table",
+  "examples": [
+    {
+      "input": "num = 3749",
+      "output": "\"MMMDCCXLIX\"",
+      "explanation": "3000 = MMM, 700 = DCC, 40 = XL, and 9 = IX."
+    },
+    {
+      "input": "num = 58",
+      "output": "\"LVIII\"",
+      "explanation": "50 = L, 5 = V, and 3 = III."
+    },
+    {
+      "input": "num = 1994",
+      "output": "\"MCMXCIV\"",
+      "explanation": "1000 = M, 900 = CM, 90 = XC, and 4 = IV."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String intToRoman(int num) {\n        \n    }\n}",
+    "python": "class Solution:\n    def intToRoman(self, num: int) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string intToRoman(int num) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string IntToRoman(int num) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn int_to_roman(num: i32) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc IntToRoman(num int) string {\n    \n}",
+    "typescript": "export function intToRoman(num: number): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $num\n     * @return string\n     */\n    public function intToRoman($num) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "num": 3749
+    },
+    {
+      "num": 58
+    },
+    {
+      "num": 1994
+    }
+  ],
+  "functionName": "intToRoman",
+  "params": [
+    {
+      "name": "num",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "List the 13 values (including the six subtractive pairs) from largest to smallest and greedily take each while it fits.",
+    "Because the table is fixed and tiny, the whole conversion is effectively constant time."
+  ]
+}

@@ -1,4 +1,5 @@
-Given an array of distinct integers nums and a target integer target, return the number of possible combinations that add up to target modulo 10^9+7. Different sequences are counted as different combinations.
+Supplied with an array `nums` of pairwise different integers and an integer goal `target`, enumerate every ordered chain whose entries sum to `target`, then report that tally reduced modulo 10^9+7.
+Two chains sharing an identical multiset but arranged differently contribute separately.
 
 **Constraints:**
 

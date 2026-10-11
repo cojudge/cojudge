@@ -1,0 +1,57 @@
+{
+  "id": "perfect-number",
+  "title": "569. Perfect Number",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/perfect-number/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "num = 28",
+      "output": "true",
+      "explanation": "Its proper divisors 1, 2, 4, 7 and 14 add up to 28."
+    },
+    {
+      "input": "num = 8",
+      "output": "false",
+      "explanation": "The proper divisors 1, 2 and 4 sum to 7, not 8."
+    },
+    {
+      "input": "num = 1",
+      "output": "false",
+      "explanation": "1 has no proper divisors, so the empty sum 0 differs from 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean checkPerfectNumber(int num) {\n        \n    }\n}",
+    "python": "class Solution:\n    def checkPerfectNumber(self, num: int) -> bool:\n        pass",
+    "cpp": "class Solution {\npublic:\n    bool checkPerfectNumber(int num) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool CheckPerfectNumber(int num) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn check_perfect_number(num: i32) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc CheckPerfectNumber(num int) bool {\n    \n}",
+    "typescript": "export function checkPerfectNumber(num: number): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $num\n     * @return bool\n     */\n    public function checkPerfectNumber($num) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "num": 28
+    },
+    {
+      "num": 8
+    },
+    {
+      "num": 1
+    }
+  ],
+  "functionName": "checkPerfectNumber",
+  "params": [
+    {
+      "name": "num",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Only trial divisors up to the square root are needed; each divisor d pairs with num / d.",
+    "Start the total at 1 for num > 1 and take care not to double-count a square root."
+  ]
+}

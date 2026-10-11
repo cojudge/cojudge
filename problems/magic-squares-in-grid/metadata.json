@@ -1,0 +1,61 @@
+{
+  "id": "magic-squares-in-grid",
+  "title": "838. Magic Squares In Grid",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/magic-squares-in-grid/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "grid = [[4,3,8,4],[9,5,1,9],[2,7,6,2]]",
+      "output": "1",
+      "explanation": "Only the top-left 3x3 window is magic."
+    },
+    {
+      "input": "grid = [[8]]",
+      "output": "0",
+      "explanation": "Too small for any window."
+    },
+    {
+      "input": "grid = [[5,5,5],[5,5,5],[5,5,5]]",
+      "output": "0",
+      "explanation": "Repeated values fail distinctness."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numMagicSquaresInside(int[][] grid) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numMagicSquaresInside(self, grid: List[List[int]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int numMagicSquaresInside(vector<vector<int>>& grid) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int NumMagicSquaresInside(int[][] grid)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_magic_squares_inside(grid: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumMagicSquaresInside(grid [][]int) int {\n    return 0\n}",
+    "typescript": "export function numMagicSquaresInside(grid: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $grid\n     * @return int\n     */\n    public function numMagicSquaresInside($grid) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "grid": "[[4,3,8,4],[9,5,1,9],[2,7,6,2]]"
+    },
+    {
+      "grid": "[[8]]"
+    },
+    {
+      "grid": "[[5,5,5],[5,5,5],[5,5,5]]"
+    },
+    {
+      "grid": "[[8,1,6],[3,5,7],[4,9,2]]"
+    }
+  ],
+  "functionName": "numMagicSquaresInside",
+  "params": [
+    {
+      "name": "grid",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The centre of any 3x3 magic square using 1..9 must be 5; skip windows whose centre differs.",
+    "Check distinctness of 1..9 first with a boolean set, then verify the eight line sums equal 15.",
+    "Slide the window over all (rows-2) * (cols-2) positions."
+  ]
+}

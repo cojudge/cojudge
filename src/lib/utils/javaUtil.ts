@@ -81,6 +81,16 @@ export const javaHelperMethods = `
         sb.append("]");
         return sb.toString();
     }
+    private static String displayOutput(ListNode[] arr) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i < arr.length; i++) {
+            if (i > 0) sb.append(",");
+            sb.append(displayOutput(arr[i]));
+        }
+        sb.append("]");
+        return sb.toString();
+    }
     private static String displayOutput(TreeNode root) {
         if (root == null) return "[]";
         List<String> out = new ArrayList<>();

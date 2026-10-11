@@ -1,0 +1,60 @@
+{
+  "id": "subarrays-with-k-different-integers",
+  "title": "975. Subarrays with K Different Integers",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/subarrays-with-k-different-integers/",
+  "category": "sliding-window",
+  "examples": [
+    {
+      "input": "nums = [1,2,1,2,3], k = 2",
+      "output": "7",
+      "explanation": "Seven windows hold exactly two distinct values."
+    },
+    {
+      "input": "nums = [1,2,1,3,4], k = 3",
+      "output": "3",
+      "explanation": "The qualifying windows are [1,2,1,3], [2,1,3] and [1,3,4]."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int subarraysWithKDistinct(int[] nums, int k) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def subarraysWithKDistinct(self, nums: List[int], k: int) -> int:\n        return 0",
+    "cpp": "#include <vector>\n#include <unordered_map>\nusing namespace std;\nclass Solution {\npublic:\n    int subarraysWithKDistinct(vector<int>& nums, int k) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int SubarraysWithKDistinct(int[] nums, int k) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn subarrays_with_k_distinct(nums: Vec<i32>, k: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc SubarraysWithKDistinct(nums []int, k int) int {\n    return 0\n}",
+    "typescript": "export function subarraysWithKDistinct(nums: number[], k: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $k\n     * @return int\n     */\n    public function subarraysWithKDistinct($nums, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,1,2,3]",
+      "k": 2
+    },
+    {
+      "nums": "[1,2,1,3,4]",
+      "k": 3
+    },
+    {
+      "nums": "[1]",
+      "k": 1
+    }
+  ],
+  "functionName": "subarraysWithKDistinct",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Counting windows with exactly k distinct values directly is awkward; count windows with at most k instead.",
+    "Exactly-k equals atMost(k) minus atMost(k-1).",
+    "For atMost, slide a window with a frequency map: every right end contributes window-length new windows."
+  ]
+}

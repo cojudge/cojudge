@@ -1,0 +1,72 @@
+{
+  "id": "the-maze-ii",
+  "title": "567. The Maze II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/the-maze-ii/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "maze = [[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]], start = [0,4], destination = [4,4]",
+      "output": "12",
+      "explanation": "One shortest rolling route covers 12 steps before stopping on the target."
+    },
+    {
+      "input": "maze = [[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]], start = [0,4], destination = [3,2]",
+      "output": "-1",
+      "explanation": "The ball can never come to rest on that cell, so the answer is -1."
+    },
+    {
+      "input": "maze = [[0,0,0],[0,0,0],[0,0,0]], start = [0,0], destination = [2,2]",
+      "output": "4",
+      "explanation": "Roll right across the top row (2 steps), then down the last column (2 steps)."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int shortestDistance(int[][] maze, int[] start, int[] destination) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def shortestDistance(self, maze: List[List[int]], start: List[int], destination: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int shortestDistance(vector<vector<int>>& maze, vector<int>& start, vector<int>& destination) {\n        return -1;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int ShortestDistance(int[][] maze, int[] start, int[] destination) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn shortest_distance(maze: Vec<Vec<i32>>, start: Vec<i32>, destination: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc ShortestDistance(maze [][]int, start []int, destination []int) int {\n    \n}",
+    "typescript": "export function shortestDistance(maze: number[][], start: number[], destination: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $maze\n     * @param int[] $start\n     * @param int[] $destination\n     * @return int\n     */\n    public function shortestDistance($maze, $start, $destination) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "maze": "[[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]]",
+      "start": "[0,4]",
+      "destination": "[4,4]"
+    },
+    {
+      "maze": "[[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]]",
+      "start": "[0,4]",
+      "destination": "[3,2]"
+    },
+    {
+      "maze": "[[0,0,0],[0,0,0],[0,0,0]]",
+      "start": "[0,0]",
+      "destination": "[2,2]"
+    }
+  ],
+  "functionName": "shortestDistance",
+  "params": [
+    {
+      "name": "maze",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "start",
+      "type": "int_array"
+    },
+    {
+      "name": "destination",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Rolling turns stopping cells into graph nodes; edge weights are the roll lengths, so Dijkstra over stopping points gives the optimum.",
+    "From each settled cell, simulate all four rolls to their stopping cells and relax longer known distances.",
+    "Starting on the destination needs zero travel, and unreachable targets stay at -1."
+  ]
+}

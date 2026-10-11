@@ -1,0 +1,58 @@
+{
+  "id": "valid-number",
+  "title": "270. Valid Number",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/valid-number/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"0\"",
+      "output": "true",
+      "explanation": "A single digit is a valid integer."
+    },
+    {
+      "input": "s = \"e\"",
+      "output": "false",
+      "explanation": "An exponent marker alone has no base digits and no exponent digits."
+    },
+    {
+      "input": "s = \"2e10\"",
+      "output": "true",
+      "explanation": "Base 2 followed by exponent 10 is well formed."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isNumber(String s) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def isNumber(self, s: str) -> bool:\n        return False\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool isNumber(string s) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool IsNumber(string s) \n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_number(s: String) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc IsNumber(s string) bool {\n    return false\n}",
+    "typescript": "export function isNumber(s: string): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return bool\n     */\n    public function isNumber($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "0"
+    },
+    {
+      "s": "e"
+    },
+    {
+      "s": "2e10"
+    }
+  ],
+  "functionName": "isNumber",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Trim surrounding spaces first; spaces anywhere else make the string invalid.",
+    "Split on e/E: the exponent must be a signed integer and the base must be a signed decimal with at least one digit.",
+    "The base allows at most one dot and requires a digit on at least one side of it."
+  ]
+}

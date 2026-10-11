@@ -1,8 +1,8 @@
-You are given an array `stones` where `stones[i]` is the weight of the `i`th stone.
+A pile of rocks is described by the array `stones`, where each entry `stones[i]` records how heavy the `i`-th rock is.
 
-On each turn, choose the two heaviest stones with weights `x <= y` and smash them together. If `x == y`, both stones are destroyed. Otherwise, the stone of weight `x` is destroyed and the stone of weight `y` becomes a stone of weight `y - x`.
+Each round proceeds as follows: select the two remaining rocks with the greatest weights, denote them `x <= y`, and crash them into each other. When the pair matches (`x == y`), both rocks vanish. When the pair differs, the lighter rock vanishes and the heavier rock continues with its weight lowered to `y - x`.
 
-Return the weight of the last remaining stone, or `0` if no stones remain.
+Report the weight of the single rock that survives at the end, or `0` when nothing survives.
 
 **Constraints:**
 

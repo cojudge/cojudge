@@ -1,0 +1,61 @@
+{
+  "id": "keys-and-rooms",
+  "title": "839. Keys and Rooms",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/keys-and-rooms/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "rooms = [[1],[2],[3],[]]",
+      "output": "true",
+      "explanation": "Chain 0->1->2->3 visits all."
+    },
+    {
+      "input": "rooms = [[1,3],[3,0,1],[2],[0]]",
+      "output": "false",
+      "explanation": "Room 2 stays locked."
+    },
+    {
+      "input": "rooms = [[]]",
+      "output": "true",
+      "explanation": "Only room exists and starts open."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean canVisitAllRooms(int[][] rooms) {\n        return false;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def canVisitAllRooms(self, rooms: List[List[int]]) -> bool:\n        return False\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool canVisitAllRooms(vector<vector<int>>& rooms) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool CanVisitAllRooms(int[][] rooms)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_visit_all_rooms(rooms: Vec<Vec<i32>>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc CanVisitAllRooms(rooms [][]int) bool {\n    return false\n}",
+    "typescript": "export function canVisitAllRooms(rooms: number[][]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $rooms\n     * @return bool\n     */\n    public function canVisitAllRooms($rooms) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "rooms": "[[1],[2],[3],[]]"
+    },
+    {
+      "rooms": "[[1,3],[3,0,1],[2],[0]]"
+    },
+    {
+      "rooms": "[[]]"
+    },
+    {
+      "rooms": "[[1],[0]]"
+    }
+  ],
+  "functionName": "canVisitAllRooms",
+  "params": [
+    {
+      "name": "rooms",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Treat rooms as a directed graph with edges from room i to each key inside it.",
+    "Run depth-first or breadth-first search from node 0 and mark visited rooms.",
+    "Answer true exactly when the visited count equals the room count."
+  ]
+}

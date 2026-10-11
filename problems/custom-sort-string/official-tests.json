@@ -1,0 +1,114 @@
+[
+  {
+    "order": "cba",
+    "s": "abcd"
+  },
+  {
+    "order": "bcafg",
+    "s": "abcd"
+  },
+  {
+    "order": "kqep",
+    "s": "pekeq"
+  },
+  {
+    "order": "a",
+    "s": "a"
+  },
+  {
+    "order": "a",
+    "s": "b"
+  },
+  {
+    "order": "ab",
+    "s": "ba"
+  },
+  {
+    "order": "ba",
+    "s": "ab"
+  },
+  {
+    "order": "cba",
+    "s": "aabbcc"
+  },
+  {
+    "order": "xyz",
+    "s": "abc"
+  },
+  {
+    "order": "abcdefghijklmnopqrstuvwxyz",
+    "s": "zyxwvutsrqponmlkjihgfedcba"
+  },
+  {
+    "order": "zyxwvutsrqponmlkjihgfedcba",
+    "s": "abcde"
+  },
+  {
+    "order": "qwertyuiopasdfghjklzxcvbnm",
+    "s": "hello"
+  },
+  {
+    "order": "c",
+    "s": "cccc"
+  },
+  {
+    "order": "d",
+    "s": "abc"
+  },
+  {
+    "order": "exv",
+    "s": "xwvee"
+  },
+  {
+    "order": "hucw",
+    "s": "utzoampdgkalexslxoqfk"
+  },
+  {
+    "order": "kqep",
+    "s": "geek"
+  },
+  {
+    "order": "abc",
+    "s": "aaabbbcccdddeee"
+  },
+  {
+    "order": "cba",
+    "s": "cccaaaabbbbdddd"
+  },
+  {
+    "order": "mnh",
+    "s": "mmmmnnnnhhhh"
+  },
+  {
+    "order": "z",
+    "s": "abcdefghijklmnopqrstuvwxyz"
+  },
+  {
+    "order": "cbafed",
+    "s": "aabbccddeeff"
+  },
+  {
+    "order": "gh",
+    "s": "hhgghghhgg"
+  },
+  {
+    "order": "p",
+    "s": "pppppp"
+  },
+  {
+    "order": "qw",
+    "s": "qqwweerrttyy"
+  },
+  {
+    "order": "jihgfedcba",
+    "s": "abcdefghij"
+  },
+  {
+    "order": "az",
+    "s": "zzzzzaaaaa"
+  },
+  {
+    "order": "mnbvcxzlkjhgfdsapoiuytrewq",
+    "s": "teststring"
+  }
+]

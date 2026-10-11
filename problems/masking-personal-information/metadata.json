@@ -1,0 +1,60 @@
+{
+  "id": "masking-personal-information",
+  "title": "829. Masking Personal Information",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/masking-personal-information/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"LeetCode@LeetCode.com\"",
+      "output": "\"l*****e@leetcode.com\"",
+      "explanation": "Name keeps first and last letters with five stars inside."
+    },
+    {
+      "input": "s = \"AB@qq.com\"",
+      "output": "\"a*****b@qq.com\""
+    },
+    {
+      "input": "s = \"1(234)567-890\"",
+      "output": "\"***-***-7890\""
+    },
+    {
+      "input": "s = \"86-(10)12345678\"",
+      "output": "\"+**-***-***-5678\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String maskPII(String s) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def maskPII(self, s: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string maskPII(string s) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string MaskPII(string s) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn mask_pii(s: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc MaskPII(s string) string {\n    return \"\"\n}",
+    "typescript": "export function maskPII(s: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string\n     */\n    public function maskPII($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "LeetCode@LeetCode.com"
+    },
+    {
+      "s": "AB@qq.com"
+    },
+    {
+      "s": "1(234)567-890"
+    }
+  ],
+  "functionName": "maskPII",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Decide the branch by checking whether the string contains '@'; emails and phones share no formatting.",
+    "For emails, lowercase everything first and only then pick the first and last name characters.",
+    "For phones, strip every non-digit and let the digit count (10-13) dictate how many country stars appear."
+  ]
+}

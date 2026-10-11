@@ -1,0 +1,69 @@
+{
+  "id": "shifting-letters",
+  "title": "845. Shifting Letters",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/shifting-letters/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"abc\", shifts = [3,5,9]",
+      "output": "\"rpl\"",
+      "explanation": "Suffix sums 17,14,9 produce rpl."
+    },
+    {
+      "input": "s = \"aaa\", shifts = [1,2,3]",
+      "output": "\"gfd\"",
+      "explanation": "Suffix sums 6,5,3 shift each a."
+    },
+    {
+      "input": "s = \"z\", shifts = [52]",
+      "output": "\"z\"",
+      "explanation": "52 steps is two full turns."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String shiftingLetters(String s, int[] shifts) {\n        return \"\";\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def shiftingLetters(self, s: str, shifts: List[int]) -> str:\n        return \"\"\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string shiftingLetters(string s, vector<int>& shifts) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string ShiftingLetters(string s, int[] shifts)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn shifting_letters(s: String, shifts: Vec<i32>) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc ShiftingLetters(s string, shifts []int) string {\n    return \"\"\n}",
+    "typescript": "export function shiftingLetters(s: string, shifts: number[]): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param int[] $shifts\n     * @return string\n     */\n    public function shiftingLetters($s, $shifts) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "abc",
+      "shifts": "[3,5,9]"
+    },
+    {
+      "s": "aaa",
+      "shifts": "[1,2,3]"
+    },
+    {
+      "s": "z",
+      "shifts": "[52]"
+    },
+    {
+      "s": "abc",
+      "shifts": "[0,0,0]"
+    }
+  ],
+  "functionName": "shiftingLetters",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "shifts",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Sweep once from right to left keeping a running suffix total modulo 26.",
+    "Shift character i by the current suffix total: (c - 'a' + total) % 26 + 'a'.",
+    "Take shifts[i] modulo 26 before adding to avoid overflow on large inputs."
+  ]
+}

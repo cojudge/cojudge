@@ -1,0 +1,59 @@
+{
+  "id": "delete-node-in-a-linked-list",
+  "title": "346. Delete Node in a Linked List",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/delete-node-in-a-linked-list/",
+  "category": "linked-list",
+  "examples": [
+    {
+      "input": "head = [4,5,1,9], val = 5",
+      "output": "[4,1,9]",
+      "explanation": "The node holding 5 is removed; the remaining order is unchanged."
+    },
+    {
+      "input": "head = [4,5,1,9], val = 1",
+      "output": "[4,5,9]",
+      "explanation": "The node holding 1 is removed; the remaining order is unchanged."
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for singly-linked list.\nclass ListNode {\n    int val;\n    ListNode next;\n    ListNode(int x) { val = x; }\n}\n*/\nclass Solution {\n    public ListNode deleteNode(ListNode head, int val) {\n        \n    }\n}",
+    "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, x):\n#         self.val = x\n#         self.next = None\n\nclass Solution:\n    def deleteNode(self, head, val: int):\n        pass",
+    "cpp": "/*\nDefinition for singly-linked list.\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode(int x) : val(x), next(NULL) {}\n};\n*/\nclass Solution {\npublic:\n    ListNode* deleteNode(ListNode* head, int val) {\n        \n    }\n};",
+    "csharp": "/*\nDefinition for singly-linked list.\npublic class ListNode {\n    public int val;\n    public ListNode next;\n    public ListNode(int x) { val = x; }\n}\n*/\npublic class Solution \n{\n    public ListNode DeleteNode(ListNode head, int val) \n    {\n        \n    }\n}",
+    "rust": "// Definition for singly-linked list.\n// #[derive(PartialEq, Eq, Clone, Debug)]\n// pub struct ListNode {\n//   pub val: i32,\n//   pub next: Option<Box<ListNode>>\n// }\n\npub struct Solution;\n\nimpl Solution {\n    pub fn delete_node(head: Option<Box<ListNode>>, val: i32) -> Option<Box<ListNode>> {\n        \n    }\n}",
+    "go": "package main\n\n/*\nDefinition for singly-linked list.\ntype ListNode struct {\n    Val int\n    Next *ListNode\n}\n*/\n\nfunc DeleteNode(head *ListNode, val int) *ListNode {\n    \n}",
+    "typescript": "// Definition for singly-linked list.\n// class ListNode {\n//     val: number\n//     next: ListNode | null\n//     constructor(val?: number, next?: ListNode | null) {\n//         this.val = (val === undefined ? 0 : val)\n//         this.next = (next === undefined ? null : next)\n//     }\n// }\nimport { ListNode } from './ListNode';\nexport function deleteNode(head: ListNode | null, val: number): ListNode | null {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param ListNode|null $head\n     * @param int $val\n     * @return ListNode|null\n     */\n    public function deleteNode($head, $val) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "head": "[4,5,1,9]",
+      "val": 5
+    },
+    {
+      "head": "[4,5,1,9]",
+      "val": 1
+    },
+    {
+      "head": "[1,2]",
+      "val": 1
+    }
+  ],
+  "functionName": "deleteNode",
+  "params": [
+    {
+      "name": "head",
+      "type": "list_node"
+    },
+    {
+      "name": "val",
+      "type": "int"
+    }
+  ],
+  "outputType": "list_node",
+  "hints": [
+    "Locate the node holding val; since it is not the tail, it always has a successor.",
+    "Copy the successor's value into the target node and bypass the successor."
+  ]
+}

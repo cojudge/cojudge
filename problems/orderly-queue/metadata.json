@@ -1,0 +1,64 @@
+{
+  "id": "orderly-queue",
+  "title": "889. Orderly Queue",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/orderly-queue/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"cba\", k = 1",
+      "output": "\"acb\"",
+      "explanation": "Best of the three rotations."
+    },
+    {
+      "input": "s = \"baaca\", k = 3",
+      "output": "\"aaabc\"",
+      "explanation": "Sorting is reachable when k exceeds 1."
+    },
+    {
+      "input": "s = \"aabbcc\", k = 2",
+      "output": "\"aabbcc\"",
+      "explanation": "Already sorted."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String orderlyQueue(String s, int k) {\n        \n    }\n}",
+    "python": "class Solution:\n    def orderlyQueue(self, s: str, k: int) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string orderlyQueue(string s, int k) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string OrderlyQueue(string s, int k) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn orderly_queue(s: String, k: i32) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc OrderlyQueue(s string, k int) string {\n    \n}",
+    "typescript": "export function orderlyQueue(s: string, k: number): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param int $k\n     * @return string\n     */\n    public function orderlyQueue($s, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "cba",
+      "k": 1
+    },
+    {
+      "s": "baaca",
+      "k": 3
+    },
+    {
+      "s": "aabbcc",
+      "k": 2
+    }
+  ],
+  "functionName": "orderlyQueue",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "For k equal to 1, build every rotation s[i:]+s[:i] and keep the minimum.",
+    "For k larger than 1, the process can simulate any swap, so returning the sorted characters is optimal."
+  ]
+}

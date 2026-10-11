@@ -1,0 +1,65 @@
+{
+  "id": "minimum-cost-to-merge-stones",
+  "title": "981. Minimum Cost to Merge Stones",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/minimum-cost-to-merge-stones/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "stones = [3,2,4,1], k = 2",
+      "output": "20",
+      "explanation": "Merge pairwise from the left: costs accumulate to 20."
+    },
+    {
+      "input": "stones = [3,2,4,1], k = 3",
+      "output": "-1",
+      "explanation": "Four piles cannot shrink to one by removing two piles per move."
+    },
+    {
+      "input": "stones = [3,5,1,2,6], k = 3",
+      "output": "25",
+      "explanation": "First merge [5,1,2] at cost 8, then merge everything at cost 17."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int mergeStones(int[] stones, int k) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def mergeStones(self, stones: List[int], k: int) -> int:\n        return 0",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int mergeStones(vector<int>& stones, int k) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MergeStones(int[] stones, int k) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn merge_stones(stones: Vec<i32>, k: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MergeStones(stones []int, k int) int {\n    return 0\n}",
+    "typescript": "export function mergeStones(stones: number[], k: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $stones\n     * @param int $k\n     * @return int\n     */\n    public function mergeStones($stones, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "stones": "[3,2,4,1]",
+      "k": 2
+    },
+    {
+      "stones": "[3,2,4,1]",
+      "k": 3
+    },
+    {
+      "stones": "[3,5,1,2,6]",
+      "k": 3
+    }
+  ],
+  "functionName": "mergeStones",
+  "params": [
+    {
+      "name": "stones",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Merging to one pile is possible exactly when (n - 1) is divisible by (k - 1); otherwise return -1.",
+    "Use interval DP: dp[i][j] is the cheapest cost to shrink piles i..j, trying every split spaced k-1 apart.",
+    "Add the interval sum on top only when the interval can collapse fully, i.e. (length - 1) is divisible by (k - 1)."
+  ]
+}

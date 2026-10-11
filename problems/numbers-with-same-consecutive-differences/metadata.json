@@ -1,0 +1,65 @@
+{
+  "id": "numbers-with-same-consecutive-differences",
+  "title": "953. Numbers With Same Consecutive Differences",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/numbers-with-same-consecutive-differences/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "n = 3, k = 7",
+      "output": "[181,292,707,818,929]",
+      "explanation": "Only 181, 292, 707, 818 and 929 have every neighbouring digit pair differ by 7."
+    },
+    {
+      "input": "n = 2, k = 1",
+      "output": "[10,12,21,23,32,34,43,45,54,56,65,67,76,78,87,89,98]",
+      "explanation": "Sixteen two-digit numbers step by exactly 1 between their digits, from 10 up to 98."
+    },
+    {
+      "input": "n = 2, k = 0",
+      "output": "[11,22,33,44,55,66,77,88,99]",
+      "explanation": "Both digits must match, giving the nine repdigits 11 through 99."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<Integer> numsSameConsecDiff(int n, int k) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numsSameConsecDiff(self, n: int, k: int) -> List[int]:\n        return []",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> numsSameConsecDiff(int n, int k) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<int> NumsSameConsecDiff(int n, int k)\n    {\n        return new List<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn nums_same_consec_diff(n: i32, k: i32) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc NumsSameConsecDiff(n int, k int) []int {\n    return nil\n}",
+    "typescript": "export function numsSameConsecDiff(n: number, k: number): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int $k\n     * @return int[]\n     */\n    public function numsSameConsecDiff($n, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 3,
+      "k": 7
+    },
+    {
+      "n": 2,
+      "k": 1
+    },
+    {
+      "n": 2,
+      "k": 0
+    }
+  ],
+  "functionName": "numsSameConsecDiff",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Extend each prefix only with last-digit plus/minus k, guarded to stay within 0..9.",
+    "When k is 0 the two extensions coincide \u2014 deduplicate to avoid double counting.",
+    "Handle single-digit answers (0 through 9) as a special case."
+  ]
+}

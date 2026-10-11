@@ -1,0 +1,67 @@
+{
+  "id": "count-the-repetitions",
+  "title": "531. Count The Repetitions",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/count-the-repetitions/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s1 = \"acb\", n1 = 4, s2 = \"ab\", n2 = 2",
+      "output": "2",
+      "explanation": "Repeating s1 four times gives \"acbacbacbacb\", which contains \"ab\" four times as a subsequence; 4 / 2 = 2."
+    },
+    {
+      "input": "s1 = \"aaa\", n1 = 3, s2 = \"aa\", n2 = 1",
+      "output": "4",
+      "explanation": "Nine a's contain \"aa\" four times as a subsequence; 4 / 1 = 4."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int getMaxRepetitions(String s1, int n1, String s2, int n2) {\n        \n    }\n}",
+    "python": "class Solution:\n    def getMaxRepetitions(self, s1: str, n1: int, s2: str, n2: int) -> int:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int getMaxRepetitions(string s1, int n1, string s2, int n2) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int GetMaxRepetitions(string s1, int n1, string s2, int n2) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn get_max_repetitions(s1: String, n1: i32, s2: String, n2: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc GetMaxRepetitions(s1 string, n1 int, s2 string, n2 int) int {\n    \n}",
+    "typescript": "export function getMaxRepetitions(s1: string, n1: number, s2: string, n2: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s1\n     * @param int $n1\n     * @param string $s2\n     * @param int $n2\n     * @return int\n     */\n    public function getMaxRepetitions($s1, $n1, $s2, $n2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s1": "acb",
+      "n1": 4,
+      "s2": "ab",
+      "n2": 2
+    },
+    {
+      "s1": "aaa",
+      "n1": 3,
+      "s2": "aa",
+      "n2": 1
+    }
+  ],
+  "functionName": "getMaxRepetitions",
+  "params": [
+    {
+      "name": "s1",
+      "type": "string"
+    },
+    {
+      "name": "n1",
+      "type": "int"
+    },
+    {
+      "name": "s2",
+      "type": "string"
+    },
+    {
+      "name": "n2",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Scanning all n1 copies is too slow; the position inside s2 after each copy must eventually repeat, forming a cycle.",
+    "Record the completed-copy count the first time each s2-offset appears, then fast-forward whole cycles with arithmetic."
+  ]
+}

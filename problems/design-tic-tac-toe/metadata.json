@@ -1,0 +1,65 @@
+{
+  "id": "design-tic-tac-toe",
+  "title": "428. Design Tic-Tac-Toe",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/design-tic-tac-toe/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "operations = [\"TicTacToe\",\"move\",\"move\",\"move\",\"move\",\"move\",\"move\",\"move\"], args = [[3],[0,0,1],[0,2,2],[2,2,1],[1,1,2],[2,0,1],[1,0,2],[2,1,1]]",
+      "output": "[0,0,0,0,0,0,1]",
+      "explanation": "Player 1 seals the bottom row on the last placement."
+    },
+    {
+      "input": "operations = [\"TicTacToe\",\"move\",\"move\",\"move\"], args = [[2],[0,0,1],[1,1,2],[0,1,1]]",
+      "output": "[0,0,1]",
+      "explanation": "Player 1 completes the top row of the small board."
+    },
+    {
+      "input": "operations = [\"TicTacToe\",\"move\",\"move\",\"move\"], args = [[3],[0,0,1],[1,1,1],[2,2,1]]",
+      "output": "[0,0,1]",
+      "explanation": "Player 1 completes the main diagonal."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runTicTacToe(String[] operations, int[][] args) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runTicTacToe(self, operations: List[str], args: List[List[int]]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runTicTacToe(vector<string>& operations, vector<vector<int>>& args) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunTicTacToe(string[] operations, int[][] args)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_tic_tac_toe(operations: Vec<String>, args: Vec<Vec<i32>>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunTicTacToe(operations []string, args [][]int) []int {\n    return []int{}\n}",
+    "typescript": "export function runTicTacToe(operations: string[], args: number[][]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[][] $args\n     * @return int[]\n     */\n    public function runTicTacToe($operations, $args) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"TicTacToe\",\"move\",\"move\",\"move\",\"move\",\"move\",\"move\",\"move\"]",
+      "args": "[[3],[0,0,1],[0,2,2],[2,2,1],[1,1,2],[2,0,1],[1,0,2],[2,1,1]]"
+    },
+    {
+      "operations": "[\"TicTacToe\",\"move\",\"move\",\"move\"]",
+      "args": "[[2],[0,0,1],[1,1,2],[0,1,1]]"
+    },
+    {
+      "operations": "[\"TicTacToe\",\"move\",\"move\",\"move\"]",
+      "args": "[[3],[0,0,1],[1,1,1],[2,2,1]]"
+    }
+  ],
+  "functionName": "runTicTacToe",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "args",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Adaptation: replay the trace with counters rather than building a class.",
+    "Score player 1 as +1 and player 2 as -1 across per-row, per-column, and two diagonal tallies.",
+    "A tally reaching +n or -n means that player owns the whole line."
+  ]
+}

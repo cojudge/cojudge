@@ -1,0 +1,114 @@
+[
+  {
+    "timeSeries": "[1,4]",
+    "duration": 2
+  },
+  {
+    "timeSeries": "[1,2]",
+    "duration": 2
+  },
+  {
+    "timeSeries": "[1]",
+    "duration": 5
+  },
+  {
+    "timeSeries": "[1]",
+    "duration": 0
+  },
+  {
+    "timeSeries": "[0]",
+    "duration": 1
+  },
+  {
+    "timeSeries": "[1,2,3,4,5]",
+    "duration": 1
+  },
+  {
+    "timeSeries": "[1,2,3,4,5]",
+    "duration": 5
+  },
+  {
+    "timeSeries": "[1,1,1]",
+    "duration": 2
+  },
+  {
+    "timeSeries": "[1,3,5,7]",
+    "duration": 2
+  },
+  {
+    "timeSeries": "[1,3,5,7]",
+    "duration": 3
+  },
+  {
+    "timeSeries": "[0,10000000]",
+    "duration": 10000000
+  },
+  {
+    "timeSeries": "[1,2]",
+    "duration": 0
+  },
+  {
+    "timeSeries": "[5,5,5,5]",
+    "duration": 1
+  },
+  {
+    "timeSeries": "[1,5,9]",
+    "duration": 4
+  },
+  {
+    "timeSeries": "[1,5,9]",
+    "duration": 5
+  },
+  {
+    "timeSeries": "[0,1,2,3]",
+    "duration": 10
+  },
+  {
+    "timeSeries": "[10,20,30]",
+    "duration": 10
+  },
+  {
+    "timeSeries": "[10,20,30]",
+    "duration": 11
+  },
+  {
+    "timeSeries": "[1,100,101,102]",
+    "duration": 2
+  },
+  {
+    "timeSeries": "[2,2]",
+    "duration": 100
+  },
+  {
+    "timeSeries": "[0,0]",
+    "duration": 0
+  },
+  {
+    "timeSeries": "[0,5,10]",
+    "duration": 5
+  },
+  {
+    "timeSeries": "[3,7,11]",
+    "duration": 4
+  },
+  {
+    "timeSeries": "[1,4,7,10]",
+    "duration": 3
+  },
+  {
+    "timeSeries": "[100]",
+    "duration": 10000000
+  },
+  {
+    "timeSeries": "[1,2,3]",
+    "duration": 100
+  },
+  {
+    "timeSeries": "[0,2,4,6,8]",
+    "duration": 2
+  },
+  {
+    "timeSeries": "[0,2,4,6,8]",
+    "duration": 3
+  }
+]

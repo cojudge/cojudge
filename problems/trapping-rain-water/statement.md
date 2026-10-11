@@ -1,5 +1,6 @@
-Given `n` non-negative integers representing an elevation map where each bar has
-width `1`, return how many units of rain water are trapped after raining.
+Picture a skyline of `n` upright columns, each of width `1`, whose elevations are
+listed in `height`. After a rainfall, liquid settles in the dips between columns.
+Determine the total volume held in those dips.
 
 **Constraints:**
 

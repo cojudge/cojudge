@@ -1,11 +1,11 @@
-Given a `n * n` matrix `grid` of `0's` and `1's` return the root of the corresponding quad tree. (In Cojudge the tree is returned as a BFS serialization: a list of `[isLeaf, val]` pairs with `1/0` integers. Leaves have no children in the serialization; internal nodes are followed by their four children in order topLeft, topRight, bottomLeft, bottomRight.)
+You are handed a square binary matrix `grid` of size `n * n` containing only `0` and `1`. Build the quad tree that represents it and return its root. In this judge the tree is submitted as a breadth-first encoding: a list of `[isLeaf, val]` pairs written with integers `1`/`0`. Leaf entries carry no children in the encoding, while each internal entry is followed by its four children in the sequence topLeft, topRight, bottomLeft, bottomRight.
 
-A Quad-Tree is a tree data structure in which each internal node has exactly four children. We use `isLeaf` and `val` to represent the node.
+A quad tree is a tree in which every branch node owns exactly four children. Each node is described by `isLeaf` together with `val`.
 
-We can construct a Quad-Tree from a two-dimensional area using the following steps:
-1. If the current grid has the same value (all `1's` or all `0's`) set `isLeaf` True and set `val` to the grid's value and set the four children to Null.
-2. If the current grid has different values, set `isLeaf` False and set `val` to any value and divide the current grid into four sub-grids.
-3. Recurse on each of the four sub-grids.
+Form the tree for a square region with this recursive rule:
+1. When every cell of the region stores one shared value (entirely `1` or entirely `0`), emit a leaf holding that value, with all four children Null.
+2. When the region mixes values, emit a branch node (its `val` may be either value) and split the region into its four equal quadrants.
+3. Apply the same procedure to each of the four quadrants.
 
 **Example 1:**
 ```

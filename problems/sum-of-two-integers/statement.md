@@ -1,4 +1,4 @@
-Given two integers `a` and `b`, return the sum of the two integers without using the operators `+` and `-`.
+You are given two integers `a` and `b`. Compute their combined total while steering clear of the `+` and `-` operators.
 
 **Constraints:**
 

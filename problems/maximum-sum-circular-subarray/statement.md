@@ -1,15 +1,15 @@
-Given a **circular integer array** `nums` of length `n`, return the maximum possible sum of a **non-empty** subarray of `nums`.
+Think of `nums` as a ring of length `n` rather than a line: positions after the final entry continue at the first entry. Report the largest total attainable by any **non-empty** contiguous block on that ring.
 
-A circular array means the end of the array connects to the beginning of the array. Formally, the next element of `nums[i]` is `nums[(i + 1) % n]` and the previous element of `nums[i]` is `nums[(i - 1 + n) % n]`.
+In ring terms, the successor of position `nums[i]` is `nums[(i + 1) % n]` and its predecessor is `nums[(i - 1 + n) % n]`.
 
-A subarray may only include each element of the fixed buffer `nums` at most once. Formally, for a subarray `nums[i], nums[i + 1], ..., nums[j]`, there does not exist `i <= k1, k2 <= j` with `k1 % n == k2 % n`.
+No slot of the underlying storage `nums` may be reused within one block. In other words, for a block written `nums[i], nums[i + 1], ..., nums[j]`, there are no indices `i <= k1, k2 <= j` with `k1 % n == k2 % n` unless `k1 == k2`.
 
 **Example 1:**
 
 ```
 Input: nums = [1,-2,3,-2]
 Output: 3
-Explanation: Subarray [3] has maximum sum 3.
+Explanation: The block [3] attains the best total, 3.
 ```
 
 **Example 2:**
@@ -17,7 +17,7 @@ Explanation: Subarray [3] has maximum sum 3.
 ```
 Input: nums = [5,-3,5]
 Output: 10
-Explanation: Subarray [5,5] has maximum sum 5 + 5 = 10.
+Explanation: The wrapping block [5,5] attains the best total, 5 + 5 = 10.
 ```
 
 **Example 3:**
@@ -25,7 +25,7 @@ Explanation: Subarray [5,5] has maximum sum 5 + 5 = 10.
 ```
 Input: nums = [-3,-2,-3]
 Output: -2
-Explanation: Subarray [-2] has maximum sum -2.
+Explanation: The block [-2] attains the best total, -2.
 ```
 
 **Constraints:**

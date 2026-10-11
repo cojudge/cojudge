@@ -1,14 +1,14 @@
-You are given the head of a singly linked-list. The list can be represented as:
+You receive the head of a singly linked chain. Number its nodes from the front as:
 
 L0 → L1 → … → Ln - 1 → Ln
 
-Reorder the list to be on the following form:
+Weave the chain into this alternating pattern:
 
 L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 
-You may not modify the values in the list's nodes. Only nodes themselves may be changed.
+The values held by the nodes must stay put; only the links between nodes may be rewired.
 
-Return the head of the reordered list.
+Hand back the head of the woven chain.
 
 **Constraints:**
 - The number of nodes in the list is in the range `[0, 5 * 10^4]`.

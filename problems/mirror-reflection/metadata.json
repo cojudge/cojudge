@@ -1,0 +1,65 @@
+{
+  "id": "mirror-reflection",
+  "title": "854. Mirror Reflection",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/mirror-reflection/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "p = 2, q = 1",
+      "output": "2",
+      "explanation": "After one bounce the ray arrives at sensor 2."
+    },
+    {
+      "input": "p = 3, q = 1",
+      "output": "1",
+      "explanation": "The ray reaches sensor 1."
+    },
+    {
+      "input": "p = 3, q = 2",
+      "output": "0",
+      "explanation": "Parity puts the first hit on sensor 0."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int mirrorReflection(int p, int q) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def mirrorReflection(self, p: int, q: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int mirrorReflection(int p, int q) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MirrorReflection(int p, int q) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn mirror_reflection(p: i32, q: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MirrorReflection(p int, q int) int {\n    return 0\n}",
+    "typescript": "export function mirrorReflection(p: number, q: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $p\n     * @param int $q\n     * @return int\n     */\n    public function mirrorReflection($p, $q) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "p": 2,
+      "q": 1
+    },
+    {
+      "p": 3,
+      "q": 1
+    },
+    {
+      "p": 3,
+      "q": 2
+    }
+  ],
+  "functionName": "mirrorReflection",
+  "params": [
+    {
+      "name": "p",
+      "type": "int"
+    },
+    {
+      "name": "q",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Unfold the bounces into a straight ray through tiled copies of the room; the hit happens when both coordinates are multiples of `p`.",
+    "Divide out common factors of two from `p` and `q`, then look at parity: an even unfolded `p` means sensor 2, else an even unfolded `q` means sensor 0, otherwise sensor 1.",
+    "The least common multiple of `p` and `q` tells how far the straight ray travels before aligning with corners."
+  ]
+}

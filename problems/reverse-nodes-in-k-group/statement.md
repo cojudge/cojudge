@@ -1,9 +1,8 @@
-Given the head of a linked list, reverse the nodes of the list `k` at a time and
-return the modified list.
+Take the head of a chain and walk along it flipping each consecutive block of
+`k` nodes, then hand back the head of the reworked chain.
 
-Only complete groups of `k` nodes are reversed. If the number of remaining nodes
-is less than `k`, those nodes stay in their original order. You may change node
-links, but you may not merely swap the values stored in nodes.
+A trailing block shorter than `k` nodes is left exactly as it is. Links may
+be rewired, but simply exchanging the values held by nodes is not allowed.
 
 **Constraints:**
 
@@ -11,4 +10,4 @@ links, but you may not merely swap the values stored in nodes.
 - `0 <= node.val <= 1000`
 - `1 <= k <=` the length of the list
 
-**Follow-up:** Can you solve the problem using `O(1)` auxiliary space?
+**Follow-up:** Is there a way to accomplish this with only `O(1)` extra memory?

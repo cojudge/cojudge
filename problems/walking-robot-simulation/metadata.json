@@ -1,0 +1,68 @@
+{
+  "id": "walking-robot-simulation",
+  "title": "868. Walking Robot Simulation",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/walking-robot-simulation/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "commands = [4,-1,3], obstacles = []",
+      "output": "25",
+      "explanation": "The robot walks to (0, 4), turns east, then walks to (3, 4), where 3*3 + 4*4 = 25."
+    },
+    {
+      "input": "commands = [4,-1,4,-2,4], obstacles = [[2,4]]",
+      "output": "65",
+      "explanation": "The robot reaches (0, 4), is stopped by the obstacle at (2, 4) and halts at (1, 4), then turns north and finishes at (1, 8), giving 1 + 64 = 65."
+    },
+    {
+      "input": "commands = [6,-1,-1,6], obstacles = []",
+      "output": "36",
+      "explanation": "The robot walks north to (0, 6), turns around, and walks back to the origin. The farthest point is (0, 6) with distance squared 36."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int robotSim(int[] commands, int[][] obstacles) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def robotSim(self, commands: List[int], obstacles: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int RobotSim(int[] commands, int[][] obstacles) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn robot_sim(commands: Vec<i32>, obstacles: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc RobotSim(commands []int, obstacles [][]int) int {\n    \n}",
+    "typescript": "export function robotSim(commands: number[], obstacles: number[][]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $commands\n     * @param int[][] $obstacles\n     * @return int\n     */\n    public function robotSim($commands, $obstacles) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "commands": "[4,-1,3]",
+      "obstacles": "[]"
+    },
+    {
+      "commands": "[4,-1,4,-2,4]",
+      "obstacles": "[[2,4]]"
+    },
+    {
+      "commands": "[6,-1,-1,6]",
+      "obstacles": "[]"
+    },
+    {
+      "commands": "[1,-1,1,-1,1,-1,1]",
+      "obstacles": "[]"
+    }
+  ],
+  "functionName": "robotSim",
+  "params": [
+    {
+      "name": "commands",
+      "type": "int_array"
+    },
+    {
+      "name": "obstacles",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Store every obstacle in a hash set so each single-step move can be checked in O(1).",
+    "Keep a direction index 0..3 for north, east, south, west; -2 subtracts one (mod 4) and -1 adds one."
+  ]
+}

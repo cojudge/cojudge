@@ -1,7 +1,6 @@
-Given a non-negative integer `x`, return the square root of `x` rounded down
-to the nearest integer. The returned integer should be non-negative as well.
+You receive a non-negative integer `x`. Work out the integer portion of its square root — that is, the greatest non-negative whole number whose square stays at or below `x`.
 
-You must not use any built-in exponent function or operator.
+Do not call any power, exponent, or root helper supplied by the language.
 
 **Constraints:**
 

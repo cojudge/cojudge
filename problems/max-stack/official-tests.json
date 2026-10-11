@@ -1,0 +1,114 @@
+[
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"top\",\"popMax\",\"top\",\"peekMax\",\"pop\",\"top\"]",
+    "values": "[5,1,5,0,0,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"peekMax\",\"pop\",\"peekMax\"]",
+    "values": "[2,7,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"top\",\"pop\",\"top\"]",
+    "values": "[4,4,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"top\",\"pop\",\"push\",\"top\"]",
+    "values": "[9,0,0,3,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"popMax\",\"top\"]",
+    "values": "[1,2,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"popMax\",\"top\"]",
+    "values": "[2,1,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"popMax\",\"popMax\",\"popMax\"]",
+    "values": "[3,1,2,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"peekMax\",\"popMax\",\"push\",\"peekMax\"]",
+    "values": "[5,0,0,1,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"peekMax\",\"popMax\",\"peekMax\"]",
+    "values": "[1,1,1,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"pop\"]",
+    "values": "[7,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"pop\",\"pop\"]",
+    "values": "[1,2,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"pop\",\"pop\",\"pop\"]",
+    "values": "[3,2,1,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"top\",\"peekMax\",\"popMax\",\"top\"]",
+    "values": "[-5,-2,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"popMax\",\"top\"]",
+    "values": "[5,1,5,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"peekMax\",\"push\",\"peekMax\",\"popMax\",\"peekMax\"]",
+    "values": "[4,0,9,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"popMax\",\"peekMax\",\"top\",\"pop\"]",
+    "values": "[6,6,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"top\",\"peekMax\"]",
+    "values": "[0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"top\",\"pop\",\"top\",\"pop\",\"top\"]",
+    "values": "[1,2,3,0,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"popMax\",\"popMax\"]",
+    "values": "[2,2,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"popMax\",\"peekMax\"]",
+    "values": "[-1,-3,-2,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"peekMax\"]",
+    "values": "[100,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"push\",\"popMax\",\"top\"]",
+    "values": "[1,5,3,5,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"popMax\"]",
+    "values": "[42,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"peekMax\",\"popMax\",\"top\",\"pop\"]",
+    "values": "[8,3,0,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"pop\",\"peekMax\",\"popMax\"]",
+    "values": "[10,20,30,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"push\",\"peekMax\",\"popMax\",\"popMax\"]",
+    "values": "[4,9,4,9,0,0,0]"
+  },
+  {
+    "operations": "[\"push\",\"top\",\"popMax\",\"push\",\"top\"]",
+    "values": "[1,0,0,2,0]"
+  },
+  {
+    "operations": "[\"push\",\"push\",\"push\",\"popMax\",\"pop\",\"peekMax\"]",
+    "values": "[7,7,7,0,0,0]"
+  }
+]

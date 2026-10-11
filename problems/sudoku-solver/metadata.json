@@ -1,0 +1,52 @@
+{
+  "id": "sudoku-solver",
+  "title": "263. Sudoku Solver",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/sudoku-solver/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "board = [\"53..7....\",\"6..195...\",\".98....6.\",\"8...6...3\",\"4..8.3..1\",\"7...2...6\",\".6....28.\",\"...419..5\",\"....8..79\"]",
+      "output": "[\"534678912\",\"672195348\",\"198342567\",\"859761423\",\"426853791\",\"713924856\",\"961537284\",\"287419635\",\"345286179\"]",
+      "explanation": "The completed grid meets the row, column, and box rules while keeping all given digits."
+    },
+    {
+      "input": "board = [\"5.4.7.9.2\",\"6.2.9.3.8\",\"1.8.4.5.7\",\"8.9.6.4.3\",\"4.6.5.7.1\",\"7.3.2.8.6\",\"9.1.3.2.4\",\"2.7.1.6.5\",\"3.5.8.1.9\"]",
+      "output": "[\"534678912\",\"672195348\",\"198342567\",\"859761423\",\"426853791\",\"713924856\",\"961537284\",\"287419635\",\"345286179\"]",
+      "explanation": "With every other cell blanked, the givens still determine the same full solution."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\n\nclass Solution {\n    public List<String> solveSudoku(String[] board) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def solveSudoku(self, board: List[str]) -> List[str]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> solveSudoku(vector<string>& board) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\n\npublic class Solution\n{\n    public List<string> SolveSudoku(string[] board)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn solve_sudoku(board: Vec<String>) -> Vec<String> {\n        Vec::new()\n    }\n}",
+    "go": "package main\n\nfunc SolveSudoku(board []string) []string {\n    return []string{}\n}",
+    "typescript": "export function solveSudoku(board: string[]): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $board\n     * @return string[]\n     */\n    public function solveSudoku($board) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "board": "[\"53..7....\", \"6..195...\", \".98....6.\", \"8...6...3\", \"4..8.3..1\", \"7...2...6\", \".6....28.\", \"...419..5\", \"....8..79\"]"
+    },
+    {
+      "board": "[\"5.4.7.9.2\", \".7.1.5.4.\", \"1.8.4.5.7\", \".5.7.1.2.\", \"4.6.5.7.1\", \".1.9.4.5.\", \"9.1.3.2.4\", \".8.4.9.3.\", \"3.5.8.1.9\"]"
+    },
+    {
+      "board": "[\"1.3.5.7.9\", \".5.7.9.2.\", \"7.9.2.4.6\", \".1.3.5.9.\", \"3.5.9.2.4\", \".9.2.4.6.\", \"5.1.3.9.8\", \".3.9.8.4.\", \"9.8.4.6.2\"]"
+    }
+  ],
+  "functionName": "solveSudoku",
+  "params": [
+    {
+      "name": "board",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Try digits cell by cell with depth-first search, undoing (backtracking) whenever a cell has no legal digit left.",
+    "Track used digits per row, column, and box as bit masks, and always branch on the empty cell with the fewest candidates."
+  ]
+}

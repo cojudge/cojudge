@@ -1,0 +1,65 @@
+{
+  "id": "subarray-product-less-than-k",
+  "title": "721. Subarray Product Less Than K",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/subarray-product-less-than-k/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [10,5,2,6], k = 100",
+      "output": "8",
+      "explanation": "Eight windows qualify: the four singles plus [10,5], [5,2], [2,6] and [5,2,6]."
+    },
+    {
+      "input": "nums = [1,2,3], k = 0",
+      "output": "0",
+      "explanation": "All values are positive, so no product can fall below 0."
+    },
+    {
+      "input": "nums = [1,1,1], k = 2",
+      "output": "6",
+      "explanation": "Every one of the six windows multiplies to 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numSubarrayProductLessThanK(int[] nums, int k) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numSubarrayProductLessThanK(self, nums: List[int], k: int) -> int:\n        return 0",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int numSubarrayProductLessThanK(vector<int>& nums, int k) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int NumSubarrayProductLessThanK(int[] nums, int k) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_subarray_product_less_than_k(nums: Vec<i32>, k: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumSubarrayProductLessThanK(nums []int, k int) int {\n    return 0\n}",
+    "typescript": "export function numSubarrayProductLessThanK(nums: number[], k: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $k\n     * @return int\n     */\n    public function numSubarrayProductLessThanK($nums, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[10,5,2,6]",
+      "k": 100
+    },
+    {
+      "nums": "[1,2,3]",
+      "k": 0
+    },
+    {
+      "nums": "[1,1,1]",
+      "k": 2
+    }
+  ],
+  "functionName": "numSubarrayProductLessThanK",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "All numbers are positive, so extending a window only grows its product and shrinking only lowers it.",
+    "Maintain a sliding window product; when it reaches k, move the left edge until it fits again.",
+    "Each right endpoint contributes (right - left + 1) new valid windows."
+  ]
+}

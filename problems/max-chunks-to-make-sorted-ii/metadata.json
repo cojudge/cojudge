@@ -1,0 +1,58 @@
+{
+  "id": "max-chunks-to-make-sorted-ii",
+  "title": "768. Max Chunks To Make Sorted II",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/max-chunks-to-make-sorted-ii/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "arr = [5,4,3,2,1]",
+      "output": "1",
+      "explanation": "No split point keeps the sorted order, so only one chunk works."
+    },
+    {
+      "input": "arr = [2,1,3,4,4]",
+      "output": "4",
+      "explanation": "Chunks [2,1], [3], [4], [4] sort to [1,2,3,4,4]."
+    },
+    {
+      "input": "arr = [1,1,0,0,1]",
+      "output": "2",
+      "explanation": "Split into [1,1,0,0] and [1]."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxChunksToSorted(int[] arr) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxChunksToSorted(self, arr: List[int]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int maxChunksToSorted(vector<int>& arr) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MaxChunksToSorted(int[] arr)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_chunks_to_sorted(arr: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MaxChunksToSorted(arr []int) int {\n    return 0\n}",
+    "typescript": "export function maxChunksToSorted(arr: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @return int\n     */\n    public function maxChunksToSorted($arr) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "arr": "[5,4,3,2,1]"
+    },
+    {
+      "arr": "[2,1,3,4,4]"
+    },
+    {
+      "arr": "[1,1,0,0,1]"
+    }
+  ],
+  "functionName": "maxChunksToSorted",
+  "params": [
+    {
+      "name": "arr",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sweep once while maintaining a stack of chunk maxima: each new value starts its own chunk.",
+    "While the previous chunk maximum exceeds the new value, merge it into the current chunk keeping the larger maximum.",
+    "The stack size at the end is the finest valid chunk count."
+  ]
+}

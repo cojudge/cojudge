@@ -1,0 +1,49 @@
+{
+  "id": "squares-of-a-sorted-array",
+  "title": "962. Squares of a Sorted Array",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/squares-of-a-sorted-array/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [-4,-1,0,3,10]",
+      "output": "[0,1,9,16,100]",
+      "explanation": "Squaring gives [16,1,0,9,100]; sorting increasingly yields [0,1,9,16,100]."
+    },
+    {
+      "input": "nums = [-7,-3,2,3,11]",
+      "output": "[4,9,9,49,121]",
+      "explanation": "Squares [49,9,4,9,121] sorted give [4,9,9,49,121]."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] sortedSquares(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def sortedSquares(self, nums: List[int]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> sortedSquares(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] SortedSquares(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn sorted_squares(nums: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc SortedSquares(nums []int) []int {\n    \n}",
+    "typescript": "export function sortedSquares(nums: number[]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function sortedSquares($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[-4,-1,0,3,10]"
+    },
+    {
+      "nums": "[-7,-3,2,3,11]"
+    }
+  ],
+  "functionName": "sortedSquares",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Squaring is symmetric around zero, so the largest square sits at one of the two ends.",
+    "Use two pointers at both ends, repeatedly emitting the larger square into the answer from back to front."
+  ]
+}

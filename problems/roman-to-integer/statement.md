@@ -1,4 +1,4 @@
-Roman numerals are represented by seven different symbols: `I`, `V`, `X`, `L`, `C`, `D` and `M`.
+Seven distinct glyphs encode Roman numerals: `I`, `V`, `X`, `L`, `C`, `D` and `M`.
 
 ```
 Symbol       Value
@@ -11,15 +11,15 @@ D             500
 M             1000
 ```
 
-For example, `2` is written as `II` in Roman numeral, just two ones added together. `12` is written as `XII`, which is simply `X + II`. The number `27` is written as `XXVII`, which is `XX + V + II`.
+For instance, `2` appears as `II` in Roman notation — two ones tallied together. `12` appears as `XII`, namely `X + II`. The value `27` appears as `XXVII`, namely `XX + V + II`.
 
-Roman numerals are usually written largest to smallest from left to right. However, the numeral for four is not `IIII`. Instead, the number four is written as `IV`. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as `IX`. There are six instances where subtraction is used:
+Ordinarily Roman glyphs run from the greatest value down to the least when read left to right. The value four breaks that pattern: rather than `IIII`, four is penned `IV`. Setting the one ahead of the five signals a subtraction that yields four. Nine follows the same device and is penned `IX`. Subtraction shows up in six pairings:
 
-- `I` can be placed before `V` (5) and `X` (10) to make 4 and 9.
-- `X` can be placed before `L` (50) and `C` (100) to make 40 and 90.
-- `C` can be placed before `D` (500) and `M` (1000) to make 400 and 900.
+- A leading `I` ahead of `V` (5) and `X` (10) produces 4 and 9.
+- A leading `X` ahead of `L` (50) and `C` (100) produces 40 and 90.
+- A leading `C` ahead of `D` (500) and `M` (1000) produces 400 and 900.
 
-Given a roman numeral, convert it to an integer.
+Translate a supplied Roman numeral into its integer value.
 
 **Examples:**
 

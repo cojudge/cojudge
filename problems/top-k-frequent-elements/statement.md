@@ -1,4 +1,4 @@
-Given an integer array `nums` and an integer `k`, return the `k` most frequent elements.
+From an integer list `nums` and an integer `k`, produce the `k` entries that show up most often.
 
 **Constraints:**
 

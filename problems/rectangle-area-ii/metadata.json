@@ -1,0 +1,61 @@
+{
+  "id": "rectangle-area-ii",
+  "title": "847. Rectangle Area II",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/rectangle-area-ii/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "rectangles = [[0,0,2,2],[1,0,2,3],[1,0,3,1]]",
+      "output": "6",
+      "explanation": "Union covers six squares."
+    },
+    {
+      "input": "rectangles = [[0,0,1000000000,1000000000]]",
+      "output": "49",
+      "explanation": "10^18 mod 1e9+7 is 49."
+    },
+    {
+      "input": "rectangles = [[0,0,1,1],[0,0,1,1]]",
+      "output": "1",
+      "explanation": "Full overlap counts once."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int rectangleArea(int[][] rectangles) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def rectangleArea(self, rectangles: List[List[int]]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int rectangleArea(vector<vector<int>>& rectangles) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int RectangleArea(int[][] rectangles)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn rectangle_area(rectangles: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc RectangleArea(rectangles [][]int) int {\n    return 0\n}",
+    "typescript": "export function rectangleArea(rectangles: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $rectangles\n     * @return int\n     */\n    public function rectangleArea($rectangles) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "rectangles": "[[0,0,2,2],[1,0,2,3],[1,0,3,1]]"
+    },
+    {
+      "rectangles": "[[0,0,1000000000,1000000000]]"
+    },
+    {
+      "rectangles": "[[0,0,1,1],[0,0,1,1]]"
+    },
+    {
+      "rectangles": "[[0,0,1,1],[2,2,3,3]]"
+    }
+  ],
+  "functionName": "rectangleArea",
+  "params": [
+    {
+      "name": "rectangles",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Compress coordinates: collect every distinct x and y border, sort them, and work on the small grid of cells between neighbours.",
+    "A compressed cell is covered when some rectangle fully contains it; add (dx * dy) modulo 1e9+7.",
+    "With at most 200 rectangles the compressed grid is at most 400x400."
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "id": "largest-time-for-given-digits",
+  "title": "936. Largest Time for Given Digits",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/largest-time-for-given-digits/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "arr = [1,2,3,4]",
+      "output": "\"23:41\"",
+      "explanation": "Latest among all valid arrangements."
+    },
+    {
+      "input": "arr = [5,5,5,5]",
+      "output": "\"\"",
+      "explanation": "No valid hour and minute pair."
+    },
+    {
+      "input": "arr = [0,0,0,0]",
+      "output": "\"00:00\"",
+      "explanation": "Midnight is the only build."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String largestTimeFromDigits(int[] arr) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def largestTimeFromDigits(self, arr: List[int]) -> str:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string largestTimeFromDigits(vector<int>& arr) {\n        return \"\";\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public string LargestTimeFromDigits(int[] arr) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn largest_time_from_digits(arr: Vec<i32>) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc LargestTimeFromDigits(arr []int) string {\n    return \"\"\n}",
+    "typescript": "export function largestTimeFromDigits(arr: number[]): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @return string\n     */\n    public function largestTimeFromDigits($arr) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "arr": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "arr": [
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "arr": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "functionName": "largestTimeFromDigits",
+  "params": [
+    {
+      "name": "arr",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Only 24 orderings exist, so trying every placement of the four digits is cheap.",
+    "A placement is valid when its hour is below 24 and its minute below 60; keep the valid one with the most total minutes.",
+    "Format the winner with two digits on each side, or return empty when nothing qualified."
+  ]
+}

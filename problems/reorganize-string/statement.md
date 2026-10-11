@@ -1,6 +1,6 @@
-Given a string `s`, rearrange the characters of `s` so that any two adjacent characters are not the same.
+Take a string `s` and shuffle its characters into a new order in which no two neighbours match.
 
-Return any possible rearrangement of `s` or return `""` if not possible.
+Produce any such shuffle, or produce `""` when no valid shuffle exists.
 
 **Example 1:**
 

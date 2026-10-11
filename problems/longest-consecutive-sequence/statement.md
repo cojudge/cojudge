@@ -1,4 +1,4 @@
-Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence. Must run in O(n) time.
+You receive a jumbled integer array nums. Measure how long the longest run of back-to-back integers that all occur in the array can be, regardless of where they sit in the input. Your method must take O(n) time.
 
 **Constraints:**
 

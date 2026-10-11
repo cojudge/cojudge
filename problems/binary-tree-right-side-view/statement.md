@@ -1,8 +1,8 @@
-Given the root of a binary tree, imagine standing on the tree's right side.
-Return the values of the nodes visible from top to bottom.
+Consider the binary tree whose entry point is `root`, observed from a vantage point far to its east.
+List, from the highest row to the lowest row, the value that can still be seen on each row.
 
-At each depth, the visible node is the rightmost node that exists on that level;
-it does not have to be connected only through right-child pointers.
+For every row, exactly one value is recorded: the easternmost occupied slot of that row.
+That slot need not lie on the all-rightward path; a left descendant is recorded whenever nothing stands to its east on the same row.
 
 **Constraints:**
 

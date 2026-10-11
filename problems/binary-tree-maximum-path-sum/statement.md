@@ -1,4 +1,4 @@
-Given the root of a binary tree, return the maximum path sum of any non-empty path. The path sum of a path is the sum of the node's values in the path.
+Starting from the `root` of a binary tree, examine every route that links a non-empty chain of nodes through parent-child edges. Score each route by totalling the values of the nodes it passes through, and return the highest such score.
 
 **Constraints:**
 

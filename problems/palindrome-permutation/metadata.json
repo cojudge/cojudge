@@ -1,0 +1,60 @@
+{
+  "id": "palindrome-permutation",
+  "title": "368. Palindrome Permutation",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/palindrome-permutation/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"code\"",
+      "output": "false",
+      "explanation": "All four letters differ, so any ordering leaves more than one character with an odd count."
+    },
+    {
+      "input": "s = \"aab\"",
+      "output": "true",
+      "explanation": "Rearranged as \"aba\", it reads the same in both directions."
+    },
+    {
+      "input": "s = \"carerac\"",
+      "output": "true",
+      "explanation": "Rearranged as \"racecar\", it is a palindrome."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean canPermutePalindrome(String s) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def canPermutePalindrome(self, s: str) -> bool:\n        return False\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool canPermutePalindrome(string s) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool CanPermutePalindrome(string s)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_permute_palindrome(s: String) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc CanPermutePalindrome(s string) bool {\n    return false\n}",
+    "typescript": "export function canPermutePalindrome(s: string): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return bool\n     */\n    public function canPermutePalindrome($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "code"
+    },
+    {
+      "s": "aab"
+    },
+    {
+      "s": "carerac"
+    },
+    {
+      "s": "a"
+    }
+  ],
+  "functionName": "canPermutePalindrome",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "A palindrome allows at most one character with an odd count.",
+    "Count characters with a set or map and check how many counts are odd."
+  ]
+}

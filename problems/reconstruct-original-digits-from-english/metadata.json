@@ -1,0 +1,53 @@
+{
+  "id": "reconstruct-original-digits-from-english",
+  "title": "494. Reconstruct Original Digits from English",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/reconstruct-original-digits-from-english/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"owoztneoer\"",
+      "output": "\"012\"",
+      "explanation": "The letters form zero, one and two."
+    },
+    {
+      "input": "s = \"fviefuro\"",
+      "output": "\"45\"",
+      "explanation": "The bundle splits into four and five."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String originalDigits(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def originalDigits(self, s: str) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string originalDigits(string s) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string OriginalDigits(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn original_digits(s: String) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc OriginalDigits(s string) string {\n    \n}",
+    "typescript": "export function originalDigits(s: string): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string\n     */\n    public function originalDigits($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "owoztneoer"
+    },
+    {
+      "s": "fviefuro"
+    },
+    {
+      "s": "zerozero"
+    }
+  ],
+  "functionName": "originalDigits",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Some letters appear in only one digit name; count those first to pin down certain digits.",
+    "Subtract the letters of identified digits before resolving the remaining ones.",
+    "Process distinctive letters in an order where each step reveals a new digit."
+  ]
+}

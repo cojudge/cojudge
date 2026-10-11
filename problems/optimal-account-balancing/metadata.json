@@ -1,0 +1,49 @@
+{
+  "id": "optimal-account-balancing",
+  "title": "530. Optimal Account Balancing",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/optimal-account-balancing/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "transactions = [[0,1,10],[2,0,5]]",
+      "output": "2",
+      "explanation": "Net balances are -5 for person 0, +10 for person 1, and -5 for person 2, so two payments (one from each debtor to person 1) settle everything."
+    },
+    {
+      "input": "transactions = [[0,1,10],[1,0,1],[1,2,5],[2,0,5]]",
+      "output": "1",
+      "explanation": "Net balances are -4 for person 0, +4 for person 1, and 0 for person 2, so a single payment of 4 from person 0 to person 1 settles everyone."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int minTransfers(int[][] transactions) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minTransfers(self, transactions: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minTransfers(vector<vector<int>>& transactions) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MinTransfers(int[][] transactions) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_transfers(transactions: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MinTransfers(transactions [][]int) int {\n    \n}",
+    "typescript": "export function minTransfers(transactions: number[][]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $transactions\n     * @return int\n     */\n    public function minTransfers($transactions) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "transactions": "[[0,1,10],[2,0,5]]"
+    },
+    {
+      "transactions": "[[0,1,10],[1,0,1],[1,2,5],[2,0,5]]"
+    }
+  ],
+  "functionName": "minTransfers",
+  "params": [
+    {
+      "name": "transactions",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Only each person's net balance matters: collapse all transfers into one balance per person and drop the zeroes.",
+    "Backtrack over pairs with opposite signs, settling one account per transfer and skipping symmetric dead ends."
+  ]
+}

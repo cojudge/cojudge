@@ -1,0 +1,164 @@
+[
+  {
+    "paths": [
+      "root/a 1.txt(abcd) 2.txt(efgh)",
+      "root/c 3.txt(abcd)",
+      "root/c/d 4.txt(efgh)",
+      "root 4.txt(efgh)"
+    ]
+  },
+  {
+    "paths": [
+      "root/a 1.txt(abcd) 2.txt(efgh)",
+      "root/c 3.txt(abcd) 4.txt(efgh)"
+    ]
+  },
+  {
+    "paths": [
+      "root/a 1.txt(abcd)"
+    ]
+  },
+  {
+    "paths": [
+      "root/a 1.txt(x)"
+    ]
+  },
+  {
+    "paths": [
+      "a 1.txt(a) 2.txt(a)",
+      "b 3.txt(a)"
+    ]
+  },
+  {
+    "paths": [
+      "root/a 1.txt(abc) 2.txt(def)",
+      "root/b 3.txt(ghi)"
+    ]
+  },
+  {
+    "paths": [
+      "d 1.txt(aa) 2.txt(bb) 3.txt(aa)"
+    ]
+  },
+  {
+    "paths": [
+      "x 1.txt(p)",
+      "y 2.txt(q)",
+      "z 3.txt(p)"
+    ]
+  },
+  {
+    "paths": [
+      "root 1.txt(a) 2.txt(a) 3.txt(a)"
+    ]
+  },
+  {
+    "paths": [
+      "r 1.txt(1) 2.txt(2) 3.txt(1) 4.txt(2)"
+    ]
+  },
+  {
+    "paths": [
+      "a 1.txt(content1)",
+      "a 2.txt(content1)"
+    ]
+  },
+  {
+    "paths": [
+      "dir f1.txt(zzz) f2.txt(zzz) f3.txt(yyy)"
+    ]
+  },
+  {
+    "paths": [
+      "r/a 1.txt(ab12) 2.txt(cd34)",
+      "r/b 3.txt(ab12)"
+    ]
+  },
+  {
+    "paths": [
+      "root 1.txt(A) 2.txt(B)",
+      "root/sub 3.txt(A) 4.txt(C)"
+    ]
+  },
+  {
+    "paths": [
+      "m 1.txt(longcontent123) 2.txt(longcontent123)"
+    ]
+  },
+  {
+    "paths": [
+      "a 1.txt(q)",
+      "b 2.txt(q)",
+      "c 3.txt(q)",
+      "d 4.txt(r)"
+    ]
+  },
+  {
+    "paths": [
+      "root 1.txt(1)",
+      "root 2.txt(1)"
+    ]
+  },
+  {
+    "paths": [
+      "d1 a.txt(x) b.txt(y)",
+      "d2 c.txt(x) d.txt(y)",
+      "d3 e.txt(x)"
+    ]
+  },
+  {
+    "paths": [
+      "top 1.txt(same) 2.txt(same) 3.txt(diff) 4.txt(same)"
+    ]
+  },
+  {
+    "paths": [
+      "a 1.txt(v1) 2.txt(v2) 3.txt(v3) 4.txt(v1) 5.txt(v2)"
+    ]
+  },
+  {
+    "paths": [
+      "r 1.txt(abc123)"
+    ]
+  },
+  {
+    "paths": [
+      "dir1 1.txt(a1) 2.txt(b2)",
+      "dir2 3.txt(a1) 4.txt(b2) 5.txt(c3)"
+    ]
+  },
+  {
+    "paths": [
+      "x y.txt(hello) z.txt(world)",
+      "w y.txt(hello)"
+    ]
+  },
+  {
+    "paths": [
+      "root/a/b/c 1.txt(k) 2.txt(k)"
+    ]
+  },
+  {
+    "paths": [
+      "a 1.txt(1)",
+      "b 2.txt(2)",
+      "c 3.txt(3)"
+    ]
+  },
+  {
+    "paths": [
+      "deep/a/b 1.txt(dup) 2.txt(one)",
+      "deep/a/c 3.txt(dup)"
+    ]
+  },
+  {
+    "paths": [
+      "r 1.txt(abcdefghijklmnopqrstuvwxyz0123456789) 2.txt(abcdefghijklmnopqrstuvwxyz0123456789)"
+    ]
+  },
+  {
+    "paths": [
+      "s 1.txt(mix1) 2.txt(mix2) 3.txt(mix1) 4.txt(mix2) 5.txt(mix3)"
+    ]
+  }
+]

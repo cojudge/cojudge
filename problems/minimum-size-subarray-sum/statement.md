@@ -1,4 +1,4 @@
-Given an array of positive integers `nums` and a positive integer `target`, return the minimal length of a subarray whose sum is greater than or equal to `target`. If there is no such subarray, return 0 instead.
+You are given an array `nums` containing only positive values and a positive threshold `target`. Look at all contiguous blocks inside `nums`. Determine the shortest block length whose elements add up to at least `target`. When no block reaches the threshold, return 0.
 
 **Constraints:**
 

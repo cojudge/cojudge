@@ -1,6 +1,8 @@
-Given a sorted array of distinct integers `nums` and a target value `target`, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+You are shown `nums`, a list of different integers already running from smallest to largest, plus a separate integer `target`.
 
-You must write an algorithm with `O(log n)` runtime complexity.
+Give back the position of `target` when it is present. When it is absent, give back the position where `target` would sit so that the ordering stays intact.
+
+Your method must run in `O(log n)` time.
 
 **Constraints:**
 

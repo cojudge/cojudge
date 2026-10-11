@@ -1,0 +1,58 @@
+{
+  "id": "number-of-boomerangs",
+  "title": "515. Number of Boomerangs",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/number-of-boomerangs/",
+  "category": "hash-table",
+  "examples": [
+    {
+      "input": "points = [[0,0],[1,0],[2,0]]",
+      "output": "2",
+      "explanation": "Middle index 1 with outer orderings (0,2) and (2,0)."
+    },
+    {
+      "input": "points = [[1,1],[2,2],[3,3]]",
+      "output": "2",
+      "explanation": "Middle index 1 sees equal gaps to the other two."
+    },
+    {
+      "input": "points = [[1,1]]",
+      "output": "0",
+      "explanation": "Fewer than three points."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numberOfBoomerangs(int[][] points) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numberOfBoomerangs(self, points: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int numberOfBoomerangs(vector<vector<int>>& points) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int NumberOfBoomerangs(int[][] points)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn number_of_boomerangs(points: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumberOfBoomerangs(points [][]int) int {\n    return 0\n}",
+    "typescript": "export function numberOfBoomerangs(points: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $points\n     * @return int\n     */\n    public function numberOfBoomerangs($points) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "points": "[[0,0],[1,0],[2,0]]"
+    },
+    {
+      "points": "[[1,1],[2,2],[3,3]]"
+    },
+    {
+      "points": "[[1,1]]"
+    }
+  ],
+  "functionName": "numberOfBoomerangs",
+  "params": [
+    {
+      "name": "points",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Fix the middle index first, then group the other points by squared distance from it.",
+    "A group of size c contributes c*(c-1) ordered outer pairs.",
+    "Squared distances avoid floating point and fit in 64-bit math."
+  ]
+}

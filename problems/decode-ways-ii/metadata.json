@@ -1,0 +1,58 @@
+{
+  "id": "decode-ways-ii",
+  "title": "661. Decode Ways II",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/decode-ways-ii/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "s = \"*\"",
+      "output": "9",
+      "explanation": "Any digit 1 through 9 forms one valid letter."
+    },
+    {
+      "input": "s = \"1*\"",
+      "output": "18",
+      "explanation": "'1' pairs with each of the 9 options, and '11'..'19' are all valid pairs, giving 9 + 9."
+    },
+    {
+      "input": "s = \"2*\"",
+      "output": "15",
+      "explanation": "9 single-step options plus the pairs '21'..'26' (6 options)."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numDecodings(String s) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numDecodings(self, s: str) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int numDecodings(string s) {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public int NumDecodings(string s) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_decodings(s: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumDecodings(s string) int {\n    return 0\n}",
+    "typescript": "export function numDecodings(s: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function numDecodings($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "*"
+    },
+    {
+      "s": "1*"
+    },
+    {
+      "s": "2*"
+    }
+  ],
+  "functionName": "numDecodings",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Let dp[i] be the ways for the first i characters; each step adds single-character and two-character transitions.",
+    "A '*' alone contributes 9; as the second char of '1*' it contributes 9 pairs, of '2*' 6 pairs, and of '**' 15 pairs.",
+    "Take every addition modulo 1_000_000_007 and treat any chunk starting with '0' as invalid."
+  ]
+}

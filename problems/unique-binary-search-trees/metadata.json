@@ -1,0 +1,58 @@
+{
+  "id": "unique-binary-search-trees",
+  "title": "281. Unique Binary Search Trees",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/unique-binary-search-trees/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "n = 3",
+      "output": "5",
+      "explanation": "Five distinct BST shapes exist over three ordered values."
+    },
+    {
+      "input": "n = 1",
+      "output": "1",
+      "explanation": "A single node forms exactly one tree."
+    },
+    {
+      "input": "n = 4",
+      "output": "14",
+      "explanation": "The Catalan number C4 is 14."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numTrees(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def numTrees(self, n: int) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int numTrees(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int NumTrees(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_trees(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumTrees(n int) int {\n    return 0\n}",
+    "typescript": "export function numTrees(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function numTrees($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 3
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 4
+    }
+  ],
+  "functionName": "numTrees",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Let dp[i] be the count for i nodes; dp[0] = dp[1] = 1.",
+    "For i >= 2, dp[i] = sum over roots r of dp[r-1] * dp[i-r].",
+    "Fill dp bottom-up from 2 to n."
+  ]
+}

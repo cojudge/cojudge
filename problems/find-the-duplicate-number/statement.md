@@ -1,15 +1,12 @@
-Given an integer array `nums` containing `n + 1` integers where every integer is
-in the range `[1, n]`, return the one repeated integer.
+You receive an integer array `nums` holding `n + 1` entries, each drawn from the interval `[1, n]`. One value occurs repeatedly; identify and return it.
 
-Exactly one distinct value is repeated, although it may occur more than twice.
-Solve the problem without modifying `nums` and using only constant extra space.
+A single distinct value is duplicated, though it may show up more than twice. Leave `nums` untouched and rely on only a constant amount of additional memory.
 
 **Constraints:**
 
 - `2 <= nums.length <= 100001`
 - `1 <= nums[i] < nums.length`
-- Exactly one distinct integer in `nums` appears more than once.
-- The repeated integer may appear more than twice.
+- Precisely one distinct integer in `nums` shows up more than once.
+- That duplicated integer may occur more than twice.
 
-**Follow-up:** Can you solve it in `O(n)` time without changing the input array
-and with `O(1)` auxiliary space?
+**Follow-up:** Is an `O(n)`-time approach achievable while keeping the input read-only and the extra memory at `O(1)`?

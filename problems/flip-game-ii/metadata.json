@@ -1,0 +1,58 @@
+{
+  "id": "flip-game-ii",
+  "title": "390. Flip Game II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/flip-game-ii/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "currentState = \"++++\"",
+      "output": "true",
+      "explanation": "Flipping the middle pair leaves \"+--+\" with no reply."
+    },
+    {
+      "input": "currentState = \"+\"",
+      "output": "false",
+      "explanation": "No move exists for the first player."
+    },
+    {
+      "input": "currentState = \"+++++\"",
+      "output": "false",
+      "explanation": "Each possible first flip hands the opponent a winning board."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean canWin(String currentState) {\n        \n    }\n}",
+    "python": "class Solution:\n    def canWin(self, currentState: str) -> bool:\n        ",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool canWin(string currentState) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool CanWin(string currentState)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_win(current_state: String) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc CanWin(currentState string) bool {\n    return false\n}",
+    "typescript": "export function canWin(currentState: string): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $currentState\n     * @return bool\n     */\n    public function canWin($currentState) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "currentState": "++++"
+    },
+    {
+      "currentState": "+"
+    },
+    {
+      "currentState": "+++++"
+    }
+  ],
+  "functionName": "canWin",
+  "params": [
+    {
+      "name": "currentState",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "A board is winning when some legal flip leads to a board that is losing for the player to move.",
+    "Boards with no flippable pair are losing; build up from there with memoised search.",
+    "Flipping splits the board into independent left and right parts, so identical substrings share results through memoisation."
+  ]
+}

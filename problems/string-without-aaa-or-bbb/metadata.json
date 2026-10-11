@@ -1,0 +1,56 @@
+{
+  "id": "string-without-aaa-or-bbb",
+  "title": "967. String Without AAA or BBB",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/string-without-aaa-or-bbb/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "a = 1, b = 2",
+      "output": "\"abb\"",
+      "explanation": "One valid arrangement is abb; it uses one a and two b's with no triple."
+    },
+    {
+      "input": "a = 4, b = 1",
+      "output": "\"aabaa\"",
+      "explanation": "aabaa uses four a's and one b while avoiding aaa and bbb."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String strWithout3a3b(int a, int b) {\n        \n    }\n}",
+    "python": "class Solution:\n    def strWithout3a3b(self, a: int, b: int) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string strWithout3a3b(int a, int b) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string StrWithout3a3b(int a, int b) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn str_without3a3b(a: i32, b: i32) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc StrWithout3a3b(a int, b int) string {\n    \n}",
+    "typescript": "export function strWithout3a3b(a: number, b: number): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $a\n     * @param int $b\n     * @return string\n     */\n    public function strWithout3a3b($a, $b) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "a": 1,
+      "b": 2
+    },
+    {
+      "a": 4,
+      "b": 1
+    }
+  ],
+  "functionName": "strWithout3a3b",
+  "params": [
+    {
+      "name": "a",
+      "type": "int"
+    },
+    {
+      "name": "b",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Always try to emit the currently more plentiful letter, unless doing so would create three in a row.",
+    "When the last two emitted letters are equal, you are forced to emit the other letter next.",
+    "This greedy choice keeps the construction feasible whenever max(a,b) <= 2*(min(a,b)+1)."
+  ]
+}

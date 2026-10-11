@@ -1,4 +1,6 @@
-Given the array `nums` with distinct values after possible rotation and an integer `target`, return the index of `target` if it is in `nums`, or -1 if it is not in `nums`.
+You receive an integer list `nums` that started out sorted upward with no repeats and was then possibly turned at some pivot, plus an integer `target`.
+
+Locate `target` inside `nums` and give back its position. When `target` never appears, give back -1 instead.
 
 **Constraints:**
 

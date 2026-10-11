@@ -59,6 +59,15 @@ static string display_output(ListNode* head) {
     s += "]";
     return s;
 }
+static string display_output(const vector<ListNode*> &v) {
+    string s = "[";
+    for (size_t i = 0; i < v.size(); i++) {
+        if (i > 0) s += ",";
+        s += display_output(v[i]);
+    }
+    s += "]";
+    return s;
+}
 static string display_output(TreeNode* root) {
     if (!root) return "[]";
     vector<string> out;

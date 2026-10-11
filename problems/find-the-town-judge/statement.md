@@ -1,13 +1,14 @@
-In a town, there are `n` people labeled from `1` to `n`. There is a rumor that one of these people is secretly the town judge.
+A settlement holds `n` residents numbered `1` through `n`. Rumor says one of them covertly serves as the town judge.
 
-If the town judge exists, then:
-1. The town judge trusts nobody.
-2. Everybody (except the town judge) trusts the town judge.
-3. There is exactly one person that satisfies properties 1 and 2.
+Whenever a judge is present, the following all hold:
 
-You are given an array `trust` where `trust[i] = [ai, bi]` representing that the person labeled `ai` trusts the person labeled `bi`. If a trust relationship does not exist in `trust` array, then such a trust relationship does not exist.
+1. The town judge places trust in no one.
+2. Every other resident places trust in the town judge.
+3. Exactly one resident meets both conditions above.
 
-Return the label of the town judge if the town judge exists and can be identified, or return `-1` otherwise.
+You receive a list `trust` in which `trust[i] = [ai, bi]` means resident `ai` trusts resident `bi`. Any pair missing from `trust` indicates no trust flows there.
+
+Identify the judge by number when such a uniquely determinable person exists; otherwise return `-1`.
 
 **Example 1:**
 ```
@@ -31,6 +32,6 @@ Output: -1
 - `1 <= n <= 1000`
 - `0 <= trust.length <= 10^4`
 - `trust[i].length == 2`
-- All the pairs of trust are unique
+- Every trust pair is different from the others.
 - `ai != bi`
 - `1 <= ai, bi <= n`

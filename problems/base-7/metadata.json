@@ -1,0 +1,53 @@
+{
+  "id": "base-7",
+  "title": "566. Base 7",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/base-7/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "num = 100",
+      "output": "\"202\"",
+      "explanation": "2*49 + 0*7 + 2 equals 100 in decimal."
+    },
+    {
+      "input": "num = -7",
+      "output": "\"-10\"",
+      "explanation": "Seven in base seven is 10, with the negative sign preserved."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String convertToBase7(int num) {\n        \n    }\n}",
+    "python": "class Solution:\n    def convertToBase7(self, num: int) -> str:\n        pass\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string convertToBase7(int num) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string ConvertToBase7(int num) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn convert_to_base7(num: i32) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc ConvertToBase7(num int) string {\n    \n}",
+    "typescript": "export function convertToBase7(num: number): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $num\n     * @return string\n     */\n    public function convertToBase7($num) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "num": 100
+    },
+    {
+      "num": -7
+    },
+    {
+      "num": 0
+    }
+  ],
+  "functionName": "convertToBase7",
+  "params": [
+    {
+      "name": "num",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Handle zero as a special case returning \"0\".",
+    "Record the sign, work with the absolute value, and collect remainders modulo 7.",
+    "Reverse the collected digits and reattach the minus sign when needed."
+  ]
+}

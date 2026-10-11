@@ -1,0 +1,61 @@
+{
+  "id": "fizz-buzz",
+  "title": "485. Fizz Buzz",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/fizz-buzz/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 3",
+      "output": "[\"1\",\"2\",\"Fizz\"]",
+      "explanation": "Multiples of 3 become Fizz."
+    },
+    {
+      "input": "n = 5",
+      "output": "[\"1\",\"2\",\"Fizz\",\"4\",\"Buzz\"]",
+      "explanation": "Multiples of 5 become Buzz."
+    },
+    {
+      "input": "n = 15",
+      "output": "[\"1\",\"2\",\"Fizz\",\"4\",\"Buzz\",\"Fizz\",\"7\",\"8\",\"Fizz\",\"Buzz\",\"11\",\"Fizz\",\"13\",\"14\",\"FizzBuzz\"]",
+      "explanation": "Multiples of both 3 and 5 become FizzBuzz."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\n\nclass Solution {\n    public List<String> fizzBuzz(int n) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def fizzBuzz(self, n: int) -> List[str]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> fizzBuzz(int n) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\n\npublic class Solution\n{\n    public List<string> FizzBuzz(int n)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn fizz_buzz(n: i32) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc FizzBuzz(n int) []string {\n    return []string{}\n}",
+    "typescript": "export function fizzBuzz(n: number): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return string[]\n     */\n    public function fizzBuzz($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 3
+    },
+    {
+      "n": 5
+    },
+    {
+      "n": 15
+    },
+    {
+      "n": 1
+    }
+  ],
+  "functionName": "fizzBuzz",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Check divisibility by 3 and 5 first for the combined case.",
+    "Otherwise emit Fizz for multiples of 3 and Buzz for multiples of 5.",
+    "All other positions hold the decimal form of the index."
+  ]
+}

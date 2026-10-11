@@ -1,0 +1,63 @@
+{
+  "id": "my-calendar-ii",
+  "title": "738. My Calendar II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/my-calendar-ii/",
+  "category": "design",
+  "examples": [
+    {
+      "input": "operations = [\"MyCalendarTwo\",\"book\",\"book\",\"book\",\"book\",\"book\",\"book\"]\nargs = [[],[10,20],[50,60],[10,40],[5,15],[5,10],[25,55]]",
+      "output": "[1,1,1,0,1,1]",
+      "explanation": "Only the [5,15) request would pile three bookings over [10,15)."
+    },
+    {
+      "input": "operations = [\"MyCalendarTwo\",\"book\",\"book\",\"book\"]\nargs = [[],[0,10],[10,20],[5,15]]",
+      "output": "[1,1,1]"
+    },
+    {
+      "input": "operations = [\"MyCalendarTwo\",\"book\",\"book\",\"book\"]\nargs = [[],[0,10],[5,15],[5,10]]",
+      "output": "[1,1,0]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runCalendarTwo(String[] operations, int[][] args) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runCalendarTwo(self, operations: List[str], args: List[List[int]]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runCalendarTwo(vector<string>& operations, vector<vector<int>>& args) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunCalendarTwo(string[] operations, int[][] args)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_calendar_two(operations: Vec<String>, args: Vec<Vec<i32>>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunCalendarTwo(operations []string, args [][]int) []int {\n    return []int{}\n}",
+    "typescript": "export function runCalendarTwo(operations: string[], args: number[][]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[][] $args\n     * @return int[]\n     */\n    public function runCalendarTwo($operations, $args) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"MyCalendarTwo\",\"book\",\"book\",\"book\",\"book\",\"book\",\"book\"]",
+      "args": "[[],[10,20],[50,60],[10,40],[5,15],[5,10],[25,55]]"
+    },
+    {
+      "operations": "[\"MyCalendarTwo\",\"book\",\"book\",\"book\"]",
+      "args": "[[],[0,10],[10,20],[5,15]]"
+    },
+    {
+      "operations": "[\"MyCalendarTwo\",\"book\",\"book\",\"book\"]",
+      "args": "[[],[0,10],[5,15],[5,10]]"
+    }
+  ],
+  "functionName": "runCalendarTwo",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "args",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Alongside the stored bookings, keep every pairwise-overlapped (double-covered) segment.",
+    "A new request fails when it overlaps any double-covered segment; otherwise append its overlaps with existing bookings to that list.",
+    "Overlap of [s,e) with [a,b) is [max(s,a), min(e,b)) whenever max < min."
+  ]
+}

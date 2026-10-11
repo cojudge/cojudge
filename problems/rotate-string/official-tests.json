@@ -1,0 +1,114 @@
+[
+  {
+    "s": "abcde",
+    "goal": "cdeab"
+  },
+  {
+    "s": "abcde",
+    "goal": "abced"
+  },
+  {
+    "s": "a",
+    "goal": "a"
+  },
+  {
+    "s": "a",
+    "goal": "b"
+  },
+  {
+    "s": "ab",
+    "goal": "ba"
+  },
+  {
+    "s": "ab",
+    "goal": "ab"
+  },
+  {
+    "s": "aa",
+    "goal": "aa"
+  },
+  {
+    "s": "abc",
+    "goal": "bca"
+  },
+  {
+    "s": "abc",
+    "goal": "cab"
+  },
+  {
+    "s": "abc",
+    "goal": "acb"
+  },
+  {
+    "s": "waterbottle",
+    "goal": "erbottlewat"
+  },
+  {
+    "s": "hello",
+    "goal": "llohe"
+  },
+  {
+    "s": "hello",
+    "goal": "ohell"
+  },
+  {
+    "s": "hello",
+    "goal": "hello"
+  },
+  {
+    "s": "abcd",
+    "goal": "abcd"
+  },
+  {
+    "s": "abcd",
+    "goal": "bcda"
+  },
+  {
+    "s": "abcd",
+    "goal": "dabc"
+  },
+  {
+    "s": "abcd",
+    "goal": "abdc"
+  },
+  {
+    "s": "aaaaa",
+    "goal": "aaaaa"
+  },
+  {
+    "s": "ababa",
+    "goal": "baaab"
+  },
+  {
+    "s": "abcde",
+    "goal": "eabcd"
+  },
+  {
+    "s": "xyz",
+    "goal": "zxy"
+  },
+  {
+    "s": "xyz",
+    "goal": "yxz"
+  },
+  {
+    "s": "abcabc",
+    "goal": "bcabca"
+  },
+  {
+    "s": "aab",
+    "goal": "aba"
+  },
+  {
+    "s": "aab",
+    "goal": "baa"
+  },
+  {
+    "s": "abcde",
+    "goal": "abcde"
+  },
+  {
+    "s": "abcdef",
+    "goal": "defabc"
+  }
+]

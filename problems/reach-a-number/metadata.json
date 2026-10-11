@@ -1,0 +1,58 @@
+{
+  "id": "reach-a-number",
+  "title": "756. Reach a Number",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/reach-a-number/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "target = 2",
+      "output": "3",
+      "explanation": "1 right, 2 left, 3 right lands on 2."
+    },
+    {
+      "input": "target = 3",
+      "output": "2",
+      "explanation": "1 right then 2 right lands on 3."
+    },
+    {
+      "input": "target = 4",
+      "output": "3",
+      "explanation": "Left 1, right 2, right 3 gives 4."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int reachNumber(int target) {\n        \n    }\n}",
+    "python": "class Solution:\n    def reachNumber(self, target: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int reachNumber(int target) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int ReachNumber(int target) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reach_number(target: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc ReachNumber(target int) int {\n    return 0\n}",
+    "typescript": "export function reachNumber(target: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $target\n     * @return int\n     */\n    public function reachNumber($target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "target": 2
+    },
+    {
+      "target": 3
+    },
+    {
+      "target": 4
+    }
+  ],
+  "functionName": "reachNumber",
+  "params": [
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Only the distance from zero matters, so replace target by its absolute value.",
+    "Grow n until the triangular sum n*(n+1)/2 reaches the distance; any smaller n cannot cover it.",
+    "Flipping a step of size x changes the total by 2*x, so the overshoot must be even; add one or two more moves otherwise."
+  ]
+}
