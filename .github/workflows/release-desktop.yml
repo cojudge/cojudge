@@ -390,6 +390,14 @@ jobs:
 
             View `~/cojudge/README.md` for a more detailed guide.
 
+            ## Add problems with a coding agent
+
+            Paste the following prompt into your coding agent to easily add problems (requires the `cojudge` desktop CLI above):
+
+            ```
+            Look at ~/cojudge/README.md, please add this problem: {URL}
+            ```
+
             ## Linux installation (x86_64)
 
             Ubuntu, Debian, and Pop!_OS: download the `.deb` and install it with:
