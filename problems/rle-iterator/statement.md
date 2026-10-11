@@ -4,27 +4,6 @@ An iterator walks that unfolded stream. Each `next(n)` call consumes the followi
 
 To keep every language on one footing, this task batches the calls into a single function `runRle(encoding, operations, values)`. The `encoding` array is the paired list above, `operations[i]` names the call (always `"next"` here), `values[i]` holds the `n` for that call, and the returned array holds each call's answer in order.
 
-**Example 1:**
-```
-Input: encoding = [3,8,0,9,2,5], operations = ["next","next","next","next"], values = [2,1,1,2]
-Output: [8,8,5,-1]
-Explanation: The stream is [8,8,8,5,5]. Consuming 2 gives 8, one more gives 8, one more skips the zero-count 9 and gives 5, and asking for 2 with one item left gives -1.
-```
-
-**Example 2:**
-```
-Input: encoding = [1,5], operations = ["next","next"], values = [1,1]
-Output: [5,-1]
-Explanation: The stream holds a lone 5; the first call reports it and the second finds nothing.
-```
-
-**Example 3:**
-```
-Input: encoding = [0,1,2,2], operations = ["next","next"], values = [1,2]
-Output: [2,2]
-Explanation: The leading zero-count entry is skipped, leaving [2,2].
-```
-
 **Constraints:**
 - `2 <= encoding.length <= 1000`
 - `encoding.length` is even.

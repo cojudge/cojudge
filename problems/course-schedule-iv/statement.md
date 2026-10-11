@@ -8,24 +8,6 @@ Respond with a boolean array `answer`, whose `j`-th slot answers the `j`-th quer
 
 **Note:** In this judge the returned collection uses the strings `"true"` and `"false"`.
 
-**Example 1:**
-```
-Input: numCourses = 2, prerequisites = [[1,0]], queries = [[0,1],[1,0]]
-Output: ["false","true"]
-```
-
-**Example 2:**
-```
-Input: numCourses = 2, prerequisites = [], queries = [[1,0],[0,1]]
-Output: ["false","false"]
-```
-
-**Example 3:**
-```
-Input: numCourses = 3, prerequisites = [[1,2],[1,0],[2,0]], queries = [[1,0],[1,2]]
-Output: ["true","true"]
-```
-
 **Constraints:**
 - `2 <= numCourses <= 100`
 - `0 <= prerequisites.length <= (numCourses * (numCourses - 1) / 2)`

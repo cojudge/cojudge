@@ -4,27 +4,6 @@ In the original interactive game, a secret word hides inside `wordlist` and you 
 
 This offline port cannot provide a live judge object with the supported types, so it uses a direct adaptation: implement `runGuess(wordlist, secret)`, which receives the full list plus the hidden word and must return the hidden word. Pretend `secret` is invisible and structure your code as the game strategy (count positional matches, filter candidates by the reported score, repeat with a minimax choice); the judge simply checks the returned word. The reference answer returns `secret` after simulating that loop.
 
-**Example 1:**
-```
-Input: wordlist = ["acckzz","ccbazz","eiowzz","abcczz"], secret = "acckzz"
-Output: "acckzz"
-Explanation: The hidden word is the first entry; a valid strategy guesses it.
-```
-
-**Example 2:**
-```
-Input: wordlist = ["hamada","khaled"], secret = "khaled"
-Output: "khaled"
-Explanation: After one mismatch the candidate set narrows to the secret.
-```
-
-**Example 3:**
-```
-Input: wordlist = ["abcd","efgh","ijkl"], secret = "efgh"
-Output: "efgh"
-Explanation: Returning the hidden entry satisfies the judge.
-```
-
 **Constraints:**
 - `1 <= wordlist.length <= 100`
 - `1 <= wordlist[i].length <= 6`

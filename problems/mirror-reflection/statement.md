@@ -4,27 +4,6 @@ Whenever the beam meets a wall it reflects like a mirror, keeping its progress t
 
 Given `p` and `q`, report which sensor (`0`, `1`, or `2`) the beam reaches first.
 
-**Example 1:**
-```
-Input: p = 2, q = 1
-Output: 2
-Explanation: After one bounce the ray arrives at the corner for sensor 2.
-```
-
-**Example 2:**
-```
-Input: p = 3, q = 1
-Output: 1
-Explanation: The ray reaches the corner for sensor 1 without needing extension tricks.
-```
-
-**Example 3:**
-```
-Input: p = 3, q = 2
-Output: 0
-Explanation: The parity of the extended grid puts the first hit on sensor 0.
-```
-
 **Constraints:**
 - `1 <= q <= 1000`
 - `1 <= p <= 1000`

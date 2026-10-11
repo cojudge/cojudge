@@ -4,20 +4,6 @@ Given the maze plus a start coordinate and a destination coordinate, decide whet
 
 Return `true` when such a rolling route exists and `false` otherwise.
 
-**Example 1:**
-```
-Input: maze = [[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]], start = [0,4], destination = [4,4]
-Output: true
-Explanation: Rolling left, down and around the walls lets the ball halt on the target cell.
-```
-
-**Example 2:**
-```
-Input: maze = [[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]], start = [0,4], destination = [3,2]
-Output: false
-Explanation: Every rolling path stops on cells other than the requested destination.
-```
-
 **Constraints:**
 - `1 <= maze.length, maze[i].length <= 100`
 - Entries are `0` (open) or `1` (wall)

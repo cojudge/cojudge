@@ -10,22 +10,6 @@ You receive three integers `a`, `b`, and `c`. Build the lengthiest happy string 
 
 Here, a substring means a block of characters standing next to each other in the string.
 
-**Example 1:**
-
-```
-Input: a = 1, b = 1, c = 7
-Output: "ccaccbcc"
-Explanation: "ccbccacc" is another acceptable longest answer.
-```
-
-**Example 2:**
-
-```
-Input: a = 7, b = 1, c = 0
-Output: "aabaa"
-Explanation: This is the single acceptable longest answer here.
-```
-
 **Constraints:**
 
 - `0 <= a, b, c <= 100`

@@ -4,18 +4,6 @@ Classify the edges of this graph's MSTs into two groups: an MST edge is critical
 
 Report the original positions of these edges as two lists. Either ordering of the indices is acceptable.
 
-**Example 1:**
-```
-Input: n = 5, edges = [[0,1,1],[1,2,1],[2,3,2],[0,3,2],[0,4,3],[3,4,3],[1,4,6]]
-Output: [[0,1],[2,3,4,5]]
-```
-
-**Example 2:**
-```
-Input: n = 4, edges = [[0,1,1],[1,2,1],[2,3,1],[0,3,1]]
-Output: [[],[0,1,2,3]]
-```
-
 **Constraints:**
 - `2 <= n <= 100`
 - `1 <= edges.length <= min(200, n * (n - 1) / 2)`

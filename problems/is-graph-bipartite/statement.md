@@ -10,29 +10,6 @@ between the groups.
 
 Given the adjacency lists, decide whether the network has this property.
 
-**Example 1:**
-```
-Input: graph = [[1,2,3],[0,2],[0,1,3],[0,2]]
-Output: false
-Explanation: The first three vertices are all pairwise linked, forming a
-triangle, which cannot be two-colored.
-```
-
-**Example 2:**
-```
-Input: graph = [[1,3],[0,2],[1,3],[0,2]]
-Output: true
-Explanation: Even-indexed vertices can share one color and odd-indexed
-vertices the other; every edge crosses between the two sets.
-```
-
-**Example 3:**
-```
-Input: graph = [[1],[0]]
-Output: true
-Explanation: A single edge is trivially two-colorable.
-```
-
 **Constraints:**
 - `graph.length == n`
 - `1 <= n <= 100`

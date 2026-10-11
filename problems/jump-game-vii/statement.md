@@ -5,21 +5,6 @@ You start on position `0` of a binary string `s` indexed from zero; that startin
 
 Decide whether position `s.length - 1` can be reached through a chain of allowed leaps.
 
-**Example 1:**
-
-```
-Input: s = "011010", minJump = 2, maxJump = 3
-Output: true
-Explanation: One valid route first leaps from index 0 to index 3.
-```
-
-**Example 2:**
-
-```
-Input: s = "01101110", minJump = 2, maxJump = 3
-Output: false
-```
-
 **Constraints:**
 
 - `2 <= s.length <= 10^5`

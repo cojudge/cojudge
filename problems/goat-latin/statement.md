@@ -7,25 +7,6 @@ A sentence is made of words separated by single spaces, with no leading or trail
 
 Return the transformed words joined with single spaces.
 
-**Example 1:**
-```
-Input: sentence = "I speak Goat Latin"
-Output: "Imaa peaksmaaa oatGmaaaa atinLmaaaaa"
-Explanation: "I" starts with a vowel, so it becomes "I" + "ma" + "a". "speak" starts with a consonant, so it becomes "peak" + "s" + "ma" + "aa". The same logic applies to the remaining words with three and four trailing a's.
-```
-
-**Example 2:**
-```
-Input: sentence = "The quick brown fox jumped over the lazy dog"
-Output: "heTmaa uickqmaaa rownbmaaaa oxfmaaaaa umpedjmaaaaaa overmaaaaaaa hetmaaaaaaaa azylmaaaaaaaaa ogdmaaaaaaaaaa"
-```
-
-**Example 3:**
-```
-Input: sentence = "a"
-Output: "amaa"
-```
-
 **Constraints:**
 - `1 <= sentence.length <= 150`
 - `sentence` consists of English letters and single spaces only

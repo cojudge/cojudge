@@ -2,18 +2,6 @@ You are given an integer array `height`, where the value at index `i` denotes th
 
 The retained quantity for a pair of positions is the gap between them multiplied by the shorter of the two walls.
 
-**Example 1:**
-```
-Input: height = [1,8,6,2,5,4,8,3,7]
-Output: 49
-```
-
-**Example 2:**
-```
-Input: height = [1,1]
-Output: 1
-```
-
 **Constraints:**
 - `n == height.length`
 - `2 <= n <= 10^5`

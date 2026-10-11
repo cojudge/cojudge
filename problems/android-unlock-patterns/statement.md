@@ -10,26 +10,5 @@ A pattern is an ordered sequence of distinct dots with length between `m` and `n
 
 Given `m` and `n`, count every valid pattern whose length falls in `[m, n]`.
 
-**Example 1:**
-```
-Input: m = 1, n = 1
-Output: 9
-Explanation: Each lone dot is a valid length-1 pattern.
-```
-
-**Example 2:**
-```
-Input: m = 1, n = 2
-Output: 65
-Explanation: 9 one-dot patterns plus 56 ordered two-dot hops give 65.
-```
-
-**Example 3:**
-```
-Input: m = 2, n = 2
-Output: 56
-Explanation: Exactly the 56 valid two-dot hops count.
-```
-
 **Constraints:**
 - `1 <= m <= n <= 9`

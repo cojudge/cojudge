@@ -9,19 +9,6 @@ Supported actions, issued as parallel operation/argument lists:
 
 Collect the answers of every `get` and `sum` call in order and return them as an array.
 
-**Example 1:**
-```
-operations = ["Excel","set","get","sum","get"], args = [[["3","3"]],[["1","1","2"]],[["1","1"]],[["1","2","A1","A2"]],[["1","2"]]]
-Output: [2,4]
-Explanation: A1 becomes 2; B1 sums A1 + A2 (= 2 + 0).
-```
-
-**Example 2:**
-```
-operations = ["Excel","set","set","sum","get"], args = [[["2","2"]],[["1","1","5"]],[["1","2","7"]],[["2","1","A1","B1"]],[["2","1"]]]
-Output: [12]
-```
-
 **Constraints:**
 - Sheet dimensions are small (single digits in tests).
 - Values and totals fit in 32-bit signed integers.

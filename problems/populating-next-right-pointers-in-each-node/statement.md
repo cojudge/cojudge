@@ -2,19 +2,6 @@ Consider a perfect binary tree — every interior node has two children and all 
 
 Link every level left-to-right using these neighbor pointers, ideally reusing constant extra space by walking the already-linked upper row. Return the root afterwards.
 
-**Example 1:**
-```
-Input: root = [1,2,3,4,5,6,7]
-Output: [1,2,3,4,5,6,7]
-Explanation: After linking, row 2 reads 2 -> 3 and row 3 reads 4 -> 5 -> 6 -> 7. Values and shape are unchanged, so the serialization matches the input.
-```
-
-**Example 2:**
-```
-Input: root = []
-Output: []
-```
-
 **Constraints:**
 - `0 <= number of nodes <= 2^12 - 1`
 - `-1000 <= Node.val <= 1000`

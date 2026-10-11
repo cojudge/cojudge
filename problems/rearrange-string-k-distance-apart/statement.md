@@ -9,27 +9,6 @@ with `k = 3` is impossible because three `a` letters need at least
 
 Note that many orderings may be valid; any correct one is accepted.
 
-**Example 1:**
-```
-Input: s = "aabbcc", k = 3
-Output: "abcabc"
-Explanation: Equal letters sit 3 apart, so the spacing rule holds.
-```
-
-**Example 2:**
-```
-Input: s = "aaabc", k = 3
-Output: ""
-Explanation: The three copies of 'a' cannot all be kept far enough apart.
-```
-
-**Example 3:**
-```
-Input: s = "aaadbbcc", k = 2
-Output: "abacabcd"
-Explanation: One valid layout; every repeated letter has a gap of at least 2.
-```
-
 **Constraints:**
 - `1 <= s.length <= 500`
 - `s` consists of lowercase English letters

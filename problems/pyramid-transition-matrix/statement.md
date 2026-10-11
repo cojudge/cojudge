@@ -6,20 +6,6 @@ Decide whether the bottom row can grow all the way to a single top block using o
 
 Adaptation for this judge: the original input gives `allowed` as a list of strings; here it arrives as a string array with the same contents.
 
-**Example 1:**
-```
-Input: bottom = "BCD", allowed = ["BCC","CDE","CEA","FFF"]
-Output: true
-Explanation: "BC" supports "C" and "CD" supports "E", forming "CE"; then "CE" supports "A", leaving one block.
-```
-
-**Example 2:**
-```
-Input: bottom = "AAAA", allowed = ["AAB","AAC","BCD","BBE","DEF"]
-Output: false
-Explanation: Every choice for the second row strands at least one pair without a legal top, so no full pyramid exists.
-```
-
 **Constraints:**
 - `2 <= bottom.length <= 6`
 - `0 <= allowed.length <= 216`

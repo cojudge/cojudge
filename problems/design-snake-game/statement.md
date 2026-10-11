@@ -22,21 +22,6 @@ move also reports `-1`).
 `runSnakeGame(width, height, food, moves)`, which replays the move list and
 returns one score per move.
 
-**Example 1:**
-```
-Input: width = 3, height = 2, food = [[1,2],[0,1]], moves = ["R","D","R","U","L","U"]
-Output: [0,0,1,1,2,-1]
-Explanation: The snake eats at (1,2) on the third move and at (0,1) on the
-fifth move, then crashes into itself on the last move.
-```
-
-**Example 2:**
-```
-Input: width = 2, height = 2, food = [], moves = ["R","D","L"]
-Output: [0,0,0]
-Explanation: With no food the score stays zero while the snake loops safely.
-```
-
 **Constraints:**
 - `1 <= width, height <= 20`
 - `0 <= food.length <= 50`, each `food[i] = [r, c]` with `0 <= r < height`, `0 <= c < width`

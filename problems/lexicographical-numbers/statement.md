@@ -2,28 +2,6 @@ Consider how positive integers look when written as decimal strings and compared
 
 Write a function that takes `n` and returns every integer in the interval `[1, n]`, sorted by the lexicographic order of its decimal representation.
 
-**Example 1:**
-```
-Input: n = 13
-Output: [1,10,11,12,13,2,3,4,5,6,7,8,9]
-Explanation: The strings "1", "10", "11", "12", "13" all start with '1' and
-come first; the remaining single-digit strings follow in order.
-```
-
-**Example 2:**
-```
-Input: n = 2
-Output: [1,2]
-Explanation: With only two values, dictionary order matches numeric order.
-```
-
-**Example 3:**
-```
-Input: n = 9
-Output: [1,2,3,4,5,6,7,8,9]
-Explanation: Single-digit values keep their natural order.
-```
-
 **Constraints:**
 - `1 <= n <= 5 * 10^4`
 

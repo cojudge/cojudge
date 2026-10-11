@@ -10,27 +10,6 @@ The averager remembers at most the newest `size` fed values. Each `next` appends
 
 Return the list of those decimal strings, one per `next` call, in order. Constructor steps contribute nothing to the output.
 
-**Example 1:**
-```
-Input: operations = ["MovingAverage","next","next","next","next"], args = [[3],[1],[10],[3],[5]]
-Output: ["1.0","5.5","4.666666666666667","6.0"]
-Explanation: Windows are [1] (mean 1.0), [1,10] (mean 5.5), [1,10,3] (mean 14/3), [10,3,5] (mean 6.0).
-```
-
-**Example 2:**
-```
-Input: operations = ["MovingAverage","next","next"], args = [[1],[4],[5]]
-Output: ["4.0","5.0"]
-Explanation: Width 1 keeps only the newest value each time.
-```
-
-**Example 3:**
-```
-Input: operations = ["MovingAverage","next","next","next"], args = [[2],[-1],[3],[5]]
-Output: ["-1.0","1.0","4.0"]
-Explanation: Windows are [-1] (mean -1.0), [-1,3] (mean 1.0), [3,5] (mean 4.0).
-```
-
 **Constraints:**
 - `1 <= size <= 1000`
 - `-10^5 <= value <= 10^5`

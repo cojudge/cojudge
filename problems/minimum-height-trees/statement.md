@@ -6,18 +6,6 @@ List the labels of every root that achieves that smallest height. The order of t
 
 For a rooted tree, height means the count of edges along the longest path that starts at the root and goes down to a leaf.
 
-**Example 1:**
-```
-Input: n = 4, edges = [[1,0],[1,2],[1,3]]
-Output: [1]
-```
-
-**Example 2:**
-```
-Input: n = 6, edges = [[3,0],[3,1],[3,2],[3,4],[5,4]]
-Output: [3,4]
-```
-
 **Constraints:**
 - `1 <= n <= 2 * 10^4`
 - `edges.length == n - 1`

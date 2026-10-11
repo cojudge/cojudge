@@ -8,20 +8,6 @@ Build the maximum binary tree as follows, applied recursively to each slice of t
 
 Return the root of the finished tree.
 
-**Example 1:**
-```
-Input: nums = [3,2,1,6,0,5]
-Output: [6,3,5,null,2,0,null,null,1]
-Explanation: 6 is the overall maximum. The left part [3,2,1] and right part [0,5] are built the same way.
-```
-
-**Example 2:**
-```
-Input: nums = [3,2,1]
-Output: [3,null,2,null,1]
-Explanation: Each step picks the first entry as the maximum of what remains.
-```
-
 **Constraints:**
 - `1 <= nums.length <= 1000`
 - `0 <= nums[i] <= 1000`

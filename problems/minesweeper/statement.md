@@ -14,20 +14,6 @@ Return the updated board as a list of row strings: row `r` of the answer is the 
 
 *Adaptation note:* the board is passed in as a 2D grid of characters and the answer is read back as a list of strings (one per row) so every supported language can express it.
 
-**Example 1:**
-```
-Input: board = [["E","E","E","E","E"],["E","E","M","E","E"],["E","E","E","E","E"],["E","E","E","E","E"]], click = [3,0]
-Output: ["B1E1B","B1M1B","B111B","BBBBB"]
-Explanation: The click lands far from the mine, so a blank region floods outward until it touches numbered squares bordering the mine.
-```
-
-**Example 2:**
-```
-Input: board = [["B","1","E","1","B"],["B","1","M","1","B"],["B","1","1","1","B"],["B","B","B","B","B"]], click = [1,2]
-Output: ["B1E1B","B1X1B","B111B","BBBBB"]
-Explanation: The clicked square hides a mine, so it is marked X.
-```
-
 **Constraints:**
 - `1 <= board.length, board[i].length <= 50`
 - The board is rectangular; every cell holds one of `E`, `M`, `B`, `X`, or a digit `1`–`8`.

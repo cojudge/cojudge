@@ -11,27 +11,5 @@ one tile in one covering but split across two tiles in the other.
 Given `n`, count all valid coverings. The total can be huge, so report it
 modulo `1_000_000_007`.
 
-**Example 1:**
-```
-Input: n = 3
-Output: 5
-Explanation: Five distinct tilings fill a 2x3 board with dominoes and
-trominoes.
-```
-
-**Example 2:**
-```
-Input: n = 1
-Output: 1
-Explanation: Only a single vertical domino fits.
-```
-
-**Example 3:**
-```
-Input: n = 2
-Output: 2
-Explanation: Either two vertical dominoes or two horizontal ones.
-```
-
 **Constraints:**
 - `1 <= n <= 1000`

@@ -5,20 +5,6 @@ You are given a picture as a grid of `B` (black) and `W` (white) pixels, plus a 
 
 Return the total number of black pixels satisfying all three conditions.
 
-**Example 1:**
-```
-Input: picture = [["W","B","W","B","B","W"],["W","B","W","B","B","W"],["W","B","W","B","B","W"],["W","W","B","W","B","W"]], N = 3
-Output: 6
-Explanation: The three identical top rows each hold 3 black pixels. Columns 1 and 3 (counting from 0) each hold exactly 3 black pixels, all in identical rows, giving 3 times 2 = 6 qualifying pixels.
-```
-
-**Example 2:**
-```
-Input: picture = [["W","B","W"],["B","W","W"]], N = 1
-Output: 2
-Explanation: Both black pixels sit in rows and columns that each hold exactly one black pixel, and each column's black rows trivially match.
-```
-
 **Constraints:**
 - `1 <= picture.length, picture[i].length <= 500`
 - The grid is rectangular and holds only `B` and `W`.

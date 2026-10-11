@@ -8,20 +8,6 @@ Return the filled canvas.
 
 **Adaptation:** the canvas maps to a nested string list in this judge.
 
-**Example 1:**
-```
-Input: root = [1,2]
-Output: [["","1",""],["2","",""]]
-Explanation: Height 2 gives a 2x3 grid; 1 sits centered on top and 2 sits at the left of the bottom row.
-```
-
-**Example 2:**
-```
-Input: root = [1,2,3,null,4]
-Output: [["","","","1","","",""],["","2","","","","3",""],["","","4","","","",""]]
-Explanation: Height 3 gives a 3x7 grid with each child centered under its parent side.
-```
-
 **Constraints:**
 - `1 <= number of nodes <= 200`
 - `-100 <= node value <= 100`

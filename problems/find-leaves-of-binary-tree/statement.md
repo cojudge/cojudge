@@ -10,24 +10,5 @@ For the tree `[1,2,3,4,5]` (root 1, children 2 and 3, with 2 parenting 4 and
 inside one round may appear in any order, but rounds stay ordered from the
 outer leaves inward.
 
-**Example 1:**
-```
-Input: root = [1,2,3,4,5]
-Output: [[4,5,3],[2],[1]]
-Explanation: Leaves [4,5,3] fall first, then [2], then [1].
-```
-
-**Example 2:**
-```
-Input: root = [1]
-Output: [[1]]
-```
-
-**Example 3:**
-```
-Input: root = []
-Output: []
-```
-
 **Constraints:**
 - The tree holds between 0 and 100 nodes, with values in `[-100, 100]`.

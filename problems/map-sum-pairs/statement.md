@@ -8,20 +8,6 @@ Convention per index `i`:
 
 Return the list of sums for the sum calls in order.
 
-**Example 1:**
-```
-Input: operations = ["insert","sum","insert","sum"], keys = ["apple","ap","app","ap"], vals = [3,0,2,0]
-Output: [3,5]
-Explanation: ap covers apple (3), later apple plus app (3+2).
-```
-
-**Example 2:**
-```
-Input: operations = ["insert","insert","sum"], keys = ["aa","aa","a"], vals = [2,3,0]
-Output: [3]
-Explanation: aa is overwritten from 2 to 3.
-```
-
 **Constraints:**
 - Operation count per test is between 1 and 20.
 - Keys use lowercase letters; insert values lie in [1, 1000].

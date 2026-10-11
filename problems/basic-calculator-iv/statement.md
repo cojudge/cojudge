@@ -11,27 +11,6 @@ Evaluate the expression, substituting the known variables, and return the simpli
 
 This judge has no floating or map types, so the expression travels as a plain string and the answer travels as a string list (`string_list`); known values travel as a string array plus an integer array.
 
-**Example 1:**
-```
-Input: expression = "e + 8 - a + 5", evalvars = ["e"], evalints = [1]
-Output: ["-1*a","14"]
-Explanation: e becomes 1, leaving 14 - a, ordered as the degree-1 term then the constant.
-```
-
-**Example 2:**
-```
-Input: expression = "e - 8 + temperature - pressure", evalvars = ["e","temperature"], evalints = [1,12]
-Output: ["-1*pressure","5"]
-Explanation: 1 - 8 + 12 - pressure simplifies to 5 - pressure.
-```
-
-**Example 3:**
-```
-Input: expression = "(e + 8) * (e - 8)", evalvars = [], evalints = []
-Output: ["1*e*e","-64"]
-Explanation: The product expands to e*e - 64.
-```
-
 **Constraints:**
 - `1 <= expression.length <= 200`
 - `expression` is valid and uses only digits, lowercase letters, `+`, `-`, `*`, `(`, `)`, and spaces

@@ -6,19 +6,5 @@ Return all such numbers in any order.
 
 *Type note:* the original signature returns a list of strings; here it maps to `string_list`.
 
-**Example 1:**
-```
-Input: n = 2
-Output: ["11","69","88","96"]
-Explanation: These are all length-2 strings whose rotation mirrors correctly with a non-zero lead.
-```
-
-**Example 2:**
-```
-Input: n = 1
-Output: ["0","1","8"]
-Explanation: Only 0, 1, and 8 rotate to themselves as single digits.
-```
-
 **Constraints:**
 - `1 <= n <= 14`

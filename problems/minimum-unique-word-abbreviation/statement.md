@@ -4,27 +4,6 @@ Given a `target` word and a `dictionary` list, find the shortest abbreviation of
 
 Return that shortest unique shorthand.
 
-**Example 1:**
-```
-Input: target = "apple", dictionary = ["blade"]
-Output: "a4"
-Explanation: a4 abbreviates apple as a plus four skips. Blade begins with b, so a4 cannot match it, and no length-1 shorthand works.
-```
-
-**Example 2:**
-```
-Input: target = "apple", dictionary = ["plain","amber","blade"]
-Output: "1p3"
-Explanation: Among shorthands of apple missed by all three rivals, 1p3 (length 3) is minimal.
-```
-
-**Example 3:**
-```
-Input: target = "a", dictionary = []
-Output: "1"
-Explanation: Without rivals the single letter compresses to 1.
-```
-
 **Constraints:**
 - `1 <= target.length <= 21`
 - `0 <= dictionary.length <= 100`

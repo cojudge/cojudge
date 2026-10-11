@@ -4,20 +4,6 @@ In a valid search tree, every node's left descendants hold smaller values and ri
 
 Return the root of the repaired tree.
 
-**Example 1:**
-```
-Input: root = [1,3,null,null,2]
-Output: [3,1,null,null,2]
-Explanation: Nodes holding 1 and 3 were exchanged. Swapping them back fixes the ordering.
-```
-
-**Example 2:**
-```
-Input: root = [3,1,4,null,null,2]
-Output: [2,1,4,null,null,3]
-Explanation: Nodes holding 3 and 2 were exchanged. Swapping them back fixes the ordering.
-```
-
 **Constraints:**
 - `2 <= number of nodes <= 1000`
 - `-2^31 <= Node.val <= 2^31 - 1`

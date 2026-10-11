@@ -4,27 +4,6 @@ Picture both strings as blocks of repeated letters: for example `heeellooo` beco
 
 Return how many entries of `words` are stretchy.
 
-**Example 1:**
-```
-Input: s = "heeellooo", words = ["hello","hi","helo"]
-Output: 1
-Explanation: Only "hello" has matching blocks that can all be lengthened to the blocks of s.
-```
-
-**Example 2:**
-```
-Input: s = "zzzzzyyyy", words = ["zzyy","zy","zyyy"]
-Output: 3
-Explanation: All three words share the two-block shape of s, and both s-blocks are long, so each one stretches.
-```
-
-**Example 3:**
-```
-Input: s = "abcd", words = ["abc"]
-Output: 0
-Explanation: The block structure differs, so the word cannot stretch.
-```
-
 **Constraints:**
 - `1 <= s.length <= 100`
 - `1 <= words.length <= 100`

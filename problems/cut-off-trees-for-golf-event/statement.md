@@ -8,24 +8,6 @@ Start at the top-left cell `(0,0)`. Repeatedly walk to the nearest remaining tre
 
 Return the total number of steps over the whole tour, or `-1` when some tree cannot be reached. When no tree above height 1 exists, the total is `0`.
 
-**Example 1:**
-```
-Input: forest = [[1,2,3],[0,0,4],[7,6,5]]
-Output: 6
-```
-
-**Example 2:**
-```
-Input: forest = [[1,2,3],[0,0,0],[7,6,5]]
-Output: -1
-```
-
-**Example 3:**
-```
-Input: forest = [[2,3,4],[0,0,5],[8,7,6]]
-Output: 6
-```
-
 **Constraints:**
 - `1 <= forest.length, forest[0].length <= 50`
 - `0 <= forest[i][j] <= 10^9`

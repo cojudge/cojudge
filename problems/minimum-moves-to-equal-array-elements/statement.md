@@ -4,20 +4,6 @@ Find the smallest number of moves that makes all entries equal.
 
 Raising `n-1` entries by one has the same effect as lowering the single untouched entry by one, so the task equals dragging every value down to the minimum.
 
-**Example 1:**
-```
-Input: nums = [1,2,3]
-Output: 3
-Explanation: Add to the first two twice and to the first and third once; all become 4 after 3 moves.
-```
-
-**Example 2:**
-```
-Input: nums = [1,1,1]
-Output: 0
-Explanation: Already equal, no moves needed.
-```
-
 **Constraints:**
 - `1 <= nums.length <= 10^5`
 - `-10^9 <= nums[i] <= 10^9`

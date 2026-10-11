@@ -4,20 +4,6 @@ After all recorded transfers, the group wants to settle up with the fewest possi
 
 Return the minimum number of settlement transfers required so that everyone ends with a net balance of zero.
 
-**Example 1:**
-```
-Input: transactions = [[0,1,10],[2,0,5]]
-Output: 2
-Explanation: Net balances are -5 for person 0, +10 for person 1, and -5 for person 2. Two payments clear everything, for instance person 0 and person 2 each pay person 1.
-```
-
-**Example 2:**
-```
-Input: transactions = [[0,1,10],[1,0,1],[1,2,5],[2,0,5]]
-Output: 1
-Explanation: Net balances collapse so that a single payment settles every account.
-```
-
 **Constraints:**
 - `1 <= transactions.length <= 8`
 - `0 <= from, to <= 20`, `from != to`

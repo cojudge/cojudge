@@ -4,26 +4,6 @@ In every round, the remaining entries are paired strongest-with-weakest: the fir
 
 Build and return the final bracket string directly from `n` (this task is a plain function of `n`, not a class-design simulation).
 
-**Example 1:**
-```
-Input: n = 4
-Output: "((1,4),(2,3))"
-Explanation: Round one gives (1,4) and (2,3); the final wraps them together.
-```
-
-**Example 2:**
-```
-Input: n = 8
-Output: "(((1,8),(4,5)),((2,7),(3,6)))"
-Explanation: Pair outer entries repeatedly, nesting each round in parentheses.
-```
-
-**Example 3:**
-```
-Input: n = 2
-Output: "(1,2)"
-```
-
 **Constraints:**
 - `n` is a power of two, `n == 2^k`
 - `1 <= k <= 12` (so `2 <= n <= 4096`)

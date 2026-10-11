@@ -4,19 +4,5 @@ In the original form of this task you are given a uniform generator `rand7()` pr
 
 Grading only checks that the returned array has exactly `calls` entries and that every entry lies in 1..10 (distribution uniformity is not measured).
 
-**Example 1:**
-```
-Input: calls = 1
-Output: [4]
-Explanation: Any single value from 1 to 10 is acceptable; the judge only checks the range.
-```
-
-**Example 2:**
-```
-Input: calls = 3
-Output: [7,2,9]
-Explanation: Return one independent uniform draw per requested call.
-```
-
 **Constraints:**
 - `1 <= calls <= 1000`

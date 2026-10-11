@@ -4,27 +4,6 @@ In one step you may insert a character anywhere, delete a character, or replace 
 
 Passwords hold letters, digits, `.` and `!`.
 
-**Example 1:**
-```
-Input: password = "a"
-Output: 5
-Explanation: Five insertions grow the length to 6 while adding the missing upper-case and digit classes.
-```
-
-**Example 2:**
-```
-Input: password = "aA1"
-Output: 3
-Explanation: Types are fine; three insertions reach the minimum length.
-```
-
-**Example 3:**
-```
-Input: password = "1337C0d3"
-Output: 0
-Explanation: All length, variety and repeat conditions already hold.
-```
-
 **Constraints:**
 - `1 <= password.length <= 50`
 - Characters are letters, digits, `.` or `!`.

@@ -7,18 +7,6 @@ Form the tree for a square region with this recursive rule:
 2. When the region mixes values, emit a branch node (its `val` may be either value) and split the region into its four equal quadrants.
 3. Apply the same procedure to each of the four quadrants.
 
-**Example 1:**
-```
-Input: grid = [[0,1],[1,0]]
-Output: [[0,1],[1,0],[1,1],[1,1],[1,0]]
-```
-
-**Example 2:**
-```
-Input: grid = [[1,1],[1,1]]
-Output: [[1,1]]
-```
-
 **Constraints:**
 - `n == grid.length == grid[i].length`
 - `n == 2^x` where `0 <= x <= 6`

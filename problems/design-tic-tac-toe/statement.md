@@ -10,27 +10,6 @@ After each placement, determine the game state: return `1` when player 1 has jus
 
 Return the list of those results, one per `move`, in order. The constructor contributes nothing.
 
-**Example 1:**
-```
-Input: operations = ["TicTacToe","move","move","move","move","move","move","move"], args = [[3],[0,0,1],[0,2,2],[2,2,1],[1,1,2],[2,0,1],[1,0,2],[2,1,1]]
-Output: [0,0,0,0,0,0,1]
-Explanation: Player 1 fills the bottom row (2,0), (2,2), (2,1) across three turns; the win is reported on the final move.
-```
-
-**Example 2:**
-```
-Input: operations = ["TicTacToe","move","move","move"], args = [[2],[0,0,1],[1,1,2],[0,1,1]]
-Output: [0,0,1]
-Explanation: Player 1 completes the top row of the 2x2 board on the third placement.
-```
-
-**Example 3:**
-```
-Input: operations = ["TicTacToe","move","move","move"], args = [[3],[0,0,1],[1,1,1],[2,2,1]]
-Output: [0,0,1]
-Explanation: Player 1 completes the main diagonal.
-```
-
 **Constraints:**
 - `2 <= n <= 100`
 - `0 <= row, col < n`

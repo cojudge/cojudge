@@ -6,20 +6,6 @@ Combine all busy blocks, merge overlaps, and return the finite gaps where everyo
 
 Adaptation for this judge: the original signature uses nested interval objects; here both the input rows and the output use plain integer arrays, with the output type `int_list_2d` (a list of `[start, end]` pairs).
 
-**Example 1:**
-```
-Input: schedule = [[1,2,5,6],[1,3],[4,10]]
-Output: [[3,4]]
-Explanation: Together the busy cover is [1,3] plus [4,10]; the only finite common gap is 3 to 4.
-```
-
-**Example 2:**
-```
-Input: schedule = [[1,3,6,7],[2,4],[2,5,9,12]]
-Output: [[5,6],[7,9]]
-Explanation: Merged busy cover is [1,5],[6,7],[9,12]; gaps 5-6 and 7-9 are the shared free time.
-```
-
 **Constraints:**
 - `1 <= schedule.length <= 50`
 - Each row holds an even count of entries forming `[start, end]` pairs.

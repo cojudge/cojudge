@@ -7,22 +7,6 @@ Along the entire journey the headcount aboard must never surpass `capacity`.
 
 Decide whether every booking can be honoured: return `true` when feasible, `false` otherwise.
 
-**Example 1:**
-
-```
-Input: trips = [[2,1,5],[3,3,7]], capacity = 4
-Output: false
-Explanation: At kilometre 1, 2 riders board, leaving 2 aboard.
-```
-
-**Example 2:**
-
-```
-Input: trips = [[2,1,5],[3,3,7]], capacity = 5
-Output: true
-Explanation: At kilometre 1, the vehicle carries 2 riders.
-```
-
 **Constraints:**
 
 - `1 <= trips.length <= 1000`

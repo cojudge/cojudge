@@ -10,16 +10,6 @@ query itself.
 `checkAbbr(dictionary, words)` returning an array with `1` for unique and
 `0` otherwise, one entry per query.
 
-**Examples:**
-```
-Input: dictionary = ["deer","door","cake","card"], words = ["dear","cart","cane"]
-Output: [0,1,0]
-```
-```
-Input: dictionary = ["hello"], words = ["hello","hallo"]
-Output: [1,0]
-```
-
 **Constraints:**
 - `1 <= dictionary.length, words.length <= 100`
 - Words are lowercase letters.

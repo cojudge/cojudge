@@ -6,27 +6,6 @@ You receive such a comma-separated line `preorder`. Decide whether it could have
 
 You must answer without rebuilding the tree.
 
-**Example 1:**
-```
-Input: preorder = "9,3,4,#,#,1,#,#,2,#,6,#,#"
-Output: true
-Explanation: The tokens line up with a complete preorder walk: every real node supplies exactly two child slots and every `#` consumes one.
-```
-
-**Example 2:**
-```
-Input: preorder = "1,#"
-Output: false
-Explanation: The root claims two child slots but only one token follows, so one slot stays empty.
-```
-
-**Example 3:**
-```
-Input: preorder = "9,#,#,1"
-Output: false
-Explanation: The first three tokens already describe a finished tree, leaving the trailing `1` with nowhere to attach.
-```
-
 **Constraints:**
 - `1 <= preorder.length <= 10^4`
 - Tokens are integers in `[0, 100]` or `#`, separated by single commas.

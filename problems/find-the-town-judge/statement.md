@@ -10,24 +10,6 @@ You receive a list `trust` in which `trust[i] = [ai, bi]` means resident `ai` tr
 
 Identify the judge by number when such a uniquely determinable person exists; otherwise return `-1`.
 
-**Example 1:**
-```
-Input: n = 2, trust = [[1,2]]
-Output: 2
-```
-
-**Example 2:**
-```
-Input: n = 3, trust = [[1,3],[2,3]]
-Output: 3
-```
-
-**Example 3:**
-```
-Input: n = 3, trust = [[1,3],[2,3],[3,1]]
-Output: -1
-```
-
 **Constraints:**
 - `1 <= n <= 1000`
 - `0 <= trust.length <= 10^4`

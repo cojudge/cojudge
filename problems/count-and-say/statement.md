@@ -4,26 +4,5 @@ Formally, `countAndSay(1) = "1"`, and `countAndSay(n)` is the run-length encodin
 
 Given `n`, return the nth term.
 
-**Example 1:**
-```
-Input: n = 4
-Output: "1211"
-Explanation: "1" -> "11" -> "21" -> "1211".
-```
-
-**Example 2:**
-```
-Input: n = 1
-Output: "1"
-Explanation: The sequence starts with "1".
-```
-
-**Example 3:**
-```
-Input: n = 5
-Output: "111221"
-Explanation: Reading "1211" aloud gives one 1, one 2, then two 1s.
-```
-
 **Constraints:**
 - `1 <= n <= 30`

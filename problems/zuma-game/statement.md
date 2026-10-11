@@ -4,27 +4,6 @@ On each move you may take one ball from your hand and slide it into the row at a
 
 Your task is to use as few hand balls as possible to empty the row. Return that minimum count, or `-1` when the hand cannot finish the job.
 
-**Example 1:**
-```
-Input: board = "WRRBBW", hand = "RB"
-Output: -1
-Explanation: No insertion order empties the row with these two hand balls.
-```
-
-**Example 2:**
-```
-Input: board = "WWRRBBWW", hand = "WRBRW"
-Output: 2
-Explanation: Two well placed insertions trigger cascading deletions that clear the row.
-```
-
-**Example 3:**
-```
-Input: board = "G", hand = "GGGGG"
-Output: 2
-Explanation: Adding two more `G` balls makes three in a row, which are then removed.
-```
-
 **Constraints:**
 - `1 <= board.length <= 16`
 - `1 <= hand.length <= 5`

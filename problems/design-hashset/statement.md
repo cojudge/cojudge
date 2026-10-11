@@ -6,18 +6,6 @@ Collect one number per `contains` — `1` when the key is present and `0` when i
 
 Each script opens with `MyHashSet`, every key obeys `0 <= key <= 10^6`, and at most `10^4` invocations occur.
 
-**Example 1:**
-```
-Input: operations = ["MyHashSet","add","add","contains","contains","add","contains","remove","contains"], values = [0,1,2,1,3,2,2,2,2]
-Output: [1,0,1,0]
-```
-
-**Example 2:**
-```
-Input: operations = ["MyHashSet","contains","add","contains","remove","contains"], values = [0,5,5,5,5,5]
-Output: [0,1,0]
-```
-
 **Constraints:**
 - `0 <= key <= 10^6`
 - At most `10^4` calls to `add`, `remove`, and `contains`.

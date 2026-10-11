@@ -2,27 +2,6 @@ You are given a file's full text `file` and a request size `n`. Imagine a reader
 
 Return the characters that such a reader would collect: the first `n` characters of `file`, or the whole file when it is shorter than `n`.
 
-**Example 1:**
-```
-Input: file = "abc", n = 4
-Output: "abc"
-Explanation: Only three characters exist, so the reader stops early.
-```
-
-**Example 2:**
-```
-Input: file = "abcde", n = 5
-Output: "abcde"
-Explanation: Exactly the whole file is requested.
-```
-
-**Example 3:**
-```
-Input: file = "abcdABCD1234", n = 12
-Output: "abcdABCD1234"
-Explanation: Twelve characters fill three read4 calls exactly.
-```
-
 **Constraints:**
 - `0 <= file.length <= 10^4`
 - `file` holds printable ASCII characters.

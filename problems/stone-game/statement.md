@@ -6,19 +6,6 @@ Alice moves first and the two alternate. On every move the player whose turn it 
 
 Both sides choose as well as possible. Return `true` when that optimal play leaves Alice ahead, and `false` when it leaves Bob ahead.
 
-**Example 1:**
-```
-Input: piles = [5,3,4,5]
-Output: true
-Explanation: Alice opens and must commit to one of the 5s on either side. Suppose she removes the left 5, leaving [3, 4, 5]. If Bob then removes 3, the row is [4, 5] and Alice secures 5 next, finishing ahead 10 to 7. If Bob instead removes the right 5, the row is [3, 4] and Alice secures 4 next, finishing ahead 9 to 8.
-```
-
-**Example 2:**
-```
-Input: piles = [3,7,2,3]
-Output: true
-```
-
 **Constraints:**
 - 2 ≤ piles.length ≤ 500
 - piles.length is even.

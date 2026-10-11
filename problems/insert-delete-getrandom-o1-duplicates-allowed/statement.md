@@ -8,27 +8,6 @@ This is a deterministic, function-style adaptation of the classic duplicates-all
 
 Return one recorded entry per non-constructor step, in order. The classic version also demands sampling proportional to multiplicity and average O(1) time; this portable judge checks only validity — each `getRandom` entry must have a remaining copy — not the distribution. Aim for average O(1) with a list plus index sets.
 
-**Example 1:**
-```
-Input: operations = ["RandomizedCollection","insert","insert","insert","getRandom","remove","getRandom"], values = [0,1,1,2,0,1,0]
-Output: [1,0,1,X,1,Y] (X in {1,1,2}; Y in {1,2})
-Explanation: First 1 is new (1), second 1 duplicates (0), 2 is new (1). Sampling sees {1,1,2}. Removing one 1 hits (1), leaving {1,2} for the last sample.
-```
-
-**Example 2:**
-```
-Input: operations = ["RandomizedCollection","insert","remove","remove"], values = [0,4,4,4]
-Output: [1,1,0]
-Explanation: After adding and removing one 4, a second removal misses.
-```
-
-**Example 3:**
-```
-Input: operations = ["RandomizedCollection","insert","insert","remove"], values = [0,2,2,2]
-Output: [1,0,1]
-Explanation: Two copies of 2 are stored; removing one still leaves a copy.
-```
-
 **Constraints:**
 - `1 <= operations.length == values.length <= 2 * 10^5`
 - `operations[0] == "RandomizedCollection"`

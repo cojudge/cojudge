@@ -16,26 +16,6 @@ The two arrays are parallel. `operations[i]` is one of `"MyCircularDeque"`, `"in
 
 Return one integer per operation after the constructor, in call order. There is intentionally no class wrapper.
 
-**Example 1:**
-```
-Input: operations = ["MyCircularDeque","insertLast","insertLast","insertFront","insertFront","getRear","isFull","deleteLast","insertFront","getFront"], values = [3,1,2,3,4,0,0,0,4,0]
-Output: [1,1,1,0,2,1,1,1,4]
-Explanation: Capacity 3 fills with [3,1,2]; the second insertFront fails; rear is 2 and the deque is full; after deleting the rear, inserting 4 at the front gives [4,3,1].
-```
-
-**Example 2:**
-```
-Input: operations = ["MyCircularDeque","getFront","getRear","isEmpty","insertFront","isFull","deleteFront","isEmpty"], values = [2,0,0,0,9,0,0,0]
-Output: [-1,-1,1,1,0,1,1]
-Explanation: An empty deque reads -1 at both ends; after inserting 9 it is neither full nor empty.
-```
-
-**Example 3:**
-```
-Input: operations = ["MyCircularDeque","insertFront","getFront","deleteFront","isEmpty"], values = [1,5,0,0,0]
-Output: [1,5,1,1]
-```
-
 **Constraints:**
 - `1 <= operations.length == values.length <= 3000`
 - The first operation is `"MyCircularDeque"` with `1 <= k <= 1000`.

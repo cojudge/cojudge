@@ -4,27 +4,6 @@ In other words, for every pair of positions `(i, j)` that falls inside the layou
 
 Return `true` when `words` forms such a layout, otherwise `false`.
 
-**Example 1:**
-```
-Input: words = ["abcd","bnrt","crmy","dtye"]
-Output: true
-Explanation: Row 0 reads "abcd" and column 0 reads "abcd"; the same agreement holds for the other three positions.
-```
-
-**Example 2:**
-```
-Input: words = ["ball","area","read","lady"]
-Output: false
-Explanation: Column 3 spells "dly?" while row 3 is "lady", so the symmetry breaks.
-```
-
-**Example 3:**
-```
-Input: words = ["abcd","bnrt","crm","dt"]
-Output: true
-Explanation: The shorter trailing rows still mirror their columns wherever characters exist.
-```
-
 **Constraints:**
 - `1 <= words.length <= 500`
 - `1 <= words[i].length <= 500`

@@ -2,27 +2,6 @@ A linked list may contain a loop: the last node can point back to some earlier n
 
 Find where the loop starts and return its index. Return `-1` when there is no loop. Do not change the list.
 
-**Example 1:**
-```
-Input: head = [3,2,0,-4], pos = 1
-Output: 1
-Explanation: The tail (-4) links to index 1 (value 2), so the cycle starts at index 1.
-```
-
-**Example 2:**
-```
-Input: head = [1,2], pos = 0
-Output: 0
-Explanation: The tail links to the head, so the cycle starts at index 0.
-```
-
-**Example 3:**
-```
-Input: head = [1], pos = -1
-Output: -1
-Explanation: There is no cycle.
-```
-
 **Constraints:**
 - `0 <= number of nodes <= 10^4`
 - `-10^5 <= Node.val <= 10^5`

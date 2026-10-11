@@ -4,20 +4,6 @@ Simulate all calls at once: for each `queries[i]`, collect up to that many chara
 
 Return the list of collected chunks, one per query.
 
-**Example 1:**
-```
-Input: file = "abc", queries = [1,2,1]
-Output: ["a","bc",""]
-Explanation: First call takes "a", second takes "bc", and the third finds nothing left.
-```
-
-**Example 2:**
-```
-Input: file = "abc", queries = [4,1]
-Output: ["abc",""]
-Explanation: The first call drains the file; the second returns empty.
-```
-
 **Constraints:**
 - `0 <= file.length <= 10^4`
 - `file` holds letters and digits (no spaces, to keep chunk boundaries unambiguous).

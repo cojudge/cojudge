@@ -2,27 +2,6 @@ Starting at the origin of a grid, you walk in a repeating cycle of directions: f
 
 As the path grows it may touch or cross its own earlier trail. Return `true` when any such contact happens and `false` when the whole walk stays clear of itself.
 
-**Example 1:**
-```
-Input: distance = [2,1,1,2]
-Output: true
-Explanation: The fourth leg reaches back to the starting vertical line, touching the first leg.
-```
-
-**Example 2:**
-```
-Input: distance = [1,2,3,4]
-Output: false
-Explanation: Each leg lands strictly outside the previous spiral, so nothing meets.
-```
-
-**Example 3:**
-```
-Input: distance = [1,1,1,2,1]
-Output: true
-Explanation: A later leg cuts across an earlier one in the tighter spiral case.
-```
-
 **Constraints:**
 - `1 <= distance.length <= 10^5`
 - `1 <= distance[i] <= 10^5`

@@ -19,26 +19,6 @@ The two arrays are parallel. `operations[i]` is one of `"LogSystem"`, `"put"`, o
 
 Return one integer row per `retrieve` call (in call order), each row listing matching `id` values in insertion order. Constructor and `put` calls produce no rows. There is intentionally no class wrapper.
 
-**Example 1:**
-```
-Input: operations = ["LogSystem","put","put","put","retrieve"], values = ["","1|2017:01:01:23:59:59","2|2017:01:01:22:59:59","3|2016:01:01:00:00:00","2016:01:01:01:01:01|2017:01:01:23:00:00|Year"]
-Output: [[1,2,3]]
-Explanation: At year precision all three records sit in 2016..2017.
-```
-
-**Example 2:**
-```
-Input: operations = ["LogSystem","put","put","put","retrieve"], values = ["","1|2017:01:01:23:59:59","2|2017:01:01:22:59:59","3|2016:01:01:00:00:00","2016:01:01:01:01:01|2017:01:01:23:00:00|Hour"]
-Output: [[1,2]]
-Explanation: At hour precision only the two 2017 records land inside the window.
-```
-
-**Example 3:**
-```
-Input: operations = ["LogSystem","put","retrieve"], values = ["","7|2020:05:05:05:05:05","2020:05:05:05:05:05|2020:05:05:05:05:05|Second"]
-Output: [[7]]
-```
-
 **Constraints:**
 - `1 <= operations.length == values.length <= 500`
 - The first operation is `"LogSystem"` with `""`.
