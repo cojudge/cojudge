@@ -20,7 +20,13 @@ export abstract class ProgramRunner {
     abstract run(): Promise<string[]>;
 
     static wrapWithMetrics(cmd: string): string {
-        return `/usr/bin/time -f "COJUDGE_METRICS:%e|%M" timeout ${EXECUTION_TIMEOUT_SECONDS} ${cmd}`;
+        // /usr/bin/time is installed on-demand via ensureTimeInstalled(), which
+        // requires network (apt-get/apk). When offline the install silently
+        // fails and the hard dependency on /usr/bin/time breaks execution
+        // with "/bin/sh: 1: /usr/bin/time: not found". Fall back to plain
+        // `timeout` so runs still work offline (memory metric unavailable;
+        // execution time is still captured via :::TIME::: internal timing).
+        return `if command -v /usr/bin/time >/dev/null 2>&1; then /usr/bin/time -f "COJUDGE_METRICS:%e|%M" timeout ${EXECUTION_TIMEOUT_SECONDS} ${cmd}; else timeout ${EXECUTION_TIMEOUT_SECONDS} ${cmd}; fi`;
     }
 
     /** Install the `time` package (provides /usr/bin/time) inside the container */
