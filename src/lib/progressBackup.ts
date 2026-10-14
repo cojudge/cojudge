@@ -333,6 +333,7 @@ export function isMeaningfulProgress(data: ProgressData): boolean {
 	const ignoredKeys = new Set([
 		'banner-dismissed',
 		'exec-pane-height',
+		'group-sort',
 		'open-groups',
 		'pane-width',
 		'user-settings'

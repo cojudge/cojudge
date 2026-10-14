@@ -395,10 +395,32 @@
     );
     $: if (browser) writeProgressStorageItem(localStorage, OPEN_GROUPS_KEY, JSON.stringify([...openGroups]));
 
-    // Per-group sort state
-    type SortKey = "title" | "difficulty";
+    // Per-group sort state (persisted to localStorage only, not cloud-synced)
+    type SortKey = "title" | "difficulty" | "status";
     type SortDir = "asc" | "desc";
-    let groupSort: Record<string, { key: SortKey; dir: SortDir }> = {};
+    const GROUP_SORT_KEY = 'group-sort';
+    function loadGroupSort(): Record<string, { key: SortKey; dir: SortDir }> {
+        if (!browser) return {};
+        try {
+            const raw = localStorage.getItem(GROUP_SORT_KEY);
+            if (!raw) return {};
+            const parsed = JSON.parse(raw) as Record<string, { key: unknown; dir: unknown }>;
+            if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {};
+            const validKeys: SortKey[] = ["title", "difficulty", "status"];
+            const cleaned: Record<string, { key: SortKey; dir: SortDir }> = {};
+            for (const [group, conf] of Object.entries(parsed)) {
+                if (!conf || typeof conf !== 'object') continue;
+                if (!validKeys.includes(conf.key as SortKey)) continue;
+                if (conf.dir !== 'asc' && conf.dir !== 'desc') continue;
+                cleaned[group] = { key: conf.key as SortKey, dir: conf.dir as SortDir };
+            }
+            return cleaned;
+        } catch {
+            return {};
+        }
+    }
+    let groupSort: Record<string, { key: SortKey; dir: SortDir }> = loadGroupSort();
+    $: if (browser) writeProgressStorageItem(localStorage, GROUP_SORT_KEY, JSON.stringify(groupSort));
 
     // Nicely format category labels (e.g., "two-pointers" -> "Two Pointers").
     // Keep digit-digit ranges intact (e.g., "1-100" stays "1-100").
@@ -559,6 +581,17 @@
                             { sensitivity: "base" },
                         ),
                 );
+        }
+        // status (solved vs unsolved; asc = unsolved first, desc = solved first)
+        if (conf.key === "status") {
+            return arr.slice().toSorted((a, b) => {
+                const sa = checkMap[a.id] ? 1 : 0;
+                const sb = checkMap[b.id] ? 1 : 0;
+                const cmp = sa - sb;
+                if (cmp !== 0) return dirMul * cmp;
+                // tie-breaker by title
+                return dirMul * displayTitle(a).localeCompare(displayTitle(b));
+            });
         }
         // difficulty
         return arr.slice().toSorted((a, b) => {
@@ -2233,7 +2266,26 @@
                     <table class="problem-table">
                         <thead>
                             <tr>
-                                <th>Status</th>
+                                <th>
+                                    <button
+                                        class="th-button"
+                                        onclick={() =>
+                                            toggleSort(key, "status")}
+                                        aria-label="Sort by status"
+                                    >
+                                        Status
+                                        <span
+                                            class="sort-icon"
+                                            aria-hidden="true"
+                                        >
+                                            <SortIcon
+                                                active={groupSort[key]?.key ===
+                                                    "status"}
+                                                dir={groupSort[key]?.dir}
+                                            />
+                                        </span>
+                                    </button>
+                                </th>
                                 <th>
                                     <button
                                         class="th-button"
@@ -2277,7 +2329,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {#key groupSort}
+                            {#key JSON.stringify([groupSort, solvedCount])}
                                 {#each getSortedGroup(grouped[key] || [], key) as problem}
                                     <tr>
                                         <td class="status-cell">
