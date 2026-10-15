@@ -1,6 +1,11 @@
 import type { Param } from "./util";
 
-export const phpImage = 'php:8.3-cli';
+// Docker image for running PHP code. Override via COJUDGE_PHP_IMAGE env var.
+// For offline-friendly runs with pre-installed `time`:
+// see docker/php/Dockerfile for instructions.
+// NOTE: uses process.env (not $env/dynamic/private) so this module stays
+// importable from plain vitest, like DebugRunner.ts does.
+export const phpImage = process.env.COJUDGE_PHP_IMAGE || 'php:8.3-cli';
 
 export const phpListNodeClass = `<?php
 class ListNode {

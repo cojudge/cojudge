@@ -31,15 +31,29 @@ export abstract class ProgramRunner {
 
     /** Install the `time` package (provides /usr/bin/time) inside the container */
     static async ensureTimeInstalled(container: Dockerode.Container): Promise<void> {
+        // The install needs network (apt/apk). Offline, apt-get update can
+        // hang for minutes on DNS/connect timeouts, wedging compile at
+        // "Preparing / Compiling" until the cleanup cron kills the container
+        // (surfacing as HTTP 409). Bound it at both levels: `timeout` in the
+        // shell (fail-safe if the binary is missing: 127 -> `|| true`) plus
+        // short apt timeouts, and a JS-side cap as a final backstop. Missing
+        // metrics are fine: run commands fall back to plain `timeout`.
         const exec = await container.exec({
-            Cmd: ['/bin/sh', '-c', 'command -v /usr/bin/time >/dev/null 2>&1 || (command -v apt-get >/dev/null 2>&1 && apt-get update -qq && apt-get install -y -qq time) || (command -v apk >/dev/null 2>&1 && apk add --no-cache time) || true'],
+            Cmd: ['/bin/sh', '-c', 'command -v /usr/bin/time >/dev/null 2>&1 || timeout 45 sh -c \'(command -v apt-get >/dev/null 2>&1 && apt-get update -qq -o Acquire::http::Timeout=5 -o Acquire::https::Timeout=5 && apt-get install -y -qq time) || (command -v apk >/dev/null 2>&1 && apk add --no-cache time)\' || true'],
             AttachStdout: true,
             AttachStderr: true
         });
         const stream: any = await exec.start({ hijack: true, stdin: false });
         await new Promise((resolve, reject) => {
-            stream.on('end', resolve);
-            stream.on('error', reject);
+            const timer = setTimeout(resolve, 60000);
+            stream.on('end', () => {
+                clearTimeout(timer);
+                resolve(null);
+            });
+            stream.on('error', (err: unknown) => {
+                clearTimeout(timer);
+                reject(err);
+            });
             stream.resume();
         });
     }
