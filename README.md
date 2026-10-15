@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="src-tauri/icons/Square71x71Logo.png">
-    <img src="src-tauri/icons/Square71x71Logo.png" alt="" width="71">
+    <source media="(prefers-color-scheme: dark)" srcset="src-tauri/icons/Square71x71Logo-white.png">
+    <img src="src-tauri/icons/Square71x71Logo.png" alt="Cojudge" width="71">
   </picture>
 </p>
 
