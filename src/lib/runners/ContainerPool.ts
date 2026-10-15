@@ -96,19 +96,27 @@ class ContainerPool {
 
     static async cleanupStale(maxAgeMs = 300000): Promise<void> {
         const now = Date.now();
+        const pending: Promise<void>[] = [];
         for (const [key, entries] of this.pools.entries()) {
             const active = entries.filter(e => {
                 if (e.inUse) {
-                    if (now - e.createdAt > maxAgeMs) {
-                        console.log(`[cleanupStale] destroying in-use container ${e.container.id.substring(0, 12)} (image: ${key}, age: ${now - e.createdAt}ms)`);
-                        ContainerPool.destroyContainer(e.container);
+                    // In-use staleness is measured from the last acquire, not
+                    // from pool-entry creation: a warm container may sit idle
+                    // in the pool for minutes before being acquired, and must
+                    // not be killed minutes into its work (that surfaced as
+                    // "HTTP 409 ... container is not running" mid-compile).
+                    // Leaked holders never re-acquire, so lastUsed freezes
+                    // and they are still reclaimed here.
+                    if (now - e.lastUsed > maxAgeMs) {
+                        console.log(`[cleanupStale] destroying in-use container ${e.container.id.substring(0, 12)} (image: ${key}, held: ${now - e.lastUsed}ms)`);
+                        pending.push(ContainerPool.destroyContainer(e.container));
                         return false;
                     }
                     return true;
                 }
                 if (now - e.lastUsed > maxAgeMs) {
                     console.log(`[cleanupStale] destroying container ${e.container.id.substring(0, 12)} (image: ${key}, idle: ${now - e.lastUsed}ms)`);
-                    ContainerPool.destroyContainer(e.container);
+                    pending.push(ContainerPool.destroyContainer(e.container));
                     return false;
                 }
                 return true;
@@ -119,6 +127,9 @@ class ContainerPool {
                 this.pools.delete(key);
             }
         }
+        // Await removals so cleanup is fully applied when this resolves
+        // (previously fire-and-forget, racing with in-flight runner execs).
+        await Promise.allSettled(pending);
     }
 
     static async destroyAll(): Promise<void> {

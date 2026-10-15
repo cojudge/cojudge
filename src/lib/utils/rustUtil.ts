@@ -1,7 +1,12 @@
 import type { Param } from "./util";
 import { extractOperations } from "./util";
 
-export const rustImage = "rust:1.78-slim";
+// Docker image for running Rust code. Override via COJUDGE_RUST_IMAGE env var.
+// For offline-friendly runs with pre-installed `time` (plus GDB for debugging):
+// see docker/rust/Dockerfile for instructions.
+// NOTE: uses process.env (not $env/dynamic/private) so this module stays
+// importable from plain vitest, like DebugRunner.ts does.
+export const rustImage = process.env.COJUDGE_RUST_IMAGE || "rust:1.78-slim";
 
 export const rustListNodeClass = `
 #[derive(PartialEq, Eq, Clone, Debug)]
