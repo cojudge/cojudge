@@ -579,6 +579,7 @@
                     status: "error",
                     error: body?.error || "Failed to start debug session",
                 };
+                runningMessage = "Debug failed";
                 isDebugRunning = false;
                 return;
             }
@@ -589,10 +590,10 @@
             startDebugPolling();
         } catch (err: any) {
             debugState = { status: "error", error: err.message || "Debug failed" };
+            runningMessage = "Debug failed";
         } finally {
             isLoading = false;
             isDebugRunning = false;
-            runningMessage = "";
         }
     }
 

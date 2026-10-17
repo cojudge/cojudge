@@ -924,6 +924,12 @@
 
     function handleModalKeydown(event: KeyboardEvent) {
         if ($activeDialog) return;
+        // Cmd+S or Ctrl+S — open cloud sync, even outside modals.
+        if ((event.ctrlKey || event.metaKey) && !event.shiftKey && !event.altKey && event.key.toLowerCase() === 's') {
+            event.preventDefault();
+            openCloudSettings();
+            return;
+        }
         // Note: Docker settings modal handles its own Escape/Tab via DockerSettingsModal.
         if (showDockerSettings) return;
         if (showUpdatePrompt && event.key === 'Escape') {

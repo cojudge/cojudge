@@ -2,6 +2,7 @@
     import SaveStatus from '$lib/components/SaveStatus.svelte';
     import ExecutionPanel from '$lib/components/ExecutionPanel.svelte';
     import ShareModal from '$lib/components/ShareModal.svelte';
+    import CloudSyncModal from '$lib/components/CloudSyncModal.svelte';
     import TabContextMenu from '$lib/components/TabContextMenu.svelte';
     import GameResultPopup from '$lib/components/GameResultPopup.svelte';
     import GameHistoryPopup from '$lib/components/GameHistoryPopup.svelte';
@@ -158,6 +159,15 @@
     let showShareModal = false;
     let shareUrl = '';
     let qrCodeDataUrl = '';
+    let showCloudSettings = false;
+
+    function openCloudSettings() {
+        showCloudSettings = true;
+    }
+
+    function closeCloudSettings() {
+        showCloudSettings = false;
+    }
 
     async function loadOrInitFile(lang: ProgrammingLanguage) {
         if (activeTabId < 0 || activeTabId >= tabs.length) return;
@@ -678,6 +688,13 @@
             if ((e.ctrlKey || e.metaKey) && (e.key === 'b' || e.key === 'B')) {
                 e.preventDefault();
                 toggleProblemPaneVisibility();
+            }
+            // Cmd+S or Ctrl+S — open cloud sync (works in browser + desktop,
+            // must run before the desktop-only early return below).
+            if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 's') {
+                e.preventDefault();
+                openCloudSettings();
+                return;
             }
             if (e.defaultPrevented) return;
             if (!isDesktopMode) return;
@@ -1412,6 +1429,8 @@
             on:close={() => showGameHistory = false}
         />
     {/if}
+
+    <CloudSyncModal open={showCloudSettings} onClose={closeCloudSettings} />
 </div>
 
 <style>

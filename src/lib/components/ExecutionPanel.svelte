@@ -1108,6 +1108,7 @@
                     status: "error",
                     error: body?.error || "Failed to start debug session",
                 };
+                runningMessage = "Debug failed";
                 return;
             }
 
@@ -1117,6 +1118,7 @@
             startDebugPolling();
         } catch (err: any) {
             debugState = { status: "error", error: err.message || "Debug failed" };
+            runningMessage = "Debug failed";
         } finally {
             isLoading = false;
             isDebugRunning = false;
@@ -2076,12 +2078,15 @@
                 </Tooltip>
                 <span
                     class="status"
-                    class:correct={status == "accepted" ||
-                        status == "sample-tests-passed"}
-                    class:incorrect={status == "failed" ||
-                        status == "sample-tests-failed" ||
-                        status == "sample-tests-failed-tle" ||
-                        status == "tle"}
+                    class:correct={!runningMessage &&
+                        (status == "accepted" ||
+                            status == "sample-tests-passed")}
+                    class:incorrect={!runningMessage &&
+                        (status == "failed" ||
+                            status == "sample-tests-failed" ||
+                            status == "sample-tests-failed-tle" ||
+                            status == "tle")}
+                    class:running={!!runningMessage}
                 >
                     {#if runningMessage}
                         {runningMessage}
@@ -2404,6 +2409,10 @@
         color: var(--color-correct);
     }
     .status {
+        color: var(--color-text-secondary);
+    }
+    .status.running {
+        color: var(--color-text-secondary);
     }
     .metrics {
         display: inline-flex;
