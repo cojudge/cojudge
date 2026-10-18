@@ -34,6 +34,7 @@
         | "tle"
         | "running"
         | "sample-tests-failed-tle"
+        | "compilation-error"
         | "preparing"
         | "pending"
         | "judging";
@@ -132,11 +133,17 @@
                 return "Judging";
             case "sample-tests-failed-tle":
                 return "Sample Tests Failed (TLE)";
+            case "compilation-error":
+                return "Compilation Error";
             case "tle":
                 return "Failed (TLE)";
             default:
                 return "";
         }
+    }
+
+    function isCompilationError(message: string | null | undefined): boolean {
+        return !!message && /compil/i.test(message);
     }
 
     function handleMouseDown(event: MouseEvent) {
@@ -566,7 +573,7 @@
                     isCorrect: false,
                     error: errMsg,
                 }));
-                status = "sample-tests-failed";
+                status = isCompilationError(errMsg) ? "compilation-error" : "sample-tests-failed";
                 return;
             }
 
@@ -586,7 +593,8 @@
                         isCorrect: false,
                         error: errMsg,
                     }));
-                    status = "sample-tests-failed";
+                    runningMessage = "";
+                    status = isCompilationError(errMsg) ? "compilation-error" : "sample-tests-failed";
                     break;
                 }
                 if (!body?.ready) {
@@ -634,6 +642,7 @@
             }
         } catch (err) {
             console.error(err);
+            runningMessage = "";
             status = "sample-tests-failed";
             testCaseResults = testCaseResults.map((tc: any) => ({
                 ...tc,
@@ -687,8 +696,8 @@
                 if (!startRes.ok || !startBody?.jobId) {
                     const errMsg =
                         startBody?.error || "Failed to start submit job";
-                    runningMessage = "";
                     status = "failed";
+                    runningMessage = isCompilationError(errMsg) ? "Compilation Error" : "";
                     submissionFailure = {
                         type: "failed",
                         index: tcNo,
@@ -710,7 +719,11 @@
                     if (!pollRes.ok) {
                         runningMessage = "";
                         status = body.timeout ? "tle" : "failed";
-                        runningMessage = `${body.timeout ? "TLE" : "Failed"} on Test ${tcNo + 1}`;
+                        runningMessage = body.timeout
+                            ? `TLE on Test ${tcNo + 1}`
+                            : isCompilationError(body?.error)
+                              ? "Compilation Error"
+                              : `Failed on Test ${tcNo + 1}`;
                         // Prepare failure details
                         if (body?.timeout && body?.timeoutTestCase) {
                             submissionFailure = {
@@ -1074,6 +1087,9 @@
         isDebugRunning = true;
         isLoading = true;
         runningMessage = "Debug starting...";
+        // Reset the footer status so the in-progress message never inherits
+        // the red/green styling of a previous run/submit result.
+        status = "running";
         submissionFailure = null;
         debugState = { status: "running" };
         activeMainTab = "debugger";
@@ -2078,15 +2094,13 @@
                 </Tooltip>
                 <span
                     class="status"
-                    class:correct={!runningMessage &&
-                        (status == "accepted" ||
-                            status == "sample-tests-passed")}
-                    class:incorrect={!runningMessage &&
-                        (status == "failed" ||
-                            status == "sample-tests-failed" ||
-                            status == "sample-tests-failed-tle" ||
-                            status == "tle")}
-                    class:running={!!runningMessage}
+                    class:correct={status == "accepted" ||
+                        status == "sample-tests-passed"}
+                    class:incorrect={status == "failed" ||
+                        status == "sample-tests-failed" ||
+                        status == "sample-tests-failed-tle" ||
+                        status == "compilation-error" ||
+                        status == "tle"}
                 >
                     {#if runningMessage}
                         {runningMessage}
@@ -2411,8 +2425,11 @@
     .status {
         color: var(--color-text-secondary);
     }
-    .status.running {
-        color: var(--color-text-secondary);
+    .status.correct {
+        color: var(--color-correct);
+    }
+    .status.incorrect {
+        color: var(--color-incorrect);
     }
     .metrics {
         display: inline-flex;
