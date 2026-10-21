@@ -1,235 +1,280 @@
 [
   {
+    "secret": "acckzz",
     "wordlist": [
       "acckzz",
       "ccbazz",
       "eiowzz",
       "abcczz"
-    ],
-    "secret": "acckzz"
+    ]
   },
   {
+    "secret": "khaled",
     "wordlist": [
       "hamada",
       "khaled"
-    ],
-    "secret": "khaled"
+    ]
   },
   {
+    "secret": "aaaaaaaa",
     "wordlist": [
-      "abcd",
-      "efgh",
-      "ijkl"
-    ],
-    "secret": "efgh"
+      "aaaaaaaa"
+    ]
   },
   {
-    "wordlist": [
-      "aaaaaa"
-    ],
-    "secret": "aaaaaa"
-  },
-  {
+    "secret": "abcdeg",
     "wordlist": [
       "abcdef",
       "abcdeg",
       "abcdeh"
-    ],
-    "secret": "abcdeg"
+    ]
   },
   {
+    "secret": "efghij",
     "wordlist": [
-      "wich",
-      "thor",
-      "jamie",
-      "james"
-    ],
-    "secret": "jamie"
+      "abcdef",
+      "ghijkl",
+      "efghij",
+      "mnopqr"
+    ]
   },
   {
+    "secret": "bbbb",
     "wordlist": [
       "aaaa",
       "bbbb",
       "cccc"
-    ],
-    "secret": "bbbb"
+    ]
   },
   {
-    "wordlist": [
-      "aa",
-      "bb",
-      "cc"
-    ],
-    "secret": "cc"
-  },
-  {
-    "wordlist": [
-      "abcd",
-      "abce",
-      "abcf",
-      "abcg"
-    ],
-    "secret": "abcg"
-  },
-  {
-    "wordlist": [
-      "hello",
-      "hallo",
-      "hollow"
-    ],
-    "secret": "hallo"
-  },
-  {
-    "wordlist": [
-      "abcdef",
-      "uvwxyz",
-      "qwerty"
-    ],
-    "secret": "qwerty"
-  },
-  {
+    "secret": "aaba",
     "wordlist": [
       "aaaa",
       "aaab",
       "aaba",
       "abaa"
-    ],
-    "secret": "aaba"
+    ]
   },
   {
+    "secret": "hallo",
     "wordlist": [
-      "topcoder",
-      "topcodex",
-      "topcodey"
-    ],
-    "secret": "topcodex"
+      "hello",
+      "hallo",
+      "hullo",
+      "hillo"
+    ]
   },
   {
-    "wordlist": [
-      "a",
-      "b",
-      "c"
-    ],
-    "secret": "b"
-  },
-  {
+    "secret": "warm",
     "wordlist": [
       "word",
       "ward",
       "warm",
       "warn"
-    ],
-    "secret": "warm"
+    ]
   },
   {
-    "wordlist": [
-      "aaaaaa",
-      "aaaaab",
-      "aaaabb",
-      "aaabbb"
-    ],
-    "secret": "aaabbb"
-  },
-  {
-    "wordlist": [
-      "abcdef",
-      "abccef",
-      "abcccf"
-    ],
-    "secret": "abcccf"
-  },
-  {
-    "wordlist": [
-      "123456",
-      "123457",
-      "123458"
-    ],
-    "secret": "123457"
-  },
-  {
-    "wordlist": [
-      "apple",
-      "apply",
-      "appel"
-    ],
-    "secret": "apply"
-  },
-  {
-    "wordlist": [
-      "cat",
-      "bat",
-      "rat",
-      "mat"
-    ],
-    "secret": "rat"
-  },
-  {
-    "wordlist": [
-      "aaaa",
-      "aabb",
-      "bbaa",
-      "bbbb"
-    ],
-    "secret": "bbaa"
-  },
-  {
-    "wordlist": [
-      "abcdef",
-      "ghijkl",
-      "mnopqr"
-    ],
-    "secret": "ghijkl"
-  },
-  {
-    "wordlist": [
-      "zzzzzz",
-      "yyyyyy",
-      "xxxxxx"
-    ],
-    "secret": "xxxxxx"
-  },
-  {
-    "wordlist": [
-      "ab",
-      "ac",
-      "ad",
-      "ae"
-    ],
-    "secret": "ad"
-  },
-  {
-    "wordlist": [
-      "code",
-      "mode",
-      "node",
-      "rode"
-    ],
-    "secret": "node"
-  },
-  {
-    "wordlist": [
-      "aaaaa",
-      "aaaab",
-      "aaabb",
-      "aabbb"
-    ],
-    "secret": "aaabb"
-  },
-  {
+    "secret": "tame",
     "wordlist": [
       "game",
       "fame",
       "same",
       "tame"
-    ],
-    "secret": "tame"
+    ]
   },
   {
+    "secret": "rat",
+    "wordlist": [
+      "cat",
+      "bat",
+      "rat",
+      "mat"
+    ]
+  },
+  {
+    "secret": "ad",
+    "wordlist": [
+      "ab",
+      "ac",
+      "ad",
+      "ae"
+    ]
+  },
+  {
+    "secret": "node",
+    "wordlist": [
+      "code",
+      "mode",
+      "node",
+      "rode"
+    ]
+  },
+  {
+    "secret": "b",
+    "wordlist": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "secret": "qwerty",
+    "wordlist": [
+      "abcdef",
+      "uvwxyz",
+      "qwerty"
+    ]
+  },
+  {
+    "secret": "secrey",
     "wordlist": [
       "secret",
       "secrex",
       "secrey"
+    ]
+  },
+  {
+    "secret": "aaabbb",
+    "wordlist": [
+      "aaaaaa",
+      "aaaaab",
+      "aaaabb",
+      "aaabbb"
+    ]
+  },
+  {
+    "secret": "abcccf",
+    "wordlist": [
+      "abcdef",
+      "abccef",
+      "abcccf"
+    ]
+  },
+  {
+    "secret": "apply",
+    "wordlist": [
+      "apple",
+      "apply",
+      "appel"
+    ]
+  },
+  {
+    "secret": "bbaa",
+    "wordlist": [
+      "aaaa",
+      "aabb",
+      "bbaa",
+      "bbbb"
+    ]
+  },
+  {
+    "wordlist": [
+      "word00",
+      "word01",
+      "word02",
+      "word03",
+      "word04",
+      "word05",
+      "word06",
+      "word07",
+      "word08",
+      "word09",
+      "word10",
+      "word11",
+      "word12",
+      "word13",
+      "word14",
+      "word15",
+      "word16",
+      "word17",
+      "word18",
+      "word19",
+      "word20",
+      "word21",
+      "word22",
+      "word23",
+      "word24",
+      "word25",
+      "word26",
+      "word27",
+      "word28",
+      "word29"
     ],
-    "secret": "secrey"
+    "secret": "word29"
+  },
+  {
+    "wordlist": [
+      "door",
+      "boor",
+      "moor",
+      "poor"
+    ],
+    "secret": "moor"
+  },
+  {
+    "wordlist": [
+      "test",
+      "best",
+      "rest",
+      "nest"
+    ],
+    "secret": "nest"
+  },
+  {
+    "wordlist": [
+      "apple",
+      "apply",
+      "ample",
+      "amply"
+    ],
+    "secret": "amply"
+  },
+  {
+    "wordlist": [
+      "stone",
+      "stony",
+      "atone",
+      "alone"
+    ],
+    "secret": "alone"
+  },
+  {
+    "wordlist": [
+      "banana",
+      "cabana",
+      "panama"
+    ],
+    "secret": "panama"
+  },
+  {
+    "wordlist": [
+      "orange",
+      "orator",
+      "orates"
+    ],
+    "secret": "orates"
+  },
+  {
+    "wordlist": [
+      "purple",
+      "people",
+      "pupple"
+    ],
+    "secret": "people"
+  },
+  {
+    "wordlist": [
+      "abcdef",
+      "ghijkl",
+      "mnopqr",
+      "stuvwx"
+    ],
+    "secret": "stuvwx"
+  },
+  {
+    "wordlist": [
+      "zzzzzz"
+    ],
+    "secret": "zzzzzz"
   }
 ]

@@ -1,4 +1,5 @@
 import type { Param } from './util';
+import type { InteractiveConfig } from './interactiveUtil';
 import { env } from '$env/dynamic/private';
 
 export const cppImage = env.COJUDGE_CPP_IMAGE || 'gcc:13';
@@ -721,8 +722,7 @@ ${branches}
 `;
 }
 
-export function generateCppRunner(functionName: string, params: Param[], testCases: any[], checkGraphClone?: boolean): string {
-    const calls = testCases
+export function generateCppRunner(functionName: string, params: Param[], testCases: any[], checkGraphClone?: boolean): string {    const calls = testCases
         .map((tc, caseIndex) => {
             const decls: string[] = [];
             const args: string[] = [];
@@ -888,6 +888,107 @@ static void crash_handler(int sig) {
 
     return `${crashHandlerCode}
 ${cppHelperMethods}
+int main() {
+    signal(SIGSEGV, crash_handler);
+    signal(SIGFPE, crash_handler);
+    signal(SIGABRT, crash_handler);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    try {
+    Solution sol;
+    ${calls}
+    } catch (const std::exception &e) {
+        std::cerr << "Unhandled exception: " << e.what() << std::endl;
+        throw;
+    }
+    return 0;
+}
+`;
+}
+
+export const cppMasterStruct = `
+struct Master {
+    string secret;
+    unordered_set<string> wordSet;
+    int maxGuesses;
+    int guessCount = 0;
+    bool solved = false;
+    vector<string> history;
+    vector<int> scores;
+    Master() {}
+    Master(const string& s, const vector<string>& wl, int m): secret(s), maxGuesses(m) {
+        for (auto &w : wl) wordSet.insert(w);
+    }
+    int guess(const string& word) {
+        guessCount++;
+        history.push_back(word);
+        int m;
+        if (wordSet.find(word) == wordSet.end()) {
+            m = -1;
+        } else {
+            m = 0;
+            size_t n = min(word.size(), secret.size());
+            for (size_t i = 0; i < n; i++) if (word[i] == secret[i]) m++;
+            if (word == secret) solved = true;
+        }
+        scores.push_back(m);
+        return m;
+    }
+};
+`;
+
+export function generateCppInteractiveRunner(functionName: string, testCases: any[], interactive: InteractiveConfig): string {
+    const maxG = interactive.maxGuesses;
+    const secretField = interactive.secretField;
+    const calls = testCases
+        .map((tc, caseIndex) => {
+            const rawWl = (tc as any)['wordlist'];
+            let wlStr: string;
+            if (Array.isArray(rawWl)) {
+                try { wlStr = JSON.stringify(rawWl); } catch { wlStr = '[]'; }
+            } else {
+                wlStr = String(rawWl ?? '[]');
+            }
+            const rawSec = String((tc as any)[secretField] ?? '');
+            return `{
+        vector<string> __wl${caseIndex} = to_string_array(${cppEscapeStringLiteral(wlStr)});
+        string __sec${caseIndex} = ${cppEscapeStringLiteral(rawSec)};
+        Master __m${caseIndex}(__sec${caseIndex}, __wl${caseIndex}, ${maxG});
+        auto __t0 = std::chrono::high_resolution_clock::now();
+        try { sol.${functionName}(__wl${caseIndex}, __m${caseIndex}); } catch (const std::exception& __e) { cout << "ERROR: " << __e.what() << "\\n"; }
+        auto __t1 = std::chrono::high_resolution_clock::now();
+        cout << ":::TIME:::" << std::chrono::duration_cast<std::chrono::nanoseconds>(__t1 - __t0).count() << "\\n";
+        for (size_t __k${caseIndex} = 0; __k${caseIndex} < __m${caseIndex}.history.size(); __k${caseIndex}++) {
+            cout << "guess #" << (__k${caseIndex}+1) << ": " << __m${caseIndex}.history[__k${caseIndex}] << " -> " << __m${caseIndex}.scores[__k${caseIndex}] << "\\n";
+        }
+        string __tr${caseIndex} = (__m${caseIndex}.solved && __m${caseIndex}.guessCount <= ${maxG}) ? ("solved:" + to_string(__m${caseIndex}.guessCount)) : ("failed:" + to_string(__m${caseIndex}.guessCount));
+        cout << ":::RESULT:::" << __tr${caseIndex} << "\\n";
+        cout << "---\\n";
+    }`;
+        })
+        .join('\n    ');
+
+    const crashHandlerCode = `
+#include <signal.h>
+#include <execinfo.h>
+#include <iostream>
+#include <chrono>
+
+static void crash_handler(int sig) {
+    std::cerr << "Crash: signal " << sig << std::endl;
+    void* array[16];
+    size_t size = backtrace(array, 16);
+    backtrace_symbols_fd(array, size, STDERR_FILENO);
+    _exit(1);
+}
+`;
+    const interactiveHelpers = cppHelperMethods.replace(
+        '#include "Solution.cpp"',
+        `${cppMasterStruct}\n#include "Solution.cpp"`
+    );
+
+    return `${crashHandlerCode}
+${interactiveHelpers}
 int main() {
     signal(SIGSEGV, crash_handler);
     signal(SIGFPE, crash_handler);

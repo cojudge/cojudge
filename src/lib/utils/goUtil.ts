@@ -1,4 +1,5 @@
 import type { Param } from "./util";
+import type { InteractiveConfig } from "./interactiveUtil";
 import { extractOperations } from "./util";
 import { env } from '$env/dynamic/private';
 
@@ -631,6 +632,111 @@ ${branches}
     }
     return result
 }`;
+}
+
+export const goMasterClass = `
+type Master struct {
+    secret string
+    wordSet map[string]bool
+    maxGuesses int
+    guessCount int
+    solved bool
+    history []string
+    scores []int
+}
+
+func NewMaster(secret string, wordlist []string, maxGuesses int) *Master {
+    ws := make(map[string]bool)
+    for _, w := range wordlist {
+        ws[w] = true
+    }
+    return &Master{secret: secret, wordSet: ws, maxGuesses: maxGuesses}
+}
+
+func (m *Master) Guess(word string) int {
+    m.guessCount++
+    m.history = append(m.history, word)
+    var res int
+    if !m.wordSet[word] {
+        res = -1
+    } else {
+        n := len(word)
+        if len(m.secret) < n {
+            n = len(m.secret)
+        }
+        c := 0
+        for i := 0; i < n; i++ {
+            if word[i] == m.secret[i] {
+                c++
+            }
+        }
+        res = c
+        if word == m.secret {
+            m.solved = true
+        }
+    }
+    m.scores = append(m.scores, res)
+    return res
+}
+`;
+
+export function generateGoInteractiveRunner(
+    functionName: string,
+    testCases: any[],
+    interactive: InteractiveConfig,
+): string {
+    const fnName = goFunctionName(functionName);
+    const maxG = interactive.maxGuesses;
+    const secretField = interactive.secretField;
+    const calls = testCases
+        .map((tc, caseIndex) => {
+            const wlArg = goGetFullParam([{ name: 'wordlist', type: 'string_array' } as Param], tc);
+            const rawSec = String((tc as any)[secretField] ?? '');
+            return `{
+        __wl := ${wlArg}
+        __sec := ${goEscapeStringLiteral(rawSec)}
+        __m := NewMaster(__sec, __wl, ${maxG})
+        __t0 := time.Now()
+        func() {
+            defer func() {
+                if r := recover(); r != nil {
+                    fmt.Println("ERROR:", r)
+                }
+            }()
+            ${fnName}(__wl, __m)
+        }()
+        __dt := time.Since(__t0).Nanoseconds()
+        fmt.Println(":::TIME:::" + strconv.FormatInt(__dt, 10))
+        for __k := range __m.history {
+            fmt.Printf("guess #%d: %s -> %d\\n", __k+1, __m.history[__k], __m.scores[__k])
+        }
+        __tr := "failed:" + strconv.Itoa(__m.guessCount)
+        if __m.solved && __m.guessCount <= ${maxG} {
+            __tr = "solved:" + strconv.Itoa(__m.guessCount)
+        }
+        fmt.Println(":::RESULT:::" + __tr)
+        fmt.Println("---")
+    }`;
+        })
+        .join("\n        ");
+
+    return `package main
+
+${goImports}
+${goListNodeClass}
+
+${goTreeNodeClass}
+
+${goGraphNodeClass}
+
+${goHelperMethods}
+
+${goMasterClass}
+
+func main() {
+    ${calls}
+}
+`;
 }
 
 export function generateGoRunner(

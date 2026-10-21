@@ -1,25 +1,25 @@
 ## Approach
 
-Score words by positional matches, the same number the live judge would report. Keep a candidate pool starting as the whole list; each round pick the minimax word whose largest match-group is smallest, read its score against the hidden word, and discard every candidate with a different score. The pool shrinks fast and reaches the secret within the allowed rounds. In this offline port the secret arrives as a parameter, so the routine returns it after the same loop.
+Interact with the judge instead of reading the secret. Score any pair of words by counting equal positions — this is exactly what `master.guess` returns for words in the list (`-1` otherwise). Keep a candidate pool starting as the full wordlist; each round pick the minimax candidate whose largest match-group is smallest, call `master.guess` on it, and stop when the score equals the word length. Otherwise discard every candidate whose score against the guess differs from the reported score and repeat. The pool shrinks fast enough to hit the secret within 10 guesses.
 
 ## Complexity Analysis
 
 - **Time Complexity:** O(R * n^2 * L), where R <= 10 rounds, n the list size, and L the word length.
-- **Space Complexity:** O(n * L) for the candidate pool.
+- **Space Complexity:** O(n) for the candidate pool plus the judge's guess history.
 
 ## Implementation
 
 ```python
 from typing import List
 class Solution:
-    def runGuess(self, wordlist: List[str], secret: str) -> str:
+    def findSecretWord(self, wordlist: List[str], master: 'Master') -> None:
         def matches(a, b):
             return sum(1 for x, y in zip(a, b) if x == y)
         cand = list(wordlist)
         for _ in range(10):
             if not cand:
                 break
-            best, best_max = cand[0], 10**9
+            best, best_max = cand[0], 10 ** 9
             for g in cand:
                 groups = {}
                 for w in cand:
@@ -28,11 +28,10 @@ class Solution:
                 mx = max(groups.values())
                 if mx < best_max:
                     best_max, best = mx, g
-            m = matches(best, secret)
-            if m == len(secret):
-                return secret
+            m = master.guess(best)
+            if m == len(best):
+                return
             cand = [w for w in cand if matches(w, best) == m]
-            if len(cand) == 1:
-                return secret
-        return secret
+            if not cand:
+                break
 ```

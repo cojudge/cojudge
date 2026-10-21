@@ -1,4 +1,5 @@
 import type { Param } from "./util";
+import type { InteractiveConfig } from "./interactiveUtil";
 
 // Docker image for running PHP code. Override via COJUDGE_PHP_IMAGE env var.
 // For offline-friendly runs with pre-installed `time`:
@@ -463,6 +464,62 @@ require_once 'GraphNode.php';
 require_once 'Solution.php';
 
 ${phpHelperMethods}
+$sol = new Solution();
+${calls}
+`;
+}
+
+export const phpMasterClass = `class Master {
+    private $secret;
+    private $wordSet = [];
+    private $maxGuesses;
+    public $guessCount = 0;
+    public $solved = false;
+    public $history = [];
+    public $scores = [];
+    public function __construct($secret, $wordlist, $maxGuesses = 10) {
+        $this->secret = $secret;
+        foreach ($wordlist as $w) { $this->wordSet[$w] = true; }
+        $this->maxGuesses = $maxGuesses;
+    }
+    public function guess($word) {
+        $this->guessCount++;
+        $this->history[] = $word;
+        if (!isset($this->wordSet[$word])) {
+            $m = -1;
+        } else {
+            $m = 0;
+            $n = min(strlen($word), strlen($this->secret));
+            for ($i = 0; $i < $n; $i++) if ($word[$i] === $this->secret[$i]) $m++;
+            if ($word === $this->secret) $this->solved = true;
+        }
+        $this->scores[] = $m;
+        return $m;
+    }
+}
+`;
+
+function phpEscapeForSingleQuote(s: string): string {
+    return String(s ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+}
+
+export function generatePhpInteractiveRunner(functionName: string, testCases: any[], interactive: InteractiveConfig): string {
+    const maxG = interactive.maxGuesses;
+    const secretField = interactive.secretField;
+    const calls = testCases.map((tc, idx) => {
+        const rawWl = (tc as any)['wordlist'];
+        const wlStr = Array.isArray(rawWl) ? JSON.stringify(rawWl) : String(rawWl ?? '[]');
+        const rawSec = String((tc as any)[secretField] ?? '');
+        return `$__wl${idx} = json_decode('${phpEscapeForSingleQuote(wlStr)}', true);\n$__sec${idx} = '${phpEscapeForSingleQuote(rawSec)}';\n$__m${idx} = new Master($__sec${idx}, $__wl${idx}, ${maxG});\n$__t0 = hrtime(true);\ntry { $sol->${functionName}($__wl${idx}, $__m${idx}); } catch (Throwable $__e) { echo 'ERROR: ' . $__e->getMessage() . "\\n"; }\n$__dt = hrtime(true) - $__t0;\necho ':::TIME:::' . $__dt . "\\n";\nfor ($__k${idx} = 0; $__k${idx} < count($__m${idx}->history); $__k${idx}++) {\n    echo 'guess #' . ($__k${idx}+1) . ': ' . $__m${idx}->history[$__k${idx}] . ' -> ' . $__m${idx}->scores[$__k${idx}] . "\\n";\n}\n$__tr${idx} = ($__m${idx}->solved && $__m${idx}->guessCount <= ${maxG}) ? ('solved:' . $__m${idx}->guessCount) : ('failed:' . $__m${idx}->guessCount);\necho ':::RESULT:::' . $__tr${idx} . "\\n";\necho "---\\n";`;
+    }).join('\n');
+    return `<?php
+require_once 'ListNode.php';
+require_once 'TreeNode.php';
+require_once 'GraphNode.php';
+require_once 'Solution.php';
+
+${phpHelperMethods}
+${phpMasterClass}
 $sol = new Solution();
 ${calls}
 `;

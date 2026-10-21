@@ -1,4 +1,5 @@
-import { generatePythonRunner, generatePythonClassSolution, pythonImage, pythonListNodeClass, pythonTreeNodeClass, pythonGraphNodeClass } from "$lib/utils/pythonUtil";
+import { generatePythonRunner, generatePythonInteractiveRunner, generatePythonClassSolution, pythonImage, pythonListNodeClass, pythonTreeNodeClass, pythonGraphNodeClass } from "$lib/utils/pythonUtil";
+import { getInteractive } from "$lib/utils/interactiveUtil";
 import { extractOperations } from "$lib/utils/util";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
@@ -24,7 +25,10 @@ export class PythonRunner extends ProgramRunner {
             const problemPath = await resolveProblemFile(this.problemId, 'metadata.json');
             const problemContent = await fs.readFile(problemPath, 'utf-8');
             const problemData = JSON.parse(problemContent);
-            const runnerCode = generatePythonRunner(problemData.functionName, problemData.params, this.testCases, problemData.checkGraphClone);
+            const interactive = getInteractive(problemData);
+            const runnerCode = interactive
+                ? generatePythonInteractiveRunner(problemData.functionName, this.testCases, interactive)
+                : generatePythonRunner(problemData.functionName, problemData.params, this.testCases, problemData.checkGraphClone);
 
             this.container = await ContainerPool.acquire(pythonImage);
             if (!this.container) {

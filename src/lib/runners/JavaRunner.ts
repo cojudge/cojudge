@@ -1,4 +1,5 @@
-import { generateJavaRunner, generateJavaRunnerWithMarker, generateJavaClassSolution, javaImage, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from "$lib/utils/javaUtil";
+import { generateJavaRunner, generateJavaRunnerWithMarker, generateJavaClassSolution, generateJavaInteractiveRunner, generateJavaInteractiveRunnerWithMarker, javaMasterClass, javaImage, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from "$lib/utils/javaUtil";
+import { getInteractive } from "$lib/utils/interactiveUtil";
 import { extractOperations } from "$lib/utils/util";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
@@ -35,13 +36,27 @@ export class JavaRunner extends ProgramRunner {
 
             if (hasMarker) {
                 this.useMarker = true;
-                runnerCode = generateJavaRunnerWithMarker(
-                    problemData.functionName, problemData.params, this.testCases, problemData.outputType, problemData.checkGraphClone
-                );
+                const interactive = getInteractive(problemData);
+                if (interactive) {
+                    runnerCode = generateJavaInteractiveRunnerWithMarker(
+                        problemData.functionName, problemData.params, this.testCases, interactive
+                    );
+                } else {
+                    runnerCode = generateJavaRunnerWithMarker(
+                        problemData.functionName, problemData.params, this.testCases, problemData.outputType, problemData.checkGraphClone
+                    );
+                }
             } else {
-                runnerCode = generateJavaRunner(
-                    problemData.functionName, problemData.params, this.testCases, problemData.outputType, problemData.checkGraphClone
-                );
+                const interactive = getInteractive(problemData);
+                if (interactive) {
+                    runnerCode = generateJavaInteractiveRunner(
+                        problemData.functionName, this.testCases, interactive
+                    );
+                } else {
+                    runnerCode = generateJavaRunner(
+                        problemData.functionName, problemData.params, this.testCases, problemData.outputType, problemData.checkGraphClone
+                    );
+                }
             }
 
             this.container = await ContainerPool.acquire(javaImage);
@@ -61,6 +76,9 @@ export class JavaRunner extends ProgramRunner {
             pack.entry({ name: 'ListNode.java' }, Buffer.from(javaListNodeClass));
             pack.entry({ name: 'TreeNode.java' }, Buffer.from(javaTreeNodeClass));
             pack.entry({ name: 'GraphNode.java' }, Buffer.from(javaGraphNodeClass));
+            if (getInteractive(problemData)) {
+                pack.entry({ name: 'Master.java' }, Buffer.from(javaMasterClass));
+            }
             if (hasMarker) {
                 const markerCode = await fs.readFile(markerPath, 'utf-8');
                 pack.entry({ name: 'Marker.java' }, Buffer.from(markerCode));

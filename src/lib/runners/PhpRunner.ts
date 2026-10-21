@@ -1,4 +1,5 @@
-import { phpImage, generatePhpRunner, generatePhpClassSolution, phpGetTypeImports, phpListNodeClass, phpTreeNodeClass, phpGraphNodeClass } from "$lib/utils/phpUtil";
+import { phpImage, generatePhpRunner, generatePhpInteractiveRunner, generatePhpClassSolution, phpGetTypeImports, phpListNodeClass, phpTreeNodeClass, phpGraphNodeClass } from "$lib/utils/phpUtil";
+import { getInteractive } from "$lib/utils/interactiveUtil";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE, type Param } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import fs from 'fs/promises';
@@ -28,9 +29,14 @@ export class PhpRunner extends ProgramRunner {
             const problemContent = await fs.readFile(problemPath, 'utf-8');
             const problemData = JSON.parse(problemContent);
 
-            const runnerCode = generatePhpRunner(
-                problemData.functionName, problemData.params, this.testCases, problemData.outputType, problemData.checkGraphClone, problemData.classProblem?.userClassName
-            );
+            const interactive = getInteractive(problemData);
+            const runnerCode = interactive
+                ? generatePhpInteractiveRunner(
+                    problemData.functionName, this.testCases, interactive
+                )
+                : generatePhpRunner(
+                    problemData.functionName, problemData.params, this.testCases, problemData.outputType, problemData.checkGraphClone, problemData.classProblem?.userClassName
+                );
 
             this.container = await ContainerPool.acquire(phpImage);
             if (!this.container) {

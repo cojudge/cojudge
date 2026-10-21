@@ -1,4 +1,5 @@
-import { generateCSharpRunner, generateCSharpClassSolution, csharpImage, csharpListNodeClass, csharpTreeNodeClass, csharpGraphNodeClass } from "$lib/utils/csharpUtil";
+import { generateCSharpRunner, generateCSharpInteractiveRunner, generateCSharpClassSolution, csharpImage, csharpListNodeClass, csharpTreeNodeClass, csharpGraphNodeClass } from "$lib/utils/csharpUtil";
+import { getInteractive } from "$lib/utils/interactiveUtil";
 import { extractOperations } from "$lib/utils/util";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
@@ -24,7 +25,10 @@ export class CSharpRunner extends ProgramRunner {
             const problemPath = await resolveProblemFile(this.problemId, 'metadata.json');
             const problemContent = await fs.readFile(problemPath, 'utf-8');
             const problemData = JSON.parse(problemContent);
-            const runnerCode = generateCSharpRunner(problemData.functionName, problemData.params, this.testCases, problemData.outputType, problemData.checkGraphClone);
+            const interactive = getInteractive(problemData);
+            const runnerCode = interactive
+                ? generateCSharpInteractiveRunner(problemData.functionName, this.testCases, interactive)
+                : generateCSharpRunner(problemData.functionName, problemData.params, this.testCases, problemData.outputType, problemData.checkGraphClone);
 
             this.container = await ContainerPool.acquire(csharpImage);
             if (!this.container) {

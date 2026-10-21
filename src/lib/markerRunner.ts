@@ -16,6 +16,16 @@ export type MarkerResponse = {
 };
 
 export async function getMarkerResponses(problemId: string, functionName: string, params: Param[], testCases: any, outputs: string[], outputType: string): Promise<MarkerResponse[]> {
+    // Interactive problems (e.g. guess-word): outputs[i] is a harness-generated
+    // transcript "solved:N"/"failed:N". Marker.isCorrect(wordlist, secret, transcript)
+    // validates it; the correct answer shown is the secret itself.
+    let interactive: any = null;
+    try {
+        const metaPath = await resolveProblemFile(problemId, 'metadata.json');
+        const metaContent = await fs.readFile(metaPath, 'utf-8');
+        const meta = JSON.parse(metaContent);
+        if (meta?.interactive?.secretField) interactive = meta.interactive;
+    } catch {}
     const testCalls = testCases
     .map((tc: any, i: number) => {
         let fullParam = javaGetFullParam(params, tc);
@@ -25,6 +35,17 @@ export async function getMarkerResponses(problemId: string, functionName: string
         const out = formatAndSplitJavaString(outputs[i] ?? '');
         const toFunc = `to_${outputType}`;
         const displayFunc = getDisplayFuncName(outputType);
+        if (interactive) {
+            const secretVal = String(tc[interactive.secretField] ?? '');
+            const secretLit = formatAndSplitJavaString(secretVal);
+            return `try {
+            System.out.println(marker.isCorrect(${fullParam}, ${toFunc}(${out})));
+        } catch (Exception __e) {
+            System.out.println("false");
+        }
+        System.out.println(${displayFunc}(${secretLit}));
+        System.out.println("---");`;
+        }
         return `try {
             System.out.println(marker.isCorrect(${fullParam}, ${toFunc}(${out})));
         } catch (Exception __e) {
