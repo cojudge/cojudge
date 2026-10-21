@@ -1,4 +1,5 @@
-import { goImage, generateGoRunner, generateGoClassSolution } from "$lib/utils/goUtil";
+import { goImage, generateGoRunner, generateGoInteractiveRunner, generateGoClassSolution } from "$lib/utils/goUtil";
+import { getInteractive } from "$lib/utils/interactiveUtil";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import fs from 'fs/promises';
@@ -25,7 +26,10 @@ export class GoRunner extends ProgramRunner {
             const problemData = JSON.parse(problemContent);
 
             const className = problemData.classProblem?.userClassName;
-            const runnerCode = generateGoRunner(problemData.functionName, problemData.params, this.testCases, problemData.outputType, className, problemData.checkGraphClone);
+            const interactive = getInteractive(problemData);
+            const runnerCode = interactive
+                ? generateGoInteractiveRunner(problemData.functionName, this.testCases, interactive)
+                : generateGoRunner(problemData.functionName, problemData.params, this.testCases, problemData.outputType, className, problemData.checkGraphClone);
 
             this.container = await ContainerPool.acquire(goImage);
             if (!this.container) {

@@ -1,4 +1,5 @@
 import type { Param } from "./util";
+import type { InteractiveConfig } from "./interactiveUtil";
 
 export const tsImage = 'node:22-alpine';
 
@@ -409,6 +410,74 @@ ${calls}
     return `${imports}
 ${tsHelperMethods}
 
+import { ${functionName} } from './Solution';
+
+${calls}
+`;
+}
+
+export const tsMasterClass = `export class Master {
+    private secret: string;
+    private wordSet: Set<string>;
+    private maxGuesses: number;
+    guessCount = 0;
+    solved = false;
+    history: string[] = [];
+    scores: number[] = [];
+    constructor(secret: string, wordlist: string[], maxGuesses = 10) {
+        this.secret = secret;
+        this.wordSet = new Set(wordlist);
+        this.maxGuesses = maxGuesses;
+    }
+    guess(word: string): number {
+        this.guessCount++;
+        this.history.push(word);
+        let m: number;
+        if (!this.wordSet.has(word)) {
+            m = -1;
+        } else {
+            m = 0;
+            const n = Math.min(word.length, this.secret.length);
+            for (let i = 0; i < n; i++) if (word[i] === this.secret[i]) m++;
+            if (word === this.secret) this.solved = true;
+        }
+        this.scores.push(m);
+        return m;
+    }
+}
+`;
+
+export function generateTypeScriptInteractiveRunner(functionName: string, testCases: any[], interactive: InteractiveConfig): string {
+    const maxG = interactive.maxGuesses;
+    const secretField = interactive.secretField;
+    const calls = testCases.map((tc, idx) => {
+        const rawWl = (tc as any)['wordlist'];
+        let wlStr: string;
+        if (Array.isArray(rawWl)) {
+            try { wlStr = JSON.stringify(rawWl); } catch { wlStr = '[]'; }
+        } else {
+            wlStr = String(rawWl ?? '[]');
+        }
+        const rawSec = String((tc as any)[secretField] ?? '');
+        const escSec = rawSec.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        return `const __wl${idx}: string[] = ${wlStr};
+const __sec${idx} = '${escSec}';
+const __m${idx} = new Master(__sec${idx}, __wl${idx}, ${maxG});
+const __t0${idx} = process.hrtime.bigint();
+try { ${functionName}(__wl${idx}, __m${idx}); } catch (__e: any) { console.log('ERROR: ' + (__e?.message ?? __e)); }
+const __t1${idx} = process.hrtime.bigint();
+console.log(':::TIME:::' + (__t1${idx} - __t0${idx}).toString());
+for (let __k${idx} = 0; __k${idx} < __m${idx}.history.length; __k${idx}++) {
+    console.log('guess #' + (__k${idx}+1) + ': ' + __m${idx}.history[__k${idx}] + ' -> ' + __m${idx}.scores[__k${idx}]);
+}
+const __tr${idx} = (__m${idx}.solved && __m${idx}.guessCount <= ${maxG}) ? ('solved:' + __m${idx}.guessCount) : ('failed:' + __m${idx}.guessCount);
+console.log(':::RESULT:::' + __tr${idx});
+console.log('---');`;
+    }).join('\n');
+
+    return `${tsHelperMethods}
+
+import { Master } from './Master';
 import { ${functionName} } from './Solution';
 
 ${calls}

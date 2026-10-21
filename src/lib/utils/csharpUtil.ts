@@ -1,6 +1,44 @@
 import type { Param } from "./util";
+import type { InteractiveConfig } from "./interactiveUtil";
 
 export const csharpImage = 'mcr.microsoft.com/dotnet/sdk:8.0-alpine';
+
+export const csharpMasterClass = `
+public class Master {
+    private readonly string secret;
+    private readonly HashSet<string> wordSet;
+    private readonly int maxGuesses;
+    private int guessCount = 0;
+    private bool solved = false;
+    private readonly List<string> history = new List<string>();
+    private readonly List<int> scores = new List<int>();
+    public Master(string secret, string[] wordlist, int maxGuesses) {
+        this.secret = secret;
+        this.wordSet = new HashSet<string>(wordlist);
+        this.maxGuesses = maxGuesses;
+    }
+    public int Guess(string word) {
+        guessCount++;
+        history.Add(word);
+        int m;
+        if (!wordSet.Contains(word)) {
+            m = -1;
+        } else {
+            m = 0;
+            int n = Math.Min(word.Length, secret.Length);
+            for (int i = 0; i < n; i++) if (word[i] == secret[i]) m++;
+            if (word == secret) solved = true;
+        }
+        scores.Add(m);
+        return m;
+    }
+    public int GuessCount => guessCount;
+    public bool Solved => solved;
+    public int MaxGuesses => maxGuesses;
+    public List<string> History => history;
+    public List<int> Scores => scores;
+}
+`;
 
 export const csharpListNodeClass = `
 public class ListNode {
@@ -677,6 +715,58 @@ using System.Text;
 #nullable disable
 
 ${csharpHelperMethods}
+
+public class Program {
+    public static void Main(string[] args) {
+        Solution sol = new Solution();
+        ${testCalls}
+    }
+}`;
+}
+
+export function generateCSharpInteractiveRunner(functionName: string, testCases: any[], interactive: InteractiveConfig): string {
+    const csharpFunctionName = functionName.charAt(0).toUpperCase() + functionName.slice(1);
+    const maxG = interactive.maxGuesses;
+    const secretField = interactive.secretField;
+    const testCalls = testCases
+        .map((tc: any, idx: number) => {
+            const rawWl = (tc as any)['wordlist'];
+            let wlStr: string;
+            if (Array.isArray(rawWl)) {
+                try { wlStr = JSON.stringify(rawWl); } catch { wlStr = '[]'; }
+            } else {
+                wlStr = String(rawWl ?? '[]');
+            }
+            const rawSec = String((tc as any)[secretField] ?? '');
+            return [
+                `string[] __wl${idx} = CSharpHelper.ToStringArray(${formatAndSplitCSharpString(wlStr)});`,
+                `string __sec${idx} = ${formatAndSplitCSharpString(rawSec)};`,
+                `Master __m${idx} = new Master(__sec${idx}, __wl${idx}, ${maxG});`,
+                `var __sw${idx} = System.Diagnostics.Stopwatch.StartNew();`,
+                `try { sol.${csharpFunctionName}(__wl${idx}, __m${idx}); } catch (Exception __e) { Console.WriteLine("ERROR: " + __e.Message); }`,
+                `__sw${idx}.Stop();`,
+                `Console.WriteLine(":::TIME:::" + (__sw${idx}.ElapsedTicks * 1000000000L / System.Diagnostics.Stopwatch.Frequency));`,
+                `for (int __k${idx} = 0; __k${idx} < __m${idx}.History.Count; __k${idx}++) {`,
+                `    Console.WriteLine("guess #" + (__k${idx}+1) + ": " + __m${idx}.History[__k${idx}] + " -> " + __m${idx}.Scores[__k${idx}]);`,
+                `}`,
+                `string __tr${idx} = (__m${idx}.Solved && __m${idx}.GuessCount <= ${maxG}) ? ("solved:" + __m${idx}.GuessCount) : ("failed:" + __m${idx}.GuessCount);`,
+                `Console.WriteLine(":::RESULT:::" + __tr${idx});`,
+                `Console.WriteLine("---");`
+            ].join('\n        ');
+        })
+        .join('\n        ');
+
+    return `
+using System;
+using System.Diagnostics;
+using System.Collections.Generic;
+using System.Text;
+
+#nullable disable
+
+${csharpHelperMethods}
+
+${csharpMasterClass}
 
 public class Program {
     public static void Main(string[] args) {

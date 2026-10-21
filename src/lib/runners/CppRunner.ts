@@ -1,4 +1,5 @@
-import { cppImage, cppListNodeClass, cppTreeNodeClass, cppGraphNodeClass, generateCppRunner, generateCppClassSolution } from "$lib/utils/cppUtil";
+import { cppImage, cppListNodeClass, cppTreeNodeClass, cppGraphNodeClass, generateCppRunner, generateCppInteractiveRunner, generateCppClassSolution } from "$lib/utils/cppUtil";
+import { getInteractive } from "$lib/utils/interactiveUtil";
 import { extractOperations } from "$lib/utils/util";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
@@ -24,7 +25,10 @@ export class CppRunner extends ProgramRunner {
             const problemPath = await resolveProblemFile(this.problemId, 'metadata.json');
             const problemContent = await fs.readFile(problemPath, 'utf-8');
             const problemData = JSON.parse(problemContent);
-            const runnerCode = generateCppRunner(problemData.functionName, problemData.params, this.testCases, problemData.checkGraphClone);
+            const interactive = getInteractive(problemData);
+            const runnerCode = interactive
+                ? generateCppInteractiveRunner(problemData.functionName, this.testCases, interactive)
+                : generateCppRunner(problemData.functionName, problemData.params, this.testCases, problemData.checkGraphClone);
 
             this.container = await ContainerPool.acquire(cppImage);
             if (!this.container) {

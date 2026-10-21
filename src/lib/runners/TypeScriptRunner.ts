@@ -1,4 +1,5 @@
-import { tsImage, generateTypeScriptRunner, tsGetTypeImports, tsListNodeClass, tsTreeNodeClass, tsGraphNodeClass } from "$lib/utils/tsUtil";
+import { tsImage, generateTypeScriptRunner, generateTypeScriptInteractiveRunner, tsMasterClass, tsGetTypeImports, tsListNodeClass, tsTreeNodeClass, tsGraphNodeClass } from "$lib/utils/tsUtil";
+import { getInteractive } from "$lib/utils/interactiveUtil";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE, type Param } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import fs from 'fs/promises';
@@ -25,9 +26,14 @@ export class TypeScriptRunner extends ProgramRunner {
             const problemData = JSON.parse(problemContent);
 
             const hasMarker = false; // TypeScript doesn't use Marker.java pattern
-            const runnerCode = generateTypeScriptRunner(
-                problemData.functionName, problemData.params, this.testCases, problemData.outputType, problemData.checkGraphClone, problemData.classProblem?.userClassName
-            );
+            const interactive = getInteractive(problemData);
+            const runnerCode = interactive
+                ? generateTypeScriptInteractiveRunner(
+                    problemData.functionName, this.testCases, interactive
+                )
+                : generateTypeScriptRunner(
+                    problemData.functionName, problemData.params, this.testCases, problemData.outputType, problemData.checkGraphClone, problemData.classProblem?.userClassName
+                );
 
             this.container = await ContainerPool.acquire(tsImage);
             if (!this.container) {
@@ -61,6 +67,9 @@ export class TypeScriptRunner extends ProgramRunner {
             pack.entry({ name: 'ListNode.ts' }, Buffer.from(tsListNodeClass));
             pack.entry({ name: 'TreeNode.ts' }, Buffer.from(tsTreeNodeClass));
             pack.entry({ name: 'GraphNode.ts' }, Buffer.from(tsGraphNodeClass));
+            if (getInteractive(problemData)) {
+                pack.entry({ name: 'Master.ts' }, Buffer.from(tsMasterClass));
+            }
             if (problemData.classProblem) {
                 const className = problemData.classProblem.userClassName || 'MedianFinder';
                 pack.entry({ name: `${className}.ts` }, Buffer.from(prefix + this.code));

@@ -1,4 +1,5 @@
 import type { Param } from "./util";
+import type { InteractiveConfig } from "./interactiveUtil";
 import { extractOperations } from "./util";
 
 // Docker image for running Rust code. Override via COJUDGE_RUST_IMAGE env var.
@@ -958,6 +959,251 @@ ${cleanedCode}
 
 // Solution wrapper
 ${solutionCode}
+
+// Helper methods for display
+${rustHelperMethods}
+
+fn main() {
+    ${calls}
+}
+`;
+}
+
+export const rustMasterStruct = `
+pub struct Master {
+    pub secret: String,
+    pub word_set: std::collections::HashSet<String>,
+    pub max_guesses: usize,
+    pub guess_count: usize,
+    pub solved: bool,
+    pub history: Vec<String>,
+    pub scores: Vec<i32>,
+}
+
+impl Master {
+    pub fn new(secret: String, wordlist: Vec<String>, max_guesses: usize) -> Self {
+        let word_set: std::collections::HashSet<String> = wordlist.into_iter().collect();
+        Master { secret, word_set, max_guesses, guess_count: 0, solved: false, history: Vec::new(), scores: Vec::new() }
+    }
+    pub fn guess(&mut self, word: &str) -> i32 {
+        self.guess_count += 1;
+        self.history.push(word.to_string());
+        let m: i32;
+        if !self.word_set.contains(word) {
+            m = -1;
+        } else {
+            let a = word.as_bytes();
+            let b = self.secret.as_bytes();
+            let n = std::cmp::min(a.len(), b.len());
+            let mut c = 0;
+            for i in 0..n { if a[i] == b[i] { c += 1; } }
+            m = c as i32;
+            if word == self.secret { self.solved = true; }
+        }
+        self.scores.push(m);
+        m
+    }
+}
+`;
+
+export const rustMasterModule = `
+use std::collections::HashSet;
+
+pub struct Master {
+    pub secret: String,
+    pub word_set: HashSet<String>,
+    pub max_guesses: usize,
+    pub guess_count: usize,
+    pub solved: bool,
+    pub history: Vec<String>,
+    pub scores: Vec<i32>,
+}
+
+impl Master {
+    pub fn new(secret: String, wordlist: Vec<String>, max_guesses: usize) -> Self {
+        let word_set: HashSet<String> = wordlist.into_iter().collect();
+        Master { secret, word_set, max_guesses, guess_count: 0, solved: false, history: Vec::new(), scores: Vec::new() }
+    }
+    pub fn guess(&mut self, word: &str) -> i32 {
+        self.guess_count += 1;
+        self.history.push(word.to_string());
+        let m: i32;
+        if !self.word_set.contains(word) {
+            m = -1;
+        } else {
+            let a = word.as_bytes();
+            let b = self.secret.as_bytes();
+            let n = std::cmp::min(a.len(), b.len());
+            let mut c = 0;
+            for i in 0..n { if a[i] == b[i] { c += 1; } }
+            m = c as i32;
+            if word == self.secret { self.solved = true; }
+        }
+        self.scores.push(m);
+        m
+    }
+}
+`;
+
+export function ensureRustMasterImport(code: string): string {
+    if (!code.includes("Master")) return code;
+    if (code.includes("crate::master") || code.includes("crate::Master")) return code;
+    return `use crate::master::Master;\n${code}`;
+}
+
+export function generateRustDebugInteractiveRunner(
+    functionName: string,
+    testCases: any[],
+    interactive: InteractiveConfig,
+): string {
+    const snakedFunctionName = functionName
+        .replace(/([A-Z]+)([A-Z][a-z])/g, "$1_$2")
+        .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+        .toLowerCase()
+        .replace(/^_/, "");
+    const maxG = interactive.maxGuesses;
+    const secretField = interactive.secretField;
+    const calls = testCases
+        .map((tc, caseIndex) => {
+            const wlArg = rustGetFullParam([{ name: 'wordlist', type: 'string_array' } as Param], tc);
+            const rawSec = String((tc as any)[secretField] ?? '');
+            const escSec = rawSec.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+            return `{
+        let __wl${caseIndex}: Vec<String> = ${wlArg};
+        let __sec${caseIndex} = "${escSec}".to_string();
+        let mut __m${caseIndex} = Master::new(__sec${caseIndex}, __wl${caseIndex}.clone(), ${maxG});
+        let __res${caseIndex} = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            solution::Solution::${snakedFunctionName}(__wl${caseIndex}.clone(), &mut __m${caseIndex});
+        }));
+        if __res${caseIndex}.is_err() { println!("ERROR: solution panicked"); }
+        for (__k, (__w, __s)) in __m${caseIndex}.history.iter().zip(__m${caseIndex}.scores.iter()).enumerate() {
+            println!("guess #{}: {} -> {}", __k+1, __w, __s);
+        }
+        let __tr${caseIndex} = if __m${caseIndex}.solved && __m${caseIndex}.guess_count <= ${maxG} {
+            format!("solved:{}", __m${caseIndex}.guess_count)
+        } else {
+            format!("failed:{}", __m${caseIndex}.guess_count)
+        };
+        println!(":::RESULT:::{}", __tr${caseIndex});
+        println!("---");
+    }`;
+        })
+        .join("\n    ");
+
+    return `
+use std::rc::Rc;
+use std::cell::RefCell;
+
+mod master;
+mod solution;
+use master::Master;
+
+${rustListNodeClass}
+
+${rustTreeNodeClass}
+
+// GraphNode
+#[derive(Debug, PartialEq, Eq)]
+pub struct GraphNode {
+  pub val: i32,
+  pub neighbors: Vec<Option<Rc<RefCell<GraphNode>>>>,
+}
+
+impl GraphNode {
+  #[inline]
+  pub fn new(val: i32) -> Self {
+    GraphNode {
+      val,
+      neighbors: vec![]
+    }
+  }
+}
+
+// Helper methods for display
+${rustHelperMethods}
+
+fn main() {
+    ${calls}
+}
+`;
+}
+
+export function generateRustInteractiveRunner(
+    functionName: string,
+    testCases: any[],
+    code: string,
+    interactive: InteractiveConfig,
+): string {
+    const snakedFunctionName = functionName
+        .replace(/([A-Z]+)([A-Z][a-z])/g, "$1_$2")
+        .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+        .toLowerCase()
+        .replace(/^_/, "");
+    const maxG = interactive.maxGuesses;
+    const secretField = interactive.secretField;
+    const calls = testCases
+        .map((tc, caseIndex) => {
+            const wlArg = rustGetFullParam([{ name: 'wordlist', type: 'string_array' } as Param], tc);
+            const rawSec = String((tc as any)[secretField] ?? '');
+            const escSec = rawSec.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+            return `{
+        let __wl${caseIndex}: Vec<String> = ${wlArg};
+        let __sec${caseIndex} = "${escSec}".to_string();
+        let mut __m${caseIndex} = Master::new(__sec${caseIndex}, __wl${caseIndex}.clone(), ${maxG});
+        let __t0 = std::time::Instant::now();
+        let __res${caseIndex} = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            Solution::${snakedFunctionName}(__wl${caseIndex}.clone(), &mut __m${caseIndex});
+        }));
+        if __res${caseIndex}.is_err() { println!("ERROR: solution panicked"); }
+        let __dt = __t0.elapsed().as_nanos();
+        println!(":::TIME:::{}", __dt);
+        for (__k, (__w, __s)) in __m${caseIndex}.history.iter().zip(__m${caseIndex}.scores.iter()).enumerate() {
+            println!("guess #{}: {} -> {}", __k+1, __w, __s);
+        }
+        let __tr${caseIndex} = if __m${caseIndex}.solved && __m${caseIndex}.guess_count <= ${maxG} {
+            format!("solved:{}", __m${caseIndex}.guess_count)
+        } else {
+            format!("failed:{}", __m${caseIndex}.guess_count)
+        };
+        println!(":::RESULT:::{}", __tr${caseIndex});
+        println!("---");
+    }`;
+        })
+        .join("\n    ");
+
+    const cleanedCode = (code || "")
+        .replace(/use std::rc::Rc;/g, "// use std::rc::Rc;")
+        .replace(/use std::cell::RefCell;/g, "// use std::cell::RefCell;");
+
+    return `
+use std::rc::Rc;
+use std::cell::RefCell;
+
+${rustListNodeClass}
+
+${rustTreeNodeClass}
+
+// GraphNode
+#[derive(Debug, PartialEq, Eq)]
+pub struct GraphNode {
+  pub val: i32,
+  pub neighbors: Vec<Option<Rc<RefCell<GraphNode>>>>,
+}
+
+impl GraphNode {
+  #[inline]
+  pub fn new(val: i32) -> Self {
+    GraphNode {
+      val,
+      neighbors: vec![]
+    }
+  }
+}
+
+${rustMasterStruct}
+
+// User code
+${cleanedCode}
 
 // Helper methods for display
 ${rustHelperMethods}

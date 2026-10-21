@@ -1,6 +1,48 @@
 import type { Param } from "./util";
+import type { InteractiveConfig } from "./interactiveUtil";
 
 export const javaImage = 'alpine/java:22-jdk';
+
+// Master judge for interactive guess-word problems. The runner builds one
+// per test case from (secret, wordlist); user code calls master.guess(word).
+export const javaMasterClass = `
+import java.util.*;
+public class Master {
+    private final String secret;
+    private final Set<String> wordSet;
+    private final int maxGuesses;
+    private int guessCount = 0;
+    private boolean solved = false;
+    private final List<String> history = new ArrayList<>();
+    private final List<Integer> scores = new ArrayList<>();
+    public Master(String secret, String[] wordlist, int maxGuesses) {
+        this.secret = secret;
+        this.wordSet = new HashSet<>(Arrays.asList(wordlist));
+        this.maxGuesses = maxGuesses;
+    }
+    public int guess(String word) {
+        guessCount++;
+        history.add(word);
+        int m;
+        if (!wordSet.contains(word)) {
+            m = -1;
+        } else {
+            m = 0;
+            int n = Math.min(word.length(), secret.length());
+            for (int i = 0; i < n; i++) if (word.charAt(i) == secret.charAt(i)) m++;
+            if (word.equals(secret)) solved = true;
+        }
+        scores.add(m);
+        return m;
+    }
+    public int getGuessCount() { return guessCount; }
+    public boolean isSolved() { return solved; }
+    public int getMaxGuesses() { return maxGuesses; }
+    public List<String> getHistory() { return history; }
+    public List<Integer> getScores() { return scores; }
+    public String getSecret() { return secret; }
+}
+`;
 
 export const javaListNodeClass = `
     public class ListNode {
@@ -689,6 +731,100 @@ export function generateJavaRunnerWithMarker(functionName: string, params: Param
                 `System.out.println(":::ANSWER:::" + ${displayFunc}(marker.${functionName}(${fullParam})));`,
                 `System.out.println("---");`
             ].join('\n');
+        })
+        .join('\n        ');
+
+    return `
+import java.util.*;
+public class Main {
+    ${javaHelperMethods}
+    public static void main(String[] args) throws Exception {
+        Solution sol = new Solution();
+        Marker marker = new Marker();
+        ${testCalls}
+    }
+}`;
+
+}
+
+function javaInteractiveWordlistLiteral(tc: any, interactive: InteractiveConfig): string {
+    const raw = tc['wordlist'];
+    let strVal: string;
+    if (Array.isArray(raw)) {
+        try { strVal = JSON.stringify(raw); } catch { strVal = '[]'; }
+    } else {
+        strVal = String(raw ?? '[]');
+    }
+    return `to_string_array(${formatAndSplitJavaString(strVal)})`;
+}
+
+function javaInteractiveSecretLiteral(tc: any, interactive: InteractiveConfig): string {
+    return formatAndSplitJavaString(String(tc[interactive.secretField] ?? ''));
+}
+
+export function generateJavaInteractiveRunner(
+    functionName: string, testCases: any[], interactive: InteractiveConfig
+): string {
+    const maxG = interactive.maxGuesses;
+    const testCalls = testCases
+        .map((tc, idx) => {
+            const wl = javaInteractiveWordlistLiteral(tc, interactive);
+            const sec = javaInteractiveSecretLiteral(tc, interactive);
+            return [
+                `String[] __wl${idx} = ${wl};`,
+                `String __sec${idx} = ${sec};`,
+                `Master __m${idx} = new Master(__sec${idx}, __wl${idx}, ${maxG});`,
+                `long __t${idx} = System.nanoTime();`,
+                `try { sol.${functionName}(__wl${idx}, __m${idx}); } catch (Exception __e) { System.out.println("ERROR: " + __e); }`,
+                `long __time${idx} = System.nanoTime() - __t${idx};`,
+                `System.out.println(":::TIME:::" + __time${idx});`,
+                `for (int __k${idx} = 0; __k${idx} < __m${idx}.getHistory().size(); __k${idx}++) {`,
+                `    System.out.println("guess #" + (__k${idx}+1) + ": " + __m${idx}.getHistory().get(__k${idx}) + " -> " + __m${idx}.getScores().get(__k${idx}));`,
+                `}`,
+                `String __tr${idx} = (__m${idx}.isSolved() && __m${idx}.getGuessCount() <= ${maxG}) ? ("solved:" + __m${idx}.getGuessCount()) : ("failed:" + __m${idx}.getGuessCount());`,
+                `System.out.println(":::RESULT:::" + __tr${idx});`,
+                `System.out.println("---");`
+            ].join('\n        ');
+        })
+        .join('\n        ');
+
+    return `
+import java.util.*;
+public class Main {
+    ${javaHelperMethods}
+    public static void main(String[] args) throws Exception {
+        Solution sol = new Solution();
+        ${testCalls}
+    }
+}`;
+}
+
+export function generateJavaInteractiveRunnerWithMarker(
+    functionName: string, params: Param[], testCases: any[], interactive: InteractiveConfig
+): string {
+    const maxG = interactive.maxGuesses;
+    const testCalls = testCases
+        .map((tc, idx) => {
+            const wl = javaInteractiveWordlistLiteral(tc, interactive);
+            const sec = javaInteractiveSecretLiteral(tc, interactive);
+            const markerArgs = javaGetFullParam(params, tc);
+            return [
+                `String[] __wl${idx} = ${wl};`,
+                `String __sec${idx} = ${sec};`,
+                `Master __m${idx} = new Master(__sec${idx}, __wl${idx}, ${maxG});`,
+                `long __t${idx} = System.nanoTime();`,
+                `try { sol.${functionName}(__wl${idx}, __m${idx}); } catch (Exception __e) { System.out.println("ERROR: " + __e); }`,
+                `long __time${idx} = System.nanoTime() - __t${idx};`,
+                `System.out.println(":::TIME:::" + __time${idx});`,
+                `for (int __k${idx} = 0; __k${idx} < __m${idx}.getHistory().size(); __k${idx}++) {`,
+                `    System.out.println("guess #" + (__k${idx}+1) + ": " + __m${idx}.getHistory().get(__k${idx}) + " -> " + __m${idx}.getScores().get(__k${idx}));`,
+                `}`,
+                `String __tr${idx} = (__m${idx}.isSolved() && __m${idx}.getGuessCount() <= ${maxG}) ? ("solved:" + __m${idx}.getGuessCount()) : ("failed:" + __m${idx}.getGuessCount());`,
+                `System.out.println(":::RESULT:::" + __tr${idx});`,
+                `System.out.println(":::VERDICT:::" + marker.isCorrect(${markerArgs}, __tr${idx}));`,
+                `System.out.println(":::ANSWER:::" + displayOutput(__sec${idx}));`,
+                `System.out.println("---");`
+            ].join('\n        ');
         })
         .join('\n        ');
 

@@ -1,4 +1,5 @@
 import type { Param } from "./util";
+import type { InteractiveConfig } from "./interactiveUtil";
 
 export const pythonImage = 'python:3.11-slim';
 
@@ -388,4 +389,40 @@ export function generatePythonRunner(functionName: string, params: Param[], test
     }).join('\n');
 
     return `from typing import List, Optional, Any\nimport time\n\n${pythonListNodeClass}\n${pythonTreeNodeClass}\n${pythonGraphNodeClass}\n\n${pythonHelperMethods}\nif __name__ == '__main__':\n    import builtins\n    builtins.ListNode = ListNode\n    builtins.TreeNode = TreeNode\n    builtins.GraphNode = GraphNode\n    from Solution import Solution\n    sol = Solution()\n    ${calls}\n`;
+}
+
+export const pythonMasterClass = `
+class Master:
+    def __init__(self, secret: str, wordlist, max_guesses: int = 10):
+        self._secret = secret
+        self._wordset = set(wordlist)
+        self._max = max_guesses
+        self.guess_count = 0
+        self.solved = False
+        self.history = []
+        self.scores = []
+    def guess(self, word: str) -> int:
+        self.guess_count += 1
+        self.history.append(word)
+        if word not in self._wordset:
+            m = -1
+        else:
+            m = sum(1 for a, b in zip(word, self._secret) if a == b)
+            if word == self._secret:
+                self.solved = True
+        self.scores.append(m)
+        return m
+`;
+
+export function generatePythonInteractiveRunner(functionName: string, testCases: any[], interactive: InteractiveConfig): string {
+    const maxG = interactive.maxGuesses;
+    const secretField = interactive.secretField;
+    const calls = testCases.map((tc, idx) => {
+        const wl = pyGetFullParam([{ name: 'wordlist', type: 'string_array' } as Param], tc);
+        const rawSecret = tc[secretField] ?? '';
+        const escSecret = String(rawSecret).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        return `__wl${idx} = ${wl}\n__sec${idx} = '${escSecret}'\n__m${idx} = Master(__sec${idx}, __wl${idx}, ${maxG})\n__t0 = time.perf_counter_ns()\ntry:\n    sol.${functionName}(__wl${idx}, __m${idx})\nexcept Exception as __e:\n    print('ERROR: ' + str(__e))\n__dt = time.perf_counter_ns() - __t0\nprint(':::TIME:::' + str(__dt))\nfor __k${idx}, (__w${idx}, __s${idx}) in enumerate(zip(__m${idx}.history, __m${idx}.scores)):\n    print(f'guess #{__k${idx}+1}: {__w${idx}} -> {__s${idx}}')\n__tr${idx} = ('solved:' + str(__m${idx}.guess_count)) if (__m${idx}.solved and __m${idx}.guess_count <= ${maxG}) else ('failed:' + str(__m${idx}.guess_count))\nprint(':::RESULT:::' + __tr${idx})\nprint('---')`;
+    }).join('\n');
+
+    return `from typing import List, Optional, Any\nimport time\nfrom ast import literal_eval\n\n${pythonListNodeClass}\n${pythonTreeNodeClass}\n${pythonGraphNodeClass}\n\n${pythonHelperMethods}\n${pythonMasterClass}\nif __name__ == '__main__':\n    import builtins\n    builtins.ListNode = ListNode\n    builtins.TreeNode = TreeNode\n    builtins.GraphNode = GraphNode\n    builtins.Master = Master\n    from Solution import Solution\n    sol = Solution()\n    ${calls}\n`;
 }

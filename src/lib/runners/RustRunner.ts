@@ -1,4 +1,5 @@
-import { rustImage, generateRustRunner } from "$lib/utils/rustUtil";
+import { rustImage, generateRustRunner, generateRustInteractiveRunner } from "$lib/utils/rustUtil";
+import { getInteractive } from "$lib/utils/interactiveUtil";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import fs from 'fs/promises';
@@ -25,7 +26,10 @@ export class RustRunner extends ProgramRunner {
             const problemData = JSON.parse(problemContent);
             
             const className = problemData.classProblem?.userClassName;
-            const runnerCode = generateRustRunner(problemData.functionName, problemData.params, this.testCases, this.code, className, problemData.checkGraphClone);
+            const interactive = getInteractive(problemData);
+            const runnerCode = interactive
+                ? generateRustInteractiveRunner(problemData.functionName, this.testCases, this.code, interactive)
+                : generateRustRunner(problemData.functionName, problemData.params, this.testCases, this.code, className, problemData.checkGraphClone);
 
             this.container = await ContainerPool.acquire(rustImage);
             if (!this.container) {

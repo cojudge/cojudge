@@ -391,7 +391,53 @@ class Marker {
 
 ---
 
-## 7. Registering in a Course
+## 7. Interactive Judge Problems (e.g. Guess the Word)
+
+Some LeetCode problems are interactive: the solution must call a judge API
+instead of returning an answer (e.g. `843. Guess the Word` calls
+`master.guess(word)` at most 10 times). The harness supports this via an
+`interactive` field in `metadata.json`:
+
+```json
+{
+  "functionName": "findSecretWord",
+  "params": [
+    { "name": "wordlist", "type": "string_array" },
+    { "name": "secret", "type": "string" }
+  ],
+  "outputType": "string",
+  "interactive": { "kind": "guess-word", "secretField": "secret", "maxGuesses": 10 }
+}
+```
+
+Rules:
+
+- `params` keep the judge-only field (`secret`) so `Marker.isCorrect` can see
+  it, but the runner **never passes it to user code**. Instead it builds a
+  `Master(secret, wordlist)` and calls `sol.findSecretWord(wordlist, master)`.
+- The user's function returns nothing (`void`/`None`); success is the judge
+  state. After each test case the runner prints a harness-generated transcript
+  as `:::RESULT:::`: `solved:N` (secret guessed in N calls, N <= max) or
+  `failed:N`. User code cannot forge it.
+- `Master` API per language: Java `master.guess(String)->int`, Python
+  `master.guess(str)->int`, C++ `master.guess(string)->int`, C#
+  `master.Guess(string)->int`, Rust `master.guess(&str)->i32` (takes
+  `&mut Master`), Go `master.Guess(string) int` (takes `*Master`), TypeScript
+  `master.guess(string): number` (`import { Master } from './Master'`),
+  PHP `$master->guess($word)`. `guess` returns match count, or `-1` if the
+  word is not in `wordlist`. Every call counts, including misses.
+- `Marker.java` implements **only**
+  `isCorrect(wordlist, secret, transcript)` (e.g. `transcript.startsWith("solved:")`
+  with count `<= 10`). No reference `findSecretWord` is needed: the displayed
+  correct answer is the secret itself.
+- Add at least one large test (e.g. 30 words) to `official-tests.json` so a
+  naive guess-everything strategy exceeds the budget while minimax passes.
+
+Reference: `guess-the-word`.
+
+---
+
+## 8. Registering in a Course
 
 Add the problem slug to `~/cojudge/courses/blind75/courseinfo.json` under the appropriate category:
 
@@ -416,9 +462,9 @@ You can also add problems to categories that don't exist yet:
 
 ---
 
-## 8. Verification
+## 9. Verification
 
-### 7.1 Initialize starter code
+### 9.1 Initialize starter code
 
 ```bash
 cojudge init <slug> --lang java --output /tmp/solution.java
@@ -426,7 +472,7 @@ cojudge init <slug> --lang java --output /tmp/solution.java
 
 Verify the generated starter code looks correct for each language.
 
-### 7.2 Run sample tests with a correct solution
+### 9.2 Run sample tests with a correct solution
 
 Create a correct implementation and test it:
 
@@ -440,17 +486,17 @@ cojudge run <slug> /tmp/solution.rs        # Rust
 
 All sample tests should pass.
 
-### 7.3 Test with wrong solutions to verify `isCorrect`
+### 9.3 Test with wrong solutions to verify `isCorrect`
 
 Create an intentionally wrong solution to ensure the judge correctly rejects it.
 
-### 7.4 Run submission tests (optional)
+### 9.4 Run submission tests (optional)
 
 ```bash
 cojudge submit <slug> /tmp/solution.java
 ```
 
-### 7.5 Test the web UI
+### 9.5 Test the web UI
 
 1. Start the server: `cojudge`
 2. Open the browser and navigate to the problem
@@ -477,4 +523,5 @@ cojudge submit <slug> /tmp/solution.java
 | `valid-parentheses` | Standard | `string` param, `boolean` output |
 | `merge-intervals` | Standard | `int_array_2d` param/output |
 | `group-anagrams` | Standard | `string_array` param, `string_list_2d` output |
+| `guess-the-word` | Interactive (`interactive` + `Master` judge, transcript verdict) | `findSecretWord(wordlist, master)`, max 10 `guess` calls |
 | `find-median-from-data-stream` | Class-based | `classProblem` with `string_array`/`int_array_2d` params |
