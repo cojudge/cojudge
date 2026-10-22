@@ -1,5 +1,6 @@
 import type { Param } from "./util";
 import type { InteractiveConfig } from "./interactiveUtil";
+import { interactiveBudget, isTranscriptKind, judgeClassForKind } from "./interactiveUtil";
 
 export const tsImage = 'node:22-alpine';
 
@@ -448,6 +449,9 @@ export const tsMasterClass = `export class Master {
 `;
 
 export function generateTypeScriptInteractiveRunner(functionName: string, testCases: any[], interactive: InteractiveConfig): string {
+    if (!isTranscriptKind(interactive.kind)) {
+        return generateTypeScriptJudgeRunner(functionName, testCases, interactive);
+    }
     const maxG = interactive.maxGuesses;
     const secretField = interactive.secretField;
     const calls = testCases.map((tc, idx) => {
@@ -552,4 +556,168 @@ export class ${className} {
     return `${header}export function ${functionName}(${paramStrs.join(', ')}): ${returnType} {
     
 }`;
+}
+
+export const tsGuessGameClass = `export class GuessGame {
+    private pick: number;
+    callCount = 0;
+    history: number[] = [];
+    scores: number[] = [];
+    constructor(pick: number) { this.pick = pick; }
+    guess(num: number): number {
+        this.callCount++;
+        this.history.push(num);
+        let r: number;
+        if (num > this.pick) r = -1;
+        else if (num < this.pick) r = 1;
+        else r = 0;
+        this.scores.push(r);
+        return r;
+    }
+}
+`;
+
+export const tsVersionControlClass = `export class VersionControl {
+    private bad: number;
+    callCount = 0;
+    history: number[] = [];
+    scores: boolean[] = [];
+    constructor(bad: number) { this.bad = bad; }
+    isBadVersion(version: number): boolean {
+        this.callCount++;
+        this.history.push(version);
+        const r = version >= this.bad;
+        this.scores.push(r);
+        return r;
+    }
+}
+`;
+
+export const tsArrayReaderClass = `export class ArrayReader {
+    private arr: number[];
+    callCount = 0;
+    constructor(arr: number[]) { this.arr = [...arr]; }
+    get(index: number): number {
+        this.callCount++;
+        if (index < 0 || index >= this.arr.length) return 2147483647;
+        return this.arr[index];
+    }
+}
+`;
+
+export const tsMountainArrayClass = `export class MountainArray {
+    private arr: number[];
+    callCount = 0;
+    constructor(arr: number[]) { this.arr = [...arr]; }
+    get(index: number): number {
+        this.callCount++;
+        return this.arr[index];
+    }
+    length(): number { return this.arr.length; }
+}
+`;
+
+export const tsRelationClass = `export class Relation {
+    private graph: number[][];
+    callCount = 0;
+    constructor(graph: number[][]) { this.graph = graph.map(r => [...r]); }
+    knows(a: number, b: number): boolean {
+        this.callCount++;
+        return this.graph[a][b] === 1;
+    }
+    size(): number { return this.graph.length; }
+}
+`;
+
+export function tsJudgeClass(kind: string): string {
+    switch (kind) {
+        case 'guess-word': return tsMasterClass;
+        case 'guess-number': return tsGuessGameClass;
+        case 'first-bad': return tsVersionControlClass;
+        case 'array-reader': return tsArrayReaderClass;
+        case 'mountain-array': return tsMountainArrayClass;
+        case 'celebrity': return tsRelationClass;
+        default: throw new Error(`Unknown interactive kind: ${kind}`);
+    }
+}
+
+function tsJudgeSetup(tc: any, idx: number, interactive: InteractiveConfig): { decls: string; call: string; counter: string; history: string } {
+    const kind = interactive.kind;
+    const secretField = interactive.secretField;
+    const arrStr = (field: string) => {
+        const raw = tc[field];
+        if (Array.isArray(raw)) { try { return JSON.stringify(raw); } catch { return '[]'; } }
+        return String(raw ?? '[]');
+    };
+    if (kind === 'guess-number') {
+        return {
+            decls: `const __n${idx} = ${tc['n']};\nconst __g${idx} = new GuessGame(${tc[secretField]});`,
+            call: `__FN__(__n${idx}, __g${idx})`,
+            counter: `__g${idx}.callCount`,
+            history: `for (let __k${idx} = 0; __k${idx} < __g${idx}.history.length; __k${idx}++) {\n    console.log('guess #' + (__k${idx}+1) + ': ' + __g${idx}.history[__k${idx}] + ' -> ' + __g${idx}.scores[__k${idx}]);\n}`,
+        };
+    }
+    if (kind === 'first-bad') {
+        return {
+            decls: `const __n${idx} = ${tc['n']};\nconst __vc${idx} = new VersionControl(${tc[secretField]});`,
+            call: `__FN__(__n${idx}, __vc${idx})`,
+            counter: `__vc${idx}.callCount`,
+            history: `for (let __k${idx} = 0; __k${idx} < __vc${idx}.history.length; __k${idx}++) {\n    console.log('check #' + (__k${idx}+1) + ': ' + __vc${idx}.history[__k${idx}] + ' -> ' + __vc${idx}.scores[__k${idx}]);\n}`,
+        };
+    }
+    if (kind === 'array-reader') {
+        return {
+            decls: `const __r${idx} = new ArrayReader(${arrStr(secretField)});\nconst __tgt${idx} = ${tc['target']};`,
+            call: `__FN__(__r${idx}, __tgt${idx})`,
+            counter: `__r${idx}.callCount`,
+            history: ``,
+        };
+    }
+    if (kind === 'mountain-array') {
+        return {
+            decls: `const __mt${idx} = new MountainArray(${arrStr(secretField)});\nconst __tgt${idx} = ${tc['target']};`,
+            call: `__FN__(__tgt${idx}, __mt${idx})`,
+            counter: `__mt${idx}.callCount`,
+            history: ``,
+        };
+    }
+    if (kind === 'celebrity') {
+        return {
+            decls: `const __rel${idx} = new Relation(${arrStr(secretField)});\nconst __n${idx} = __rel${idx}.size();`,
+            call: `__FN__(__n${idx}, __rel${idx})`,
+            counter: `__rel${idx}.callCount`,
+            history: ``,
+        };
+    }
+    throw new Error(`Unknown interactive kind: ${kind}`);
+}
+
+export function generateTypeScriptJudgeRunner(functionName: string, testCases: any[], interactive: InteractiveConfig): string {
+    const judgeCls = judgeClassForKind(interactive.kind);
+    const calls = testCases.map((tc, idx) => {
+        const budget = interactiveBudget(interactive, tc);
+        const setup = tsJudgeSetup(tc, idx, interactive);
+        const call = setup.call.replace('__FN__', functionName);
+        const hist = setup.history ? `\n${setup.history}` : '';
+        return `${setup.decls.split('\n').join('\n')}
+const __t0${idx} = process.hrtime.bigint();
+let __res${idx} = 0;
+let __ok${idx} = true;
+try { __res${idx} = ${call}; } catch (__e: any) { __ok${idx} = false; console.log('ERROR: ' + (__e?.message ?? __e)); }
+const __t1${idx} = process.hrtime.bigint();
+console.log(':::TIME:::' + (__t1${idx} - __t0${idx}).toString());${hist}
+const __calls${idx} = ${setup.counter};
+console.log('api calls: ' + __calls${idx} + ' (budget ${budget})');
+const __tr${idx} = (!__ok${idx}) ? 'error' : ((__calls${idx} > ${budget}) ? ('over-budget:' + __calls${idx}) : ('' + __res${idx}));
+console.log(':::RESULT:::' + __tr${idx});
+console.log('---');`;
+    }).join('\n');
+
+    return `${tsHelperMethods}
+
+import { ${judgeCls} } from './${judgeCls}';
+import { ${functionName} } from './Solution';
+
+${calls}
+`;
 }

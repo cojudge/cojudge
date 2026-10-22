@@ -1,5 +1,6 @@
 import type { Param } from "./util";
 import type { InteractiveConfig } from "./interactiveUtil";
+import { interactiveBudget, isTranscriptKind } from "./interactiveUtil";
 
 export const pythonImage = 'python:3.11-slim';
 
@@ -414,7 +415,98 @@ class Master:
         return m
 `;
 
+// Judge classes for return-value interactive kinds. The hidden value is only
+// visible through the API method; every call increments call_count so the
+// runner can enforce the call budget.
+export const pythonGuessGameClass = `
+class GuessGame:
+    def __init__(self, pick: int):
+        self._pick = pick
+        self.call_count = 0
+        self.history = []
+    def guess(self, num: int) -> int:
+        self.call_count += 1
+        self.history.append(num)
+        if num > self._pick:
+            return -1
+        if num < self._pick:
+            return 1
+        return 0
+`;
+
+export const pythonVersionControlClass = `
+class VersionControl:
+    def __init__(self, bad: int):
+        self._bad = bad
+        self.call_count = 0
+        self.history = []
+    def is_bad_version(self, version: int) -> bool:
+        self.call_count += 1
+        self.history.append(version)
+        return version >= self._bad
+`;
+
+export const pythonArrayReaderClass = `
+class ArrayReader:
+    def __init__(self, arr):
+        self._arr = list(arr)
+        self.call_count = 0
+    def get(self, index: int) -> int:
+        self.call_count += 1
+        if index < 0 or index >= len(self._arr):
+            return 2147483647
+        return self._arr[index]
+`;
+
+export const pythonMountainArrayClass = `
+class MountainArray:
+    def __init__(self, arr):
+        self._arr = list(arr)
+        self.call_count = 0
+    def get(self, index: int) -> int:
+        self.call_count += 1
+        return self._arr[index]
+    def length(self) -> int:
+        return len(self._arr)
+`;
+
+export const pythonRelationClass = `
+class Relation:
+    def __init__(self, graph):
+        self._graph = [list(row) for row in graph]
+        self.call_count = 0
+    def knows(self, a: int, b: int) -> bool:
+        self.call_count += 1
+        return self._graph[a][b] == 1
+`;
+
+export function pythonJudgeClass(kind: string): string {
+    switch (kind) {
+        case 'guess-word': return pythonMasterClass;
+        case 'guess-number': return pythonGuessGameClass;
+        case 'first-bad': return pythonVersionControlClass;
+        case 'array-reader': return pythonArrayReaderClass;
+        case 'mountain-array': return pythonMountainArrayClass;
+        case 'celebrity': return pythonRelationClass;
+        default: throw new Error(`Unknown interactive kind: ${kind}`);
+    }
+}
+
+export function pythonJudgeBuiltins(kind: string): string {
+    switch (kind) {
+        case 'guess-word': return 'Master';
+        case 'guess-number': return 'GuessGame';
+        case 'first-bad': return 'VersionControl';
+        case 'array-reader': return 'ArrayReader';
+        case 'mountain-array': return 'MountainArray';
+        case 'celebrity': return 'Relation';
+        default: throw new Error(`Unknown interactive kind: ${kind}`);
+    }
+}
 export function generatePythonInteractiveRunner(functionName: string, testCases: any[], interactive: InteractiveConfig): string {
+    if (!isTranscriptKind(interactive.kind)) {
+        return generatePythonJudgeRunner(functionName, testCases, interactive);
+    }
     const maxG = interactive.maxGuesses;
     const secretField = interactive.secretField;
     const calls = testCases.map((tc, idx) => {
@@ -425,4 +517,79 @@ export function generatePythonInteractiveRunner(functionName: string, testCases:
     }).join('\n');
 
     return `from typing import List, Optional, Any\nimport time\nfrom ast import literal_eval\n\n${pythonListNodeClass}\n${pythonTreeNodeClass}\n${pythonGraphNodeClass}\n\n${pythonHelperMethods}\n${pythonMasterClass}\nif __name__ == '__main__':\n    import builtins\n    builtins.ListNode = ListNode\n    builtins.TreeNode = TreeNode\n    builtins.GraphNode = GraphNode\n    builtins.Master = Master\n    from Solution import Solution\n    sol = Solution()\n    ${calls}\n`;
+}
+
+function pyJudgeSetup(tc: any, idx: number, interactive: InteractiveConfig): { decls: string; call: string; counter: string; history: string } {
+    const kind = interactive.kind;
+    const secretField = interactive.secretField;
+    const budget = interactiveBudget(interactive, tc);
+    if (kind === 'guess-number') {
+        const n = tc['n'];
+        const pick = tc[secretField];
+        return {
+            decls: `__n${idx} = ${n}\n__g${idx} = GuessGame(${pick})`,
+            call: `sol.${'__FN__'}(__n${idx}, __g${idx})`,
+            counter: `__g${idx}.call_count`,
+            history: `for __k${idx}, __num${idx} in enumerate(__g${idx}.history):\n    print(f'guess #{__k${idx}+1}: {__num${idx}}')`,
+        };
+    }
+    if (kind === 'first-bad') {
+        const n = tc['n'];
+        const bad = tc[secretField];
+        return {
+            decls: `__n${idx} = ${n}\n__vc${idx} = VersionControl(${bad})`,
+            call: `sol.${'__FN__'}(__n${idx}, __vc${idx})`,
+            counter: `__vc${idx}.call_count`,
+            history: `for __k${idx}, __v${idx} in enumerate(__vc${idx}.history):\n    print(f'check #{__k${idx}+1}: {__v${idx}}')`,
+        };
+    }
+    if (kind === 'array-reader') {
+        const raw = tc[secretField] ?? '[]';
+        const str = Array.isArray(raw) ? JSON.stringify(raw) : String(raw);
+        const escaped = str.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        const target = tc['target'];
+        return {
+            decls: `__r${idx} = ArrayReader(literal_eval('${escaped}'))\n__t${idx} = ${target}`,
+            call: `sol.${'__FN__'}(__r${idx}, __t${idx})`,
+            counter: `__r${idx}.call_count`,
+            history: ``,
+        };
+    }
+    if (kind === 'mountain-array') {
+        const raw = tc[secretField] ?? '[]';
+        const str = Array.isArray(raw) ? JSON.stringify(raw) : String(raw);
+        const escaped = str.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        const target = tc['target'];
+        return {
+            decls: `__mt${idx} = MountainArray(literal_eval('${escaped}'))\n__t${idx} = ${target}`,
+            call: `sol.${'__FN__'}(__t${idx}, __mt${idx})`,
+            counter: `__mt${idx}.call_count`,
+            history: ``,
+        };
+    }
+    if (kind === 'celebrity') {
+        const raw = tc[secretField] ?? '[]';
+        const str = Array.isArray(raw) ? JSON.stringify(raw) : String(raw);
+        const escaped = str.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        return {
+            decls: `__rel${idx} = Relation(literal_eval('${escaped}'))\n__n${idx} = len(__rel${idx}._graph)`,
+            call: `sol.${'__FN__'}(__n${idx}, __rel${idx})`,
+            counter: `__rel${idx}.call_count`,
+            history: ``,
+        };
+    }
+    throw new Error(`Unknown interactive kind: ${kind}`);
+}
+
+export function generatePythonJudgeRunner(functionName: string, testCases: any[], interactive: InteractiveConfig): string {
+    const judgeCls = pythonJudgeBuiltins(interactive.kind);
+    const calls = testCases.map((tc, idx) => {
+        const budget = interactiveBudget(interactive, tc);
+        const setup = pyJudgeSetup(tc, idx, interactive);
+        const call = setup.call.replace('__FN__', functionName);
+        const hist = setup.history ? setup.history + '\n' : '';
+        return `${setup.decls}\n__ts${idx} = time.perf_counter_ns()\n__ok${idx} = True\ntry:\n    __res${idx} = ${call}\nexcept Exception as __e:\n    print('ERROR: ' + str(__e))\n    __ok${idx} = False\n__dt = time.perf_counter_ns() - __ts${idx}\nprint(':::TIME:::' + str(__dt))\n${hist}__calls${idx} = ${setup.counter}\nprint(f'api calls: {__calls${idx}} (budget ${budget})')\nif (not __ok${idx}):\n    print(':::RESULT:::error')\nelif __calls${idx} > ${budget}:\n    print(':::RESULT:::over-budget:' + str(__calls${idx}))\nelse:\n    print(':::RESULT:::' + display_output(__res${idx}))\nprint('---')`;
+    }).join('\n');
+
+    return `from typing import List, Optional, Any\nimport time\nfrom ast import literal_eval\n\n${pythonListNodeClass}\n${pythonTreeNodeClass}\n${pythonGraphNodeClass}\n\n${pythonHelperMethods}\n${pythonJudgeClass(interactive.kind)}\nif __name__ == '__main__':\n    import builtins\n    builtins.ListNode = ListNode\n    builtins.TreeNode = TreeNode\n    builtins.GraphNode = GraphNode\n    builtins.${judgeCls} = ${judgeCls}\n    from Solution import Solution\n    sol = Solution()\n    ${calls}\n`;
 }

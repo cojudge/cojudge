@@ -394,9 +394,13 @@ class Marker {
 ## 7. Interactive Judge Problems (e.g. Guess the Word)
 
 Some LeetCode problems are interactive: the solution must call a judge API
-instead of returning an answer (e.g. `843. Guess the Word` calls
-`master.guess(word)` at most 10 times). The harness supports this via an
-`interactive` field in `metadata.json`:
+instead of (only) returning an answer. The harness supports this via an
+`interactive` field in `metadata.json`. Two flavors exist:
+
+### 7a. Transcript verdict (e.g. Guess the Word)
+
+The user's function returns nothing (`void`/`None`); success is the judge
+state. Used by `kind: "guess-word"`:
 
 ```json
 {
@@ -434,6 +438,59 @@ Rules:
   naive guess-everything strategy exceeds the budget while minimax passes.
 
 Reference: `guess-the-word`.
+
+### 7b. Return-value judges (binary-search / query APIs)
+
+Most interactive problems return an answer but must obtain the hidden data
+through a judge API (`guess`, `isBadVersion`, `ArrayReader.get`,
+`MountainArray.get/length`, `knows`). These use a judge kind with a call
+budget; the runner builds the judge from the hidden field and calls the user
+function with it:
+
+```json
+{
+  "functionName": "guessNumber",
+  "params": [
+    { "name": "n", "type": "int" },
+    { "name": "pick", "type": "int" }
+  ],
+  "outputType": "int",
+  "interactive": { "kind": "guess-number", "secretField": "pick", "maxGuesses": 100 }
+}
+```
+
+Supported kinds (`secretField` names the hidden param that user code never sees):
+
+| `kind` | Hidden field | User signature | Judge API | Budget |
+|---|---|---|---|---|
+| `guess-number` (374) | `pick: int` | `guessNumber(n, game)` | `guess(num)` → `-1`/`1`/`0` | 100 calls |
+| `first-bad` (278) | `bad: int` | `firstBadVersion(n, vc)` | `isBadVersion(v)` → `bool` | 100 calls |
+| `array-reader` (702) | `secret: int_array` | `search(reader, target)` | `get(i)` → value or `2147483647` past the end | 10000 calls |
+| `mountain-array` (1095) | `mountainArr: int_array` | `findInMountainArray(target, mountainArr)` | `get(i)` / `length()` | 100 `get` calls |
+| `celebrity` (277) | `graph: int_array_2d` | `findCelebrity(n, relation)` (`n` = matrix rows) | `knows(a, b)` → `bool` | `maxGuesses + perN * n` |
+
+Rules:
+
+- The runner calls the user function, prints the returned answer as
+  `:::RESULT:::`, and separately counts judge API calls. Calls beyond the
+  budget print `over-budget:N` instead of the answer, which every marker
+  rejects as Wrong Answer. Exceptions print `error` (also rejected).
+- `Marker.java` keeps a normal reference solution plus
+  `isCorrect(hidden..., visible..., output)` comparing the returned answer —
+  no transcript handling is needed (`markerRunner` only uses the transcript
+  path for `kind: "guess-word"`).
+- Method names follow each language's conventions (e.g. C# `Guess` /
+  `IsBadVersion` / `Get` / `Knows`, Python `guess` / `is_bad_version` /
+  `get` / `knows`, Rust `&mut` judge receivers, TypeScript
+  `import { GuessGame } from './GuessGame'`). Copy the exact API comment from
+  the problem's `starterCode` in `metadata.json`.
+- Add large tests (e.g. `n = 2^31 - 1`, a 10⁴-element array, a 100-person
+  party) to `official-tests.json` so linear scans / brute-force `knows`
+  matrices exceed the budget while `O(log n)` / `O(n)` solutions pass.
+
+References: `guess-number-higher-or-lower`, `first-bad-version`,
+`search-in-a-sorted-array-of-unknown-size`, `find-in-mountain-array`,
+`find-the-celebrity`.
 
 ---
 
@@ -524,4 +581,9 @@ cojudge submit <slug> /tmp/solution.java
 | `merge-intervals` | Standard | `int_array_2d` param/output |
 | `group-anagrams` | Standard | `string_array` param, `string_list_2d` output |
 | `guess-the-word` | Interactive (`interactive` + `Master` judge, transcript verdict) | `findSecretWord(wordlist, master)`, max 10 `guess` calls |
+| `guess-number-higher-or-lower` | Interactive return-value judge (`guess-number` + `GuessGame`) | `guessNumber(n, game)`, max 100 `guess` calls |
+| `first-bad-version` | Interactive return-value judge (`first-bad` + `VersionControl`) | `firstBadVersion(n, vc)`, max 100 `isBadVersion` calls |
+| `search-in-a-sorted-array-of-unknown-size` | Interactive return-value judge (`array-reader` + `ArrayReader`) | `search(reader, target)`, max 10000 `get` calls |
+| `find-in-mountain-array` | Interactive return-value judge (`mountain-array` + `MountainArray`) | `findInMountainArray(target, mountainArr)`, max 100 `get` calls |
+| `find-the-celebrity` | Interactive return-value judge (`celebrity` + `Relation`) | `findCelebrity(n, relation)`, max `10 + 5*n` `knows` calls |
 | `find-median-from-data-stream` | Class-based | `classProblem` with `string_array`/`int_array_2d` params |

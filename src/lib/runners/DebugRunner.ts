@@ -1,12 +1,12 @@
-import { generateJavaClassSolution, generateJavaInteractiveRunner, generateJavaRunner, javaGraphNodeClass, javaImage, javaListNodeClass, javaMasterClass, javaTreeNodeClass } from "$lib/utils/javaUtil";
+import { generateJavaClassSolution, generateJavaInteractiveRunner, generateJavaRunner, generateJavaJudgeRunner, javaGraphNodeClass, javaImage, javaJudgeClass, javaListNodeClass, javaTreeNodeClass } from "$lib/utils/javaUtil";
 import { generatePythonClassSolution, generatePythonInteractiveRunner, generatePythonRunner, pythonGraphNodeClass, pythonImage, pythonListNodeClass, pythonTreeNodeClass } from "$lib/utils/pythonUtil";
 import { cppImage, cppListNodeClass, cppTreeNodeClass, cppGraphNodeClass, generateCppRunner, generateCppInteractiveRunner, generateCppClassSolution } from "$lib/utils/cppUtil";
 import { generateGoRunner, generateGoInteractiveRunner, goImage } from "$lib/utils/goUtil";
 import { csharpImage, generateCSharpRunner, generateCSharpInteractiveRunner, generateCSharpClassSolution, csharpListNodeClass, csharpTreeNodeClass, csharpGraphNodeClass } from "$lib/utils/csharpUtil";
-import { rustImage, generateRustRunner, generateRustDebugRunner, generateRustDebugInteractiveRunner, ensureRustMasterImport, rustMasterModule } from "$lib/utils/rustUtil";
-import { tsImage, generateTypeScriptRunner, generateTypeScriptInteractiveRunner, tsGetTypeImports, tsListNodeClass, tsTreeNodeClass, tsGraphNodeClass, tsMasterClass } from "$lib/utils/tsUtil";
+import { rustImage, generateRustRunner, generateRustDebugRunner, generateRustDebugInteractiveRunner, ensureRustJudgeImport, rustJudgeModule } from "$lib/utils/rustUtil";
+import { tsImage, generateTypeScriptRunner, generateTypeScriptInteractiveRunner, tsGetTypeImports, tsJudgeClass, tsListNodeClass, tsTreeNodeClass, tsGraphNodeClass } from "$lib/utils/tsUtil";
 import { phpImage, generatePhpRunner, generatePhpInteractiveRunner, generatePhpClassSolution, phpGetTypeImports, phpListNodeClass, phpTreeNodeClass, phpGraphNodeClass } from "$lib/utils/phpUtil";
-import { getInteractive } from "$lib/utils/interactiveUtil";
+import { getInteractive, judgeFileForKind } from "$lib/utils/interactiveUtil";
 import { ensureImageAvailable, extractOperations } from "$lib/utils/util";
 import { getMarkerResponses } from "../markerRunner";
 import Dockerode from "dockerode";
@@ -771,7 +771,8 @@ export async function startProblemDebugSession(problemId: string, language: stri
         pack.entry({ name: 'TreeNode.java' }, Buffer.from(javaTreeNodeClass));
         pack.entry({ name: 'GraphNode.java' }, Buffer.from(javaGraphNodeClass));
         if (getInteractive(problemData)) {
-            pack.entry({ name: 'Master.java' }, Buffer.from(javaMasterClass));
+            const __kind = problemData.interactive?.kind ?? 'guess-word';
+            pack.entry({ name: judgeFileForKind(__kind, 'java')! }, Buffer.from(javaJudgeClass(__kind)));
         }
         if (problemData.classProblem) {
             const className = problemData.classProblem.userClassName || 'MedianFinder';
@@ -905,9 +906,10 @@ export async function startProblemDebugSession(problemId: string, language: stri
 
         const pack = tar.pack();
         if (interactive) {
+            const __kind = problemData.interactive?.kind ?? 'guess-word';
             pack.entry({ name: 'main.rs' }, Buffer.from(runnerCode));
-            pack.entry({ name: 'master.rs' }, Buffer.from(rustMasterModule));
-            pack.entry({ name: 'solution.rs' }, Buffer.from(ensureRustMasterImport(code)));
+            pack.entry({ name: judgeFileForKind(__kind, 'rust')! }, Buffer.from(rustJudgeModule(__kind)));
+            pack.entry({ name: 'solution.rs' }, Buffer.from(ensureRustJudgeImport(code, __kind)));
         } else {
             pack.entry({ name: 'main.rs' }, Buffer.from(runnerCode));
             pack.entry({ name: 'solution.rs' }, Buffer.from(code));
@@ -937,7 +939,8 @@ export async function startProblemDebugSession(problemId: string, language: stri
         pack.entry({ name: 'TreeNode.ts' }, Buffer.from(tsTreeNodeClass));
         pack.entry({ name: 'GraphNode.ts' }, Buffer.from(tsGraphNodeClass));
         if (getInteractive(problemData)) {
-            pack.entry({ name: 'Master.ts' }, Buffer.from(tsMasterClass));
+            const __kind = problemData.interactive?.kind ?? 'guess-word';
+            pack.entry({ name: judgeFileForKind(__kind, 'typescript')! }, Buffer.from(tsJudgeClass(__kind)));
         }
         const userPrefix = buildMissingTypeImports(typeImports, code);
         lineOffset = userPrefix ? userPrefix.split('\n').length - 1 : 0;
