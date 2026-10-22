@@ -16,12 +16,6 @@
     ]
   },
   {
-    "secret": "aaaaaaaa",
-    "wordlist": [
-      "aaaaaaaa"
-    ]
-  },
-  {
     "secret": "abcdeg",
     "wordlist": [
       "abcdef",
@@ -36,85 +30,6 @@
       "ghijkl",
       "efghij",
       "mnopqr"
-    ]
-  },
-  {
-    "secret": "bbbb",
-    "wordlist": [
-      "aaaa",
-      "bbbb",
-      "cccc"
-    ]
-  },
-  {
-    "secret": "aaba",
-    "wordlist": [
-      "aaaa",
-      "aaab",
-      "aaba",
-      "abaa"
-    ]
-  },
-  {
-    "secret": "hallo",
-    "wordlist": [
-      "hello",
-      "hallo",
-      "hullo",
-      "hillo"
-    ]
-  },
-  {
-    "secret": "warm",
-    "wordlist": [
-      "word",
-      "ward",
-      "warm",
-      "warn"
-    ]
-  },
-  {
-    "secret": "tame",
-    "wordlist": [
-      "game",
-      "fame",
-      "same",
-      "tame"
-    ]
-  },
-  {
-    "secret": "rat",
-    "wordlist": [
-      "cat",
-      "bat",
-      "rat",
-      "mat"
-    ]
-  },
-  {
-    "secret": "ad",
-    "wordlist": [
-      "ab",
-      "ac",
-      "ad",
-      "ae"
-    ]
-  },
-  {
-    "secret": "node",
-    "wordlist": [
-      "code",
-      "mode",
-      "node",
-      "rode"
-    ]
-  },
-  {
-    "secret": "b",
-    "wordlist": [
-      "a",
-      "b",
-      "c"
     ]
   },
   {
@@ -149,94 +64,6 @@
       "abccef",
       "abcccf"
     ]
-  },
-  {
-    "secret": "apply",
-    "wordlist": [
-      "apple",
-      "apply",
-      "appel"
-    ]
-  },
-  {
-    "secret": "bbaa",
-    "wordlist": [
-      "aaaa",
-      "aabb",
-      "bbaa",
-      "bbbb"
-    ]
-  },
-  {
-    "wordlist": [
-      "word00",
-      "word01",
-      "word02",
-      "word03",
-      "word04",
-      "word05",
-      "word06",
-      "word07",
-      "word08",
-      "word09",
-      "word10",
-      "word11",
-      "word12",
-      "word13",
-      "word14",
-      "word15",
-      "word16",
-      "word17",
-      "word18",
-      "word19",
-      "word20",
-      "word21",
-      "word22",
-      "word23",
-      "word24",
-      "word25",
-      "word26",
-      "word27",
-      "word28",
-      "word29"
-    ],
-    "secret": "word29"
-  },
-  {
-    "wordlist": [
-      "door",
-      "boor",
-      "moor",
-      "poor"
-    ],
-    "secret": "moor"
-  },
-  {
-    "wordlist": [
-      "test",
-      "best",
-      "rest",
-      "nest"
-    ],
-    "secret": "nest"
-  },
-  {
-    "wordlist": [
-      "apple",
-      "apply",
-      "ample",
-      "amply"
-    ],
-    "secret": "amply"
-  },
-  {
-    "wordlist": [
-      "stone",
-      "stony",
-      "atone",
-      "alone"
-    ],
-    "secret": "alone"
   },
   {
     "wordlist": [
@@ -276,5 +103,441 @@
       "zzzzzz"
     ],
     "secret": "zzzzzz"
+  },
+  {
+    "secret": "ytctof",
+    "wordlist": [
+      "ctpkto",
+      "dosvcr",
+      "fozoio",
+      "fyyxcp",
+      "glatvl",
+      "htxnpk",
+      "icdkaa",
+      "iehomr",
+      "imzivm",
+      "mjwiyz",
+      "ottsdo",
+      "ouvxhw",
+      "pizqcs",
+      "pnexnj",
+      "qnoegb",
+      "sabcdq",
+      "sgqmuv",
+      "sqcmji",
+      "sutwky",
+      "svwtmg",
+      "umymlo",
+      "uuonvq",
+      "vuhyqm",
+      "vvqzdq",
+      "vvslfz",
+      "wepykf",
+      "wgefkw",
+      "wkbdgz",
+      "ypsgua",
+      "ytctof"
+    ]
+  },
+  {
+    "secret": "zbyygc",
+    "wordlist": [
+      "lsuymy",
+      "rmzfnx",
+      "sgtbax",
+      "txgqxt",
+      "wxpwwu",
+      "zbyygc"
+    ]
+  },
+  {
+    "secret": "rveysf",
+    "wordlist": [
+      "cwnqbh",
+      "hzbnas",
+      "icqsuw",
+      "ipeust",
+      "joyuzu",
+      "otjwzc",
+      "qtnhee",
+      "rveysf"
+    ]
+  },
+  {
+    "secret": "vwbuhv",
+    "wordlist": [
+      "bimeim",
+      "brhwym",
+      "cjksqw",
+      "kcpqoq",
+      "nggyio",
+      "oromaw",
+      "prlhxo",
+      "rraemk",
+      "rrbkhv",
+      "vwbuhv"
+    ]
+  },
+  {
+    "secret": "znpzwm",
+    "wordlist": [
+      "aeecqk",
+      "bwzfvp",
+      "gkubwy",
+      "hawmjo",
+      "ndxtrw",
+      "njadnd",
+      "ofhoef",
+      "pxbjra",
+      "qhxaew",
+      "vqugyy",
+      "wzetlc",
+      "znpzwm"
+    ]
+  },
+  {
+    "secret": "zvvjin",
+    "wordlist": [
+      "abgeoc",
+      "gtorvw",
+      "gzbvvs",
+      "jtdalt",
+      "mjrzls",
+      "mlwrbi",
+      "pdihcj",
+      "pdsklz",
+      "pzmrns",
+      "tpookq",
+      "udpgyt",
+      "uebqao",
+      "ujlrvf",
+      "zbjybk",
+      "zvvjin"
+    ]
+  },
+  {
+    "secret": "tqndgs",
+    "wordlist": [
+      "abizjc",
+      "bjxyyx",
+      "cbpooc",
+      "cmajai",
+      "cqzmgf",
+      "ctmazo",
+      "elcwac",
+      "fwwoir",
+      "kmbhkn",
+      "lbhoag",
+      "mplkmd",
+      "ofamoy",
+      "pduloa",
+      "qbqpyk",
+      "qyjues",
+      "qynusu",
+      "skvayg",
+      "slehbm",
+      "thstct",
+      "tqndgs"
+    ]
+  },
+  {
+    "secret": "ynibmi",
+    "wordlist": [
+      "bhfktu",
+      "bztfjx",
+      "gdhclk",
+      "ghwcdv",
+      "gstcju",
+      "hlzbrd",
+      "iwtmgr",
+      "jdyzvi",
+      "jjhuak",
+      "jxtbbn",
+      "lafqeu",
+      "nfgaqp",
+      "oikxqp",
+      "oozmko",
+      "otzfzp",
+      "sgarpi",
+      "skchab",
+      "sodomj",
+      "ubiwun",
+      "ugrbos",
+      "vfejay",
+      "wzfhqb",
+      "xhyjdw",
+      "xoppib",
+      "ynibmi"
+    ]
+  },
+  {
+    "secret": "zadznz",
+    "wordlist": [
+      "amxgek",
+      "aqkwaz",
+      "bhpiko",
+      "cebqfp",
+      "dbvwev",
+      "dgihww",
+      "dhmldd",
+      "doxojk",
+      "drypib",
+      "dtmqdj",
+      "ebrezb",
+      "erbgex",
+      "ezhlhh",
+      "ffikit",
+      "ibwvvk",
+      "ipfgbl",
+      "ixhpzh",
+      "luvwre",
+      "mtohkz",
+      "njodxc",
+      "nulhxz",
+      "nxrxrs",
+      "otofqn",
+      "qexctx",
+      "qjvdff",
+      "qmjbqj",
+      "qokcwy",
+      "qwemma",
+      "rqhpej",
+      "rubwxd",
+      "rzkihp",
+      "sdslva",
+      "skvnvl",
+      "slnylb",
+      "tylbov",
+      "yabknr",
+      "yeoloy",
+      "ykgnca",
+      "yvppoh",
+      "zadznz"
+    ]
+  },
+  {
+    "secret": "zwsbrv",
+    "wordlist": [
+      "anvpha",
+      "aqetlu",
+      "bpbbpc",
+      "bqcnmc",
+      "daihwy",
+      "eewuoy",
+      "ejxdow",
+      "enmugu",
+      "ewfmky",
+      "fapcxq",
+      "fjtpcb",
+      "gikqom",
+      "glqchq",
+      "gnazfo",
+      "gnojil",
+      "gscvpf",
+      "hgicbg",
+      "ikgvee",
+      "ikicer",
+      "jgbmtn",
+      "jrlpzj",
+      "kduuza",
+      "kzvxsi",
+      "liemra",
+      "lkkbor",
+      "mkvnbv",
+      "nedyze",
+      "njkyoe",
+      "ojjign",
+      "onzjgg",
+      "orrbro",
+      "pbghta",
+      "pfqyyz",
+      "pgwutq",
+      "pvjbwk",
+      "qvjabd",
+      "qxdsko",
+      "rxidqq",
+      "saimmz",
+      "schhuv",
+      "ttmhyh",
+      "vnaupr",
+      "vwifra",
+      "wbkmry",
+      "xqecyw",
+      "xwcayh",
+      "yrkwkz",
+      "zdtceo",
+      "zrharl",
+      "zwsbrv"
+    ]
+  },
+  {
+    "secret": "yawoha",
+    "wordlist": [
+      "acrbty",
+      "bhzgiu",
+      "caqqrx",
+      "chvjsj",
+      "ckxxrv",
+      "cpkngy",
+      "ctqrsu",
+      "dbmtqd",
+      "dqafvy",
+      "dwyauw",
+      "ebqmat",
+      "egjgri",
+      "ehsrhc",
+      "eobupu",
+      "eoyrcz",
+      "evrxrz",
+      "fzxagn",
+      "gdxquq",
+      "giipga",
+      "gjeubz",
+      "gnnkqq",
+      "gnxfah",
+      "gtivix",
+      "hqygke",
+      "httsrf",
+      "hwwqwn",
+      "hxvoia",
+      "jimtrg",
+      "joqujo",
+      "jvirtq",
+      "jxweeq",
+      "ksjrvu",
+      "kucvpp",
+      "kzghbd",
+      "liswem",
+      "lzvmcc",
+      "mblfct",
+      "muwceq",
+      "mvtdfq",
+      "mzzktr",
+      "nnfenx",
+      "omyerm",
+      "owspln",
+      "oxnlde",
+      "peahqz",
+      "pmvvxf",
+      "polbjx",
+      "pthwss",
+      "ptyxlq",
+      "qicphv",
+      "ryhujy",
+      "ssbjgh",
+      "suovdz",
+      "tojgvy",
+      "upszet",
+      "vmtwpc",
+      "vridkb",
+      "vthrcn",
+      "xxppak",
+      "yawoha"
+    ]
+  },
+  {
+    "secret": "zxmtdl",
+    "wordlist": [
+      "acdgrq",
+      "acfich",
+      "aeacci",
+      "ahzfnd",
+      "aivkjo",
+      "apfrav",
+      "apxmbo",
+      "baowfs",
+      "bdpjxp",
+      "bdslyh",
+      "bfflee",
+      "bfwbce",
+      "biochg",
+      "biydpd",
+      "cmtaxw",
+      "cryhny",
+      "czfwkj",
+      "diohip",
+      "dmccko",
+      "dqnxbw",
+      "dqyvpn",
+      "eiyhlm",
+      "elebgi",
+      "engijf",
+      "eupans",
+      "euumjy",
+      "faiprc",
+      "fdlvqk",
+      "fnhcls",
+      "fqvywq",
+      "fyhyxc",
+      "gcnslp",
+      "hggmen",
+      "hgltyg",
+      "hlowsh",
+      "htnwsn",
+      "idgzwv",
+      "ifdovj",
+      "ifnghb",
+      "ihhjyk",
+      "iqrfwx",
+      "ixvdew",
+      "izuhze",
+      "jhuwps",
+      "jkddtr",
+      "koaypd",
+      "kxkoue",
+      "lianfv",
+      "lmnfle",
+      "mjrdin",
+      "mssqkb",
+      "mwgogu",
+      "myikad",
+      "ncnbib",
+      "ncpqhh",
+      "ngxagk",
+      "oduvhr",
+      "omzvoq",
+      "oqfyop",
+      "osdmah",
+      "osrczy",
+      "otzpeg",
+      "oxjoke",
+      "pzimrd",
+      "qisgix",
+      "qknzdw",
+      "qlettk",
+      "qrzghf",
+      "qssrnk",
+      "qvggdp",
+      "qvxwqa",
+      "rnwxcn",
+      "sckgxa",
+      "sfwijx",
+      "teigxb",
+      "uszkij",
+      "utmaxv",
+      "uwsldb",
+      "uyyyko",
+      "vdyvkw",
+      "vhykuh",
+      "vytxqe",
+      "wcyxuc",
+      "wegfkg",
+      "winvoy",
+      "wipsck",
+      "xaoqjd",
+      "xccmys",
+      "xkwtmy",
+      "xkzmys",
+      "ycaktr",
+      "yemyjp",
+      "yepwxc",
+      "yjfefp",
+      "ynblrr",
+      "zfbevk",
+      "zpirjz",
+      "zuqrpd",
+      "zwcooj",
+      "zxmtdl"
+    ]
   }
 ]
