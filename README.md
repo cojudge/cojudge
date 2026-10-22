@@ -57,6 +57,18 @@
 #### Desktop app
 Download the latest installer for macOS, Windows, or Linux from [GitHub Releases](https://github.com/cojudge/cojudge/releases). Desktop builds bundle Node.js; Docker is only required when running, submitting, or debugging code. After installing the app, open the homepage menu and choose **CLI** to put `cojudge` on your PATH (no separate Node.js install).
 
+On Windows, the easiest install is via winget:
+
+```powershell
+winget install -e --id Cojudge.Cojudge
+```
+
+Upgrade later with:
+
+```powershell
+winget upgrade Cojudge.Cojudge
+```
+
 #### CLI
 If you are not using the desktop app, the easiest way to install the `cojudge` CLI without dealing with NPM permission issues is to run our install script:
 
