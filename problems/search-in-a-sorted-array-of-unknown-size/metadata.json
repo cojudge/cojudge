@@ -1,54 +1,54 @@
 {
   "id": "search-in-a-sorted-array-of-unknown-size",
-  "title": "714. Search in a Sorted Array of Unknown Size",
+  "title": "702. Search in a Sorted Array of Unknown Size",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/search-in-a-sorted-array-of-unknown-size/",
   "category": "binary-search",
   "examples": [
     {
-      "input": "arr = [-1,0,3,5,9,12], target = 9",
+      "input": "secret = [-1,0,3,5,9,12], target = 9",
       "output": "4",
       "explanation": "9 at index 4."
     },
     {
-      "input": "arr = [-1,0,3,5,9,12], target = 2",
+      "input": "secret = [-1,0,3,5,9,12], target = 2",
       "output": "-1",
       "explanation": "2 absent."
     },
     {
-      "input": "arr = [1,2,3,4,5], target = 1",
+      "input": "secret = [1,2,3,4,5], target = 1",
       "output": "0",
       "explanation": "First entry."
     }
   ],
   "starterCode": {
-    "java": "class Solution {\n    public int search(int[] arr, int target) {\n        return 0;\n    }\n}",
-    "python": "from typing import List\nclass Solution:\n    def search(self, arr: List[int], target: int) -> int:\n        return 0\n",
-    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int search(vector<int>& arr, int target) {\n        return 0;\n    }\n};",
-    "csharp": "public class Solution\n{\n    public int Search(int[] arr, int target)\n    {\n        return 0;\n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn search(arr: Vec<i32>, target: i32) -> i32 {\n        0\n    }\n}",
-    "go": "package main\n\nfunc Search(arr []int, target int) int {\n    return 0\n}",
-    "typescript": "export function search(arr: number[], target: number): number {\n    return 0;\n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @param int $target\n     * @return int\n     */\n    public function search($arr, $target) {\n\n    }\n}"
+    "java": "/**\n * // This is the ArrayReader's API interface.\n * // You should not implement it, or speculate about its implementation\n * // class ArrayReader {\n * //     public int get(int index);\n * // }\n * // get(index) returns the element at index, or 2147483647 if out of bounds.\n * // The length is hidden: probe exponentially, then binary search.\n * // The judge counts your calls: at most 10000 per test case.\n */\nclass Solution {\n    public int search(ArrayReader reader, int target) {\n        return 0;\n    }\n}",
+    "python": "# The ArrayReader API is provided by the judge as `reader`.\n# You should not implement it, or speculate about its implementation\n# class ArrayReader:\n#     def get(self, index: int) -> int:\n#         ...\n# get(index) returns the element at index, or 2147483647 if out of bounds.\n# The length is hidden: probe exponentially, then binary search.\n# The judge counts your calls: at most 10000 per test case.\nfrom typing import List\nclass Solution:\n    def search(self, reader: 'ArrayReader', target: int) -> int:\n        return 0\n",
+    "cpp": "/**\n * // This is the ArrayReader's API interface.\n * // You should not implement it, or speculate about its implementation\n * class ArrayReader {\n *   public:\n *     int get(int index);\n * };\n * // get(index) returns the element at index, or 2147483647 if out of bounds.\n * // The length is hidden: probe exponentially, then binary search.\n * // The judge counts your calls: at most 10000 per test case.\n */\nclass Solution {\npublic:\n    int search(ArrayReader& reader, int target) {\n        return 0;\n    }\n};",
+    "csharp": "/**\n * // This is the ArrayReader's API interface.\n * // You should not implement it, or speculate about its implementation\n * // class ArrayReader {\n * //     public int Get(int index);\n * // }\n * // Get(index) returns the element at index, or 2147483647 if out of bounds.\n * // The length is hidden: probe exponentially, then binary search.\n * // The judge counts your calls: at most 10000 per test case.\n */\npublic class Solution\n{\n    public int Search(ArrayReader reader, int target)\n    {\n        return 0;\n    }\n}",
+    "rust": "// This is the ArrayReader's API interface.\n// You should not implement it, or speculate about its implementation\n// struct ArrayReader;\n// impl ArrayReader {\n//     pub fn get(&mut self, index: i32) -> i32;\n// }\n// get(index) returns the element at index, or 2147483647 if out of bounds.\n// The length is hidden: probe exponentially, then binary search.\n// The judge counts your calls: at most 10000 per test case.\npub struct Solution;\n\nimpl Solution {\n    pub fn search(reader: &mut ArrayReader, target: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\n// This is the ArrayReader's API interface.\n// You should not implement it, or speculate about its implementation\n// type ArrayReader struct { }\n// func (r *ArrayReader) Get(index int) int\n// Get(index) returns the element at index, or 2147483647 if out of bounds.\n// The length is hidden: probe exponentially, then binary search.\n// The judge counts your calls: at most 10000 per test case.\nfunc Search(reader *ArrayReader, target int) int {\n    return 0\n}",
+    "typescript": "import { ArrayReader } from './ArrayReader';\n// This is the ArrayReader's API interface.\n// You should not implement it, or speculate about its implementation\n// class ArrayReader {\n//     get(index: number): number;\n// }\n// get(index) returns the element at index, or 2147483647 if out of bounds.\n// The length is hidden: probe exponentially, then binary search.\n// The judge counts your calls: at most 10000 per test case.\nexport function search(reader: ArrayReader, target: number): number {\n    return 0;\n}",
+    "php": "// This is the ArrayReader's API interface.\n// You should not implement it, or speculate about its implementation\n// class ArrayReader {\n//     public function get($index);\n// }\n// get($index) returns the element at index, or 2147483647 if out of bounds.\n// The judge counts your calls: at most 10000 per test case.\nclass Solution {\n    /**\n     * @param ArrayReader $reader\n     * @param int $target\n     * @return int\n     */\n    public function search($reader, $target) {\n        return 0;\n    }\n}"
   },
   "testCases": [
     {
-      "arr": "[-1,0,3,5,9,12]",
+      "secret": "[-1,0,3,5,9,12]",
       "target": 9
     },
     {
-      "arr": "[-1,0,3,5,9,12]",
+      "secret": "[-1,0,3,5,9,12]",
       "target": 2
     },
     {
-      "arr": "[1,2,3,4,5]",
+      "secret": "[1,2,3,4,5]",
       "target": 1
     }
   ],
   "functionName": "search",
   "params": [
     {
-      "name": "arr",
+      "name": "secret",
       "type": "int_array"
     },
     {
@@ -57,9 +57,14 @@
     }
   ],
   "outputType": "int",
+  "interactive": {
+    "kind": "array-reader",
+    "secretField": "secret",
+    "maxGuesses": 10000
+  },
   "hints": [
-    "Adaptation: the array is supplied whole (sorted, bound 10000); out-of-range sentinel 2147483647 never needs reading.",
-    "Grow an index exponentially (1, 2, 4, 8, ...) until it passes the array end or the value reaches target, then binary-search that window.",
-    "A plain binary search over the whole array is also accepted and runs in O(log n)."
+    "The judge never reveals the array or its length; only reader.get(i) is available, returning 2147483647 past the end.",
+    "Grow an index exponentially (1, 2, 4, 8, ...) until the value reaches target or the sentinel, then binary-search that window.",
+    "A single binary search over the whole array is impossible here because the length is unknown."
   ]
 }

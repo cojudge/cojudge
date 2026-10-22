@@ -1,5 +1,6 @@
 import type { Param } from "./util";
 import type { InteractiveConfig } from "./interactiveUtil";
+import { interactiveBudget, isTranscriptKind } from "./interactiveUtil";
 
 export const csharpImage = 'mcr.microsoft.com/dotnet/sdk:8.0-alpine';
 
@@ -725,6 +726,9 @@ public class Program {
 }
 
 export function generateCSharpInteractiveRunner(functionName: string, testCases: any[], interactive: InteractiveConfig): string {
+    if (!isTranscriptKind(interactive.kind)) {
+        return generateCSharpJudgeRunner(functionName, testCases, interactive);
+    }
     const csharpFunctionName = functionName.charAt(0).toUpperCase() + functionName.slice(1);
     const maxG = interactive.maxGuesses;
     const secretField = interactive.secretField;
@@ -767,6 +771,200 @@ using System.Text;
 ${csharpHelperMethods}
 
 ${csharpMasterClass}
+
+public class Program {
+    public static void Main(string[] args) {
+        Solution sol = new Solution();
+        ${testCalls}
+    }
+}`;
+}
+
+export const csharpGuessGameClass = `
+public class GuessGame {
+    private readonly int pick;
+    private int callCount = 0;
+    private readonly List<int> history = new List<int>();
+    private readonly List<int> scores = new List<int>();
+    public GuessGame(int pick) { this.pick = pick; }
+    public int Guess(int num) {
+        callCount++;
+        history.Add(num);
+        int r;
+        if (num > pick) r = -1;
+        else if (num < pick) r = 1;
+        else r = 0;
+        scores.Add(r);
+        return r;
+    }
+    public int CallCount => callCount;
+    public List<int> History => history;
+    public List<int> Scores => scores;
+}
+`;
+
+export const csharpVersionControlClass = `
+public class VersionControl {
+    private readonly int bad;
+    private int callCount = 0;
+    private readonly List<int> history = new List<int>();
+    private readonly List<bool> scores = new List<bool>();
+    public VersionControl(int bad) { this.bad = bad; }
+    public bool IsBadVersion(int version) {
+        callCount++;
+        history.Add(version);
+        bool r = version >= bad;
+        scores.Add(r);
+        return r;
+    }
+    public int CallCount => callCount;
+    public List<int> History => history;
+    public List<bool> Scores => scores;
+}
+`;
+
+export const csharpArrayReaderClass = `
+public class ArrayReader {
+    private readonly int[] arr;
+    private int callCount = 0;
+    public ArrayReader(int[] arr) { this.arr = (int[])arr.Clone(); }
+    public int Get(int index) {
+        callCount++;
+        if (index < 0 || index >= arr.Length) return 2147483647;
+        return arr[index];
+    }
+    public int CallCount => callCount;
+}
+`;
+
+export const csharpMountainArrayClass = `
+public class MountainArray {
+    private readonly int[] arr;
+    private int callCount = 0;
+    public MountainArray(int[] arr) { this.arr = (int[])arr.Clone(); }
+    public int Get(int index) {
+        callCount++;
+        return arr[index];
+    }
+    public int Length() { return arr.Length; }
+    public int CallCount => callCount;
+}
+`;
+
+export const csharpRelationClass = `
+public class Relation {
+    private readonly int[][] graph;
+    private int callCount = 0;
+    public Relation(int[][] graph) { this.graph = (int[][])graph.Clone(); }
+    public bool Knows(int a, int b) {
+        callCount++;
+        return graph[a][b] == 1;
+    }
+    public int Size() { return graph.Length; }
+    public int CallCount => callCount;
+}
+`;
+
+export function csharpJudgeClass(kind: string): string {
+    switch (kind) {
+        case 'guess-word': return csharpMasterClass;
+        case 'guess-number': return csharpGuessGameClass;
+        case 'first-bad': return csharpVersionControlClass;
+        case 'array-reader': return csharpArrayReaderClass;
+        case 'mountain-array': return csharpMountainArrayClass;
+        case 'celebrity': return csharpRelationClass;
+        default: throw new Error(`Unknown interactive kind: ${kind}`);
+    }
+}
+
+function csharpJudgeSetup(tc: any, idx: number, interactive: InteractiveConfig): { decls: string; call: string; counter: string; history: string } {
+    const kind = interactive.kind;
+    const secretField = interactive.secretField;
+    const arrStr = (field: string) => {
+        const raw = tc[field];
+        if (Array.isArray(raw)) { try { return JSON.stringify(raw); } catch { return '[]'; } }
+        return String(raw ?? '[]');
+    };
+    if (kind === 'guess-number') {
+        return {
+            decls: `int __n${idx} = ${tc['n']};\nGuessGame __g${idx} = new GuessGame(${tc[secretField]});`,
+            call: `sol.__FN__(__n${idx}, __g${idx})`,
+            counter: `__g${idx}.CallCount`,
+            history: `for (int __k${idx} = 0; __k${idx} < __g${idx}.History.Count; __k${idx}++) {\n    Console.WriteLine("guess #" + (__k${idx}+1) + ": " + __g${idx}.History[__k${idx}] + " -> " + __g${idx}.Scores[__k${idx}]);\n}`,
+        };
+    }
+    if (kind === 'first-bad') {
+        return {
+            decls: `int __n${idx} = ${tc['n']};\nVersionControl __vc${idx} = new VersionControl(${tc[secretField]});`,
+            call: `sol.__FN__(__n${idx}, __vc${idx})`,
+            counter: `__vc${idx}.CallCount`,
+            history: `for (int __k${idx} = 0; __k${idx} < __vc${idx}.History.Count; __k${idx}++) {\n    Console.WriteLine("check #" + (__k${idx}+1) + ": " + __vc${idx}.History[__k${idx}] + " -> " + (__vc${idx}.Scores[__k${idx}] ? "true" : "false"));\n}`,
+        };
+    }
+    if (kind === 'array-reader') {
+        return {
+            decls: `ArrayReader __r${idx} = new ArrayReader(CSharpHelper.ToIntArray(${formatAndSplitCSharpString(arrStr(secretField))}));\nint __t${idx} = ${tc['target']};`,
+            call: `sol.__FN__(__r${idx}, __t${idx})`,
+            counter: `__r${idx}.CallCount`,
+            history: ``,
+        };
+    }
+    if (kind === 'mountain-array') {
+        return {
+            decls: `MountainArray __mt${idx} = new MountainArray(CSharpHelper.ToIntArray(${formatAndSplitCSharpString(arrStr(secretField))}));\nint __t${idx} = ${tc['target']};`,
+            call: `sol.__FN__(__t${idx}, __mt${idx})`,
+            counter: `__mt${idx}.CallCount`,
+            history: ``,
+        };
+    }
+    if (kind === 'celebrity') {
+        return {
+            decls: `Relation __rel${idx} = new Relation(CSharpHelper.ToIntArray2d(${formatAndSplitCSharpString(arrStr(secretField))}));\nint __n${idx} = __rel${idx}.Size();`,
+            call: `sol.__FN__(__n${idx}, __rel${idx})`,
+            counter: `__rel${idx}.CallCount`,
+            history: ``,
+        };
+    }
+    throw new Error(`Unknown interactive kind: ${kind}`);
+}
+
+export function generateCSharpJudgeRunner(functionName: string, testCases: any[], interactive: InteractiveConfig): string {
+    const csharpFunctionName = functionName.charAt(0).toUpperCase() + functionName.slice(1);
+    const testCalls = testCases
+        .map((tc: any, idx: number) => {
+            const budget = interactiveBudget(interactive, tc);
+            const setup = csharpJudgeSetup(tc, idx, interactive);
+            const call = setup.call.replace('__FN__', csharpFunctionName);
+            const histLines = setup.history ? [setup.history] : [];
+            return [
+                ...setup.decls.split('\n'),
+                `var __sw${idx} = System.Diagnostics.Stopwatch.StartNew();`,
+                `int __res${idx} = 0;`,
+                `bool __ok${idx} = true;`,
+                `try { __res${idx} = ${call}; } catch (Exception __e) { __ok${idx} = false; Console.WriteLine("ERROR: " + __e.Message); }`,
+                `__sw${idx}.Stop();`,
+                `Console.WriteLine(":::TIME:::" + (__sw${idx}.ElapsedTicks * 1000000000L / System.Diagnostics.Stopwatch.Frequency));`,
+                ...histLines,
+                `int __calls${idx} = ${setup.counter};`,
+                `Console.WriteLine("api calls: " + __calls${idx} + " (budget ${budget})");`,
+                `string __tr${idx} = (!__ok${idx}) ? "error" : ((__calls${idx} > ${budget}) ? ("over-budget:" + __calls${idx}) : ("" + __res${idx}));`,
+                `Console.WriteLine(":::RESULT:::" + __tr${idx});`,
+                `Console.WriteLine("---");`
+            ].join('\n        ');
+        })
+        .join('\n        ');
+
+    return `
+using System;
+using System.Diagnostics;
+using System.Collections.Generic;
+using System.Text;
+
+#nullable disable
+
+${csharpHelperMethods}
+
+${csharpJudgeClass(interactive.kind)}
 
 public class Program {
     public static void Main(string[] args) {

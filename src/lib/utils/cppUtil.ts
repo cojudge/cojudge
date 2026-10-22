@@ -1,5 +1,6 @@
 import type { Param } from './util';
 import type { InteractiveConfig } from './interactiveUtil';
+import { interactiveBudget, isTranscriptKind } from './interactiveUtil';
 import { env } from '$env/dynamic/private';
 
 export const cppImage = env.COJUDGE_CPP_IMAGE || 'gcc:13';
@@ -938,6 +939,9 @@ struct Master {
 `;
 
 export function generateCppInteractiveRunner(functionName: string, testCases: any[], interactive: InteractiveConfig): string {
+    if (!isTranscriptKind(interactive.kind)) {
+        return generateCppJudgeRunner(functionName, testCases, interactive);
+    }
     const maxG = interactive.maxGuesses;
     const secretField = interactive.secretField;
     const calls = testCases
@@ -985,6 +989,213 @@ static void crash_handler(int sig) {
     const interactiveHelpers = cppHelperMethods.replace(
         '#include "Solution.cpp"',
         `${cppMasterStruct}\n#include "Solution.cpp"`
+    );
+
+    return `${crashHandlerCode}
+${interactiveHelpers}
+int main() {
+    signal(SIGSEGV, crash_handler);
+    signal(SIGFPE, crash_handler);
+    signal(SIGABRT, crash_handler);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    try {
+    Solution sol;
+    ${calls}
+    } catch (const std::exception &e) {
+        std::cerr << "Unhandled exception: " << e.what() << std::endl;
+        throw;
+    }
+    return 0;
+}
+`;
+}
+
+export const cppGuessGameStruct = `
+struct GuessGame {
+    int pick;
+    int callCount = 0;
+    vector<int> history;
+    vector<int> scores;
+    GuessGame() {}
+    GuessGame(int p): pick(p) {}
+    int guess(int num) {
+        callCount++;
+        history.push_back(num);
+        int r;
+        if (num > pick) r = -1;
+        else if (num < pick) r = 1;
+        else r = 0;
+        scores.push_back(r);
+        return r;
+    }
+};
+`;
+
+export const cppVersionControlStruct = `
+struct VersionControl {
+    int bad;
+    int callCount = 0;
+    vector<int> history;
+    vector<int> scores;
+    VersionControl() {}
+    VersionControl(int b): bad(b) {}
+    bool isBadVersion(int version) {
+        callCount++;
+        history.push_back(version);
+        bool r = version >= bad;
+        scores.push_back(r ? 1 : 0);
+        return r;
+    }
+};
+`;
+
+export const cppArrayReaderStruct = `
+struct ArrayReader {
+    vector<int> arr;
+    int callCount = 0;
+    ArrayReader() {}
+    ArrayReader(const vector<int>& a): arr(a) {}
+    int get(int index) {
+        callCount++;
+        if (index < 0 || index >= (int)arr.size()) return 2147483647;
+        return arr[index];
+    }
+};
+`;
+
+export const cppMountainArrayStruct = `
+struct MountainArray {
+    vector<int> arr;
+    int callCount = 0;
+    MountainArray() {}
+    MountainArray(const vector<int>& a): arr(a) {}
+    int get(int index) {
+        callCount++;
+        return arr[index];
+    }
+    int length() { return (int)arr.size(); }
+};
+`;
+
+export const cppRelationStruct = `
+struct Relation {
+    vector<vector<int>> graph;
+    int callCount = 0;
+    Relation() {}
+    Relation(const vector<vector<int>>& g): graph(g) {}
+    bool knows(int a, int b) {
+        callCount++;
+        return graph[a][b] == 1;
+    }
+    int size() { return (int)graph.size(); }
+};
+`;
+
+export function cppJudgeStruct(kind: string): string {
+    switch (kind) {
+        case 'guess-word': return cppMasterStruct;
+        case 'guess-number': return cppGuessGameStruct;
+        case 'first-bad': return cppVersionControlStruct;
+        case 'array-reader': return cppArrayReaderStruct;
+        case 'mountain-array': return cppMountainArrayStruct;
+        case 'celebrity': return cppRelationStruct;
+        default: throw new Error(`Unknown interactive kind: ${kind}`);
+    }
+}
+
+function cppJudgeSetup(tc: any, idx: number, interactive: InteractiveConfig): { decls: string; call: string; counter: string; history: string } {
+    const kind = interactive.kind;
+    const secretField = interactive.secretField;
+    const arrStr = (field: string) => {
+        const raw = tc[field];
+        if (Array.isArray(raw)) { try { return JSON.stringify(raw); } catch { return '[]'; } }
+        return String(raw ?? '[]');
+    };
+    if (kind === 'guess-number') {
+        return {
+            decls: `int __n${idx} = ${tc['n']};\nGuessGame __g${idx}(${tc[secretField]});`,
+            call: `sol.__FN__(__n${idx}, __g${idx})`,
+            counter: `__g${idx}.callCount`,
+            history: `for (size_t __k${idx} = 0; __k${idx} < __g${idx}.history.size(); __k${idx}++) {\n            cout << "guess #" << (__k${idx}+1) << ": " << __g${idx}.history[__k${idx}] << " -> " << __g${idx}.scores[__k${idx}] << "\\n";\n        }`,
+        };
+    }
+    if (kind === 'first-bad') {
+        return {
+            decls: `int __n${idx} = ${tc['n']};\nVersionControl __vc${idx}(${tc[secretField]});`,
+            call: `sol.__FN__(__n${idx}, __vc${idx})`,
+            counter: `__vc${idx}.callCount`,
+            history: `for (size_t __k${idx} = 0; __k${idx} < __vc${idx}.history.size(); __k${idx}++) {\n            cout << "check #" << (__k${idx}+1) << ": " << __vc${idx}.history[__k${idx}] << " -> " << (__vc${idx}.scores[__k${idx}] ? "true" : "false") << "\\n";\n        }`,
+        };
+    }
+    if (kind === 'array-reader') {
+        return {
+            decls: `ArrayReader __r${idx}(to_int_array(${cppEscapeStringLiteral(arrStr(secretField))}));\nint __tgt${idx} = ${tc['target']};`,
+            call: `sol.__FN__(__r${idx}, __tgt${idx})`,
+            counter: `__r${idx}.callCount`,
+            history: ``,
+        };
+    }
+    if (kind === 'mountain-array') {
+        return {
+            decls: `MountainArray __mt${idx}(to_int_array(${cppEscapeStringLiteral(arrStr(secretField))}));\nint __tgt${idx} = ${tc['target']};`,
+            call: `sol.__FN__(__tgt${idx}, __mt${idx})`,
+            counter: `__mt${idx}.callCount`,
+            history: ``,
+        };
+    }
+    if (kind === 'celebrity') {
+        return {
+            decls: `Relation __rel${idx}(to_int_array_2d(${cppEscapeStringLiteral(arrStr(secretField))}));\nint __n${idx} = __rel${idx}.size();`,
+            call: `sol.__FN__(__n${idx}, __rel${idx})`,
+            counter: `__rel${idx}.callCount`,
+            history: ``,
+        };
+    }
+    throw new Error(`Unknown interactive kind: ${kind}`);
+}
+
+export function generateCppJudgeRunner(functionName: string, testCases: any[], interactive: InteractiveConfig): string {
+    const calls = testCases
+        .map((tc, caseIndex) => {
+            const budget = interactiveBudget(interactive, tc);
+            const setup = cppJudgeSetup(tc, caseIndex, interactive);
+            const call = setup.call.replace('__FN__', functionName);
+            const hist = setup.history ? `\n        ${setup.history}` : '';
+            return `{
+        ${setup.decls.split('\n').join('\n        ')}
+        auto __t0 = std::chrono::high_resolution_clock::now();
+        int __res${caseIndex} = 0;
+        bool __ok${caseIndex} = true;
+        try { __res${caseIndex} = ${call}; } catch (const std::exception& __e) { __ok${caseIndex} = false; cout << "ERROR: " << __e.what() << "\\n"; } catch (...) { __ok${caseIndex} = false; cout << "ERROR: unknown\\n"; }
+        auto __t1 = std::chrono::high_resolution_clock::now();
+        cout << ":::TIME:::" << std::chrono::duration_cast<std::chrono::nanoseconds>(__t1 - __t0).count() << "\\n";${hist}
+        int __calls${caseIndex} = ${setup.counter};
+        cout << "api calls: " << __calls${caseIndex} << " (budget ${budget})" << "\\n";
+        string __tr${caseIndex} = (!__ok${caseIndex}) ? "error" : ((__calls${caseIndex} > ${budget}) ? ("over-budget:" + to_string(__calls${caseIndex})) : ("" + to_string(__res${caseIndex})));
+        cout << ":::RESULT:::" << __tr${caseIndex} << "\\n";
+        cout << "---\\n";
+    }`;
+        })
+        .join('\n    ');
+
+    const crashHandlerCode = `
+#include <signal.h>
+#include <execinfo.h>
+#include <iostream>
+#include <chrono>
+
+static void crash_handler(int sig) {
+    std::cerr << "Crash: signal " << sig << std::endl;
+    void* array[16];
+    size_t size = backtrace(array, 16);
+    backtrace_symbols_fd(array, size, STDERR_FILENO);
+    _exit(1);
+}
+`;
+    const interactiveHelpers = cppHelperMethods.replace(
+        '#include "Solution.cpp"',
+        `${cppJudgeStruct(interactive.kind)}\n#include "Solution.cpp"`
     );
 
     return `${crashHandlerCode}

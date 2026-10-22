@@ -1,5 +1,5 @@
-import { generateJavaRunner, generateJavaRunnerWithMarker, generateJavaClassSolution, generateJavaInteractiveRunner, generateJavaInteractiveRunnerWithMarker, javaMasterClass, javaImage, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from "$lib/utils/javaUtil";
-import { getInteractive } from "$lib/utils/interactiveUtil";
+import { generateJavaRunner, generateJavaRunnerWithMarker, generateJavaClassSolution, generateJavaInteractiveRunner, generateJavaInteractiveRunnerWithMarker, javaJudgeClass, javaImage, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from "$lib/utils/javaUtil";
+import { getInteractive, judgeFileForKind } from "$lib/utils/interactiveUtil";
 import { extractOperations } from "$lib/utils/util";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
 import Dockerode from "dockerode";
@@ -77,7 +77,8 @@ export class JavaRunner extends ProgramRunner {
             pack.entry({ name: 'TreeNode.java' }, Buffer.from(javaTreeNodeClass));
             pack.entry({ name: 'GraphNode.java' }, Buffer.from(javaGraphNodeClass));
             if (getInteractive(problemData)) {
-                pack.entry({ name: 'Master.java' }, Buffer.from(javaMasterClass));
+                const kind = problemData.interactive?.kind ?? 'guess-word';
+                pack.entry({ name: judgeFileForKind(kind, 'java')! }, Buffer.from(javaJudgeClass(kind)));
             }
             if (hasMarker) {
                 const markerCode = await fs.readFile(markerPath, 'utf-8');

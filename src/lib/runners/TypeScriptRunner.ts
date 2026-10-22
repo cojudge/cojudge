@@ -1,5 +1,5 @@
-import { tsImage, generateTypeScriptRunner, generateTypeScriptInteractiveRunner, tsMasterClass, tsGetTypeImports, tsListNodeClass, tsTreeNodeClass, tsGraphNodeClass } from "$lib/utils/tsUtil";
-import { getInteractive } from "$lib/utils/interactiveUtil";
+import { tsImage, generateTypeScriptRunner, generateTypeScriptInteractiveRunner, tsJudgeClass, tsGetTypeImports, tsListNodeClass, tsTreeNodeClass, tsGraphNodeClass } from "$lib/utils/tsUtil";
+import { getInteractive, judgeFileForKind } from "$lib/utils/interactiveUtil";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE, type Param } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import fs from 'fs/promises';
@@ -68,7 +68,8 @@ export class TypeScriptRunner extends ProgramRunner {
             pack.entry({ name: 'TreeNode.ts' }, Buffer.from(tsTreeNodeClass));
             pack.entry({ name: 'GraphNode.ts' }, Buffer.from(tsGraphNodeClass));
             if (getInteractive(problemData)) {
-                pack.entry({ name: 'Master.ts' }, Buffer.from(tsMasterClass));
+                const kind = problemData.interactive?.kind ?? 'guess-word';
+                pack.entry({ name: judgeFileForKind(kind, 'typescript')! }, Buffer.from(tsJudgeClass(kind)));
             }
             if (problemData.classProblem) {
                 const className = problemData.classProblem.userClassName || 'MedianFinder';

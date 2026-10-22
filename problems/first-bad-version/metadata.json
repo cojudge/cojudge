@@ -1,6 +1,6 @@
 {
   "id": "first-bad-version",
-  "title": "377. First Bad Version",
+  "title": "278. First Bad Version",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/first-bad-version/",
   "category": "binary-search",
@@ -22,14 +22,14 @@
     }
   ],
   "starterCode": {
-    "java": "class Solution {\n    public int firstBadVersion(int n, int bad) {\n        return 0;\n    }\n}",
-    "python": "class Solution:\n    def firstBadVersion(self, n: int, bad: int) -> int:\n        return 0",
-    "cpp": "class Solution {\npublic:\n    int firstBadVersion(int n, int bad) {\n        return 0;\n    }\n};",
-    "csharp": "public class Solution\n{\n    public int FirstBadVersion(int n, int bad)\n    {\n        return 0;\n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn first_bad_version(n: i32, bad: i32) -> i32 {\n        0\n    }\n}",
-    "go": "package main\n\nfunc FirstBadVersion(n int, bad int) int {\n    return 0\n}",
-    "typescript": "export function firstBadVersion(n: number, bad: number): number {\n    return 0;\n}",
-    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int $bad\n     * @return int\n     */\n    public function firstBadVersion($n, $bad) {\n\n    }\n}"
+    "java": "/*\n * // This is the version-control API interface.\n * // You should not implement it, or speculate about its implementation\n * // class VersionControl {\n * //     public boolean isBadVersion(int version);\n * // }\n * // The judge counts your calls: at most 100 per test case.\n */\nclass Solution {\n    public int firstBadVersion(int n, VersionControl vc) {\n        return 0;\n    }\n}",
+    "python": "# The version-control API is provided by the judge as `vc`.\n# You should not implement it, or speculate about its implementation\n# class VersionControl:\n#     def is_bad_version(self, version: int) -> bool:\n#         ...\n# The judge counts your calls: at most 100 per test case.\nclass Solution:\n    def firstBadVersion(self, n: int, vc: 'VersionControl') -> int:\n        return 0",
+    "cpp": "// This is the version-control API interface.\n// You should not implement it, or speculate about its implementation\n// class VersionControl {\n//   public:\n//     bool isBadVersion(int version);\n// };\n// The judge counts your calls: at most 100 per test case.\nclass Solution {\npublic:\n    int firstBadVersion(int n, VersionControl& vc) {\n        return 0;\n    }\n};",
+    "csharp": "/**\n * // This is the version-control API interface.\n * // You should not implement it, or speculate about its implementation\n * // class VersionControl {\n * //     public bool IsBadVersion(int version);\n * // }\n * // The judge counts your calls: at most 100 per test case.\n */\npublic class Solution\n{\n    public int FirstBadVersion(int n, VersionControl vc)\n    {\n        return 0;\n    }\n}",
+    "rust": "// This is the version-control API interface.\n// You should not implement it, or speculate about its implementation\n// struct VersionControl;\n// impl VersionControl {\n//     pub fn is_bad_version(&mut self, version: i32) -> bool;\n// }\n// The judge counts your calls: at most 100 per test case.\npub struct Solution;\n\nimpl Solution {\n    pub fn first_bad_version(n: i32, vc: &mut VersionControl) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\n// This is the version-control API interface.\n// You should not implement it, or speculate about its implementation\n// type VersionControl struct { }\n// func (v *VersionControl) IsBadVersion(version int) bool\n// The judge counts your calls: at most 100 per test case.\nfunc FirstBadVersion(n int, vc *VersionControl) int {\n    return 0\n}",
+    "typescript": "import { VersionControl } from './VersionControl';\n// This is the version-control API interface.\n// You should not implement it, or speculate about its implementation\n// class VersionControl {\n//     isBadVersion(version: number): boolean;\n// }\n// The judge counts your calls: at most 100 per test case.\nexport function firstBadVersion(n: number, vc: VersionControl): number {\n    return 0;\n}",
+    "php": "// This is the version-control API interface.\n// You should not implement it, or speculate about its implementation\n// class VersionControl {\n//     public function isBadVersion($version);\n// }\n// The judge counts your calls: at most 100 per test case.\nclass Solution {\n    /**\n     * @param int $n\n     * @param VersionControl $vc\n     * @return int\n     */\n    public function firstBadVersion($n, $vc) {\n        return 0;\n    }\n}"
   },
   "testCases": [
     {
@@ -57,8 +57,13 @@
     }
   ],
   "outputType": "int",
+  "interactive": {
+    "kind": "first-bad",
+    "secretField": "bad",
+    "maxGuesses": 100
+  },
   "hints": [
-    "Adaptation: the hidden API isBadVersion(v) is simulated as v >= bad; both n and bad are given.",
+    "The judge never reveals bad; call the isBadVersion API to test a version, and minimize the number of calls.",
     "Binary-search [1, n] for the first v with v >= bad.",
     "Use mid = left + (right - left) / 2 to avoid overflow."
   ]

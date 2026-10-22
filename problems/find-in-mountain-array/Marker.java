@@ -33,14 +33,14 @@ class Marker {
         return -1;
     }
 
-    public int findInMountainArray(int[] arr, int target) {
-        int peak = findPeak(arr);
-        int leftHit = searchAscending(arr, target, 0, peak);
+    public int findInMountainArray(int[] mountainArr, int target) {
+        int peak = findPeak(mountainArr);
+        int leftHit = searchAscending(mountainArr, target, 0, peak);
         if (leftHit != -1) return leftHit;
-        return searchDescending(arr, target, peak + 1, arr.length - 1);
+        return searchDescending(mountainArr, target, peak + 1, mountainArr.length - 1);
     }
 
-    public boolean isCorrect(int[] arr, int target, int output) {
-        return output == findInMountainArray(arr, target);
+    public boolean isCorrect(int[] mountainArr, int target, int output) {
+        return output == findInMountainArray(mountainArr, target);
     }
 }

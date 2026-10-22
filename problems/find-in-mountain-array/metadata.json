@@ -1,58 +1,58 @@
 {
   "id": "find-in-mountain-array",
-  "title": "190. Find in Mountain Array",
+  "title": "1095. Find in Mountain Array",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/find-in-mountain-array/",
   "category": "binary-search",
   "examples": [
     {
-      "input": "arr = [1,2,3,4,5,3,1], target = 3",
+      "input": "mountainArr = [1,2,3,4,5,3,1], target = 3",
       "output": "2",
       "explanation": "3 occurs at indices 2 and 5; the minimum index is 2."
     },
     {
-      "input": "arr = [0,1,2,4,2,1], target = 3",
+      "input": "mountainArr = [0,1,2,4,2,1], target = 3",
       "output": "-1",
       "explanation": "3 does not occur in the array."
     },
     {
-      "input": "arr = [1,5,2], target = 5",
+      "input": "mountainArr = [1,5,2], target = 5",
       "output": "1",
       "explanation": "5 is the peak at index 1."
     }
   ],
   "starterCode": {
-    "java": "class Solution {\n    public int findInMountainArray(int[] arr, int target) {\n        return -1;\n    }\n}",
-    "python": "from typing import List\n\nclass Solution:\n    def findInMountainArray(self, arr: List[int], target: int) -> int:\n        return -1\n",
-    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int findInMountainArray(vector<int>& arr, int target) {\n        return -1;\n    }\n};",
-    "csharp": "public class Solution\n{\n    public int FindInMountainArray(int[] arr, int target)\n    {\n        return -1;\n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_in_mountain_array(arr: Vec<i32>, target: i32) -> i32 {\n        -1\n    }\n}",
-    "go": "package main\n\nfunc FindInMountainArray(arr []int, target int) int {\n    return -1\n}",
-    "typescript": "export function findInMountainArray(arr: number[], target: number): number {\n    return -1;\n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @param int $target\n     * @return int\n     */\n    public function findInMountainArray($arr, $target) {\n\n    }\n}"
+    "java": "/**\n * // This is the MountainArray's API interface.\n * // You should not implement it, or speculate about its implementation\n * // interface MountainArray {\n * //     public int get(int index);\n * //     public int length();\n * // }\n * // You cannot access the mountain array directly; use get/length only.\n * // The judge counts your get calls: at most 100 per test case.\n */\nclass Solution {\n    public int findInMountainArray(int target, MountainArray mountainArr) {\n        return -1;\n    }\n}",
+    "python": "# \"\"\"\n# This is the MountainArray's API interface.\n# You should not implement it, or speculate about its implementation\n# \"\"\"\n# class MountainArray:\n#     def get(self, index: int) -> int:\n#     def length(self) -> int:\n# You cannot access the mountain array directly; use get/length only.\n# The judge counts your get calls: at most 100 per test case.\nfrom typing import List\n\nclass Solution:\n    def findInMountainArray(self, target: int, mountainArr: 'MountainArray') -> int:\n        return -1\n",
+    "cpp": "/**\n * // This is the MountainArray's API interface.\n * // You should not implement it, or speculate about its implementation\n * class MountainArray {\n *   public:\n *     int get(int index);\n *     int length();\n * };\n * // You cannot access the mountain array directly; use get/length only.\n * // The judge counts your get calls: at most 100 per test case.\n */\nclass Solution {\npublic:\n    int findInMountainArray(int target, MountainArray &mountainArr) {\n        return -1;\n    }\n};",
+    "csharp": "/**\n * // This is the MountainArray's API interface.\n * // You should not implement it, or speculate about its implementation\n * // class MountainArray {\n * //     public int Get(int index);\n * //     public int Length();\n * // }\n * // You cannot access the mountain array directly; use Get/Length only.\n * // The judge counts your Get calls: at most 100 per test case.\n */\npublic class Solution\n{\n    public int FindInMountainArray(int target, MountainArray mountainArr)\n    {\n        return -1;\n    }\n}",
+    "rust": "// This is the MountainArray's API interface.\n// You should not implement it, or speculate about its implementation\n// struct MountainArray;\n// impl MountainArray {\n//     pub fn get(&mut self, index: i32) -> i32;\n//     pub fn length(&self) -> i32;\n// }\n// You cannot access the mountain array directly; use get/length only.\n// The judge counts your get calls: at most 100 per test case.\npub struct Solution;\n\nimpl Solution {\n    pub fn find_in_mountain_array(target: i32, mountain_arr: &mut MountainArray) -> i32 {\n        -1\n    }\n}",
+    "go": "package main\n\n// This is the MountainArray's API interface.\n// You should not implement it, or speculate about its implementation\n// type MountainArray struct { }\n// func (m *MountainArray) Get(index int) int\n// func (m *MountainArray) Length() int\n// You cannot access the mountain array directly; use Get/Length only.\n// The judge counts your Get calls: at most 100 per test case.\nfunc FindInMountainArray(target int, mountainArr *MountainArray) int {\n    return -1\n}",
+    "typescript": "import { MountainArray } from './MountainArray';\n// This is the MountainArray's API interface.\n// You should not implement it, or speculate about its implementation\n// class MountainArray {\n//     get(index: number): number;\n//     length(): number;\n// }\n// You cannot access the mountain array directly; use get/length only.\n// The judge counts your get calls: at most 100 per test case.\nexport function findInMountainArray(target: number, mountainArr: MountainArray): number {\n    return -1;\n}",
+    "php": "// This is the MountainArray's API interface.\n// You should not implement it, or speculate about its implementation\n// class MountainArray {\n//     public function get($index);\n//     public function length();\n// }\n// You cannot access the mountain array directly; use get/length only.\n// The judge counts your get calls: at most 100 per test case.\nclass Solution {\n    /**\n     * @param int $target\n     * @param MountainArray $mountainArr\n     * @return int\n     */\n    public function findInMountainArray($target, $mountainArr) {\n        return -1;\n    }\n}"
   },
   "testCases": [
     {
-      "arr": "[1,2,3,4,5,3,1]",
+      "mountainArr": "[1,2,3,4,5,3,1]",
       "target": 3
     },
     {
-      "arr": "[0,1,2,4,2,1]",
+      "mountainArr": "[0,1,2,4,2,1]",
       "target": 3
     },
     {
-      "arr": "[1,5,2]",
+      "mountainArr": "[1,5,2]",
       "target": 5
     },
     {
-      "arr": "[1,2,3,5,3,1]",
+      "mountainArr": "[1,2,3,5,3,1]",
       "target": 1
     }
   ],
   "functionName": "findInMountainArray",
   "params": [
     {
-      "name": "arr",
+      "name": "mountainArr",
       "type": "int_array"
     },
     {
@@ -61,9 +61,14 @@
     }
   ],
   "outputType": "int",
+  "interactive": {
+    "kind": "mountain-array",
+    "secretField": "mountainArr",
+    "maxGuesses": 100
+  },
   "hints": [
+    "The judge never reveals the array; only mountainArr.get(i) and mountainArr.length() are available, with at most 100 get calls.",
     "Binary-search the peak: arr[mid] < arr[mid+1] means the peak is to the right.",
-    "Binary-search the increasing left side for the target with the usual ascending order.",
-    "Binary-search the decreasing right side with reversed comparisons, and return the left-side hit first to get the minimum index."
+    "Binary-search the increasing left side for the target with the usual ascending order, then the decreasing right side with reversed comparisons, and return the left-side hit first to get the minimum index."
   ]
 }
