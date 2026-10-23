@@ -1,13 +1,27 @@
 import Dockerode from "dockerode";
 import { EXECUTION_TIMEOUT_SECONDS } from "$lib/utils/util";
 
+/**
+ * Thrown when the compiled test binary exits non-zero (e.g. SIGSEGV from a
+ * stack overflow or bad access). Carries whatever the program printed before
+ * dying so callers can count how many `---`-delimited test chunks completed
+ * and attribute the crash to the correct test case instead of the batch start.
+ */
+export class RunnerCrashError extends Error {
+    partialStdout: string;
+    constructor(message: string, partialStdout: string) {
+        super(message);
+        this.name = 'RunnerCrashError';
+        this.partialStdout = partialStdout;
+    }
+}
+
 export abstract class ProgramRunner {
     protected readonly problemId: string;
     protected readonly testCases: any[];
     protected readonly code: string;
 
     lastRunMetrics: { executionTimeMs: number; memoryKB: number } | null = null;
-
     protected constructor(problemId: string, testCases: any[], code: string) {
         this.problemId = problemId;
         this.testCases = testCases || [];
@@ -85,5 +99,17 @@ export abstract class ProgramRunner {
             this.lastRunMetrics = { executionTimeMs: totalMs, memoryKB: 0 };
         }
         return stdout.replace(/:::TIME:::\d+\n?/g, '');
+    }
+
+    /** Raw stdout captured before a crash, or null when the error carries none. */
+    static crashStdout(error: any): string | null {
+        if (error && typeof (error as any).partialStdout === 'string') return (error as any).partialStdout;
+        return null;
+    }
+
+    /** Number of complete `---`-delimited test chunks in raw runner stdout. */
+    static countCompletedChunks(stdout: string): number {
+        if (!stdout) return 0;
+        return stdout.split('---\n').length - 1;
     }
 }

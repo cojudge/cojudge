@@ -719,11 +719,14 @@
                     if (!pollRes.ok) {
                         runningMessage = "";
                         status = body.timeout ? "tle" : "failed";
+                        // A mid-batch crash reports the absolute index of the
+                        // test that died; fall back to the batch start.
+                        const failedIdx = body?.errorTestIndex ?? tcNo;
                         runningMessage = body.timeout
                             ? `TLE on Test ${tcNo + 1}`
                             : isCompilationError(body?.error)
                               ? "Compilation Error"
-                              : `Failed on Test ${tcNo + 1}`;
+                              : `Failed on Test ${failedIdx + 1}`;
                         // Prepare failure details
                         if (body?.timeout && body?.timeoutTestCase) {
                             submissionFailure = {
@@ -737,7 +740,7 @@
                         } else {
                             submissionFailure = {
                                 type: "failed",
-                                index: tcNo,
+                                index: failedIdx,
                                 testCase: body?.errorTestCase || null,
                                 yourAnswer: null,
                                 expectedAnswer: null,

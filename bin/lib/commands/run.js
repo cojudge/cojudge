@@ -308,6 +308,10 @@ export async function handleRun(argsToUse, PORT) {
         console.log(`CONSOLE: ${res.logs.trim()}`);
       }
 
+      if (res.error) {
+        console.log(`ERROR: ${res.error}`);
+      }
+
       if (res.output && isPlayground) {
         console.log(res.output);
       }

@@ -852,7 +852,7 @@ export function generateCppRunner(functionName: string, params: Param[], testCas
         } else {
             cout << ":::RESULT:::" << display_output(__res) << "\\n";
         }
-        cout << "---\\n";
+        cout << "---\\n" << flush;
     }`;
             }
             return `{
@@ -862,7 +862,7 @@ export function generateCppRunner(functionName: string, params: Param[], testCas
         auto __t1 = std::chrono::high_resolution_clock::now();
         cout << ":::TIME:::" << std::chrono::duration_cast<std::chrono::nanoseconds>(__t1 - __t0).count() << "\\n";
         cout << ":::RESULT:::" << display_output(__res) << "\\n";
-        cout << "---\\n";
+        cout << "---\\n" << flush;
     }`;
         })
         .join('\n    ');
@@ -895,6 +895,7 @@ int main() {
     signal(SIGABRT, crash_handler);
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    cout << unitbuf;
     try {
     Solution sol;
     ${calls}
@@ -967,7 +968,7 @@ export function generateCppInteractiveRunner(functionName: string, testCases: an
         }
         string __tr${caseIndex} = (__m${caseIndex}.solved && __m${caseIndex}.guessCount <= ${maxG}) ? ("solved:" + to_string(__m${caseIndex}.guessCount)) : ("failed:" + to_string(__m${caseIndex}.guessCount));
         cout << ":::RESULT:::" << __tr${caseIndex} << "\\n";
-        cout << "---\\n";
+        cout << "---\\n" << flush;
     }`;
         })
         .join('\n    ');
@@ -999,6 +1000,7 @@ int main() {
     signal(SIGABRT, crash_handler);
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    cout << unitbuf;
     try {
     Solution sol;
     ${calls}
@@ -1174,7 +1176,7 @@ export function generateCppJudgeRunner(functionName: string, testCases: any[], i
         cout << "api calls: " << __calls${caseIndex} << " (budget ${budget})" << "\\n";
         string __tr${caseIndex} = (!__ok${caseIndex}) ? "error" : ((__calls${caseIndex} > ${budget}) ? ("over-budget:" + to_string(__calls${caseIndex})) : ("" + to_string(__res${caseIndex})));
         cout << ":::RESULT:::" << __tr${caseIndex} << "\\n";
-        cout << "---\\n";
+        cout << "---\\n" << flush;
     }`;
         })
         .join('\n    ');
@@ -1206,6 +1208,7 @@ int main() {
     signal(SIGABRT, crash_handler);
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    cout << unitbuf;
     try {
     Solution sol;
     ${calls}

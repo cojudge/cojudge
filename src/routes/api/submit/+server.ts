@@ -4,7 +4,7 @@ import fs from 'fs/promises';
 import vm from 'vm';
 import { ensureUserContentSeeded, resolveProblemFile } from '$lib/server/contentPaths';
 import { getMarkerResponses } from '../../../lib/markerRunner';
-import type { ProgramRunner } from '$lib/runners/ProgramRunner';
+import { ProgramRunner } from '$lib/runners/ProgramRunner';
 import { JavaRunner } from '$lib/runners/JavaRunner';
 import { PythonRunner } from '$lib/runners/PythonRunner';
 import { CppRunner } from '$lib/runners/CppRunner';
@@ -13,7 +13,7 @@ import { RustRunner } from '$lib/runners/RustRunner';
 import { GoRunner } from '$lib/runners/GoRunner';
 import { PhpRunner } from '$lib/runners/PhpRunner';
 import { TypeScriptRunner } from '$lib/runners/TypeScriptRunner';
-import { TIMEOUT_MESSAGE, type JobStatus } from '$lib/utils/util';
+import { TIMEOUT_MESSAGE, annotateCrashSignal, type JobStatus } from '$lib/utils/util';
 
 type SubmitResult = {
     accepted?: boolean;
@@ -31,6 +31,8 @@ type SubmitJob = {
     timeoutTestCase?: any;
     error?: string;
     errorTestCase?: any;
+    /** Absolute 0-based index (across all official tests) of the test that crashed. */
+    errorTestIndex?: number;
     executionTimeMs?: number;
     memoryKB?: number;
 };
@@ -49,6 +51,7 @@ function isJavaLanguage(language: string): boolean {
 
 async function executeSubmit(problemId: string, language: string, code: string, startTcNo: number, job: SubmitJob) {
     let timeoutTestcase: any = null;
+    let batchTestCases: any[] = [];
     try {
         job.status = 'running';
         await ensureUserContentSeeded();
@@ -79,6 +82,7 @@ async function executeSubmit(problemId: string, language: string, code: string, 
             }
             testCases = newTestCases;
             passedTc = newTestCases.length;
+            batchTestCases = newTestCases;
             const JAVASCRIPT_PREFIX = '@javascript:';
             for (let i = 0; i < testCases.length; i++) {
                 const tc = testCases[i];
@@ -113,6 +117,7 @@ async function executeSubmit(problemId: string, language: string, code: string, 
                 return;
             }
         }
+        if (batchTestCases.length === 0) batchTestCases = testCases;
 
         let programRunner: ProgramRunner | null = null;
         if (language === 'java') {
@@ -259,8 +264,21 @@ async function executeSubmit(problemId: string, language: string, code: string, 
             job.timeoutTestCase = timeoutTestcase;
             job.status = 'completed';
         } else {
-            job.error = `Submission failed: details: ${error.message || error}`;
-            job.errorTestCase = timeoutTestcase;
+            // A crash (e.g. SIGSEGV) kills the whole batch container, but the
+            // tests before the crash already printed their `---`-delimited
+            // chunks (runners flush per test). Count them to blame the test
+            // that actually crashed instead of the batch start.
+            const partial = ProgramRunner.crashStdout(error);
+            let crashIndex = 0;
+            if (partial !== null && batchTestCases.length > 0) {
+                crashIndex = Math.min(
+                    Math.max(ProgramRunner.countCompletedChunks(partial), 0),
+                    batchTestCases.length - 1
+                );
+            }
+            job.error = `Submission failed: details: ${annotateCrashSignal(error.message || error)}`;
+            job.errorTestCase = batchTestCases[crashIndex];
+            job.errorTestIndex = startTcNo + crashIndex;
             job.status = 'error';
         }
     }
@@ -286,7 +304,7 @@ export const GET: RequestHandler = async ({ url }) => {
         return json({ ready: true, timeout: true, timeoutTestCase: job.timeoutTestCase });
     }
     if (job.status === 'error') {
-        return json({ ready: true, error: job.error || 'Submission failed', errorTestCase: job.errorTestCase }, { status: 400 });
+        return json({ ready: true, error: job.error || 'Submission failed', errorTestCase: job.errorTestCase, errorTestIndex: job.errorTestIndex }, { status: 400 });
     }
     return json({
         ready: true,
