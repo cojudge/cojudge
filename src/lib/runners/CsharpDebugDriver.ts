@@ -958,23 +958,28 @@ function extractVarDeclarations(line: string): string[] {
     const trimmed = line.trim();
     if (!trimmed || CONTROL_FLOW_RE.test(trimmed) || PATTERN_MATCH_RE.test(trimmed)) return [];
 
+    // Strip catch clauses: `catch (Exception __e)` declares __e scoped to the
+    // catch block only. Tracking it after the line emits `__cs_vars["__e"] =
+    // __e;` outside its scope (CS0103), breaking every C# problem debug
+    // session since runners use single-line try/catch one-liners.
+    const searchable = trimmed.replace(/catch\s*\([^)]*\)/g, 'catch');
     const names: string[] = [];
     let m: RegExpExecArray | null;
-    while ((m = SIMPLE_TYPE_RE.exec(trimmed)) !== null) {
+    while ((m = SIMPLE_TYPE_RE.exec(searchable)) !== null) {
         names.push(m[2]);
     }
-    while ((m = ARRAY_TYPE_RE.exec(trimmed)) !== null) {
+    while ((m = ARRAY_TYPE_RE.exec(searchable)) !== null) {
         const n = m[2];
         if (!names.includes(n)) names.push(n);
     }
-    while ((m = GENERIC_TYPE_RE.exec(trimmed)) !== null) {
+    while ((m = GENERIC_TYPE_RE.exec(searchable)) !== null) {
         const typeName = m[1];
         const varName = m[2];
         if (!/^(var|int|long|double|float|bool|string|char|if|for|foreach|while)$/i.test(typeName) && !names.includes(varName)) {
             names.push(varName);
         }
     }
-    while ((m = CLASS_TYPE_RE.exec(trimmed)) !== null) {
+    while ((m = CLASS_TYPE_RE.exec(searchable)) !== null) {
         const varName = m[2];
         if (!names.includes(varName)) names.push(varName);
     }

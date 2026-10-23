@@ -140,13 +140,14 @@ Examples:
 
         if (!pollResponse.ok || data.error) {
           if (data.errorTestCase) {
+            const testNo = (data.errorTestIndex ?? startTcNo) + 1;
             const inputStr = Object.entries(data.errorTestCase)
               .filter(([key]) =>
                 !["output", "logs", "isCorrect", "correctAnswer", "error"].includes(key)
               )
               .map(([key, value]) => `${key} = ${value}`)
               .join(", ");
-            console.log(`\n\x1b[31mFAILED\x1b[0m at Test Case ${startTcNo + 1}`);
+            console.log(`\n\x1b[31mFAILED\x1b[0m at Test Case ${testNo}`);
             console.log(`INPUT: ${inputStr}`);
           }
           let msg = data.error || pollResponse.statusText;

@@ -6,7 +6,7 @@ import Dockerode from "dockerode";
 import fs from 'fs/promises';
 import tar from 'tar-stream';
 import { resolveProblemFile } from "$lib/server/contentPaths";
-import { ProgramRunner } from "./ProgramRunner";
+import { ProgramRunner, RunnerCrashError } from "./ProgramRunner";
 import ContainerPool from "./ContainerPool";
 import { cojudgeContainerLabels } from "$lib/server/containerSession";
 
@@ -75,7 +75,7 @@ export class PythonRunner extends ProgramRunner {
         if (!this.prepared || !this.container) throw new Error('PythonRunner: not prepared. Call compile() first.');
         try {
             const exec = await this.container.exec({
-                Cmd: ['/bin/sh', '-c', ProgramRunner.wrapWithMetrics('python -B main.py')],
+                Cmd: ['/bin/sh', '-c', ProgramRunner.wrapWithMetrics('python -B -u main.py')],
                 AttachStdout: true,
                 AttachStderr: true,
                 WorkingDir: '/app',
@@ -96,11 +96,12 @@ export class PythonRunner extends ProgramRunner {
             const inspect = await exec.inspect();
             const cleanedStderr = this.parseMetricsFromStderr(stderr);
             if (inspect.ExitCode === LINUX_TIMEOUT_CODE) throw new Error(TIMEOUT_MESSAGE);
-            if (inspect.ExitCode !== 0) throw new Error(cleanedStderr || stdout);
+            if (inspect.ExitCode !== 0) throw new RunnerCrashError(cleanedStderr || stdout, stdout);
             stdout = this.parseInternalTiming(stdout);
             const results = stdout.split('---\n').filter((res) => res.trim() !== '');
             return results;
         } catch (error: any) {
+            if (error && typeof error.partialStdout === 'string') throw error;
             throw new Error(`${error}`);
         } finally {
             if (this.container) {

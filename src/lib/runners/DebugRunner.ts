@@ -861,7 +861,12 @@ export async function startProblemDebugSession(problemId: string, language: stri
         pack.finalize();
         await container.putArchive(pack as any, { path: '/app' });
 
-        const compile = await runExec(container, ['/bin/sh', '-c', 'g++ -std=c++17 -g -rdynamic -o main *.cpp']);
+        // Compile only Main.cpp: it #includes Solution.cpp (+ judge struct +
+        // List/Tree/Graph helpers), mirroring CppRunner. Compiling *.cpp would
+        // compile Solution.cpp as a standalone TU where the judge type
+        // (Master, GuessGame, ...) is not declared, breaking every C++
+        // interactive problem in debug mode.
+        const compile = await runExec(container, ['/bin/sh', '-c', 'g++ -std=c++17 -g -rdynamic -o main Main.cpp']);
         if (compile.exitCode !== 0) {
             await ContainerPool.markForCleanup(container);
             throw new Error(`Compilation failed:\n${compile.stderr || compile.stdout}`);

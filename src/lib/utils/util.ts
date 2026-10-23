@@ -26,6 +26,24 @@ export const EXECUTION_TIMEOUT_SECONDS = '30';
 
 export const TIMEOUT_MESSAGE = 'TIMEOUT';
 
+const CRASH_SIGNAL_NAMES: Record<string, string> = {
+    '4': 'SIGILL',
+    '6': 'SIGABRT',
+    '7': 'SIGBUS',
+    '8': 'SIGFPE',
+    '11': 'SIGSEGV'
+};
+
+/** Turn "Command terminated by signal 11" into "... signal 11 (SIGSEGV)". */
+export function annotateCrashSignal(message: any): string {
+    const text = String(message ?? '');
+    const m = /signal (\d+)/i.exec(text);
+    if (m && CRASH_SIGNAL_NAMES[m[1]] && !text.includes(CRASH_SIGNAL_NAMES[m[1]])) {
+        return `${text} (${CRASH_SIGNAL_NAMES[m[1]]})`;
+    }
+    return text;
+}
+
 export function extractOperations(testCases: any[], className: string): string[] {
     const opSet = new Set<string>();
     for (const tc of testCases) {
