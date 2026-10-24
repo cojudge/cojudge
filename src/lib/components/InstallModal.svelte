@@ -66,7 +66,7 @@ xattr -dr com.apple.quarantine /Applications/Cojudge.app`;
 				<button class="install-modal-close" onclick={onClose} aria-label="Close"> &times; </button>
 			</div>
 			<p class="install-modal-sub">
-				The demo runs in your browser without judging. Install the desktop app for the full
+				The demo uses a free server for judging, so the speed could be limited. Install the desktop app for the full
 				offline judge with Docker sandboxing.
 			</p>
 
