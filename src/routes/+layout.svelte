@@ -5,10 +5,9 @@
 	import { startCloudSync, stopCloudSync } from '$lib/cloudSync';
 	import { isDesktopRuntime } from '$lib/firebaseSettings';
 	import favicon from '$lib/assets/favicon.svg';
-	import DemoBanner from '$lib/components/DemoBanner.svelte';
 	import '../app.css';
 
-	let { children, data } = $props();
+	let { children } = $props();
 
 	let zoom = 1;
 
@@ -58,10 +57,6 @@
 	<title>Offline Code Judge for LeetCode-style problems - Cojudge</title>
 	<link rel="icon" href={favicon} />
 </svelte:head>
-
-{#if data.isDemoSite}
-	<DemoBanner />
-{/if}
 
 {@render children?.()}
 <AppDialog />

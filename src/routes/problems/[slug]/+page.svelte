@@ -8,6 +8,7 @@
     import GameHistoryPopup from '$lib/components/GameHistoryPopup.svelte';
     import GameModePopup from '$lib/components/GameModePopup.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
+    import DemoBanner from '$lib/components/DemoBanner.svelte';
     import Whiteboard from '$lib/components/Whiteboard.svelte';
     import { WHITEBOARD_FILE_ID } from '$lib/cloudFileChange';
     import { showAlert, showConfirm } from '$lib/dialogs';
@@ -971,7 +972,11 @@
     <title>{data.problem.title} - Cojudge</title>
 </svelte:head>
 
-<div
+<div class:demo-problems-wrap={data.isDemoSite}>
+    {#if data.isDemoSite}
+        <DemoBanner />
+    {/if}
+    <div
     class="workspace"
     bind:this={workspaceElement}
     style="grid-template-columns: {Math.max(0, $leftPaneWidthStore === null ? 50 : $leftPaneWidthStore)}% auto 1fr;"
@@ -1431,9 +1436,21 @@
     {/if}
 
     <CloudSyncModal open={showCloudSettings} onClose={closeCloudSettings} />
+    </div>
 </div>
 
 <style>
+    .demo-problems-wrap {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        height: 100dvh;
+    }
+    .demo-problems-wrap .workspace {
+        height: auto;
+        flex: 1;
+        min-height: 0;
+    }
     .workspace {
         display: grid;
         gap: var(--spacing-1);

@@ -454,3 +454,69 @@ jobs:
           release-tag: v${{ inputs.version }}
           fork-user: anslwy
           token: ${{ secrets.WINGET_TOKEN }}
+
+  homebrew-tap:
+    needs: publish
+    if: ${{ !contains(inputs.version, '-') }}
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    steps:
+      - name: Update cojudge/tap cask
+        env:
+          GH_TOKEN: ${{ github.token }}
+          # Reuses the existing PAT (also used for winget). For tighter scoping,
+          # create a dedicated fine-grained PAT with contents:write on
+          # cojudge/homebrew-tap, store it as HOMEBREW_TAP_TOKEN, and swap it in here.
+          TAP_TOKEN: ${{ secrets.WINGET_TOKEN }}
+          VERSION: ${{ inputs.version }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if [ -z "${TAP_TOKEN:-}" ]; then
+            echo "WINGET_TOKEN (used as tap push token) is not set" >&2
+            exit 1
+          fi
+
+          TAG="v$VERSION"
+          DMG="Cojudge_${VERSION}_universal.dmg"
+          echo "Downloading $DMG from $REPO@$TAG for sha256..."
+          rm -rf dist-tap && mkdir -p dist-tap && cd dist-tap
+          gh release download "$TAG" --repo "$REPO" --pattern "$DMG" --clobber
+          SHA="$(shasum -a 256 "$DMG" | awk '{print $1}')"
+          if ! [[ "$SHA" =~ ^[0-9a-f]{64}$ ]]; then
+            echo "Invalid sha256: $SHA" >&2
+            exit 1
+          fi
+          echo "sha256=$SHA"
+          cd ..
+
+          rm -rf tap && git clone "https://x-access-token:${TAP_TOKEN}@github.com/cojudge/homebrew-tap.git" tap
+          export SHA256="$SHA"
+          node --input-type=module <<'NODE'
+          import { readFileSync, writeFileSync } from 'node:fs';
+          const version = process.env.VERSION;
+          const sha = process.env.SHA256;
+          const path = 'tap/Casks/cojudge.rb';
+          let src = readFileSync(path, 'utf8');
+          const next = src
+            .replace(/^\s*version\s+"[^"]+"/m, `  version "${version}"`)
+            .replace(/^\s*sha256\s+"[^"]+"/m, `  sha256 "${sha}"`);
+          if (next === src) throw new Error('Cask update produced no changes - check version/sha256 lines in Casks/cojudge.rb');
+          if (!next.includes(`version "${version}"`) || !next.includes(`sha256 "${sha}"`)) {
+            throw new Error('Cask update failed to apply version/sha');
+          }
+          writeFileSync(path, next);
+          console.log('Updated Casks/cojudge.rb to', version, sha);
+          NODE
+
+          cd tap
+          git config user.name "cojudge-bot"
+          git config user.email "bot@cojudge.cloud"
+          git add Casks/cojudge.rb
+          if git diff --cached --quiet; then
+            echo "Cask already up to date for $TAG"
+            exit 0
+          fi
+          git commit -m "cojudge $TAG"
+          git push origin HEAD:main
