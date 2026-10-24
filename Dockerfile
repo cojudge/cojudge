@@ -43,6 +43,13 @@ ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=3000
 
+# IS_DEMO_SITE is read at request time via $env/dynamic/private, so it must
+# also exist in the runtime stage (ENV does not carry across build stages).
+# Pass --build-arg IS_DEMO_SITE=true when building the demo image, or set
+# -e IS_DEMO_SITE=true when running the container.
+ARG IS_DEMO_SITE
+ENV IS_DEMO_SITE=$IS_DEMO_SITE
+
 COPY --from=build /usr/src/app/build ./build
 COPY --from=build /usr/src/app/courses ./courses
 COPY --from=build /usr/src/app/problems ./problems
