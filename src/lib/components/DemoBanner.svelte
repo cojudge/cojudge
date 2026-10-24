@@ -18,7 +18,7 @@
 			target="_blank"
 			rel="noreferrer"
 			aria-label="Cojudge on GitHub"
-			data-tip="Give us a star if you find this helpful!"
+			data-tip="View Source Code"
 		>
 			<svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
 				<path
