@@ -55,19 +55,21 @@
 ### 1. Installation
 
 #### Desktop app
-Download the latest installer for macOS, Windows, or Linux from [GitHub Releases](https://github.com/cojudge/cojudge/releases). Desktop builds bundle Node.js; Docker is only required when running, submitting, or debugging code. After installing the app, open the homepage menu and choose **CLI** to put `cojudge` on your PATH (no separate Node.js install).
+Desktop builds bundle Node.js; Docker is only required when running, submitting, or debugging code. After installing the app, open the homepage menu and choose **CLI** to put `cojudge` on your PATH (no separate Node.js install).
 
-On Windows, the easiest install is via winget:
-
-```powershell
-winget install -e --id Cojudge.Cojudge
-```
-
-Upgrade later with:
-
-```powershell
-winget upgrade Cojudge.Cojudge
-```
+- **macOS** (Homebrew):
+  ```bash
+  brew tap cojudge/tap
+  brew install --cask cojudge
+  xattr -dr com.apple.quarantine /Applications/Cojudge.app
+  ```
+  The `xattr` step is required on first install (ad-hoc signed, not yet notarized). Update with `brew upgrade --cask cojudge`. Or grab the `.dmg` directly from [GitHub Releases](https://github.com/cojudge/cojudge/releases).
+- **Windows** (winget):
+  ```powershell
+  winget install -e --id Cojudge.Cojudge
+  ```
+  Update with `winget upgrade Cojudge.Cojudge`. Or grab the `-setup.exe` from [GitHub Releases](https://github.com/cojudge/cojudge/releases).
+- **Linux**: download the `.deb`, `.rpm`, or `.AppImage` from [GitHub Releases](https://github.com/cojudge/cojudge/releases) — per-distro install commands are in the release notes.
 
 #### CLI
 If you are not using the desktop app, the easiest way to install the `cojudge` CLI without dealing with NPM permission issues is to run our install script:

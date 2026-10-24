@@ -6,6 +6,7 @@
     import { goto } from '$app/navigation';
     import { navigating, page } from '$app/stores';
     import Tooltip from "$lib/components/Tooltip.svelte";
+    import DemoBanner from "$lib/components/DemoBanner.svelte";
     import SortIcon from "$lib/components/SortIcon.svelte";
     import userSettingsStorage from '$lib/stores/userSettingsStorage';
     import userStore from "$lib/stores/userStore";
@@ -1473,6 +1474,10 @@
 </svelte:head>
 
 <svelte:window onkeydown={handleModalKeydown} />
+
+{#if $page.data.isDemoSite}
+    <DemoBanner />
+{/if}
 
 <div class="container">
     <div class="backup-toolbar">
