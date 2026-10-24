@@ -2218,7 +2218,8 @@
 
     {#if showGamePopup}
         <GameModePopup
-            problems={selectedCourseProblems}
+            problems={baseProblems}
+            poolLabel={showBookmarks ? 'your bookmarks' : null}
             solvedSet={checkMap}
             on:close={() => showGamePopup = false}
         />

@@ -6,6 +6,7 @@
     export let problems: { id: string; title: string; difficulty: string; link?: string; category?: string }[] = [];
     export let solvedSet: Record<string, boolean> = {};
     export let currentProblemId: string | null = null;
+    export let poolLabel: string | null = null;
 
     const dispatch = createEventDispatcher();
 
@@ -80,7 +81,7 @@
         <button class="close-btn" on:click={() => dispatch('close')} aria-label="Close">&times;</button>
         <h2 id="game-mode-title">Game Mode</h2>
         <div class="rules">
-            <p>{currentProblemId ? 'Play this problem in game mode.' : 'A random problem will be selected for you to solve under time pressure.'}</p>
+            <p>{currentProblemId ? 'Play this problem in game mode.' : poolLabel ? `A random problem from ${poolLabel} will be selected for you to solve under time pressure.` : 'A random problem will be selected for you to solve under time pressure.'}</p>
             <ul>
                 <li>A timer starts as soon as the problem loads.</li>
                 <li>Your previous solution (if any) will be hidden — you start fresh.</li>
