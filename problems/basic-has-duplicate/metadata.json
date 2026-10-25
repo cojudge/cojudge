@@ -1,0 +1,52 @@
+{
+  "id": "basic-has-duplicate",
+  "title": "36. Has Duplicate?",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "nested-loops",
+  "examples": [
+    {
+      "input": "nums = [1,2,3,1]",
+      "output": "true",
+      "explanation": "1 appears twice."
+    },
+    {
+      "input": "nums = [1,2,3]",
+      "output": "false",
+      "explanation": "All values are unique."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean hasDuplicate(int[] nums) {\n        return false;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def hasDuplicate(self, nums: List[int]) -> bool:\n        return False\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool hasDuplicate(vector<int>& nums) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool HasDuplicate(int[] nums)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn has_duplicate(nums: Vec<i32>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc HasDuplicate(nums []int) bool {\n    return false\n}",
+    "typescript": "export function hasDuplicate(nums: number[]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return bool\n     */\n    public function hasDuplicate($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3,1]"
+    },
+    {
+      "nums": "[1,2,3]"
+    },
+    {
+      "nums": "[]"
+    }
+  ],
+  "functionName": "hasDuplicate",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Compare every pair of positions with nested loops.",
+    "Return `true` at the first equal pair."
+  ]
+}

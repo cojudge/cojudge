@@ -1,0 +1,52 @@
+{
+  "id": "basic-sum-digits-rec",
+  "title": "45. Sum of Digits (Recursive)",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "recursion",
+  "examples": [
+    {
+      "input": "n = 123",
+      "output": "6",
+      "explanation": "1+2+3 = 6."
+    },
+    {
+      "input": "n = 7",
+      "output": "7",
+      "explanation": "A single digit returns itself."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int sumDigitsRec(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def sumDigitsRec(self, n: int) -> int:\n        return 0\n",
+    "cpp": "\nclass Solution {\npublic:\n    int sumDigitsRec(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int SumDigitsRec(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn sum_digits_rec(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc SumDigitsRec(n int) int {\n    return 0\n}",
+    "typescript": "export function sumDigitsRec(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function sumDigitsRec($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 123
+    },
+    {
+      "n": 7
+    },
+    {
+      "n": 1000
+    }
+  ],
+  "functionName": "sumDigitsRec",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The last digit is `n % 10` and the rest is `n / 10`.",
+    "Base case: numbers below 10 return themselves."
+  ]
+}

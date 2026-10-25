@@ -1,0 +1,52 @@
+{
+  "id": "basic-is-even",
+  "title": "1. Is It Even?",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "if-else",
+  "examples": [
+    {
+      "input": "n = 4",
+      "output": "true",
+      "explanation": "4 is divisible by 2."
+    },
+    {
+      "input": "n = 7",
+      "output": "false",
+      "explanation": "7 leaves a remainder of 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isEven(int n) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def isEven(self, n: int) -> bool:\n        return False\n",
+    "cpp": "\nclass Solution {\npublic:\n    bool isEven(int n) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool IsEven(int n)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_even(n: i32) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc IsEven(n int) bool {\n    return false\n}",
+    "typescript": "export function isEven(n: number): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return bool\n     */\n    public function isEven($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 4
+    },
+    {
+      "n": 7
+    },
+    {
+      "n": 0
+    }
+  ],
+  "functionName": "isEven",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "An even number has remainder 0 when divided by 2.",
+    "In most languages the remainder operator is `%`."
+  ]
+}

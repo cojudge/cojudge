@@ -1,6 +1,6 @@
 {
   "title": "NeetCode 250",
-  "description": "NeetCode 250 is the NeetCode 150 plus 100 more beginner-friendly problems, covering all essential patterns for coding interviews [(Source)](https://neetcode.io/practice/practice/neetcode250). This course also includes problems already available in CoJudge. Please open an issue in the [repo](https://github.com/cojudge/cojudge) if you notice anything wrong (e.g. missing test cases or incorrect grading)",
+  "description": "NeetCode 250 is the NeetCode 150 plus 100 more beginner-friendly problems, covering all essential patterns for coding interviews [(Source)](https://neetcode.io/practice/practice/neetcode250). This course also includes problems already available in Cojudge. Please open an issue in the [repo](https://github.com/cojudge/cojudge) if you notice anything wrong (e.g. missing test cases or incorrect grading)",
   "category-order": [
     "arrays-hashing",
     "two-pointers",

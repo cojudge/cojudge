@@ -1,0 +1,59 @@
+{
+  "id": "basic-count-pairs",
+  "title": "35. Count Pairs with Sum",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "nested-loops",
+  "examples": [
+    {
+      "input": "nums = [1,2,3,4], target = 5",
+      "output": "2",
+      "explanation": "Pairs (1,4) and (2,3) work."
+    },
+    {
+      "input": "nums = [0,0,0], target = 0",
+      "output": "3",
+      "explanation": "All three position pairs work."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int countPairs(int[] nums, int target) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def countPairs(self, nums: List[int], target: int) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int countPairs(vector<int>& nums, int target) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int CountPairs(int[] nums, int target)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_pairs(nums: Vec<i32>, target: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc CountPairs(nums []int, target int) int {\n    return 0\n}",
+    "typescript": "export function countPairs(nums: number[], target: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $target\n     * @return int\n     */\n    public function countPairs($nums, $target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3,4]",
+      "target": 5
+    },
+    {
+      "nums": "[0,0,0]",
+      "target": 0
+    },
+    {
+      "nums": "[5]",
+      "target": 5
+    }
+  ],
+  "functionName": "countPairs",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use two loops: `i` from start, `j` from `i+1`.",
+    "Count 1 every time the pair sums to the target."
+  ]
+}

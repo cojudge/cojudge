@@ -1,0 +1,52 @@
+{
+  "id": "basic-bubble-sort",
+  "title": "38. Bubble Sort",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "nested-loops",
+  "examples": [
+    {
+      "input": "nums = [3,1,2]",
+      "output": "[1,2,3]",
+      "explanation": "Sorted ascending."
+    },
+    {
+      "input": "nums = []",
+      "output": "[]",
+      "explanation": "Nothing to sort."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] bubbleSort(int[] nums) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def bubbleSort(self, nums: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> bubbleSort(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] BubbleSort(int[] nums)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn bubble_sort(nums: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc BubbleSort(nums []int) []int {\n    return []int{}\n}",
+    "typescript": "export function bubbleSort(nums: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function bubbleSort($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[3,1,2]"
+    },
+    {
+      "nums": "[]"
+    },
+    {
+      "nums": "[5,4,3,2,1]"
+    }
+  ],
+  "functionName": "bubbleSort",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Repeat passes over the array, swapping neighbors that are out of order.",
+    "After enough passes the largest unsorted value bubbles to its place each round."
+  ]
+}

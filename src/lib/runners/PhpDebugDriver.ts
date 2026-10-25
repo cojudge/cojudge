@@ -12,7 +12,7 @@
 //   /tmp/cojudge_eval_result.json  driver -> server (eval result)
 
 export const PHP_DEBUG_SUPPORT: string = String.raw`<?php
-// CoJudge PHP debug runtime. Loaded via require_once from instrumented files.
+// Cojudge PHP debug runtime. Loaded via require_once from instrumented files.
 if (!function_exists('__cjd_init')) {
 $GLOBALS['__cjd_state_file'] = '/tmp/cojudge_debug_state.json';
 $GLOBALS['__cjd_cmd_file'] = '/tmp/cojudge_debug_cmd.json';

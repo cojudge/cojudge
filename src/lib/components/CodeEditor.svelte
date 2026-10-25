@@ -38,7 +38,7 @@
         return { tabSize: 4, insertSpaces: true };
     }
 
-    // Monaco only tokenizes PHP inside <?php blocks, but CoJudge solutions
+    // Monaco only tokenizes PHP inside <?php blocks, but Cojudge solutions
     // are tagless (LeetCode-style). Register a variant that starts directly
     // in the PHP tokenizer state so tagless code still highlights.
     const MONACO_PHP_CODE_ID = 'phpcode';

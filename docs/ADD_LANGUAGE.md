@@ -1,6 +1,6 @@
-# Adding a New Language to CoJudge
+# Adding a New Language to Cojudge
 
-This guide explains how to add a new programming language to CoJudge, using C# as a reference implementation.
+This guide explains how to add a new programming language to Cojudge, using C# as a reference implementation.
 
 ## Overview
 

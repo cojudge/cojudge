@@ -1,0 +1,59 @@
+{
+  "id": "basic-power",
+  "title": "14. Integer Power",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "loops",
+  "examples": [
+    {
+      "input": "base = 2, exp = 10",
+      "output": "1024",
+      "explanation": "2 multiplied by itself 10 times is 1024."
+    },
+    {
+      "input": "base = 5, exp = 0",
+      "output": "1",
+      "explanation": "Anything to the power 0 is 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int power(int base, int exp) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def power(self, base: int, exp: int) -> int:\n        return 0\n",
+    "cpp": "\nclass Solution {\npublic:\n    int power(int base, int exp) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int Power(int base, int exp)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn power(base: i32, exp: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc Power(base int, exp int) int {\n    return 0\n}",
+    "typescript": "export function power(base: number, exp: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $base\n     * @param int $exp\n     * @return int\n     */\n    public function power($base, $exp) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "base": 2,
+      "exp": 10
+    },
+    {
+      "base": 5,
+      "exp": 0
+    },
+    {
+      "base": -2,
+      "exp": 3
+    }
+  ],
+  "functionName": "power",
+  "params": [
+    {
+      "name": "base",
+      "type": "int"
+    },
+    {
+      "name": "exp",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Multiply a running result by `base` exactly `exp` times.",
+    "Start the result at 1 so the `exp = 0` case works."
+  ]
+}

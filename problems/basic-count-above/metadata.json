@@ -1,0 +1,59 @@
+{
+  "id": "basic-count-above",
+  "title": "26. Count Above Threshold",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "arrays",
+  "examples": [
+    {
+      "input": "nums = [1,5,10], t = 4",
+      "output": "2",
+      "explanation": "5 and 10 exceed 4."
+    },
+    {
+      "input": "nums = [1,2,3], t = 5",
+      "output": "0",
+      "explanation": "Nothing exceeds 5."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int countAbove(int[] nums, int t) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def countAbove(self, nums: List[int], t: int) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int countAbove(vector<int>& nums, int t) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int CountAbove(int[] nums, int t)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_above(nums: Vec<i32>, t: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc CountAbove(nums []int, t int) int {\n    return 0\n}",
+    "typescript": "export function countAbove(nums: number[], t: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $t\n     * @return int\n     */\n    public function countAbove($nums, $t) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,5,10]",
+      "t": 4
+    },
+    {
+      "nums": "[1,2,3]",
+      "t": 5
+    },
+    {
+      "nums": "[]",
+      "t": 0
+    }
+  ],
+  "functionName": "countAbove",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "t",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Loop with a counter like Count Evens.",
+    "The condition is `x > t`."
+  ]
+}

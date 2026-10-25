@@ -1,0 +1,52 @@
+{
+  "id": "basic-factorial",
+  "title": "10. Factorial",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "loops",
+  "examples": [
+    {
+      "input": "n = 5",
+      "output": "120",
+      "explanation": "1*2*3*4*5 = 120."
+    },
+    {
+      "input": "n = 0",
+      "output": "1",
+      "explanation": "0! is defined as 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int factorial(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def factorial(self, n: int) -> int:\n        return 0\n",
+    "cpp": "\nclass Solution {\npublic:\n    int factorial(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int Factorial(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn factorial(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc Factorial(n int) int {\n    return 0\n}",
+    "typescript": "export function factorial(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function factorial($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 5
+    },
+    {
+      "n": 0
+    },
+    {
+      "n": 3
+    }
+  ],
+  "functionName": "factorial",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Like the sum problem, but multiply instead of add.",
+    "Start the running product at 1, not 0."
+  ]
+}

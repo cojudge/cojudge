@@ -1,0 +1,52 @@
+{
+  "id": "basic-reverse-array",
+  "title": "24. Reverse Array",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "arrays",
+  "examples": [
+    {
+      "input": "nums = [1,2,3]",
+      "output": "[3,2,1]",
+      "explanation": "The order is flipped."
+    },
+    {
+      "input": "nums = []",
+      "output": "[]",
+      "explanation": "Reversing nothing gives nothing."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] reverseArray(int[] nums) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def reverseArray(self, nums: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> reverseArray(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] ReverseArray(int[] nums)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reverse_array(nums: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc ReverseArray(nums []int) []int {\n    return []int{}\n}",
+    "typescript": "export function reverseArray(nums: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function reverseArray($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3]"
+    },
+    {
+      "nums": "[]"
+    },
+    {
+      "nums": "[7]"
+    }
+  ],
+  "functionName": "reverseArray",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Read the input from the last index down to 0.",
+    "Append each visited element to the answer."
+  ]
+}

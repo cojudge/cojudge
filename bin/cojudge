@@ -108,7 +108,7 @@ async function main() {
     const pids = getPIDs(PORT);
     if (pids.length > 0) {
       console.log(
-        `CoJudge is already running on port ${PORT} (PID: ${pids.join(", ")})`,
+        `Cojudge is already running on port ${PORT} (PID: ${pids.join(", ")})`,
       );
       openBrowser(PORT);
       setTimeout(() => process.exit(0), 1000);

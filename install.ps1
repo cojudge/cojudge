@@ -24,7 +24,7 @@ $INSTALL_DIR = Get-Location
 $FUNCTION_NAME = "cojudge"
 $FUNCTION_DEFINITION = @"
 
-# CoJudge CLI
+# Cojudge CLI
 function $FUNCTION_NAME {
     node "$INSTALL_DIR\bin\cojudge" `$args
 }
@@ -47,7 +47,7 @@ if ($null -eq $CONFIG_FILE -or $CONFIG_FILE -eq "") {
         # But let's try a replacement if it looks standard
         Write-Host "Updating existing cojudge function in $CONFIG_FILE" -ForegroundColor $Green
         # Simple replacement regex
-        $NewContent = $ProfileContent -replace "(?s)# CoJudge CLI\s+function $FUNCTION_NAME \{.*?}", $FUNCTION_DEFINITION
+        $NewContent = $ProfileContent -replace "(?s)# Cojudge CLI\s+function $FUNCTION_NAME \{.*?}", $FUNCTION_DEFINITION
         if ($NewContent -eq $ProfileContent) {
             # If regex didn't match exactly, just append
             Add-Content -Path $CONFIG_FILE -Value $FUNCTION_DEFINITION

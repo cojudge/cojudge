@@ -1,0 +1,59 @@
+{
+  "id": "basic-sum-multiples",
+  "title": "16. Sum of Multiples",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "loops",
+  "examples": [
+    {
+      "input": "n = 10, k = 3",
+      "output": "18",
+      "explanation": "3+6+9 = 18."
+    },
+    {
+      "input": "n = 10, k = 1",
+      "output": "55",
+      "explanation": "Every number 1..10 counts."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int sumMultiples(int n, int k) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def sumMultiples(self, n: int, k: int) -> int:\n        return 0\n",
+    "cpp": "\nclass Solution {\npublic:\n    int sumMultiples(int n, int k) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int SumMultiples(int n, int k)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn sum_multiples(n: i32, k: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc SumMultiples(n int, k int) int {\n    return 0\n}",
+    "typescript": "export function sumMultiples(n: number, k: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int $k\n     * @return int\n     */\n    public function sumMultiples($n, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 10,
+      "k": 3
+    },
+    {
+      "n": 10,
+      "k": 1
+    },
+    {
+      "n": 1,
+      "k": 5
+    }
+  ],
+  "functionName": "sumMultiples",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Loop from 1 to `n` and add the value when `i % k == 0`.",
+    "Alternatively step the loop by `k`: `k, 2k, 3k, ...`."
+  ]
+}

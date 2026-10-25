@@ -1,0 +1,59 @@
+{
+  "id": "basic-max-of-two",
+  "title": "2. Max of Two",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "if-else",
+  "examples": [
+    {
+      "input": "a = 3, b = 7",
+      "output": "7",
+      "explanation": "7 is larger than 3."
+    },
+    {
+      "input": "a = -5, b = -2",
+      "output": "-2",
+      "explanation": "-2 is larger than -5."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxOfTwo(int a, int b) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def maxOfTwo(self, a: int, b: int) -> int:\n        return 0\n",
+    "cpp": "\nclass Solution {\npublic:\n    int maxOfTwo(int a, int b) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MaxOfTwo(int a, int b)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_of_two(a: i32, b: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MaxOfTwo(a int, b int) int {\n    return 0\n}",
+    "typescript": "export function maxOfTwo(a: number, b: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $a\n     * @param int $b\n     * @return int\n     */\n    public function maxOfTwo($a, $b) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "a": 3,
+      "b": 7
+    },
+    {
+      "a": -5,
+      "b": -2
+    },
+    {
+      "a": 4,
+      "b": 4
+    }
+  ],
+  "functionName": "maxOfTwo",
+  "params": [
+    {
+      "name": "a",
+      "type": "int"
+    },
+    {
+      "name": "b",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use an `if` statement to compare `a` and `b`.",
+    "Remember to handle the equal case."
+  ]
+}

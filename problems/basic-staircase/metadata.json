@@ -1,0 +1,52 @@
+{
+  "id": "basic-staircase",
+  "title": "42. Staircase Stars",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "nested-loops",
+  "examples": [
+    {
+      "input": "n = 3",
+      "output": "[\"*\",\"**\",\"***\"]",
+      "explanation": "Three rows of growing stars."
+    },
+    {
+      "input": "n = 1",
+      "output": "[\"*\"]",
+      "explanation": "A single star."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\n\nclass Solution {\n    public List<String> staircase(int n) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def staircase(self, n: int) -> List[str]:\n        return []\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> staircase(int n) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\n\npublic class Solution\n{\n    public List<string> Staircase(int n)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn staircase(n: i32) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc Staircase(n int) []string {\n    return []string{}\n}",
+    "typescript": "export function staircase(n: number): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return string[]\n     */\n    public function staircase($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 3
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 5
+    }
+  ],
+  "functionName": "staircase",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Row `i` holds `i` copies of `*`.",
+    "Use an inner loop (or string repetition) to build each row."
+  ]
+}

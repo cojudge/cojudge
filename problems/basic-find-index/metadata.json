@@ -1,0 +1,59 @@
+{
+  "id": "basic-find-index",
+  "title": "21. Find Index",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "arrays",
+  "examples": [
+    {
+      "input": "nums = [5,3,7], target = 3",
+      "output": "1",
+      "explanation": "3 sits at index 1."
+    },
+    {
+      "input": "nums = [5,3,7], target = 9",
+      "output": "-1",
+      "explanation": "9 never appears."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findIndex(int[] nums, int target) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def findIndex(self, nums: List[int], target: int) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int findIndex(vector<int>& nums, int target) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int FindIndex(int[] nums, int target)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_index(nums: Vec<i32>, target: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FindIndex(nums []int, target int) int {\n    return 0\n}",
+    "typescript": "export function findIndex(nums: number[], target: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $target\n     * @return int\n     */\n    public function findIndex($nums, $target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[5,3,7]",
+      "target": 3
+    },
+    {
+      "nums": "[5,3,7]",
+      "target": 9
+    },
+    {
+      "nums": "[1,2,2,3]",
+      "target": 2
+    }
+  ],
+  "functionName": "findIndex",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Loop with an index variable.",
+    "Return immediately when you find a match; return -1 after the loop."
+  ]
+}

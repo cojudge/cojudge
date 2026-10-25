@@ -1,0 +1,52 @@
+{
+  "id": "basic-count-words",
+  "title": "34. Count Words",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "strings",
+  "examples": [
+    {
+      "input": "s = \"hello world\"",
+      "output": "2",
+      "explanation": "Two words."
+    },
+    {
+      "input": "s = \"  hi   there \"",
+      "output": "2",
+      "explanation": "Extra spaces do not create words."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int countWords(String s) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def countWords(self, s: str) -> int:\n        return 0\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int countWords(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int CountWords(string s)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_words(s: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc CountWords(s string) int {\n    return 0\n}",
+    "typescript": "export function countWords(s: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function countWords($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "hello world"
+    },
+    {
+      "s": "  hi   there "
+    },
+    {
+      "s": ""
+    }
+  ],
+  "functionName": "countWords",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Trim the string first; empty after trimming means 0.",
+    "Split on whitespace and count the pieces."
+  ]
+}

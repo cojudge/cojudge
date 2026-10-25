@@ -1,0 +1,52 @@
+{
+  "id": "basic-second-largest",
+  "title": "37. Second Largest",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "nested-loops",
+  "examples": [
+    {
+      "input": "nums = [1,2,3]",
+      "output": "2",
+      "explanation": "The largest is 3, the next distinct value is 2."
+    },
+    {
+      "input": "nums = [5,5,4]",
+      "output": "4",
+      "explanation": "Duplicates of the maximum do not count."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int secondLargest(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def secondLargest(self, nums: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int secondLargest(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int SecondLargest(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn second_largest(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc SecondLargest(nums []int) int {\n    return 0\n}",
+    "typescript": "export function secondLargest(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function secondLargest($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3]"
+    },
+    {
+      "nums": "[5,5,4]"
+    },
+    {
+      "nums": "[-1,-5,-3]"
+    }
+  ],
+  "functionName": "secondLargest",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "First find the maximum value.",
+    "Then find the maximum among values smaller than it."
+  ]
+}

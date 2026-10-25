@@ -1,0 +1,59 @@
+{
+  "id": "basic-gcd",
+  "title": "47. GCD",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "recursion",
+  "examples": [
+    {
+      "input": "a = 48, b = 18",
+      "output": "6",
+      "explanation": "6 is the largest number dividing both."
+    },
+    {
+      "input": "a = 7, b = 5",
+      "output": "1",
+      "explanation": "7 and 5 share no larger divisor."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int gcd(int a, int b) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def gcd(self, a: int, b: int) -> int:\n        return 0\n",
+    "cpp": "\nclass Solution {\npublic:\n    int gcd(int a, int b) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int Gcd(int a, int b)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn gcd(a: i32, b: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc Gcd(a int, b int) int {\n    return 0\n}",
+    "typescript": "export function gcd(a: number, b: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $a\n     * @param int $b\n     * @return int\n     */\n    public function gcd($a, $b) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "a": 48,
+      "b": 18
+    },
+    {
+      "a": 7,
+      "b": 5
+    },
+    {
+      "a": 0,
+      "b": 5
+    }
+  ],
+  "functionName": "gcd",
+  "params": [
+    {
+      "name": "a",
+      "type": "int"
+    },
+    {
+      "name": "b",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The base case is `b == 0`.",
+    "Otherwise recurse with `(b, a % b)`."
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "id": "basic-max-of-three",
+  "title": "3. Max of Three",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "if-else",
+  "examples": [
+    {
+      "input": "a = 1, b = 9, c = 4",
+      "output": "9",
+      "explanation": "9 is the largest."
+    },
+    {
+      "input": "a = -1, b = -7, c = -3",
+      "output": "-1",
+      "explanation": "-1 is the largest."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxOfThree(int a, int b, int c) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def maxOfThree(self, a: int, b: int, c: int) -> int:\n        return 0\n",
+    "cpp": "\nclass Solution {\npublic:\n    int maxOfThree(int a, int b, int c) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MaxOfThree(int a, int b, int c)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_of_three(a: i32, b: i32, c: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MaxOfThree(a int, b int, c int) int {\n    return 0\n}",
+    "typescript": "export function maxOfThree(a: number, b: number, c: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $a\n     * @param int $b\n     * @param int $c\n     * @return int\n     */\n    public function maxOfThree($a, $b, $c) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "a": 1,
+      "b": 9,
+      "c": 4
+    },
+    {
+      "a": -1,
+      "b": -7,
+      "c": -3
+    },
+    {
+      "a": 5,
+      "b": 5,
+      "c": 5
+    }
+  ],
+  "functionName": "maxOfThree",
+  "params": [
+    {
+      "name": "a",
+      "type": "int"
+    },
+    {
+      "name": "b",
+      "type": "int"
+    },
+    {
+      "name": "c",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Track the biggest value seen so far in a variable.",
+    "Update it with two `if` statements, one per remaining value."
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "basic-countdown",
+  "title": "15. Countdown List",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "loops",
+  "examples": [
+    {
+      "input": "n = 4",
+      "output": "[4,3,2,1]",
+      "explanation": "Count down from 4 to 1."
+    },
+    {
+      "input": "n = 1",
+      "output": "[1]",
+      "explanation": "A countdown from 1 is just [1]."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] countdown(int n) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def countdown(self, n: int) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> countdown(int n) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] Countdown(int n)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn countdown(n: i32) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc Countdown(n int) []int {\n    return []int{}\n}",
+    "typescript": "export function countdown(n: number): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int[]\n     */\n    public function countdown($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 4
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 5
+    }
+  ],
+  "functionName": "countdown",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Create an array and fill it in a loop.",
+    "Position 0 holds `n`, position 1 holds `n-1`, and so on."
+  ]
+}

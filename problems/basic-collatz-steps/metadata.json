@@ -1,0 +1,52 @@
+{
+  "id": "basic-collatz-steps",
+  "title": "50. Collatz Steps",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "recursion",
+  "examples": [
+    {
+      "input": "n = 3",
+      "output": "7",
+      "explanation": "3 -> 10 -> 5 -> 16 -> 8 -> 4 -> 2 -> 1 takes 7 steps."
+    },
+    {
+      "input": "n = 1",
+      "output": "0",
+      "explanation": "Already at 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int collatzSteps(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def collatzSteps(self, n: int) -> int:\n        return 0\n",
+    "cpp": "\nclass Solution {\npublic:\n    int collatzSteps(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int CollatzSteps(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn collatz_steps(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc CollatzSteps(n int) int {\n    return 0\n}",
+    "typescript": "export function collatzSteps(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function collatzSteps($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 3
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 6
+    }
+  ],
+  "functionName": "collatzSteps",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The base case is `n == 1`.",
+    "Otherwise add 1 to the recursive step count for the next value."
+  ]
+}

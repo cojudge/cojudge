@@ -1,0 +1,52 @@
+{
+  "id": "basic-absolute-value",
+  "title": "8. Absolute Value",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "if-else",
+  "examples": [
+    {
+      "input": "n = -5",
+      "output": "5",
+      "explanation": "The absolute value of -5 is 5."
+    },
+    {
+      "input": "n = 3",
+      "output": "3",
+      "explanation": "Positive numbers are unchanged."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int absVal(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def absVal(self, n: int) -> int:\n        return 0\n",
+    "cpp": "\nclass Solution {\npublic:\n    int absVal(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int AbsVal(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn abs_val(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc AbsVal(n int) int {\n    return 0\n}",
+    "typescript": "export function absVal(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function absVal($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": -5
+    },
+    {
+      "n": 3
+    },
+    {
+      "n": 0
+    }
+  ],
+  "functionName": "absVal",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Branch on whether `n` is negative.",
+    "Negating a negative number makes it positive."
+  ]
+}

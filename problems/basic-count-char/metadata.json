@@ -1,0 +1,59 @@
+{
+  "id": "basic-count-char",
+  "title": "31. Count Character",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "strings",
+  "examples": [
+    {
+      "input": "s = \"hello\", ch = \"l\"",
+      "output": "2",
+      "explanation": "l appears twice in hello."
+    },
+    {
+      "input": "s = \"hello\", ch = \"z\"",
+      "output": "0",
+      "explanation": "z never appears."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int countChar(String s, String ch) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def countChar(self, s: str, ch: str) -> int:\n        return 0\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int countChar(string s, string ch) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int CountChar(string s, string ch)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_char(s: String, ch: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc CountChar(s string, ch string) int {\n    return 0\n}",
+    "typescript": "export function countChar(s: string, ch: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string $ch\n     * @return int\n     */\n    public function countChar($s, $ch) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "hello",
+      "ch": "l"
+    },
+    {
+      "s": "hello",
+      "ch": "z"
+    },
+    {
+      "s": "",
+      "ch": "a"
+    }
+  ],
+  "functionName": "countChar",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "ch",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Loop over `s` and compare each character with `ch`.",
+    "Count with an integer that starts at 0."
+  ]
+}

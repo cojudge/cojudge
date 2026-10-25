@@ -1,0 +1,52 @@
+{
+  "id": "basic-to-upper",
+  "title": "32. To Uppercase",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "strings",
+  "examples": [
+    {
+      "input": "s = \"hello\"",
+      "output": "\"HELLO\"",
+      "explanation": "All letters become capitals."
+    },
+    {
+      "input": "s = \"AbC123!\"",
+      "output": "\"ABC123!\"",
+      "explanation": "Digits and punctuation are untouched."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String toUpper(String s) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def toUpper(self, s: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string toUpper(string s) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string ToUpper(string s)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn to_upper(s: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc ToUpper(s string) string {\n    return \"\"\n}",
+    "typescript": "export function toUpper(s: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string\n     */\n    public function toUpper($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "hello"
+    },
+    {
+      "s": "AbC123!"
+    },
+    {
+      "s": ""
+    }
+  ],
+  "functionName": "toUpper",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Lowercase and uppercase letters differ by 32 in ASCII.",
+    "Only shift characters between 'a' and 'z'."
+  ]
+}

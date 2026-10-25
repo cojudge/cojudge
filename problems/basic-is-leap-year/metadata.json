@@ -1,0 +1,57 @@
+{
+  "id": "basic-is-leap-year",
+  "title": "5. Leap Year",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "if-else",
+  "examples": [
+    {
+      "input": "year = 2000",
+      "output": "true",
+      "explanation": "2000 is divisible by 400."
+    },
+    {
+      "input": "year = 1900",
+      "output": "false",
+      "explanation": "1900 is divisible by 100 but not by 400."
+    },
+    {
+      "input": "year = 2024",
+      "output": "true",
+      "explanation": "2024 is divisible by 4 but not by 100."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isLeapYear(int year) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def isLeapYear(self, year: int) -> bool:\n        return False\n",
+    "cpp": "\nclass Solution {\npublic:\n    bool isLeapYear(int year) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool IsLeapYear(int year)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_leap_year(year: i32) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc IsLeapYear(year int) bool {\n    return false\n}",
+    "typescript": "export function isLeapYear(year: number): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $year\n     * @return bool\n     */\n    public function isLeapYear($year) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "year": 2000
+    },
+    {
+      "year": 1900
+    },
+    {
+      "year": 2024
+    }
+  ],
+  "functionName": "isLeapYear",
+  "params": [
+    {
+      "name": "year",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Combine the divisibility checks with `&&`, `||`, and `!`.",
+    "Check the 400 rule first."
+  ]
+}
