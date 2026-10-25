@@ -2,7 +2,6 @@
   "id": "basic-second-largest",
   "title": "37. Second Largest",
   "difficulty": "Easy",
-  "link": "https://github.com/cojudge/cojudge",
   "category": "nested-loops",
   "examples": [
     {

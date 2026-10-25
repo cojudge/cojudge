@@ -2,7 +2,6 @@
   "id": "basic-palindrome-text",
   "title": "30. Palindrome Check",
   "difficulty": "Easy",
-  "link": "https://github.com/cojudge/cojudge",
   "category": "strings",
   "examples": [
     {

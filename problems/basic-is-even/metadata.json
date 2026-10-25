@@ -2,7 +2,6 @@
   "id": "basic-is-even",
   "title": "1. Is It Even?",
   "difficulty": "Easy",
-  "link": "https://github.com/cojudge/cojudge",
   "category": "if-else",
   "examples": [
     {

@@ -2,7 +2,6 @@
   "id": "basic-count-pairs",
   "title": "35. Count Pairs with Sum",
   "difficulty": "Easy",
-  "link": "https://github.com/cojudge/cojudge",
   "category": "nested-loops",
   "examples": [
     {

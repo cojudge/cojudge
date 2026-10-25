@@ -2,7 +2,6 @@
   "id": "basic-gcd",
   "title": "47. GCD",
   "difficulty": "Easy",
-  "link": "https://github.com/cojudge/cojudge",
   "category": "recursion",
   "examples": [
     {

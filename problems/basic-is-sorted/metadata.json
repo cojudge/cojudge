@@ -2,7 +2,6 @@
   "id": "basic-is-sorted",
   "title": "39. Is Sorted?",
   "difficulty": "Easy",
-  "link": "https://github.com/cojudge/cojudge",
   "category": "nested-loops",
   "examples": [
     {

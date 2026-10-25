@@ -2,7 +2,6 @@
   "id": "basic-fibonacci",
   "title": "44. Fibonacci",
   "difficulty": "Easy",
-  "link": "https://github.com/cojudge/cojudge",
   "category": "recursion",
   "examples": [
     {
