@@ -2,7 +2,6 @@
   "id": "basic-collatz-steps",
   "title": "50. Collatz Steps",
   "difficulty": "Easy",
-  "link": "https://github.com/cojudge/cojudge",
   "category": "recursion",
   "examples": [
     {

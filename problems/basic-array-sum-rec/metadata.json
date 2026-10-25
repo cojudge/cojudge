@@ -2,7 +2,6 @@
   "id": "basic-array-sum-rec",
   "title": "48. Array Sum (Recursive)",
   "difficulty": "Easy",
-  "link": "https://github.com/cojudge/cojudge",
   "category": "recursion",
   "examples": [
     {

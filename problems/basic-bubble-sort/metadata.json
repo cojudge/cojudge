@@ -2,7 +2,6 @@
   "id": "basic-bubble-sort",
   "title": "38. Bubble Sort",
   "difficulty": "Easy",
-  "link": "https://github.com/cojudge/cojudge",
   "category": "nested-loops",
   "examples": [
     {

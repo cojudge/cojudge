@@ -2,7 +2,6 @@
   "id": "basic-sum-1-to-n",
   "title": "9. Sum 1 to N",
   "difficulty": "Easy",
-  "link": "https://github.com/cojudge/cojudge",
   "category": "loops",
   "examples": [
     {

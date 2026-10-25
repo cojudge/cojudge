@@ -2,7 +2,6 @@
   "id": "basic-max-frequency",
   "title": "40. Max Frequency",
   "difficulty": "Easy",
-  "link": "https://github.com/cojudge/cojudge",
   "category": "nested-loops",
   "examples": [
     {

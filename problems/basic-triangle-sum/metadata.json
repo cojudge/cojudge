@@ -2,7 +2,6 @@
   "id": "basic-triangle-sum",
   "title": "41. Triangle Sum",
   "difficulty": "Easy",
-  "link": "https://github.com/cojudge/cojudge",
   "category": "nested-loops",
   "examples": [
     {

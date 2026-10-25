@@ -2,7 +2,6 @@
   "id": "basic-count-above",
   "title": "26. Count Above Threshold",
   "difficulty": "Easy",
-  "link": "https://github.com/cojudge/cojudge",
   "category": "arrays",
   "examples": [
     {

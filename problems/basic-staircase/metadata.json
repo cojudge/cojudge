@@ -2,7 +2,6 @@
   "id": "basic-staircase",
   "title": "42. Staircase Stars",
   "difficulty": "Easy",
-  "link": "https://github.com/cojudge/cojudge",
   "category": "nested-loops",
   "examples": [
     {

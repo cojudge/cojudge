@@ -1034,9 +1034,11 @@
             {:else if data.problem.source === 'modified'}
                 <span class="source-badge modified" title="Modified — edited in your Cojudge folder, differs from the bundled copy">Modified</span>
             {/if}
+            {#if data.problem.link}
             <Tooltip text="Source Link" pos="top">
                 <a href={data.problem.link} target="_blank" rel="noopener noreferrer" class="external-link" aria-label={`Open ${data.problem.title} in LeetCode`}>↗</a>
             </Tooltip>
+            {/if}
             <Tooltip text={$bookmarkStore?.[problemId] ? 'Remove bookmark' : 'Bookmark'} pos="top">
                 <button
                     type="button"

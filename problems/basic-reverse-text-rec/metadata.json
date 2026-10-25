@@ -2,7 +2,6 @@
   "id": "basic-reverse-text-rec",
   "title": "49. Reverse Text (Recursive)",
   "difficulty": "Easy",
-  "link": "https://github.com/cojudge/cojudge",
   "category": "recursion",
   "examples": [
     {
