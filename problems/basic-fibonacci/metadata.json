@@ -1,0 +1,52 @@
+{
+  "id": "basic-fibonacci",
+  "title": "44. Fibonacci",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "recursion",
+  "examples": [
+    {
+      "input": "n = 6",
+      "output": "8",
+      "explanation": "The sequence 0,1,1,2,3,5,8."
+    },
+    {
+      "input": "n = 0",
+      "output": "0",
+      "explanation": "Base case."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int fibonacci(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def fibonacci(self, n: int) -> int:\n        return 0\n",
+    "cpp": "\nclass Solution {\npublic:\n    int fibonacci(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int Fibonacci(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn fibonacci(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc Fibonacci(n int) int {\n    return 0\n}",
+    "typescript": "export function fibonacci(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function fibonacci($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 6
+    },
+    {
+      "n": 0
+    },
+    {
+      "n": 10
+    }
+  ],
+  "functionName": "fibonacci",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Handle the two base cases first.",
+    "Otherwise add the two recursive calls."
+  ]
+}

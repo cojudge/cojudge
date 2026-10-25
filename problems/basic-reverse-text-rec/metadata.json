@@ -1,0 +1,52 @@
+{
+  "id": "basic-reverse-text-rec",
+  "title": "49. Reverse Text (Recursive)",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "recursion",
+  "examples": [
+    {
+      "input": "s = \"hello\"",
+      "output": "\"olleh\"",
+      "explanation": "Reversed text."
+    },
+    {
+      "input": "s = \"\"",
+      "output": "\"\"",
+      "explanation": "Base case."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String reverseTextRec(String s) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def reverseTextRec(self, s: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string reverseTextRec(string s) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string ReverseTextRec(string s)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reverse_text_rec(s: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc ReverseTextRec(s string) string {\n    return \"\"\n}",
+    "typescript": "export function reverseTextRec(s: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string\n     */\n    public function reverseTextRec($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "hello"
+    },
+    {
+      "s": ""
+    },
+    {
+      "s": "ab"
+    }
+  ],
+  "functionName": "reverseTextRec",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Base case: strings of length 0 or 1 return themselves.",
+    "Otherwise return `reverse(rest) + first`."
+  ]
+}

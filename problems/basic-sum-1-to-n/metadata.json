@@ -1,0 +1,52 @@
+{
+  "id": "basic-sum-1-to-n",
+  "title": "9. Sum 1 to N",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "loops",
+  "examples": [
+    {
+      "input": "n = 5",
+      "output": "15",
+      "explanation": "1+2+3+4+5 = 15."
+    },
+    {
+      "input": "n = 1",
+      "output": "1",
+      "explanation": "The sum of just 1 is 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int sumUpTo(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def sumUpTo(self, n: int) -> int:\n        return 0\n",
+    "cpp": "\nclass Solution {\npublic:\n    int sumUpTo(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int SumUpTo(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn sum_up_to(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc SumUpTo(n int) int {\n    return 0\n}",
+    "typescript": "export function sumUpTo(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function sumUpTo($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 5
+    },
+    {
+      "n": 10
+    },
+    {
+      "n": 0
+    }
+  ],
+  "functionName": "sumUpTo",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Loop from 1 to `n`, adding each value to a running total.",
+    "Start the total at 0."
+  ]
+}

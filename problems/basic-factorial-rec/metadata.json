@@ -1,0 +1,52 @@
+{
+  "id": "basic-factorial-rec",
+  "title": "43. Factorial (Recursive)",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "recursion",
+  "examples": [
+    {
+      "input": "n = 5",
+      "output": "120",
+      "explanation": "5*4*3*2*1 = 120."
+    },
+    {
+      "input": "n = 0",
+      "output": "1",
+      "explanation": "Base case."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int factorialRec(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def factorialRec(self, n: int) -> int:\n        return 0\n",
+    "cpp": "\nclass Solution {\npublic:\n    int factorialRec(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int FactorialRec(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn factorial_rec(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FactorialRec(n int) int {\n    return 0\n}",
+    "typescript": "export function factorialRec(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function factorialRec($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 5
+    },
+    {
+      "n": 0
+    },
+    {
+      "n": 4
+    }
+  ],
+  "functionName": "factorialRec",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The base case is `n <= 1`, returning 1.",
+    "Otherwise return `n * factorialRec(n - 1)`."
+  ]
+}

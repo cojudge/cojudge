@@ -1,0 +1,52 @@
+{
+  "id": "basic-double-array",
+  "title": "25. Double Array",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "arrays",
+  "examples": [
+    {
+      "input": "nums = [1,2,3]",
+      "output": "[2,4,6]",
+      "explanation": "Each value doubles."
+    },
+    {
+      "input": "nums = [-1,0]",
+      "output": "[-2,0]",
+      "explanation": "-1 doubles to -2; 0 stays 0."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] doubleArray(int[] nums) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def doubleArray(self, nums: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> doubleArray(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] DoubleArray(int[] nums)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn double_array(nums: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc DoubleArray(nums []int) []int {\n    return []int{}\n}",
+    "typescript": "export function doubleArray(nums: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function doubleArray($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3]"
+    },
+    {
+      "nums": "[]"
+    },
+    {
+      "nums": "[-1,0]"
+    }
+  ],
+  "functionName": "doubleArray",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Build an answer array of the same length.",
+    "Set `ans[i] = nums[i] * 2` in a loop."
+  ]
+}

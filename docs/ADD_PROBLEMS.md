@@ -1,10 +1,10 @@
-# Adding a Problem to CoJudge
+# Adding a Problem to Cojudge
 
-This guide explains how to add a new problem to CoJudge, with examples for both standard function-based problems and class-based design problems.
+This guide explains how to add a new problem to Cojudge, with examples for both standard function-based problems and class-based design problems.
 
 ## Where content lives (`~/cojudge`)
 
-For local use, CoJudge keeps all editable content in your home folder:
+For local use, Cojudge keeps all editable content in your home folder:
 
 ```
 ~/cojudge/
@@ -17,7 +17,7 @@ For local use, CoJudge keeps all editable content in your home folder:
 └── courses/<course-id>/courseinfo.json
 ```
 
-On first start, CoJudge copies (seeds) the repo's bundled `problems/` and `courses/` into `~/cojudge`. Afterwards `~/cojudge` is the source of truth: view / edit / add problems, test cases, solutions, and courses by managing files there — changes take effect immediately (refresh the browser or re-run the CLI, no restart needed). Missing files are re-seeded from the bundled copy, unedited copies auto-update when a new CoJudge version ships fixes, and your edits are never overwritten. If a problem shows as "Modified" but you never edited it, reset it in Manage Problems (or `cojudge sync --reset <slug>`). Set `COJUDGE_CONTENT_DIR` (or `COJUDGE_HOME`) to use a different folder.
+On first start, Cojudge copies (seeds) the repo's bundled `problems/` and `courses/` into `~/cojudge`. Afterwards `~/cojudge` is the source of truth: view / edit / add problems, test cases, solutions, and courses by managing files there — changes take effect immediately (refresh the browser or re-run the CLI, no restart needed). Missing files are re-seeded from the bundled copy, unedited copies auto-update when a new Cojudge version ships fixes, and your edits are never overwritten. If a problem shows as "Modified" but you never edited it, reset it in Manage Problems (or `cojudge sync --reset <slug>`). Set `COJUDGE_CONTENT_DIR` (or `COJUDGE_HOME`) to use a different folder.
 
 Only `statement.md`, `metadata.json`, `official-tests.json`, and `Marker.java` are required. `solution.md` is optional — if present, a "Reference Solution" button appears in the UI.
 

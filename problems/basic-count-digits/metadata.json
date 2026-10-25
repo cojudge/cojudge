@@ -1,0 +1,52 @@
+{
+  "id": "basic-count-digits",
+  "title": "11. Count Digits",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "loops",
+  "examples": [
+    {
+      "input": "n = 123",
+      "output": "3",
+      "explanation": "123 has three digits."
+    },
+    {
+      "input": "n = 0",
+      "output": "1",
+      "explanation": "0 is written with one digit."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int countDigits(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def countDigits(self, n: int) -> int:\n        return 0\n",
+    "cpp": "\nclass Solution {\npublic:\n    int countDigits(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int CountDigits(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_digits(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc CountDigits(n int) int {\n    return 0\n}",
+    "typescript": "export function countDigits(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function countDigits($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 123
+    },
+    {
+      "n": 0
+    },
+    {
+      "n": 1000
+    }
+  ],
+  "functionName": "countDigits",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Repeatedly divide by 10 and count the steps.",
+    "Handle 0 as a special case before the loop."
+  ]
+}

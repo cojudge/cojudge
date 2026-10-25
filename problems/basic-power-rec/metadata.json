@@ -1,0 +1,59 @@
+{
+  "id": "basic-power-rec",
+  "title": "46. Power (Recursive)",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "recursion",
+  "examples": [
+    {
+      "input": "base = 2, exp = 5",
+      "output": "32",
+      "explanation": "2^5 = 32."
+    },
+    {
+      "input": "base = 3, exp = 0",
+      "output": "1",
+      "explanation": "Base case."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int powerRec(int base, int exp) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def powerRec(self, base: int, exp: int) -> int:\n        return 0\n",
+    "cpp": "\nclass Solution {\npublic:\n    int powerRec(int base, int exp) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int PowerRec(int base, int exp)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn power_rec(base: i32, exp: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc PowerRec(base int, exp int) int {\n    return 0\n}",
+    "typescript": "export function powerRec(base: number, exp: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $base\n     * @param int $exp\n     * @return int\n     */\n    public function powerRec($base, $exp) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "base": 2,
+      "exp": 5
+    },
+    {
+      "base": 3,
+      "exp": 0
+    },
+    {
+      "base": 0,
+      "exp": 0
+    }
+  ],
+  "functionName": "powerRec",
+  "params": [
+    {
+      "name": "base",
+      "type": "int"
+    },
+    {
+      "name": "exp",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Base case: `exp == 0` returns 1.",
+    "Otherwise return `base * powerRec(base, exp - 1)`."
+  ]
+}

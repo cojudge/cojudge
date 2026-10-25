@@ -1,0 +1,52 @@
+{
+  "id": "basic-temperature-advice",
+  "title": "6. Temperature Advice",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "if-else",
+  "examples": [
+    {
+      "input": "t = -5",
+      "output": "\"Freezing\"",
+      "explanation": "-5 is below 0."
+    },
+    {
+      "input": "t = 20",
+      "output": "\"Warm\"",
+      "explanation": "20 is between 15 and 25."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String tempAdvice(int t) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def tempAdvice(self, t: int) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string tempAdvice(int t) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string TempAdvice(int t)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn temp_advice(t: i32) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc TempAdvice(t int) string {\n    return \"\"\n}",
+    "typescript": "export function tempAdvice(t: number): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param int $t\n     * @return string\n     */\n    public function tempAdvice($t) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "t": -5
+    },
+    {
+      "t": 10
+    },
+    {
+      "t": 30
+    }
+  ],
+  "functionName": "tempAdvice",
+  "params": [
+    {
+      "name": "t",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Order the checks from coldest to hottest.",
+    "Use `<` comparisons against 0, 15, and 25."
+  ]
+}

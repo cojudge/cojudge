@@ -2,7 +2,7 @@ On an `n x n` board a knight begins on square `(row, column)` with zero-based co
 
 Estimate the chance that the knight is still on the board once the walk stops. Report the probability as a decimal string (for example `"0.0625"`).
 
-This is a portable adaptation: CoJudge has no floating type, so inputs stay integers and the output is a decimal string compared with a small tolerance.
+This is a portable adaptation: Cojudge has no floating type, so inputs stay integers and the output is a decimal string compared with a small tolerance.
 
 **Constraints:**
 - `1 <= n <= 25`

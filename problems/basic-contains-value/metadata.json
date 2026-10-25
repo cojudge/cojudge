@@ -1,0 +1,59 @@
+{
+  "id": "basic-contains-value",
+  "title": "22. Contains Value",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "arrays",
+  "examples": [
+    {
+      "input": "nums = [5,3,7], target = 7",
+      "output": "true",
+      "explanation": "7 is in the array."
+    },
+    {
+      "input": "nums = [5,3,7], target = 9",
+      "output": "false",
+      "explanation": "9 is not in the array."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean containsValue(int[] nums, int target) {\n        return false;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def containsValue(self, nums: List[int], target: int) -> bool:\n        return False\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool containsValue(vector<int>& nums, int target) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool ContainsValue(int[] nums, int target)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn contains_value(nums: Vec<i32>, target: i32) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc ContainsValue(nums []int, target int) bool {\n    return false\n}",
+    "typescript": "export function containsValue(nums: number[], target: number): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $target\n     * @return bool\n     */\n    public function containsValue($nums, $target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[5,3,7]",
+      "target": 7
+    },
+    {
+      "nums": "[5,3,7]",
+      "target": 9
+    },
+    {
+      "nums": "[]",
+      "target": 1
+    }
+  ],
+  "functionName": "containsValue",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Same scan as Find Index, but return a boolean.",
+    "Return `true` on the first match and `false` at the end."
+  ]
+}

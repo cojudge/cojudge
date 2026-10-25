@@ -1,0 +1,52 @@
+{
+  "id": "basic-is-sorted",
+  "title": "39. Is Sorted?",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "nested-loops",
+  "examples": [
+    {
+      "input": "nums = [1,2,2,3]",
+      "output": "true",
+      "explanation": "Never decreases."
+    },
+    {
+      "input": "nums = [1,3,2]",
+      "output": "false",
+      "explanation": "3 is followed by 2."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isSorted(int[] nums) {\n        return false;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def isSorted(self, nums: List[int]) -> bool:\n        return False\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool isSorted(vector<int>& nums) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool IsSorted(int[] nums)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_sorted(nums: Vec<i32>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc IsSorted(nums []int) bool {\n    return false\n}",
+    "typescript": "export function isSorted(nums: number[]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return bool\n     */\n    public function isSorted($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,2,3]"
+    },
+    {
+      "nums": "[1,3,2]"
+    },
+    {
+      "nums": "[]"
+    }
+  ],
+  "functionName": "isSorted",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Compare each element with its neighbor.",
+    "Return `false` at the first decrease."
+  ]
+}

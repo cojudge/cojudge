@@ -1,0 +1,52 @@
+{
+  "id": "basic-average-floor",
+  "title": "23. Floor Average",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "arrays",
+  "examples": [
+    {
+      "input": "nums = [1,2,3]",
+      "output": "2",
+      "explanation": "The average is exactly 2."
+    },
+    {
+      "input": "nums = [1,2]",
+      "output": "1",
+      "explanation": "The average 1.5 rounds down to 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int avgFloor(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def avgFloor(self, nums: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int avgFloor(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int AvgFloor(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn avg_floor(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc AvgFloor(nums []int) int {\n    return 0\n}",
+    "typescript": "export function avgFloor(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function avgFloor($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3]"
+    },
+    {
+      "nums": "[1,2]"
+    },
+    {
+      "nums": "[10]"
+    }
+  ],
+  "functionName": "avgFloor",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "First compute the sum.",
+    "Then divide by the length using integer division."
+  ]
+}

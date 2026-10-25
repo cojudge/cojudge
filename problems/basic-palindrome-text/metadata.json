@@ -1,0 +1,57 @@
+{
+  "id": "basic-palindrome-text",
+  "title": "30. Palindrome Check",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "strings",
+  "examples": [
+    {
+      "input": "s = \"racecar\"",
+      "output": "true",
+      "explanation": "racecar is symmetric."
+    },
+    {
+      "input": "s = \"hello\"",
+      "output": "false",
+      "explanation": "hello reversed is olleh."
+    },
+    {
+      "input": "s = \"Abba\"",
+      "output": "false",
+      "explanation": "Capital A does not match lowercase a."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isPalindromeText(String s) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def isPalindromeText(self, s: str) -> bool:\n        return False\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool isPalindromeText(string s) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool IsPalindromeText(string s)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_palindrome_text(s: String) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc IsPalindromeText(s string) bool {\n    return false\n}",
+    "typescript": "export function isPalindromeText(s: string): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return bool\n     */\n    public function isPalindromeText($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "racecar"
+    },
+    {
+      "s": "hello"
+    },
+    {
+      "s": "abba"
+    }
+  ],
+  "functionName": "isPalindromeText",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Compare the first character with the last, the second with the second-last, and so on.",
+    "Only the first half needs checking."
+  ]
+}

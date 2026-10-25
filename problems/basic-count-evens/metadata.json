@@ -1,0 +1,52 @@
+{
+  "id": "basic-count-evens",
+  "title": "20. Count Evens",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "arrays",
+  "examples": [
+    {
+      "input": "nums = [1,2,3,4]",
+      "output": "2",
+      "explanation": "2 and 4 are even."
+    },
+    {
+      "input": "nums = [1,3,5]",
+      "output": "0",
+      "explanation": "None are even."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int countEvens(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def countEvens(self, nums: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int countEvens(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int CountEvens(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_evens(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc CountEvens(nums []int) int {\n    return 0\n}",
+    "typescript": "export function countEvens(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function countEvens($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3,4]"
+    },
+    {
+      "nums": "[1,3,5]"
+    },
+    {
+      "nums": "[]"
+    }
+  ],
+  "functionName": "countEvens",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Loop over the array with a counter.",
+    "Increment the counter when `x % 2 == 0`."
+  ]
+}

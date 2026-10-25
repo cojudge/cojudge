@@ -1,0 +1,52 @@
+{
+  "id": "basic-reverse-number",
+  "title": "13. Reverse Number",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "loops",
+  "examples": [
+    {
+      "input": "n = 123",
+      "output": "321",
+      "explanation": "Reading 123 backwards gives 321."
+    },
+    {
+      "input": "n = 120",
+      "output": "21",
+      "explanation": "The leading zero of 021 is dropped."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int reverseNumber(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def reverseNumber(self, n: int) -> int:\n        return 0\n",
+    "cpp": "\nclass Solution {\npublic:\n    int reverseNumber(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int ReverseNumber(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reverse_number(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc ReverseNumber(n int) int {\n    return 0\n}",
+    "typescript": "export function reverseNumber(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function reverseNumber($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 123
+    },
+    {
+      "n": 120
+    },
+    {
+      "n": 5
+    }
+  ],
+  "functionName": "reverseNumber",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Build the answer digit by digit: multiply it by 10, then add the next digit.",
+    "Take the next digit from `n % 10`."
+  ]
+}

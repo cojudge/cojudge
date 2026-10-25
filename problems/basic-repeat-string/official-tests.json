@@ -1,0 +1,106 @@
+[
+  {
+    "s": "ab",
+    "k": 3
+  },
+  {
+    "s": "x",
+    "k": 0
+  },
+  {
+    "s": "hi",
+    "k": 1
+  },
+  {
+    "s": "",
+    "k": 5
+  },
+  {
+    "s": "a",
+    "k": 10
+  },
+  {
+    "s": "abc",
+    "k": 2
+  },
+  {
+    "s": "zz",
+    "k": 5
+  },
+  {
+    "s": "x",
+    "k": 5
+  },
+  {
+    "s": "hello",
+    "k": 2
+  },
+  {
+    "s": "",
+    "k": 0
+  },
+  {
+    "s": "ab",
+    "k": 10
+  },
+  {
+    "s": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "k": 10
+  },
+  {
+    "s": "xy",
+    "k": 100
+  },
+  {
+    "s": "test",
+    "k": 4
+  },
+  {
+    "s": " ",
+    "k": 7
+  },
+  {
+    "s": "0123456789",
+    "k": 3
+  },
+  {
+    "s": "q",
+    "k": 100
+  },
+  {
+    "s": "ab",
+    "k": 0
+  },
+  {
+    "s": "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+    "k": 5
+  },
+  {
+    "s": "hi!",
+    "k": 6
+  },
+  {
+    "s": "z",
+    "k": 1
+  },
+  {
+    "s": "*",
+    "k": 20
+  },
+  {
+    "s": "abcde",
+    "k": 5
+  },
+  {
+    "s": "p",
+    "k": 500
+  },
+  {
+    "s": "longstring",
+    "k": 1
+  },
+  {
+    "s": "-=",
+    "k": 25
+  }
+]

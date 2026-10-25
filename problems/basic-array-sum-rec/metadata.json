@@ -1,0 +1,52 @@
+{
+  "id": "basic-array-sum-rec",
+  "title": "48. Array Sum (Recursive)",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "recursion",
+  "examples": [
+    {
+      "input": "nums = [1,2,3]",
+      "output": "6",
+      "explanation": "1+2+3 = 6."
+    },
+    {
+      "input": "nums = []",
+      "output": "0",
+      "explanation": "Base case."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int arraySumRec(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def arraySumRec(self, nums: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int arraySumRec(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int ArraySumRec(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn array_sum_rec(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc ArraySumRec(nums []int) int {\n    return 0\n}",
+    "typescript": "export function arraySumRec(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function arraySumRec($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3]"
+    },
+    {
+      "nums": "[]"
+    },
+    {
+      "nums": "[5]"
+    }
+  ],
+  "functionName": "arraySumRec",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Peel off index 0 and recurse on the remainder.",
+    "Use a helper that carries the current index."
+  ]
+}

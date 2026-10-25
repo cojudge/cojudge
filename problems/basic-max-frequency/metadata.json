@@ -1,0 +1,52 @@
+{
+  "id": "basic-max-frequency",
+  "title": "40. Max Frequency",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "nested-loops",
+  "examples": [
+    {
+      "input": "nums = [1,2,2,3]",
+      "output": "2",
+      "explanation": "2 appears twice."
+    },
+    {
+      "input": "nums = [5]",
+      "output": "1",
+      "explanation": "A single element appears once."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxFrequency(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def maxFrequency(self, nums: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int maxFrequency(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MaxFrequency(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_frequency(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MaxFrequency(nums []int) int {\n    return 0\n}",
+    "typescript": "export function maxFrequency(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function maxFrequency($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,2,3]"
+    },
+    {
+      "nums": "[5]"
+    },
+    {
+      "nums": "[1,1,1]"
+    }
+  ],
+  "functionName": "maxFrequency",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "For each position, count how many times its value appears.",
+    "Keep the biggest count seen."
+  ]
+}

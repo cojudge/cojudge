@@ -1,0 +1,52 @@
+{
+  "id": "basic-string-length",
+  "title": "27. String Length",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "strings",
+  "examples": [
+    {
+      "input": "s = \"hello\"",
+      "output": "5",
+      "explanation": "hello has five letters."
+    },
+    {
+      "input": "s = \"\"",
+      "output": "0",
+      "explanation": "An empty string has no characters."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int strLength(String s) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def strLength(self, s: str) -> int:\n        return 0\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int strLength(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int StrLength(string s)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn str_length(s: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc StrLength(s string) int {\n    return 0\n}",
+    "typescript": "export function strLength(s: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function strLength($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "hello"
+    },
+    {
+      "s": ""
+    },
+    {
+      "s": "hi there"
+    }
+  ],
+  "functionName": "strLength",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Loop over the characters and count them.",
+    "Every language also has a built-in length property you can compare with."
+  ]
+}

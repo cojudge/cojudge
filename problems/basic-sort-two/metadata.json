@@ -1,0 +1,59 @@
+{
+  "id": "basic-sort-two",
+  "title": "7. Sort Two Numbers",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "if-else",
+  "examples": [
+    {
+      "input": "a = 5, b = 2",
+      "output": "[2,5]",
+      "explanation": "2 comes before 5."
+    },
+    {
+      "input": "a = 3, b = 3",
+      "output": "[3,3]",
+      "explanation": "Equal values stay as they are."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] sortTwo(int a, int b) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def sortTwo(self, a: int, b: int) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> sortTwo(int a, int b) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] SortTwo(int a, int b)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn sort_two(a: i32, b: i32) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc SortTwo(a int, b int) []int {\n    return []int{}\n}",
+    "typescript": "export function sortTwo(a: number, b: number): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int $a\n     * @param int $b\n     * @return int[]\n     */\n    public function sortTwo($a, $b) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "a": 5,
+      "b": 2
+    },
+    {
+      "a": 1,
+      "b": 9
+    },
+    {
+      "a": 3,
+      "b": 3
+    }
+  ],
+  "functionName": "sortTwo",
+  "params": [
+    {
+      "name": "a",
+      "type": "int"
+    },
+    {
+      "name": "b",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Use an `if` to decide which value goes first.",
+    "The result always has exactly two elements."
+  ]
+}

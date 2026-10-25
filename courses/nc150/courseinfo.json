@@ -1,6 +1,6 @@
 {
     "title": "NeetCode 150",
-    "description": "NeetCode 150 is a curated list of 150 LeetCode questions designed to cover all the important patterns for coding interviews [(Source)](https://neetcode.io/). This course also includes problems already available in CoJudge. Please open an issue in the [repo](https://github.com/cojudge/cojudge) if you notice anything wrong (e.g. missing test cases or incorrect grading)",
+    "description": "NeetCode 150 is a curated list of 150 LeetCode questions designed to cover all the important patterns for coding interviews [(Source)](https://neetcode.io/). This course also includes problems already available in Cojudge. Please open an issue in the [repo](https://github.com/cojudge/cojudge) if you notice anything wrong (e.g. missing test cases or incorrect grading)",
     "category-order": [
         "array",
         "two-pointer",

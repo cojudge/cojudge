@@ -9,6 +9,9 @@ const rootDir = path.resolve(__dirname, "..");
 const DEFAULT_MIN_TESTS = 25;
 const EXHAUSTIVE_DOMAIN_SIZES = {
   "n-queens-ii": 9,
+  // Factorial inputs are constrained to 0..12 so results fit int32.
+  "basic-factorial": 13,
+  "basic-factorial-rec": 13,
 };
 
 function parseArgs(argv) {

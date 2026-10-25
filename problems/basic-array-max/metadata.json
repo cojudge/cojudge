@@ -1,0 +1,52 @@
+{
+  "id": "basic-array-max",
+  "title": "18. Array Maximum",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "arrays",
+  "examples": [
+    {
+      "input": "nums = [3,1,4,2]",
+      "output": "4",
+      "explanation": "4 is the largest."
+    },
+    {
+      "input": "nums = [-7,-2,-9]",
+      "output": "-2",
+      "explanation": "-2 is the largest."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int arrayMax(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def arrayMax(self, nums: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int arrayMax(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int ArrayMax(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn array_max(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc ArrayMax(nums []int) int {\n    return 0\n}",
+    "typescript": "export function arrayMax(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function arrayMax($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[3,1,4,2]"
+    },
+    {
+      "nums": "[-7,-2,-9]"
+    },
+    {
+      "nums": "[5]"
+    }
+  ],
+  "functionName": "arrayMax",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Start with the first element as the best guess.",
+    "Compare every other element against it with an `if`."
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "basic-grade-letter",
+  "title": "4. Grade Letter",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "if-else",
+  "examples": [
+    {
+      "input": "score = 95",
+      "output": "\"A\"",
+      "explanation": "95 is at least 90."
+    },
+    {
+      "input": "score = 72",
+      "output": "\"C\"",
+      "explanation": "72 is at least 70 but below 80."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String gradeLetter(int score) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def gradeLetter(self, score: int) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string gradeLetter(int score) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string GradeLetter(int score)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn grade_letter(score: i32) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc GradeLetter(score int) string {\n    return \"\"\n}",
+    "typescript": "export function gradeLetter(score: number): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param int $score\n     * @return string\n     */\n    public function gradeLetter($score) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "score": 95
+    },
+    {
+      "score": 72
+    },
+    {
+      "score": 55
+    }
+  ],
+  "functionName": "gradeLetter",
+  "params": [
+    {
+      "name": "score",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Check the thresholds from highest to lowest.",
+    "An `if / else if / else` chain fits this problem well."
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "basic-reverse-text",
+  "title": "29. Reverse Text",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "strings",
+  "examples": [
+    {
+      "input": "s = \"hello\"",
+      "output": "\"olleh\"",
+      "explanation": "Reading hello backwards gives olleh."
+    },
+    {
+      "input": "s = \"ab\"",
+      "output": "\"ba\"",
+      "explanation": "Two characters swap places."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String reverseText(String s) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def reverseText(self, s: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string reverseText(string s) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string ReverseText(string s)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reverse_text(s: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc ReverseText(s string) string {\n    return \"\"\n}",
+    "typescript": "export function reverseText(s: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string\n     */\n    public function reverseText($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "hello"
+    },
+    {
+      "s": "ab"
+    },
+    {
+      "s": ""
+    }
+  ],
+  "functionName": "reverseText",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Build the answer from the last character to the first.",
+    "Append `s.charAt(i)` while looping `i` downward."
+  ]
+}

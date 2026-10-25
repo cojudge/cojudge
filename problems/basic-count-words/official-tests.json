@@ -1,0 +1,86 @@
+[
+  {
+    "s": "hello world"
+  },
+  {
+    "s": "  hi   there "
+  },
+  {
+    "s": ""
+  },
+  {
+    "s": "one"
+  },
+  {
+    "s": "   "
+  },
+  {
+    "s": "a b c"
+  },
+  {
+    "s": "  a  "
+  },
+  {
+    "s": "the quick brown fox"
+  },
+  {
+    "s": "a"
+  },
+  {
+    "s": "a b"
+  },
+  {
+    "s": "  a  b  c  "
+  },
+  {
+    "s": "hello"
+  },
+  {
+    "s": "one two three four"
+  },
+  {
+    "s": "   leading"
+  },
+  {
+    "s": "trailing   "
+  },
+  {
+    "s": "multiple   spaces   inside"
+  },
+  {
+    "s": "a  b"
+  },
+  {
+    "s": "          "
+  },
+  {
+    "s": "the quick brown fox jumps over"
+  },
+  {
+    "s": "x y z w"
+  },
+  {
+    "s": "word"
+  },
+  {
+    "s": "  word  "
+  },
+  {
+    "s": "two  words"
+  },
+  {
+    "s": "lorem ipsum dolor sit amet"
+  },
+  {
+    "s": "a b c d e f g"
+  },
+  {
+    "s": "ends with space "
+  },
+  {
+    "s": " starts"
+  },
+  {
+    "s": "one two two two two two two two two two two two two two two two two two two two two"
+  }
+]

@@ -51,7 +51,7 @@ if [ -n "$CONFIG_FILE" ]; then
         echo -e "${GREEN}Updated existing cojudge alias in $CONFIG_FILE${NC}"
     else
         # Add new alias
-        echo -e "\n# CoJudge CLI\n$ALIAS_LINE" >> "$CONFIG_FILE"
+        echo -e "\n# Cojudge CLI\n$ALIAS_LINE" >> "$CONFIG_FILE"
         echo -e "${GREEN}Added cojudge alias to $CONFIG_FILE${NC}"
     fi
     echo -e "${BLUE}Please run 'source $CONFIG_FILE' or restart your terminal to use the 'cojudge' command.${NC}"

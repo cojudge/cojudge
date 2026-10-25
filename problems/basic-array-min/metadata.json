@@ -1,0 +1,52 @@
+{
+  "id": "basic-array-min",
+  "title": "19. Array Minimum",
+  "difficulty": "Easy",
+  "link": "https://github.com/cojudge/cojudge",
+  "category": "arrays",
+  "examples": [
+    {
+      "input": "nums = [3,1,4,2]",
+      "output": "1",
+      "explanation": "1 is the smallest."
+    },
+    {
+      "input": "nums = [-7,-2,-9]",
+      "output": "-9",
+      "explanation": "-9 is the smallest."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int arrayMin(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def arrayMin(self, nums: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int arrayMin(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int ArrayMin(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn array_min(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc ArrayMin(nums []int) int {\n    return 0\n}",
+    "typescript": "export function arrayMin(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function arrayMin($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[3,1,4,2]"
+    },
+    {
+      "nums": "[-7,-2,-9]"
+    },
+    {
+      "nums": "[5]"
+    }
+  ],
+  "functionName": "arrayMin",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Mirror the maximum problem but flip the comparison.",
+    "Start with the first element."
+  ]
+}
