@@ -8,28 +8,31 @@
     {
       "input": "data = \"[1,null,3,2,4,null,5,6]\"",
       "output": "\"[1,null,3,2,4,null,5,6]\"",
-      "explanation": "Encoding to binary and decoding restores the grouping."
+      "explanation": "The N-ary tree encodes to binary as [1,3,null,5,2,null,6,null,4] (first child left, siblings right) and decodes back to the canonical N-ary form."
     },
     {
       "input": "data = \"[]\"",
       "output": "\"[]\"",
-      "explanation": "Empty trees survive the round-trip."
+      "explanation": "Empty trees round-trip to themselves."
     },
     {
-      "input": "data = \"[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]\"",
-      "output": "\"[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]\"",
-      "explanation": "The deeper structure is preserved through both conversions."
+      "input": "data = \"[1]\"",
+      "output": "\"[1]\"",
+      "explanation": "A single node has no children, so the binary form is just [1]."
     }
   ],
+  "classProblem": {
+    "userClassName": "Codec"
+  },
   "starterCode": {
-    "java": "class Solution {\n    public String encodeDecode(String data) {\n        \n    }\n}",
-    "python": "class Solution:\n    def encodeDecode(self, data: str) -> str:\n        pass",
-    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string encodeDecode(string data) {\n        return \"\";\n    }\n};",
-    "csharp": "public class Solution \n{\n    public string EncodeDecode(string data) \n    {\n        \n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn encode_decode(data: String) -> String {\n        \n    }\n}",
-    "go": "package main\n\nfunc EncodeDecode(data string) string {\n    \n}",
-    "typescript": "export function encodeDecode(data: string): string {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param string $data\n     * @return string\n     */\n    public function encodeDecode($data) {\n\n    }\n}"
+    "java": "public class Codec {\n    // Encodes an N-ary tree (level-order text) to a binary tree (level-order text).\n    public String encode(String naryData) {\n        return \"\";\n    }\n\n    // Decodes a binary tree (level-order text) back to canonical N-ary level-order text.\n    public String decode(String binaryData) {\n        return \"\";\n    }\n}",
+    "python": "class Codec:\n    def encode(self, naryData: str) -> str:\n        # Encodes an N-ary tree (level-order text) to a binary tree (level-order text).\n        pass\n\n    def decode(self, binaryData: str) -> str:\n        # Decodes a binary tree (level-order text) back to canonical N-ary level-order text.\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Codec {\npublic:\n    // Encodes an N-ary tree (level-order text) to a binary tree (level-order text).\n    string encode(string naryData) {\n        return \"\";\n    }\n\n    // Decodes a binary tree (level-order text) back to canonical N-ary level-order text.\n    string decode(string binaryData) {\n        return \"\";\n    }\n};",
+    "csharp": "using System;\n\npublic class Codec\n{\n    // Encodes an N-ary tree (level-order text) to a binary tree (level-order text).\n    public string Encode(string naryData)\n    {\n        return \"\";\n    }\n\n    // Decodes a binary tree (level-order text) back to canonical N-ary level-order text.\n    public string Decode(string binaryData)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Codec;\n\nimpl Codec {\n    pub fn new() -> Self {\n        Codec\n    }\n\n    // Encodes an N-ary tree (level-order text) to a binary tree (level-order text).\n    pub fn encode(&mut self, nary_data: String) -> String {\n        String::new()\n    }\n\n    // Decodes a binary tree (level-order text) back to canonical N-ary level-order text.\n    pub fn decode(&self, binary_data: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\ntype Codec struct {\n}\n\n// Encodes an N-ary tree (level-order text) to a binary tree (level-order text).\nfunc (c *Codec) Encode(naryData string) string {\n    return \"\"\n}\n\n// Decodes a binary tree (level-order text) back to canonical N-ary level-order text.\nfunc (c *Codec) Decode(binaryData string) string {\n    return \"\"\n}",
+    "typescript": "export class Codec {\n    // Encodes an N-ary tree (level-order text) to a binary tree (level-order text).\n    encode(naryData: string): string {\n        return \"\";\n    }\n\n    // Decodes a binary tree (level-order text) back to canonical N-ary level-order text.\n    decode(binaryData: string): string {\n        return \"\";\n    }\n}",
+    "php": "class Codec {\n    /**\n     * @param string $naryData\n     * @return string\n     */\n    public function encode($naryData) {\n        return \"\";\n    }\n\n    /**\n     * @param string $binaryData\n     * @return string\n     */\n    public function decode($binaryData) {\n        return \"\";\n    }\n}"
   },
   "testCases": [
     {
@@ -40,19 +43,23 @@
     },
     {
       "data": "[1]"
+    },
+    {
+      "data": "[1,null,2,3,null]"
     }
   ],
-  "functionName": "encodeDecode",
+  "functionName": "solve",
   "params": [
     {
       "name": "data",
       "type": "string"
     }
   ],
-  "outputType": "string",
+  "outputType": "string_list",
   "hints": [
-    "Parse the N-ary string with a queue, one null-delimited group per node.",
-    "Encode: first child goes left, next sibling goes right, recursively.",
-    "Decode by reversing that mapping, then serialize canonically."
+    "Parse the N-ary text breadth-first: each null starts the child group of the next queued node.",
+    "Encode with the left-child right-sibling rule: first child becomes the left link, later siblings chain through right links.",
+    "Decode by walking left once for the first child, then right repeatedly for the remaining siblings.",
+    "Emit the binary tree in level order with null placeholders and trailing nulls trimmed, e.g. [1,3,null,5,2,null,6,null,4]."
   ]
 }

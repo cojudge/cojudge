@@ -609,6 +609,42 @@ public class Solution {
     }
 }`;
     }
+    if (params && params.length === 1 && params[0]?.type === 'string' && params[0]?.name === 'data') {
+        return `
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public List<string> Solve(string data) {
+        ${className} codec = new ${className}();
+        string binA = codec.Encode(data);
+        string binB = codec.Encode(data);
+        string nary = codec.Decode(binA);
+        return new List<string> { binA, binB, nary };
+    }
+}`;
+    }
+    if (params && params.length === 1 && params[0]?.type === 'string_array' && params[0]?.name === 'urls') {
+        return `
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public List<string> Solve(string[] urls) {
+        ${className} codec = new ${className}();
+        var result = new List<string>();
+        foreach (var url in urls) {
+            string shortA = codec.Encode(url);
+            string shortB = codec.Encode(url);
+            string decoded = codec.Decode(shortA);
+            result.Add(shortA);
+            result.Add(shortB);
+            result.Add(decoded);
+        }
+        return result;
+    }
+}`;
+    }
     if (params && params.length === 1 && params[0]?.type === 'string_array') {
         return `
 using System;

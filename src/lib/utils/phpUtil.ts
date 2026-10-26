@@ -544,6 +544,42 @@ class Solution {
 }
 `;
     }
+    if (params && params.length === 1 && params[0]?.type === 'string' && params[0]?.name === 'data') {
+        return `<?php
+require_once '${className}.php';
+
+class Solution {
+    public function solve($data) {
+        $codec = new ${className}();
+        $binA = $codec->encode($data);
+        $binB = $codec->encode($data);
+        $nary = $codec->decode($binA);
+        return [$binA, $binB, $nary];
+    }
+}
+`;
+    }
+    if (params && params.length === 1 && params[0]?.type === 'string_array' && params[0]?.name === 'urls') {
+        return `<?php
+require_once '${className}.php';
+
+class Solution {
+    public function solve($urls) {
+        $codec = new ${className}();
+        $result = [];
+        foreach ($urls as $url) {
+            $shortA = $codec->encode($url);
+            $shortB = $codec->encode($url);
+            $decoded = $codec->decode($shortA);
+            $result[] = $shortA;
+            $result[] = $shortB;
+            $result[] = $decoded;
+        }
+        return $result;
+    }
+}
+`;
+    }
     if (params && params.length === 1 && params[0]?.type === 'string_array') {
         return `<?php
 require_once '${className}.php';

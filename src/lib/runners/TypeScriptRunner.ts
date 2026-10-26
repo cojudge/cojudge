@@ -147,6 +147,36 @@ export class Solution {
     }
 }`;
     }
+    if (params && params.length === 1 && params[0]?.type === 'string' && params[0]?.name === 'data') {
+        return `
+${importLine}
+export class Solution {
+    solve(data: string): string[] {
+        const codec = new ${className}();
+        const binA = codec.encode(data);
+        const binB = codec.encode(data);
+        const nary = codec.decode(binA);
+        return [binA, binB, nary];
+    }
+}`;
+    }
+    if (params && params.length === 1 && params[0]?.type === 'string_array' && params[0]?.name === 'urls') {
+        return `
+${importLine}
+export class Solution {
+    solve(urls: string[]): string[] {
+        const codec = new ${className}();
+        const result: string[] = [];
+        for (const url of urls) {
+            const shortA = codec.encode(url);
+            const shortB = codec.encode(url);
+            const decoded = codec.decode(shortA);
+            result.push(shortA, shortB, decoded);
+        }
+        return result;
+    }
+}`;
+    }
     if (params && params.length === 1 && params[0]?.type === 'string_array') {
         return `
 ${importLine}

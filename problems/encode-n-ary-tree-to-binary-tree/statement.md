@@ -1,9 +1,12 @@
-An N-ary tree and a binary tree can stand in for each other through the left-child right-sibling encoding: a node's first child becomes its left link, and each sibling becomes the previous sibling's right link. Your adapted task round-trips an N-ary tree through that binary form using only strings.
+An N-ary tree and a binary tree can stand in for each other through the left-child right-sibling encoding: a node's first child becomes its left link, and each sibling becomes the previous sibling's right link.
 
-The N-ary tree arrives as a string `data` in breadth order with `null` separating sibling groups (for example `[1,null,3,2,4,null,5,6]`). Write `encodeDecode`, which parses that string into an N-ary tree, converts it to binary via the encoding above, converts back to N-ary, and returns the canonical N-ary string. Correct code returns the canonical form of its input.
+Implement a `Codec` class with two methods that work on level-order text:
+
+- `encode(naryData)` parses an N-ary tree from breadth-first text (`null` separates sibling groups, e.g. `[1,null,3,2,4,null,5,6]`) and returns the converted binary tree as level-order text with `null` placeholders for missing children and trailing nulls trimmed (e.g. `[1,3,null,5,2,null,6,null,4]`). An empty tree encodes to `[]`.
+- `decode(binaryData)` parses that binary level-order text and returns the canonical N-ary breadth-first text (trailing empty groups dropped, `[]` for empty).
+
+The judge creates one `Codec` per test case, encodes the input twice, decodes the first binary string, and checks that both encodes agree, the decoded text equals the canonical N-ary form, and the binary text parses to exactly the left-child right-sibling structure of the input. Inputs are already canonical; your binary text must still earn its structure — echoing the input fails the structural check.
 
 **Constraints:**
 - Node count lies in `[0, 10^4]`.
 - Values are integers.
-
-Adaptation: the source defines a `Codec` over N-ary `Node` and binary `TreeNode`; here both sides are modeled as `string` with the binary step hidden inside the reference. Document the left-child right-sibling rule in your reasoning.

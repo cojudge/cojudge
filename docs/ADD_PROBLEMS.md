@@ -587,3 +587,6 @@ cojudge submit <slug> /tmp/solution.java
 | `find-in-mountain-array` | Interactive return-value judge (`mountain-array` + `MountainArray`) | `findInMountainArray(target, mountainArr)`, max 100 `get` calls |
 | `find-the-celebrity` | Interactive return-value judge (`celebrity` + `Relation`) | `findCelebrity(n, relation)`, max `10 + 5*n` `knows` calls |
 | `find-median-from-data-stream` | Class-based | `classProblem` with `string_array`/`int_array_2d` params |
+| `encode-and-decode-tinyurl` | Class-based (stateful `Codec`, property-checked) | `solve(urls)` encodes each URL twice + decodes; wrapper emits `[shortA, shortB, decoded]` triples so the marker checks prefix, idempotency, distinctness, and round-trip |
+| `serialize-and-deserialize-bst` | Class-based (`Codec` over `tree_node`) | `solve(root)` serializes then deserializes; marker checks tree equality |
+| `encode-n-ary-tree-to-binary-tree` | Class-based (`Codec` string/binary-string, structurally checked) | `solve(data)` encodes twice + decodes; wrapper emits `[binA, binB, nary]` triples so the marker checks idempotency, canonical N-ary form, and the left-child right-sibling binary structure |

@@ -583,6 +583,38 @@ class Solution {
     }
 }`;
     }
+    if (params && params.length === 1 && params[0]?.type === 'string' && params[0]?.name === 'data') {
+        return `
+import java.util.*;
+class Solution {
+    public List<String> solve(String data) {
+        ${className} codec = new ${className}();
+        String binA = codec.encode(data);
+        String binB = codec.encode(data);
+        String nary = codec.decode(binA);
+        return Arrays.asList(binA, binB, nary);
+    }
+}`;
+    }
+    if (params && params.length === 1 && params[0]?.type === 'string_array' && params[0]?.name === 'urls') {
+        return `
+import java.util.*;
+class Solution {
+    public List<String> solve(String[] urls) {
+        ${className} codec = new ${className}();
+        List<String> result = new ArrayList<>();
+        for (String url : urls) {
+            String shortA = codec.encode(url);
+            String shortB = codec.encode(url);
+            String decoded = codec.decode(shortA);
+            result.add(shortA);
+            result.add(shortB);
+            result.add(decoded);
+        }
+        return result;
+    }
+}`;
+    }
     if (params && params.length === 1 && params[0]?.type === 'string_array') {
         return `
 import java.util.*;

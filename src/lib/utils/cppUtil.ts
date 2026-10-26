@@ -648,6 +648,49 @@ public:
 };
 `;
     }
+    if (params && params.length === 1 && params[0]?.type === 'string' && params[0]?.name === 'data') {
+        return `#include <string>
+#include <vector>
+#include "${className}.cpp"
+using namespace std;
+
+class Solution {
+public:
+    vector<string> solve(string data) {
+        ${className} codec;
+        string binA = codec.encode(data);
+        string binB = codec.encode(data);
+        string nary = codec.decode(binA);
+        return {binA, binB, nary};
+    }
+};
+`;
+    }
+    if (params && params.length === 1 && params[0]?.type === 'string_array' && params[0]?.name === 'urls') {
+        return `#include <string>
+#include <vector>
+#include <sstream>
+#include "${className}.cpp"
+using namespace std;
+
+class Solution {
+public:
+    vector<string> solve(vector<string>& urls) {
+        ${className} codec;
+        vector<string> result;
+        for (string& url : urls) {
+            string shortA = codec.encode(url);
+            string shortB = codec.encode(url);
+            string decoded = codec.decode(shortA);
+            result.push_back(shortA);
+            result.push_back(shortB);
+            result.push_back(decoded);
+        }
+        return result;
+    }
+};
+`;
+    }
     if (params && params.length === 1 && params[0]?.type === 'string_array') {
         return `#include <string>
 #include <vector>

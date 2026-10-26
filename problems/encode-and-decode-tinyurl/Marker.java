@@ -17,11 +17,42 @@ class Marker {
             return shortToLong.getOrDefault(key, "");
         }
     }
-    public String codecRoundTrip(String url) {
+    public List<String> solve(String[] urls) {
         Codec codec = new Codec();
-        return codec.decode(codec.encode(url));
+        List<String> result = new ArrayList<>();
+        for (String url : urls) {
+            String shortA = codec.encode(url);
+            String shortB = codec.encode(url);
+            String decoded = codec.decode(shortA);
+            result.add(shortA);
+            result.add(shortB);
+            result.add(decoded);
+        }
+        return result;
     }
-    public boolean isCorrect(String url, String output) {
-        return output != null && codecRoundTrip(url).equals(output);
+    public boolean isCorrect(String[] urls, List<String> output) {
+        if (output == null || output.size() != urls.length * 3) return false;
+        String prefix = "http://tinyurl.com/";
+        Map<String, String> longToShort = new HashMap<>();
+        Set<String> seenShorts = new HashSet<>();
+        for (int i = 0; i < urls.length; i++) {
+            String shortA = output.get(3 * i);
+            String shortB = output.get(3 * i + 1);
+            String decoded = output.get(3 * i + 2);
+            if (shortA == null || shortB == null || decoded == null) return false;
+            if (!shortA.equals(shortB)) return false;
+            if (!decoded.equals(urls[i])) return false;
+            if (!shortA.startsWith(prefix) || shortA.length() <= prefix.length()) return false;
+            if (shortA.equals(urls[i])) return false;
+            String prev = longToShort.get(urls[i]);
+            if (prev != null) {
+                if (!prev.equals(shortA)) return false;
+            } else {
+                if (seenShorts.contains(shortA)) return false;
+                seenShorts.add(shortA);
+                longToShort.put(urls[i], shortA);
+            }
+        }
+        return true;
     }
 }

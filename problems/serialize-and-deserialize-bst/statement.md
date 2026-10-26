@@ -1,11 +1,10 @@
-You are given a binary search tree written as bracket text `data`, for example `"[4,2,7,1,3]"` means root 4 with left child 2 (which has children 1 and 3) and right child 7. An empty tree is `"[]"`.
+Turning a data structure into a bit stream so it can be saved to a file or buffer, or sent over a link and rebuilt later on the same or another machine, is called serialization.
 
-Write `serialize`, which returns a compact preorder listing of the same tree: visit the node, then the left subtree, then the right subtree, joining values with commas and using no null markers. The examples below show the mapping. An empty tree serializes to `""` (the empty string).
+Build a pair of routines for a **binary search tree**: one that flattens a tree into a string, and one that rebuilds the starting tree shape from that string. Because a search tree's preorder listing alone determines its shape, a compact preorder string is sufficient — but any unambiguous scheme works, since the judge only checks that the round trip restores the original tree.
 
-> **Adaptation note:** the classic task exposes a `Codec` class with `serialize(TreeNode)` and `deserialize(String)` over a `tree_node`. Here both sides are plain `string` values so the judge stays within portable types: the input is bracket text, the output is preorder text, and the reference `Marker` codec parses brackets into a tree and then emits preorder. Returning preorder tests the serialization half; a correct preorder can rebuild the same search tree.
+**Note on the judge:** The harness reads and displays trees with the same level-order listing style that LeetCode uses. Your internal encoding does not have to copy that style — feel free to invent your own scheme.
 
 **Constraints:**
-- `0 <= number of nodes <= 10^4`
+- The number of nodes in the tree is in the range `[0, 10^4]`.
 - Values are unique and form a valid binary search tree.
-- `-10^4 <= node value <= 10^4`
-- Bracket text follows level order with `null` for missing children.
+- `-10^4 <= Node.val <= 10^4`

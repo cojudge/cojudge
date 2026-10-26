@@ -614,6 +614,42 @@ impl Solution {
 }
 `;
   }
+  if (params && params.length === 1 && params[0]?.type === 'string' && params[0]?.name === 'data') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(data: String) -> Vec<String> {
+        let mut codec = ${className}::new();
+        let bin_a = codec.encode(data.clone());
+        let bin_b = codec.encode(data.clone());
+        let nary = codec.decode(bin_a.clone());
+        vec![bin_a, bin_b, nary]
+    }
+}
+`;
+  }
+  if (params && params.length === 1 && params[0]?.type === 'string_array' && params[0]?.name === 'urls') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(urls: Vec<String>) -> Vec<String> {
+        let mut codec = ${className}::new();
+        let mut result = Vec::new();
+        for url in urls {
+            let short_a = codec.encode(url.clone());
+            let short_b = codec.encode(url.clone());
+            let decoded = codec.decode(short_a.clone());
+            result.push(short_a);
+            result.push(short_b);
+            result.push(decoded);
+        }
+        result
+    }
+}
+`;
+  }
   if (params && params.length === 1 && params[0]?.type === 'string_array') {
     return `
 pub struct Solution;
@@ -789,6 +825,42 @@ impl Solution {
         let ser = solution::${className}::new();
         let deser = solution::${className}::new();
         deser.deserialize(ser.serialize(root))
+    }
+}
+`;
+  }
+  if (params && params.length === 1 && params[0]?.type === 'string' && params[0]?.name === 'data') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(data: String) -> Vec<String> {
+        let mut codec = solution::${className}::new();
+        let bin_a = codec.encode(data.clone());
+        let bin_b = codec.encode(data.clone());
+        let nary = codec.decode(bin_a.clone());
+        vec![bin_a, bin_b, nary]
+    }
+}
+`;
+  }
+  if (params && params.length === 1 && params[0]?.type === 'string_array' && params[0]?.name === 'urls') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(urls: Vec<String>) -> Vec<String> {
+        let mut codec = solution::${className}::new();
+        let mut result = Vec::new();
+        for url in urls {
+            let short_a = codec.encode(url.clone());
+            let short_b = codec.encode(url.clone());
+            let decoded = codec.decode(short_a.clone());
+            result.push(short_a);
+            result.push(short_b);
+            result.push(decoded);
+        }
+        result
     }
 }
 `;

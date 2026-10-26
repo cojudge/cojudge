@@ -2,7 +2,7 @@ An N-ary tree gives every node any number of ordered children (unlike a binary t
 
 The encoding used here lists values in breadth order with `null` separating each group of siblings. For instance, `[1,null,3,2,4,null,5,6]` describes a root `1` whose children are `3, 2, 4`, where node `3` in turn has children `5, 6`. An empty tree is `[]`.
 
-Write a function `codecRoundTrip` that accepts one such string `data`, parses it into an N-ary tree, serializes the tree back with the same grouping rule, parses once more and serializes again, then returns the final string. A correct implementation returns the canonical form of its input.
+Write a function `codecRoundTrip` that accepts one such string `data`, parses it into an N-ary tree, serializes the tree back with the same grouping rule, parses once more and serializes again, then returns the final string. A correct implementation returns the canonical form of its input. Inputs are not guaranteed to be canonical — trailing empty groups, extra whitespace, or placeholders like `[null]` must all normalize to the same canonical output.
 
 **Constraints:**
 - The node count lies in `[0, 10^4]`.

@@ -299,6 +299,37 @@ class Solution:
         return deser.deserialize(ser.serialize(root))
 `;
     }
+    if (params && params.length === 1 && params[0]?.type === 'string' && params[0]?.name === 'data') {
+        return `
+from typing import List
+from ${className} import ${className}
+
+class Solution:
+    def solve(self, data: str) -> List[str]:
+        codec = ${className}()
+        bin_a = codec.encode(data)
+        bin_b = codec.encode(data)
+        nary = codec.decode(bin_a)
+        return [bin_a, bin_b, nary]
+`;
+    }
+    if (params && params.length === 1 && params[0]?.type === 'string_array' && params[0]?.name === 'urls') {
+        return `
+from typing import List
+from ${className} import ${className}
+
+class Solution:
+    def solve(self, urls: List[str]) -> List[str]:
+        codec = ${className}()
+        result = []
+        for url in urls:
+            short_a = codec.encode(url)
+            short_b = codec.encode(url)
+            decoded = codec.decode(short_a)
+            result += [short_a, short_b, decoded]
+        return result
+`;
+    }
     if (params && params.length === 1 && params[0]?.type === 'string_array') {
         return `
 from typing import List

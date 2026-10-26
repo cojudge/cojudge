@@ -591,6 +591,30 @@ func Solve(root *TreeNode) *TreeNode {
     return deser.Deserialize(ser.Serialize(root))
 }`;
     }
+    if (params && params.length === 1 && params[0]?.type === 'string' && params[0]?.name === 'data') {
+        return `
+func Solve(data string) []string {
+    var codec ${className}
+    binA := codec.Encode(data)
+    binB := codec.Encode(data)
+    nary := codec.Decode(binA)
+    return []string{binA, binB, nary}
+}`;
+    }
+    if (params && params.length === 1 && params[0]?.type === 'string_array' && params[0]?.name === 'urls') {
+        return `
+func Solve(urls []string) []string {
+    var codec ${className}
+    result := []string{}
+    for _, url := range urls {
+        shortA := codec.Encode(url)
+        shortB := codec.Encode(url)
+        decoded := codec.Decode(shortA)
+        result = append(result, shortA, shortB, decoded)
+    }
+    return result
+}`;
+    }
     if (params && params.length === 1 && params[0]?.type === 'string_array') {
         return `
 func Solve(strs []string) []string {
