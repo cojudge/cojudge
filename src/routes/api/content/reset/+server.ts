@@ -5,8 +5,13 @@ import {
 	resetCourseToBundled,
 	resetProblemToBundled
 } from '$lib/server/contentPaths';
+import { isExamModeEnabled } from '$lib/server/examMode';
 
 export const POST: RequestHandler = async ({ request }) => {
+	// Exam mode: resetting would restore bundled hints/solutions.
+	if (isExamModeEnabled()) {
+		return json({ error: 'Disabled in exam mode' }, { status: 403 });
+	}
 	try {
 		const body = (await request.json().catch(() => null)) as {
 			type?: unknown;

@@ -15,13 +15,19 @@ import {
     getProblemSources
 } from '$lib/server/contentPaths';
 import { existsSync } from 'node:fs';
+import { isExamModeEnabled } from '$lib/server/examMode';
 
 /**
  * Full custom/modified inventory for the Manage Problems dialog. Computing
  * this requires comparing every problem against its bundled copy, so it is
  * served lazily here instead of on every home-page navigation.
+ * In exam mode everything is stripped (hence "modified") — report nothing
+ * so the dialog doesn't list a thousand items.
  */
 export const GET: RequestHandler = async () => {
+    if (isExamModeEnabled()) {
+        return json({ modifiedProblems: [], modifiedCourses: [] });
+    }
     try {
         await ensureUserContentSeeded();
         const coursesDir = existsSync(getCoursesDir()) ? getCoursesDir() : getBundledCoursesDir();
