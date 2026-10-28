@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, highlightCodeHtml, removeFencedCodeBlock, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref } from './markdown';
+import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, highlightCodeHtml, removeFencedCodeBlock, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref, extractPlaygroundFileId } from './markdown';
 
 describe('markdown utils', () => {
     it('renders markdown with the interactive code-block renderer', () => {
@@ -64,14 +64,82 @@ describe('markdown utils', () => {
         expect(htmlToMarkdown(renderMarkdownPlain(htmlToMarkdown(plain)))).toContain(`[Notes](${href})`);
     });
 
+    it('parses cojudge:// playground file links; other schemes are normal links', () => {
+        expect(parsePlaygroundFileId('cojudge://playground?fileId=abc-123')).toBe('abc-123');
+        expect(parsePlaygroundFileId('cojudge:///playground?fileId=abc-123')).toBe('abc-123');
+        expect(parsePlaygroundFileId('cojudge://file/abc-123')).toBe('abc-123');
+        expect(parsePlaygroundFileId('cojudge://fileId/abc-123')).toBe('abc-123');
+        expect(parsePlaygroundFileId('  cojudge://file/abc-123  ')).toBe('abc-123');
+        expect(parsePlaygroundFileId('cojudge://s/a67a1044-7748-43e2-97ae-6673f77f2ba7')).toBe('a67a1044-7748-43e2-97ae-6673f77f2ba7');
+        // Only cojudge:// addresses in-app files; every other custom scheme
+        // (vicuna://, app://, ...) is a normal external link.
+        expect(parsePlaygroundFileId('app://playground?fileId=abc-123')).toBe(null);
+        expect(parsePlaygroundFileId('app://file/abc-123')).toBe(null);
+        expect(parsePlaygroundFileId('app://s/a67a1044-7748-43e2-97ae-6673f77f2ba7')).toBe(null);
+        expect(parsePlaygroundFileId('vicuna://s/a67a1044-7748-43e2-97ae-6673f77f2ba7')).toBe(null);
+        expect(parsePlaygroundFileId('myapp://s/abc-123')).toBe(null);
+        expect(parsePlaygroundFileId('VICUNA://s/abc-123')).toBe(null);
+        // Pasted-image fake links under the same schemes are not file links.
+        expect(parsePlaygroundFileId('cojudge://image/abc-123')).toBe(null);
+        expect(parsePlaygroundFileId('app://image/abc-123')).toBe(null);
+        expect(parsePlaygroundFileId('cojudge:///image/abc-123')).toBe(null);
+        // Transport/metadata schemes and schemeless text are never file links.
+        expect(parsePlaygroundFileId('ftp://host/path')).toBe(null);
+        expect(parsePlaygroundFileId('mailto:foo@bar.com')).toBe(null);
+        expect(parsePlaygroundFileId('tel:+123')).toBe(null);
+        expect(parsePlaygroundFileId('file:///tmp/x')).toBe(null);
+        expect(parsePlaygroundFileId('foo:bar')).toBe(null);
+        expect(parsePlaygroundFileId('plain text')).toBe(null);
+        // Unknown custom-scheme shapes are not file links.
+        expect(parsePlaygroundFileId('cojudge://playground')).toBe(null);
+        expect(parsePlaygroundFileId('cojudge://file/')).toBe(null);
+
+        const custom = 'cojudge://file/file-1';
+        const html = renderMarkdown(`[Notes](${custom})`, {
+            resolveFileLanguage: () => 'go'
+        }) as string;
+        expect(html).toContain('md-file-mention');
+        expect(html).toContain('>Notes</span>');
+        expect(html).not.toContain('target="_blank"');
+        // Non-cojudge schemes render as normal external links.
+        const external = linkHtml('vicuna://s/file-1', 'Notes');
+        expect(external).toContain('target="_blank"');
+        expect(external).not.toContain('md-file-mention');
+        const externalMd = renderMarkdown('[vicuna chat session 2](vicuna://s/file-1)') as string;
+        expect(externalMd).toContain('target="_blank"');
+        expect(externalMd).not.toContain('md-file-mention');
+    });
+
+    it('extracts playground file ids from pasted text', () => {
+        expect(extractPlaygroundFileId('/playground?fileId=abc-123')).toBe('abc-123');
+        expect(extractPlaygroundFileId('cojudge://file/abc-123')).toBe('abc-123');
+        expect(extractPlaygroundFileId('vicuna://s/abc-123')).toBe(null);
+        expect(extractPlaygroundFileId('app://playground?fileId=abc-123')).toBe(null);
+        expect(extractPlaygroundFileId('[Notes](/playground?fileId=abc-123)')).toBe('abc-123');
+        expect(extractPlaygroundFileId('[Notes](cojudge://file/abc-123)')).toBe('abc-123');
+        expect(extractPlaygroundFileId('see https://example.com/playground?fileId=xyz.')).toBe('xyz');
+        expect(extractPlaygroundFileId('plain text')).toBe(null);
+        expect(extractPlaygroundFileId('cojudge://image/abc-123')).toBe(null);
+        expect(extractPlaygroundFileId('')).toBe(null);
+    });
+
     it('detects URL-like paste strings', () => {
         expect(isUrlLike('https://example.com')).toBe(true);
         expect(isUrlLike('http://example.com/path?q=1')).toBe(true);
         expect(isUrlLike('www.example.com')).toBe(true);
         expect(isUrlLike('  https://example.com  ')).toBe(true);
+        expect(isUrlLike('/playground?fileId=abc-123')).toBe(true);
+        expect(isUrlLike('cojudge://file/abc-123')).toBe(true);
+        // Non-cojudge schemes are normal (external) links, still link-like.
+        expect(isUrlLike('app://s/a67a1044-7748-43e2-97ae-6673f77f2ba7')).toBe(true);
+        expect(isUrlLike('vicuna://s/a67a1044-7748-43e2-97ae-6673f77f2ba7')).toBe(true);
+        expect(isUrlLike('app://playground?fileId=abc-123')).toBe(true);
+        expect(isUrlLike('ftp://example.com')).toBe(true);
+        expect(isUrlLike('cojudge://image/abc-123')).toBe(false);
+        expect(isUrlLike('mailto:foo@bar.com')).toBe(false);
+        expect(isUrlLike('foo:bar')).toBe(false);
         expect(isUrlLike('not a url')).toBe(false);
         expect(isUrlLike('https://example.com and more')).toBe(false);
-        expect(isUrlLike('ftp://example.com')).toBe(false);
         expect(normalizeUrl('www.example.com')).toBe('http://www.example.com');
         expect(normalizeUrl('https://example.com')).toBe('https://example.com');
         expect(linkHtml('https://example.com', 'https://example.com')).toContain('target="_blank"');
