@@ -99,6 +99,14 @@
     let pathCopiedTimer: ReturnType<typeof setTimeout> | undefined;
     let resettingContentKey: string | null = null;
     let resettingAllContent = false;
+    // Exam mode password modal ({ mode: 'enable' } asks for a new password,
+    // { mode: 'disable' } asks for the existing one).
+    let examModal: { mode: 'enable' | 'disable' } | null = null;
+    let examPassword = '';
+    let examPasswordConfirm = '';
+    let examPasswordError = '';
+    let examSubmitting = false;
+    let examPasswordInput: HTMLInputElement | null = null;
     type ModifiedItem = { id: string; title: string };
     // Full modified inventory is fetched lazily when the dialog opens (see
     // openManageProblems) so course-tab navigations don't pay for comparing
@@ -1424,6 +1432,46 @@
         }
     }
 
+    function openExamModal() {
+        examModal = { mode: $page.data.isExamMode ? 'disable' : 'enable' };
+        examPassword = '';
+        examPasswordConfirm = '';
+        examPasswordError = '';
+        showDropdown = false;
+        tick().then(() => examPasswordInput?.focus());
+    }
+
+    async function submitExamModal() {
+        if (!examModal || examSubmitting) return;
+        const password = examPassword;
+        if (password.length < 4) {
+            examPasswordError = 'Password must be at least 4 characters.';
+            return;
+        }
+        if (examModal.mode === 'enable' && password !== examPasswordConfirm) {
+            examPasswordError = 'Passwords do not match.';
+            return;
+        }
+        examPasswordError = '';
+        examSubmitting = true;
+        try {
+            const response = await fetch('/api/exam', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ on: examModal.mode === 'enable', password })
+            });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(result?.error || 'Could not switch exam mode');
+            }
+            window.location.reload();
+        } catch (err: any) {
+            examPasswordError = err?.message || 'Could not switch exam mode';
+        } finally {
+            examSubmitting = false;
+        }
+    }
+
     async function closeClearProgress() {
         showClearConfirm = false;
         await tick();
@@ -1477,6 +1525,12 @@
 
 {#if $page.data.isDemoSite}
     <DemoBanner />
+{/if}
+{#if $page.data.isExamMode}
+    <div class="exam-banner" role="note">Exam mode is on — hints and reference solutions are hidden.</div>
+{/if}
+{#if $page.data.examTampered}
+    <div class="exam-tamper" role="alert">Warning: the exam lock was removed without the password. Hints or solutions may have been restored — check before the event.</div>
 {/if}
 
 <div class="container">
@@ -1648,6 +1702,23 @@
                                     <line x1="9" y1="14" x2="15" y2="14"></line>
                                 </svg>
                                 Manage Problems
+                            </span>
+                        </button>
+                        <button
+                            class="dropdown-item"
+                            role="menuitem"
+                            onclick={openExamModal}
+                            title={$page.data.isExamMode ? 'Turn exam mode off (requires the exam password)' : 'Strip hints and solutions and hide them in the UI'}
+                        >
+                            <span class="dropdown-item-content">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                                Exam mode
+                            </span>
+                            <span class:configured={$page.data.isExamMode} class="firebase-menu-status">
+                                {$page.data.isExamMode ? 'On' : 'Off'}
                             </span>
                         </button>
                     {/if}
@@ -1825,6 +1896,9 @@
             <div bind:this={manageProblemsCard} class="home-modal-card manage-problems-card" role="dialog" aria-modal="true" aria-labelledby="manage-problems-title">
                 <span class="modal-eyebrow">Local content</span>
                 <h2 id="manage-problems-title">Manage Problems</h2>
+                {#if $page.data.isExamMode}
+                    <p class="modal-error" role="note">Exam mode is on — hints and reference solutions are hidden. Resetting and opening the content folder are disabled. Turn exam mode off in the menu to restore everything.</p>
+                {/if}
                 <p class="manage-intro">Problems and courses live in your Cojudge folder. Edit files directly — changes apply on refresh.</p>
 
                 <div class="manage-path-row">
@@ -1881,7 +1955,7 @@
                                     <button
                                         class="btn manage-reset-btn"
                                         type="button"
-                                        disabled={resettingContentKey !== null || resettingAllContent}
+                                        disabled={resettingContentKey !== null || resettingAllContent || $page.data.isExamMode}
                                         onclick={() => void resetContentToBundled('problem', item.id)}
                                     >{resettingContentKey === `problem:${item.id}` ? 'Resetting…' : 'Reset'}</button>
                                 </li>
@@ -1893,7 +1967,7 @@
                                     <button
                                         class="btn manage-reset-btn"
                                         type="button"
-                                        disabled={resettingContentKey !== null || resettingAllContent}
+                                        disabled={resettingContentKey !== null || resettingAllContent || $page.data.isExamMode}
                                         onclick={() => void resetContentToBundled('course', item.id)}
                                     >{resettingContentKey === `course:${item.id}` ? 'Resetting…' : 'Reset'}</button>
                                 </li>
@@ -1903,7 +1977,7 @@
                             <button
                                 class="btn"
                                 type="button"
-                                disabled={resettingContentKey !== null || resettingAllContent}
+                                disabled={resettingContentKey !== null || resettingAllContent || $page.data.isExamMode}
                                 onclick={() => void resetAllModifiedToBundled()}
                             >{resettingAllContent ? 'Resetting…' : `Reset all (${modifiedItemCount})`}</button>
                         {/if}
@@ -1914,9 +1988,59 @@
                     <p class="modal-error" role="alert">{manageProblemsError}</p>
                 {/if}
                 <div class="home-modal-actions">
-                    <button class="btn" type="button" onclick={revealContentFolder} disabled={revealingFolder}>{revealingFolder ? 'Opening…' : 'Open folder'}</button>
+                    <button class="btn" type="button" onclick={revealContentFolder} disabled={revealingFolder || $page.data.isExamMode}>{revealingFolder ? 'Opening…' : 'Open folder'}</button>
                     <span class="modal-action-spacer"></span>
                     <button class="btn modal-primary-btn" type="button" onclick={() => void closeManageProblems()}>Done</button>
+                </div>
+            </div>
+        </div>
+    {/if}
+    {#if examModal}
+        <div class="home-modal-shell">
+            <button class="home-modal-backdrop" aria-label="Cancel" tabindex="-1" onclick={() => (examModal = null)}></button>
+            <div class="home-modal-card" role="dialog" aria-modal="true" aria-labelledby="exam-modal-title">
+                <span class="modal-eyebrow">{examModal.mode === 'enable' ? 'Lock answers' : 'Unlock answers'}</span>
+                <h2 id="exam-modal-title">{examModal.mode === 'enable' ? 'Enable exam mode' : 'Disable exam mode'}</h2>
+                {#if examModal.mode === 'enable'}
+                    <p class="manage-intro">Hints and reference solutions will be stripped from your Cojudge folder and hidden in the UI. Resetting is disabled while exam mode is on. They are restored automatically when you turn exam mode off. Choose a password — turning exam mode off later requires it.</p>
+                    <label class="exam-label" for="exam-password-new">Exam password (min 4 characters)</label>
+                    <input
+                        id="exam-password-new"
+                        class="exam-input"
+                        type="password"
+                        autocomplete="new-password"
+                        bind:this={examPasswordInput}
+                        bind:value={examPassword}
+                        onkeydown={(e) => { if (e.key === 'Enter') void submitExamModal(); }}
+                    />
+                    <label class="exam-label" for="exam-password-confirm">Confirm password</label>
+                    <input
+                        id="exam-password-confirm"
+                        class="exam-input"
+                        type="password"
+                        autocomplete="new-password"
+                        bind:value={examPasswordConfirm}
+                        onkeydown={(e) => { if (e.key === 'Enter') void submitExamModal(); }}
+                    />
+                {:else}
+                    <p class="manage-intro">Enter the exam password to turn exam mode off. Your original hints and solutions will be restored automatically.</p>
+                    <label class="exam-label" for="exam-password">Exam password</label>
+                    <input
+                        id="exam-password"
+                        class="exam-input"
+                        type="password"
+                        autocomplete="current-password"
+                        bind:this={examPasswordInput}
+                        bind:value={examPassword}
+                        onkeydown={(e) => { if (e.key === 'Enter') void submitExamModal(); }}
+                    />
+                {/if}
+                {#if examPasswordError}
+                    <p class="modal-error" role="alert">{examPasswordError}</p>
+                {/if}
+                <div class="home-modal-actions">
+                    <button class="btn" type="button" onclick={() => (examModal = null)} disabled={examSubmitting}>Cancel</button>
+                    <button class="btn modal-primary-btn" type="button" onclick={() => void submitExamModal()} disabled={examSubmitting}>{examSubmitting ? 'Working…' : examModal.mode === 'enable' ? 'Enable exam mode' : 'Disable exam mode'}</button>
                 </div>
             </div>
         </div>
@@ -3366,6 +3490,38 @@
         color: var(--color-hard) !important;
         font-size: 0.8rem;
         font-weight: 600;
+    }
+    .exam-banner {
+        background: var(--color-hard);
+        color: #fff;
+        text-align: center;
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+    }
+    .exam-tamper {
+        background: #b45309;
+        color: #fff;
+        text-align: center;
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+    }
+    .exam-label {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin: 0.75rem 0 0.25rem;
+    }
+    .exam-input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.95rem;
+        border: 1px solid var(--color-border);
+        border-radius: 0.5rem;
+        background: var(--color-bg);
+        color: var(--color-text);
     }
     .settings-actions {
         border-top: 1px solid var(--color-border);

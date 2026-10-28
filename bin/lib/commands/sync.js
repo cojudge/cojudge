@@ -29,6 +29,19 @@ function isBundledCourse(id) {
   }
 }
 
+// Exam mode (see the Exam mode menu item): resetting would restore bundled
+// hints/solutions, so refuse while the lock is on. Turn it off in the app
+// menu first (requires the exam password).
+function isExamLocked() {
+  const v = (process.env.COJUDGE_EXAM_MODE || "").trim().toLowerCase();
+  if (v === "1" || v === "true" || v === "yes" || v === "on") return true;
+  try {
+    return fs.existsSync(path.join(getContentRoot(), ".exam-lock"));
+  } catch {
+    return false;
+  }
+}
+
 function resetOne(target) {
   if (isBundledProblem(target)) {
     resetProblemToBundledSync(target);
@@ -105,6 +118,13 @@ export function handleSync(args) {
   // Smart sync runs first: pristine copies auto-update, edits preserved.
   ensureUserContentSeededSync();
   const resetIdx = args.findIndex((a) => a === "--reset" || a === "--reset-all");
+  if (args.includes("--reset-all") || resetIdx !== -1) {
+    if (isExamLocked()) {
+      console.error("Error: exam mode is on — turn it off in the app menu first (requires the exam password).");
+      process.exitCode = 1;
+      return;
+    }
+  }
   if (args.includes("--reset-all")) {
     resetAllModified();
     return;

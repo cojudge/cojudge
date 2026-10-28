@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { error } from '@sveltejs/kit';
 import { ensureUserContentSeeded, getProblemSource, resolveProblemDir } from '$lib/server/contentPaths';
+import { isExamModeEnabled } from '$lib/server/examMode';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -42,6 +43,14 @@ export const load: PageServerLoad = async ({ params }) => {
             problem.hints = [];
         }
 
+        // Exam mode (discussion #185): strip hints and reference solutions
+        // server-side so they never reach `__data.json`. A client-side hide
+        // alone would still leak via view-source / network.
+        if (isExamModeEnabled()) {
+            problem.hints = [];
+            problem.solution = null;
+        }
+
         problem.examples = Array.isArray(problem.examples)
             ? problem.examples
                 .filter((example: unknown) => example !== null && typeof example === 'object')
@@ -55,8 +64,10 @@ export const load: PageServerLoad = async ({ params }) => {
             : [];
 
         // Label user content so the UI can badge custom/modified problems.
+        // In exam mode the stripped content would all read "modified" —
+        // mask it so no badges show.
         try {
-            problem.source = await getProblemSource(params.slug);
+            problem.source = isExamModeEnabled() ? 'bundled' : await getProblemSource(params.slug);
         } catch {
             problem.source = 'bundled';
         }

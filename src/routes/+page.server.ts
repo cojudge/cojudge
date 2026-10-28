@@ -16,6 +16,7 @@ import {
 } from '$lib/server/contentPaths';
 import { existsSync } from 'node:fs';
 import type { PageServerLoad } from './$types';
+import { isExamModeEnabled } from '$lib/server/examMode';
 
 async function resolveContentDir(userDir: string, bundledDir: string): Promise<string> {
     await ensureUserContentSeeded();
@@ -55,11 +56,16 @@ export const load: PageServerLoad = async ({ url }) => {
     // Sources are only resolved for the visible course. The full modified
     // inventory for Manage Problems is served lazily by
     // GET /api/content/modified instead of on every navigation.
+    // In exam mode every problem is stripped (hence "modified") — mask the
+    // source as bundled so the UI doesn't plaster Modified badges everywhere.
+    const examMode = isExamModeEnabled();
     const selectedIds = [...new Set(problems.map((problem) => problem.id))];
-    const [courseSources, problemSources] = await Promise.all([
-        getCourseSources(courses.map((course) => course.id)),
-        getProblemSources(selectedIds)
-    ]);
+    const [courseSources, problemSources]: Array<Record<string, 'custom' | 'modified' | 'bundled'>> = examMode
+        ? [{}, {}]
+        : await Promise.all([
+            getCourseSources(courses.map((course) => course.id)),
+            getProblemSources(selectedIds)
+        ]);
     const problemsWithSource = problems.map((problem) => ({
         ...problem,
         source: problemSources[problem.id] ?? 'bundled'

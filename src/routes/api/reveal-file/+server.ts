@@ -3,8 +3,13 @@ import type { RequestHandler } from './$types';
 import { execFile } from 'node:child_process';
 import path from 'node:path';
 import os from 'node:os';
+import { isExamModeEnabled } from '$lib/server/examMode';
 
 export const POST: RequestHandler = async ({ request }) => {
+    // Exam mode: don't reveal the content folder (hints/solutions on disk).
+    if (isExamModeEnabled()) {
+        return json({ error: 'Disabled in exam mode' }, { status: 403 });
+    }
     try {
         const { filePath } = await request.json();
         if (typeof filePath !== 'string' || !filePath.trim()) {
