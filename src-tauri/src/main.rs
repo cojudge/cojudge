@@ -75,10 +75,11 @@ struct Backend {
 }
 
 fn open_external(app: &tauri::AppHandle, url: &tauri::Url) {
-    if matches!(url.scheme(), "http" | "https") {
-        if let Err(error) = app.opener().open_url(url.as_str(), None::<&str>) {
-            eprintln!("failed to open external URL: {error}");
-        }
+    // External links leave the app: http(s) opens in the system browser and
+    // any other scheme (e.g. vicuna://) is delegated to the OS handler so
+    // in-app markdown links can open other apps.
+    if let Err(error) = app.opener().open_url(url.as_str(), None::<&str>) {
+        eprintln!("failed to open external URL: {error}");
     }
 }
 
