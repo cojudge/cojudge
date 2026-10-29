@@ -1,9 +1,9 @@
-Your friend typed a name but some keys may have stuck, repeating characters. Given the intended `name` and the actually typed string `typed`, decide whether the typed string could have come from the intended name by holding some keys longer.
+Ваш друг набрал имя, но некоторые ключи, возможно, застряли, повторяя символы. Учитывая предназначенную `name` и фактически набранную строку `typed`, решите, могла ли набранная строка исходить из предполагаемого имени, удерживая некоторые клавиши дольше.
 
-In other words, scanning from left to right, each character of `name` must appear in `typed` in order, and any extra characters in `typed` must equal the previous character of `typed` (a long press). Every character of `typed` must be explainable this way.
+Другими словами, сканирование слева направо, каждый символ `name` должен появиться в `typed` По порядку и любым дополнительным персонажам в `typed` должен соответствовать предыдущему характеру `typed` (долгая пресса) Каждый персонаж `typed` Это должно быть объяснимо таким образом.
 
-Return `true` when `typed` is a valid long-pressed version of `name`, otherwise `false`.
+Возврат `true`, когда `typed` является действительной версией `name` с длинным прессованием, в противном случае `false`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= name.length, typed.length <= 1000`
-- Both strings contain only lowercase English letters.
+- Обе строки содержат только английские буквы.

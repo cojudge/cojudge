@@ -1,6 +1,6 @@
 {
   "id": "keyboard-row",
-  "title": "563. Keyboard Row",
+  "title": "563. Клавиатура Row",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/keyboard-row/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "words = [\"Hello\",\"Alaska\",\"Dad\",\"Peace\"]",
       "output": "[\"Alaska\",\"Dad\"]",
-      "explanation": "Alaska uses only the middle row and Dad uses only the middle row; the other two mix rows."
+      "explanation": "Аляска использует только средний ряд, а папа использует только средний ряд; два других смешанных ряда."
     },
     {
       "input": "words = [\"omk\"]",
       "output": "[]",
-      "explanation": "The letters span at least two rows."
+      "explanation": "Буквы охватывают как минимум два ряда."
     },
     {
       "input": "words = [\"adsdf\",\"sfd\"]",
       "output": "[\"adsdf\",\"sfd\"]",
-      "explanation": "Both words stay within the middle row."
+      "explanation": "Оба слова остаются в середине строки."
     }
   ],
   "starterCode": {
@@ -61,8 +61,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Map every letter (lowercased) to its row index 0, 1 or 2 once.",
-    "A word passes when all its letters share the row of its first letter.",
-    "Adaptation: the returned string list maps to string_list; preserve input order."
+    "Картографируйте каждую букву (в нижнем регистре) на ее индекс строк 0, 1 или 2 один раз.",
+    "Слово проходит, когда все его буквы разделяют строку его первой буквы.",
+    "Адаптация: возвращаемые карты списка строк в строку_list; сохранение порядка ввода."
   ]
 }

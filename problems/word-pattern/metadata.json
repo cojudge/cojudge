@@ -1,6 +1,6 @@
 {
   "id": "word-pattern",
-  "title": "386. Word Pattern",
+  "title": "386. Образец слов",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/word-pattern/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "pattern = \"abba\", s = \"dog cat cat dog\"",
       "output": "true",
-      "explanation": "a maps to dog and b maps to cat bijectively."
+      "explanation": "a Карты для собак и b Карты для кошек."
     },
     {
       "input": "pattern = \"abba\", s = \"dog cat cat fish\"",
       "output": "false",
-      "explanation": "The last fish breaks the a-dog pairing."
+      "explanation": "Последняя рыбка разрывает собачью пару."
     },
     {
       "input": "pattern = \"aaaa\", s = \"dog cat cat dog\"",
       "output": "false",
-      "explanation": "One letter cannot map to two different words."
+      "explanation": "Одна буква не может сопоставить два разных слова."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Split s on single spaces; lengths of pattern and word list must match.",
-    "Enforce a bijection with two maps (letter->word and word->letter).",
-    "Reject when one side would map to two different partners."
+    "Разделение s на отдельные пространства; длины шаблона и списка слов должны совпадать.",
+    "Выполните биджект с двумя картами (буква->слово и слово->буква).",
+    "Отклонить, когда одна сторона будет отображаться на двух разных партнеров."
   ]
 }

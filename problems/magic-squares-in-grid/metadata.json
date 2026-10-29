@@ -1,6 +1,6 @@
 {
   "id": "magic-squares-in-grid",
-  "title": "838. Magic Squares In Grid",
+  "title": "838. Волшебные площади в сетке",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/magic-squares-in-grid/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "grid = [[4,3,8,4],[9,5,1,9],[2,7,6,2]]",
       "output": "1",
-      "explanation": "Only the top-left 3x3 window is magic."
+      "explanation": "Только верхнее левое окно 3x3 является волшебным."
     },
     {
       "input": "grid = [[8]]",
       "output": "0",
-      "explanation": "Too small for any window."
+      "explanation": "Слишком маленький для любого окна."
     },
     {
       "input": "grid = [[5,5,5],[5,5,5],[5,5,5]]",
       "output": "0",
-      "explanation": "Repeated values fail distinctness."
+      "explanation": "Повторяющиеся ценности не дают четкости."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "The centre of any 3x3 magic square using 1..9 must be 5; skip windows whose centre differs.",
-    "Check distinctness of 1..9 first with a boolean set, then verify the eight line sums equal 15.",
-    "Slide the window over all (rows-2) * (cols-2) positions."
+    "Центром любого магического квадрата 3x3 с использованием 1..9 должен быть 5; пропустите окна, центр которых отличается.",
+    "Проверьте четкость 1..9 сначала с булевым набором, затем проверьте восемь сумм строк, равных 15.",
+    "Разверните окно по всем позициям (rows-2) * (cols-2)."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "monotonic-array",
-  "title": "886. Monotonic Array",
+  "title": "886. Монотонный массив",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/monotonic-array/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,2,2,3]",
       "output": "true",
-      "explanation": "Non-decreasing so monotone."
+      "explanation": "Не снижаясь так монотонно."
     },
     {
       "input": "nums = [6,5,4,4]",
       "output": "true",
-      "explanation": "Non-increasing so monotone."
+      "explanation": "Не увеличивая монотонность."
     },
     {
       "input": "nums = [1,3,2]",
       "output": "false",
-      "explanation": "Rises then falls."
+      "explanation": "Затем поднимается и падает."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Walk once while remembering whether you have seen an upward step and whether you have seen a downward step.",
-    "If both directions appear, the answer is false; otherwise it is true. A single element or all-equal list is true."
+    "Пройдите один раз, вспоминая, видели ли вы шаг вверх и видели ли вы шаг вниз.",
+    "Если появляются оба направления, ответ ложный; в противном случае это правда. Один элемент или все равный список — это правда."
   ]
 }

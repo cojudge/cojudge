@@ -1,6 +1,6 @@
 {
   "id": "read-n-characters-given-read4",
-  "title": "310. Read N Characters Given Read4",
+  "title": "310. Читаем N персонажей, которым дано читать 4",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/read-n-characters-given-read4/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "file = \"abc\", n = 4",
       "output": "\"abc\"",
-      "explanation": "Only three characters exist, so the reader stops early."
+      "explanation": "Существует только три персонажа, поэтому читатель останавливается рано."
     },
     {
       "input": "file = \"abcde\", n = 5",
       "output": "\"abcde\"",
-      "explanation": "Exactly the whole file is requested."
+      "explanation": "Запрашивается весь файл."
     },
     {
       "input": "file = \"abcdABCD1234\", n = 12",
       "output": "\"abcdABCD1234\"",
-      "explanation": "Twelve characters fill three read4 calls exactly."
+      "explanation": "Двенадцать символов заполняют три вызова read4."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "The answer is simply the file prefix of length min(n, file length).",
-    "Think in read4 chunks: full groups of four plus one final partial group.",
-    "An empty file or n = 0 both yield an empty string."
+    "Ответ прост: префикс файла длины min (n, длина файла).",
+    "Подумайте в 4 кусках: полные группы по четыре плюс одна конечная частичная группа.",
+    "Пустой файл или n = 0 оба дают пустую строку."
   ]
 }

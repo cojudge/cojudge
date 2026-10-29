@@ -1,6 +1,6 @@
 {
   "id": "trapping-rain-water-ii",
-  "title": "481. Trapping Rain Water II",
+  "title": "481. Дождевая вода II",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/trapping-rain-water-ii/",
   "category": "heap",
@@ -8,17 +8,17 @@
     {
       "input": "heightMap = [[1,4,3,1,3,2],[3,2,1,3,2,4],[2,3,3,2,3,1]]",
       "output": "4",
-      "explanation": "The central dip holds 4 units when water settles against the lowest rim."
+      "explanation": "Центральное погружение удерживает 4, когда вода оседает на самом низком ободе."
     },
     {
       "input": "heightMap = [[3,3,3,3,3],[3,2,2,2,3],[3,2,1,2,3],[3,2,2,2,3],[3,3,3,3,3]]",
       "output": "10",
-      "explanation": "The bowl interior traps 10 units below its rim of 3s."
+      "explanation": "Внутреннее убранство чаши захватывает 10 единицы ниже его обода 3s."
     },
     {
       "input": "heightMap = [[1,1,1],[1,1,1]]",
       "output": "0",
-      "explanation": "A flat rim with no dip traps nothing."
+      "explanation": "Плоский обод без капельницы ничего не ловит."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Think of water leaking out through the border: the lowest rim cell decides the level.",
-    "Push every border cell into a min-heap and expand inward, always popping the lowest boundary first.",
-    "When stepping to an inner cell, add max(0, boundary - its height) and push it back with the raised level."
+    "Подумайте об утечке воды через границу: самая низкая ячейка ободка определяет уровень.",
+    "Выталкивайте каждую пограничную ячейку в мини-кучу и расширяйтесь внутрь, всегда выскакивая сначала самую низкую границу.",
+    "При наступлении на внутреннюю ячейку добавьте max (0, граница - ее высота) и отодвиньте ее назад с поднятым уровнем."
   ]
 }

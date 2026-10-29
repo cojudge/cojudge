@@ -1,12 +1,12 @@
-You are given a list of distinct lowercase words. For each word, build its *abbreviation* as follows: keep a prefix of the word, then write the count of skipped middle characters, then keep the last character. For example, with a one-letter prefix, `word` becomes `w2d` (keep `w`, skip 2 letters, keep `d`).
+Для каждого слова стройте его *аббревиатуру* следующим образом: сохраните префикс слова, затем напишите количество пропущенных средних символов, затем сохраните последний символ. Например, с однобуквенным префиксом `word` становится `w2d` (сохраните `w`, пропустите буквы 2, сохраните `d`).
 
-Two rules apply:
-- If the abbreviation is not strictly shorter than the original word, keep the original word instead.
-- Abbreviations in the final answer must be pairwise unique, so no two words may share one. Resolve clashes with the *shared-prefix growth rule*: while any abbreviation is used by more than one word, extend the kept prefix by one character for every word in each clashing group and rebuild those abbreviations (keeping the original whenever it is not shorter).
+Применяются два правила:
+- Если аббревиатура не является строго короче, чем оригинальное слово, сохраните оригинальное слово.
+- Аббревиатуры в конечном ответе должны быть попарно уникальными, поэтому никакие два слова не могут разделить одно.Решите столкновения с правилом роста *shared-prefix: в то время как любая аббревиатура используется более чем одним словом, расширьте сохраненный префикс одним символом для каждого слова в каждой сталкивающейся группе и восстановите эти аббревиатуры (сохраняя оригинал, когда он не короче).
 
-Return the abbreviations in the same order as the input words.
+Верните аббревиатуры в том же порядке, что и входные слова.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= words.length <= 400`
 - `1 <= words[i].length <= 400`
-- All words are distinct and contain only lowercase English letters.
+- Все слова различны и содержат только строчные английские буквы.

@@ -1,6 +1,6 @@
-Given a positive integer `n`, return every way to write it as a product of integers greater than 1. Each way is a list of at least two factors in non-decreasing order whose product equals `n`. Return the collection of ways in any order.
+Учитывая положительное целое число `n`, возвращайте каждый способ, чтобы написать его как продукт целых чисел больше, чем 1. Каждый способ представляет собой список по крайней мере двух факторов в неубывающем порядке, чей продукт равен `n`. Возвращайте коллекцию способов в любом порядке.
 
-A single factor such as `[12]` alone is not counted, and factor `1` is never used.
+Один фактор, такой как `[12]`, не учитывается, а фактор `1` никогда не используется.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 10^7`

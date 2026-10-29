@@ -1,6 +1,6 @@
 {
   "id": "unique-morse-code-words",
-  "title": "802. Unique Morse Code Words",
+  "title": "802. Уникальные слова азбуки Морзе",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/unique-morse-code-words/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "words = [\"gin\",\"zen\",\"gig\",\"msg\"]",
       "output": "2",
-      "explanation": "Two distinct Morse strings occur."
+      "explanation": "Происходят две различные азбучные струны."
     },
     {
       "input": "words = [\"a\"]",
       "output": "1",
-      "explanation": "One word gives one encoding."
+      "explanation": "Одно слово дает один код."
     },
     {
       "input": "words = [\"abc\",\"def\",\"ghi\"]",
       "output": "3",
-      "explanation": "All encodings differ."
+      "explanation": "Все кодировки различаются."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Store the 26 letter codes in an array indexed by character offset from 'a'.",
-    "Build each word encoding with a string builder and insert it into a hash set.",
-    "The set size is the answer."
+    "Храните буквенные коды 26 в массиве, индексируемом смещением символов от «a».",
+    "Создайте каждое слово, кодирующееся строителем строки, и вставьте его в хеш-набор.",
+    "Заданный размер является ответом."
   ]
 }

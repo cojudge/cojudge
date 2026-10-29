@@ -1,8 +1,8 @@
-Given an integer `n`, determine whether it is a power of two.
+Учитывая целое число `n`, определите, является ли оно силой двух.
 
-An integer is a power of two when some non-negative integer `x` satisfies `n == 2^x`. In binary this means exactly one bit is set and the value is positive.
+Целое число — это сила двух, когда некоторое неотрицательное целое число `x` удовлетворяет `n == 2^x`. В двоичном варианте это означает, что устанавливается ровно один бит и значение положительно.
 
-Return `true` when `n` meets that definition, otherwise return `false`.
+Возвращайте `true`, когда `n` соответствует этому определению, в противном случае возвращайте `false`.
 
-**Constraints:**
+**Ограничения:**
 - `-2^31 <= n <= 2^31 - 1`

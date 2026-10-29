@@ -1,6 +1,6 @@
 {
   "id": "to-lower-case",
-  "title": "717. To Lower Case",
+  "title": "717. В более низком случае",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/to-lower-case/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"Hello\"",
       "output": "\"hello\"",
-      "explanation": "Uppercase H becomes lowercase; the rest stay as they are."
+      "explanation": "Верхний ящик H становится нижним; остальные остаются такими, какие они есть."
     },
     {
       "input": "s = \"LOVELY\"",
       "output": "\"lovely\"",
-      "explanation": "Every uppercase letter shifts to its lowercase form."
+      "explanation": "Каждая строчная буква переходит в нижнюю форму."
     },
     {
       "input": "s = \"a1B2!\"",
       "output": "\"a1b2!\"",
-      "explanation": "Only the letter B changes; digits and symbols are untouched."
+      "explanation": "Меняется только буква В, не тронуты цифры и символы."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Only characters in 'A' to 'Z' need changing; add 32 to their code or use a lookup.",
-    "Leave lowercase letters, digits and symbols exactly as they appear.",
-    "A single left-to-right pass building a new string is enough."
+    "Только символы от «A» до «Z» должны быть изменены; добавьте 32 в свой код или используйте поиск.",
+    "Оставьте строчные буквы, цифры и символы точно такими, какими они кажутся.",
+    "Достаточно одного прохода слева направо, создающего новую нить."
   ]
 }

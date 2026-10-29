@@ -1,8 +1,8 @@
-Eight holding cells sit in a row, each either occupied (`1`) or empty (`0`). Every day each cell is refreshed at the same time: a cell becomes occupied when its left and right neighbours currently hold the same value (both occupied or both empty), and becomes empty otherwise. The two end cells have only one neighbour, so they always become empty after the first day.
+Восемь удерживающих ячеек сидят подряд, каждая из которых либо занята (`1`), либо пуста (`0`).Каждый день каждая ячейка обновляется одновременно: ячейка становится занятой, когда ее левый и правый соседи в настоящее время имеют одинаковое значение (оба заняты или оба пусты), и становится пустой в противном случае. Две конечные ячейки имеют только одного соседа, поэтому они всегда становятся пустыми после первого дня.
 
-Given the starting layout `cells` and a day count `N`, return the layout of the row right after the `N`-th daily refresh.
+Учитывая стартовый макет `cells` и дневной подсчет `N`, верните макет строки сразу после ежедневного обновления `N`.
 
-**Constraints:**
+**Ограничения:**
 - `cells.length == 8`
-- Each entry of `cells` is `0` or `1`
+- Каждая запись `cells` - это `0` или `1`.
 - `1 <= N <= 10^9` (so a day-by-day simulation needs cycle skipping)

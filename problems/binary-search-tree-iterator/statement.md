@@ -1,17 +1,17 @@
-This is an offline adaptation of a design task. Instead of writing a class, you write one function that replays a whole session:
+Это офлайн-адаптация задачи проектирования. Вместо того, чтобы писать класс, вы пишете одну функцию, которая воспроизводит целую сессию:
 
 ```
-runBstIterator(root, operations)
+RunBstIterator (корень, операции)
 ```
 
-`root` is the binary search tree to walk (level-order form such as `[7,3,15,null,null,9,20]`), and `operations` holds only `"next"` or `"hasNext"`, in the order they are called. The iterator visits values in ascending order:
+`root` - это двоичное дерево поиска для ходьбы (форма уровня порядка, такая как `[7,3,15,null,null,9,20]`), и `operations` содержит только `"next"` или `"hasNext"`, в том порядке, в котором они называются.
 
-- `"next"` returns the next smallest value and moves forward.
-- `"hasNext"` returns `1` when values remain and `0` otherwise.
+- `"next"` возвращает следующее наименьшее значение и движется вперед.
+- `"hasNext"` возвращает `1`, когда значения остаются, и `0` иначе.
 
-Return the answers for every operation in order, encoding `"hasNext"` as `1` or `0`.
+Возвращайте ответы для каждой операции в порядке, кодируя `"hasNext"` как `1` или `0`.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= number of nodes <= 10^4`
 - `-10^5 <= Node.val <= 10^5`
-- `"next"` is only called when `"hasNext"` would be true.
+- `"next"` называется только тогда, когда `"hasNext"` будет истинным.

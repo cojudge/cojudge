@@ -1,18 +1,18 @@
 {
   "id": "basic-string-length",
-  "title": "27. String Length",
+  "title": "27. Длина струн",
   "difficulty": "Easy",
   "category": "strings",
   "examples": [
     {
       "input": "s = \"hello\"",
       "output": "5",
-      "explanation": "hello has five letters."
+      "explanation": "Здравствуйте, пять букв."
     },
     {
       "input": "s = \"\"",
       "output": "0",
-      "explanation": "An empty string has no characters."
+      "explanation": "Пустая строка не имеет символов."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Loop over the characters and count them.",
-    "Every language also has a built-in length property you can compare with."
+    "Нажмите на персонажей и сосчитайте их.",
+    "Каждый язык также имеет встроенное свойство длины, с которым вы можете сравниться."
   ]
 }

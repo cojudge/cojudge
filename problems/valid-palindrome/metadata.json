@@ -1,6 +1,6 @@
 {
   "id": "valid-palindrome",
-  "title": "56. Valid Palindrome",
+  "title": "56. Действительный палиндром",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/valid-palindrome/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "s=\"A man, a plan, a canal: Panama\"",
       "output": "true",
-      "explanation": "\"A man, a plan, a canal: Panama\" reads the same forwards and backwards when only alphanumeric characters are compared case-insensitively."
+      "explanation": "«Человек, план, канал: Панама» читается одинаково вперед и назад, когда только буквенно-цифровые символы сравниваются без учета случая."
     },
     {
       "input": "s=\"race a car\"",
       "output": "false",
-      "explanation": "\"race a car\" reads \"raceacar\" forwards but \"racaecar\" backwards when only alphanumeric characters are considered, so it is not a palindrome."
+      "explanation": "«Гонка на автомобиле» означает «гонщик» вперед, но «гонщик» назад, когда рассматриваются только буквенно-цифровые символы, поэтому это не палиндром."
     }
   ],
   "starterCode": {
@@ -46,6 +46,6 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Use two pointers from both ends, skipping non-alphanumeric characters and comparing case-insensitively."
+    "Используйте два указателя с обоих концов, пропуская буквенно-цифровые символы и сравнивая случай-бесчувственно."
   ]
 }

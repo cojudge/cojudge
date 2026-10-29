@@ -1,11 +1,11 @@
-Take an integer list `nums` and an integer `target`. Imagine tagging every entry of
-`nums` with either `+` or `-`, leaving the entries in their original sequence,
-which yields a signed expression.
+Возьмите целочисленный список `nums` и целочисленное число `target`. Представьте, что вы помечаете каждую запись
+`nums` с `+` или `-`, оставляя записи в их исходной последовательности,
+который дает подписанное выражение.
 
-Count how many distinct taggings make that expression come out to `target`.
-The result is known to fit inside a signed 32-bit integer.
+Подсчитайте, сколько различных тегов позволяют этому выражению выйти на `target`.
+Результат, как известно, вписывается в подписанное 32-битовое целое число.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 20`
 - `0 <= nums[i] <= 1000`
 - `0 <= sum(nums) <= 1000`

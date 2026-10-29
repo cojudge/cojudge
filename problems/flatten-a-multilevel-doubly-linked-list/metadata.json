@@ -1,6 +1,6 @@
 {
   "id": "flatten-a-multilevel-doubly-linked-list",
-  "title": "499. Flatten a Multilevel Doubly Linked List",
+  "title": "499. Сформулируйте многоуровневый список, связанный вдвойне",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "head = [1,2,3,4,5,6]",
       "output": "[1,2,3,4,5,6]",
-      "explanation": "A single-level list is already flat."
+      "explanation": "Одноуровневый список уже плоский."
     },
     {
       "input": "head = [1,2,3]",
       "output": "[1,2,3]",
-      "explanation": "Nothing to unfold; order is preserved."
+      "explanation": "Нечего раскрывать, порядок сохраняется."
     },
     {
       "input": "head = []",
       "output": "[]",
-      "explanation": "Empty input gives empty output."
+      "explanation": "Пустой вход дает пустой выход."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Walk the chain once and collect values, then rebuild a fresh chain in that order.",
-    "Adaptation: child and prev links are omitted, so flattening keeps the value order.",
-    "An empty input returns null."
+    "Пройдите по цепочке один раз и соберите ценности, а затем восстановите новую цепочку в таком порядке.",
+    "Адаптация: детские и предварительные ссылки опущены, поэтому сглаживание сохраняет порядок ценностей.",
+    "Пустой вход возвращает нуль."
   ]
 }

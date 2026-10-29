@@ -1,6 +1,6 @@
-Given n nodes labeled 0..n-1 and a list of undirected edges, return the number of connected components.
+Учитывая n узлов, помеченных 0..n-1 и список ненаправленных краев, возвращайте количество подключенных компонентов.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 <= n <= 2000
 - 0 <= edges.length <= 10^4

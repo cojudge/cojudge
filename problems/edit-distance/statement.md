@@ -1,7 +1,7 @@
-Take two strings `word1` and `word2`. Determine the smallest count of single-character edits that turns `word1` into `word2`.
+Возьмите две строки `word1` и `word2`. Определите наименьшее количество односимвольных правок, превращающих `word1` в `word2`.
 
-Each edit must be one of the following: add a single character at any position, remove a single character, or swap one character for a different one.
+Каждое редактирование должно быть одним из следующих: добавить один символ в любую позицию, удалить один символ или поменять один символ на другой.
 
-**Constraints:**
+**Ограничения:**
 - Lengths obey `0 <= word1.length, word2.length <= 500`.
-- `word1` and `word2` use only lowercase English letters.
+- `word1` и `word2` используют только английские буквы.

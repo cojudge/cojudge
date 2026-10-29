@@ -1,6 +1,6 @@
 {
   "id": "n-repeated-element-in-size-2n-array",
-  "title": "947. N-Repeated Element in Size 2N Array",
+  "title": "947. N-повторяющийся элемент в массиве размера 2N",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/n-repeated-element-in-size-2n-array/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,2,3,3]",
       "output": "3",
-      "explanation": "The value 3 fills half the slots while every other value appears once."
+      "explanation": "Значение 3 заполняет половину слотов, в то время как любое другое значение появляется один раз."
     },
     {
       "input": "nums = [2,1,2,5,3,2]",
       "output": "2",
-      "explanation": "Here 2 is the element occupying exactly half the array."
+      "explanation": "Здесь 2 — это элемент, занимающий ровно половину массива."
     },
     {
       "input": "nums = [5,1,5,2,5,3,5,4]",
       "output": "5",
-      "explanation": "Four of the eight entries are 5, so 5 is the repeated element."
+      "explanation": "Четыре из восьми записей являются 5, поэтому 5 является повторяющимся элементом."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Only one value appears more than once, so frequency counting finds it.",
-    "A value repeating N times must also sit close to one of its copies; comparing nearby entries works too."
+    "Только одно значение появляется более одного раза, поэтому частотный подсчет находит его.",
+    "Значение, повторяющее N раз, также должно находиться рядом с одной из его копий; сравнение близлежащих записей также работает."
   ]
 }

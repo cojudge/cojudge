@@ -1,13 +1,13 @@
-You are given the root of a binary tree whose nodes hold integer values.
+Вам дан корень двоичного дерева, узлы которого содержат целые значения.
 
-Two branches are considered the same shape when they have equal values placed in equal positions: either both are empty, or both roots share the value and their left sides match and their right sides match.
+Две ветви считаются одинаковой формой, когда они имеют равные значения, размещенные в равных положениях: либо обе пусты, либо оба корня разделяют значение, и их левая сторона совпадает, а правая сторона совпадает.
 
-A shape is repeated when two or more distinct nodes start that same shape. Collect each repeated shape exactly once.
+Форма повторяется, когда два или более различных узла начинают одну и ту же форму. Соберите каждую повторяющуюся форму ровно один раз.
 
-**Adaptation:** instead of handing back tree nodes, return each repeated shape as a preorder code. Write a node as its value, then its left code, then its right code, separated by commas; write `#` for a missing child. A leaf holding 4 therefore becomes `4,#,#`.
+**Адаптация: ** вместо того, чтобы возвращать узлы дерева, возвращайте каждую повторяющуюся форму в качестве кода предварительного заказа. Напишите узел в качестве его значения, затем его левый код, затем его правый код, разделенный запятыми; напишите `#` для пропавшего потомка. Лист, удерживающий 4, поэтому становится `4,#,#`.
 
-Return the codes in any order (the checker sorts them).
+Возвращайте коды в любом порядке (чекер их сортирует).
 
-**Constraints:**
+**Ограничения:**
 - `0 <= number of nodes <= 3000`
 - `-200 <= node value <= 200`

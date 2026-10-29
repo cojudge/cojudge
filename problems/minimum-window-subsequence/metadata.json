@@ -1,6 +1,6 @@
 {
   "id": "minimum-window-subsequence",
-  "title": "734. Minimum Window Subsequence",
+  "title": "734. Минимальная оконная последовательность",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/minimum-window-subsequence/",
   "category": "string",
@@ -8,7 +8,7 @@
     {
       "input": "s1 = \"abcdebdde\", s2 = \"bde\"",
       "output": "\"bcde\"",
-      "explanation": "Indices 1 through 4 give the shortest block holding b, d, e in order."
+      "explanation": "Индексы 1 через 4 дают самый короткий блок, удерживающий b, d, e в порядке."
     },
     {
       "input": "s1 = \"abc\", s2 = \"ac\"",
@@ -17,7 +17,7 @@
     {
       "input": "s1 = \"abc\", s2 = \"d\"",
       "output": "\"\"",
-      "explanation": "No block contains d, so the answer is empty."
+      "explanation": "Ни один блок не содержит d, поэтому ответ пуст."
     }
   ],
   "starterCode": {
@@ -57,8 +57,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Scan s1 forward to find where s2 finishes as a subsequence, then walk backwards to find the earliest start of that match.",
-    "Keep the best (shortest, then earliest) window across all forward matches.",
-    "This two-pointer pass runs in O(n * m) worst case but only O(1) extra memory."
+    "Сканируйте s1 вперед, чтобы найти, где s2 заканчивается как последовательность, а затем пройдите назад, чтобы найти самое раннее начало этого матча.",
+    "Сохраняйте лучшее (короткое, а затем самое раннее) окно во всех форвардных матчах.",
+    "Этот двухточечный пропуск работает в худшем случае O (n * m), но только с дополнительной памятью O (1)."
   ]
 }

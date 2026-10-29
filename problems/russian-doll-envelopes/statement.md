@@ -1,11 +1,11 @@
-You are given envelopes described by `[width, height]` pairs. One envelope can
-hold another exactly when both its width and its height are strictly larger.
-Turning envelopes is not allowed.
+Вам выдаются конверты, описанные парами `[width, height]`.
+Держите другой точно тогда, когда его ширина и высота строго больше.
+Переворачивать конверты не разрешается.
 
-Find the largest number of envelopes that can be nested one inside another in a
-single chain.
+Найдите наибольшее количество конвертов, которые могут быть вложены друг в друга.
+одиночная цепь.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= envelopes.length <= 10^5`
 - `envelopes[i].length == 2`
 - `1 <= width, height <= 10^5`

@@ -1,6 +1,6 @@
 {
   "id": "add-two-numbers",
-  "title": "93. Add Two Numbers",
+  "title": "93. Добавить два числа",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/add-two-numbers/",
   "category": "linked-list",
@@ -62,8 +62,8 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Walk through both lists together and add corresponding digits plus a carry.",
-    "Create a result node for `sum % 10` and carry `sum / 10` into the next position.",
-    "After both lists end, append one more node if a carry remains."
+    "Пройдите оба списка вместе и добавьте соответствующие цифры плюс перенос.",
+    "Создайте узел результатов для `sum % 10` и перенесите `sum / 10` в следующую позицию.",
+    "После того, как оба списка закончатся, добавьте еще один узел, если узел остается."
   ]
 }

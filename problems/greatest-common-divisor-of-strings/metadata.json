@@ -1,6 +1,6 @@
 {
   "id": "greatest-common-divisor-of-strings",
-  "title": "244. Greatest Common Divisor of Strings",
+  "title": "244. Самый большой общий делитель струн",
   "difficulty": "Easy",
   "category": "string",
   "link": "https://leetcode.com/problems/greatest-common-divisor-of-strings/",
@@ -55,8 +55,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "The greatest common divisor must be a prefix of both strings, so try every prefix of the shorter string from longest to shortest.",
-    "A divisor x of length len divides a string of length L only if L is a multiple of len and the string is x repeated L / len times.",
-    "Alternatively, if str1 + str2 != str2 + str1 there is no common divisor; otherwise the answer is the prefix of length gcd(str1.length, str2.length)."
+    "Самый большой общий делитель должен быть префиксом обеих струн, поэтому попробуйте каждый префикс более короткой струны от самой длинной до самой короткой.",
+    "Дивизор x длины len делит строку длины L только в том случае, если L является кратным len, а струна x повторяется L / len раз.",
+    "Альтернативно, если str1 + str2 != str2 + str1 нет общего делителя; в противном случае ответом является префикс длины gcd (str1.length, str2.length)."
   ]
 }

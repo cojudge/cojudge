@@ -1,7 +1,7 @@
-Consider an endless string that uses only the digits `1` and `2`. It starts `1, 2, 2, ...` and has a self-describing trait: reading the lengths of its blocks of equal digits, in order, reproduces the string itself. For instance the block sizes `1, 2, 2, 1, 1, 2, ...` spell out the same digit sequence.
+Рассмотрим бесконечную строку, в которой используются только цифры `1` и `2`. Она запускает `1, 2, 2, ...` и имеет самоописывающуюся черту: считывая длины своих блоков равных цифр, по порядку воспроизводит саму строку. Например, размеры блоков `1, 2, 2, 1, 1, 2, ...` прописывают одну и ту же последовательность цифр.
 
-Given `n`, look at the first `n` characters of this string and count how many of them are `1`.
+Учитывая `n`, посмотрите на первые символы `n` этой строки и подсчитайте, сколько из них `1`.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= n <= 10^5`

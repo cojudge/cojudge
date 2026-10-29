@@ -1,6 +1,6 @@
 {
   "id": "replace-words",
-  "title": "669. Replace Words",
+  "title": "669. Заменить слова",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/replace-words/",
   "category": "trie",
@@ -8,17 +8,17 @@
     {
       "input": "dictionary = [\"cat\",\"bat\",\"rat\"], sentence = \"the cattle was rattled by the battery\"",
       "output": "\"the cat was rat by the bat\"",
-      "explanation": "\"cattle\" shortens to \"cat\", \"rattled\" to \"rat\", and \"battery\" to \"bat\"."
+      "explanation": "«Скот» укорачивается до «кошки», «гремел» до «крысы», а «батарея» до «баты»."
     },
     {
       "input": "dictionary = [\"a\",\"b\",\"c\"], sentence = \"aadsfasf absbs bbab cadsfafs\"",
       "output": "\"a a b c\"",
-      "explanation": "Every word starts with one of the single-letter roots."
+      "explanation": "Каждое слово начинается с одного корня."
     },
     {
       "input": "dictionary = [\"abc\"], sentence = \"def ghi\"",
       "output": "\"def ghi\"",
-      "explanation": "No word starts with \"abc\", so nothing changes."
+      "explanation": "Ни одно слово не начинается с «abc», поэтому ничего не меняется."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Index every root in a prefix tree (trie) that marks word ends.",
-    "For each sentence word, walk the trie and stop at the first end marker: that is the shortest matching root.",
-    "If the walk dies before any marker, keep the original word."
+    "Каждый корень индексируется в префиксном дереве (три), которое обозначает окончание слова.",
+    "Для каждого слова предложения пройдите три и остановитесь на первом конце маркера: это самый короткий соответствующий корень.",
+    "Если прогулка умирает раньше любого маркера, сохраните оригинальное слово."
   ]
 }

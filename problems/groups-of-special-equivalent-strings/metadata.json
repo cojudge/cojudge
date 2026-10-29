@@ -1,6 +1,6 @@
 {
   "id": "groups-of-special-equivalent-strings",
-  "title": "884. Groups of Special-Equivalent Strings",
+  "title": "884. Группы специальных эквивалентных струн",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/groups-of-special-equivalent-strings/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "words = [\"abcd\",\"cdab\",\"cbad\",\"xyzz\",\"zzxy\",\"zzyx\"]",
       "output": "3",
-      "explanation": "Three families: {abcd,cdab,cbad}, {xyzz,zzxy}, {zzyx}."
+      "explanation": "Три семейства: {abcd,cdab,cbad}, {xyzz,zzxy}, {zzyx}."
     },
     {
       "input": "words = [\"abc\",\"acb\",\"bac\",\"bca\",\"cab\",\"cba\"]",
       "output": "3",
-      "explanation": "Middle vs outer letters define three families."
+      "explanation": "Средние и внешние буквы определяют три семейства."
     }
   ],
   "starterCode": {
@@ -62,7 +62,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Build a canonical key per word: sort the characters at even indexes and those at odd indexes separately, then join them.",
-    "Two words share a family exactly when their keys match, so the answer is the number of distinct keys in a hash set."
+    "Постройте канонический ключ на слово: сортируйте символы по четным индексам и нечетным индексам отдельно, а затем присоединяйтесь к ним.",
+    "Два слова разделяют семью, когда их ключи совпадают, поэтому ответом является количество отдельных ключей в хэш-наборе."
   ]
 }

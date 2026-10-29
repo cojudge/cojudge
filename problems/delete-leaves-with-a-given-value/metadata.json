@@ -1,6 +1,6 @@
 {
   "id": "delete-leaves-with-a-given-value",
-  "title": "201. Delete Leaves With a Given Value",
+  "title": "201. Удалить листья с определенной ценностью",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/delete-leaves-with-a-given-value/",
   "category": "tree",
@@ -56,6 +56,6 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Post-order: process children first, then delete the node if it becomes a leaf equal to target."
+    "Пост-заказ: сначала обработать потомков, затем удалить узел, если он станет листом, равным мишени."
   ]
 }

@@ -1,9 +1,9 @@
-You are given an array `arr` of length `n` holding each integer from `0` to `n - 1` exactly once (a permutation).
+Вы получаете массив `arr` длины `n`, содержащий каждое целое число от `0` до `n - 1` ровно один раз (перестановка).
 
-Split it into the most contiguous chunks possible so that sorting every chunk on its own and concatenating the results equals the fully sorted array `[0, 1, ..., n-1]`. Return that largest number of chunks.
+Разделите его на самые смежные куски, чтобы сортировка каждого куска по отдельности и конкатенирование результатов равнялись полностью отсортированному массиву `[0, 1, ..., n-1]`. Верните наибольшее количество кусков.
 
-**Constraints:**
+**Ограничения:**
 - `n == arr.length`
 - `1 <= n <= 10`
 - `0 <= arr[i] < n`
-- All values are distinct
+- Все ценности различны

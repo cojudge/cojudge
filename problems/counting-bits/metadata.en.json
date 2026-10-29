@@ -1,0 +1,57 @@
+{
+  "id": "counting-bits",
+  "title": "13. Counting Bits",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/counting-bits/",
+  "category": "binary",
+  "examples": [
+    {
+      "input": "n = 2",
+      "output": "[0,1,1]",
+      "explanation": "For numbers 0 through 2, the counts of 1-bits in their binary representations are [0, 1, 1]."
+    },
+    {
+      "input": "n = 5",
+      "output": "[0,1,1,2,1,2]",
+      "explanation": "For numbers 0 through 5, the counts of 1-bits in their binary representations are [0, 1, 1, 2, 1, 2]."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] countBits(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def countBits(self, n: int) -> list[int]:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> countBits(int n) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] CountBits(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_bits(n: i32) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc CountBits(n int) []int {\n    \n}",
+    "typescript": "export function countBits(n: number): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int[]\n     */\n    public function countBits($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 0
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 2
+    },
+    {
+      "n": 5
+    },
+    {
+      "n": 16
+    }
+  ],
+  "functionName": "countBits",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Use DP: `ans[i] = ans[i >> 1] + (i & 1)`."
+  ]
+}

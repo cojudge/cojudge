@@ -1,9 +1,9 @@
-A square room has side length `p`. Its corners hold light sensors numbered so that the starting corner (where the laser sits) has no sensor, one neighbor corner holds sensor 1, the opposite diagonal area relates to sensor 2, and the remaining corner holds sensor 0. A laser beam leaves the starting corner heading diagonally into the room.
+Квадратное помещение имеет боковую длину `p`. Его углы содержат датчики света, пронумерованные так, что стартовый угол (где сидит лазер) не имеет датчика, один соседний угол удерживает датчик 1, противоположная диагональная область относится к датчику 2, а оставшийся угол удерживает датчик 0. Лазерный луч покидает стартовый угол, направляющийся по диагонали в помещение.
 
-Whenever the beam meets a wall it reflects like a mirror, keeping its progress toward the far side. It keeps bouncing until it lands exactly on one of the three sensor corners. The beam's first horizontal wall contact is determined by the integer `q`: think of the ray as advancing `q` units vertically for each `p` units of mirrored extension.
+Всякий раз, когда луч встречает стену, он отражается как зеркало, сохраняя свой прогресс к дальней стороне. Он продолжает отскакивать, пока не приземлится точно на один из трех углов датчика. Первый горизонтальный контакт луча с стенкой определяется целым числом `q`: подумайте о луче как движущемся звене `q` по вертикали для каждого звена `p` зеркального расширения.
 
-Given `p` and `q`, report which sensor (`0`, `1`, or `2`) the beam reaches first.
+Учитывая `p` и `q`, сообщите, какой датчик (`0`, `1` или `2`) луч достигает первого.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= q <= 1000`
 - `1 <= p <= 1000`

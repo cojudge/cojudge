@@ -1,11 +1,11 @@
-You are given an array `nums`. A `132 pattern` is a triple of positions `i < j < k` whose values sit in small-large-middle order:
+Вам дано множество `nums`. A `132 pattern` Это тройка позиций. `i < j < k` чьи ценности находятся в малом и среднем порядке:
 
 ```
-nums[i] < nums[k] < nums[j]
+nums[i] <nums[k] <nums[j]
 ```
 
-Return `true` if such a triple exists, and `false` otherwise.
+Возврат `true`, если такая тройка существует, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 2 * 10^5`
 - `-10^9 <= nums[i] <= 10^9`

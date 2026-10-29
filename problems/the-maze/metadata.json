@@ -1,6 +1,6 @@
 {
   "id": "the-maze",
-  "title": "554. The Maze",
+  "title": "554. Лабиринт",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/the-maze/",
   "category": "graph",
@@ -8,12 +8,12 @@
     {
       "input": "maze = [[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]], start = [0,4], destination = [4,4]",
       "output": "true",
-      "explanation": "Rolling left, down and around the walls lets the ball halt on the target cell."
+      "explanation": "Переворачивание влево, вниз и вокруг стенок позволяет мячу остановиться на целевой ячейке."
     },
     {
       "input": "maze = [[0,0,1,0,0],[0,0,0,0,0],[0,0,0,1,0],[1,1,0,1,1],[0,0,0,0,0]], start = [0,4], destination = [3,2]",
       "output": "false",
-      "explanation": "Every rolling path stops on cells other than the requested destination."
+      "explanation": "Каждый катящийся путь останавливается на ячейках, отличных от запрашиваемого пункта назначения."
     }
   ],
   "starterCode": {
@@ -60,8 +60,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Model stopping positions as graph nodes; rolling to the wall in each direction gives the edges.",
-    "Breadth-first or depth-first search over stopping positions avoids revisiting the same halt.",
-    "Simulate each roll step by step until the cell before a wall, then enqueue that halt if unseen."
+    "Модель останавливает позиции как графовые узлы; катясь к стене в каждом направлении дает края.",
+    "Широкий или глубокий поиск по позициям остановки позволяет избежать повторного посещения одной и той же остановки.",
+    "Имитация каждого крена шаг за шагом до клетки перед стенкой, а затем очередь, которая останавливается, если ее не видно."
   ]
 }

@@ -1,6 +1,6 @@
-Return the second-largest distinct value in `nums`. The array always contains at least two different values.
+Возврат второго по величине отдельного значения в `nums`. Массив всегда содержит по меньшей мере два разных значения.
 
-**Constraints:**
+**Ограничения:**
 - ``2 <= nums.length <= 1000``
 - ``-10^9 <= nums[i] <= 10^9``
 - `At least two distinct values exist`

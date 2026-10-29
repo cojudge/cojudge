@@ -1,6 +1,6 @@
 {
   "id": "palindrome-partitioning",
-  "title": "112. Palindrome Partitioning",
+  "title": "112. Разделение палиндрома",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/palindrome-partitioning/",
   "category": "backtracking",
@@ -8,12 +8,12 @@
     {
       "input": "s = \"aab\"",
       "output": "[[\"a\",\"a\",\"b\"],[\"aa\",\"b\"]]",
-      "explanation": "Both `a | a | b` and `aa | b` consist only of palindromes."
+      "explanation": "`a | a | b` и `aa | b` состоят только из палиндромов."
     },
     {
       "input": "s = \"a\"",
       "output": "[[\"a\"]]",
-      "explanation": "The only way to partition \"a\" such that every substring is a palindrome is [[\"a\"]]."
+      "explanation": "Единственный способ разделить «а» так, чтобы каждая подстрока была палиндромом, — это [[а]]."
     }
   ],
   "starterCode": {
@@ -46,7 +46,7 @@
   ],
   "outputType": "string_list_2d",
   "hints": [
-    "Try every possible end position for the next substring.",
-    "Continue backtracking only when the chosen substring is a palindrome."
+    "Попробуйте все возможные конечные позиции для следующей подстроки.",
+    "Продолжайте отступать только тогда, когда выбранная подстрока является палиндромом."
   ]
 }

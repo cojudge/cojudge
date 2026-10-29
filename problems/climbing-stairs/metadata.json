@@ -1,6 +1,6 @@
 {
   "id": "climbing-stairs",
-  "title": "16. Climbing Stairs",
+  "title": "16. Подъем по лестнице",
   "difficulty": "Easy",
   "category": "dp",
   "link": "https://leetcode.com/problems/climbing-stairs/",
@@ -8,12 +8,12 @@
     {
       "input": "n = 2",
       "output": "2",
-      "explanation": "There are 2 ways: 1 step + 1 step, or 2 steps."
+      "explanation": "Есть способы 2: шаг 1 + шаг 1 или шаги 2."
     },
     {
       "input": "n = 3",
       "output": "3",
-      "explanation": "There are 3 ways: 1+1+1, 1+2, 2+1."
+      "explanation": "Существуют 3 способы: 1+1+1, 1+2, 2+1."
     }
   ],
   "starterCode": {
@@ -52,6 +52,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Classic DP: ways[n] = ways[n-1] + ways[n-2]. With O(1) space we can keep just the last two values."
+    "Классический DP: Ways[n] = Ways[n-1] + Ways[n-2]. С пространством O(1) мы можем сохранить только последние два значения."
   ]
 }

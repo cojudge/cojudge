@@ -1,18 +1,18 @@
-Build a singly linked list that supports indexed access and edits. Instead of submitting a class, you write one runner function `runLinkedList(operations, args)` that replays a script and returns every `get` result in order.
+Создайте единый связанный список, который поддерживает индексированный доступ и редактирование. Вместо того, чтобы отправлять класс, вы пишете одну функцию бегуна `runLinkedList(operations, args)`, которая воспроизводит сценарий и возвращает каждый результат `get` в порядке.
 
-The script uses parallel arrays: `operations[i]` names the action and `args[i]` holds its numbers.
-- `"MyLinkedList"` with `[]` restarts with an empty list.
-- `"get"` with `[index]` reads the value at `index`, or `-1` when invalid.
-- `"addAtHead"` with `[val]` inserts before the first element.
-- `"addAtTail"` with `[val]` appends at the end.
-- `"addAtIndex"` with `[index,val]` inserts before position `index`; if `index` equals the length it appends; if `index` is larger than the length nothing happens; a non-positive index inserts at the head.
-- `"deleteAtIndex"` with `[index]` removes the element there when valid.
+Сценарий использует параллельные массивы: `operations[i]` называет действие, а `args[i]` содержит его номера.
+- `"MyLinkedList"` с `[]` перезапускается с пустым списком.
+- `"get"` с `[index]` считывает значение в `index`, или `-1`, когда оно недействительно.
+- `"addAtHead"` с вставками `[val]` перед первым элементом.
+- `"addAtTail"` с приложением `[val]` в конце.
+- `"addAtIndex"` с вставками `[index,val]` перед положением `index`; если `index` равен длине, которую он добавляет; если `index` больше длины, ничего не происходит; неположительный индекс вставляется в голову.
+- `"deleteAtIndex"` с `[index]` удаляет элемент там, когда он действителен.
 
-Return an array containing the `get` answers in the order they were issued.
+Верните массив, содержащий ответы `get`, в том порядке, в котором они были выпущены.
 
-This is a portable adaptation: the original class with five methods becomes a single `runXxx` function, mirroring other design adaptations in this judge.
+Это портативная адаптация: оригинальный класс с пятью методами становится единой функцией `runXxx`, отражая другие конструктивные адаптации в этом судье.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= operations.length <= 2000`
 - `0 <= index, val <= 1000`
-- `args[i]` lengths match the operation arities above.
+- Длины `args[i]` соответствуют эксплуатационным условиям выше.

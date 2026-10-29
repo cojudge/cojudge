@@ -1,6 +1,6 @@
 {
   "id": "champagne-tower",
-  "title": "797. Champagne Tower",
+  "title": "797. Башня шампанского",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/champagne-tower/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "poured = 1, query_row = 1, query_glass = 1",
       "output": "\"0.0\"",
-      "explanation": "Only the top glass fills."
+      "explanation": "Заполняется только верхнее стекло."
     },
     {
       "input": "poured = 2, query_row = 1, query_glass = 1",
       "output": "\"0.5\"",
-      "explanation": "Half the overflow reaches each glass below."
+      "explanation": "Половина перелива достигает каждого стакана ниже."
     },
     {
       "input": "poured = 4, query_row = 2, query_glass = 1",
       "output": "\"0.5\"",
-      "explanation": "Two levels of splitting leave half a cup."
+      "explanation": "Два уровня расщепления оставляют половину чашки."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "This is a portable adaptation: return the amount as a finite decimal string; the checker allows 1e-9 absolute plus 1e-5 relative error.",
-    "Simulate row by row, pushing half the excess of each full glass to its two children.",
-    "Cap the queried glass at 1.0 before formatting the answer."
+    "Это переносимая адаптация: возвращаем сумму в виде конечной десятичной строки; шашка допускает абсолютную 1e-9 плюс относительную ошибку 1e-5.",
+    "Симулируйте ряд за рядом, толкая половину избытка каждого полного стакана на двух своих детей.",
+    "Захватите запрашиваемое стекло в 1.0 перед форматированием ответа."
   ]
 }

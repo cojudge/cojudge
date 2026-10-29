@@ -1,16 +1,16 @@
-Replay a constant-time set with random sampling through one batch function.
+Повторите набор постоянного времени со случайной выборкой через одну функцию партии.
 
-This is a deterministic, function-style adaptation of the classic randomized-set design: implement `runRandomizedSet(operations, values)`. Both arrays share one length. Entry `0` is always the constructor `"RandomizedSet"` with dummy value `0`. Each later entry is:
+Это детерминированная, функциональная адаптация классического рандомизированного набора дизайна: реализовать `runRandomizedSet(operations, values)`. Оба массива имеют одну длину. Ввод `0` всегда является конструктором `"RandomizedSet"` с фиктивным значением `0`. Каждая более поздняя запись:
 
-- `"insert"` with `values[i] = val`: store `val` when absent. Record `1` when the value was newly added, else `0`.
+- `"insert"` с `values[i] = val`: храните `val`, когда отсутствует. Запишите `1`, когда значение было добавлено, еще `0`.
 - `"remove"` with `values[i] = val`: delete `val` when present. Record `1` when something was removed, else `0`.
-- `"getRandom"` with dummy `values[i] = 0`: record one element currently in the set.
+- `"getRandom"` с манекеном `values[i] = 0`: запишите один элемент в настоящее время в наборе.
 
-Return one recorded entry per non-constructor step, in order. The classic version also demands uniform sampling and average O(1) time; this portable judge checks only validity — every `getRandom` entry must belong to the set at that moment — not the distribution. Keep average O(1) behavior with a hash map plus a compact list.
+Классическая версия также требует равномерной выборки и среднего времени O (1); этот портативный судья проверяет только валидность - каждая запись `getRandom` должна принадлежать набору в этот момент, а не распределению. Сохраните среднее поведение O (1) с хеш-картой плюс компактный список.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= operations.length == values.length <= 2 * 10^5`
 - `operations[0] == "RandomizedSet"`
-- Later operations are `insert`, `remove`, or `getRandom`.
+- Более поздние операции — `insert`, `remove` или `getRandom`.
 - `-2^31 <= val <= 2^31 - 1`
-- `getRandom` is called only when the set holds at least one element.
+- `getRandom` называется только тогда, когда набор содержит по меньшей мере один элемент.

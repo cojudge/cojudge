@@ -1,6 +1,6 @@
 {
   "id": "maximum-depth-of-binary-tree",
-  "title": "60. Maximum Depth of Binary Tree",
+  "title": "60. Максимальная глубина двоичного дерева",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [3,9,20,null,null,15,7]",
       "output": "3",
-      "explanation": "The maximum depth (root-to-leaf longest path) is 3."
+      "explanation": "Максимальная глубина (самый длинный путь от корня до листа) - 3."
     },
     {
       "input": "root = [1,null,2]",
       "output": "2",
-      "explanation": "The maximum depth (root-to-leaf longest path) is 2."
+      "explanation": "Максимальная глубина (самый длинный путь от корня до листа) - 2."
     },
     {
       "input": "root = []",
       "output": "0",
-      "explanation": "The maximum depth (root-to-leaf longest path) is 0."
+      "explanation": "Максимальная глубина (самый длинный путь от корня до листа) - 0."
     }
   ],
   "starterCode": {
@@ -61,6 +61,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Compute the maximum depth of a binary tree."
+    "Вычислите максимальную глубину двоичного дерева."
   ]
 }

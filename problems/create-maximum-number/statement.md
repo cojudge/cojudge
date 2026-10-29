@@ -1,8 +1,8 @@
-You are given two arrays `nums1` and `nums2` of digits (each entry `0`–`9`, with lengths `m` and `n`) plus an integer `k` with `1 <= k <= m + n`. Build the largest possible number with exactly `k` digits by picking some digits from each array so that the digits taken from either array keep their original relative order.
+Вам даны два массива `nums1` и `nums2` Цифры (каждая запись) `0`–`9`, с длиной `m` и `n`) плюс целое число `k` с `1 <= k <= m + n`Постройте максимально возможное число с точной `k` Цифры, выбирая некоторые цифры из каждого массива, чтобы цифры, взятые из любого массива, сохраняли свой первоначальный относительный порядок.
 
-Digits from the two arrays may be interleaved freely. Compare candidate numbers digit by digit from the most significant side (all have length `k`). Return the winning digits as an array.
+Цифры из двух массивов могут быть переплетены свободно. Сравните числа кандидатов цифрой за цифрой с наиболее значимой стороны (все имеют длину `k`). Верните выигрышные цифры в виде массива.
 
-**Constraints:**
+**Ограничения:**
 - `m == nums1.length`, `n == nums2.length`
 - `1 <= m, n <= 500`
 - `0 <= nums1[i], nums2[i] <= 9`

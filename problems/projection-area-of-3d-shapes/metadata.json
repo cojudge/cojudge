@@ -1,6 +1,6 @@
 {
   "id": "projection-area-of-3d-shapes",
-  "title": "874. Projection Area of 3D Shapes",
+  "title": "874. Проекционная область 3D-форм",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/projection-area-of-3d-shapes/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "grid = [[1,2],[3,4]]",
       "output": "17",
-      "explanation": "4 squares from above, 2 + 4 = 6 from the front, and 3 + 4 = 7 from the side."
+      "explanation": "4 квадраты сверху, 2 + 4 = 6 спереди, и 3 + 4 = 7 сбоку."
     },
     {
       "input": "grid = [[2]]",
       "output": "5",
-      "explanation": "1 from above, 2 from the front, and 2 from the side."
+      "explanation": "1 сверху, 2 спереди и 2 сбоку."
     },
     {
       "input": "grid = [[1,0],[0,2]]",
       "output": "8",
-      "explanation": "2 from above, 1 + 2 = 3 from the front, and 1 + 2 = 3 from the side."
+      "explanation": "2 сверху, 1 + 2 = 3 спереди, и 1 + 2 = 3 сбоку."
     }
   ],
   "starterCode": {
@@ -54,7 +54,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "The top view is simply the count of cells holding at least one cube.",
-    "The front view sums each row's maximum and the side view sums each column's maximum."
+    "Верхний вид — это просто количество клеток, содержащих по крайней мере один куб.",
+    "Вид спереди суммирует максимум каждой строки, а вид сбоку суммирует максимум каждой колонки."
   ]
 }

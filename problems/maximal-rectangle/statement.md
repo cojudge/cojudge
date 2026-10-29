@@ -1,10 +1,10 @@
-Given a binary grid written with the characters `'0'` and `'1'`, find the area of the largest axis-aligned rectangle that contains only `'1'` cells.
+Учитывая двоичную сетку, написанную символами `'0'` и `'1'`, найдите область самого большого прямоугольника, выровненного по оси, который содержит только ячейки `'1'`.
 
-Treat each row as the base of a histogram whose bar heights count consecutive `'1'`s above (including the current row), then measure the biggest rectangle inside that histogram. The best value across all rows is the answer.
+Относитесь к каждой строке как к основанию гистограммы, чьи барные высоты считаются последовательными `'1'` выше (включая текущий ряд), а затем измеряйте самый большой прямоугольник внутри этой гистограммы.
 
-> **Adaptation note:** the original LeetCode signature uses `char[][]`. This problem uses the portable `char_array_2d` type, which carries rows of single-character strings such as `[["1","0"],["0","1"]]`. Values are still only `"0"` and `"1"`.
+**Примечание: ** Оригинальная подпись LeetCode использует `char[][]`. Эта проблема использует портативный тип `char_array_2d`, который несет строки односимвольных строк, таких как `[["1","0"],["0","1"]]`. Значения по-прежнему только `"0"` и `"1"`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= matrix.length <= 200`
 - `1 <= matrix[0].length <= 200`
-- Each entry is `"0"` or `"1"`.
+- Каждая запись `"0"` или `"1"`.

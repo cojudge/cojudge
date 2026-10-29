@@ -1,9 +1,9 @@
-Raise a base to an enormous exponent given digit by digit, then reduce modulo 1337.
+Поднимите базу до огромного показателя, заданного цифрой за цифрой, а затем уменьшите модуль 1337.
 
-You receive an integer `a` and an array `b` whose entries are the decimal digits of a huge exponent (most significant first, no leading zeros). Compute `a` raised to that exponent, modulo `1337`. The exponent can have up to 2000 digits, so it must never be rebuilt as one machine integer; instead fold the digits in one at a time with modular arithmetic.
+Вы получаете целое число `a` и массив `b`, записи которого являются десятичными цифрами огромного экспонента (наиболее значительными первыми, без ведущих нулей). Вычислите `a`, поднятый до этого экспонента, модуля `1337`. Экспонент может иметь до 2000 цифр, поэтому он никогда не должен быть перестроен как одно целое число машины; вместо этого сложите цифры в одно за раз с модульной арифметикой.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= a <= 2^31 - 1`
 - `1 <= b.length <= 2000`
 - `0 <= b[i] <= 9`
-- `b` has no leading zeros.
+- `b` не имеет ведущих нулей.

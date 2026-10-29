@@ -1,6 +1,6 @@
 {
   "id": "unique-email-addresses",
-  "title": "916. Unique Email Addresses",
+  "title": "916. Уникальные адреса электронной почты",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/unique-email-addresses/",
   "category": "string",
@@ -8,7 +8,7 @@
     {
       "input": "emails = [\"test.email+alex@leetcode.com\",\"test.e.mail+bob.cathy@leetcode.com\",\"testemail+david@lee.tcode.com\"]",
       "output": "2",
-      "explanation": "The first two both become \"testemail@leetcode.com\"."
+      "explanation": "Первыми двумя из них стали «testemail@leetcode.com»."
     },
     {
       "input": "emails = [\"a@leetcode.com\",\"b@leetcode.com\",\"c@leetcode.com\"]",
@@ -17,7 +17,7 @@
     {
       "input": "emails = [\"test.email+alex@leetcode.com\",\"test.email.leet+alex@code.com\"]",
       "output": "2",
-      "explanation": "Different domains keep them distinct."
+      "explanation": "Различные домены сохраняют их различны."
     }
   ],
   "starterCode": {
@@ -61,8 +61,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Split each address once at '@' to separate local and domain handling.",
-    "In the local part, keep characters before '+' and drop every '.'; the domain never changes.",
-    "Collect normalized strings in a set and return its size."
+    "Разделите каждый адрес один раз на «@», чтобы отделить локальную обработку и обработку домена.",
+    "В локальной части сохраняйте символы перед «+» и отбрасывайте все «.»; домен никогда не меняется.",
+    "Соберите нормализованные струны в наборе и верните их размер."
   ]
 }

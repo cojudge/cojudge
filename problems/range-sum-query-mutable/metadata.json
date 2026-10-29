@@ -1,6 +1,6 @@
 {
   "id": "range-sum-query-mutable",
-  "title": "399. Range Sum Query - Mutable",
+  "title": "399. Range Sum Query — мутабельный",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/range-sum-query-mutable/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,3,5], operations = [\"sumRange\",\"update\",\"sumRange\"], values = [[0,2],[1,2],[0,2]]",
       "output": "[9,8]",
-      "explanation": "Range sums 9, then 8 after the point update."
+      "explanation": "Диапазон суммирует 9, затем 8 после обновления точки."
     },
     {
       "input": "nums = [7], operations = [\"sumRange\",\"update\",\"sumRange\"], values = [[0,0],[0,4],[0,0]]",
       "output": "[7,4]",
-      "explanation": "Single cell read, rewritten, re-read."
+      "explanation": "Одиночная клетка читается, переписывается, перечитывается."
     },
     {
       "input": "nums = [0,0], operations = [\"update\",\"update\",\"sumRange\"], values = [[0,5],[1,3],[0,1]]",
       "output": "[8]",
-      "explanation": "Two updates precede the only query."
+      "explanation": "Два обновления предшествуют единственному запросу."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Replay the script on a plain copy of the array to get a simple (if slower) baseline.",
-    "For full speed, back the array with a segment tree or binary indexed tree for logarithmic updates and queries.",
-    "Only \"sumRange\" steps append to the answer; updates just change stored state."
+    "Повторите сценарий на простой копии массива, чтобы получить простую (если медленнее) базовую линию.",
+    "Для полной скорости верните массив с деревом сегмента или деревом с двоичной индексацией для логарифмических обновлений и запросов.",
+    "К ответу прилагаются только шаги «sumRange»; обновления просто меняют сохраненное состояние."
   ]
 }

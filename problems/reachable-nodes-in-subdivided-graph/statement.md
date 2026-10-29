@@ -1,10 +1,10 @@
-An undirected graph has `n` original nodes numbered `0` to `n - 1`. Each entry `edges[i] = [u, v, cnt]` means the direct link between `u` and `v` is split by `cnt` brand-new middle nodes in a row, so traveling from `u` to `v` costs `cnt + 1` moves.
+Ненаправленный график имеет оригинальные узлы `n` с номером `0` до `n - 1`. Каждая запись `edges[i] = [u, v, cnt]` означает, что прямая связь между `u` и `v` разделена новыми средними узлами `cnt` подряд, поэтому путешествие от `u` до `v` стоит ходов `cnt + 1`.
 
-Starting from node `0` with at most `maxMoves` moves, you may walk along these chains in any way. Count every node you can reach: original nodes plus any subdivision nodes stepped on. Return that total.
+Начиная с узла `0` с максимумом ходов `maxMoves`, вы можете идти по этим цепочкам любым способом. Подсчитайте каждый узел, которого вы можете достичь: оригинальные узлы плюс любые узлы подразделения. Верните эту сумму.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= edges.length <= 10^4`
-- `edges[i] = [u, v, cnt]` with `0 <= u, v < n` and `u != v`
+- `edges[i] = [u, v, cnt]` с `0 <= u, v < n` и `u != v`
 - `0 <= cnt <= 10^4`
 - `0 <= maxMoves <= 10^9`
 - `1 <= n <= 10`

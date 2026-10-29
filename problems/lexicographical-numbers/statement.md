@@ -1,8 +1,8 @@
-Consider how positive integers look when written as decimal strings and compared alphabetically: `"10"` starts with `'1'`, so it comes before `"2"`, even though ten is numerically larger than two. This task asks for the numbers from `1` through `n` arranged by that string ordering rather than by size.
+Рассмотрим, как выглядят положительные целые числа, когда они написаны как десятичные строки и сравниваются в алфавитном порядке: `"10"` начинается с `'1'`, поэтому он идет перед `"2"`, хотя десять численно больше двух. Эта задача запрашивает числа от `1` до `n`, расположенные по этой строке, а не по размеру.
 
-Write a function that takes `n` and returns every integer in the interval `[1, n]`, sorted by the lexicographic order of its decimal representation.
+Запишите функцию, которая принимает `n` и возвращает каждое целое число в интервале `[1, n]`, отсортированном по лексикографическому порядку его десятичного представления.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 5 * 10^4`
 
-Aim for a method that visits each value once and keeps only a constant amount of working memory besides the answer list.
+Цель метода, который посещает каждое значение один раз и сохраняет только постоянное количество рабочей памяти, кроме списка ответов.

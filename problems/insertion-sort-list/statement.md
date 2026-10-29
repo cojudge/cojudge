@@ -1,7 +1,7 @@
-Sort a singly linked list using insertion sort and return the head of the ordered list.
+Сортируйте единый связанный список, используя сортировку вставки, и возвращайте заголовок упорядоченного списка.
 
-Insertion sort builds the answer one element at a time: take the next input node, find where it belongs among the already sorted prefix, and splice it in. Repeat until no input nodes remain.
+Вставка сортирует ответ по одному элементу за раз: возьмите следующий входной узел, найдите, где он принадлежит к уже отсортированному префиксу, и сплайсируйте его. Повторяйте до тех пор, пока не останутся входные узлы.
 
-**Constraints:**
-- The list holds between 1 and 5000 nodes.
+**Ограничения:**
+- Список находится между узлами 1 и 5000.
 - `-5000 <= Node.val <= 5000`

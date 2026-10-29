@@ -1,18 +1,18 @@
 {
   "id": "basic-sort-two",
-  "title": "7. Sort Two Numbers",
+  "title": "7. Сортировать два числа",
   "difficulty": "Easy",
   "category": "if-else",
   "examples": [
     {
       "input": "a = 5, b = 2",
       "output": "[2,5]",
-      "explanation": "2 comes before 5."
+      "explanation": "2 предшествует 5."
     },
     {
       "input": "a = 3, b = 3",
       "output": "[3,3]",
-      "explanation": "Equal values stay as they are."
+      "explanation": "Равные ценности остаются такими, какие они есть."
     }
   ],
   "starterCode": {
@@ -52,7 +52,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Use an `if` to decide which value goes first.",
-    "The result always has exactly two elements."
+    "Используйте `if`, чтобы решить, какое значение идет первым.",
+    "Результат всегда имеет ровно два элемента."
   ]
 }

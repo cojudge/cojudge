@@ -1,6 +1,6 @@
-Write out all positive integers in order, glued together into one endless digit string: `12345678910111213...`. Given a one-based position `n` into that string, report which digit sits there.
+Запишите все положительные целые числа в порядке, склеенные в одну бесконечную струну с цифрой: `12345678910111213...`. Учитывая одностороннюю позицию `n` в этой строке, сообщите, какая цифра находится там.
 
-For example, positions `1` through `9` hold `1` through `9`, position `10` holds the `'1'` of `10`, and position `11` holds the `'0'` of `10`.
+Например, позиции `1` через `9` удерживают `1` через `9`, позиция `10` удерживает `'1'` от `10`, а позиция `11` удерживает `'0'` от `10`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 2^31 - 1`

@@ -1,6 +1,6 @@
 {
   "id": "race-car",
-  "title": "816. Race Car",
+  "title": "816. Гоночный автомобиль",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/race-car/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "target = 3",
       "output": "2",
-      "explanation": "Drive forward twice: positions 1 then 3, using two A commands."
+      "explanation": "Дважды пройдите вперед: позиции 1, затем 3, используя две команды A."
     },
     {
       "input": "target = 6",
       "output": "5",
-      "explanation": "One shortest plan is A,A,R,A,A: overshoot to 7, reverse, then advance to 6."
+      "explanation": "Одним из самых коротких планов является A, A, R, A, A: перейдите в 7, переверните, затем перейдите в 6."
     },
     {
       "input": "target = 1",
       "output": "1",
-      "explanation": "A single forward move reaches the flag."
+      "explanation": "Одно движение вперед достигает флага."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Let n be the smallest run of A commands passing the flag (position 2^n - 1): either stop exactly or overshoot and come back.",
-    "Memoize results: overshooting costs n+1 plus the mirrored remainder; alternatively stop one step early and add a short forward burst."
+    "Пусть n будет наименьшим пробегом команд A, проходящих через флаг (позиция 2^n - 1): либо точно остановитесь, либо перевыпустите и вернитесь.",
+    "Результаты запоминания: превышение затрат n + 1 плюс зеркальный остаток; в качестве альтернативы остановитесь на один шаг раньше и добавьте короткий передний всплеск."
   ]
 }

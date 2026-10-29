@@ -1,6 +1,6 @@
 {
   "id": "gas-station",
-  "title": "140. Gas Station",
+  "title": "140. Газовая станция",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/gas-station/",
   "category": "greedy",
@@ -8,17 +8,17 @@
     {
       "input": "gas = [1,2,3,4,5], cost = [3,4,5,1,2]",
       "output": "3",
-      "explanation": "Starting at station 3 allows a complete circuit without running out of fuel."
+      "explanation": "Запуск на станции 3 обеспечивает полную схему без выхлопа топлива."
     },
     {
       "input": "gas = [2,3,4], cost = [3,4,3]",
       "output": "-1",
-      "explanation": "No starting station can complete the circuit (total gas < total cost)."
+      "explanation": "Ни одна стартовая станция не может завершить схему (общая стоимость газа)."
     },
     {
       "input": "gas = [5], cost = [4]",
       "output": "0",
-      "explanation": "Starting at station 0, there is enough gas (5) to cover the cost (4) and complete the circuit."
+      "explanation": "Начиная со станции 0, достаточно газа (5), чтобы покрыть стоимость (4) и завершить схему."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "A circuit is impossible when total gas is less than total cost.",
-    "Track the running fuel balance from a candidate start while scanning the stations once.",
-    "If the balance becomes negative at station i, no station from the current candidate through i can be a valid start, so try i + 1."
+    "Схема невозможна, когда общий газ меньше общей стоимости.",
+    "Отслеживайте текущий топливный баланс от кандидата, начиная сканирование станций один раз.",
+    "Если баланс становится отрицательным на станции i, ни одна станция от текущего кандидата через i не может быть действительным стартом, поэтому попробуйте i + 1."
   ]
 }

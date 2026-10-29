@@ -1,6 +1,6 @@
 {
   "id": "binary-tree-right-side-view",
-  "title": "99. Binary Tree Right Side View",
+  "title": "99. Бинарное дерево Правое боковое зрение",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/binary-tree-right-side-view/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,2,3,null,5,null,4]",
       "output": "[1,3,4]",
-      "explanation": "From the right side, you see the root (1), then the rightmost node at level 2 (3), then the rightmost node at level 3 (4)."
+      "explanation": "С правой стороны вы видите корень (1), затем самый правый узел на уровне 2 (3), затем самый правый узел на уровне 3 (4)."
     },
     {
       "input": "root = [1,2,3,4,null,null,null,5]",
       "output": "[1,3,4,5]",
-      "explanation": "From the right side, you see the root (1), then 3 at level 2, then 4 at level 3, then 5 at level 4."
+      "explanation": "С правой стороны вы видите корень (1), затем 3 на уровне 2, затем 4 на уровне 3, затем 5 на уровне 4."
     },
     {
       "input": "root = []",
       "output": "[]",
-      "explanation": "An empty tree has no visible nodes."
+      "explanation": "Пустое дерево не имеет видимых узлов."
     }
   ],
   "starterCode": {
@@ -55,8 +55,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "A breadth-first traversal exposes all nodes one level at a time; record the final node processed on each level.",
-    "Alternatively, traverse right children before left children and record the first node reached at each depth.",
-    "A left child can still be visible when no node farther right exists at that depth."
+    "Широкополосный первый обход обнажает все узлы по одному уровню за раз; записывает конечный узел, обработанный на каждом уровне.",
+    "В качестве альтернативы, перейдите правых потомков перед левыми детьми и запишите первый узел, достигнутый на каждой глубине.",
+    "Левый потомок все еще может быть виден, когда на этой глубине нет узла дальше правого."
   ]
 }

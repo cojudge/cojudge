@@ -1,6 +1,6 @@
 {
   "id": "bulls-and-cows",
-  "title": "393. Bulls and Cows",
+  "title": "393. Быки и коровы",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/bulls-and-cows/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "secret = \"1807\", guess = \"7810\"",
       "output": "\"1A3B\"",
-      "explanation": "One digit lines up; three others are displaced matches."
+      "explanation": "Одна цифра выравнивается; три других — смещенные спички."
     },
     {
       "input": "secret = \"1123\", guess = \"0111\"",
       "output": "\"1A1B\"",
-      "explanation": "One bull plus one reusable '1' elsewhere."
+      "explanation": "Один бык плюс один многоразовый 1 в другом месте."
     },
     {
       "input": "secret = \"11\", guess = \"10\"",
       "output": "\"1A0B\"",
-      "explanation": "Only the first position matches."
+      "explanation": "Только первая позиция совпадает."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "First sweep the positions once to count bulls and set those spots aside.",
-    "For the remaining spots, count how many of each digit each string still holds.",
-    "Each digit contributes the smaller of its two leftover counts to the cow total."
+    "Сначала сметайте позиции один раз, чтобы посчитать быков и отставить эти места в сторону.",
+    "Для остальных пятен подсчитайте, сколько каждой цифры все еще держит каждая строка.",
+    "Каждая цифра вносит меньший из двух оставшихся отсчетов в общую сумму коров."
   ]
 }

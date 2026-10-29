@@ -1,7 +1,7 @@
-You receive two lowercase strings `s` and `p`. Slide a window of length `p.length` across `s` and note every starting index where the window holds exactly the same multiset of letters as `p` (that is, some rearrangement of `p`). Return all such starts in any order.
+Вы получаете две строчки нижнего регистра `s` и `p`. Слайдируйте окно длины `p.length` через `s` и обратите внимание на каждый стартовый индекс, где окно содержит точно такой же набор букв, как `p` (то есть некоторую перестановку `p`).
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length, p.length <= 3 * 10^4`
-- Both strings use only lowercase English letters.
+- В обеих строках используются только английские буквы.
 
-Adaptation: the source returns a list of integers; here it maps to `int_list`.
+Адаптация: источник возвращает список целых чисел; здесь он отображает `int_list`.

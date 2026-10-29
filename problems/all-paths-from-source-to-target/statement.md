@@ -1,9 +1,9 @@
-You receive a directed acyclic graph with `n` vertices numbered `0` through `n - 1`. It is stored as an adjacency list `graph`, where `graph[i]` lists every vertex reachable by one directed edge from `i`. Every edge points from a smaller index to a larger one, so no cycles exist.
+Вы получаете направленный ациклический граф с вершинами `n`, пронумерованными `0` через `n - 1`. Он хранится как список смежности `graph`, где `graph[i]` перечисляет каждую вершину, доступную по одному направленному краю от `i`. Каждая кромка указывает от меньшего индекса к большему, поэтому циклов не существует.
 
-List every directed route that starts at vertex `0` and finishes at vertex `n - 1`. The order of the routes in your answer does not matter, but each individual route must list vertices from start to finish.
+Перечислите каждый направленный маршрут, который начинается в вершине `0` и заканчивается в вершине `n - 1`. Порядок маршрутов в вашем ответе не имеет значения, но каждый отдельный маршрут должен перечислить вершины от начала до конца.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= n <= 15`
-- `graph[i]` contains distinct vertices larger than `i`
-- At least the structure is acyclic; the target may be unreachable
-- Adaptation: the nested input maps to int_array_2d and the nested output maps to int_list_2d in this judge.
+- `graph[i]` содержит различные вершины больше, чем `i`
+- По меньшей мере, структура является ациклической; цель может быть недостижимой.
+- Адаптация: вложенные карты ввода в int_array_2d и вложенные карты вывода в int_list_2d в этом решении.

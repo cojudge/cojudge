@@ -1,6 +1,6 @@
 {
   "id": "word-pattern-ii",
-  "title": "387. Word Pattern II",
+  "title": "387. Скриншоты Word Pattern II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/word-pattern-ii/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "pattern = \"abab\", s = \"redblueredblue\"",
       "output": "true",
-      "explanation": "'a' maps to \"red\" and 'b' maps to \"blue\"."
+      "explanation": "\"a\" карты на \"красный\" и \"b\" карты на \"синий\"."
     },
     {
       "input": "pattern = \"aaaa\", s = \"asdasdasdasd\"",
       "output": "true",
-      "explanation": "Each 'a' maps to \"asd\"."
+      "explanation": "Каждая «а» карта обозначает «асд»."
     },
     {
       "input": "pattern = \"aabb\", s = \"xyzabcxzyabc\"",
       "output": "false",
-      "explanation": "No bijective block mapping rebuilds the text."
+      "explanation": "Никакое биджективное отображение блоков не восстанавливает текст."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Try assigning the next pattern letter to every possible non-empty block starting at the current text position, then solve the rest recursively.",
-    "Keep both directions of the mapping: letter -> block and used blocks, so two letters never share one block.",
-    "When a letter already has a block, simply check the text continues with that block instead of guessing again."
+    "Попробуйте назначить следующую шаблонную букву каждому возможному непустому блоку, начиная с текущей текстовой позиции, а затем рекурсивно решить остальную часть.",
+    "Сохраняйте оба направления отображения: буква -> блок и используемые блоки, поэтому две буквы никогда не разделяют один блок.",
+    "Когда в письме уже есть блок, просто проверьте, что текст продолжается с этим блоком, вместо того, чтобы снова гадать."
   ]
 }

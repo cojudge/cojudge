@@ -1,6 +1,6 @@
 {
   "id": "shortest-word-distance",
-  "title": "349. Shortest Word Distance",
+  "title": "349. Самое короткое расстояние между словами",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/shortest-word-distance/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "wordsDict = [\"practice\",\"makes\",\"perfect\",\"coding\",\"makes\"], word1 = \"coding\", word2 = \"practice\"",
       "output": "3",
-      "explanation": "\"coding\" is at index 3 and \"practice\" at index 0, so the gap is 3."
+      "explanation": "«Кодирование» находится в индексе 3 и «практика» в индексе 0, поэтому разрыв составляет 3."
     },
     {
       "input": "wordsDict = [\"practice\",\"makes\",\"perfect\",\"coding\",\"makes\"], word1 = \"makes\", word2 = \"coding\"",
       "output": "1",
-      "explanation": "\"makes\" at index 4 and \"coding\" at index 3 are adjacent."
+      "explanation": "\"создает\" индекс 4 и \"кодирует\" индекс 3 являются смежными."
     }
   ],
   "starterCode": {
@@ -60,7 +60,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sweep once while remembering the latest index of each target word.",
-    "Whenever both words have been seen, update the best gap with the current distance."
+    "Прокрутите один раз, запоминая последний индекс каждого целевого слова.",
+    "Всякий раз, когда оба слова были замечены, обновляйте лучший разрыв с текущим расстоянием."
   ]
 }

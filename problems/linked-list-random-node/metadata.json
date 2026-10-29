@@ -1,6 +1,6 @@
 {
   "id": "linked-list-random-node",
-  "title": "458. Linked List Random Node",
+  "title": "458. Связанный список Random Node",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/linked-list-random-node/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "head = [1,2,3]",
       "output": "2",
-      "explanation": "Any of 1, 2, or 3 is valid."
+      "explanation": "Любой из 1, 2 или 3 действителен."
     },
     {
       "input": "head = [5]",
       "output": "5",
-      "explanation": "Only value available."
+      "explanation": "Доступна только стоимость."
     },
     {
       "input": "head = [1,2,2,3]",
       "output": "2",
-      "explanation": "Returned value appears in the list."
+      "explanation": "Возвращенная стоимость появляется в списке."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Collecting the values into an array and picking one index works for a single call.",
-    "Reservoir sampling (keep candidate i with probability 1/i) handles unknown lengths in one pass.",
-    "The judge only checks membership, not uniformity."
+    "Сбор значений в массив и выбор одного индекса работает для одного вызова.",
+    "Отбор проб водохранилища (сохранение кандидата i с вероятностью 1/i) обрабатывает неизвестные длины за один проход.",
+    "Судья проверяет только членство, а не единообразие."
   ]
 }

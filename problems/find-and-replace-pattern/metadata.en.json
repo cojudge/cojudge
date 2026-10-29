@@ -1,0 +1,63 @@
+{
+  "id": "find-and-replace-pattern",
+  "title": "881. Find and Replace Pattern",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/find-and-replace-pattern/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "words = [\"abc\",\"deq\",\"mee\",\"aqq\",\"dkd\",\"ccc\"], pattern = \"abb\"",
+      "output": "[\"mee\",\"aqq\"]",
+      "explanation": "\"mee\" and \"aqq\" repeat their last two letters exactly like \"abb\" does. \"abc\" and \"deq\" use three distinct letters, \"dkd\" repeats the first and last, and \"ccc\" repeats everything."
+    },
+    {
+      "input": "words = [\"a\",\"b\",\"c\"], pattern = \"a\"",
+      "output": "[\"a\",\"b\",\"c\"]",
+      "explanation": "Every single-letter word trivially shares the shape of a one-letter pattern."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> findAndReplacePattern(String[] words, String pattern) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findAndReplacePattern(self, words: List[str], pattern: str) -> List[str]:\n        pass",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> findAndReplacePattern(vector<string>& words, string pattern) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\n\npublic class Solution\n{\n    public List<string> FindAndReplacePattern(string[] words, string pattern)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_and_replace_pattern(words: Vec<String>, pattern: String) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc FindAndReplacePattern(words []string, pattern string) []string {\n    return []string{}\n}",
+    "typescript": "export function findAndReplacePattern(words: string[], pattern: string): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $words\n     * @param string $pattern\n     * @return string[]\n     */\n    public function findAndReplacePattern($words, $pattern) {\n        return [];\n    }\n}"
+  },
+  "testCases": [
+    {
+      "words": "[\"abc\",\"deq\",\"mee\",\"aqq\",\"dkd\",\"ccc\"]",
+      "pattern": "abb"
+    },
+    {
+      "words": "[\"a\",\"b\",\"c\"]",
+      "pattern": "a"
+    },
+    {
+      "words": "[\"aa\",\"bb\",\"ab\"]",
+      "pattern": "aa"
+    },
+    {
+      "words": "[\"ab\",\"ba\",\"cc\"]",
+      "pattern": "ab"
+    }
+  ],
+  "functionName": "findAndReplacePattern",
+  "params": [
+    {
+      "name": "words",
+      "type": "string_array"
+    },
+    {
+      "name": "pattern",
+      "type": "string"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Reduce each word to its repetition shape by replacing every letter with the index of its first appearance.",
+    "A word fits exactly when its shape equals the pattern's shape; compare the two encodings."
+  ]
+}

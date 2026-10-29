@@ -1,6 +1,6 @@
-A non-negative integer has monotone digits when each digit (read left to right) is greater than or equal to the previous one — for instance `123`, `1123` and `7` qualify, while `132` and `1000` do not.
+Неотрицательное целое число имеет монотонные цифры, когда каждая цифра (читай слева направо) больше или равна предыдущей — например, `123`, `1123` и `7` квалифицируются, а `132` и `1000` нет.
 
-Given `n`, return the largest integer that is less than or equal to `n` and has monotone digits.
+Учитывая `n`, верните наибольшее целое число, которое меньше или равно `n` и имеет монотонные цифры.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= n <= 10^9`

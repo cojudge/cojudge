@@ -1,0 +1,69 @@
+{
+  "id": "koko-eating-bananas",
+  "title": "89. Koko Eating Bananas",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/koko-eating-bananas/",
+  "category": "binary-search",
+  "examples": [
+    {
+      "input": "piles = [3,6,7,11], h = 8",
+      "output": "4",
+      "explanation": "At 4 bananas/hour Koko takes ceil(3/4)+ceil(6/4)+ceil(7/4)+ceil(11/4) = 1+2+2+3 = 8 hours; at 3 bananas/hour she would take 1+2+3+4 = 10 hours, exceeding the 8-hour limit."
+    },
+    {
+      "input": "piles = [30,11,23,4,20], h = 5",
+      "output": "30",
+      "explanation": "At 30 bananas/hour Koko takes ceil(30/30)+ceil(11/30)+ceil(23/30)+ceil(4/30)+ceil(20/30) = 1+1+1+1+1 = 5 hours; at 29 bananas/hour she would take 2+1+1+1+1 = 6 hours, exceeding the 5-hour limit."
+    },
+    {
+      "input": "piles = [30,11,23,4,20], h = 6",
+      "output": "23",
+      "explanation": "At 23 bananas/hour Koko takes ceil(30/23)+ceil(11/23)+ceil(23/23)+ceil(4/23)+ceil(20/23) = 2+1+1+1+1 = 6 hours; at 22 bananas/hour she would take 2+1+2+1+1 = 7 hours, exceeding the 6-hour limit."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minEatingSpeed(int[] piles, int h) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def minEatingSpeed(self, piles: List[int], h: int) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minEatingSpeed(vector<int>& piles, int h) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinEatingSpeed(int[] piles, int h)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_eating_speed(piles: Vec<i32>, h: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinEatingSpeed(piles []int, h int) int {\n    return 0\n}",
+    "typescript": "export function minEatingSpeed(piles: number[], h: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $piles\n     * @param int $h\n     * @return int\n     */\n    public function minEatingSpeed($piles, $h) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "piles": "[3,6,7,11]",
+      "h": 8
+    },
+    {
+      "piles": "[30,11,23,4,20]",
+      "h": 5
+    },
+    {
+      "piles": "[30,11,23,4,20]",
+      "h": 6
+    },
+    {
+      "piles": "[1]",
+      "h": 1
+    }
+  ],
+  "functionName": "minEatingSpeed",
+  "params": [
+    {
+      "name": "piles",
+      "type": "int_array"
+    },
+    {
+      "name": "h",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "For a fixed speed k, one pile of size p takes ceil(p / k) hours.",
+    "If a speed is fast enough, every larger speed is also fast enough.",
+    "Binary-search speeds from 1 through the largest pile and accumulate hours in a wide integer type."
+  ]
+}

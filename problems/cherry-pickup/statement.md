@@ -1,10 +1,10 @@
-You are given a square grid where each cell holds `0` (empty), `1` (a cherry), or `-1` (a thorn that blocks passage).
+Вы получаете квадратную сетку, где каждая ячейка содержит `0` (пустая), `1` (вишня) или `-1` (заноза, которая блокирует проход).
 
-One trip starts at the top-left corner, moves only right or down to the bottom-right corner, then returns from the bottom-right back to the top-left moving only left or up. A cherry on a visited cell is collected once: stepping on the same cell during both legs still yields just one cherry, and thorn cells can never be entered.
+Одна поездка начинается в верхнем левом углу, перемещается только вправо или вниз в нижний правый угол, затем возвращается из нижнего правого обратно в верхнее левое движение только влево или вверх.Вишенка на посещаемой клетке собирается один раз: наступление на одну и ту же клетку во время обеих ног все еще дает только одну вишню, и колючие клетки никогда не могут быть введены.
 
-Because the return path mirrors a second forward path, think of two walkers moving from the top-left to the bottom-right together. Return the greatest number of cherries collectible over such a round trip, or `0` when no valid round trip exists.
+Поскольку обратный путь отражает второй прямой путь, подумайте о двух ходоках, движущихся от верхнего левого к нижнему правому вместе. Верните наибольшее количество вишни, коллекционируемой в течение такого круглого путешествия, или `0`, когда нет действительного круглого путешествия.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= grid.length <= 50`
 - `grid[i].length == grid.length`
-- Cells hold only `-1`, `0` or `1`.
+- Ячейки содержат только `-1`, `0` или `1`.

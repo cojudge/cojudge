@@ -1,6 +1,6 @@
 {
   "id": "number-of-recent-calls",
-  "title": "920. Number of Recent Calls",
+  "title": "920. Количество последних звонков",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/number-of-recent-calls/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "pings = [1,100,3001,3002]",
       "output": "[1,2,3,3]",
-      "explanation": "The third call still sees the first one, the fourth drops it."
+      "explanation": "Третий звонок все еще видит первый, четвертый бросает его."
     },
     {
       "input": "pings = [1,2,3,4]",
       "output": "[1,2,3,4]",
-      "explanation": "All four fit inside one window."
+      "explanation": "Все четверо вмещаются в одно окно."
     },
     {
       "input": "pings = [1,4000,8000]",
       "output": "[1,1,1]",
-      "explanation": "Gaps exceed the window."
+      "explanation": "Пробелы выходят за окно."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Adaptation: replay the trace with a queue instead of building a class; each entry answers one ping in order.",
-    "Keep only times within [t-3000, t]; drop older front entries before recording the size.",
-    "The queue size after cleanup is the answer for that call."
+    "Адаптация: переигрывание трассы с очередями вместо построения класса; каждая запись отвечает на один пинг в порядке.",
+    "Храните только время в [t-3000, t]; перед записью размера опустите старые передние записи.",
+    "Размер очередей после уборки является ответом на этот звонок."
   ]
 }

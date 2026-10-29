@@ -1,6 +1,6 @@
 {
   "id": "sparse-matrix-multiplication",
-  "title": "401. Sparse Matrix Multiplication",
+  "title": "401. Умножение спаренной матрицы",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/sparse-matrix-multiplication/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "mat1 = [[1,0,0],[-1,0,3]], mat2 = [[7,0,0],[0,0,0],[0,0,1]]",
       "output": "[[7,0,0],[-7,0,3]]",
-      "explanation": "Zero entries contribute nothing to the dots."
+      "explanation": "Нулевые записи ничего не вносят в точки."
     },
     {
       "input": "mat1 = [[0]], mat2 = [[0]]",
       "output": "[[0]]",
-      "explanation": "Zero times zero is zero."
+      "explanation": "Нулевое время равно нулю."
     },
     {
       "input": "mat1 = [[1,2],[3,4]], mat2 = [[5,6],[7,8]]",
       "output": "[[19,22],[43,50]]",
-      "explanation": "Standard 2 x 2 product."
+      "explanation": "Стандартный продукт 2 x 2."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Entry (i, j) of the answer sums mat1[i][p] * mat2[p][j] over the shared dimension p.",
-    "Skip any mat1[i][p] that is zero: its whole inner contribution vanishes.",
-    "Pre-collect the nonzero entries of each mat2 row to avoid scanning zeros repeatedly."
+    "Ввод (i, j) ответа суммирует mat1[i][p]* mat2[p][j] над общим измерением p.",
+    "Пропустите любой mat1[i][p], который равен нулю: весь его внутренний вклад исчезает.",
+    "Предварительно соберите ненулевые записи каждой строки mat2, чтобы избежать многократного сканирования нулей."
   ]
 }

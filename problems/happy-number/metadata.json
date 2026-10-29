@@ -1,6 +1,6 @@
 {
   "id": "happy-number",
-  "title": "145. Happy Number",
+  "title": "145. Счастливый номер",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/happy-number/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "n = 19",
       "output": "true",
-      "explanation": "The digit-square sequence reaches 1."
+      "explanation": "Цифровая квадратная последовательность достигает 1."
     },
     {
       "input": "n = 2",
       "output": "false",
-      "explanation": "The sequence enters a cycle that does not contain 1."
+      "explanation": "Последовательность входит в цикл, который не содержит 1."
     },
     {
       "input": "n = 1",
       "output": "true",
-      "explanation": "1 is already 1, so its digit-square sequence stays at 1."
+      "explanation": "1 уже является 1, поэтому его последовательность цифрового квадрата остается на 1."
     }
   ],
   "starterCode": {
@@ -57,8 +57,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Write a helper that computes the sum of the squares of an integer's digits.",
-    "A non-happy sequence must eventually repeat because digit-square sums are bounded.",
-    "Use a set to detect repetition, or use Floyd's slow-and-fast pointer cycle detection for constant extra space."
+    "Напишите помощника, который вычисляет сумму квадратов цифр целого числа.",
+    "Несчастливая последовательность должна в конечном итоге повториться, потому что суммы в квадрате ограничены.",
+    "Используйте набор для обнаружения повторения или используйте медленное и быстрое обнаружение цикла указателя Флойда для постоянного дополнительного пространства."
   ]
 }

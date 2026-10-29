@@ -1,9 +1,9 @@
-Take the string `s` and flip the order of its vowels while leaving every other character exactly where it is.
+Возьмите строку `s` и переверните порядок ее гласных, оставив все остальные символы именно там, где они есть.
 
-Vowels are the letters `a`, `e`, `i`, `o`, `u` in either upper or lower case. Collect them in the order they appear, then write them back in reverse across the same vowel positions. Consonants, digits, spaces, and punctuation never move.
+Голоса — это буквы `a`, `e`, `i`, `o`, `u` в верхнем или нижнем регистре. Соберите их в порядке, в котором они появляются, а затем запишите обратно в тех же положениях гласных. Согласующие, цифры, пробелы и пунктуация никогда не перемещаются.
 
-Return the resulting string.
+Верните полученную строку.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 3 * 10^5`
-- `s` consists of printable ASCII characters.
+- `s` состоит из печатаемых символов ASCII.

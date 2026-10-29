@@ -1,6 +1,6 @@
 {
   "id": "encode-and-decode-strings",
-  "title": "59. Encode and Decode Strings",
+  "title": "59. Encode и Decode строки",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/encode-and-decode-strings/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "strs = [\"hello\",\"world\"]",
       "output": "[\"hello\",\"world\"]",
-      "explanation": "The encoded string is decoded back to the original list."
+      "explanation": "Закодированная строка декодируется обратно в исходный список."
     },
     {
       "input": "strs = [\"\"]",
       "output": "[\"\"]",
-      "explanation": "A list containing an empty string is preserved."
+      "explanation": "Сохраняется список, содержащий пустую строку."
     },
     {
       "input": "strs = []",
       "output": "[]",
-      "explanation": "An empty list remains empty after encoding and decoding."
+      "explanation": "Пустой список остается пустым после кодирования и декодирования."
     }
   ],
   "classProblem": {
@@ -57,8 +57,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Think of a way to delimit each string so that decoding is unambiguous.",
-    "A common approach is to prefix each string with its length followed by a delimiter like '#'.",
-    "During decoding, read the length until the delimiter, then read that many characters as the next string."
+    "Подумайте о том, как разграничить каждую строку, чтобы декодирование было однозначным.",
+    "Общий подход заключается в том, чтобы префиксировать каждую строку с ее длиной, за которой следует делимитер, такой как «#».",
+    "Во время декодирования прочитайте длину до делимитера, затем прочитайте, что многие символы являются следующей строкой."
   ]
 }

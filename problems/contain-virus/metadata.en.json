@@ -1,0 +1,58 @@
+{
+  "id": "contain-virus",
+  "title": "752. Contain Virus",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/contain-virus/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "isInfected = [[0,1,0,0,0,0,0,1],[0,1,0,0,0,0,0,1],[0,0,0,0,0,0,0,1],[0,0,0,0,0,0,0,0]]",
+      "output": "10",
+      "explanation": "Seal left with 5 walls, let right spread, seal right with 5."
+    },
+    {
+      "input": "isInfected = [[1,1,1],[1,0,1],[1,1,1]]",
+      "output": "4",
+      "explanation": "Four walls close the single ring."
+    },
+    {
+      "input": "isInfected = [[1,1,1,0,0,0,0,0,0],[1,0,1,0,1,1,1,1,1],[1,1,1,0,0,0,0,0,0]]",
+      "output": "13",
+      "explanation": "Left ring sealed first, then the right mass."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int containVirus(int[][] isInfected) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def containVirus(self, isInfected: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int containVirus(vector<vector<int>>& isInfected) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int ContainVirus(int[][] isInfected) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn contain_virus(is_infected: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc ContainVirus(isInfected [][]int) int {\n    return 0\n}",
+    "typescript": "export function containVirus(isInfected: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $isInfected\n     * @return int\n     */\n    public function containVirus($isInfected) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "isInfected": "[[0,1,0,0,0,0,0,1],[0,1,0,0,0,0,0,1],[0,0,0,0,0,0,0,1],[0,0,0,0,0,0,0,0]]"
+    },
+    {
+      "isInfected": "[[1,1,1],[1,0,1],[1,1,1]]"
+    },
+    {
+      "isInfected": "[[1,1,1,0,0,0,0,0,0],[1,0,1,0,1,1,1,1,1],[1,1,1,0,0,0,0,0,0]]"
+    }
+  ],
+  "functionName": "containVirus",
+  "params": [
+    {
+      "name": "isInfected",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Each day, flood-fill every connected block of 1s, collecting both its cells and the set of neighboring 0s plus the wall count.",
+    "Seal the block with the biggest threatened set, add its wall count to the answer, freeze its cells, and infect the threatened cells of all other blocks.",
+    "Repeat until no block touches a healthy cell; frozen cells behave as permanent barriers."
+  ]
+}

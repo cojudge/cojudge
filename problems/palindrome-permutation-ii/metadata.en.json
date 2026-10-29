@@ -1,0 +1,60 @@
+{
+  "id": "palindrome-permutation-ii",
+  "title": "369. Palindrome Permutation II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/palindrome-permutation-ii/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "s = \"aabb\"",
+      "output": "[\"abba\",\"baab\"]",
+      "explanation": "Halves \"ab\" and \"ba\" mirror to full palindromes \"abba\" and \"baab\"."
+    },
+    {
+      "input": "s = \"abc\"",
+      "output": "[]",
+      "explanation": "Three different characters mean more than one odd count, so no palindrome exists."
+    },
+    {
+      "input": "s = \"aaa\"",
+      "output": "[\"aaa\"]",
+      "explanation": "All characters match, giving a single distinct palindrome."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\n\nclass Solution {\n    public List<String> generatePalindromes(String s) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def generatePalindromes(self, s: str) -> List[str]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> generatePalindromes(string s) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\n\npublic class Solution\n{\n    public List<string> GeneratePalindromes(string s)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn generate_palindromes(s: String) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc GeneratePalindromes(s string) []string {\n    return []string{}\n}",
+    "typescript": "export function generatePalindromes(s: string): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string[]\n     */\n    public function generatePalindromes($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "aabb"
+    },
+    {
+      "s": "abc"
+    },
+    {
+      "s": "aaa"
+    },
+    {
+      "s": "aab"
+    }
+  ],
+  "functionName": "generatePalindromes",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Count characters first; more than one odd count means the answer is empty.",
+    "Build palindromes from half the characters plus the middle character, permuting only the half uniquely."
+  ]
+}

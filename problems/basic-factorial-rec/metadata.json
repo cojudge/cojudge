@@ -1,6 +1,6 @@
 {
   "id": "basic-factorial-rec",
-  "title": "43. Factorial (Recursive)",
+  "title": "43. Факторный (рекурсивный)",
   "difficulty": "Easy",
   "category": "recursion",
   "examples": [
@@ -12,7 +12,7 @@
     {
       "input": "n = 0",
       "output": "1",
-      "explanation": "Base case."
+      "explanation": "Базовое дело."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "The base case is `n <= 1`, returning 1.",
-    "Otherwise return `n * factorialRec(n - 1)`."
+    "Базовый случай — `n <= 1`, возвращающий 1.",
+    "В противном случае возвращайте `n * factorialRec(n - 1)`."
   ]
 }

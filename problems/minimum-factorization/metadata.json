@@ -1,6 +1,6 @@
 {
   "id": "minimum-factorization",
-  "title": "649. Minimum Factorization",
+  "title": "649. Минимальная факторизация",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/minimum-factorization/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "a = 48",
       "output": "68",
-      "explanation": "48 splits as 6 x 8; arranging the digits increasingly gives 68, the smallest layout."
+      "explanation": "48 разделяется как 6 x 8; расположение цифр все чаще дает 68, самый маленький макет."
     },
     {
       "input": "a = 15",
       "output": "35",
-      "explanation": "15 splits as 3 x 5, ordered as 35."
+      "explanation": "15 разделяется как 3 x 5, заказывается как 35."
     },
     {
       "input": "a = 13",
       "output": "0",
-      "explanation": "13 is prime above 9, so no digit layout exists."
+      "explanation": "13 выше 9, поэтому не существует цифровой компоновки."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Single-digit inputs answer themselves; 1 answers 1.",
-    "Pull factors greedily from 9 down to 2 so the digit multiset stays small and sortable.",
-    "If a remainder above 1 survives, the task is impossible (answer 0); otherwise sort digits increasingly and reject overflows past 2^31-1."
+    "Однозначные входы отвечают сами за себя; 1 отвечает за 1.",
+    "Жадно перемещайте факторы от 9 до 2, чтобы цифровой мультисет оставался небольшим и сортируемым.",
+    "Если остаток выше 1 Выживает, задача невыполнима (ответ) 0); в противном случае сортируйте цифры все чаще и отклоняйте переливы прошлого 2^31-1."
   ]
 }

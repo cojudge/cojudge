@@ -1,10 +1,10 @@
-You are given an array `coins` where `coins[i]` is the price of standing on cell `i+1` (cells are numbered from 1). A value of `-1` means the cell is blocked and can never be used.
+Вы получаете массив `coins`, где `coins[i]` - это цена стояния на ячейке `i+1` (ячейки пронумерованы от 1). Значение `-1` означает, что ячейка заблокирована и никогда не может быть использована.
 
-Start on cell 1 paying `coins[0]`. From cell `i` you may jump forward between 1 and `maxJump` cells. Each visited cell adds its price. Reach cell `n` (the last cell) as cheaply as possible.
+Начните с ячейки 1, платя `coins[0]`. Из ячейки `i` вы можете перепрыгнуть между ячейками 1 и `maxJump`. Каждая посещенная ячейка добавляет свою цену. Достигните ячейки `n` (последняя ячейка) как можно дешевле.
 
-Return the visited cell numbers in order, from 1 to `n`. When several cheapest routes exist, return the lexicographically smallest list. When the last cell cannot be reached, return an empty list.
+Возвращайте посещенные номера ячеек в порядке, от 1 до `n`. Когда существует несколько самых дешевых маршрутов, верните лексикографически наименьший список. Когда последняя ячейка не может быть достигнута, верните пустой список.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= coins.length <= 1000`
 - `-1 <= coins[i] <= 100`
 - `1 <= maxJump <= 100`

@@ -1,13 +1,13 @@
-You are given the root of a binary tree. Lay the tree out on a text canvas as follows:
+Вам дан корень двоичного дерева. Выложите дерево на текстовом холсте следующим образом:
 
-- Let the height `h` be the number of levels. The canvas has `h` rows and `2^h - 1` columns, initially all empty strings.
-- Put the root label at the middle column of row 0.
-- For a node placed at row `r` and column `c` with left bound `L` and right bound `R`, put its left child at row `r+1` and the middle of `[L, c-1]`, and its right child at row `r+1` and the middle of `[c+1, R]`. Keep splitting until every node is placed.
+- Пусть высота `h` будет числом уровней. холст имеет строки `h` и столбцы `2^h - 1`, изначально все пустые строки.
+- Поместите корневую этикетку в среднюю колонку строки 0.
+- Для узла, размещенного в строке `r` и столбце `c` с левой строкой `L` и правой строкой `R`, поместите его левого потомка в строку `r+1` и середину `[L, c-1]`, а его правого потомка в строку `r+1` и середину `[c+1, R]`. Продолжайте расщепление до тех пор, пока каждый узел не будет размещен.
 
-Return the filled canvas.
+Верните заполненное полотно.
 
-**Adaptation:** the canvas maps to a nested string list in this judge.
+**Адаптация: ** Карты холста к вложенному списку струн этого судьи.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= number of nodes <= 200`
 - `-100 <= node value <= 100`

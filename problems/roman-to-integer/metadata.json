@@ -1,6 +1,6 @@
 {
   "id": "roman-to-integer",
-  "title": "247. Roman to Integer",
+  "title": "247. Роман в целом",
   "difficulty": "Easy",
   "category": "string",
   "link": "https://leetcode.com/problems/roman-to-integer/",
@@ -18,7 +18,7 @@
     {
       "input": "s = \"MCMXCIV\"",
       "output": "1994",
-      "explanation": "M = 1000, CM = 900, XC = 90 and IV = 4."
+      "explanation": "M = 1000, CM = 900, XC = 90 и IV = 4."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Work the string from back to front so each numeral is either added or subtracted based on the symbol to its right.",
-    "If a numeral is smaller than the one that follows it, subtract it; otherwise add it."
+    "Работайте со строкой сзади наперед, чтобы каждая цифра была добавлена или вычтена на основе символа справа.",
+    "Если число меньше следующего за ним, вычтите его; в противном случае добавьте его."
   ]
 }

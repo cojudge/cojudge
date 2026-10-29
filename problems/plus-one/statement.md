@@ -1,8 +1,8 @@
-You are given a nonempty array of decimal digits representing a nonnegative integer. The most significant digit is first, and the representation has no leading zero unless the number itself is zero.
+Вам дается непустый массив десятичных цифр, представляющих неотрицательное целое число.Самая значительная цифра — первая, и представление не имеет ведущего нуля, если само число не равно нулю.
 
-Add one to the integer and return its digit array. Do not convert the entire input to a built-in integer type, because the array may represent a value larger than that type can hold.
+Добавьте одно к целому числу и верните его цифровой массив. Не преобразовывайте весь вход во встроенный целочисленный тип, потому что массив может представлять значение, большее, чем этот тип может удерживать.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= digits.length <= 100`
 - `0 <= digits[i] <= 9`
-- `digits` has no leading zero unless it is exactly `[0]`
+- `digits` не имеет нулевого уровня, если он не является `[0]`.

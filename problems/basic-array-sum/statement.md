@@ -1,5 +1,5 @@
-Return the sum of all numbers in the array `nums`. An empty array sums to 0.
+Возврат суммы всех чисел в массиве `nums`. Пустой массив сумм в 0.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= nums.length <= 1000``
 - ``-1000 <= nums[i] <= 1000``

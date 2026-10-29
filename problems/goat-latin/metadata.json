@@ -1,6 +1,6 @@
 {
   "id": "goat-latin",
-  "title": "822. Goat Latin",
+  "title": "822. Латинский козёл",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/goat-latin/",
   "category": "string",
@@ -8,7 +8,7 @@
     {
       "input": "sentence = \"I speak Goat Latin\"",
       "output": "\"Imaa peaksmaaa oatGmaaaa atinLmaaaaa\"",
-      "explanation": "\"I\" keeps its order and gains \"maa\"; \"speak\" moves \"s\" to the end and gains \"maaa\"."
+      "explanation": "«Я» сохраняет свой порядок и получает «маа»; «говорит» перемещает «с» до конца и получает «мааа»."
     },
     {
       "input": "sentence = \"The quick brown fox jumped over the lazy dog\"",
@@ -49,8 +49,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Split the sentence on single spaces and remember each word's 1-based position for the trailing a's.",
-    "Check only the first character against both lowercase and uppercase vowels before deciding whether to rotate.",
-    "Build each result word as core + \"ma\" + \"a\" repeated by position, then join with spaces."
+    "Разделите предложение на отдельные пространства и вспомните положение каждого слова на основе 1 для отслеживания a.",
+    "Проверьте только первый символ против нижнего регистра и верхнего регистра гласных, прежде чем решить, следует ли вращаться.",
+    "Создайте каждое итоговое слово в виде ядра + «ма» + «а», повторяемое по положению, затем соедините его с пробелами."
   ]
 }

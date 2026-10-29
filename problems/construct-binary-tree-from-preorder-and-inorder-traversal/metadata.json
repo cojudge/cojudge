@@ -1,6 +1,6 @@
 {
   "id": "construct-binary-tree-from-preorder-and-inorder-traversal",
-  "title": "67. Construct Binary Tree from Preorder and Inorder Traversal",
+  "title": "67. Постройте двоичное дерево из предзаказа и обхода порядка",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]",
       "output": "[3,9,20,null,null,15,7]",
-      "explanation": "The first element of preorder (3) is the root. It splits inorder into left ([9]) and right ([15, 20, 7]) subtrees. Repeating recursively builds the tree [3,9,20,null,null,15,7].\n\n![Construct binary tree example](/api/problems/construct-binary-tree-from-preorder-and-inorder-traversal/asset/explanation1.png)"
+      "explanation": "Первым элементом предзаказа (3) является корень. Он расщепляет порядки на левое ([9]) и правое ([15, 20, 7]) поддеревья. Повторяя рекурсивно строит дерево [3, 9, 20,null,null, 15, 7].\n\n![Пример бинарного дерева](/api/problems/construct-binary-tree-from-preorder-and-inorder-traversal/asset/explanation1.png)"
     },
     {
       "input": "preorder = [-1], inorder = [-1]",
       "output": "[-1]",
-      "explanation": "The first element of preorder (-1) is the root. It splits inorder into left ([]) and right ([]) subtrees. Repeating recursively builds the tree [-1]."
+      "explanation": "Первым элементом предзаказа (-1) является корень. Он расщепляет порядок на левое ([]) и правое ([]) поддеревья. Повторяя рекурсивно строит дерево [-1]."
     }
   ],
   "starterCode": {
@@ -57,6 +57,6 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Use recursion with a hashmap of inorder indices to split left and right subtrees."
+    "Используйте рекурсию с хешмапом индексов непорядка для разделения левых и правых поддеревьев."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "1-bit-and-2-bit-characters",
-  "title": "725. 1-bit and 2-bit Characters",
+  "title": "725. 1-bit и 2-bit символы",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/1-bit-and-2-bit-characters/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "bits = [1,0,0]",
       "output": "true",
-      "explanation": "The encoding splits as 10 then 0, so the final symbol uses one bit."
+      "explanation": "Кодирование расщепляется как 10, а затем 0, поэтому конечный символ использует один бит."
     },
     {
       "input": "bits = [1,1,1,0]",
       "output": "false",
-      "explanation": "The only split is 11 then 10, leaving a two-bit tail."
+      "explanation": "Единственным разделением является 11, а затем 10, оставляя двухбитный хвост."
     },
     {
       "input": "bits = [0]",
       "output": "true",
-      "explanation": "A lone zero is a one-bit symbol."
+      "explanation": "Одинокий ноль — это однобитный символ."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "A 1 always starts a two-bit symbol and consumes the next bit; a 0 stands alone.",
-    "Walk from the front jumping 1 or 2 steps and see where you land relative to the last index.",
-    "The answer is true exactly when the walk ends on the final position, not before it."
+    "1 всегда запускает двухбитный символ и потребляет следующий бит; 0 стоит особняком.",
+    "Пройдитесь по ступеням 1 или 2 и посмотрите, где вы приземляетесь относительно последнего индекса.",
+    "Ответ верный именно тогда, когда прогулка заканчивается на финальной позиции, а не перед ней."
   ]
 }

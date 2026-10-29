@@ -1,6 +1,6 @@
 {
   "id": "construct-the-rectangle",
-  "title": "556. Construct the Rectangle",
+  "title": "556. Построй прямоугольник",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/construct-the-rectangle/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "area = 4",
       "output": "[2,2]",
-      "explanation": "Among [1,4] and [2,2], the square has the smallest side gap."
+      "explanation": "Среди [1, 4] и [2, 2] квадрат имеет наименьший боковой зазор."
     },
     {
       "input": "area = 37",
       "output": "[37,1]",
-      "explanation": "A prime area only factors as 37 by 1."
+      "explanation": "Основная область имеет только такие факторы, как 37 от 1."
     },
     {
       "input": "area = 122122",
       "output": "[427,286]",
-      "explanation": "This factor pair is the closest to a square."
+      "explanation": "Эта пара факторов ближе всего к квадрату."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "The width can never exceed the square root of the area.",
-    "Scan downward from the integer square root until a divisor is found; the first hit is the answer."
+    "Ширина никогда не может превышать квадратный корень площади.",
+    "Сканируйте вниз от целого квадратного корня до тех пор, пока не будет найден делитель; первым ударом является ответ."
   ]
 }

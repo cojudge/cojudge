@@ -1,6 +1,6 @@
 {
   "id": "number-of-corner-rectangles",
-  "title": "753. Number Of Corner Rectangles",
+  "title": "753. Количество угловых прямоугольников",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/number-of-corner-rectangles/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "grid = [[1,0,0,1,0],[0,0,1,0,1],[0,0,0,1,0],[1,0,1,0,1]]",
       "output": "1",
-      "explanation": "Only rows 1,3 with columns 2,4 form all-one corners."
+      "explanation": "Только строки 1, 3 с столбцами 2, 4 образуют все-один угол."
     },
     {
       "input": "grid = [[1,1,1],[1,1,1],[1,1,1]]",
       "output": "9",
-      "explanation": "3 row pairs times 3 column pairs."
+      "explanation": "Пара строк 3 умножает пары столбцов 3."
     },
     {
       "input": "grid = [[1,1,1,1]]",
       "output": "0",
-      "explanation": "Need two distinct rows."
+      "explanation": "Нужны два разных ряда."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Fix one row at a time and look at every pair of 1s inside it as a potential base.",
-    "Keep a table counting how many earlier rows already contained each column pair; each prior occurrence closes that many new rectangles.",
-    "Summing over rows gives an O(m * n^2) scan with O(n^2) memory."
+    "Исправьте один ряд за раз и посмотрите на каждую пару 1s внутри него как на потенциальную основу.",
+    "Держите таблицу, подсчитывая, сколько ранних строк уже содержали каждую пару столбцов; каждое предыдущее событие закрывает много новых прямоугольников.",
+    "Резюмирование по строкам дает сканирование O(m * n^2) с памятью O(n^2)."
   ]
 }

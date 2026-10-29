@@ -1,15 +1,15 @@
-You receive a list of folder descriptions. Each description names one folder followed by the files directly inside it, where every file token carries its stored text in trailing parentheses.
+Вы получаете список описаний папок. Каждое описание называет одну папку, за которой следуют файлы непосредственно внутри нее, где каждый токен файла несет свой сохраненный текст в круглых скобках.
 
-For instance, the description `root/a 1.txt(abcd) 2.txt(efgh)` means folder `root/a` contains `1.txt` holding `abcd` and `2.txt` holding `efgh`.
+Например, описание `root/a 1.txt(abcd) 2.txt(efgh)` означает, что папка `root/a` содержит `1.txt`, содержащий `abcd`, и `2.txt`, содержащий `efgh`.
 
-Two files count as duplicates exactly when their stored texts match character for character, no matter how their names or folders differ. Collect every maximal set of files sharing one text, but only keep sets with at least two members. Return those sets as lists of full paths built with a slash between folder and file name, such as `root/a/1.txt`.
+Два файла считаются дубликатами именно тогда, когда их сохраненные тексты соответствуют символу для символа, независимо от того, как отличаются их имена или папки. Соберите каждый максимальный набор файлов, обменивающихся одним текстом, но сохраняйте наборы только с по крайней мере двумя участниками. Верните эти наборы в виде списков полных путей, построенных со срезом между папкой и именем файла, таким как `root/a/1.txt`.
 
-The order of the groups and the order inside each group do not matter.
+Порядок групп и порядок внутри каждой группы не имеют значения.
 
-**Constraints:**
-- Each folder description holds at least one file.
-- Folder names, file names, and stored texts use only letters and digits.
-- Stored text length is between 1 and 50 characters.
-- Total file count is modest (fits easily in memory).
+**Ограничения:**
+- Каждое описание папки содержит по меньшей мере один файл.
+- Имена папок, имена файлов и сохраненные тексты используют только буквы и цифры.
+- Хранимая длина текста находится между символами 1 и 50.
+- Общее количество файлов скромное (легко в памяти).
 
-*Adaptation: the input list maps to `string_array` and the grouped output maps to `string_list_2d` in this judge.*
+*Адаптация: карты входного списка для `string_array` и сгруппированные карты вывода для `string_list_2d` в этом решении.*

@@ -1,8 +1,8 @@
-Count the fewest swaps turning one anagram into another.
+Подсчитайте наименьшее количество свопов, превращающих одну анаграмму в другую.
 
-Strings `s1` and `s2` hold the same multiset of lowercase letters. In one move you may swap any two positions of `s1`. Return the smallest number of such swaps that rewrites `s1` into `s2`.
+Струны `s1` и `s2` держат один и тот же набор строчных букв. В одном движении вы можете поменять любые две позиции `s1`. Верните наименьшее количество таких свопов, которые переписывают `s1` в `s2`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s1.length <= 20`
 - `s1.length == s2.length`
-- `s1` and `s2` are anagrams with lowercase letters.
+- `s1` и `s2` являются анаграммами с строчными буквами.

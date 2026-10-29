@@ -1,6 +1,6 @@
 {
   "id": "maximum-length-of-pair-chain",
-  "title": "668. Maximum Length of Pair Chain",
+  "title": "668. Максимальная длина парной цепи",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/maximum-length-of-pair-chain/",
   "category": "greedy",
@@ -8,12 +8,12 @@
     {
       "input": "pairs = [[1,2],[2,3],[3,4]]",
       "output": "2",
-      "explanation": "[1,2] then [3,4] is valid, but [1,2] then [2,3] is not since 2 is not less than 2."
+      "explanation": "[1, 2] тогда [3, 4] действителен, но [1, 2] тогда [2, 3] не является, поскольку 2 не меньше, чем 2."
     },
     {
       "input": "pairs = [[1,2],[7,8],[4,5]]",
       "output": "3",
-      "explanation": "Ordering as [1,2], [4,5], [7,8] chains all three."
+      "explanation": "Заказ в виде [1, 2], [4, 5], [7, 8] цепей всех трех."
     },
     {
       "input": "pairs = [[1,2]]",
@@ -50,8 +50,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sort all pairs by their second entry ascending.",
-    "Greedily take each pair whose first entry exceeds the last taken second entry.",
-    "Earliest finishers leave the most room, so this greedy pass is optimal."
+    "Сортируйте все пары по их второй восходящей записи.",
+    "Жадно возьмите каждую пару, чья первая запись превышает последнюю вторую запись.",
+    "Самые ранние финишеры покидают наибольшее помещение, поэтому этот жадный проход является оптимальным."
   ]
 }

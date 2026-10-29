@@ -1,12 +1,12 @@
-You are given a license plate string `licensePlate` and a list of lowercase candidate words `words`. Exactly one answer is guaranteed to exist.
+Вам выдается строка номерного знака `licensePlate` и список строчных кандидатов слов `words`. Точно один ответ гарантированно существует.
 
-Collect every letter appearing in the plate while skipping digits, spaces, and punctuation, treating upper and lower case as the same. A candidate is acceptable when it holds each required letter at least as many times as the plate does.
+Соберите каждую букву, появляющуюся в пластине, пропуская цифры, пробелы и пунктуацию, рассматривая верхний и нижний регистры как одинаковые. Кандидат приемлем, когда он держит каждую требуемую букву по крайней мере столько раз, сколько пластина делает.
 
-Return the shortest acceptable candidate. If several share the minimal length, return the one appearing earliest in `words`.
+Если несколько из них имеют минимальную длину, верните тот, который появляется раньше в `words`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= licensePlate.length <= 7`
-- `licensePlate` holds digits, letters, or spaces.
+- `licensePlate` содержит цифры, буквы или пробелы.
 - `1 <= words.length <= 1000`
 - `1 <= words[i].length <= 15`
-- `words[i]` holds lowercase English letters.
+- `words[i]` содержит английские буквы.

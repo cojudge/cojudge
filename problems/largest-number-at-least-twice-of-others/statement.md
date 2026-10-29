@@ -1,8 +1,8 @@
-You are given an integer array `nums` in which the largest value occurs exactly once.
+Вы получаете целочисленный массив `nums`, в котором наибольшее значение происходит ровно один раз.
 
-Locate the biggest entry. If it is at least twice as large as every other entry, return its index. Otherwise return `-1`.
+Найдите самую большую запись. Если она как минимум в два раза больше, чем любая другая запись, верните ее индекс. В противном случае верните `-1`.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= nums.length <= 50`
 - `0 <= nums[i] <= 100`
-- The largest entry of `nums` is unique.
+- Самая большая запись `nums` уникальна.

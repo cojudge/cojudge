@@ -1,7 +1,7 @@
-Given a string `s`, decide whether some rearrangement of its characters can form a palindrome. A palindrome reads the same forward and backward.
+Учитывая строку `s`, решайте, может ли некоторая перестановка его символов образовывать палиндром. Палиндром читает то же самое вперед и назад.
 
-Return `true` when such a rearrangement exists and `false` otherwise.
+Возврат `true`, когда такая перестановка существует, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 5000`
-- `s` consists of lowercase and uppercase English letters.
+- `s` состоит из строчных и верхних английских букв.

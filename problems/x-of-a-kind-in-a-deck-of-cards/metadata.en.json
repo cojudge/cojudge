@@ -1,0 +1,63 @@
+{
+  "id": "x-of-a-kind-in-a-deck-of-cards",
+  "title": "902. X of a Kind in a Deck of Cards",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/x-of-a-kind-in-a-deck-of-cards/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "deck = [1,2,3,4,4,3,2,1]",
+      "output": "true",
+      "explanation": "Split into four pairs: [1,1], [2,2], [3,3], [4,4]."
+    },
+    {
+      "input": "deck = [1,1,1,2,2,2,3,3]",
+      "output": "false",
+      "explanation": "No group size X >= 2 divides every value count (3, 3, 2)."
+    },
+    {
+      "input": "deck = [1,1,2,2,2,2]",
+      "output": "true",
+      "explanation": "Use X = 2: [1,1], [2,2], [2,2]."
+    },
+    {
+      "input": "deck = [1]",
+      "output": "false",
+      "explanation": "A single card cannot form a group of size at least 2."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean hasGroupsSizeX(int[] deck) {\n        return false;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def hasGroupsSizeX(self, deck: List[int]) -> bool:\n        return False\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool hasGroupsSizeX(vector<int>& deck) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool HasGroupsSizeX(int[] deck) \n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn has_groups_size_x(deck: Vec<i32>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc HasGroupsSizeX(deck []int) bool {\n    return false\n}",
+    "typescript": "export function hasGroupsSizeX(deck: number[]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $deck\n     * @return bool\n     */\n    public function hasGroupsSizeX($deck) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "deck": "[1,2,3,4,4,3,2,1]"
+    },
+    {
+      "deck": "[1,1,1,2,2,2,3,3]"
+    },
+    {
+      "deck": "[1]"
+    }
+  ],
+  "functionName": "hasGroupsSizeX",
+  "params": [
+    {
+      "name": "deck",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Count how many times each distinct value appears; every count must be a multiple of the shared group size X.",
+    "That is possible exactly when the greatest common divisor of all counts is at least 2.",
+    "A deck with fewer than 2 cards, or with a count of 1 anywhere while others disagree, fails."
+  ]
+}

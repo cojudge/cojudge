@@ -1,0 +1,67 @@
+{
+  "id": "pyramid-transition-matrix",
+  "title": "758. Pyramid Transition Matrix",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/pyramid-transition-matrix/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "bottom = \"BCD\", allowed = [\"BCC\",\"CDE\",\"CEA\",\"FFF\"]",
+      "output": "true",
+      "explanation": "Build CE then A."
+    },
+    {
+      "input": "bottom = \"AAAA\", allowed = [\"AAB\",\"AAC\",\"BCD\",\"BBE\",\"DEF\"]",
+      "output": "false",
+      "explanation": "No second row leads to a full pyramid."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean pyramidTransition(String bottom, String[] allowed) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def pyramidTransition(self, bottom: str, allowed: List[str]) -> bool:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool pyramidTransition(string bottom, vector<string>& allowed) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool PyramidTransition(string bottom, string[] allowed) \n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn pyramid_transition(bottom: String, allowed: Vec<String>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc PyramidTransition(bottom string, allowed []string) bool {\n    return false\n}",
+    "typescript": "export function pyramidTransition(bottom: string, allowed: string[]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $bottom\n     * @param string[] $allowed\n     * @return bool\n     */\n    public function pyramidTransition($bottom, $allowed) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "bottom": "BCD",
+      "allowed": [
+        "BCC",
+        "CDE",
+        "CEA",
+        "FFF"
+      ]
+    },
+    {
+      "bottom": "AAAA",
+      "allowed": [
+        "AAB",
+        "AAC",
+        "BCD",
+        "BBE",
+        "DEF"
+      ]
+    }
+  ],
+  "functionName": "pyramidTransition",
+  "params": [
+    {
+      "name": "bottom",
+      "type": "string"
+    },
+    {
+      "name": "allowed",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Group allowed triples by their two-letter base so each pair quickly yields its possible tops.",
+    "Build the next row one position at a time with backtracking; abandon a row as soon as a pair has no options.",
+    "Memoize failed rows to avoid re-exploring dead ends from different paths."
+  ]
+}

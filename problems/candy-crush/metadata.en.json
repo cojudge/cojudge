@@ -1,0 +1,58 @@
+{
+  "id": "candy-crush",
+  "title": "730. Candy Crush",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/candy-crush/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "board = [[\"1\",\"1\",\"1\",\"2\"],[\"1\",\"3\",\"2\",\"2\"],[\"1\",\"2\",\"3\",\"1\"]]",
+      "output": "[\"0002\",\"0322\",\"0231\"]",
+      "explanation": "The top row triple and left column triple crush to 0, then survivors fall down leaving rows 0002, 0322 and 0231."
+    },
+    {
+      "input": "board = [[\"1\",\"2\",\"3\"],[\"4\",\"5\",\"6\"]]",
+      "output": "[\"123\",\"456\"]",
+      "explanation": "No row or column holds three equal non-zero values, so the board is already stable."
+    },
+    {
+      "input": "board = [[\"2\",\"2\",\"2\"]]",
+      "output": "[\"000\"]",
+      "explanation": "One horizontal triple crushes and nothing falls."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> candyCrush(char[][] board) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def candyCrush(self, board: List[List[str]]) -> List[str]:\n        return []",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> candyCrush(vector<vector<char>>& board) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<string> CandyCrush(char[][] board) \n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn candy_crush(board: String) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc CandyCrush(board [][]byte) []string {\n    return []string{}\n}",
+    "typescript": "export function candyCrush(board: string[][]): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[][] $board\n     * @return string[]\n     */\n    public function candyCrush($board) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "board": "[[\"1\",\"1\",\"1\",\"2\"],[\"1\",\"3\",\"2\",\"2\"],[\"1\",\"2\",\"3\",\"1\"]]"
+    },
+    {
+      "board": "[[\"1\",\"2\",\"3\"],[\"4\",\"5\",\"6\"]]"
+    },
+    {
+      "board": "[[\"2\",\"2\",\"2\"]]"
+    }
+  ],
+  "functionName": "candyCrush",
+  "params": [
+    {
+      "name": "board",
+      "type": "char_array_2d"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Repeat two phases until stable: mark every horizontal or vertical run of 3+ equal non-zero cells, then apply gravity per column.",
+    "Mark before crushing so overlapping crosses disappear together; '0' means empty and never forms a run.",
+    "Drop each column by compacting non-zero values to the bottom and filling the top with zeros, then re-encode each row as one string. Adaptation: input is char_array_2d with digits '0'-'5' and output is string_list of row strings; Rust receives the board as its encoded string."
+  ]
+}

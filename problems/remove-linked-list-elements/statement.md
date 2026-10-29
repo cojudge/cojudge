@@ -1,8 +1,8 @@
-You are given the head of a singly linked list and an integer `val`. Unlink every node whose value equals `val` and return the head of what remains. If every node is removed, return an empty list.
+Вам дают заголовок единственно связанного списка и целое число `val`. Отсоедините каждый узел, значение которого равно `val`, и верните заголовок того, что осталось. Если каждый узел удален, верните пустой список.
 
-The list is supplied in the form `[v0,v1,...]` and an answer is expected in the same form.
+Список предоставляется в форме `[v0,v1,...]`, и ответ ожидается в той же форме.
 
-**Constraints:**
-- The list holds between 0 and `10^4` nodes.
+**Ограничения:**
+- Список находится между узлами 0 и `10^4`.
 - `0 <= node value <= 50`
 - `0 <= val <= 50`

@@ -1,11 +1,11 @@
-Given an array of words `wordsDict` and two words `word1` and `word2` that each appear at least once, find the smallest distance between their positions.
+С учетом массива слов `wordsDict` и двух слов `word1` и `word2`, каждое из которых появляется хотя бы один раз, найдите наименьшее расстояние между их положениями.
 
-This variant allows `word1` and `word2` to be the same word. When they are equal, the answer is the smallest gap between two different occurrences of that word. When they differ, the answer is the smallest gap between any occurrence of one and any occurrence of the other, exactly as in the basic version.
+Этот вариант позволяет `word1` и `word2` быть одним и тем же словом. При их равенстве ответом является наименьший разрыв между двумя разными случаями этого слова. При их различии ответом является наименьший разрыв между любым возникновением одного и любым возникновением другого, точно так же, как и в базовой версии.
 
-Return that minimum distance.
+Верните минимальное расстояние.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= wordsDict.length <= 300`
 - `1 <= wordsDict[i].length <= 100`
-- Each word holds lowercase English letters.
-- `word1` and `word2` both occur in `wordsDict`.
+- Каждое слово содержит английские буквы.
+- `word1` и `word2` встречаются в `wordsDict`.

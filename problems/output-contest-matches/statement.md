@@ -1,9 +1,9 @@
-A knockout tournament starts with `n` ranked squads numbered `1` through `n`, where `1` is strongest and `n` is weakest. The count `n` is always a power of two.
+Турнир по нокауту начинается с `n` Ранжированные отряды пронумерованы `1` через `n`где `1` Он является самым сильным и `n` Самый слабый. `n` Это всегда сила двоих.
 
-In every round, the remaining entries are paired strongest-with-weakest: the first remaining entry meets the last, the second meets the second-last, and so on. Each pair is written as `(a,b)`. Winners advance, keeping their bracket text, and the process repeats until one bracket remains.
+В каждом раунде оставшиеся записи соединяются между собой сильнейшими и слабыми: первая оставшаяся запись встречается с последней, вторая встречает вторую последнюю и т. д. Каждая пара записывается как `(a,b)`. Победители продвигаются вперед, сохраняя текст в скобках, и процесс повторяется до тех пор, пока не останется одна скобка.
 
-Build and return the final bracket string directly from `n` (this task is a plain function of `n`, not a class-design simulation).
+Постройте и верните финальную строку кронштейна непосредственно из `n` (эта задача является простой функцией `n`, а не симуляцией дизайна класса).
 
-**Constraints:**
-- `n` is a power of two, `n == 2^k`
+**Ограничения:**
+- `n` - это мощность двух, `n == 2^k`
 - `1 <= k <= 12` (so `2 <= n <= 4096`)

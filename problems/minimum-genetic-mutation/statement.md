@@ -1,7 +1,7 @@
-A gene is an 8-letter string over the alphabet `A, C, G, T`. One mutation swaps a single position to a different letter. You are given a starting gene `startGene`, a target gene `endGene`, and a bank of approved intermediate genes. Every step of your mutation path (including the destination) must appear in the bank, except the start which is assumed valid even when absent from the bank.
+Ген - это строка 8-буквы над алфавитом `A, C, G, T`. Одна мутация меняет одну позицию на другую букву. Вам дают стартовый ген `startGene`, целевой ген `endGene` и банк одобренных промежуточных генов. Каждый шаг вашего пути мутации (включая пункт назначения) должен появиться в банке, за исключением старта, который считается действительным даже при отсутствии в банке.
 
-Return the smallest number of mutations leading from start to target. Return `-1` when no such chain exists.
+Возвращайте наименьшее число мутаций, ведущих от начала к цели. Возвращайте `-1`, когда такой цепи не существует.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= bank.length <= 10`
-- Each of `startGene`, `endGene` and every bank entry has length 8 and uses only `A, C, G, T`.
+- Каждый из `startGene`, `endGene` и каждая банковская запись имеет длину 8 и использует только `A, C, G, T`.

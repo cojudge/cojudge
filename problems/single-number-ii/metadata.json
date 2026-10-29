@@ -1,6 +1,6 @@
 {
   "id": "single-number-ii",
-  "title": "302. Single Number II",
+  "title": "302. Одноместный номер II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/single-number-ii/",
   "category": "binary",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [2,2,3,2]",
       "output": "3",
-      "explanation": "2 appears three times while 3 appears once."
+      "explanation": "2 появляется три раза, а 3 появляется один раз."
     },
     {
       "input": "nums = [0,1,0,1,0,1,99]",
       "output": "99",
-      "explanation": "0 and 1 each appear three times; 99 is the single one."
+      "explanation": "0 и 1 появляются три раза; 99 является единственным."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Count set bits per position: bits whose count is not a multiple of 3 belong to the answer.",
-    "A two-variable bit state machine (ones, twos) achieves O(1) space without per-bit loops.",
-    "Remember to handle negative numbers via 32-bit two's complement behavior."
+    "Подсчитайте биты на позицию: биты, количество которых не является кратным 3, относятся к ответу.",
+    "Машина с двумя переменными битовыми состояниями (один, два) достигает пространства O (1) без однобитных петель.",
+    "Не забывайте обрабатывать отрицательные числа с помощью дополнения 32-бита два."
   ]
 }

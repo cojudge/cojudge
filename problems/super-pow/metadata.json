@@ -1,6 +1,6 @@
 {
   "id": "super-pow",
-  "title": "450. Super Pow",
+  "title": "450. Супер Поу",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/super-pow/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "a = 2, b = [3]",
       "output": "8",
-      "explanation": "Exponent 3 gives 2^3 = 8."
+      "explanation": "Экспонент 3 дает 2^3 = 8."
     },
     {
       "input": "a = 2, b = [1,0]",
       "output": "1024",
-      "explanation": "Exponent 10 gives 1024."
+      "explanation": "Экспонент 10 дает 1024."
     },
     {
       "input": "a = 1, b = [4,3,3,8,5,2]",
       "output": "1",
-      "explanation": "Powers of 1 stay 1."
+      "explanation": "Мощности 1 остаются 1."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Fold digits with result = result^10 * a^digit (mod 1337) at each step.",
-    "Write a small modular power helper using binary exponentiation.",
-    "Reduce the base modulo 1337 first; large exponents never fit in one integer."
+    "Сложите цифры с результатом = результат^10 * a^digit (mod 1337) на каждом шаге.",
+    "Напишите небольшой модульный усилитель питания с использованием бинарной экспоненциации.",
+    "Сначала уменьшите базовый модуль 1337; большие экспоненты никогда не вписываются в одно целое число."
   ]
 }

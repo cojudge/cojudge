@@ -1,6 +1,6 @@
 {
   "id": "find-the-duplicate-number",
-  "title": "94. Find the Duplicate Number",
+  "title": "94. Найдите дублирующий номер",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/find-the-duplicate-number/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,3,4,2,2]",
       "output": "2",
-      "explanation": "The repeated number in [1, 3, 4, 2, 2] is 2."
+      "explanation": "Повторное число в [1, 3, 4, 2, 2] — 2."
     },
     {
       "input": "nums = [3,1,3,4,2]",
       "output": "3",
-      "explanation": "The repeated number in [3, 1, 3, 4, 2] is 3."
+      "explanation": "Повторное число в [3, 1, 3, 4, 2] — 3."
     },
     {
       "input": "nums = [3,3,3,3,3]",
       "output": "3",
-      "explanation": "The number 3 is the duplicate, appearing 5 times."
+      "explanation": "Цифра 3 является дубликатом, появляющимся 5 раз."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Interpret each array value as the next index in a linked structure; a duplicate creates a cycle.",
-    "Use slow and fast pointers to find a meeting point inside that cycle.",
-    "Reset one pointer to `nums[0]` and advance both one step at a time; their next meeting point is the duplicate."
+    "Интерпретируйте каждое значение массива как следующий индекс в связанной структуре; дубликат создает цикл.",
+    "Используйте медленные и быстрые указатели, чтобы найти точку встречи в этом цикле.",
+    "Сбросьте один указатель на `nums[0]` и продвиньте оба шага за один раз; их следующий пункт встречи - дубликат."
   ]
 }

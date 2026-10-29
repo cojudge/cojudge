@@ -1,6 +1,6 @@
 {
   "id": "image-smoother",
-  "title": "680. Image Smoother",
+  "title": "680. Изображение: Smoother",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/image-smoother/",
   "category": "matrix",
@@ -8,12 +8,12 @@
     {
       "input": "img = [[1,1,1],[1,0,1],[1,1,1]]",
       "output": "[[0,0,0],[0,0,0],[0,0,0]]",
-      "explanation": "Each corner averages 3 neighbours, each edge 6, and the center 9; all floors are 0."
+      "explanation": "Каждый угол усредняет соседей 3, каждый край 6 и центр 9; все этажи 0."
     },
     {
       "input": "img = [[100,200,100],[200,50,200],[100,200,100]]",
       "output": "[[137,141,137],[141,150,141],[137,141,137]]",
-      "explanation": "Averages include the cell plus every valid neighbour, rounded down."
+      "explanation": "Средние значения включают ячейку плюс каждый действительный сосед, округленный вниз."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Compute every output cell from the original grid, not from partly smoothed values.",
-    "Loop over the 3x3 window offsets (-1..1) and keep only in-bounds neighbours.",
-    "Integer division already floors the average."
+    "Вычислите каждую выходную ячейку из исходной сетки, а не из частично сглаженных значений.",
+    "Нажмите на оконные смещения 3x3 (-1..1) и удерживайте только входящих соседей.",
+    "Целое деление уже пополняет среднее."
   ]
 }

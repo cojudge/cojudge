@@ -1,6 +1,6 @@
 {
   "id": "path-with-minimum-effort",
-  "title": "223. Path With Minimum Effort",
+  "title": "223. Путь с минимальными усилиями",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/path-with-minimum-effort/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "heights = [[1,2,2],[3,8,2],[5,3,5]]",
       "output": "2",
-      "explanation": "The route of [1,3,5,3,5] has a maximum absolute difference of 2 in consecutive cells. This is better than the route of [1,2,2,2,5], where the maximum absolute difference is 3."
+      "explanation": "Маршрут []1,3,5,3,5] имеет максимальную абсолютную разницу 2 в последовательных ячейках. Это лучше, чем путь [1,2,2,2,5где максимальная абсолютная разница 3."
     },
     {
       "input": "heights = [[1,2,3],[3,8,4],[5,3,5]]",
       "output": "1",
-      "explanation": "The route of [1,2,3,4,5] has a maximum absolute difference of 1 in consecutive cells, which is better than route [1,3,5,3,5]."
+      "explanation": "Маршрут []1,2,3,4,5] имеет максимальную абсолютную разницу 1 в последовательных ячейках, что лучше, чем маршрут [1,3,5,3,5]."
     },
     {
       "input": "heights = [[1,2,1,1,1],[1,2,1,2,1],[1,2,1,2,1],[1,2,1,2,1],[1,1,1,2,1]]",
       "output": "0",
-      "explanation": "This route does not require any effort."
+      "explanation": "Этот маршрут не требует никаких усилий."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Consider the grid as a graph, where adjacent cells have an edge with cost of the difference between the cells.",
-    "If you are given threshold k, check if it is possible to go from (0, 0) to (n-1, m-1) using only edges of cost at most k.",
-    "Binary search the k value."
+    "Рассмотрим сетку как граф, где соседние ячейки имеют край со стоимостью разницы между ячейками.",
+    "Если вам дали порог k, проверьте, можно ли перейти от (0, 0) к (n-1, m-1) с использованием только краев стоимости максимум k.",
+    "Бинарный поиск по значению k."
   ]
 }

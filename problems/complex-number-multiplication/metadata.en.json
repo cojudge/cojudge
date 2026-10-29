@@ -1,0 +1,65 @@
+{
+  "id": "complex-number-multiplication",
+  "title": "595. Complex Number Multiplication",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/complex-number-multiplication/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "num1 = \"1+1i\", num2 = \"1+1i\"",
+      "output": "\"0+2i\"",
+      "explanation": "(1+i) times (1+i) is 1 + 2i + i^2 = 0 + 2i."
+    },
+    {
+      "input": "num1 = \"1+-1i\", num2 = \"1+-1i\"",
+      "output": "\"0+-2i\"",
+      "explanation": "(1-i) times (1-i) is 1 - 2i + i^2 = 0 - 2i."
+    },
+    {
+      "input": "num1 = \"2+3i\", num2 = \"4+5i\"",
+      "output": "\"-7+22i\"",
+      "explanation": "Real part 2*4-3*5 = -7; imaginary part 2*5+3*4 = 22."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String complexNumberMultiply(String num1, String num2) {\n        \n    }\n}",
+    "python": "class Solution:\n    def complexNumberMultiply(self, num1: str, num2: str) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string complexNumberMultiply(string num1, string num2) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string ComplexNumberMultiply(string num1, string num2) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn complex_number_multiply(num1: String, num2: String) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc ComplexNumberMultiply(num1 string, num2 string) string {\n    \n}",
+    "typescript": "export function complexNumberMultiply(num1: string, num2: string): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $num1\n     * @param string $num2\n     * @return string\n     */\n    public function complexNumberMultiply($num1, $num2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "num1": "1+1i",
+      "num2": "1+1i"
+    },
+    {
+      "num1": "1+-1i",
+      "num2": "1+-1i"
+    },
+    {
+      "num1": "2+3i",
+      "num2": "4+5i"
+    }
+  ],
+  "functionName": "complexNumberMultiply",
+  "params": [
+    {
+      "name": "num1",
+      "type": "string"
+    },
+    {
+      "name": "num2",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Split each input at the '+' into real and imaginary text (dropping the trailing 'i'), then parse both as integers.",
+    "Apply the product rule: real = a*c-b*d, imaginary = a*d+b*c.",
+    "Format the answer with the same pattern, keeping the '+' separator even for negative parts."
+  ]
+}

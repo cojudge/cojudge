@@ -1,6 +1,6 @@
 {
   "id": "reshape-the-matrix",
-  "title": "621. Reshape the Matrix",
+  "title": "621. Изменить матрицу",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/reshape-the-matrix/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "mat = [[1,2],[3,4]], r = 1, c = 4",
       "output": "[[1,2,3,4]]",
-      "explanation": "Four values flow into one row in order."
+      "explanation": "Четыре значения поступают в один ряд по порядку."
     },
     {
       "input": "mat = [[1,2],[3,4]], r = 2, c = 4",
       "output": "[[1,2],[3,4]]",
-      "explanation": "Cell counts differ, so the input returns unchanged."
+      "explanation": "Количество ячеек отличается, поэтому вход возвращается без изменений."
     },
     {
       "input": "mat = [[1,2,3],[4,5,6]], r = 3, c = 2",
       "output": "[[1,2],[3,4],[5,6]]",
-      "explanation": "Six values fill three rows of two."
+      "explanation": "Шесть значений заполняют три ряда из двух."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "First compare r * c against m * n; on mismatch return the input unchanged.",
-    "Map flat position k to old cell (k / n, k % n) and new cell (k / c, k % c).",
-    "One linear pass over all cells fills the new matrix in row-major order."
+    "Сначала сравните r * c с m * n; при несоответствии входные данные возвращаются без изменений.",
+    "Карта плоского положения k на старую ячейку (k/n, k % n) и новую ячейку (k/c, k % c).",
+    "Один линейный проход над всеми ячейками заполняет новую матрицу в основном порядке."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "coin-change",
-  "title": "17. Coin Change",
+  "title": "17. Монетные изменения",
   "difficulty": "Medium",
   "category": "dp",
   "link": "https://leetcode.com/problems/coin-change/",
@@ -13,7 +13,7 @@
     {
       "input": "coins = [2], amount = 3",
       "output": "-1",
-      "explanation": "Amount 3 cannot be formed by any combination of [2], so -1 is returned."
+      "explanation": "Сумма 3 не может быть сформирована какой-либо комбинацией [2], поэтому -1 возвращается."
     }
   ],
   "starterCode": {
@@ -57,6 +57,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Unbounded knapsack DP: dp[a] = min over coins c (dp[a-c] + 1). Initialize dp[0]=0 and others to INF."
+    "Unbounded knapsack DP: dp[a] = мин над монетами c (dp[a-c] + 1). Инициировать dp[0]=0 и другие к INF."
   ]
 }

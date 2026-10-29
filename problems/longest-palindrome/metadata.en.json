@@ -1,0 +1,61 @@
+{
+  "id": "longest-palindrome",
+  "title": "483. Longest Palindrome",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/longest-palindrome/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"abccccdd\"",
+      "output": "7",
+      "explanation": "Rearrange to dccaccd, which reads the same both ways."
+    },
+    {
+      "input": "s = \"a\"",
+      "output": "1",
+      "explanation": "A single letter is already a palindrome."
+    },
+    {
+      "input": "s = \"Aa\"",
+      "output": "1",
+      "explanation": "Upper and lower case are distinct, so only one can be used."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int longestPalindrome(String s) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def longestPalindrome(self, s: str) -> int:\n        return 0",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int longestPalindrome(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int LongestPalindrome(string s) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn longest_palindrome(s: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc LongestPalindrome(s string) int {\n    return 0\n}",
+    "typescript": "export function longestPalindrome(s: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function longestPalindrome($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "abccccdd"
+    },
+    {
+      "s": "a"
+    },
+    {
+      "s": "Aa"
+    },
+    {
+      "s": "abc"
+    }
+  ],
+  "functionName": "longestPalindrome",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Count how many times each letter appears; case matters.",
+    "Pairs of equal letters can sit symmetrically on both sides.",
+    "At most one leftover single can sit in the center."
+  ]
+}

@@ -1,10 +1,10 @@
-In a binary search tree, find the inorder successor of the node with value `p`.
+В двоичном дереве поиска найдите преемника узла по порядку со значением `p`.
 
-**Adaptation:** instead of node references, `p` is given as an integer value
-present in the tree and you return the successor's value, or `-1` when `p`
-is the maximum (the original would return null). Implement
+**Адаптация: ** вместо ссылок на узлы `p` дается как целое значение
+Присутствуя в дереве, вы возвращаете значение преемника, или `-1`, когда `p`
+- максимальный (оригинал возвращался бы нулевым).
 `inorderSuccessor(root, p)`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nodes <= 10^4`
-- Tree is a valid BST; `p` exists in the tree.
+- Дерево является действительным BST; `p` существует в дереве.

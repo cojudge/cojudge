@@ -1,6 +1,6 @@
 {
   "id": "strobogrammatic-number",
-  "title": "352. Strobogrammatic Number",
+  "title": "352. Стробограмматический номер",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/strobogrammatic-number/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "num = \"69\"",
       "output": "true",
-      "explanation": "Rotating gives \"69\" back."
+      "explanation": "Вращение возвращает \"69\"."
     },
     {
       "input": "num = \"88\"",
       "output": "true",
-      "explanation": "Each 8 rotates to itself, mirrored correctly."
+      "explanation": "Каждый 8 вращается сам по себе, правильно отзеркаливается."
     },
     {
       "input": "num = \"962\"",
       "output": "false",
-      "explanation": "The digit 2 has no valid rotation."
+      "explanation": "Цифра 2 не имеет действительного вращения."
     }
   ],
   "starterCode": {
@@ -57,7 +57,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Compare characters from both ends using the rotation pairs 0-0, 1-1, 6-9, 8-8, 9-6.",
-    "Any character outside those pairs immediately disqualifies the string."
+    "Сравните символы с обоих концов, используя пары вращения 0-0, 1-1, 6-9, 8-8, 9-6.",
+    "Любой персонаж вне этих пар сразу же дисквалифицирует струну."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "majority-element",
-  "title": "155. Majority Element",
+  "title": "155. Элемент большинства",
   "difficulty": "Easy",
   "category": "array",
   "link": "https://leetcode.com/problems/majority-element/",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [3,2,3]",
       "output": "3",
-      "explanation": "3 appears 2 times out of 3, which is more than 3/2 = 1."
+      "explanation": "3 появляется 2 раз из 3, что больше, чем 3/2 = 1."
     },
     {
       "input": "nums = [2,2,1,1,1,2,2]",
       "output": "2",
-      "explanation": "2 appears 4 times out of 7, which is more than 7/2 = 3."
+      "explanation": "2 появляется 4 раз из 7, что больше, чем 7/2 = 3."
     }
   ],
   "starterCode": {
@@ -43,7 +43,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "The Boyer-Moore voting algorithm finds the majority in O(n) time and O(1) space: keep a candidate and count, incrementing on match and decrementing otherwise.",
-    "Alternatively, sorting puts the majority element at index n/2, or a hash map can count frequencies."
+    "Алгоритм голосования Бойера-Мура находит большинство во времени O(n) и пространстве O(1): держите кандидата и подсчитывайте, увеличивая совпадение и уменьшая в противном случае.",
+    "Альтернативно, сортировка помещает элемент большинства в индекс n/2, или хеш-карта может подсчитывать частоты."
   ]
 }

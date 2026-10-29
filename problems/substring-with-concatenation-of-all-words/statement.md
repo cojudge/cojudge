@@ -1,9 +1,9 @@
-You receive a text string `s` together with a list `words` in which every word has the same length. A *concatenated block* is formed by gluing together every word from the list exactly once, in any order, with no gaps or extra characters.
+Вы получаете текстовую строку `s` вместе со списком `words`, в котором каждое слово имеет одинаковую длину. *сцепленный блок* образуется путем склеивания каждого слова из списка ровно один раз, в любом порядке, без пробелов или дополнительных символов.
 
-Find every starting index `i` such that the slice of `s` beginning at `i` is a concatenated block, and return those indices in any order.
+Найдите каждый стартовый индекс `i` таким образом, чтобы срез `s`, начинающийся с `i`, был сцепленным блоком, и верните эти индексы в любом порядке.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 10^4`
 - `1 <= words.length <= 5000`
 - `1 <= words[i].length <= 30`
-- `s` and each word consist of lowercase English letters, and all words share one length.
+- `s` и каждое слово состоят из строчных английских букв, и все слова имеют одну длину.

@@ -1,15 +1,15 @@
-You are given a binary matrix `grid` with `m` rows and `n` columns. Each cell holds `0` or `1`, and each row is read as a binary number with the leftmost cell as the most significant bit.
+Вы получаете двоичную матрицу `grid` с строками `m` и столбцами `n`. Каждая ячейка содержит `0` или `1`, и каждая строка читается как двоичное число с самой левой ячейкой в качестве наиболее значительного бита.
 
-You may perform two kinds of moves any number of times, in any order:
+Вы можете выполнять два вида движений любое количество раз, в любом порядке:
 
-- Choose a row and invert every bit in that row.
-- Choose a column and invert every bit in that column.
+- Выберите строку и переверните каждый бит в этой строке.
+- Выберите колонку и переверните каждый бит в этой колонке.
 
-After all moves, the score is the sum of the row values interpreted in binary. Rearrange the bits with allowed moves to make this total as large as possible, and return that maximum.
+После всех ходов, счет - это сумма значений строк, интерпретируемых в двоичном. Перегруппируйте биты с разрешенными ходами, чтобы сделать эту сумму как можно больше, и вернуть этот максимум.
 
-**Constraints:**
+**Ограничения:**
 - `m == grid.length`
 - `n == grid[i].length`
 - `1 <= m <= 20`
 - `1 <= n <= 20`
-- `grid[i][j]` is `0` or `1`.
+- `grid[i][j]` - это `0` или `1`.

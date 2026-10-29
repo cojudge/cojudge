@@ -1,7 +1,7 @@
-Measure the longest subsequence whose steps zigzag up and down.
+Измерьте самую длинную последовательность, чьи шаги зигзаг вверх и вниз.
 
-A wiggle run requires neighboring differences to strictly alternate in sign: positive, negative, positive, and so on. The opening step may point either way. A single value always qualifies with length 1, and any two different values qualify with length 2, while equal neighbors can never sit next to each other in the subsequence. From `nums`, keep a subsequence (deleting entries freely but preserving order) that wiggles and is as long as possible, then return its length.
+Пробег переключения требует, чтобы соседние различия строго чередовались в знаке: положительный, отрицательный, положительный и так далее. Шаг открытия может указывать в любом случае. Одно значение всегда квалифицируется с длиной 1, а любые два разных значения квалифицируются с длиной 2, в то время как равные соседи никогда не могут сидеть рядом друг с другом в последовательности. От `nums` сохраняйте последовательность (удаляя записи свободно, но сохраняя порядок), которая шевелится и является как можно более длинной, а затем возвращайте ее длину.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 1000`
 - `0 <= nums[i] <= 1000`

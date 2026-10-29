@@ -1,6 +1,6 @@
 {
   "id": "best-time-to-buy-and-sell-stock",
-  "title": "2. Best Time to Buy and Sell Stock",
+  "title": "2. Лучшее время для покупки и продажи акций",
   "difficulty": "Easy",
   "category": "array",
   "link": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",
@@ -8,17 +8,17 @@
     {
       "input": "prices = [7,1,5,3,6,4]",
       "output": 5,
-      "explanation": "Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5. Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell."
+      "explanation": "Покупайте в день 2 (цена = 1) и продавайте в день 5 (цена = 6), прибыль = 6-1 = 5. Обратите внимание, что покупка в день 2 и продажа в день 1 не допускается, потому что вы должны купить, прежде чем продавать."
     },
     {
       "input": "prices = [7,6,4,3,1]",
       "output": 0,
-      "explanation": "In this case no transaction is done and the max profit = 0."
+      "explanation": "В этом случае сделка не производится и максимальная прибыль = 0."
     },
     {
       "input": "prices = [1,2]",
       "output": 1,
-      "explanation": "Buy at 1 and sell at 2 for a profit of 2 - 1 = 1."
+      "explanation": "Покупайте в 1 и продавайте в 2 с прибылью 2 - 1 = 1."
     }
   ],
   "starterCode": {
@@ -51,6 +51,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "This problem asks for the maximum difference prices[j] - prices[i] where j > i. The optimal O(n) solution keeps track of the minimum price seen so far and the maximum profit obtainable at each step."
+    "Эта проблема требует максимальных разностных цен [j] - цен [i], где j > i. Оптимальное решение O(n) отслеживает минимальную цену, наблюдаемую до сих пор, и максимальную прибыль, получаемую на каждом шаге."
   ]
 }

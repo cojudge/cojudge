@@ -1,6 +1,6 @@
 {
   "id": "encode-and-decode-tinyurl",
-  "title": "535. Encode and Decode TinyURL",
+  "title": "535. Кодирование и декодирование TinyURL",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/encode-and-decode-tinyurl/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "urls = [\"https://leetcode.com/problems/design-tinyurl\"]",
       "output": "[\"https://leetcode.com/problems/design-tinyurl\"]",
-      "explanation": "decode(encode(url)) returns the original URL. The judge also checks that the short URL starts with http://tinyurl.com/, is stable across repeated encodes, and differs per distinct URL."
+      "explanation": "Судья также проверяет, что короткий URL начинается с http://tinyurl.com/,, стабилен в повторяющихся кодах и отличается на отдельный URL."
     },
     {
       "input": "urls = [\"https://example.com/a/long/path?q=1\", \"http://x.co\"]",
       "output": "[\"https://example.com/a/long/path?q=1\", \"http://x.co\"]",
-      "explanation": "One shared Codec handles every URL in the test case: each encodes to its own short link and decodes back."
+      "explanation": "Один общий кодек обрабатывает каждый URL-адрес в тестовом случае: каждый кодирует свою короткую ссылку и декодирует обратно."
     },
     {
       "input": "urls = [\"https://a.com\", \"https://a.com\"]",
       "output": "[\"https://a.com\", \"https://a.com\"]",
-      "explanation": "Encoding is idempotent: repeats of the same URL reuse the existing short link."
+      "explanation": "Кодирование идемпотентно: повторы одного и того же URL повторно используют существующую короткую ссылку."
     }
   ],
   "classProblem": {
@@ -57,8 +57,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Keep two maps on the Codec: long URL to code and code back to long URL, plus a counter that mints a fresh code for each unseen address.",
-    "Encode must be idempotent: an already-seen URL gets its existing short link instead of a new one.",
-    "Decode by stripping the http://tinyurl.com/ prefix and looking the code up in the reverse map."
+    "Сохраняйте две карты на кодеке: длинный URL-адрес для кода и обратный код для длинного URL-адреса, а также счетчик, который отображает новый код для каждого невидимого адреса.",
+    "Код должен быть идемпотентным: уже видимый URL-адрес получает существующую короткую ссылку вместо новой.",
+    "Декодируйте, сняв префикс http://tinyurl.com/ и посмотрев код вверх на обратной карте."
   ]
 }

@@ -1,9 +1,9 @@
-A burglar has discovered a district whose only access point is the house labeled `root`.
+Взломщик обнаружил район, единственной точкой доступа которого является дом с надписью `root`.
 
-Every other house in the district reports to exactly one parent house, so a survey of the area shows the houses are arranged as a binary tree. If two houses sharing a direct connection are both entered during one night, an alarm summons the police.
+Каждый другой дом в округе отчитывается ровно перед одним родительским домом, поэтому обследование местности показывает, что дома устроены как двоичное дерево.Если два дома, имеющие прямую связь, оба введены в течение одной ночи, полиция вызывает тревогу.
 
-Given the `root` of that binary tree, compute the largest sum of money collectible in one night while never entering two houses joined by an edge.
+Учитывая `root` этого двоичного дерева, вычислите самую большую сумму денег, собранную за одну ночь, при этом никогда не входя в два дома, соединенных краем.
 
-**Constraints:**
-- The number of nodes in the tree is in the range `[1, 10^4]`
+**Ограничения:**
+- Количество узлов в дереве находится в диапазоне `[1, 10^4]`
 - `0 <= Node.val <= 10^4`

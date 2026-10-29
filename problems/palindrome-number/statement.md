@@ -1,8 +1,8 @@
-Decide whether a given integer `x` reads the same forwards and backwards in its ordinary decimal writing (without extra leading zeros).
+Решите, читает ли данное целое число `x` одни и те же вперед и назад в своей обычной десятичной записи (без дополнительных ведущих нулей).
 
-A negative value can never qualify, because the minus sign has no counterpart on the right side. Likewise, a non-zero number ending in `0` cannot qualify, since its reversal would begin with `0`.
+Отрицательное значение никогда не может квалифицироваться, потому что знак минус не имеет аналога на правой стороне. Аналогично, ненулевое число, оканчивающееся на `0`, не может квалифицироваться, поскольку его разворот начнется с `0`.
 
-**Constraints:**
+**Ограничения:**
 - `-2^31 <= x <= 2^31 - 1`
 
-**Follow up:** Try to avoid converting the number to a string. As a hint, reversing only half of the digits keeps every intermediate value safely inside 32 bits.
+**Следуйте: ** Старайтесь не превращать число в строку. В качестве подсказки, обращение только половины цифр безопасно сохраняет каждое промежуточное значение внутри битов 32.

@@ -1,6 +1,6 @@
 {
   "id": "find-duplicate-file-in-system",
-  "title": "643. Find Duplicate File in System",
+  "title": "643. Найти дубликаты файлов в системе",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/find-duplicate-file-in-system/",
   "category": "hash-table",
@@ -8,17 +8,17 @@
     {
       "input": "paths = [\"root/a 1.txt(abcd) 2.txt(efgh)\",\"root/c 3.txt(abcd)\",\"root/c/d 4.txt(efgh)\",\"root 4.txt(efgh)\"]",
       "output": "[[\"root/a/2.txt\",\"root/c/d/4.txt\",\"root/4.txt\"],[\"root/a/1.txt\",\"root/c/3.txt\"]] (order may vary)",
-      "explanation": "Files holding abcd form one group; files holding efgh form another."
+      "explanation": "Файлы, содержащие abcd, образуют одну группу; файлы, содержащие efgh, образуют другую."
     },
     {
       "input": "paths = [\"root/a 1.txt(abcd) 2.txt(efgh)\",\"root/c 3.txt(abcd) 4.txt(efgh)\"]",
       "output": "[[\"root/a/1.txt\",\"root/c/3.txt\"],[\"root/a/2.txt\",\"root/c/4.txt\"]] (order may vary)",
-      "explanation": "Each content value appears twice, so two groups are reported."
+      "explanation": "Каждое значение контента появляется дважды, поэтому сообщается о двух группах."
     },
     {
       "input": "paths = [\"root/a 1.txt(abcd)\"]",
       "output": "[]",
-      "explanation": "A single file has no partner, so nothing is reported."
+      "explanation": "В одном файле нет партнера, поэтому ничего не сообщается."
     }
   ],
   "starterCode": {
@@ -61,9 +61,9 @@
   ],
   "outputType": "string_list_2d",
   "hints": [
-    "Split each entry on spaces: the first token is the folder, later tokens look like name(content).",
-    "Key a hash map by the content text and push dir + '/' + name into that bucket.",
-    "Return only buckets holding two or more paths; lone files are not duplicates.",
-    "Adaptation: the input list maps to string_array and the grouped output maps to string_list_2d in this judge."
+    "Разделите каждую запись на пробелы: первый токен - это папка, более поздние токены выглядят как имя (контент).",
+    "Ключ хеш-карты по тексту содержимого и нажмите dir + '/' + имя в это ведро.",
+    "Возвращайте только ведра с двумя или более дорожками; одиночные файлы не являются дубликатами.",
+    "Адаптация: карты входного списка для string_array и сгруппированные карты вывода для string_list_2d в этом решении."
   ]
 }

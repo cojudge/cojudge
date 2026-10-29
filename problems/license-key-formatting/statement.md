@@ -1,9 +1,9 @@
-A license key is written as letters, digits, and dashes. Reformat it in this way: drop every dash, turn lowercase letters into uppercase, then re-insert dashes so that each chunk holds exactly `k` characters, except the leading chunk which may be shorter but must not be empty. Dashes separate chunks and never appear at the ends.
+Лицензионный ключ пишется как буквы, цифры и тире. Переформатируйте его таким образом: перетащите каждую тире, превратите строчные буквы в верхние, затем повторно вставьте тире так, чтобы каждый кусочек содержал именно символы `k`, за исключением ведущего кусочка, который может быть короче, но не должен быть пустым. тире разделяют кусочки и никогда не появляются на концах.
 
-Return the reformatted key.
+Верните переформатированный ключ.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= s.length <= 10^5`
-- `s` holds English letters, digits, and `-`.
+- `s` содержит английские буквы, цифры и `-`.
 - `1 <= k <= 10^4`

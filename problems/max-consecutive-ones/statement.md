@@ -1,6 +1,6 @@
-Scan a binary array (only `0`s and `1`s) and report the length of the longest contiguous run of `1`s.
+Сканируйте двоичный массив (только `0`s и `1`s) и сообщите о длине самого длинного непрерывного прогона `1`s.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= nums.length <= 10^5`
-- Each `nums[i]` is `0` or `1`.
+- Каждый `nums[i]` является `0` или `1`.

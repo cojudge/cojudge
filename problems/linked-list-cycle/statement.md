@@ -1,9 +1,9 @@
-You receive `head`, the first node of a singly linked list. Decide whether following `next` links from that node can ever revisit a node: return true when such a loop exists, and false when the chain ends.
+Вы получаете `head`, первый узел единственно связанного списка. Решите, могут ли следующие ссылки `next` из этого узла когда-либо вернуться к узлу: вернуть истинное, когда такая петля существует, и ложное, когда цепь заканчивается.
 
-A loop means some node in the chain is reachable a second time by continuing along `next` pointers. For describing tests, `pos` records the index that the tail's `next` link points back to. Take note that `pos` is only a description of the test data and is not handed to your code.
+Цикл означает, что некоторый узел в цепочке доступен во второй раз, продолжая вдоль указателей `next`. Для описания тестов `pos` записывает индекс, на который указывает ссылка хвоста `next`. Обратите внимание, что `pos` является только описанием тестовых данных и не передается вашему коду.
 
-**Constraints:**
+**Ограничения:**
 
-- The number of the nodes in the list is in the range [0, 10^4].
+- Количество узлов в списке находится в диапазоне [0, 10^4].
 - -10^5 ≤ Node.val ≤ 10^5
-- pos is -1 or a valid index in the linked-list.
+- pos -1 или действительный индекс в связанном списке.

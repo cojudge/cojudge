@@ -1,6 +1,6 @@
 {
   "id": "integer-to-english-words",
-  "title": "372. Integer to English Words",
+  "title": "372. Целое число английских слов",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/integer-to-english-words/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "num = 123",
       "output": "\"One Hundred Twenty Three\"",
-      "explanation": "123 reads as one hundred twenty three."
+      "explanation": "123 означает сто двадцать три."
     },
     {
       "input": "num = 12345",
       "output": "\"Twelve Thousand Three Hundred Forty Five\"",
-      "explanation": "Split into 12 thousand and 345."
+      "explanation": "Разделение на 12 тыс. и 345."
     },
     {
       "input": "num = 0",
       "output": "\"Zero\"",
-      "explanation": "Zero is a special case."
+      "explanation": "Ноль – это особый случай."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Split the number into groups of three digits (thousands, millions, billions) and convert each group under 1000 separately.",
-    "Handle zero alone as \"Zero\"; skip any three-digit group that equals zero so no extra scale word appears.",
-    "Use word lists for 0-19 and tens (Twenty, Thirty, ...) plus \"Hundred\" for the sub-thousand helper."
+    "Разделите число на группы из трех цифр (тысячи, миллионы, миллиарды) и конвертируйте каждую группу под 1000 отдельно.",
+    "Управляйте нулем в одиночку как «ноль»; пропустите любую трехзначную группу, которая равна нулю, чтобы не появилось лишнее слово масштаба.",
+    "Используйте списки слов для 0-19 и десятков (Двадцать, Тридцать, ...) плюс «Сотня» для суб-тысячи помощников."
   ]
 }

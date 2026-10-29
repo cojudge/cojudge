@@ -1,6 +1,6 @@
-You receive a string `s`. Disregard every character that is not a letter or a digit, and treat uppercase and lowercase forms of the same letter as identical. After this filtering, decide whether the characters that remain read the same forward and backward. Return `true` when the filtered sequence is mirror-symmetric, and `false` otherwise.
+Вы получаете строку `s`. Игнорируйте каждый символ, который не является буквой или цифрой, и рассматривайте прописные и строчные формы одной и той же буквы как идентичные. После этой фильтрации решите, будут ли символы, которые остаются, читаться одинаково вперед и назад. Возвращайте `true`, когда фильтрованная последовательность зеркально симметрична, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ s.length ≤ 2 * 10^5
-- s consists only of printable ASCII characters.
+- s состоит только из печатных символов ASCII.

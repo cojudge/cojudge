@@ -1,6 +1,6 @@
 {
   "id": "shortest-subarray-with-sum-at-least-k",
-  "title": "857. Shortest Subarray with Sum at Least K",
+  "title": "857. Короткий субарей с суммой по крайней мере K",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1], k = 1",
       "output": "1",
-      "explanation": "The whole array sums to 1 with length 1."
+      "explanation": "Весь массив суммируется в 1 с длиной 1."
     },
     {
       "input": "nums = [1,2], k = 4",
       "output": "-1",
-      "explanation": "The total 3 is below 4."
+      "explanation": "Общий индекс 3 ниже 4."
     },
     {
       "input": "nums = [2,-1,2], k = 3",
       "output": "3",
-      "explanation": "Only the full array reaches 3."
+      "explanation": "Только полный массив достигает 3."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Prefix sums turn any segment sum into a difference of two prefixes; the task becomes finding close indices with a large enough rise.",
-    "Keep candidate start positions in a deque ordered by increasing prefix value, discarding dominated entries to preserve monotonicity.",
-    "For each new prefix, pop from the front while the window already reaches `k` to record the shortest length, then maintain the monotonic order at the back."
+    "Префиксные суммы превращают любую сегментную сумму в разность двух префиксов; задачей становится поиск близких индексов с достаточно большим ростом.",
+    "Держите стартовые позиции кандидата в деке, упорядоченном путем увеличения значения префикса, отбрасывая доминируемые записи, чтобы сохранить монотонность.",
+    "Для каждого нового префикса всплывайте спереди, в то время как окно уже достигает `k`, чтобы записать самую короткую длину, а затем поддерживать монотонный порядок сзади."
   ]
 }

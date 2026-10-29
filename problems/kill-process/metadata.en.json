@@ -1,0 +1,72 @@
+{
+  "id": "kill-process",
+  "title": "627. Kill Process",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/kill-process/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "pid = [1,3,10,5], ppid = [3,0,5,3], kill = 5",
+      "output": "[5,10]",
+      "explanation": "Ending 5 also ends its child 10."
+    },
+    {
+      "input": "pid = [1,3,10,5], ppid = [3,0,5,3], kill = 3",
+      "output": "[3,1,5,10]",
+      "explanation": "Ending 3 ends the whole tree underneath it in some order."
+    },
+    {
+      "input": "pid = [1], ppid = [0], kill = 1",
+      "output": "[1]",
+      "explanation": "A lone entry only ends itself."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<Integer> killProcess(int[] pid, int[] ppid, int kill) {\n        return new java.util.ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def killProcess(self, pid: List[int], ppid: List[int], kill: int) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> killProcess(vector<int>& pid, vector<int>& ppid, int kill) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<int> KillProcess(int[] pid, int[] ppid, int kill)\n    {\n        return new List<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn kill_process(pid: Vec<i32>, ppid: Vec<i32>, kill: i32) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc KillProcess(pid []int, ppid []int, kill int) []int {\n    return []int{}\n}",
+    "typescript": "export function killProcess(pid: number[], ppid: number[], kill: number): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $pid\n     * @param int[] $ppid\n     * @param int $kill\n     * @return int[]\n     */\n    public function killProcess($pid, $ppid, $kill) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "pid": "[1,3,10,5]",
+      "ppid": "[3,0,5,3]",
+      "kill": 5
+    },
+    {
+      "pid": "[1,3,10,5]",
+      "ppid": "[3,0,5,3]",
+      "kill": 3
+    },
+    {
+      "pid": "[1]",
+      "ppid": "[0]",
+      "kill": 1
+    }
+  ],
+  "functionName": "killProcess",
+  "params": [
+    {
+      "name": "pid",
+      "type": "int_array"
+    },
+    {
+      "name": "ppid",
+      "type": "int_array"
+    },
+    {
+      "name": "kill",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Build a map from each parent value to its direct children, then walk down from kill.",
+    "[BFS/DFS] from the target collects every descendant; the order of the answer does not matter.",
+    "A parent id of 0 marks a root with no owner."
+  ]
+}

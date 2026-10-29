@@ -1,6 +1,6 @@
 {
   "id": "broken-calculator",
-  "title": "974. Broken Calculator",
+  "title": "974. Сломанный калькулятор",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/broken-calculator/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "startValue = 2, target = 3",
       "output": "2",
-      "explanation": "Double to 4, then subtract once."
+      "explanation": "Удвоить до 4, затем вычесть один раз."
     },
     {
       "input": "startValue = 5, target = 8",
       "output": "2",
-      "explanation": "Subtract to 4, then double to 8."
+      "explanation": "Вычтите 4, затем удвойте до 8."
     },
     {
       "input": "startValue = 3, target = 10",
       "output": "3",
-      "explanation": "Double to 6, subtract to 5, double to 10."
+      "explanation": "Удвоить до 6, вычесть до 5, удвоить до 10."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Going forward, doubling overshoots while subtracting crawls; think backwards from target instead.",
-    "Reversed, the moves are halve (when even) and add one: an odd target must first be bumped up to become even.",
-    "Once target drops to startValue or below, the rest is plain subtraction."
+    "Идя вперед, удваивая перелеты, вычитая ползания; вместо этого подумайте назад от цели.",
+    "Перевернутые, движения уменьшаются вдвое (когда четные) и добавляют один: нечетная цель должна сначала быть поднята, чтобы стать четной.",
+    "Как только цель падает, чтобы начать Ценность или ниже, остальное - простое вычитание."
   ]
 }

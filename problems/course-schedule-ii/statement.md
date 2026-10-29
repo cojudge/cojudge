@@ -1,11 +1,11 @@
-There are `numCourses` subjects numbered `0` through `numCourses - 1`. Every entry `prerequisites[i] = [course, prerequisite]` states that `course` may only be taken after `prerequisite` has been finished.
+Там есть `numCourses` Субъекты нумеруются `0` через `numCourses - 1`Каждый вход `prerequisites[i] = [course, prerequisite]` Утверждает, что `course` могут быть приняты только после `prerequisite` Все кончено.
 
-Produce any sequence in which every subject can be finished while respecting those requirements. When several valid sequences exist, any one of them is accepted. When the requirements loop back on themselves so that no complete sequence is possible, return an empty array.
+Изготовить любую последовательность, в которой каждый субъект может быть завершен при соблюдении этих требований. Когда существует несколько действительных последовательностей, любая из них принимается. Когда требования зацикливаются на себе так, что полная последовательность невозможна, вернуть пустой массив.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= numCourses <= 2000`
 - `0 <= prerequisites.length <= numCourses * (numCourses - 1)`
 - `prerequisites[i].length == 2`
 - `0 <= course, prerequisite < numCourses`
 - `course != prerequisite`
-- All prerequisite pairs are unique.
+- Все необходимые пары уникальны.

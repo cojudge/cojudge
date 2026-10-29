@@ -1,0 +1,51 @@
+{
+  "id": "palindromic-substrings",
+  "title": "58. Palindromic Substrings",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/palindromic-substrings/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s=\"abc\"",
+      "output": "3",
+      "explanation": "The palindromic substrings in \"abc\" are \"a\", \"b\", and \"c\", for a total of 3."
+    },
+    {
+      "input": "s=\"aaa\"",
+      "output": "6",
+      "explanation": "The palindromic substrings in \"aaa\" are \"a\" (×3), \"aa\" (×2), and \"aaa\" (×1), for a total of 6."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int countSubstrings(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def countSubstrings(self, s: str) -> int:\n        pass\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int countSubstrings(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int CountSubstrings(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_substrings(s: String) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc CountSubstrings(s string) int {\n    \n}",
+    "typescript": "export function countSubstrings(s: string): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function countSubstrings($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "abc"
+    },
+    {
+      "s": "aaa"
+    },
+    {
+      "s": "abccba"
+    }
+  ],
+  "functionName": "countSubstrings",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Expand around centers for each position (odd and even) and count all palindromic substrings."
+  ]
+}

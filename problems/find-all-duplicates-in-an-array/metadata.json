@@ -1,6 +1,6 @@
 {
   "id": "find-all-duplicates-in-an-array",
-  "title": "510. Find All Duplicates in an Array",
+  "title": "510. Найти все дубликаты в массиве",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/find-all-duplicates-in-an-array/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [4,3,2,7,8,2,3,1]",
       "output": "[2,3]",
-      "explanation": "Values 2 and 3 each occur twice."
+      "explanation": "Значения 2 и 3 встречаются дважды."
     },
     {
       "input": "nums = [1,1,2]",
       "output": "[1]",
-      "explanation": "Only 1 repeats."
+      "explanation": "Только 1 повторяется."
     },
     {
       "input": "nums = [1]",
       "output": "[]",
-      "explanation": "Nothing repeats."
+      "explanation": "Ничего не повторяется."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Track which values have been seen; the second sighting of a value means it is a duplicate.",
-    "Because values lie in 1..n, a boolean table of size n+1 gives O(1) lookups.",
-    "Report each repeated value once even if the input guarantees at most two copies."
+    "Отслеживайте, какие значения были замечены; второе наблюдение значения означает, что оно является дубликатом.",
+    "Поскольку значения лежат в 1..n, булевая таблица размера n + 1 дает поиск O(1).",
+    "Сообщите каждое повторное значение один раз, даже если вход гарантирует не более двух копий."
   ]
 }

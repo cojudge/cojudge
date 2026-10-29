@@ -1,1 +1,58 @@
-{"category":"array","difficulty":"Hard","examples":[{"explanation":"Right of 5 sit the smaller values 2 and 1; right of 2 sits 1; right of 6 sits 1; right of 1 sits nothing.","input":"nums = [5,2,6,1]","output":"[2,1,1,0]"},{"explanation":"A lone element has nothing to its right.","input":"nums = [-1]","output":"[0]"},{"explanation":"Neither entry is strictly smaller than the other.","input":"nums = [-1,-1]","output":"[0,0]"}],"functionName":"countSmaller","hints":["Scanning from right to left turns the task into counting previously seen values below a threshold.","Compress the values to ranks and keep a Fenwick tree of seen frequencies for O(log n) queries and updates.","A merge-sort variant that counts right-side takeovers while merging works too."],"id":"count-of-smaller-numbers-after-self","link":"https://leetcode.com/problems/count-of-smaller-numbers-after-self/","outputType":"int_array","params":[{"name":"nums","type":"int_array"}],"starterCode":{"cpp":"#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> countSmaller(vector<int>& nums) {\n        return {};\n    }\n};","csharp":"public class Solution \n{\n    public int[] CountSmaller(int[] nums) \n    {\n        \n    }\n}","go":"package main\n\nfunc CountSmaller(nums []int) []int {\n    \n}","java":"class Solution {\n    public int[] countSmaller(int[] nums) {\n        \n    }\n}","php":"class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function countSmaller($nums) {\n\n    }\n}","python":"from typing import List\nclass Solution:\n    def countSmaller(self, nums: List[int]) -> List[int]:\n        pass","rust":"pub struct Solution;\n\nimpl Solution {\n    pub fn count_smaller(nums: Vec<i32>) -> Vec<i32> {\n        \n    }\n}","typescript":"export function countSmaller(nums: number[]): number[] {\n    \n}"},"testCases":[{"nums":"[5,2,6,1]"},{"nums":"[-1]"},{"nums":"[-1,-1]"}],"title":"404. Count of Smaller Numbers After Self"}
+{
+  "category": "array",
+  "difficulty": "Hard",
+  "examples": [
+    {
+      "explanation": "Право 5 находится на меньших значениях 2 и 1; право 2 находится на 1; право 6 сидит на 1; право 1 ничего не сидит.",
+      "input": "nums = [5,2,6,1]",
+      "output": "[2,1,1,0]"
+    },
+    {
+      "explanation": "Одинокий элемент не имеет ничего общего с его правом.",
+      "input": "nums = [-1]",
+      "output": "[0]"
+    },
+    {
+      "explanation": "Ни один из них не является строго меньшим, чем другой.",
+      "input": "nums = [-1,-1]",
+      "output": "[0,0]"
+    }
+  ],
+  "functionName": "countSmaller",
+  "hints": [
+    "Сканирование справа налево превращает задачу в подсчет ранее увиденных значений ниже порога.",
+    "Сжимайте значения для ранжирования и сохраняйте дерево частот Fenwick для запросов O(log n) и обновлений.",
+    "Вариант слияния-сорта, который учитывает правосторонние поглощения, в то время как слияние также работает."
+  ],
+  "id": "count-of-smaller-numbers-after-self",
+  "link": "https://leetcode.com/problems/count-of-smaller-numbers-after-self/",
+  "outputType": "int_array",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "starterCode": {
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> countSmaller(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] CountSmaller(int[] nums) \n    {\n        \n    }\n}",
+    "go": "package main\n\nfunc CountSmaller(nums []int) []int {\n    \n}",
+    "java": "class Solution {\n    public int[] countSmaller(int[] nums) {\n        \n    }\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function countSmaller($nums) {\n\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def countSmaller(self, nums: List[int]) -> List[int]:\n        pass",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_smaller(nums: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
+    "typescript": "export function countSmaller(nums: number[]): number[] {\n    \n}"
+  },
+  "testCases": [
+    {
+      "nums": "[5,2,6,1]"
+    },
+    {
+      "nums": "[-1]"
+    },
+    {
+      "nums": "[-1,-1]"
+    }
+  ],
+  "title": "404. Счет меньших чисел после себя"
+}

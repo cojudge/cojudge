@@ -1,6 +1,6 @@
 {
   "id": "non-negative-integers-without-consecutive-ones",
-  "title": "639. Non-negative Integers without Consecutive Ones",
+  "title": "639. Неотрицательные целые числа без последовательных",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/non-negative-integers-without-consecutive-ones/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "n = 5",
       "output": "5",
-      "explanation": "Values 0,1,2,4,5 qualify; 3 is 11 in binary."
+      "explanation": "Значения 0, 1, 2, 4, 5 квалифицируются; 3 является 11 в двоичном варианте."
     },
     {
       "input": "n = 1",
       "output": "2",
-      "explanation": "Both 0 and 1 qualify."
+      "explanation": "Квалифицируются как 0, так и 1."
     },
     {
       "input": "n = 2",
       "output": "3",
-      "explanation": "Values 0,1,2 qualify."
+      "explanation": "Значения 0, 1, 2 квалифицируются."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Count binary strings without adjacent ones using Fibonacci numbers.",
-    "Scan bits from high to low, adding block counts when a 1 appears.",
-    "Stop early on consecutive ones; otherwise add one for n itself."
+    "Подсчитывайте двоичные строки без смежных, используя числа Фибоначчи.",
+    "Сканирование битов от высокого к низкому, добавление блоков считается при появлении 1.",
+    "Остановитесь рано на последовательных; в противном случае добавьте один для самого n."
   ]
 }

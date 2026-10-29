@@ -1,0 +1,58 @@
+{
+  "id": "to-lower-case",
+  "title": "717. To Lower Case",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/to-lower-case/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"Hello\"",
+      "output": "\"hello\"",
+      "explanation": "Uppercase H becomes lowercase; the rest stay as they are."
+    },
+    {
+      "input": "s = \"LOVELY\"",
+      "output": "\"lovely\"",
+      "explanation": "Every uppercase letter shifts to its lowercase form."
+    },
+    {
+      "input": "s = \"a1B2!\"",
+      "output": "\"a1b2!\"",
+      "explanation": "Only the letter B changes; digits and symbols are untouched."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String toLowerCase(String s) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def toLowerCase(self, s: str) -> str:\n        return \"\"",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string toLowerCase(string s) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string ToLowerCase(string s) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn to_lower_case(s: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc ToLowerCase(s string) string {\n    return \"\"\n}",
+    "typescript": "export function toLowerCase(s: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string\n     */\n    public function toLowerCase($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "Hello"
+    },
+    {
+      "s": "LOVELY"
+    },
+    {
+      "s": "a1B2!"
+    }
+  ],
+  "functionName": "toLowerCase",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Only characters in 'A' to 'Z' need changing; add 32 to their code or use a lookup.",
+    "Leave lowercase letters, digits and symbols exactly as they appear.",
+    "A single left-to-right pass building a new string is enough."
+  ]
+}

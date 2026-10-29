@@ -1,10 +1,10 @@
-Turning a data structure into a bit stream so it can be saved to a file or buffer, or sent over a link and rebuilt later on the same or another machine, is called serialization.
+Превращение структуры данных в битовый поток, чтобы ее можно было сохранить в файл или буфер, или отправить по ссылке и перестроить позже на той же или другой машине, называется сериализацией.
 
-Build a pair of routines for a **binary search tree**: one that flattens a tree into a string, and one that rebuilds the starting tree shape from that string. Because a search tree's preorder listing alone determines its shape, a compact preorder string is sufficient — but any unambiguous scheme works, since the judge only checks that the round trip restores the original tree.
+Постройте пару процедур для дерева двойного поиска: одно, которое сплющивает дерево в строку, и одно, которое восстанавливает начальную форму дерева из этой строки. Поскольку только список предварительных заказов дерева поиска определяет его форму, достаточно компактной строки предварительного заказа - но любая однозначная схема работает, поскольку судья проверяет только то, что круглая поездка восстанавливает оригинальное дерево.
 
-**Note on the judge:** The harness reads and displays trees with the same level-order listing style that LeetCode uses. Your internal encoding does not have to copy that style — feel free to invent your own scheme.
+** Заметка на судью: ** Упряжка читает и отображает деревья с тем же стилем листинга уровня, который использует LeetCode.Ваше внутреннее кодирование не должно копировать этот стиль — не стесняйтесь придумывать свою собственную схему.
 
-**Constraints:**
-- The number of nodes in the tree is in the range `[0, 10^4]`.
-- Values are unique and form a valid binary search tree.
+**Ограничения:**
+- Количество узлов в дереве находится в диапазоне `[0, 10^4]`.
+- Значения уникальны и образуют действительное дерево двоичного поиска.
 - `-10^4 <= Node.val <= 10^4`

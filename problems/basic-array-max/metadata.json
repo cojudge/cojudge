@@ -1,18 +1,18 @@
 {
   "id": "basic-array-max",
-  "title": "18. Array Maximum",
+  "title": "18. Максимальный массив",
   "difficulty": "Easy",
   "category": "arrays",
   "examples": [
     {
       "input": "nums = [3,1,4,2]",
       "output": "4",
-      "explanation": "4 is the largest."
+      "explanation": "4 является самым большим."
     },
     {
       "input": "nums = [-7,-2,-9]",
       "output": "-2",
-      "explanation": "-2 is the largest."
+      "explanation": "2 является самым большим."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Start with the first element as the best guess.",
-    "Compare every other element against it with an `if`."
+    "Начните с первого элемента, как лучшее предположение.",
+    "Сравните все остальные элементы с `if`."
   ]
 }

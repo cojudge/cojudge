@@ -1,9 +1,9 @@
-Given a dividend and a divisor, compute the integer quotient of the division, discarding any fractional part (truncation toward zero: `8.345` becomes `8` and `-2.7335` becomes `-2`).
+Получив дивиденд и делитель, вычислите целочисленный коэффициент деления, отбрасывая любую дробную часть (усечение к нулю: `8.345` становится `8`, а `-2.7335` становится `-2`).
 
-You may not use the multiplication, division, or modulo operators anywhere in your logic.
+Вы не можете использовать операторы умножения, деления или модуля нигде в своей логике.
 
-Because the environment stores only 32-bit signed integers, clamp the result: a quotient above `2^31 - 1` becomes `2147483647`. (This happens only for `-2147483648 / -1`; a quotient below `-2^31` cannot occur.)
+Поскольку среда хранит только подписанные целые числа 32-бит, зажимайте результат: коэффициент выше `2^31 - 1` становится `2147483647`. (Это происходит только для `-2147483648 / -1`; коэффициент ниже `-2^31` не может произойти.)
 
-**Constraints:**
+**Ограничения:**
 - `-2^31 <= dividend, divisor <= 2^31 - 1`
 - `divisor != 0`

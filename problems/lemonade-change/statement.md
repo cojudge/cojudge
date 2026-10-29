@@ -1,7 +1,7 @@
-A drink stand sells each lemonade for $5. Patrons arrive one after another, each handing over a $5, $10, or $20 bill, and each must end up having paid exactly $5. The register begins empty, holding no bills for making change.
+Напиток продает каждый лимонад $5. Patrons arrive one after another, each handing over a $5, $10, or $20 каждый должен в конечном итоге заплатить ровно $5Реестр начинает пустовать, не имея счетов за внесение изменений.
 
-You receive the integer array `bills`, where `bills[i]` is what the `i`-th patron in line hands over. Decide whether change can be handed back correctly to the whole line: return `true` when every patron can be served, or `false` otherwise.
+Вы получаете целочисленный массив `bills`, где `bills[i]` - это то, что `i`-й меценат в линейных руках. Решите, можно ли правильно вернуть изменения во всю линейку: вернуть `true`, когда каждый меценат может быть обслуживаем, или `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= bills.length <= 10^5`
-- `bills[i]` is either `5`, `10`, or `20`
+- `bills[i]` - это `5`, `10` или `20`.

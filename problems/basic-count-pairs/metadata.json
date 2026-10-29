@@ -1,18 +1,18 @@
 {
   "id": "basic-count-pairs",
-  "title": "35. Count Pairs with Sum",
+  "title": "35. Счет пар с суммой",
   "difficulty": "Easy",
   "category": "nested-loops",
   "examples": [
     {
       "input": "nums = [1,2,3,4], target = 5",
       "output": "2",
-      "explanation": "Pairs (1,4) and (2,3) work."
+      "explanation": "Пары (1, 4) и (2, 3) работают."
     },
     {
       "input": "nums = [0,0,0], target = 0",
       "output": "3",
-      "explanation": "All three position pairs work."
+      "explanation": "Работают все три пары позиций."
     }
   ],
   "starterCode": {
@@ -52,7 +52,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use two loops: `i` from start, `j` from `i+1`.",
-    "Count 1 every time the pair sums to the target."
+    "Используйте два цикла: `i` от начала, `j` от `i+1`.",
+    "Подсчитывайте 1 каждый раз, когда пара подводит итог к цели."
   ]
 }

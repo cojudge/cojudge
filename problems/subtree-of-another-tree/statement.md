@@ -1,8 +1,8 @@
-You are handed the roots of two binary trees, `root` and `subRoot`. Decide whether `root` contains a portion that coincides with `subRoot` in both layout and stored values, returning `true` when such a portion exists and `false` otherwise. By portion is meant some node of the larger tree taken together with every descendant below it.
+Вам вручают корни двух двоичных деревьев, `root` и `subRoot`. Решите, содержит ли `root` часть, которая совпадает с `subRoot` как в макете, так и в сохраненных значениях, возвращая `true`, когда такая часть существует, и `false` в противном случае. Под частью подразумевается некоторый узел большего дерева, взятый вместе с каждым потомком под ним.
 
-**Constraints:**
+**Ограничения:**
 
-- The number of nodes in the root tree is in the range [1, 2000].
-- The number of nodes in the subRoot tree is in the range [1, 1000].
+- Количество узлов в корневом дереве находится в диапазоне [1, 2000].
+- Количество узлов в субкорневом дереве находится в диапазоне [1, 1000].
 - -10^4 ≤ root.val ≤ 10^4
 - -10^4 ≤ subRoot.val ≤ 10^4

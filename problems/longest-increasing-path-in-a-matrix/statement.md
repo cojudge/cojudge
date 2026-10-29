@@ -1,10 +1,10 @@
-Given a nonempty rectangular integer matrix, return the length of its longest strictly
-increasing path.
+Учитывая непустую прямоугольную целочисленную матрицу, возвращайте длину ее самой длинной строго
+Расширяющийся путь.
 
-From a cell, you may move up, down, left, or right. You may not move diagonally or wrap
-across an edge.
+Из клетки вы можете двигаться вверх, вниз, влево или вправо. Вы не можете двигаться по диагонали или обертывать
+Через край.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= matrix.length, matrix[i].length <= 200`
-- Every row has the same length.
+- Каждый ряд имеет одинаковую длину.
 - `0 <= matrix[i][j] <= 2^31 - 1`

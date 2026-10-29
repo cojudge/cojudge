@@ -1,18 +1,18 @@
 {
   "id": "basic-max-of-three",
-  "title": "3. Max of Three",
+  "title": "3. Макс из трех",
   "difficulty": "Easy",
   "category": "if-else",
   "examples": [
     {
       "input": "a = 1, b = 9, c = 4",
       "output": "9",
-      "explanation": "9 is the largest."
+      "explanation": "9 является самым большим."
     },
     {
       "input": "a = -1, b = -7, c = -3",
       "output": "-1",
-      "explanation": "-1 is the largest."
+      "explanation": "1 является самым большим."
     }
   ],
   "starterCode": {
@@ -59,7 +59,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Track the biggest value seen so far in a variable.",
-    "Update it with two `if` statements, one per remaining value."
+    "Отслеживайте наибольшее значение, наблюдаемое до сих пор в переменной.",
+    "Обновите его двумя заявлениями `if`, по одному на оставшееся значение."
   ]
 }

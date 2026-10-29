@@ -1,6 +1,6 @@
 {
   "id": "max-increase-to-keep-city-skyline",
-  "title": "805. Max Increase to Keep City Skyline",
+  "title": "805. Max увеличит число участников City Skyline",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/max-increase-to-keep-city-skyline/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "grid = [[3,0,8,4],[2,4,5,7],[9,2,6,3],[0,3,1,0]]",
       "output": "35",
-      "explanation": "Each cell rises to min(row max, column max)."
+      "explanation": "Каждая ячейка поднимается до мин (ряд max, столбец max)."
     },
     {
       "input": "grid = [[0,0,0],[0,0,0],[0,0,0]]",
       "output": "0",
-      "explanation": "Nothing can be raised."
+      "explanation": "Ничего нельзя поднять."
     },
     {
       "input": "grid = [[5]]",
       "output": "0",
-      "explanation": "Single cell already at its caps."
+      "explanation": "Одиночная камера уже на колпаках."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Precompute each row maximum and each column maximum first.",
-    "A cell at (i,j) can rise to min(rowMax[i], colMax[j]) without changing the skyline.",
-    "Sum those caps minus the original heights for the answer."
+    "Сначала вычислите каждый максимум строки и каждый максимум столбца.",
+    "Ячейка в (i,j) может подниматься до мин (rowMax[i], colMax[j]) без изменения горизонта.",
+    "Составьте эти шапки минус исходные высоты для ответа."
   ]
 }

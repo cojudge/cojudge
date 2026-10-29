@@ -1,6 +1,6 @@
 {
   "id": "convert-binary-search-tree-to-sorted-doubly-linked-list",
-  "title": "496. Convert Binary Search Tree to Sorted Doubly Linked List",
+  "title": "496. Преобразуйте дерево двоичного поиска в сортированный список с двойной связью",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/convert-binary-search-tree-to-sorted-doubly-linked-list/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [4,2,5,1,3]",
       "output": "[1,null,2,null,3,null,4,null,5]",
-      "explanation": "Inorder gives 1,2,3,4,5 chained through right pointers."
+      "explanation": "Порядок дает 1, 2, 3, 4, 5, прикованный цепью через правильные указатели."
     },
     {
       "input": "root = [2,1,3]",
       "output": "[1,null,2,null,3]",
-      "explanation": "The sorted order is 1,2,3."
+      "explanation": "Отсортированный заказ: 1, 2, 3."
     },
     {
       "input": "root = []",
       "output": "[]",
-      "explanation": "An empty tree flattens to nothing."
+      "explanation": "Пустое дерево ни к чему не приводит."
     }
   ],
   "starterCode": {
@@ -52,8 +52,8 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Collect values with an inorder walk; a BST yields them sorted.",
-    "Rebuild a right-only chain from that order and clear every left pointer.",
-    "Adaptation: the circular and previous links are omitted so output stays serializable."
+    "Собирайте значения с помощью ходьбы по порядку; BST дает их сортировку.",
+    "Восстановите правую цепочку из этого порядка и очистите каждый левый указатель.",
+    "Адаптация: круговые и предыдущие ссылки опущены, поэтому выход остается сериализуемым."
   ]
 }

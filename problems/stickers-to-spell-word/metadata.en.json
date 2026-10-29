@@ -1,0 +1,78 @@
+{
+  "id": "stickers-to-spell-word",
+  "title": "706. Stickers to Spell Word",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/stickers-to-spell-word/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "stickers = [\"with\",\"example\",\"science\"], target = \"thehat\"",
+      "output": "3",
+      "explanation": "Three sheets cover all letters."
+    },
+    {
+      "input": "stickers = [\"notice\",\"possible\"], target = \"basicbasic\"",
+      "output": "-1",
+      "explanation": "Letter 'c' never appears."
+    },
+    {
+      "input": "stickers = [\"these\",\"guess\",\"about\",\"garden\",\"him\"], target = \"atomher\"",
+      "output": "3",
+      "explanation": "Three sheets suffice."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int minStickers(String[] stickers, String target) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minStickers(self, stickers: List[str], target: str) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int minStickers(vector<string>& stickers, string target) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinStickers(string[] stickers, string target)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_stickers(stickers: Vec<String>, target: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinStickers(stickers []string, target string) int {\n    return 0\n}",
+    "typescript": "export function minStickers(stickers: string[], target: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $stickers\n     * @param string $target\n     * @return int\n     */\n    public function minStickers($stickers, $target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "stickers": [
+        "with",
+        "example",
+        "science"
+      ],
+      "target": "thehat"
+    },
+    {
+      "stickers": [
+        "notice",
+        "possible"
+      ],
+      "target": "basicbasic"
+    },
+    {
+      "stickers": [
+        "these",
+        "guess",
+        "about",
+        "garden",
+        "him"
+      ],
+      "target": "atomher"
+    }
+  ],
+  "functionName": "minStickers",
+  "params": [
+    {
+      "name": "stickers",
+      "type": "string_array"
+    },
+    {
+      "name": "target",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Count letters (26 slots) for every sticker and for the target; only the overlap matters.",
+    "Search over subsets of target positions with memoization: always cover the first uncovered letter to prune the branching.",
+    "If no sticker holds a needed letter, the answer is -1."
+  ]
+}

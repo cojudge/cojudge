@@ -1,6 +1,6 @@
 {
   "id": "prime-number-of-set-bits-in-binary-representation",
-  "title": "764. Prime Number of Set Bits in Binary Representation",
+  "title": "764. Простое количество битов в бинарном представлении",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/prime-number-of-set-bits-in-binary-representation/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "left = 6, right = 10",
       "output": "4",
-      "explanation": "6, 7, 9, 10 have 2, 3, 2, 2 one-bits (all prime); 8 has 1."
+      "explanation": "6, 7, 9, 10 имеют 2, 3, 2, 2 один бит (все простые); 8 имеет 1."
     },
     {
       "input": "left = 10, right = 15",
       "output": "5",
-      "explanation": "Only 15 (4 bits) misses a prime count."
+      "explanation": "Только 15 (4 биты) пропускает простое число."
     },
     {
       "input": "left = 1, right = 1",
       "output": "0",
-      "explanation": "A single one-bit is not prime."
+      "explanation": "Один бит не является простым."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Count one-bits with a loop or a builtin popcount, then test membership in the small prime set.",
-    "Values up to 10^6 need at most 20 bits, so only primes 2, 3, 5, 7, 11, 13, 17, 19 can occur."
+    "Считайте один бит с циклом или встроенным поп-счетом, а затем проверьте членство в небольшом простом наборе.",
+    "Ценности до 10^6 Нужны в лучшем случае 20 биты, так что только простые 2, 3, 5, 7, 11, 13, 17, 19 Это может произойти."
   ]
 }

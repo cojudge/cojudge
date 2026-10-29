@@ -1,5 +1,5 @@
-Return how many index pairs `(i, j)` with `i < j` satisfy `nums[i] + nums[j] == target`. Each pair of positions counts separately, even when values repeat.
+Верните, сколько пар индексов `(i, j)` с `i < j` удовлетворяют `nums[i] + nums[j] == target`. Каждая пара позиций учитывается отдельно, даже когда значения повторяются.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= nums.length <= 500``
 - ``-10^9 <= nums[i], target <= 10^9``

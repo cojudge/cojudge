@@ -1,10 +1,10 @@
-A set of trees stands at integer coordinates. Imagine stretching a rope around the whole set so it touches the outermost trees; every tree that the rope touches or that lies exactly on a rope segment belongs to the fence.
+Набор деревьев стоит в целочисленных координатах. Представьте, что веревка растягивается вокруг всего набора так, что она касается самых внешних деревьев; каждое дерево, к которому прикасается веревка или которое лежит точно на веревочном отрезке, принадлежит забору.
 
-Given `trees` as points, return the points on the fence boundary, including collinear points along the edges. The order does not matter.
+Учитывая `trees` в качестве точек, возвращайте точки на границе забора, включая коллинеарные точки по краям. Порядок не имеет значения.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= trees.length <= 100`
 - `-100 <= trees[i][j] <= 100`
-- Points are distinct in the tests.
+- Точки различны в тестах.
 
-Adaptation: the nested input maps to int_array_2d and the nested output maps to int_list_2d in this judge.
+Адаптация: вложенные карты ввода в int_array_2d и вложенные карты вывода в int_list_2d в этом решении.

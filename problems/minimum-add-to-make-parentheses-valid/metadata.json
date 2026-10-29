@@ -1,6 +1,6 @@
 {
   "id": "minimum-add-to-make-parentheses-valid",
-  "title": "908. Minimum Add to Make Parentheses Valid",
+  "title": "908. Минимальное добавление, чтобы сделать парентезы действительными",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/",
   "category": "string",
@@ -8,22 +8,22 @@
     {
       "input": "s = \"())\"",
       "output": "1",
-      "explanation": "One extra ')' has no partner; adding a single '(' at the front balances it."
+      "explanation": "Одно дополнительное «») не имеет партнера; добавление одного «(» на передней части уравновешивает его."
     },
     {
       "input": "s = \"(((\"",
       "output": "3",
-      "explanation": "Three unmatched opens each need a closing partner."
+      "explanation": "Три непревзойденных открытия, каждый из которых нуждается в близком партнере."
     },
     {
       "input": "s = \"()\"",
       "output": "0",
-      "explanation": "Already balanced."
+      "explanation": "Уже сбалансировано."
     },
     {
       "input": "s = \"()))((\"",
       "output": "4",
-      "explanation": "The middle is balanced; the stray ')' needs one '(' and the two trailing '(' need two ')'."
+      "explanation": "Среда уравновешена; блуждающему ''нуждается в одном ''', а двум отстающим ''' - в двух '''."
     }
   ],
   "starterCode": {
@@ -56,8 +56,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Track the current open balance: '(' raises it, ')' lowers it.",
-    "A ')' arriving at balance 0 has no partner, so count one needed '(' and keep the balance at 0.",
-    "Leftover open balance at the end needs that many ')' characters; add both counts."
+    "Отслеживайте текущий открытый баланс: «(» поднимает его, «)» понижает его.",
+    "При достижении баланса 0 не имеет партнера, поэтому посчитайте необходимое «(» и сохраните баланс на 0.",
+    "Оставшийся открытый баланс в конце нуждается во многих символах; добавьте оба значения."
   ]
 }

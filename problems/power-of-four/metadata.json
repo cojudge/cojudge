@@ -1,6 +1,6 @@
 {
   "id": "power-of-four",
-  "title": "425. Power of Four",
+  "title": "425. Сила четырех",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/power-of-four/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "n = 16",
       "output": "true",
-      "explanation": "16 is 4 squared."
+      "explanation": "16 является 4 квадрат."
     },
     {
       "input": "n = 5",
       "output": "false",
-      "explanation": "No integer exponent of 4 equals 5."
+      "explanation": "Ни один целочисленный показатель 4 не равен 5."
     },
     {
       "input": "n = 1",
       "output": "true",
-      "explanation": "4 to the power 0 is 1."
+      "explanation": "4 для питания 0 — это 1."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "A power of four is a power of two whose single set bit sits in an odd position.",
-    "Check positivity, a single set bit, and divisibility of (n - 1) by 3."
+    "Сила четырех — это сила двух, один бит которых находится в нечетном положении.",
+    "Проверьте позитивность, один бит набора и делимость (n - 1) по 3."
   ]
 }

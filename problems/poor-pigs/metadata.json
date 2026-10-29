@@ -1,6 +1,6 @@
 {
   "id": "poor-pigs",
-  "title": "525. Poor Pigs",
+  "title": "525. Бедные свиньи",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/poor-pigs/",
   "category": "math",
@@ -12,12 +12,12 @@
     {
       "input": "buckets = 4, minutesToDie = 15, minutesToTest = 15",
       "output": "2",
-      "explanation": "With one round of testing each pig has 2 outcomes, and 2 pigs cover 2 * 2 = 4 buckets."
+      "explanation": "С одним раундом тестирования у каждой свиньи есть результаты 2, а свиньи 2 покрывают ведра 2 * 2 = 4."
     },
     {
       "input": "buckets = 4, minutesToDie = 15, minutesToTest = 30",
       "output": "2",
-      "explanation": "Two rounds give each pig 3 outcomes, so 2 pigs cover 3 * 3 = 9 buckets, but 1 pig covers only 3."
+      "explanation": "Два раунда дают каждой свинье результаты 3, поэтому свиньи 2 покрывают ведра 3 * 3 = 9, но свинья 1 покрывает только 3."
     }
   ],
   "starterCode": {
@@ -64,7 +64,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "The number of full test rounds is `minutesToTest / minutesToDie` (integer division), so each pig distinguishes `rounds + 1` outcomes.",
-    "Find the smallest `p` with `(rounds + 1)^p >= buckets`."
+    "Количество полных тестовых раундов `minutesToTest / minutesToDie` (целое деление), поэтому каждая свинья различает результаты `rounds + 1`.",
+    "Найдите самый маленький `p` с `(rounds + 1)^p >= buckets`."
   ]
 }

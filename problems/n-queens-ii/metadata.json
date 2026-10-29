@@ -8,12 +8,12 @@
     {
       "input": "n = 4",
       "output": "2",
-      "explanation": "There are two distinct solutions to the 4-queens puzzle."
+      "explanation": "Существует два различных решения головоломки 4-queens."
     },
     {
       "input": "n = 1",
       "output": "1",
-      "explanation": "There is one distinct solution to the 1-queens puzzle."
+      "explanation": "Существует одно четкое решение головоломки 1-queens."
     }
   ],
   "starterCode": {
@@ -46,7 +46,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Place one queen per row: a new queen is valid only when its column, diagonal, and anti-diagonal are all free.",
-    "Columns are tracked by index, diagonals by `row - col` (shifted), and anti-diagonals by `row + col`; when all n rows are filled, the placement is a solution."
+    "Поместите одну королеву в ряд: новая королева действительна только тогда, когда ее колонка, диагональ и антидиагональ свободны.",
+    "Колонки отслеживаются по индексу, диагонали по `row - col` (сдвинутые) и антидиагонали по `row + col`; при заполнении всех n рядов размещение является решением."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "minimum-falling-path-sum",
-  "title": "918. Minimum Falling Path Sum",
+  "title": "918. Минимальный путь Sum",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/minimum-falling-path-sum/",
   "category": "dp",
@@ -8,12 +8,12 @@
     {
       "input": "matrix = [[2,1,3],[6,5,4],[7,8,9]]",
       "output": "13",
-      "explanation": "The path 1 -> 4 -> 8 is minimal."
+      "explanation": "Путь 1 -> 4 -> 8 минимальный."
     },
     {
       "input": "matrix = [[-19,57],[-40,-5]]",
       "output": "-59",
-      "explanation": "-19 plus -40 is cheapest."
+      "explanation": "-19 плюс -40 дешевле всего."
     },
     {
       "input": "matrix = [[-48]]",
@@ -50,8 +50,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "The cheapest way to reach a cell depends only on the three cells above it.",
-    "Roll one row of best costs forward instead of storing the whole table.",
-    "Borders have fewer predecessors; handle the first and last columns carefully."
+    "Самый дешевый способ добраться до клетки зависит только от трех ячеек над ней.",
+    "Прокрутите один ряд лучших затрат вперед вместо того, чтобы хранить весь стол.",
+    "Границы имеют меньше предшественников, аккуратно обрабатывают первую и последнюю колонны."
   ]
 }

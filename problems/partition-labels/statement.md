@@ -1,8 +1,8 @@
-You are given a nonempty lowercase string `s`. Split it into as many contiguous parts as possible so that every letter appears in at most one part.
+Вам дается непустая строчка нижнего регистра `s`. Разделите ее на как можно больше смежных частей, чтобы каждая буква отображалась не более чем в одной части.
 
-Return the sizes of the parts from left to right. Concatenating the parts must reproduce the original string.
+Возвращать размеры частей слева направо. Объединение частей должно воспроизводить оригинальную струну.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= s.length <= 500`
-- `s` contains only lowercase English letters.
+- `s` содержит только английские буквы.

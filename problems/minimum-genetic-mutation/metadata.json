@@ -1,6 +1,6 @@
 {
   "id": "minimum-genetic-mutation",
-  "title": "502. Minimum Genetic Mutation",
+  "title": "502. Минимальная генетическая мутация",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/minimum-genetic-mutation/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "startGene = \"AACCGGTT\", endGene = \"AACCGGTA\", bank = [\"AACCGGTA\"]",
       "output": "1",
-      "explanation": "One change at the last position reaches the target."
+      "explanation": "Одно изменение на последней позиции достигает цели."
     },
     {
       "input": "startGene = \"AACCGGTT\", endGene = \"AAACGGTA\", bank = [\"AACCGGTA\",\"AACCGCTA\",\"AAACGGTA\"]",
       "output": "2",
-      "explanation": "Two single-letter steps via AACCGGTA."
+      "explanation": "Два однобуквенных шага через AACCGGTA."
     }
   ],
   "starterCode": {
@@ -60,8 +60,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Model valid genes as graph nodes joined when they differ by one letter.",
-    "Breadth-first search from the start yields the fewest steps.",
-    "Stop early when the target is dequeued; unvisited bank entries are unreachable."
+    "Модели действительных генов в виде графовых узлов соединяются, когда они отличаются одной буквой.",
+    "Поиск по ширине с самого начала дает наименьшее количество шагов.",
+    "Остановитесь рано, когда цель очерчена; непосещенные банковские записи недоступны."
   ]
 }

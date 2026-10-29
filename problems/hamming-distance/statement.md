@@ -1,6 +1,6 @@
-The Hamming distance between two integers is the number of bit positions at which their binary representations differ.
+Расстояние Хэмминга между двумя целыми числами — это число битовых позиций, в которых различаются их бинарные представления.
 
-You are given two non-negative integers `x` and `y`. Return their Hamming distance.
+Вам даны два неотрицательных целых числа `x` и `y`. Верните им расстояние Хэмминга.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= x, y <= 2^31 - 1`

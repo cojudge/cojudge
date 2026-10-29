@@ -1,6 +1,6 @@
 {
   "id": "minimum-interval-to-include-each-query",
-  "title": "138. Minimum Interval to Include Each Query",
+  "title": "138. Минимальный интервал для каждого запроса",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/minimum-interval-to-include-each-query/",
   "category": "interval",
@@ -8,17 +8,17 @@
     {
       "input": "intervals = [[1,4],[2,4],[3,6],[4,4]], queries = [2,3,4,5]",
       "output": "[3,3,1,4]",
-      "explanation": "The smallest covering intervals are [2,4], [2,4], [4,4], and [3,6]."
+      "explanation": "Наименьшими интервалами покрытия являются [2, 4], [2, 4], [4, 4] и [3, 6]."
     },
     {
       "input": "intervals = [[2,3],[2,5],[1,8],[20,25]], queries = [2,19,5,22]",
       "output": "[2,-1,4,6]",
-      "explanation": "Query 2 is covered by [2,3] (size 2), [2,5] (size 4), and [1,8] (size 8) — smallest is [2,3] size 2. Query 19 has no covering interval, so -1. Query 5 is covered by [2,5] (size 4) and [1,8] (size 8) — smallest is [2,5] size 4. Query 22 is covered only by [20,25] (size 6)."
+      "explanation": "Запрос 2 Покрывается []2,3] (размер 2), [2,5] (размер 4) и [1,8] (размер 8) - наименьший [2,3Размер 2Запросить 19 Не имеет покрывающего интервала, поэтому -1Запросить 5 Покрывается []2,5] (размер 4) и [1,8] (размер 8) - наименьший [2,5Размер 4Запросить 22 Он покрывается только [...]20,25] (размер 6)."
     },
     {
       "input": "intervals = [[1,1]], queries = [1,2]",
       "output": "[1,-1]",
-      "explanation": "Query 1 is covered by [1,1] (size 1). Query 2 has no covering interval, so -1."
+      "explanation": "Запрос 1 покрывается [1,1] (размер 1). Запрос 2 не имеет интервала покрытия, поэтому -1."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Process queries in sorted order while separately preserving each query's original index.",
-    "Before answering query q, add every interval whose left endpoint is at most q to a min-heap ordered by interval size.",
-    "Remove heap entries whose right endpoint is less than q; the remaining smallest entry gives the answer."
+    "Обрабатывайте запросы в сортированном порядке, сохраняя при этом исходный индекс каждого запроса.",
+    "Прежде чем ответить на вопрос q, добавьте каждый интервал, левая конечная точка которого составляет максимум q, к минимальной куче, упорядоченной по размеру интервала.",
+    "Удалите кучу записей, правая конечная точка которых меньше q; оставшаяся наименьшая запись дает ответ."
   ]
 }

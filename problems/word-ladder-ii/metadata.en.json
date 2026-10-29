@@ -1,0 +1,67 @@
+{
+  "id": "word-ladder-ii",
+  "title": "299. Word Ladder II",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/word-ladder-ii/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]",
+      "output": "[[\"hit\",\"hot\",\"dot\",\"dog\",\"cog\"],[\"hit\",\"hot\",\"lot\",\"log\",\"cog\"]]",
+      "explanation": "Both ladders use 5 words, which is minimal here."
+    },
+    {
+      "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\"]",
+      "output": "[]",
+      "explanation": "Without \"cog\" in the dictionary the target is unreachable."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<List<String>> findLadders(String beginWord, String endWord, String[] wordList) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) -> List[List[str]]:\n        return []",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<List<string>> FindLadders(string beginWord, string endWord, string[] wordList) \n    {\n        return new List<List<string>>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_ladders(begin_word: String, end_word: String, word_list: Vec<String>) -> Vec<Vec<String>> {\n        Vec::new()\n    }\n}",
+    "go": "package main\n\nfunc FindLadders(beginWord string, endWord string, wordList []string) [][]string {\n    return [][]string{}\n}",
+    "typescript": "export function findLadders(beginWord: string, endWord: string, wordList: string[]): string[][] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $beginWord\n     * @param string $endWord\n     * @param string[] $wordList\n     * @return string[][]\n     */\n    public function findLadders($beginWord, $endWord, $wordList) {\n        return [];\n    }\n}"
+  },
+  "testCases": [
+    {
+      "beginWord": "hit",
+      "endWord": "cog",
+      "wordList": ["hot", "dot", "dog", "lot", "log", "cog"]
+    },
+    {
+      "beginWord": "hit",
+      "endWord": "cog",
+      "wordList": ["hot", "dot", "dog", "lot", "log"]
+    },
+    {
+      "beginWord": "a",
+      "endWord": "c",
+      "wordList": ["a", "b", "c"]
+    }
+  ],
+  "functionName": "findLadders",
+  "params": [
+    {
+      "name": "beginWord",
+      "type": "string"
+    },
+    {
+      "name": "endWord",
+      "type": "string"
+    },
+    {
+      "name": "wordList",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list_2d",
+  "hints": [
+    "BFS from the start records the shortest distance to each reachable word.",
+    "Revisit words level by level so every shortest predecessor is captured.",
+    "DFS backwards from the target through predecessors to enumerate all shortest ladders."
+  ]
+}

@@ -1,6 +1,6 @@
-Call an integer powerful when it can be written as `x^i + y^j` for some non-negative integers `i` and `j`. Given `x`, `y` and `bound`, return every powerful integer that does not exceed `bound`, in increasing order, as an integer list. Any order is accepted by the judge.
+Назовите целое число мощным, когда его можно записать как `x^i + y^j` для некоторых неотрицательных целых чисел `i` и `j`. Учитывая `x`, `y` и `bound`, верните каждое мощное целое число, которое не превышает `bound`, в порядке увеличения, в виде целого списка. Любой приказ принимается судьей.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= x, y <= 100`
 - `0 <= bound <= 10^6`
-- The answers form an integer list.
+- Ответы образуют целочисленный список.

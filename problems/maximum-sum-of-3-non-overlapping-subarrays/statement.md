@@ -1,9 +1,9 @@
-You are given a list `nums` and a window length `k`. Choose three blocks, each covering exactly `k` consecutive positions, so that no two blocks overlap. The goal is to make the sum of all covered entries as large as possible.
+Вам дан список `nums` и длина окна `k`. Выберите три блока, каждый из которых покрывает точно `k` последовательные позиции, так что два блока не пересекаются. Цель состоит в том, чтобы сделать сумму всех покрытых записей как можно больше.
 
-Return the three starting indexes in increasing order. When several triples reach the same best total, return the one that is smallest in dictionary order (compare the first differing index).
+Когда несколько тройок достигают одной и той же лучшей суммы, возвращайте тот, который наименьший в словарном порядке (сравните первый отличающийся индекс).
 
-**Constraints:**
+**Ограничения:**
 - `3 * k <= nums.length <= 20000`
 - `1 <= k <= 250`
 - `1 <= nums[i] <= 1000`
-- The judge accepts any triple whose total equals the optimum and whose blocks are disjoint and ordered; the reference returns the dictionary-smallest.
+- Судья принимает любую тройку, общая сумма которой равна оптимальной, а блоки которой разъединены и упорядочены; ссылка возвращает словарь-маленький.

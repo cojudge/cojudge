@@ -1,6 +1,6 @@
-Given n nodes labeled 0..n-1 and a list of undirected edges, return true if they make up a valid tree.
+Учитывая n узлов, помеченных как 0..n-1 и список ненаправленных краев, возвращайте истинность, если они составляют действительное дерево.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 <= n <= 2000
 - 0 <= edges.length <= 10^4

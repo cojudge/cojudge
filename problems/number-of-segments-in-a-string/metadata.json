@@ -1,6 +1,6 @@
 {
   "id": "number-of-segments-in-a-string",
-  "title": "503. Number of Segments in a String",
+  "title": "503. Количество сегментов в строке",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/number-of-segments-in-a-string/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"Hello, my name is John\"",
       "output": "5",
-      "explanation": "Five runs of non-space characters."
+      "explanation": "Пять серий некосмических персонажей."
     },
     {
       "input": "s = \"Hello\"",
       "output": "1",
-      "explanation": "A single word is one segment."
+      "explanation": "Одно слово – это один сегмент."
     },
     {
       "input": "s = \"   extra   gaps   \"",
       "output": "2",
-      "explanation": "Only extra and gaps count."
+      "explanation": "Только дополнительные и пробелы учитываются."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Scan once, counting positions where a non-space follows a space or the start.",
-    "Multiple consecutive spaces start only one segment.",
-    "An empty or all-space string yields zero."
+    "Сканируйте один раз, подсчитывая позиции, где непространство следует за пространством или началом.",
+    "Несколько последовательных пространств начинаются только с одного сегмента.",
+    "Пустая или всепространственная строка дает ноль."
   ]
 }

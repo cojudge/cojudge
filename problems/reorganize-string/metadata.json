@@ -1,6 +1,6 @@
 {
   "id": "reorganize-string",
-  "title": "203. Reorganize String",
+  "title": "203. Реорганизовать струну",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/reorganize-string/",
   "category": "heap",
@@ -8,12 +8,12 @@
     {
       "input": "s = \"aab\"",
       "output": "\"aba\"",
-      "explanation": "The only possible rearrangement is \"aba\"."
+      "explanation": "Единственная возможная перегруппировка — «Аба»."
     },
     {
       "input": "s = \"aaab\"",
       "output": "\"\"",
-      "explanation": "No valid rearrangement exists because three a's would always touch."
+      "explanation": "Никакой действительной перестановки не существует, потому что три a всегда будут касаться."
     }
   ],
   "starterCode": {
@@ -52,8 +52,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Count the frequency of each character.",
-    "Use a max-heap keyed by frequency to always append the most frequent remaining character that was not just placed.",
-    "If a character appears more than (s.length + 1) / 2 times, a rearrangement is impossible."
+    "Подсчитайте частоту каждого персонажа.",
+    "Используйте максимальную кучу, нажатую на частоту, чтобы всегда добавлять наиболее частый оставшийся символ, который не был просто помещен.",
+    "Если персонаж появляется больше (s.length + 1) / 2 раз, перегруппировка невозможна."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "find-duplicate-subtrees",
-  "title": "672. Find Duplicate Subtrees",
+  "title": "672. Найти дублирующие поддеревья",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/find-duplicate-subtrees/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,2,3,4,null,2,4,null,null,4]",
       "output": "[\"4,#,#\",\"2,4,#,#,#\"]",
-      "explanation": "The leaf 4 occurs three times and the branch 2 -> 4 occurs twice; each repeated shape is reported once using preorder codes where # marks a missing child."
+      "explanation": "Лист 4 встречается три раза, а ветвь 2 -> 4 встречается дважды; каждая повторяющаяся форма сообщается один раз с использованием кодов предзаказа, где # обозначает пропавшего ребенка."
     },
     {
       "input": "root = [2,1,1]",
       "output": "[\"1,#,#\"]",
-      "explanation": "Both leaves hold 1, so the single-leaf code is the only repeat."
+      "explanation": "Оба листа содержат 1, поэтому однолистный код является единственным повторением."
     },
     {
       "input": "root = [2,2,2,3,null,3,null]",
       "output": "[\"3,#,#\",\"2,3,#,#,#\"]",
-      "explanation": "Leaf 3 repeats and so does the parent branch holding it."
+      "explanation": "Лист 3 повторяется, и родительская ветвь держит его."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Encode every branch as value + left code + right code with a marker for empty children, so equal shapes map to equal strings.",
-    "Count how often each code appears with a hash table and emit a code the second time it is seen.",
-    "Sort the collected codes before returning so the order is stable."
+    "Закодируйте каждую ветвь как значение + левый код + правый код с маркером для пустых детей, поэтому равные формы отображают равные строки.",
+    "Подсчитайте, как часто каждый код появляется с хэш-таблицей и испускает код во второй раз, когда он виден.",
+    "Сортируйте собранные коды перед возвращением, чтобы порядок был стабильным."
   ]
 }

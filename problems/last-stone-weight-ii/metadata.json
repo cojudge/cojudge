@@ -1,6 +1,6 @@
 {
   "id": "last-stone-weight-ii",
-  "title": "233. Last Stone Weight II",
+  "title": "233. Последний камень вес II",
   "difficulty": "Medium",
   "category": "dp",
   "link": "https://leetcode.com/problems/last-stone-weight-ii/",
@@ -8,12 +8,12 @@
     {
       "input": "stones = [2,7,4,1,8,1]",
       "output": "1",
-      "explanation": "We can combine 2 and 4 to get 2, so the array converts to [2,7,1,8,1] then, we can combine 7 and 8 to get 1, so the array converts to [2,1,1,1] then, we can combine 2 and 1 to get 1, so the array converts to [1,1,1] then, we can combine 1 and 1 to get 0, so the array converts to [1], then that's the optimal value."
+      "explanation": "Мы можем объединить 2 и 4 добираться 2При этом муравейник превращается в [...]2,7,1,8,1Тогда мы можем объединить 7 и 8 добираться 1При этом муравейник превращается в [...]2,1,1,1Тогда мы можем объединить 2 и 1 добираться 1При этом муравейник превращается в [...]1,1,1Тогда мы можем объединить 1 и 1 добираться 0При этом муравейник превращается в [...]1], то это оптимальное значение."
     },
     {
       "input": "stones = [31,26,33,21,40]",
       "output": "5",
-      "explanation": "We can do any sequence of smashes we want, and 5 is the smallest possible."
+      "explanation": "Мы можем делать любую последовательность ударов, какую захотим, а 5 — самая маленькая из возможных."
     }
   ],
   "starterCode": {
@@ -43,7 +43,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Think of the final answer as a sum of weights with + or - sign symbols in front of each weight. Actually, all sums with 1 of each sign symbol are possible.",
-    "Use dynamic programming: for every possible sum with N stones, those sums +x or -x is possible with N+1 stones, where x is the value of the newest stone."
+    "Подумайте об окончательном ответе как о сумме весов с символами + или - знаками перед каждым весом.На самом деле все суммы с 1 каждого символа знака возможны.",
+    "Используйте динамическое программирование: для каждой возможной суммы с N-камнями эти суммы +x или -x возможны с N+1-камнями, где x - значение новейшего камня."
   ]
 }

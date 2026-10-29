@@ -1,4 +1,4 @@
-Count how many integers `x` with `0 <= x <= n` have no two adjacent `1` bits in binary. For example 5 is `101` and qualifies, while 3 is `11` and does not.
+Подсчитайте, сколько целых чисел `x` с `0 <= x <= n` не имеют двух смежных битов `1` в двоичной системе. Например, 5 является `101` и квалифицируется, в то время как 3 является `11` и не имеет.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= n <= 10^9`.

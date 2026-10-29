@@ -1,7 +1,7 @@
-You are given a string `s`. Count how often each character appears, then reorder the characters so that more frequent characters come first. Characters with the same frequency may appear in any order relative to each other.
+Вам дается строка `s`. Подсчитайте, как часто появляется каждый персонаж, затем переупорядочьте символы так, чтобы на первое место приходили более частые персонажи. Персонажи с одинаковой частотой могут появляться в любом порядке относительно друг друга.
 
-Return any reordering that respects non-increasing frequency.
+Возврат любого переупорядочения, которое учитывает неповышающуюся частоту.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 5 * 10^5`
-- `s` contains letters, digits and spaces.
+- `s` содержит буквы, цифры и пространства.

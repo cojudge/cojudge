@@ -1,6 +1,6 @@
 {
   "id": "construct-binary-tree-from-string",
-  "title": "594. Construct Binary Tree from String",
+  "title": "594. Постройте двоичное дерево из струны",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/construct-binary-tree-from-string/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"4(2(3)(1))(6(5))\"",
       "output": "[4,2,6,3,1,5]",
-      "explanation": "Root 4 has left subtree 2 (children 3 and 1) and right child 6 (left child 5)."
+      "explanation": "У корня 4 левое поддерево 2 (потомки 3 и 1) и правый потомок 6 (левый потомок 5)."
     },
     {
       "input": "s = \"4(2(3)(1))(6(5)(7))\"",
       "output": "[4,2,6,3,1,5,7]",
-      "explanation": "As above, plus 6 gains right child 7."
+      "explanation": "Как и выше, плюс 6 получает правого потомка 7."
     },
     {
       "input": "s = \"-4(2(3)(1))(6(5)(7))\"",
       "output": "[-4,2,6,3,1,5,7]",
-      "explanation": "Node values may be negative; the shape is unchanged."
+      "explanation": "Значения узлов могут быть отрицательными; форма неизменна."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Parse recursively with a shared position cursor: read the integer, then parse up to two parenthesized children.",
-    "A '(' starts a child subtree; its matching ')' ends it. Absent parentheses mean an absent child.",
-    "An empty input string yields a null tree."
+    "Парсировать рекурсивно с общим курсором позиции: прочитать целое число, затем разобрать до двух детей скобки.",
+    "А '(' начинает детское дерево; его соответствие ')' заканчивает его. Отсутствие скобок означает отсутствие потомка.",
+    "Пустая входная строка дает нулевое дерево."
   ]
 }

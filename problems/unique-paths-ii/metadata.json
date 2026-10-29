@@ -1,6 +1,6 @@
 {
   "id": "unique-paths-ii",
-  "title": "231. Unique Paths II",
+  "title": "231. Уникальные маршруты II",
   "difficulty": "Medium",
   "category": "dp",
   "link": "https://leetcode.com/problems/unique-paths-ii/",
@@ -8,7 +8,7 @@
     {
       "input": "obstacleGrid = [[0,0,0],[0,1,0],[0,0,0]]",
       "output": "2",
-      "explanation": "There is one obstacle in the middle of the 3x3 grid above. There are two ways to reach the bottom-right corner: Right -> Right -> Down -> Down and Down -> Down -> Right -> Right."
+      "explanation": "Существует одно препятствие в середине сетки 3х3 выше. Есть два способа добраться до нижнего правого угла: справа -> справа -> вниз -> вниз -> вниз -> вниз -> вниз -> справа -> справа."
     },
     {
       "input": "obstacleGrid = [[0,1],[0,0]]",
@@ -43,7 +43,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use dynamic programming since, from each cell, you can move to the right or down.",
-    "Assume dp[i][j] is the number of unique paths to reach (i, j). dp[i][j] = dp[i][j - 1] + dp[i - 1][j]. Be careful when you encounter an obstacle; set its value in dp to 0."
+    "Используйте динамическое программирование, так как с каждой ячейки вы можете перемещаться вправо или вниз.",
+    "Предположим, что dp[i][j] — это число уникальных путей для достижения (i, j). dp[i][j] = dp[i][j — 1] + dp[i — 1][j]. Будьте осторожны, когда сталкиваетесь с препятствием; установите его значение в dp на 0."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "basic-sum-1-to-n",
-  "title": "9. Sum 1 to N",
+  "title": "9. Обсуждение 1 to N",
   "difficulty": "Easy",
   "category": "loops",
   "examples": [
@@ -12,7 +12,7 @@
     {
       "input": "n = 1",
       "output": "1",
-      "explanation": "The sum of just 1 is 1."
+      "explanation": "Суммой 1 является 1."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Loop from 1 to `n`, adding each value to a running total.",
-    "Start the total at 0."
+    "Перейдите от 1 к `n`, добавляя каждое значение к общей сумме.",
+    "Начните с 0."
   ]
 }

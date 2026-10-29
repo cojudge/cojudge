@@ -1,8 +1,8 @@
-You are given `n` pairs `[a, b]` with `a < b`. A chain links pairs so that each pair's second entry is strictly smaller than the next pair's first entry (`b < c` for `[a,b]` followed by `[c,d]`). Pairs may be reordered freely and any subset may be used.
+Вам даны пары `n` `[a, b]` с `a < b`. Пара цепей связывается так, что вторая запись каждой пары строго меньше, чем первая запись следующей пары (`b < c` для `[a,b]`, за которой следует `[c,d]`). Пары могут быть переупорядочены свободно и может использоваться любое подмножество.
 
-Implement `findLongestChain(pairs)` returning the longest achievable chain length.
+Внедрить `findLongestChain(pairs)`, возвращая самую длинную достижимую длину цепи.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= pairs.length <= 2500`
 - `pairs[i].length == 2`
 - `-1000 <= pairs[i][j] <= 1000`

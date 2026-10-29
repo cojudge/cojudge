@@ -1,18 +1,18 @@
 {
   "id": "basic-count-evens",
-  "title": "20. Count Evens",
+  "title": "20. Подсчитывать события",
   "difficulty": "Easy",
   "category": "arrays",
   "examples": [
     {
       "input": "nums = [1,2,3,4]",
       "output": "2",
-      "explanation": "2 and 4 are even."
+      "explanation": "2 и 4 являются ровными."
     },
     {
       "input": "nums = [1,3,5]",
       "output": "0",
-      "explanation": "None are even."
+      "explanation": "Ни один из них не ровный."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Loop over the array with a counter.",
-    "Increment the counter when `x % 2 == 0`."
+    "Нажмите на массив со счетчиком.",
+    "Увеличьте счетчик, когда `x % 2 == 0`."
   ]
 }

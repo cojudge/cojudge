@@ -1,6 +1,6 @@
 {
   "id": "insert-delete-getrandom-o1-duplicates-allowed",
-  "title": "457. Insert Delete GetRandom O(1) - Duplicates Allowed",
+  "title": "457. Включить Удалить GetRandom O (1) - Разрешенные дубликаты",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/insert-delete-getrandom-o1-duplicates-allowed/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"RandomizedCollection\",\"insert\",\"insert\",\"insert\",\"getRandom\",\"remove\",\"getRandom\"], values = [0,1,1,2,0,1,0]",
       "output": "[1,0,1,X,1,Y] (X in {1,1,2}; Y in {1,2})",
-      "explanation": "Sampling entries may be any held value."
+      "explanation": "Отбор проб может иметь любую удерживаемую стоимость."
     },
     {
       "input": "operations = [\"RandomizedCollection\",\"insert\",\"remove\",\"remove\"], values = [0,4,4,4]",
       "output": "[1,1,0]",
-      "explanation": "Second removal misses."
+      "explanation": "Вторая увольнение промах."
     },
     {
       "input": "operations = [\"RandomizedCollection\",\"insert\",\"insert\",\"remove\"], values = [0,2,2,2]",
       "output": "[1,0,1]",
-      "explanation": "One copy of 2 remains after removal."
+      "explanation": "Одна копия 2 остается после удаления."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Keep a list of values plus, per value, the set of list positions holding it.",
-    "Insertion appends and records the new index; removal swaps the chosen index with the tail and fixes both index sets.",
-    "Sampling draws a uniform list position; the judge accepts any held value."
+    "Сохраните список значений плюс, за значение, набор позиций списка, удерживающих его.",
+    "Вставка добавляет и записывает новый индекс; удаление свопов выбранного индекса с хвостом и фиксирует оба набора индексов.",
+    "Отбор проб занимает единую позицию в списке; судья принимает любую удерживаемую стоимость."
   ]
 }

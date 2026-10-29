@@ -1,0 +1,58 @@
+{
+  "id": "course-schedule",
+  "title": "28. Course Schedule",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/course-schedule/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "numCourses = 2, prerequisites = [[1,0]]",
+      "output": "true",
+      "explanation": "All 2 courses can be completed (no prerequisite cycle)."
+    },
+    {
+      "input": "numCourses = 2, prerequisites = [[1,0],[0,1]]",
+      "output": "false",
+      "explanation": "A cycle is detected in the prerequisite graph, so all 2 courses cannot be completed."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public boolean canFinish(int numCourses, int[][] prerequisites) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool CanFinish(int numCourses, int[][] prerequisites) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_finish(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc CanFinish(numCourses int, prerequisites [][]int) bool {\n    \n}",
+    "typescript": "export function canFinish(numCourses: number, prerequisites: number[][]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $numCourses\n     * @param int[][] $prerequisites\n     * @return bool\n     */\n    public function canFinish($numCourses, $prerequisites) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "numCourses": 2,
+      "prerequisites": "[[1,0]]"
+    },
+    {
+      "numCourses": 2,
+      "prerequisites": "[[1,0],[0,1]]"
+    },
+    {
+      "numCourses": 5,
+      "prerequisites": "[[1,4],[2,4],[3,1],[3,2]]"
+    }
+  ],
+  "functionName": "canFinish",
+  "params": [
+    {
+      "name": "numCourses",
+      "type": "int"
+    },
+    {
+      "name": "prerequisites",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Model courses as a directed graph with edges bi->ai. You can finish all courses iff the graph is acyclic. Use Kahn's algorithm (BFS on indegrees) or DFS cycle detection."
+  ]
+}

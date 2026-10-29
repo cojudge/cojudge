@@ -1,13 +1,13 @@
-Consider a booking service for half-open slots `[start, end)` that tolerates overlaps of up to two bookings but refuses any booking that would create a triple overlap.
+Рассмотрим услугу бронирования для полуоткрытых слотов `[start, end)`, которая перекрывает до двух бронирований, но отказывается от любого бронирования, которое создало бы тройное перекрытие.
 
-You receive an ordered call sequence. The first entry creates the calendar; each later entry books one interval `[start, end)` with `start < end`. A booking succeeds exactly when adding it keeps every point in time covered by at most two stored slots; successful bookings are stored.
+Вы получаете упорядоченную последовательность вызовов. Первая запись создает календарь; каждая более поздняя запись книги один интервал `[start, end)` с `start < end`. Бронирование преуспевает именно при добавлении, оно сохраняет каждую точку времени, охватываемую максимум двумя сохраненными слотами; успешные бронирования хранятся.
 
-Implement `runCalendarTwo(operations, args)` instead of a class:
+Внедрить `runCalendarTwo(operations, args)` вместо класса:
 
-- `operations[i]` is `"MyCalendarTwo"` for the creation entry, then `"book"` for each request.
-- `args[i]` is `[]` for creation and `[start, end]` for a booking.
-- Return one integer per booking call (creation excluded): `1` for accepted, `0` for refused.
+- `operations[i]` - это `"MyCalendarTwo"` для записи создания, затем `"book"` для каждого запроса.
+- `args[i]` - это `[]` для создания и `[start, end]` для бронирования.
+- Возврат одного целого числа на вызов бронирования (создание исключено): `1` для принятого, `0` для отказа.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= operations.length <= 1000`
 - `0 <= start < end <= 10^9`

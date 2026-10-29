@@ -1,6 +1,6 @@
 {
   "id": "valid-sudoku",
-  "title": "76. Valid Sudoku",
+  "title": "76. Достоверный Судоку",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/valid-sudoku/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "board = [\"53..7....\",\"6..195...\",\".98....6.\",\"8...6...3\",\"4..8.3..1\",\"7...2...6\",\".6....28.\",\"...419..5\",\"....8..79\"]",
       "output": "true",
-      "explanation": "No duplicates in any row, column, or 3x3 sub-box. The board is valid."
+      "explanation": "Никаких дубликатов ни в одной строке, столбце, ни в 3х3 подкоробке."
     },
     {
       "input": "board = [\"83..7....\",\"6..195...\",\".98....6.\",\"8...6...3\",\"4..8.3..1\",\"7...2...6\",\".6....28.\",\"...419..5\",\"....8..79\"]",
       "output": "false",
-      "explanation": "The top-left 3 x 3 box contains two 8s."
+      "explanation": "Верхняя левая коробка 3 x 3 содержит два 8s."
     },
     {
       "input": "board = [\".........\",\".........\",\".........\",\".........\",\".........\",\".........\",\".........\",\".........\",\".........\"]",
       "output": "true",
-      "explanation": "No duplicates in any row, column, or 3x3 sub-box. The board is valid."
+      "explanation": "Никаких дубликатов ни в одной строке, столбце, ни в 3х3 подкоробке."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Track the digits already seen in each row, column, and 3 x 3 box.",
-    "A 9-bit mask can represent the used digits for one unit."
+    "Отслеживайте цифры, которые уже видны в каждой строке, столбце и поле 3 x 3.",
+    "Маска 9-bit может представлять используемые цифры для одного блока."
   ]
 }

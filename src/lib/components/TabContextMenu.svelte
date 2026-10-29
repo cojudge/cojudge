@@ -21,7 +21,7 @@
 <div
     class="tab-context-menu"
     role="menu"
-    aria-label="Tab actions"
+    aria-label="Действия на вкладке"
     tabindex="-1"
     style="left: {x}px; top: {y}px;"
     on:contextmenu|preventDefault|stopPropagation
@@ -32,28 +32,28 @@
         role="menuitem"
         disabled={closeDisabled}
         on:click={() => dispatch('close')}
-    >Close</button>
+    >Закрыть</button>
     <button
         type="button"
         class="tab-context-menu-item"
         role="menuitem"
         disabled={closeLeftDisabled}
         on:click={() => dispatch('closeLeft')}
-    >Close Left</button>
+    >Закрыть слева</button>
     <button
         type="button"
         class="tab-context-menu-item"
         role="menuitem"
         disabled={closeRightDisabled}
         on:click={() => dispatch('closeRight')}
-    >Close Right</button>
+    >Закрыть справа</button>
     <button
         type="button"
         class="tab-context-menu-item"
         role="menuitem"
         disabled={closeOthersDisabled}
         on:click={() => dispatch('closeOthers')}
-    >Close Others</button>
+    >Закрыть остальные</button>
     <div class="tab-context-menu-separator" role="separator"></div>
     <button
         type="button"
@@ -61,7 +61,7 @@
         role="menuitem"
         disabled={renameDisabled}
         on:click={() => dispatch('rename')}
-    >Rename</button>
+    >Переименовать</button>
 </div>
 
 <style>

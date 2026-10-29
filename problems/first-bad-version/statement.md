@@ -1,12 +1,12 @@
-Versions `1..n` turn bad starting at some hidden threshold: every version from the first bad one onward is bad. Interact with the judge object `vc` — your code never receives `bad` directly:
+Версии `1..n` становятся плохими, начиная с какого-то скрытого порога: каждая версия с первой плохой и далее плоха.Взаимодействуйте с объектом судьи `vc` — ваш код никогда не получает `bad` напрямую:
 
-- `isBadVersion(version)` returns whether that version is bad.
+- `isBadVersion(version)` отвечает на вопрос, плоха ли эта версия.
 
-Implement `firstBadVersion(n, vc)` returning the first bad version while minimizing the number of API calls. Binary search needs `O(log n)` calls; the judge counts your calls and reports Wrong Answer if you exceed **100** calls on a test case.
+Внедряйте `firstBadVersion(n, vc)`, возвращая первую плохую версию, минимизируя количество вызовов API. Бинарный поиск требует вызовов `O(log n)`; судья подсчитывает ваши звонки и сообщает Неправильный ответ, если вы превышаете **100** вызовы по тестовому делу.
 
-Method names per language: Java `vc.isBadVersion(version)`, Python `vc.is_bad_version(version)`, C++ `vc.isBadVersion(version)`, C# `vc.IsBadVersion(version)`, Rust `vc.is_bad_version(version)`, Go `vc.IsBadVersion(version)`, TypeScript `vc.isBadVersion(version)`, PHP `$vc->isBadVersion($version)`.
+Имена методов на языке: Java `vc.isBadVersion(version)`, Python `vc.is_bad_version(version)`, C++ `vc.isBadVersion(version)`, C# `vc.IsBadVersion(version)`, Rust `vc.is_bad_version(version)`, Go `vc.IsBadVersion(version)`, TypeScript `vc.isBadVersion(version)`, PHP `$vc->isBadVersion($version)`.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= bad <= n <= 2^31 - 1`
-- At most 100 API calls per test case.
+- В большинстве случаев 100 API вызывается в тестовом случае.

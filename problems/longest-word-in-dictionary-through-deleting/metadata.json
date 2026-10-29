@@ -1,6 +1,6 @@
 {
   "id": "longest-word-in-dictionary-through-deleting",
-  "title": "583. Longest Word in Dictionary through Deleting",
+  "title": "583. Самое длинное слово в словаре через удаление",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"abpcplea\", dictionary = [\"ale\",\"apple\",\"monkey\",\"plea\"]",
       "output": "\"apple\"",
-      "explanation": "\"apple\" is the longest dictionary word formable by deleting letters."
+      "explanation": "«Яблоко» — это самое длинное словарное слово, которое может быть сформировано путем удаления букв."
     },
     {
       "input": "s = \"abpcplea\", dictionary = [\"a\",\"b\",\"c\"]",
       "output": "\"a\"",
-      "explanation": "\"a\" and \"b\" tie at length 1; \"a\" is alphabetically smaller."
+      "explanation": "«a» и «b» связаны в длину 1; «a» в алфавитном порядке меньше."
     },
     {
       "input": "s = \"bab\", dictionary = [\"ba\",\"ab\",\"a\",\"b\"]",
       "output": "\"ab\"",
-      "explanation": "\"ba\" and \"ab\" tie for longest; \"ab\" is alphabetically smaller."
+      "explanation": "«ба» и «аб» галстук для самых длинных; «аб» в алфавитном порядке меньше."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "A word is formable exactly when it is a subsequence of s; test this with two pointers scanning s once per word.",
-    "Track the best word so far: replace it when a longer formable word appears, or an equally long but alphabetically smaller one.",
-    "Sorting the dictionary by decreasing length (ties broken alphabetically) lets you return the first formable word."
+    "Слово формируется именно тогда, когда оно является последовательностью s; проверьте это с помощью двух указателей, сканирующих s один раз на слово.",
+    "Отслеживайте лучшее слово на данный момент: замените его, когда появится более длинное, но в алфавитном порядке меньшее слово.",
+    "Сортировка словаря по уменьшению длины (связи разбиты по алфавиту) позволяет вернуть первое формируемое слово."
   ]
 }

@@ -1,8 +1,8 @@
-You are given an integer array `nums` and an integer `k`. A *k-diff pair* is a pair of distinct positions `(i, j)` with `i != j` such that `|nums[i] - nums[j]| == k`. Pairs are compared by their values, not their positions: for example, `(1, 2)` and `(2, 1)` describe the same pair, and two position pairs holding the same two values count only once.
+Вы получаете целочисленный массив `nums` и целое число `k`. Пара *k-diff* представляет собой пару различных позиций `(i, j)` с `i != j` таким образом, что `|nums[i] - nums[j]| == k`. Пары сравниваются по их значениям, а не по их позициям: например, `(1, 2)` и `(2, 1)` описывают одну и ту же пару, а две пары позиций, удерживающие одни и те же два значения, учитываются только один раз.
 
-Return the number of distinct k-diff pairs in the array.
+Возвращайте количество различных k-диффовых пар в массиве.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^4`
 - `-10^7 <= nums[i] <= 10^7`
 - `0 <= k <= 10^7`

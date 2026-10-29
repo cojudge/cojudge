@@ -1,6 +1,6 @@
 {
   "id": "optimal-account-balancing",
-  "title": "530. Optimal Account Balancing",
+  "title": "530. Оптимальный баланс счета",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/optimal-account-balancing/",
   "category": "backtracking",
@@ -8,12 +8,12 @@
     {
       "input": "transactions = [[0,1,10],[2,0,5]]",
       "output": "2",
-      "explanation": "Net balances are -5 for person 0, +10 for person 1, and -5 for person 2, so two payments (one from each debtor to person 1) settle everything."
+      "explanation": "Чистые остатки -5 для человека 0, +10 для человека 1 и -5 для человека 2, поэтому два платежа (по одному от каждого должника к человеку 1) решают все."
     },
     {
       "input": "transactions = [[0,1,10],[1,0,1],[1,2,5],[2,0,5]]",
       "output": "1",
-      "explanation": "Net balances are -4 for person 0, +4 for person 1, and 0 for person 2, so a single payment of 4 from person 0 to person 1 settles everyone."
+      "explanation": "Чистые остатки -4 для человека 0, +4 для человека 1 и 0 для человека 2, поэтому единый платеж 4 от человека 0 до человека 1 устраивает всех."
     }
   ],
   "starterCode": {
@@ -43,7 +43,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Only each person's net balance matters: collapse all transfers into one balance per person and drop the zeroes.",
-    "Backtrack over pairs with opposite signs, settling one account per transfer and skipping symmetric dead ends."
+    "Только чистый баланс каждого человека имеет значение: схлопните все переводы в один баланс на человека и сбросьте нули.",
+    "Обратный путь по парам с противоположными знаками, урегулирование одной учетной записи на передачу и пропуск симметричных тупиков."
   ]
 }

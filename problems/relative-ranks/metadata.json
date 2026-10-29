@@ -1,6 +1,6 @@
 {
   "id": "relative-ranks",
-  "title": "568. Relative Ranks",
+  "title": "568. Относительные ранги",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/relative-ranks/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "score = [5,4,3,2,1]",
       "output": "[\"Gold Medal\",\"Silver Medal\",\"Bronze Medal\",\"4\",\"5\"]",
-      "explanation": "The best score 5 earns gold, then 4 silver, 3 bronze, and the rest keep their numeric ranks."
+      "explanation": "Лучший результат 5 зарабатывает золото, затем серебро 4, бронза 3, а остальные сохраняют свои числовые ранги."
     },
     {
       "input": "score = [10,3,8,9,4]",
       "output": "[\"Gold Medal\",\"5\",\"Bronze Medal\",\"Silver Medal\",\"4\"]",
-      "explanation": "Sorted best-first the scores are 10, 9, 8, 4, 3, giving ranks 1..5 mapped back to the input order."
+      "explanation": "Лучше всего сортируются 10, 9, 8, 4, 3, давая ранги 1..5, отображаемые обратно в порядок ввода."
     },
     {
       "input": "score = [1]",
       "output": "[\"Gold Medal\"]",
-      "explanation": "A single competitor wins gold."
+      "explanation": "Один конкурент выигрывает золото."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Sort competitor indices by score from high to low; the position in that order is the rank.",
-    "Translate ranks 1, 2, 3 to the three medal names and format all other ranks as decimal strings."
+    "Сортируйте индексы конкурентов по баллам от высокого до низкого; позиция в этом порядке - ранг.",
+    "Перевод ранжирует 1, 2, 3 до трех названий медалей и форматирует все остальные ранги как десятичные строки."
   ]
 }

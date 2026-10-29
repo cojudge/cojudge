@@ -1,6 +1,6 @@
 {
   "id": "k-inverse-pairs-array",
-  "title": "651. K Inverse Pairs Array",
+  "title": "651. K Inverse Pairs Array (недоступная ссылка)",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/k-inverse-pairs-array/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "n = 3, k = 0",
       "output": "1",
-      "explanation": "Only [1,2,3] has zero inversions."
+      "explanation": "Только 1, 2, 3 имеет нулевые инверсии."
     },
     {
       "input": "n = 3, k = 1",
       "output": "2",
-      "explanation": "[1,3,2] and [2,1,3] each have exactly one inversion."
+      "explanation": "[1, 3, 2] и [2, 1, 3] имеют ровно одну инверсию."
     },
     {
       "input": "n = 2, k = 2",
       "output": "0",
-      "explanation": "Two elements allow at most one inversion."
+      "explanation": "Два элемента допускают максимум одну инверсию."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Let dp[i][j] count permutations of 1..i with j inversions; appending i+1 can add 0..i new inversions.",
-    "That gives a sliding-window recurrence: dp[i][j] = sum of dp[i-1][j-t] for t in 0..min(i-1, j).",
-    "Keep prefix sums to evaluate each row in linear time and take everything modulo 1000000007."
+    "Пусть dp[i][j] подсчитывает перестановки 1.i с j-инверсиями; добавление i+1 может добавить 0..i новые инверсии.",
+    "Это дает повторение раздвижного окна: dp[i][j] = сумма dp[i-1][j-t] для t в 0..min(i-1, j).",
+    "Сохраняйте префиксные суммы, чтобы оценить каждую строку в линейном времени и взять все модулю 1000000007."
   ]
 }

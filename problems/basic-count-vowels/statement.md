@@ -1,4 +1,4 @@
-Return how many vowels appear in `s`. The vowels are `a, e, i, o, u` in both lowercase and uppercase.
+Верните, сколько гласных появляется в `s`. гласные - `a, e, i, o, u` как в нижнем, так и в верхнем регистре.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= s.length <= 1000``

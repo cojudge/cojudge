@@ -1,6 +1,6 @@
 {
   "id": "card-flipping-game",
-  "title": "820. Card Flipping Game",
+  "title": "820. Игра Card Flipping",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/card-flipping-game/",
   "category": "hash-table",
@@ -8,17 +8,17 @@
     {
       "input": "fronts = [1,2,4,4,7], backs = [1,3,4,1,3]",
       "output": "2",
-      "explanation": "Values 1 and 4 each appear on both sides of some card and are disqualified; the smallest remaining value is 2."
+      "explanation": "Значения 1 и 4 появляются с обеих сторон карты и дисквалифицируются; наименьшее оставшееся значение - 2."
     },
     {
       "input": "fronts = [1], backs = [1]",
       "output": "0",
-      "explanation": "The only value is double-sided on its card, so no good number exists."
+      "explanation": "Единственное значение на карте двойное, поэтому хорошего числа не существует."
     },
     {
       "input": "fronts = [2,3], backs = [4,5]",
       "output": "2",
-      "explanation": "No card shows the same value twice, so the minimum of all faces wins."
+      "explanation": "Ни одна карта не показывает одно и то же значение дважды, поэтому выигрывает минимум всех лиц."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "A value appearing on both faces of any single card can never be the hidden answer.",
-    "Collect those forbidden values, then take the minimum over all faces not in the set (0 when empty)."
+    "Значение, появляющееся на обоих лицах одной карты, никогда не может быть скрытым ответом.",
+    "Соберите эти запрещенные значения, а затем возьмите минимум на всех лицах, не в наборе (0, когда пуст)."
   ]
 }

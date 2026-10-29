@@ -1,6 +1,6 @@
 {
   "id": "number-complement",
-  "title": "540. Number Complement",
+  "title": "540. Дополнение числа",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/number-complement/",
   "category": "binary",
@@ -8,17 +8,17 @@
     {
       "input": "num = 5",
       "output": "2",
-      "explanation": "101 becomes 010."
+      "explanation": "101 становится 010."
     },
     {
       "input": "num = 1",
       "output": "0",
-      "explanation": "1 becomes 0."
+      "explanation": "1 становится 0."
     },
     {
       "input": "num = 7",
       "output": "0",
-      "explanation": "111 becomes 000."
+      "explanation": "111 становится 000."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Build a mask of all 1s with the same bit-length as num.",
-    "XOR the mask with num to flip exactly those bits.",
-    "Shifting a 64-bit value avoids overflow when num is near 2^31."
+    "Постройте маску из всех 1 с той же длиной бита, что и число.",
+    "XOR маска с нумом, чтобы перевернуть именно эти биты.",
+    "Смещение значения 64-бит позволяет избежать переполнения, когда число находится вблизи 2^31."
   ]
 }

@@ -1,0 +1,56 @@
+{
+  "id": "nested-list-weight-sum-ii",
+  "title": "443. Nested List Weight Sum II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/nested-list-weight-sum-ii/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "nestedList = \"[[1,1],2,[1,1]]\"",
+      "output": "8",
+      "explanation": "Four ones at depth 2 count once each, and the two at depth 1 counts twice."
+    },
+    {
+      "input": "nestedList = \"[1,[4,[6]]]\"",
+      "output": "17",
+      "explanation": "Depths are 1, 2, 3 with max depth 3, giving 1*3 + 4*2 + 6*1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int depthSumInverse(String nestedList) {\n        \n    }\n}",
+    "python": "class Solution:\n    def depthSumInverse(self, nestedList: str) -> int:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int depthSumInverse(string nestedList) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int DepthSumInverse(string nestedList) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn depth_sum_inverse(nested_list: String) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc DepthSumInverse(nestedList string) int {\n    \n}",
+    "typescript": "export function depthSumInverse(nestedList: string): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $nestedList\n     * @return int\n     */\n    public function depthSumInverse($nestedList) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nestedList": "[[1,1],2,[1,1]]"
+    },
+    {
+      "nestedList": "[1,[4,[6]]]"
+    },
+    {
+      "nestedList": "[1]"
+    },
+    {
+      "nestedList": "[]"
+    }
+  ],
+  "functionName": "depthSumInverse",
+  "params": [
+    {
+      "name": "nestedList",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Parse the string into a tree of integers and lists first.",
+    "A first walk finds the maximum integer depth.",
+    "A second walk accumulates value * (maxDepth - depth + 1)."
+  ]
+}

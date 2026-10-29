@@ -1,6 +1,6 @@
 {
   "id": "meeting-rooms",
-  "title": "38. Meeting Rooms",
+  "title": "38. Комнаты для совещаний",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/meeting-rooms/",
   "category": "interval",
@@ -8,12 +8,12 @@
     {
       "input": "intervals = [[0,30],[5,10],[15,20]]",
       "output": "false",
-      "explanation": "Intervals [0,30] overlaps with [5,10] and [15,20], so not all meetings can fit in one room."
+      "explanation": "Интервалы [0, 30] пересекаются с [5, 10] и [15, 20], поэтому не все встречи могут поместиться в одной комнате."
     },
     {
       "input": "intervals = [[7,10],[2,4]]",
       "output": "true",
-      "explanation": "Intervals [7,10] and [2,4] do not overlap, so one room suffices."
+      "explanation": "Интервалы [7, 10] и [2, 4] не пересекаются, поэтому достаточно одной комнаты."
     }
   ],
   "starterCode": {
@@ -68,8 +68,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Sort intervals by start time and check adjacent pairs: if intervals[i].start < intervals[i-1].end then there's a conflict.",
-    "Alternatively, sort starts and ends separately and sweep with two pointers to detect overlaps.",
-    "Empty or single interval inputs are always attendable."
+    "Сортируйте интервалы по времени начала и проверяйте соседние пары: если интервалы [i].start < интервалы [i-1].end, то возникает конфликт.",
+    "Альтернативно, сортируйте начало и конец по отдельности и проведите двумя указателями для обнаружения перекрытий.",
+    "Пустые или единичные интервальные входы всегда доступны."
   ]
 }

@@ -1,8 +1,8 @@
-You receive `intervals`, where each entry holds `[start, end]` and every start value is unique. For each position `i`, locate its right neighbor: the index `j` whose start is at least `intervals[i][1]` (the end of `i`) and as small as possible. An interval may be its own neighbor. When no start reaches far enough, record `-1` for that position.
+Вы получаете `intervals`, где каждая запись содержит `[start, end]`, а каждое начальное значение уникально. Для каждой позиции `i` найдите своего правильного соседа: индекс `j`, начало которого составляет по меньшей мере `intervals[i][1]` (конец `i`) и как можно меньше. Интервал может быть его собственным соседом. Когда ни один старт не достигает достаточного расстояния, запишите `-1` для этой позиции.
 
-Return the list of neighbor indices, one per input interval, in the original order.
+Верните список соседних индексов, по одному на входной интервал, в исходном порядке.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= intervals.length <= 2 * 10^4`
-- Each inner pair has length 2 with `-10^6 <= start <= end <= 10^6`.
-- Starts are pairwise distinct.
+- Каждая внутренняя пара имеет длину 2 с `-10^6 <= start <= end <= 10^6`.
+- Начало попарно различно.

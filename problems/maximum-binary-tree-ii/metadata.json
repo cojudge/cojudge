@@ -1,6 +1,6 @@
 {
   "id": "maximum-binary-tree-ii",
-  "title": "979. Maximum Binary Tree II",
+  "title": "979. Максимальное двоичное дерево II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/maximum-binary-tree-ii/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [4,1,3,null,null,2], val = 5",
       "output": "[5,4,null,1,3,null,null,2]",
-      "explanation": "5 exceeds every existing value, so it becomes the new root with the old tree on its left."
+      "explanation": "5 превосходит все существующие значения, поэтому он становится новым корнем со старым деревом слева."
     },
     {
       "input": "root = [5,2,4,null,1], val = 3",
       "output": "[5,2,4,null,1,null,3]",
-      "explanation": "3 settles as the right child of 4."
+      "explanation": "3 становится правым потомком узла 4."
     },
     {
       "input": "root = [5,2,3,null,1], val = 4",
       "output": "[5,2,4,null,1,3]",
-      "explanation": "4 takes the place of 3, which slides down to become its left child."
+      "explanation": "4 занимает место 3, который скользит вниз, чтобы стать его левым потомком."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "The appended value only disturbs the rightmost path, since everything left of the old maximum stays left of it.",
-    "Walk down right children: if val beats the current node, splice a new node in and hang the current subtree left.",
-    "Otherwise recurse into the right child; an empty right child simply receives the new leaf."
+    "Прилагаемое значение только нарушает самый правый путь, так как все, что осталось от старого максимума, остается от него.",
+    "Прогуляйтесь по правым детям: если валь бьет текущий узел, вставьте новый узел и повесьте текущее поддерево слева.",
+    "В противном случае потомок возвращается в нужное место; пустой потомок просто получает новый лист."
   ]
 }

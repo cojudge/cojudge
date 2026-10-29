@@ -1,6 +1,6 @@
 {
   "id": "split-array-into-consecutive-subsequences",
-  "title": "678. Split Array into Consecutive Subsequences",
+  "title": "678. Расщепление массива на последовательные последствия",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/split-array-into-consecutive-subsequences/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,2,3,3,4,5]",
       "output": "true",
-      "explanation": "Groups [1,2,3] and [3,4,5] each run consecutively with length 3."
+      "explanation": "Группы [1, 2, 3] и [3, 4, 5] работают последовательно с длиной 3."
     },
     {
       "input": "nums = [1,2,3,3,4,4,5,5]",
       "output": "true",
-      "explanation": "Groups [1,2,3,4,5] and [3,4,5] both qualify."
+      "explanation": "Группы [1, 2, 3, 4, 5] и [3, 4, 5] оба квалифицируются."
     },
     {
       "input": "nums = [1,2,3,4,4,5]",
       "output": "false",
-      "explanation": "The leftover 4 and 5 cannot form a triple without breaking another group."
+      "explanation": "Оставшиеся 4 и 5 не могут образовать тройную группу, не разбив другую."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Count occurrences of each value first.",
-    "Always try to extend an existing group waiting for the current value before starting a fresh triple.",
-    "Starting a new triple consumes one copy each of v, v+1 and v+2; fail when any is missing."
+    "Сначала подсчитывайте события каждого значения.",
+    "Всегда старайтесь расширить существующую группу, ожидая текущего значения, прежде чем начинать новую тройку.",
+    "Запуск новой тройки потребляет по одной копии v, v+1 и v+2; потерпит неудачу, если какая-либо из них отсутствует."
   ]
 }

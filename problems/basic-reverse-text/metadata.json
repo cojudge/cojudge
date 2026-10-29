@@ -1,18 +1,18 @@
 {
   "id": "basic-reverse-text",
-  "title": "29. Reverse Text",
+  "title": "29. Обратный текст",
   "difficulty": "Easy",
   "category": "strings",
   "examples": [
     {
       "input": "s = \"hello\"",
       "output": "\"olleh\"",
-      "explanation": "Reading hello backwards gives olleh."
+      "explanation": "Чтение здравия задом наперёд даёт Олле."
     },
     {
       "input": "s = \"ab\"",
       "output": "\"ba\"",
-      "explanation": "Two characters swap places."
+      "explanation": "Два персонажа поменялись местами."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Build the answer from the last character to the first.",
-    "Append `s.charAt(i)` while looping `i` downward."
+    "Постройте ответ от последнего персонажа к первому.",
+    "Добавьте `s.charAt(i)`, зацикливаясь на `i` вниз."
   ]
 }

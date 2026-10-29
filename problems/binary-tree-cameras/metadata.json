@@ -1,6 +1,6 @@
 {
   "id": "binary-tree-cameras",
-  "title": "954. Binary Tree Cameras",
+  "title": "954. Бинарные камеры деревьев",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/binary-tree-cameras/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [0,0,null,0,0]",
       "output": "1",
-      "explanation": "One camera on the left child watches the root and both grandchildren, covering everything."
+      "explanation": "Одна камера слева смотрит на корень и обоих внуков, покрывая все."
     },
     {
       "input": "root = [0,0,null,0,null,0,null,null,0]",
       "output": "2",
-      "explanation": "The long chain forces two cameras; a single device always leaves one end unwatched."
+      "explanation": "Длинная цепь вынуждает две камеры; одно устройство всегда оставляет один конец незамеченным."
     },
     {
       "input": "root = [0]",
       "output": "1",
-      "explanation": "A lone node must host its own camera."
+      "explanation": "Одинокий узел должен иметь собственную камеру."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Let each subtree report: 0 = needs its parent, 1 = covered, 2 = hosts a camera.",
-    "A node with an uncovered child must take a camera; a node beside a camera is covered.",
-    "After the walk, the root still uncovered means one extra camera on top."
+    "Пусть каждое поддерево сообщает: 0 = нуждается в своей материнской, 1 = покрыт, 2 = содержит камеру.",
+    "Узел с непокрытым потомком должен взять камеру; узел рядом с камерой закрыт.",
+    "После прогулки, корень все еще не обнаружен, что означает, что сверху находится одна дополнительная камера."
   ]
 }

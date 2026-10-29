@@ -1,6 +1,6 @@
 {
   "id": "valid-anagram",
-  "title": "53. Valid Anagram",
+  "title": "53. Проверка анаграммы",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/valid-anagram/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "s=\"anagram\", t=\"nagaram\"",
       "output": "true",
-      "explanation": "Both \"anagram\" and \"nagaram\" contain the same characters with identical frequencies, so they are anagrams."
+      "explanation": "И «анаграмма», и «нагарам» содержат одни и те же символы с одинаковыми частотами, поэтому они являются анаграммами."
     },
     {
       "input": "s=\"rat\", t=\"car\"",
       "output": "false",
-      "explanation": "Character frequency counts differ between \"rat\" and \"car\", so they are not anagrams."
+      "explanation": "Частота символов различается между «крысой» и «автомобилем», поэтому они не являются анаграммами."
     }
   ],
   "starterCode": {
@@ -53,6 +53,6 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Count character frequencies and compare, or sort both strings and compare equality."
+    "Подсчитайте частоты символов и сравните или сортируйте обе строки и сравните равенство."
   ]
 }

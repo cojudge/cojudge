@@ -1,6 +1,6 @@
-Pay for wrong guesses and guarantee a win with the least worst-case cash.
+Платите за неправильные догадки и гарантируйте выигрыш с наименьшими наихудшими деньгами.
 
-A hidden integer lies between `1` and `n` inclusive. You name guesses; each miss costs the guessed value in dollars and tells you whether the hidden value is higher or lower, then you continue. A hit costs nothing extra and ends the game. Compute the smallest bankroll that guarantees finding the hidden value no matter which one it is.
+Скрытое целое число лежит между `1` и `n` включительно. Вы называете догадки; каждый промах стоит угадываемое значение в долларах и говорит вам, выше или ниже скрытое значение, затем вы продолжаете. Хит не стоит ничего лишнего и заканчивает игру. Вычислите наименьший банкролл, который гарантирует нахождение скрытого значения независимо от того, какой он.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 200`

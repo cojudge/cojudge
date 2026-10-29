@@ -1,0 +1,58 @@
+{
+  "id": "longest-repeating-character-replacement",
+  "title": "51. Longest Repeating Character Replacement",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/longest-repeating-character-replacement/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s=\"ABAB\", k=2",
+      "output": "4",
+      "explanation": "Replace the two 'B's with 'A' (or the two 'A's with 'B') to get \"AAAA\" (\"BBBB\"), a substring of 4 identical characters."
+    },
+    {
+      "input": "s=\"AABABBA\", k=1",
+      "output": "4",
+      "explanation": "Replace the 'B' at index 3 with 'A' to get \"AAAABBA\", giving a \"AAAA\" substring of length 4. Alternatively, replace the 'A' at index 4 with 'B' to get \"AABBBBA\", giving a \"BBBB\" substring."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int characterReplacement(String s, int k) {\n        \n    }\n}",
+    "python": "class Solution:\n    def characterReplacement(self, s: str, k: int) -> int:\n        pass\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int characterReplacement(string s, int k) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int CharacterReplacement(string s, int k) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn character_replacement(s: String, k: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc CharacterReplacement(s string, k int) int {\n    \n}",
+    "typescript": "export function characterReplacement(s: string, k: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param int $k\n     * @return int\n     */\n    public function characterReplacement($s, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "ABAB",
+      "k": 2
+    },
+    {
+      "s": "AABABBA",
+      "k": 1
+    },
+    {
+      "s": "AAAA",
+      "k": 2
+    }
+  ],
+  "functionName": "characterReplacement",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use a sliding window with frequency counts of letters and track the highest frequency in the window. Shrink the window when (window size - maxFreq) > k."
+  ]
+}

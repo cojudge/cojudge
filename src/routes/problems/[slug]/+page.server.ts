@@ -25,6 +25,13 @@ export const load: PageServerLoad = async ({ params }) => {
             problem.statement = '';
         }
 
+        // Keep the source statement available when reviewing a machine translation.
+        try {
+            problem.originalStatement = await fs.readFile(path.join(baseDir, 'statement.en.md'), 'utf-8');
+        } catch {
+            problem.originalStatement = null;
+        }
+
         // Load solution.md if present and attach as problem.solution
         const solutionPath = path.join(baseDir, 'solution.md');
         try {

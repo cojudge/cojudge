@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { ru } from '$lib/i18n/ru';
     export let data;
     import { onDestroy, onMount, tick } from "svelte";
     import { marked } from "marked";
@@ -151,14 +152,14 @@
     } | null = null;
     $: updateAvailable = appUpdateStatus === 'available' && !!availableAppUpdate;
     $: updateMenuLabel = appUpdateStatus === 'checking'
-        ? 'Checking for updates…'
+        ? "Проверка обновлений..."
         : appUpdateStatus === 'installing'
-            ? 'Installing update…'
+            ? "Установка обновления..."
             : appUpdateStatus === 'installed'
-                ? 'Restart to apply update'
+                ? "Перезагрузить для применения обновления"
                 : appUpdateStatus === 'available' && availableAppUpdate
                     ? `Update to v${availableAppUpdate.version}`
-                    : 'Check for Updates';
+                    : "Проверить обновления";
     $: if (browser) {
         document.body.style.overflow = showGamePopup || pendingImport || showFirebaseSettings || showLoadCode || showClearConfirm || showManageProblems || showCliSettings || showDockerSettings || showUpdatePrompt ? 'hidden' : '';
     }
@@ -382,14 +383,14 @@
     };
 
     function sourceLabel(source?: ContentSource): string {
-        return source === 'custom' ? 'Custom' : source === 'modified' ? 'Modified' : '';
+        return source === 'custom' ? "Своя" : source === 'modified' ? "Изменено" : '';
     }
 
     function sourceTitle(source?: ContentSource): string {
         return source === 'custom'
-            ? 'Custom content — only exists in your Cojudge folder'
+            ? "Пользовательский контент — существует только в вашей папке Cojudge"
             : source === 'modified'
-                ? 'Modified — edited in your Cojudge folder, differs from the bundled copy'
+                ? "Модифицированный — отредактированный в папке Cojudge, отличается от пакетной копии"
                 : '';
     }
 
@@ -440,7 +441,7 @@
             const after = full[offset + (m as string).length] ?? "";
             return /\d/.test(before) && /\d/.test(after) ? m : " ";
         });
-        return label.replace(/\b\w/g, (c) => c.toUpperCase());
+        return ru(label.replace(/\b\w/g, (c) => c.toUpperCase()));
     };
 
     // Display title: courses may override the leading number via
@@ -716,7 +717,7 @@
             applyProgressData(pendingImport);
             firebaseConfigured = isFirebaseConfigured();
             firebaseSettingsSaved = hasSavedFirebaseSettings();
-            showImportNotice('Import complete.', false);
+            showImportNotice("Импорт завершен.", false);
         } catch (err: any) {
             showImportNotice(`Failed to import: ${err?.message || String(err)}`, true);
         } finally {
@@ -748,15 +749,15 @@
     }
 
     function cloudMenuStatus() {
-        if ($cloudSyncState.authStatus === 'unavailable') return 'Off';
-        if ($cloudSyncState.authStatus !== 'signed-in') return 'Sign in';
-        if ($cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading') return 'Syncing';
+        if ($cloudSyncState.authStatus === 'unavailable') return "Выкл.";
+        if ($cloudSyncState.authStatus !== 'signed-in') return "Войти";
+        if ($cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading') return "Синхронизация";
         if ($cloudSyncState.resolution === 'local-changes') return '* Unsynced';
         if ($cloudSyncState.resolution) return '* Review';
-        if ($cloudSyncState.syncStatus === 'offline') return 'Offline';
-        if ($cloudSyncState.syncStatus === 'error') return 'Error';
-        if ($cloudSyncState.remoteStatus === 'unknown') return 'Checking';
-        return 'Synced';
+        if ($cloudSyncState.syncStatus === 'offline') return "Оффлайн";
+        if ($cloudSyncState.syncStatus === 'error') return "Ошибка";
+        if ($cloudSyncState.remoteStatus === 'unknown') return "Проверка";
+        return "синхронизированный";
     }
 
     function openCloudSettings() {
@@ -799,7 +800,7 @@
             googleDesktopClientSecret: firebaseForm.googleDesktopClientSecret.trim()
         };
         if (!isFirebaseConfigured(settings)) {
-            firebaseSettingsError = 'Complete all required Firebase fields.';
+            firebaseSettingsError = "Заполните все необходимые поля Firebase.";
             return;
         }
 
@@ -807,7 +808,7 @@
             saveFirebaseSettings(settings);
             firebaseConfigured = true;
             firebaseSettingsSaved = true;
-            showImportNotice('Firebase settings saved.', false);
+            showImportNotice("Сохранены настройки Firebase.", false);
             void restartCloudSync();
             void closeFirebaseSettings();
         } catch (err: any) {
@@ -822,7 +823,7 @@
             firebaseConfigured = isFirebaseConfigured();
             firebaseSettingsSaved = false;
             firebaseSettingsError = '';
-            showImportNotice('Saved Firebase settings removed.', false);
+            showImportNotice("Удалены сохраненные настройки Firebase", false);
             void restartCloudSync();
         } catch (err: any) {
             firebaseSettingsError = err?.message || String(err);
@@ -1001,7 +1002,7 @@
         } catch (err: any) {
             manageProblemsError = err?.message
                 ? `Could not load modified content: ${err.message}`
-                : 'Could not load modified content';
+                : "Невозможно загрузить измененный контент";
         } finally {
             modifiedInventoryLoading = false;
         }
@@ -1134,7 +1135,7 @@
                 appUpdateStatus = 'up_to_date';
                 closeUpdatePrompt();
                 if (source === 'manual') {
-                    showImportNotice('Cojudge is already up to date.', false);
+                    showImportNotice("Судья уже в курсе.", false);
                 }
             }
         } catch (err) {
@@ -1258,7 +1259,7 @@
     }
 
     function handleDockerSaved() {
-        showImportNotice('Docker settings saved. Quit and reopen Cojudge to apply.', false);
+        showImportNotice("Настройки Docker сохранены. Брось и открой Cojudge, чтобы применить.", false);
     }
 
     async function refreshCliStatus() {
@@ -1426,7 +1427,7 @@
         } catch (err: any) {
             manageProblemsError = err?.message
                 ? `Could not reset all: ${err.message}`
-                : 'Could not reset all';
+                : "Не удалось сбросить все";
         } finally {
             resettingAllContent = false;
         }
@@ -1445,11 +1446,11 @@
         if (!examModal || examSubmitting) return;
         const password = examPassword;
         if (password.length < 4) {
-            examPasswordError = 'Password must be at least 4 characters.';
+            examPasswordError = "Пароль должен быть как минимум 4 символами.";
             return;
         }
         if (examModal.mode === 'enable' && password !== examPasswordConfirm) {
-            examPasswordError = 'Passwords do not match.';
+            examPasswordError = "Пароли не совпадают.";
             return;
         }
         examPasswordError = '';
@@ -1495,11 +1496,11 @@
         if (isSolved) {
             event.preventDefault();
             const confirmed = await showConfirm(
-                'Do you want to mark this problem as unsolved? You will need to submit a correct solution again to mark it as solved.',
+                "Вы хотите обозначить эту проблему как нерешенную? Вам нужно будет снова представить правильное решение, чтобы обозначить ее как решенную.",
                 {
-                    title: 'Mark as unsolved?',
-                    confirmLabel: 'Mark unsolved',
-                    cancelLabel: 'Cancel',
+                    title: "Марк не раскрыт?",
+                    confirmLabel: "Марк нераскрытый",
+                    cancelLabel: "Отмена",
                     tone: 'danger'
                 }
             );
@@ -1518,7 +1519,7 @@
 </script>
 
 <svelte:head>
-    <title>Home | Offline Code Judge for LeetCode-style problems - Cojudge</title>
+    <title>Cojudge — локальный тренажёр задач по программированию</title>
 </svelte:head>
 
 <svelte:window onkeydown={handleModalKeydown} />
@@ -1527,16 +1528,16 @@
     <DemoBanner />
 {/if}
 {#if $page.data.isExamMode}
-    <div class="exam-banner" role="note">Exam mode is on — hints and reference solutions are hidden.</div>
+    <div class="exam-banner" role="note">Экзаменный режим включен — подсказки и справочные решения скрыты.</div>
 {/if}
 {#if $page.data.examTampered}
-    <div class="exam-tamper" role="alert">Warning: the exam lock was removed without the password. Hints or solutions may have been restored — check before the event.</div>
+    <div class="exam-tamper" role="alert">Предупреждение: блокировка экзамена была удалена без пароля. Подсказки или решения могли быть восстановлены — проверьте перед мероприятием.</div>
 {/if}
 
 <div class="container">
     <div class="backup-toolbar">
-        <Tooltip text={"Playground"} pos={"bottom"}>
-            <a href="playground" class="btn playground-btn" aria-label="Playground">
+        <Tooltip text={"Песочница"} pos={"bottom"}>
+            <a href="playground" class="btn playground-btn" aria-label="Песочница">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block; flex-shrink: 0;">
                     <polyline points="16 18 22 12 16 6"></polyline>
                     <polyline points="8 6 2 12 8 18"></polyline>
@@ -1551,7 +1552,7 @@
                 onkeydown={handleDropdownTriggerKeydown}
                 aria-expanded={showDropdown}
                 aria-haspopup="true"
-                aria-label="Toggle menu"
+                aria-label="Открыть меню"
             >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
                     <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -1559,9 +1560,9 @@
                     <line x1="3" y1="18" x2="21" y2="18"></line>
                 </svg>
                 {#if $cloudSyncState.authStatus === 'signed-in' && ($cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading')}
-                    <span class="dropdown-cloud-loading" title="Syncing with Cojudge Cloud" aria-hidden="true"></span>
+                    <span class="dropdown-cloud-loading" title="Синхронизация с Cojudge Cloud" aria-hidden="true"></span>
                 {:else if $cloudSyncState.authStatus === 'signed-in' && $cloudSyncState.resolution}
-                    <span class="dropdown-cloud-dirty" title="Local or conflicting cloud changes need attention" aria-hidden="true">*</span>
+                    <span class="dropdown-cloud-dirty" title="Местные или конфликтующие облачные изменения требуют внимания." aria-hidden="true">*</span>
                 {/if}
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
                     <polyline points="6 9 12 15 18 9"></polyline>
@@ -1573,10 +1574,10 @@
                         class="dropdown-item"
                         role="menuitem"
                         onclick={openCloudSettings}
-                        title="Sign in and sync progress with Cojudge Cloud"
+                        title="Войти и синхронизировать прогресс с Cojudge Cloud"
                     >
                         <span class="dropdown-item-content">
-                            Cloud Sync
+                            Облачная синхронизация
                         </span>
                         <span
                             class:configured={$cloudSyncState.authStatus === 'signed-in' && !$cloudSyncState.resolution && $cloudSyncState.syncStatus !== 'syncing' && $cloudSyncState.remoteStatus !== 'loading'}
@@ -1584,9 +1585,9 @@
                             class:syncing={$cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading'}
                             class="firebase-menu-status"
                             title={$cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading'
-                                ? 'Syncing with Cojudge Cloud'
+                                ? "Синхронизация с Cojudge Cloud"
                                 : $cloudSyncState.resolution === 'local-changes'
-                                    ? 'Local changes have not been pushed to Cojudge Cloud'
+                                    ? "Местные изменения не были перенесены в Cojudge Cloud"
                                     : undefined}
                         >
                             {cloudMenuStatus()}
@@ -1598,7 +1599,7 @@
                         role="menuitem"
                         onclick={() => { exportLocalStorage(); showDropdown = false; }}
                         disabled={!browser}
-                        title="Export all progress (settings, code, etc.) to a JSON file"
+                        title="Экспортировать весь прогресс (настройки, код и т.д.) в файл JSON"
                     >
                         <span class="dropdown-item-content">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1606,7 +1607,7 @@
                                 <polyline points="7 10 12 15 17 10"></polyline>
                                 <line x1="12" y1="15" x2="12" y2="3"></line>
                             </svg>
-                            Export progress
+                            Экспорт прогресса
                         </span>
                     </button>
                     <button
@@ -1614,7 +1615,7 @@
                         role="menuitem"
                         onclick={() => { triggerImport(); showDropdown = false; }}
                         disabled={!browser}
-                        title="Import progress (settings, code, etc.) from a JSON backup"
+                        title="Прогресс импорта (настройки, код и т. Д.) из резервной копии JSON"
                     >
                         <span class="dropdown-item-content">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1622,7 +1623,7 @@
                                 <polyline points="17 8 12 3 7 8"></polyline>
                                 <line x1="12" y1="3" x2="12" y2="15"></line>
                             </svg>
-                            Import progress
+                            Импорт прогресса
                         </span>
                     </button>
                     <button
@@ -1630,7 +1631,7 @@
                         role="menuitem"
                         onclick={openClearProgress}
                         disabled={!browser}
-                        title="Delete all progress, solutions, files, and settings stored locally"
+                        title="Удалить все прогресс, решения, файлы и настройки, хранящиеся локально."
                     >
                         <span class="dropdown-item-content">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1638,7 +1639,7 @@
                                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
                                 <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                             </svg>
-                            Clear progress
+                            Очистить прогресс
                         </span>
                     </button>
                     {#if !$page.data.isDemoSite}
@@ -1646,13 +1647,13 @@
                         class="dropdown-item"
                         role="menuitem"
                         onclick={() => { goto('/recovery'); showDropdown = false; }}
-                        title="Safe-mode storage inspector: measure and repair local data without opening the playground"
+                        title="Инспектор безопасного режима хранения: измерение и ремонт локальных данных без открытия игровой площадки"
                     >
                         <span class="dropdown-item-content">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
                             </svg>
-                            Recovery
+                            восстановление
                         </span>
                     </button>
                     {/if}
@@ -1661,21 +1662,21 @@
                         class="dropdown-item"
                         role="menuitem"
                         onclick={() => { goto('/whiteboard'); showDropdown = false; }}
-                        title="Open the whiteboard"
+                        title="Откройте доску"
                     >
                         <span class="dropdown-item-content">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="3" y="4" width="18" height="16" rx="2"></rect>
                                 <path d="m8 15 6-6 2 2-6 6H8v-2Z"></path>
                             </svg>
-                            Whiteboard
+                            Доска
                         </span>
                     </button>
                     <button
                         class="dropdown-item"
                         role="menuitem"
                         onclick={() => { showGamePopup = true; showDropdown = false; }}
-                        title="Random problem game mode"
+                        title="Режим игры Random problem"
                     >
                         <span class="dropdown-item-content">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1685,7 +1686,7 @@
                                 <line x1="18" y1="11" x2="18.01" y2="11"></line>
                                 <rect x="2" y="6" width="20" height="12" rx="2"></rect>
                             </svg>
-                            Game
+                            Играть
                         </span>
                     </button>
                     {#if !$page.data.isDemoSite}
@@ -1693,7 +1694,7 @@
                             class="dropdown-item"
                             role="menuitem"
                             onclick={openManageProblems}
-                            title="View, edit, and add problems and courses in your Cojudge folder"
+                            title="Просмотр, редактирование и добавление проблем и курсов в папку Cojudge"
                         >
                             <span class="dropdown-item-content">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1701,24 +1702,24 @@
                                     <line x1="12" y1="11" x2="12" y2="17"></line>
                                     <line x1="9" y1="14" x2="15" y2="14"></line>
                                 </svg>
-                                Manage Problems
+                                Управление задачами
                             </span>
                         </button>
                         <button
                             class="dropdown-item"
                             role="menuitem"
                             onclick={openExamModal}
-                            title={$page.data.isExamMode ? 'Turn exam mode off (requires the exam password)' : 'Strip hints and solutions and hide them in the UI'}
+                            title={$page.data.isExamMode ? "Выключите режим экзамена (требуется пароль экзамена)" : "Стриптиз-подсказки и решения и спрячьте их в UI"}
                         >
                             <span class="dropdown-item-content">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <rect x="3" y="11" width="18" height="11" rx="2"></rect>
                                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                                 </svg>
-                                Exam mode
+                                Режим экзамена
                             </span>
                             <span class:configured={$page.data.isExamMode} class="firebase-menu-status">
-                                {$page.data.isExamMode ? 'On' : 'Off'}
+                                {$page.data.isExamMode ? "Вкл." : "Выкл."}
                             </span>
                         </button>
                     {/if}
@@ -1727,7 +1728,7 @@
                             class="dropdown-item"
                             role="menuitem"
                             onclick={openCliSettings}
-                            title="Install the cojudge CLI on your PATH"
+                            title="Установите cojudge CLI на свой PATH"
                         >
                             <span class="dropdown-item-content">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1737,7 +1738,7 @@
                                 CLI
                             </span>
                             <span class:configured={cliStatus.installed} class="firebase-menu-status">
-                                {cliStatus.installed ? 'On' : 'Off'}
+                                {cliStatus.installed ? "Вкл." : "Выкл."}
                             </span>
                         </button>
                         <div class="dropdown-separator" role="separator"></div>
@@ -1750,10 +1751,10 @@
                                         <rect x="3" y="14" width="7" height="7" rx="1"></rect>
                                         <rect x="14" y="14" width="7" height="7" rx="1"></rect>
                                     </svg>
-                                    Docker settings
+                                    Настройки Docker
                                 </span>
-                                <span class="firebase-menu-status" class:configured={dockerConnected && !dockerStatusChecking} title="Connection status of the saved Docker runtime" aria-label={dockerStatusChecking ? 'Checking Docker connection' : dockerConnected ? 'Docker connected' : 'Docker unavailable'}>
-                                    {dockerStatusChecking ? '…' : dockerConnected ? 'On' : 'Off'}
+                                <span class="firebase-menu-status" class:configured={dockerConnected && !dockerStatusChecking} title="Статус подключения сохраненного времени выполнения Docker" aria-label={dockerStatusChecking ? "Проверка подключения Docker" : dockerConnected ? "Docker подключён" : "Docker недоступен"}>
+                                    {dockerStatusChecking ? '…' : dockerConnected ? "Вкл." : "Выкл."}
                                 </span>
                             </button>
                         {/if}
@@ -1761,17 +1762,17 @@
                             class="dropdown-item"
                             role="menuitem"
                             onclick={openFirebaseSettings}
-                            title="Configure Firebase sharing for desktop mode"
+                            title="Настройка обмена Firebase для настольного режима"
                         >
                             <span class="dropdown-item-content">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M12 2 4.5 20.3a.5.5 0 0 0 .7.6L12 17l6.8 3.9a.5.5 0 0 0 .7-.6L12 2Z"></path>
                                     <path d="m8.5 11.2 7 0"></path>
                                 </svg>
-                                Firebase settings
+                                Параметры Firebase
                             </span>
                             <span class:configured={firebaseConfigured} class="firebase-menu-status">
-                                {firebaseConfigured ? 'On' : 'Off'}
+                                {firebaseConfigured ? "Вкл." : "Выкл."}
                             </span>
                         </button>
                         {#if firebaseConfigured}
@@ -1779,7 +1780,7 @@
                                 class="dropdown-item"
                                 role="menuitem"
                                 onclick={openLoadCode}
-                                title="Open a shared solution by its four-character code in the configured firebase"
+                                title="Откройте совместно используемое решение с помощью кода из четырех символов в сконфигурированной пожарной базе"
                             >
                                 <span class="dropdown-item-content">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1787,7 +1788,7 @@
                                         <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"></path>
                                         <path d="m10 8 4 4-4 4"></path>
                                     </svg>
-                                    Load File
+                                    Загрузить файл
                                 </span>
                             </button>
                         {/if}
@@ -1796,7 +1797,7 @@
                             class="dropdown-item"
                             role="menuitem"
                             onclick={openNewWindow}
-                            title="Open a new window"
+                            title="Открыть новое окно"
                         >
                             <span class="dropdown-item-content">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1804,7 +1805,7 @@
                                     <line x1="12" y1="9" x2="12" y2="15"></line>
                                     <line x1="9" y1="12" x2="15" y2="12"></line>
                                 </svg>
-                                New Window
+                                Новое окно
                             </span>
                         </button>
                     {/if}
@@ -1815,7 +1816,7 @@
                             userSettingsStorage.update(s => ({ ...s, theme: s.theme === 'dark' ? 'light' : 'dark' }));
                             showDropdown = false;
                         }}
-                        title="Toggle theme"
+                        title="Переключить тему"
                     >
                         <span class="dropdown-item-content">
                             {#if browser && $userSettingsStorage.theme === 'dark'}
@@ -1830,20 +1831,18 @@
                                     <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
                                     <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                                 </svg>
-                                Light theme
-                            {:else}
+                                Световая тема{:else}
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                                 </svg>
-                                Dark theme
-                            {/if}
+                                Темная тема{/if}
                         </span>
                     </button>
                     <button
                         class="dropdown-item"
                         role="menuitem"
                         onclick={() => void openUpdateFromMenu()}
-                        title={isDesktopMode ? 'Check GitHub Releases for a newer Cojudge build' : 'Open Cojudge on GitHub'}
+                        title={isDesktopMode ? "Check GitHub выпустил новую сборку Cojudge" : "Открытое жюри на GitHub"}
                     >
                         <span class="dropdown-item-content">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1854,8 +1853,8 @@
                             {updateMenuLabel}
                         </span>
                         {#if updateAvailable}
-                            <span class="firebase-menu-status configured" title="A newer Cojudge build is available">
-                                New
+                            <span class="firebase-menu-status configured" title="Новая сборка Cojudge уже доступна">
+                                Новый
                             </span>
                         {/if}
                     </button>
@@ -1866,40 +1865,40 @@
     </div>
     {#if pendingImport}
         <div class="home-modal-shell">
-            <button class="home-modal-backdrop" aria-label="Cancel import" tabindex="-1" onclick={cancelImport}></button>
+            <button class="home-modal-backdrop" aria-label="Отменить импорт" tabindex="-1" onclick={cancelImport}></button>
             <div bind:this={importModalCard} class="home-modal-card" role="dialog" aria-modal="true" aria-labelledby="import-dialog-title">
-                <h2 id="import-dialog-title">Import local data?</h2>
-                <p>Matching local solutions, files, settings, and progress will be overwritten by this backup.</p>
+                <h2 id="import-dialog-title">Импортировать локальные данные?</h2>
+                <p>Соответствие локальным решениям, файлам, настройкам и прогрессу будет перезаписано этой резервной копией.</p>
                 <div class="home-modal-actions">
-                    <button class="btn" type="button" onclick={cancelImport}>Cancel</button>
-                    <button bind:this={importConfirmButton} class="btn modal-primary-btn" type="button" onclick={confirmImport}>Import data</button>
+                    <button class="btn" type="button" onclick={cancelImport}>Отмена</button>
+                    <button bind:this={importConfirmButton} class="btn modal-primary-btn" type="button" onclick={confirmImport}>Импортировать данные</button>
                 </div>
             </div>
         </div>
     {/if}
     {#if showClearConfirm}
         <div class="home-modal-shell">
-            <button class="home-modal-backdrop" aria-label="Cancel clearing progress" tabindex="-1" onclick={closeClearProgress}></button>
+            <button class="home-modal-backdrop" aria-label="Отменить процесс очистки" tabindex="-1" onclick={closeClearProgress}></button>
             <div bind:this={clearConfirmCard} class="home-modal-card clear-progress-card" role="dialog" aria-modal="true" aria-labelledby="clear-progress-title">
-                <h2 id="clear-progress-title">Clear all progress?</h2>
-                <p>This permanently deletes all local progress: solutions, saved code, files, settings, test cases, game history, and pasted images. All local storage will be gone and this cannot be undone.</p>
+                <h2 id="clear-progress-title">Очистить весь прогресс?</h2>
+                <p>Это навсегда удаляет весь локальный прогресс: решения, сохраненный код, файлы, настройки, тестовые случаи, историю игр и вставленные изображения. Все локальное хранилище исчезнет, и это не может быть отменено.</p>
                 <div class="home-modal-actions">
-                    <button class="btn" type="button" onclick={closeClearProgress}>Cancel</button>
-                    <button class="btn clear-progress-danger-btn" type="button" onclick={confirmClearProgress}>Clear progress</button>
+                    <button class="btn" type="button" onclick={closeClearProgress}>Отмена</button>
+                    <button class="btn clear-progress-danger-btn" type="button" onclick={confirmClearProgress}>Очистить прогресс</button>
                 </div>
             </div>
         </div>
     {/if}
     {#if showManageProblems && !$page.data.isDemoSite}
         <div class="home-modal-shell">
-            <button class="home-modal-backdrop" aria-label="Close manage problems" tabindex="-1" onclick={() => void closeManageProblems()}></button>
+            <button class="home-modal-backdrop" aria-label="Близкое управление проблемами" tabindex="-1" onclick={() => void closeManageProblems()}></button>
             <div bind:this={manageProblemsCard} class="home-modal-card manage-problems-card" role="dialog" aria-modal="true" aria-labelledby="manage-problems-title">
-                <span class="modal-eyebrow">Local content</span>
-                <h2 id="manage-problems-title">Manage Problems</h2>
+                <span class="modal-eyebrow">Локальный контент</span>
+                <h2 id="manage-problems-title">Управление задачами</h2>
                 {#if $page.data.isExamMode}
-                    <p class="modal-error" role="note">Exam mode is on — hints and reference solutions are hidden. Resetting and opening the content folder are disabled. Turn exam mode off in the menu to restore everything.</p>
+                    <p class="modal-error" role="note">Включен режим экзамена - скрыты подсказки и справочные решения. Сброс и открытие папки контента отключены. Выключите режим экзамена в меню, чтобы восстановить все.</p>
                 {/if}
-                <p class="manage-intro">Problems and courses live in your Cojudge folder. Edit files directly — changes apply on refresh.</p>
+                <p class="manage-intro">Задачи и подборки хранятся в папке Cojudge. Файлы можно редактировать напрямую — изменения появятся после обновления страницы.</p>
 
                 <div class="manage-path-row">
                     <code class="manage-path-text">{contentDir}</code>
@@ -1907,8 +1906,8 @@
                         class="manage-path-copy"
                         type="button"
                         onclick={copyContentDir}
-                        title={pathCopied ? 'Copied' : 'Copy path'}
-                        aria-label={pathCopied ? 'Path copied' : 'Copy path'}
+                        title={pathCopied ? "Скопировано" : "Путь копирования"}
+                        aria-label={pathCopied ? "Путь копировался" : "Путь копирования"}
                     >
                         {#if pathCopied}
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1925,51 +1924,51 @@
 
                 <div class="manage-sections">
                     <div class="manage-section">
-                        <h3>Problems</h3>
+                        <h3>Задачи</h3>
                         <code class="manage-section-path">problems/&lt;slug&gt;/</code>
-                        <p>statement.md · metadata.json · official-tests.json · Marker.java · solution.md (optional)</p>
+                        <p>statement.md · metadata.json · official-tests.json · Marker.java · solution.md (необязательно)</p>
                     </div>
                     <div class="manage-section">
-                        <h3>Courses</h3>
+                        <h3>Курсы</h3>
                         <code class="manage-section-path">courses/&lt;id&gt;/courseinfo.json</code>
-                        <p>Category order and problem list for each course tab.</p>
+                        <p>Заказ категории и список проблем для каждой вкладки курса.</p>
                     </div>
                 </div>
 
-                <p class="manage-note">Duplicate a problem folder, edit it, then register the slug in a <code>courseinfo.json</code>. Unedited copies auto-update when Cojudge ships fixes; your edits are never overwritten.</p>
+                <p class="manage-note">Чтобы добавить задачу, скопируйте её папку, измените файлы и добавьте идентификатор в <code>courseinfo.json</code>. Неизменённые задачи обновляются вместе с Cojudge; ваши правки сохраняются.</p>
 
                 {#if modifiedInventoryLoading}
                     <div class="manage-section manage-modified" aria-live="polite">
-                        <h3>Modified — differs from bundled</h3>
-                        <p>Checking your Cojudge folder for edits…</p>
+                        <h3>Модифицированный — отличается от пакетного</h3>
+                        <p>Проверка вашей папки Cojudge для редактирования ...</p>
                     </div>
                 {:else if modifiedItemCount > 0}
                     <div class="manage-section manage-modified">
-                        <h3>Modified — differs from bundled ({modifiedItemCount})</h3>
-                        <p>If you did not edit these, they are stale copies from an older version — reset them to receive the latest fixes. Resetting discards your edits to that item.</p>
+                        <h3>Модифицированный — отличается от пакетного (){modifiedItemCount})</h3>
+                        <p>Если вы не редактировали их, они являются устаревшими копиями из более старой версии — сбросьте их, чтобы получить последние исправления.</p>
                         <ul class="manage-modified-list">
                             {#each modifiedProblems as item}
                                 <li>
                                     <span class="manage-modified-id" title={item.title}>{item.id}</span>
-                                    <span class="manage-modified-kind">problem</span>
+                                    <span class="manage-modified-kind">проблема</span>
                                     <button
                                         class="btn manage-reset-btn"
                                         type="button"
                                         disabled={resettingContentKey !== null || resettingAllContent || $page.data.isExamMode}
                                         onclick={() => void resetContentToBundled('problem', item.id)}
-                                    >{resettingContentKey === `problem:${item.id}` ? 'Resetting…' : 'Reset'}</button>
+                                    >{resettingContentKey === `problem:${item.id}` ? "Перезагрузка..." : "Сбросить"}</button>
                                 </li>
                             {/each}
                             {#each modifiedCourses as item}
                                 <li>
                                     <span class="manage-modified-id" title={item.title}>{item.id}</span>
-                                    <span class="manage-modified-kind">course</span>
+                                    <span class="manage-modified-kind">курс</span>
                                     <button
                                         class="btn manage-reset-btn"
                                         type="button"
                                         disabled={resettingContentKey !== null || resettingAllContent || $page.data.isExamMode}
                                         onclick={() => void resetContentToBundled('course', item.id)}
-                                    >{resettingContentKey === `course:${item.id}` ? 'Resetting…' : 'Reset'}</button>
+                                    >{resettingContentKey === `course:${item.id}` ? "Перезагрузка..." : "Сбросить"}</button>
                                 </li>
                             {/each}
                         </ul>
@@ -1979,7 +1978,7 @@
                                 type="button"
                                 disabled={resettingContentKey !== null || resettingAllContent || $page.data.isExamMode}
                                 onclick={() => void resetAllModifiedToBundled()}
-                            >{resettingAllContent ? 'Resetting…' : `Reset all (${modifiedItemCount})`}</button>
+                            >{resettingAllContent ? "Перезагрузка..." : `Сбросить все ()${modifiedItemCount})`}</button>
                         {/if}
                     </div>
                 {/if}
@@ -1988,22 +1987,22 @@
                     <p class="modal-error" role="alert">{manageProblemsError}</p>
                 {/if}
                 <div class="home-modal-actions">
-                    <button class="btn" type="button" onclick={revealContentFolder} disabled={revealingFolder || $page.data.isExamMode}>{revealingFolder ? 'Opening…' : 'Open folder'}</button>
+                    <button class="btn" type="button" onclick={revealContentFolder} disabled={revealingFolder || $page.data.isExamMode}>{revealingFolder ? "Открытие..." : "Открытая папка"}</button>
                     <span class="modal-action-spacer"></span>
-                    <button class="btn modal-primary-btn" type="button" onclick={() => void closeManageProblems()}>Done</button>
+                    <button class="btn modal-primary-btn" type="button" onclick={() => void closeManageProblems()}>Готово</button>
                 </div>
             </div>
         </div>
     {/if}
     {#if examModal}
         <div class="home-modal-shell">
-            <button class="home-modal-backdrop" aria-label="Cancel" tabindex="-1" onclick={() => (examModal = null)}></button>
+            <button class="home-modal-backdrop" aria-label="Отмена" tabindex="-1" onclick={() => (examModal = null)}></button>
             <div class="home-modal-card" role="dialog" aria-modal="true" aria-labelledby="exam-modal-title">
-                <span class="modal-eyebrow">{examModal.mode === 'enable' ? 'Lock answers' : 'Unlock answers'}</span>
-                <h2 id="exam-modal-title">{examModal.mode === 'enable' ? 'Enable exam mode' : 'Disable exam mode'}</h2>
+                <span class="modal-eyebrow">{examModal.mode === 'enable' ? "Замкнутые ответы" : "Разблокировать ответы"}</span>
+                <h2 id="exam-modal-title">{examModal.mode === 'enable' ? "Включить режим экзамена" : "Выключить режим экзамена"}</h2>
                 {#if examModal.mode === 'enable'}
-                    <p class="manage-intro">Hints and reference solutions will be stripped from your Cojudge folder and hidden in the UI. Resetting is disabled while exam mode is on. They are restored automatically when you turn exam mode off. Choose a password — turning exam mode off later requires it.</p>
-                    <label class="exam-label" for="exam-password-new">Exam password (min 4 characters)</label>
+                    <p class="manage-intro">Подсказки и справочные решения будут удалены из вашей папки Cojudge и скрыты в пользовательском интерфейсе. Перезагрузка отключена при включении режима экзамена. Они восстанавливаются автоматически при выключении режима экзамена. Выберите пароль — выключение режима экзамена позже требует этого.</p>
+                    <label class="exam-label" for="exam-password-new">Экзамен пароля (мин 4 символов)</label>
                     <input
                         id="exam-password-new"
                         class="exam-input"
@@ -2013,7 +2012,7 @@
                         bind:value={examPassword}
                         onkeydown={(e) => { if (e.key === 'Enter') void submitExamModal(); }}
                     />
-                    <label class="exam-label" for="exam-password-confirm">Confirm password</label>
+                    <label class="exam-label" for="exam-password-confirm">Подтвердить пароль</label>
                     <input
                         id="exam-password-confirm"
                         class="exam-input"
@@ -2023,8 +2022,8 @@
                         onkeydown={(e) => { if (e.key === 'Enter') void submitExamModal(); }}
                     />
                 {:else}
-                    <p class="manage-intro">Enter the exam password to turn exam mode off. Your original hints and solutions will be restored automatically.</p>
-                    <label class="exam-label" for="exam-password">Exam password</label>
+                    <p class="manage-intro">Введите пароль экзамена, чтобы выключить режим экзамена. Ваши оригинальные подсказки и решения будут восстановлены автоматически.</p>
+                    <label class="exam-label" for="exam-password">Экзамен пароля</label>
                     <input
                         id="exam-password"
                         class="exam-input"
@@ -2039,8 +2038,8 @@
                     <p class="modal-error" role="alert">{examPasswordError}</p>
                 {/if}
                 <div class="home-modal-actions">
-                    <button class="btn" type="button" onclick={() => (examModal = null)} disabled={examSubmitting}>Cancel</button>
-                    <button class="btn modal-primary-btn" type="button" onclick={() => void submitExamModal()} disabled={examSubmitting}>{examSubmitting ? 'Working…' : examModal.mode === 'enable' ? 'Enable exam mode' : 'Disable exam mode'}</button>
+                    <button class="btn" type="button" onclick={() => (examModal = null)} disabled={examSubmitting}>Отмена</button>
+                    <button class="btn modal-primary-btn" type="button" onclick={() => void submitExamModal()} disabled={examSubmitting}>{examSubmitting ? "Работать..." : examModal.mode === 'enable' ? "Включить режим экзамена" : "Выключить режим экзамена"}</button>
                 </div>
             </div>
         </div>
@@ -2050,18 +2049,18 @@
     {/if}
     {#if showCliSettings && isDesktopMode}
         <div class="home-modal-shell">
-            <button class="home-modal-backdrop" aria-label="Close CLI settings" tabindex="-1" onclick={() => void closeCliSettings()}></button>
+            <button class="home-modal-backdrop" aria-label="Закрыть настройки CLI" tabindex="-1" onclick={() => void closeCliSettings()}></button>
             <div bind:this={cliSettingsCard} class="home-modal-card manage-problems-card" role="dialog" aria-modal="true" aria-labelledby="cli-settings-title">
                 <div class="modal-heading-row">
                     <div>
-                        <span class="modal-eyebrow">Command line</span>
-                        <h2 id="cli-settings-title">Cojudge CLI</h2>
+                        <span class="modal-eyebrow">Командная строка</span>
+                        <h2 id="cli-settings-title">Судья КЛИ</h2>
                     </div>
                     <span class:configured={cliStatus.installed} class="firebase-status-pill">
-                        <span></span>{cliStatus.installed ? 'Installed' : 'Not installed'}
+                        <span></span>{cliStatus.installed ? "установленный" : "Не установлен"}
                     </span>
                 </div>
-                <p class="manage-intro">Adds <code>cojudge</code> to your PATH using this app's Node.js.</p>
+                <p class="manage-intro">Добавить <code>cojudge</code> PATH с помощью этого приложения Node.js.</p>
 
                 {#if cliStatus.path}
                     <div class="manage-path-row">
@@ -2070,8 +2069,8 @@
                             class="manage-path-copy"
                             type="button"
                             onclick={copyCliPath}
-                            title={cliPathCopied ? 'Copied' : 'Copy path'}
-                            aria-label={cliPathCopied ? 'Path copied' : 'Copy path'}
+                            title={cliPathCopied ? "Скопировано" : "Путь копирования"}
+                            aria-label={cliPathCopied ? "Путь копировался" : "Путь копирования"}
                         >
                             {#if cliPathCopied}
                                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -2089,26 +2088,26 @@
 
                 <div class="manage-sections">
                     <div class="manage-section">
-                        <h3>Usage</h3>
+                        <h3>использование</h3>
                         <ul class="cli-usage">
-                            <li><code>cojudge list</code> List problems</li>
-                            <li><code>cojudge init two-sum --lang python</code> Starter file</li>
-                            <li><code>cojudge run two-sum Solution.py</code> Sample tests</li>
-                            <li><code>cojudge submit two-sum Solution.py</code> Official tests</li>
-                            <li><code>cojudge version</code> Installed release number</li>
-                            <li><code>cojudge update</code> Check GitHub Releases for a newer app</li>
+                            <li><code>cojudge list</code> Перечисление проблем</li>
+                            <li><code>cojudge init two-sum --lang python</code> Стартовый файл</li>
+                            <li><code>cojudge run two-sum Solution.py</code> Тесты образцов</li>
+                            <li><code>cojudge submit two-sum Solution.py</code> Официальные испытания</li>
+                            <li><code>cojudge version</code> Установленный номер выпуска</li>
+                            <li><code>cojudge update</code> Check GitHub выпустил новое приложение</li>
                         </ul>
                     </div>
                     {#if cliStatus.aliasPaths?.length}
                         <div class="manage-section">
-                            <h3>Shell alias</h3>
-                            <p>A <code>cojudge</code> alias from <code>./install.sh</code> was found in {cliStatus.aliasPaths.join(', ')}. It overrides the desktop CLI in terminals.</p>
-                            <button class="btn" type="button" onclick={removeCliAlias} disabled={cliBusy}>{cliBusy ? 'Removing…' : 'Remove alias'}</button>
+                            <h3>Имя Shell</h3>
+                            <p>A <code>cojudge</code> псевдоним из <code>./install.sh</code> был найден в {cliStatus.aliasPaths.join(', ')}Он перекрывает CLI рабочего стола в терминалах.</p>
+                            <button class="btn" type="button" onclick={removeCliAlias} disabled={cliBusy}>{cliBusy ? "Удаление..." : "Удалить псевдоним"}</button>
                         </div>
                     {/if}
                 </div>
 
-                <p class="manage-note">Open a new terminal after installing. Problems live in <code>{contentDir}</code>. Docker is required for run and submit.</p>
+                <p class="manage-note">Откройте новый терминал после установки. Проблемы живут в <code>{contentDir}</code>Докер необходим для запуска и подачи.</p>
 
                 {#if cliStatus.message && !cliError}
                     <p class="cli-status-note">{cliStatus.message}</p>
@@ -2118,12 +2117,12 @@
                 {/if}
                 <div class="home-modal-actions">
                     {#if cliStatus.installed}
-                        <button class="btn remove-settings-btn" type="button" onclick={uninstallCli} disabled={cliBusy}>{cliBusy ? 'Removing…' : 'Uninstall'}</button>
+                        <button class="btn remove-settings-btn" type="button" onclick={uninstallCli} disabled={cliBusy}>{cliBusy ? "Удаление..." : "Удалить"}</button>
                     {/if}
                     <span class="modal-action-spacer"></span>
-                    <button class="btn" type="button" onclick={() => void closeCliSettings()}>Close</button>
+                    <button class="btn" type="button" onclick={() => void closeCliSettings()}>Закрыть</button>
                     {#if !cliStatus.installed}
-                        <button class="btn modal-primary-btn" type="button" onclick={installCli} disabled={cliBusy || !cliStatus.available}>{cliBusy ? 'Installing…' : 'Install'}</button>
+                        <button class="btn modal-primary-btn" type="button" onclick={installCli} disabled={cliBusy || !cliStatus.available}>{cliBusy ? "Установка..." : "устанавливать"}</button>
                     {/if}
                 </div>
             </div>
@@ -2144,7 +2143,7 @@
     {/if}
     {#if showFirebaseSettings}
         <div class="home-modal-shell">
-            <button class="home-modal-backdrop" aria-label="Close Firebase settings" tabindex="-1" onclick={closeFirebaseSettings}></button>
+            <button class="home-modal-backdrop" aria-label="Закрыть Firebase" tabindex="-1" onclick={closeFirebaseSettings}></button>
             <div
                 bind:this={firebaseModalCard}
                 class="home-modal-card firebase-settings-card"
@@ -2155,59 +2154,59 @@
                 <form onsubmit={submitFirebaseSettings}>
                 <div class="modal-heading-row">
                     <div>
-                        <span class="modal-eyebrow">Desktop connection</span>
-                        <h2 id="firebase-settings-title">Firebase settings</h2>
+                        <span class="modal-eyebrow">Подключение к рабочему столу</span>
+                        <h2 id="firebase-settings-title">Параметры Firebase</h2>
                     </div>
                     <span class:configured={firebaseConfigured} class="firebase-status-pill">
-                        <span></span>{firebaseConfigured ? 'Configured' : 'Not configured'}
+                        <span></span>{firebaseConfigured ? "сконфигурированный" : "Не сконфигурированный"}
                     </span>
                 </div>
-                <p>Connect this desktop app to the Firebase project used for shared solutions and Cojudge Cloud.</p>
+                <p>Подключите это настольное приложение к проекту Firebase, используемому для общих решений и Cojudge Cloud.</p>
                 <div class="firebase-fields">
                     <label>
                         <span>API key <code>VITE_FIREBASE_API_KEY</code></span>
                         <input bind:this={firebaseApiKeyInput} bind:value={firebaseForm.apiKey} required autocomplete="off" spellcheck="false" />
                     </label>
                     <label>
-                        <span>Auth domain <code>VITE_FIREBASE_AUTH_DOMAIN</code></span>
+                        <span>домен Auth <code>VITE_FIREBASE_AUTH_DOMAIN</code></span>
                         <input bind:value={firebaseForm.authDomain} required autocomplete="off" spellcheck="false" placeholder="project.firebaseapp.com" />
                     </label>
                     <label>
-                        <span>Project ID <code>VITE_FIREBASE_PROJECT_ID</code></span>
+                        <span>Проект ID <code>VITE_FIREBASE_PROJECT_ID</code></span>
                         <input bind:value={firebaseForm.projectId} required autocomplete="off" spellcheck="false" />
                     </label>
                     <label>
-                        <span>Messaging sender ID <code>VITE_FIREBASE_MESSAGING_SENDER_ID</code></span>
+                        <span>Идентификатор отправителя сообщений <code>VITE_FIREBASE_MESSAGING_SENDER_ID</code></span>
                         <input bind:value={firebaseForm.messagingSenderId} required autocomplete="off" spellcheck="false" inputmode="numeric" />
                     </label>
                     <label class="firebase-field-wide">
-                        <span>App ID <code>VITE_FIREBASE_APP_ID</code></span>
+                        <span>Идентификатор <code>VITE_FIREBASE_APP_ID</code></span>
                         <input bind:value={firebaseForm.appId} required autocomplete="off" spellcheck="false" />
                     </label>
                     <label class="firebase-field-wide">
-                        <span>Storage bucket <small>optional</small> <code>VITE_FIREBASE_STORAGE_BUCKET</code></span>
-                        <input bind:value={firebaseForm.storageBucket} autocomplete="off" spellcheck="false" placeholder="project.firebasestorage.app" />
+                        <span>Ведро для хранения <small>необязательный</small> <code>VITE_FIREBASE_STORAGE_BUCKET</code></span>
+                        <input bind:value={firebaseForm.storageBucket} autocomplete="off" spellcheck="false" placeholder="Project.firebasestorage.app" />
                     </label>
                     <label class="firebase-field-wide">
-                        <span>Google desktop client ID <small>required for Cloud sign-in</small> <code>VITE_GOOGLE_DESKTOP_CLIENT_ID</code></span>
+                        <span>Google Desktop Client ID <small>Требуется для входа в облако</small> <code>VITE_GOOGLE_DESKTOP_CLIENT_ID</code></span>
                         <input bind:value={firebaseForm.googleDesktopClientId} autocomplete="off" spellcheck="false" placeholder="000000000000-example.apps.googleusercontent.com" />
                     </label>
                     <label class="firebase-field-wide">
-                        <span>Google desktop client secret <small>required for local/custom builds</small> <code>VITE_GOOGLE_DESKTOP_CLIENT_SECRET</code></span>
-                        <input type="password" bind:value={firebaseForm.googleDesktopClientSecret} autocomplete="off" spellcheck="false" placeholder="GOCSPX-…" />
+                        <span>Секретный клиент Google Desktop <small>Для локальных/таможенных сборок</small> <code>VITE_GOOGLE_DESKTOP_CLIENT_SECRET</code></span>
+                        <input type="password" bind:value={firebaseForm.googleDesktopClientSecret} autocomplete="off" spellcheck="false" placeholder="GOCSPX..." />
                     </label>
                 </div>
-                <p class="firebase-settings-note">Stored only on this device. Desktop OAuth credentials cannot be confidential in an installed app; PKCE protects each sign-in exchange.</p>
+                <p class="firebase-settings-note">Учетные данные Desktop OAuth не могут быть конфиденциальными в установленном приложении; PKCE защищает каждый обмен входами.</p>
                 {#if firebaseSettingsError}
                     <p class="modal-error" role="alert">{firebaseSettingsError}</p>
                 {/if}
                     <div class="home-modal-actions settings-actions">
                         {#if firebaseSettingsSaved}
-                            <button class="btn remove-settings-btn" type="button" onclick={removeFirebaseSettings}>Remove saved</button>
+                            <button class="btn remove-settings-btn" type="button" onclick={removeFirebaseSettings}>Удалить сохраненный</button>
                         {/if}
                         <span class="modal-action-spacer"></span>
-                        <button class="btn" type="button" onclick={closeFirebaseSettings}>Cancel</button>
-                        <button class="btn modal-primary-btn" type="submit">Save settings</button>
+                        <button class="btn" type="button" onclick={closeFirebaseSettings}>Отмена</button>
+                        <button class="btn modal-primary-btn" type="submit">Сохранить настройки</button>
                     </div>
                 </form>
             </div>
@@ -2215,17 +2214,17 @@
     {/if}
     {#if showLoadCode}
         <div class="home-modal-shell">
-            <button class="home-modal-backdrop" aria-label="Close shared code loader" tabindex="-1" onclick={closeLoadCode}></button>
+            <button class="home-modal-backdrop" aria-label="Закрытый общий загрузчик кода" tabindex="-1" onclick={closeLoadCode}></button>
             <div bind:this={loadModalCard} class="home-modal-card load-code-card" role="dialog" aria-modal="true" aria-labelledby="load-code-title">
-                <span class="modal-eyebrow">Shared solution</span>
-                <h2 id="load-code-title">Enter code</h2>
-                <p>Type or paste the four-character code from a Cojudge share link.</p>
-                <div class="load-code-inputs" aria-label="Four-character share code" onpaste={handleLoadCodePaste}>
+                <span class="modal-eyebrow">Совместное решение</span>
+                <h2 id="load-code-title">Введите код</h2>
+                <p>Введите или вставьте код из четырех символов из ссылки Cojudge share.</p>
+                <div class="load-code-inputs" aria-label="Четырехсимвольный код Share" onpaste={handleLoadCodePaste}>
                     {#each loadCodeCharacters as character, index}
                         <input
                             bind:this={loadCodeInputs[index]}
                             value={character}
-                            aria-label={`Code character ${index + 1}`}
+                            aria-label={`Кодовые характеристики ${index + 1}`}
                             maxlength="1"
                             autocomplete="off"
                             autocapitalize="none"
@@ -2236,9 +2235,9 @@
                         />
                     {/each}
                 </div>
-                <p class="load-code-hint">Codes are case-sensitive and open automatically.</p>
+                <p class="load-code-hint">Коды чувствительны к регистру и открываются автоматически.</p>
                 <div class="home-modal-actions load-code-actions">
-                    <button class="btn" type="button" onclick={closeLoadCode}>Cancel</button>
+                    <button class="btn" type="button" onclick={closeLoadCode}>Отмена</button>
                 </div>
             </div>
         </div>
@@ -2248,12 +2247,12 @@
             <span>{importNotice.message}</span>
             {#if importNotice.filePath}
                 <button class="reveal-btn" onclick={() => revealFile(importNotice?.filePath)}>
-                    Show in Folder
+                    Показать в папке
                 </button>
             {/if}
         </div>
     {/if}
-    <nav class="tabs" aria-label="Course">
+    <nav class="tabs" aria-label="Курс">
         {#each courses as course}
             <a
                 class="tab"
@@ -2275,22 +2274,20 @@
                 class:active={showBookmarks}
                 aria-current={showBookmarks ? "page" : undefined}
                 aria-pressed={showBookmarks}
-                title={showBookmarks ? 'Showing bookmarked problems' : `Show bookmarked problems (${bookmarkCount})`}
+                title={showBookmarks ? "Показать закладки проблем" : `Показать закладки проблем ()${bookmarkCount})`}
                 onclick={() => { showBookmarks = true; }}
-            >Bookmarks ({bookmarkCount})</button>
+            >Закладки ({bookmarkCount})</button>
         {/if}
     </nav>
     {#if hasCustomContent || hasModifiedContent}
-        <div class="source-legend" aria-label="Legend for custom content labels">
+        <div class="source-legend" aria-label="Легенда для пользовательских ярлыков контента">
             {#if hasCustomContent}
-                <span class="source-badge custom">Custom</span> created in your Cojudge folder
-            {/if}
+                <span class="source-badge custom">Своя</span> Создан в вашей папке Cojudge{/if}
             {#if hasCustomContent && hasModifiedContent}
                 <span class="source-legend-sep" aria-hidden="true">·</span>
             {/if}
             {#if hasModifiedContent}
-                <span class="source-badge modified">Modified</span> edited in your Cojudge folder
-            {/if}
+                <span class="source-badge modified">Изменено</span> Отредактировано в вашей папке Cojudge{/if}
         </div>
     {/if}
     <div class="intro" class:stale={isCourseNavigating} aria-busy={isCourseNavigating || undefined}>
@@ -2313,7 +2310,7 @@
             </div>
         </div>
         {#if showBookmarks}
-            <p>Problems you bookmarked for later. Toggle the bookmark icon next to any problem to add or remove it here.</p>
+            <p>Проблемы, которые вы закладывали позже. Переключите значок закладки рядом с любой проблемой, чтобы добавить или удалить его здесь.</p>
         {:else}
             {@html renderMarkdown(courseDescription)}
         {/if}
@@ -2327,15 +2324,15 @@
         <input
             type="text"
             class="search-input"
-            placeholder="Search problems..."
+            placeholder="Поиск задач…"
             bind:value={searchQuery}
-            aria-label="Search problems"
+            aria-label="Поиск задач"
         />
         {#if searchQuery}
             <button
                 class="search-clear"
                 onclick={() => searchQuery = ""}
-                aria-label="Clear search"
+                aria-label="Очистить поиск"
             >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -2407,9 +2404,9 @@
                                         class="th-button"
                                         onclick={() =>
                                             toggleSort(key, "status")}
-                                        aria-label="Sort by status"
+                                        aria-label="Сортировать по статусу"
                                     >
-                                        Status
+                                        Статус
                                         <span
                                             class="sort-icon"
                                             aria-hidden="true"
@@ -2427,9 +2424,9 @@
                                         class="th-button"
                                         onclick={() =>
                                             toggleSort(key, "title")}
-                                        aria-label="Sort by title"
+                                        aria-label="Сортировать по названию"
                                     >
-                                        Title
+                                        Название
                                         <span
                                             class="sort-icon"
                                             aria-hidden="true"
@@ -2447,9 +2444,9 @@
                                         class="th-button"
                                         onclick={() =>
                                             toggleSort(key, "difficulty")}
-                                        aria-label="Sort by difficulty"
+                                        aria-label="Сортировать по сложности"
                                     >
-                                        Difficulty
+                                        Сложность
                                         <span
                                             class="sort-icon"
                                             aria-hidden="true"
@@ -2475,8 +2472,8 @@
                                                     problem.id
                                                 ] === true}
                                                 disabled={checkMap[problem.id] !== true}
-                                                title={checkMap[problem.id] === true ? 'Mark as unsolved' : 'Submit a correct solution to mark as solved'}
-                                                aria-label={checkMap[problem.id] === true ? `Mark ${problem.title} as unsolved` : `${problem.title} is unsolved`}
+                                                title={checkMap[problem.id] === true ? "Марк как нераскрытый" : "Предоставить правильное решение для маркировки как решено"}
+                                                aria-label={checkMap[problem.id] === true ? `Марк ${problem.title} как нераскрытый` : `${problem.title} нераскрытый`}
                                                 onclick={(e) => handleSolvedCheckboxClick(e, problem.id)}
                                             />
                                         </td>
@@ -2485,23 +2482,23 @@
                                                 {displayTitle(problem)}
                                             </a>
                                             {#if problem.link}
-                                                <Tooltip text="Source Link" pos="top">
+                                                <Tooltip text="Источник задачи" pos="top">
                                                     <a
                                                         href={problem.link}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         class="external-link"
-                                                        aria-label={`Open ${problem.title} in LeetCode`}>↗</a
+                                                        aria-label={`Открыть ${problem.title} в LeetCode`}>↗</a
                                                     >
                                                 </Tooltip>
                                             {/if}
-                                            <Tooltip text={$bookmarkStore?.[problem.id] ? 'Remove bookmark' : 'Bookmark'} pos="top">
+                                            <Tooltip text={$bookmarkStore?.[problem.id] ? "Убрать из закладок" : "В закладки"} pos="top">
                                                 <button
                                                     type="button"
                                                     class="bookmark-btn"
                                                     class:bookmarked={$bookmarkStore?.[problem.id]}
                                                     aria-pressed={$bookmarkStore?.[problem.id] ? 'true' : 'false'}
-                                                    aria-label={$bookmarkStore?.[problem.id] ? `Remove ${problem.title} from bookmarks` : `Bookmark ${problem.title}`}
+                                                    aria-label={$bookmarkStore?.[problem.id] ? `Удалить ${problem.title} из закладок` : `В закладки ${problem.title}`}
                                                     onclick={() => toggleBookmark(problem.id)}
                                                 >
                                                     <svg width="13" height="13" viewBox="0 0 24 24" fill={$bookmarkStore?.[problem.id] ? 'currentColor' : 'none'} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -2523,7 +2520,7 @@
                                                     class:rank-b={bestRanks[problem.id] === 'B'}
                                                     class:rank-c={bestRanks[problem.id] === 'C'}
                                                     onclick={(e) => { e.stopPropagation(); historyProblem = { id: problem.id, title: problem.title }; }}
-                                                    title="View game history"
+                                                    title="Просмотр истории игр"
                                                 >
                                                     {bestRanks[problem.id]}
                                                 </button>
@@ -2535,7 +2532,7 @@
                                                     problem.difficulty,
                                                 )}"
                                             >
-                                                {problem.difficulty}
+                                                {ru(problem.difficulty)}
                                             </span>
                                         </td>
                                     </tr>

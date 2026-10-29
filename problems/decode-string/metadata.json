@@ -1,6 +1,6 @@
 {
   "id": "decode-string",
-  "title": "182. Decode String",
+  "title": "182. Декодировать строку",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/decode-string/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"3[a]2[bc]\"",
       "output": "\"aaabcbc\"",
-      "explanation": "Repeat 'a' 3 times and 'bc' 2 times, concatenating to 'aaabcbc'."
+      "explanation": "Повторите «a» 3 раз и «bc» 2 раз, сцепляясь с «aaabcbc»."
     },
     {
       "input": "s = \"3[a2[c]]\"",
       "output": "\"accaccacc\"",
-      "explanation": "Inner '2[c]' becomes 'cc', so 'a2[c]' is 'acc', repeated 3 times."
+      "explanation": "Внутреннее «2[c]» становится «cc», поэтому «a2[c]» — это «acc», повторяемое время 3."
     },
     {
       "input": "s = \"2[abc]3[cd]ef\"",
       "output": "\"abcabccdcdcdef\"",
-      "explanation": "'abc' twice, 'cd' three times, then 'ef'."
+      "explanation": "Дважды \"abc\", три раза \"cd\", затем \"ef\"."
     }
   ],
   "starterCode": {
@@ -54,7 +54,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Use two stacks: one for repeat counts and one for the string built so far.",
-    "On ']' pop the count and previous string, repeat the current segment, and append it to the previous string."
+    "Используйте два стека: один для подсчета повторов и один для строки, построенной до сих пор.",
+    "На ''' всплывайте счет и предыдущую строку, повторяйте текущий сегмент и добавляйте его к предыдущей строке."
   ]
 }

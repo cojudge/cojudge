@@ -1,6 +1,6 @@
 {
   "id": "frog-jump",
-  "title": "477. Frog Jump",
+  "title": "477. Прыжок лягушки",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/frog-jump/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "stones = [0,1,3,5,6,8,12,17]",
       "output": "true",
-      "explanation": "Hop sizes 1,2,2,3,4,5 walk the frog from the first stone to the last."
+      "explanation": "Хоп-размеры 1, 2, 2, 3, 4, 5 ходят по лягушке от первого камня до последнего."
     },
     {
       "input": "stones = [0,1,2,3,4,8,9,11]",
       "output": "false",
-      "explanation": "The wide water gap after stone 4 cannot be crossed with any allowed step."
+      "explanation": "Широкий водяной зазор после камня 4 не может быть пересечен ни одним допустимым шагом."
     },
     {
       "input": "stones = [0,1]",
       "output": "true",
-      "explanation": "A single hop of length 1 reaches the final stone."
+      "explanation": "Один прыжок длиной 1 достигает конечного камня."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Track, for each stone, the set of jump lengths that can land on it; the first hop must be 1.",
-    "From a stone reached with step k, only k-1, k and k+1 (when positive) can continue forward.",
-    "Stop early when a gap exceeds the largest reachable step, and memoize visited (index, step) pairs."
+    "След, для каждого камня, набор длин прыжков, которые могут приземлиться на него; первый прыжок должен быть 1.",
+    "Из камня, достигнутого с шагом k, только k-1, k и k+1 (при положительном) могут продолжать движение вперед.",
+    "Остановитесь рано, когда разрыв превышает самый большой достижимый шаг, и запомните посещенные (индекс, шаг) пары."
   ]
 }

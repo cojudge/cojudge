@@ -1,0 +1,64 @@
+{
+  "id": "substring-with-concatenation-of-all-words",
+  "title": "259. Substring with Concatenation of All Words",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/substring-with-concatenation-of-all-words/",
+  "category": "hash-table",
+  "examples": [
+    {
+      "input": "s = \"barfoothefoobarman\", words = [\"foo\",\"bar\"]",
+      "output": "[0,9]",
+      "explanation": "Windows at 0 (barfoo) and 9 (foobar) each use every word once."
+    },
+    {
+      "input": "s = \"wordgoodgoodgoodbestword\", words = [\"word\",\"good\",\"best\",\"word\"]",
+      "output": "[]",
+      "explanation": "No window of length 16 contains each required word the right number of times."
+    },
+    {
+      "input": "s = \"barfoofoobarthefoobarman\", words = [\"bar\",\"foo\",\"the\"]",
+      "output": "[6,9,12]",
+      "explanation": "Each of these windows rearranges the three words with nothing left over."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<Integer> findSubstring(String s, String[] words) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findSubstring(self, s: str, words: List[str]) -> List[int]:\n        ",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> findSubstring(string s, vector<string>& words) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<int> FindSubstring(string s, string[] words) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_substring(s: String, words: Vec<String>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindSubstring(s string, words []string) []int {\n    \n}",
+    "typescript": "export function findSubstring(s: string, words: string[]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string[] $words\n     * @return int[]\n     */\n    public function findSubstring($s, $words) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "barfoothefoobarman",
+      "words": "[\"foo\",\"bar\"]"
+    },
+    {
+      "s": "wordgoodgoodgoodbestword",
+      "words": "[\"word\",\"good\",\"best\",\"word\"]"
+    },
+    {
+      "s": "barfoofoobarthefoobarman",
+      "words": "[\"bar\",\"foo\",\"the\"]"
+    }
+  ],
+  "functionName": "findSubstring",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "words",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Count how many times each word is needed, then slide a window whose length equals words.length * word.length.",
+    "Because words align to multiples of the word length, run one sliding pass per offset 0..wordLen-1 and shrink the window whenever a word appears too often."
+  ]
+}

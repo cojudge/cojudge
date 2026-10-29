@@ -1,6 +1,6 @@
 {
   "id": "out-of-boundary-paths",
-  "title": "625. Out of Boundary Paths",
+  "title": "625. Из граничных путей",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/out-of-boundary-paths/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "m = 2, n = 2, maxMove = 2, startRow = 0, startColumn = 0",
       "output": "6",
-      "explanation": "Six short sequences exit the corner in time."
+      "explanation": "Шесть коротких последовательностей выходят из угла во времени."
     },
     {
       "input": "m = 1, n = 3, maxMove = 3, startRow = 0, startColumn = 1",
       "output": "12",
-      "explanation": "Twelve sequences of up to three moves leave the row."
+      "explanation": "Двенадцать последовательностей до трех ходов покидают ряд."
     },
     {
       "input": "m = 1, n = 1, maxMove = 1, startRow = 0, startColumn = 0",
       "output": "4",
-      "explanation": "Every first step exits the lone cell."
+      "explanation": "Каждый первый шаг выходит из одиночной клетки."
     }
   ],
   "starterCode": {
@@ -79,8 +79,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Memoize on (row, column, moves left): leaving the grid scores 1, zero moves scores 0.",
-    "Otherwise sum the four neighbors' counts modulo 1,000,000,007.",
-    "An iterative DP layer per move works too and avoids deep recursion."
+    "Запомните (ряд, столбец, ходы влево): оставляя сетку баллов 1, ноль ходов баллов 0.",
+    "В противном случае суммируйте количество четырех соседей по модулю 1, 000, 000, 007.",
+    "Итеративный слой DP на ход также работает и избегает глубокой рекурсии."
   ]
 }

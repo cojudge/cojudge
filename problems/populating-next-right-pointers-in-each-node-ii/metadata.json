@@ -1,6 +1,6 @@
 {
   "id": "populating-next-right-pointers-in-each-node-ii",
-  "title": "294. Populating Next Right Pointers in Each Node II",
+  "title": "294. Настройка следующих правильных указателей в каждом узле II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "root = [1,2,3,4,5,null,7]",
       "output": "[1,2,3,4,5,null,7]",
-      "explanation": "Row 2 links 2 -> 3 and row 3 links 4 -> 5 -> 7; the serialized shape is unchanged."
+      "explanation": "Row 2 связывает 2 -> 3 и строка 3 связывает 4 -> 5 -> 7; сериализованная форма неизменна."
     },
     {
       "input": "root = []",
       "output": "[]",
-      "explanation": "Nothing to link."
+      "explanation": "Нечего связывать."
     }
   ],
   "starterCode": {
@@ -53,8 +53,8 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Breadth-first search links each row regardless of missing children.",
-    "A constant-space method chains the next row using a dummy head while walking the current row via established links.",
-    "Adaptation: the original Node type carries a next pointer which this judge does not model; return the same tree and the checker confirms its values and shape are preserved."
+    "Поиск по ширине ведет каждую строку, независимо от пропавших детей.",
+    "Метод постоянного пространства цепляет следующий ряд с помощью фиктивной головы во время ходьбы по текущему ряду через установленные ссылки.",
+    "Адаптация: оригинальный тип узла несет следующий указатель, который этот судья не моделирует; возвращает то же дерево, и шашка подтверждает, что его значения и форма сохранены."
   ]
 }

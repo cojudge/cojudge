@@ -1,5 +1,5 @@
-You are given a binary array `nums` containing only `0`s and `1`s. Find the length of the longest contiguous subarray that holds an equal number of `0`s and `1`s. If no such subarray exists, return `0`.
+Вы получаете двоичный массив `nums`, содержащий только `0`s и `1`s. Найдите длину самого длинного смежного подкатегории, которая содержит равное количество `0`s и `1`s. Если такой подкатегории не существует, верните `0`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^5`
-- `nums[i]` is either `0` or `1`.
+- `nums[i]` - это `0` или `1`.

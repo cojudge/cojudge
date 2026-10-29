@@ -1,17 +1,17 @@
-You must simulate a tiny spreadsheet with `height` rows and a fixed column count (column 1 is A, 2 is B, and so on). All cells start at 0 and rows/columns are 1-based.
+Вы должны смоделировать крошечную таблицу с строками `height` и фиксированным количеством столбцов (столбец 1 - A, 2 - B и т. Д. Все ячейки начинаются с 0, а строки / столбцы основаны на 1).
 
-Supported actions, issued as parallel operation/argument lists:
+Поддерживаемые действия, выданные в виде параллельных операций/списков аргументов:
 
-- `Excel [height, widthCount]`: create the sheet.
-- `set [r, c, v]`: write value `v` into cell (r, c), discarding any formula previously stored there.
-- `get [r, c]`: return the current value of cell (r, c), evaluating its formula first when one exists (formulas chain, so changes propagate on read).
-- `sum [r, c, t1, t2, ...]`: store a formula on (r, c) equal to the total of the listed tokens, then return that total. Each token is either one cell such as `B2` or a rectangle such as `A1:B2` covering every cell in the inclusive rectangle.
+- `Excel [height, widthCount]`: создайте лист.
+- `set [r, c, v]`: записывайте значение `v` в ячейку (r, c), отбрасывая любую формулу, ранее хранящуюся там.
+- `get [r, c]`: возвращает текущее значение ячейки (r, c), сначала оценивая ее формулу, когда она существует (цепь формул, поэтому изменения распространяются на чтение).
+- `sum [r, c, t1, t2, ...]`: храните формулу на (r, c), равную общей сумме перечисленных токенов, затем возвращайте эту сумму.Каждый токен представляет собой либо одну ячейку, такую как `B2`, либо прямоугольник, такой как `A1:B2`, охватывающий каждую ячейку в инклюзивном прямоугольнике.
 
-Collect the answers of every `get` and `sum` call in order and return them as an array.
+Соберите ответы на все вызовы `get` и `sum` и верните их в виде массива.
 
-**Constraints:**
-- Sheet dimensions are small (single digits in tests).
-- Values and totals fit in 32-bit signed integers.
-- Formula chains contain no cycles in the tests.
+**Ограничения:**
+- Размеры листа малы (однозначные цифры в тестах).
+- Значения и итоговые значения вписываются в 32-бит подписанных целых чисел.
+- Цепи формул не содержат циклов в тестах.
 
-*Adaptation: this judge drives the sheet through `runExcel(operations, args)` with every argument stringified. The constructor takes `[height, widthCount]`; cell coordinates are 1-based `[row, col]` numbers; formula tokens keep letter-number form like `A1` or `A1:B2`.*
+*Адаптация: этот судья прогоняет лист через `runExcel(operations, args)` с каждым аргументом. Конструктор принимает `[height, widthCount]`; координаты ячеек - это 1 на основе `[row, col]`; токены формулы сохраняют форму буквенного номера, как `A1` или `A1:B2`.*

@@ -1,7 +1,7 @@
-You are given two strings `s` and `goal`. One rotation step moves the leftmost character of the string to its far right end, preserving the order of all other characters.
+Вам даются две струны `s` и `goal`. Один шаг вращения перемещает самый левый характер струны на ее крайне правый конец, сохраняя порядок всех остальных символов.
 
-Decide whether any number of such steps (possibly zero) can turn `s` into `goal`.
+Решите, может ли любое количество таких шагов (возможно, ноль) превратить `s` в `goal`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length, goal.length <= 100`
-- Both strings contain only lowercase English letters
+- Обе строки содержат только строчные английские буквы.

@@ -1,5 +1,5 @@
-You receive an integer array `nums`. Decide whether some value occurs more than once in it: return `true` when any entry is repeated, and `false` when all entries are pairwise different.
+Дан массив целых чисел `nums`. Определите, встречается ли в нём хотя бы одно значение более одного раза. Верните `true`, если есть повторяющиеся элементы, и `false`, если все элементы различны.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^5`
 - `-10^9 <= nums[i] <= 10^9`

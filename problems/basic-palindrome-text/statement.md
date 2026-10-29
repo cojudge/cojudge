@@ -1,4 +1,4 @@
-Return `true` if `s` reads the same forwards and backwards (case-sensitive), otherwise `false`. The empty string counts as a palindrome.
+Возврат `true`, если `s` читает те же вперед и назад (случай-чувствительный), иначе `false`. Пустая строка считается палиндромом.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= s.length <= 1000``

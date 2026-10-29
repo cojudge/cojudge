@@ -1,6 +1,6 @@
 {
   "id": "soup-servings",
-  "title": "806. Soup Servings",
+  "title": "806. Суповые сервировки",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/soup-servings/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "n = 50",
       "output": "\"0.625\"",
-      "explanation": "Mixed paths give 0.625."
+      "explanation": "Смешанные пути дают 0.625."
     },
     {
       "input": "n = 100",
       "output": "\"0.71875\"",
-      "explanation": "Larger start favours A."
+      "explanation": "Большие старты благоприятствуют А."
     },
     {
       "input": "n = 0",
       "output": "\"0.5\"",
-      "explanation": "Both empty together counts half."
+      "explanation": "И то и другое вместе считается половиной."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "This is a portable adaptation: return the probability as a finite decimal string; the checker allows 1e-9 absolute plus 1e-5 relative error.",
-    "Scale by 25 ml units and memoize the recursion on remaining (a,b) pairs.",
-    "Beyond about 4800 ml the answer is 1.0 for practical purposes, so shortcut large n."
+    "Это переносная адаптация: возвращаем вероятность как конечную десятичную строку; шашка допускает абсолютную 1e-9 плюс относительную ошибку 1e-5.",
+    "Масштабирование по единицам 25 мл и запоминание рекурсии по оставшимся (a,b) парам.",
+    "Помимо 4800 мл ответ 1.0 для практических целей, поэтому ярлык большой n."
   ]
 }

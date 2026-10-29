@@ -1,11 +1,11 @@
-Each log entry looks like `"<count> <domain>"`, meaning the full domain was visited `count` times. Every visit to a domain also counts as a visit to each of its parent suffixes: for `discuss.leetcode.com`, the suffixes `leetcode.com` and `com` gain the same visits.
+Каждая запись журнала выглядит как `"<count> <domain>"`, что означает, что полный домен был посещен `count` раз.Каждый визит в домен также считается посещением каждого из его родительских суффиксов: для `discuss.leetcode.com` суффиксы `leetcode.com` и `com` получают одинаковые посещения.
 
-Collect the total visits for every distinct domain and suffix appearing in the logs. Return strings of the form `"<total> <domain>"` in any order.
+Соберите общее количество посещений для каждого отдельного домена и суффикса, появляющихся в журналах. Возвращайте строки формы `"<total> <domain>"` в любом порядке.
 
-Adaptation note: this task uses the portable `string_array` input and `string_list` output types; ordering of the output list is ignored during judging (lists are compared as sorted sets).
+Адаптационное примечание: в этой задаче используются портативные типы входных данных `string_array` и выходных данных `string_list`; порядок списка выходных данных игнорируется при оценке (списки сравниваются с отсортированными наборами).
 
-**Constraints:**
+**Ограничения:**
 - `1 <= cpdomains.length <= 100`
 - `1 <= cpdomains[i].length <= 100`
-- Each entry has a positive count, one space, then lowercase letters, digits, dots and hyphens.
-- No leading or trailing dots; at least one dot-separated label.
+- Каждая запись имеет положительное количество, одно пространство, затем строчные буквы, цифры, точки и дефисы.
+- Нет ведущих или задающих точек; по крайней мере, одна точка-отдельная метка.

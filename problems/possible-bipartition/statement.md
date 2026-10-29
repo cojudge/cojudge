@@ -1,8 +1,8 @@
-There are `n` people numbered `1` to `n`. Each pair in `dislikes` holds two people who refuse to sit in the same group. Decide whether everyone can be split into two groups so that every rival pair lands in different groups.
+Есть люди `n`, пронумерованные `1` в `n`. Каждая пара в `dislikes` держит двух людей, которые отказываются сидеть в одной группе. Решите, можно ли разделить всех на две группы, чтобы каждая конкурирующая пара приземлилась в разных группах.
 
-Return `true` when such a split exists and `false` otherwise.
+Возврат `true`, если такое разделение существует, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 2000`
 - `1 <= dislikes.length <= 10^4`
-- `dislikes[i] = [a, b]` with `1 <= a, b <= n` and `a != b`
+- `dislikes[i] = [a, b]` с `1 <= a, b <= n` и `a != b`

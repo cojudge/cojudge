@@ -1,11 +1,11 @@
-Given a nonempty rectangular board represented by an array of equal-width strings, capture every region of `O` cells that is completely surrounded by `X` cells.
+Учитывая непустую прямоугольную плату, представленную массивом струн равной ширины, захватывайте каждую область ячеек `O`, которая полностью окружена ячейками `X`.
 
-Cells connect horizontally and vertically. An `O` connected to any boundary `O` is not surrounded and must remain unchanged. Replace every other `O` with `X` and return the transformed rows.
+Ячейки соединяются горизонтально и вертикально. `O`, подключенный к любой границе `O`, не окружен и должен оставаться неизменным. Замените все остальные `O` на `X` и верните преобразованные строки.
 
-This version adapts the usual in-place character-grid operation to `solve(board: string_array) -> string_list`.
+Эта версия адаптирует обычную работу с символьной сеткой на месте к `solve(board: string_array) -> string_list`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= board.length <= 200`
 - `1 <= board[r].length <= 200`
-- Every row has the same length.
-- Every character is `X` or `O`.
+- Каждый ряд имеет одинаковую длину.
+- Каждый персонаж — `X` или `O`.

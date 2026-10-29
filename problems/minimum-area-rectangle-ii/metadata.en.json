@@ -1,0 +1,58 @@
+{
+  "id": "minimum-area-rectangle-ii",
+  "title": "949. Minimum Area Rectangle II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/minimum-area-rectangle-ii/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "points = [[1,2],[2,1],[1,0],[0,1]]",
+      "output": "2",
+      "explanation": "The four points are the corners of a tilted square whose area is 2."
+    },
+    {
+      "input": "points = [[0,1],[2,1],[1,1],[1,0],[2,0]]",
+      "output": "1",
+      "explanation": "Points (1,0), (1,1), (2,0) and (2,1) outline a unit square of area 1."
+    },
+    {
+      "input": "points = [[0,3],[1,2],[3,1],[1,3],[2,1]]",
+      "output": "0",
+      "explanation": "No four of these points form a rectangle, so the answer is 0."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minAreaFreeRect(int[][] points) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minAreaFreeRect(self, points: List[List[int]]) -> int:\n        return 0",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minAreaFreeRect(vector<vector<int>>& points) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinAreaFreeRect(int[][] points)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_area_free_rect(points: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinAreaFreeRect(points [][]int) int {\n    return 0\n}",
+    "typescript": "export function minAreaFreeRect(points: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $points\n     * @return int\n     */\n    public function minAreaFreeRect($points) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "points": "[[1,2],[2,1],[1,0],[0,1]]"
+    },
+    {
+      "points": "[[0,1],[2,1],[1,1],[1,0],[2,0]]"
+    },
+    {
+      "points": "[[0,3],[1,2],[3,1],[1,3],[2,1]]"
+    }
+  ],
+  "functionName": "minAreaFreeRect",
+  "params": [
+    {
+      "name": "points",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Two segments are a rectangle's diagonals exactly when they share midpoint and length.",
+    "Group point pairs by (midpoint, squared length) and check pairs within each group.",
+    "All coordinates are integers, so the area is an exact integer \u2014 no floating point needed."
+  ]
+}

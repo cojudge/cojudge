@@ -1,10 +1,10 @@
-You receive `k` linked lists, each already ordered increasingly. Weave all of their nodes into a single linked list that remains ordered increasingly, and return its head.
+Вы получаете связанные с `k` списки, каждый из которых уже заказал все больше. Сплетайте все их узлы в единый связанный список, который остается упорядоченным все больше, и верните его голову.
 
-**Constraints:**
+**Ограничения:**
 
 - k == lists.length
 - 0 ≤ k ≤ 10^4
 - 0 ≤ lists[i].length ≤ 500
 - -10^4 ≤ lists[i][j] ≤ 10^4
-- lists[i] is sorted in ascending order.
-- The sum of lists[i].length will not exceed 10^4.
+- Списки [i] отсортированы по восходящему порядку.
+- Сумма списков [i].длина не будет превышать 10^4.

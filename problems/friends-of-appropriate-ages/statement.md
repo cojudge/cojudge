@@ -1,11 +1,11 @@
-You are given an array `ages` where each entry is one person's age. Person `x` sends a request to a different person `y` exactly when all of the following hold:
+Вам предоставляется массив `ages`, где каждая запись является возрастом одного человека. Лицо `x` отправляет запрос другому лицу `y` именно тогда, когда все следующие удерживаются:
 
-- `y`'s age is more than half of `x`'s age plus seven (that is, the request is blocked when `ages[y] <= ages[x] / 2 + 7` using real division).
-- `y`'s age is not greater than `x`'s age.
-- It is not the case that `y` is over 100 while `x` is under 100.
+- Возраст `y` составляет более половины возраста `x` плюс семь (то есть запрос блокируется, когда `ages[y] <= ages[x] / 2 + 7` использует реальное деление).
+- Возраст `y` не превышает возраст `x`.
+- Это не тот случай, когда `y` превышает 100, в то время как `x` находится под 100.
 
-Every ordered pair of distinct people is considered. Return the total number of requests sent.
+Рассматривается каждая заказанная пара разных людей. Возвратить общее количество отправленных запросов.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= ages.length <= 20000`
 - `1 <= ages[i] <= 120`

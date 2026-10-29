@@ -1,7 +1,7 @@
-The array `prices` lists one stock's daily quote, where `prices[i]` is what the share costs on day `i`. Chain together as many buy-then-sell round trips as you find worthwhile and report the best total profit they can yield.
+В массиве `prices` приведена ежедневная котировка одной акции, где `prices[i]` - это то, что цена акции на день `i`. Цепочка вместе столько поездок в оба конца, сколько вы найдете стоящим, и сообщите о лучшей общей прибыли, которую они могут принести.
 
-Two trading rules apply throughout: your hand may carry at most one share at any moment, and the day directly after any sale is a mandatory rest day on which buying is forbidden.
+В течение всего торгового дня действуют два правила: ваша рука может в любой момент нести не более одной акции, а день непосредственно после любой продажи является обязательным днем отдыха, на который покупка запрещена.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= prices.length <= 5000`
 - `0 <= prices[i] <= 1000`

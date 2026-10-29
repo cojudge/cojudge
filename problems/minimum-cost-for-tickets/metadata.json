@@ -1,6 +1,6 @@
 {
   "id": "minimum-cost-for-tickets",
-  "title": "966. Minimum Cost For Tickets",
+  "title": "966. Минимальная стоимость билетов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/minimum-cost-for-tickets/",
   "category": "dp",
@@ -8,12 +8,12 @@
     {
       "input": "days = [1,4,6,7,8,20], costs = [2,7,15]",
       "output": "11",
-      "explanation": "A 7-day pass covering days 4-10 plus two 1-day passes totals 7+2+2 = 11."
+      "explanation": "A 7Дневной пропуск, покрывающий дни 4-10 плюс два 1- дневной пасс 7+2+2 = 11."
     },
     {
       "input": "days = [1,2,3,4,5,6,7,8,9,10,30,31], costs = [2,7,15]",
       "output": "17",
-      "explanation": "Combining weekly and daily passes optimally costs 17."
+      "explanation": "Сочетание еженедельных и ежедневных пропусков оптимально обходится 17."
     }
   ],
   "starterCode": {
@@ -49,8 +49,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Build day-by-day costs over the calendar year: non-travel days copy the previous total.",
-    "On a travel day take the cheapest of yesterday plus a 1-day pass, 7 days back plus a weekly pass, or 30 days back plus a monthly pass.",
-    "A boolean travel-day lookup makes the scan O(365)."
+    "Постройте ежедневные расходы в течение календарного года: дни, не связанные с поездкой, копируют предыдущую сумму.",
+    "В день путешествия возьмите самый дешевый из вчерашних плюс пропуск 1-день, 7 дни назад плюс еженедельный пропуск или 30 дни назад плюс ежемесячный пропуск.",
+    "Булевой поиск в день путешествия делает сканирование O (365)."
   ]
 }

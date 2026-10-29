@@ -1,11 +1,11 @@
-The array form of a non-negative integer lists its decimal digits from the most
-significant digit to the least significant digit. For example, the array form
-of `1200` is `[1,2,0,0]`.
+Форма массива неотрицательного целого числа перечисляет его десятичные цифры из самых
+значащая цифра к наименьшей значащей цифре. Например, форма массива
+`1200` — это `[1,2,0,0]`.
 
-You are given the array form `num` of an integer together with a non-negative
-integer `k`. Add the two values and return the array form of the result.
+Вам дается массивная форма `num` целого числа вместе с неотрицательным
+Целое число `k`. Добавить два значения и вернуть форму массива результата.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= num.length <= 10^4`
 - `0 <= num[i] <= 9`
 - `0 <= k <= 10^4`

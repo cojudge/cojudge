@@ -1,10 +1,10 @@
-You are given a 0-indexed array of unique positive integers `nums`.
+Вы получаете 0-индексированный массив уникальных положительных целых чисел `nums`.
 
-You can perform multiple operations on the array. In one operation you can choose two indices `i` and `j` (`i != j`) such that `gcd(nums[i], nums[j]) > 1` and traverse between them.
+В одной операции можно выбрать два индекса `i` и `j` (`i != j`) так, чтобы `gcd(nums[i], nums[j]) > 1` и пересекались между ними.
 
-Return `true` if for every pair of indices `i` and `j` in `nums` there exists a sequence of operations that can take you from `i` to `j`, otherwise return `false`.
+Возврат `true`, если для каждой пары индексов `i` и `j` в `nums` существует последовательность операций, которая может переносить вас из `i` в `j`, в противном случае возвращайте `false`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^5`
 - `1 <= nums[i] <= 10^5`
-- All values are unique
+- Все ценности уникальны

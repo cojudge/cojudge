@@ -1,6 +1,6 @@
 {
   "id": "largest-bst-subtree",
-  "title": "418. Largest BST Subtree",
+  "title": "418. Крупнейшее подлесок BST",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/largest-bst-subtree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [10,5,15,1,8,null,7]",
       "output": "3",
-      "explanation": "The branch rooted at 5 (nodes 5, 1, 8) is ordered with 3 nodes; the right branch breaks ordering."
+      "explanation": "Ветвь, укорененная в 5 (узлы 5, 1, 8), заказывается с узлами 3; правая ветвь нарушает порядок."
     },
     {
       "input": "root = [2,1,3]",
       "output": "3",
-      "explanation": "The whole tree respects the ordering, so all 3 nodes count."
+      "explanation": "Все дерево уважает порядок, поэтому все узлы 3 считаются."
     },
     {
       "input": "root = [1]",
       "output": "1",
-      "explanation": "A single node always forms an ordered subtree of size 1."
+      "explanation": "Один узел всегда формирует упорядоченное поддерево размера 1."
     }
   ],
   "starterCode": {
@@ -52,8 +52,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Return per-subtree info bottom-up: whether it is ordered, its size, and its value range.",
-    "A subtree is ordered when both children are ordered and max(left) < node < min(right).",
-    "Track the best size seen anywhere, since the largest ordered portion may sit deep inside."
+    "Возврат информации снизу вверх: упорядочена ли она, ее размер и диапазон значений.",
+    "Поддеревья упорядочены, когда оба потомка упорядочены и max (слева) <узел < мин (справа).",
+    "Отслеживайте лучший размер, который можно увидеть в любом месте, так как самая большая упорядоченная часть может находиться глубоко внутри."
   ]
 }

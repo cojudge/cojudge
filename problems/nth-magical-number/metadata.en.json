@@ -1,0 +1,76 @@
+{
+  "id": "nth-magical-number",
+  "title": "870. Nth Magical Number",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/nth-magical-number/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 1, a = 2, b = 3",
+      "output": "2",
+      "explanation": "The magical numbers start 2, 3, 4, 6, 8, ..., so the first one is 2."
+    },
+    {
+      "input": "n = 4, a = 2, b = 3",
+      "output": "6",
+      "explanation": "Listing them in order gives 2, 3, 4, 6, so the fourth is 6."
+    },
+    {
+      "input": "n = 5, a = 2, b = 4",
+      "output": "10",
+      "explanation": "Every even number is magical here, so the fifth one is 10."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int nthMagicalNumber(int n, int a, int b) {\n        \n    }\n}",
+    "python": "class Solution:\n    def nthMagicalNumber(self, n: int, a: int, b: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int nthMagicalNumber(int n, int a, int b) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int NthMagicalNumber(int n, int a, int b) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn nth_magical_number(n: i32, a: i32, b: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc NthMagicalNumber(n int, a int, b int) int {\n    \n}",
+    "typescript": "export function nthMagicalNumber(n: number, a: number, b: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int $a\n     * @param int $b\n     * @return int\n     */\n    public function nthMagicalNumber($n, $a, $b) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 1,
+      "a": 2,
+      "b": 3
+    },
+    {
+      "n": 4,
+      "a": 2,
+      "b": 3
+    },
+    {
+      "n": 5,
+      "a": 2,
+      "b": 4
+    },
+    {
+      "n": 3,
+      "a": 6,
+      "b": 4
+    }
+  ],
+  "functionName": "nthMagicalNumber",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "a",
+      "type": "int"
+    },
+    {
+      "name": "b",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Count how many magical numbers are at most x with x/a + x/b - x/lcm(a,b), then binary search the smallest x whose count reaches n.",
+    "Use 64-bit integers for the search bounds and take the result modulo 10^9 + 7 only at the very end."
+  ]
+}

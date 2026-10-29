@@ -1,6 +1,6 @@
 {
   "id": "find-the-index-of-the-first-occurrence-in-a-string",
-  "title": "257. Find the Index of the First Occurrence in a String",
+  "title": "257. Найдите индекс первого появления в строке",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/",
   "category": "two-pointers",
@@ -8,12 +8,12 @@
     {
       "input": "haystack = \"sadbutsad\", needle = \"sad\"",
       "output": "0",
-      "explanation": "The pattern appears at index 0 and again at 6; the first occurrence wins."
+      "explanation": "Модель появляется в индексе 0 и снова в 6; первое событие выигрывает."
     },
     {
       "input": "haystack = \"leetcode\", needle = \"leeto\"",
       "output": "-1",
-      "explanation": "No substring of the text equals the pattern."
+      "explanation": "Ни одна подстрочная строка текста не равна рисунку."
     }
   ],
   "starterCode": {
@@ -53,7 +53,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Try every start position from 0 up to len(haystack) - len(needle) and compare character by character.",
-    "For a faster scan, precompute the longest-prefix-suffix table (KMP) so a mismatch never re-examines text characters."
+    "Попробуйте каждую стартовую позицию от 0 до len(haystack) - len(needle) и сравните характер по характеру.",
+    "Для более быстрого сканирования вычислите таблицу с самым длинным префиксом-суффиксом (KMP), чтобы несоответствие никогда не пересматривало текстовые символы."
   ]
 }

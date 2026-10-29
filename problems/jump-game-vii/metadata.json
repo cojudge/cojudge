@@ -1,6 +1,6 @@
 {
   "id": "jump-game-vii",
-  "title": "239. Jump Game VII",
+  "title": "239. Игровой прыжок VII",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/jump-game-vii/",
   "category": "greedy",
@@ -8,7 +8,7 @@
     {
       "input": "s = \"011010\", minJump = 2, maxJump = 3",
       "output": "true",
-      "explanation": "In the first step, move from index 0 to index 3."
+      "explanation": "На первом этапе перейдите от индекса 0 к индексу 3."
     },
     {
       "input": "s = \"01101110\", minJump = 2, maxJump = 3",
@@ -64,8 +64,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Consider for each reachable index i the interval [i + minJump, i + maxJump].",
-    "Use a sliding window that counts how many reachable indices fall inside each index's previous window.",
-    "Index j is reachable when s[j] == '0' and some reachable index lies in [j - maxJump, j - minJump]."
+    "Рассмотрим для каждого достижимого индекса i интервал [i + minJump, i + maxJump].",
+    "Используйте раздвижное окно, которое подсчитывает, сколько доступных индексов попадает в предыдущее окно каждого индекса.",
+    "Индекс j достижим, когда s[j] == '0' и некоторый достижимый индекс находится в [j - maxJump, j - minJump]."
   ]
 }

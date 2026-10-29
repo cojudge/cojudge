@@ -1,6 +1,6 @@
 {
   "id": "consecutive-numbers-sum",
-  "title": "827. Consecutive Numbers Sum",
+  "title": "827. Последующие цифры Sum",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/consecutive-numbers-sum/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "n = 5",
       "output": "2",
-      "explanation": "Writings are [5] and [2,3]."
+      "explanation": "Надписи [5] и [2, 3]."
     },
     {
       "input": "n = 9",
       "output": "3",
-      "explanation": "Writings are [9], [4,5], and [2,3,4]."
+      "explanation": "Надписи [9], [4, 5] и [2, 3, 4]."
     },
     {
       "input": "n = 15",
       "output": "4",
-      "explanation": "Writings are [15], [7,8], [4,5,6], and [1,2,3,4,5]."
+      "explanation": "Надписи [15], [7, 8], [4, 5, 6] и [1, 2, 3, 4, 5]."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "A block of k consecutive numbers starting at x sums to k*x + k*(k-1)/2, so x must be a positive integer.",
-    "For each possible length k, check whether n minus k*(k-1)/2 is a positive multiple of k.",
-    "Only lengths with k*(k-1)/2 < n can work, which bounds the loop near sqrt(2n)."
+    "Блок из k последовательных чисел, начинающихся с x сумм до k*x + k*(k-1)/2, поэтому x должен быть положительным целым числом.",
+    "Для каждой возможной длины k проверьте, является ли n минус k*(k-1)/2 положительным кратным k.",
+    "Работают только длины с k*(k-1)/2 < n, что ограничивает петлю вблизи sqrt(2n)."
   ]
 }

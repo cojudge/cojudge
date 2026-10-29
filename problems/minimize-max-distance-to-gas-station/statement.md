@@ -1,11 +1,11 @@
-You are given the sorted positions `stations` of existing gas stops on a line and an integer `k`. You may build at most `k` extra stops at any real-valued positions you choose.
+Вам даны отсортированные позиции `stations` существующих остановок газа на линии и целое число `k`. Вы можете построить максимум дополнительных остановок `k` на любых реальных позициях, которые вы выберете.
 
-After placement, look at the gaps between consecutive stops (old and new). Your goal is to make the largest such gap as small as possible.
+После размещения посмотрите на промежутки между последовательными остановками (старыми и новыми). Ваша цель состоит в том, чтобы сделать самый большой такой разрыв как можно меньше.
 
-Because distances are fractional, this judge exchanges them as decimal strings: implement `minmaxGasDist(stations, k)` returning a finite decimal string parseable as a double. An answer is accepted when it lies within `1e-5` of the true optimum (absolute or relative).
+Поскольку расстояния дробны, этот судья обменивает их на десятичные строки: реализуйте `minmaxGasDist(stations, k)`, возвращая конечную десятичную строку, которую можно разделить как двойную.Ответ принимается, когда он находится в пределах `1e-5` истинного оптимума (абсолютного или относительного).
 
-**Constraints:**
+**Ограничения:**
 - `2 <= stations.length <= 2000`
-- `0 <= stations[i] <= 10^8` and `stations` is strictly increasing
+- `0 <= stations[i] <= 10^8` и `stations` строго увеличиваются
 - `1 <= k <= 10^5`
-- The output must be a finite decimal string parseable as a double
+- Выход должен быть конечной десятичной строкой, подлежащей разбору как двойная.

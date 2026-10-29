@@ -1,14 +1,14 @@
-A sorted list of distinct integers is hidden behind a reader. Interact with the judge object `reader` — your code never receives the array or its length:
+Сортированный список отдельных целых чисел скрыт за читателем.Взаимодействуйте с объектом судьи `reader` — ваш код никогда не получает массив или его длину:
 
-- `get(index)` returns the element at `index`, or `2147483647` if `index` is out of bounds.
+- `get(index)` возвращает элемент в `index` или `2147483647`, если `index` выходит за пределы.
 
-Implement `search(reader, target)` returning the index of `target`, or `-1` when absent. Because the length is unknown, grow a window exponentially (`1, 2, 4, 8, ...`) until it covers `target`, then binary search inside it. The judge counts your `get` calls and reports Wrong Answer if you exceed **10000** calls on a test case.
+Внедрите `search(reader, target)`, возвращающий индекс `target`, или `-1`, когда он отсутствует. Поскольку длина неизвестна, вырастите окно экспоненциально (`1, 2, 4, 8, ...`) до тех пор, пока оно не покроет `target`, затем двоичный поиск внутри него. Судья подсчитывает ваши звонки `get` и сообщает неправильный ответ, если вы превышаете **10000** вызовы по тестовому делу.
 
-Method names per language: Java `reader.get(index)`, Python `reader.get(index)`, C++ `reader.get(index)`, C# `reader.Get(index)`, Rust `reader.get(index)`, Go `reader.Get(index)`, TypeScript `reader.get(index)`, PHP `$reader->get($index)`.
+Имена методов на языке: Java `reader.get(index)`, Python `reader.get(index)`, C++ `reader.get(index)`, C# `reader.Get(index)`, Rust `reader.get(index)`, Go `reader.Get(index)`, TypeScript `reader.get(index)`, PHP `$reader->get($index)`.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= secret.length <= 10^4`
 - `-10^4 <= secret[i], target <= 10^4`
-- Values in `secret` are strictly increasing.
-- At most 10000 `get` calls per test case.
+- Значения в `secret` строго возрастают.
+- В большинстве случаев 10000 `get` вызывается в тестовом случае.

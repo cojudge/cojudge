@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { installRussianMonacoMessages } from '$lib/i18n/monaco';
     import type * as Monaco from 'monaco-editor';
     import { attachVisualCursorFix, configureMonacoVim, createHistoryAwareStatusBar, patchMonacoVimKeyName } from '$lib/utils/vimMode';
     import { isDebugSupported } from '$lib/utils/util';
@@ -222,6 +223,7 @@
     }
 
     onMount(() => {
+        installRussianMonacoMessages();
         let disposed = false;
         editorElement.addEventListener('paste', handlePasteCapture, true);
         Promise.all([

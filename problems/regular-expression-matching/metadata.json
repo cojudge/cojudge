@@ -1,6 +1,6 @@
 {
   "id": "regular-expression-matching",
-  "title": "137. Regular Expression Matching",
+  "title": "137. Регулярное сопоставление экспрессии",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/regular-expression-matching/",
   "category": "dp-2d",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"aa\", p = \"a\"",
       "output": "false",
-      "explanation": "The pattern \"a\" does not match the string \"aa\"."
+      "explanation": "Узор «а» не соответствует строке «аа»."
     },
     {
       "input": "s = \"aa\", p = \"a*\"",
       "output": "true",
-      "explanation": "The pattern \"a*\" means zero or more 'a' characters, so it matches \"aa\"."
+      "explanation": "Узор «a*» означает ноль или более символов «a», поэтому он соответствует «aa»."
     },
     {
       "input": "s = \"aab\", p = \"c*a*b\"",
       "output": "true",
-      "explanation": "c* matches zero characters, a* matches both a characters, and b matches the final character."
+      "explanation": "c* соответствует нулю символов, a* соответствует как символам, так и b соответствует конечному персонажу."
     }
   ],
   "starterCode": {
@@ -66,8 +66,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Let dp[i][j] indicate whether the first i characters of s match the first j characters of p.",
-    "A normal character or '.' extends a match from dp[i - 1][j - 1].",
-    "For x*, either skip both pattern characters or consume one matching character while staying at the same pattern position."
+    "Пусть dp[i][j] укажет, соответствуют ли первые i символы s первым j символам p.",
+    "Нормальный персонаж или «.» продлевает матч с dp[i — 1][j — 1].",
+    "Для x* либо пропустите оба символа шаблона, либо используйте один соответствующий символ, оставаясь в одном и том же положении шаблона."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "reorder-list",
-  "title": "45. Reorder List",
+  "title": "45. Список заказов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/reorder-list/",
   "category": "linked-list",
@@ -8,12 +8,12 @@
     {
       "input": "head = [1,2,3,4]",
       "output": "[1,4,2,3]",
-      "explanation": "The list [1,2,3,4] reordered as first-last-first-last becomes [1,4,2,3]."
+      "explanation": "Список [1,2,3,4] переупорядоченный как первый-последний становится [1,4,2,3]."
     },
     {
       "input": "head = [1,2,3,4,5]",
       "output": "[1,5,2,4,3]",
-      "explanation": "The list [1,2,3,4,5] reordered as first-last-first-last becomes [1,5,2,4,3]."
+      "explanation": "Список [1,2,3,4,5] переупорядоченный как первый-последний становится [1,5,2,4,3]."
     }
   ],
   "starterCode": {
@@ -58,9 +58,9 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Find the middle of the linked list using slow and fast pointers.",
-    "Reverse the second half of the list.",
-    "Merge the first half and the reversed second half by interleaving nodes.",
-    "Make sure to terminate the first half before reversing to avoid cycles."
+    "Найдите середину списка ссылок, используя медленные и быстрые указатели.",
+    "Переверните вторую половину списка.",
+    "Слить первую половину и обратную вторую половину путем перемешивания узлов.",
+    "Обязательно прекратите первую половину, прежде чем повернуть назад, чтобы избежать циклов."
   ]
 }

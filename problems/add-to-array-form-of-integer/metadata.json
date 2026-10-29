@@ -1,6 +1,6 @@
 {
   "id": "add-to-array-form-of-integer",
-  "title": "972. Add to Array-Form of Integer",
+  "title": "972. Добавить в Array-форму целых чисел",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/add-to-array-form-of-integer/",
   "category": "array",
@@ -58,8 +58,8 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Add from the least significant digit, carrying the value of k along as you move left.",
-    "Keep emitting digits while digits of num or a nonzero carry remain; a leftover carry may add a new leading digit.",
-    "Collect the digits backwards and reverse them at the end."
+    "Добавьте из наименее значащей цифры, несущую значение k по мере движения влево.",
+    "Продолжайте испускать цифры, в то время как цифры числа или ненулевого переноса остаются; оставшийся перенос может добавить новую ведущую цифру.",
+    "Соберите цифры в обратном направлении и поверните их в конце."
   ]
 }

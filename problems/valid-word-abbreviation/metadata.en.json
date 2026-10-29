@@ -1,0 +1,69 @@
+{
+  "id": "valid-word-abbreviation",
+  "title": "482. Valid Word Abbreviation",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/valid-word-abbreviation/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "word = \"internationalization\", abbr = \"i12iz4n\"",
+      "output": "true",
+      "explanation": "The numbers 12 and 4 skip the matching middle blocks."
+    },
+    {
+      "input": "word = \"apple\", abbr = \"a2e\"",
+      "output": "false",
+      "explanation": "Skipping 2 letters after a lands on l, not e."
+    },
+    {
+      "input": "word = \"word\", abbr = \"4\"",
+      "output": "true",
+      "explanation": "A single number covering the whole length is valid."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean validWordAbbreviation(String word, String abbr) {\n        \n    }\n}",
+    "python": "class Solution:\n    def validWordAbbreviation(self, word: str, abbr: str) -> bool:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool validWordAbbreviation(string word, string abbr) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool ValidWordAbbreviation(string word, string abbr) \n    {\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn valid_word_abbreviation(word: String, abbr: String) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc ValidWordAbbreviation(word string, abbr string) bool {\n    \n}",
+    "typescript": "export function validWordAbbreviation(word: string, abbr: string): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $word\n     * @param string $abbr\n     * @return bool\n     */\n    public function validWordAbbreviation($word, $abbr) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "word": "internationalization",
+      "abbr": "i12iz4n"
+    },
+    {
+      "word": "apple",
+      "abbr": "a2e"
+    },
+    {
+      "word": "word",
+      "abbr": "4"
+    },
+    {
+      "word": "a",
+      "abbr": "1"
+    }
+  ],
+  "functionName": "validWordAbbreviation",
+  "params": [
+    {
+      "name": "word",
+      "type": "string"
+    },
+    {
+      "name": "abbr",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Walk both strings with two pointers, advancing the word by numeric jumps.",
+    "A number with a leading zero is always invalid, and a lone zero never skips anything.",
+    "Both pointers must finish together for the abbreviation to match."
+  ]
+}

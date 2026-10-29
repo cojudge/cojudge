@@ -1,6 +1,6 @@
 {
   "id": "basic-array-sum-rec",
-  "title": "48. Array Sum (Recursive)",
+  "title": "48. Array Sum (рекурсивный)",
   "difficulty": "Easy",
   "category": "recursion",
   "examples": [
@@ -12,7 +12,7 @@
     {
       "input": "nums = []",
       "output": "0",
-      "explanation": "Base case."
+      "explanation": "Базовое дело."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Peel off index 0 and recurse on the remainder.",
-    "Use a helper that carries the current index."
+    "Откажитесь от индекса 0 и повторите его на оставшейся части.",
+    "Используйте помощника, который несет текущий индекс."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "hamming-distance",
-  "title": "527. Hamming Distance",
+  "title": "527. Расстояние Хэмминга",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/hamming-distance/",
   "category": "bit-manipulation",
@@ -8,12 +8,12 @@
     {
       "input": "x = 1, y = 4",
       "output": "2",
-      "explanation": "1 is 0001 and 4 is 0100 in binary, which differ in the lowest and third bits."
+      "explanation": "1 - это 0001, а 4 - это 0100 в двоичном варианте, который отличается самым низким и третьим битами."
     },
     {
       "input": "x = 3, y = 1",
       "output": "1",
-      "explanation": "3 is 0011 and 1 is 0001, differing only in the second bit."
+      "explanation": "3 — 0011, а 1 — 0001, отличающийся только вторым битом."
     }
   ],
   "starterCode": {
@@ -49,7 +49,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "XOR the two numbers: the result has a 1 exactly where the inputs differ.",
-    "Count the set bits of `x ^ y`."
+    "XOR - это два числа: результат имеет 1, где входы различаются.",
+    "Подсчитайте биты `x ^ y`."
   ]
 }

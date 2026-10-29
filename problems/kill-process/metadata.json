@@ -1,6 +1,6 @@
 {
   "id": "kill-process",
-  "title": "627. Kill Process",
+  "title": "627. Убить процесс",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/kill-process/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "pid = [1,3,10,5], ppid = [3,0,5,3], kill = 5",
       "output": "[5,10]",
-      "explanation": "Ending 5 also ends its child 10."
+      "explanation": "Завершение 5 также заканчивает его ребенок 10."
     },
     {
       "input": "pid = [1,3,10,5], ppid = [3,0,5,3], kill = 3",
       "output": "[3,1,5,10]",
-      "explanation": "Ending 3 ends the whole tree underneath it in some order."
+      "explanation": "Завершение 3 завершает все дерево под ним в некотором порядке."
     },
     {
       "input": "pid = [1], ppid = [0], kill = 1",
       "output": "[1]",
-      "explanation": "A lone entry only ends itself."
+      "explanation": "Одинокий вход заканчивается сам собой."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Build a map from each parent value to its direct children, then walk down from kill.",
-    "[BFS/DFS] from the target collects every descendant; the order of the answer does not matter.",
-    "A parent id of 0 marks a root with no owner."
+    "Постройте карту от каждого родителя до его прямых детей, а затем спуститесь от убийства.",
+    "[BFS/DFS] от цели собирает каждого потомка; порядок ответа не имеет значения.",
+    "Родительский идентификатор 0 обозначает корень без владельца."
   ]
 }

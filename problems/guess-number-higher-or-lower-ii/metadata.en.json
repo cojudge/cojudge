@@ -1,0 +1,61 @@
+{
+  "id": "guess-number-higher-or-lower-ii",
+  "title": "452. Guess Number Higher or Lower II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/guess-number-higher-or-lower-ii/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "n = 1",
+      "output": "0",
+      "explanation": "One candidate needs no payment."
+    },
+    {
+      "input": "n = 2",
+      "output": "1",
+      "explanation": "Guessing 1 risks at most 1."
+    },
+    {
+      "input": "n = 10",
+      "output": "16",
+      "explanation": "The best split caps the worst branch at 16."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int getMoneyAmount(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def getMoneyAmount(self, n: int) -> int:\n        return 0\n",
+    "cpp": "class Solution {\npublic:\n    int getMoneyAmount(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int GetMoneyAmount(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn get_money_amount(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc GetMoneyAmount(n int) int {\n    return 0\n}",
+    "typescript": "export function getMoneyAmount(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function getMoneyAmount($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 1
+    },
+    {
+      "n": 2
+    },
+    {
+      "n": 10
+    },
+    {
+      "n": 3
+    }
+  ],
+  "functionName": "getMoneyAmount",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Define dp over intervals [lo, hi] as the cheapest worst-case cost inside.",
+    "Trying guess x costs x plus the worse of the left and right subproblems.",
+    "Fill intervals by increasing length; the answer is the cost over [1, n]."
+  ]
+}

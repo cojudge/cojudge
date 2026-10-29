@@ -1,0 +1,54 @@
+{
+  "id": "longest-palindromic-substring",
+  "title": "57. Longest Palindromic Substring",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/longest-palindromic-substring/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s=\"babad\"",
+      "output": "\"bab\" or \"aba\"",
+      "explanation": "The longest palindromic substring in \"babad\" is \"bab\" or \"aba\" (both length 3)."
+    },
+    {
+      "input": "s=\"cbbd\"",
+      "output": "\"bb\"",
+      "explanation": "The longest palindromic substring in \"cbbd\" is \"bb\" (length 2)."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String longestPalindrome(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def longestPalindrome(self, s: str) -> str:\n        pass\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string longestPalindrome(string s) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string LongestPalindrome(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn longest_palindrome(s: String) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc LongestPalindrome(s string) string {\n    \n}",
+    "typescript": "export function longestPalindrome(s: string): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string\n     */\n    public function longestPalindrome($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "babad"
+    },
+    {
+      "s": "cbbd"
+    },
+    {
+      "s": "a"
+    },
+    {
+      "s": "ac"
+    }
+  ],
+  "functionName": "longestPalindrome",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Expand around centers (both odd and even) to find the longest palindromic substring in O(n^2) time and O(1) space."
+  ]
+}

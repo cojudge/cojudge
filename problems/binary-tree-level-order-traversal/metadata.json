@@ -1,6 +1,6 @@
 {
   "id": "binary-tree-level-order-traversal",
-  "title": "64. Binary Tree Level Order Traversal",
+  "title": "64. Обсуждение Binary Tree Level Order",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/binary-tree-level-order-traversal/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [3,9,20,null,null,15,7]",
       "output": "[[3],[9,20],[15,7]]",
-      "explanation": "The level-order traversal groups are [[3],[9,20],[15,7]]."
+      "explanation": "Поперечные группы уровня-порядка [[3], [9, 20], [15, 7]]."
     },
     {
       "input": "root = [1]",
       "output": "[[1]]",
-      "explanation": "The level-order traversal groups are [[1]]."
+      "explanation": "Порядковые группы являются [1]."
     },
     {
       "input": "root = []",
       "output": "[]",
-      "explanation": "The level-order traversal groups are []."
+      "explanation": "Порядковые группы являются []."
     }
   ],
   "starterCode": {
@@ -58,6 +58,6 @@
   ],
   "outputType": "int_list_2d",
   "hints": [
-    "Perform a breadth-first search (BFS), collecting node values level by level."
+    "Выполните поиск по ширине (BFS), собирая значения узлов по уровням."
   ]
 }

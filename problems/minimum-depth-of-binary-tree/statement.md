@@ -1,7 +1,7 @@
-Find how short the shortest root-to-leaf chain in a binary tree can be.
+Узнайте, насколько короткой может быть самая короткая цепь от корня до листа в двоичном дереве.
 
-A leaf is a node with neither a left nor a right child. Count nodes along the path, so a lone root has depth 1 and an empty tree has depth 0. Where a node has only one child, the path must continue through that child — a missing side does not count as depth 0.
+Лист - это узел, у которого нет ни левого, ни правого потомка. Считай узлы вдоль пути, поэтому один корень имеет глубину 1, а пустое дерево имеет глубину 0. Там, где у узла есть только один потомок, путь должен продолжаться через этого потомка - отсутствующая сторона не считается глубиной 0.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= number of nodes <= 10^5`
 - `-1000 <= Node.val <= 1000`

@@ -1,11 +1,11 @@
-You are given a short program written with nested choices. The text `expression` uses `T` for true, `F` for false, single digits `0` to `9` as plain values, and the symbols `?` and `:` to form choices shaped like `condition ? valueIfTrue : valueIfFalse`.
+Текст `expression` использует `T` для истинного, `F` для ложных, однозначных цифр `0` для `9` в качестве простых значений, а символы `?` и `:` для формирования вариантов в форме `condition ? valueIfTrue : valueIfFalse`.
 
-Choices can nest on either side, and nesting groups from the right. To find the answer, decide the rightmost choice first, replace it with its picked branch, then keep working leftward until one value remains.
+Выбор может гнездиться с обеих сторон, а группы гнездования справа. Чтобы найти ответ, сначала решите правильный выбор, замените его выбранной ветвью, затем продолжайте работать влево, пока не останется одно значение.
 
-Return that final value as a one-character string.
+Верните это конечное значение в виде односимвольной строки.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= expression.length <= 10000`
-- `expression` contains only `T`, `F`, `0`-`9`, `?` and `:`.
-- `expression` is always a valid nested choice expression.
-- The answer is always a single character (`T`, `F`, or a digit).
+- `expression` содержит только `T`, `F`, `0`-`9`, `?` и `:`.
+- `expression` - это всегда правильное вложенное выражение.
+- Ответ всегда один символ (`T`, `F`, или цифра).

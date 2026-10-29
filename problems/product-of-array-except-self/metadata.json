@@ -1,6 +1,6 @@
 {
   "id": "product-of-array-except-self",
-  "title": "4. Product of Array Except Self",
+  "title": "4. Произведение Array, исключая себя",
   "difficulty": "Medium",
   "category": "array",
   "link": "https://leetcode.com/problems/product-of-array-except-self/",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1,2,3,4]",
       "output": "[24,12,8,6]",
-      "explanation": "Each output element is the product of every other element in [1,2,3,4]: 2·3·4=24, 1·3·4=12, 1·2·4=8, 1·2·3=6."
+      "explanation": "Каждый выходной элемент является продуктом каждого другого элемента в [1,2,3,4]: 2·3·4=24, 1·3·4=12, 1·2·4=8, 1·2·3=6."
     },
     {
       "input": "nums = [-1,1,0,-3,3]",
       "output": "[0,0,9,0,0]",
-      "explanation": "The single zero at index 2 makes all other output positions zero; at index 2 the output is the product of the remaining elements: (−1)·1·(−3)·3 = 9."
+      "explanation": "Единый ноль в индексе 2 делает все другие выходные позиции нулевыми; в индексе 2 выход является продуктом остальных элементов: (-1) · 1 · (-3) · 3 = 9."
     }
   ],
   "starterCode": {
@@ -52,6 +52,6 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Solve in O(n) time without using division and with O(1) extra space (output array not counted). A standard approach computes prefix products in one pass and multiplies by a running suffix product in reverse."
+    "Решите во времени O(n) без использования разделения и с дополнительным пространством O(1) (выходной массив не учитывается). Стандартный подход вычисляет префиксные продукты за один проход и умножает на работающий суффиксный продукт в обратном направлении."
   ]
 }

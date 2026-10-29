@@ -1,7 +1,7 @@
-You are given the root of a complete binary tree: every level except possibly the last is fully filled, and the last level's nodes sit as far left as possible. Count the nodes in the tree.
+Вам дан корень полного двоичного дерева: каждый уровень, за исключением, возможно, последнего, полностью заполнен, а узлы последнего уровня сидят как можно дальше влево.
 
-The tree is supplied in level-order form such as `[1,2,3,4,5,6]`, where `null` marks a missing child, and an empty list means there is no tree.
+Дерево поставляется в форме уровня, такой как `[1,2,3,4,5,6]`, где `null` отмечает пропавшего потомка, а пустой список означает, что дерева нет.
 
-**Constraints:**
-- The tree holds between 0 and `5 * 10^4` nodes.
+**Ограничения:**
+- Дерево находится между узлами 0 и `5 * 10^4`.
 - `0 <= node value <= 10^5`

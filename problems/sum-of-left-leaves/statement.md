@@ -1,9 +1,9 @@
-You receive the root of a binary tree. Add up the values of certain special nodes: those that are leaves and sit as the left child of their parent.
+Вы получаете корень двоичного дерева. Сложите значения определенных специальных узлов: тех, которые являются листьями и сидят как левый потомок своего родителя.
 
-A leaf means a node with neither a left nor a right child. The root itself never counts, because it has no parent. Any leaf reached via a right edge is ignored.
+Лист означает узел, у которого нет ни левого, ни правого потомка. Сам корень никогда не считается, потому что у него нет родителя. Любой лист, достигаемый правым краем, игнорируется.
 
-Return the total of all qualifying left-leaf values.
+Верните общую сумму всех квалификационных значений левого листа.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= number of nodes <= 1000`
 - `-1000 <= Node.val <= 1000`

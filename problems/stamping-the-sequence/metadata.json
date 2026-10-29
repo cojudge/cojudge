@@ -1,6 +1,6 @@
 {
   "id": "stamping-the-sequence",
-  "title": "923. Stamping The Sequence",
+  "title": "923. Стимулирование последовательности",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/stamping-the-sequence/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "stamp = \"abc\", target = \"ababc\"",
       "output": "[0,2]",
-      "explanation": "Stamp at 2 (\"??abc\"), then at 0 (\"ababc\")."
+      "explanation": "Маркировка 2 («??abc»), затем 0 («ababc»)."
     },
     {
       "input": "stamp = \"abca\", target = \"aabcaca\"",
       "output": "[3,0,1]",
-      "explanation": "One valid build order."
+      "explanation": "Один действительный заказ на строительство."
     },
     {
       "input": "stamp = \"abc\", target = \"acabc\"",
       "output": "[]",
-      "explanation": "No order can create that middle character."
+      "explanation": "Никакой порядок не может создать этот средний характер."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Think in reverse: from the target, turn stamp-matching windows into wildcards.",
-    "A window is erasable when every non-wildcard matches the stamp and at least one cell is still concrete.",
-    "Reverse the erasure order to obtain a forward stamping sequence; failure to erase everything means impossible."
+    "Подумайте наоборот: из цели превратите окна, соответствующие штампу, в wildcards.",
+    "Окно стирается, когда каждая недиктовка соответствует штампу, и по крайней мере одна ячейка все еще бетонна.",
+    "Обратный порядок стирания, чтобы получить последовательность штамповки вперед; неспособность стереть все означает невозможность."
   ]
 }

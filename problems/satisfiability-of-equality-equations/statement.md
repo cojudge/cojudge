@@ -1,10 +1,10 @@
-You are given a list of equations over lowercase variables. Each equation has one
-of two shapes: `x==y`, meaning `x` and `y` must hold equal values, or `x!=y`,
-meaning they must hold different values.
+Вам дается список уравнений по более низким переменным. Каждое уравнение имеет одну
+`x==y`, то есть `x` и `y` должны иметь равные значения, или `x!=y`,
+Это означает, что они должны иметь разные ценности.
 
-Return `true` if the variables can be assigned values so that every equation
-holds at the same time, and `false` otherwise.
+Возврат `true`, если переменным могут быть присвоены значения, так что каждое уравнение
+В то же время, `false` и наоборот.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= equations.length <= 500`
-- Each equation is exactly 4 characters: a lowercase letter, `==` or `!=`, and a lowercase letter.
+- Каждое уравнение состоит из символов 4: строчная буква, `==` или `!=` и строчная буква.

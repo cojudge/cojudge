@@ -1,6 +1,6 @@
 {
   "id": "leaf-similar-trees",
-  "title": "866. Leaf-Similar Trees",
+  "title": "866. Листья похожие деревья",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/leaf-similar-trees/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root1 = [3,5,1,6,2,9,8,null,null,7,4], root2 = [3,5,1,6,7,4,2,null,null,null,null,null,null,9,8]",
       "output": "true",
-      "explanation": "Both leaf orders are 6, 7, 4, 9, 8."
+      "explanation": "Оба листовых заказа - 6, 7, 4, 9, 8."
     },
     {
       "input": "root1 = [1,2,3], root2 = [1,3,2]",
       "output": "false",
-      "explanation": "Orders are 2, 3 versus 3, 2."
+      "explanation": "Заказы 2, 3 против 3, 2."
     },
     {
       "input": "root1 = [1], root2 = [1]",
       "output": "true",
-      "explanation": "Both are a single 1."
+      "explanation": "Оба являются одними 1."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "A simple depth-first walk that visits left before right naturally emits leaves in order.",
-    "Collect each tree's leaf list separately, then compare the two lists for equality.",
-    "Iterative stacks or recursion both work; recursion depth stays small for the given sizes."
+    "Простая прогулка на глубину, которая посещает левый перед правым, естественным образом излучает листья в порядке.",
+    "Соберите список листьев каждого дерева отдельно, затем сравните два списка для равенства.",
+    "Итерационные стеки или рекурсия работают; глубина рекурсии остается небольшой для заданных размеров."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "h-index-ii",
-  "title": "374. H-Index II",
+  "title": "374. H-индекс II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/h-index-ii/",
   "category": "binary-search",
@@ -8,17 +8,17 @@
     {
       "input": "citations = [0,1,3,5,6]",
       "output": "3",
-      "explanation": "Three papers have at least 3 citations (3, 5, 6)."
+      "explanation": "Три статьи имеют, по крайней мере, цитаты 3 (3, 5, 6)."
     },
     {
       "input": "citations = [1,2,100]",
       "output": "2",
-      "explanation": "Two papers have at least 2 citations (2, 100)."
+      "explanation": "В двух статьях есть как минимум цитаты 2 (2, 100)."
     },
     {
       "input": "citations = [0]",
       "output": "0",
-      "explanation": "No citation reaches 1."
+      "explanation": "Цитата не доходит до 1."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Input is already ascending, so binary-search the first index i with citations[i] >= n - i.",
-    "The answer is n - i for that first feasible i, or 0 when none qualifies.",
-    "Expected time is O(log n)."
+    "Ввод уже идет вверх, поэтому двоичный поиск первого индекса i с цитатами [i] >= n - i.",
+    "Ответ n - i для этого первого выполнимого i, или 0, когда никто не квалифицируется.",
+    "Ожидаемое время - O(log n)."
   ]
 }

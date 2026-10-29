@@ -1,6 +1,6 @@
 {
   "id": "stickers-to-spell-word",
-  "title": "706. Stickers to Spell Word",
+  "title": "706. Наклейки, чтобы заклинать слово",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/stickers-to-spell-word/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "stickers = [\"with\",\"example\",\"science\"], target = \"thehat\"",
       "output": "3",
-      "explanation": "Three sheets cover all letters."
+      "explanation": "Три листа покрывают все буквы."
     },
     {
       "input": "stickers = [\"notice\",\"possible\"], target = \"basicbasic\"",
       "output": "-1",
-      "explanation": "Letter 'c' never appears."
+      "explanation": "Письмо «с» никогда не появляется."
     },
     {
       "input": "stickers = [\"these\",\"guess\",\"about\",\"garden\",\"him\"], target = \"atomher\"",
       "output": "3",
-      "explanation": "Three sheets suffice."
+      "explanation": "Трех листов достаточно."
     }
   ],
   "starterCode": {
@@ -71,8 +71,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Count letters (26 slots) for every sticker and for the target; only the overlap matters.",
-    "Search over subsets of target positions with memoization: always cover the first uncovered letter to prune the branching.",
-    "If no sticker holds a needed letter, the answer is -1."
+    "Счетные буквы (26 слоты) для каждой наклейки и для цели; имеет значение только перекрытие.",
+    "Поиск по подмножествам целевых позиций с запоминанием: всегда покройте первое непокрытое письмо, чтобы обрезать ветвление.",
+    "Если наклейка не содержит нужной буквы, ответ -1."
   ]
 }

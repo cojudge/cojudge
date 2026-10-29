@@ -1,6 +1,6 @@
 {
   "id": "parse-lisp-expression",
-  "title": "742. Parse Lisp Expression",
+  "title": "742. Выражение Parse Lisp",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/parse-lisp-expression/",
   "category": "stack",
@@ -12,12 +12,12 @@
     {
       "input": "expression = \"(mult 3 (add 2 3))\"",
       "output": "15",
-      "explanation": "Inner (add 2 3) is 5; 3 times 5 is 15."
+      "explanation": "Внутренний (добавить) 2 3) является 5; 3 время 5 это 15."
     },
     {
       "input": "expression = \"(let x 2 (mult x 5))\"",
       "output": "10",
-      "explanation": "x binds to 2, then 2 times 5 is 10."
+      "explanation": "x связывается с 2, затем 2 раз 5 является 10."
     },
     {
       "input": "expression = \"(let x 2 y 3 (add x y))\"",
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Parse with an index pointer over the string plus a stack of scopes; each let pushes bindings that are discarded at ')'.",
-    "To evaluate a list, read its head token: add and mult take exactly two sub-expressions, let takes pairs plus a trailing body.",
-    "A bare token is either an integer literal or a variable resolved from the innermost scope outward."
+    "Парс с указателем индекса над строкой плюс стопка областей; каждый пусть толкает связывания, которые отбрасываются на ''.",
+    "Чтобы оценить список, прочитайте его токен головы: добавьте и мульт возьмите ровно два суб-выражения, давайте возьмем пары плюс следующее тело.",
+    "Голый токен является либо целым буквальным числом, либо переменной, разрешенной из внутреннего объема наружу."
   ]
 }

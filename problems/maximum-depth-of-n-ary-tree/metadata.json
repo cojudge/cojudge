@@ -1,6 +1,6 @@
 {
   "id": "maximum-depth-of-n-ary-tree",
-  "title": "615. Maximum Depth of N-ary Tree",
+  "title": "615. Максимальная глубина дерева N-ary",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/maximum-depth-of-n-ary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "data = \"[1,null,3,2,4,null,5,6]\"",
       "output": "3",
-      "explanation": "The chain 1 -> 3 -> 5 uses three nodes."
+      "explanation": "Цепочка 1 -> 3 -> 5 использует три узла."
     },
     {
       "input": "data = \"[]\"",
       "output": "0",
-      "explanation": "No nodes means depth zero."
+      "explanation": "Отсутствие узлов означает нулевую глубину."
     },
     {
       "input": "data = \"[1]\"",
       "output": "1",
-      "explanation": "The lone root is itself the longest path."
+      "explanation": "Одинокий корень сам по себе является самым длинным путем."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Split the bracket string on commas; null tokens mark the end of each node's child group.",
-    "Rebuild the tree with a queue: each group after a null belongs to the next queued node.",
-    "Depth is one plus the deepest child subtree (a leaf contributes 1); a breadth-first level count works too."
+    "Разделите веревку скобки на запятые; нулевые токены отмечают конец детской группы каждого узла.",
+    "Восстановление дерева с очередью: каждая группа после нуля относится к следующему очерченному узлу.",
+    "Глубина - один плюс самое глубокое детское дерево (лист вносит вклад 1); также работает подсчет уровня широты."
   ]
 }

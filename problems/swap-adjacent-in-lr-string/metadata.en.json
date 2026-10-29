@@ -1,0 +1,65 @@
+{
+  "id": "swap-adjacent-in-lr-string",
+  "title": "777. Swap Adjacent in LR String",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/swap-adjacent-in-lr-string/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "start = \"RXXLRXRXL\", end = \"XRLXXRRLX\"",
+      "output": "true",
+      "explanation": "A sequence of allowed slides reshapes the first row into the second one."
+    },
+    {
+      "input": "start = \"X\", end = \"L\"",
+      "output": "false",
+      "explanation": "An empty slot cannot become a token."
+    },
+    {
+      "input": "start = \"XL\", end = \"LX\"",
+      "output": "true",
+      "explanation": "The L steps one slot left into the empty cell."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean canTransform(String start, String end) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def canTransform(self, start: str, end: str) -> bool:\n        return False\n",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool canTransform(string start, string end) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool CanTransform(string start, string end)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_transform(start: String, end: String) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc CanTransform(start string, end string) bool {\n    return false\n}",
+    "typescript": "export function canTransform(start: string, end: string): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $start\n     * @param string $end\n     * @return bool\n     */\n    public function canTransform($start, $end) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "start": "RXXLRXRXL",
+      "end": "XRLXXRRLX"
+    },
+    {
+      "start": "X",
+      "end": "L"
+    },
+    {
+      "start": "XL",
+      "end": "LX"
+    }
+  ],
+  "functionName": "canTransform",
+  "params": [
+    {
+      "name": "start",
+      "type": "string"
+    },
+    {
+      "name": "end",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Ignore the empty slots first: after deleting every X, the remaining L/R order must match exactly.",
+    "Track positions of the remaining tokens: each L in the start must not sit to the right of its counterpart in the target, and each R must not sit to the left.",
+    "Scan both strings with two pointers that skip over X characters and compare token by token."
+  ]
+}

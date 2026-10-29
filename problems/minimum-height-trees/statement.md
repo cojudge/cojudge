@@ -1,15 +1,15 @@
-Consider an undirected connected graph with no cycles — that structure is a tree, so every pair of vertices is joined by a single unique path.
+Рассмотрим ненаправленный связанный граф без циклов — эта структура является деревом, поэтому каждая пара вершин соединена одним уникальным путем.
 
-You are given `n` labeled `0` through `n - 1`, together with `n - 1` connections `edges` where `edges[i] = [ai, bi]` joins vertices `ai` and `bi`. Any vertex may be designated as the root, which turns the tree into a rooted tree of some height `h`. The trees whose height is as small as possible over all root choices are the minimum height trees (MHTs).
+Вы получаете `n` с маркировкой `0` через `n - 1`, вместе с `n - 1` соединениями `edges`, где `edges[i] = [ai, bi]` присоединяется к вершинам `ai` и `bi`. Любая вершина может быть обозначена как корень, который превращает дерево в корневое дерево некоторой высоты `h`. Деревья, высота которых как можно меньше по всем вариантам корня, являются деревьями минимальной высоты (MHT).
 
-List the labels of every root that achieves that smallest height. The order of the returned list does not matter.
+Перечислите ярлыки каждого корня, который достигает этой наименьшей высоты. Порядок возвращаемого списка не имеет значения.
 
-For a rooted tree, height means the count of edges along the longest path that starts at the root and goes down to a leaf.
+Для корневого дерева высота означает количество краев вдоль самой длинной тропы, которая начинается у корня и спускается к листу.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 2 * 10^4`
 - `edges.length == n - 1`
 - `0 <= ai, bi < n`
 - `ai != bi`
-- All the pairs `(ai, bi)` are unique
-- The given input is guaranteed to be a tree and there will be no repeated edges
+- Все пары `(ai, bi)` уникальны.
+- Заданный вход гарантированно будет деревом, и не будет повторяющихся краев.

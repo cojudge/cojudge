@@ -1,6 +1,6 @@
 {
   "id": "base-7",
-  "title": "566. Base 7",
+  "title": "566. База 7",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/base-7/",
   "category": "math",
@@ -8,12 +8,12 @@
     {
       "input": "num = 100",
       "output": "\"202\"",
-      "explanation": "2*49 + 0*7 + 2 equals 100 in decimal."
+      "explanation": "2*49 + 0*7 + 2 равные 100 в десятичном."
     },
     {
       "input": "num = -7",
       "output": "\"-10\"",
-      "explanation": "Seven in base seven is 10, with the negative sign preserved."
+      "explanation": "Семь в основании семи - 10, с отрицательным знаком сохранен."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Handle zero as a special case returning \"0\".",
-    "Record the sign, work with the absolute value, and collect remainders modulo 7.",
-    "Reverse the collected digits and reattach the minus sign when needed."
+    "Обработать ноль в качестве специального случая возвращая \"0\".",
+    "Записывайте знак, работайте с абсолютным значением и собирайте остатки по модулю 7.",
+    "Переверните собранные цифры и при необходимости прикрепите знак минус."
   ]
 }

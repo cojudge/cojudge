@@ -1,6 +1,6 @@
 {
   "id": "equal-rational-numbers",
-  "title": "958. Equal Rational Numbers",
+  "title": "958. Равные рациональные числа",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/equal-rational-numbers/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"0.(52)\", t = \"0.5(25)\"",
       "output": "true",
-      "explanation": "Both spellings expand to 0.525252..., so they name the same value."
+      "explanation": "Оба написания расширяются до 0.525252, поэтому они называют одно и то же значение."
     },
     {
       "input": "s = \"0.1666(6)\", t = \"0.166(66)\"",
       "output": "true",
-      "explanation": "Both spellings expand to 0.166666..., so they match."
+      "explanation": "Оба варианта написания расширяются до 0.166666, поэтому они совпадают."
     },
     {
       "input": "s = \"0.9(9)\", t = \"1.\"",
       "output": "true",
-      "explanation": "A trailing infinite run of 9s carries over, giving 0.999... which equals 1."
+      "explanation": "Бесконечный пробег 9s переносится, давая 0.999 ... который равен 1."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Split each spelling into integer part, non-repeating decimals, and parenthesized repeating block.",
-    "Convert each spelling to an exact fraction: with a non-repeat length a and repeat length b, the denominator involves 10^a * (10^b - 1).",
-    "Compare the two fractions by cross multiplication instead of floating point."
+    "Разделите каждое написание на целочисленную часть, неповторяющиеся десятичные числа и повторяющийся блок скобки.",
+    "Преобразуйте каждое написание в точную дробь: с неповторяющейся длиной a и повторяющейся длиной b знаменатель включает 10^a * (10^b - 1).",
+    "Сравните две фракции по перекрестному умножению вместо плавающей точки."
   ]
 }

@@ -1,0 +1,64 @@
+{
+  "id": "encode-and-decode-tinyurl",
+  "title": "535. Encode and Decode TinyURL",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/encode-and-decode-tinyurl/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "urls = [\"https://leetcode.com/problems/design-tinyurl\"]",
+      "output": "[\"https://leetcode.com/problems/design-tinyurl\"]",
+      "explanation": "decode(encode(url)) returns the original URL. The judge also checks that the short URL starts with http://tinyurl.com/, is stable across repeated encodes, and differs per distinct URL."
+    },
+    {
+      "input": "urls = [\"https://example.com/a/long/path?q=1\", \"http://x.co\"]",
+      "output": "[\"https://example.com/a/long/path?q=1\", \"http://x.co\"]",
+      "explanation": "One shared Codec handles every URL in the test case: each encodes to its own short link and decodes back."
+    },
+    {
+      "input": "urls = [\"https://a.com\", \"https://a.com\"]",
+      "output": "[\"https://a.com\", \"https://a.com\"]",
+      "explanation": "Encoding is idempotent: repeats of the same URL reuse the existing short link."
+    }
+  ],
+  "classProblem": {
+    "userClassName": "Codec"
+  },
+  "starterCode": {
+    "java": "import java.util.*;\n\npublic class Codec {\n    // Encodes a URL to a shortened URL.\n    public String encode(String longUrl) {\n        return \"\";\n    }\n\n    // Decodes a shortened URL to its original URL.\n    public String decode(String shortUrl) {\n        return \"\";\n    }\n}",
+    "python": "class Codec:\n    def encode(self, longUrl: str) -> str:\n        # Encodes a URL to a shortened URL.\n        pass\n\n    def decode(self, shortUrl: str) -> str:\n        # Decodes a shortened URL to its original URL.\n        pass",
+    "cpp": "#include <string>\n#include <unordered_map>\nusing namespace std;\n\nclass Codec {\npublic:\n    // Encodes a URL to a shortened URL.\n    string encode(string longUrl) {\n        return \"\";\n    }\n\n    // Decodes a shortened URL to its original URL.\n    string decode(string shortUrl) {\n        return \"\";\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Codec {\n    // Encodes a URL to a shortened URL.\n    public string Encode(string longUrl) {\n        return \"\";\n    }\n\n    // Decodes a shortened URL to its original URL.\n    public string Decode(string shortUrl) {\n        return \"\";\n    }\n}",
+    "rust": "use std::collections::HashMap;\n\npub struct Codec;\n\nimpl Codec {\n    pub fn new() -> Self {\n        Codec\n    }\n\n    // Encodes a URL to a shortened URL.\n    pub fn encode(&mut self, long_url: String) -> String {\n        String::new()\n    }\n\n    // Decodes a shortened URL to its original URL.\n    pub fn decode(&self, short_url: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\ntype Codec struct {\n    longToShort map[string]string\n    shortToLong map[string]string\n    counter int\n}\n\n// Encodes a URL to a shortened URL.\nfunc (c *Codec) Encode(longUrl string) string {\n    return \"\"\n}\n\n// Decodes a shortened URL to its original URL.\nfunc (c *Codec) Decode(shortUrl string) string {\n    return \"\"\n}",
+    "typescript": "export class Codec {\n    // Encodes a URL to a shortened URL.\n    encode(longUrl: string): string {\n        return \"\";\n    }\n\n    // Decodes a shortened URL to its original URL.\n    decode(shortUrl: string): string {\n        return \"\";\n    }\n}",
+    "php": "class Codec {\n    /**\n     * @param string $longUrl\n     * @return string\n     */\n    public function encode($longUrl) {\n\n    }\n\n    /**\n     * @param string $shortUrl\n     * @return string\n     */\n    public function decode($shortUrl) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "urls": "[\"https://leetcode.com/problems/design-tinyurl\"]"
+    },
+    {
+      "urls": "[\"https://example.com/a/long/path?q=1\", \"http://x.co\"]"
+    },
+    {
+      "urls": "[\"https://a.com\", \"https://a.com\"]"
+    },
+    {
+      "urls": "[]"
+    }
+  ],
+  "functionName": "solve",
+  "params": [
+    {
+      "name": "urls",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Keep two maps on the Codec: long URL to code and code back to long URL, plus a counter that mints a fresh code for each unseen address.",
+    "Encode must be idempotent: an already-seen URL gets its existing short link instead of a new one.",
+    "Decode by stripping the http://tinyurl.com/ prefix and looking the code up in the reverse map."
+  ]
+}

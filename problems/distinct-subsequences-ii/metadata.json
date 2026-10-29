@@ -1,6 +1,6 @@
 {
   "id": "distinct-subsequences-ii",
-  "title": "927. Distinct Subsequences II",
+  "title": "927. Отличительные последствия II",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/distinct-subsequences-ii/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"abc\"",
       "output": "7",
-      "explanation": "All 7 non-empty picks differ."
+      "explanation": "Все непустые пики 7 отличаются."
     },
     {
       "input": "s = \"aba\"",
       "output": "6",
-      "explanation": "Texts are a, b, ab, aa, ba, aba."
+      "explanation": "Тексты: a, b, ab, aa, ba, aba."
     },
     {
       "input": "s = \"aaa\"",
       "output": "3",
-      "explanation": "Only a, aa, aaa."
+      "explanation": "Только Ааа, Ааа, Ааа."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Track all subsequences including the empty one, then subtract it at the end.",
-    "Appending a new character doubles the count, but texts already created at its previous appearance must be subtracted once to avoid double counting.",
-    "Keep the running total before each first-seen letter so repeats can be corrected with modular arithmetic."
+    "Отслеживайте все последовательности, включая пустую, а затем вычитайте ее в конце.",
+    "Добавление нового символа удваивает счет, но тексты, уже созданные при его предыдущем появлении, должны быть вычтены один раз, чтобы избежать двойного подсчета.",
+    "Сохраняйте общее число перед каждой первой буквой, чтобы повторы можно было исправить с помощью модульной арифметики."
   ]
 }

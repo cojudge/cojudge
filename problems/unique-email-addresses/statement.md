@@ -1,7 +1,7 @@
-Each email address has the form `local@domain`. The domain part is used exactly as written. The local part follows two rules: dots `'.'` are skipped entirely, and anything after the first `'+'` is discarded.
+Каждый адрес электронной почты имеет форму `local@domain`. Доменная часть используется именно так, как написано. Локальная часть следует двум правилам: точки `'.'` пропускаются полностью, а все после первого `'+'` отбрасывается.
 
-Two addresses that normalize to the same string count as one. Given a list `emails`, return how many distinct normalized addresses appear.
+Два адреса, которые нормализуются до того же числа строк, что и один. Учитывая список `emails`, верните, сколько различных нормализованных адресов появляется.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= emails.length <= 100`
-- Each address contains exactly one `'@'`, lowercase letters, `'.'`, `'+'`, and digits in the local part.
+- Каждый адрес содержит ровно один `'@'`, строчные буквы, `'.'`, `'+'` и цифры в локальной части.

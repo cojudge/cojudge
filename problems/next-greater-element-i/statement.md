@@ -1,8 +1,8 @@
-For an element `x` inside a list, its next greater element is the first value to the right of `x` that is strictly larger. If no such value exists the answer for `x` is `-1`.
+Для элемента `x` внутри списка его следующим большим элементом является первое значение справа от `x`, которое строго больше.Если такого значения не существует, ответом для `x` является `-1`.
 
-You receive two lists with all distinct entries where every value of `nums1` also occurs somewhere in `nums2`. For each entry of `nums1`, locate its position in `nums2` and report its next greater element within `nums2`. Collect the results in the order of `nums1`.
+Вы получаете два списка со всеми отдельными записями, где каждое значение `nums1` также встречается где-то в `nums2`. Для каждой записи `nums1` найдите свое положение в `nums2` и сообщите о своем следующем большем элементе в `nums2`. Соберите результаты в порядке `nums1`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums1.length <= nums2.length <= 1000`
 - `0 <= nums1[i], nums2[i] <= 10^4`
-- All values in each list are unique and `nums1` is a subset of `nums2`
+- Все значения в каждом списке уникальны, а `nums1` является подмножеством `nums2`.

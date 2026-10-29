@@ -1,6 +1,6 @@
 {
   "id": "perfect-number",
-  "title": "569. Perfect Number",
+  "title": "569. Идеальное число",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/perfect-number/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "num = 28",
       "output": "true",
-      "explanation": "Its proper divisors 1, 2, 4, 7 and 14 add up to 28."
+      "explanation": "Его собственные делители 1, 2, 4, 7 и 14 складываются в 28."
     },
     {
       "input": "num = 8",
       "output": "false",
-      "explanation": "The proper divisors 1, 2 and 4 sum to 7, not 8."
+      "explanation": "Соответствующие делители 1, 2 и 4 суммируются с 7, а не с 8."
     },
     {
       "input": "num = 1",
       "output": "false",
-      "explanation": "1 has no proper divisors, so the empty sum 0 differs from 1."
+      "explanation": "1 не имеет собственных делителей, поэтому пустая сумма 0 отличается от 1."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Only trial divisors up to the square root are needed; each divisor d pairs with num / d.",
-    "Start the total at 1 for num > 1 and take care not to double-count a square root."
+    "Необходимы только пробные делители до квадратного корня; каждый делитель d соединяется с числом / d.",
+    "Начните с 1 для числа > 1 и позаботьтесь о том, чтобы не пересчитать квадратный корень."
   ]
 }

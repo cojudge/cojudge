@@ -1,7 +1,7 @@
-Alice plays a drawing game. She starts with 0 points and repeatedly draws a random whole number uniformly from `1` to `maxPts`, adding it to her score. She stops as soon as her score reaches at least `k`. Given `n`, return the probability that her final score is at most `n`.
+Алиса играет в розыгрыш. Она начинает с очков 0 и многократно рисует случайное целое число равномерно от `1` до `maxPts`, добавляя его к своему счету. Она останавливается, как только ее счет достигает, по крайней мере, `k`. Учитывая `n`, возвращайте вероятность того, что ее окончательный счет - максимум `n`.
 
-**Portable adaptation:** Cojudge has no floating-point type, so return the probability as a decimal string that parses as a finite double (for example `"0.73278"` or `"1.0"`). Answers are accepted when they differ from the reference by at most `1e-5` in absolute value.
+**Портативная адаптация: ** Судья не имеет типа с плавающей точкой, поэтому возвращайте вероятность в виде десятичной строки, которая парсирует как конечный двойник (например, `"0.73278"` или `"1.0"`). Ответы принимаются, когда они отличаются от ссылки максимум `1e-5` в абсолютном значении.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= k <= n <= 10^4`
 - `1 <= maxPts <= 10^4`

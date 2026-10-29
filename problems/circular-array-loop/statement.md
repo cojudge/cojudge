@@ -1,10 +1,10 @@
-You are given a circular array `nums` of length `n`. From index `i` you jump to index `(i + nums[i]) mod n`, wrapping around the ends: a positive value moves forward and a negative value moves backward.
+Вам дается круговой массив `nums` длины `n`. От индекса `i` вы прыгаете к индексу `(i + nums[i]) mod n`, оборачиваясь вокруг концов: положительное значение движется вперед, а отрицательное значение движется назад.
 
-A valid loop is a cycle of indices with length greater than 1 such that every jump in the cycle points the same way (all forward or all backward). A jump that lands back on its own index does not count, since that cycle has length 1.
+Действительный цикл представляет собой цикл индексов с длиной больше, чем 1, так что каждый скачок в цикле указывает одинаково (все вперед или все назад). Скачок, который приземляется обратно на свой собственный индекс, не учитывается, поскольку этот цикл имеет длину 1.
 
-Return `true` if such a loop exists, and `false` otherwise.
+Возврат `true`, если такой цикл существует, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 5000`
 - `-1000 <= nums[i] <= 1000`
 - `nums[i] != 0`

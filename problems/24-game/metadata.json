@@ -1,6 +1,6 @@
 {
   "id": "24-game",
-  "title": "697. 24 Game",
+  "title": "697. 24 Играть",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/24-game/",
   "category": "backtracking",
@@ -8,17 +8,17 @@
     {
       "input": "cards = [4,1,8,7]",
       "output": "true",
-      "explanation": "(8 - 4) * (7 - 1) equals 24."
+      "explanation": "(8 - 4) * (7 - 1) равняется 24."
     },
     {
       "input": "cards = [1,2,1,2]",
       "output": "false",
-      "explanation": "No arrangement of the four values reaches 24."
+      "explanation": "Ни одно расположение четырех значений не достигает 24."
     },
     {
       "input": "cards = [3,3,8,8]",
       "output": "true",
-      "explanation": "8 divided by (3 - 8/3) equals 24."
+      "explanation": "8, разделенный на (3 - 8 / 3), равен 24."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Try every order of combining pairs with +, -, *, / in a depth-first search.",
-    "Floating comparisons need a small tolerance (1e-6); document that divisions use doubles.",
-    "Prune symmetric branches but keep both subtraction and division orders."
+    "Попробуйте каждый порядок комбинирования пар с +, -, *, / в глубинном поиске.",
+    "Плавающие сравнения нуждаются в небольшом допуске (1e-6); документ, в котором деления используют двойники.",
+    "Скромные симметричные ветви, но сохраняют как порядок вычитания, так и порядок деления."
   ]
 }

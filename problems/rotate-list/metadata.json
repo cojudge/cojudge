@@ -1,6 +1,6 @@
 {
   "id": "rotate-list",
-  "title": "269. Rotate List",
+  "title": "269. Список ротаций",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/rotate-list/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "head = [1,2,3,4,5], k = 2",
       "output": "[4,5,1,2,3]",
-      "explanation": "The last 2 nodes (4, 5) move to the front."
+      "explanation": "Последние узлы 2 (4, 5) перемещаются в переднюю часть."
     },
     {
       "input": "head = [0,1,2], k = 4",
       "output": "[2,0,1]",
-      "explanation": "4 mod 3 is 1, so effectively rotate by 1."
+      "explanation": "4 mod 3 - это 1, поэтому эффективно вращается по 1."
     },
     {
       "input": "head = [], k = 0",
       "output": "[]",
-      "explanation": "An empty list stays empty."
+      "explanation": "Пустой список остается пустым."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Compute the length first, then reduce k with k % length to handle large rotations.",
-    "Link the tail to the head to form a ring, then break it at the new tail (length - k%length steps from the start)."
+    "Сначала вычислите длину, затем уменьшите k с длиной k % для обработки больших вращений.",
+    "Свяжите хвост с головой, чтобы сформировать кольцо, а затем разбейте его на новом хвосте (длина - k% длины шагов от начала)."
   ]
 }

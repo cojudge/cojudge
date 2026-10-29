@@ -1,9 +1,9 @@
-Numbers are written on a board. Two players alternate erasing one number at a time. The player who makes the xor of the remaining numbers equal 0 wins immediately; if every number is erased without that happening, the last player to move is declared the winner.
+Цифры пишутся на доске. Два игрока чередуются, стирая одно число за раз. Игрок, который делает xor оставшихся чисел равными 0, выигрывает сразу; если каждое число стирается без этого, последний игрок, который движется, объявляется победителем.
 
-Both players play perfectly and the first player moves first. Given the starting list `nums`, decide whether the first player can force a win.
+Оба игрока играют идеально, и первый игрок движется первым. Учитывая стартовый список `nums`, решайте, сможет ли первый игрок заставить выиграть.
 
-In other words, work out the xor of the whole list and look at its length: a zero xor is an instant win, otherwise an even length still lets the first player force a win while an odd length does not.
+Другими словами, вычислите xor всего списка и посмотрите на его длину: нулевой xor - это мгновенная победа, в противном случае четная длина все еще позволяет первому игроку выиграть, а нечетная длина.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 1000`
 - `0 <= nums[i] < 2^16`

@@ -1,15 +1,15 @@
-An undirected graph is given as adjacency lists `graph`, where `graph[i]` holds the neighbors of node `i`. The mouse starts on node `1`, the cat on node `2`, and node `0` is the hole. Play alternates with the mouse moving first:
+Ненаправленный граф приведен в виде списков смежности `graph`, где `graph[i]` удерживает соседей узла `i`. Мышь запускается на узле `1`, кошка на узле `2`, а узел `0` является отверстием. Игра чередуется с движением мыши сначала:
 
-- The mouse wins instantly by stepping onto node `0`.
-- The cat wins instantly by stepping onto the mouse's node.
-- The cat is never allowed to enter node `0`; it must pick another neighbor (every test graph gives the cat a legal move).
-- If both sides play on forever with no forced win, the result is a draw.
+- Мышь мгновенно выигрывает, переходя на узел `0`.
+- Кошка выигрывает мгновенно, наступая на узел мыши.
+- Кошке никогда не разрешается входить в узел `0`; она должна выбрать другого соседа (каждый тестовый график дает кошке легальный ход).
+- Если обе стороны играют вечно, не имея принудительной победы, то результат - ничья.
 
-Return `1` when the mouse can force a win, `2` when the cat can force a win, and `0` for a draw under optimal play.
+Возврат `1`, когда мышь может заставить выиграть, `2`, когда кошка может заставить выиграть, и `0` для ничьей в оптимальной игре.
 
-**Constraints:**
+**Ограничения:**
 - `4 <= graph.length <= 50`
-- Every neighbor list is non-empty and every neighbor index is valid
-- Node `0` is reachable and the cat always has a move outside node `0`
+- Каждый список соседей не пуст, а индекс каждого соседа действителен.
+- Узел `0` доступен, и у кошки всегда есть ход вне узла `0`.
 
-Note: the graph is passed as plain nested integer arrays (adjacency lists), which is the supported input encoding for this game.
+Примечание: график передается в виде простых вложенных целых массивов (списков смежности), которые являются поддерживаемым кодированием входа для этой игры.

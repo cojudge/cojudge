@@ -1,6 +1,6 @@
 {
   "id": "find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree",
-  "title": "224. Find Critical and Pseudo-Critical Edges in Minimum Spanning Tree",
+  "title": "224. Найдите критические и псевдокритические выступы в минимальном пространственном дереве",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/",
   "category": "graph",
@@ -47,6 +47,6 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Compute MST weight. An edge is critical if excluding it raises the weight. Pseudo-critical if forcing it still achieves MST weight."
+    "Вычислить вес MST. Край имеет решающее значение, если его исключение повышает вес. Псевдокритическое значение, если принуждение все еще достигает веса MST."
   ]
 }

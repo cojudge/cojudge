@@ -1,8 +1,8 @@
-For every depth of a binary tree, compute the mean of the node values sitting on that depth. The root is depth 0, its children depth 1, and so on.
+Для каждой глубины двоичного дерева вычислите среднее значение узла, сидящего на этой глубине.Корень — глубина 0, его потомки — глубина 1 и так далее.
 
-Because this judge only handles portable value types, averages travel as decimal strings: parse each output entry as a double. An answer is accepted when every level's parsed value sits within `1e-5` of the true mean (relative or absolute). Return the levels top-down.
+Поскольку этот судья обрабатывает только переносные типы значений, средние перемещаются как десятичные строки: разбор каждой входной выходной записи как двойной. Ответ принимается, когда разобранное значение каждого уровня находится в пределах `1e-5` истинного среднего (относительного или абсолютного). Возвращайте уровни сверху вниз.
 
-**Constraints:**
-- The tree has `1..10^4` nodes.
+**Ограничения:**
+- Дерево имеет узлы `1..10^4`.
 - `-10^5 <= Node.val <= 10^5`
-- Outputs are finite decimal strings parseable as doubles.
+- Выходы представляют собой конечные десятичные струны, которые можно разбирать как двойные.

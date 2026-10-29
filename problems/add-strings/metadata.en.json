@@ -1,0 +1,68 @@
+{
+  "id": "add-strings",
+  "title": "488. Add Strings",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/add-strings/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "num1 = \"11\", num2 = \"123\"",
+      "output": "\"134\"",
+      "explanation": "11 plus 123 is 134."
+    },
+    {
+      "input": "num1 = \"456\", num2 = \"77\"",
+      "output": "\"533\"",
+      "explanation": "Column addition with carries gives 533."
+    },
+    {
+      "input": "num1 = \"0\", num2 = \"0\"",
+      "output": "\"0\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String addStrings(String num1, String num2) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def addStrings(self, num1: str, num2: str) -> str:\n        return \"\"",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string addStrings(string num1, string num2) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string AddStrings(string num1, string num2) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn add_strings(num1: String, num2: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc AddStrings(num1 string, num2 string) string {\n    return \"\"\n}",
+    "typescript": "export function addStrings(num1: string, num2: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $num1\n     * @param string $num2\n     * @return string\n     */\n    public function addStrings($num1, $num2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "num1": "11",
+      "num2": "123"
+    },
+    {
+      "num1": "456",
+      "num2": "77"
+    },
+    {
+      "num1": "0",
+      "num2": "0"
+    },
+    {
+      "num1": "9",
+      "num2": "9"
+    }
+  ],
+  "functionName": "addStrings",
+  "params": [
+    {
+      "name": "num1",
+      "type": "string"
+    },
+    {
+      "name": "num2",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Add from the least significant digit toward the front, keeping a carry.",
+    "Each column sums two digits plus the carry; the digit is the remainder mod 10.",
+    "A leftover carry after the front-most column becomes a new leading digit."
+  ]
+}

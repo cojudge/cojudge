@@ -1,6 +1,6 @@
-You receive a string s. Locate the longest block within it that reads identically forwards and backwards, and give that block back.
+Вы получаете строку s. Найдите самый длинный блок внутри нее, который читает одинаково вперед и назад, и верните этот блок.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ s.length ≤ 1000
-- s consist of only digits and English letters.
+- s состоит только из цифр и английских букв.

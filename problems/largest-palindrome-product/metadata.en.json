@@ -1,0 +1,58 @@
+{
+  "id": "largest-palindrome-product",
+  "title": "543. Largest Palindrome Product",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/largest-palindrome-product/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 2",
+      "output": "987",
+      "explanation": "9009 = 99x91 is the largest palindrome product; 9009 % 1337 = 987."
+    },
+    {
+      "input": "n = 1",
+      "output": "9",
+      "explanation": "9 is the largest palindromic single-digit product."
+    },
+    {
+      "input": "n = 3",
+      "output": "123",
+      "explanation": "906609 = 993x913 is the largest palindrome product; 906609 % 1337 = 123."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int largestPalindrome(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def largestPalindrome(self, n: int) -> int:\n        return 0\n",
+    "cpp": "class Solution {\npublic:\n    int largestPalindrome(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int LargestPalindrome(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn largest_palindrome(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc LargestPalindrome(n int) int {\n    return 0\n}",
+    "typescript": "export function largestPalindrome(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function largestPalindrome($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 2
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 3
+    }
+  ],
+  "functionName": "largestPalindrome",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Only even-length palindromes need checking for n > 1; build them from the top half downward.",
+    "For each candidate, test divisors from the top down and stop once divisor squared drops below it.",
+    "The n = 8 palindrome exceeds 53-bit precision, so reduce modulo 1337 without forming the full product in float."
+  ]
+}

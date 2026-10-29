@@ -1,6 +1,6 @@
 {
   "id": "number-of-islands-ii",
-  "title": "397. Number of Islands II",
+  "title": "397. Количество островов II",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/number-of-islands-ii/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "m = 3, n = 3, positions = [[0,0],[0,1],[1,2],[2,1]]",
       "output": "[1,1,2,3]",
-      "explanation": "Counts evolve as cells join or seed islands."
+      "explanation": "Графики развиваются по мере присоединения клеток или островов семян."
     },
     {
       "input": "m = 1, n = 1, positions = [[0,0]]",
       "output": "[1]",
-      "explanation": "A lone cell is one island."
+      "explanation": "Одинокая клетка — это остров."
     },
     {
       "input": "m = 2, n = 2, positions = [[0,0],[1,1],[0,1]]",
       "output": "[1,2,1]",
-      "explanation": "The final cell merges two islands."
+      "explanation": "Последняя ячейка сливается двумя островами."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Track connected land with a union-find structure that only adds cells.",
-    "Each new cell starts as its own island, then merges with up to four land neighbours.",
-    "Re-adding an existing cell keeps the current count; record it and move on."
+    "Трек соединял землю со структурой нахождения соединения, которая только добавляет ячейки.",
+    "Каждая новая ячейка начинается как собственный остров, а затем сливается с четырьмя соседями по суше.",
+    "Повторное добавление существующей ячейки сохраняет текущий счет; записывайте его и двигайтесь дальше."
   ]
 }

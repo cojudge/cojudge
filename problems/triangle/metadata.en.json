@@ -1,0 +1,53 @@
+{
+  "id": "triangle",
+  "title": "297. Triangle",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/triangle/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "triangle = [[2],[3,4],[6,5,7],[4,1,8,3]]",
+      "output": "11",
+      "explanation": "One cheapest route is 2 -> 3 -> 5 -> 1, which sums to 11."
+    },
+    {
+      "input": "triangle = [[-10]]",
+      "output": "-10",
+      "explanation": "A single row forces that value."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minimumTotal(int[][] triangle) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minimumTotal(self, triangle: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int minimumTotal(vector<vector<int>>& triangle) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MinimumTotal(int[][] triangle) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn minimum_total(triangle: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MinimumTotal(triangle [][]int) int {\n    \n}",
+    "typescript": "export function minimumTotal(triangle: number[][]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $triangle\n     * @return int\n     */\n    public function minimumTotal($triangle) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "triangle": [[2], [3, 4], [6, 5, 7], [4, 1, 8, 3]]
+    },
+    {
+      "triangle": [[-10]]
+    },
+    {
+      "triangle": [[1], [2, 3]]
+    }
+  ],
+  "functionName": "minimumTotal",
+  "params": [
+    {
+      "name": "triangle",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Work bottom-up: each cell adds its value to the smaller of its two children.",
+    "You can reuse the bottom row as the DP array for O(n) extra space.",
+    "A top-down memo on (row, index) also works."
+  ]
+}

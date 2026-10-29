@@ -1,0 +1,65 @@
+{
+  "id": "buddy-strings",
+  "title": "855. Buddy Strings",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/buddy-strings/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"ab\", goal = \"ba\"",
+      "output": "true",
+      "explanation": "Exchanging the two characters turns \"ab\" into \"ba\"."
+    },
+    {
+      "input": "s = \"ab\", goal = \"ab\"",
+      "output": "false",
+      "explanation": "No swap of distinct positions keeps them equal."
+    },
+    {
+      "input": "s = \"aa\", goal = \"aa\"",
+      "output": "true",
+      "explanation": "Swapping the two equal letters leaves \"aa\"."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean buddyStrings(String s, String goal) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def buddyStrings(self, s: str, goal: str) -> bool:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool buddyStrings(string s, string goal) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool BuddyStrings(string s, string goal) \n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn buddy_strings(s: String, goal: String) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc BuddyStrings(s string, goal string) bool {\n    return false\n}",
+    "typescript": "export function buddyStrings(s: string, goal: string): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string $goal\n     * @return bool\n     */\n    public function buddyStrings($s, $goal) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "ab",
+      "goal": "ba"
+    },
+    {
+      "s": "ab",
+      "goal": "ab"
+    },
+    {
+      "s": "aa",
+      "goal": "aa"
+    }
+  ],
+  "functionName": "buddyStrings",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "goal",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "If the lengths differ, success is impossible without even checking letters.",
+    "When the strings are already identical, look for any repeated character that allows a harmless swap.",
+    "Otherwise there must be exactly two mismatching spots, and the letters must cross-match."
+  ]
+}

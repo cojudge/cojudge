@@ -1,0 +1,68 @@
+{
+  "id": "uncommon-words-from-two-sentences",
+  "title": "875. Uncommon Words from Two Sentences",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/uncommon-words-from-two-sentences/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s1 = \"this apple is sweet\", s2 = \"this apple is sour\"",
+      "output": "[\"sweet\",\"sour\"]",
+      "explanation": "\"this\", \"apple\" and \"is\" each appear twice, while \"sweet\" and \"sour\" appear once."
+    },
+    {
+      "input": "s1 = \"apple apple\", s2 = \"banana\"",
+      "output": "[\"banana\"]",
+      "explanation": "\"apple\" appears twice in total and \"banana\" appears once."
+    },
+    {
+      "input": "s1 = \"apple banana\", s2 = \"apple banana cherry\"",
+      "output": "[\"cherry\"]",
+      "explanation": "\"apple\" and \"banana\" each appear twice, and \"cherry\" appears once."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> uncommonFromSentences(String s1, String s2) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def uncommonFromSentences(self, s1: str, s2: str) -> List[str]:\n        pass",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> uncommonFromSentences(string s1, string s2) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\n\npublic class Solution\n{\n    public List<string> UncommonFromSentences(string s1, string s2)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn uncommon_from_sentences(s1: String, s2: String) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc UncommonFromSentences(s1 string, s2 string) []string {\n    return []string{}\n}",
+    "typescript": "export function uncommonFromSentences(s1: string, s2: string): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s1\n     * @param string $s2\n     * @return string[]\n     */\n    public function uncommonFromSentences($s1, $s2) {\n        return [];\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s1": "this apple is sweet",
+      "s2": "this apple is sour"
+    },
+    {
+      "s1": "apple apple",
+      "s2": "banana"
+    },
+    {
+      "s1": "apple banana",
+      "s2": "apple banana cherry"
+    },
+    {
+      "s1": "a",
+      "s2": "b"
+    }
+  ],
+  "functionName": "uncommonFromSentences",
+  "params": [
+    {
+      "name": "s1",
+      "type": "string"
+    },
+    {
+      "name": "s2",
+      "type": "string"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Split both sentences into words and count every word with a frequency map.",
+    "Collect the words whose total count is exactly one; any order is accepted."
+  ]
+}

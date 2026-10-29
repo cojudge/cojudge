@@ -1,7 +1,7 @@
-You are given two square binary matrices `img1` and `img2` of the same size. You may slide `img1` any number of cells up, down, left, or right (cells that move outside are discarded, and empty spots count as zero). After each shift, count the positions where both matrices show a `1`. Return the largest such overlap count over all possible shifts, including no shift.
+Вам даны две квадратные двоичные матрицы `img1` и `img2` одинакового размера. Вы можете сдвинуть `img1` любое количество ячеек вверх, вниз, влево или вправо (ячейки, которые движутся снаружи, отбрасываются, а пустые пятна считаются как ноль). После каждого сдвига подсчитывайте позиции, где обе матрицы показывают `1`. Возвращайте наибольшее количество таких перекрытий над всеми возможными сдвигами, включая отсутствие сдвига.
 
-**Constraints:**
+**Ограничения:**
 - `n == img1.length == img2.length`
 - `n == img1[i].length == img2[i].length`
 - `1 <= n <= 30`
-- Entries are `0` or `1`
+- Записи: `0` или `1`

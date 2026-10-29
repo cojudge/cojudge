@@ -128,35 +128,35 @@
 
 {#if open}
     <div class="home-modal-shell">
-        <button class="home-modal-backdrop" aria-label="Close Docker settings" tabindex="-1" onclick={close}></button>
+        <button class="home-modal-backdrop" aria-label="Настройка Close Docker" tabindex="-1" onclick={close}></button>
         <div bind:this={modalCard} class="home-modal-card docker-settings-card" role="dialog" aria-modal="true" aria-labelledby="docker-settings-title" aria-busy={busy}>
-            <span class="modal-eyebrow">Code execution</span>
-            <h2 id="docker-settings-title">Docker settings</h2>
-            <p class="docker-intro">Choose a runtime for running, submitting, and debugging code.</p>
-            <label class="docker-runtime-field" for="docker-runtime">Docker runtime
+            <span class="modal-eyebrow">Исполнение кода</span>
+            <h2 id="docker-settings-title">Настройки Docker</h2>
+            <p class="docker-intro">Выберите время выполнения для запуска, отправки и отладки кода.</p>
+            <label class="docker-runtime-field" for="docker-runtime">Время выполнения Docker
                 <select id="docker-runtime" bind:this={runtimeSelect} bind:value={selection} disabled={busy || testing || !options.length} onchange={() => { saved = false; testResult = null; }}>
                     {#each options as option}
                         <option value={option.id}>{option.label}</option>
                     {/each}
                 </select>
             </label>
-            <button class="btn docker-test-button" type="button" onclick={testConnection} disabled={busy || testing || !options.length}>{testing ? 'Testing…' : 'Test connection'}</button>
+            <button class="btn docker-test-button" type="button" onclick={testConnection} disabled={busy || testing || !options.length}>{testing ? "Тестирование..." : "Испытание соединения"}</button>
             <div class="docker-connection-status" class:success={!error && testResult?.success} class:failure={!!error || testResult?.success === false} role="status" aria-live="polite" aria-atomic="true">
                 <span class="docker-status-icon" aria-hidden="true">{error || testResult?.success === false ? '!' : testResult?.success ? '✓' : '·'}</span>
                 <div class="docker-status-copy">
-                    <strong>{error ? 'Settings error' : testing ? 'Checking connection…' : testResult ? (testResult.success ? 'Connected' : 'Connection failed') : 'Ready to test'}</strong>
-                    <span>{error || testResult?.message || 'Start your runtime, then test the connection.'}</span>
+                    <strong>{error ? "Ошибка настроек" : testing ? "Проверка соединения..." : testResult ? (testResult.success ? "подключенный" : "Связь провалилась") : "Готовы к тестированию"}</strong>
+                    <span>{error || testResult?.message || "Начните время выполнения, а затем проверьте соединение."}</span>
                 </div>
             </div>
-            <p class="docker-help">Automatic checks <code>DOCKER_HOST</code>, then local sockets. Select a runtime to override detection.</p>
+            <p class="docker-help">Автоматические проверки <code>DOCKER_HOST</code>Затем локальные розетки. Выберите время выполнения, чтобы отменить обнаружение.</p>
             {#if development}
-                <p class="docker-help docker-dev-note">Development mode: configure the external server with <code>DOCKER_HOST</code>. This preference applies to the packaged app.</p>
+                <p class="docker-help docker-dev-note">Режим разработки: настройка внешнего сервера с <code>DOCKER_HOST</code>Это предпочтение относится к упакованному приложению.</p>
             {/if}
-            <p class="docker-save-note" class:saved role="status">{saved ? '✓ Saved on this device.' : 'Saved on this device.'} Quit and reopen Cojudge to apply.</p>
+            <p class="docker-save-note" class:saved role="status">{saved ? "Экономия на этом устройстве." : "Сохранились на этом устройстве."} Брось и открой судью, чтобы подать заявку.</p>
             <div class="home-modal-actions">
                 <span class="modal-action-spacer"></span>
-                <button class="btn" type="button" onclick={close} disabled={busy || testing}>Close</button>
-                <button class="btn modal-primary-btn" type="button" onclick={save} disabled={busy || testing || !options.length}>{busy ? 'Please wait…' : 'Save'}</button>
+                <button class="btn" type="button" onclick={close} disabled={busy || testing}>Закрыть</button>
+                <button class="btn modal-primary-btn" type="button" onclick={save} disabled={busy || testing || !options.length}>{busy ? "Пожалуйста, подождите..." : "Сохранить"}</button>
             </div>
         </div>
     </div>

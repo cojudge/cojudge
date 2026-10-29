@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { ru } from '$lib/i18n/ru';
     import SaveStatus from '$lib/components/SaveStatus.svelte';
     import ExecutionPanel from '$lib/components/ExecutionPanel.svelte';
     import ShareModal from '$lib/components/ShareModal.svelte';
@@ -37,10 +38,12 @@
     const isDesktopMode = browser && isDesktopRuntime();
     let description = '';
     let constraints = '';
+    let showOriginalStatement = false;
 
     $: {
-        const text = data.problem.statement;
-        const idx = text.search(/\n\*\*Constraints?\s*:/);
+        const text = showOriginalStatement && data.problem.originalStatement
+            ? data.problem.originalStatement : data.problem.statement;
+        const idx = text.search(/\n\*\*(?:Constraints?|Ограничения)\s*:/i);
         if (idx === -1) {
             description = text;
             constraints = '';
@@ -101,7 +104,7 @@
             if (!existing) {
                 groups.set(f.fileId, {
                     fileId: f.fileId,
-                    fileName: entryType === 'whiteboard' ? 'Whiteboard' : (f.fileName || 'Solution'),
+                    fileName: entryType === 'whiteboard' ? "Доска" : (f.fileName || 'Solution'),
                     order: orderVal,
                     firstIndex: idx,
                     type: entryType
@@ -508,9 +511,9 @@
             return;
         }
         if (tabs.length <= 1) return;
-        if (!skipConfirm && !await showConfirm('This file and all of its saved language versions will be permanently removed.', {
-            title: 'Remove file?',
-            confirmLabel: 'Remove file',
+        if (!skipConfirm && !await showConfirm("Этот файл и все его сохраненные языковые версии будут удалены навсегда.", {
+            title: "Удалить файл?",
+            confirmLabel: "Удалить файл",
             tone: 'danger'
         })) return;
         const idx = tabs.findIndex((t) => t.fileId === fileId);
@@ -554,11 +557,11 @@
             const isSingleFile = filesToRemove.length === 1;
             if (!await showConfirm(
                 isSingleFile
-                    ? 'This file and all of its saved language versions will be permanently removed.'
-                    : 'These files and all of their saved language versions will be permanently removed.',
+                    ? "Этот файл и все его сохраненные языковые версии будут удалены навсегда."
+                    : "Эти файлы и все их сохраненные языковые версии будут удалены навсегда.",
                 {
-                    title: isSingleFile ? 'Remove file?' : 'Remove files?',
-                    confirmLabel: isSingleFile ? 'Remove file' : 'Remove files',
+                    title: isSingleFile ? "Удалить файл?" : "Удалить файлы?",
+                    confirmLabel: isSingleFile ? "Удалить файл" : "Удалить файлы",
                     tone: 'danger'
                 }
             )) return;
@@ -659,7 +662,7 @@
         
         if (forkData) {
             await addNewTab(
-                forkData.fileName ? `Fork of ${forkData.fileName}` : 'Forked Solution',
+                forkData.fileName ? `Fork of ${forkData.fileName}` : "Раздвоенное решение",
                 forkData.content,
                 forkData.language || language,
                 forkData.viewState ?? null
@@ -861,9 +864,9 @@
 
     // Reset code for the current problem + language
     async function handleResetClick() {
-        const confirmed = await showConfirm('Your current code will be replaced with the starter code. This action cannot be undone.', {
-            title: 'Reset this file?',
-            confirmLabel: 'Reset code',
+        const confirmed = await showConfirm("Ваш текущий код будет заменен стартовым. Это действие не может быть отменено.", {
+            title: "Сбросьте этот файл?",
+            confirmLabel: "Сбросить код",
             tone: 'danger'
         });
         if (!confirmed) return;
@@ -884,9 +887,9 @@
             viewMode = 'solution';
             return;
         }
-        const confirmed = await showConfirm('Try solving the problem yourself before opening the reference solution.', {
-            title: 'View reference solution?',
-            confirmLabel: 'View solution'
+        const confirmed = await showConfirm("Попробуйте решить проблему самостоятельно, прежде чем открывать справочное решение.", {
+            title: "Посмотреть справочное решение?",
+            confirmLabel: "Посмотреть решение"
         });
         if (confirmed) viewMode = 'solution';
     }
@@ -960,8 +963,8 @@
             showShareModal = true;
         } catch (e) {
             console.error('Error sharing:', e);
-            await showAlert('The share link could not be created. Check your Firebase settings and try again.', {
-                title: 'Share failed',
+            await showAlert("Ссылка на общий доступ не может быть создана. Проверьте настройки Firebase и попробуйте еще раз.", {
+                title: "Акция провалилась",
                 tone: 'danger'
             });
         }
@@ -969,7 +972,7 @@
 </script>
 
 <svelte:head>
-    <title>{data.problem.title} - Cojudge</title>
+    <title>{data.problem.title} - судья</title>
 </svelte:head>
 
 <div class:demo-problems-wrap={data.isDemoSite}>
@@ -984,15 +987,15 @@
     <!-- Left Pane: Problem Statement -->
     <div class="problem-pane" class:hide={($leftPaneWidthStore === null ? 50 : $leftPaneWidthStore) < 5}>
         <div class="prose">
-            <Tooltip text={viewMode === 'solution' ? 'Back to Statement' : 'Back'} pos={viewMode === 'solution' ? 'right' : 'bottom'}>
+            <Tooltip text={viewMode === 'solution' ? "К условию" : "Назад"} pos={viewMode === 'solution' ? 'right' : 'bottom'}>
                 {#if viewMode === 'solution'}
-                    <button class="back-button" aria-label="Back to Statement" on:click={() => viewMode = 'statement'}>
+                    <button class="back-button" aria-label="К условию" on:click={() => viewMode = 'statement'}>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </button>
                 {:else}
-                    <a class="back-button" href="/" aria-label="Back">
+                    <a class="back-button" href="/" aria-label="Назад">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
@@ -1003,11 +1006,11 @@
                 <h1>{data.problem.title}</h1>
                 {#if !isGameMode && $userStore && $userStore[fileKey()]}
                     <div class="title-badges">
-                        <span class="solved-pill" title="You've solved this problem" aria-label="Solved" role="status">
+                        <span class="solved-pill" title="Ты решил эту проблему." aria-label="Решено" role="status">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            Solved
+                            Решено
                         </span>
                         {#if bestRank}
                             <button
@@ -1017,8 +1020,8 @@
                                 class:rank-b={bestRank === 'B'}
                                 class:rank-c={bestRank === 'C'}
                                 on:click={() => (showGameHistory = true)}
-                                title="View game history"
-                                aria-label="Rank {bestRank}, view game history"
+                                title="Просмотр истории игр"
+                                aria-label="Ранг {bestRank}Посмотреть историю игр"
                             >
                                 {bestRank}
                             </button>
@@ -1027,25 +1030,25 @@
                 {/if}
             </div>
             <span class="badge {getDifficultyClass(data.problem.difficulty)}">
-                {data.problem.difficulty}
+                {ru(data.problem.difficulty)}
             </span>
             {#if data.problem.source === 'custom'}
-                <span class="source-badge custom" title="Custom content — only exists in your Cojudge folder">Custom</span>
+                <span class="source-badge custom" title="Пользовательский контент — существует только в вашей папке Cojudge">Своя</span>
             {:else if data.problem.source === 'modified'}
-                <span class="source-badge modified" title="Modified — edited in your Cojudge folder, differs from the bundled copy">Modified</span>
+                <span class="source-badge modified" title="Модифицированный — отредактированный в папке Cojudge, отличается от пакетной копии">Изменено</span>
             {/if}
             {#if data.problem.link}
-            <Tooltip text="Source Link" pos="top">
-                <a href={data.problem.link} target="_blank" rel="noopener noreferrer" class="external-link" aria-label={`Open ${data.problem.title} in LeetCode`}>↗</a>
+            <Tooltip text="Источник задачи" pos="top">
+                <a href={data.problem.link} target="_blank" rel="noopener noreferrer" class="external-link" aria-label={`Открыть ${data.problem.title} в LeetCode`}>↗</a>
             </Tooltip>
             {/if}
-            <Tooltip text={$bookmarkStore?.[problemId] ? 'Remove bookmark' : 'Bookmark'} pos="top">
+            <Tooltip text={$bookmarkStore?.[problemId] ? "Убрать из закладок" : "В закладки"} pos="top">
                 <button
                     type="button"
                     class="bookmark-btn"
                     class:bookmarked={$bookmarkStore?.[problemId]}
                     aria-pressed={$bookmarkStore?.[problemId] ? 'true' : 'false'}
-                    aria-label={$bookmarkStore?.[problemId] ? `Remove ${data.problem.title} from bookmarks` : `Bookmark ${data.problem.title}`}
+                    aria-label={$bookmarkStore?.[problemId] ? `Удалить ${data.problem.title} из закладок` : `В закладки ${data.problem.title}`}
                     on:click={() => bookmarkStore.update((prev) => toggleBookmarkId(prev, problemId))}
                 >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill={$bookmarkStore?.[problemId] ? 'currentColor' : 'none'} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1062,6 +1065,11 @@
             {:else}
                 <!-- Statement content is sourced from problems/[slug]/statement.md (attached on server as problem.statement) -->
                 <!-- Render description (everything before constraints), then examples, then constraints -->
+                {#if data.problem.originalStatement}
+                    <button type="button" class="btn" style="margin: 1rem 0;" aria-pressed={showOriginalStatement} on:click={() => showOriginalStatement = !showOriginalStatement}>
+                        {showOriginalStatement ? 'Русский перевод' : 'Оригинал (EN)'}
+                    </button>
+                {/if}
                 <div class="markdown-body">
                     {@html renderMarkdown(description)}
                 </div>
@@ -1071,7 +1079,7 @@
                         <pre class="example-output">{example.output}</pre>
                         {#if example.explanation}
                             <div class="example-explanation">
-                                <strong>Explanation:</strong>
+                                <strong>Пояснение:</strong>
                                 <div class="markdown-body">
                                     {@html renderMarkdown(example.explanation)}
                                 </div>
@@ -1096,7 +1104,7 @@
                                     openedHints = next; // reassign to trigger reactivity
                                 }}
                             >
-                                <span>Hint {i + 1}</span>
+                                <span>Подсказка {i + 1}</span>
                                 <span class="chevron">{openedHints.has(i) ? "▾" : "▸"}</span>
                             </button>
                             {#if openedHints.has(i)}
@@ -1115,7 +1123,7 @@
                             class:unsolved={!($userStore && $userStore[fileKey()])}
                             on:click={openReferenceSolution}
                         >
-                            <span>Reference Solution</span>
+                            <span>Эталонное решение</span>
                             <span class="chevron">▸</span>
                         </button>
                     </div>
@@ -1124,7 +1132,7 @@
         </div>
     </div>
 
-    <button class="resizer" aria-label="Resize panes" on:mousedown={handleMouseDown} on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); isResizing = true; } }}></button>
+    <button class="resizer" aria-label="Степные покрытия" on:mousedown={handleMouseDown} on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); isResizing = true; } }}></button>
 
     <!-- Right Pane: Editor and Console -->
     <div class="editor-pane">
@@ -1132,7 +1140,7 @@
             <div class="lang-dropdown-tabs-container">
                 {#if activeTab?.type !== 'whiteboard'}
                 <div style="display:flex;gap:var(--spacing-2);align-items:center;">
-                    <label for="language-select" style="font-size:0.9rem;color:var(--color-text-secondary);">Language</label>
+                    <label for="language-select" style="font-size:0.9rem;color:var(--color-text-secondary);">Язык</label>
                     <select
                         id="language-select"
                         bind:value={language}
@@ -1158,7 +1166,7 @@
                 </div>
                 {/if}
                 <div class="tabs-container">
-                    <div class="tab-bar" role="tablist" aria-label="Editor tabs">
+                    <div class="tab-bar" role="tablist" aria-label="Вкладки редактора">
                         {#each tabs as t}
                             <div
                                 class="tab {t.fileId === tabs[activeTabId].fileId ? 'active' : ''} {tabPointerDrag?.active && tabPointerDrag.fileId === t.fileId ? 'is-dragging' : ''}"
@@ -1202,8 +1210,8 @@
                                 {#if t.type !== 'whiteboard'}
                                 <button
                                     class="tab-rename"
-                                    aria-label="Rename tab"
-                                    title="Rename"
+                                    aria-label="Переименовать вкладку"
+                                    title="Переименовать"
                                     on:click|stopPropagation={() => startRename(t.fileId, t.fileName)}
                                 >
                                     <!-- Pencil icon -->
@@ -1216,8 +1224,8 @@
                                 {#if tabs.length > 1}
                                     <button
                                         class="tab-close"
-                                        aria-label="Close tab"
-                                        title="Close"
+                                        aria-label="Закрыть вкладку"
+                                        title="Закрыть"
                                         on:click|stopPropagation={() => closeTab(t.fileId)}
                                     >
                                         ×
@@ -1228,7 +1236,7 @@
                         {#if tabDropIndicatorStyle}
                             <div class="tab-drop-indicator" style={tabDropIndicatorStyle} aria-hidden="true"></div>
                         {/if}
-                        <button class="tab-add" aria-label="New tab" title="New tab" on:click={() => addNewTab()}>+</button>
+                        <button class="tab-add" aria-label="Новая вкладка" title="Новая вкладка" on:click={() => addNewTab()}>+</button>
                     </div>
                 </div>
                 {#if tabContextMenu}
@@ -1250,12 +1258,12 @@
                 {/if}
             </div>
             <div style="display:flex;align-items:center;gap:var(--spacing-2);">
-                <Tooltip text={"Whiteboard"} pos={"bottom"}>
+                <Tooltip text={"Доска"} pos={"bottom"}>
                     <button
                         class="icon-button {activeTab?.type === 'whiteboard' ? 'active' : ''}"
                         on:click={openWhiteboard}
-                        title="Whiteboard"
-                        aria-label="Whiteboard"
+                        title="Доска"
+                        aria-label="Доска"
                     >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <rect x="3" y="4" width="18" height="16" rx="2"></rect>
@@ -1265,8 +1273,8 @@
                 </Tooltip>
                 {#if activeTab?.type !== 'whiteboard'}
                 {#if !isGameMode}
-                    <Tooltip text={"Start Game"} pos={"bottom"}>
-                        <button class="icon-button game-start-btn" on:click={() => showGameStartPopup = true} title="Start Game">
+                    <Tooltip text={"Начать игру"} pos={"bottom"}>
+                        <button class="icon-button game-start-btn" on:click={() => showGameStartPopup = true} title="Начать игру">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M6 4l13 8-13 8V4z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
@@ -1274,8 +1282,8 @@
                     </Tooltip>
                 {/if}
                 {#if !isDesktopMode && isFirebaseAvailable}
-                    <Tooltip text={"Share Code"} pos={"bottom"}>
-                        <button class="icon-button" on:click={handleShare} title="Share Code">
+                    <Tooltip text={"Общий код"} pos={"bottom"}>
+                        <button class="icon-button" on:click={handleShare} title="Общий код">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <polyline points="16 6 12 2 8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1284,11 +1292,11 @@
                         </button>
                     </Tooltip>
                     {/if}
-                <Tooltip text={"Reset Code"} pos={"bottom"}>
+                <Tooltip text={"Сброс кода"} pos={"bottom"}>
                     <button
                         class="icon-button"
-                        title="Reset Code"
-                        aria-label="Reset Code"
+                        title="Сброс кода"
+                        aria-label="Сброс кода"
                         on:click={handleResetClick}
                     >
                         <!-- Reset icon -->
@@ -1302,11 +1310,11 @@
                 </Tooltip>
                 {/if}
                 <div class="settings-wrapper" bind:this={settingsContainer}>
-                    <Tooltip text={"Settings"} pos={"bottom"}>
+                    <Tooltip text={"Настройки"} pos={"bottom"}>
                         <button
                             class="icon-button"
-                            title="Editor Settings"
-                            aria-label="Editor Settings"
+                            title="Настройки редактора"
+                            aria-label="Настройки редактора"
                             on:click={() => (showSettings = !showSettings)}
                         >
                             <!-- Cog icon -->
@@ -1317,33 +1325,33 @@
                         </button>
                     </Tooltip>
                     {#if showSettings}
-                        <div class="settings-dropdown" role="dialog" aria-label="Editor settings">
-                            <label for="font-size-select">Font size</label>
+                        <div class="settings-dropdown" role="dialog" aria-label="Настройки редактора">
+                            <label for="font-size-select">Размер шрифта</label>
                             <select id="font-size-select" bind:value={fontSize}>
                                 {#each fontSizes as size}
-                                    <option value={size}>{size}px</option>
+                                    <option value={size}>{size}х</option>
                                 {/each}
                             </select>
-                            <label for="theme-select">Theme</label>
+                            <label for="theme-select">Тема</label>
                             <select id="theme-select" bind:value={theme}>
-                                <option value="dark">Dark</option>
-                                <option value="light">Light</option>
+                                <option value="dark">Тёмная</option>
+                                <option value="light">Светлая</option>
                             </select>
-                            <label for="vim-mode-select">Key Bindings</label>
+                            <label for="vim-mode-select">Ключевые связывания</label>
                             <select id="vim-mode-select" bind:value={vimMode}>
-                                <option value="off">Standard</option>
-                                <option value="on">Vim</option>
+                                <option value="off">Стандарт</option>
+                                <option value="on">Виам</option>
                             </select>
-                            <label for="indent-select">Indentation</label>
+                            <label for="indent-select">углубление</label>
                             <select id="indent-select" bind:value={indentation}>
-                                <option value="2-spaces">2 spaces</option>
-                                <option value="4-spaces">4 spaces</option>
-                                <option value="tab">Tab</option>
+                                <option value="2-spaces">2 пробела</option>
+                                <option value="4-spaces">4 пробела</option>
+                                <option value="tab">Табличка</option>
                             </select>
                         </div>
                     {/if}
                 </div>
-                <div style="font-size:0.85rem;color:var(--color-text-secondary);">{activeTab?.type === 'whiteboard' ? 'Whiteboard' : (imageName || language.toUpperCase())}</div>
+                <div style="font-size:0.85rem;color:var(--color-text-secondary);">{activeTab?.type === 'whiteboard' ? "Доска" : (imageName || language.toUpperCase())}</div>
             </div>
         </div>
 
@@ -1367,9 +1375,7 @@
                     {activeDebugLine}
                     {debugJobId}
                 />
-            {:else}
-                Loading...
-            {/if}
+            {:else}Загрузка…{/if}
         </div>
         <ExecutionPanel
             problem={data.problem}
@@ -1917,8 +1923,8 @@
         margin: var(--spacing-2) 0;
     }
 
-    .example-input::before { content: 'Input: '; font-weight: 700; }
-    .example-output::before { content: 'Output: '; font-weight: 700; }
+    .example-input::before { content: 'Входные данные: '; font-weight: 700; }
+    .example-output::before { content: 'Результат: '; font-weight: 700; }
 
     .example-explanation {
         margin-top: var(--spacing-2);

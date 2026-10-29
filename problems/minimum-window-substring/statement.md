@@ -1,8 +1,8 @@
-You are given two strings `s` and `t`. Find the shortest contiguous portion of `s` that contains every character of `t`, counting repeated letters separately. In other words, the chosen portion must supply at least as many copies of each distinct character as appear in `t`. Return that shortest portion, or the empty string `""` when no portion satisfies the requirement.
+Вам даны две строки `s` и `t`. Найдите самую короткую прилегающую часть `s`, которая содержит каждый символ `t`, считая повторяющиеся буквы отдельно. Другими словами, выбранная часть должна поставлять по меньшей мере столько копий каждого отдельного символа, сколько появляется в `t`. Верните эту самую короткую часть или пустую строку `""`, когда никакая часть не удовлетворяет требованию.
 
-**Constraints:**
+**Ограничения:**
 
 - m == s.length
 - n == t.length
 - 1 ≤ m, n ≤ 10^5
-- s and t consist of uppercase and lowercase English letters.
+- s и t состоят из английских букв верхнего регистра и нижнего регистра.

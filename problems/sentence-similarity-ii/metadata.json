@@ -1,6 +1,6 @@
 {
   "id": "sentence-similarity-ii",
-  "title": "743. Sentence Similarity II",
+  "title": "743. Сходство приговора II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/sentence-similarity-ii/",
   "category": "graph",
@@ -8,7 +8,7 @@
     {
       "input": "sentence1 = [\"great\",\"acting\",\"skills\"], sentence2 = [\"fine\",\"drama\",\"talent\"], similarPairs = [[\"great\",\"good\"],[\"fine\",\"good\"],[\"drama\",\"acting\"],[\"skills\",\"talent\"]]",
       "output": "true",
-      "explanation": "great reaches fine via good; the other positions match directly."
+      "explanation": "Великие доходят до хорошего; другие позиции совпадают напрямую."
     },
     {
       "input": "sentence1 = [\"great\"], sentence2 = [\"fine\"], similarPairs = [[\"great\",\"good\"]]",
@@ -63,8 +63,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Model the pairs as an undirected graph (or union-find sets) over words.",
-    "Union the two words of every listed pair first, then test each sentence position.",
-    "Equal words pass at once; otherwise both words must land in the same connected set."
+    "Моделируйте пары как ненаправленный граф (или наборы союзных находок) над словами.",
+    "Соедините сначала два слова каждой из перечисленных пар, а затем проверьте каждую позицию предложения.",
+    "Равные слова проходят одновременно; в противном случае оба слова должны приземлиться в одном и том же соединенном наборе."
   ]
 }

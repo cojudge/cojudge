@@ -1,8 +1,8 @@
-You are given the integer `n`, which stands for the numbers `1` through `n`. A *beautiful arrangement* is a reordering `p` of these numbers (using each exactly once) where every position `i` (counted from 1) satisfies at least one of:
-- `p[i]` is divisible by `i`, or
-- `i` is divisible by `p[i]`.
+Вам дано целое число `n`, которое обозначает числа `1` через `n`. *красивое расположение * - это переупорядочение `p` этих чисел (используя каждый ровно один раз), где каждая позиция `i` (считанная из 1) удовлетворяет по меньшей мере одному из:
+- `p[i]` делится на `i` или
+- `i` делится на `p[i]`.
 
-Return how many distinct beautiful arrangements exist for the given `n`.
+Верните, сколько различных красивых аранжировок существует для данного `n`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 15`

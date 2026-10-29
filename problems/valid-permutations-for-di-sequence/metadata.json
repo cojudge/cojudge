@@ -1,6 +1,6 @@
 {
   "id": "valid-permutations-for-di-sequence",
-  "title": "892. Valid Permutations for DI Sequence",
+  "title": "892. Действительные перестановки для DI-последовательности",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/valid-permutations-for-di-sequence/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"DID\"",
       "output": "5",
-      "explanation": "Five of the 24 orders obey down-up-down."
+      "explanation": "Пять заказов 24 подчиняются нисходящему."
     },
     {
       "input": "s = \"D\"",
       "output": "1",
-      "explanation": "Only [1,0] descends."
+      "explanation": "Только [1, 0] опускается."
     },
     {
       "input": "s = \"I\"",
       "output": "1",
-      "explanation": "Only [0,1] climbs."
+      "explanation": "Только [0, 1] поднимается."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Let dp[i][j] count ways for the prefix ending with rank j among the first i+1 values.",
-    "For an I step, dp[i][j] is the prefix sum of dp[i-1] below j; for a D step it is the suffix sum above j-1. Use running sums modulo 1e9+7."
+    "Пусть dp[i][j] посчитает пути для префикса, заканчивающегося рангом j, среди первых значений i+1.",
+    "Для I шага dp[i][j] является префиксной суммой dp[i-1] ниже j; для D шага это суффиксная сумма выше j-1. Используйте исполняемые суммы modulo 1e9+7."
   ]
 }

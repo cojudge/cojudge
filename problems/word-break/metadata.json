@@ -8,12 +8,12 @@
     {
       "input": "s=\"leetcode\", wordDict=[\"leet\",\"code\"]",
       "output": "true",
-      "explanation": "\"leetcode\" can be segmented into \"leet\" and \"code\", both in the dictionary."
+      "explanation": "«Leetcode» может быть сегментирован на «Leet» и «code», как в словаре."
     },
     {
       "input": "s=\"applepenapple\", wordDict=[\"apple\",\"pen\"]",
       "output": "true",
-      "explanation": "\"applepenapple\" can be segmented into \"apple\", \"pen\", and \"apple\", all in the dictionary."
+      "explanation": "«Яблоко» можно сегментировать на «яблоко», «яблоко» и «яблоко», все в словаре."
     }
   ],
   "starterCode": {
@@ -65,6 +65,6 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "DP over prefixes: dp[i]=true if there exists j<i such that dp[j] and s[j..i) in dict. Optimize by max word length."
+    "DP over prefixes: dp[i]=true, если существует j<i такой, что dp[j] и s[j..i) в dict."
   ]
 }

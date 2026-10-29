@@ -1,7 +1,7 @@
-You are given the head of a singly linked list. Positions are numbered starting from 1, so the first node is odd, the second is even, and so on. Rearrange the list so that all odd-positioned nodes come first, followed by all even-positioned nodes, keeping the original relative order inside each group. Return the head of the reordered list.
+Вам дается заголовок единственно связанного списка. Позиции нумеруются начиная с 1, поэтому первый узел нечетный, второй четный и так далее. Перегруппируйте список так, чтобы все нечетные узлы приходили первыми, а затем все четные узлы, сохраняя первоначальный относительный порядок внутри каждой группы. Верните заголовок переупорядоченного списка.
 
-Do this in linear time using only a constant amount of extra space (apart from rewiring pointers).
+Делайте это в линейном времени, используя только постоянное количество дополнительного пространства (кроме перезаписи указателей).
 
-**Constraints:**
-- The number of nodes lies in `[0, 10^4]`.
+**Ограничения:**
+- Количество узлов находится в `[0, 10^4]`.
 - `-10^6 <= Node.val <= 10^6`

@@ -1,18 +1,18 @@
 {
   "id": "basic-temperature-advice",
-  "title": "6. Temperature Advice",
+  "title": "6. Температурные советы",
   "difficulty": "Easy",
   "category": "if-else",
   "examples": [
     {
       "input": "t = -5",
       "output": "\"Freezing\"",
-      "explanation": "-5 is below 0."
+      "explanation": "-5 ниже 0."
     },
     {
       "input": "t = 20",
       "output": "\"Warm\"",
-      "explanation": "20 is between 15 and 25."
+      "explanation": "20 находится между 15 и 25."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Order the checks from coldest to hottest.",
-    "Use `<` comparisons against 0, 15, and 25."
+    "Закажите чеки от самых холодных до самых горячих.",
+    "Используйте сравнения `<` против 0, 15 и 25."
   ]
 }

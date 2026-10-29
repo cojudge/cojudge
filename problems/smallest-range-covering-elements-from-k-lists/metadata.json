@@ -1,6 +1,6 @@
 {
   "id": "smallest-range-covering-elements-from-k-lists",
-  "title": "654. Smallest Range Covering Elements from K Lists",
+  "title": "654. Самый маленький диапазон элементов из списков K",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/",
   "category": "heap",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]",
       "output": "[20,24]",
-      "explanation": "20 comes from list 2, 22/24 from others; span 4 is minimal."
+      "explanation": "20 происходит из списка 2, 22 / 24 от других; диапазон 4 минимален."
     },
     {
       "input": "nums = [[1,2,3],[1,2,3],[1,2,3]]",
       "output": "[1,1]",
-      "explanation": "Picking 1 from each list gives a zero-width range."
+      "explanation": "Выбор 1 из каждого списка дает диапазон нулевой ширины."
     },
     {
       "input": "nums = [[10,10],[11,11]]",
       "output": "[10,11]",
-      "explanation": "One entry per list forces [10,11]."
+      "explanation": "Одна запись на силы списка [10, 11]."
     }
   ],
   "starterCode": {
@@ -51,9 +51,9 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Seed a min-heap with the first entry of every list and record the maximum among them.",
-    "Repeatedly pop the minimum: the current [min, max] is a candidate covering all lists.",
-    "Then advance inside the popped list (updating the max) until some list runs dry; keep the shortest candidate, breaking ties by smaller start.",
-    "Adaptation: the nested input maps to int_array_2d and the two-element answer maps to int_array in this judge."
+    "Посейте мини-кучу с первой записью каждого списка и запишите максимум из них.",
+    "Неоднократно всплывает минимум: текущий [min, max] является кандидатом, охватывающим все списки.",
+    "Затем продвигайтесь в отснятый список (обновление макса), пока не высохнет какой-то список; держите самого короткого кандидата, разрывая связи меньшим стартом.",
+    "Адаптация: вложенные карты ввода в int_array_2d и карты ответов двух элементов в int_array в этом решении."
   ]
 }

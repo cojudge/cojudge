@@ -1,6 +1,6 @@
 {
   "id": "shortest-distance-to-a-character",
-  "title": "819. Shortest Distance to a Character",
+  "title": "819. Самое короткое расстояние до персонажа",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/shortest-distance-to-a-character/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"loveleetcode\", c = \"e\"",
       "output": "[3,2,1,0,1,0,0,1,2,2,1,0]",
-      "explanation": "Each position reports how far it is from the nearest e."
+      "explanation": "Каждая позиция сообщает, как далеко она находится от ближайшего пункта."
     },
     {
       "input": "s = \"aaab\", c = \"b\"",
       "output": "[3,2,1,0]",
-      "explanation": "Distances shrink as the scan nears the final b."
+      "explanation": "Расстояния сокращаются, когда сканирование приближается к концу b."
     },
     {
       "input": "s = \"ab\", c = \"a\"",
       "output": "[0,1]",
-      "explanation": "The first cell holds the target itself."
+      "explanation": "Первая ячейка удерживает саму цель."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Adaptation: the target character is passed as a one-letter string; use its first character.",
-    "Sweep left to right tracking the last seen target, then right to left tracking the next one, keeping the closer of the two."
+    "Адаптация: целевой символ передается в виде однобуквенной строки; используйте его первый символ.",
+    "Поверните налево, чтобы отследить последнюю видимую цель, а затем направо, чтобы отследить следующую, удерживая ближе две."
   ]
 }

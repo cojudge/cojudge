@@ -1,6 +1,6 @@
 {
   "id": "evaluate-division",
-  "title": "221. Evaluate Division",
+  "title": "221. Отдел оценки",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/evaluate-division/",
   "category": "graph",
@@ -53,7 +53,7 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Build a weighted graph of variables. For each query BFS/DFS to compute the product of edge weights.",
-    "Note: values and answers are decimal strings (e.g. \"2.0\", \"-1.0\") because Cojudge has no double type."
+    "Построить взвешенный график переменных для каждого запроса BFS/DFS для вычисления продукта краевых весов.",
+    "Примечание: значения и ответы представляют собой десятичные строки (например, \"2.0\", \"-1.0\"), поскольку Кожудж не имеет двойного типа."
   ]
 }

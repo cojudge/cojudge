@@ -1,0 +1,57 @@
+{
+  "id": "group-anagrams",
+  "title": "54. Group Anagrams",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/group-anagrams/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "strs=[\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]",
+      "output": "[[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]] (order may vary)",
+      "explanation": "\"eat\", \"tea\", \"ate\" have the same anagram; \"tan\" and \"nat\" have the same anagram; \"bat\" is alone."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<List<String>> groupAnagrams(String[] strs) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:\n        pass\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<string>> groupAnagrams(vector<string>& strs) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public List<List<String>> GroupAnagrams(string[] strs) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {\n        \n    }\n}",
+    "go": "package main\n\nfunc GroupAnagrams(strs []string) [][]string {\n    \n}",
+    "typescript": "export function groupAnagrams(strs: string[]): string[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $strs\n     * @return string[][]\n     */\n    public function groupAnagrams($strs) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "strs": [
+        "eat",
+        "tea",
+        "tan",
+        "ate",
+        "nat",
+        "bat"
+      ]
+    },
+    {
+      "strs": [
+        ""
+      ]
+    },
+    {
+      "strs": [
+        "a"
+      ]
+    }
+  ],
+  "functionName": "groupAnagrams",
+  "params": [
+    {
+      "name": "strs",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list_2d",
+  "hints": [
+    "Hash strings by their sorted characters or character counts and aggregate into groups."
+  ]
+}

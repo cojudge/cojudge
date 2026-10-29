@@ -1,10 +1,10 @@
-Consider a perfect binary tree — every interior node has two children and all leaves sit on the same depth. Conceptually, each node should gain a link to its nearest neighbor on the same level (or nothing at the row end).
+Рассмотрим идеальное двоичное дерево — каждый внутренний узел имеет двух потомков и все листья сидят на одной глубине.Концептуально каждый узел должен получить ссылку на своего ближайшего соседа на одном уровне (или ничего на конце строки).
 
-Link every level left-to-right using these neighbor pointers, ideally reusing constant extra space by walking the already-linked upper row. Return the root afterwards.
+Свяжите каждый уровень слева направо с помощью этих указателей соседа, в идеале повторно используя постоянное дополнительное пространство, пройдя уже связанный верхний ряд.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= number of nodes <= 2^12 - 1`
 - `-1000 <= Node.val <= 1000`
-- The input is a perfect binary tree.
+- Вход - идеальное двоичное дерево.
 
-**Adaptation note:** The original statement uses a `Node` type with `left`, `right`, and `next` fields. This judge models only `TreeNode` (`val`, `left`, `right`); neighbor links cannot be serialized, so solutions return the same tree and grading verifies that values and structure are preserved. Document your level-linking logic in comments.
+**Примечание по адаптации: ** В оригинальном заявлении используется тип `Node` с полями `left`, `right` и `next`. Этот судья моделирует только `TreeNode` (`val`, `left`, `right`); соседние ссылки не могут быть сериализованы, поэтому решения возвращают то же дерево и градуирование проверяет, что значения и структура сохранены. Документируйте свою логику ссылок в комментариях.

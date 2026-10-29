@@ -1,6 +1,6 @@
 {
   "id": "valid-word-abbreviation",
-  "title": "482. Valid Word Abbreviation",
+  "title": "482. Действительная аббревиатура Word",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/valid-word-abbreviation/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "word = \"internationalization\", abbr = \"i12iz4n\"",
       "output": "true",
-      "explanation": "The numbers 12 and 4 skip the matching middle blocks."
+      "explanation": "Цифры 12 и 4 пропускают соответствующие средние блоки."
     },
     {
       "input": "word = \"apple\", abbr = \"a2e\"",
       "output": "false",
-      "explanation": "Skipping 2 letters after a lands on l, not e."
+      "explanation": "Пропуск букв 2 после приземления на l, а не e."
     },
     {
       "input": "word = \"word\", abbr = \"4\"",
       "output": "true",
-      "explanation": "A single number covering the whole length is valid."
+      "explanation": "Одно число, покрывающее всю длину, является действительным."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Walk both strings with two pointers, advancing the word by numeric jumps.",
-    "A number with a leading zero is always invalid, and a lone zero never skips anything.",
-    "Both pointers must finish together for the abbreviation to match."
+    "Пройдите обе струны с двумя указателями, продвигая слово численными прыжками.",
+    "Число с ведущим нулем всегда недействительно, а одинокий ноль никогда ничего не пропускает.",
+    "Оба указателя должны закончиться вместе, чтобы аббревиатура соответствовала."
   ]
 }

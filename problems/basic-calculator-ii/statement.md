@@ -1,7 +1,7 @@
-You are given a string `s` holding an arithmetic expression with non-negative integers and the operators `+`, `-`, `*` and `/`, plus spaces. There are no parentheses. Multiplication and division bind tighter than addition and subtraction, and division truncates toward zero.
+Вам дается строка `s`, содержащая арифметическое выражение с неотрицательными целыми числами и операторами `+`, `-`, `*` и `/`, плюс пробелы. Скобки отсутствуют. Умножение и деление связываются более плотно, чем сложение и вычитание, а деление усечено до нуля.
 
-Evaluate the expression and return its integer value. The expression is always valid and every intermediate value fits in a 32-bit signed integer.
+Оцените выражение и верните его целочисленное значение.Выражение всегда является действительным и каждое промежуточное значение вписывается в 32-битовое подписанное целое число.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 3 * 10^5`
-- `s` consists of digits, `'+'`, `'-'`, `'*'`, `'/'` and spaces.
+- `s` состоит из цифр, `'+'`, `'-'`, `'*'`, `'/'` и пробелов.

@@ -1,0 +1,51 @@
+{
+  "id": "decode-ways",
+  "title": "24. Decode Ways",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/decode-ways/",
+  "examples": [
+    {
+      "input": "s=\"12\"",
+      "output": "2",
+      "explanation": "\"12\" can be decoded in 2 ways (as \"1,2\" or \"12\")."
+    },
+    {
+      "input": "s=\"226\"",
+      "output": "3",
+      "explanation": "\"226\" can be decoded in 3 ways (as \"2,26\", \"22,6\", or \"2,2,6\")."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numDecodings(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def numDecodings(self, s: str) -> int:\n        pass\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int numDecodings(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int NumDecodings(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_decodings(s: String) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc NumDecodings(s string) int {\n    \n}",
+    "typescript": "export function numDecodings(s: string): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function numDecodings($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "12"
+    },
+    {
+      "s": "226"
+    },
+    {
+      "s": "06"
+    }
+  ],
+  "functionName": "numDecodings",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "DP where dp[i] depends on single-digit and two-digit decodings ending at i."
+  ]
+}

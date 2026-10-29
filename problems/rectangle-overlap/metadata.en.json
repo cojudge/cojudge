@@ -1,0 +1,94 @@
+{
+  "id": "rectangle-overlap",
+  "title": "834. Rectangle Overlap",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/rectangle-overlap/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "rec1 = [0,0,2,2], rec2 = [1,1,3,3]",
+      "output": "true",
+      "explanation": "The shared square [1,2]x[1,2] has area 1."
+    },
+    {
+      "input": "rec1 = [0,0,1,1], rec2 = [1,0,2,1]",
+      "output": "false",
+      "explanation": "Edge contact is not an overlap."
+    },
+    {
+      "input": "rec1 = [0,0,1,1], rec2 = [2,2,3,3]",
+      "output": "false"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isRectangleOverlap(int[] rec1, int[] rec2) {\n        return false;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def isRectangleOverlap(self, rec1: List[int], rec2: List[int]) -> bool:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool isRectangleOverlap(vector<int>& rec1, vector<int>& rec2) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool IsRectangleOverlap(int[] rec1, int[] rec2) \n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_rectangle_overlap(rec1: Vec<i32>, rec2: Vec<i32>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc IsRectangleOverlap(rec1 []int, rec2 []int) bool {\n    return false\n}",
+    "typescript": "export function isRectangleOverlap(rec1: number[], rec2: number[]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $rec1\n     * @param int[] $rec2\n     * @return bool\n     */\n    public function isRectangleOverlap($rec1, $rec2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "rec1": [
+        0,
+        0,
+        2,
+        2
+      ],
+      "rec2": [
+        1,
+        1,
+        3,
+        3
+      ]
+    },
+    {
+      "rec1": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "rec2": [
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "rec1": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "rec2": [
+        2,
+        2,
+        3,
+        3
+      ]
+    }
+  ],
+  "functionName": "isRectangleOverlap",
+  "params": [
+    {
+      "name": "rec1",
+      "type": "int_array"
+    },
+    {
+      "name": "rec2",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Project both rectangles onto the x-axis and the y-axis; a real overlap needs a positive-length intersection on both axes.",
+    "Strict inequalities matter: use < rather than <= so edge and corner touches return false.",
+    "No geometry beyond four comparisons is required."
+  ]
+}

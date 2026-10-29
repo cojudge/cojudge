@@ -1,8 +1,8 @@
-You receive an array `nums` holding `n` entries. Identify the majority element.
+Вы получаете массив `nums`, содержащий записи `n`. Определите элемент большинства.
 
-That means the value showing up strictly more than `n / 2` times. The input is guaranteed to hold such a value.
+Это означает, что значение отображается строго больше, чем `n / 2` раз. Ввод гарантированно держит такое значение.
 
-**Constraints:**
+**Ограничения:**
 
 - n == nums.length
 - 1 ≤ n ≤ 5 * 10^4

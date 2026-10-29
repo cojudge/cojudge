@@ -1,9 +1,9 @@
-You are given the root of a binary search tree and an integer `k`.
+Вам даны корень двоичного дерева поиска и целое число `k`.
 
-Decide whether the tree contains two different nodes whose values add up to `k`.
+Решите, содержит ли дерево два разных узла, значения которых складываются в `k`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= number of nodes <= 10^4`
 - `-10^4 <= node value <= 10^4`
-- The tree satisfies binary-search-tree ordering.
+- Дерево удовлетворяет бинарно-поисковому порядку.
 - `-10^5 <= k <= 10^5`

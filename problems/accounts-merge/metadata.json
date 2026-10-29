@@ -1,6 +1,6 @@
 {
   "id": "accounts-merge",
-  "title": "220. Accounts Merge",
+  "title": "220. Слияние счетов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/accounts-merge/",
   "category": "graph",
@@ -37,6 +37,6 @@
   ],
   "outputType": "string_list_2d",
   "hints": [
-    "Union emails that share an account. Then group by root and sort emails."
+    "Союзные письма, которые делятся учетной записью, затем группируются по корню и сортируют электронные письма."
   ]
 }

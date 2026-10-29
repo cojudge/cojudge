@@ -1,6 +1,6 @@
 {
   "id": "longest-substring-with-at-most-k-distinct-characters",
-  "title": "423. Longest Substring with At Most K Distinct Characters",
+  "title": "423. Самая длинная подставка с большинством характеров K",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"eceba\", k = 2",
       "output": "3",
-      "explanation": "The block ece uses two letters and is the longest such block."
+      "explanation": "Блок ece использует две буквы и является самым длинным таким блоком."
     },
     {
       "input": "s = \"aa\", k = 1",
       "output": "2",
-      "explanation": "One distinct letter covers the whole string."
+      "explanation": "Одна буква охватывает всю строку."
     },
     {
       "input": "s = \"abc\", k = 5",
       "output": "3",
-      "explanation": "The allowance covers everything, so the full length counts."
+      "explanation": "Пособие покрывает все, поэтому учитывается полная длина."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Grow a right edge and count characters inside the window.",
-    "When distinct letters exceed k, advance the left edge until the count fits again."
+    "Вырастите правый край и посчитайте персонажей внутри окна.",
+    "Когда отдельные буквы превышают k, продвигайтесь по левому краю до тех пор, пока счет снова не совпадет."
   ]
 }

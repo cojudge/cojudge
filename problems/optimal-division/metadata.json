@@ -1,6 +1,6 @@
 {
   "id": "optimal-division",
-  "title": "609. Optimal Division",
+  "title": "609. Оптимальный дивизион",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/optimal-division/",
   "category": "math",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1000,100,10,2]",
       "output": "\"1000/(100/10/2)\"",
-      "explanation": "Minimise the divisor tail."
+      "explanation": "Минимизируйте хвост делителя."
     },
     {
       "input": "nums = [2,3,4]",
       "output": "\"2/(3/4)\"",
-      "explanation": "Parenthesise the tail."
+      "explanation": "Парентезируйте хвост."
     },
     {
       "input": "nums = [2]",
@@ -50,8 +50,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "The numerator should stay as nums[0] and the whole denominator should be as small as possible.",
-    "Chaining divisions left to right already minimises a/b/c/..., so wrap everything after the first element in one pair.",
-    "Handle lengths 1 and 2 separately to avoid useless parentheses."
+    "Знаменатель должен оставаться в виде чисел [0], а весь знаменатель должен быть как можно меньше.",
+    "Цепные деления слева направо уже минимизируют a/b/c/..., поэтому заверните все после первого элемента в одну пару.",
+    "Обрабатывайте длины 1 и 2 отдельно, чтобы избежать ненужных скобок."
   ]
 }

@@ -1,8 +1,8 @@
-You receive an integer array `nums` with no particular order. Report the least positive integer (1, 2, 3, ...) absent from `nums`.
+Вы получаете целочисленный массив `nums` без определенного порядка.Сообщите о наименее положительном целочисленном числе (1, 2, 3, ...), отсутствующем в `nums`.
 
-Your method should complete in `O(n)` time while consuming only `O(1)` extra memory.
+Ваш метод должен выполняться во время `O(n)`, потребляя только дополнительную память `O(1)`.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= nums.length <= 10^5`
 - `-2^31 <= nums[i] <= 2^31 - 1`

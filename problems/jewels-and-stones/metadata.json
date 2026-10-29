@@ -1,6 +1,6 @@
 {
   "id": "jewels-and-stones",
-  "title": "771. Jewels and Stones",
+  "title": "771. Драгоценности и камни",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/jewels-and-stones/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "jewels = \"aA\", stones = \"aAAbbbb\"",
       "output": "3",
-      "explanation": "Three stones match the jewel kinds."
+      "explanation": "Три камня соответствуют видам драгоценностей."
     },
     {
       "input": "jewels = \"z\", stones = \"ZZ\"",
       "output": "0",
-      "explanation": "Case mismatch means no match."
+      "explanation": "Несоответствие по делу означает отсутствие совпадения."
     },
     {
       "input": "jewels = \"abc\", stones = \"aabbccdd\"",
       "output": "6",
-      "explanation": "Six stones use jewel letters."
+      "explanation": "Шесть камней используют драгоценные буквы."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Put the jewel characters into a set for constant-time lookup.",
-    "Then count how many stone characters belong to that set, keeping case sensitivity."
+    "Поместите символы драгоценностей в набор для постоянного поиска.",
+    "Затем посчитайте, сколько каменных символов принадлежит этому набору, сохраняя деликатность."
   ]
 }

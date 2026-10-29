@@ -1,6 +1,6 @@
 {
   "id": "build-a-matrix-with-conditions",
-  "title": "225. Build a Matrix With Conditions",
+  "title": "225. Постройте матрицу с условиями",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/build-a-matrix-with-conditions/",
   "category": "graph",
@@ -53,6 +53,6 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Topological sort for rows and columns separately. Place number i at (rowPos[i], colPos[i])."
+    "Топологический сорт для строк и столбцов отдельно. Номер места i в (rowPos[i], colPos[i])."
   ]
 }

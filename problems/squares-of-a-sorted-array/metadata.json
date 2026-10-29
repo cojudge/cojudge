@@ -1,6 +1,6 @@
 {
   "id": "squares-of-a-sorted-array",
-  "title": "962. Squares of a Sorted Array",
+  "title": "962. Квадраты сортированного массива",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/squares-of-a-sorted-array/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [-4,-1,0,3,10]",
       "output": "[0,1,9,16,100]",
-      "explanation": "Squaring gives [16,1,0,9,100]; sorting increasingly yields [0,1,9,16,100]."
+      "explanation": "Скваринг дает [16,1,0,9,100]; сортировка все более и более дает [0,1,9,16,100]."
     },
     {
       "input": "nums = [-7,-3,2,3,11]",
       "output": "[4,9,9,49,121]",
-      "explanation": "Squares [49,9,4,9,121] sorted give [4,9,9,49,121]."
+      "explanation": "Квадраты [49, 9, 4, 9, 121] отсортированы [4, 9, 9, 49, 121]."
     }
   ],
   "starterCode": {
@@ -43,7 +43,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Squaring is symmetric around zero, so the largest square sits at one of the two ends.",
-    "Use two pointers at both ends, repeatedly emitting the larger square into the answer from back to front."
+    "Квадрат симметричен около нуля, поэтому самый большой квадрат находится на одном из двух концов.",
+    "Используйте два указателя на обоих концах, многократно излучая больший квадрат в ответ сзади наперед."
   ]
 }

@@ -1,8 +1,8 @@
-You are given an integer array `nums` and a list of `queries`, where each query is a pair `[val, index]` meaning add `val` to `nums[index]`.
+Вы получаете целочисленный массив `nums` и список `queries`, где каждый запрос представляет собой пару `[val, index]`, что означает добавление `val` в `nums[index]`.
 
-After applying each query in order, compute the sum of all even-valued entries in the array. Collect these sums into an answer array of the same length as `queries` and return it.
+После приведения каждого запроса в порядок вычислите сумму всех равнозначных записей в массиве. Соберите эти суммы в массив ответов той же длины, что и `queries`, и верните его.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10000`
 - `-10000 <= nums[i] <= 10000`
 - `1 <= queries.length <= 10000`

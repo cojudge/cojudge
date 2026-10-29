@@ -1,0 +1,65 @@
+{
+  "category": "string",
+  "difficulty": "Medium",
+  "examples": [
+    {
+      "explanation": "\"aaa\" is good; the full string fails since 'b' appears twice.",
+      "input": "s = \"aaabb\", k = 3",
+      "output": "3"
+    },
+    {
+      "explanation": "\"ababb\" is good ('a' twice, 'b' three times).",
+      "input": "s = \"ababbc\", k = 2",
+      "output": "5"
+    },
+    {
+      "explanation": "Every letter appears once, so no block qualifies.",
+      "input": "s = \"abcde\", k = 2",
+      "output": "0"
+    }
+  ],
+  "functionName": "longestSubstring",
+  "hints": [
+    "Any letter occurring fewer than k times in the current range can never belong to a good block covering that range.",
+    "Split the range at such rare letters and solve each piece independently.",
+    "A piece with no rare letters is itself good."
+  ],
+  "id": "longest-substring-with-at-least-k-repeating-characters",
+  "link": "https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/",
+  "outputType": "int",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "starterCode": {
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int longestSubstring(string s, int k) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int LongestSubstring(string s, int k) \n    {\n        return 0;\n    }\n}",
+    "go": "package main\n\nfunc LongestSubstring(s string, k int) int {\n    return 0\n}",
+    "java": "class Solution {\n    public int longestSubstring(String s, int k) {\n        return 0;\n    }\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param int $k\n     * @return int\n     */\n    public function longestSubstring($s, $k) {\n\n    }\n}",
+    "python": "class Solution:\n    def longestSubstring(self, s: str, k: int) -> int:\n        pass",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn longest_substring(s: String, k: i32) -> i32 {\n        0\n    }\n}",
+    "typescript": "export function longestSubstring(s: string, k: number): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "k": 3,
+      "s": "aaabb"
+    },
+    {
+      "k": 2,
+      "s": "ababbc"
+    },
+    {
+      "k": 2,
+      "s": "abcde"
+    }
+  ],
+  "title": "470. Longest Substring with At Least K Repeating Characters"
+}

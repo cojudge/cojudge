@@ -1,6 +1,6 @@
 {
   "id": "find-anagram-mappings",
-  "title": "762. Find Anagram Mappings",
+  "title": "762. Найти Anagram Mappings",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/find-anagram-mappings/",
   "category": "array",
@@ -8,7 +8,7 @@
     {
       "input": "nums1 = [12,28,46,32,50], nums2 = [50,12,32,46,28]",
       "output": "[1,4,3,2,0]",
-      "explanation": "Each value in nums1 is paired with an equal value in nums2; repeated values may use any matching slot."
+      "explanation": "Каждое значение в числах1 сопряжено с равным значением в числах2; повторные значения могут использовать любой совпадающий интервал."
     },
     {
       "input": "nums1 = [84,46], nums2 = [84,46]",
@@ -17,7 +17,7 @@
     {
       "input": "nums1 = [1,1,2], nums2 = [2,1,1]",
       "output": "[1,2,0]",
-      "explanation": "The two 1s share nums2 slots 1 and 2 in either order."
+      "explanation": "Два слота 1s делят слоты 1 и 2 в любом порядке."
     }
   ],
   "starterCode": {
@@ -57,8 +57,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Record every position of each value in the second array, for example with a map from value to a queue of indices.",
-    "Then walk the first array once, popping one stored index for each value.",
-    "The checker accepts any pairing of equal values, so duplicates need no special ordering."
+    "Запишите каждую позицию каждого значения во втором массиве, например, с картой от значения до очереди индексов.",
+    "Затем пройдите первый массив один раз, выскакивая один сохраненный индекс для каждого значения.",
+    "Шекер принимает любое спаривание равных значений, поэтому дубликаты не нуждаются в специальном заказе."
   ]
 }

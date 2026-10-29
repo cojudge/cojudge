@@ -1,8 +1,8 @@
-Given the head of a sorted linked list, collapse each run of equal values into a single node. The first occurrence of every value is kept and all consecutive duplicates are removed, preserving the sorted order.
+Учитывая заголовок сортированного связанного списка, сворачивайте каждый прогон равных значений в один узел.Первое возникновение каждого значения сохраняется и все последовательные дубликаты удаляются, сохраняя отсортированный порядок.
 
-For example, `1 -> 1 -> 2` becomes `1 -> 2`. Return the head of the deduplicated list.
+Например, `1 -> 1 -> 2` становится `1 -> 2`. Возвратить заголовок дублированного списка.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= number of nodes <= 300`
 - `-100 <= node value <= 100`
-- The list is sorted in non-decreasing order.
+- Список отсортирован в неубывающем порядке.

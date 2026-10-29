@@ -1,5 +1,5 @@
-Return the smallest value in the array `nums`. The array always contains at least one number.
+Возврат наименьшего значения в массиве `nums`. Массив всегда содержит по меньшей мере одно число.
 
-**Constraints:**
+**Ограничения:**
 - ``1 <= nums.length <= 1000``
 - ``-10^9 <= nums[i] <= 10^9``

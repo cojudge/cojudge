@@ -1,18 +1,18 @@
 {
   "id": "basic-max-frequency",
-  "title": "40. Max Frequency",
+  "title": "40. Макс-частота",
   "difficulty": "Easy",
   "category": "nested-loops",
   "examples": [
     {
       "input": "nums = [1,2,2,3]",
       "output": "2",
-      "explanation": "2 appears twice."
+      "explanation": "2 появляется дважды."
     },
     {
       "input": "nums = [5]",
       "output": "1",
-      "explanation": "A single element appears once."
+      "explanation": "Один элемент появляется один раз."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "For each position, count how many times its value appears.",
-    "Keep the biggest count seen."
+    "Для каждой позиции подсчитайте, сколько раз появляется ее значение.",
+    "Держите самый большой счет замеченным."
   ]
 }

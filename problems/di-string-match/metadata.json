@@ -1,6 +1,6 @@
 {
   "id": "di-string-match",
-  "title": "929. DI String Match",
+  "title": "929. струнный матч DI",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/di-string-match/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"IDID\"",
       "output": "[0,4,1,3,2]",
-      "explanation": "Steps rise, fall, rise, fall as required."
+      "explanation": "Шаги поднимаются, падают, поднимаются, падают по мере необходимости."
     },
     {
       "input": "s = \"III\"",
       "output": "[0,1,2,3]",
-      "explanation": "All steps rise."
+      "explanation": "Все шаги поднимаются."
     },
     {
       "input": "s = \"DDI\"",
       "output": "[3,2,0,1]",
-      "explanation": "Two falls then a rise."
+      "explanation": "Два падает, потом поднимается."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Keep two pools: the smallest unused number and the largest unused number.",
-    "Hand out the smallest remaining value on every I and the largest remaining value on every D; the final leftover fills the last slot.",
-    "Any valid ordering is accepted, so this greedy choice never needs backtracking."
+    "Держите два пула: наименьшее неиспользованное число и наибольшее неиспользованное число.",
+    "Раздавайте наименьшее оставшееся значение на каждый I и наибольшее оставшееся значение на каждый D; окончательное оставшееся заполняет последний слот.",
+    "Любой действительный заказ принимается, поэтому этот жадный выбор никогда не нуждается в откате."
   ]
 }

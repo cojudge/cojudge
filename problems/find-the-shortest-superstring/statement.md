@@ -1,9 +1,9 @@
-Stitch every word into one short string that holds each of them as a contiguous block.
+Сшивайте каждое слово в одну короткую строку, которая удерживает каждое из них в виде смежного блока.
 
-Given distinct words, arrange them in some order and glue neighbours together with the largest possible overlap (the tail of one matching the head of the next). The result must contain every word somewhere inside it. Among all shortest results, any one is accepted. Assume no word appears inside another word.
+Учитывая отдельные слова, расположить их в каком-то порядке и склеить соседи вместе с максимально возможным перекрытием (хвост одного, совпадающий с головой следующего). Результат должен содержать каждое слово где-то внутри него. Среди всех кратчайших результатов принимается любое. Предположим, ни одно слово не появляется внутри другого слова.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= words.length <= 12`
 - `1 <= words[i].length <= 20`
-- Words hold lowercase English letters and are pairwise different.
-- No word is a substring of another word.
+- Слова содержат строчные английские буквы и попарно отличаются.
+- Ни одно слово не является нитью другого слова.

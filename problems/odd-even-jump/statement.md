@@ -1,10 +1,10 @@
-You stand on an array `arr`. From index `i` you make numbered jumps: jump 1, 3, 5, ... are odd-numbered and jumps 2, 4, 6, ... are even-numbered. The next jump starts counting at 1 again for each new starting index.
+Вы стоите на массиве `arr`. Из индекса `i` вы делаете пронумерованные прыжки: прыжки 1, 3, 5, ... имеют нечетные номера и прыжки 2, 4, 6, ... имеют четные номера. Следующий прыжок снова начинается с подсчета на 1 для каждого нового стартового индекса.
 
-- On an odd-numbered jump from `i`, hop to the smallest index `j > i` whose value is the smallest value `>= arr[i]`. If several positions share that value, pick the smallest index. If no such `j` exists, the walk stops.
-- On an even-numbered jump from `i`, hop to the smallest index `j > i` whose value is the largest value `<= arr[i]`, again breaking ties by smallest index. If none exists, the walk stops.
+- При нечетном прыжке от `i` перейдите к наименьшему индексу `j > i`, значение которого является наименьшим значением `>= arr[i]`. Если несколько позиций разделяют это значение, выберите наименьший индекс. Если такого `j` не существует, прогулка останавливается.
+- На четном прыжке от `i` перепрыгните к наименьшему индексу `j > i`, значение которого является наибольшим значением `<= arr[i]`, снова разрывая связи наименьшим индексом.
 
-A start index is good when the walk beginning with an odd jump eventually lands exactly on the last array index. Count the good starting indices.
+Стартовый индекс хорош, когда ходьба, начинающаяся с нечетного прыжка, в конечном итоге попадает точно в последний массивный индекс.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= arr.length <= 20000`
 - `1 <= arr[i] <= 100000`

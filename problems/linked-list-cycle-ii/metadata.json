@@ -1,6 +1,6 @@
 {
   "id": "linked-list-cycle-ii",
-  "title": "303. Linked List Cycle II",
+  "title": "303. Связанный список II цикл",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/linked-list-cycle-ii/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "head = [3,2,0,-4], pos = 1",
       "output": "1",
-      "explanation": "The tail (-4) links to index 1 (value 2), so the cycle starts at index 1."
+      "explanation": "Хвост (-4) связывается с индексом 1 (значение 2), поэтому цикл начинается с индекса 1."
     },
     {
       "input": "head = [1,2], pos = 0",
       "output": "0",
-      "explanation": "The tail links to the head, so the cycle starts at index 0."
+      "explanation": "Хвост связывается с головой, поэтому цикл начинается с индекса 0."
     },
     {
       "input": "head = [1], pos = -1",
       "output": "-1",
-      "explanation": "There is no cycle."
+      "explanation": "Циклов не существует."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Floyd's tortoise and hare finds a meeting point inside the loop, if any.",
-    "Restart one pointer at the head; both advance one step until they meet at the entry.",
-    "Count nodes to translate the entry node into its index; return -1 when there is no meeting."
+    "Черепаха и заяц Флойда находит точку встречи внутри петли, если таковая имеется.",
+    "Перезапустите один указатель на голове; оба шаг за шагом, пока они не встретятся при входе.",
+    "Подсчитывайте узлы для перевода входного узла в его индекс; возвращайте -1, когда нет встречи."
   ]
 }

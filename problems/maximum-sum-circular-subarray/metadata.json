@@ -1,6 +1,6 @@
 {
   "id": "maximum-sum-circular-subarray",
-  "title": "237. Maximum Sum Circular Subarray",
+  "title": "237. Максимальная сумма кругового субмарина",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/maximum-sum-circular-subarray/",
   "category": "greedy",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,-2,3,-2]",
       "output": "3",
-      "explanation": "Subarray [3] has maximum sum 3."
+      "explanation": "Subarray [3] имеет максимальную сумму 3."
     },
     {
       "input": "nums = [5,-3,5]",
       "output": "10",
-      "explanation": "Subarray [5,5] has maximum sum 5 + 5 = 10."
+      "explanation": "Subarray [5, 5] имеет максимальную сумму 5 + 5 = 10."
     },
     {
       "input": "nums = [-3,-2,-3]",
       "output": "-2",
-      "explanation": "Subarray [-2] has maximum sum -2."
+      "explanation": "Subarray [-2] имеет максимальную сумму -2."
     }
   ],
   "starterCode": {
@@ -57,8 +57,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "For those familiar with Kadane's algorithm, this problem is a twist on that idea: use Kadane's on a straight array first.",
-    "There are two cases; the second maximizes the sum by wrapping around, which equals the total sum minus the minimum subarray sum.",
-    "If every element is negative, the answer is simply the maximum element."
+    "Для тех, кто знаком с алгоритмом Кадане, эта проблема является поворотом в этой идее: сначала используйте Кадане на прямом массиве.",
+    "Есть два случая; второй максимизирует сумму, оборачиваясь вокруг, что равняется общей сумме за вычетом минимальной суммы субмарины.",
+    "Если каждый элемент отрицательный, то ответом будет только максимальный элемент."
   ]
 }

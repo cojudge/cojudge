@@ -1,6 +1,6 @@
 {
   "id": "wildcard-matching",
-  "title": "265. Wildcard Matching",
+  "title": "265. Wildcard Матчирование",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/wildcard-matching/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"aa\", p = \"a\"",
       "output": "false",
-      "explanation": "One literal \"a\" cannot cover the two-character text."
+      "explanation": "Одно буквальное «а» не может охватить двухсимвольный текст."
     },
     {
       "input": "s = \"aa\", p = \"*\"",
       "output": "true",
-      "explanation": "A single star absorbs any text, including all of \"aa\"."
+      "explanation": "Одна звезда поглощает любой текст, включая все «аа»."
     },
     {
       "input": "s = \"cb\", p = \"?a\"",
       "output": "false",
-      "explanation": "\"?\" matches \"c\", but then \"a\" disagrees with \"b\"."
+      "explanation": "\"?\" совпадает с \"с\", но затем \"а\" не соглашается с \"б\"."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Walk both strings with two pointers; when a '*' is seen, remember it and the text position so a later mismatch can stretch the star by one more character.",
-    "Only the most recent star needs remembering, because an earlier star can always absorb whatever the later one gives up."
+    "Пройдите обе строки с двумя указателями; когда вы видите «*», запомните его и положение текста, чтобы более позднее несоответствие могло растянуть звезду еще одним персонажем.",
+    "Только самая последняя звезда нуждается в запоминании, потому что более ранняя звезда всегда может поглощать то, что более поздняя отказывается."
   ]
 }

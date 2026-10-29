@@ -1,11 +1,11 @@
-You are given a list `words` of pairwise different strings. Find every ordered index pair `(i, j)` with `i != j` such that gluing `words[i]` in front of `words[j]` produces a palindrome (a string reading identically forwards and backwards).
+Вам выдается список `words` Найдите каждую упорядоченную индексную пару `(i, j)` с `i != j` такой, что склеивание `words[i]` перед собой `words[j]` производит палиндром (струна, читающая одинаково вперед и назад).
 
-Return all such pairs. The order of pairs in the answer does not matter.
+Возвращать все такие пары.Порядок пар в ответе не имеет значения.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= words.length <= 5000`
 - `0 <= words[i].length <= 300`
-- `words[i]` uses only lowercase English letters.
-- All entries of `words` are distinct.
+- `words[i]` использует только английские буквы.
+- Все записи `words` отличаются.
 
-**Adaptation note:** The nested pair list is represented as `int_list_2d` in this judge; pair order is ignored during checking.
+**Примечание по адаптации: ** Список вложенных пар представлен как `int_list_2d`; порядок пары игнорируется во время проверки.

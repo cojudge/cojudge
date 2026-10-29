@@ -1,18 +1,18 @@
 {
   "id": "basic-second-largest",
-  "title": "37. Second Largest",
+  "title": "37. Второй по величине",
   "difficulty": "Easy",
   "category": "nested-loops",
   "examples": [
     {
       "input": "nums = [1,2,3]",
       "output": "2",
-      "explanation": "The largest is 3, the next distinct value is 2."
+      "explanation": "Самым большим является 3, следующим отдельным значением является 2."
     },
     {
       "input": "nums = [5,5,4]",
       "output": "4",
-      "explanation": "Duplicates of the maximum do not count."
+      "explanation": "Дубликаты максимума не учитываются."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "First find the maximum value.",
-    "Then find the maximum among values smaller than it."
+    "Сначала найдите максимальное значение.",
+    "Затем найдите максимум среди значений, меньших, чем он."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "second-minimum-node-in-a-binary-tree",
-  "title": "690. Second Minimum Node in a Binary Tree",
+  "title": "690. Второй минимальный узел в двоичном дереве",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/second-minimum-node-in-a-binary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [2,2,5,null,null,5,7]",
       "output": "5",
-      "explanation": "The smallest value is 2 and the next distinct value present is 5."
+      "explanation": "Наименьшим значением является 2, а следующим отдельным значением является 5."
     },
     {
       "input": "root = [2,2,2]",
       "output": "-1",
-      "explanation": "Every node stores 2, so no second distinct value exists."
+      "explanation": "Каждый узел хранит 2, поэтому второго отдельного значения не существует."
     },
     {
       "input": "root = [5,8,5]",
       "output": "8",
-      "explanation": "Values present are 5 and 8; the second minimum is 8."
+      "explanation": "Значения 5 и 8; второй минимум - 8."
     }
   ],
   "starterCode": {
@@ -52,8 +52,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "The root always carries the global minimum in this special tree.",
-    "Walk the tree and track the smallest value strictly larger than the root value.",
-    "Return -1 when every node equals the root value."
+    "Корень всегда несет в себе глобальный минимум этого дерева.",
+    "Прогуляйтесь по дереву и проследите за наименьшим значением, строго превышающим значение корня.",
+    "Возврат -1, когда каждый узел равен корневому значению."
   ]
 }

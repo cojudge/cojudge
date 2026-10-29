@@ -1,6 +1,6 @@
 {
   "id": "flatten-2d-vector",
-  "title": "357. Flatten 2D Vector",
+  "title": "357. 2D вектор",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/flatten-2d-vector/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "vec = [[1,2],[3],[4]], operations = [\"next\",\"next\",\"next\",\"hasNext\",\"hasNext\",\"next\",\"hasNext\"]",
       "output": "[1,2,3,1,1,4,0]",
-      "explanation": "Flattened order is [1,2,3,4]. The first three calls give 1, 2 and 3; values remain so both checks are 1; the next call gives 4; nothing remains so the last check is 0."
+      "explanation": "Смягченный приказ является [1,2,3,4Первые три звонка дают 1, 2 и 3Значения остаются, поэтому обе проверки 1Следующий звонок дает 4Ничего не остается, поэтому последняя проверка 0."
     },
     {
       "input": "vec = [[],[1],[],[2,3]], operations = [\"hasNext\",\"next\",\"next\",\"next\",\"hasNext\"]",
       "output": "[1,1,2,3,0]",
-      "explanation": "Empty rows are skipped, so flattened order is [1,2,3]."
+      "explanation": "Пустые ряды пропущены, поэтому сплющенный порядок [1, 2, 3]."
     },
     {
       "input": "vec = [[],[]], operations = [\"hasNext\",\"hasNext\"]",
       "output": "[0,0]",
-      "explanation": "Both rows are empty, so no value ever becomes available."
+      "explanation": "Оба ряда пусты, поэтому ценность никогда не становится доступной."
     }
   ],
   "starterCode": {
@@ -62,7 +62,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Flatten the input once into a single list, skipping empty rows, then serve operations with an index pointer.",
-    "Alternatively keep a row and column cursor and advance it past empty rows before answering each operation."
+    "Разложите вход один раз в один список, пропустив пустые строки, затем подавайте операции с указателем индекса.",
+    "В качестве альтернативы держите курсор строки и столбца и продвигайте его мимо пустых строк, прежде чем отвечать на каждую операцию."
   ]
 }

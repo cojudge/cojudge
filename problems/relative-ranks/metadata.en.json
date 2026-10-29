@@ -1,0 +1,57 @@
+{
+  "id": "relative-ranks",
+  "title": "568. Relative Ranks",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/relative-ranks/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "score = [5,4,3,2,1]",
+      "output": "[\"Gold Medal\",\"Silver Medal\",\"Bronze Medal\",\"4\",\"5\"]",
+      "explanation": "The best score 5 earns gold, then 4 silver, 3 bronze, and the rest keep their numeric ranks."
+    },
+    {
+      "input": "score = [10,3,8,9,4]",
+      "output": "[\"Gold Medal\",\"5\",\"Bronze Medal\",\"Silver Medal\",\"4\"]",
+      "explanation": "Sorted best-first the scores are 10, 9, 8, 4, 3, giving ranks 1..5 mapped back to the input order."
+    },
+    {
+      "input": "score = [1]",
+      "output": "[\"Gold Medal\"]",
+      "explanation": "A single competitor wins gold."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> findRelativeRanks(int[] score) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findRelativeRanks(self, score: List[int]) -> List[str]:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> findRelativeRanks(vector<int>& score) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<string> FindRelativeRanks(int[] score) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_relative_ranks(score: Vec<i32>) -> Vec<String> {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindRelativeRanks(score []int) []string {\n    \n}",
+    "typescript": "export function findRelativeRanks(score: number[]): string[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $score\n     * @return string[]\n     */\n    public function findRelativeRanks($score) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "score": "[5,4,3,2,1]"
+    },
+    {
+      "score": "[10,3,8,9,4]"
+    },
+    {
+      "score": "[1]"
+    }
+  ],
+  "functionName": "findRelativeRanks",
+  "params": [
+    {
+      "name": "score",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Sort competitor indices by score from high to low; the position in that order is the rank.",
+    "Translate ranks 1, 2, 3 to the three medal names and format all other ranks as decimal strings."
+  ]
+}

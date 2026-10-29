@@ -1,6 +1,6 @@
 {
   "id": "copy-list-with-random-pointer",
-  "title": "92. Copy List with Random Pointer",
+  "title": "92. Список копий с помощью Random Pointer",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/copy-list-with-random-pointer/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "nodes = [[7,-1],[13,0],[11,4],[10,2],[1,0]]",
       "output": "[[7,-1],[13,0],[11,4],[10,2],[1,0]]",
-      "explanation": "Each returned row preserves the node value and the index targeted by its random pointer."
+      "explanation": "Каждая возвращенная строка сохраняет значение узла и индекс, нацеленный на его случайный указатель."
     },
     {
       "input": "nodes = [[1,1],[2,1]]",
       "output": "[[1,1],[2,1]]",
-      "explanation": "A deep copy of the linked list preserves all node values and random pointer targets: [[1,1],[2,1]]."
+      "explanation": "Глубокая копия связанного списка сохраняет все значения узлов и цели случайных указателей: [[1, 1], [2, 1]]."
     },
     {
       "input": "nodes = []",
       "output": "[]",
-      "explanation": "A deep copy of the empty list is also empty: []."
+      "explanation": "Глубокая копия пустого списка также пуста: []."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Create one copied row or conceptual copied node for every original position before resolving random targets.",
-    "The random index already identifies the target position, so preserve `-1` and every valid index exactly.",
-    "Do not return or reuse mutable input rows; construct an independent result."
+    "Создайте один скопированный ряд или концептуальный скопированный узел для каждой исходной позиции, прежде чем решать случайные цели.",
+    "Случайный индекс уже идентифицирует целевую позицию, поэтому сохраняйте `-1` и каждый действительный индекс точно.",
+    "Не возвращайте и не используйте изменяемые строки ввода; создайте независимый результат."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "knight-dialer",
-  "title": "922. Knight Dialer",
+  "title": "922. Рыцарь Диалер",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/knight-dialer/",
   "category": "dp",
@@ -8,12 +8,12 @@
     {
       "input": "n = 1",
       "output": "10",
-      "explanation": "Each single digit is one number."
+      "explanation": "Каждая отдельная цифра — это одно число."
     },
     {
       "input": "n = 2",
       "output": "20",
-      "explanation": "Summing jumps from every start gives twenty pairs."
+      "explanation": "Подводя итог прыжкам с каждого старта, можно получить двадцать пар."
     },
     {
       "input": "n = 3",
@@ -50,8 +50,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Model the pad as a graph: each digit points to its knight neighbors (5 points nowhere).",
-    "Dynamic programming over positions: new ways on a digit equal the sum of ways on its predecessors.",
-    "Apply the 1e9+7 modulus at every addition."
+    "Смоделируйте прокладку как график: каждая цифра указывает на своих соседей-рыцарей (5 указывает нигде).",
+    "Динамическое программирование над позициями: новые способы на цифре равны сумме способов на ее предшественниках.",
+    "Применяйте модуль 1e9+7 при каждом добавлении."
   ]
 }

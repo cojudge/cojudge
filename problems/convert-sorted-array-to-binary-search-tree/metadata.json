@@ -1,6 +1,6 @@
 {
   "id": "convert-sorted-array-to-binary-search-tree",
-  "title": "287. Convert Sorted Array to Binary Search Tree",
+  "title": "287. Преобразование сортированного массива в дерево бинарного поиска",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [-10,-3,0,5,9]",
       "output": "[0,-3,9,-10,null,5]",
-      "explanation": "One balanced choice puts 0 at the root with [-10,-3] left and [5,9] right; any height-balanced search tree with these values is accepted."
+      "explanation": "Один сбалансированный выбор ставит 0 в корень с [-10,-3] слева и [5, 9] справа; любое дерево поиска с балансом высоты с этими значениями принимается."
     },
     {
       "input": "nums = [1,3]",
       "output": "[3,1]",
-      "explanation": "Either [3,1] or [1,null,3] is balanced; the checker accepts any valid one."
+      "explanation": "Либо [3,1], либо [1,null,3] сбалансированы; чекер принимает любой действительный."
     }
   ],
   "starterCode": {
@@ -52,8 +52,8 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Pick the middle entry as the root so both halves stay roughly equal in size.",
-    "Recurse on the left slice and right slice to build balanced children.",
-    "Any height-balanced search tree holding exactly these values passes; the checker validates ordering and balance, not exact shape."
+    "Выберите средний вход в качестве корня, чтобы обе половины оставались примерно равными по размеру.",
+    "Повторение на левом и правом ломтиках для построения сбалансированных детей.",
+    "Любое дерево поиска с уравновешенной высотой, содержащее именно эти значения, проходит; шашка проверяет порядок и баланс, а не точную форму."
   ]
 }

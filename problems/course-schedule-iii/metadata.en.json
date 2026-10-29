@@ -1,0 +1,58 @@
+{
+  "id": "course-schedule-iii",
+  "title": "652. Course Schedule III",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/course-schedule-iii/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "courses = [[100,200],[200,1300],[1000,1250],[2000,3200]]",
+      "output": "3",
+      "explanation": "Take the first three courses (100 + 200 + 1000 = 1300 by day 1300); the 2000-long course cannot fit."
+    },
+    {
+      "input": "courses = [[1,2]]",
+      "output": "1",
+      "explanation": "The single course finishes exactly on time."
+    },
+    {
+      "input": "courses = [[3,2],[4,3]]",
+      "output": "0",
+      "explanation": "Each course alone already misses its deadline."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int scheduleCourse(int[][] courses) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def scheduleCourse(self, courses: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int scheduleCourse(vector<vector<int>>& courses) {\n        return 0;\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public int ScheduleCourse(int[][] courses) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn schedule_course(courses: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc ScheduleCourse(courses [][]int) int {\n    \n}",
+    "typescript": "export function scheduleCourse(courses: number[][]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $courses\n     * @return int\n     */\n    public function scheduleCourse($courses) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "courses": "[[100,200],[200,1300],[1000,1250],[2000,3200]]"
+    },
+    {
+      "courses": "[[1,2]]"
+    },
+    {
+      "courses": "[[3,2],[4,3]]"
+    }
+  ],
+  "functionName": "scheduleCourse",
+  "params": [
+    {
+      "name": "courses",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Order courses by deadline so earlier cutoffs are considered first.",
+    "Keep taken durations in a max-heap plus their running total.",
+    "When the total passes the current deadline, drop the longest taken course; the heap size at the end is the answer."
+  ]
+}

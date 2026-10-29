@@ -1,6 +1,6 @@
 {
   "id": "largest-perimeter-triangle",
-  "title": "961. Largest Perimeter Triangle",
+  "title": "961. Самый большой треугольник периметра",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/largest-perimeter-triangle/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [2,1,2]",
       "output": "5",
-      "explanation": "The three sticks form a valid triangle with perimeter 2+1+2 = 5."
+      "explanation": "Три палки образуют действительный треугольник с периметром. 2+1+2 = 5."
     },
     {
       "input": "nums = [1,2,1,10]",
       "output": "0",
-      "explanation": "No triple satisfies the triangle rule, so the answer is 0."
+      "explanation": "Ни одна тройка не удовлетворяет правилу треугольника, поэтому ответ 0."
     }
   ],
   "starterCode": {
@@ -43,8 +43,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sort the sticks so any candidate triple appears as three consecutive values.",
-    "Scan from the largest end: the first consecutive triple with small + middle > large gives the maximum perimeter.",
-    "Return 0 when the scan finishes without finding such a triple."
+    "Сортируйте палки так, чтобы любой кандидат тройной выглядел как три последовательных значения.",
+    "Сканирование с самого большого конца: первая тройка подряд с малым + средним > большим дает максимальный периметр.",
+    "Возвращайте 0, когда сканирование закончится, не найдя такой тройки."
   ]
 }

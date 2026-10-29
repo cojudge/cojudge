@@ -1,6 +1,6 @@
 {
   "id": "clone-graph",
-  "title": "27. Clone Graph",
+  "title": "27. Клонография",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/clone-graph/",
   "category": "graph",
@@ -8,22 +8,22 @@
     {
       "input": "adjList = [[2,4],[1,3],[2,4],[1,3]]",
       "output": "[[2,4],[1,3],[2,4],[1,3]]",
-      "explanation": "A graph with 4 nodes connected as a cycle."
+      "explanation": "График с узлами 4, соединенными как цикл."
     },
     {
       "input": "adjList = [[]]",
       "output": "[[]]",
-      "explanation": "A graph with 1 node and no neighbors."
+      "explanation": "График с узлом 1 и без соседей."
     },
     {
       "input": "adjList = []",
       "output": "[]",
-      "explanation": "An empty graph."
+      "explanation": "Пустой график."
     },
     {
       "input": "adjList = [[2],[1]]",
       "output": "[[2],[1]]",
-      "explanation": "Two nodes connected by a single edge."
+      "explanation": "Два узла, соединенные одним краем."
     }
   ],
   "starterCode": {
@@ -64,8 +64,8 @@
   "outputType": "graph_node",
   "checkGraphClone": true,
   "hints": [
-    "Use a HashMap to map original nodes to their clones.",
-    "Traverse the graph using DFS or BFS. For each node visited, create a clone if not already created, then recursively/breadth-first clone its neighbors.",
-    "Be careful to avoid infinite loops due to cycles in the graph."
+    "Используйте HashMap для отображения оригинальных узлов на их клоны.",
+    "Перейдите по графику с помощью DFS или BFS. Для каждого посещенного узла создайте клон, если он еще не создан, то рекурсивно/широко-первый клон своих соседей.",
+    "Будьте осторожны, чтобы избежать бесконечных циклов из-за циклов на графике."
   ]
 }

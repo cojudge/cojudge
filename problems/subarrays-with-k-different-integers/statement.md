@@ -1,8 +1,8 @@
-Given an integer array `nums` and an integer `k`, count the contiguous subarrays
-that contain exactly `k` distinct values.
+Учитывая целочисленный массив `nums` и целочисленное `k`, подсчитайте смежные подкатегории.
+которые содержат в точности различные значения `k`.
 
-A subarray is a non-empty slice of consecutive elements.
+Подкатегория представляет собой непустую часть последовательных элементов.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 2 * 10^4`
 - `1 <= nums[i], k <= nums.length`

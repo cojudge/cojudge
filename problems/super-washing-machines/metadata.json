@@ -1,6 +1,6 @@
 {
   "id": "super-washing-machines",
-  "title": "577. Super Washing Machines",
+  "title": "577. Супер стиральные машины",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/super-washing-machines/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "machines = [1,0,5]",
       "output": "3",
-      "explanation": "The average is 2. The left machine needs 1 more and the right one must give 3 away; balancing takes 3 moves."
+      "explanation": "Средний показатель 2. Левая машина нуждается в 1 больше, а правая должна отдавать 3; балансировка принимает движения 3."
     },
     {
       "input": "machines = [0,3,0]",
       "output": "2",
-      "explanation": "The average is 1. Both outer machines pull one garment from the middle, finishing in 2 moves."
+      "explanation": "Средний - 1. Обе наружные машины вытаскивают одну одежду из середины, заканчивая в 2 ходами."
     },
     {
       "input": "machines = [0,2,0]",
       "output": "-1",
-      "explanation": "The total 2 cannot be split evenly across 3 machines."
+      "explanation": "Общий 2 не может быть равномерно распределен по машинам 3."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "If the total is not divisible by n, answer -1; otherwise each machine targets total / n garments.",
-    "Scan left to right tracking the running imbalance; a machine's bottleneck is the larger of its own surplus/deficit and the flow passing through it."
+    "Если сумма не делится на n, ответ -1; в противном случае каждая машина нацелена на общую / n одежду.",
+    "Сканирование слева направо отслеживает дисбаланс бега; узкое место машины - больший из ее собственного избытка / дефицита и потока, проходящего через него."
   ]
 }

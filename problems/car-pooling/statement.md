@@ -1,13 +1,13 @@
-A vehicle with `capacity` vacant seats travels exclusively eastward (reversing toward the west is impossible).
+Транспортное средство с вакантными сиденьями `capacity` движется исключительно на восток (обратно на запад невозможно).
 
-A manifest `trips` describes the itinerary, where `trips[i] = [numPassengers[i], from[i], to[i]]` means booking `i` boards `numPassengers[i]` riders at kilometre `from[i]` east of the start and alights them at kilometre `to[i]` east of the start.
+В манифесте `trips` описывается маршрут, где `trips[i] = [numPassengers[i], from[i], to[i]]` означает бронирование платы `i` для гонщиков `numPassengers[i]` на километре `from[i]` к востоку от старта и поджигает их на километре `to[i]` к востоку от старта.
 
-Whenever boarding and alighting coincide at one kilometre, alighting completes first.
-Along the entire journey the headcount aboard must never surpass `capacity`.
+Всякий раз, когда посадка и посадка совпадают на одном километре, посадка завершается первой.
+На протяжении всего путешествия численность персонала на борту никогда не должна превышать `capacity`.
 
-Decide whether every booking can be honoured: return `true` when feasible, `false` otherwise.
+Решите, можно ли выполнить каждое бронирование: возвращайте `true`, когда это возможно, `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= trips.length <= 1000`
 - `trips[i].length == 3`

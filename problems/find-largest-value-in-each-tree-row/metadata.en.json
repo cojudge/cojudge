@@ -1,0 +1,57 @@
+{
+  "id": "find-largest-value-in-each-tree-row",
+  "title": "575. Find Largest Value in Each Tree Row",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/find-largest-value-in-each-tree-row/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [1,3,2,5,3,null,9]",
+      "output": "[1,3,9]",
+      "explanation": "Row 0 holds [1], row 1 holds [3,2], row 2 holds [5,3,9]; the maxima are 1, 3 and 9."
+    },
+    {
+      "input": "root = [1,2,3]",
+      "output": "[1,3]",
+      "explanation": "The rows are [1] and [2,3], giving maxima 1 and 3."
+    },
+    {
+      "input": "root = []",
+      "output": "[]",
+      "explanation": "An empty tree has no rows."
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nimport java.util.*;\nclass Solution {\n    public List<Integer> largestValues(TreeNode root) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nfrom typing import List\nclass Solution:\n    def largestValues(self, root) -> List[int]:\n        pass",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> largestValues(TreeNode* root) {\n        return {};\n    }\n};",
+    "csharp": "/*\nDefinition for a binary tree node.\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\nusing System.Collections.Generic;\npublic class Solution \n{\n    public List<int> LargestValues(TreeNode root) \n    {\n        \n    }\n}",
+    "rust": "// Definition for a binary tree node.\n// #[derive(Debug, PartialEq, Eq)]\n// pub struct TreeNode {\n//   pub val: i32,\n//   pub left: Option<Rc<RefCell<TreeNode>>>,\n//   pub right: Option<Rc<RefCell<TreeNode>>>,\n// }\nuse std::rc::Rc;\nuse std::cell::RefCell;\npub struct Solution;\n\nimpl Solution {\n    pub fn largest_values(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "// Definition for a binary tree node.\n// type TreeNode struct {\n//     Val int\n//     Left *TreeNode\n//     Right *TreeNode\n// }\npackage main\n\nfunc LargestValues(root *TreeNode) []int {\n    \n}",
+    "typescript": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    val: number;\n    left: TreeNode | null;\n    right: TreeNode | null;\n    constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {\n        this.val = val ?? 0;\n        this.left = left ?? null;\n        this.right = right ?? null;\n    }\n}\n*/\nimport { TreeNode } from './TreeNode';\nexport function largestValues(root: TreeNode | null): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param TreeNode|null $root\n     * @return int[]\n     */\n    public function largestValues($root) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "root": "[1,3,2,5,3,null,9]"
+    },
+    {
+      "root": "[1,2,3]"
+    },
+    {
+      "root": "[]"
+    }
+  ],
+  "functionName": "largestValues",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Process the tree breadth-first so nodes are grouped by depth.",
+    "Track the running maximum inside each row and append it before moving to the next row."
+  ]
+}

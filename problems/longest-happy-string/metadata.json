@@ -1,6 +1,6 @@
 {
   "id": "longest-happy-string",
-  "title": "204. Longest Happy String",
+  "title": "204. Самая длинная счастливая струна",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/longest-happy-string/",
   "category": "heap",
@@ -8,12 +8,12 @@
     {
       "input": "a = 1, b = 1, c = 7",
       "output": "\"ccaccbcc\"",
-      "explanation": "\"ccbccacc\" would also be a correct answer."
+      "explanation": "«КП» также является правильным ответом."
     },
     {
       "input": "a = 7, b = 1, c = 0",
       "output": "\"aabaa\"",
-      "explanation": "It is the only correct answer in this case."
+      "explanation": "Это единственный правильный ответ в данном случае."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Use a greedy approach.",
-    "Use the letter with the maximum current limit that can be added without breaking the condition.",
-    "Track the last two appended characters so you never build \"aaa\", \"bbb\", or \"ccc\"."
+    "Используйте жадный подход.",
+    "Используйте букву с максимальным пределом тока, который можно добавить, не нарушая условия.",
+    "Отслеживайте два последних добавленных символа, чтобы никогда не создавать «aaa», «bbb» или «ccc»."
   ]
 }

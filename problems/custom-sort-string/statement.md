@@ -1,17 +1,17 @@
-You receive a helper string `order` that lists distinct lower-case letters
-in a custom priority sequence, plus a second string `s` to rearrange. Shrink
-or expand nothing: the output must be a permutation of `s` holding exactly
-the same multiset of characters.
+Вы получаете строку-помощник `order`, в которой перечислены отдельные строчные буквы
+в пользовательской последовательности приоритетов, плюс вторая строка `s` для перегруппировки.
+или ничего не расширять: выход должен быть перестановкой `s`, удерживающей точно
+Один и тот же набор персонажей.
 
-The rule: whenever a letter `x` appears earlier than a letter `y` inside
-`order`, every copy of `x` in your answer must stand before every copy of
-`y`. Letters of `s` that never occur in `order` may appear in any trailing
-positions, in any order among themselves.
+Правило: когда буква `x` появляется раньше, чем буква `y` внутри
+`order`, каждая копия `x` в вашем ответе должна стоять перед каждой копией
+`y`Письма `s` которые никогда не происходят в `order` может появиться в любой
+Позиции, в любом порядке между собой.
 
-Any permutation meeting those conditions is accepted.
+Любая перестановка, отвечающая этим условиям, принимается.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= order.length <= 26`
 - `1 <= s.length <= 200`
-- `order` and `s` hold only lower-case English letters.
-- All characters of `order` are unique.
+- `order` и `s` содержат только английские буквы.
+- Все персонажи `order` уникальны.

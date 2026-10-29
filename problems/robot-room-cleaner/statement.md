@@ -1,11 +1,11 @@
-A room is drawn as a grid of cells. A value of `1` marks a free cell the robot may enter, while `0` marks a wall or piece of furniture that blocks movement. The robot begins on a guaranteed free cell given by `row` and `col`, facing upward.
+Помещение рисуется как сетка ячеек. Значение `1` обозначает свободную ячейку, в которую может войти робот, в то время как `0` обозначает стену или предмет мебели, который блокирует движение. Робот начинается на гарантированной свободной ячейке, заданной `row` и `col`, обращенной вверх.
 
-In the original interactive version the robot is blindfolded and may only use move, turn and clean operations. This offline adaptation hands you the whole layout at once: count how many distinct free cells are reachable from the start by moving up, down, left or right through free cells. That count equals the number of cells a perfect cleaning tour would visit.
+В оригинальной интерактивной версии робот с завязанными глазами может использовать только операции перемещения, поворота и очистки. Эта офлайн-адаптация дает вам всю компоновку сразу: посчитайте, сколько отдельных свободных ячеек можно получить с самого начала, перемещаясь вверх, вниз, влево или вправо через свободные ячейки. Это количество равно количеству ячеек, которые посетит идеальный тур по очистке.
 
-Return that reachable free-cell count. A single isolated free cell therefore yields `1`.
+Возврат этого достижимого количества свободных ячеек. Поэтому одна изолированная свободная ячейка дает `1`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= room.length <= 20`
 - `1 <= room[i].length <= 20`
-- Each entry is `0` or `1`
+- Каждая запись `0` или `1`
 - `room[row][col] == 1`

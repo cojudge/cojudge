@@ -1,0 +1,64 @@
+{
+  "id": "minimum-window-subsequence",
+  "title": "734. Minimum Window Subsequence",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/minimum-window-subsequence/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s1 = \"abcdebdde\", s2 = \"bde\"",
+      "output": "\"bcde\"",
+      "explanation": "Indices 1 through 4 give the shortest block holding b, d, e in order."
+    },
+    {
+      "input": "s1 = \"abc\", s2 = \"ac\"",
+      "output": "\"abc\""
+    },
+    {
+      "input": "s1 = \"abc\", s2 = \"d\"",
+      "output": "\"\"",
+      "explanation": "No block contains d, so the answer is empty."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String minWindow(String s1, String s2) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def minWindow(self, s1: str, s2: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string minWindow(string s1, string s2) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string MinWindow(string s1, string s2) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_window(s1: String, s2: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc MinWindow(s1 string, s2 string) string {\n    return \"\"\n}",
+    "typescript": "export function minWindow(s1: string, s2: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s1\n     * @param string $s2\n     * @return string\n     */\n    public function minWindow($s1, $s2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s1": "abcdebdde",
+      "s2": "bde"
+    },
+    {
+      "s1": "abc",
+      "s2": "ac"
+    },
+    {
+      "s1": "abc",
+      "s2": "d"
+    }
+  ],
+  "functionName": "minWindow",
+  "params": [
+    {
+      "name": "s1",
+      "type": "string"
+    },
+    {
+      "name": "s2",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Scan s1 forward to find where s2 finishes as a subsequence, then walk backwards to find the earliest start of that match.",
+    "Keep the best (shortest, then earliest) window across all forward matches.",
+    "This two-pointer pass runs in O(n * m) worst case but only O(1) extra memory."
+  ]
+}

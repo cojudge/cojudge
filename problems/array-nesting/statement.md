@@ -1,7 +1,7 @@
-Given a permutation `nums` of `0..n-1`, define the chain starting at `k` by repeated indexing: `k, nums[k], nums[nums[k]]`, and so on until a value repeats. Let `S(k)` be the set of distinct values on that chain. Return the largest possible `|S(k)|` over all starts.
+Учитывая перестановку `nums` `0..n-1`, определите цепочку, начинающуюся с `k`, повторным индексированием: `k, nums[k], nums[nums[k]]` и так далее, пока значение не повторится. Пусть `S(k)` будет набором различных значений на этой цепочке. Верните максимально возможный `|S(k)|` по всем стартам.
 
-Because every index has exactly one outgoing edge, the chains are disjoint cycles with trees feeding into them; the longest chain always equals the longest directed cycle. Marking visited indices keeps the total work linear.
+Поскольку каждый индекс имеет ровно один исходящий край, цепи представляют собой разрозненные циклы с деревьями, питающимися в них; самая длинная цепь всегда равна самому длинному направленному циклу. Маркировка посещенных индексов сохраняет общую работу линейной.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 2 * 10^4`
-- `nums` is a permutation of `[0, nums.length - 1]`.
+- `nums` является перестановкой `[0, nums.length - 1]`.

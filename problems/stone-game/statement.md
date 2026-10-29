@@ -1,13 +1,13 @@
-Alice and Bob compete over a single row of stone piles. The row holds an even count of piles, and `piles[i]` records how many stones sit in the `i`-th pile, always a positive integer.
+Алиса и Боб соревнуются за один ряд каменных свай. В ряде четное количество свай, и `piles[i]` записывает, сколько камней находится в `i`-й свае, всегда положительное целое число.
 
-The combined stone count is odd, so the final totals cannot match.
+Объединенное количество камней является странным, поэтому окончательные итоги не могут совпадать.
 
-Alice moves first and the two alternate. On every move the player whose turn it is removes one whole pile, choosing freely between the leftmost remaining pile and the rightmost remaining pile. Play proceeds this way until the row is empty; whoever has collected more stones is the winner.
+Алиса движется первой, а двое чередуют. На каждом ходу игрок, чья очередь, снимает одну цельную кучу, свободно выбирая между самой левой оставшейся кучой и самой правой оставшейся кучой. Игра продолжается таким образом, пока ряд не опустеет; тот, кто собрал больше камней, является победителем.
 
-Both sides choose as well as possible. Return `true` when that optimal play leaves Alice ahead, and `false` when it leaves Bob ahead.
+Обе стороны выбирают как можно лучше. Возвращайте `true`, когда эта оптимальная игра оставляет Алису впереди, и `false`, когда она оставляет Боба впереди.
 
-**Constraints:**
+**Ограничения:**
 - 2 ≤ piles.length ≤ 500
-- piles.length is even.
-- 1 ≤ piles[i] ≤ 500
-- sum(piles[i]) is odd.
+- Квас. длина ровная.
+- 1 ≤ сваи[i] ≤ 500
+- Сумма (пайки) — нечетная.

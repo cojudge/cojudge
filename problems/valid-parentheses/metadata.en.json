@@ -1,0 +1,62 @@
+{
+  "id": "valid-parentheses",
+  "title": "55. Valid Parentheses",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/valid-parentheses/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s=\"()\"",
+      "output": "true",
+      "explanation": "Every opening bracket in \"()\" has a correctly matched closing bracket of the same type in the correct order."
+    },
+    {
+      "input": "s=\"()[]{}\"",
+      "output": "true",
+      "explanation": "Every opening bracket in \"()[]{}\" has a correctly matched closing bracket of the same type in the correct order."
+    },
+    {
+      "input": "s=\"(]\"",
+      "output": "false",
+      "explanation": "\"(\" is matched with \"]\", but \"]\" does not match the opening bracket type."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public boolean isValid(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def isValid(self, s: str) -> bool:\n        pass\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool isValid(string s) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool IsValid(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_valid(s: String) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc IsValid(s string) bool {\n    \n}",
+    "typescript": "export function isValid(s: string): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return bool\n     */\n    public function isValid($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "()"
+    },
+    {
+      "s": "()[]{}"
+    },
+    {
+      "s": "(]"
+    },
+    {
+      "s": "([)]"
+    },
+    {
+      "s": "{[]}"
+    }
+  ],
+  "functionName": "isValid",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Use a stack to match opening and closing brackets. Ensure types match and stack is empty at the end."
+  ]
+}

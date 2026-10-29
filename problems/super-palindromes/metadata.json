@@ -1,6 +1,6 @@
 {
   "id": "super-palindromes",
-  "title": "895. Super Palindromes",
+  "title": "895. Супер палиндромы",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/super-palindromes/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "left = \"4\", right = \"1000\"",
       "output": "4",
-      "explanation": "4, 9, 121 and 484 qualify."
+      "explanation": "Квалифицируются 4, 9, 121 и 484."
     },
     {
       "input": "left = \"1\", right = \"2\"",
       "output": "1",
-      "explanation": "Only 1 qualifies."
+      "explanation": "Квалифицируется только 1."
     },
     {
       "input": "left = \"1\", right = \"100000\"",
       "output": "10",
-      "explanation": "Ten qualify below 100000."
+      "explanation": "Десять квалификаций ниже 100000."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Square roots of candidates stay below 1e9 and must themselves be palindromes, so only about 1e5 halves need trying.",
-    "Mirror each half i into odd and even palindromes, square them, and keep those whose square is a palindrome inside the interval."
+    "Квадратные корни кандидатов остаются ниже 1e9 и сами должны быть палиндромами, поэтому пробовать нужно только около 1e5 половин.",
+    "Зеркало каждой половины i в нечетные и четные палиндромы, квадрат их, и держать тех, чей квадрат является палиндром внутри интервала."
   ]
 }

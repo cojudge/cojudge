@@ -1,11 +1,11 @@
-There is a new alien language that uses the English alphabet (lowercase letters a-z). However, the order of the letters is unknown to you.
+Существует новый инопланетный язык, использующий английский алфавит (нижние буквы a-z).Однако порядок букв вам неизвестен.
 
-You are given a list of strings `words` from the alien language's dictionary, where the strings are **sorted lexicographically** by the rules of this new language.
+Вам предоставляется список строк `words` из словаря инопланетного языка, где строки ** сортируются лексикографически ** по правилам этого нового языка.
 
-Derive the order of characters in this alien language and return it as a string. If the given arrangement of words cannot correspond to any valid order of letters (e.g., due to a cycle in the character dependencies, or a longer word appearing before its prefix), return `""`. If there are multiple valid orders, return **any** of them.
+Если данное расположение слов не может соответствовать какому-либо действительному порядку букв (например, из-за цикла в зависимостях символов или более длинного слова, появляющегося перед его префиксом), верните `""`. Если есть несколько действительных ордеров, верните ** любой ** из них.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 <= words.length <= 100
 - 1 <= words[i].length <= 100
-- words[i] consists of only lowercase English letters.
+- Слова [i] состоят только из английских букв.

@@ -1,6 +1,6 @@
 {
   "id": "sum-of-square-numbers",
-  "title": "655. Sum of Square Numbers",
+  "title": "655. Сумма квадратных чисел",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/sum-of-square-numbers/",
   "category": "math",
@@ -13,7 +13,7 @@
     {
       "input": "c = 3",
       "output": "false",
-      "explanation": "No pair of squares sums to 3."
+      "explanation": "Нет пары квадратов с 3."
     },
     {
       "input": "c = 4",
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Think of a at 0 and b at floor(sqrt(c)) as two ends of the search.",
-    "Compare a*a + b*b with c: too small moves a up, too large moves b down.",
-    "Squares can reuse the same root (e.g. 2 = 1^2 + 1^2)."
+    "Подумайте об a в 0 и b на полу (sqrt (c)) как о двух концах поиска.",
+    "Сравните a*a + b*b с c: слишком малые движения a вверх, слишком большие движения b вниз.",
+    "Квадраты могут повторно использовать один и тот же корень (например, 2 = 1^2 + 1^2)."
   ]
 }

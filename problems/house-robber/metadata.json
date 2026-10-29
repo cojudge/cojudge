@@ -1,6 +1,6 @@
 {
   "id": "house-robber",
-  "title": "22. House Robber",
+  "title": "22. Домой Грабитель",
   "difficulty": "Medium",
   "category": "dp",
   "link": "https://leetcode.com/problems/house-robber/",
@@ -8,12 +8,12 @@
     {
       "input": "nums=[1,2,3,1]",
       "output": "4",
-      "explanation": "Robbing houses 0 (1) and 2 (3) without triggering adjacent alarms yields 4."
+      "explanation": "Ограбление домов 0 (1) и 2 (3) без срабатывания смежных сигнализаций дает 4."
     },
     {
       "input": "nums=[2,7,9,3,1]",
       "output": "12",
-      "explanation": "Robbing houses 0 (2), 2 (9), and 4 (1) without triggering adjacent alarms yields 12."
+      "explanation": "Ограбление домов 0 (2), 2 (9) и 4 (1) без срабатывания смежных сигнализаций дает 12."
     }
   ],
   "starterCode": {
@@ -43,6 +43,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "DP with two states per step: rob or skip current house."
+    "ДП с двумя штатами на шаг: ограбить или пропустить текущий дом."
   ]
 }

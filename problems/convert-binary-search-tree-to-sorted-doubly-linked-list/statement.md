@@ -1,10 +1,10 @@
-You are given the root of a binary search tree. Rearrange its nodes into ascending order linked through the `right` pointer, so that following `right` from the smallest node visits every value exactly once from low to high.
+Вам дается корень дерева двоичного поиска. Перегруппируйте его узлы в восходящий порядок, связанный через указатель `right`, так что после `right` от самого маленького узла посещает каждое значение ровно один раз от низкого до высокого.
 
-Return the head (the smallest node) of that chain. All `left` pointers in the returned structure must be `null` so the result remains a valid tree serialization.
+Все указатели `left` в возвращенной структуре должны быть `null`, чтобы результат оставался действительной сериализацией дерева.
 
-**Constraints:**
-- The tree holds between 0 and 1000 nodes.
-- Node values fit in a 32-bit signed integer.
-- The input is a valid binary search tree.
+**Ограничения:**
+- Дерево находится между узлами 0 и 1000.
+- Значения узлов вписываются в целое число, подписанное 32-битом.
+- Вход является действительным деревом двоичного поиска.
 
-Adaptation: the source produces a circular doubly linked list using left as previous and right as next. Because circular and backward links cannot be serialized as a tree without looping forever, this judge asks for the linear right-only chain (left pointers cleared, circular link omitted); only the ascending right order is checked.
+Адаптация: источник производит круговой двусвязный список, используя левое как предыдущее и правое как следующее. Поскольку круговые и обратные ссылки не могут быть сериализованы как дерево, не зацикливаясь навсегда, этот судья просит линейную цепь только справа (левые указатели очищены, круговая ссылка опущена); проверяется только восходящий правый порядок.

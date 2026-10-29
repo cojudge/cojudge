@@ -1,6 +1,6 @@
 {
   "id": "count-good-nodes-in-binary-tree",
-  "title": "100. Count Good Nodes in Binary Tree",
+  "title": "100. Подсчитайте хорошие узлы на двоичном дереве",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/count-good-nodes-in-binary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [3,1,4,3,null,1,5]",
       "output": "4",
-      "explanation": "The root 3, the left grandchild 3, node 4, and node 5 are good."
+      "explanation": "Корень 3, левый внук 3, узел 4 и узел 5 хороши."
     },
     {
       "input": "root = [3,3,null,4,2]",
       "output": "3",
-      "explanation": "There are 3 good nodes (nodes where all ancestors have <= node.val)."
+      "explanation": "Есть хорошие узлы 3 (узлы, где все предки имеют <= node.val)."
     },
     {
       "input": "root = [1]",
       "output": "1",
-      "explanation": "There are 1 good nodes (nodes where all ancestors have <= node.val)."
+      "explanation": "Есть хорошие узлы 1 (узлы, где все предки имеют <= node.val)."
     }
   ],
   "starterCode": {
@@ -55,8 +55,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Carry the maximum value seen on the path from the root during a DFS or BFS.",
-    "A node is good exactly when its value is at least that path maximum.",
-    "Pass `max(pathMaximum, node.val)` to each child."
+    "Несите максимальное значение, видимое на пути от корня во время DFS или BFS.",
+    "Узел хорош именно тогда, когда его значение, по крайней мере, является максимальным.",
+    "Передайте `max(pathMaximum, node.val)` каждому потомку."
   ]
 }

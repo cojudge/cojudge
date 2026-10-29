@@ -1,6 +1,6 @@
-Given a positive integer `n`, rearrange its decimal digits into the smallest larger integer that uses exactly the same digits. If no larger arrangement exists, or if the rearranged value does not fit in a 32-bit signed integer, return `-1`.
+Учитывая положительное целое число `n`, перегруппируйте его десятичные цифры в наименьшее большее целое число, которое использует точно такие же цифры. Если не существует большего расположения или если перегруппированное значение не вписывается в 32-бит подписанное целое число, верните `-1`.
 
-Think of it as finding the next permutation of the digit sequence: scan from the right for the first position where a digit is smaller than its right neighbor, exchange it with the smallest bigger digit on its right, then order the trailing digits increasingly. A fully non-increasing digit sequence has no greater permutation.
+Думайте об этом как об обнаружении следующей перестановки последовательности цифр: сканируйте справа на первую позицию, где цифра меньше своего правого соседа, обменивайте ее с наименьшей большой цифрой справа, а затем упорядочивайте следующие цифры все чаще. Полностью не увеличивающаяся последовательность цифр не имеет большей перестановки.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 2^31 - 1`

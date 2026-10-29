@@ -1,4 +1,4 @@
-Return the sum of the decimal digits of `n`, computed recursively: a single digit is its own sum, otherwise add the last digit to the sum of the rest.
+Возвращайте сумму десятичных цифр `n`, вычисленных рекурсивно: одна цифра является собственной суммой, иначе добавьте последнюю цифру к сумме остальных.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= n <= 10^9``

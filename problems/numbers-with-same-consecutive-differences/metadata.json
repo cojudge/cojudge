@@ -1,6 +1,6 @@
 {
   "id": "numbers-with-same-consecutive-differences",
-  "title": "953. Numbers With Same Consecutive Differences",
+  "title": "953. Числа с одинаковыми последовательными различиями",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/numbers-with-same-consecutive-differences/",
   "category": "backtracking",
@@ -8,17 +8,17 @@
     {
       "input": "n = 3, k = 7",
       "output": "[181,292,707,818,929]",
-      "explanation": "Only 181, 292, 707, 818 and 929 have every neighbouring digit pair differ by 7."
+      "explanation": "Только 181, 292, 707, 818 и 929 имеют каждую соседнюю цифровую пару, отличающуюся от 7."
     },
     {
       "input": "n = 2, k = 1",
       "output": "[10,12,21,23,32,34,43,45,54,56,65,67,76,78,87,89,98]",
-      "explanation": "Sixteen two-digit numbers step by exactly 1 between their digits, from 10 up to 98."
+      "explanation": "Шестнадцать двузначных чисел шагают точно по 1 между своими цифрами, от 10 до 98."
     },
     {
       "input": "n = 2, k = 0",
       "output": "[11,22,33,44,55,66,77,88,99]",
-      "explanation": "Both digits must match, giving the nine repdigits 11 through 99."
+      "explanation": "Обе цифры должны совпадать, давая девять повторных цифр 11 через 99."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Extend each prefix only with last-digit plus/minus k, guarded to stay within 0..9.",
-    "When k is 0 the two extensions coincide \u2014 deduplicate to avoid double counting.",
-    "Handle single-digit answers (0 through 9) as a special case."
+    "Расширяйте каждый префикс только последней цифрой плюс/минус k, охраняя его в пределах 0..9.",
+    "Когда k — 0, два расширения совпадают — дублируются, чтобы избежать двойного подсчета.",
+    "Обработка однозначных ответов (0 через 9) в качестве специального случая."
   ]
 }

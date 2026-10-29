@@ -1,0 +1,51 @@
+{
+  "id": "house-robber-ii",
+  "title": "23. House Robber II",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/house-robber-ii/",
+  "examples": [
+    {
+      "input": "nums=[2,3,2]",
+      "output": "3",
+      "explanation": "The houses form a circle, so house 0 (2) and house 2 (2) are adjacent. Robbing only house 1 (value 3) yields the maximum."
+    },
+    {
+      "input": "nums=[1,2,3,1]",
+      "output": "4",
+      "explanation": "The houses form a circle. Robbing houses 0 (1) and 2 (3) for a total of 4 is the maximum."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int rob(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def rob(self, nums: List[int]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int rob(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int Rob(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn rob(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc Rob(nums []int) int {\n    \n}",
+    "typescript": "export function rob(nums: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function rob($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[2,3,2]"
+    },
+    {
+      "nums": "[1,2,3,1]"
+    },
+    {
+      "nums": "[1,2,3]"
+    }
+  ],
+  "functionName": "rob",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Split into two cases: rob from [0..n-2] or [1..n-1], and take the max."
+  ]
+}

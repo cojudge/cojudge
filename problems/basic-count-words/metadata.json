@@ -1,18 +1,18 @@
 {
   "id": "basic-count-words",
-  "title": "34. Count Words",
+  "title": "34. Подсчитывать слова",
   "difficulty": "Easy",
   "category": "strings",
   "examples": [
     {
       "input": "s = \"hello world\"",
       "output": "2",
-      "explanation": "Two words."
+      "explanation": "Два слова."
     },
     {
       "input": "s = \"  hi   there \"",
       "output": "2",
-      "explanation": "Extra spaces do not create words."
+      "explanation": "Дополнительные пространства не создают слов."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Trim the string first; empty after trimming means 0.",
-    "Split on whitespace and count the pieces."
+    "Сначала обрезайте строку; пустая после обрезки означает 0.",
+    "Разделите на белое пространство и сосчитайте кусочки."
   ]
 }

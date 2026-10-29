@@ -1,6 +1,6 @@
 {
   "id": "minimum-increment-to-make-array-unique",
-  "title": "932. Minimum Increment to Make Array Unique",
+  "title": "932. Минимальное увеличение, чтобы сделать Array уникальным",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/minimum-increment-to-make-array-unique/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1,2,2]",
       "output": "1",
-      "explanation": "Raise one duplicate 2 to 3."
+      "explanation": "Поднимите один дубликат 2 до 3."
     },
     {
       "input": "nums = [3,2,1,2,1,7]",
       "output": "6",
-      "explanation": "Finish at values such as 3,4,1,2,5,7."
+      "explanation": "Завершить на значениях, таких как 3, 4, 1, 2, 5, 7."
     }
   ],
   "starterCode": {
@@ -59,7 +59,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sort first so equal and nearly-equal values sit next to each other.",
-    "Sweep left to right keeping the smallest free value: whenever the current entry is taken, lift it exactly to that free value and add the gap to the cost."
+    "Сначала такие равные и почти равные значения находятся рядом друг с другом.",
+    "Скачайте слева направо, сохраняя наименьшую свободную стоимость: всякий раз, когда текущая запись принимается, поднимите ее точно до этой свободной стоимости и добавьте разрыв к стоимости."
   ]
 }

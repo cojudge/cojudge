@@ -1,6 +1,6 @@
 {
   "id": "construct-string-from-binary-tree",
-  "title": "642. Construct String from Binary Tree",
+  "title": "642. Строительная струна из бинарного дерева",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/construct-string-from-binary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,2,3,4]",
       "output": "\"1(2(4))(3)\"",
-      "explanation": "Node 1 has left subtree 2 (which itself has left child 4) and right child 3, so the parenthesized preorder form is 1(2(4))(3)."
+      "explanation": "Узел 1 оставил поддеревья 2 (который сам оставил потомка 4) и правый потомок 3, поэтому форма предварительного заказа в скобках 1 (2 (4)) (3)."
     },
     {
       "input": "root = [1,2,3,null,4]",
       "output": "\"1(2()(4))(3)\"",
-      "explanation": "Node 2 has no left child but has right child 4, so an empty pair marks the missing left side to keep the mapping unambiguous."
+      "explanation": "Узел 2 не имеет левого потомка, но имеет правого потомка 4, поэтому пустая пара отмечает недостающую левую сторону, чтобы сохранить отображение однозначным."
     },
     {
       "input": "root = [1]",
       "output": "\"1\"",
-      "explanation": "A lone node needs no parentheses."
+      "explanation": "Одинокий узел не нуждается в скобках."
     }
   ],
   "starterCode": {
@@ -52,8 +52,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Walk the tree in root-left-right order and emit the node value first.",
-    "Append the left part in parentheses whenever any child exists; append the right part only when a right child exists.",
-    "When the left child is missing but the right child is present, keep an empty pair for the left side so the shape stays recoverable."
+    "Прогуляйтесь по дереву в корнево-лево-правом порядке и сначала излучите значение узла.",
+    "Приложите левую часть в скобках всякий раз, когда существует потомок; приложите правую часть только тогда, когда существует правый потомок.",
+    "Когда левый потомок отсутствует, а правый потомок присутствует, держите пустую пару на левой стороне, чтобы форма оставалась восстанавливаемой."
   ]
 }

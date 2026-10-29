@@ -1,6 +1,6 @@
 {
   "id": "triples-with-bitwise-and-equal-to-zero",
-  "title": "965. Triples With Bitwise AND Equal To Zero",
+  "title": "965. Трижды с битумом и равным нулю",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/triples-with-bitwise-and-equal-to-zero/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [2,1,3]",
       "output": "12",
-      "explanation": "Twelve ordered index triples have a combined bitwise AND of zero."
+      "explanation": "Двенадцать упорядоченных тройных индексов имеют комбинированную битовую и нулевую величину."
     },
     {
       "input": "nums = [0,0,0]",
       "output": "27",
-      "explanation": "Every one of the 3*3*3 triples qualifies because 0 AND 0 AND 0 is 0."
+      "explanation": "Каждый из них - 3*3*3 тройная квалификация, потому что 0 И 0 И 0 это 0."
     }
   ],
   "starterCode": {
@@ -43,8 +43,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Precompute frequencies of all pairwise AND results; there are at most 2^16 distinct values.",
-    "For each pair value p and each element x, the triple qualifies exactly when (p AND x) == 0.",
-    "Multiply pair frequencies by matching third elements instead of enumerating all n^3 triples."
+    "Предвычислительные частоты всех попарно и результаты; есть максимум 2^16 различных значений.",
+    "Для каждого значения пары p и каждого элемента x тройка определяет, когда (p и x) == 0.",
+    "Умножьте частоты пар, сопоставляя третьи элементы вместо перечисления всех тройных n^3."
   ]
 }

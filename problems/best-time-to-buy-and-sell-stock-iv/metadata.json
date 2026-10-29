@@ -1,1 +1,65 @@
-{"category": "dp", "difficulty": "Hard", "examples": [{"explanation": "Buy at 2, sell at 4 for profit 2; no second profitable trade exists.", "input": "k = 2, prices = [2,4,1]", "output": "2"}, {"explanation": "Trade 2->6 (profit 4) and 0->3 (profit 3) for a total of 7.", "input": "k = 2, prices = [3,2,6,5,0,3]", "output": "7"}, {"explanation": "With one trade allowed, buy at 1 and sell at 5.", "input": "k = 1, prices = [1,2,3,4,5]", "output": "4"}], "functionName": "maxProfit", "hints": ["When k is at least half the number of days, every upward step can be taken: sum all positive day-to-day differences.", "Otherwise track, for each trade count j, the best balance while holding (buy[j]) and while free (sell[j]), updating both as each price arrives.", "A buy on day i uses sell[j-1] - price; a sell uses buy[j] + price. The answer is sell[k]."], "id": "best-time-to-buy-and-sell-stock-iv", "link": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/", "outputType": "int", "params": [{"name": "k", "type": "int"}, {"name": "prices", "type": "int_array"}], "starterCode": {"cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int maxProfit(int k, vector<int>& prices) {\n        return 0;\n    }\n};", "csharp": "public class Solution \n{\n    public int MaxProfit(int k, int[] prices) \n    {\n        return 0;\n    }\n}", "go": "package main\n\nfunc MaxProfit(k int, prices []int) int {\n    return 0\n}", "java": "class Solution {\n    public int maxProfit(int k, int[] prices) {\n        return 0;\n    }\n}", "php": "class Solution {\n    /**\n     * @param int $k\n     * @param int[] $prices\n     * @return int\n     */\n    public function maxProfit($k, $prices) {\n\n    }\n}", "python": "from typing import List\nclass Solution:\n    def maxProfit(self, k: int, prices: List[int]) -> int:\n        return 0\n", "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_profit(k: i32, prices: Vec<i32>) -> i32 {\n        0\n    }\n}", "typescript": "export function maxProfit(k: number, prices: number[]): number {\n    return 0;\n}"}, "testCases": [{"k": 2, "prices": "[2,4,1]"}, {"k": 2, "prices": "[3,2,6,5,0,3]"}, {"k": 1, "prices": "[1,2,3,4,5]"}], "title": "328. Best Time to Buy and Sell Stock IV"}
+{
+  "category": "dp",
+  "difficulty": "Hard",
+  "examples": [
+    {
+      "explanation": "Покупайте в 2, продавайте в 4 с прибылью 2; второй прибыльной торговли не существует.",
+      "input": "k = 2, prices = [2,4,1]",
+      "output": "2"
+    },
+    {
+      "explanation": "Торговля 2->6 (прибыль 4) и 0->3 (прибыль 3) в общей сложности 7.",
+      "input": "k = 2, prices = [3,2,6,5,0,3]",
+      "output": "7"
+    },
+    {
+      "explanation": "С одной разрешенной торговлей покупайте в 1 и продавайте в 5.",
+      "input": "k = 1, prices = [1,2,3,4,5]",
+      "output": "4"
+    }
+  ],
+  "functionName": "maxProfit",
+  "hints": [
+    "Когда k составляет по меньшей мере половину числа дней, можно сделать каждый шаг вверх: суммировать все положительные ежедневные различия.",
+    "В противном случае отслеживайте, для каждого торгового счета j, лучший баланс при удерживании (покупка [j]) и в то время как свободный (продажа [j]), обновляя оба по мере поступления каждой цены.",
+    "Покупка в день i использует sell[j-1] — цена; продажа использует buy[j] + цена."
+  ],
+  "id": "best-time-to-buy-and-sell-stock-iv",
+  "link": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/",
+  "outputType": "int",
+  "params": [
+    {
+      "name": "k",
+      "type": "int"
+    },
+    {
+      "name": "prices",
+      "type": "int_array"
+    }
+  ],
+  "starterCode": {
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int maxProfit(int k, vector<int>& prices) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MaxProfit(int k, int[] prices) \n    {\n        return 0;\n    }\n}",
+    "go": "package main\n\nfunc MaxProfit(k int, prices []int) int {\n    return 0\n}",
+    "java": "class Solution {\n    public int maxProfit(int k, int[] prices) {\n        return 0;\n    }\n}",
+    "php": "class Solution {\n    /**\n     * @param int $k\n     * @param int[] $prices\n     * @return int\n     */\n    public function maxProfit($k, $prices) {\n\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxProfit(self, k: int, prices: List[int]) -> int:\n        return 0\n",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_profit(k: i32, prices: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "typescript": "export function maxProfit(k: number, prices: number[]): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "k": 2,
+      "prices": "[2,4,1]"
+    },
+    {
+      "k": 2,
+      "prices": "[3,2,6,5,0,3]"
+    },
+    {
+      "k": 1,
+      "prices": "[1,2,3,4,5]"
+    }
+  ],
+  "title": "328. Лучшее время для покупки и продажи акций IV"
+}

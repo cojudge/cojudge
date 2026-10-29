@@ -1,7 +1,7 @@
-You are given an integer list `nums`. A subsequence keeps the original order but may skip entries. It counts as arithmetic when it holds at least three numbers and the gap between consecutive numbers never changes.
+Вам дается целый список `nums`. Последовательность сохраняет первоначальный порядок, но может пропускать записи. Она считается арифметической, когда она содержит по меньшей мере три числа, и разрыв между последовательными числами никогда не меняется.
 
-Count all such arithmetic subsequences. Overlapping subsequences that use different positions count separately even when their values look the same.
+Подсчитывайте все такие арифметические подпоследовательности. Накладывающие подпоследовательности, использующие разные позиции, подсчитывают отдельно, даже когда их значения выглядят одинаково.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 1000`
 - `-2^31 <= nums[i] <= 2^31 - 1`

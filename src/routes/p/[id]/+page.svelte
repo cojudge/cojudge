@@ -34,7 +34,7 @@
 
         const fb = await initFirebase();
         if (!fb || !fb.db) {
-            error = 'Firebase not configured';
+            error = "Firebase не настроена";
             loading = false;
             return;
         }
@@ -52,11 +52,11 @@
                 output = data.output || '';
                 logs = data.logs || '';
             } else {
-                error = 'Code does not exist.';
+                error = "Кодекса не существует.";
             }
         } catch (e) {
             console.error(e);
-            error = 'Error loading solution';
+            error = "Решение для загрузки ошибок";
         } finally {
             loading = false;
         }
@@ -89,16 +89,14 @@
 
 <div class="page-container">
     {#if loading}
-        <div class="center-msg">Loading...</div>
+        <div class="center-msg">Загрузка…</div>
     {:else if error}
         <div class="center-msg error-state">
             <div class="error-card">
-                <span class="error-eyebrow">Shared solution</span>
-                <h1>{error === 'Code does not exist.' ? 'Solution not found' : 'Unable to load solution'}</h1>
+                <span class="error-eyebrow">Совместное решение</span>
+                <h1>{error === 'Code does not exist.' ? "Решение не найдено" : "Невозможно загрузить решение"}</h1>
                 <p>
-                    {#if error === 'Code does not exist.'}
-                        Code <code>{id}</code> does not exist.
-                    {:else}
+                    {#if error === 'Code does not exist.'}Код <code>{id}</code> не существует.{:else}
                         {error}
                     {/if}
                 </p>
@@ -107,7 +105,7 @@
                         <path d="m3 11 9-8 9 8"></path>
                         <path d="M5 10v11h14V10"></path>
                     </svg>
-                    Home
+                    Домой
                 </button>
             </div>
         </div>
@@ -123,16 +121,14 @@
                         <path d="m3 11 9-8 9 8"></path>
                         <path d="M5 10v11h14V10"></path>
                     </svg>
-                    Home
+                    Домой
                 </button>
                 <button class="action-btn" on:click={copySourceCode}>
                     {#if sourceCopied}
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        Copied
-                    {:else}
+                        Скопировано{:else}
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                        Copy Source
-                    {/if}
+                        Источник Copy{/if}
                 </button>
                 <button class="action-btn" on:click={handleFork}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -141,7 +137,7 @@
                         <path d="M6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M15 6a9 9 0 0 0-9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    Fork to {problemId ? 'Problem' : 'Playground'}
+                    Вилка {problemId ? "Задача" : "Песочница"}
                 </button>
             </div>
         </div>

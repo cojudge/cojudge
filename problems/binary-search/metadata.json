@@ -1,6 +1,6 @@
 {
   "id": "binary-search",
-  "title": "87. Binary Search",
+  "title": "87. Бинарный поиск",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/binary-search/",
   "category": "binary-search",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [-1,0,3,5,9,12], target = 9",
       "output": "4",
-      "explanation": "Target 9 is found at index 4 in the sorted array."
+      "explanation": "Цель 9 находится в индексе 4 в сортированном массиве."
     },
     {
       "input": "nums = [-1,0,3,5,9,12], target = 2",
       "output": "-1",
-      "explanation": "Target 2 is not present in the array."
+      "explanation": "Цель 2 отсутствует в массиве."
     },
     {
       "input": "nums = [5], target = 5",
       "output": "0",
-      "explanation": "Target 5 is found at index 0 in the sorted array."
+      "explanation": "Цель 5 находится в индексе 0 в сортированном массиве."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Compare target with the middle element and discard the half that cannot contain it.",
-    "Track an inclusive search interval with left <= right.",
-    "Compute the midpoint as left + (right - left) / 2."
+    "Сравните цель со средним элементом и отбросьте половину, которая не может его содержать.",
+    "Отслеживайте инклюзивный интервал поиска слева <= справа.",
+    "Вычислите среднюю точку как левая + (правая - левая) / 2."
   ]
 }

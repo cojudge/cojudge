@@ -1,6 +1,6 @@
 {
   "id": "pour-water",
-  "title": "757. Pour Water",
+  "title": "757. Слить воду",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/pour-water/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "heights = [2,1,1,2,1,2,2], volume = 4, k = 3",
       "output": "[2,2,2,3,2,2,2]",
-      "explanation": "Two left, one right, one stays."
+      "explanation": "Два слева, один справа, один остается."
     },
     {
       "input": "heights = [1,2,3,4], volume = 2, k = 2",
       "output": "[2,3,3,4]",
-      "explanation": "Both drift left."
+      "explanation": "Оба дрейфа ушли."
     },
     {
       "input": "heights = [3,1,3], volume = 5, k = 1",
       "output": "[4,4,4]",
-      "explanation": "Dip fills then levels out."
+      "explanation": "Dip заполняет уровни."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Handle units sequentially; each decision sees all previously placed water.",
-    "To probe left, scan outward while heights do not rise and track the lowest position; only move when it beats the start level.",
-    "Try the left side before the right side, and stay put when neither side improves."
+    "Управляйте устройствами последовательно; каждое решение видит всю ранее размещенную воду.",
+    "Чтобы зондировать влево, сканируйте наружу, в то время как высоты не поднимаются и отслеживают нижнюю позицию; двигайтесь только тогда, когда она бьет стартовый уровень.",
+    "Попробуйте левую сторону перед правой стороной и оставайтесь на месте, когда ни одна из сторон не улучшается."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "couples-holding-hands",
-  "title": "766. Couples Holding Hands",
+  "title": "766. Пары держатся за руки",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/couples-holding-hands/",
   "category": "greedy",
@@ -8,17 +8,17 @@
     {
       "input": "row = [0,2,1,3]",
       "output": "1",
-      "explanation": "Swap chairs 1 and 2 to line up both couples."
+      "explanation": "Поменяйте стулья 1 и 2, чтобы выстроить обе пары."
     },
     {
       "input": "row = [3,2,0,1]",
       "output": "0",
-      "explanation": "Every adjacent pair is already a couple."
+      "explanation": "Каждая соседняя пара уже является парой."
     },
     {
       "input": "row = [2,3,1,0]",
       "output": "0",
-      "explanation": "Reversed pairs still count as together."
+      "explanation": "Обратные пары по-прежнему считаются вместе."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Keep a position table from person to chair so the partner of any seat is found instantly.",
-    "Walk the couches left to right: if chair 2k+1 does not hold the partner of chair 2k, swap that partner into place.",
-    "Each such swap fixes at least one couple and never harms an earlier couch, so the count is minimal."
+    "Держите позиционный стол от человека к стулу, чтобы партнер любого сиденья был найден мгновенно.",
+    "Пройдитесь по диванам слева направо: если стул 2k+1 не держит партнера стула 2k, поменяйте этого партнера на место.",
+    "Каждый такой своп фиксирует хотя бы одну пару и никогда не вредит более раннему дивану, поэтому счет минимальный."
   ]
 }

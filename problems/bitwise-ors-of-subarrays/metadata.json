@@ -1,6 +1,6 @@
 {
   "id": "bitwise-ors-of-subarrays",
-  "title": "888. Bitwise ORs of Subarrays",
+  "title": "888. Bitwise или Subarrays",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/bitwise-ors-of-subarrays/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "arr = [0]",
       "output": "1",
-      "explanation": "Only 0 is reachable."
+      "explanation": "Доступен только 0."
     },
     {
       "input": "arr = [1,1,2]",
       "output": "3",
-      "explanation": "Reachable ORs are 1, 2, 3."
+      "explanation": "Достижимыми OR являются 1, 2, 3."
     },
     {
       "input": "arr = [1,2,4]",
       "output": "6",
-      "explanation": "Reachable ORs are 1, 2, 3, 4, 6, 7."
+      "explanation": "Достижимыми ИЛИ являются 1, 2, 3, 4, 6, 7."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Keep the set of ORs for blocks ending at the previous position; each new element extends them.",
-    "That set stays tiny (at most ~30 values) because ORs can only gain bits, so the total work is linear."
+    "Сохраняйте набор ИЛИ для блоков, заканчивающихся в предыдущем положении; каждый новый элемент расширяет их.",
+    "Этот набор остается крошечным (в большинстве значений ~30), потому что ИЛИ могут получать только биты, поэтому общая работа является линейной."
   ]
 }

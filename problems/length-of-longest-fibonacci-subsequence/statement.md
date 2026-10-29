@@ -1,8 +1,8 @@
-You are given a strictly increasing array of positive integers `arr`. A subsequence of `arr` is called Fibonacci-like when it contains at least three numbers and every element from the third onward equals the sum of the two elements right before it.
+Вы получаете строго увеличивающийся массив положительных целых чисел `arr`.Последовательность `arr` называется Фибоначчи-подобной, когда она содержит по меньшей мере три числа, и каждый элемент с третьего вперед равен сумме двух элементов прямо перед ним.
 
-Return the length of the longest Fibonacci-like subsequence. When no such subsequence exists, return `0`.
+Возвращайте длину самой длинной последовательности, подобной Фибоначчи. Когда такой последовательности не существует, возвращайте `0`.
 
-**Constraints:**
+**Ограничения:**
 - `3 <= arr.length <= 1000`
 - `1 <= arr[i] <= 10^9`
-- All values of `arr` are distinct and sorted in increasing order.
+- Все значения `arr` различны и сортируются в порядке возрастания.

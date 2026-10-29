@@ -1,9 +1,9 @@
-You are given `m` arrays, each sorted in non-decreasing order. Choose two numbers coming from two different arrays and look at their absolute difference. Return the largest achievable difference.
+Вы получаете массивы `m`, каждый из которых отсортирован в неубывающем порядке. Выберите два числа из двух разных массивов и посмотрите на их абсолютную разницу. Верните самую большую достижимую разницу.
 
-Because every row is ordered, only row endpoints influence the optimum, but the two picks must never share a row.
+Поскольку каждая строка упорядочена, только конечные точки строки влияют на оптимум, но два пика никогда не должны делить строку.
 
-**Constraints:**
-- At least two arrays are present; total values are modest.
-- Each array has at least one number; values fit in [-10000, 10000].
+**Ограничения:**
+- Присутствуют как минимум два массива; общие значения скромны.
+- Каждый массив имеет по меньшей мере одно число; значения вписываются в [-10000, 10000].
 
-*Adaptation: the nested input maps to `int_array_2d` in this judge.*
+*Адаптация: вложенные карты ввода в `int_array_2d` в этом суде.*

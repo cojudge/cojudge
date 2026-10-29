@@ -1,6 +1,6 @@
 {
   "id": "additive-number",
-  "title": "398. Additive Number",
+  "title": "398. Аддитивное число",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/additive-number/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "num = \"112358\"",
       "output": "true",
-      "explanation": "Splits as 1, 1, 2, 3, 5."
+      "explanation": "Разделяется на 1, 1, 2, 3, 5."
     },
     {
       "input": "num = \"199100199\"",
       "output": "true",
-      "explanation": "Splits as 1, 99, 100, 199."
+      "explanation": "Разделяется на 1, 99, 100, 199."
     },
     {
       "input": "num = \"1023\"",
       "output": "false",
-      "explanation": "No valid additive split exists."
+      "explanation": "Не существует действительного аддитивного разделения."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Only the first two numbers are free choices; everything after is forced by the sum rule.",
-    "Reject any candidate first or second number with a leading zero and length above one.",
-    "Add with digit strings (or big integers) since values can outgrow fixed-size types."
+    "Только первые два числа являются свободным выбором; все после этого вынуждается правилом суммы.",
+    "Отклоните любое кандидатское первое или второе число с ведущим нулем и длиной выше единицы.",
+    "Добавьте к ним цифровые строки (или большие целые числа), так как значения могут перерасти типы фиксированного размера."
   ]
 }

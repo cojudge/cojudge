@@ -1,7 +1,7 @@
-Given an unsorted integer array, look at the array in sorted order and measure the gaps between neighbours. Return the largest such gap.
+Учитывая несортированный целочисленный массив, посмотрите на массив в отсортированном порядке и измерьте разрывы между соседями.
 
-When the array holds fewer than two numbers there is no gap, so return 0.
+Когда массив содержит меньше двух чисел, нет разрыва, поэтому возвращайте 0.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= nums.length <= 10^4`
 - `0 <= nums[i] <= 10^9`

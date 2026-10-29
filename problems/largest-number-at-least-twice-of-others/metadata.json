@@ -1,6 +1,6 @@
 {
   "id": "largest-number-at-least-twice-of-others",
-  "title": "750. Largest Number At Least Twice of Others",
+  "title": "750. Самое большое число, по крайней мере, в два раза",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/largest-number-at-least-twice-of-others/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [3,6,1,0]",
       "output": "1",
-      "explanation": "6 at index 1 is at least twice every other value."
+      "explanation": "6 в индексе 1 по крайней мере в два раза превышает любое другое значение."
     },
     {
       "input": "nums = [1,2,3,4]",
       "output": "-1",
-      "explanation": "4 is less than twice 3."
+      "explanation": "4 в два раза меньше, чем 3."
     },
     {
       "input": "nums = [10,5,3]",
       "output": "0",
-      "explanation": "10 at index 0 doubles 5 and more."
+      "explanation": "10 по индексу 0 удваивает 5 и более."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Make one pass to find the maximum value and remember its position.",
-    "Make a second pass comparing the maximum against twice each other entry; any failure means -1.",
-    "Comparing with 2*x avoids fractions entirely."
+    "Сделайте один проход, чтобы найти максимальное значение и запомнить его положение.",
+    "Сделайте второй проход, сравнивая максимум с двойным входом; любой отказ означает -1.",
+    "Сравнение с 2*x позволяет полностью избежать фракций."
   ]
 }

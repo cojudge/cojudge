@@ -66,9 +66,9 @@
   ],
   "outputType": "string",
   "hints": [
-    "This is a portable adaptation: parse the input string as a double and return a finite, double-parseable decimal string.",
-    "Use exponentiation by squaring, halving the exponent at each step.",
-    "Store the exponent in a wider signed integer before negating it so the minimum 32-bit exponent is handled safely.",
-    "For a negative exponent, invert the base and use the positive magnitude of the exponent."
+    "Это портативная адаптация: разберите входную строку как двойную и верните конечную, двойную десятичную строку.",
+    "Используйте экспоненциацию путем квадратуры, уменьшая вдвое показатель на каждом шаге.",
+    "Храните экспоненту в более широком подписанном целом числе, прежде чем отрицать его, чтобы минимальный экспонент 32-бит обрабатывался безопасно.",
+    "Для отрицательного экспонента переверните основание и используйте положительную величину экспоненты."
   ]
 }

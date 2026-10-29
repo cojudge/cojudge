@@ -1,6 +1,6 @@
 {
   "id": "unique-binary-search-trees",
-  "title": "281. Unique Binary Search Trees",
+  "title": "281. Уникальные двоичные деревья поиска",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/unique-binary-search-trees/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "n = 3",
       "output": "5",
-      "explanation": "Five distinct BST shapes exist over three ordered values."
+      "explanation": "Пять различных форм BST существуют по трем упорядоченным значениям."
     },
     {
       "input": "n = 1",
       "output": "1",
-      "explanation": "A single node forms exactly one tree."
+      "explanation": "Один узел образует ровно одно дерево."
     },
     {
       "input": "n = 4",
       "output": "14",
-      "explanation": "The Catalan number C4 is 14."
+      "explanation": "Каталонский номер C4 — 14."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Let dp[i] be the count for i nodes; dp[0] = dp[1] = 1.",
-    "For i >= 2, dp[i] = sum over roots r of dp[r-1] * dp[i-r].",
-    "Fill dp bottom-up from 2 to n."
+    "Пусть dp[i] будет счётчиком для i-узлов; dp[0] = dp[1] = 1.",
+    "Для i >= 2, dp[i] = сумма над корнями r dp[r-1] * dp[i-r].",
+    "Заполните dp снизу вверх от 2 до n."
   ]
 }

@@ -1,0 +1,58 @@
+{
+  "id": "number-of-corner-rectangles",
+  "title": "753. Number Of Corner Rectangles",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/number-of-corner-rectangles/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "grid = [[1,0,0,1,0],[0,0,1,0,1],[0,0,0,1,0],[1,0,1,0,1]]",
+      "output": "1",
+      "explanation": "Only rows 1,3 with columns 2,4 form all-one corners."
+    },
+    {
+      "input": "grid = [[1,1,1],[1,1,1],[1,1,1]]",
+      "output": "9",
+      "explanation": "3 row pairs times 3 column pairs."
+    },
+    {
+      "input": "grid = [[1,1,1,1]]",
+      "output": "0",
+      "explanation": "Need two distinct rows."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int countCornerRectangles(int[][] grid) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def countCornerRectangles(self, grid: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int countCornerRectangles(vector<vector<int>>& grid) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int CountCornerRectangles(int[][] grid) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_corner_rectangles(grid: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc CountCornerRectangles(grid [][]int) int {\n    return 0\n}",
+    "typescript": "export function countCornerRectangles(grid: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $grid\n     * @return int\n     */\n    public function countCornerRectangles($grid) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "grid": "[[1,0,0,1,0],[0,0,1,0,1],[0,0,0,1,0],[1,0,1,0,1]]"
+    },
+    {
+      "grid": "[[1,1,1],[1,1,1],[1,1,1]]"
+    },
+    {
+      "grid": "[[1,1,1,1]]"
+    }
+  ],
+  "functionName": "countCornerRectangles",
+  "params": [
+    {
+      "name": "grid",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Fix one row at a time and look at every pair of 1s inside it as a potential base.",
+    "Keep a table counting how many earlier rows already contained each column pair; each prior occurrence closes that many new rectangles.",
+    "Summing over rows gives an O(m * n^2) scan with O(n^2) memory."
+  ]
+}

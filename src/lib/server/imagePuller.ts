@@ -1,7 +1,8 @@
+import { javaImage, pythonImage } from '$lib/server/runtimeImages';
 import Dockerode from 'dockerode';
-import { javaImage } from '$lib/utils/javaUtil';
+
 import { phpImage } from '$lib/utils/phpUtil';
-import { pythonImage } from '$lib/utils/pythonUtil';
+
 import { cppImage } from '$lib/utils/cppUtil';
 import { csharpImage } from '$lib/utils/csharpUtil';
 import { rustImage } from '$lib/utils/rustUtil';

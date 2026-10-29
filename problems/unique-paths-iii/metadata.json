@@ -1,6 +1,6 @@
 {
   "id": "unique-paths-iii",
-  "title": "964. Unique Paths III",
+  "title": "964. Уникальные маршруты III",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/unique-paths-iii/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "grid = [[1,0,0,0],[0,0,0,0],[0,0,2,-1]]",
       "output": "2",
-      "explanation": "Two walks start at 1, step on every open cell exactly once, and finish at 2."
+      "explanation": "Две прогулки начинаются на 1, наступают на каждую открытую ячейку ровно один раз и заканчиваются на 2."
     },
     {
       "input": "grid = [[1,0,0,0],[0,0,0,0],[0,0,0,2]]",
       "output": "4",
-      "explanation": "Four covering walks exist on this obstacle-free board."
+      "explanation": "На этой доске без препятствий существуют четыре покрывающие прогулки."
     },
     {
       "input": "grid = [[0,1],[1,0]]",
       "output": "0",
-      "explanation": "No walk can both cover every open cell and end at the target."
+      "explanation": "Никакая прогулка не может покрыть каждую открытую камеру и закончиться в мишени."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Count how many non-obstacle cells must be visited; a valid walk visits exactly that many cells including start and end.",
-    "Depth-first search with backtracking from the start cell, marking cells visited and unmarking on return.",
-    "When the search reaches the end cell, count it only if every open cell has been stepped on."
+    "Подсчитайте, сколько клеток, не являющихся препятствием, необходимо посетить; действительная прогулка посещает именно то, что многие клетки, включая начало и конец.",
+    "Глубина первого поиска с обратным отслеживанием от начальной ячейки, пометкой посещенных ячеек и разметкой по возвращении.",
+    "Когда поиск достигает конечной ячейки, сосчитайте ее только в том случае, если на каждую открытую ячейку наступала ступка."
   ]
 }

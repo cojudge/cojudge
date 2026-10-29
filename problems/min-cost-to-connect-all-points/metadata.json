@@ -1,6 +1,6 @@
 {
   "id": "min-cost-to-connect-all-points",
-  "title": "123. Min Cost to Connect All Points",
+  "title": "123. Стоимость подключения всех точек",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/min-cost-to-connect-all-points/",
   "category": "graph",
@@ -8,12 +8,12 @@
     {
       "input": "points = [[0,0],[2,2],[3,10],[5,2],[7,0]]",
       "output": "20",
-      "explanation": "The minimum Manhattan distance to connect all 5 points is 20."
+      "explanation": "Минимальное расстояние до Манхэттена для соединения всех точек 5 — 20."
     },
     {
       "input": "points = [[3,12],[-2,5],[-4,1]]",
       "output": "18",
-      "explanation": "The minimum Manhattan distance to connect all 3 points is 18."
+      "explanation": "Минимальное расстояние до Манхэттена для соединения всех точек 3 — 18."
     }
   ],
   "starterCode": {
@@ -47,8 +47,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "This is a minimum spanning tree problem on a complete graph whose edge weights are Manhattan distances.",
-    "Prim's algorithm can update each unvisited point's cheapest connection without explicitly storing all O(n^2) edges.",
-    "An O(n^2) implementation of Prim's algorithm uses O(n) auxiliary space and is sufficient for the constraints."
+    "Это минимальная проблема с деревом на полном графике, крайние веса которого составляют расстояния Манхэттена.",
+    "Алгоритм Prim может обновлять самое дешевое соединение каждой непосещенной точки без явного хранения всех краев O(n^2).",
+    "Реализация алгоритма Прима O(n^2) использует дополнительное пространство O(n) и достаточна для ограничений."
   ]
 }

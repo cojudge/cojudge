@@ -1,12 +1,12 @@
-You are given a starting string `beginWord`, a destination string `endWord`, and a pool of strings `wordList`. Consider chains that open with `beginWord` and finish at `endWord`, alter precisely one letter between consecutive links, and draw every link after the first from `wordList`.
+Вам предоставляется стартовая строка `beginWord`, строка назначения `endWord` и пул строк `wordList`. Рассмотрим цепочки, которые открываются с `beginWord` и заканчиваются на `endWord`, изменяют ровно одну букву между последовательными ссылками и рисуют каждую ссылку после первой из `wordList`.
 
-Among all such chains, return how many strings the briefest one holds, counting both the opening and the closing string. When the two ends cannot be connected this way, return `0`.
+Среди всех таких цепочек возвращайте, сколько струн держит самая короткая, считая и открывающую, и закрывающую струну.Когда два конца не могут быть соединены таким образом, возвращайте `0`.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= beginWord.length <= 10`
 - `endWord.length == beginWord.length`
 - `1 <= wordList.length <= 5000`
-- Every word contains only lowercase English letters and has the same length as `beginWord`.
-- All words in `wordList` are unique.
+- Каждое слово содержит только строчные английские буквы и имеет ту же длину, что и `beginWord`.
+- Все слова в `wordList` уникальны.
 - `beginWord != endWord`

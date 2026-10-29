@@ -1,6 +1,6 @@
 {
   "id": "lfu-cache",
-  "title": "193. LFU Cache",
+  "title": "193. Кэш ЛФУ",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/lfu-cache/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"LFUCache\",\"put\",\"put\",\"get\",\"put\",\"get\",\"get\",\"put\",\"get\",\"get\",\"get\"], args = [[2],[1,1],[2,2],[1],[3,3],[2],[3],[4,4],[1],[3],[4]]",
       "output": "[1,-1,3,-1,3,4]",
-      "explanation": "Capacity 2. get(1) returns 1; put(3,3) evicts key 2; get(2) returns -1 and get(3) returns 3. put(4,4) evicts key 1; get(1) returns -1 while get(3) returns 3 and get(4) returns 4."
+      "explanation": "Емкость 2. get(1) возвращает 1; put(3,3) выселяет ключ 2; get(2) возвращает -1 и get(3) возвращает 3. put(4,4) выселяет ключ 1; get(1) возвращает -1 в то время как get(3) возвращает 3 и get(4) возвращает 4."
     },
     {
       "input": "operations = [\"LFUCache\",\"put\",\"get\",\"put\",\"get\",\"get\"], args = [[1],[2,1],[2],[3,2],[2],[3]]",
       "output": "[1,-1,2]",
-      "explanation": "Capacity 1. get(2) returns 1; put(3,2) evicts key 2; get(2) returns -1 and get(3) returns 2."
+      "explanation": "Емкость 1. get(2) возвращает 1; put(3,2) выселяет ключ 2; get(2) возвращает -1 и get(3) возвращает 2."
     },
     {
       "input": "operations = [\"LFUCache\",\"put\",\"put\",\"get\",\"get\"], args = [[2],[1,1],[1,9],[1],[2]]",
       "output": "[9,-1]",
-      "explanation": "Capacity 2. put(1,9) updates key 1; get(1) returns 9 and get(2) returns -1."
+      "explanation": "Емкость 2. put(1,9) обновляет ключ 1; get(1) возвращает 9 и get(2) возвращает -1."
     }
   ],
   "starterCode": {
@@ -62,7 +62,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Keep key-to-value and key-to-frequency maps plus frequency-to-ordered-keys groups.",
-    "Track the minimum frequency; on eviction remove the least recently used key from the minimum group, and update min frequency after each get/put."
+    "Храните карты ключ-значение и ключ-частота плюс группы ключей с частотой-упорядочением.",
+    "Отслеживайте минимальную частоту; при выселении удаляйте наименее используемый ключ из минимальной группы и обновляйте минимальную частоту после каждого приема / вывода."
   ]
 }

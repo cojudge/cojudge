@@ -1,6 +1,6 @@
 {
   "id": "largest-triangle-area",
-  "title": "810. Largest Triangle Area",
+  "title": "810. Самая большая зона треугольника",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/largest-triangle-area/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "points = [[0,0],[0,1],[1,0],[0,2],[2,0]]",
       "output": "\"2.0\"",
-      "explanation": "The triangle (0,0),(0,2),(2,0) has area 2, which is the largest achievable."
+      "explanation": "Треугольник (0, 0), (0, 2), (2, 0) имеет площадь 2, которая является самой большой достижимой."
     },
     {
       "input": "points = [[1,0],[0,0],[0,1]]",
       "output": "\"0.5\"",
-      "explanation": "The only triangle uses the three points and covers half a unit square."
+      "explanation": "Единственный треугольник использует три точки и покрывает половину квадрата."
     },
     {
       "input": "points = [[0,0],[1,1],[2,2]]",
       "output": "\"0.0\"",
-      "explanation": "All points lie on one line, so every triangle is flat."
+      "explanation": "Все точки лежат на одной линии, поэтому каждый треугольник плоский."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "This is a portable adaptation: return the area as a finite, double-parseable decimal string.",
-    "Try every triple of points and keep the largest shoelace value: area = |x1(y2-y3)+x2(y3-y1)+x3(y1-y2)| / 2.",
-    "Three points on one line give zero area and can be ignored."
+    "Это переносная адаптация: возвращайте область в виде конечной, двураздельной десятичной строки.",
+    "Попробуйте каждую тройку очков и сохраните наибольшее значение шнурка: площадь = |x1(y2-y3)+x2(y3-y1)+x3(y1-y2) | / 2.",
+    "Три очка на одной линии дают нулевую площадь и могут быть проигнорированы."
   ]
 }

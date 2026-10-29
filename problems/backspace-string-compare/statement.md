@@ -1,7 +1,7 @@
-Check whether two edited texts end up identical.
+Проверьте, идентичны ли два отредактированных текста.
 
-Each input holds lowercase letters plus the symbol `#`, which erases the most recent not-yet-erased letter before it (like a backspace key). If no letter exists, the eraser does nothing. Build the final text of `s` and of `t` under these rules and return `true` when both results match.
+Каждый вход содержит строчные буквы плюс символ `#`, который стирает самую последнюю еще не стертую букву перед ней (например, ключ заднего пространства). Если буквы не существует, ластик ничего не делает. Постройте окончательный текст `s` и `t` в соответствии с этими правилами и верните `true`, когда оба результата совпадают.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length, t.length <= 200`
-- Strings hold lowercase letters and `#`.
+- Струны содержат строчные буквы и `#`.

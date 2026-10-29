@@ -1,9 +1,9 @@
-Given a positive integer `num`, decide whether it is a perfect square: some
-integer multiplied by itself. Do not rely on built-in square-root helpers;
-use integer arithmetic such as binary search instead.
+Учитывая положительное целое число `num`, решите, является ли оно идеальным квадратом:
+Не полагайтесь на встроенных помощников квадратного корня;
+Вместо этого используйте целочисленную арифметику, такую как двоичный поиск.
 
-For example, `16` is a square (`4 * 4`) while `14` is not, since no integer
-squares to it.
+Например, `16` — это квадрат (`4 * 4`), а `14` — нет, поскольку нет целого числа.
+Квадраты к нему.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= num <= 2^31 - 1`

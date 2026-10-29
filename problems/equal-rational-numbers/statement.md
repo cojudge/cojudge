@@ -1,10 +1,10 @@
-Two strings `s` and `t` each describe a decimal number. The format is an integer part, optionally followed by a dot and decimals, where a trailing block in parentheses repeats forever. For instance, `0.(52)` means `0.525252...` and `0.955(72)` means `0.9557272...`. A spelling such as `1.` has no fractional digits.
+Две строки `s` и `t` описывают десятичное число. Формат представляет собой целочисленную часть, за которой необязательно следуют точка и десятичные числа, где следующий блок в скобках повторяется навсегда. Например, `0.(52)` означает `0.525252...`, а `0.955(72)` означает `0.9557272...`. Написание, такое как `1.`, не имеет дробных цифр.
 
-Decide whether the two spellings name the same numeric value. Note that different spellings can coincide: trailing repeating `9`s round up (`0.9(9)` equals `1.`), and the split between repeating and non-repeating digits is not unique (`0.1666(6)` equals `0.166(66)`).
+Обратите внимание, что разные орфографии могут совпадать: отслеживание повторяющихся `9` округляется (`0.9(9)` равен `1.`), а разделение между повторяющимися и неповторяющимися цифрами не является уникальным (`0.1666(6)` равен `0.166(66)`).
 
-Return `true` when the values are equal and `false` otherwise.
+Возвращайте `true`, когда значения равны, и `false` в противном случае.
 
-**Constraints:**
-- Each spelling contains digits, at most one `.`, and at most one `(...)` block at the end.
-- The repeating block, when present, holds 1 to 4 digits.
-- The integer part holds 1 to 3 digits.
+**Ограничения:**
+- Каждое написание содержит цифры, самое большее один `.`, и самое большее один блок `(...)` в конце.
+- Повторяющийся блок, когда он присутствует, содержит цифры 1 в 4.
+- Целая часть содержит цифры 1-3.

@@ -1,11 +1,11 @@
-Design an algorithm to encode **a list of strings** to **a string**. The encoded string is then sent over the network and is decoded back to the original list of strings.
+Создайте алгоритм для кодирования ** списка строк ** в ** строку **. Закодированная строка затем отправляется по сети и декодируется обратно в исходный список строк.
 
-Implement the `Codec` class:
+Внедрение класса `Codec`:
 
-- `String encode(String[] strs)` — Encodes a list of strings to a single string.
+- `String encode(String[] strs)` — кодирует список строк в одну строку.
 - `List<String> decode(String s)` — Decodes a single string back to a list of strings.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= strs.length <= 100`
 - `0 <= strs[i].length <= 200`
-- `strs[i]` contains any possible characters (including non-ASCII characters and delimiters).
+- `strs[i]` содержит любые возможные символы (включая символы, не относящиеся к ASCII, и разграничители).

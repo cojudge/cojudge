@@ -1,6 +1,6 @@
-Take two strings, `s` and `t`. Report `true` when `t` rearranges the letters of `s`, and `false` otherwise.
+Даны две строки: `s` и `t`. Верните `true`, если строку `t` можно получить перестановкой букв строки `s`, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ s.length, t.length ≤ 5 * 10^4
-- s and t consist of lowercase English letters.
+- s и t состоят из строчных английских букв.

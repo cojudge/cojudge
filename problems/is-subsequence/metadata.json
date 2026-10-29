@@ -3,26 +3,26 @@
   "difficulty": "Easy",
   "examples": [
     {
-      "explanation": "Keep 'a' at 0, 'b' at 2 and 'c' at 5 of t.",
+      "explanation": "Храните «a» в 0, «b» в 2 и «c» в 5 t.",
       "input": "s = \"abc\", t = \"ahbgdc\"",
       "output": "true"
     },
     {
-      "explanation": "After matching 'a', no 'x' appears later in t.",
+      "explanation": "После сопоставления «а» в t не появляется «х».",
       "input": "s = \"axc\", t = \"ahbgdc\"",
       "output": "false"
     },
     {
-      "explanation": "Erasing everything leaves the empty string.",
+      "explanation": "Стирание всего оставляет пустую струну.",
       "input": "s = \"\", t = \"ahbgdc\"",
       "output": "true"
     }
   ],
   "functionName": "isSubsequence",
   "hints": [
-    "Walk through t once while advancing a pointer into s on matches.",
-    "If the s-pointer reaches the end, every character was found in order.",
-    "This greedy scan is optimal because taking the earliest match never hurts."
+    "Пройдите через t один раз, продвигая указатель в s на матчах.",
+    "Если s-pointer достигает конца, каждый персонаж нашёлся в порядке.",
+    "Это жадное сканирование является оптимальным, потому что самый ранний матч никогда не повредит."
   ],
   "id": "is-subsequence",
   "link": "https://leetcode.com/problems/is-subsequence/",
@@ -61,5 +61,5 @@
       "t": "ahbgdc"
     }
   ],
-  "title": "468. Is Subsequence"
+  "title": "468. является последующая"
 }

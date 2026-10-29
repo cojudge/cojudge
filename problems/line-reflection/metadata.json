@@ -1,6 +1,6 @@
 {
   "id": "line-reflection",
-  "title": "435. Line Reflection",
+  "title": "435. Линейное отражение",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/line-reflection/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "points = [[1,1],[-1,1]]",
       "output": "true",
-      "explanation": "The line x = 0 reflects each point onto the other."
+      "explanation": "Линия x = 0 отражает каждую точку на другую."
     },
     {
       "input": "points = [[1,1],[-1,-1]]",
       "output": "false",
-      "explanation": "The mirror of (1,1) across any vertical line through these x values would be (-1,1), which is absent."
+      "explanation": "Зеркало (1, 1) по любой вертикальной линии через эти значения x будет (-1, 1), которое отсутствует."
     }
   ],
   "starterCode": {
@@ -49,8 +49,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "If a mirror exists, it must sit halfway between the smallest and largest x values.",
-    "Store all points in a hash set, then check the mirror partner of each point.",
-    "Use the sum minX + maxX to avoid fractions: the partner of x is (minX + maxX - x)."
+    "Если зеркало существует, оно должно находиться на полпути между наименьшими и наибольшими значениями x.",
+    "Храните все точки в хеш-наборе, а затем проверьте зеркального партнера каждой точки.",
+    "Используйте сумму minX + maxX, чтобы избежать дробей: партнёром x является (minX + maxX - x)."
   ]
 }

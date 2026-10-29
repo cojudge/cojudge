@@ -1,10 +1,10 @@
-Turn an ascending integer list into a height-balanced binary search tree.
+Превратите восходящий целочисленный список в дерево бинарного поиска с балансом высоты.
 
-A height-balanced tree requires that, for every node, the depths of its two subtrees differ by at most one. Combined with the search-tree ordering (left values smaller, right values larger), this keeps the tree shallow. Choose elements so both sides stay even, build each side the same way, and return the root.
+Сбалансированное по высоте дерево требует, чтобы для каждого узла глубины двух его поддеревов отличались по крайней мере одним. В сочетании с упорядочиванием дерева поиска (левые значения меньше, правые значения больше), это сохраняет дерево неглубоким. Выберите элементы, чтобы обе стороны оставались ровными, построили каждую сторону одинаково и вернули корень.
 
-Because several balanced shapes can be valid, any height-balanced search tree containing exactly the input values is accepted.
+Поскольку несколько сбалансированных форм могут быть действительными, принимается любое дерево поиска с балансом высоты, содержащее точно входные значения.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^4`
 - `-10^4 <= nums[i] <= 10^4`
-- `nums` is sorted in strictly increasing order.
+- `nums` сортируется в строго возрастающем порядке.

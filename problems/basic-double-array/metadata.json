@@ -1,18 +1,18 @@
 {
   "id": "basic-double-array",
-  "title": "25. Double Array",
+  "title": "25. Двойной массив",
   "difficulty": "Easy",
   "category": "arrays",
   "examples": [
     {
       "input": "nums = [1,2,3]",
       "output": "[2,4,6]",
-      "explanation": "Each value doubles."
+      "explanation": "Каждое значение удваивается."
     },
     {
       "input": "nums = [-1,0]",
       "output": "[-2,0]",
-      "explanation": "-1 doubles to -2; 0 stays 0."
+      "explanation": "-1 удваивается до -2; 0 остается 0."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Build an answer array of the same length.",
-    "Set `ans[i] = nums[i] * 2` in a loop."
+    "Постройте массив ответов одинаковой длины.",
+    "Установите `ans[i] = nums[i] * 2` в петлю."
   ]
 }

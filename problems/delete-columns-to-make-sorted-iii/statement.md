@@ -1,9 +1,9 @@
-You hold several equal-length lowercase strings, one per row. You may delete any set of columns (the same positions in every row). After the deletions, every remaining row must read in non-decreasing order from top to bottom within each kept column — that is, for any two rows where the upper row comes first, its kept characters must never exceed the lower row's kept characters column by column.
+Вы можете удалить любой набор столбцов (одинаковые позиции в каждой строке). После удаления каждая оставшаяся строка должна читаться в неубывающем порядке сверху вниз в каждом сохраненном столбце - то есть для любых двух строк, где верхняя строка стоит первой, ее сохраненные символы никогда не должны превышать столбец за столбцом сохраненных символов нижней строки.
 
-Remove as few columns as possible while achieving this column-wise order, and return that minimum deletion count.
+Удалите как можно меньше столбцов при достижении этого порядка столбцов и верните этот минимальный подсчет удаления.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= strs.length <= 100`
 - `1 <= strs[i].length <= 100`
-- All rows share the same length and use lowercase English letters.
-- The input is given as a plain string array.
+- Все строки имеют одинаковую длину и используют строчные английские буквы.
+- Ввод дается как простой струнный массив.

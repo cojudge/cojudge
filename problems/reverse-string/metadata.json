@@ -1,6 +1,6 @@
 {
   "id": "reverse-string",
-  "title": "165. Reverse String",
+  "title": "165. Обратная струна",
   "difficulty": "Easy",
   "category": "two-pointer",
   "link": "https://leetcode.com/problems/reverse-string/",
@@ -8,12 +8,12 @@
     {
       "input": "s = \"hello\"",
       "output": "\"olleh\"",
-      "explanation": "Reversing \"hello\" gives \"olleh\"."
+      "explanation": "Перевернуть «привет» дает «олех»."
     },
     {
       "input": "s = \"Hannah\"",
       "output": "\"hannaH\"",
-      "explanation": "Reversing \"Hannah\" gives \"hannaH\"."
+      "explanation": "Обратная сторона «Ханны» дает «Ханна»."
     }
   ],
   "starterCode": {
@@ -46,7 +46,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Use two pointers starting at opposite ends and swap characters while moving toward the center.",
-    "Reversing can also be done by building the result from the end of the string to the start."
+    "Используйте два указателя, начинающиеся на противоположных концах, и меняйте символы, двигаясь к центру.",
+    "Обратный ход также может быть выполнен путем построения результата от конца строки до начала."
   ]
 }

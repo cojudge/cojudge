@@ -1,6 +1,6 @@
 {
   "id": "inorder-successor-in-bst-ii",
-  "title": "572. Inorder Successor in BST II",
+  "title": "572. Преемник порядка в BST II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/inorder-successor-in-bst-ii/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [2,1,3], parents = [null,2,2], p = 1",
       "output": "2",
-      "explanation": "Inorder visits 1, 2, 3, so the node after 1 holds 2."
+      "explanation": "Порядок посещения 1, 2, 3, поэтому узел после 1 удерживает 2."
     },
     {
       "input": "root = [2,1,3], parents = [null,2,2], p = 3",
       "output": "-1",
-      "explanation": "3 is the largest value, hence has no successor."
+      "explanation": "3 является самым большим значением, поэтому не имеет преемника."
     },
     {
       "input": "root = [5,3,6,2,4,null,null,1], parents = [null,5,5,3,3,2], p = 3",
       "output": "4",
-      "explanation": "The inorder order is 1, 2, 3, 4, 5, 6, so 4 follows 3."
+      "explanation": "Порядок последовательности 1, 2, 3, 4, 5, 6, поэтому 4 следует за 3."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Adaptation: the original Node carries left/right/parent links and the answer is a Node (or null); here links arrive as the parents string and the answer is the successor value (-1 when absent).",
-    "Rebuild val -> parent-val links by zipping the non-null values of root with the parents entries.",
-    "From the target: if it has a right subtree the answer is that subtree's minimum, otherwise climb parents until stepping up from a left child."
+    "Адаптация: оригинальный Узел несет левую / правую / родительские ссылки, и ответ - Узел (или нуль); здесь ссылки прибывают в качестве родительской строки, а ответ - значение преемника (-1, когда отсутствует).",
+    "Восстановление ссылок val -> parent-val путем зажима ненулевых значений root с записями родителей.",
+    "От цели: если у него есть правое поддерево, ответ заключается в том, что поддеревья минимальны, иначе поднимитесь на родителей, пока не подниметесь с левого потомка."
   ]
 }

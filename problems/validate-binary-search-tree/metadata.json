@@ -1,6 +1,6 @@
 {
   "id": "validate-binary-search-tree",
-  "title": "68. Validate Binary Search Tree",
+  "title": "68. Проверить двоичное дерево поиска",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/validate-binary-search-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [2,1,3]",
       "output": "true",
-      "explanation": "Every node satisfies the BST property: all left descendants < node.val < all right descendants."
+      "explanation": "Каждый узел удовлетворяет свойству BST: все левые потомки < node.val < все правые потомки."
     },
     {
       "input": "root = [5,1,4,null,null,3,6]",
       "output": "false",
-      "explanation": "Node 4 is in the right subtree of Node 5 but has a smaller value, violating the BST property."
+      "explanation": "Узел 4 находится в правом поддереве узла 5, но имеет меньшую ценность, нарушая свойство BST."
     },
     {
       "input": "root = []",
       "output": "true",
-      "explanation": "Every node satisfies the BST property: all left descendants < node.val < all right descendants."
+      "explanation": "Каждый узел удовлетворяет свойству BST: все левые потомки < node.val < все правые потомки."
     }
   ],
   "starterCode": {
@@ -55,6 +55,6 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Use DFS with value bounds (min/max) to verify BST properties for every node."
+    "Используйте DFS с границами значений (мин/макс) для проверки свойств BST для каждого узла."
   ]
 }

@@ -1,9 +1,9 @@
-You are given an integer array `nums` of length `n`. Decide whether three separator positions `i < j < k` can carve the array into four blocks with identical totals.
+Вы получаете целочисленный массив `nums` длины `n`. Решите, могут ли три позиции сепаратора `i < j < k` разделить массив на четыре блока с идентичными суммами.
 
-The separators themselves are discarded: the blocks are `nums[0..i-1]`, `nums[i+1..j-1]`, `nums[j+1..k-1]`, and `nums[k+1..n-1]`. Valid separators must satisfy `0 < i`, `i+1 < j`, `j+1 < k`, and `k < n-1`, so every block holds at least one element.
+Сами сепараторы отбрасываются: блоки `nums[0..i-1]`, `nums[i+1..j-1]`, `nums[j+1..k-1]` и `nums[k+1..n-1]`. Действительные сепараторы должны удовлетворять требованиям `0 < i`, `i+1 < j`, `j+1 < k` и `k < n-1`, поэтому каждый блок содержит по меньшей мере один элемент.
 
-Return `true` when such a triple exists, else `false`.
+Возврат `true`, когда такая тройка существует, другой `false`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 2000`
 - `-10^6 <= nums[i] <= 10^6`

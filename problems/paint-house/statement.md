@@ -1,8 +1,8 @@
-There is a row of houses, and each house can be painted red, blue or green. Painting house `i` costs `costs[i][0]` for red, `costs[i][1]` for blue and `costs[i][2]` for green. No two neighboring houses may share the same color.
+Есть ряд домов, и каждый дом можно покрасить в красный, синий или зеленый. Покраска дома `i` стоит `costs[i][0]` для красного, `costs[i][1]` для синего и `costs[i][2]` для зеленого. Никакие два соседних дома не могут иметь одинаковый цвет.
 
-Return the smallest total cost to paint every house.
+Возврат наименьших общих затрат на покраску каждого дома.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= costs.length <= 100`
 - `costs[i].length == 3`
 - `1 <= costs[i][j] <= 1000`

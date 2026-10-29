@@ -1,6 +1,6 @@
 {
   "id": "stone-game-ii",
-  "title": "235. Stone Game II",
+  "title": "235. Каменная игра II",
   "difficulty": "Medium",
   "category": "dp",
   "link": "https://leetcode.com/problems/stone-game-ii/",
@@ -8,7 +8,7 @@
     {
       "input": "piles = [2,7,9,4,4]",
       "output": "10",
-      "explanation": "If Alice takes one pile at the beginning, Bob takes two piles, then Alice takes 2 piles again. Alice can get 2 + 4 + 4 = 10 piles in total. If Alice takes two piles at the beginning, then Bob can take three piles, and Alice can get 2 + 7 = 9 piles in total. If Alice takes three piles at the beginning, then Bob takes all the four remaining piles, and Alice can get 9 piles in total. So the maximum Alice can get is 10."
+      "explanation": "Если Алиса берет одну кучу в начале, Боб берет две кучи, то Алиса берет две. 2 Алиса снова может получить 2 + 4 + 4 = 10 Если Алиса берет две стопки в начале, то Боб может взять три стопки, и Алиса может получить 2 + 7 = 9 Если Алиса берет три сваи в начале, то Боб берет все четыре оставшиеся сваи, и Алиса может получить 9 Так что максимум, что может получить Алиса, это 10."
     },
     {
       "input": "piles = [1,2,3,4,5,100]",
@@ -43,7 +43,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use dynamic programming: the states are (i, m) for the answer of piles[i:] given m.",
-    "If 2*m >= n - i the current player can take all remaining piles. Otherwise try every X in 1..2*m and let the opponent start at i + X with M = max(m, X), keeping the take that maximizes suffix[i] - opponent's score."
+    "Используйте динамическое программирование: состояния являются (i, m) для ответа свай [i:] заданными m.",
+    "Если 2*m >= n - i текущий игрок может взять все оставшиеся сваи. В противном случае попробуйте каждый X в 1..2*m и позвольте противнику начать с i + X с M = max(m, X), сохраняя дубль, который максимизирует суффикс [i] - счет противника."
   ]
 }

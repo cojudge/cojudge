@@ -1,6 +1,6 @@
 {
   "id": "basic-sum-multiples",
-  "title": "16. Sum of Multiples",
+  "title": "16. Сумма множественных",
   "difficulty": "Easy",
   "category": "loops",
   "examples": [
@@ -12,7 +12,7 @@
     {
       "input": "n = 10, k = 1",
       "output": "55",
-      "explanation": "Every number 1..10 counts."
+      "explanation": "Каждое число 1..10 считается."
     }
   ],
   "starterCode": {
@@ -52,7 +52,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Loop from 1 to `n` and add the value when `i % k == 0`.",
-    "Alternatively step the loop by `k`: `k, 2k, 3k, ...`."
+    "Перейдите от 1 к `n` и добавьте значение, когда `i % k == 0`.",
+    "В качестве альтернативы перейдите по петле `k`: `k, 2k, 3k, ...`."
   ]
 }

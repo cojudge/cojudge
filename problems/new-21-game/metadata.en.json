@@ -1,0 +1,71 @@
+{
+  "id": "new-21-game",
+  "title": "835. New 21 Game",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/new-21-game/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "n = 10, k = 1, maxPts = 10",
+      "output": "\"1.0\"",
+      "explanation": "Every first draw stops the game within the limit."
+    },
+    {
+      "input": "n = 6, k = 1, maxPts = 10",
+      "output": "\"0.6\"",
+      "explanation": "Six of ten faces stay within 6."
+    },
+    {
+      "input": "n = 21, k = 17, maxPts = 10",
+      "output": "\"0.73278\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String new21Game(int n, int k, int maxPts) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def new21Game(self, n: int, k: int, maxPts: int) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string new21Game(int n, int k, int maxPts) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string New21Game(int n, int k, int maxPts)\n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn new21_game(n: i32, k: i32, max_pts: i32) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc New21Game(n int, k int, maxPts int) string {\n    return \"\"\n}",
+    "typescript": "export function new21Game(n: number, k: number, maxPts: number): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int $k\n     * @param int $maxPts\n     * @return string\n     */\n    public function new21Game($n, $k, $maxPts) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 10,
+      "k": 1,
+      "maxPts": 10
+    },
+    {
+      "n": 6,
+      "k": 1,
+      "maxPts": 10
+    },
+    {
+      "n": 21,
+      "k": 17,
+      "maxPts": 10
+    }
+  ],
+  "functionName": "new21Game",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    },
+    {
+      "name": "maxPts",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "This is a portable adaptation: return the probability as a finite decimal string; grading allows 1e-5 absolute error.",
+    "Let dp[i] be the chance of ever holding exactly i points; then dp[i] is the average of the previous maxPts values that are still below k.",
+    "Maintain a sliding window sum so each dp[i] is O(1), and add up dp[k] through dp[n] for the answer."
+  ]
+}

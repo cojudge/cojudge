@@ -1,6 +1,6 @@
 {
   "id": "unique-substrings-in-wraparound-string",
-  "title": "532. Unique Substrings in Wraparound String",
+  "title": "532. Уникальные подстанции в Wraparound String",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/unique-substrings-in-wraparound-string/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"a\"",
       "output": "1",
-      "explanation": "The only substring \"a\" appears in the wraparound string."
+      "explanation": "Единственная подстрочная «а» появляется в оберточной струне."
     },
     {
       "input": "s = \"cac\"",
       "output": "2",
-      "explanation": "The distinct substrings present are \"a\" and \"c\"; \"ca\", \"ac\" and \"cac\" never occur consecutively in the wrap."
+      "explanation": "Отличительными подстроками являются «a» и «c»; «ca», «ac» и «cac» никогда не встречаются последовательно в обертке."
     },
     {
       "input": "s = \"zab\"",
       "output": "6",
-      "explanation": "Every substring of \"zab\" occurs in the wrap: \"z\", \"a\", \"b\", \"za\", \"ab\", \"zab\"."
+      "explanation": "Каждая подстрока «заб» встречается в обертке: «z», «a», «b», «za», «ab», «zab»."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "For each letter, only the longest valid run ending with that letter matters: it contributes exactly that many new distinct substrings.",
-    "Extend the current consecutive run when each new character follows the previous one in the alphabet (wrapping from z to a)."
+    "Для каждой буквы имеет значение только самый длинный действительный пробег, заканчивающийся этой буквой: она вносит именно столько новых отдельных подстрок.",
+    "Продление текущего последовательного прогона, когда каждый новый символ следует за предыдущим в алфавите (обертывание от z до a)."
   ]
 }

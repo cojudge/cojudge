@@ -1,6 +1,6 @@
 {
   "id": "bitwise-and-of-numbers-range",
-  "title": "249. Bitwise AND of Numbers Range",
+  "title": "249. Битва и диапазон чисел",
   "difficulty": "Medium",
   "category": "bit-manipulation",
   "link": "https://leetcode.com/problems/bitwise-and-of-numbers-range/",
@@ -56,7 +56,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "The bitwise AND of the range has the common prefix of left and right in their binary forms, with all lower bits set to 0.",
-    "Shift both left and right right until they become equal; shift the result back left by the same count."
+    "У битовой AND диапазона есть общий префикс слева и справа в их двоичной форме, со всеми нижними битами, установленными на 0.",
+    "Сдвиньте и левое, и правое право, пока они не станут равными; сдвиньте результат влево на один и тот же счет."
   ]
 }

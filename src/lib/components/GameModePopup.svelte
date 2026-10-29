@@ -59,8 +59,8 @@
             pool = problems.filter(p => !solvedSet[p.id]);
         }
         if (pool.length === 0) {
-            await showAlert('Try enabling "Include solved problems" to expand the available pool.', {
-                title: 'No problems available'
+            await showAlert("Попробуйте включить «Включите решенные проблемы» для расширения доступного пула.", {
+                title: "Нет проблем"
             });
             return;
         }
@@ -78,51 +78,51 @@
 
 <div class="modal-backdrop" on:click={handleBackdropClick} on:keydown={(e) => { if (e.key === 'Escape') dispatch('close'); }} role="dialog" aria-modal="true" aria-labelledby="game-mode-title" tabindex="-1" transition:fade={{ duration: 200 }}>
     <div class="modal" transition:scale={{ start: 0.95, duration: 200 }}>
-        <button class="close-btn" on:click={() => dispatch('close')} aria-label="Close">&times;</button>
-        <h2 id="game-mode-title">Game Mode</h2>
+        <button class="close-btn" on:click={() => dispatch('close')} aria-label="Закрыть">&times;</button>
+        <h2 id="game-mode-title">Режим игры</h2>
         <div class="rules">
-            <p>{currentProblemId ? 'Play this problem in game mode.' : poolLabel ? `A random problem from ${poolLabel} will be selected for you to solve under time pressure.` : 'A random problem will be selected for you to solve under time pressure.'}</p>
+            <p>{currentProblemId ? "Играйте в эту проблему в игровом режиме." : poolLabel ? `Случайная проблема из ${poolLabel} Вы будете выбраны для решения проблемы под давлением времени.` : "Случайная проблема будет выбрана для вас, чтобы решить ее под давлением времени."}</p>
             <ul>
-                <li>A timer starts as soon as the problem loads.</li>
-                <li>Your previous solution (if any) will be hidden — you start fresh.</li>
-                <li>Your rank is based on three factors:</li>
+                <li>Таймер начинается, как только проблема загружается.</li>
+                <li>Ваше предыдущее решение (если таковое имеется) будет скрытым — вы начнете с чистого листа.</li>
+                <li>Ваш рейтинг основан на трех факторах:</li>
             </ul>
             <table class="scoring-table">
                 <tbody>
                     <tr>
-                        <td><strong>Run Code</strong></td>
-                        <td>Fewer runs = better (moderate weight)</td>
+                        <td><strong>Запустить код</strong></td>
+                        <td>Меньше бегов = лучше (умеренный вес)</td>
                     </tr>
                     <tr>
-                        <td><strong>Submit Code</strong></td>
-                        <td>Fewer submits = better (highest penalty)</td>
+                        <td><strong>Отправить решение</strong></td>
+                        <td>Меньше предложений = лучше (самый высокий штраф)</td>
                     </tr>
                     <tr>
-                        <td><strong>Time Spent</strong></td>
-                        <td>Shorter time = better</td>
+                        <td><strong>Проведенное время</strong></td>
+                        <td>Меньше времени = лучше</td>
                     </tr>
                 </tbody>
             </table>
-            <p class="rank-info">Final rank: <strong>S</strong> (best) → <strong>A</strong> → <strong>B</strong> → <strong>C</strong></p>
+            <p class="rank-info">Финальный ранг: <strong>S</strong> (лучше всего) <strong>A</strong> → <strong>B</strong> → <strong>C</strong></p>
         </div>
         <label class="toggle-label">
             <input type="checkbox" bind:checked={countdownEnabled} on:change={persistCountdownSettings} />
-            Enable Time Limit
+            Ограничить время
         </label>
         {#if countdownEnabled}
             <div class="countdown-control">
-                <button type="button" aria-label="Decrease countdown" on:click={() => { countdownMinutes = Math.max(1, countdownMinutes - 1); persistCountdownSettings(); }}>-</button>
-                <strong>{countdownMinutes} mins</strong>
-                <button type="button" aria-label="Increase countdown" on:click={() => { countdownMinutes = Math.min(60, countdownMinutes + 1); persistCountdownSettings(); }}>+</button>
+                <button type="button" aria-label="Уменьшить обратный отсчет" on:click={() => { countdownMinutes = Math.max(1, countdownMinutes - 1); persistCountdownSettings(); }}>-</button>
+                <strong>{countdownMinutes} минс</strong>
+                <button type="button" aria-label="Увеличить обратный отсчет" on:click={() => { countdownMinutes = Math.min(60, countdownMinutes + 1); persistCountdownSettings(); }}>+</button>
             </div>
         {/if}
         {#if !currentProblemId}
             <label class="toggle-label">
                 <input type="checkbox" bind:checked={includeSolved} on:change={persistIncludeSolved} />
-                Include already solved problems
+                Включите уже решенные проблемы
             </label>
         {/if}
-        <button class="start-btn" on:click={startGame}>Start</button>
+        <button class="start-btn" on:click={startGame}>Начинать</button>
     </div>
 </div>
 

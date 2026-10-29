@@ -1,6 +1,6 @@
-You are handed the `root` of a binary tree. Compute how deep the tree is, where depth is measured as the count of nodes on the longest downward route that begins at `root` and finishes at a leaf farthest away.
+Вы получаете `root` двоичного дерева. Вычислите, насколько глубоко дерево, где глубина измеряется как количество узлов на самом длинном нисходящем маршруте, который начинается на `root` и заканчивается на самом далеком листе.
 
-**Constraints:**
+**Ограничения:**
 
-- The number of nodes in the tree is in the range [0, 10^4].
+- Количество узлов в дереве находится в диапазоне [0, 10^4].
 - -100 ≤ Node.val ≤ 100

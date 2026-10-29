@@ -1,6 +1,6 @@
 {
   "id": "best-time-to-buy-and-sell-stock-with-cooldown",
-  "title": "129. Best Time to Buy and Sell Stock with Cooldown",
+  "title": "129. Лучшее время для покупки и продажи акций с Cooldown",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/",
   "category": "dp",
@@ -8,12 +8,12 @@
     {
       "input": "prices = [1,2,3,0,2]",
       "output": "3",
-      "explanation": "Buy on day 0, sell on day 1, cooldown, then buy on day 3 and sell on day 4."
+      "explanation": "Покупайте в день 0, продавайте в день 1, затем покупайте в день 3 и продавайте в день 4."
     },
     {
       "input": "prices = [1]",
       "output": "0",
-      "explanation": "With only one price, no transaction can be made, so the maximum profit is 0."
+      "explanation": "При одной цене сделка не может быть совершена, поэтому максимальная прибыль - 0."
     }
   ],
   "starterCode": {
@@ -49,7 +49,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Track the best value after each day in three states: holding, just sold, and resting.",
-    "A buy transition can only come from a resting state, not from the previous day's sold state."
+    "Отслеживайте лучшее значение после каждого дня в трех состояниях: удерживая, просто продавая и отдыхая.",
+    "Переход на покупку может происходить только из состояния покоя, а не из состояния продажи предыдущего дня."
   ]
 }

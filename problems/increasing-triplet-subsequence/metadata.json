@@ -1,6 +1,6 @@
 {
   "id": "increasing-triplet-subsequence",
-  "title": "419. Increasing Triplet Subsequence",
+  "title": "419. Увеличение количества тройняшек",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/increasing-triplet-subsequence/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,2,3,4,5]",
       "output": "true",
-      "explanation": "The whole list climbs, so any three positions qualify."
+      "explanation": "Весь список поднимается, поэтому любые три позиции квалифицируются."
     },
     {
       "input": "nums = [5,4,3,2,1]",
       "output": "false",
-      "explanation": "Every later value is smaller, blocking any climb."
+      "explanation": "Каждое последующее значение меньше, блокируя любое восхождение."
     },
     {
       "input": "nums = [2,1,5,0,4,6]",
       "output": "true",
-      "explanation": "Values 1, 4, 6 appear in order and rise strictly."
+      "explanation": "Значения 1, 4, 6 появляются в порядке и растут строго."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Keep the smallest value seen and the smallest valid middle value above it.",
-    "A new value larger than the middle completes a triple; otherwise shrink the tracked pair."
+    "Держите наименьшую видимую величину и наименьшую действительную среднюю величину над ней.",
+    "Новое значение, больше среднего, завершает тройное, в противном случае сокращает отслеживаемую пару."
   ]
 }

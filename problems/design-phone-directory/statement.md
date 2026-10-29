@@ -1,15 +1,15 @@
-Replay a phone-number pool through one portable batch function.
+Повторите пул телефонных номеров через одну портативную функцию пакета.
 
-This is a function adaptation of the classic directory-design task: instead of writing a class, implement `runPhoneDirectory(operations, args)`. The two arrays are parallel. The first operation is always `"PhoneDirectory"` with a single argument `[maxNumbers]`, creating pool numbers `0` through `maxNumbers - 1`, all free at first. Each later operation is one of:
+Это функциональная адаптация классической задачи проектирования каталогов: вместо написания класса реализуйте `runPhoneDirectory(operations, args)`. Два массива параллельны. Первая операция всегда `"PhoneDirectory"` с одним аргументом `[maxNumbers]`, создавая номера пула `0` через `maxNumbers - 1`, все бесплатно сначала. Каждая последующая операция является одной из:
 
-- `"get"` with `[]`: hand out the smallest free number, or `-1` when none is free. Its result is recorded.
-- `"check"` with `[number]`: record `1` when that number is currently free, else `0`.
-- `"release"` with `[number]`: return the number to the pool when it is currently taken; otherwise do nothing. It records nothing.
+- `"get"` с `[]`: выдает наименьшее бесплатное число, или `-1`, когда ни один не является бесплатным.
+- `"check"` с `[number]`: записывайте `1`, когда этот номер в настоящее время свободен, иначе `0`.
+- `"release"` с `[number]`: возвращайте номер в пул, когда он в настоящее время взят; в противном случае ничего не делайте.
 
-Return the recorded results from `get` and `check` calls only, in order. Fixing `get` to the smallest free number keeps every test deterministic.
+Возврат записанных результатов от `get` и `check` звонит только по порядку. Фиксация `get` на наименьшее свободное число сохраняет каждый тест детерминированным.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= operations.length == args.length <= 10^4`
-- `operations[0] == "PhoneDirectory"` and `args[0] == [maxNumbers]` with `1 <= maxNumbers <= 10^4`.
-- Later operations are `get` with `[]`, `check` with `[number]`, or `release` with `[number]`.
+- `operations[0] == "PhoneDirectory"` и `args[0] == [maxNumbers]` с `1 <= maxNumbers <= 10^4`.
+- Более поздние операции `get` с `[]`, `check` с `[number]` или `release` с `[number]`.
 - `0 <= number < maxNumbers`

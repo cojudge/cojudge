@@ -1,13 +1,13 @@
-Build a container that records inserted words and can later test query strings against them.
+Создайте контейнер, который записывает вставленные слова и может позже протестировать строки запросов против них.
 
-Provide the `WordDictionary` type with these members:
+Предоставьте тип `WordDictionary` с этими членами:
 
-- `WordDictionary()` Creates an empty container.
-- `void addWord(word)` Stores `word` so that later queries may match it.
-- `bool search(word)` Reports `true` when some stored entry matches `word`, else `false`. A dot `'.'` inside the query stands for an arbitrary single letter.
+- `WordDictionary()` создает пустой контейнер.
+- `void addWord(word)` хранит `word`, чтобы последующие запросы могли совпадать с ним.
+- `bool search(word)` сообщает о `true`, когда некоторая сохраненная запись совпадает с `word`, иначе `false`.Точка `'.'` внутри запроса обозначает произвольную одну букву.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= word.length <= 25`
-- `word` in `addWord` consists of lowercase English letters.
-- `word` in `search` consist of `'.'` or lowercase English letters.
-- There will be at most `10^4` calls to `addWord` and `search`.
+- `word` в `addWord` состоит из строчных английских букв.
+- `word` в `search` состоит из `'.'` или строчных английских букв.
+- В `10^4` будет максимум звонков на `addWord` и `search`.

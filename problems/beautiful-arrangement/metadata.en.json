@@ -1,0 +1,58 @@
+{
+  "id": "beautiful-arrangement",
+  "title": "585. Beautiful Arrangement",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/beautiful-arrangement/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "n = 2",
+      "output": "2",
+      "explanation": "Both [1,2] and [2,1] satisfy the rule at each position."
+    },
+    {
+      "input": "n = 1",
+      "output": "1",
+      "explanation": "Only [1] is possible."
+    },
+    {
+      "input": "n = 3",
+      "output": "3",
+      "explanation": "The valid orders are [1,2,3], [3,2,1], and [2,1,3]."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int countArrangement(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def countArrangement(self, n: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int countArrangement(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int CountArrangement(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_arrangement(n: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc CountArrangement(n int) int {\n    \n}",
+    "typescript": "export function countArrangement(n: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function countArrangement($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 2
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 3
+    }
+  ],
+  "functionName": "countArrangement",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Build the ordering position by position and abandon a branch as soon as the current slot breaks the divisibility rule.",
+    "A used-marker array (or bitmask) tracks which numbers are already placed.",
+    "With n capped at 15, pruned backtracking finishes quickly."
+  ]
+}

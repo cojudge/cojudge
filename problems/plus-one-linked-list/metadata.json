@@ -1,6 +1,6 @@
 {
   "id": "plus-one-linked-list",
-  "title": "448. Plus One Linked List",
+  "title": "448. Плюс один связанный список",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/plus-one-linked-list/",
   "category": "linked-list",
@@ -54,8 +54,8 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Find the rightmost digit that is not 9; it absorbs the carry.",
-    "If no such digit exists, prepend a new node with value 1 and set the rest to 0.",
-    "Otherwise increment that digit and set every digit after it to 0."
+    "Найдите правильную цифру, которая не является 9; она поглощает переноску.",
+    "Если такой цифры не существует, подготовьте новый узел со значением 1 и установите остальные на 0.",
+    "В противном случае увеличивайте эту цифру и установите каждую цифру после нее на 0."
   ]
 }

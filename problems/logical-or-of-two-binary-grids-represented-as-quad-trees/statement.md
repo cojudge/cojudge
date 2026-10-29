@@ -1,9 +1,9 @@
-Two binary grids of equal size are each given as a quad tree. Combine them with a cell-wise logical OR and return the quad tree of the resulting grid.
+Две двоичные сетки одинакового размера задаются как квадратное дерево. Объедините их с логическим OR по клеточному принципу и верните квадратное дерево полученной сетки.
 
-Representation used here (matching the Construct Quad Tree problem): each tree is serialized as a breadth-first list of `[isLeaf, val]` pairs with `1/0` integers. Leaves carry the cell value and have no entries for children; every internal node is followed by its four children in topLeft, topRight, bottomLeft, bottomRight order. Internal nodes always store `val` 1 in outputs.
+Представление, используемое здесь (соответствие задаче квадратного дерева конструкции): каждое дерево сериализовано как первый по ширине список пар `[isLeaf, val]` с целыми числами `1/0`. Листья несут значение ячейки и не имеют записей для потомков; за каждым внутренним узлом следуют его четыре потомка в верхнем левом, верхнем правом, нижнем левом, нижнем правом порядке. Внутренние узлы всегда хранят `val` 1 в выводах.
 
-Merging follows two simplifications: OR-ing anything with a leaf `1` gives a leaf `1`, and OR-ing anything with a leaf `0` gives the other side unchanged. After merging children, an internal node whose four children are all leaves holding the same value collapses into a single leaf.
+Слияние следует за двумя упрощениями: ИЛИ-слияние чего-либо с листом `1` дает лист `1`, и ИЛИ-слияние чего-либо с листом `0` дает другую сторону без изменений.После слияния потомков внутренний узел, все четыре потомка которого являются листьями с одинаковым значением, сжимается в один лист.
 
-**Constraints:**
-- Each input is a valid minimal quad-tree serialization with at most a few hundred nodes.
-- Both trees describe the same grid size (a power-of-two square).
+**Ограничения:**
+- Каждый вход представляет собой минимальную последовательность из четырех деревьев с максимум несколькими сотнями узлов.
+- Оба дерева описывают один и тот же размер сетки (мощность в два квадрата).

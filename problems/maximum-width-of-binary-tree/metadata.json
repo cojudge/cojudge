@@ -1,6 +1,6 @@
 {
   "id": "maximum-width-of-binary-tree",
-  "title": "681. Maximum Width of Binary Tree",
+  "title": "681. Максимальная ширина бинарного дерева",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/maximum-width-of-binary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,3,2,5,3,null,9]",
       "output": "4",
-      "explanation": "Level 2 spans positions for 5,3,null,9 giving width 4."
+      "explanation": "Уровень 2 охватывает позиции для 5, 3,null, 9, придавая ширину 4."
     },
     {
       "input": "root = [1,3,2,5,null,null,9,6,null,7]",
       "output": "7",
-      "explanation": "The lowest level stretches across 7 slots including gaps."
+      "explanation": "Самый низкий уровень простирается через слоты 7, включая зазоры."
     },
     {
       "input": "root = [1,3,2,5]",
       "output": "2",
-      "explanation": "The second level holds two adjacent nodes."
+      "explanation": "Второй уровень содержит два соседних узла."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Number nodes as in a heap: children of index i sit at 2*i and 2*i+1.",
-    "Width of a level is last index minus first index plus one, counting empty slots between.",
-    "Normalize indices per level (subtract the first) to keep numbers small."
+    "Номерные узлы как в куче: дети индекса i сидят на 2*i и 2*i+1.",
+    "Ширина уровня - последний индекс минус первый индекс плюс один, считая пустые слоты между ними.",
+    "Нормализовать индексы на уровень (вычесть первый), чтобы цифры были небольшими."
   ]
 }

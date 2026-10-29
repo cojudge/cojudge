@@ -1,6 +1,6 @@
 {
   "id": "flip-game-ii",
-  "title": "390. Flip Game II",
+  "title": "390. Игры для Flip Game II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/flip-game-ii/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "currentState = \"++++\"",
       "output": "true",
-      "explanation": "Flipping the middle pair leaves \"+--+\" with no reply."
+      "explanation": "Переворачивание средней пары оставляет «+--+» без ответа."
     },
     {
       "input": "currentState = \"+\"",
       "output": "false",
-      "explanation": "No move exists for the first player."
+      "explanation": "Для первого игрока не существует хода."
     },
     {
       "input": "currentState = \"+++++\"",
       "output": "false",
-      "explanation": "Each possible first flip hands the opponent a winning board."
+      "explanation": "Каждый возможный первый переворачивает руки сопернику победную доску."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "A board is winning when some legal flip leads to a board that is losing for the player to move.",
-    "Boards with no flippable pair are losing; build up from there with memoised search.",
-    "Flipping splits the board into independent left and right parts, so identical substrings share results through memoisation."
+    "Доска выигрывает, когда какой-то юридический флип приводит к доске, которая проигрывает игроку, чтобы двигаться.",
+    "Доски без гибкой пары теряются; накапливаются оттуда с помощью мемуированного поиска.",
+    "Перелистывание разделяет доску на независимые левую и правую части, поэтому идентичные подстроки делятся результатами через запоминание."
   ]
 }

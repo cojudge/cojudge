@@ -1,12 +1,12 @@
-Spin each decimal digit half a turn and see what it becomes. The digits
-`0`, `1`, and `8` look the same afterwards; `2` and `5` turn into each
-other; `6` and `9` turn into each other. The remaining digits (`3`, `4`,
-`7`) break, so any number containing one of them is unusable.
+Вращайте каждую десятичную цифру пополам оборота и смотрите, чем она станет.
+`0`, `1` и `8` выглядят одинаково; `2` и `5` превращаются в каждый из них.
+другие; `6` и `9` превращаются друг в друга. Остальные цифры (`3`, `4`,
+`7`) ломается, поэтому любое число, содержащее один из них, непригодно для использования.
 
-Call a positive integer turning when every digit survives the spin and at
-least one digit actually changes (that is, the number uses `2`, `5`, `6`,
-or `9` somewhere). Given `n`, count how many turning integers lie in the
-closed interval from `1` to `n`.
+Назовите положительное целочисленное вращение, когда каждая цифра выживает при спине и при
+по меньшей мере одна цифра фактически изменяется (т.е. число использует `2`, `5`, `6`, ZXQQXZ, ZXQ, ZXQ, ZXQ).
+или `9` Где-то. Дано `n`Подсчитайте, сколько целочисленных чисел лежит в
+Закрытый интервал от `1` до `n`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 10^4`

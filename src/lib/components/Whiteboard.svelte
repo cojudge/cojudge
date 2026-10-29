@@ -34,10 +34,10 @@
 	type StrokeStyle = 'solid' | 'dashed' | 'dotted';
 	type Arrowhead = 'none' | 'arrow' | 'triangle' | 'triangle-outline';
 	const arrowheads: { value: Arrowhead; label: string }[] = [
-		{ value: 'none', label: 'None' },
-		{ value: 'arrow', label: 'Open arrow' },
-		{ value: 'triangle', label: 'Filled triangle' },
-		{ value: 'triangle-outline', label: 'Outlined triangle' }
+		{ value: 'none', label: "Ни одного" },
+		{ value: 'arrow', label: "Открытая стрела" },
+		{ value: 'triangle', label: "Наполненный треугольник" },
+		{ value: 'triangle-outline', label: "Контурный треугольник" }
 	];
 	type ResizeHandle = 'nw' | 'ne' | 'se' | 'sw';
 
@@ -176,7 +176,7 @@
 		{ id: 'line', label: 'Line (6 or L)', icon: 'line', shortcut: '6' },
 		{ id: 'draw', label: 'Draw (7 or P)', icon: 'pencil', shortcut: '7' },
 		{ id: 'text', label: 'Text (8 or T)', icon: 'text', shortcut: '8' },
-		{ id: 'image', label: 'Insert image (9)', icon: 'image', shortcut: '9' },
+		{ id: 'image', label: "Вставить изображение (9)", icon: 'image', shortcut: '9' },
 		{ id: 'eraser', label: 'Eraser (0 or E)', icon: 'eraser', shortcut: '0' }
 	];
 
@@ -1696,7 +1696,7 @@
 
 	function cycleKeyboardSelection(direction: 1 | -1): void {
 		if (elements.length === 0) {
-			accessibilityMessage = 'The canvas is empty';
+			accessibilityMessage = "Полотно пустое.";
 			return;
 		}
 		const currentIndex = selectedIds.length === 1
@@ -1715,7 +1715,7 @@
 		if (activeTool === 'text') {
 			beginTextEditor({ x: center.x - 80, y: center.y - drawingStyle.fontSize });
 			hasInteracted = true;
-			accessibilityMessage = 'Text editor opened at the center of the canvas';
+			accessibilityMessage = "Текстовый редактор открылся в центре холста";
 			return;
 		}
 		if (!drawableTools.has(activeTool)) return;
@@ -1957,7 +1957,7 @@
 				selectedIds = [element.id];
 				recordSnapshot(before);
 				hasInteracted = true;
-				accessibilityMessage = pasted ? 'Clipboard image pasted at the center of the canvas' : 'Image added at the center of the canvas';
+				accessibilityMessage = pasted ? "Изображение с трамплина, наклеенное в центре холста" : "Изображение добавлено в центре холста";
 				if (pasted || !toolLocked) activeTool = 'selection';
 				if (pasted) showToast('Image pasted from clipboard');
 			};
@@ -1981,7 +1981,7 @@
 				stroke: '#f08c00'
 			});
 			const text = makeElement('text', center.x - 76, center.y - 18, 152, 60, {
-				text: 'Write an idea',
+				text: "Написать идею",
 				stroke: '#5f3dc4',
 				fill: 'transparent',
 				fontSize: 25
@@ -1996,7 +1996,7 @@
 			additions = [makeElement('diamond', center.x - 90, center.y - 90, 180, 180, { fill: '#eebefa' })];
 		} else {
 			const label = makeElement('text', center.x - 100, center.y - 20, 200, 50, {
-				text: 'Section title',
+				text: "Название раздела",
 				fontSize: 36,
 				fill: 'transparent'
 			});
@@ -2012,9 +2012,9 @@
 	}
 
 	async function newBoard(): Promise<void> {
-		if (elements.length > 0 && !await showConfirm('Every element on this whiteboard will be removed. This action can still be undone until you leave the page.', {
-			title: 'Clear whiteboard?',
-			confirmLabel: 'Clear board',
+		if (elements.length > 0 && !await showConfirm("Каждый элемент на этой доске будет удален. Это действие все еще может быть отменено, пока вы не покинете страницу.", {
+			title: "Чистая доска?",
+			confirmLabel: "Чистая доска",
 			tone: 'danger'
 		})) return;
 		const before = cloneElements();
@@ -2211,7 +2211,7 @@
 			return;
 		}
 		try {
-			await navigator.share({ title: 'Whiteboard', url: shareLink });
+			await navigator.share({ title: "Доска", url: shareLink });
 		} catch {
 			// Closing the system share sheet does not require feedback.
 		}
@@ -2247,7 +2247,7 @@
 		class:eraser-cursor={activeTool === 'eraser'}
 		class="drawing-canvas"
 		role="application"
-		aria-label="Whiteboard drawing canvas"
+		aria-label="Брезент для рисования белой доски"
 		tabindex="0"
 		onpointerdown={handlePointerDown}
 		onpointermove={handlePointerMove}
@@ -2572,8 +2572,8 @@
 			bind:this={textArea}
 			bind:value={textEditor.value}
 			class="text-editor"
-			aria-label="Whiteboard text"
-			placeholder="Type something..."
+			aria-label="Текст на белой доске"
+			placeholder="Введите что-нибудь..."
 			style={`left: ${editorPosition.x}px; top: ${editorPosition.y}px; width: ${editorPosition.width}px; height: ${editorPosition.height}px; font-size: ${editorPosition.fontSize}px; line-height: 1.25; ${editedShape ? `min-height: 0; text-align: center; transform: rotate(${editedShape.rotation ?? 0}deg); ${isConnector(editedShape) ? 'background: var(--canvas);' : ''}` : ''}`}
 			onkeydown={handleTextKeyDown}
 			onblur={() => finishTextEditor(true)}
@@ -2584,8 +2584,8 @@
 		<button
 			class:active={showMainMenu}
 			class="square-button menu-trigger"
-			title="Main menu"
-			aria-label="Open main menu"
+			title="Главное меню"
+			aria-label="Открыть главное меню"
 			aria-expanded={showMainMenu}
 			onclick={() => (showMainMenu = !showMainMenu)}
 		>
@@ -2596,48 +2596,48 @@
 			<div class="popover main-menu">
 				<div class="menu-brand">
 					<span class="brand-mark">C</span>
-					<div><strong>Cojudge Whiteboard</strong><small>Saved locally</small></div>
+					<div><strong>Судья Уайтборд</strong><small>Спасены локально</small></div>
 				</div>
 				<div class="menu-separator"></div>
 				{#if !embedded}
 					<a class="menu-item" href="/">
-						<WhiteboardIcon name="home" size={18} /><span>Back to Cojudge</span>
+						<WhiteboardIcon name="home" size={18} /><span>Вернуться в Судья</span>
 					</a>
 				{/if}
 				<button class="menu-item" onclick={newBoard}>
-					<WhiteboardIcon name="plus" size={18} /><span>New whiteboard</span>{#if newBoardShortcutEnabled}<kbd>{isMac ? 'Cmd N' : 'Ctrl N'}</kbd>{/if}
+					<WhiteboardIcon name="plus" size={18} /><span>Новая Whiteboard</span>{#if newBoardShortcutEnabled}<kbd>{isMac ? 'Cmd N' : 'Ctrl N'}</kbd>{/if}
 				</button>
 				<button class="menu-item" onclick={() => boardInput?.click()}>
-					<WhiteboardIcon name="upload" size={18} /><span>Open</span>
+					<WhiteboardIcon name="upload" size={18} /><span>Открыть</span>
 				</button>
 				<button class="menu-item" onclick={saveBoardFile}>
-					<WhiteboardIcon name="download" size={18} /><span>Save to file</span>
+					<WhiteboardIcon name="download" size={18} /><span>Сохранить в файл</span>
 				</button>
 				<button class="menu-item" onclick={exportPng}>
-					<WhiteboardIcon name="image" size={18} /><span>Export PNG</span>
+					<WhiteboardIcon name="image" size={18} /><span>Экспорт PNG</span>
 				</button>
 				<div class="menu-separator"></div>
 				<button class="menu-item" onclick={toggleGrid}>
-					<WhiteboardIcon name="grid" size={18} /><span>Canvas grid</span>
+					<WhiteboardIcon name="grid" size={18} /><span>Сетка холста</span>
 					<span class:enabled={showGrid} class="switch"><span></span></span>
 				</button>
 				<button class="menu-item" onclick={toggleTheme}>
 					<WhiteboardIcon name={isDark ? 'sun' : 'moon'} size={18} />
-					<span>{isDark ? 'Light mode' : 'Dark mode'}</span>
+					<span>{isDark ? "Световой режим" : "Темный режим"}</span>
 				</button>
 				<button class="menu-item danger" onclick={newBoard}>
-					<WhiteboardIcon name="trash" size={18} /><span>Clear canvas</span>
+					<WhiteboardIcon name="trash" size={18} /><span>Чистый холст</span>
 				</button>
 			</div>
 		{/if}
 	</div>
 
-	<div class="top-toolbar" role="toolbar" aria-label="Drawing tools" data-popover-root>
+	<div class="top-toolbar" role="toolbar" aria-label="Инструменты для рисования" data-popover-root>
 		<button
 			class:active={toolLocked}
 			class="tool-button lock-button"
-			title={toolLocked ? 'Keep active tool selected' : 'Lock active tool'}
-			aria-label="Lock active tool"
+			title={toolLocked ? "Выберите активный инструмент" : "Заблокировать активный инструмент"}
+			aria-label="Заблокировать активный инструмент"
 			aria-pressed={toolLocked}
 			onclick={() => (toolLocked = !toolLocked)}
 		>
@@ -2661,8 +2661,8 @@
 		<button
 			class:active={showOverflowMenu}
 			class="tool-button"
-			title="More tools"
-			aria-label="More tools"
+			title="Больше инструментов"
+			aria-label="Больше инструментов"
 			aria-expanded={showOverflowMenu}
 			onclick={() => (showOverflowMenu = !showOverflowMenu)}
 		>
@@ -2674,32 +2674,32 @@
 	{#if showOverflowMenu}
 		<div class="popover overflow-menu" data-popover-root>
 			<button class="menu-item" onclick={fitToContent}>
-				<WhiteboardIcon name="fit" size={18} /><span>Zoom to fit</span><kbd>Shift 1</kbd>
+				<WhiteboardIcon name="fit" size={18} /><span>Зум подходит</span><kbd>Shift 1</kbd>
 			</button>
 			<button class="menu-item" onclick={() => { showLibrary = true; showOverflowMenu = false; }}>
-				<WhiteboardIcon name="panel" size={18} /><span>Open library</span>
+				<WhiteboardIcon name="panel" size={18} /><span>Открытая библиотека</span>
 			</button>
 			<button class="menu-item" onclick={openHelpDialog}>
-				<WhiteboardIcon name="help" size={18} /><span>Keyboard shortcuts</span>
+				<WhiteboardIcon name="help" size={18} /><span>Ярлыки клавиатуры</span>
 			</button>
 		</div>
 	{/if}
 
 	{#if elements.length === 0 && !hasInteracted}
 		<p class="canvas-hint">
-			Pan with two fingers, or hold <kbd>Space</kbd> or the middle mouse button while dragging
+			Пан с двумя пальцами, или держать <kbd>Space</kbd> или кнопка средней мыши при перетаскивании
 		</p>
 	{:else if activeTool === 'line' || activeTool === 'arrow' || (selectedIds.length === 1 && selectedElement && isConnector(selectedElement))}
-		<p class="canvas-hint">Drag middle handles to bend · Double-click to edit text · Right-click a bend to remove</p>
+		<p class="canvas-hint">Перетащите средние ручки, чтобы согнуть · Дважды щелкните, чтобы отредактировать текст · Нажмите правой кнопкой мыши, чтобы удалить</p>
 	{/if}
 
 	<div class="top-actions">
-		<button class="share-button" onclick={openShareDialog}>Share</button>
+		<button class="share-button" onclick={openShareDialog}>Поделиться</button>
 		<button
 			class:active={showLibrary}
 			class="square-button"
-			title="Library"
-			aria-label="Toggle library"
+			title="Библиотека"
+			aria-label="Библиотека Toggle"
 			aria-pressed={showLibrary}
 			onclick={() => (showLibrary = !showLibrary)}
 		>
@@ -2708,9 +2708,9 @@
 	</div>
 
 	{#if selectedIds.length > 0 || drawableTools.has(activeTool)}
-		<aside class="style-panel" aria-label="Element styles">
+		<aside class="style-panel" aria-label="Стили элементов">
 			<div class="panel-section">
-				<span class="section-label">Stroke</span>
+				<span class="section-label">инсульт</span>
 				<div class="color-row">
 					{#each strokeColors as color}
 						<button
@@ -2718,7 +2718,7 @@
 							class="color-swatch"
 							style={`--swatch: ${color}`}
 							title={color}
-							aria-label={`Use stroke color ${color}`}
+							aria-label={`Используйте цвет хода ${color}`}
 							onclick={() => setStyle('stroke', color)}
 						></button>
 					{/each}
@@ -2727,7 +2727,7 @@
 
 			{#if activeTool !== 'text' && selectedElement?.type !== 'text' && activeTool !== 'line' && activeTool !== 'arrow' && activeTool !== 'draw'}
 				<div class="panel-section">
-					<span class="section-label">Background</span>
+					<span class="section-label">Предыстория</span>
 					<div class="color-row">
 						{#each fillColors as color}
 							<button
@@ -2735,8 +2735,8 @@
 								class:transparent={color === 'transparent'}
 								class="color-swatch"
 								style={`--swatch: ${color === 'transparent' ? 'var(--panel-bg)' : color}`}
-								title={color === 'transparent' ? 'Transparent' : color}
-								aria-label={color === 'transparent' ? 'Use transparent background' : `Use background ${color}`}
+								title={color === 'transparent' ? "Прозрачный" : color}
+								aria-label={color === 'transparent' ? "Используйте прозрачный фон" : `Используйте фон ${color}`}
 								onclick={() => setStyle('fill', color)}
 							></button>
 						{/each}
@@ -2746,24 +2746,24 @@
 
 			<div class="panel-columns">
 				<div class="panel-section">
-					<span class="section-label">Stroke width</span>
+					<span class="section-label">Ширина удара</span>
 					<div class="segmented-control">
 						{#each [1, 2, 4] as width}
 							<button
 								class:active={(selectedElement?.strokeWidth ?? drawingStyle.strokeWidth) === width}
-								aria-label={`Stroke width ${width}`}
+								aria-label={`Ширина удара ${width}`}
 								onclick={() => setStyle('strokeWidth', width)}
 							><span style={`height: ${width}px`}></span></button>
 						{/each}
 					</div>
 				</div>
 				<div class="panel-section">
-					<span class="section-label">Stroke style</span>
+					<span class="section-label">Стиль удара</span>
 					<div class="segmented-control">
 						{#each ['solid', 'dashed', 'dotted'] as style}
 							<button
 								class:active={(selectedElement?.strokeStyle ?? drawingStyle.strokeStyle) === style}
-								aria-label={`${style} stroke`}
+								aria-label={`${style} удар`}
 								onclick={() => setStyle('strokeStyle', style as StrokeStyle)}
 							><span class={`line-${style}`}></span></button>
 						{/each}
@@ -2773,19 +2773,19 @@
 
 			{#if activeTool === 'arrow' || elements.some((element) => selectedIds.includes(element.id) && element.type === 'arrow')}
 				<div class="panel-section">
-					<span class="section-label">Arrowheads</span>
+					<span class="section-label">Орловые стрелы</span>
 					<div class="arrowhead-controls">
 						{#each ['start', 'end'] as endpoint}
 							{@const key = endpoint === 'start' ? 'startArrowhead' : 'endArrowhead'}
 							{@const arrow = elements.find((element) => selectedIds.includes(element.id) && element.type === 'arrow')}
 							{@const current = arrow?.[key] ?? drawingStyle[key]}
 							<details class="arrowhead-picker" name="whiteboard-arrowheads">
-								<summary title={`${endpoint === 'start' ? 'Start' : 'End'} arrowhead`} aria-label={`${endpoint === 'start' ? 'Start' : 'End'} arrowhead`}>
+								<summary title={`${endpoint === 'start' ? "Начинать" : 'End'} наконечник стрел`} aria-label={`${endpoint === 'start' ? "Начинать" : 'End'} наконечник стрел`}>
 									<WhiteboardArrowheadIcon head={current} start={endpoint === 'start'} />
 								</summary>
-								<div class="arrowhead-options" role="group" aria-label={`${endpoint} arrowhead options`}>
+								<div class="arrowhead-options" role="group" aria-label={`${endpoint} Наконечник стрелки`}>
 									{#each arrowheads as head}
-										<button class:active={current === head.value} title={head.label} aria-label={`${endpoint} arrowhead: ${head.label}`} aria-pressed={current === head.value}
+										<button class:active={current === head.value} title={head.label} aria-label={`${endpoint} Наконечник стрелы: ${head.label}`} aria-pressed={current === head.value}
 											onclick={(event) => { setStyle(key, head.value); const picker = event.currentTarget.closest('details'); if (picker) picker.open = false; }}>
 											<WhiteboardArrowheadIcon head={head.value} start={endpoint === 'start'} />
 										</button>
@@ -2799,7 +2799,7 @@
 
 			{#if activeTool === 'text' || selectedElement?.type === 'text'}
 				<div class="panel-section">
-					<label class="range-label" for="font-size"><span>Font size</span><output>{selectedElement?.fontSize ?? drawingStyle.fontSize}</output></label>
+					<label class="range-label" for="font-size"><span>Размер шрифта</span><output>{selectedElement?.fontSize ?? drawingStyle.fontSize}</output></label>
 					<input
 						id="font-size"
 						type="range"
@@ -2813,7 +2813,7 @@
 			{/if}
 
 			<div class="panel-section">
-				<label class="range-label" for="opacity"><span>Opacity</span><output>{selectedElement?.opacity ?? drawingStyle.opacity}%</output></label>
+				<label class="range-label" for="opacity"><span>непрозрачность</span><output>{selectedElement?.opacity ?? drawingStyle.opacity}%</output></label>
 				<input
 					id="opacity"
 					type="range"
@@ -2827,16 +2827,16 @@
 
 			{#if selectedIds.length > 0}
 				<div class="panel-actions">
-					<button title="Send to back" aria-label="Send to back" onclick={() => arrangeSelected('back')}>
+					<button title="Отправить назад" aria-label="Отправить назад" onclick={() => arrangeSelected('back')}>
 						<WhiteboardIcon name="layers-down" size={18} />
 					</button>
-					<button title="Bring to front" aria-label="Bring to front" onclick={() => arrangeSelected('front')}>
+					<button title="Привести на фронт" aria-label="Привести на фронт" onclick={() => arrangeSelected('front')}>
 						<WhiteboardIcon name="layers-up" size={18} />
 					</button>
-					<button title="Duplicate" aria-label="Duplicate" onclick={() => duplicateSelected()}>
+					<button title="Дублировать" aria-label="Дублировать" onclick={() => duplicateSelected()}>
 						<WhiteboardIcon name="copy" size={18} />
 					</button>
-					<button class="delete" title="Delete" aria-label="Delete" onclick={deleteSelected}>
+					<button class="delete" title="Удалить" aria-label="Удалить" onclick={deleteSelected}>
 						<WhiteboardIcon name="trash" size={18} />
 					</button>
 				</div>
@@ -2845,51 +2845,51 @@
 	{/if}
 
 	{#if showLibrary}
-		<aside class="library-panel" aria-label="Shape library">
+		<aside class="library-panel" aria-label="Библиотека формы">
 			<header>
-				<div><span class="eyebrow">Reusable elements</span><h2>Library</h2></div>
-				<button class="icon-button" aria-label="Close library" onclick={() => (showLibrary = false)}>
+				<div><span class="eyebrow">Многоразовые элементы</span><h2>Библиотека</h2></div>
+				<button class="icon-button" aria-label="Закрытая библиотека" onclick={() => (showLibrary = false)}>
 					<WhiteboardIcon name="close" size={20} />
 				</button>
 			</header>
-			<p>Drop a ready-made building block onto your canvas.</p>
+			<p>Бросьте готовый строительный блок на ваш холст.</p>
 			<div class="library-grid">
 				<button onclick={() => addLibraryItem('note')}>
 					<span class="library-preview note-preview"><i></i><i></i><i></i></span>
-					<strong>Idea note</strong>
+					<strong>Идеальная записка</strong>
 				</button>
 				<button onclick={() => addLibraryItem('flow')}>
 					<span class="library-preview flow-preview"><i></i><b></b><em></em></span>
-					<strong>Flow step</strong>
+					<strong>Шаг потока</strong>
 				</button>
 				<button onclick={() => addLibraryItem('decision')}>
 					<span class="library-preview decision-preview"><i></i></span>
-					<strong>Decision</strong>
+					<strong>Решение</strong>
 				</button>
 				<button onclick={() => addLibraryItem('label')}>
 					<span class="library-preview label-preview">Aa</span>
-					<strong>Section title</strong>
+					<strong>Название раздела</strong>
 				</button>
 			</div>
-			<div class="library-tip"><WhiteboardIcon name="plus" size={17} /> More packs can be added later.</div>
+			<div class="library-tip"><WhiteboardIcon name="plus" size={17} /> Больше пакетов можно добавить позже.</div>
 		</aside>
 	{/if}
 
 	<div class="bottom-left">
 		<div class="zoom-controls">
-			<button title="Zoom out" aria-label="Zoom out" onclick={() => setZoom(zoom - 0.1)}>
+			<button title="Забудь." aria-label="Забудь." onclick={() => setZoom(zoom - 0.1)}>
 				<WhiteboardIcon name="minus" size={18} />
 			</button>
-			<button class="zoom-value" title="Reset zoom" onclick={() => setZoom(1)}>{Math.round(zoom * 100)}%</button>
-			<button title="Zoom in" aria-label="Zoom in" onclick={() => setZoom(zoom + 0.1)}>
+			<button class="zoom-value" title="Сбросить зум" onclick={() => setZoom(1)}>{Math.round(zoom * 100)}%</button>
+			<button title="Взбейте." aria-label="Взбейте." onclick={() => setZoom(zoom + 0.1)}>
 				<WhiteboardIcon name="plus" size={18} />
 			</button>
 		</div>
 		<div class="history-controls">
-			<button disabled={undoStack.length === 0} title="Undo" aria-label="Undo" onclick={undo}>
+			<button disabled={undoStack.length === 0} title="Отменить" aria-label="Отменить" onclick={undo}>
 				<WhiteboardIcon name="undo" size={19} />
 			</button>
-			<button disabled={redoStack.length === 0} title="Redo" aria-label="Redo" onclick={redo}>
+			<button disabled={redoStack.length === 0} title="Повторить" aria-label="Повторить" onclick={redo}>
 				<WhiteboardIcon name="redo" size={19} />
 			</button>
 		</div>
@@ -2900,18 +2900,18 @@
 			class:error={saveState === 'error'}
 			class:saving={saveState === 'saving'}
 			class="saved-indicator"
-			title={saveState === 'saved' ? 'Saved locally' : saveState === 'saving' ? 'Saving locally' : 'Could not save locally'}
+			title={saveState === 'saved' ? "Спасены локально" : saveState === 'saving' ? "Экономить локально" : "Не удалось спасти местное"}
 		>
-			<WhiteboardIcon name="shield" size={23} /><span>{saveState === 'saved' ? 'Saved' : saveState === 'saving' ? 'Saving...' : 'Not saved'}</span>
+			<WhiteboardIcon name="shield" size={23} /><span>{saveState === 'saved' ? "Сохранено" : saveState === 'saving' ? "Сохранение…" : "Не спасли"}</span>
 		</div>
-		<button class="square-button" title="Help" aria-label="Open help" onclick={openHelpDialog}>
+		<button class="square-button" title="Помогите" aria-label="Открытая помощь" onclick={openHelpDialog}>
 			<WhiteboardIcon name="help" size={20} />
 		</button>
 	</div>
 
 	{#if showShare}
 		<div class="modal-shell">
-			<button class="modal-backdrop" aria-label="Close share dialog" onclick={closeShareDialog}></button>
+			<button class="modal-backdrop" aria-label="Близкий диалог" onclick={closeShareDialog}></button>
 			<div
 				bind:this={shareDialog}
 				class="modal-card share-modal"
@@ -2921,30 +2921,30 @@
 				tabindex="-1"
 				onkeydown={trapDialogFocus}
 			>
-				<button class="modal-close" aria-label="Close" onclick={closeShareDialog}>
+				<button class="modal-close" aria-label="Закрыть" onclick={closeShareDialog}>
 					<WhiteboardIcon name="close" size={20} />
 				</button>
 				<div class="modal-icon"><WhiteboardIcon name="external" size={24} /></div>
-				<span class="eyebrow">Self-contained link</span>
-				<h2 id="share-title">Share your whiteboard</h2>
-				<p>The drawing is embedded in this private link. No account or server upload is required.</p>
-				<label for="share-link">Share link</label>
+				<span class="eyebrow">Самодостаточная связь</span>
+				<h2 id="share-title">Поделитесь своей белой доской</h2>
+				<p>Рисунок встроен в эту частную ссылку. Загрузка учетной записи или сервера не требуется.</p>
+				<label for="share-link">Совместная ссылка</label>
 				<div class="share-link-row">
 					<input id="share-link" readonly value={shareLink} onclick={(event) => event.currentTarget.select()} />
 					<button class:copied={copiedShareLink} onclick={copyShareLink}>
 						<WhiteboardIcon name={copiedShareLink ? 'check' : 'copy'} size={18} />
-						{copiedShareLink ? 'Copied' : 'Copy'}
+						{copiedShareLink ? "Скопировано" : "Копировать"}
 					</button>
 				</div>
-				<button class="primary-modal-button" onclick={nativeShare}>Share link</button>
-				<small>Large embedded images can make the link long. Use "Save to file" for image-heavy boards.</small>
+				<button class="primary-modal-button" onclick={nativeShare}>Совместная ссылка</button>
+				<small>Большие встроенные изображения могут сделать ссылку длинной. Используйте &quot;Сохранить для файла&quot; для больших досок изображений.</small>
 			</div>
 		</div>
 	{/if}
 
 	{#if showHelp}
 		<div class="modal-shell">
-			<button class="modal-backdrop" aria-label="Close help dialog" onclick={closeHelpDialog}></button>
+			<button class="modal-backdrop" aria-label="Близкий диалог помощи" onclick={closeHelpDialog}></button>
 			<div
 				bind:this={helpDialog}
 				class="modal-card help-modal"
@@ -2954,21 +2954,21 @@
 				tabindex="-1"
 				onkeydown={trapDialogFocus}
 			>
-				<button class="modal-close" aria-label="Close" onclick={closeHelpDialog}>
+				<button class="modal-close" aria-label="Закрыть" onclick={closeHelpDialog}>
 					<WhiteboardIcon name="close" size={20} />
 				</button>
-				<span class="eyebrow">Quick reference</span>
-				<h2 id="help-title">Keyboard shortcuts</h2>
+				<span class="eyebrow">Быстрая ссылка</span>
+				<h2 id="help-title">Ярлыки клавиатуры</h2>
 				<div class="shortcut-list">
-					<div><span>Selection</span><kbd>1</kbd><kbd>V</kbd></div>
-					<div><span>Rectangle / ellipse</span><kbd>R</kbd><kbd>O</kbd></div>
-					<div><span>Arrow / line</span><kbd>A</kbd><kbd>L</kbd></div>
-					<div><span>Free draw / text</span><kbd>P</kbd><kbd>T</kbd></div>
-					<div><span>Pan canvas</span><kbd>Trackpad</kbd><kbd>Middle mouse</kbd></div>
-					<div><span>Place / cycle selection</span><kbd>Enter</kbd><kbd>Shift Enter</kbd></div>
-					<div><span>Undo / redo</span><kbd>{isMac ? 'Cmd Z' : 'Ctrl Z'}</kbd><kbd>{isMac ? 'Shift Cmd Z' : 'Shift Ctrl Z'}</kbd></div>
-					<div><span>Duplicate</span><kbd>{isMac ? 'Cmd D' : 'Ctrl D'}</kbd></div>
-					<div><span>Delete selected</span><kbd>Delete</kbd></div>
+					<div><span>Выбор</span><kbd>1</kbd><kbd>V</kbd></div>
+					<div><span>Прямоугольник/эллипс</span><kbd>R</kbd><kbd>O</kbd></div>
+					<div><span>Стрела/линия</span><kbd>A</kbd><kbd>L</kbd></div>
+					<div><span>Бесплатный рисунок/текст</span><kbd>P</kbd><kbd>T</kbd></div>
+					<div><span>Пан холст</span><kbd>Trackpad</kbd><kbd>Middle mouse</kbd></div>
+					<div><span>Выбор места/цикла</span><kbd>Enter</kbd><kbd>Shift Enter</kbd></div>
+					<div><span>Ундо / Redo</span><kbd>{isMac ? 'Cmd Z' : 'Ctrl Z'}</kbd><kbd>{isMac ? 'Shift Cmd Z' : 'Shift Ctrl Z'}</kbd></div>
+					<div><span>Дублировать</span><kbd>{isMac ? 'Cmd D' : 'Ctrl D'}</kbd></div>
+					<div><span>Исключить выбранный</span><kbd>Delete</kbd></div>
 				</div>
 			</div>
 		</div>
@@ -2980,7 +2980,7 @@
 			<span>{toastMessage}</span>
 			{#if toastFilePath}
 				<button class="reveal-btn" onclick={() => revealFile(toastFilePath)}>
-					Show in Folder
+					Показать в папке
 				</button>
 			{/if}
 		</div>
@@ -2991,7 +2991,7 @@
 		class="hidden-input"
 		type="file"
 		accept="image/*"
-		aria-label="Choose an image"
+		aria-label="Выберите изображение"
 		onchange={handleImageFile}
 	/>
 	<input
@@ -2999,7 +2999,7 @@
 		class="hidden-input"
 		type="file"
 		accept="application/json,.json"
-		aria-label="Open a whiteboard file"
+		aria-label="Откройте файл Whiteboard"
 		onchange={handleBoardFile}
 	/>
 </main>

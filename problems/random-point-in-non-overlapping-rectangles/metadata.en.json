@@ -1,0 +1,53 @@
+{
+  "id": "random-point-in-non-overlapping-rectangles",
+  "title": "560. Random Point in Non-overlapping Rectangles",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/random-point-in-non-overlapping-rectangles/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "rects = [[-2,-2,1,1],[2,2,4,6]]",
+      "output": "[0,0]",
+      "explanation": "Both [0,0] (first rectangle) and [3,3] (second rectangle) are valid answers."
+    },
+    {
+      "input": "rects = [[0,0,0,0]]",
+      "output": "[0,0]",
+      "explanation": "The single-cell rectangle covers exactly one point."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] pickPoint(int[][] rects) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def pickPoint(self, rects: List[List[int]]) -> List[int]:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> pickPoint(vector<vector<int>>& rects) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] PickPoint(int[][] rects) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn pick_point(rects: Vec<Vec<i32>>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc PickPoint(rects [][]int) []int {\n    \n}",
+    "typescript": "export function pickPoint(rects: number[][]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $rects\n     * @return int[]\n     */\n    public function pickPoint($rects) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "rects": "[[-2,-2,1,1],[2,2,4,6]]"
+    },
+    {
+      "rects": "[[0,0,0,0]]"
+    },
+    {
+      "rects": "[[1,1,2,2]]"
+    }
+  ],
+  "functionName": "pickPoint",
+  "params": [
+    {
+      "name": "rects",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Adaptation: return any covered integer point; the judge only checks that it falls inside some rectangle.",
+    "The bottom-left corner of the first rectangle is always a valid answer.",
+    "A fully random solution would weight rectangles by their point counts, but determinism also passes here."
+  ]
+}

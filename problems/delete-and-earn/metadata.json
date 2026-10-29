@@ -1,6 +1,6 @@
 {
   "id": "delete-and-earn",
-  "title": "745. Delete and Earn",
+  "title": "745. Удалить и заработать",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/delete-and-earn/",
   "category": "dp",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [3,4,2]",
       "output": "6",
-      "explanation": "Take 4, lose 3, then take 2."
+      "explanation": "Возьмите 4, потеряйте 3, затем возьмите 2."
     },
     {
       "input": "nums = [2,2,3,3,3,4]",
       "output": "9",
-      "explanation": "Three 3s beat any mix involving 2s or 4."
+      "explanation": "Три 3-х бьют любой микс с участием 2-х или 4."
     },
     {
       "input": "nums = [1]",
@@ -50,8 +50,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Group equal values: taking v earns v times its frequency, and values sort into independent chains broken by gaps.",
-    "Within a chain of consecutive values this is the house-robber choice: take v plus the best up to v-2, or skip to the best up to v-1.",
-    "Track only two rolling best values while sweeping v upward."
+    "Групповые равные значения: принимая v зарабатывает v умножает его частоту, и значения сортируются в независимые цепи, разбитые разрывами.",
+    "В цепочке последовательных значений это выбор дома-разбойника: взять v плюс лучшее до v-2 или перейти к лучшему до v-1.",
+    "Отслеживайте только два наилучших значения прокатки при разметке v вверх."
   ]
 }

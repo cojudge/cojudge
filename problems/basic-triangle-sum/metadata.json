@@ -1,6 +1,6 @@
 {
   "id": "basic-triangle-sum",
-  "title": "41. Triangle Sum",
+  "title": "41. Треугольник Sum",
   "difficulty": "Easy",
   "category": "nested-loops",
   "examples": [
@@ -12,7 +12,7 @@
     {
       "input": "n = 1",
       "output": "1",
-      "explanation": "Just the first row."
+      "explanation": "Только первый ряд."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "The outer loop picks the row `i`; the inner loop adds `1..i`.",
-    "Accumulate everything into one total."
+    "Внешняя петля выбирает строку `i`; внутренняя петля добавляет `1..i`.",
+    "Накопите все в одну общую сумму."
   ]
 }

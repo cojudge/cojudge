@@ -1,6 +1,6 @@
 {
   "id": "delete-node-in-a-bst",
-  "title": "198. Delete Node in a BST",
+  "title": "198. Удалить узел в BST",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/delete-node-in-a-bst/",
   "category": "tree",
@@ -8,7 +8,7 @@
     {
       "input": "root = [5,3,6,2,4,null,7], key = 3",
       "output": "[5,4,6,2,null,null,7]",
-      "explanation": "One valid result after deleting 3."
+      "explanation": "Один действительный результат после удаления 3."
     },
     {
       "input": "root = [5,3,6,2,4,null,7], key = 0",
@@ -57,6 +57,6 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "If the node has two children, replace it with its inorder successor (min of right subtree)."
+    "Если у узла двое потомков, замените его на его непорядочного преемника (мин правого поддерева)."
   ]
 }

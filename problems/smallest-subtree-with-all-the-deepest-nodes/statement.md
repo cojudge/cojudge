@@ -1,10 +1,10 @@
-You are given the root of a binary tree in level-order form. Among all nodes, look at those sitting at the greatest depth (the longest root-to-leaf distance).
+Вам дают корень двоичного дерева в форме упорядоченного уровня. Среди всех узлов посмотрите на сидящих на наибольшей глубине (самое длинное расстояние от корня до листа).
 
-Find the smallest subtree that holds every such deepest node. Return the root of that subtree, again encoded in level-order form.
+Найдите наименьшее поддерево, которое удерживает каждый такой глубокий узел. Верните корень этого поддеревья, снова закодированного в форме уровня.
 
-Intuitively, walk down until the branches holding the deepest leaves finally meet; that meeting point is the answer.
+Интуитивно спускайтесь, пока ветви, держащие самые глубокие листья, наконец не встретятся; эта точка встречи является ответом.
 
-**Constraints:**
-- The tree holds `1 <= n <= 500` nodes.
+**Ограничения:**
+- Дерево содержит узлы `1 <= n <= 500`.
 - `0 <= node.val <= 500`
-- All values are unique.
+- Все ценности уникальны.

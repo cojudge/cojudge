@@ -1,6 +1,6 @@
 {
   "id": "monotone-increasing-digits",
-  "title": "744. Monotone Increasing Digits",
+  "title": "744. Монотон увеличивает дигитацию",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/monotone-increasing-digits/",
   "category": "greedy",
@@ -8,7 +8,7 @@
     {
       "input": "n = 10",
       "output": "9",
-      "explanation": "10 dips at the last digit, so 9 is the answer."
+      "explanation": "10 падает на последнюю цифру, поэтому 9 является ответом."
     },
     {
       "input": "n = 1234",
@@ -17,7 +17,7 @@
     {
       "input": "n = 332",
       "output": "299",
-      "explanation": "Borrow at the first dip, then set the tail to 9."
+      "explanation": "Заимствуйте при первом падении, затем установите хвост на 9."
     }
   ],
   "starterCode": {
@@ -50,8 +50,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Work on the digit array from right to left, marking the first position (from the left) where a dip occurs.",
-    "When digits[i] > digits[i+1], lower digits[i] by one and remember that the tail from i+1 onward must become 9s.",
-    "Scanning right to left propagates the borrow through runs like 332 -> 322 -> 299."
+    "Работайте над цифровым массивом справа налево, отмечая первое положение (слева), где происходит падение.",
+    "Когда цифры [i] > цифры [i+1], нижние цифры [i] по одной и помните, что хвост от i+1 вперед должен стать 9s.",
+    "Сканирование справа налево пропагандирует заимствование с помощью таких прогонов, как 332 -> 322 -> 299."
   ]
 }

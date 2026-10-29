@@ -1,6 +1,6 @@
 {
   "id": "unique-paths",
-  "title": "25. Unique Paths",
+  "title": "25. Уникальные пути",
   "difficulty": "Medium",
   "category": "dp",
   "link": "https://leetcode.com/problems/unique-paths/",
@@ -8,7 +8,7 @@
     {
       "input": "m=3, n=7",
       "output": "28",
-      "explanation": "There are 28 unique paths on a 3x7 grid."
+      "explanation": "Существуют уникальные пути 28 на сетке 3x7."
     }
   ],
   "starterCode": {
@@ -48,6 +48,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Combinatorics: C(m+n-2, m-1)."
+    "Комбинаторика: C(m+n-2, m-1)."
   ]
 }

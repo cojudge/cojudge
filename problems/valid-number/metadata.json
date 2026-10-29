@@ -1,6 +1,6 @@
 {
   "id": "valid-number",
-  "title": "270. Valid Number",
+  "title": "270. действительное число",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/valid-number/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"0\"",
       "output": "true",
-      "explanation": "A single digit is a valid integer."
+      "explanation": "Единичная цифра является действительным целым числом."
     },
     {
       "input": "s = \"e\"",
       "output": "false",
-      "explanation": "An exponent marker alone has no base digits and no exponent digits."
+      "explanation": "Один только маркер экспоненты не имеет базовых цифр и не имеет экспонентных цифр."
     },
     {
       "input": "s = \"2e10\"",
       "output": "true",
-      "explanation": "Base 2 followed by exponent 10 is well formed."
+      "explanation": "База 2, за которой следует показатель 10, хорошо сформирована."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Trim surrounding spaces first; spaces anywhere else make the string invalid.",
-    "Split on e/E: the exponent must be a signed integer and the base must be a signed decimal with at least one digit.",
-    "The base allows at most one dot and requires a digit on at least one side of it."
+    "Сначала обрезайте окружающие пространства; пространства в любом другом месте делают строку недействительной.",
+    "Разделение на e/E: показатель должен быть подписанным целым числом, а основание должно быть подписанным десятичным числом с по меньшей мере одной цифрой.",
+    "Основание позволяет по крайней мере одну точку и требует цифру по крайней мере на одной ее стороне."
   ]
 }

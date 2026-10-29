@@ -1,6 +1,6 @@
 {
   "id": "brick-wall",
-  "title": "610. Brick Wall",
+  "title": "610. Кирпичная стена",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/brick-wall/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "wall = [[1,2,2,1],[3,1,2],[1,3,2],[2,4],[3,1,2],[1,3,1,1]]",
       "output": "2",
-      "explanation": "Best cut follows four boundaries."
+      "explanation": "Лучшее сокращение следует четырем границам."
     },
     {
       "input": "wall = [[1],[1],[1]]",
       "output": "3",
-      "explanation": "No inner edges exist."
+      "explanation": "Никаких внутренних краев не существует."
     },
     {
       "input": "wall = [[1,1],[2]]",
@@ -50,8 +50,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Convert each row into running prefix sums, ignoring the final outer edge.",
-    "The best cut sits at the most frequent prefix offset; crossed bricks equal rows minus that frequency.",
-    "A hash map from offset to row count finds the optimum in linear time."
+    "Преобразуйте каждую строку в запущенные префиксные суммы, игнорируя конечный внешний край.",
+    "Лучший срез находится в наиболее частом смещение префикса; скрещенные кирпичи равны строкам за вычетом этой частоты.",
+    "Карта хеширования от смещения до подсчета строк находит оптимальный в линейном времени."
   ]
 }

@@ -1,10 +1,10 @@
-Order the deck so a reveal-and-rotate routine exposes cards from smallest to largest.
+Закажите колоду, чтобы раскрываемая и вращающаяся рутина разоблачала карты от самых маленьких до самых больших.
 
-The routine repeats two steps until the deck is empty: show the top card (it leaves the deck), then, if cards remain, move the new top card to the bottom. You may arrange the starting deck however you wish.
+Рутина повторяет два шага, пока колода не опустеет: покажите верхнюю карту (она покидает колоду), затем, если карты остаются, переместите новую верхнюю карту вниз.
 
-Given the distinct values in `deck`, return a starting order whose reveal sequence is sorted increasingly. The first entry of your answer is the top of the deck.
+Учитывая различные значения в `deck`, верните начальный порядок, последовательность раскрытия которого сортируется все чаще.Первая запись вашего ответа - верхняя часть колоды.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= deck.length <= 1000`
 - `1 <= deck[i] <= 10^6`
-- All values in `deck` are distinct.
+- Все значения в `deck` различны.

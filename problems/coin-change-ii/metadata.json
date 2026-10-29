@@ -1,6 +1,6 @@
 {
   "id": "coin-change-ii",
-  "title": "130. Coin Change II",
+  "title": "130. Монетные изменения II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/coin-change-ii/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "amount = 5, coins = [1,2,5]",
       "output": "4",
-      "explanation": "There are four order-independent combinations."
+      "explanation": "Существует четыре независимых от порядка сочетания."
     },
     {
       "input": "amount = 3, coins = [2]",
       "output": "0",
-      "explanation": "The number of combinations to make 3 is 0."
+      "explanation": "Количество комбинаций для создания 3 — 0."
     },
     {
       "input": "amount = 10, coins = [10]",
       "output": "1",
-      "explanation": "The number of combinations to make 10 is 1."
+      "explanation": "Количество комбинаций для создания 10 — 1."
     }
   ],
   "starterCode": {
@@ -62,7 +62,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use one-dimensional dynamic programming where dp[value] counts combinations for that value.",
-    "Process coins in the outer loop so permutations of one combination are not counted again."
+    "Используйте одномерное динамическое программирование, где dp [значение] рассчитывает комбинации для этого значения.",
+    "Обрабатывайте монеты во внешней петле, чтобы перестановки одной комбинации не учитывались снова."
   ]
 }

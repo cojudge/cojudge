@@ -1,15 +1,15 @@
-A logger receives print requests, each carrying a timestamp (in seconds) and a
-message. A message may be printed when it has never appeared before, or when at
-least 10 seconds have passed since it was last printed. Otherwise the request
-is rejected.
+Лесоруб получает запросы на печать, каждый из которых несет временную метку (в секундах) и
+Сообщение может быть напечатано, когда оно никогда не появлялось раньше, или когда
+Минимум секунд 10 прошло с момента последней печати.
+Отклоняется.
 
-Timestamps arrive in non-decreasing order.
+Временные метки поступают в неубывающем порядке.
 
-**Adaptation note:** instead of a stateful class, implement
-`runLogger(timestamps, messages)`, which replays one request per index and
-returns an array using `1` for "printed" and `0` for "rejected".
+**Примечание по адаптации: ** вместо государственного класса, осуществить
+`runLogger(timestamps, messages)`, который воспроизводит один запрос на индекс
+возвращает массив с использованием `1` для «печатного» и `0` для «отклоненного».
 
-**Constraints:**
+**Ограничения:**
 - `1 <= timestamps.length == messages.length <= 500`
 - `0 <= timestamps[i] <= 10^9`, non-decreasing
-- `1 <= messages[i].length <= 100`, lowercase letters and spaces
+- `1 <= messages[i].length <= 100`, строчные буквы и пробелы

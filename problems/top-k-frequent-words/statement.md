@@ -1,9 +1,9 @@
-Given a word list `words` and a number `k`, return the `k` words that appear most often. Order the answer from highest frequency to lowest; when two words share the same count, the one that comes earlier in the dictionary goes first.
+Учитывая список слов `words` и число `k`, возвращайте слова `k`, которые появляются чаще всего. Закажите ответ с самой высокой частоты на самую низкую; когда два слова разделяют одно и то же количество, первое идет то, которое приходит раньше в словаре.
 
-Assume `k` is positive and never exceeds the number of distinct words.
+Предположим, что `k` является положительным и никогда не превышает количество отдельных слов.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= words.length <= 500`
 - `1 <= words[i].length <= 10`
-- Words contain only lowercase letters.
+- Слова содержат только строчные буквы.
 - `1 <= k <= distinct word count`

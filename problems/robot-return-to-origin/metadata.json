@@ -1,6 +1,6 @@
 {
   "id": "robot-return-to-origin",
-  "title": "677. Robot Return to Origin",
+  "title": "677. Роботы возвращаются к истокам",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/robot-return-to-origin/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "moves = \"UD\"",
       "output": "true",
-      "explanation": "Up then down cancels out."
+      "explanation": "Вверху вниз отменяется."
     },
     {
       "input": "moves = \"LL\"",
       "output": "false",
-      "explanation": "Two left steps end at (-2, 0)."
+      "explanation": "Две левые ступени заканчиваются на (-2, 0)."
     },
     {
       "input": "moves = \"URDL\"",
       "output": "true",
-      "explanation": "Each direction appears once, so the robot is back home."
+      "explanation": "Каждое направление появляется один раз, поэтому робот возвращается домой."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Track horizontal and vertical offsets separately.",
-    "U adds one to height, D subtracts one, R adds one to width, L subtracts one.",
-    "The answer is true exactly when both offsets are zero."
+    "Отслеживание горизонтальных и вертикальных смещений отдельно.",
+    "U добавляет один к высоте, D вычитает один, R добавляет один к ширине, L вычитает один.",
+    "Ответ верн, когда оба смещения равны нулю."
   ]
 }

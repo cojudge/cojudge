@@ -1,6 +1,6 @@
 {
   "id": "valid-square",
-  "title": "635. Valid Square",
+  "title": "635. Валидная площадь",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/valid-square/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "p1 = [0,0], p2 = [1,1], p3 = [1,0], p4 = [0,1]",
       "output": "true",
-      "explanation": "The four corners of a unit square."
+      "explanation": "Четыре угла единого квадрата."
     },
     {
       "input": "p1 = [0,0], p2 = [1,1], p3 = [1,0], p4 = [0,12]",
       "output": "false",
-      "explanation": "One corner is stretched away."
+      "explanation": "Один угол растянут."
     },
     {
       "input": "p1 = [1,0], p2 = [-1,0], p3 = [0,1], p4 = [0,-1]",
       "output": "true",
-      "explanation": "A diamond with side root 2."
+      "explanation": "Алмаз с боковым корнем 2."
     }
   ],
   "starterCode": {
@@ -72,8 +72,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "A square has four equal sides and two equal diagonals twice as long in squared length.",
-    "Compute all six pairwise squared distances and sort them.",
-    "Reject zero side length to rule out repeated points."
+    "Квадрат имеет четыре равные стороны и две равные диагонали в два раза длиннее квадратной длины.",
+    "Вычислите все шесть попарно квадратных расстояний и сортируйте их.",
+    "Отклоните нулевую длину стороны, чтобы исключить повторяющиеся точки."
   ]
 }

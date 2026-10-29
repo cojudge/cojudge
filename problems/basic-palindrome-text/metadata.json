@@ -1,23 +1,23 @@
 {
   "id": "basic-palindrome-text",
-  "title": "30. Palindrome Check",
+  "title": "30. Проверка на палиндроме",
   "difficulty": "Easy",
   "category": "strings",
   "examples": [
     {
       "input": "s = \"racecar\"",
       "output": "true",
-      "explanation": "racecar is symmetric."
+      "explanation": "Гоночный автомобиль симметричен."
     },
     {
       "input": "s = \"hello\"",
       "output": "false",
-      "explanation": "hello reversed is olleh."
+      "explanation": "Здравствуйте, перевернутый - Олле."
     },
     {
       "input": "s = \"Abba\"",
       "output": "false",
-      "explanation": "Capital A does not match lowercase a."
+      "explanation": "Столица А не соответствует нижнему регистру А."
     }
   ],
   "starterCode": {
@@ -50,7 +50,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Compare the first character with the last, the second with the second-last, and so on.",
-    "Only the first half needs checking."
+    "Сравните первого персонажа с последним, второго со вторым последним и так далее.",
+    "Только первая половина нуждается в проверке."
   ]
 }

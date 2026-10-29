@@ -1,6 +1,6 @@
 {
   "id": "array-partition",
-  "title": "616. Array Partition",
+  "title": "616. Распределение массива",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/array-partition/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,4,3,2]",
       "output": "4",
-      "explanation": "Pairs (1,2) and (3,4) give 1 + 3."
+      "explanation": "Пары (1, 2) и (3, 4) дают 1 + 3."
     },
     {
       "input": "nums = [6,2,6,5,1,2]",
       "output": "9",
-      "explanation": "Pairs (1,2), (2,5), (6,6) give 1 + 2 + 6."
+      "explanation": "Пары1,2), (2,5), (6,6) дать 1 + 2 + 6."
     },
     {
       "input": "nums = [1,2]",
       "output": "1",
-      "explanation": "The single pair contributes 1."
+      "explanation": "Одиночная пара вносит свой вклад в 1."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sort the array so neighbors are as close in value as possible.",
-    "Pair adjacent elements; each pair's minimum is the element at the even index.",
-    "Adding up indices 0, 2, 4, ... of the sorted array gives the optimum."
+    "Сортируйте массив так, чтобы соседи были как можно ближе по стоимости.",
+    "Парные смежные элементы; минимум каждой пары — это элемент в четном индексе.",
+    "Сложение индексов 0, 2, 4, ... сортированного массива дает оптимальный результат."
   ]
 }

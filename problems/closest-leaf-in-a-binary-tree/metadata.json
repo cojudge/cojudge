@@ -1,6 +1,6 @@
 {
   "id": "closest-leaf-in-a-binary-tree",
-  "title": "747. Closest Leaf in a Binary Tree",
+  "title": "747. Ближайший лист в двоичном дереве",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/closest-leaf-in-a-binary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,3,2], k = 1",
       "output": "2",
-      "explanation": "Leaves 3 and 2 are both one edge from 1; either counts."
+      "explanation": "Листья 3 и 2 являются одним краем от 1; любой считается."
     },
     {
       "input": "root = [1], k = 1",
       "output": "1",
-      "explanation": "The root itself is a leaf."
+      "explanation": "Сам корень — это лист."
     },
     {
       "input": "root = [1,2,3,4,null,null,null,5,null,6], k = 2",
       "output": "3",
-      "explanation": "Leaf 3 is one edge away from node 2; leaf 6 is farther."
+      "explanation": "Лист 3 находится на одном краю от узла 2; лист 6 находится дальше."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "View the tree as an undirected graph by remembering each node's parent, then search outward from the target.",
-    "A breadth-first search from the node holding k reaches leaves in order of increasing distance; the first leaf found is an answer.",
-    "The root counts as a leaf when it has no children."
+    "Рассматривайте дерево как ненаправленный график, запоминая родителя каждого узла, а затем ищите его снаружи.",
+    "Поиск по ширине от узла, удерживающего k, достигает листьев в порядке увеличения расстояния; первый найденный лист является ответом.",
+    "Корень считается листом, когда у него нет потомков."
   ]
 }

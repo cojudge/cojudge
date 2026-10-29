@@ -1,0 +1,77 @@
+{
+  "id": "basic-calculator-iv",
+  "title": "770. Basic Calculator IV",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/basic-calculator-iv/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "expression = \"e + 8 - a + 5\", evalvars = [\"e\"], evalints = [1]",
+      "output": "[\"-1*a\",\"14\"]",
+      "explanation": "Substituting e=1 leaves 14 - a."
+    },
+    {
+      "input": "expression = \"e - 8 + temperature - pressure\", evalvars = [\"e\",\"temperature\"], evalints = [1,12]",
+      "output": "[\"-1*pressure\",\"5\"]",
+      "explanation": "Known vars collapse to the constant 5."
+    },
+    {
+      "input": "expression = \"(e + 8) * (e - 8)\", evalvars = [], evalints = []",
+      "output": "[\"1*e*e\",\"-64\"]",
+      "explanation": "Expands to e*e - 64."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> basicCalculatorIV(String expression, String[] evalvars, int[] evalints) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def basicCalculatorIV(self, expression: str, evalvars: List[str], evalints: List[int]) -> List[str]:\n        return []\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> basicCalculatorIV(string expression, vector<string>& evalvars, vector<int>& evalints) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<string> BasicCalculatorIV(string expression, string[] evalvars, int[] evalints)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn basic_calculator_iv(expression: String, evalvars: Vec<String>, evalints: Vec<i32>) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc BasicCalculatorIV(expression string, evalvars []string, evalints []int) []string {\n    return nil\n}",
+    "typescript": "export function basicCalculatorIV(expression: string, evalvars: string[], evalints: number[]): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $expression\n     * @param string[] $evalvars\n     * @param int[] $evalints\n     * @return string[]\n     */\n    public function basicCalculatorIV($expression, $evalvars, $evalints) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "expression": "e + 8 - a + 5",
+      "evalvars": [
+        "e"
+      ],
+      "evalints": "[1]"
+    },
+    {
+      "expression": "e - 8 + temperature - pressure",
+      "evalvars": [
+        "e",
+        "temperature"
+      ],
+      "evalints": "[1,12]"
+    },
+    {
+      "expression": "(e + 8) * (e - 8)",
+      "evalvars": [],
+      "evalints": "[]"
+    }
+  ],
+  "functionName": "basicCalculatorIV",
+  "params": [
+    {
+      "name": "expression",
+      "type": "string"
+    },
+    {
+      "name": "evalvars",
+      "type": "string_array"
+    },
+    {
+      "name": "evalints",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Represent a polynomial as a map from sorted variable list to coefficient; addition merges maps and multiplication takes pairwise products with merged sorted keys.",
+    "Parse with standard precedence (parentheses, then *, then +-) and replace any variable found in the eval map by its constant.",
+    "Portable note: the expression is a plain string and the answer is a string list ordered by degree descending then variable part ascending."
+  ]
+}

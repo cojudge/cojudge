@@ -1,8 +1,8 @@
-You receive an integer array `nums` and an integer `k`. Identify the element that would appear in position `k` if the array were arranged from largest to smallest.
+Вы получаете целочисленный массив `nums` и целочисленный `k`. Определите элемент, который появится в положении `k`, если массив был расположен от самого большого до самого маленького.
 
-Repeated values each occupy their own positions, so this is not a question about distinct values.
+Повторяющиеся ценности занимают свои собственные позиции, поэтому речь не идет об отдельных ценностях.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= k <= nums.length <= 10^5`
 - `-10^4 <= nums[i] <= 10^4`

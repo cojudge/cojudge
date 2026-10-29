@@ -1,13 +1,13 @@
-You are given an `n x n` grid where `grid[row][col]` is the elevation of a
-cell. At time `t`, you may enter cells whose elevation is at most `t`. From a
-cell, you may move up, down, left, or right.
+Вы получаете сетку `n x n`, где `grid[row][col]` является возвышением сетки.
+В момент времени `t` вы можете войти в клетки, высота которых составляет максимум `t`.
+Вы можете двигаться вверх, вниз, влево или вправо.
 
-Return the minimum time at which it is possible to travel from the top-left
-cell to the bottom-right cell.
+Верните минимальное время, в которое можно путешествовать с левого верха.
+Ячейка в правую нижнюю ячейку.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= n <= 50`
 - `grid.length == n`
 - `grid[i].length == n`
-- The grid contains every elevation from `0` through `n^2 - 1` exactly once.
+- Сетка содержит каждое возвышение от `0` до `n^2 - 1` ровно один раз.

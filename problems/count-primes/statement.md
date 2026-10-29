@@ -1,4 +1,4 @@
-Given a non-negative integer `n`, count how many prime numbers are strictly smaller than `n`. Recall that 0 and 1 are not prime, and a prime has no divisors other than 1 and itself.
+Учитывая неотрицательное целое число `n`, подсчитайте, сколько простых чисел строго меньше, чем `n`. Напомним, что 0 и 1 не являются простыми, а простое не имеет делителей, кроме 1 и само по себе.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= n <= 5 * 10^6`

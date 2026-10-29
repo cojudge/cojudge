@@ -1,0 +1,57 @@
+{
+  "id": "race-car",
+  "title": "816. Race Car",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/race-car/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "target = 3",
+      "output": "2",
+      "explanation": "Drive forward twice: positions 1 then 3, using two A commands."
+    },
+    {
+      "input": "target = 6",
+      "output": "5",
+      "explanation": "One shortest plan is A,A,R,A,A: overshoot to 7, reverse, then advance to 6."
+    },
+    {
+      "input": "target = 1",
+      "output": "1",
+      "explanation": "A single forward move reaches the flag."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int racecar(int target) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def racecar(self, target: int) -> int:\n        return 0\n",
+    "cpp": "class Solution {\npublic:\n    int racecar(int target) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int Racecar(int target) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn racecar(target: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc Racecar(target int) int {\n    return 0\n}",
+    "typescript": "export function racecar(target: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $target\n     * @return int\n     */\n    public function racecar($target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "target": 3
+    },
+    {
+      "target": 6
+    },
+    {
+      "target": 1
+    }
+  ],
+  "functionName": "racecar",
+  "params": [
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Let n be the smallest run of A commands passing the flag (position 2^n - 1): either stop exactly or overshoot and come back.",
+    "Memoize results: overshooting costs n+1 plus the mirrored remainder; alternatively stop one step early and add a short forward burst."
+  ]
+}

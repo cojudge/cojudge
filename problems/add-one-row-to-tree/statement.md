@@ -1,11 +1,11 @@
-You are given a binary tree root, an integer `val`, and a 1-based target `depth`. Insert a full row of new nodes holding `val` at that depth.
+Вам дают двоичный корень дерева, целое число `val` и цель 1 на основе `depth`. Вставьте полный ряд новых узлов, удерживающих `val` на этой глубине.
 
-- When `depth` is 1, create a fresh root with value `val`; the previous tree becomes its left subtree.
-- Otherwise, every node currently at depth `depth-1` receives two fresh children both holding `val`. The node's former left subtree is reattached as the left child of the new left node, and its former right subtree as the right child of the new right node. Nodes already deeper simply shift one level down.
+- Когда `depth` является 1, создайте свежий корень со значением `val`; предыдущее дерево становится его левым поддеревом.
+- В противном случае каждый узел, находящийся в настоящее время на глубине `depth-1`, получает двух свежих потомков, оба из которых держат `val`. Прежнее левое поддерево узла повторно прикрепляется в качестве левого потомка нового левого узла, а его прежнее правое поддерево в качестве правого потомка нового правого узла. Узлы уже глубже просто сдвигают один уровень вниз.
 
-Return the (possibly new) root.
+Возвратить (возможно, новый) корень.
 
-**Constraints:**
-- Tree size is between 0 and 10000 nodes.
-- Depth is at least 1 and at most one past the current height plus one.
-- Values fit in 32-bit signed integers.
+**Ограничения:**
+- Размер дерева находится между узлами 0 и 10000.
+- Глубина - это, по крайней мере, 1, и самое большее один за текущей высотой плюс один.
+- Значения вписываются в 32-бит подписанных целых чисел.

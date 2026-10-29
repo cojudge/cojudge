@@ -1,4 +1,4 @@
-A phone lock screen shows nine dots in a 3x3 grid numbered row by row:
+Экран блокировки телефона показывает девять точек в сетке 3x3, пронумерованной ряд за рядом:
 
 ```
 1 2 3
@@ -6,9 +6,9 @@ A phone lock screen shows nine dots in a 3x3 grid numbered row by row:
 7 8 9
 ```
 
-A pattern is an ordered sequence of distinct dots with length between `m` and `n` inclusive. After touching a dot, the next dot is chosen under one movement rule: sliding straight over an untouched intermediate dot is forbidden — such a jump is allowed only when the dot being jumped over has already been visited. Diagonal neighbours, side neighbours, and knight-style hops that cross no dot are always permitted.
+Узор представляет собой упорядоченную последовательность отдельных точек с длиной между `m` и `n` включительно. После касания точки следующая точка выбирается по одному правилу движения: скользить прямо по нетронутой промежуточной точке запрещено — такой прыжок допускается только тогда, когда точка, над которой прыгают, уже была посещена. Диагональные соседи, боковые соседи и прыжки в рыцарском стиле, которые не пересекают точку, всегда разрешены.
 
-Given `m` and `n`, count every valid pattern whose length falls in `[m, n]`.
+Учитывая `m` и `n`, подсчитайте каждый действительный шаблон, длина которого падает в `[m, n]`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= m <= n <= 9`

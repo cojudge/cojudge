@@ -1,5 +1,5 @@
-A ramp is a pair of positions `i < j` with `nums[i] <= nums[j]`, and its width is the distance `j - i`. Find the greatest width among all ramps in the array, or return 0 when no ramp exists.
+Пандус — это пара позиций `i < j` с `nums[i] <= nums[j]`, а его ширина — это расстояние `j - i`. Найдите наибольшую ширину среди всех пандусов в массиве или верните 0, когда пандус не существует.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 5 * 10^4`
 - `0 <= nums[i] <= 5 * 10^4`

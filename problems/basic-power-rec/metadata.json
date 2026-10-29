@@ -1,6 +1,6 @@
 {
   "id": "basic-power-rec",
-  "title": "46. Power (Recursive)",
+  "title": "46. Власть (рекурсивная)",
   "difficulty": "Easy",
   "category": "recursion",
   "examples": [
@@ -12,7 +12,7 @@
     {
       "input": "base = 3, exp = 0",
       "output": "1",
-      "explanation": "Base case."
+      "explanation": "Базовое дело."
     }
   ],
   "starterCode": {
@@ -52,7 +52,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Base case: `exp == 0` returns 1.",
-    "Otherwise return `base * powerRec(base, exp - 1)`."
+    "`exp == 0` возвращает 1.",
+    "В противном случае возвращайте `base * powerRec(base, exp - 1)`."
   ]
 }

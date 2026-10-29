@@ -1,0 +1,53 @@
+{
+  "id": "strobogrammatic-number-ii",
+  "title": "353. Strobogrammatic Number II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/strobogrammatic-number-ii/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "n = 2",
+      "output": "[\"11\",\"69\",\"88\",\"96\"]",
+      "explanation": "These are all length-2 strings whose rotation mirrors correctly with a non-zero lead."
+    },
+    {
+      "input": "n = 1",
+      "output": "[\"0\",\"1\",\"8\"]",
+      "explanation": "Only 0, 1, and 8 rotate to themselves as single digits."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> findStrobogrammatic(int n) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findStrobogrammatic(self, n: int) -> List[str]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> findStrobogrammatic(int n) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<string> FindStrobogrammatic(int n) \n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_strobogrammatic(n: i32) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc FindStrobogrammatic(n int) []string {\n    return []string{}\n}",
+    "typescript": "export function findStrobogrammatic(n: number): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return string[]\n     */\n    public function findStrobogrammatic($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 2
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 3
+    }
+  ],
+  "functionName": "findStrobogrammatic",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Build the strings from the outside in, wrapping inner results with each rotation pair.",
+    "The outermost pair cannot use 0 as the leading digit.",
+    "Recurse with length n - 2 until reaching length 0 (empty middle) or 1 (0, 1, 8)."
+  ]
+}

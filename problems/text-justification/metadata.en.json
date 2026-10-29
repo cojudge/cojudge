@@ -1,0 +1,60 @@
+{
+  "id": "text-justification",
+  "title": "271. Text Justification",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/text-justification/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "words = [\"This\",\"is\",\"an\",\"example\",\"of\",\"text\",\"justification.\"], maxWidth = 16",
+      "output": "[\"This    is    an\",\"example  of text\",\"justification.  \"]",
+      "explanation": "The first two lines spread extra blanks across gaps; the last line is left-aligned."
+    },
+    {
+      "input": "words = [\"What\",\"must\",\"be\",\"acknowledgment\",\"shall\",\"be\"], maxWidth = 16",
+      "output": "[\"What   must   be\",\"acknowledgment  \",\"shall be        \"]",
+      "explanation": "The long word fills its own line with trailing blanks."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> fullJustify(String[] words, int maxWidth) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def fullJustify(self, words: List[str], maxWidth: int) -> List[str]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> fullJustify(vector<string>& words, int maxWidth) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<string> FullJustify(string[] words, int maxWidth) \n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn full_justify(words: Vec<String>, max_width: i32) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc FullJustify(words []string, maxWidth int) []string {\n    return []string{}\n}",
+    "typescript": "export function fullJustify(words: string[], maxWidth: number): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $words\n     * @param int $maxWidth\n     * @return string[]\n     */\n    public function fullJustify($words, $maxWidth) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "words": ["This", "is", "an", "example", "of", "text", "justification."],
+      "maxWidth": 16
+    },
+    {
+      "words": ["What", "must", "be", "acknowledgment", "shall", "be"],
+      "maxWidth": 16
+    },
+    {
+      "words": ["Science", "is", "what", "we", "understand", "well", "enough", "to", "explain"],
+      "maxWidth": 20
+    }
+  ],
+  "functionName": "fullJustify",
+  "params": [
+    {
+      "name": "words",
+      "type": "string_array"
+    },
+    {
+      "name": "maxWidth",
+      "type": "int"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Greedily pack words: keep adding while the total letters plus minimum single spaces fits maxWidth.",
+    "For justified lines, compute total blanks and share them as (blanks / gaps) with the first (blanks % gaps) gaps getting one extra.",
+    "Left-align the last line and any single-word line: join with single spaces then pad the end."
+  ]
+}

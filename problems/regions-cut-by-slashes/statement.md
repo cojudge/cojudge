@@ -1,10 +1,10 @@
-A square board of `n x n` cells is described by `n` text rows. Each cell holds one mark: `' '` (empty), `'/'` (a wall joining the top-right and bottom-left corners), or `'\\'` (a wall joining the top-left and bottom-right corners). The walls split the board into connected zones; empty space touching across cell edges belongs to one zone.
+Квадратная доска ячеек `n x n` описывается текстовыми строками `n`. Каждая ячейка имеет одну отметку: `' '` (пустая), `'/'` (стена, соединяющая верхний правый и нижний левый углы) или `'\\'` (стена, соединяющая верхний левый и нижний правый углы). Стены разделяют доску на связанные зоны; пустое пространство, касающееся краев ячейки, принадлежит одной зоне.
 
-Count how many distinct zones the walls create.
+Подсчитайте, сколько различных зон создают стены.
 
-Input encoding: because blank cells are significant, the rows are passed as a single string with rows joined by `'|'` (for example `" /|/ "` means the two rows `" /"` and `"/ "`). The `'|'` character never appears inside a row.
+Кодирование ввода: поскольку пустые ячейки являются значительными, строки передаются как одна строка с строками, соединенными между собой. `'|'` (например, `" /|/ "` означает два ряда `" /"` и `"/ "`.The `'|'` Персонаж никогда не появляется внутри ряда.
 
-**Constraints:**
-- The board is `n x n` with `1 <= n <= 30`, and every row has exactly `n` characters.
-- Each character is `' '`, `'/'`, or `'\\'`.
-- Rows are joined with `'|'` into one string.
+**Ограничения:**
+- Доска `n x n` с `1 <= n <= 30`, и в каждом ряду есть именно символы `n`.
+- Каждый персонаж — `' '`, `'/'` или `'\\'`.
+- Rows соединены с `'|'` в одну строку.

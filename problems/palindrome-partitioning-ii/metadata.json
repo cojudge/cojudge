@@ -1,6 +1,6 @@
 {
   "id": "palindrome-partitioning-ii",
-  "title": "301. Palindrome Partitioning II",
+  "title": "301. Разделение на палиндром II",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/palindrome-partitioning-ii/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"aab\"",
       "output": "1",
-      "explanation": "Splitting as \"aa\" | \"b\" uses one cut and both parts are palindromes."
+      "explanation": "Расщепление как «aa» | «b» использует один разрез, и обе части являются палиндромами."
     },
     {
       "input": "s = \"a\"",
       "output": "0",
-      "explanation": "A single character is already a palindrome."
+      "explanation": "Один персонаж уже палиндром."
     },
     {
       "input": "s = \"ab\"",
       "output": "1",
-      "explanation": "\"a\" | \"b\" is the only palindromic split."
+      "explanation": "«a» | «b» — единственный палиндром."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Expand around every center to mark all palindromic substrings in O(n^2).",
-    "Let dp[i] be the min cuts for the prefix ending at i; extend from each palindrome start.",
-    "A single DP pass with center expansion avoids storing the full n x n table."
+    "Расширяйтесь вокруг каждого центра, чтобы отметить все палиндромные подстроки в O(n^2).",
+    "Пусть dp [i] будет мини-разрезами для префикса, заканчивающегося на i; расширяйтесь от каждого начала палиндрома.",
+    "Один проход DP с расширением центра позволяет избежать хранения полного стола n x n."
   ]
 }

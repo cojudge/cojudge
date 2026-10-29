@@ -1,8 +1,8 @@
-A shuffled bundle `s` holds the letters of several English digit names (`zero` through `nine`) rangled together with their letters out of order. Every letter in `s` belongs to exactly one of those hidden names, and the bundle is guaranteed to be splittable this way.
+Перетасованный пакет `s` содержит буквы нескольких английских цифровых имен (`zero` через `nine`), перезваниваемые вместе с их буквами из порядка. Каждая буква в `s` принадлежит именно к одному из этих скрытых имен, и пакет гарантированно будет разделен таким образом.
 
-Recover the hidden digits and return them as a string with the digits arranged from smallest to largest.
+Восстановите скрытые цифры и верните их в виде строки с цифрами, расположенными от самых маленьких до самых больших.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 10^5`
-- `s` uses only the letters appearing in English digit names.
-- `s` is guaranteed to decompose into full digit names.
+- `s` использует только буквы, появляющиеся в английских цифровых именах.
+- `s` гарантированно разлагается на полнозначные имена.

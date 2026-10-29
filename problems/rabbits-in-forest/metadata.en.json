@@ -1,0 +1,58 @@
+{
+  "id": "rabbits-in-forest",
+  "title": "780. Rabbits in Forest",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/rabbits-in-forest/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "answers = [1,1,2]",
+      "output": "5",
+      "explanation": "A pair plus a trio gives five rabbits."
+    },
+    {
+      "input": "answers = [10,10,10]",
+      "output": "11",
+      "explanation": "Three speakers fit inside one group of eleven."
+    },
+    {
+      "input": "answers = [0,0,1,1,1]",
+      "output": "6",
+      "explanation": "Two lone rabbits plus two pairs (one with a silent partner) total six."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numRabbits(int[] answers) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numRabbits(self, answers: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int numRabbits(vector<int>& answers) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int NumRabbits(int[] answers)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_rabbits(answers: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumRabbits(answers []int) int {\n    return 0\n}",
+    "typescript": "export function numRabbits(answers: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $answers\n     * @return int\n     */\n    public function numRabbits($answers) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "answers": "[1,1,2]"
+    },
+    {
+      "answers": "[10,10,10]"
+    },
+    {
+      "answers": "[0,0,1,1,1]"
+    }
+  ],
+  "functionName": "numRabbits",
+  "params": [
+    {
+      "name": "answers",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Rabbits giving the same answer a can share groups of size a+1; count how many speakers gave each answer.",
+    "For each distinct answer, the number of groups needed is the ceiling of count/(a+1).",
+    "Multiply groups by group size and sum across all distinct answers."
+  ]
+}

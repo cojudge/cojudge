@@ -1,8 +1,8 @@
-You are given a string that encodes a binary tree. The encoding works like this: a node's integer value comes first (possibly negative, possibly several digits), then its left subtree wrapped in parentheses, then its right subtree wrapped in parentheses. A missing child is simply omitted (never written as empty parentheses). For example, `1(2)(3)` is a root `1` with left child `2` and right child `3`, while `1(2)` has only a left child.
+Вам дают строку, которая кодирует двоичное дерево. Кодирование работает так: сначала приходит целое значение узла (возможно, отрицательное, возможно несколько цифр), затем его левое поддерево, завернутое в скобки, затем его правое поддерево, завернутое в скобки. Пропавший потомок просто опущен (никогда не записывается в пустые скобки). Например, `1(2)(3)` - это корень `1` с левым потомком `2` и правым потомком `3`, в то время как `1(2)` имеет только левого потомка.
 
-Build the tree described by the string and return its root. An empty string means there is no tree, so return null.
+Построй дерево, описанное струной, и верни его корень. Пустая струна означает, что дерева нет, поэтому верни нуль.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= s.length <= 3 * 10^4`
-- `s` is either empty or a valid encoding: integers (with optional leading `-`), parentheses balanced, no empty `()` pairs.
-- Node values fit in a 32-bit signed integer.
+- `s` является либо пустым, либо действительным кодированием: целые числа (с дополнительным ведущим `-`), скобки сбалансированы, нет пустых пар `()`.
+- Значения узлов вписываются в целое число, подписанное 32-битом.

@@ -1,14 +1,14 @@
-An integer array `stones` lists the weight of every rock, with `stones[i]` belonging to the `i`-th rock.
+Целый массив `stones` перечисляет вес каждой породы, причем `stones[i]` принадлежит к `i`-й породе.
 
-The rocks take part in the following game. On every move, pick any two rocks and crash them together: call their weights `x` and `y` with `x <= y`. The crash has this outcome:
+Скалы принимают участие в следующей игре. На каждом шагу выберите любые два камня и разобьите их вместе: назовите их веса `x` и `y` с `x <= y`. Крушение имеет такой результат:
 
-- When `x == y`, both rocks vanish, and
-- When `x != y`, the rock of weight `x` vanishes, while the rock of weight `y` survives with the reduced weight `y - x`.
+- Когда `x == y`, оба камня исчезают, и
+- Когда `x != y`, скала веса `x` исчезает, в то время как скала веса `y` выживает с уменьшенным весом `y - x`.
 
-Play continues until no more than one rock is left.
+Игра продолжается до тех пор, пока не останется не более одного камня.
 
-Report the lightest weight that this final rock can possibly have. When every rock can be eliminated, report `0`.
+Сообщите о самом легком весе, который может иметь этот последний камень. Когда каждый камень может быть устранен, сообщите `0`.
 
-**Constraints:**
+**Ограничения:**
 - 1 ≤ stones.length ≤ 30
-- 1 ≤ stones[i] ≤ 100
+- 1 ≤ камни[i] ≤ 100

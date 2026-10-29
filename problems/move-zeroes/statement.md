@@ -1,8 +1,8 @@
-Move all zeros to the end while keeping the relative order of non-zero values.
+Переместите все нули до конца, сохраняя относительный порядок ненулевых значений.
 
-**Adaptation:** the original requires an in-place void update; here implement
-`moveZeroes(nums)` returning the rearranged array.
+**Адаптация: ** Оригинал требует обновления на месте; здесь реализуется
+`moveZeroes(nums)` возвращает перестроенный массив.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^4`
 - `-2^31 <= nums[i] <= 2^31 - 1`

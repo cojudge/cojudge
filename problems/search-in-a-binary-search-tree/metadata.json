@@ -1,6 +1,6 @@
 {
   "id": "search-in-a-binary-search-tree",
-  "title": "713. Search in a Binary Search Tree",
+  "title": "713. Поиск в двоичном дерево поиска",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/search-in-a-binary-search-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [4,2,7,1,3], val = 2",
       "output": "[2,1,3]",
-      "explanation": "Subtree rooted at 2."
+      "explanation": "Субтри укоренено в 2."
     },
     {
       "input": "root = [4,2,7,1,3], val = 5",
       "output": "[]",
-      "explanation": "Missing value."
+      "explanation": "Недостающая ценность."
     },
     {
       "input": "root = [1,null,2,null,3], val = 3",
       "output": "[3]",
-      "explanation": "Deepest node."
+      "explanation": "Самый глубокий узел."
     }
   ],
   "starterCode": {
@@ -59,8 +59,8 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Use the ordering: go left when val is smaller, right when larger.",
-    "Stop at the first node equal to val and return it directly.",
-    "A loop or recursion both run in height time."
+    "Используйте порядок: идите влево, когда вал меньше, вправо, когда больше.",
+    "Остановитесь на первом узле, равном валу, и верните его напрямую.",
+    "Петля или рекурсия оба работают в высоту времени."
   ]
 }

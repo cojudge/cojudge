@@ -1,6 +1,6 @@
 {
   "id": "largest-component-size-by-common-factor",
-  "title": "939. Largest Component Size by Common Factor",
+  "title": "939. Самый большой размер компонента по общему фактору",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/largest-component-size-by-common-factor/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [4,6,15,35]",
       "output": "4",
-      "explanation": "Factors chain all four together."
+      "explanation": "Цепь факторов все четыре вместе."
     },
     {
       "input": "nums = [20,50,9,63]",
       "output": "2",
-      "explanation": "Two pairs form two groups of two."
+      "explanation": "Две пары образуют две группы по две."
     },
     {
       "input": "nums = [2,3,6,7,4,12,21,39]",
       "output": "8",
-      "explanation": "Everything connects into one group."
+      "explanation": "Все объединяется в одну группу."
     }
   ],
   "starterCode": {
@@ -70,8 +70,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Split each number into its distinct prime factors; numbers sharing a prime belong together.",
-    "Union the indices that meet at the same prime with a disjoint-set structure keyed by prime.",
-    "The value 1 has no prime factor and always stays solitary."
+    "Разделите каждое число на его различные простые факторы; числа, разделяющие простое, принадлежат друг другу.",
+    "Унифицируйте индексы, которые встречаются в одном и том же прайме, с разъединенной структурой, основанной на прайме.",
+    "Значение 1 не имеет основного фактора и всегда остается одиноким."
   ]
 }

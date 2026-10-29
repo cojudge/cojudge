@@ -1,6 +1,6 @@
 {
   "id": "most-frequent-subtree-sum",
-  "title": "570. Most Frequent Subtree Sum",
+  "title": "570. Самая частая субтрёшка",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/most-frequent-subtree-sum/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [5,2,-3]",
       "output": "[2,-3,4]",
-      "explanation": "The three subtree totals are 2 (left leaf), -3 (right leaf) and 4 (whole tree); each occurs once, so all are returned."
+      "explanation": "Всего три поддеревья: 2 (левый лист), -3 (правый лист) и 4 (целое дерево); каждое происходит один раз, поэтому все возвращаются."
     },
     {
       "input": "root = [5,2,-5]",
       "output": "[2]",
-      "explanation": "The subtree totals are 2, -5 and 2; the value 2 occurs twice, more than any other total."
+      "explanation": "Итоги поддеревов 2, -5 и 2; значение 2 происходит в два раза, больше, чем любой другой итог."
     },
     {
       "input": "root = [1]",
       "output": "[1]",
-      "explanation": "The only subtree total is 1."
+      "explanation": "Единственным поддеревом является 1."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "A post-order walk computes each subtree total from its children before counting it.",
-    "Keep a frequency table of totals plus the best frequency seen; collect every total matching it (order is free)."
+    "Пост-заказная прогулка вычисляет общее количество каждого поддеревья от своих потомков, прежде чем считать его.",
+    "Держите таблицу частот с лучшими частотами; соберите все совпадающие частоты (заказ бесплатный)."
   ]
 }

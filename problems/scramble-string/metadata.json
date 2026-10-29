@@ -1,6 +1,6 @@
 {
   "id": "scramble-string",
-  "title": "277. Scramble String",
+  "title": "277. Струна скрембла",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/scramble-string/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s1 = \"great\", s2 = \"rgeat\"",
       "output": "true",
-      "explanation": "Split into gr/eat, swap the first half to rg, then rejoin as rgeat."
+      "explanation": "Разделите на гр/есть, поменяйте первую половину на rg, а затем воссоединитесь как rgeat."
     },
     {
       "input": "s1 = \"abcde\", s2 = \"caebd\"",
       "output": "false",
-      "explanation": "No sequence of recursive swaps turns abcde into caebd."
+      "explanation": "Никакая последовательность рекурсивных свопов не превращает abcde в caebd."
     },
     {
       "input": "s1 = \"a\", s2 = \"a\"",
       "output": "true",
-      "explanation": "Identical single characters match."
+      "explanation": "Идентичные одиночные персонажи совпадают."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Try every split point with both the straight and swapped matchings, memoizing (i, j, length) results.",
-    "Prune with character counts: mismatched frequency means the pair cannot be scrambles.",
-    "Equal substrings are an immediate true without further splitting."
+    "Попробуйте каждую точку разделения с прямыми и сменными совпадениями, запоминая (i, j, длина) результаты.",
+    "Обрезка с количеством символов: несоответствующая частота означает, что пара не может быть скремблирована.",
+    "Равные подстроки являются непосредственной правдой без дальнейшего расщепления."
   ]
 }

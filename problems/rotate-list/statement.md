@@ -1,8 +1,8 @@
-Given the head of a singly linked list and a non-negative integer `k`, shift the list to the right by `k` places. Shifting means the last `k` nodes move to the front while preserving their internal order, and the remaining nodes follow behind them.
+Учитывая заголовок односвязного списка и неотрицательное целое число `k`, сместите список вправо по местам `k`.Сдвиг означает, что последние узлы `k` перемещаются в переднюю часть, сохраняя при этом свой внутренний порядок, а остальные узлы следуют за ними.
 
-If `k` is larger than the list length, wrap around using `k` modulo the length. An empty list or a zero shift leaves the list unchanged.
+Если `k` больше длины списка, оберните его с помощью модуля `k`. Пустой список или нулевой сдвиг оставляют список без изменений.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= number of nodes <= 500`
 - `-100 <= node value <= 100`
 - `0 <= k <= 2000000000`

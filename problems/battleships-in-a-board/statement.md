@@ -1,9 +1,9 @@
-A board holds battleships marked `X` and empty water marked `.`. Each ship occupies a straight line of one or more cells, either fully horizontal or fully vertical. Different ships never touch side by side — at least one water cell separates them horizontally and vertically (diagonal touching is allowed).
+На борту находятся линкоры с маркировкой `X` и пустые воды с маркировкой `.`. Каждое судно занимает прямую линию из одной или нескольких ячеек, либо полностью горизонтальную, либо полностью вертикальную. Различные корабли никогда не соприкасаются бок о бок — по крайней мере одна ячейка воды отделяет их горизонтально и вертикально (допускается диагональное касание).
 
-Count how many distinct ships appear. Scan once using only constant extra memory.
+Подсчитайте, сколько разных кораблей появляется. Сканируйте один раз, используя только постоянную дополнительную память.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= board.length, board[i].length <= 200`
-- Each cell is either `X` or `.`.
+- Каждая ячейка представляет собой `X` или `.`.
 
-**Type note:** the board arrives as a 2D char array; in Rust it is passed as one string holding the JSON-encoded board.
+** Примечание к типу: ** доска поступает в виде массива 2D-угольника; в Rust она передается как одна строка, удерживающая доску с кодировкой JSON.

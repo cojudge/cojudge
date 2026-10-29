@@ -1,6 +1,6 @@
 {
   "id": "number-of-connected-components-in-an-undirected-graph",
-  "title": "34. Number of Connected Components in an Undirected Graph",
+  "title": "34. Количество подключенных компонентов в ненаправленном графе",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/",
   "category": "graph",
@@ -8,12 +8,12 @@
     {
       "input": "n=5, edges=[[0,1],[1,2],[3,4]]",
       "output": "2",
-      "explanation": "The 5 nodes with 3 edges form 2 connected components."
+      "explanation": "Узлы 5 с краями 3 образуют связанные компоненты 2."
     },
     {
       "input": "n=5, edges=[[0,1],[1,2],[2,3],[3,4]]",
       "output": "1",
-      "explanation": "The 5 nodes with 4 edges form 1 connected component."
+      "explanation": "Узлы 5 с краями 4 образуют подключенный компонент 1."
     }
   ],
   "starterCode": {
@@ -85,6 +85,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use Union-Find to union endpoints and count unique roots, or BFS/DFS to count visited components."
+    "Используйте Union-Find для конечных точек и подсчета уникальных корней, или BFS / DFS для подсчета посещенных компонентов."
   ]
 }

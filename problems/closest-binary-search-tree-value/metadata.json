@@ -1,6 +1,6 @@
 {
   "id": "closest-binary-search-tree-value",
-  "title": "370. Closest Binary Search Tree Value",
+  "title": "370. Ближайшая двоичная поисковая ценность",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/closest-binary-search-tree-value/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [4,2,5,1,3], target = \"3.714286\"",
       "output": "4",
-      "explanation": "4 is 0.285714 away, closer than 3 at 0.714286 and all other values."
+      "explanation": "4 находится на расстоянии 0.285714, ближе, чем 3 на 0.714286 и всех других значениях."
     },
     {
       "input": "root = [1], target = \"4.428571\"",
       "output": "1",
-      "explanation": "The only value 1 is trivially the closest."
+      "explanation": "Единственное значение 1 тривиально самое близкое."
     },
     {
       "input": "root = [4,2,5,1,3], target = \"3.5\"",
       "output": "3",
-      "explanation": "3 and 4 tie at distance 0.5, and the tie goes to the smaller value 3."
+      "explanation": "3 и 4 галстук на расстоянии 0.5, а галстук идет на меньшее значение 3."
     }
   ],
   "starterCode": {
@@ -63,8 +63,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "This is a portable adaptation: parse the target string as a double and compare absolute differences.",
-    "Walk down the search tree, moving left or right by comparing the target with each node, tracking the best value seen.",
-    "On an exact distance tie, keep the smaller value."
+    "Это портативная адаптация: разберите целевую строку как двойную и сравните абсолютные различия.",
+    "Пройдитесь по дереву поиска, двигаясь влево или вправо, сравнивая цель с каждым узлом, отслеживая лучшее значение.",
+    "На точном расстоянии галстук, сохранить меньшее значение."
   ]
 }

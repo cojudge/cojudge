@@ -1,6 +1,6 @@
 {
   "id": "zuma-game",
-  "title": "552. Zuma Game",
+  "title": "552. Игра Zuma",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/zuma-game/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "board = \"WRRBBW\", hand = \"RB\"",
       "output": "-1",
-      "explanation": "No insertion order empties the row with these two hand balls."
+      "explanation": "Никакой порядок вставки не опустошает ряд этими двумя ручными шариками."
     },
     {
       "input": "board = \"WWRRBBWW\", hand = \"WRBRW\"",
       "output": "2",
-      "explanation": "Two well placed insertions trigger cascading deletions that clear the row."
+      "explanation": "Две хорошо расположенные вставки запускают каскадные удаления, которые очищают строку."
     },
     {
       "input": "board = \"G\", hand = \"GGGGG\"",
       "output": "2",
-      "explanation": "Adding two more G balls makes three in a row, which are then removed."
+      "explanation": "Добавление еще двух шаров G делает три в ряд, которые затем удаляются."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Search over game states with breadth-first or depth-first search plus memoization; the state is the current row together with remaining hand counts.",
-    "Only insertions next to an equal-colored ball can be useful, and identical resulting rows from different gaps need be tried once.",
-    "Write a helper that repeatedly deletes every run of length three or more until the row is stable."
+    "Поиск по игровым состояниям с поиском по ширине или по глубине плюс запоминание; состояние - текущий ряд вместе с оставшимися подсчетами рук.",
+    "Полезными могут быть только вставки рядом с шаром равного цвета, и одинаковые результирующие ряды из разных промежутков нужно попробовать один раз.",
+    "Напишите помощника, который многократно удаляет каждый пробег длиной три и более до тех пор, пока строка не станет стабильной."
   ]
 }

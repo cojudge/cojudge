@@ -1,6 +1,6 @@
-You are given the root of a binary search tree (BST): for every node, all values in its left subtree are smaller and all values in its right subtree are larger. Return the smallest absolute difference between the values of any two nodes in the tree.
+Вам дан корень двоичного дерева поиска (BST): для каждого узла все значения в его левом поддереве меньше, а все значения в его правом поддереве больше.Верните наименьшую абсолютную разницу между значениями любых двух узлов в дереве.
 
-**Constraints:**
-- The tree holds between 2 and 10^4 nodes.
+**Ограничения:**
+- Дерево находится между узлами 2 и 10^4.
 - `0 <= Node.val <= 10^5`
-- The tree is a valid BST with distinct values.
+- Дерево является действительным BST с различными значениями.

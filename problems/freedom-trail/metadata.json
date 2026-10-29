@@ -1,6 +1,6 @@
 {
   "id": "freedom-trail",
-  "title": "574. Freedom Trail",
+  "title": "574. Тропа свободы",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/freedom-trail/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "ring = \"godding\", key = \"gd\"",
       "output": "4",
-      "explanation": "Keep the dial still and press 'g' (1), rotate two places to a 'd' (2), then press it (1), for 4 total."
+      "explanation": "Держите циферблат неподвижным и нажмите «g» (1), поверните два места на «d» (2), затем нажмите его (1), для 4 в целом."
     },
     {
       "input": "ring = \"godding\", key = \"godding\"",
       "output": "13",
-      "explanation": "Spelling the full word in order needs 6 rotations plus 7 presses."
+      "explanation": "Для написания полного слова в порядке нужны вращения 6 плюс нажатия 7."
     },
     {
       "input": "ring = \"ab\", key = \"b\"",
       "output": "2",
-      "explanation": "Rotate one step to 'b' (1) and press it (1)."
+      "explanation": "Поверните один шаг на «b» (1) и нажмите его (1)."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Precompute, for each letter, the list of dial positions holding it so transitions only consider relevant stops.",
-    "Memoize over (key index, dial position): try every occurrence of the next character and add the circular distance plus one press.",
-    "Circular distance between i and j on a dial of length m is min(|i-j|, m-|i-j|)."
+    "Предвычислите для каждой буквы список позиций циферблата, удерживающих ее, чтобы переходы учитывали только соответствующие остановки.",
+    "Запомните (ключевой индекс, положение циферблата): попробуйте каждое появление следующего символа и добавьте круговое расстояние плюс один нажатие.",
+    "Круговое расстояние между i и j на циферблате длины m составляет мин ( |i-j |, m- |i-j |)."
   ]
 }

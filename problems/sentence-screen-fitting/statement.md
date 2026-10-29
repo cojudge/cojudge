@@ -1,12 +1,12 @@
-A screen has `rows` rows and `cols` columns. Words from `sentence` are written left to right, top to bottom, in order, repeating the sentence as needed. A single space separates consecutive words, words never break across lines, and trailing spaces at a row end do not count against the width.
+На экране есть строки `rows` и столбцы `cols`. Слова из `sentence` пишутся слева направо, сверху вниз, по порядку, повторяя предложение по мере необходимости. Одно пространство разделяет последовательные слова, слова никогда не ломаются по линиям, а пробелы в конце строки не засчитываются против ширины.
 
-For example, with `cols = 8` the row `hello___` (hello plus three spaces) is fine, but `hello_w` would overflow.
+Например, с `cols = 8` ряд `hello___` (привет, плюс три пробела) в порядке, но `hello_w` будет переполнен.
 
-Count how many complete copies of `sentence` fit on the whole screen.
+Подсчитайте, сколько полных копий `sentence` помещается на весь экран.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= sentence.length <= 100`
 - `1 <= sentence[i].length <= 10`
-- Words hold lowercase letters.
+- Слова содержат строчные буквы.
 - `1 <= rows, cols <= 20000`
 - Every word fits alone in a row (`sentence[i].length <= cols`).

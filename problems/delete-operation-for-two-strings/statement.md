@@ -1,7 +1,7 @@
-Two words can only be changed by deleting characters. Find the smallest number of single-character deletions that makes the two words identical.
+Два слова могут быть изменены только путем удаления символов. Найдите наименьшее количество односимвольных удалений, которые делают два слова идентичными.
 
-In other words, keep a subsequence shared by both words and delete everything else; maximizing the kept part minimizes the deletions.
+Другими словами, сохраняйте последовательность, разделяемую обоими словами, и удаляйте все остальное; максимизация сохраненной части сводит к минимуму удаление.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= word1.length, word2.length <= 500`
-- Words contain lowercase English letters.
+- Слова содержат строчные английские буквы.

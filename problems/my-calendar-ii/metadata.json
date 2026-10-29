@@ -1,6 +1,6 @@
 {
   "id": "my-calendar-ii",
-  "title": "738. My Calendar II",
+  "title": "738. Мой календарь II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/my-calendar-ii/",
   "category": "design",
@@ -8,7 +8,7 @@
     {
       "input": "operations = [\"MyCalendarTwo\",\"book\",\"book\",\"book\",\"book\",\"book\",\"book\"]\nargs = [[],[10,20],[50,60],[10,40],[5,15],[5,10],[25,55]]",
       "output": "[1,1,1,0,1,1]",
-      "explanation": "Only the [5,15) request would pile three bookings over [10,15)."
+      "explanation": "Только запрос [5, 15] будет включать в себя три бронирования [10, 15]."
     },
     {
       "input": "operations = [\"MyCalendarTwo\",\"book\",\"book\",\"book\"]\nargs = [[],[0,10],[10,20],[5,15]]",
@@ -56,8 +56,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Alongside the stored bookings, keep every pairwise-overlapped (double-covered) segment.",
-    "A new request fails when it overlaps any double-covered segment; otherwise append its overlaps with existing bookings to that list.",
-    "Overlap of [s,e) with [a,b) is [max(s,a), min(e,b)) whenever max < min."
+    "При этом каждый из них должен быть покрыт двустворчатой оболочкой.",
+    "Новый запрос терпит неудачу, когда он перекрывает любой сегмент с двойным покрытием; в противном случае добавьте его перекрытия с существующими бронированиями в этот список.",
+    "[s,e] с [a,b] является [max(s,a), min(e,b)] всякий раз, когда max < min."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "search-insert-position",
-  "title": "184. Search Insert Position",
+  "title": "184. Поисковая позиция Insert",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/search-insert-position/",
   "category": "binary-search",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,3,5,6], target = 5",
       "output": "2",
-      "explanation": "Target 5 is found at index 2."
+      "explanation": "Целевой индекс 5 находится в индексе 2."
     },
     {
       "input": "nums = [1,3,5,6], target = 2",
       "output": "1",
-      "explanation": "Target 2 is not present; inserting it keeps order at index 1."
+      "explanation": "Целевой 2 отсутствует; вставка его ведет порядок по индексу 1."
     },
     {
       "input": "nums = [1,3,5,6], target = 7",
       "output": "4",
-      "explanation": "Target 7 is larger than all elements; it would be appended at index 4."
+      "explanation": "Цель 7 больше, чем все элементы; она будет добавлена в индекс 4."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use binary search for the lower bound: the first index with nums[i] >= target.",
-    "Keep an inclusive interval with left <= right and move left to mid+1 when nums[mid] < target.",
-    "Compute the midpoint as left + (right - left) / 2 to avoid overflow."
+    "Используйте двоичный поиск по нижней границе: первый индекс с числами [i] >= цель.",
+    "Сохраняйте инклюзивный интервал слева <= вправо и перемещайтесь влево до середины + 1, когда nums [mid] <цель.",
+    "Вычислите среднюю точку как левая + (правая - левая) / 2, чтобы избежать переполнения."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "special-binary-string",
-  "title": "763. Special Binary String",
+  "title": "763. Специальная бинарная струна",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/special-binary-string/",
   "category": "string",
@@ -8,7 +8,7 @@
     {
       "input": "s = \"11011000\"",
       "output": "\"11100100\"",
-      "explanation": "Neighboring balanced blocks are swapped recursively to maximize the order."
+      "explanation": "Соседние сбалансированные блоки меняются рекурсивно, чтобы максимизировать порядок."
     },
     {
       "input": "s = \"10\"",
@@ -17,7 +17,7 @@
     {
       "input": "s = \"1010\"",
       "output": "\"1010\"",
-      "explanation": "Identical primitives keep the string unchanged."
+      "explanation": "Идентичные примитивы сохраняют струну неизменной."
     }
   ],
   "starterCode": {
@@ -50,8 +50,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Split s into primitives: scan with a balance counter and cut whenever it returns to zero.",
-    "A primitive has the form 1 + inner + 0; recurse on the inner part, rewrap it, and collect all primitives.",
-    "Sort the rewrapped primitives in descending order and concatenate them."
+    "Разделите s на примитивы: сканируйте счетчиком баланса и разрежьте его всякий раз, когда он возвращается к нулю.",
+    "Примитив имеет форму 1 + внутренний + 0; повторяется на внутренней части, переворачивает ее и собирает все примитивы.",
+    "Сортируйте перевернутых примитивов в порядке убывания и соединяйте их."
   ]
 }

@@ -1,11 +1,11 @@
-You are given the root of a binary search tree and an integer `target`. Divide the tree into two subtrees so that every value at most `target` lands in the first part and every larger value lands in the second part, keeping the original ancestor relations wherever possible.
+Вам даны корень двоичного дерева поиска и целое число `target`. Разделите дерево на два поддеревья, чтобы каждое значение максимум `target` приземлялось в первой части, а каждое большее значение приземлялось во второй части, сохраняя первоначальные отношения предков, где это возможно.
 
-Concretely, split recursively: an empty tree splits into two empty trees; if the root value is at most `target`, its left subtree stays whole and its right subtree is split, reattaching the small half as the new right child; otherwise its right subtree stays whole and its left subtree is split, reattaching the large half as the new left child.
+Конкретно, рекурсивно: пустое дерево расщепляется на два пустых дерева; если значение корня не больше `target`, его левое поддерево остается целым, а его правое поддерево разделено, повторно прикрепляя малую половину в качестве нового правого потомка; в противном случае его правое поддерево остается целым, а левое поддерево разделено, прикрепляя большую половину в качестве нового левого потомка.
 
-Because this judge has no pair-of-trees type, the two halves travel as BFS strings (portable adaptation following the unique-bst-ii precedent): return a two-element list `[small, large]` where each entry is the level-order serialization of that half (`[]` for an empty tree, `null` for missing children, trailing nulls trimmed).
+Поскольку у этого судьи нет типа пары деревьев, две половины путешествуют как строки BFS (портативная адаптация после прецедента уникального-bst-ii): возвращайте список из двух элементов `[small, large]`, где каждая запись является сериализацией уровня порядка этой половины (`[]` для пустого дерева, `null` для пропавших потомков, обрезанные нули).
 
-**Constraints:**
+**Ограничения:**
 - `0 <= nodes <= 50`
-- `-100 <= Node.val <= 100`, all values distinct, BST ordered
+- `-100 <= Node.val <= 100`, все значения различны, BST упорядочен
 - `-100 <= target <= 100`
-- Outputs are BFS strings parseable as trees
+- Выходы - это строки BFS, воспринимаемые как деревья.

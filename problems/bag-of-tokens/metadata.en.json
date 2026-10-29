@@ -1,0 +1,75 @@
+{
+  "id": "bag-of-tokens",
+  "title": "935. Bag of Tokens",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/bag-of-tokens/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "tokens = [100], power = 150",
+      "output": "1",
+      "explanation": "One affordable face-up play."
+    },
+    {
+      "input": "tokens = [100,200,300,400], power = 200",
+      "output": "2",
+      "explanation": "Two cheap wins peak the score at 2."
+    },
+    {
+      "input": "tokens = [71,55,82], power = 54",
+      "output": "0",
+      "explanation": "Nothing affordable, no points to trade."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int bagOfTokensScore(int[] tokens, int power) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def bagOfTokensScore(self, tokens: List[int], power: int) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int bagOfTokensScore(vector<int>& tokens, int power) {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public int BagOfTokensScore(int[] tokens, int power) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn bag_of_tokens_score(tokens: Vec<i32>, power: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc BagOfTokensScore(tokens []int, power int) int {\n    return 0\n}",
+    "typescript": "export function bagOfTokensScore(tokens: number[], power: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $tokens\n     * @param int $power\n     * @return int\n     */\n    public function bagOfTokensScore($tokens, $power) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "tokens": [
+        100
+      ],
+      "power": 50
+    },
+    {
+      "tokens": [
+        200,
+        100
+      ],
+      "power": 150
+    },
+    {
+      "tokens": [
+        100,
+        200,
+        300,
+        400
+      ],
+      "power": 200
+    }
+  ],
+  "functionName": "bagOfTokensScore",
+  "params": [
+    {
+      "name": "tokens",
+      "type": "int_array"
+    },
+    {
+      "name": "power",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sort the tokens so the cheapest wins and the richest refuels are easy to pick.",
+    "Always spend the cheapest affordable token face-up; only when stuck, cash in the priciest remaining token face-down.",
+    "Record the best score seen, since late trades can dip before climbing again."
+  ]
+}

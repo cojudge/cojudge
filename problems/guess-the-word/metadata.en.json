@@ -1,0 +1,80 @@
+{
+  "category": "string",
+  "difficulty": "Hard",
+  "examples": [
+    {
+      "explanation": "Hidden word is the first entry; guess it via master.guess within 10 calls.",
+      "input": "wordlist = [\"acckzz\",\"ccbazz\",\"eiowzz\",\"abcczz\"], secret = \"acckzz\"",
+      "output": "solved"
+    },
+    {
+      "explanation": "Filtering by match scores leaves the secret; guess it via the judge.",
+      "input": "wordlist = [\"hamada\",\"khaled\"], secret = \"khaled\"",
+      "output": "solved"
+    },
+    {
+      "explanation": "Return the hidden entry through the guessing API.",
+      "input": "wordlist = [\"abcdef\",\"abcdeg\",\"abcdeh\"], secret = \"abcdeg\"",
+      "output": "solved"
+    }
+  ],
+  "functionName": "findSecretWord",
+  "hints": [
+    "Score any pair by counting equal positions; this is the value master.guess returns.",
+    "After each guess keep only candidates whose score against the guess equals the reported score.",
+    "Pick the guess minimizing the largest score-group (minimax) so the candidate pool shrinks fastest."
+  ],
+  "id": "guess-the-word",
+  "interactive": {
+    "kind": "guess-word",
+    "maxGuesses": 10,
+    "secretField": "secret"
+  },
+  "link": "https://leetcode.com/problems/guess-the-word/",
+  "outputType": "string",
+  "params": [
+    {
+      "name": "wordlist",
+      "type": "string_array"
+    },
+    {
+      "name": "secret",
+      "type": "string"
+    }
+  ],
+  "starterCode": {
+    "java": "/**\n * // This is the Master's API interface.\n * // You should not implement it, or speculate about its implementation\n * interface Master {\n *     public int guess(String word);\n * }\n */\nclass Solution {\n    public void findSecretWord(String[] wordlist, Master master) {\n    }\n}",
+    "python": "from typing import List\n# This is the Master's API interface.\n# You should not implement it, or speculate about its implementation\n# class Master:\n#     def guess(self, word: str) -> int:\n#         ...\nclass Solution:\n    def findSecretWord(self, wordlist: List[str], master: 'Master') -> None:\n        pass\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n/**\n * // This is the Master's API interface.\n * // You should not implement it, or speculate about its implementation\n * class Master {\n *   public:\n *     int guess(string word);\n * };\n */\nclass Solution {\npublic:\n    void findSecretWord(vector<string>& wordlist, Master& master) {\n    }\n};",
+    "csharp": "/**\n * // This is the Master's API interface.\n * // You should not implement it, or speculate about its implementation\n * class Master {\n *     public int Guess(string word);\n * }\n */\npublic class Solution\n{\n    public void FindSecretWord(string[] wordlist, Master master)\n    {\n    }\n}",
+    "rust": "// This is the Master's API interface.\n// You should not implement it, or speculate about its implementation\n// struct Master;\n// impl Master {\n//     pub fn guess(&mut self, word: &str) -> i32;\n// }\npub struct Solution;\n\nimpl Solution {\n    pub fn find_secret_word(wordlist: Vec<String>, master: &mut Master) {\n    }\n}",
+    "go": "package main\n\n// This is the Master's API interface.\n// You should not implement it, or speculate about its implementation\n// type Master struct { }\n// func (m *Master) Guess(word string) int\nfunc FindSecretWord(wordlist []string, master *Master) {\n}",
+    "typescript": "import { Master } from './Master';\n// This is the Master's API interface.\n// You should not implement it, or speculate about its implementation\n// class Master {\n//     guess(word: string): number;\n// }\nexport function findSecretWord(wordlist: string[], master: Master): void {\n}",
+    "php": "// This is the Master's API interface.\n// You should not implement it, or speculate about its implementation\n// class Master {\n//     public function guess($word);\n// }\nclass Solution {\n    /**\n     * @param string[] $wordlist\n     * @param Master $master\n     */\n    public function findSecretWord($wordlist, $master) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "secret": "acckzz",
+      "wordlist": [
+        "acckzz",
+        "ccbazz",
+        "eiowzz",
+        "abcczz"
+      ]
+    },
+    {
+      "secret": "khaled",
+      "wordlist": [
+        "hamada",
+        "khaled"
+      ]
+    },
+    {
+      "secret": "aaaaaa",
+      "wordlist": [
+        "aaaaaa"
+      ]
+    }
+  ],
+  "title": "841. Guess the Word"
+}

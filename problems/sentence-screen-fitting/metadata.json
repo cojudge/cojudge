@@ -1,6 +1,6 @@
 {
   "id": "sentence-screen-fitting",
-  "title": "489. Sentence Screen Fitting",
+  "title": "489. Скриншоты для Sentence Screen Fitting",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/sentence-screen-fitting/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "sentence = [\"hello\",\"world\"], rows = 2, cols = 8",
       "output": "1",
-      "explanation": "Each row holds one word plus trailing spaces, fitting the sentence once."
+      "explanation": "Каждая строка содержит одно слово плюс пробелы, соответствующие предложению один раз."
     },
     {
       "input": "sentence = [\"a\",\"bcd\",\"e\"], rows = 3, cols = 6",
       "output": "2",
-      "explanation": "Rows pack as a-bcd-e twice with the given width."
+      "explanation": "Строки упаковываются как a-bcd-e дважды с заданной шириной."
     },
     {
       "input": "sentence = [\"i\",\"had\",\"apple\",\"pie\"], rows = 4, cols = 5",
       "output": "1",
-      "explanation": "Four narrow rows together spell the sentence once."
+      "explanation": "Четыре узких ряда вместе пишут предложение один раз."
     }
   ],
   "starterCode": {
@@ -84,8 +84,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Join the sentence with single spaces plus a trailing space to form one repeating cycle.",
-    "Advance a cursor by cols per row; when it lands mid-word, back up to the word start.",
-    "Total fitted sentences equal the cursor position divided by the cycle length."
+    "Присоединяйтесь к предложению с единичными пространствами плюс пространство, чтобы сформировать один повторяющийся цикл.",
+    "Продвигайте курсор по cols за строку; когда он приземляется в середине слова, вернитесь к началу слова.",
+    "Суммарно установленные предложения равны положению курсора, деленному на длину цикла."
   ]
 }

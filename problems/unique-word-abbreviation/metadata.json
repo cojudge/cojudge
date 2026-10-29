@@ -1,6 +1,6 @@
 {
   "id": "unique-word-abbreviation",
-  "title": "384. Unique Word Abbreviation",
+  "title": "384. Уникальное сокращение слова",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/unique-word-abbreviation/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "dictionary = [\"deer\",\"door\",\"cake\",\"card\"], words = [\"dear\",\"cart\",\"cane\"]",
       "output": "[0,1,0]",
-      "explanation": "dear shares d2r with deer/door (0); cart has fresh c2t (1); cane shares c2e with cake (0)."
+      "explanation": "дорогие акции d2r с оленьей/дверью (0); корзина имеет свежие c2t (1); тростниковые акции c2e с тортом (0)."
     },
     {
       "input": "dictionary = [\"hello\"], words = [\"hello\",\"hallo\"]",
       "output": "[1,0]",
-      "explanation": "hello alone keeps h3o unique; hallo collides with it."
+      "explanation": "Hello в одиночку сохраняет h3o уникальным; Hallo сталкивается с ним."
     },
     {
       "input": "dictionary = [\"it\",\"bit\"], words = [\"hit\"]",
       "output": "[1]",
-      "explanation": "h1t appears in no dictionary word."
+      "explanation": "h1t не фигурирует ни в одном словаре."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Adaptation: the ValidWordAbbr class is replaced by checkAbbr(dictionary, words) answering many queries at once (1 unique, 0 otherwise).",
-    "Abbreviate as first letter + (length-2) + last letter; words of length <= 2 map to themselves.",
-    "A query is unique when its abbreviation is absent, or the only dictionary word with it equals the query."
+    "Адаптация: класс ValidWordAbbr заменяется на checkAbbr (словарь, слова), отвечающий сразу на многие запросы (1 уникальный, 0 в противном случае).",
+    "Сокращенно как первая буква + (длина-2) + последняя буква; слова длины <= карта 2 для себя.",
+    "Запрос уникален, когда его аббревиатура отсутствует, или единственное словарное слово с ним равно запросу."
   ]
 }

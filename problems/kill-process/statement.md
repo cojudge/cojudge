@@ -1,8 +1,8 @@
-Each running program has an id in `pid` and its parent id in `ppid` at the same index; a parent id of `0` means no parent. Ending a program also ends every program below it in the parent-child tree.
+Каждая запущенная программа имеет идентификатор в `pid` и его родительский идентификатор в `ppid` с тем же индексом; родительский идентификатор `0` означает отсутствие родителя.Завершение программы также завершает каждую программу ниже него в дереве родитель-потомок.
 
-Given `pid`, `ppid` and `kill`, return all ids that stop, starting with `kill` itself. The order of the remaining ids does not matter.
+Учитывая `pid`, `ppid` и `kill`, возвращают все ids, которые останавливаются, начиная с самого `kill`. Порядок остальных ids не имеет значения.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= pid.length <= 2000`
-- All `pid` values are distinct and each appears as the kill target in tests.
-- Each `ppid` entry is `0` or another `pid` value.
+- Все значения `pid` различны, и каждый из них появляется в качестве цели убийства в тестах.
+- Каждая запись `ppid` представляет собой `0` или другое значение `pid`.

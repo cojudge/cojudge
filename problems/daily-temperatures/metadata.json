@@ -1,6 +1,6 @@
 {
   "id": "daily-temperatures",
-  "title": "82. Daily Temperatures",
+  "title": "82. Ежедневные температуры",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/daily-temperatures/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "temperatures = [73,74,75,71,69,72,76,73]",
       "output": "[1,1,4,2,1,1,0,0]",
-      "explanation": "The days until a warmer temperature for each day are [1, 1, 4, 2, 1, 1, 0, 0]."
+      "explanation": "Дни до более теплой температуры для каждого дня [1, 1, 4, 2, 1, 1, 0, 0]."
     },
     {
       "input": "temperatures = [30,40,50,60]",
       "output": "[1,1,1,0]",
-      "explanation": "The days until a warmer temperature for each day are [1, 1, 1, 0]."
+      "explanation": "Дни до более теплой температуры для каждого дня [1, 1, 1, 0]."
     },
     {
       "input": "temperatures = [30,60,90]",
       "output": "[1,1,0]",
-      "explanation": "The days until a warmer temperature for each day are [1, 1, 0]."
+      "explanation": "Дни до более теплой температуры для каждого дня [1, 1, 0]."
     }
   ],
   "starterCode": {
@@ -54,7 +54,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Keep indices of unresolved days in a monotonic decreasing stack.",
-    "When a warmer day arrives, pop every colder day and fill its waiting distance."
+    "Держите индексы неразрешенных дней в монотонном стеке уменьшения.",
+    "Когда наступает более теплый день, выскакивайте каждый более холодный день и заполняйте расстояние ожидания."
   ]
 }

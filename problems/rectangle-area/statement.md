@@ -1,8 +1,8 @@
-Two rectangles sit on a grid with sides parallel to the axes. The first has corners `(ax1, ay1)` (bottom-left) and `(ax2, ay2)` (top-right); the second has corners `(bx1, by1)` and `(bx2, by2)`.
+Два прямоугольника сидят на сетке со сторонами, параллельными осям. Первый имеет углы `(ax1, ay1)` (снизу слева) и `(ax2, ay2)` (сверху справа); второй имеет углы `(bx1, by1)` и `(bx2, by2)`.
 
-Return the total area covered by at least one of the rectangles, counting any overlap only once.
+Верните общую площадь, покрытую по меньшей мере одним из прямоугольников, считая любое перекрытие только один раз.
 
-**Constraints:**
+**Ограничения:**
 - `-10^4 <= ax1 < ax2 <= 10^4`
 - `-10^4 <= ay1 < ay2 <= 10^4`
 - `-10^4 <= bx1 < bx2 <= 10^4`

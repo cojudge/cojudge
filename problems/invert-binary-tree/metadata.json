@@ -1,6 +1,6 @@
 {
   "id": "invert-binary-tree",
-  "title": "62. Invert/Flip Binary Tree",
+  "title": "62. Бинарное дерево Flip Binary Tree",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/invert-binary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [4,2,7,1,3,6,9]",
       "output": "[4,7,2,9,6,3,1]",
-      "explanation": "Inverting [4,2,7,1,3,6,9] produces [4,7,2,9,6,3,1].\n\n![Invert binary tree example](/api/problems/invert-binary-tree/asset/explanation1.png)"
+      "explanation": "Инвертирование [4, 2, 7, 1, 3, 6, 9] производит [4, 7, 2, 9, 6, 3, 1].\n\n[Пример с перевернутым двоичным деревом](/api/problems/invert-binary-tree/asset/explanation1.png)"
     },
     {
       "input": "root = [2,1,3]",
       "output": "[2,3,1]",
-      "explanation": "Inverting [2,1,3] produces [2,3,1].\n\n![Invert binary tree example 2](/api/problems/invert-binary-tree/asset/explanation2.png)"
+      "explanation": "Инвертирование [2, 1, 3] производит [2, 3, 1].\n\n![Инвертированный пример двоичного дерева 2](/api/problems/invert-binary-tree/asset/explanation2.png)"
     },
     {
       "input": "root = []",
       "output": "[]",
-      "explanation": "Inverting an empty tree produces an empty tree."
+      "explanation": "Перевертывание пустого дерева приводит к образованию пустого дерева."
     }
   ],
   "starterCode": {
@@ -58,6 +58,6 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Swap left and right children for every node (mirror the tree) using recursion or BFS."
+    "Поменяйте левых и правых потомков на каждый узел (зеркальное дерево) с помощью рекурсии или BFS."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "max-chunks-to-make-sorted-ii",
-  "title": "768. Max Chunks To Make Sorted II",
+  "title": "768. Max Chunks выпустят Sorted II",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/max-chunks-to-make-sorted-ii/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "arr = [5,4,3,2,1]",
       "output": "1",
-      "explanation": "No split point keeps the sorted order, so only one chunk works."
+      "explanation": "Никакая точка разделения не сохраняет отсортированный порядок, поэтому работает только одна часть."
     },
     {
       "input": "arr = [2,1,3,4,4]",
       "output": "4",
-      "explanation": "Chunks [2,1], [3], [4], [4] sort to [1,2,3,4,4]."
+      "explanation": "Кусочки.2,1], [3], [4], [4[править править код]1,2,3,4,4]."
     },
     {
       "input": "arr = [1,1,0,0,1]",
       "output": "2",
-      "explanation": "Split into [1,1,0,0] and [1]."
+      "explanation": "Распределение на [1, 1, 0, 0] и [1]."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sweep once while maintaining a stack of chunk maxima: each new value starts its own chunk.",
-    "While the previous chunk maximum exceeds the new value, merge it into the current chunk keeping the larger maximum.",
-    "The stack size at the end is the finest valid chunk count."
+    "Заметьте один раз, сохраняя стопку максимы куска: каждое новое значение начинает свой собственный куск.",
+    "В то время как предыдущий максимум кусочка превышает новое значение, слить его в текущий кусочек, сохраняя больший максимум.",
+    "Размер стека в конце является лучшим действительным количеством кусков."
   ]
 }

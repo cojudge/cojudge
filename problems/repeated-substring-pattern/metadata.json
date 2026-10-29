@@ -1,6 +1,6 @@
 {
   "id": "repeated-substring-pattern",
-  "title": "526. Repeated Substring Pattern",
+  "title": "526. Повторяющийся шаблон подстанции",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/repeated-substring-pattern/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"abab\"",
       "output": "true",
-      "explanation": "The block \"ab\" appears twice in a row."
+      "explanation": "Блок «Аб» появляется дважды подряд."
     },
     {
       "input": "s = \"aba\"",
       "output": "false",
-      "explanation": "No block repeated whole times rebuilds the string."
+      "explanation": "Ни один блок, повторяющийся целыми днями, не восстанавливает строку."
     },
     {
       "input": "s = \"abcabcabcabc\"",
       "output": "true",
-      "explanation": "The block \"abc\" appears four times in a row."
+      "explanation": "Блок «abc» появляется четыре раза подряд."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "A repeating block must have a length that divides the whole string length.",
-    "Try every divisor length of `n` up to `n / 2` and check whether copies of the prefix rebuild the string."
+    "Повторяющийся блок должен иметь длину, которая разделяет всю длину струны.",
+    "Попробуйте каждую длину делителя `n` вплоть до `n / 2` и проверьте, перестраивают ли строки копии префикса."
   ]
 }

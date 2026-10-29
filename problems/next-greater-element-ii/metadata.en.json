@@ -1,0 +1,53 @@
+{
+  "id": "next-greater-element-ii",
+  "title": "565. Next Greater Element II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/next-greater-element-ii/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "nums = [1,2,1]",
+      "output": "[2,-1,2]",
+      "explanation": "The first 1 sees 2; 2 sees nothing larger in the circle; the last 1 wraps to 2."
+    },
+    {
+      "input": "nums = [1,2,3,4,3]",
+      "output": "[2,3,4,-1,4]",
+      "explanation": "Each element except the maximum 4 finds a larger successor, with the final 3 wrapping to 4."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] nextGreaterElements(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def nextGreaterElements(self, nums: List[int]) -> List[int]:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> nextGreaterElements(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] NextGreaterElements(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn next_greater_elements(nums: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc NextGreaterElements(nums []int) []int {\n    \n}",
+    "typescript": "export function nextGreaterElements(nums: number[]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function nextGreaterElements($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,1]"
+    },
+    {
+      "nums": "[1,2,3,4,3]"
+    },
+    {
+      "nums": "[5,4,3,2,1]"
+    }
+  ],
+  "functionName": "nextGreaterElements",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Scan twice around the array while keeping a decreasing stack of indices awaiting their greater element.",
+    "Only push indices during the first lap; the second lap only resolves pending entries.",
+    "Unresolved indices at the end keep -1."
+  ]
+}

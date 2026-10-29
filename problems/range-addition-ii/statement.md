@@ -1,7 +1,7 @@
-Start with an `m` by `n` grid of zeros. Each entry `[a,b]` in `ops` adds one to every cell with row below `a` and column below `b`. After all steps, count how many cells hold the largest value.
+Начните с `m` с помощью сетки нулей `n`. Каждая запись `[a,b]` в `ops` добавляет одну к каждой ячейке с строкой ниже `a` и столбцом ниже `b`. После всех шагов подсчитайте, сколько ячеек имеют наибольшее значение.
 
-Because every step starts at the origin, the most-incremented cells are exactly the overlap of all requested rectangles.
+Поскольку каждый шаг начинается с самого начала, наиболее инкрементированные ячейки являются перекрытием всех запрашиваемых прямоугольников.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= m, n <= 40000`
-- `0 <= ops.length <= 10000`, each `[a,b]` with `1 <= a <= m`, `1 <= b <= n`.
+- `0 <= ops.length <= 10000`, каждый `[a,b]` с `1 <= a <= m`, `1 <= b <= n`.

@@ -1,0 +1,61 @@
+{
+  "id": "frog-jump",
+  "title": "477. Frog Jump",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/frog-jump/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "stones = [0,1,3,5,6,8,12,17]",
+      "output": "true",
+      "explanation": "Hop sizes 1,2,2,3,4,5 walk the frog from the first stone to the last."
+    },
+    {
+      "input": "stones = [0,1,2,3,4,8,9,11]",
+      "output": "false",
+      "explanation": "The wide water gap after stone 4 cannot be crossed with any allowed step."
+    },
+    {
+      "input": "stones = [0,1]",
+      "output": "true",
+      "explanation": "A single hop of length 1 reaches the final stone."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean canCross(int[] stones) {\n        \n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def canCross(self, stones: List[int]) -> bool:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool canCross(vector<int>& stones) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool CanCross(int[] stones) \n    {\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_cross(stones: Vec<i32>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc CanCross(stones []int) bool {\n    \n}",
+    "typescript": "export function canCross(stones: number[]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $stones\n     * @return bool\n     */\n    public function canCross($stones) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "stones": "[0,1,3,5,6,8,12,17]"
+    },
+    {
+      "stones": "[0,1,2,3,4,8,9,11]"
+    },
+    {
+      "stones": "[0,1]"
+    },
+    {
+      "stones": "[0,2]"
+    }
+  ],
+  "functionName": "canCross",
+  "params": [
+    {
+      "name": "stones",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Track, for each stone, the set of jump lengths that can land on it; the first hop must be 1.",
+    "From a stone reached with step k, only k-1, k and k+1 (when positive) can continue forward.",
+    "Stop early when a gap exceeds the largest reachable step, and memoize visited (index, step) pairs."
+  ]
+}

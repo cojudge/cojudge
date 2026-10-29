@@ -46,8 +46,8 @@ function initCollapseState(wrapper: HTMLElement) {
 function applyCollapsedState(wrapper: HTMLElement, preEl: Element, expandLabel: Element | null, collapseBtn: Element) {
     preEl.style.display = 'none';
     wrapper.classList.add('collapsed');
-    collapseBtn.setAttribute('aria-label', 'Expand code');
-    collapseBtn.setAttribute('title', 'Expand code');
+    collapseBtn.setAttribute('aria-label', 'Развернуть код');
+    collapseBtn.setAttribute('title', 'Развернуть код');
     collapseBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>';
     if (expandLabel) expandLabel.style.display = '';
 }
@@ -55,8 +55,8 @@ function applyCollapsedState(wrapper: HTMLElement, preEl: Element, expandLabel: 
 function applyExpandedState(wrapper: HTMLElement, preEl: Element, expandLabel: Element | null, collapseBtn: Element) {
     preEl.style.display = '';
     wrapper.classList.remove('collapsed');
-    collapseBtn.setAttribute('aria-label', 'Collapse code');
-    collapseBtn.setAttribute('title', 'Collapse code');
+    collapseBtn.setAttribute('aria-label', 'Свернуть код');
+    collapseBtn.setAttribute('title', 'Свернуть код');
     collapseBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"></polyline></svg>';
     if (expandLabel) expandLabel.style.display = 'none';
 }
@@ -276,7 +276,7 @@ export function linkHtml(href: string, text: string, language?: string | null): 
 // atomic unit inside the WYSIWYG editor.
 export function imageThumbnailHtml(href: string, alt: string, title?: string | null): string {
     const titleAttr = title ? ` title="${escapeHtmlAttr(title)}"` : '';
-    return `<span class="${THUMB_WRAPPER_CLASS}" contenteditable="false"><img src="${escapeHtmlAttr(href)}" alt="${escapeHtmlAttr(alt)}"${titleAttr}><button type="button" class="${THUMB_DELETE_CLASS}" title="Delete image" aria-label="Delete image">${TRASH_ICON_SVG}</button></span>`;
+    return `<span class="${THUMB_WRAPPER_CLASS}" contenteditable="false"><img src="${escapeHtmlAttr(href)}" alt="${escapeHtmlAttr(alt)}"${titleAttr}><button type="button" class="${THUMB_DELETE_CLASS}" title="Удалить изображение" aria-label="Удалить изображение">${TRASH_ICON_SVG}</button></span>`;
 }
 
 // Wraps every <img> under root in a thumbnail container with a delete button.
@@ -294,8 +294,8 @@ export function wrapImageThumbnails(root: HTMLElement) {
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = THUMB_DELETE_CLASS;
-        btn.title = 'Delete image';
-        btn.setAttribute('aria-label', 'Delete image');
+        btn.title = 'Удалить изображение';
+        btn.setAttribute('aria-label', 'Удалить изображение');
         btn.innerHTML = TRASH_ICON_SVG;
         wrapper.appendChild(btn);
     }
@@ -677,17 +677,17 @@ export function wrapCodeBlocksWithCopy(root: HTMLElement) {
         if (!actions.querySelector('.code-lang-btn')) {
             actions.innerHTML = `
                 <div class="code-lang-picker">
-                    <button type="button" class="code-lang-btn" title="Select language" aria-label="Select language" contenteditable="false">
+                    <button type="button" class="code-lang-btn" title="Выбрать язык" aria-label="Выбрать язык" contenteditable="false">
                         <span class="code-lang-name">${getLanguageLabel(language)}</span>
                         <svg class="code-lang-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </button>
                 </div>
                 <div class="code-action-divider"></div>
-                <button type="button" class="copy-code-button" title="Copy code" aria-label="Copy code" contenteditable="false">
+                <button type="button" class="copy-code-button" title="Копировать код" aria-label="Копировать код" contenteditable="false">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 </button>
                 <div class="code-action-divider"></div>
-                <button type="button" class="delete-code-button" title="Delete code block" aria-label="Delete code block" contenteditable="false">
+                <button type="button" class="delete-code-button" title="Удалить блок кода" aria-label="Удалить блок кода" contenteditable="false">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                 </button>
             `;
@@ -734,18 +734,18 @@ export function getMarkdownRenderer(options?: MarkdownRenderOptions) {
         // only needed when the collapse toggle is present.
         const langLabel = lang && showCollapse ? `<span class="code-block-lang-label" style="display:none;">${escapeHtmlText(lang)}</span>` : '';
 
-        const collapseButton = showCollapse ? `<button class="collapse-code-button" title="Collapse code" aria-label="Collapse code">
+        const collapseButton = showCollapse ? `<button class="collapse-code-button" title="Свернуть код" aria-label="Свернуть код">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <polyline points="18 15 12 9 6 15"></polyline>
                     </svg>
                 </button>` : '';
-        const copyButton = showCopy ? `<button class="copy-code-button" title="Copy code" aria-label="Copy code">
+        const copyButton = showCopy ? `<button class="copy-code-button" title="Копировать код" aria-label="Копировать код">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                     </svg>
                 </button>` : '';
-        const deleteButton = showDelete ? `<button class="delete-code-button" title="Delete code block" aria-label="Delete code block">
+        const deleteButton = showDelete ? `<button class="delete-code-button" title="Удалить блок кода" aria-label="Удалить блок кода">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <polyline points="3 6 5 6 21 6"></polyline>
                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>

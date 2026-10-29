@@ -1,4 +1,4 @@
-A positive integer `n` can be written as a sum of one or more consecutive positive integers in several ways (for example, `5 = 5 = 2 + 3`). Count how many such writings exist, where the single-term writing `n = n` always counts.
+Положительное целое число `n` может быть записано в виде суммы одного или нескольких последовательных положительных целых чисел несколькими способами (например, `5 = 5 = 2 + 3`).Подсчитайте, сколько таких писем существует, где всегда учитывается однократное написание `n = n`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 10^9`

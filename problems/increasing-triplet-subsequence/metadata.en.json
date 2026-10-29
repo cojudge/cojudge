@@ -1,0 +1,57 @@
+{
+  "id": "increasing-triplet-subsequence",
+  "title": "419. Increasing Triplet Subsequence",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/increasing-triplet-subsequence/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,2,3,4,5]",
+      "output": "true",
+      "explanation": "The whole list climbs, so any three positions qualify."
+    },
+    {
+      "input": "nums = [5,4,3,2,1]",
+      "output": "false",
+      "explanation": "Every later value is smaller, blocking any climb."
+    },
+    {
+      "input": "nums = [2,1,5,0,4,6]",
+      "output": "true",
+      "explanation": "Values 1, 4, 6 appear in order and rise strictly."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean increasingTriplet(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def increasingTriplet(self, nums: List[int]) -> bool:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool increasingTriplet(vector<int>& nums) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool IncreasingTriplet(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn increasing_triplet(nums: Vec<i32>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc IncreasingTriplet(nums []int) bool {\n    \n}",
+    "typescript": "export function increasingTriplet(nums: number[]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return bool\n     */\n    public function increasingTriplet($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3,4,5]"
+    },
+    {
+      "nums": "[5,4,3,2,1]"
+    },
+    {
+      "nums": "[2,1,5,0,4,6]"
+    }
+  ],
+  "functionName": "increasingTriplet",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Keep the smallest value seen and the smallest valid middle value above it.",
+    "A new value larger than the middle completes a triple; otherwise shrink the tracked pair."
+  ]
+}

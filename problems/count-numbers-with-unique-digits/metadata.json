@@ -1,6 +1,6 @@
 {
   "id": "count-numbers-with-unique-digits",
-  "title": "436. Count Numbers with Unique Digits",
+  "title": "436. Подсчитайте числа с уникальными цифрами",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/count-numbers-with-unique-digits/",
   "category": "math",
@@ -8,7 +8,7 @@
     {
       "input": "n = 2",
       "output": "91",
-      "explanation": "All numbers from 0 to 99 except 11, 22, 33, 44, 55, 66, 77, 88 and 99 have distinct digits."
+      "explanation": "Все номера от 0 до 99, за исключением 11, 22, 33, 44, 55, 66, 77, 88 и 99 имеют разные цифры."
     },
     {
       "input": "n = 0",
@@ -52,8 +52,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Count numbers by exact length: the first digit has 9 choices (no leading zero) and each later digit has one fewer choice.",
-    "Add the length-1 counts for all lengths from 1 up to n, plus 1 for zero itself.",
-    "Lengths beyond 10 cannot have unique digits, but n is at most 8 here."
+    "Подсчитайте числа по точной длине: первая цифра имеет выбор 9 (без ведущего нуля), а каждая более поздняя цифра имеет один меньший выбор.",
+    "Добавьте длина-1 для всех длин от 1 до n, плюс 1 для самого нуля.",
+    "Длины за пределами 10 не могут иметь уникальные цифры, но n - это максимум 8."
   ]
 }

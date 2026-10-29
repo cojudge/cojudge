@@ -1,6 +1,6 @@
-A positive integer is called self-dividing when every one of its decimal digits is non-zero and the number is divisible by each of those digits. For example, 128 divides evenly by 1, 2 and 8.
+Положительное целое число называется саморазделением, когда каждая из его десятичных цифр не равна нулю, а число делится на каждую из этих цифр. Например, 128 делится равномерно на 1, 2 и 8.
 
-Given two bounds `left` and `right` with `left <= right`, collect every self-dividing number in that closed interval and return them in increasing order.
+Учитывая две границы `left` и `right` с `left <= right`, соберите каждое саморазделяющееся число в этом закрытом интервале и верните их в порядке возрастания.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= left <= right <= 10000`

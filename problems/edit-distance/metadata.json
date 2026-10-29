@@ -1,6 +1,6 @@
 {
   "id": "edit-distance",
-  "title": "135. Edit Distance",
+  "title": "135. Редактировать расстояние",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/edit-distance/",
   "category": "dp",
@@ -8,12 +8,12 @@
     {
       "input": "word1 = \"horse\", word2 = \"ros\"",
       "output": "3",
-      "explanation": "One optimal sequence uses one replacement and two deletions."
+      "explanation": "Одна оптимальная последовательность использует одну замену и два удаления."
     },
     {
       "input": "word1 = \"intention\", word2 = \"execution\"",
       "output": "5",
-      "explanation": "One optimal sequence replaces the first five characters ('i','n','t','e','n') with ('e','x','e','c','u'), using five replacements."
+      "explanation": "Одна оптимальная последовательность заменяет первые пять символов («i», «n», «n», «e», «n») на «e», «x», «e», «c», «u», используя пять замен."
     }
   ],
   "starterCode": {
@@ -57,7 +57,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Define a state for converting a prefix of word1 into a prefix of word2.",
-    "When the final characters differ, take one plus the best of insert, delete, and replace."
+    "Определить состояние для преобразования префикса слова 1 в префикс слова 2.",
+    "Когда окончательные символы отличаются, возьмите один плюс лучший из вставки, удаления и замены."
   ]
 }

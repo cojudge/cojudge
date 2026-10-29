@@ -1,11 +1,11 @@
-You are given a list of clock readings, each written as a five-character string `"HH:MM"` in 24-hour format (for example `"05:30"` or `"23:59"`).
+Вам предоставляется список показаний часов, каждый из которых написан в виде пятисимвольной строки `"HH:MM"` в формате 24-час (например, `"05:30"` или `"23:59"`).
 
-Think of the readings as points on a circular 24-hour dial with 1440 minutes. The gap between two readings is the smaller of the clockwise and counter-clockwise distances along the dial.
+Подумайте о показаниях как о точках на круглом циферблате 24-час с минутами 1440. Разрыв между двумя показаниями меньше по часовой стрелке и против часовой стрелки расстояния вдоль циферблата.
 
-Return the smallest gap, in minutes, among every pair of readings. If two readings show the same moment, the answer is zero.
+Возвращаем наименьший за считанные минуты разрыв между двумя чтениями. Если два чтения показывают один и тот же момент, ответ равен нулю.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= timePoints.length <= 2 * 10^4`
-- Each entry matches `"HH:MM"` with `00 <= HH <= 23` and `00 <= MM <= 59`
+- Каждая запись соответствует `"HH:MM"` с `00 <= HH <= 23` и `00 <= MM <= 59`.
 
-Adaptation note: the original signature takes a list of strings; here it is modelled as `String[] timePoints` (`string_array`) with identical semantics.
+Примечание к адаптации: оригинальная подпись берет список строк; здесь она смоделирована как `String[] timePoints` (`string_array`) с идентичной семантикой.

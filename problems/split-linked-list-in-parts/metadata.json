@@ -1,6 +1,6 @@
 {
   "id": "split-linked-list-in-parts",
-  "title": "732. Split Linked List in Parts",
+  "title": "732. Разделённый список в частях",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/split-linked-list-in-parts/",
   "category": "linked-list",
@@ -8,12 +8,12 @@
     {
       "input": "head = [1,2,3], k = 5",
       "output": "[[1],[2],[3],[],[]]",
-      "explanation": "Three values across five groups leave the last two groups empty."
+      "explanation": "Три значения в пяти группах оставляют последние две группы пустыми."
     },
     {
       "input": "head = [1,2,3,4,5,6,7,8,9,10], k = 3",
       "output": "[[1,2,3,4],[5,6,7],[8,9,10]]",
-      "explanation": "Sizes are 4, 3, 3 with the extra value placed in the first group."
+      "explanation": "Размеры 4, 3, 3 с дополнительным значением, помещенным в первую группу."
     },
     {
       "input": "head = [1,2,3,4], k = 2",
@@ -57,8 +57,8 @@
   ],
   "outputType": "list_node_array",
   "hints": [
-    "Count the values first to get n, then each group holds either n / k or n / k + 1 values.",
-    "The first n % k groups are the larger ones; walk the chain and cut each group by setting the tail's next pointer to null.",
-    "When k exceeds n, emit one single-value group per value and empty groups for the remainder."
+    "Сначала подсчитывают значения, чтобы получить n, затем каждая группа удерживает либо n/k, либо n/k + 1 значения.",
+    "Первые группы n % k являются более крупными; пройдите по цепочке и разрежьте каждую группу, установив следующий указатель хвоста на нуль.",
+    "Когда k превышает n, испускают одну однозначную группу на величину и пустые группы для остальной части."
   ]
 }

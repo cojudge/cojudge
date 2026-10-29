@@ -1,8 +1,8 @@
-Two strings `word1` and `word2` are provided. Construct a new string by taking characters in turn, beginning with the first character of `word1`, then the first character of `word2`, then the second character of `word1`, and so on. Once the shorter input runs out, attach whatever remains of the longer input to the tail of the result.
+Предусмотрены две строки `word1` и `word2`. Постройте новую строку, по очереди взяв символы, начиная с первого символа `word1`, затем первого символа `word2`, затем второго символа `word1` и так далее. Как только закончится более короткий вход, приложите все остатки более длинного входа к хвосту результата.
 
-Output the string built this way.
+Выведите струну, построенную таким образом.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ word1.length, word2.length ≤ 100
-- word1 and word2 consist of lowercase English letters.
+- Слово 1 и слово 2 состоят из английских букв.

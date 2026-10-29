@@ -31,18 +31,18 @@
 		isInstalling
 			? 'Installing…'
 			: isInstalled
-				? 'Restart to Apply'
+				? "Перезапустить для применения"
 				: appUpdateStatus === 'error'
-					? 'Retry Install'
-					: 'Install Update'
+					? "Установка Retry"
+					: "Установить обновление"
 	);
-	const title = $derived(isInstalled ? 'Update Installed' : 'Update Available');
+	const title = $derived(isInstalled ? "Установка обновлений" : "Обновление доступно");
 	const subtitle = $derived(
 		isInstalled
 			? `Version ${availableAppUpdate.version} is installed. Restart Cojudge to finish applying it.`
 			: `Version ${availableAppUpdate.version} is available for Cojudge.`
 	);
-	const remindLaterLabel = $derived(isInstalled ? 'Later' : isInstalling ? 'Hide' : 'Remind Later');
+	const remindLaterLabel = $derived(isInstalled ? "Позже" : isInstalling ? "прятаться" : "Напомнить позже");
 	const effectiveReleaseNotesUrl = $derived(
 		availableAppUpdate.releaseNotesUrl?.trim() || APP_UPDATE_RELEASES_URL
 	);
@@ -102,7 +102,7 @@
 </script>
 
 <div class="home-modal-shell">
-	<button class="home-modal-backdrop" aria-label="Dismiss update dialog" tabindex="-1" onclick={onClose}></button>
+	<button class="home-modal-backdrop" aria-label="Диалог обновлений Dismiss" tabindex="-1" onclick={onClose}></button>
 	<div
 		class="home-modal-card update-modal-card"
 		role="dialog"
@@ -112,10 +112,10 @@
 	>
 		<div class="modal-heading-row">
 			<div>
-				<span class="modal-eyebrow">Software update</span>
+				<span class="modal-eyebrow">Программное обновление</span>
 				<h2 id="cojudge-update-title">{title}</h2>
 			</div>
-			<span class="update-version-pill" title="Latest available version">
+			<span class="update-version-pill" title="Последняя доступная версия">
 				<span></span>v{availableAppUpdate.version}
 			</span>
 		</div>
@@ -123,16 +123,16 @@
 
 		<div class="update-section">
 			<div class="update-row">
-				<span class="update-label">Current</span>
-				<span class="update-value update-mono">{availableAppUpdate.currentVersion || 'Unknown'}</span>
+				<span class="update-label">текущий</span>
+				<span class="update-value update-mono">{availableAppUpdate.currentVersion || "неизвестный"}</span>
 			</div>
 			<div class="update-row">
-				<span class="update-label">Latest</span>
+				<span class="update-label">последний</span>
 				<span class="update-value update-mono">{availableAppUpdate.version}</span>
 			</div>
 			{#if formattedPublishedAt}
 				<div class="update-row">
-					<span class="update-label">Published</span>
+					<span class="update-label">Опубликовано</span>
 					<span class="update-value">{formattedPublishedAt}</span>
 				</div>
 			{/if}
@@ -143,7 +143,7 @@
 				<div
 					class="update-progress-track"
 					role="progressbar"
-					aria-label="Download progress"
+					aria-label="Скачать Progress"
 					aria-valuemin={0}
 					aria-valuemax={100}
 					aria-valuenow={progressPercent ?? undefined}
@@ -155,16 +155,16 @@
 					></div>
 				</div>
 				<div class="update-progress-text">
-					<span class="update-progress-numbers">{progressText ?? 'Downloading update…'}</span>
+					<span class="update-progress-numbers">{progressText ?? "Скачать обновление..."}</span>
 					<span class="update-progress-hint">
-						The dialog can be hidden; the install continues in the background.
+						Диалог можно скрыть, установка продолжается в фоновом режиме.
 					</span>
 				</div>
 			</div>
 		{/if}
 
 		<button type="button" class="update-link" onclick={openReleaseNotes}>
-			See the full release notes
+			Смотреть полный выпуск Notes
 		</button>
 
 		{#if appUpdateError}
@@ -174,7 +174,7 @@
 		<div class="home-modal-actions">
 			{#if showSkipButton}
 				<button type="button" class="btn" onclick={onSkipVersion}>
-					Skip for this version
+					Skip для этой версии
 				</button>
 			{/if}
 			<button type="button" class="btn" onclick={onRemindLater}>
@@ -185,7 +185,7 @@
 			</button>
 		</div>
 
-		<button type="button" class="update-close" aria-label="Dismiss update dialog" onclick={onClose}>
+		<button type="button" class="update-close" aria-label="Диалог обновлений Dismiss" onclick={onClose}>
 			×
 		</button>
 	</div>

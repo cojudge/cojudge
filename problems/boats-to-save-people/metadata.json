@@ -1,6 +1,6 @@
 {
   "id": "boats-to-save-people",
-  "title": "172. Boats to Save People",
+  "title": "172. Лодки спасают людей",
   "difficulty": "Medium",
   "category": "two-pointer",
   "link": "https://leetcode.com/problems/boats-to-save-people/",
@@ -8,17 +8,17 @@
     {
       "input": "people = [1,2], limit = 3",
       "output": "1",
-      "explanation": "1 boat (1, 2)."
+      "explanation": "Лодка 1 (1, 2)."
     },
     {
       "input": "people = [3,2,2,1], limit = 3",
       "output": "3",
-      "explanation": "3 boats (1, 2), (2) and (3)."
+      "explanation": "Лодки 3 (1, 2), (2) и (3)."
     },
     {
       "input": "people = [3,5,3,4], limit = 5",
       "output": "4",
-      "explanation": "4 boats (3), (3), (4), (5)."
+      "explanation": "Лодки 4 (3), (3), (4), (5)."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sort the array and use two pointers at opposite ends.",
-    "Pair the lightest remaining person with the heaviest when possible; otherwise the heaviest goes alone."
+    "Сортируйте массив и используйте два указателя на противоположных концах.",
+    "Соедините самого легкого оставшегося человека с самым тяжелым, когда это возможно; в противном случае самый тяжелый идет один."
   ]
 }

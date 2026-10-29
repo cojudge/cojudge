@@ -1,0 +1,72 @@
+{
+  "id": "reorder-data-in-log-files",
+  "title": "924. Reorder Data in Log Files",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/reorder-data-in-log-files/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "logs = [\"dig1 8 1 5 1\",\"let1 art can\",\"dig2 3 6\",\"let2 own kit dig\",\"let3 art zero\"]",
+      "output": "[\"let1 art can\",\"let3 art zero\",\"let2 own kit dig\",\"dig1 8 1 5 1\",\"dig2 3 6\"]",
+      "explanation": "Letter-logs sort by content; digits stay behind in order."
+    },
+    {
+      "input": "logs = [\"a1 9 2 3 1\",\"g1 act car\",\"zo4 4 7\",\"ab1 off key dog\",\"a8 act zoo\"]",
+      "output": "[\"g1 act car\",\"a8 act zoo\",\"ab1 off key dog\",\"a1 9 2 3 1\",\"zo4 4 7\"]"
+    },
+    {
+      "input": "logs = [\"t1 1 2\",\"t2 3 4\"]",
+      "output": "[\"t1 1 2\",\"t2 3 4\"]",
+      "explanation": "With only digits, the order is unchanged."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> reorderLogFiles(String[] logs) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def reorderLogFiles(self, logs: List[str]) -> List[str]:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> reorderLogFiles(vector<string>& logs) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<string> ReorderLogFiles(string[] logs)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reorder_log_files(logs: Vec<String>) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc ReorderLogFiles(logs []string) []string {\n    return nil\n}",
+    "typescript": "export function reorderLogFiles(logs: string[]): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $logs\n     * @return string[]\n     */\n    public function reorderLogFiles($logs) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "logs": [
+        "dig1 8 1 5 1",
+        "let1 art can",
+        "dig2 3 6",
+        "let2 own kit dig",
+        "let3 art zero"
+      ]
+    },
+    {
+      "logs": [
+        "a1 9 2 3 1",
+        "g1 act car",
+        "zo4 4 7",
+        "ab1 off key dog",
+        "a8 act zoo"
+      ]
+    },
+    {
+      "logs": [
+        "t1 1 2",
+        "t2 3 4"
+      ]
+    }
+  ],
+  "functionName": "reorderLogFiles",
+  "params": [
+    {
+      "name": "logs",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "A log is a digit-log when the first character after the identifier is a digit; otherwise it is a letter-log.",
+    "Sort letter-logs by the tuple (content, identifier); keep digit-logs in input order.",
+    "Concatenate sorted letters followed by the untouched digits."
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "id": "domino-and-tromino-tiling",
-  "title": "788. Domino and Tromino Tiling",
+  "title": "788. Домино и Тромино Тилинг",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/domino-and-tromino-tiling/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "n = 3",
       "output": "5",
-      "explanation": "Five tilings fill a 2x3 board."
+      "explanation": "Пять плиток заполняют доску 2х3."
     },
     {
       "input": "n = 1",
       "output": "1",
-      "explanation": "One vertical domino fits."
+      "explanation": "Одно вертикальное домино подходит."
     },
     {
       "input": "n = 2",
       "output": "2",
-      "explanation": "Two vertical or two horizontal dominoes."
+      "explanation": "Два вертикальных или два горизонтальных домино."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Let dp[n] be the number of full tilings of width n; consider how the rightmost column can be closed.",
-    "A recurrence dp[n] = 2*dp[n-1] + dp[n-3] captures domino and tromino completions.",
-    "Seed dp[0]=1, dp[1]=1, dp[2]=2 and apply the modulus at every step."
+    "Пусть dp[n] будет числом полных наклонов шириной n; подумайте, как можно закрыть самую правую колонку.",
+    "Повторяющийся dp[n] = 2*dp[n-1] + dp[n-3] захватывает завершения домино и тромино.",
+    "Seed dp[0]=1, dp[1]=1, dp[2]=2 и применять модуль на каждом шаге."
   ]
 }

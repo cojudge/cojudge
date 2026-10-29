@@ -1,9 +1,9 @@
-Count all integers `x` with `0 <= x < 10^n` whose decimal digits are pairwise
-different. Note that `0` itself counts as a one-digit number with unique
-digits.
+Подсчитайте все целые числа `x` с `0 <= x < 10^n`, десятичные цифры которых попарно
+Обратите внимание, что `0` сам по себе считается однозначным числом с уникальными характеристиками.
+Цифры.
 
-For `n = 2` the range is `0..99`, and only the nine doubles `11, 22, ..., 99`
-are excluded, giving `91`. For `n = 0` the range holds just `0`, giving `1`.
+Для `n = 2` диапазон составляет `0..99`, и только девять удваивает `11, 22, ..., 99`.
+исключаются, давая `91`Для `n = 0` Диапазон держится только `0`отдавать `1`.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= n <= 8`

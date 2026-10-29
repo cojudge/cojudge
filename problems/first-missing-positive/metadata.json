@@ -1,6 +1,6 @@
 {
   "id": "first-missing-positive",
-  "title": "164. First Missing Positive",
+  "title": "164. Первое упущенное положительное",
   "difficulty": "Hard",
   "category": "array",
   "link": "https://leetcode.com/problems/first-missing-positive/",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,2,0]",
       "output": "3",
-      "explanation": "The numbers in the range [1,2] are all in the array."
+      "explanation": "Все числа в диапазоне [1, 2] находятся в массиве."
     },
     {
       "input": "nums = [3,4,-1,1]",
       "output": "2",
-      "explanation": "1 is in the array but 2 is missing."
+      "explanation": "1 находится в массиве, но 2 отсутствует."
     },
     {
       "input": "nums = [7,8,9,11,12]",
       "output": "1",
-      "explanation": "The smallest positive integer 1 is missing."
+      "explanation": "Самое маленькое положительное целое число 1 отсутствует."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Place each value v with 1 <= v <= n at index v-1 by swapping (cyclic sort), ignoring others.",
-    "Then the first index i with nums[i] != i+1 gives answer i+1; otherwise n+1."
+    "Поместите каждое значение v с 1 <= v <= n в индекс v-1 путем замены (циклической сортировки), игнорируя другие.",
+    "Тогда первый индекс i с числами [i] != i+1 дает ответ i+1; в противном случае n+1."
   ]
 }

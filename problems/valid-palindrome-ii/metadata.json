@@ -1,6 +1,6 @@
 {
   "id": "valid-palindrome-ii",
-  "title": "166. Valid Palindrome II",
+  "title": "166. Действительный палиндром II",
   "difficulty": "Easy",
   "category": "two-pointer",
   "link": "https://leetcode.com/problems/valid-palindrome-ii/",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"aba\"",
       "output": "true",
-      "explanation": "\"aba\" is already a palindrome."
+      "explanation": "«Аба» — это уже палиндром."
     },
     {
       "input": "s = \"abca\"",
       "output": "true",
-      "explanation": "Delete the character 'c' to get \"aba\", which is a palindrome."
+      "explanation": "Удалите символ «c», чтобы получить «aba», который является палиндромом."
     },
     {
       "input": "s = \"abc\"",
       "output": "false",
-      "explanation": "No single deletion makes \"abc\" a palindrome."
+      "explanation": "Ни одно удаление не делает «abc» палиндромом."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Use two pointers from both ends; on the first mismatch try skipping either the left or the right character.",
-    "Check whether the remaining substring is a palindrome after one skip."
+    "Используйте два указателя с обоих концов; при первом несоответствии попробуйте пропустить либо левого, либо правого персонажа.",
+    "Проверьте, является ли оставшаяся подструнка палиндромом после одного пропуска."
   ]
 }

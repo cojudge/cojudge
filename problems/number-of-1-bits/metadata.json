@@ -1,6 +1,6 @@
 {
   "id": "number-of-1-bits",
-  "title": "12. Number of 1 Bits",
+  "title": "12. Количество битов 1",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/number-of-1-bits/",
   "category": "binary",
@@ -8,12 +8,12 @@
     {
       "input": "n = 11 (0b1011)",
       "output": "3",
-      "explanation": "The binary representation of 11 is 0b1011, which contains 3 bits set to 1."
+      "explanation": "Двоичное представление 11 составляет 0b1011, который содержит биты 3, установленные на 1."
     },
     {
       "input": "n = 128 (0b10000000)",
       "output": "1",
-      "explanation": "The binary representation of 128 is 0b10000000, which contains 1 bit set to 1."
+      "explanation": "Двоичное представление 128 составляет 0b10000000, которое содержит бит 1, установленный на 1."
     }
   ],
   "starterCode": {
@@ -46,6 +46,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use Kernighan's algorithm: repeatedly clear the lowest set bit with n &= (n - 1) and count iterations."
+    "Используйте алгоритм Кернигана: многократно очищайте бит наименьшего набора с помощью n & = (n - 1) и итераций подсчета."
   ]
 }

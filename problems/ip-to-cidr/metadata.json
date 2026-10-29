@@ -1,6 +1,6 @@
 {
   "id": "ip-to-cidr",
-  "title": "754. IP to CIDR",
+  "title": "754. IP для CIDR",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/ip-to-cidr/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "ip = \"255.0.0.7\", n = 10",
       "output": "[\"255.0.0.7/32\",\"255.0.0.8/29\",\"255.0.0.16/32\"]",
-      "explanation": "Sizes 1, 8, 1 cover ten addresses minimally."
+      "explanation": "Размеры 1, 8, 1 охватывают десять адресов минимально."
     },
     {
       "input": "ip = \"117.145.102.62\", n = 8",
       "output": "[\"117.145.102.62/31\",\"117.145.102.64/30\",\"117.145.102.68/31\"]",
-      "explanation": "Sizes 2, 4, 2 cover eight addresses."
+      "explanation": "Размеры 2, 4, 2 охватывают восемь адресов."
     }
   ],
   "starterCode": {
@@ -49,8 +49,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Translate the dotted address into a 32-bit integer so alignment becomes arithmetic.",
-    "From the current start, the biggest usable block is limited both by the lowest set bit of start and by the largest power of two fitting in the remainder.",
-    "Emit that block, advance start by its size, and repeat until n reaches zero."
+    "Переведите пунктирный адрес в целое число 32-бит, чтобы выравнивание стало арифметическим.",
+    "С текущего старта самый большой полезный блок ограничен как наименьшим битом старта, так и наибольшей мощностью двух фитингов в оставшейся части.",
+    "Выйдите из этого блока, заранее начните с его размера и повторите, пока n не достигнет нуля."
   ]
 }

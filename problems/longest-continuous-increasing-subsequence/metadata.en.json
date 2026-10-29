@@ -1,0 +1,58 @@
+{
+  "id": "longest-continuous-increasing-subsequence",
+  "title": "693. Longest Continuous Increasing Subsequence",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/longest-continuous-increasing-subsequence/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,3,5,4,7]",
+      "output": "3",
+      "explanation": "The run [1,3,5] has length 3; the later run [4,7] has length 2."
+    },
+    {
+      "input": "nums = [2,2,2,2,2]",
+      "output": "1",
+      "explanation": "No adjacent pair increases, so the best is a single element."
+    },
+    {
+      "input": "nums = [1,3,5,7]",
+      "output": "4",
+      "explanation": "The whole array is strictly increasing."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findLengthOfLCIS(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findLengthOfLCIS(self, nums: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int findLengthOfLCIS(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindLengthOfLCIS(int[] nums) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_length_of_lcis(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FindLengthOfLCIS(nums []int) int {\n    return 0\n}",
+    "typescript": "export function findLengthOfLCIS(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function findLengthOfLCIS($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,3,5,4,7]"
+    },
+    {
+      "nums": "[2,2,2,2,2]"
+    },
+    {
+      "nums": "[1,3,5,7]"
+    }
+  ],
+  "functionName": "findLengthOfLCIS",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Only neighbors matter: extend the current run when nums[i] > nums[i-1], else restart at 1.",
+    "Keep the maximum run seen so far.",
+    "An empty array yields 0."
+  ]
+}

@@ -1,7 +1,7 @@
-You are given rods of various integer lengths and want to mount a billboard on two supports of exactly equal height. Each rod can be assigned to the left support, to the right support, or left unused, and the height of a support is the total length of the rods assigned to it.
+Вам дают стержни различной целочисленной длины и хотят установить рекламный щит на две опоры ровно равной высоты.Каждому стержню можно присвоить левую опору, правую опору или левую неиспользованную, а высота опоры — общую длину назначенных ей стержней.
 
-Choose the assignments so that both supports end up with the same height, and make that shared height as large as possible. Return the tallest balanced height you can build, or 0 when no balanced pair of supports exists.
+Выберите задания так, чтобы обе опоры в конечном итоге имели одинаковую высоту, и сделайте эту общую высоту как можно больше. Верните самую высокую сбалансированную высоту, которую вы можете построить, или 0, когда не существует сбалансированной пары опор.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= rods.length <= 20`
 - `1 <= rods[i] <= 20`

@@ -3,26 +3,26 @@
   "difficulty": "Medium",
   "examples": [
     {
-      "explanation": "The file lives at \"dir/subdir2/file.ext\", length 20.",
+      "explanation": "Файл находится по адресу \"dir/subdir2/file.ext\", длина 20.",
       "input": "input = \"dir\\n\\tsubdir1\\n\\tsubdir2\\n\\t\\tfile.ext\"",
       "output": "20"
     },
     {
-      "explanation": "Two files exist; the longer path \"dir/subdir2/subsubdir2/file2.ext\" has 32 chars.",
+      "explanation": "Существуют два файла; более длинный путь «dir/subdir2/subsubdir2/file2.ext» имеет 32 chars.",
       "input": "input = \"dir\\n\\tsubdir1\\n\\t\\tfile1.ext\\n\\t\\tsubsubdir1\\n\\tsubdir2\\n\\t\\tsubsubdir2\\n\\t\\t\\tfile2.ext\"",
       "output": "32"
     },
     {
-      "explanation": "A single folder with no file yields 0.",
+      "explanation": "Одна папка без файла дает 0.",
       "input": "input = \"a\"",
       "output": "0"
     }
   ],
   "functionName": "lengthLongestPath",
   "hints": [
-    "Split the encoding on newlines and count leading tabs to get each entry's depth.",
-    "Keep the cumulative path length per depth; a file candidate is parent length plus its own name length.",
-    "Only entries containing a dot can be files; folders just update the length table for deeper entries."
+    "Разделите кодирование на новые линии и посчитайте ведущие вкладки, чтобы получить глубину каждой записи.",
+    "Сохраняйте кумулятивную длину пути на глубину; кандидатом файла является длина родителя плюс длина его собственного имени.",
+    "Только записи, содержащие точку, могут быть файлами; папки просто обновляют таблицу длины для более глубоких записей."
   ],
   "id": "longest-absolute-file-path",
   "link": "https://leetcode.com/problems/longest-absolute-file-path/",
@@ -54,5 +54,5 @@
       "input": "a"
     }
   ],
-  "title": "464. Longest Absolute File Path"
+  "title": "464. Долгосрочный абсолютный путь файла"
 }

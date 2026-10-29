@@ -1,6 +1,6 @@
 {
   "id": "baseball-game",
-  "title": "176. Baseball Game",
+  "title": "176. Бейсбольная игра",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/baseball-game/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"5\",\"2\",\"C\",\"D\",\"+\"]",
       "output": "30",
-      "explanation": "\"5\" - Add 5 to the record, record is now [5]. \"2\" - Add 2 to the record, record is now [5, 2]. \"C\" - Invalidate and remove the previous score, record is now [5]. \"D\" - Add 2 * 5 = 10 to the record, record is now [5, 10]. \"+\" - Add 5 + 10 = 15 to the record, record is now [5, 10, 15]. The sum is 30."
+      "explanation": "\"5\" - Добавить 5 к рекорду, рекорд сейчас [5]. \"2\" - Добавить 2 к рекорду, рекорд сейчас [5, 2]. \"C\" - Инвалидировать и удалить предыдущий счет, рекорд сейчас [5]. \"D\" - Добавить 2 * 5 = 10 к рекорду, рекорд сейчас [5, 10]. \"+\" - Добавить 5 + 10 = 15 к рекорду, рекорд сейчас [5, 10, 15]. Сумма - 30."
     },
     {
       "input": "operations = [\"5\",\"-2\",\"4\",\"C\",\"D\",\"9\",\"+\",\"+\"]",
       "output": "27",
-      "explanation": "\"5\" - Add 5, record is [5]. \"-2\" - Add -2, record is [5, -2]. \"4\" - Add 4, record is [5, -2, 4]. \"C\" - Remove 4, record is [5, -2]. \"D\" - Add 2 * -2 = -4, record is [5, -2, -4]. \"9\" - Add 9, record is [5, -2, -4, 9]. \"+\" - Add -4 + 9 = 5, record is [5, -2, -4, 9, 5]. \"+\" - Add 9 + 5 = 14, record is [5, -2, -4, 9, 5, 14]. The sum is 27."
+      "explanation": "\"5\"Добавить 5Запись - это [5]. \"-2- Добавить -2Запись - это [5, -2]. \"4\"Добавить 4Запись - это [5, -2, 4]. \"С\" - Удалить 4Запись - это [5, -2]. \"D\" - Добавить 2 * -2 = -4Запись - это [5, -2, -4]. \"9\"Добавить 9Запись - это [5, -2, -4, 9\"+\" - Добавить -4 + 9 = 5Запись - это [5, -2, -4, 9, 5\"+\" - Добавить 9 + 5 = 14Запись - это [5, -2, -4, 9, 5, 14] Сумма равна 27."
     },
     {
       "input": "operations = [\"1\",\"C\"]",
       "output": "0",
-      "explanation": "\"1\" - Add 1 to the record, record is now [1]. \"C\" - Invalidate and remove the previous score, record is now []. The sum is 0."
+      "explanation": "\"1\" - Добавить 1 к рекорду, рекорд сейчас [1]. \"С\" - Недействительно и удалить предыдущий счет, рекорд сейчас []. Сумма - 0."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Keep a stack (list) of valid scores and update it for each operation.",
-    "For '+' push the sum of the last two scores; for 'D' push twice the last score; for 'C' pop the last score; otherwise parse and push the integer."
+    "Сохраните стек (список) действительных баллов и обновите его для каждой операции.",
+    "Для «+» нажмите сумму последних двух баллов; для «D» нажмите дважды на последний балл; для «C» нажмите последний балл; в противном случае разберите и нажмите целое число."
   ]
 }

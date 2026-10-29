@@ -1,8 +1,8 @@
-Given a 2D matrix `matrix`, handle multiple queries asking for the sum of elements inside the rectangle defined by its upper left corner `(row1, col1)` and lower right corner `(row2, col2)`.
+Учитывая 2D-матрицу `matrix`, обработайте несколько запросов, запрашивающих сумму элементов внутри прямоугольника, определяемую его верхним левым углом `(row1, col1)` и нижним правым углом `(row2, col2)`.
 
-For this judge, you are given the full `matrix` and a list of `queries`, where each query is `[row1, col1, row2, col2]`. Return an array with the sum for each query in order. An efficient solution precomputes a 2D prefix sum so each query runs in `O(1)`.
+Для этого судьи вам дается полный `matrix` и список `queries`, где каждый запрос `[row1, col1, row2, col2]`. Возвращайте массив с суммой для каждого запроса в порядке. Эффективное решение предварительно вычисляет сумму префикса 2D, поэтому каждый запрос выполняется в `O(1)`.
 
-**Constraints:**
+**Ограничения:**
 
 - m == matrix.length, n == matrix[i].length
 - 1 ≤ m, n ≤ 200

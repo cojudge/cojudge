@@ -1,5 +1,5 @@
-A binary tree is univalued when every node in it stores the same value. Given the level-order serialization `root`, return whether the described tree is univalued. An empty tree counts as univalued.
+Бинарное дерево однозначно, когда каждый узел в нем хранит одно и то же значение. Учитывая последовательность уровней `root`, верните, является ли описанное дерево однозначным. Пустое дерево считается однозначным.
 
-**Constraints:**
-- The tree holds between 0 and 100 nodes.
-- Node values are integers fitting in a 32-bit signed range.
+**Ограничения:**
+- Дерево находится между узлами 0 и 100.
+- Значения узлов представляют собой целые числа, вписывающиеся в диапазон 32-бит.

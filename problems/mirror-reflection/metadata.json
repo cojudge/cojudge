@@ -1,6 +1,6 @@
 {
   "id": "mirror-reflection",
-  "title": "854. Mirror Reflection",
+  "title": "854. Зеркальное отражение",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/mirror-reflection/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "p = 2, q = 1",
       "output": "2",
-      "explanation": "After one bounce the ray arrives at sensor 2."
+      "explanation": "После одного отскока луч попадает на датчик 2."
     },
     {
       "input": "p = 3, q = 1",
       "output": "1",
-      "explanation": "The ray reaches sensor 1."
+      "explanation": "Луч достигает датчика 1."
     },
     {
       "input": "p = 3, q = 2",
       "output": "0",
-      "explanation": "Parity puts the first hit on sensor 0."
+      "explanation": "Parity наносит первый удар по датчику 0."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Unfold the bounces into a straight ray through tiled copies of the room; the hit happens when both coordinates are multiples of `p`.",
-    "Divide out common factors of two from `p` and `q`, then look at parity: an even unfolded `p` means sensor 2, else an even unfolded `q` means sensor 0, otherwise sensor 1.",
-    "The least common multiple of `p` and `q` tells how far the straight ray travels before aligning with corners."
+    "Разверните отскоки в прямой луч через черепичные копии комнаты; удар происходит, когда обе координаты кратны `p`.",
+    "Разделите общие факторы на два от `p` и `q`, а затем посмотрите на четность: даже развернутый `p` означает датчик 2, иначе даже развернутый `q` означает датчик 0, иначе датчик 1.",
+    "Наименее распространенное число `p` и `q` показывает, как далеко проходит прямой луч, прежде чем выровняться с углами."
   ]
 }

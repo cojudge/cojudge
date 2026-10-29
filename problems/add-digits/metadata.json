@@ -1,6 +1,6 @@
 {
   "id": "add-digits",
-  "title": "362. Add Digits",
+  "title": "362. Добавить цифру",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/add-digits/",
   "category": "math",
@@ -13,12 +13,12 @@
     {
       "input": "num = 0",
       "output": "0",
-      "explanation": "0 already has one digit."
+      "explanation": "0 уже имеет одну цифру."
     },
     {
       "input": "num = 123",
       "output": "6",
-      "explanation": "1 + 2 + 3 = 6, which is a single digit."
+      "explanation": "1 + 2 + 3 = 6, который является одной цифрой."
     }
   ],
   "starterCode": {
@@ -54,7 +54,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Add the digits in a loop until the value is below 10.",
-    "Alternatively use the digit-root pattern: 0 stays 0, otherwise the answer is 1 plus the remainder of num - 1 divided by 9."
+    "Добавьте цифры в цикл, пока значение не будет ниже 10.",
+    "Альтернативно используйте шаблон с цифровым корнем: 0 остается 0, в противном случае ответ 1 плюс остальная часть числа - 1, разделенная на 9."
   ]
 }

@@ -1,0 +1,59 @@
+{
+  "id": "erect-the-fence",
+  "title": "629. Erect the Fence",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/erect-the-fence/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "trees = [[1,1],[2,2],[2,0],[2,4],[3,3],[4,2]]",
+      "output": "[[1,1],[2,0],[4,2],[3,3],[2,4]]",
+      "explanation": "These five points wrap all trees; interior points stay inside."
+    },
+    {
+      "input": "trees = [[1,2],[2,2],[4,2]]",
+      "output": "[[1,2],[2,2],[4,2]]",
+      "explanation": "All three lie on one line, so all belong to the boundary."
+    },
+    {
+      "input": "trees = [[0,0],[1,0],[2,0]]",
+      "output": "[[0,0],[1,0],[2,0]]",
+      "explanation": "Collinear points are all kept."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<List<Integer>> outerTrees(int[][] trees) {\n        return new java.util.ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def outerTrees(self, trees: List[List[int]]) -> List[List[int]]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> outerTrees(vector<vector<int>>& trees) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<List<int>> OuterTrees(int[][] trees)\n    {\n        return new List<List<int>>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn outer_trees(trees: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc OuterTrees(trees [][]int) [][]int {\n    return [][]int{}\n}",
+    "typescript": "export function outerTrees(trees: number[][]): number[][] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $trees\n     * @return int[][]\n     */\n    public function outerTrees($trees) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "trees": "[[1,1],[2,2],[2,0],[2,4],[3,3],[4,2]]"
+    },
+    {
+      "trees": "[[1,2],[2,2],[4,2]]"
+    },
+    {
+      "trees": "[[0,0],[1,0],[2,0]]"
+    }
+  ],
+  "functionName": "outerTrees",
+  "params": [
+    {
+      "name": "trees",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_list_2d",
+  "hints": [
+    "Sort points and build the convex hull; points lying on hull edges count as boundary too.",
+    "After finding hull corners, scan every input point for collinearity with each hull edge and keep those between the endpoints.",
+    "Compare squared distances to avoid floating point; order of the answer does not matter.",
+    "Adaptation: the nested output maps to int_list_2d in this judge."
+  ]
+}

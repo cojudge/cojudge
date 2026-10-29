@@ -1,8 +1,8 @@
-You receive a rectangular `m x n` table. Collect its entries by walking around the outside clockwise and spiralling inward, and hand back that visiting sequence.
+Вы получаете прямоугольную таблицу `m x n`. Соберите ее записи, прогуливаясь по внешней часовой стрелке и спирали внутрь, и отдайте эту последовательность посещения.
 
-**Constraints:**
+**Ограничения:**
 
 - m == matrix.length
 - n == matrix[i].length
 - 1 ≤ m, n ≤ 10
-- -100 ≤ matrix[i][j] ≤ 100
+- -100 ≤ матрица[i][j] ≤ 100

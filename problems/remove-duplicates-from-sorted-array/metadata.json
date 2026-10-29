@@ -1,6 +1,6 @@
 {
   "id": "remove-duplicates-from-sorted-array",
-  "title": "169. Remove Duplicates from Sorted Array",
+  "title": "169. Удалить дубликаты из сортированного массива",
   "difficulty": "Easy",
   "category": "two-pointer",
   "link": "https://leetcode.com/problems/remove-duplicates-from-sorted-array/",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1,1,2]",
       "output": "2",
-      "explanation": "Return k = 2, with the first two elements of nums being 1 and 2."
+      "explanation": "Возвращение k = 2, причем первые два элемента чисел — 1 и 2."
     },
     {
       "input": "nums = [0,0,1,1,1,2,2,3,3,4]",
       "output": "5",
-      "explanation": "Return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4."
+      "explanation": "Возвращение k = 5, первые пять элементов нумов — 0, 1, 2, 3 и 4."
     }
   ],
   "starterCode": {
@@ -46,7 +46,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "The array is sorted, so duplicates are adjacent. Use a slow pointer for the next unique position.",
-    "Iterate with a fast pointer; when a new value is found, write it to the slow position and advance."
+    "Массив отсортирован, поэтому дубликаты соседствуют. Используйте медленный указатель для следующего уникального положения.",
+    "Перемещайтесь с быстрым указателем; когда новое значение найдено, запишите его в медленное положение и продвигайтесь вперед."
   ]
 }

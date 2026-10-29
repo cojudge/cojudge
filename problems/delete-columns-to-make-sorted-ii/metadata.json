@@ -1,6 +1,6 @@
 {
   "id": "delete-columns-to-make-sorted-ii",
-  "title": "941. Delete Columns to Make Sorted II",
+  "title": "941. Удалить колонны, чтобы сделать сортировку II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/delete-columns-to-make-sorted-ii/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "strs = [\"ca\",\"bb\",\"ac\"]",
       "output": "1",
-      "explanation": "Drop the first column to get a, b, c."
+      "explanation": "Бросьте первую колонку, чтобы получить a, b, c."
     },
     {
       "input": "strs = [\"xc\",\"yb\",\"za\"]",
       "output": "0",
-      "explanation": "Rows already ordered."
+      "explanation": "Роуз уже заказала."
     },
     {
       "input": "strs = [\"zyx\",\"wvu\",\"tsr\"]",
       "output": "3",
-      "explanation": "Every column steps down."
+      "explanation": "Каждая колонна спускается вниз."
     }
   ],
   "starterCode": {
@@ -63,8 +63,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Scan columns left to right, remembering which adjacent row pairs are already strictly ordered by kept columns.",
-    "Drop a column when an undecided pair steps down in it; otherwise keep it and mark newly ordered pairs as decided.",
-    "A kept column never harms decided pairs, so this greedy pass is optimal."
+    "Сканируйте колонны слева направо, вспоминая, какие соседние пары рядов уже строго упорядочены хранящимися колоннами.",
+    "Бросьте колонку, когда в ней опускается неопределившаяся пара; в противном случае сохраните ее и пометьте вновь упорядоченные пары, как решено.",
+    "Сохраненная колонка никогда не вредит выбранным парам, поэтому этот жадный проход оптимален."
   ]
 }

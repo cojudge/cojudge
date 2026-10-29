@@ -1,6 +1,6 @@
 {
   "id": "repeated-string-match",
-  "title": "701. Repeated String Match",
+  "title": "701. Повторяющийся струнный матч",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/repeated-string-match/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "a = \"abcd\", b = \"cdabcdab\"",
       "output": "3",
-      "explanation": "Repeating abcd three times gives abcdabcdabcd, which contains cdabcdab."
+      "explanation": "Повторение abcd три раза дает abcdabcdabcd, который содержит cdabcdab."
     },
     {
       "input": "a = \"a\", b = \"aa\"",
       "output": "2",
-      "explanation": "Two copies are needed to cover aa."
+      "explanation": "Для покрытия АА необходимы две копии."
     },
     {
       "input": "a = \"abc\", b = \"wxyz\"",
       "output": "-1",
-      "explanation": "No amount of repetition introduces w."
+      "explanation": "Никакое количество повторений не приводит к п."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Repeat a until the built string is at least as long as b.",
-    "Check containment; if it fails, one extra copy is the only longer case worth testing.",
-    "Return -1 when even that extended string lacks b."
+    "Повторяйте a до тех пор, пока построенная струна не станет по меньшей мере такой же длинной, как b.",
+    "Проверьте сдерживание; если это не удается, одна дополнительная копия является единственным более длительным случаем, который стоит проверить.",
+    "Возвращение -1, когда даже этой расширенной строке не хватает b."
   ]
 }

@@ -1,7 +1,7 @@
-Two players take turns choosing from the pool of integers `1` through `maxChoosableInteger`. Each number may be used at most once per game. The chosen numbers accumulate into a running total, and the player whose pick makes the total reach or exceed `desiredTotal` wins immediately.
+Два игрока по очереди выбирают из пула целых чисел `1` через `maxChoosableInteger`. Каждое число может использоваться максимум один раз за игру. Выбранные числа накапливаются в бегущую сумму, и игрок, чей выбор делает общий охват или превышает `desiredTotal`, выигрывает немедленно.
 
-Both players play perfectly. Return `true` if the first player can force a win, and `false` otherwise. A non-positive target counts as already met, so the first player wins without moving.
+Оба игрока играют отлично. Возвращайте `true`, если первый игрок может заставить выиграть, и `false` в противном случае. Неположительная цель считается уже достигнутой, поэтому первый игрок выигрывает, не двигаясь.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= maxChoosableInteger <= 20`
 - `0 <= desiredTotal <= 300`

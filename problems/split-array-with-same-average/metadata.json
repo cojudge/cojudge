@@ -1,6 +1,6 @@
 {
   "id": "split-array-with-same-average",
-  "title": "803. Split Array With Same Average",
+  "title": "803. Расщепленный массив с тем же средним",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/split-array-with-same-average/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,2,3,4,5,6,7,8]",
       "output": "true",
-      "explanation": "Two groups can share the same mean."
+      "explanation": "Две группы могут разделять одно и то же среднее."
     },
     {
       "input": "nums = [3,1]",
       "output": "false",
-      "explanation": "No split equalizes the means."
+      "explanation": "Никакой раскол не уравнивает средства."
     },
     {
       "input": "nums = [5,5,5]",
       "output": "true",
-      "explanation": "Equal values always split."
+      "explanation": "Равные ценности всегда разделяются."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Same average for both groups means some subset size k has sum total * k / n with an integer target.",
-    "Track reachable subset sums per cardinality with a set for each k, updating backwards over the numbers.",
-    "Only k up to n / 2 needs checking since complements mirror each other."
+    "Одно и то же среднее значение для обеих групп означает, что некоторый подмножественный размер k имеет общую сумму * k/n с целочисленной целью.",
+    "Достижимое подмножество сумм на каждую кардинальную величину с набором для каждого k, обновляя обратно над числами.",
+    "Только k до n/2 нуждается в проверке, так как комплементы зеркально отражают друг друга."
   ]
 }

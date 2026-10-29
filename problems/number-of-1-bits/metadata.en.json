@@ -1,0 +1,51 @@
+{
+  "id": "number-of-1-bits",
+  "title": "12. Number of 1 Bits",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/number-of-1-bits/",
+  "category": "binary",
+  "examples": [
+    {
+      "input": "n = 11 (0b1011)",
+      "output": "3",
+      "explanation": "The binary representation of 11 is 0b1011, which contains 3 bits set to 1."
+    },
+    {
+      "input": "n = 128 (0b10000000)",
+      "output": "1",
+      "explanation": "The binary representation of 128 is 0b10000000, which contains 1 bit set to 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int hammingWeight(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def hammingWeight(self, n: int) -> int:\n        pass\n",
+    "cpp": "class Solution {\npublic:\n    int hammingWeight(uint32_t n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int HammingWeight(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn hamming_weight(n: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc HammingWeight(n int) int {\n    \n}",
+    "typescript": "export function hammingWeight(n: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function hammingWeight($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 11
+    },
+    {
+      "n": 128
+    },
+    {
+      "n": 2147483645
+    }
+  ],
+  "functionName": "hammingWeight",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use Kernighan's algorithm: repeatedly clear the lowest set bit with n &= (n - 1) and count iterations."
+  ]
+}

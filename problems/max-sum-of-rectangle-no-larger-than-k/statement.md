@@ -1,14 +1,14 @@
-Given an `m x n` integer matrix and an integer `k`, find the largest sum of
-any rectangular submatrix whose sum is no larger than `k`. The test data always
-contains at least one such rectangle (a single small-enough cell suffices).
+При наличии целочисленной матрицы `m x n` и целочисленной матрицы `k` найдите наибольшую сумму
+любая прямоугольная подматрица, сумма которой не больше `k`.
+содержит по меньшей мере один такой прямоугольник (достаточно одной клетки).
 
-Brute force over all rectangles is too slow for the upper limits. Fixing the
-left and right borders collapses each row strip into a 1D array, turning the
-inner task into finding the best subarray sum bounded by `k`, which an ordered
-set of prefix sums answers in logarithmic time.
+Грубая сила над всеми прямоугольниками слишком медленна для верхних пределов.
+Левая и правая границы разрушают каждую полосу строки в 1D массив, превращая
+Внутренняя задача в поиске лучшей суммы подкатегории, ограниченной `k`, которую заказал
+Набор префиксов суммирует ответы в логарифмическом времени.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= m, n <= 20` (judge cases stay small enough for verification)
 - `-100 <= matrix[i][j] <= 100`
 - `-10^5 <= k <= 10^5`
-- At least one rectangle sums to `k` or less.
+- По крайней мере, одна прямоугольная сумма `k` или меньше.

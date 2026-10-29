@@ -1,18 +1,18 @@
 {
   "id": "basic-grade-letter",
-  "title": "4. Grade Letter",
+  "title": "4. Классное письмо",
   "difficulty": "Easy",
   "category": "if-else",
   "examples": [
     {
       "input": "score = 95",
       "output": "\"A\"",
-      "explanation": "95 is at least 90."
+      "explanation": "95 — это, по крайней мере, 90."
     },
     {
       "input": "score = 72",
       "output": "\"C\"",
-      "explanation": "72 is at least 70 but below 80."
+      "explanation": "72 по крайней мере 70, но ниже 80."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Check the thresholds from highest to lowest.",
-    "An `if / else if / else` chain fits this problem well."
+    "Проверьте пороги от самого высокого до самого низкого.",
+    "Цепочка `if / else if / else` хорошо подходит для этой задачи."
   ]
 }

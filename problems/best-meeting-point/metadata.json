@@ -1,6 +1,6 @@
 {
   "id": "best-meeting-point",
-  "title": "391. Best Meeting Point",
+  "title": "391. Лучшая точка встречи",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/best-meeting-point/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "grid = [[1,0,0,0,1],[0,0,0,0,0],[0,0,1,0,0]]",
       "output": "6",
-      "explanation": "Meeting at row 0, column 2 costs 2 + 2 + 2."
+      "explanation": "Встреча в строке 0, столбец 2 стоит 2 + 2 + 2."
     },
     {
       "input": "grid = [[1,1]]",
       "output": "1",
-      "explanation": "One friend walks a single step."
+      "explanation": "Один из друзей делает один шаг."
     },
     {
       "input": "grid = [[1]]",
       "output": "0",
-      "explanation": "Nobody needs to travel."
+      "explanation": "Никому не нужно путешествовать."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Manhattan distance splits into an independent row part plus a column part.",
-    "On a line, the point minimising the sum of absolute deviations is the median.",
-    "Collect friend rows in sorted order by scanning row by row, and friend columns by scanning column by column."
+    "Расстояние до Манхэттена делится на независимую часть строки плюс часть колонки.",
+    "Следовательно, точка, минимизирующая сумму абсолютных отклонений, является медианой.",
+    "Соберите строки друзей в отсортированном порядке, сканируя строку за строкой, и столбцы друзей, сканируя столбец за столбцом."
   ]
 }

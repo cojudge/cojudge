@@ -1,4 +1,4 @@
-Return the `n`-th Fibonacci number: `fib(0) = 0`, `fib(1) = 1`, and `fib(n) = fib(n-1) + fib(n-2)` for larger `n`.
+Возврат `n`-th числа Фибоначчи: `fib(0) = 0`, `fib(1) = 1` и `fib(n) = fib(n-1) + fib(n-2)` для большего `n`.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= n <= 25``

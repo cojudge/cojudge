@@ -1,6 +1,6 @@
 {
   "id": "reverse-bits",
-  "title": "15. Reverse Bits",
+  "title": "15. Обратные биты",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/reverse-bits/",
   "category": "binary",
@@ -8,12 +8,12 @@
     {
       "input": "n = 43261596 (00000010100101000001111010011100)",
       "output": "964176192 (00111001011110000010100101000000)",
-      "explanation": "Reversing the 32-bit binary of 43261596 (binary: 0b10100101000001111010011100) gives the value 964176192 (00111001011110000010100101000000)."
+      "explanation": "Обратная сторона 32-битной двоичной системы 43261596 (двоичная: 0b10100101000001111010011100) дает значение 964176192 (00111001011110000010100101000000)."
     },
     {
       "input": "n = 2 (00000000000000000000000000000010)",
       "output": "1073741824 (01000000000000000000000000000000)",
-      "explanation": "Reversing the 32-bit binary of 2 (binary: 0b10) gives the value 1073741824 (01000000000000000000000000000000)."
+      "explanation": "Обратная сторона 32-битной двоичной системы 2 (двоичная: 0b10) дает значение 1073741824 (01000000000000000000000000000000)."
     }
   ],
   "starterCode": {
@@ -49,6 +49,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Iterate 32 times: shift result left and add the least significant bit of n, then unsigned right shift n."
+    "Перемещайте время 32: результат сдвига влево и добавьте наименее значимый бит n, затем неподписанный правый сдвиг n."
   ]
 }

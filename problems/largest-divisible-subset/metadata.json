@@ -1,6 +1,6 @@
 {
   "id": "largest-divisible-subset",
-  "title": "447. Largest Divisible Subset",
+  "title": "447. Крупнейшее делимое подмножество",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/largest-divisible-subset/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,2,3]",
       "output": "[1,2]",
-      "explanation": "1 divides 2, giving a group of size 2; [1,3] is equally valid."
+      "explanation": "1 делит 2, давая группу размеров 2; [1, 3] одинаково действителен."
     },
     {
       "input": "nums = [1,2,4,8]",
       "output": "[1,2,4,8]",
-      "explanation": "Each value divides the next, so the whole input is one valid group."
+      "explanation": "Каждое значение делит следующее, поэтому весь вход представляет собой одну действительную группу."
     },
     {
       "input": "nums = [3,5,10,20]",
       "output": "[5,10,20]",
-      "explanation": "5 divides 10 and 20, and 10 divides 20."
+      "explanation": "5 делит 10 и 20, а 10 делит 20."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Sort the numbers first; divisibility only needs checking on the sorted order.",
-    "Use dynamic programming where each entry extends the best chain ending at an earlier divisor.",
-    "Remember the predecessor of each choice so the longest chain can be rebuilt."
+    "Сначала сортируйте числа; делимость требует только проверки сортированного заказа.",
+    "Используйте динамическое программирование, где каждая запись расширяет наилучшую цепочку, заканчивающуюся на более раннем делителе.",
+    "Запомните предшественника каждого варианта, чтобы можно было перестроить самую длинную цепочку."
   ]
 }

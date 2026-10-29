@@ -1,9 +1,9 @@
-You are given a collection of closed intervals with `intervals[i] = [left, right]`, plus an array `queries`. Define the length of an interval as `right - left + 1`.
+Вам предоставляется набор закрытых интервалов с `intervals[i] = [left, right]`, плюс массив `queries`. Определите длину интервала как `right - left + 1`.
 
-For every query value, identify the shortest interval from the collection that covers it (that is, `left <= query <= right`). When several intervals cover the same query, keep the one with the smallest length; when none covers it, record `-1` for that query. Collect these answers in an array that preserves the incoming order of `queries`.
+Для каждого значения запроса идентифицируйте самый короткий интервал из коллекции, которая его покрывает (то есть `left <= query <= right`). Когда несколько интервалов покрывают один и тот же запрос, сохраните один с наименьшей длиной; когда никто не покрывает его, запишите `-1` для этого запроса. Соберите эти ответы в массиве, который сохраняет входящий порядок `queries`.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= intervals.length, queries.length <= 100000`
-- Every interval row has the form `[left, right]` with `1 <= left <= right <= 10000000`.
+- Каждый интервальный ряд имеет форму `[left, right]` с `1 <= left <= right <= 10000000`.
 - `1 <= queries[i] <= 10000000`

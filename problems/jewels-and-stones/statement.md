@@ -1,8 +1,8 @@
-You are handed two strings: `jewels` lists the stone kinds that count as jewels, and `stones` lists the stones you own. Each character is one stone kind, and upper- versus lowercase matters (`a` differs from `A`).
+Вам вручают две струны: `jewels` перечисляет виды камней, которые считаются драгоценными камнями, а `stones` перечисляет камни, которыми вы владеете. Каждый персонаж - это один вид камня, и значение верхнего и нижнего регистров (`a` отличается от `A`).
 
-Count how many characters of `stones` also appear in `jewels`.
+Подсчитайте, сколько символов `stones` также появляется в `jewels`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= jewels.length, stones.length <= 50`
-- Both strings hold only English letters
-- All characters of `jewels` are distinct
+- Обе строки содержат только английские буквы.
+- Все персонажи `jewels` отличаются друг от друга.

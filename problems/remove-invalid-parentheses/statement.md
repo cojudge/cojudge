@@ -1,8 +1,8 @@
-Given a string mixing parentheses with other characters, delete the fewest parentheses
-possible so that what remains is balanced (every opening bracket is closed in order).
-Return every distinct result achievable with that minimum deletion count; the order of the
-results does not matter. Non-parenthesis characters are never removed.
+Учитывая скобки для смешивания строк с другими символами, удалите наименьшее количество скобок.
+Возможно, чтобы то, что остается, было сбалансировано (каждая открывающая скобка закрывается по порядку).
+Возврат каждого отдельного результата, достижимого при этом минимальном количестве удаления; порядок
+Результаты не имеют значения. Персонажи без парентеза никогда не удаляются.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 25`
-- `s` holds lowercase letters plus `'('` and `')'`.
+- `s` содержит строчные буквы плюс `'('` и `')'`.

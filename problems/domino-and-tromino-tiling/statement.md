@@ -1,15 +1,15 @@
-Picture a board with 2 rows and `n` columns. You own two kinds of tiles
-that may be turned around:
+Изобразите доску с строками 2 и столбцами `n`. У вас есть два вида плитки
+Это может быть перевернуто:
 
-- a straight domino covering a `2 x 1` (or `1 x 2`) strip,
-- an L-shaped tromino covering three cells of a `2 x 2` square.
+- прямое домино, покрывающее полосу `2 x 1` (или `1 x 2`),
+- L-образный тромино, покрывающий три клетки квадрата `2 x 2`.
 
-Cover the whole board exactly, without gaps or overlaps. Two coverings
-count as different when some pair of side-touching cells is joined inside
-one tile in one covering but split across two tiles in the other.
+Покрыть всю доску точно, без зазоров или перекрытий.
+считать по-разному, когда какая-то пара боковых трогательных клеток соединена внутри
+Одна плитка в одном покрытии, но разделена на две плитки в другой.
 
-Given `n`, count all valid coverings. The total can be huge, so report it
-modulo `1_000_000_007`.
+Учитывая `n`, подсчитайте все действительные покрытия. Сумма может быть огромной, поэтому сообщите об этом.
+Modulo `1_000_000_007`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 1000`

@@ -1,8 +1,8 @@
-You are given a list of distinct words. A word is called buildable when every strict prefix of it (dropping one or more trailing letters) also appears in the list; single-letter words are buildable by default.
+Вам дается список отдельных слов. Слово называется «строительным», когда в списке также появляется каждый строгий его префикс (сбрасывание одной или нескольких пронумерованных букв); однобуквенные слова создаются по умолчанию.
 
-Among all buildable words, pick the longest. When several share that length, pick the alphabetically smallest. Return an empty string when nothing is buildable.
+Среди всех слов, которые можно построить, выберите самую длинную. Когда несколько делят эту длину, выберите самую маленькую в алфавитном порядке. Возвращайте пустую строку, когда ничего нельзя построить.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= words.length <= 1000`
 - `1 <= words[i].length <= 30`
-- All words are distinct lowercase English strings.
+- Все слова являются отдельными строчками английского языка.

@@ -1,8 +1,8 @@
-American keyboards group letters into three rows: the top row holds `qwertyuiop`, the middle row holds `asdfghjkl`, and the bottom row holds `zxcvbnm`. Letter case does not matter for this task.
+Американские клавиатуры группируют буквы в три ряда: верхняя строка удерживает `qwertyuiop`, средняя строка удерживает `asdfghjkl`, а нижняя строка удерживает `zxcvbnm`. Буквенный чехол для этой задачи не имеет значения.
 
-Given a list of words, keep only those whose letters all come from a single row. Return the kept words in their original order.
+Если у вас есть список слов, держите только те, чьи буквы взяты из одной строки. Верните сохраненные слова в их первоначальном порядке.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= words.length <= 20`
 - `1 <= words[i].length <= 100`
-- Words contain only English letters
+- Слова содержат только английские буквы.

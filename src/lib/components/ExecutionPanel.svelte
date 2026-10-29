@@ -116,27 +116,27 @@
             case "no-status":
                 return "";
             case "sample-tests-failed":
-                return "Sample Tests Failed";
+                return "Примеры не пройдены";
             case "sample-tests-passed":
-                return "Sample Tests Passed";
+                return "Примеры пройдены";
             case "accepted":
-                return "Accepted";
+                return "Принято";
             case "failed":
-                return "Failed";
+                return "Не пройдено";
             case "running":
-                return "Running";
+                return "Выполнение";
             case "pending":
-                return "Pending";
+                return "В очереди";
             case "preparing":
-                return "Preparing / Compiling";
+                return "Подготовка / компиляция";
             case "judging":
-                return "Judging";
+                return "Проверка";
             case "sample-tests-failed-tle":
-                return "Sample Tests Failed (TLE)";
+                return "Примеры: превышен лимит времени";
             case "compilation-error":
-                return "Compilation Error";
+                return "Ошибка компиляции";
             case "tle":
-                return "Failed (TLE)";
+                return "Превышен лимит времени";
             default:
                 return "";
         }
@@ -668,7 +668,7 @@
         let totalTc = 0;
         while (true) {
             if (totalTc > 0) {
-                runningMessage = `Passed ${tcNo} / ${totalTc}`;
+                runningMessage = `Пройдено ${tcNo} / ${totalTc}`;
             }
             try {
                 // If the runtime image is missing, inform user and pull it first
@@ -697,7 +697,7 @@
                     const errMsg =
                         startBody?.error || "Failed to start submit job";
                     status = "failed";
-                    runningMessage = isCompilationError(errMsg) ? "Compilation Error" : "";
+                    runningMessage = isCompilationError(errMsg) ? "Ошибка компиляции" : "";
                     submissionFailure = {
                         type: "failed",
                         index: tcNo,
@@ -723,10 +723,10 @@
                         // test that died; fall back to the batch start.
                         const failedIdx = body?.errorTestIndex ?? tcNo;
                         runningMessage = body.timeout
-                            ? `TLE on Test ${tcNo + 1}`
+                            ? `Превышен лимит времени в тесте ${tcNo + 1}`
                             : isCompilationError(body?.error)
-                              ? "Compilation Error"
-                              : `Failed on Test ${failedIdx + 1}`;
+                              ? "Ошибка компиляции"
+                              : `Ошибка в тесте ${failedIdx + 1}`;
                         // Prepare failure details
                         if (body?.timeout && body?.timeoutTestCase) {
                             submissionFailure = {
@@ -752,7 +752,7 @@
                     }
                     if (!body?.ready) {
                         if (body?.passedTc) {
-                            runningMessage = `Passed ${body?.passedTc}`;
+                            runningMessage = `Пройдено ${body?.passedTc}`;
                         }
                         await delay(600);
                         continue;
@@ -760,7 +760,7 @@
                     if (body?.timeout) {
                         runningMessage = "";
                         status = "tle";
-                        runningMessage = `TLE on Test ${tcNo + 1}`;
+                        runningMessage = `Превышен лимит времени в тесте ${tcNo + 1}`;
                         submissionFailure = {
                             type: "tle",
                             index: tcNo,
@@ -795,7 +795,7 @@
                         break;
                     }
                     if (!body.accepted) {
-                        runningMessage = `Failed on Test ${tcNo + 1}`;
+                        runningMessage = `Ошибка в тесте ${tcNo + 1}`;
                         status = "failed";
                         const results: any[] = body.results || [];
                         let localFailIndex = 0;
@@ -834,7 +834,7 @@
                 console.error(err);
                 runningMessage = "";
                 status = "failed";
-                runningMessage = `Failed on Test ${tcNo + 1}`;
+                runningMessage = `Ошибка в тесте ${tcNo + 1}`;
                 submissionFailure = {
                     type: "failed",
                     index: tcNo,
@@ -852,9 +852,9 @@
 
     function getCrashHint(error: string | null): string | null {
         if (!error) return null;
-        if (error.includes('SIGSEGV')) return 'Your code crashed (Segmentation Fault). This usually means you accessed invalid memory — check for out-of-bounds array access or null pointer dereference.';
-        if (error.includes('SIGFPE')) return 'Your code crashed (Floating Point Exception). This usually means a division by zero or arithmetic overflow.';
-        if (error.includes('SIGABRT')) return 'Your code crashed (Abort). This usually means an assertion failed or an unhandled exception.';
+        if (error.includes('SIGSEGV')) return "Ваш код разбился (Segmentation Fault). Обычно это означает, что вы получили доступ к недействительной памяти — проверьте доступ к массиву или нулевой указатель.";
+        if (error.includes('SIGFPE')) return "Ваш код разбился (исключение с плавающей точкой). Обычно это означает деление на ноль или арифметическое переполнение.";
+        if (error.includes('SIGABRT')) return "Ваш код разбился (Abort). Обычно это означает неудавшееся утверждение или необработанное исключение.";
         return null;
     }
 
@@ -1089,7 +1089,7 @@
         }
         isDebugRunning = true;
         isLoading = true;
-        runningMessage = "Debug starting...";
+        runningMessage = "Запуск отладки…";
         // Reset the footer status so the in-progress message never inherits
         // the red/green styling of a previous run/submit result.
         status = "running";
@@ -1127,7 +1127,7 @@
                     status: "error",
                     error: body?.error || "Failed to start debug session",
                 };
-                runningMessage = "Debug failed";
+                runningMessage = "Ошибка отладки";
                 return;
             }
 
@@ -1137,7 +1137,7 @@
             startDebugPolling();
         } catch (err: any) {
             debugState = { status: "error", error: err.message || "Debug failed" };
-            runningMessage = "Debug failed";
+            runningMessage = "Ошибка отладки";
         } finally {
             isLoading = false;
             isDebugRunning = false;
@@ -1314,7 +1314,7 @@
     <button
         class="resizer"
         type="button"
-        aria-label="Resize execution panel"
+        aria-label="Панель исполнения Resize"
         on:mousedown={handleMouseDown}
         on:keydown={handleResizerKeydown}
     ></button>
@@ -1324,21 +1324,21 @@
             class:active={activeMainTab === "testcase"}
             on:click={() => (activeMainTab = "testcase")}
         >
-            Test Case
+            Тест
         </button>
         <button
             class="tab"
             class:active={activeMainTab === "output"}
             on:click={() => (activeMainTab = "output")}
         >
-            Output
+            Результат
         </button>
         <button
             class="tab"
             class:active={activeMainTab === "console"}
             on:click={() => (activeMainTab = "console")}
         >
-            Console
+            Консоль
         </button>
         {#if submissionFailure}
             <button
@@ -1346,7 +1346,7 @@
                 class:active={activeMainTab === "submission"}
                 on:click={() => (activeMainTab = "submission")}
             >
-                Submission
+                Проверка решения
             </button>
         {/if}
         {#if debugState}
@@ -1355,7 +1355,7 @@
                 class:active={activeMainTab === "debugger"}
                 on:click={() => (activeMainTab = "debugger")}
             >
-                Debugger
+                Отладчик
             </button>
         {/if}
         {#if debugState}
@@ -1364,7 +1364,7 @@
                 class:active={activeMainTab === "debug-console"}
                 on:click={() => (activeMainTab = "debug-console")}
             >
-                Debug Console
+                Консоль отладки
             </button>
         {/if}
     </div>
@@ -1383,11 +1383,11 @@
                                 class:active={activeTestCaseIndex === i}
                                 on:click={() => (activeTestCaseIndex = i)}
                             >
-                                Case {i + 1}
+                                Тест {i + 1}
                             </button>
                             <button
                                 class="case-remove"
-                                aria-label="Remove test case"
+                                aria-label="Удалить тестовый случай"
                                 on:click={(e) => {
                                     e.stopPropagation();
                                     removeTestCase(i);
@@ -1398,14 +1398,14 @@
                     <button
                         class="btn"
                         on:click={addTestCase}
-                        aria-label="Add test case">+</button
+                        aria-label="Добавить тест">+</button
                     >
                     <button
                         class="link-btn reset-link"
                         type="button"
                         on:click={resetTestCases}
-                        aria-label="Reset to original sample test cases"
-                        >Reset Test Cases</button
+                        aria-label="Перезагрузка оригинальных образцов тестовых случаев"
+                        >Сбросить тесты</button
                     >
                 </div>
                 {#if activeTestCase}
@@ -1453,11 +1453,11 @@
                                 class:active={activeTestCaseIndex === i}
                                 on:click={() => (activeTestCaseIndex = i)}
                             >
-                                Case {i + 1}
+                                Тест {i + 1}
                             </button>
                             <button
                                 class="case-remove"
-                                aria-label="Remove test case"
+                                aria-label="Удалить тестовый случай"
                                 on:click={(e) => {
                                     e.stopPropagation();
                                     removeTestCase(i);
@@ -1495,9 +1495,9 @@
                                 {/if}
                             {/each}
                         </div>
-                        <span class="result-title">Your Answer</span>
+                        <span class="result-title">Ваш ответ</span>
                         {#if activeTestCase.error}
-                            <span class="result-status error">Error</span>
+                            <span class="result-status error">Ошибка</span>
                             <pre
                                 class="result-output error">{activeTestCase.error}</pre>
                         {:else}
@@ -1506,7 +1506,7 @@
                                 class="result-output">{activeTestCase.output}</pre>
                         {/if}
                         {#if activeTestCase.correctAnswer}
-                            <span class="result-title">Correct Answer</span>
+                            <span class="result-title">Правильный ответ</span>
                             <pre
                                 class="result-output">{activeTestCase.correctAnswer}</pre>
                         {/if}
@@ -1523,11 +1523,11 @@
                                 class:active={activeTestCaseIndex === i}
                                 on:click={() => (activeTestCaseIndex = i)}
                             >
-                                Case {i + 1}
+                                Тест {i + 1}
                             </button>
                             <button
                                 class="case-remove"
-                                aria-label="Remove test case"
+                                aria-label="Удалить тестовый случай"
                                 on:click={(e) => {
                                     e.stopPropagation();
                                     removeTestCase(i);
@@ -1539,7 +1539,7 @@
 
                 {#if activeTestCase}
                     <div class="result-item">
-                        <span class="result-title">Console</span>
+                        <span class="result-title">Консоль</span>
                         <pre class="result-output">{activeTestCase.logs ||
                                 ""}</pre>
                     </div>
@@ -1549,12 +1549,11 @@
             <div class="submission-view">
                 <div class="summary">
                     <span class="result-title incorrect"
-                        >{submissionFailure.type === "tle" ? "TLE" : "Failed"} on
-                        Test {submissionFailure.index + 1}</span
+                        >{submissionFailure.type === "tle" ? "Письмо" : "Не пройдено"} На тесте {submissionFailure.index + 1}</span
                     >
                 </div>
                 <div class="inputs">
-                    <div class="result-title">Inputs</div>
+                    <div class="result-title">Вводимые данные</div>
                     <div class="kv-list">
                         {#if submissionFailure.testCase}
                             {#each problem.params as p}
@@ -1572,7 +1571,7 @@
                             {/each}
                         {:else}
                             <div class="kv-row">
-                                <span>No input details available.</span>
+                                <span>Никаких вводных данных.</span>
                             </div>
                         {/if}
                     </div>
@@ -1580,15 +1579,15 @@
                 <div class="outputs">
                     {#if submissionFailure.type === "tle"}
                         <div class="result-item">
-                            <span class="result-title">Result</span>
+                            <span class="result-title">Результат</span>
                             <pre
-                                class="result-output error">Time Limit Exceeded</pre>
+                                class="result-output error">Превышен лимит времени</pre>
                         </div>
                     {:else}
                         <div class="result-item">
-                            <span class="result-title">Your Answer</span>
+                            <span class="result-title">Ваш ответ</span>
                             {#if submissionFailure.error}
-                                <span class="result-status error">Error</span>
+                                <span class="result-status error">Ошибка</span>
                                 {#if getCrashHint(submissionFailure.error)}
                                     <pre class="result-output hint">{getCrashHint(submissionFailure.error)}</pre>
                                 {/if}
@@ -1601,7 +1600,7 @@
                             {/if}
                         </div>
                         <div class="result-item">
-                            <span class="result-title">Correct Answer</span>
+                            <span class="result-title">Правильный ответ</span>
                             <pre
                                 class="result-output">{submissionFailure.expectedAnswer}</pre>
                         </div>
@@ -1609,7 +1608,7 @@
                 </div>
                 <div class="use-case-action">
                     <button class="btn use-case-btn" on:click={useFailedTestCase}>
-                        Use Test Case
+                        Используйте тестовый случай
                     </button>
                 </div>
             </div>
@@ -1620,9 +1619,9 @@
                         <button
                             class="btn case-btn debug-case-pill"
                             class:debug-current={debugTestCaseIndex === i}
-                            title={debugTestCaseIndex === i ? "Currently running" : ""}
+                            title={debugTestCaseIndex === i ? "В настоящее время работает" : ""}
                         >
-                            Case {i + 1}
+                            Тест {i + 1}
                             {#if debugTestCaseIndex === i}
                                 <span class="debug-run-dot"></span>
                             {/if}
@@ -1632,19 +1631,15 @@
                 <div class="debug-header">
                     <span class="debug-status">
                         {#if debugState.status === "running"}
-                            <span class="debug-dot running"></span> Running
-                        {:else if debugState.status === "paused"}
-                            <span class="debug-dot paused"></span> Paused at line {debugState.line}
+                            <span class="debug-dot running"></span> Выполнение{:else if debugState.status === "paused"}
+                            <span class="debug-dot paused"></span> Остановка на линии {debugState.line}
                         {:else if debugState.status === "completed"}
-                            <span class="debug-dot completed"></span> Completed
-                        {:else if debugState.status === "error"}
-                            <span class="debug-dot error"></span> Error
-                        {:else if debugState.status === "stopped"}
-                            <span class="debug-dot error"></span> Stopped
-                        {/if}
+                            <span class="debug-dot completed"></span> Завершено{:else if debugState.status === "error"}
+                            <span class="debug-dot error"></span> Ошибка{:else if debugState.status === "stopped"}
+                            <span class="debug-dot error"></span> Остановиться{/if}
                         {#if typeof debugState.testCase === "number"}
                             <span class="debug-case-label"
-                                >· Case {debugState.testCase}{debugState.totalTestCases
+                                >· Тест {debugState.testCase}{debugState.totalTestCases
                                     ? `/${debugState.totalTestCases}`
                                     : ""}</span
                             >
@@ -1654,17 +1649,17 @@
                         <div class="debug-actions">
                             <Tooltip text="F10" pos="bottom">
                                 <button class="btn btn-debug-action" on:click={() => debugAction("step")} disabled={isDebugRunning}>
-                                    Step Over
+                                    Шаг за шагом
                                 </button>
                             </Tooltip>
                             <Tooltip text="F5" pos="bottom">
                                 <button class="btn btn-debug-action" on:click={() => debugAction("continue")} disabled={isDebugRunning}>
-                                    Continue
+                                    Продолжить
                                 </button>
                             </Tooltip>
-                            <Tooltip text="Shift+F5" pos="bottom">
+                            <Tooltip text="Сдвиг + F5" pos="bottom">
                                 <button class="btn btn-debug-action" on:click={() => debugAction("stop")} disabled={isDebugRunning}>
-                                    Stop
+                                    Остановить
                                 </button>
                             </Tooltip>
                         </div>
@@ -1672,7 +1667,7 @@
                 </div>
                 {#if debugState.status === "paused"}
                     <div class="debug-variables">
-                        <div class="debug-section-title">Variables</div>
+                        <div class="debug-section-title">Переменные</div>
                         {#if debugState.vars && Object.keys(debugState.vars).length > 0}
                             <table class="debug-vars-table">
                                 <tbody>
@@ -1685,21 +1680,21 @@
                                 </tbody>
                             </table>
                         {:else}
-                            <div class="debug-placeholder">No local variables at this point.</div>
+                            <div class="debug-placeholder">На данный момент локальных переменных нет.</div>
                         {/if}
                     </div>
                 {/if}
                 <div class="debug-variables">
-                    <div class="debug-section-title">Output</div>
+                    <div class="debug-section-title">Результат</div>
                     {#if debugCleanOutput.trim()}
                         <pre class="debug-output">{debugCleanOutput}</pre>
                     {:else}
-                        <div class="debug-placeholder">No output yet.</div>
+                        <div class="debug-placeholder">Пока нет результатов.</div>
                     {/if}
                 </div>
                 {#if debugState.error}
                     <div class="result-item">
-                        <span class="result-status error">Error</span>
+                        <span class="result-status error">Ошибка</span>
                         <pre class="result-output error">{debugState.error}</pre>
                     </div>
                 {/if}
@@ -1709,14 +1704,14 @@
                 <div class="debug-header">
                     <span class="debug-status">
                         {#if debugState.status === "paused"}
-                            <span class="debug-dot paused"></span> Paused at line {debugState.line}
+                            <span class="debug-dot paused"></span> Остановка на линии {debugState.line}
                         {:else}
                             <span class="debug-dot running"></span>
                             {debugState.status === "running"
-                                ? "Running"
+                                ? "Выполнение"
                                 : debugState.status === "completed"
-                                  ? "Completed"
-                                  : "Not paused"}
+                                  ? "Завершено"
+                                  : "Не останавливаться"}
                         {/if}
                     </span>
                     <button
@@ -1724,23 +1719,23 @@
                         on:click={() => (evalHistory = [])}
                         disabled={evalHistory.length === 0}
                     >
-                        Clear
+                        Ясно.
                     </button>
                     {#if debugJobId && (debugState.status === "paused" || debugState.status === "running")}
                         <div class="debug-actions">
                             <Tooltip text="F10" pos="bottom">
                                 <button class="btn btn-debug-action" on:click={() => debugAction("step")} disabled={isDebugRunning}>
-                                    Step Over
+                                    Шаг за шагом
                                 </button>
                             </Tooltip>
                             <Tooltip text="F5" pos="bottom">
                                 <button class="btn btn-debug-action" on:click={() => debugAction("continue")} disabled={isDebugRunning}>
-                                    Continue
+                                    Продолжить
                                 </button>
                             </Tooltip>
-                            <Tooltip text="Shift+F5" pos="bottom">
+                            <Tooltip text="Сдвиг + F5" pos="bottom">
                                 <button class="btn btn-debug-action" on:click={() => debugAction("stop")} disabled={isDebugRunning}>
-                                    Stop
+                                    Остановить
                                 </button>
                             </Tooltip>
                         </div>
@@ -1762,12 +1757,9 @@
                     {/each}
                     {#if evalHistory.length === 0}
                         <div class="debug-placeholder">
-                            {#if debugState.status === "paused"}
-                                Enter an expression to evaluate, e.g. <code>x + y</code> or
+                            {#if debugState.status === "paused"}Введите выражение для оценки, например. <code>x + y</code> или
                                 <code>arr.length</code>.
-                            {:else}
-                                Waiting for the debug session to pause...
-                            {/if}
+                            {:else}В ожидании отладки сессии, чтобы приостановить...{/if}
                         </div>
                     {/if}
                 </div>
@@ -1795,8 +1787,8 @@
                         class="repl-input"
                         type="text"
                         placeholder={debugState.status === "paused"
-                            ? "Enter expression to evaluate"
-                            : "Session must be paused to evaluate"}
+                            ? "Введите выражение для оценки"
+                            : "Сессия должна быть остановлена для оценки"}
                         value={evalInput}
                         bind:this={evalInputEl}
                         disabled={debugState.status !== "paused" || evalBusy || !debugJobId}
@@ -1831,7 +1823,7 @@
             <Tooltip text={isMac ? "Cmd + B" : "Ctrl + B"} pos="right">
                 <button
                     class="icon-btn"
-                    aria-label={isLeftPaneVisible ? "Hide problem pane" : "Show problem pane"}
+                    aria-label={isLeftPaneVisible ? "Скрыть панель проблем" : "Показать Панель проблем"}
                     on:click={toggleProblemPaneVisibility}
                 >
                     {#if isLeftPaneVisible}
@@ -1883,7 +1875,7 @@
             <Tooltip text={isMac ? "Cmd + J" : "Ctrl + J"}>
                 <button
                     class="icon-btn"
-                    aria-label={isBottomPaneVisible ? "Hide panel" : "Show panel"}
+                    aria-label={isBottomPaneVisible ? "Спрятанная панель" : "Шоу-панель"}
                     on:click={togglePanelVisibility}
                 >
                     {#if isBottomPaneVisible}
@@ -1962,21 +1954,21 @@
                             stroke-linecap="round"
                         />
                     </svg>
-                    Checking Docker...
+                    Проверка Docker...
                 </div>
             {:else if !isDockerRunning}
                 <div class="docker-error-msg">
-                    Docker engine not detected.
+                    Движок Docker не найден.
                     <button
                         class="link-btn"
                         on:click={refreshImageStatus}
-                        style="margin-left: 0.5rem;">Check again</button
+                        style="margin-left: 0.5rem;">Проверить снова</button
                     >
                     {#if isDesktopMode && !$page.data.isDemoSite}
                         <button
                             class="link-btn"
                             on:click={() => (showDockerSettings = true)}
-                            style="margin-left: 0.5rem;">Configure</button
+                            style="margin-left: 0.5rem;">конфигурировать</button
                         >
                     {/if}
                 </div>
@@ -1986,14 +1978,14 @@
                     text={isPullingImage
                         ? `${Math.round(pullProgress * 100)}% ${pullStatusMessage} (${imageName})`
                         : imageStatus === "present"
-                          ? `Local runtime ready${imageName ? ` (${imageName})` : ""}`
-                          : `Download runtime ${imageName ? ` (${imageName})` : ""}`}
+                          ? `Местный Runtime готов${imageName ? ` (${imageName})` : ""}`
+                          : `Скачать среду выполнения ${imageName ? ` (${imageName})` : ""}`}
                 >
                     <div class="runtime-status-container">
                         {#if isPullingImage}
                             <button
                                 class="icon-btn progress-btn"
-                                aria-label="Cancel download"
+                                aria-label="Отменить загрузку"
                                 on:click={cancelPullImage}
                             >
                                 <svg width="24" height="24" viewBox="0 0 24 24">
@@ -2035,7 +2027,7 @@
                         {:else}
                             <button
                                 class="icon-btn"
-                                aria-label="Runtime image status"
+                                aria-label="Статус изображения Runtime"
                                 class:non-button-hover={imageStatus ===
                                     "present"}
                                 on:click={() => {
@@ -2114,43 +2106,43 @@
                 {#if status === "accepted" && (executionTimeMs != null || memoryKB != null)}
                     <span class="metrics">
                         {#if executionTimeMs != null}
-                            <Tooltip text="Runtime">
-                                <span class="metric">{executionTimeMs.toFixed(2)} ms</span>
+                            <Tooltip text="Время выполнения">
+                                <span class="metric">{executionTimeMs.toFixed(2)} мс</span>
                             </Tooltip>
                         {/if}
                         {#if memoryKB != null}
-                            <Tooltip text="Memory usage">
-                                <span class="metric">{(memoryKB / 1024).toFixed(1)} MB</span>
+                            <Tooltip text="Использование памяти">
+                                <span class="metric">{(memoryKB / 1024).toFixed(1)} МБ</span>
                             </Tooltip>
                         {/if}
                     </span>
                 {/if}
                 {#if isDebugSupported(language)}
-                    <Tooltip text={debugBreakpoints.length === 0 ? "No breakpoint selected" : "Run in Debug mode"}>
+                    <Tooltip text={debugBreakpoints.length === 0 ? "Нет выбранной точки останова" : "Скачать Debug mode"}>
                         <button
                             class="btn btn-debug"
                             on:click={handleDebugRun}
                             disabled={isLoading || !!debugJobId || debugBreakpoints.length === 0}
-                            aria-label="Debug"
+                            aria-label="Отладка"
                         >
-                            Debug
+                            Отладка
                         </button>
                     </Tooltip>
                 {/if}
-                <Tooltip text={isMac ? "Cmd + '" : "Ctrl + '"}>
+                <Tooltip text={isMac ? "Cmd + '" : "Ctrl + ''"}>
                     <button
                         class="btn btn-secondary"
                         on:click={handleRun}
                         disabled={isLoading || !!debugJobId}
                     >
-                        Run
+                        Запустить
                     </button>
                 </Tooltip>
-                <Tooltip text={isMac ? "Cmd + Shift + '" : "Ctrl + Shift + '"}>
+                <Tooltip text={isMac ? "Cmd + Shift + '" : "Ctrl + Shift +"}>
                     <button
                         class="btn btn-primary"
                         on:click={handleSubmit}
-                        disabled={isLoading || !!debugJobId}>Submit</button
+                        disabled={isLoading || !!debugJobId}>Отправить</button
                     >
                 </Tooltip>
             {/if}

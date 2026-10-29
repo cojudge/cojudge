@@ -1,6 +1,6 @@
-Return `base` raised to the power `exp` (`base^exp`) using repeated multiplication. Any number to the power 0 is 1, including `0^0 = 1` for this problem.
+Возврат `base` поднят до мощности `exp` (`base^exp`) с использованием многократного умножения.Любое число к мощности 0 — 1, включая `0^0 = 1` для этой задачи.
 
-**Constraints:**
+**Ограничения:**
 - ``-10 <= base <= 10``
 - ``0 <= exp <= 9``
 - `The result fits in a 32-bit signed integer for all test inputs`

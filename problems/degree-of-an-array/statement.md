@@ -1,5 +1,5 @@
-For a non-empty integer list `nums`, call its degree the largest number of times any single value occurs. Find the shortest contiguous block that has the same degree as the whole list, and return that block's length.
+Для непустого целого списка `nums` назовите его степень наибольшим числом раз, когда происходит какое-либо одно значение. Найдите самый короткий смежный блок, который имеет ту же степень, что и весь список, и верните длину этого блока.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 50000`
 - `0 <= nums[i] <= 49999`

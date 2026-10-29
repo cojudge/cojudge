@@ -1,6 +1,6 @@
 {
   "id": "chalkboard-xor-game",
-  "title": "808. Chalkboard XOR Game",
+  "title": "808. Игровой автомат XOR Game",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/chalkboard-xor-game/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,1,2]",
       "output": "false",
-      "explanation": "The xor of all numbers is 2 (nonzero) and the count is odd, so the first player cannot force erasing everything."
+      "explanation": "Xor всех чисел 2 (ненулевой) и счет нечетный, поэтому первый игрок не может заставить стереть все."
     },
     {
       "input": "nums = [0,1]",
       "output": "true",
-      "explanation": "With an even count the first player has a mirroring strategy even though the xor is nonzero."
+      "explanation": "С четным счетом у первого игрока есть зеркальная стратегия, даже если xor не равен нулю."
     },
     {
       "input": "nums = [1,2,3]",
       "output": "true",
-      "explanation": "The xor of the whole board is already 0, so the first player wins immediately."
+      "explanation": "Xor всей доски уже 0, поэтому первый игрок выигрывает сразу."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "XOR every entry once: a zero total means the board is already balanced.",
-    "When the total is nonzero, the parity of the length decides the winner: even favors the first player, odd favors the second."
+    "XOR - каждая запись один раз: нулевая сумма означает, что доска уже сбалансирована.",
+    "Когда сумма не равна нулю, паритет длины определяет победителя: даже предпочтение первому игроку, нечетное предпочтение второму."
   ]
 }

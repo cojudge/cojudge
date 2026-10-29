@@ -1,6 +1,6 @@
 {
   "id": "max-consecutive-ones",
-  "title": "549. Max Consecutive Ones",
+  "title": "549. Макс Последовательное",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/max-consecutive-ones/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,1,0,1,1,1]",
       "output": "3",
-      "explanation": "Last three entries are the longest run."
+      "explanation": "Последние три позиции являются самыми длинными."
     },
     {
       "input": "nums = [1,0,1,1,0,1]",
       "output": "2",
-      "explanation": "Middle pair is longest."
+      "explanation": "Средняя пара самая длинная."
     },
     {
       "input": "nums = [0,0,0]",
       "output": "0",
-      "explanation": "No ones present."
+      "explanation": "Никаких присутствующих."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Walk once, counting the current run of 1s.",
-    "Reset the counter on each 0 and track the maximum.",
-    "No extra memory is needed."
+    "Ходите один раз, считая текущий пробег 1s.",
+    "Сбросьте счетчик на каждый 0 и отследите максимум.",
+    "Никакой дополнительной памяти не требуется."
   ]
 }

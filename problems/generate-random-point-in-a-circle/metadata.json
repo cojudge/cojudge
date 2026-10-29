@@ -1,6 +1,6 @@
 {
   "id": "generate-random-point-in-a-circle",
-  "title": "542. Generate Random Point in a Circle",
+  "title": "542. Создайте случайную точку в круге",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/generate-random-point-in-a-circle/",
   "category": "math",
@@ -8,12 +8,12 @@
     {
       "input": "radius = \"1.0\", xCenter = \"0.0\", yCenter = \"0.0\"",
       "output": "[\"0.0\",\"0.0\"]",
-      "explanation": "The center is distance 0 from itself, so it is always a valid (though not random) answer; any point with x^2+y^2<=1 also passes."
+      "explanation": "Центр — это расстояние 0 от себя, поэтому он всегда является достоверным (хотя и не случайным) ответом; любая точка с x^2+y^2<=1 также проходит."
     },
     {
       "input": "radius = \"2.0\", xCenter = \"3.0\", yCenter = \"-1.0\"",
       "output": "[\"3.0\",\"-1.0\"]",
-      "explanation": "Returning the center is valid; any point within 2.0 of (3.0,-1.0) is accepted."
+      "explanation": "Возвращение центра является действительным; принимается любая точка в пределах 2.0 (3.0,-1.0)."
     }
   ],
   "starterCode": {
@@ -60,8 +60,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Adaptation: doubles are carried as decimal strings; return the point as two decimal strings.",
-    "Sample uniformly by area: radius scales with sqrt(u) and angle is uniform in [0, 2*pi).",
-    "The checker only verifies distance <= radius + tolerance, using a fixed reference seed."
+    "Адаптация: двойники переносятся как десятичные струны; возвращают точку как две десятичные струны.",
+    "Образец равномерно по площади: шкалы радиуса с sqrt(u) и угол однородны в [0, 2*pi].",
+    "Шекер проверяет только расстояние <= радиус + допуск, используя фиксированный эталонный семенной материал."
   ]
 }

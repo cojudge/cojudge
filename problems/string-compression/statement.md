@@ -1,9 +1,9 @@
-You are given text `s` made of letters. Imagine squeezing each maximal block of equal letters: keep one copy of the letter, and if the block length is greater than one, write the block length right after it. For example `aaab` squeezes to `a3b`.
+Вам дается текст `s`, выполненный из букв. Представьте себе сжатие каждого максимального блока равных букв: сохраните одну копию буквы, а если длина блока больше одной, напишите длину блока сразу после нее. Например, `aaab` сжимается до `a3b`.
 
-Return the length of the squeezed form. You do not need to build the squeezed text itself, only report how long it would be.
+Возвращайте длину сжатой формы. Вам не нужно строить сам сжатый текст, только сообщайте, сколько он будет длиться.
 
-> **Adaptation note:** the classic task rewrites a character array in place and returns its new length. Here the input arrives as a `string` `s` and you return the squeezed length as an `int`, using the same counting rule. A block of length `1` adds `1`, a block of length `c > 1` adds `1 + digits(c)`.
+**Примечание по адаптации: ** классическая задача переписывает массив символов на месте и возвращает его новую длину. Здесь вход поступает как `string` `s`, и вы возвращаете сжатую длину как `int`, используя то же правило подсчета. Блок длины `1` добавляет `1`, блок длины `c > 1` добавляет `1 + digits(c)`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 2000`
-- `s` contains only English letters.
+- `s` содержит только английские буквы.

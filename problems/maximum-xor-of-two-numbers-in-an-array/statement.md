@@ -1,7 +1,7 @@
-You are given a list of non-negative integers called `nums`. Pick two positions `i` and `j` (they may be the same position) and look at the value `nums[i] XOR nums[j]`, where `XOR` is the bitwise exclusive-or operation.
+Вам предоставляется список неотрицательных целых чисел, называемых `nums`Выберите две позиции `i` и `j` (они могут быть одинаковой позиции) и посмотреть на значение `nums[i] XOR nums[j]`где `XOR` Это эксклюзивная или эксклюзивная операция.
 
-Return the largest XOR value you can obtain from any such pair.
+Верните наибольшее значение XOR, которое вы можете получить от любой такой пары.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 2 * 10^4`
 - `0 <= nums[i] <= 2^31 - 1`

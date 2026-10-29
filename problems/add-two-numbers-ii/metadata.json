@@ -1,6 +1,6 @@
 {
   "id": "add-two-numbers-ii",
-  "title": "513. Add Two Numbers II",
+  "title": "513. Добавить два числа II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/add-two-numbers-ii/",
   "category": "linked-list",
@@ -58,8 +58,8 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Forward order means the least significant digits are at the tails; stacks expose them in addition order.",
-    "Push both lists, then pop pairs with a carry, prepending each new digit.",
-    "A leftover carry becomes a new leading node."
+    "Форвардный порядок означает, что наименее значимые цифры находятся у хвостов; стеки выставляют их в дополнительном порядке.",
+    "Нажмите оба списка, затем поп-пары с переноской, готовя каждую новую цифру.",
+    "Оставшийся носитель становится новым ведущим узлом."
   ]
 }

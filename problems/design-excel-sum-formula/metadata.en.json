@@ -1,0 +1,58 @@
+{
+  "id": "design-excel-sum-formula",
+  "title": "653. Design Excel Sum Formula",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/design-excel-sum-formula/",
+  "category": "design",
+  "examples": [
+    {
+      "input": "operations = [\"Excel\",\"set\",\"get\",\"sum\",\"get\"], args = [[[\"3\",\"3\"]],[\"1\",\"1\",\"2\"],[\"1\",\"1\"],[\"1\",\"2\",\"A1\",\"A2\"],[\"1\",\"2\"]]",
+      "output": "[2,4]",
+      "explanation": "Build a 3x3 sheet; set A1 to 2; get A1 is 2; sum A1+A2 into B1 gives 4 (A2 is 0); get B1 is 4."
+    },
+    {
+      "input": "operations = [\"Excel\",\"set\",\"set\",\"sum\",\"get\"], args = [[[\"2\",\"2\"]],[\"1\",\"1\",\"5\"],[\"1\",\"2\",\"7\"],[\"2\",\"1\",\"A1\",\"B1\"],[\"2\",\"1\"]]",
+      "output": "[12]",
+      "explanation": "A1=5 and B1=7, so the formula A1+B1 stored at A2 evaluates to 12."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int[] runExcel(String[] operations, List<List<String>> args) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def runExcel(self, operations: List[str], args: List[List[str]]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runExcel(vector<string>& operations, vector<vector<string>>& args) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public int[] RunExcel(string[] operations, List<List<string>> args)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_excel(operations: Vec<String>, args: Vec<Vec<String>>) -> Vec<i32> {\n        Vec::new()\n    }\n}",
+    "go": "package main\n\nfunc RunExcel(operations []string, args [][]string) []int {\n    return []int{}\n}",
+    "typescript": "export function runExcel(operations: string[], args: string[][]): number[] {\n    return [];\n}\n",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param string[][] $args\n     * @return int[]\n     */\n    public function runExcel($operations, $args) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"Excel\",\"set\",\"get\",\"sum\",\"get\"]",
+      "args": "[[\"3\",\"3\"],[\"1\",\"1\",\"2\"],[\"1\",\"1\"],[\"1\",\"2\",\"A1\",\"A2\"],[\"1\",\"2\"]]"
+    },
+    {
+      "operations": "[\"Excel\",\"set\",\"set\",\"sum\",\"get\"]",
+      "args": "[[\"2\",\"2\"],[\"1\",\"1\",\"5\"],[\"1\",\"2\",\"7\"],[\"2\",\"1\",\"A1\",\"B1\"],[\"2\",\"1\"]]"
+    }
+  ],
+  "functionName": "runExcel",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "args",
+      "type": "string_list_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Model columns as 1-based numbers (A=1, B=2, ...); keep a value grid plus a formula map keyed by cell.",
+    "set writes the value and clears any formula on that cell; get evaluates live (following formulas recursively).",
+    "sum stores the token list as the cell formula (each token is a cell like B2 or a rectangle like A1:B2) and returns the evaluated total.",
+    "Only get and sum produce outputs, collected in call order into the int_array result.",
+    "Adaptation: this judge drives the sheet through runExcel(operations, args) with all arguments stringified; the constructor takes [height, widthCount] and set/get/sum take 1-based [row, col] plus values or formula tokens."
+  ]
+}

@@ -1,7 +1,7 @@
-Given an array `candyType` where each entry records the type of one candy, Alice may take exactly half of the candies. She wants as many distinct types as possible. Return the greatest number of different types she can hold.
+Учитывая массив `candyType`, где каждая запись записывает тип одной конфеты, Алиса может взять ровно половину конфет. Она хочет как можно больше различных типов. Вернуть наибольшее количество различных типов, которые она может держать.
 
-She cannot exceed half the pile, and she cannot exceed the number of distinct types present — the answer is simply the smaller of those two numbers.
+Она не может превышать половины кучи, и она не может превышать количество различных типов — ответ просто меньше этих двух чисел.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= candyType.length <= 10^4`, even length.
 - `-10^5 <= candyType[i] <= 10^5`

@@ -1,13 +1,13 @@
-You start on position `0` of a binary string `s` indexed from zero; that starting character is `'0'`. Two integers `minJump` and `maxJump` bound each leap. A leap from position `i` to position `j` is allowed exactly when:
+Вы начинаете с позиции `0` двоичной строки `s`, проиндексированной с нуля; этот начальный символ - `'0'`. Два целых числа `minJump` и `maxJump` связывают каждый скачок. Скачок от позиции `i` до позиции `j` допускается именно тогда, когда:
 
-- `i + minJump <= j <= min(i + maxJump, s.length - 1)`, and
+- `i + minJump <= j <= min(i + maxJump, s.length - 1)` и
 - `s[j] == '0'`.
 
-Decide whether position `s.length - 1` can be reached through a chain of allowed leaps.
+Решите, можно ли достичь позиции `s.length - 1` через цепочку разрешенных прыжков.
 
-**Constraints:**
+**Ограничения:**
 
 - `2 <= s.length <= 10^5`
-- `s[i]` is either `'0'` or `'1'`.
+- `s[i]` - это `'0'` или `'1'`.
 - `s[0] == '0'`
 - `1 <= minJump <= maxJump < s.length`

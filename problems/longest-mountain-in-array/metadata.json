@@ -1,6 +1,6 @@
 {
   "id": "longest-mountain-in-array",
-  "title": "843. Longest Mountain in Array",
+  "title": "843. Самая длинная гора в Аррее",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/longest-mountain-in-array/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "arr = [2,1,4,7,3,2,5]",
       "output": "5",
-      "explanation": "Run [1,4,7,3,2] is the longest mountain."
+      "explanation": "Бег [1, 4, 7, 3, 2] — самая длинная гора."
     },
     {
       "input": "arr = [2,2,2]",
       "output": "0",
-      "explanation": "No strict up-down run exists."
+      "explanation": "Строгого нисходящего бега не существует."
     },
     {
       "input": "arr = [0,1,2,3,4,5,4,3,2,1,0]",
       "output": "11",
-      "explanation": "Entire array is one mountain."
+      "explanation": "Целый массив — это одна гора."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Walk peaks: at each index higher than both neighbours, expand left while strictly rising and right while strictly falling.",
-    "Alternatively do one pass tracking the current climb length and descent length, resetting on flat steps.",
-    "Only count spans with both an upward and a downward part and total length at least three."
+    "Пик ходьбы: при каждом индексе выше, чем у обоих соседей, расширяйтесь влево, строго поднимаясь и вправо, строго падая.",
+    "В качестве альтернативы сделайте один проход, отслеживающий текущую длину подъема и длину спуска, сбросив на плоские ступени.",
+    "Только счетные пролеты с восходящей и нисходящей частью и общей длиной не менее трех."
   ]
 }

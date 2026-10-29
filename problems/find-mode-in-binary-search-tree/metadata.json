@@ -1,6 +1,6 @@
 {
   "id": "find-mode-in-binary-search-tree",
-  "title": "564. Find Mode in Binary Search Tree",
+  "title": "564. Найти режим в Binary Search Tree",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/find-mode-in-binary-search-tree/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "root = [1,null,2,2]",
       "output": "[2]",
-      "explanation": "The value 2 appears twice while 1 appears once."
+      "explanation": "Значение 2 появляется дважды, а 1 появляется один раз."
     },
     {
       "input": "root = [0]",
       "output": "[0]",
-      "explanation": "A single node is trivially the most frequent."
+      "explanation": "Один узел является тривиально наиболее частым."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "An inorder walk visits keys in sorted order, so equal values become adjacent.",
-    "Count frequencies with a hash table (or track runs in sorted order) and remember the maximum.",
-    "Return all keys whose count equals the maximum; order does not matter for the checker."
+    "Непорядочная прогулка посещает ключи в сортированном порядке, поэтому равные значения становятся смежными.",
+    "Подсчитывайте частоты с помощью хеш-таблицы (или трека в сортированном порядке) и запоминайте максимум.",
+    "Возврат всех ключей, количество которых равно максимуму; порядок не имеет значения для шашки."
   ]
 }

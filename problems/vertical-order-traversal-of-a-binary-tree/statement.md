@@ -1,7 +1,7 @@
-Place the binary tree on a grid: the root sits at column 0 and row 0; a left child moves to column - 1 and row + 1, while a right child moves to column + 1 and row + 1.
+Поместите двоичное дерево на сетку: корень находится в колонке 0 и строке 0; левый потомок перемещается в колонку - 1 и строка + 1, в то время как правый потомок перемещается в колонку + 1 и строку + 1.
 
-Collect nodes column by column from left to right. Inside one column, order nodes by row from top to bottom; nodes sharing both column and row are ordered by value increasingly. Return the sequence of columns, each as a list of values in that order.
+Соберите узлы столбцом по столбцу слева направо. Внутри одного столбца упорядоченные узлы рядами сверху вниз; узлы, разделяющие как столбец, так и ряд, упорядочены по значению все больше. Возвращайте последовательность столбцов, каждый в виде списка значений в этом порядке.
 
-**Constraints:**
-- The tree holds 1 to 1000 nodes.
-- Node values range from 0 to 1000.
+**Ограничения:**
+- Дерево удерживает узлы 1 в 1000.
+- Значения узлов варьируются от 0 до 1000.

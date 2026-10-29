@@ -1,18 +1,18 @@
 {
   "id": "basic-count-digits",
-  "title": "11. Count Digits",
+  "title": "11. Граф Дигитс",
   "difficulty": "Easy",
   "category": "loops",
   "examples": [
     {
       "input": "n = 123",
       "output": "3",
-      "explanation": "123 has three digits."
+      "explanation": "123 имеет три цифры."
     },
     {
       "input": "n = 0",
       "output": "1",
-      "explanation": "0 is written with one digit."
+      "explanation": "0 пишется одной цифрой."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Repeatedly divide by 10 and count the steps.",
-    "Handle 0 as a special case before the loop."
+    "Неоднократно делить на 10 и считать шаги.",
+    "Обработайте 0 как особый случай перед циклом."
   ]
 }

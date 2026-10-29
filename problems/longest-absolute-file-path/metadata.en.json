@@ -1,0 +1,58 @@
+{
+  "category": "string",
+  "difficulty": "Medium",
+  "examples": [
+    {
+      "explanation": "The file lives at \"dir/subdir2/file.ext\", length 20.",
+      "input": "input = \"dir\\n\\tsubdir1\\n\\tsubdir2\\n\\t\\tfile.ext\"",
+      "output": "20"
+    },
+    {
+      "explanation": "Two files exist; the longer path \"dir/subdir2/subsubdir2/file2.ext\" has 32 chars.",
+      "input": "input = \"dir\\n\\tsubdir1\\n\\t\\tfile1.ext\\n\\t\\tsubsubdir1\\n\\tsubdir2\\n\\t\\tsubsubdir2\\n\\t\\t\\tfile2.ext\"",
+      "output": "32"
+    },
+    {
+      "explanation": "A single folder with no file yields 0.",
+      "input": "input = \"a\"",
+      "output": "0"
+    }
+  ],
+  "functionName": "lengthLongestPath",
+  "hints": [
+    "Split the encoding on newlines and count leading tabs to get each entry's depth.",
+    "Keep the cumulative path length per depth; a file candidate is parent length plus its own name length.",
+    "Only entries containing a dot can be files; folders just update the length table for deeper entries."
+  ],
+  "id": "longest-absolute-file-path",
+  "link": "https://leetcode.com/problems/longest-absolute-file-path/",
+  "outputType": "int",
+  "params": [
+    {
+      "name": "input",
+      "type": "string"
+    }
+  ],
+  "starterCode": {
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int lengthLongestPath(string input) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int LengthLongestPath(string input) \n    {\n        return 0;\n    }\n}",
+    "go": "package main\n\nfunc LengthLongestPath(input string) int {\n    return 0\n}",
+    "java": "class Solution {\n    public int lengthLongestPath(String input) {\n        return 0;\n    }\n}",
+    "php": "class Solution {\n    /**\n     * @param string $input\n     * @return int\n     */\n    public function lengthLongestPath($input) {\n\n    }\n}",
+    "python": "class Solution:\n    def lengthLongestPath(self, input: str) -> int:\n        pass",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn length_longest_path(input: String) -> i32 {\n        0\n    }\n}",
+    "typescript": "export function lengthLongestPath(input: string): number {\n    return 0;\n}"
+  },
+  "testCases": [
+    {
+      "input": "dir|\tsubdir1|\tsubdir2|\t\tfile.ext"
+    },
+    {
+      "input": "dir|\tsubdir1|\t\tfile1.ext|\t\tsubsubdir1|\tsubdir2|\t\tsubsubdir2|\t\t\tfile2.ext"
+    },
+    {
+      "input": "a"
+    }
+  ],
+  "title": "464. Longest Absolute File Path"
+}

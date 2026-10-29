@@ -1,6 +1,6 @@
 {
   "id": "construct-quad-tree",
-  "title": "199. Construct Quad Tree",
+  "title": "199. Конструкция четырех деревьев",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/construct-quad-tree/",
   "category": "tree",
@@ -8,7 +8,7 @@
     {
       "input": "grid = [[0,1],[1,0]]",
       "output": "[[0,1],[1,0],[1,1],[1,1],[1,0]]",
-      "explanation": "Serialized as BFS list of [isLeaf,val] (1/0). null children of leaves omitted via structure."
+      "explanation": "Сериализирован как список BFS [isLeaf,val] (1/0)."
     },
     {
       "input": "grid = [[1,1],[1,1]]",
@@ -45,7 +45,7 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Recursively build the quad tree. If a subgrid is uniform, return a leaf.",
-    "Serialize the tree as a BFS list of [isLeaf, val] pairs (1/0). For internal nodes, four children follow in order TL,TR,BL,BR. Leaves have no children in the serialization (standard LeetCode display)."
+    "Рекурсивно построить квадроцикл. Если подсетка однородная, вернуть лист.",
+    "Сериализируйте дерево как список BFS пар [isLeaf, val] (1/0). Для внутренних узлов четыре потомка следуют по порядку TL, TR, BL,BR. Листья не имеют потомков в сериализации (стандартный дисплей LeetCode)."
   ]
 }

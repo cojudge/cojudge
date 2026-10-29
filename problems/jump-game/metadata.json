@@ -1,6 +1,6 @@
 {
   "id": "jump-game",
-  "title": "26. Jump Game",
+  "title": "26. Игра в прыжок",
   "difficulty": "Medium",
   "category": "dp",
   "link": "https://leetcode.com/problems/jump-game/",
@@ -8,12 +8,12 @@
     {
       "input": "nums=[2,3,1,1,4]",
       "output": "true",
-      "explanation": "From index 0 you can reach index 4 via index 1."
+      "explanation": "Из индекса 0 вы можете получить индекс 4 через индекс 1."
     },
     {
       "input": "nums=[3,2,1,0,4]",
       "output": "false",
-      "explanation": "Every path from index 0 ends at index 3; index 4 is unreachable."
+      "explanation": "Каждый путь от индекса 0 заканчивается индексом 3; индекс 4 недостижим."
     }
   ],
   "starterCode": {
@@ -46,6 +46,6 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Greedy keeps the furthest reachable index; if it ever falls behind current index, it's impossible."
+    "Greedy сохраняет самый дальний достижимый индекс; если он когда-либо отстает от текущего индекса, это невозможно."
   ]
 }

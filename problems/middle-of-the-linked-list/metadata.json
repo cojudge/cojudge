@@ -1,6 +1,6 @@
 {
   "id": "middle-of-the-linked-list",
-  "title": "869. Middle of the Linked List",
+  "title": "869. Середина связанного списка",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/middle-of-the-linked-list/",
   "category": "linked-list",
@@ -8,12 +8,12 @@
     {
       "input": "head = [1,2,3,4,5]",
       "output": "[3,4,5]",
-      "explanation": "With five nodes the middle one holds 3, so the list from there on is [3,4,5]."
+      "explanation": "С пятью узлами средний удерживает 3, поэтому список оттуда [3, 4, 5]."
     },
     {
       "input": "head = [1,2,3,4,5,6]",
       "output": "[4,5,6]",
-      "explanation": "With six nodes there are two centers (3 and 4); the second one holds 4, so the answer is [4,5,6]."
+      "explanation": "С шестью узлами есть два центра (3 и 4); второй содержит 4, поэтому ответ [4, 5, 6]."
     }
   ],
   "starterCode": {
@@ -49,7 +49,7 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Advance two pointers at different speeds: one moves a single node per step while the other moves two.",
-    "When the fast pointer reaches the end, the slow pointer sits on the middle (and naturally on the second middle for even lengths)."
+    "Продвигайте два указателя на разных скоростях: один перемещает один узел на шаг, а другой перемещает два.",
+    "Когда быстрый указатель достигает конца, медленный указатель находится на середине (и, естественно, на второй середине для четных длин)."
   ]
 }

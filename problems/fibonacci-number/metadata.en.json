@@ -1,0 +1,57 @@
+{
+  "id": "fibonacci-number",
+  "title": "571. Fibonacci Number",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/fibonacci-number/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "n = 2",
+      "output": "1",
+      "explanation": "F(2) = F(1) + F(0) = 1 + 0."
+    },
+    {
+      "input": "n = 3",
+      "output": "2",
+      "explanation": "F(3) = F(2) + F(1) = 1 + 1."
+    },
+    {
+      "input": "n = 4",
+      "output": "3",
+      "explanation": "F(4) = F(3) + F(2) = 2 + 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int fib(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def fib(self, n: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int fib(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int Fib(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn fib(n: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc Fib(n int) int {\n    \n}",
+    "typescript": "export function fib(n: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function fib($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 2
+    },
+    {
+      "n": 3
+    },
+    {
+      "n": 4
+    }
+  ],
+  "functionName": "fib",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Only the previous two values are needed to build the next one, so two rolling variables suffice.",
+    "Seed them with F(0) = 0 and F(1) = 1 and iterate upward to n."
+  ]
+}

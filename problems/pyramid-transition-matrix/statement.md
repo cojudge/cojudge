@@ -1,14 +1,14 @@
-You stack colored blocks into a centered pyramid. The bottom row is the string `bottom`, and every row above holds one fewer block than the row below it.
+Нижний ряд — это строка `bottom`, и каждая строка выше содержит на один блок меньше, чем строка ниже.
 
-A block resting on two neighbors is allowed only when the triple (left base, right base, top) appears in the list `allowed`. Each entry of `allowed` is a three-letter string where the first two letters are the base pair and the third is the block they support. Order matters: `ABC` differs from `BAC`.
+Блок, покоящийся на двух соседях, допускается только при появлении в списке тройки (левая база, правая база, верхняя). `allowed`Каждый вход в `allowed` Это трехбуквенная строка, где первые две буквы - базовая пара, а третья - блок, который они поддерживают. `ABC` Отличается от `BAC`.
 
-Decide whether the bottom row can grow all the way to a single top block using only allowed triples.
+Решите, может ли нижний ряд расти до одного верхнего блока, используя только разрешенные тройки.
 
-Adaptation for this judge: the original input gives `allowed` as a list of strings; here it arrives as a string array with the same contents.
+Адаптация для этого судьи: исходный ввод дает `allowed` в виде списка строк; здесь он поступает в виде строкового массива с тем же содержимым.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= bottom.length <= 6`
 - `0 <= allowed.length <= 216`
-- Each entry of `allowed` has length 3.
-- All letters come from `A` through `F`.
-- All entries of `allowed` are distinct.
+- Каждая запись `allowed` имеет длину 3.
+- Все письма приходят от `A` через `F`.
+- Все записи `allowed` отличаются.

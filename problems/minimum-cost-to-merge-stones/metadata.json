@@ -1,6 +1,6 @@
 {
   "id": "minimum-cost-to-merge-stones",
-  "title": "981. Minimum Cost to Merge Stones",
+  "title": "981. Минимальная стоимость слияния камней",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/minimum-cost-to-merge-stones/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "stones = [3,2,4,1], k = 2",
       "output": "20",
-      "explanation": "Merge pairwise from the left: costs accumulate to 20."
+      "explanation": "Слиться попарно слева: расходы накапливаются до 20."
     },
     {
       "input": "stones = [3,2,4,1], k = 3",
       "output": "-1",
-      "explanation": "Four piles cannot shrink to one by removing two piles per move."
+      "explanation": "Четыре сваи не могут сжаться до одной, удаляя две сваи за ход."
     },
     {
       "input": "stones = [3,5,1,2,6], k = 3",
       "output": "25",
-      "explanation": "First merge [5,1,2] at cost 8, then merge everything at cost 17."
+      "explanation": "Сначала слить [5, 1, 2] по цене 8, затем слить все по цене 17."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Merging to one pile is possible exactly when (n - 1) is divisible by (k - 1); otherwise return -1.",
-    "Use interval DP: dp[i][j] is the cheapest cost to shrink piles i..j, trying every split spaced k-1 apart.",
-    "Add the interval sum on top only when the interval can collapse fully, i.e. (length - 1) is divisible by (k - 1)."
+    "Слияние в одну кучу возможно именно тогда, когда (n - 1) делится на (k - 1); в противном случае возвращается -1.",
+    "Используйте интервал DP: dp[i][j] — это самая дешевая стоимость для сокращения свай i..j, пробуя каждый разделенный интервал k-1 отдельно.",
+    "Добавить сумму интервала сверху можно только тогда, когда интервал может полностью схлопнуться, т.е. (длина - 1) делится на (k - 1)."
   ]
 }

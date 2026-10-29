@@ -1,7 +1,7 @@
-You are given the root of a binary tree. Regard a node as **good** when its value reaches or exceeds every value encountered along the route from the root down to it.
+Рассматривайте узел как **хороший**, когда его значение достигает или превышает каждое значение, встречающееся вдоль маршрута от корня до него.
 
-Count how many such good nodes the tree holds. The route examined for each node contains both endpoints, the root and the node itself.
+Подсчитайте, сколько таких хороших узлов удерживает дерево. Маршрут, исследованный для каждого узла, содержит обе конечные точки, корень и сам узел.
 
-**Constraints:**
-- The number of nodes lies in the range `1` to `100000`.
+**Ограничения:**
+- Количество узлов находится в диапазоне от `1` до `100000`.
 - `-10^4 <= node.val <= 10^4`

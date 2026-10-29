@@ -1,6 +1,6 @@
-Your input is an integer array `nums` plus a non-negative integer `k`. Shift the array right by `k` places and return the shifted array.
+Ваш ввод представляет собой целочисленный массив `nums` плюс неотрицательное целое число `k`. Сдвиньте массив прямо на `k` места и верните сдвинутый массив.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ nums.length ≤ 10^5
 - -2^31 ≤ nums[i] ≤ 2^31 - 1

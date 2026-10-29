@@ -1,6 +1,6 @@
 {
   "id": "maximum-length-of-repeated-subarray",
-  "title": "726. Maximum Length of Repeated Subarray",
+  "title": "726. Максимальная длина повторного подкатегории",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/maximum-length-of-repeated-subarray/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "nums1 = [1,2,3,2,1], nums2 = [3,2,1,4,7]",
       "output": "3",
-      "explanation": "The shared window [3,2,1] of length 3 is the longest."
+      "explanation": "Общее окно [3, 2, 1] длины 3 является самым длинным."
     },
     {
       "input": "nums1 = [0,0,0,0,0], nums2 = [0,0,0,0,0]",
       "output": "5",
-      "explanation": "Identical arrays share their full length."
+      "explanation": "Идентичные массивы разделяют их полную длину."
     },
     {
       "input": "nums1 = [1,2,3], nums2 = [4,5,6]",
       "output": "0",
-      "explanation": "No value overlaps, so nothing repeats."
+      "explanation": "Никакое значение не перекрывается, поэтому ничего не повторяется."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Let dp[i][j] be the length of the shared suffix ending at nums1[i-1] and nums2[j-1].",
-    "Equal endpoints extend the diagonal value by one; mismatches reset to zero.",
-    "Track the maximum cell seen during the fill."
+    "Пусть dp[i][j] — длина общего суффикса, оканчивающегося на nums1[i-1] и nums2[j-1].",
+    "Равные конечные точки увеличивают диагональное значение на единицу; несоответствия сбрасываются до нуля.",
+    "Отслеживайте максимальную ячейку, видимую во время заполнения."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "merge-two-sorted-lists",
-  "title": "42. Merge Two Sorted Lists",
+  "title": "42. Соедините два сортированных списка",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/merge-two-sorted-lists/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "list1 = [1,2,4], list2 = [1,3,4]",
       "output": "[1,1,2,3,4,4]",
-      "explanation": "Merging the sorted lists [1,2,4] and [1,3,4] produces the sorted list [1,1,2,3,4,4]."
+      "explanation": "Слияние сортированных списков [1,2,4] и [1,3,4] составляет сортированный список [1,1,2,3,4,4]."
     },
     {
       "input": "list1 = [], list2 = []",
       "output": "[]",
-      "explanation": "Merging the sorted lists [] and [] produces the sorted list []."
+      "explanation": "Слияние сортированных списков [] и [] производит сортированный список []."
     },
     {
       "input": "list1 = [], list2 = [0]",
       "output": "[0]",
-      "explanation": "Merging the sorted lists [] and [0] produces the sorted list [0]."
+      "explanation": "Слияние сортированных списков [] и [0] производит сортированный список [0]."
     }
   ],
   "starterCode": {
@@ -62,9 +62,9 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Use a dummy head and a tail pointer; at each step, attach the smaller of list1 or list2 and advance that list.",
-    "When one list runs out, attach the remainder of the other list.",
-    "You can do this iteratively (preferred for O(1) stack) or recursively (clearer but uses call stack).",
-    "Re-use nodes by adjusting next pointers; don't allocate new nodes unless required by the environment."
+    "Используйте фиктивный указатель головы и хвоста; на каждом шаге прикрепляйте меньший из списка 1 или списка 2 и продвигайте этот список.",
+    "Когда один список заканчивается, приложите остаток другого списка.",
+    "Вы можете сделать это итеративно (предпочтительно для стека O (1)) или рекурсивно (чище, но использует стек вызовов).",
+    "Повторное использование узлов путем корректировки следующих указателей; не выделяйте новые узлы, если это не требуется окружающей средой."
   ]
 }

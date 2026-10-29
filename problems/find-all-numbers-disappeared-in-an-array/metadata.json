@@ -1,6 +1,6 @@
 {
   "id": "find-all-numbers-disappeared-in-an-array",
-  "title": "516. Find All Numbers Disappeared in an Array",
+  "title": "516. Найти все числа, исчезнувшие в массиве",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [4,3,2,7,8,2,3,1]",
       "output": "[5,6]",
-      "explanation": "Values 5 and 6 from 1..8 are absent."
+      "explanation": "Значения 5 и 6 от 1..8 отсутствуют."
     },
     {
       "input": "nums = [1,1]",
       "output": "[2]",
-      "explanation": "With n = 2, value 2 never shows up."
+      "explanation": "При n = 2 значение 2 никогда не отображается."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Mark every value you see in a boolean table indexed by value.",
-    "A second pass from 1 to n collects the unmarked entries in order.",
-    "Both passes are linear; the table costs O(n) extra memory."
+    "Отметьте каждое значение, которое вы видите в булевой таблице, проиндексированной по значению.",
+    "Второй проход от 1 к n собирает немаркированные записи в порядке.",
+    "Оба прохода линейны; таблица стоит O(n) дополнительной памяти."
   ]
 }

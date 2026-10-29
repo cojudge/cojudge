@@ -1,6 +1,6 @@
 {
   "id": "longest-turbulent-subarray",
-  "title": "238. Longest Turbulent Subarray",
+  "title": "238. Самый длинный турбулентный подкат",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/longest-turbulent-subarray/",
   "category": "greedy",
@@ -55,8 +55,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Turbulence is a local alternating property; track two counters: the longest swing ending with '<' and the longest ending with '>'.",
-    "When consecutive elements are equal, a turbulent run restarts at size 1.",
-    "Keep a sliding window over arr while it remains turbulent."
+    "Турбулентность - это местное переменное свойство; отслеживайте два счетчика: самый длинный качель, заканчивающийся на «<' and the longest ending with '>».",
+    "Когда последовательные элементы равны, турбулентный запуск перезапускается с размером 1.",
+    "Держите раздвижное окно над арр, пока оно остается турбулентным."
   ]
 }

@@ -1,4 +1,4 @@
-Return `s` with every lowercase letter (`a` to `z`) converted to uppercase. All other characters stay unchanged.
+Возвращайте `s` с каждой строчкой (`a` в `z`) преобразованной в верхний регистр. Все остальные символы остаются неизменными.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= s.length <= 1000``

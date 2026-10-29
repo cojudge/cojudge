@@ -1,17 +1,17 @@
-You are scor­ing an odd baseball match, starting from a blank scoresheet. Process the entries of the string list `operations` one after another, updating a running record as follows:
+Вы забиваете странный бейсбольный матч, начиная с пустого бюллетеня. Обработайте записи списка струн `operations` один за другим, обновив беговой рекорд следующим образом:
 
-- a numeric string `x`: append a fresh score of `x` to the record.
-- `'+'`: append a fresh score equal to the total of the two most recent recorded scores.
-- `'D'`: append a fresh score worth twice the most recent recorded score.
-- `'C'`: erase the most recent recorded score, as if it had never happened.
+- Цифровая строка `x`: добавьте новый счет `x` к рекорду.
+- `'+'`: добавьте новый балл, равный сумме двух последних зарегистрированных баллов.
+- `'D'`: Добавьте свежий счет, который стоит в два раза больше, чем самый последний зарегистрированный счет.
+- `'C'`: стереть самый последний записанный счет, как будто этого никогда не было.
 
-After the whole list has been consumed, add together every score still left on the record and return that total.
+После того, как весь список был потреблен, сложите все баллы, оставшиеся на записи, и верните эту сумму.
 
-Every generated case keeps each intermediate value and the final answer inside a 32-bit signed integer, and every requested operation is guaranteed to be applicable when it appears.
+Каждый сгенерированный случай сохраняет каждое промежуточное значение и окончательный ответ внутри целого числа, подписанного 32-битом, и каждая запрошенная операция гарантированно будет применима, когда она появится.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= operations.length <= 1000`
-- `operations[i]` is `"C"`, `"D"`, `"+"`, or a string representing an integer in the range `[-3 * 10^4, 3 * 10^4]`.
-- For operation `"+"`, there will always be at least two previous scores on the record.
-- For operations `"C"` and `"D"`, there will always be at least one previous score on the record.
+- `operations[i]` - это `"C"`, `"D"`, `"+"` или строка, представляющая целое число в диапазоне `[-3 * 10^4, 3 * 10^4]`.
+- Для работы `"+"` всегда будет как минимум два предыдущих балла.
+- Для операций `"C"` и `"D"` всегда будет по крайней мере один предыдущий счет в записи.

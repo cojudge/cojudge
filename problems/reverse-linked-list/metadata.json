@@ -1,6 +1,6 @@
 {
   "id": "reverse-linked-list",
-  "title": "40. Reverse Linked List",
+  "title": "40. Обратный связанный список",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/reverse-linked-list/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "head = [1,2,3,4,5]",
       "output": "[5,4,3,2,1]",
-      "explanation": "Reversing the linked list [1,2,3,4,5] gives the reversed order [5,4,3,2,1]."
+      "explanation": "Перевернуть связанный список [1,2,3,4,5] отдает обратный приказ [5,4,3,2,1]."
     },
     {
       "input": "head = [1,2]",
       "output": "[2,1]",
-      "explanation": "Reversing the linked list [1,2] gives the reversed order [2,1]."
+      "explanation": "Обратный список [1, 2] дает обратный порядок [2, 1]."
     },
     {
       "input": "head = []",
       "output": "[]",
-      "explanation": "The list is empty, so the reversed list is also empty."
+      "explanation": "Список пуст, поэтому обратный список также пуст."
     }
   ],
   "starterCode": {
@@ -63,9 +63,9 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Iterative approach: maintain prev, curr, next pointers; set curr.next = prev while walking forward.",
-    "At the end, prev is the new head; return it.",
-    "Recursive approach: reverse from head.next, then set head.next.next = head and head.next = null.",
-    "Avoid creating new nodes; just rewire next pointers."
+    "Итеративный подход: поддерживать prev, curr, следующие указатели; установить curr.next = prev во время ходьбы вперед.",
+    "В конце концов, prev — это новая голова; верните ее.",
+    "Рекурсивный подход: обратный от head.next, затем установите head.next.next = head и head.next = null.",
+    "Избегайте создания новых узлов; просто перенастройте следующие указатели."
   ]
 }

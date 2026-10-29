@@ -1,12 +1,12 @@
-You receive a reference to the root of a binary search tree alongside an integer `key`. Excise the node holding `key` from the tree, then return the (possibly new) root reference.
+Вы получаете ссылку на корень дерева двоичного поиска вместе с целым числом `key`. Акцизируйте узел, удерживающий `key` от дерева, а затем верните (возможно, новый) ссылку на корень.
 
-Conceptually the removal proceeds in two phases:
-1. Locate the node storing the key.
-2. When it is present, unlink it while keeping the binary search tree ordering intact.
+Концептуально удаление происходит в два этапа:
+1. Найдите узел, хранящий ключ.
+2. Когда он присутствует, отсоедините его, сохраняя при этом двоичное дерево поиска, упорядоченное.
 
-**Constraints:**
-- The number of nodes in the tree is in the range `[0, 10^4]`
+**Ограничения:**
+- Количество узлов в дереве находится в диапазоне `[0, 10^4]`
 - `-10^5 <= Node.val <= 10^5`
-- Each node has a unique value
-- `root` is a valid binary search tree
+- Каждый узел имеет уникальное значение
+- `root` - это действительное дерево двоичного поиска.
 - `-10^5 <= key <= 10^5`

@@ -1,18 +1,18 @@
-You begin at the origin `(0, 0)` of an endless grid and want to reach a
-destination cell `target = [xt, yt]`. Several ghosts start from the cells
-listed in `ghosts`, where each entry is `[xg, yg]`. Every turn, you and each
-ghost may independently stay put or step one cell north, south, east, or
-west, all moving at once.
+Вы начинаете с начала `(0, 0)` бесконечной сетки и хотите достичь цели.
+Ячейка назначения `target = [xt, yt]`. Несколько призраков начинаются из ячеек
+в `ghosts`, где каждая запись `[xg, yg]`. Каждый поворот, вы и каждый
+Призрак может самостоятельно оставаться на месте или наступать на одну клетку на север, юг, восток или
+Запад, все движется сразу.
 
-You succeed exactly when you can step onto the destination strictly before
-any ghost could get there (ghosts play optimally to intercept). If a ghost
-can arrive at the same time as you or earlier — even by heading straight
-for the target — the escape fails. Because the grid is open, only the
-shortest-path distances matter, measured with Manhattan steps.
+Вы добьетесь успеха именно тогда, когда сможете строго наступить на пункт назначения.
+Любой призрак может попасть туда (призраки играют оптимально, чтобы перехватить).
+Вы можете прибыть в то же время, что и вы, или раньше, даже направляясь прямо.
+Для цели - побег не удался. Потому что сетка открыта, только
+Самые короткие расстояния, измеряемые с помощью шагов Манхэттена.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= ghosts.length <= 100`
 - `ghosts[i].length == 2`
 - `-10^4 <= xg, yg <= 10^4`
 - `-10^4 <= xt, yt <= 10^4`
-- Several ghosts may share a cell.
+- Несколько призраков могут делить одну клетку.

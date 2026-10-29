@@ -1,10 +1,10 @@
-Given strings `s1`, `s2`, and `s3`, return `true` if `s3` is formed by interleaving
-`s1` and `s2`, or `false` otherwise.
+Заданные строки `s1`, `s2` и `s3` возвращают `true`, если `s3` образован чередованием
+`s1` и `s2` или `false` в противном случае.
 
-An interleaving uses every character from `s1` and `s2` exactly once while preserving
-the left-to-right order of characters from each source string.
+Interleaving использует каждый символ от `s1` и `s2` ровно один раз, сохраняя при этом
+Порядок слева направо символов из каждой исходной строки.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= s1.length, s2.length <= 100`
 - `0 <= s3.length <= 200`
-- All strings contain only lowercase English letters.
+- Все строки содержат только английские буквы.

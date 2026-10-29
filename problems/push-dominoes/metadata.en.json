@@ -1,0 +1,52 @@
+{
+  "id": "push-dominoes",
+  "title": "836. Push Dominoes",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/push-dominoes/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "dominoes = \"RR.L\"",
+      "output": "\"RR.L\"",
+      "explanation": "The middle dot is pulled both ways and stays upright."
+    },
+    {
+      "input": "dominoes = \".L.R...LR..L..\"",
+      "output": "\"LL.RR.LLRRLL..\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String pushDominoes(String dominoes) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def pushDominoes(self, dominoes: str) -> str:\n        return \"\"\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string pushDominoes(string dominoes) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string PushDominoes(string dominoes) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn push_dominoes(dominoes: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc PushDominoes(dominoes string) string {\n    return \"\"\n}",
+    "typescript": "export function pushDominoes(dominoes: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $dominoes\n     * @return string\n     */\n    public function pushDominoes($dominoes) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "dominoes": "RR.L"
+    },
+    {
+      "dominoes": ".L.R...LR..L.."
+    },
+    {
+      "dominoes": "R.R.L"
+    }
+  ],
+  "functionName": "pushDominoes",
+  "params": [
+    {
+      "name": "dominoes",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Compute a left-to-right force wave (R pushes decay with distance, L resets it) and a mirrored right-to-left wave, then combine them.",
+    "A positive combined force means R wins, a negative one means L wins, and zero means the piece stays upright.",
+    "Segments between an R and a later L split in the middle; equal halves leave the centre standing when the gap is odd."
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "id": "distribute-candies",
-  "title": "624. Distribute Candies",
+  "title": "624. Распространять конфеты",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/distribute-candies/",
   "category": "hash-table",
@@ -8,17 +8,17 @@
     {
       "input": "candyType = [1,1,2,2,3,3]",
       "output": "3",
-      "explanation": "Three takes cover all three types."
+      "explanation": "Три дубля охватывают все три типа."
     },
     {
       "input": "candyType = [1,1,2,3]",
       "output": "2",
-      "explanation": "Two takes cover at most two types."
+      "explanation": "Два покрывают максимум два типа."
     },
     {
       "input": "candyType = [6,6,6,6]",
       "output": "1",
-      "explanation": "Only one type exists."
+      "explanation": "Существует только один тип."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Count the distinct candy types with a set.",
-    "Alice's share size is exactly half the array length.",
-    "The answer is the smaller of the distinct count and the share size."
+    "Подсчитайте различные типы конфет с набором.",
+    "Размер доли Алисы ровно вдвое меньше длины массива.",
+    "Ответ заключается в меньшем количестве и размере доли."
   ]
 }

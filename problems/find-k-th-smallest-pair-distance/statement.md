@@ -1,8 +1,8 @@
-Consider every unordered pair of positions in `nums` and record the absolute difference of the two values. Sort those distances increasingly and pick the `k`-th entry (1-based).
+Рассмотрим каждую неупорядоченную пару позиций в `nums` и зафиксируем абсолютную разницу двух значений.Сортируйте эти расстояния все чаще и выберите `k`-th запись (на основе 1).
 
-Return that distance. For example, `[1,3,1]` yields distances `0, 2, 2`, whose first entry is `0`.
+Например, `[1,3,1]` дает расстояния `0, 2, 2`, первая запись которого `0`.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= nums.length <= 10^4`
 - `0 <= nums[i] <= 10^6`
 - `1 <= k <= n*(n-1)/2`

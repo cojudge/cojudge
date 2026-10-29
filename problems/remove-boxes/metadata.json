@@ -1,6 +1,6 @@
 {
   "id": "remove-boxes",
-  "title": "603. Remove Boxes",
+  "title": "603. Удалить коробки",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/remove-boxes/",
   "category": "dp",
@@ -8,12 +8,12 @@
     {
       "input": "boxes = [1,3,2,2,2,3,4,3,1]",
       "output": "23",
-      "explanation": "Clear 2s first, then merge 3s for the optimum."
+      "explanation": "Сначала прочищайте 2, затем сливайте 3 для оптимального."
     },
     {
       "input": "boxes = [1,1,1]",
       "output": "9",
-      "explanation": "Remove together for 9."
+      "explanation": "Удалите вместе для 9."
     },
     {
       "input": "boxes = [1]",
@@ -50,8 +50,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Add a third dimension k counting extra boxes of the same colour attached to the left interval.",
-    "Compress leading equal colours, then either delete them now or merge them with a later equal colour after clearing the middle.",
-    "Memoise on (l, r, k) to avoid exponential recomputation."
+    "Добавьте третье измерение k, считая дополнительные коробки того же цвета, прикрепленные к левому интервалу.",
+    "Сжимайте ведущие равные цвета, затем либо удаляйте их сейчас, либо сливайте их с более поздним равным цветом после очистки середины.",
+    "Память на (l, r, k), чтобы избежать экспоненциального пересчета."
   ]
 }

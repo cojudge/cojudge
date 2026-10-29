@@ -1,4 +1,4 @@
-Return `true` if `year` is a leap year: divisible by 400, or divisible by 4 but not by 100. Otherwise return `false`.
+Возвращение `true` если `year` Високосный год: делится на 400или делится на 4 но не путем 100В противном случае вернуться `false`.
 
-**Constraints:**
+**Ограничения:**
 - ``1 <= year <= 9999``

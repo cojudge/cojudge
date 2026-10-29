@@ -1,6 +1,6 @@
 {
   "id": "next-greater-element-ii",
-  "title": "565. Next Greater Element II",
+  "title": "565. Следующий Большой элемент II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/next-greater-element-ii/",
   "category": "stack",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1,2,1]",
       "output": "[2,-1,2]",
-      "explanation": "The first 1 sees 2; 2 sees nothing larger in the circle; the last 1 wraps to 2."
+      "explanation": "Первый 1 видит 2; 2 не видит ничего большего в круге; последний 1 обертывается до 2."
     },
     {
       "input": "nums = [1,2,3,4,3]",
       "output": "[2,3,4,-1,4]",
-      "explanation": "Each element except the maximum 4 finds a larger successor, with the final 3 wrapping to 4."
+      "explanation": "Каждый элемент, за исключением максимального 4, находит более крупного преемника с окончательной оберткой 3 в 4."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Scan twice around the array while keeping a decreasing stack of indices awaiting their greater element.",
-    "Only push indices during the first lap; the second lap only resolves pending entries.",
-    "Unresolved indices at the end keep -1."
+    "Сканируйте дважды вокруг массива, сохраняя при этом уменьшающийся стек индексов, ожидающих своего большего элемента.",
+    "Только нажимать индексы во время первого круга; второй круг только разрешает ожидающие записи.",
+    "Неразрешенные индексы в конце сохраняют -1."
   ]
 }

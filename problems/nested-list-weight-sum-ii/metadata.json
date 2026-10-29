@@ -1,6 +1,6 @@
 {
   "id": "nested-list-weight-sum-ii",
-  "title": "443. Nested List Weight Sum II",
+  "title": "443. Взвешенный список весов Сумма II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/nested-list-weight-sum-ii/",
   "category": "stack",
@@ -8,12 +8,12 @@
     {
       "input": "nestedList = \"[[1,1],2,[1,1]]\"",
       "output": "8",
-      "explanation": "Four ones at depth 2 count once each, and the two at depth 1 counts twice."
+      "explanation": "Четыре из них на глубине 2 считаются один раз, а два на глубине 1 — дважды."
     },
     {
       "input": "nestedList = \"[1,[4,[6]]]\"",
       "output": "17",
-      "explanation": "Depths are 1, 2, 3 with max depth 3, giving 1*3 + 4*2 + 6*1."
+      "explanation": "Глубины 1, 2, 3 с максимальной глубиной 3, что дает 1*3 + 4*2 + 6*1."
     }
   ],
   "starterCode": {
@@ -49,8 +49,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Parse the string into a tree of integers and lists first.",
-    "A first walk finds the maximum integer depth.",
-    "A second walk accumulates value * (maxDepth - depth + 1)."
+    "Сначала разберите строку в дерево целых чисел и списков.",
+    "Первая прогулка находит максимальную целочисленную глубину.",
+    "Вторая прогулка аккумулирует значение * (максимальная глубина - глубина + 1)."
   ]
 }

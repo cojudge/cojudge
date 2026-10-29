@@ -1,6 +1,6 @@
 {
   "id": "recover-binary-search-tree",
-  "title": "282. Recover Binary Search Tree",
+  "title": "282. Восстановление двоичного дерева поиска",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/recover-binary-search-tree/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "root = [1,3,null,null,2]",
       "output": "[3,1,null,null,2]",
-      "explanation": "Swapping the values 1 and 3 restores sorted inorder order, giving [3,1,null,null,2]."
+      "explanation": "Обмен значениями 1 и 3 восстанавливает отсортированный порядок, давая [3, 1,null,null, 2]."
     },
     {
       "input": "root = [3,1,4,null,null,2]",
       "output": "[2,1,4,null,null,3]",
-      "explanation": "Swapping the values 3 and 2 restores the search-tree ordering, giving [2,1,4,null,null,3]."
+      "explanation": "Обмен значениями 3 и 2 восстанавливает порядок поиска, давая [2, 1, 4,null,null, 3]."
     }
   ],
   "starterCode": {
@@ -50,9 +50,9 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "An inorder walk of a search tree visits values in ascending order; the two misplaced entries break that order.",
-    "Scan the inorder sequence once to locate the first and second out-of-place nodes, then exchange their values.",
-    "Only the node values move \u2014 the shape of the tree stays exactly the same.",
-    "Adaptation: the original task edits the tree in place and returns nothing; here return the repaired root so the judge can compare it."
+    "Неупорядоченная прогулка по дереву поиска посещает значения в восходящем порядке; две неуместные записи нарушают этот порядок.",
+    "Сканируйте последовательность непорядка один раз, чтобы найти первый и второй неуместные узлы, а затем обменивайтесь их значениями.",
+    "Двигаются только узлы — форма дерева остается точно такой же.",
+    "Адаптация: оригинальное задание редактирует дерево на месте и ничего не возвращает; здесь возвращают отремонтированный корень, чтобы судья мог сравнить его."
   ]
 }

@@ -1,0 +1,58 @@
+{
+  "id": "unique-paths-iii",
+  "title": "964. Unique Paths III",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/unique-paths-iii/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "grid = [[1,0,0,0],[0,0,0,0],[0,0,2,-1]]",
+      "output": "2",
+      "explanation": "Two walks start at 1, step on every open cell exactly once, and finish at 2."
+    },
+    {
+      "input": "grid = [[1,0,0,0],[0,0,0,0],[0,0,0,2]]",
+      "output": "4",
+      "explanation": "Four covering walks exist on this obstacle-free board."
+    },
+    {
+      "input": "grid = [[0,1],[1,0]]",
+      "output": "0",
+      "explanation": "No walk can both cover every open cell and end at the target."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int uniquePathsIII(int[][] grid) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def uniquePathsIII(self, grid: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int uniquePathsIII(vector<vector<int>>& grid) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int UniquePathsIII(int[][] grid) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn unique_paths_iii(grid: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc UniquePathsIII(grid [][]int) int {\n    \n}",
+    "typescript": "export function uniquePathsIII(grid: number[][]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $grid\n     * @return int\n     */\n    public function uniquePathsIII($grid) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "grid": "[[1,0,0,0],[0,0,0,0],[0,0,2,-1]]"
+    },
+    {
+      "grid": "[[1,0,0,0],[0,0,0,0],[0,0,0,2]]"
+    },
+    {
+      "grid": "[[0,1],[1,0]]"
+    }
+  ],
+  "functionName": "uniquePathsIII",
+  "params": [
+    {
+      "name": "grid",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Count how many non-obstacle cells must be visited; a valid walk visits exactly that many cells including start and end.",
+    "Depth-first search with backtracking from the start cell, marking cells visited and unmarking on return.",
+    "When the search reaches the end cell, count it only if every open cell has been stepped on."
+  ]
+}

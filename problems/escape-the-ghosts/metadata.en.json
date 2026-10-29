@@ -1,0 +1,65 @@
+{
+  "id": "escape-the-ghosts",
+  "title": "787. Escape The Ghosts",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/escape-the-ghosts/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "ghosts = [[1,0],[0,3]], target = [0,1]",
+      "output": "true",
+      "explanation": "You need 1 step while the closest ghost needs at least 2."
+    },
+    {
+      "input": "ghosts = [[1,0]], target = [2,0]",
+      "output": "false",
+      "explanation": "The ghost sits on the way and arrives first."
+    },
+    {
+      "input": "ghosts = [[2,0]], target = [1,0]",
+      "output": "false",
+      "explanation": "A tie still counts as a capture."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean escapeGhosts(int[][] ghosts, int[] target) {\n        return false;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def escapeGhosts(self, ghosts: List[List[int]], target: List[int]) -> bool:\n        return False\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool escapeGhosts(vector<vector<int>>& ghosts, vector<int>& target) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool EscapeGhosts(int[][] ghosts, int[] target)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn escape_ghosts(ghosts: Vec<Vec<i32>>, target: Vec<i32>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc EscapeGhosts(ghosts [][]int, target []int) bool {\n    return false\n}",
+    "typescript": "export function escapeGhosts(ghosts: number[][], target: number[]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $ghosts\n     * @param int[] $target\n     * @return bool\n     */\n    public function escapeGhosts($ghosts, $target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "ghosts": "[[1,0],[0,3]]",
+      "target": "[0,1]"
+    },
+    {
+      "ghosts": "[[1,0]]",
+      "target": "[2,0]"
+    },
+    {
+      "ghosts": "[[2,0]]",
+      "target": "[1,0]"
+    }
+  ],
+  "functionName": "escapeGhosts",
+  "params": [
+    {
+      "name": "ghosts",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "target",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "On an open grid the shortest route length is the Manhattan distance.",
+    "Compute your distance from the origin and each ghost's distance to the target.",
+    "You escape exactly when your distance is strictly smaller than every ghost distance."
+  ]
+}

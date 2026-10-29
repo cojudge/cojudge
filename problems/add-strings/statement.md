@@ -1,7 +1,7 @@
-Two non-negative integers arrive as decimal strings `num1` and `num2`. They may be long, so converting the whole strings to integers (or relying on big-integer helpers) is not allowed.
+Два неотрицательных целых числа прибывают в виде десятичных струн `num1` и `num2`. Они могут быть длинными, поэтому преобразование целых струн в целые числа (или полагаясь на помощников с большими целыми числами) не допускается.
 
-Add them digit by digit and return the total, also as a decimal string without extra leading zeros (except `"0"` itself).
+Добавьте их цифру за цифрой и верните общее число, также как десятичную строку без дополнительных ведущих нулей (кроме самого `"0"`).
 
-**Constraints:**
+**Ограничения:**
 - `1 <= num1.length, num2.length <= 10^4`
-- Strings hold only digits `0-9` with no leading zeros except for `"0"` itself.
+- Струны содержат только цифры `0-9` без ведущих нулей, за исключением самого `"0"`.

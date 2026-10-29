@@ -1,7 +1,7 @@
-You are given two sentences, `s1` and `s2`, where words are separated by single spaces. A word is uncommon when it appears exactly once across both sentences put together.
+Вам даны два предложения, `s1` и `s2`, где слова разделены отдельными пространствами. Слово встречается редко, когда оно появляется ровно один раз в обоих предложениях вместе взятых.
 
-Return the list of all uncommon words. The order of the returned words does not matter.
+Верните список всех необычных слов. Порядок возвращаемых слов не имеет значения.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s1.length, s2.length <= 200`
-- Sentences hold lowercase English words joined by single spaces, with no leading or trailing spaces.
+- Приговоры содержат строчные английские слова, соединенные единичными пространствами, без ведущих или задающих пространств.

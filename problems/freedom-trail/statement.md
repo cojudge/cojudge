@@ -1,8 +1,8 @@
-A circular dial carries the characters of `ring` around its rim, with position 0 initially pointing at 12 o'clock. One step rotates the dial a single place clockwise or counterclockwise, and pressing a button spells the character currently at the top (costing one extra move per character). The dial starts aligned so `ring[0]` is at the top.
+Циркулярный циферблат несет символы `ring` вокруг его обода, с положением 0, первоначально указывающим на часы 12. Один шаг вращает циферблат по часовой стрелке или против часовой стрелки, и нажатие кнопки заклинает символ, находящийся в настоящее время в верхней части (стоимость одного дополнительного движения на персонажа). Циферблат начинает выровняться так, что `ring[0]` находится в верхней части.
 
-Given the dial layout `ring` and a word `key` to spell in order, compute the smallest total number of moves (rotations plus one press per character) that spells the whole word. Every character of `key` appears somewhere in `ring`.
+Учитывая компоновку циферблата `ring` и слово `key` для написания в порядке, вычислите наименьшее общее количество ходов (повороты плюс один нажатие на символ), которое пишет целое слово.Каждый символ `key` появляется где-то в `ring`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= ring.length, key.length <= 100`
-- `ring` and `key` contain only lowercase English letters
-- Every character of `key` occurs in `ring`
+- `ring` и `key` содержат только строчные английские буквы.
+- Каждый персонаж `key` встречается в `ring`.

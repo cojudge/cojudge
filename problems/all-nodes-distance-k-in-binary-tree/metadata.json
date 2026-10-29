@@ -1,6 +1,6 @@
 {
   "id": "all-nodes-distance-k-in-binary-tree",
-  "title": "858. All Nodes Distance K in Binary Tree",
+  "title": "858. Все узлы расстояния K в двоичном дереве",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [3,5,1,6,2,0,8,null,null,7,4], target = 5, k = 2",
       "output": "[1,4,7]",
-      "explanation": "Nodes 7, 4 and 1 are two steps from 5."
+      "explanation": "Узлы 7, 4 и 1 находятся в двух шагах от 5."
     },
     {
       "input": "root = [3,5,1,6,2,0,8,null,null,7,4], target = 5, k = 0",
       "output": "[5]",
-      "explanation": "Distance zero means the target itself."
+      "explanation": "Ноль расстояния означает саму цель."
     },
     {
       "input": "root = [1], target = 1, k = 3",
       "output": "[]",
-      "explanation": "No node is three steps away."
+      "explanation": "Ни один узел не находится в трех шагах."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Record each node's parent with a traversal so the tree can be walked upward as well as downward.",
-    "Run a breadth-first search outward from the target node, tracking visited nodes to avoid going back.",
-    "Collect nodes seen at depth `k` and sort them before returning."
+    "Запишите родителя каждого узла с помощью обхода, чтобы дерево можно было пройти как вверх, так и вниз.",
+    "Запустите поиск по ширине снаружи от целевого узла, отслеживая посещенные узлы, чтобы избежать возвращения.",
+    "Соберите узлы, видимые на глубине `k`, и сортируйте их перед возвращением."
   ]
 }

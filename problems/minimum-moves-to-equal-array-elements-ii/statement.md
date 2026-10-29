@@ -1,7 +1,7 @@
-You are given an integer array `nums`. In one move you may increment or decrement a single element by 1.
+Вы получаете целочисленный массив `nums`. В одном движении вы можете увеличить или уменьшить один элемент 1.
 
-Return the smallest number of moves needed to make all elements equal.
+Возвращайте наименьшее количество ходов, необходимое для приравнивания всех элементов.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^5`
 - `-10^9 <= nums[i] <= 10^9`

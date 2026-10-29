@@ -1,6 +1,6 @@
 {
   "id": "battleships-in-a-board",
-  "title": "490. Battleships in a Board",
+  "title": "490. Броненосцы в доске",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/battleships-in-a-board/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "board = [[\"X\",\".\",\".\",\"X\"],[\".\",\".\",\".\",\"X\"],[\".\",\".\",\".\",\"X\"]]",
       "output": "2",
-      "explanation": "One lone X plus one vertical ship of length 3 make two battleships."
+      "explanation": "Один единственный X плюс один вертикальный корабль длиной 3 составляют два линкора."
     },
     {
       "input": "board = [[\".\"]]",
       "output": "0",
-      "explanation": "No X cells means no ships."
+      "explanation": "Никакие X-клетки не означают никаких кораблей."
     },
     {
       "input": "board = [[\"X\"]]",
       "output": "1",
-      "explanation": "A single X is one ship."
+      "explanation": "Один Х — это один корабль."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Ships are straight lines with at least one empty cell gap, never touching side by side.",
-    "Count only the top-left cell of each ship: an X with no X above and no X to the left.",
-    "This single pass needs O(1) extra memory."
+    "Корабли являются прямыми линиями с по крайней мере одним пустым зазором в ячейке, никогда не касаясь бок о бок.",
+    "Подсчитайте только верхнюю левую ячейку каждого корабля: X без X выше и X слева.",
+    "Для этого требуется дополнительная память O(1)."
   ]
 }

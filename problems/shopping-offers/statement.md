@@ -1,8 +1,8 @@
-A shop sells `n` item kinds. `price[i]` is the shelf price of one unit of kind `i`. The shop also posts bundle deals: each row of `special` holds `n` counts followed by the bundle price, so `special[r][n]` is what the bundle costs instead of buying its items separately. You must buy exactly the quantities in `needs` and want the smallest possible total.
+Магазин продает товары `n`. `price[i]` - это цена полки одной единицы вида `i`. Магазин также публикует пакетные сделки: каждый ряд `special` содержит счета `n`, за которыми следует цена пакета, поэтому `special[r][n]` - это то, что стоит пакет, а не покупка его товаров отдельно. Вы должны покупать именно количества в `needs` и хотите наименьшую возможную сумму.
 
-Implement `shoppingOffers(price, special, needs)`. You may use any deal any number of times as long as you never exceed the remaining need for any kind; leftover units are bought at shelf price.
+Осуществление `shoppingOffers(price, special, needs)`Вы можете использовать любую сделку любое количество раз, если вы никогда не превышаете оставшуюся потребность в любом виде; оставшиеся единицы покупаются по цене полки.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 6`
 - `price.length == needs.length == n`, `0 <= price[i] <= 10`, `0 <= needs[i] <= 10`
-- `1 <= special.length <= 100`; each row has `n + 1` entries with the last in `0..10`.
+- `1 <= special.length <= 100`; каждая строка имеет записи `n + 1` с последней в `0..10`.

@@ -1,9 +1,9 @@
-Given an integer array `nums` containing unique values, return every possible subset (the power set).
+При наличии целочисленного массива `nums`, содержащего уникальные значения, возвращают все возможные подмножества (силовой набор).
 
-The solution must not contain duplicate subsets. The judge treats both the order of subsets and the order of values within each subset as irrelevant; nested output is canonicalized before comparison.
+Решение не должно содержать дублирующихся подмножеств.Судья рассматривает как порядок подмножеств, так и порядок значений внутри каждого подмножества как не относящиеся к делу; вложенный выход канонизирован перед сравнением.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= nums.length <= 10`
 - `-10 <= nums[i] <= 10`
-- All values in `nums` are unique.
+- Все значения в `nums` уникальны.

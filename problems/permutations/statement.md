@@ -1,8 +1,8 @@
-Given an integer array `nums` whose values are distinct, return every possible permutation of its values.
+Учитывая целочисленный массив `nums`, значения которого различны, возвращайте все возможные перестановки его значений.
 
-The permutations may be returned in any order. Each permutation must contain every value from `nums` exactly once.
+Каждая перестановка должна содержать каждое значение от `nums` ровно один раз.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 6`
 - `-10 <= nums[i] <= 10`
-- All values in `nums` are distinct.
+- Все значения в `nums` различны.

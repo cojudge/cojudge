@@ -1,13 +1,13 @@
-You are given a file's full text `file` and a sequence of request sizes `queries`. Imagine calling a `read(n)` routine several times in a row, where each call uses `read4` internally, keeps any leftover characters buffered between calls, and continues from where the previous call stopped.
+Вам предоставляется полный текст файла `file` и последовательность размеров запроса `queries`. Представьте, что вы звоните в `read(n)` несколько раз подряд, где каждый вызов использует `read4` внутри, сохраняет любые оставшиеся символы, буферизованные между вызовами, и продолжается с того места, где остановился предыдущий вызов.
 
-Simulate all calls at once: for each `queries[i]`, collect up to that many characters from the current file position (using leftover buffered data first), advance the position, and store the chunk.
+Моделируйте все вызовы одновременно: для каждого `queries[i]` соберите до этого много символов из текущей позиции файла (сначала используя оставшиеся буферизованные данные), продвиньте позицию и сохраните фрагмент.
 
-Return the list of collected chunks, one per query.
+Верните список собранных кусков, по одному на запрос.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= file.length <= 10^4`
-- `file` holds letters and digits (no spaces, to keep chunk boundaries unambiguous).
+- `file` содержит буквы и цифры (без пробелов, чтобы недвусмысленно сохранять границы фрагментов).
 - `1 <= queries.length <= 100`
 - `0 <= queries[i] <= 10^4`
 
-**Adaptation note:** The original LeetCode task is a stateful class (`Reader4.read` keeps an internal buffer across calls). To fit the judge's stateless-function model, the batch of call sizes is passed as `queries` (`int_array`) and the per-call results are returned together as `string_list`. The chunking behavior, including leftovers carried between calls, is identical to sequential calls.
+**Примечание по адаптации: ** Оригинальная задача LeetCode является государственным классом (`Reader4.read` сохраняет внутренний буфер между вызовами). Чтобы соответствовать модели судьи без состояния функции, партия размеров вызова передается как `queries` (`int_array`) и результаты по вызову возвращаются вместе как `string_list`. Поведение деления, включая остатки, переносимые между вызовами, идентично последовательным вызовам.

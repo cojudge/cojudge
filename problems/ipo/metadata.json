@@ -8,7 +8,7 @@
     {
       "input": "k = 2, w = 0, profits = [1,2,3], capital = [0,1,1]",
       "output": "4",
-      "explanation": "Since your initial capital is 0, you can only start the project indexed 0."
+      "explanation": "Поскольку ваш первоначальный капитал 0, вы можете только начать проект с индексом 0."
     },
     {
       "input": "k = 3, w = 0, profits = [1,2,3], capital = [0,1,2]",
@@ -72,8 +72,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "At each step you may only start the affordable project with the largest profit.",
-    "Sort projects by required capital and sweep affordable ones into a max-heap of profits.",
-    "Reach into the heap up to k times; stop early when nothing is affordable."
+    "На каждом шагу вы можете начать доступный проект с наибольшей прибылью.",
+    "Сортировать проекты по требуемому капиталу и сметать доступные в максимальную кучу прибыли.",
+    "Достигните кучи до k раз; остановитесь рано, когда нет ничего доступного."
   ]
 }

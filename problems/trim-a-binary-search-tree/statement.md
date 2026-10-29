@@ -1,7 +1,7 @@
-You are given the root of a binary search tree plus two bounds `low` and `high`.
+Вы получаете корень дерева двоичного поиска плюс две границы `low` и `high`.
 
-Walk the tree and drop every node whose value lies outside the closed interval `[low, high]`. Keep the search-tree ordering among the survivors and return the root of the trimmed tree. An empty result is represented by an empty tree.
+Прогуляйтесь по дереву и сбросьте каждый узел, значение которого лежит за пределами закрытого интервала `[low, high]`. Сохраните порядок поискового дерева среди выживших и верните корень обрезанного дерева. Пустой результат представлен пустым деревом.
 
-**Constraints:**
-- The tree holds between 0 and 10000 nodes.
-- Node values and `low`/`high` fit in 32-bit signed integers, with `low <= high`.
+**Ограничения:**
+- Дерево находится между узлами 0 и 10000.
+- Значения узлов и `low` / `high` вписываются в целые числа, подписанные 32, с `low <= high`.

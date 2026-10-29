@@ -1,8 +1,8 @@
-Given counts `a` and `b`, build a string containing exactly `a` copies of `a` and `b` copies of `b` such that neither `aaa` nor `bbb` appears as a contiguous block.
+Учитывая количество `a` и `b`, создайте строку, содержащую именно копии `a` `a` и копии `b` `b`, так что ни `aaa`, ни `bbb` не отображаются в виде смежного блока.
 
-All test inputs satisfy the feasibility condition `max(a, b) <= 2 * (min(a, b) + 1)`, so at least one valid arrangement exists. Any valid arrangement is accepted.
+Все тестовые вводы удовлетворяют технико-экономическому обоснованию `max(a, b) <= 2 * (min(a, b) + 1)`, поэтому существует по меньшей мере одно действующее соглашение.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= a, b <= 100`
 - `a + b > 0`
-- Inputs guarantee a valid string exists.
+- Вводы гарантируют наличие действительной строки.

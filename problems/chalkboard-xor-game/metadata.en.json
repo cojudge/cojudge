@@ -1,0 +1,57 @@
+{
+  "id": "chalkboard-xor-game",
+  "title": "808. Chalkboard XOR Game",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/chalkboard-xor-game/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "nums = [1,1,2]",
+      "output": "false",
+      "explanation": "The xor of all numbers is 2 (nonzero) and the count is odd, so the first player cannot force erasing everything."
+    },
+    {
+      "input": "nums = [0,1]",
+      "output": "true",
+      "explanation": "With an even count the first player has a mirroring strategy even though the xor is nonzero."
+    },
+    {
+      "input": "nums = [1,2,3]",
+      "output": "true",
+      "explanation": "The xor of the whole board is already 0, so the first player wins immediately."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean xorGame(int[] nums) {\n        return false;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def xorGame(self, nums: List[int]) -> bool:\n        return False\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool xorGame(vector<int>& nums) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool XorGame(int[] nums) \n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn xor_game(nums: Vec<i32>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc XorGame(nums []int) bool {\n    return false\n}",
+    "typescript": "export function xorGame(nums: number[]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return bool\n     */\n    public function xorGame($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,1,2]"
+    },
+    {
+      "nums": "[0,1]"
+    },
+    {
+      "nums": "[1,2,3]"
+    }
+  ],
+  "functionName": "xorGame",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "XOR every entry once: a zero total means the board is already balanced.",
+    "When the total is nonzero, the parity of the length decides the winner: even favors the first player, odd favors the second."
+  ]
+}

@@ -1,9 +1,9 @@
-You are given course pairs `[duration, lastDay]`: a course consumes `duration` consecutive days and must end no later than `lastDay`. You may take courses in any order, one at a time, starting on day 1 (a course needing `d` days taken first ends on day `d`).
+Вам даются пары курсов `[duration, lastDay]`: курс потребляет `duration` последовательные дни и должен заканчиваться не позднее, чем `lastDay`. Вы можете проходить курсы в любом порядке, по одному за раз, начиная с дня 1 (курс, требующий дней `d`, взятых первыми концами в день `d`).
 
-Return the greatest number of courses you can complete without missing any chosen deadline.
+Верните наибольшее количество курсов, которые вы можете пройти, не пропуская ни одного выбранного срока.
 
-**Constraints:**
-- Between 1 and 10000 courses.
-- Each duration and deadline lies in [1, 10000].
+**Ограничения:**
+- Между курсами 1 и 10000.
+- Каждая продолжительность и крайний срок лежат в [1, 10000].
 
-*Adaptation: the nested input maps to `int_array_2d` in this judge.*
+*Адаптация: вложенные карты ввода в `int_array_2d` в этом суде.*

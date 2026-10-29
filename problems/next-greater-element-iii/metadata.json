@@ -1,6 +1,6 @@
 {
   "id": "next-greater-element-iii",
-  "title": "612. Next Greater Element III",
+  "title": "612. Следующий Большой элемент III",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/next-greater-element-iii/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "n = 12",
       "output": "21",
-      "explanation": "21 is the smallest larger integer using the same digits."
+      "explanation": "21 — наименьшее целое число, использующее одни и те же цифры."
     },
     {
       "input": "n = 21",
       "output": "-1",
-      "explanation": "Descending digits admit no larger permutation."
+      "explanation": "Нисходящие цифры не допускают большей перестановки."
     },
     {
       "input": "n = 12443322",
       "output": "13222344",
-      "explanation": "Pivot swap plus sorted tail yields the next arrangement."
+      "explanation": "Поворотный своп плюс сортированный хвост дает следующую договоренность."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Scan the digits from right to left to find the first rise (a pivot smaller than its right neighbor).",
-    "Swap the pivot with the smallest digit on its right that is larger than it, then reverse the suffix.",
-    "If the digits never rise, or the result exceeds 2147483647, return -1."
+    "Отсканируйте цифры справа налево, чтобы найти первый подъем (поворот меньше, чем у его правого соседа).",
+    "Поменяйте разворот с наименьшей цифрой справа, которая больше, чем он, затем переверните суффикс.",
+    "Если цифры никогда не поднимаются, или результат превышает 2147483647, возвращайте -1."
   ]
 }

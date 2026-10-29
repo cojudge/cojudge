@@ -1,6 +1,6 @@
-You receive a string s. Measure the greatest length of a continuous block inside it in which every character occurs only once.
+Вы получаете строку s. Измерьте наибольшую длину непрерывного блока внутри нее, в котором каждый символ встречается только один раз.
 
-**Constraints:**
+**Ограничения:**
 
 - 0 ≤ s.length ≤ 5 * 10^4
-- s consists of English letters, digits, symbols and spaces.
+- s состоит из английских букв, цифр, символов и пространств.

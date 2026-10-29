@@ -1,10 +1,10 @@
-Write `[S, n]` for the string formed by repeating `S` exactly `n` times. Given strings `s1`, `s2` and counts `n1`, `n2`, consider `S1 = [s1, n1]`.
+Запишите `[S, n]` для строки, образованной повторением `S` точно времени `n`. Учитывая строки `s1`, `s2` и подсчитывает `n1`, `n2`, рассмотрим `S1 = [s1, n1]`.
 
-Count how many copies of `s2` appear in `S1` as a subsequence (characters in order, not necessarily adjacent), then divide that count by `n2` using integer division. In other words, find the largest `M` such that `[s2, M]` divided into groups of `n2` still fits, i.e. `M = (number of subsequence copies of s2 in S1) / n2` rounded down.
+Подсчитайте, сколько копий `s2` появляется в `S1` в качестве последовательности (характеристики по порядку, не обязательно смежные), затем разделите это количество на `n2` с помощью целочисленного деления. Другими словами, найдите самый большой `M`, такой, что `[s2, M]`, разделенный на группы `n2`, все еще подходит, то есть `M = (number of subsequence copies of s2 in S1) / n2` округлен.
 
-Return that value `M`.
+Верните значение `M`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s1.length, s2.length <= 100`
 - `1 <= n1, n2 <= 10^6`
-- `s1` and `s2` consist of lowercase English letters.
+- `s1` и `s2` состоят из строчных английских букв.

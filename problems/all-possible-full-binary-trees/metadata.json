@@ -1,6 +1,6 @@
 {
   "id": "all-possible-full-binary-trees",
-  "title": "885. All Possible Full Binary Trees",
+  "title": "885. Все возможные двоичные деревья",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/all-possible-full-binary-trees/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "n = 7",
       "output": "[\"[0,0,0,null,null,0,0,null,null,0,0]\",\"[0,0,0,null,null,0,0,0,0]\",\"[0,0,0,0,0,0,0]\",\"[0,0,0,0,0,null,null,null,null,0,0]\",\"[0,0,0,0,0,null,null,0,0]\"] (order may vary)",
-      "explanation": "Five full shapes on seven nodes in BFS form."
+      "explanation": "Пять полных форм на семи узлах в форме BFS."
     },
     {
       "input": "n = 3",
       "output": "[\"[0,0,0]\"]",
-      "explanation": "A root with two leaves is the only shape."
+      "explanation": "Корень с двумя листьями - единственная форма."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Even counts can never form a full tree; only odd n yields answers.",
-    "For odd n, try every odd left size L and right size n-1-L, then pair each left shape with each right shape under a fresh root.",
-    "Memoize results per size and serialize each finished tree with BFS, trimming trailing nulls, then compare sorted lists."
+    "Даже подсчеты никогда не могут сформировать целое дерево; только нечетное n дает ответы.",
+    "Для нечетного n попробуйте каждый нечетный левый размер L и правый размер n-1-L, а затем соедините каждую левую форму с каждой правой формой под свежим корнем.",
+    "Запомните результаты по размеру и сериализуйте каждое готовое дерево с помощью BFS, обрезая отстающие нули, а затем сравните отсортированные списки."
   ]
 }

@@ -1,7 +1,7 @@
-You are given a string `s` built from lowercase English letters. Delete some characters so that each distinct letter occurring in `s` shows up exactly once in what remains, while the surviving characters keep their original relative order.
+Вам дается строка `s`, построенная из строчных английских букв. Удалите некоторые символы, чтобы каждая отдельная буква, встречающаяся в `s`, появлялась ровно один раз в том, что осталось, в то время как уцелевшие символы сохраняли свой первоначальный относительный порядок.
 
-Among every string achievable this way, pick the one that comes first in dictionary (lexicographical) order and return it.
+Среди каждой достижимой таким образом строки выберите ту, которая идет первой в словарном (лексикографическом) порядке и верните ее.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 10^4`
-- `s` consists of lowercase English letters.
+- `s` состоит из строчных английских букв.

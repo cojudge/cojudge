@@ -1,9 +1,9 @@
-A strobogrammatic number looks the same when rotated 180 degrees. The valid digit rotations are `0 -> 0`, `1 -> 1`, `6 -> 9`, `8 -> 8`, and `9 -> 6`; any other digit breaks the property.
+Стробограмматическое число выглядит одинаково при повернутых градусах 180. Действительными цифрами вращения являются `0 -> 0`, `1 -> 1`, `6 -> 9`, `8 -> 8` и `9 -> 6`; любая другая цифра нарушает свойство.
 
-Given a numeric string `num`, check that every character has a valid rotation and that the rotated characters mirror the original positions. Leading zeros are allowed.
+Учитывая числовую строку `num`, проверьте, что каждый символ имеет действительное вращение и что повернутые символы отражают исходные положения. Допускаются ведущие нули.
 
-Return `true` when `num` is strobogrammatic, otherwise return `false`.
+Возврат `true`, когда `num` является стробограмматическим, в противном случае возврат `false`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= num.length <= 50`
-- `num` holds digits only.
+- `num` содержит только цифры.

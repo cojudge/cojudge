@@ -38,22 +38,22 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="modal-backdrop" on:click={close}>
     <div class="modal-content" on:click|stopPropagation>
-        <h3>Share</h3>
-        <p class="info-text">Latest changes saved to the following url:</p>
+        <h3>Поделиться</h3>
+        <p class="info-text">Последние изменения сохранены в следующем URL:</p>
         <div class="url-container">
             <input type="text" readonly value={url} />
-            <button on:click={copyToClipboard}>{copied ? 'Copied' : 'Copy'}</button>
+            <button on:click={copyToClipboard}>{copied ? "Скопировано" : "Копировать"}</button>
         </div>
         {#if qrCodeDataUrl}
             <div class="qr-container">
-                <img src={qrCodeDataUrl} alt="QR Code" />
+                <img src={qrCodeDataUrl} alt="QR-код" />
             </div>
         {/if}
-        <button class="generate-btn" on:click={generateNew}>Generate New Link</button>
+        <button class="generate-btn" on:click={generateNew}>Создайте новое звено</button>
         {#if code}
-            <button class="copy-code-btn" on:click={copySourceCode}>{sourceCopied ? 'Copied' : 'Copy Source Code'}</button>
+            <button class="copy-code-btn" on:click={copySourceCode}>{sourceCopied ? "Скопировано" : "Копии исходного кода"}</button>
         {/if}
-        <button class="close-btn" on:click={close}>Close</button>
+        <button class="close-btn" on:click={close}>Закрыть</button>
     </div>
 </div>
 

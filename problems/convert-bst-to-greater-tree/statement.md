@@ -1,9 +1,9 @@
-You are given the root of a binary search tree (BST). Rewrite the tree so that every node's value becomes the sum of its original value plus all values greater than it (keeping the same shape). In other words, each node accumulates the total of its own key and every larger key in the tree.
+Вам дан корень двоичного дерева поиска (BST). Перепишите дерево так, чтобы значение каждого узла стало суммой его первоначального значения плюс все значения больше, чем оно (сохраняя одну и ту же форму). Другими словами, каждый узел накапливает общую сумму своего собственного ключа и каждого большего ключа в дереве.
 
-Return the root of the rewritten tree.
+Верните корень переписанного дерева.
 
-**Constraints:**
-- The tree holds between 0 and 10^4 nodes.
+**Ограничения:**
+- Дерево находится между узлами 0 и 10^4.
 - `-10^4 <= Node.val <= 10^4`
-- The tree is a valid BST with distinct values.
-- The rewritten values fit in a 32-bit signed integer.
+- Дерево является действительным BST с различными значениями.
+- Переписанные значения укладываются в целое число, подписанное 32-битом.

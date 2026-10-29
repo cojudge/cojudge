@@ -1,7 +1,7 @@
-You receive a list of integers. A subsequence keeps some elements in their original relative order while possibly skipping others. It is called non-decreasing when each kept value is greater than or equal to the previous kept value.
+Вы получаете список целых чисел. Последовательность сохраняет некоторые элементы в их первоначальном относительном порядке, в то время как, возможно, пропускает другие. Это называется неуменьшением, когда каждое сохраненное значение больше или равно предыдущему сохраненному значению.
 
-List every distinct non-decreasing subsequence that uses at least two positions. Two subsequences count as the same when their value sequences match, even if they came from different indices. The order of the returned groups does not matter.
+Перечислите каждую отдельную неубывающую последовательность, которая использует по крайней мере две позиции. Две последовательности считаются одинаковыми, когда их последовательности значений совпадают, даже если они пришли из разных индексов. Порядок возвращаемых групп не имеет значения.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 15`
 - `-100 <= nums[i] <= 100`

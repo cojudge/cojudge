@@ -1,7 +1,7 @@
-Measure the longest mountain-shaped run inside an array.
+Измерьте самый длинный горный пробег внутри массива.
 
-A mountain is a contiguous segment of length at least three that first climbs strictly upward to a single peak and then descends strictly downward, with no flat steps anywhere. Given `arr`, return the length of the longest such segment, or zero when none exists.
+Гора — это смежный отрезок длиной не менее трех, который сначала поднимается строго вверх до одной вершины, а затем спускается строго вниз, без каких-либо плоских ступеней в любом месте.Учитывая `arr`, возвращайте длину самого длинного такого отрезка, или ноль, когда его нет.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= arr.length <= 10^4`
 - `0 <= arr[i] <= 10^4`

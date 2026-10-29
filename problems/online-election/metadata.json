@@ -1,6 +1,6 @@
 {
   "id": "online-election",
-  "title": "900. Online Election",
+  "title": "900. Онлайн выборы",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/online-election/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "persons = [0,1,1,0,0,1,0], times = [0,5,10,15,20,25,30], queries = [3,12,25,15,24,8]",
       "output": "[0,1,1,0,0,1]",
-      "explanation": "The leader after each vote is [0,1,1,0,0,1,0]; each query picks the latest leader at or before its time."
+      "explanation": "Лидером после каждого голосования является [...]0,1,1,0,0,1,0]; каждый запрос выбирает последнего лидера в свое время или до него."
     },
     {
       "input": "persons = [0,0,0,1,1], times = [0,10,20,30,40], queries = [0,10,25,40]",
       "output": "[0,0,0,0]",
-      "explanation": "Person 0 leads from the first vote onward."
+      "explanation": "Лицо 0 лидирует с первого голосования."
     },
     {
       "input": "persons = [1,2,2,1,2], times = [5,10,15,20,25], queries = [5,14,20,100]",
       "output": "[1,2,1,2]",
-      "explanation": "Ties go to the most recently voted person: at time 10 the tie picks 2, at time 20 it picks 1."
+      "explanation": "Связи переходят к самому недавно проголосовавшему человеку: в то время как 10 галстук выбирает 2, в то время как 20 он выбирает 1."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Precompute who leads right after every vote: track vote counts and let the newest vote win ties.",
-    "Each query asks for the latest vote time at or before it, which is a binary search over the sorted times.",
-    "Adaptation note: the original class interaction is flattened here into one batch call returning every query answer."
+    "Предвычислители, которые лидируют сразу после каждого голосования: отслеживайте подсчет голосов и позволяйте новейшим голосам завоевывать связи.",
+    "Каждый запрос запрашивает последнее время голосования в или до него, что является бинарным поиском по сортированному времени.",
+    "Примечание по адаптации: оригинальное взаимодействие классов сплющено здесь в один пакетный вызов, возвращающий каждый ответ на запрос."
   ]
 }

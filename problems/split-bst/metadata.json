@@ -1,6 +1,6 @@
 {
   "id": "split-bst",
-  "title": "776. Split BST",
+  "title": "776. Разделить BST",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/split-bst/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [4,2,6,1,3,5,7], target = 2",
       "output": "[\"[2,1]\",\"[4,3,6,null,null,5,7]\"]",
-      "explanation": "Small keeps 2,1; large keeps 4 with 3 on the left."
+      "explanation": "Маленький сохраняет 2, 1; большой сохраняет 4 с 3 слева."
     },
     {
       "input": "root = [1], target = 1",
       "output": "[\"[1]\",\"[]\"]",
-      "explanation": "Single node goes small."
+      "explanation": "Одиночный узел становится маленьким."
     },
     {
       "input": "root = [], target = 0",
       "output": "[\"[]\",\"[]\"]",
-      "explanation": "Empty splits into two empties."
+      "explanation": "Пустота делится на две пустоты."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Portable adaptation: the pair of trees is returned as two BFS strings [small, large], as in unique-bst-ii.",
-    "Recurse: if root is null return two nulls; if root.val <= target, split the right side and reattach its small half; else split the left side and reattach its large half.",
-    "Serialize each half with BFS (null placeholders, trim trailing nulls); empty trees become []."
+    "Портативная адаптация: пара деревьев возвращается в виде двух струн BFS [маленькая, большая], как в unique-bst-ii.",
+    "Повторение: если корень нулевой, возвращайте два нуля; если root.val <= мишень, разделите правую сторону и прикрепите ее маленькую половину; иначе разделите левую сторону и прикрепите ее большую половину.",
+    "Сериализируйте каждую половину с BFS (нулевые заполнители, обрезка следовых нулей); пустые деревья становятся []."
   ]
 }

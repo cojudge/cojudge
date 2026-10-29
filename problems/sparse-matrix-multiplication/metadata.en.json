@@ -1,0 +1,65 @@
+{
+  "id": "sparse-matrix-multiplication",
+  "title": "401. Sparse Matrix Multiplication",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/sparse-matrix-multiplication/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "mat1 = [[1,0,0],[-1,0,3]], mat2 = [[7,0,0],[0,0,0],[0,0,1]]",
+      "output": "[[7,0,0],[-7,0,3]]",
+      "explanation": "Zero entries contribute nothing to the dots."
+    },
+    {
+      "input": "mat1 = [[0]], mat2 = [[0]]",
+      "output": "[[0]]",
+      "explanation": "Zero times zero is zero."
+    },
+    {
+      "input": "mat1 = [[1,2],[3,4]], mat2 = [[5,6],[7,8]]",
+      "output": "[[19,22],[43,50]]",
+      "explanation": "Standard 2 x 2 product."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] multiply(int[][] mat1, int[][] mat2) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def multiply(self, mat1: List[List[int]], mat2: List[List[int]]) -> List[List[int]]:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> multiply(vector<vector<int>>& mat1, vector<vector<int>>& mat2) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[][] Multiply(int[][] mat1, int[][] mat2)\n    {\n        return Array.Empty<int[]>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn multiply(mat1: Vec<Vec<i32>>, mat2: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc Multiply(mat1 [][]int, mat2 [][]int) [][]int {\n    return nil\n}",
+    "typescript": "export function multiply(mat1: number[][], mat2: number[][]): number[][] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $mat1\n     * @param int[][] $mat2\n     * @return int[][]\n     */\n    public function multiply($mat1, $mat2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "mat1": "[[1,0,0],[-1,0,3]]",
+      "mat2": "[[7,0,0],[0,0,0],[0,0,1]]"
+    },
+    {
+      "mat1": "[[0]]",
+      "mat2": "[[0]]"
+    },
+    {
+      "mat1": "[[1,2],[3,4]]",
+      "mat2": "[[5,6],[7,8]]"
+    }
+  ],
+  "functionName": "multiply",
+  "params": [
+    {
+      "name": "mat1",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "mat2",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Entry (i, j) of the answer sums mat1[i][p] * mat2[p][j] over the shared dimension p.",
+    "Skip any mat1[i][p] that is zero: its whole inner contribution vanishes.",
+    "Pre-collect the nonzero entries of each mat2 row to avoid scanning zeros repeatedly."
+  ]
+}

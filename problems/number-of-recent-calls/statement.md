@@ -1,9 +1,9 @@
-A counter receives calls over time. Each call `ping(t)` reports how many calls arrived in the inclusive window `[t - 3000, t]`, counting the current call.
+Счетчик принимает звонки с течением времени. Каждый звонок `ping(t)` сообщает, сколько звонков поступило в инклюзивное окно `[t - 3000, t]`, подсчитывая текущий звонок.
 
-Instead of building a class, implement a replay function: given the strictly increasing call times `pings`, return an array where entry `i` is the answer `ping(pings[i])` would have produced if the calls arrived in order.
+Вместо того, чтобы создавать класс, реализуйте функцию воспроизведения: учитывая строго увеличивающееся время вызова `pings`, верните массив, где запись `i` является ответом, который `ping(pings[i])` получил бы, если бы вызовы пришли в порядок.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= pings.length <= 10000`
 - `1 <= pings[i] <= 10^9`, strictly increasing.
 
-Adaptation: the original design problem is replayed through `runRecentCalls` using `int_array` input and output.
+Адаптация: проблема оригинального дизайна воспроизводится через `runRecentCalls` с использованием ввода и вывода `int_array`.

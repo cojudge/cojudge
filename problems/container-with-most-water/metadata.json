@@ -1,6 +1,6 @@
 {
   "id": "container-with-most-water",
-  "title": "10. Container With Most Water",
+  "title": "10. Контейнер с большим количеством воды",
   "difficulty": "Medium",
   "category": "array",
   "link": "https://leetcode.com/problems/container-with-most-water/",
@@ -8,12 +8,12 @@
     {
       "input": "height = [1,8,6,2,5,4,8,3,7]",
       "output": "49",
-      "explanation": "The maximum area is 49."
+      "explanation": "Максимальная площадь — 49."
     },
     {
       "input": "height = [1,1]",
       "output": "1",
-      "explanation": "The maximum area is 1."
+      "explanation": "Максимальная площадь — 1."
     }
   ],
   "starterCode": {
@@ -46,6 +46,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use a two-pointer approach starting at both ends, moving the shorter side inward each step. This guarantees O(n) time."
+    "Используйте двухточечный подход, начиная с обоих концов, перемещая более короткую сторону внутрь каждого шага. Это гарантирует время O(n)."
   ]
 }

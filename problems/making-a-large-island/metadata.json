@@ -1,6 +1,6 @@
 {
   "id": "making-a-large-island",
-  "title": "825. Making A Large Island",
+  "title": "825. Сделаем большой остров",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/making-a-large-island/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "grid = [[1,0],[0,1]]",
       "output": "3",
-      "explanation": "One flip connects both ones plus the flipped cell."
+      "explanation": "Один флип соединяет оба плюс перевернутая ячейка."
     },
     {
       "input": "grid = [[1,1],[1,0]]",
       "output": "4",
-      "explanation": "The flip completes the square."
+      "explanation": "Флип завершает площадь."
     },
     {
       "input": "grid = [[1,1],[1,1]]",
       "output": "4",
-      "explanation": "No flip is needed."
+      "explanation": "Флип не нужен."
     }
   ],
   "starterCode": {
@@ -78,8 +78,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Label each existing island with a unique id and record its cell count first.",
-    "For every zero, gather the distinct neighbouring island ids and add their sizes plus one for the flip.",
-    "Handle the all-ones grid separately since no zero exists to flip."
+    "Пометьте каждый существующий остров уникальным идентификатором и запишите сначала количество клеток.",
+    "Для каждого нуля соберите различные соседние островные идентификаторы и добавьте их размеры плюс один для флипа.",
+    "Управляйте сеткой «всех один», потому что нет нуля, который можно перевернуть."
   ]
 }

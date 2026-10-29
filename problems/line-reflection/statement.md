@@ -1,13 +1,13 @@
-You are given points on a 2D grid. Decide whether some vertical line mirrors
-the whole set onto itself: reflecting every point across the line must land on
-another point of the set (possibly itself). The mirror line may pass halfway
-between integer coordinates.
+Вам даны точки на 2D сетке. Решите, есть ли зеркала вертикальной линии.
+весь набор на себя: отражение каждой точки через линию должно приземляться на
+другая точка набора (возможно, сама по себе). Линия зеркала может пройти на полпути
+между целыми координатами.
 
-For instance, `[[1,1],[-1,1]]` is symmetric around the vertical axis, while
-`[[1,1],[-1,-1]]` is not, because the mirror of `(1,1)` would be `(-1,1)`,
-which is missing.
+Например, `[[1,1],[-1,1]]` симметричен вокруг вертикальной оси.
+`[[1,1],[-1,-1]]` не является, потому что зеркало `(1,1)` будет `(-1,1)`.
+которого отсутствует.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= points.length <= 10000`
 - `points[i].length == 2`
 - `-10^8 <= points[i][j] <= 10^8`

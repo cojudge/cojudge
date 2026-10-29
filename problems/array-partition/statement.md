@@ -1,7 +1,7 @@
-Given an integer array `nums` containing an even number of elements, split it into pairs so that the sum of the smaller element of each pair is as large as possible, and return that maximum sum.
+При наличии целочисленного массива `nums`, содержащего четное число элементов, разделить его на пары так, чтобы сумма меньшего элемента каждой пары была как можно больше, и вернуть эту максимальную сумму.
 
-Pairing two numbers contributes the lesser of the two. To push the total upward, small values should be sacrificed together so that larger values survive as the kept minimum of their pairs.
+Спаривание двух чисел способствует меньшему из двух. Чтобы подтолкнуть общее вверх, малые значения должны быть принесены в жертву вместе, чтобы более крупные значения выжили как минимум их пар.
 
-**Constraints:**
-- `2 <= nums.length <= 2 * 10^4`, and the length is even.
+**Ограничения:**
+- `2 <= nums.length <= 2 * 10^4`, а длина четная.
 - `-10^4 <= nums[i] <= 10^4`

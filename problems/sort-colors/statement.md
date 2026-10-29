@@ -1,9 +1,9 @@
-You receive a list `nums` holding `n` items painted red, white, or blue. Place equal colours side by side so that all reds come first, all whites come next, and all blues come last.
+Вы получаете список `nums`, содержащий предметы `n`, окрашенные в красный, белый или синий. Поместите равные цвета бок о бок, чтобы все красные пришли первыми, все белые пришли следующими, и все синие пришли последними.
 
-Red is coded as `0`, white as `1`, and blue as `2`. Do not rely on the standard-library sort. In this judge's functional setup, hand back the arranged list.
+Красный закодирован как `0`, белый как `1` и синий как `2`. Не полагайтесь на стандартную библиотеку. В функциональной настройке этого судьи отдайте устроенный список.
 
-**Constraints:**
+**Ограничения:**
 
 - n == nums.length
 - 1 ≤ n ≤ 300
-- nums[i] is either 0, 1, or 2.
+- nums — это 0, 1 или 2.

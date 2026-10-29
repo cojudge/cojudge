@@ -1,6 +1,6 @@
 {
   "id": "plus-one",
-  "title": "146. Plus One",
+  "title": "146. Плюс один",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/plus-one/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "digits = [1,2,3]",
       "output": "[1,2,4]",
-      "explanation": "Adding 1 to [1, 2, 3] gives [1, 2, 4]."
+      "explanation": "Добавление 1 к [1, 2, 3] дает [1, 2, 4]."
     },
     {
       "input": "digits = [4,3,2,1]",
       "output": "[4,3,2,2]",
-      "explanation": "Adding 1 to [4, 3, 2, 1] gives [4, 3, 2, 2]."
+      "explanation": "Добавление 1 к [4, 3, 2, 1] дает [4, 3, 2, 2]."
     },
     {
       "input": "digits = [9,9]",
       "output": "[1,0,0]",
-      "explanation": "Adding 1 to 99 produces 100."
+      "explanation": "Добавление 1 в 99 производит 100."
     }
   ],
   "starterCode": {
@@ -57,8 +57,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Process the digits from right to left, just as in elementary addition.",
-    "Stop as soon as a digit is smaller than 9; otherwise turn each trailing 9 into 0.",
-    "If every digit was 9, return a new array one element longer with a leading 1."
+    "Обрабатывайте цифры справа налево, так же, как и в элементарном дополнении.",
+    "Остановитесь, как только цифра меньше, чем 9; в противном случае превратите каждый следующий 9 в 0.",
+    "Если каждая цифра была 9, возвращайте новый массив на один элемент дольше с ведущим 1."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "paint-fence",
-  "title": "375. Paint Fence",
+  "title": "375. Забор для краски",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/paint-fence/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "n = 3, k = 2",
       "output": "6",
-      "explanation": "Six colorings of 3 posts with 2 colors avoid three in a row."
+      "explanation": "Шесть окрасок постов 3 с цветами 2 избегают трех подряд."
     },
     {
       "input": "n = 1, k = 1",
       "output": "1",
-      "explanation": "One post has one choice."
+      "explanation": "У одного поста есть один выбор."
     },
     {
       "input": "n = 2, k = 2",
       "output": "4",
-      "explanation": "All 2x2 colorings are allowed."
+      "explanation": "Допускаются все окраски 2х2."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Track colorings ending with a double (same as previous) versus a fresh color separately.",
-    "A double must follow a fresh color; a fresh color can follow anything with k-1 choices.",
-    "Iterate posts from 3 to n updating both counts."
+    "Отслеживайте окраски, заканчивающиеся двойным (так же, как и предыдущий) по сравнению со свежим цветом отдельно.",
+    "Двойник должен следовать за свежим цветом; свежий цвет может следовать за чем угодно с выбором k-1.",
+    "Перемещайте сообщения от 3 до n, обновляя оба счета."
   ]
 }

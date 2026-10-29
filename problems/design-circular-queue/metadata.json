@@ -1,6 +1,6 @@
 {
   "id": "design-circular-queue",
-  "title": "192. Design Circular Queue",
+  "title": "192. Дизайн Циркулярная очередь",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/design-circular-queue/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"MyCircularQueue\",\"enQueue\",\"enQueue\",\"enQueue\",\"enQueue\",\"Rear\",\"isFull\",\"deQueue\",\"enQueue\",\"Rear\"], values = [3,1,2,3,4,0,0,0,4,0]",
       "output": "[1,1,1,0,3,1,1,1,4]",
-      "explanation": "Capacity 3. EnQueue 1, 2, 3 succeed; enQueue 4 fails (full). Rear is 3, isFull is true (1), deQueue succeeds, enQueue 4 succeeds, Rear is 4."
+      "explanation": "Емкость 3. EnQueue 1, 2, 3 успешны; enQueue 4 терпит неудачу (полный). Задний 3, полный верен (1), deQueue преуспевает, enQueue 4 преуспевает, Задний 4."
     },
     {
       "input": "operations = [\"MyCircularQueue\",\"enQueue\",\"Rear\",\"Front\",\"deQueue\",\"isEmpty\"], values = [2,7,0,0,0,0]",
       "output": "[1,7,7,1,1]",
-      "explanation": "Capacity 2. EnQueue 7 succeeds, Rear and Front are 7, deQueue succeeds, then isEmpty is true (1)."
+      "explanation": "Вместимость 2. EnQueue 7 преуспевает, Rear и Front — 7, deQueue преуспевает, то есть Empty — это правда (1)."
     },
     {
       "input": "operations = [\"MyCircularQueue\",\"Front\",\"Rear\",\"isEmpty\",\"enQueue\",\"isFull\"], values = [1,0,0,0,5,0]",
       "output": "[-1,-1,1,1,1]",
-      "explanation": "Capacity 1 starts empty so Front/Rear are -1 and isEmpty is true (1). EnQueue 5 succeeds, then isFull is true (1)."
+      "explanation": "Вместимость 1 начинается с нуля, поэтому Front/Rear -1 и isEmpty - это правда (1). EnQueue 5 преуспевает, а затем isFull - это правда (1)."
     }
   ],
   "starterCode": {
@@ -62,7 +62,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Keep a fixed-size array with head and count pointers; indices wrap with modulo k.",
-    "enQueue fails when full, deQueue fails when empty; Front/Rear return -1 when empty and booleans are encoded as 1/0."
+    "Держите массив фиксированного размера с указателями головы и счета; индексы обернуты модулем k.",
+    "EnQueue выходит из строя при заполнении, deQueue выходит из строя при пустом; Front/Rear return -1 при пустом и booleans кодируются как 1/0."
   ]
 }

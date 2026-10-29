@@ -1,8 +1,8 @@
-You are given an integer array `nums` and an integer `k`. A subarray is called *good* when it uses at least two consecutive positions and its elements add up to a multiple of `k` (that is, the sum divided by `k` leaves remainder zero; when `k` is zero this means the sum itself must be zero).
+Вы получаете целочисленный массив `nums` и целое число `k`Субаррэй называется «хорошим», когда он использует по крайней мере два последовательных положения, а его элементы складываются в несколько последовательных позиций. `k` (т.е. сумма, деленная на `k` оставшийся ноль, когда `k` Это означает, что сама сумма должна быть равна нулю.
 
-Return `true` if `nums` contains at least one good subarray, and `false` otherwise.
+Возврат `true`, если `nums` содержит по меньшей мере один хороший подкатегория, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^5`
 - `0 <= nums[i] <= 10^9`
 - `0 <= k <= 2^31 - 1`

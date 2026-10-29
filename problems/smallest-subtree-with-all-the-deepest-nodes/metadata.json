@@ -1,6 +1,6 @@
 {
   "id": "smallest-subtree-with-all-the-deepest-nodes",
-  "title": "860. Smallest Subtree with All the Deepest Nodes",
+  "title": "860. Самое маленькое дерево со всеми самыми глубокими узлами",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/smallest-subtree-with-all-the-deepest-nodes/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [3,5,1,6,2,0,8,null,null,7,4]",
       "output": "[2,7,4]",
-      "explanation": "Deepest leaves 7 and 4 meet at 2."
+      "explanation": "Наиболее глубокая из них 7 и 4 встречаются в 2."
     },
     {
       "input": "root = [1]",
       "output": "[1]",
-      "explanation": "Only one node."
+      "explanation": "Только один узел."
     },
     {
       "input": "root = [0,1,3,null,2]",
       "output": "[2]",
-      "explanation": "Single deepest leaf 2."
+      "explanation": "Самый глубокий лист 2."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Depth of a subtree is one plus the larger of its children's depths; an empty child has depth zero.",
-    "If the left and right depths match, the current node is the meeting point of the deepest leaves below it.",
-    "Otherwise the answer lies entirely in the deeper side, so recurse there."
+    "Глубина поддеревья равна единице плюс большая глубина его потомков; пустой потомок имеет нулевую глубину.",
+    "Если левая и правая глубины совпадают, то текущий узел является точкой встречи самых глубоких листьев под ним.",
+    "В противном случае ответ полностью лежит в более глубокой стороне, поэтому повторите его."
   ]
 }

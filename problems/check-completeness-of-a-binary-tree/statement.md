@@ -1,7 +1,7 @@
-A binary tree is complete when every level except possibly the last is entirely filled, and all nodes of the last level sit as far left as possible. Equivalently, a level-order walk never meets a present node after the first missing slot.
+Бинарное дерево является полным, когда каждый уровень, за исключением, возможно, последнего, полностью заполнен, и все узлы последнего уровня находятся как можно дальше влево.Эквивалентно, прогулка уровня никогда не встречает текущий узел после первого отсутствующего слота.
 
-Given the level-order serialization `root` of a binary tree, decide whether the tree is complete.
+Учитывая уровень-порядок сериализации `root` двоичного дерева, решить, является ли дерево полным.
 
-**Constraints:**
-- The tree holds between 0 and 100 nodes.
-- Node values are integers fitting in a 32-bit signed range.
+**Ограничения:**
+- Дерево находится между узлами 0 и 100.
+- Значения узлов представляют собой целые числа, вписывающиеся в диапазон 32-бит.

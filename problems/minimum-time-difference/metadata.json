@@ -1,6 +1,6 @@
 {
   "id": "minimum-time-difference",
-  "title": "597. Minimum Time Difference",
+  "title": "597. Минимальная разница во времени",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/minimum-time-difference/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "timePoints = [\"23:59\",\"00:00\"]",
       "output": "1",
-      "explanation": "One minute apart across midnight."
+      "explanation": "Одна минута в полуночи."
     },
     {
       "input": "timePoints = [\"00:00\",\"23:59\",\"00:00\"]",
       "output": "0",
-      "explanation": "A repeated moment gives gap zero."
+      "explanation": "Повторяющийся момент дает нулевой разрыв."
     },
     {
       "input": "timePoints = [\"12:30\",\"15:45\",\"12:35\"]",
       "output": "5",
-      "explanation": "12:30 and 12:35 are closest."
+      "explanation": "12:30 и 12:35 являются самыми близкими."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Turn every \"HH:MM\" entry into minutes since midnight, then sort the numbers.",
-    "The answer is the minimum of adjacent differences in sorted order plus the wrap-around gap (first + 1440 - last).",
-    "A duplicate minute forces the answer to zero; with more than 1440 entries the answer is always zero."
+    "Включите каждую запись HH:MM в минуты с полуночи, затем сортируйте цифры.",
+    "Ответом является минимум смежных различий в сортированном порядке плюс оберточный зазор (первый + 1440 - последний).",
+    "Дублирующая минута вынуждает ответить на ноль; с более чем 1440 записи ответ всегда равен нулю."
   ]
 }

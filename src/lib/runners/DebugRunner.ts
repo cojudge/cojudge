@@ -1,5 +1,6 @@
-import { generateJavaClassSolution, generateJavaInteractiveRunner, generateJavaRunner, generateJavaJudgeRunner, javaGraphNodeClass, javaImage, javaJudgeClass, javaListNodeClass, javaTreeNodeClass } from "$lib/utils/javaUtil";
-import { generatePythonClassSolution, generatePythonInteractiveRunner, generatePythonRunner, pythonGraphNodeClass, pythonImage, pythonListNodeClass, pythonTreeNodeClass } from "$lib/utils/pythonUtil";
+import { javaImage, pythonImage } from '$lib/server/runtimeImages';
+import { generateJavaClassSolution, generateJavaInteractiveRunner, generateJavaRunner, generateJavaJudgeRunner, javaGraphNodeClass, javaJudgeClass, javaListNodeClass, javaTreeNodeClass } from "$lib/utils/javaUtil";
+import { generatePythonClassSolution, generatePythonInteractiveRunner, generatePythonRunner, pythonGraphNodeClass, pythonListNodeClass, pythonTreeNodeClass } from "$lib/utils/pythonUtil";
 import { cppImage, cppListNodeClass, cppTreeNodeClass, cppGraphNodeClass, generateCppRunner, generateCppInteractiveRunner, generateCppClassSolution } from "$lib/utils/cppUtil";
 import { generateGoRunner, generateGoInteractiveRunner, goImage } from "$lib/utils/goUtil";
 import { csharpImage, generateCSharpRunner, generateCSharpInteractiveRunner, generateCSharpClassSolution, csharpListNodeClass, csharpTreeNodeClass, csharpGraphNodeClass } from "$lib/utils/csharpUtil";

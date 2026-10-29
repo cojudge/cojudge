@@ -1,16 +1,16 @@
-You receive a Unix-style absolute path, which by definition opens with `/`. Reduce it to its shortened canonical equivalent.
+Вы получаете абсолютный путь в стиле Unix, который по определению открывается с `/`. Сократите его до сокращенного канонического эквивалента.
 
-Apply these interpretations:
+Применяйте эти интерпретации:
 
-- one dot `.` stands for the present folder;
-- two dots `..` stand for stepping up to the enclosing folder;
-- runs of slashes such as `//` collapse into a single `/`;
-- any other dot run, for instance `...`, counts as an ordinary folder name rather than a special token.
+- одна точка `.` обозначает текущую папку;
+- две точки `..` означают шаг вверх к ограждающей папке;
+- - обвалы слэшей, таких как `//`, в один `/`;
+- Любой другой точечный запуск, например `...`, считается обычным именем папки, а не специальным токеном.
 
-The shortened result must open with exactly one `/`, join folders with a single `/`, never close with `/` (except for the lone root `/` itself), and leave out any `.` or `..` pieces.
+Сокращенный результат должен открываться с помощью одного `/`, объединять папки с одним `/`, никогда не закрываться с `/` (за исключением самого одиночного корня `/`) и исключать любые фрагменты `.` или `..`.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= path.length <= 3000`
-- `path` consists of English letters, digits, period `.`, slash `/` or `_`.
-- `path` is a valid absolute Unix path.
+- `path` состоит из английских букв, цифр, периода `.`, слэша `/` или `_`.
+- `path` — это абсолютный путь Unix.

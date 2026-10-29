@@ -1,6 +1,6 @@
 {
   "id": "kth-largest-element-in-a-stream",
-  "title": "101. Kth Largest Element in a Stream",
+  "title": "101. Kth Самый большой элемент в потоке",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/kth-largest-element-in-a-stream/",
   "category": "heap",
@@ -8,12 +8,12 @@
     {
       "input": "k = 3, nums = [4,5,8,2], additions = [3,5,10,9,4]",
       "output": "[4,5,5,8,8]",
-      "explanation": "The function returns the third largest value after each insertion."
+      "explanation": "Функция возвращает третье по величине значение после каждой вставки."
     },
     {
       "input": "k = 1, nums = [], additions = [-3,-2,-4,0,4]",
       "output": "[-3,-2,-2,0,4]",
-      "explanation": "With k = 1, each answer is the maximum value seen so far."
+      "explanation": "С k = 1, каждый ответ является максимальным значением, которое мы видели до сих пор."
     }
   ],
   "starterCode": {
@@ -60,8 +60,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Keep only the k largest values seen so far.",
-    "A min-heap of size k exposes the current kth largest value at its root.",
-    "Insert each value, remove the heap minimum when its size exceeds k, and record the root after every addition."
+    "Сохраняйте только самые большие значения k, которые мы видели до сих пор.",
+    "Мин-куча размера k обнажает текущее наибольшее значение kth в его корне.",
+    "Вставьте каждое значение, удалите минимум кучи, когда его размер превышает k, и запишите корень после каждого добавления."
   ]
 }

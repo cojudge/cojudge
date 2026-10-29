@@ -1,10 +1,10 @@
-You are given the intended order `nums`, which lists each number from `1` to `n` exactly once, plus a collection `sequences` where each entry is a shorter list that should appear as a subsequence of the true order.
+Вам дается предполагаемый заказ `nums`, который перечисляет каждое число от `1` до `n` ровно один раз, плюс коллекция `sequences`, где каждая запись является более коротким списком, который должен отображаться как последовательность истинного заказа.
 
-Decide whether `nums` is the only shortest ordering that contains every listed sequence as a subsequence. Return `true` when the reconstruction is uniquely forced to be `nums`, and `false` otherwise. In particular, return `false` when some value never appears, some listed value falls outside `1..n`, or the ordering constraints allow more than one candidate.
+Решите, является ли `nums` единственным самым коротким заказом, который содержит каждую перечисленную последовательность в качестве последовательности. Возврат `true`, когда реконструкция однозначно вынуждена быть `nums`, и `false` в противном случае. В частности, возврат `false`, когда какое-то значение никогда не появляется, какое-то перечисленное значение выходит за пределы `1..n`, или ограничения заказа позволяют более одного кандидата.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^4`
-- `nums` is a permutation of `1..n`.
+- `nums` является перестановкой `1..n`.
 - `1 <= sequences.length <= 10^4`
 - `0 <= sequences[i].length <= 10^4`
-- Values in `sequences` lie in `1..n` for valid cases.
+- Значения в `sequences` лежат в `1..n` для действительных случаев.

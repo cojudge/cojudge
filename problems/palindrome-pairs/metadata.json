@@ -1,6 +1,6 @@
 {
   "id": "palindrome-pairs",
-  "title": "421. Palindrome Pairs",
+  "title": "421. Пары палиндрома",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/palindrome-pairs/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "words = [\"abcd\",\"dcba\",\"lls\",\"s\",\"sssll\"]",
       "output": "[[0,1],[1,0],[3,2],[2,4]]",
-      "explanation": "Reversed partners plus the s/lls/sssll interactions give four pairs."
+      "explanation": "Обратные партнеры плюс взаимодействия s/lls/sssll дают четыре пары."
     },
     {
       "input": "words = [\"bat\",\"tab\",\"cat\"]",
       "output": "[[0,1],[1,0]]",
-      "explanation": "Only bat and tab complete each other into palindromes."
+      "explanation": "Только летучая мышь и вкладка дополняют друг друга в палиндромы."
     },
     {
       "input": "words = [\"a\",\"\"]",
       "output": "[[0,1],[1,0]]",
-      "explanation": "The empty string pairs with any single palindrome word in both directions."
+      "explanation": "Пустая струна соединяется с одним словом палиндрома в обоих направлениях."
     }
   ],
   "starterCode": {
@@ -64,8 +64,8 @@
   ],
   "outputType": "int_list_2d",
   "hints": [
-    "Index every word so reversed candidates can be looked up instantly.",
-    "Split each word at every cut: when one side is a palindrome, the mirror of the other side is the needed partner.",
-    "Treat the empty string and whole-word mirrors as special cases of the same split rule."
+    "Проиндексируйте каждое слово, чтобы можно было мгновенно найти кандидатов.",
+    "Разделите каждое слово на каждом вырезе: когда одна сторона палиндрома, зеркало другой стороны является необходимым партнером.",
+    "Относитесь к пустой строке и зеркалам с целым словом как к особым случаям одного и того же правила разделения."
   ]
 }

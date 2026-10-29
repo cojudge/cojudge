@@ -1,10 +1,10 @@
-You are given a `pattern` string made of lowercase English letters and a text string `s`.
-Decide whether `s` follows the pattern: every pattern letter must stand for one non-empty
-block of characters, the same letter always stands for the same block, and two different
-letters must stand for two different blocks. Concatenating the blocks in pattern order must
-reproduce `s` exactly.
+Вам предоставляется строка `pattern`, состоящая из строчных английских букв, и текстовая строка `s`.
+Решите, следует ли `s` шаблону: каждая буква шаблона должна обозначать одну непустую букву.
+Блок символов, одна и та же буква всегда обозначает один и тот же блок, и два разных блока.
+Буквы должны обозначать два разных блока. Сцепление блоков в порядке рисунка должно
+Воспроизведите `s` точно.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= pattern.length <= 20`
 - `1 <= s.length <= 20`
-- `pattern` and `s` contain only lowercase English letters.
+- `pattern` и `s` содержат только английские буквы.

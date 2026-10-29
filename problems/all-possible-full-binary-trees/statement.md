@@ -1,8 +1,8 @@
-A full binary tree is one where every node either has no children at all or has exactly two children. You are given a count `n` and must produce every possible full shape with `n` nodes, each node holding the value `0`.
+Полное двоичное дерево - это такое, где у каждого узла либо нет потомков вообще, либо есть ровно два потомка. Вам дается счетчик `n` и вы должны производить все возможные полные формы с узлами `n`, каждый узел имеет значение `0`.
 
-Because a tree object cannot travel directly across languages here, encode each tree as its breadth-first listing: walk level by level, write `0` for real nodes and `null` for missing spots, drop trailing `null` entries, and wrap the rest in brackets such as `[0,0,0]`. Return the collection of those strings in any order. When `n` is even no full tree exists, so return an empty collection.
+Поскольку объект дерева не может перемещаться непосредственно по языкам здесь, закодируйте каждое дерево как его первый список широты: шаг за шагом, напишите `0` для реальных узлов и `null` для отсутствующих пятен, опустите записи `null` и оберните остальное в скобки, такие как `[0,0,0]`. Верните коллекцию этих строк в любом порядке. Когда `n` даже не существует полного дерева, поэтому верните пустую коллекцию.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 20`
 
-> **Adaptation note:** the original LeetCode signature returns `List<TreeNode>`, which has no portable cross-language encoding here. This problem instead returns `string_list`: each entry is the BFS serialization of one tree (level order with `null` placeholders, trailing nulls trimmed, wrapped like `[0,0,0]`). Grading compares the sorted sets of serializations.
+**Примечание по адаптации: ** оригинальная подпись LeetCode возвращает `List<TreeNode>`, который не имеет портативного кросс-языкового кодирования здесь. Эта проблема вместо этого возвращает `string_list`: каждая запись представляет собой сериализацию BFS одного дерева (уровень порядка с заполнителями `null`, отстающие нули обрезаны, обернуты как `[0,0,0]`).

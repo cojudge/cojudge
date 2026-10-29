@@ -1,15 +1,15 @@
-Decide whether query words have unique abbreviations against a dictionary.
+Решите, имеют ли запрашиваемые слова уникальные аббревиатуры против словаря.
 
-Abbreviate a word as its first letter, then the count of middle letters,
-then its last letter (for example `deer` becomes `d2r`); words of length 2
-or less abbreviate to themselves. A query is unique when no dictionary word
-shares its abbreviation, or every dictionary word sharing it equals the
-query itself.
+Сокращайте слово как первую букву, а затем счет средних букв.
+последняя буква (например, `deer` становится `d2r`); слова длины 2
+Запрос уникален, когда нет словаря.
+делится своей аббревиатурой, или каждое словарное слово, делящееся ею, равняется
+Задайте себе вопрос.
 
-**Adaptation:** instead of a `ValidWordAbbr` class with `isUnique`, implement
-`checkAbbr(dictionary, words)` returning an array with `1` for unique and
-`0` otherwise, one entry per query.
+**Адаптация: ** вместо класса `ValidWordAbbr` с `isUnique`, реализуйте
+`checkAbbr(dictionary, words)` возвращает массив с `1` для уникального
+`0` в противном случае - одна запись на запрос.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= dictionary.length, words.length <= 100`
-- Words are lowercase letters.
+- Слова - это строчные буквы.

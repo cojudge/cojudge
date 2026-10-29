@@ -1,6 +1,6 @@
 {
   "id": "pascals-triangle-ii",
-  "title": "296. Pascal's Triangle II",
+  "title": "296. Треугольник Паскаля II",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/pascals-triangle-ii/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "rowIndex = 3",
       "output": "[1,3,3,1]",
-      "explanation": "The fourth (0-based third) row is [1,3,3,1]."
+      "explanation": "Четвертый (0 на основе третьего) ряд [1, 3, 3, 1]."
     },
     {
       "input": "rowIndex = 0",
       "output": "[1]",
-      "explanation": "Row 0 holds just the apex."
+      "explanation": "Row 0 держит только вершину."
     },
     {
       "input": "rowIndex = 1",
       "output": "[1,1]",
-      "explanation": "Row 1 holds two ones."
+      "explanation": "Row 1 имеет два варианта."
     }
   ],
   "starterCode": {
@@ -57,8 +57,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Build only one row in place by updating it from right to left so needed values are not overwritten.",
-    "Row edges stay 1; each interior entry is the sum of the two values above it.",
-    "Adaptation: the value list maps to int_array in this judge."
+    "Постройте только одну строку, обновив ее справа налево, чтобы необходимые значения не перезаписывались.",
+    "Пороговые края остаются 1; каждая внутренняя запись представляет собой сумму двух значений над ней.",
+    "Адаптация: карты списка значений int_array в этом решении."
   ]
 }

@@ -1,9 +1,9 @@
-Decide whether a binary tree reads the same on both sides — that is, whether it is a mirror image of itself around its center.
+Решите, читает ли двоичное дерево одно и то же с обеих сторон, то есть является ли оно зеркальным отражением себя вокруг своего центра.
 
-Two trees are mirrors when their roots hold equal values and each left branch of one matches the corresponding right branch of the other, recursively. Check the root's left subtree against its right subtree in this mirrored fashion.
+Два дерева являются зеркалами, когда их корни имеют равные значения, и каждая левая ветвь одного соответствует соответствующей правой ветви другого, рекурсивно.
 
-Return `true` when the whole structure is mirrored, otherwise `false`.
+Возврат `true` при зеркальном отображении всей структуры, в противном случае `false`.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= number of nodes <= 1000`
 - `-100 <= Node.val <= 100`

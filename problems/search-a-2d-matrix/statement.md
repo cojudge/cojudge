@@ -1,17 +1,17 @@
-You are handed a rectangular integer table that is never empty, together with an integer `target`. Report whether `target` occurs anywhere inside the table: answer `true` when it does and `false` when it does not.
+Вам вручают прямоугольную целочисленную таблицу, которая никогда не пуста, вместе с целым числом `target`. Сообщите, встречается ли `target` где-либо внутри таблицы: отвечайте `true`, когда он это делает, и `false`, когда он этого не делает.
 
-The table obeys one strict global ordering:
+Таблица подчиняется одному строгому глобальному порядку:
 
-- each row runs left to right in nondecreasing order;
-- for every row past the first, its opening entry is strictly larger than the closing entry of the row directly above it.
+- каждый ряд проходит слева направо в неубывающем порядке;
+- Для каждой строки, проходящей мимо первой, ее открывающая запись строго больше, чем закрывающая запись строки непосредственно над ней.
 
-Put differently, reading the rows one after another starting from the top left produces a single fully sorted sequence.
+Другими словами, чтение строк один за другим, начиная с верхнего левого, создает одну полностью отсортированную последовательность.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= matrix.length, matrix[i].length <= 100`
-- Every row has the same number of columns.
+- Каждая строка имеет одинаковое количество столбцов.
 - `-10^4 <= matrix[i][j], target <= 10^4`
-- The matrix satisfies the global ordering described above.
+- Матрица удовлетворяет описанному выше глобальному порядку.
 
-**Judge adaptation:** Code `searchMatrix(matrix, target)` directly in this repository. The test harness in each language passes the rectangle using that language's usual nested integer-array type.
+** Адаптация к суждению: ** Код `searchMatrix(matrix, target)` непосредственно в этом хранилище. Тестовая упряжка на каждом языке проходит прямоугольник с использованием обычного вложенного целочисленного типа этого языка.

@@ -1,10 +1,10 @@
-You receive the `root` of a binary search tree (BST) along with an integer `val` that must be added to the structure. Produce the `root` of the tree once the addition is done. The incoming value is guaranteed absent from the starting tree.
+Вы получаете `root` двоичного дерева поиска (BST) вместе с целым числом `val`, которое должно быть добавлено к структуре. Производите `root` дерева после того, как добавление сделано. Входящее значение гарантировано отсутствует в исходном дереве.
 
-Several placements can preserve BST ordering; returning any tree that is a valid BST containing all old values plus the new one is acceptable.
+Несколько мест размещения могут сохранить заказ BST; приемлемо возврат любого дерева, которое является действительным BST, содержащим все старые значения плюс новое.
 
-**Constraints:**
-- The number of nodes in the tree is in the range `[0, 10^4]`
+**Ограничения:**
+- Количество узлов в дереве находится в диапазоне `[0, 10^4]`
 - `-10^8 <= Node.val <= 10^8`
-- All the values `Node.val` are unique
+- Все значения `Node.val` уникальны.
 - `-10^8 <= val <= 10^8`
-- It's guaranteed that `val` does not exist in the original BST
+- Это гарантирует, что `val` не существует в оригинальном BST.

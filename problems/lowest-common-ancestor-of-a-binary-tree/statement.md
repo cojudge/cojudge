@@ -1,13 +1,13 @@
-Given the root of a binary tree and two distinct values `p` and `q` that both occur in the tree, find their lowest common ancestor.
+Учитывая корень двоичного дерева и два различных значения `p` и `q`, которые встречаются в дереве, найдите их наименьшего общего предка.
 
-The lowest common ancestor of two nodes is the deepest node that has both of them in its subtree, where a node counts as being in its own subtree. All node values in the tree are unique.
+Самый низкий общий предок двух узлов — самый глубокий узел, имеющий оба в своем поддереве, где узел считается находящимся в собственном поддереве.Все значения узлов в дереве уникальны.
 
-Return the ancestor node itself (as a tree).
+Возвращает узел предка сам (как дерево).
 
-*Adaptation note:* the original statement passes the two target nodes as node references. Here they are passed as integer values `p` and `q` instead, since every value is unique; the returned tree is the subtree rooted at the ancestor.
+*Примечание по адаптации: * первоначальное утверждение проходит два целевых узла в качестве ссылок на узлы. Здесь они передаются в виде целых значений `p` и `q` вместо этого, поскольку каждое значение уникально; возвращенное дерево является поддеревом, укорененным у предка.
 
-**Constraints:**
-- The number of nodes is in the range `[2, 10^5]`.
+**Ограничения:**
+- Количество узлов находится в диапазоне `[2, 10^5]`.
 - `-10^9 <= Node.val <= 10^9`
-- All node values are unique.
-- `p != q`, and both values exist in the tree.
+- Все значения узлов уникальны.
+- `p != q`, и оба значения существуют в дереве.

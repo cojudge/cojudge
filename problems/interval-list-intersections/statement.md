@@ -1,6 +1,6 @@
-You are given two lists of closed intervals, `firstList` and `secondList`. Within each list the intervals are pairwise disjoint and sorted by start. Compute all pairwise intersections: for every `I` in the first list and `J` in the second list, if they share at least one point, include their overlap `[max(starts), min(ends)]` in the answer. Return the intersections sorted by start (the two-pointer scan naturally produces this order).
+Вам даны два списка закрытых интервалов, `firstList` и `secondList`. В каждом списке интервалы попарно разъединены и отсортированы по старту. Вычислите все попарные пересечения: для каждого `I` в первом списке и `J` во втором списке, если они разделяют хотя бы одну точку, включите в ответ их перекрывающиеся `[max(starts), min(ends)]`. Возвратите сортированные по старту перекрестки (двухточечное сканирование естественным образом производит этот порядок).
 
-**Constraints:**
+**Ограничения:**
 - `0 <= firstList.length, secondList.length <= 1000`
-- `firstList[i], secondList[i]` each hold `[start, end]` with `0 <= start <= end <= 10^9`.
-- Intervals inside each list are disjoint and sorted.
+- `firstList[i], secondList[i]` содержит `[start, end]` с `0 <= start <= end <= 10^9`.
+- Интервалы внутри каждого списка разъединены и сортированы.

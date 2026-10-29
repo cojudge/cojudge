@@ -1,7 +1,7 @@
-You are given the root of a binary tree. Picture each node sitting in a vertical column: the root starts at column `0`, a left child moves one column left, and a right child moves one column right.
+Представьте каждый узел, сидящий в вертикальной колонке: корень начинается в колонке `0`, левый потомок перемещает одну колонку влево, а правый потомок перемещает одну колонку вправо.
 
-Collect the node values column by column, ordering the columns from leftmost to rightmost. Inside a single column, list values from top to bottom; when several nodes share the same row and column, keep their left-to-right visiting order (as produced by a level-by-level scan that always visits a left child before its right sibling). Return the resulting list of columns.
+Соберите столбец значений узла по столбцу, заказывая столбцы слева направо. Внутри одного столбца перечислите значения сверху вниз; когда несколько узлов разделяют одну и ту же строку и столбец, сохраните их порядок посещения слева направо (как это производится сканированием уровня за уровнем, которое всегда посещает левого потомка перед его правым братом). Верните полученный список столбцов.
 
-**Constraints:**
-- The tree holds between `0` and `100` nodes.
+**Ограничения:**
+- Дерево находится между узлами `0` и `100`.
 - `-100 <= Node.val <= 100`

@@ -1,6 +1,6 @@
 {
   "id": "find-the-derangement-of-an-array",
-  "title": "656. Find the Derangement of An Array",
+  "title": "656. Найдите расстройство массива",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/find-the-derangement-of-an-array/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "n = 3",
       "output": "2",
-      "explanation": "The derangements of [1,2,3] are [2,3,1] and [3,1,2]."
+      "explanation": "Разновидностями [1, 2, 3] являются [2, 3, 1] и [3, 1, 2]."
     },
     {
       "input": "n = 2",
       "output": "1",
-      "explanation": "Only [2,1] avoids every original slot."
+      "explanation": "Только 2, 1 избегает каждого оригинального слота."
     },
     {
       "input": "n = 1",
       "output": "0",
-      "explanation": "One element cannot escape its own position."
+      "explanation": "Один элемент не может избежать своего положения."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Let f[i] count derangements of i items with f[0] = 1 and f[1] = 0.",
-    "Placing item 1 into slot j (i-1 choices) splits on where item j goes, giving f[i] = (i-1) * (f[i-1] + f[i-2]).",
-    "Iterate bottom-up with two rolling values, reducing modulo 1000000007 each step."
+    "Пусть f[i] подсчитывает отклонения i элементов с f[0] = 1 и f[1] = 0.",
+    "Размещение элемента 1 в слот j (выборы i-1) разделяется на то, куда идет элемент j, давая f [i] = (i-1) * (f [i-1] + f [i-2]).",
+    "Итерация снизу вверх с двумя значениями качения, уменьшая модуль 1000000007 на каждом шаге."
   ]
 }

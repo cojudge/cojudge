@@ -1,8 +1,8 @@
-You get an integer `columnNumber`. Produce the label that a spreadsheet assigns to that column.
+Вы получаете целое число `columnNumber`. Создайте ярлык, который электронная таблица присваивает этой колонке.
 
-Columns are named with capital letters in sequence: `A` through `Z` cover the first 26 columns, then two-letter names take over (`AA`, `AB`, and so on), mirroring a 1-based base-26 scheme without a zero digit.
+Колонки названы заглавными буквами в последовательности: `A` через `Z` покрывают первые столбцы 26, затем берут на себя двухбуквенные имена (`AA`, `AB` и т. Д.), Отражая схему 1 на основе базы-26 без нулевой цифры.
 
-For reference, the numbering runs as follows:
+Для справки нумерация выглядит следующим образом:
 
 ```
 A -> 1
@@ -10,11 +10,11 @@ B -> 2
 C -> 3
 ...
 Z -> 26
-AA -> 27
+АА -> 27
 AB -> 28
 ...
 ```
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= columnNumber <= 2^31 - 1`

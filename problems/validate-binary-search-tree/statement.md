@@ -1,6 +1,6 @@
-You are handed the `root` of a binary tree. Report whether the tree honors binary-search-tree ordering everywhere: for every node, each value in its entire left descendant group must lie strictly below the node's own value, each value in its entire right descendant group must lie strictly above it, and the left and right child groups must each independently satisfy this same ordering.
+Вам вручают `root` двоичного дерева.Сообщите, соблюдает ли дерево порядок двоичного дерева поиска везде: для каждого узла каждое значение во всей его левой группе потомков должно лежать строго ниже собственного значения узла, каждое значение во всей его правой группе потомков должно лежать строго над ним, и каждая группа левых и правых потомков должна независимо удовлетворять этому же порядку.
 
-**Constraints:**
+**Ограничения:**
 
-- The number of nodes in the tree is in the range [1, 10^4].
+- Количество узлов в дереве находится в диапазоне [1, 10^4].
 - -2^31 ≤ Node.val ≤ 2^31 - 1

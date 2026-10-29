@@ -1,6 +1,6 @@
-You are given a positive integer `a`. Write it as a product of integers each between 2 and 9 inclusive, then concatenate those factors as decimal digits to form a new integer. Among all such splittings, return the smallest achievable integer.
+Вам дано положительное целое число `a`. Запишите его как произведение целых чисел, каждое между 2 и 9 включительно, затем сопоставьте эти факторы как десятичные цифры, чтобы сформировать новое целое число. Среди всех таких расщеплений верните наименьшее достижимое целое число.
 
-Handle the edges directly: values below 10 are already answers. When no splitting into allowed digits exists, return 0. Answers exceeding the 32-bit signed ceiling also yield 0.
+Обработка краев напрямую: значения ниже 10 уже являются ответами. При отсутствии расщепления на разрешенные цифры существует возврат 0. Ответы, превышающие подписанный потолок 32-бит, также дают 0.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= a <= 2^31 - 1`

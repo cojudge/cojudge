@@ -1,16 +1,16 @@
-Maintain counts for a dynamic set of lowercase keys. You receive two parallel arrays describing a script: `operations` names the action at each step and `values` carries its argument (an empty string when the action takes none).
+Вы получаете два параллельных массива, описывающих сценарий: `operations` называет действие на каждом шаге, а `values` несет свой аргумент (пустая строка, когда действие не принимает ни одного).
 
-The script always starts with `"AllOne"` (create the structure, answer `"null"`). Later steps use:
-- `"inc"` with a key: raise that key's count by one, inserting at 1 when new; answer `"null"`.
-- `"dec"` with a key: lower that key's count by one, removing keys that reach zero; the key is guaranteed present; answer `"null"`.
-- `"getMaxKey"`: return any key currently holding the largest count, or `""` when empty.
-- `"getMinKey"`: return any key currently holding the smallest count, or `""` when empty.
+Сценарий всегда начинается с `"AllOne"` (создайте структуру, ответьте `"null"`).
+- `"inc"` с ключом: увеличить количество ключей на единицу, вставляя в 1, когда новый; ответить `"null"`.
+- `"dec"` с ключом: понижайте количество ключей на единицу, удаляя ключи, которые достигают нуля; ключ гарантированно присутствует; ответьте `"null"`.
+- `"getMaxKey"`: возвращайте любой ключ, имеющий наибольшее количество, или `""`, когда он пуст.
+- `"getMinKey"`: возвращайте любой ключ, содержащий наименьшее количество, или `""`, когда он пуст.
 
-Write `runAllOne`, which replays the whole script and returns the per-step answers (`"null"` for mutating or constructing steps, the requested key otherwise). When several keys tie for max or min, any tied key is accepted by the checker.
+Напишите `runAllOne`, который воспроизводит весь сценарий и возвращает ответы на шаг (`"null"` для мутирования или построения шагов, запрашиваемый ключ иначе). Когда несколько ключей связываются для максимума или минуты, любой связанный ключ принимается кассиром.
 
-**Constraints:**
-- Key length lies in `[1, 10]`, lowercase letters only.
+**Ограничения:**
+- Длина ключа лежит в `[1, 10]`, только строчные буквы.
 - At most `5 * 10^4` calls in one script.
-- Every `dec` targets an existing key.
+- Каждый `dec` нацелен на существующий ключ.
 
-Adaptation: the source is a stateful `AllOne` class; here it is modeled as the `runAllOne(operations, values)` replay function with `string_array` inputs and `string_list` output so all runners can drive it. Average O(1) per action is intended but only answer correctness is checked.
+Адаптация: источник является государственным классом `AllOne`; здесь он смоделирован как функция воспроизведения `runAllOne(operations, values)` с входами `string_array` и выходом `string_list`, чтобы все бегуны могли управлять им. Среднее значение O (1) за действие предназначено, но проверяется только правильность ответа.

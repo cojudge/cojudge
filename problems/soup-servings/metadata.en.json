@@ -1,0 +1,58 @@
+{
+  "id": "soup-servings",
+  "title": "806. Soup Servings",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/soup-servings/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "n = 50",
+      "output": "\"0.625\"",
+      "explanation": "Mixed paths give 0.625."
+    },
+    {
+      "input": "n = 100",
+      "output": "\"0.71875\"",
+      "explanation": "Larger start favours A."
+    },
+    {
+      "input": "n = 0",
+      "output": "\"0.5\"",
+      "explanation": "Both empty together counts half."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String soupServings(int n) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def soupServings(self, n: int) -> str:\n        return \"\"",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string soupServings(int n) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string SoupServings(int n) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn soup_servings(n: i32) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc SoupServings(n int) string {\n    return \"\"\n}",
+    "typescript": "export function soupServings(n: number): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return string\n     */\n    public function soupServings($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 50
+    },
+    {
+      "n": 100
+    },
+    {
+      "n": 0
+    }
+  ],
+  "functionName": "soupServings",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "This is a portable adaptation: return the probability as a finite decimal string; the checker allows 1e-9 absolute plus 1e-5 relative error.",
+    "Scale by 25 ml units and memoize the recursion on remaining (a,b) pairs.",
+    "Beyond about 4800 ml the answer is 1.0 for practical purposes, so shortcut large n."
+  ]
+}

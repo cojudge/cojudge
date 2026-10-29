@@ -1,7 +1,7 @@
-You own endless copies of several sticker sheets. Each sheet carries a lowercase word; cutting a sheet yields its letters for reuse, and sheets may be reused any number of times. Given the list `stickers` and a goal word `target`, determine the smallest number of sheets needed to assemble `target`. Cutting extra unused letters is allowed, but every letter of `target` must be covered. Return `-1` when the goal cannot be formed.
+У вас есть бесконечные копии нескольких листов наклейки. Каждый лист несет нижнее слово; разрез листа дает свои буквы для повторного использования, и листы могут быть повторно использованы любое количество раз. Учитывая список `stickers` и целевое слово `target`, определите наименьшее количество листов, необходимых для сборки `target`. Разрезание дополнительных неиспользованных букв разрешено, но каждая буква `target` должна быть покрыта. Возврат `-1`, когда цель не может быть сформирована.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= stickers.length <= 50`
 - `1 <= stickers[i].length <= 10`
 - `1 <= target.length <= 15`
-- All words use lowercase English letters.
+- Все слова используют английские буквы.

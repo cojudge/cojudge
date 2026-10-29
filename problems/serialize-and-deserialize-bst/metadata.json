@@ -1,6 +1,6 @@
 {
   "id": "serialize-and-deserialize-bst",
-  "title": "517. Serialize and Deserialize BST",
+  "title": "517. Сериализация и десериализация BST",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/serialize-and-deserialize-bst/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [2,1,3]",
       "output": "[2,1,3]",
-      "explanation": "The tree is serialized and then deserialized back to the original tree."
+      "explanation": "Дерево сериализуется, а затем десерализуется обратно к первоначальному дереву."
     },
     {
       "input": "root = []",
       "output": "[]",
-      "explanation": "An empty tree serializes to an empty string and deserializes back to null."
+      "explanation": "Пустое дерево сериализуется до пустой струны и десериализируется обратно до нуля."
     },
     {
       "input": "root = [1]",
       "output": "[1]",
-      "explanation": "A single node round-trips through the codec unchanged."
+      "explanation": "Один узел проходит через кодек без изменений."
     }
   ],
   "classProblem": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "A BST's preorder listing alone rebuilds it: the first value is the root, smaller values go left, larger go right.",
-    "Serialize with preorder and no null markers; deserialize by inserting the values back in order.",
-    "Alternatively, any unambiguous scheme works — the judge only checks that the round trip restores the tree."
+    "Один только список предварительных заказов BST восстанавливает его: первое значение - корень, меньшие значения идут влево, большие идут вправо.",
+    "Сериализация с предзаказом и без нулевых маркеров; десериализация путем вставки значений обратно в порядок.",
+    "Альтернативно работает любая однозначная схема — судья только проверяет, что круглая поездка восстанавливает дерево."
   ]
 }

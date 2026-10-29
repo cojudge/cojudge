@@ -1,6 +1,6 @@
 {
   "id": "output-contest-matches",
-  "title": "601. Output Contest Matches",
+  "title": "601. Матчи конкурса Output",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/output-contest-matches/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "n = 4",
       "output": "\"((1,4),(2,3))\"",
-      "explanation": "Two semifinals wrapped in a final."
+      "explanation": "Два полуфинала завернуты в финал."
     },
     {
       "input": "n = 8",
       "output": "\"(((1,8),(4,5)),((2,7),(3,6)))\"",
-      "explanation": "Three rounds of nesting."
+      "explanation": "Три раунда гнездования."
     },
     {
       "input": "n = 2",
@@ -50,7 +50,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Keep an array of bracket strings starting as \"1\"..\"n\" and repeatedly fold it: new[i] = \"(\" + cur[i] + \",\" + cur[size-1-i] + \")\".",
-    "Halve the active size after each round until one string remains."
+    "Держите массив струн кронштейна, начинающийся как «1..n» и многократно складывайте его: новый [i] = «(» + cur[i] + «», + cur[size-1-i] + «)».",
+    "Сократите активный размер после каждого раунда до тех пор, пока не останется одна строка."
   ]
 }

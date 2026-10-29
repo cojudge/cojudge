@@ -1,10 +1,10 @@
-You are given an integer list `nums`. In one move you may pick any `n-1` entries and add `1` to each of them, where `n` is the list length.
+Вам выдается целочисленный список `nums`В одном движении вы можете выбрать любой `n-1` Записи и добавить `1` Для каждого из них, где `n` Это длина списка.
 
-Find the smallest number of moves that makes all entries equal.
+Найдите наименьшее количество ходов, которое делает все записи равными.
 
-Raising `n-1` entries by one has the same effect as lowering the single untouched entry by one, so the task equals dragging every value down to the minimum.
+Повышение `n-1`-записей на единицу имеет тот же эффект, что и снижение одной нетронутой записи на единицу, поэтому задача равна перетаскиванию каждого значения до минимума.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^5`
 - `-10^9 <= nums[i] <= 10^9`
-- The answer fits in a 32-bit signed integer.
+- Ответ помещается в 32-бит подписанного целого числа.

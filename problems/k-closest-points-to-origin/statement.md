@@ -1,10 +1,10 @@
-You receive a list `points` where `points[i] = [x_i, y_i]`, plus an integer `k`. Select `k` entries lying nearest to the coordinate origin `(0, 0)` and return them.
+Вы получаете список `points`, где `points[i] = [x_i, y_i]`, плюс целое число `k`. Выберите записи `k`, лежащие ближе всего к координатному происхождению `(0, 0)`, и верните их.
 
-Measure nearness by `sqrt(x^2 + y^2)`; because squaring preserves order you may rank by `x^2 + y^2` directly. Result order is unrestricted. When multiple inputs share the boundary distance, returning any sufficient subset of those tied entries is fine.
+Измерьте близость по `sqrt(x^2 + y^2)`; поскольку квадратура сохраняет порядок, вы можете ранжировать по `x^2 + y^2` напрямую. Заказ результата неограничен. Когда несколько входов разделяют пограничное расстояние, возврат любого достаточного подмножества этих связанных записей в порядке.
 
-Each entry of `points` holds precisely two integers.
+Каждая запись `points` содержит ровно два целых числа.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= k <= points.length <= 10^4`
 - `points[i].length == 2`

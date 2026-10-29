@@ -1,6 +1,6 @@
 {
   "id": "task-scheduler",
-  "title": "105. Task Scheduler",
+  "title": "105. Расписание задач",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/task-scheduler/",
   "category": "heap",
@@ -8,12 +8,12 @@
     {
       "input": "tasks = \"AAABBB\", n = 2",
       "output": "8",
-      "explanation": "A, B, idle, A, B, idle, A, B is optimal."
+      "explanation": "A, B, idle, A, B, idle, A, B является оптимальным вариантом."
     },
     {
       "input": "tasks = \"AAABBB\", n = 0",
       "output": "6",
-      "explanation": "No idle time is required when the cooldown is zero."
+      "explanation": "Время простоя не требуется, когда остывание равно нулю."
     }
   ],
   "starterCode": {
@@ -53,8 +53,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Count the frequency of each of the 26 task types.",
-    "Arrange the most frequent task into blocks separated by n slots.",
-    "If the maximum frequency is `f` and `m` task types have that frequency, compare `tasks.length` with `(f - 1) * (n + 1) + m`."
+    "Подсчитайте частоту каждого из типов задач 26.",
+    "Организуйте наиболее часто встречающуюся задачу в блоки, разделенные n-слотами.",
+    "Если максимальная частота `f` и задачи `m` имеют эту частоту, сравните `tasks.length` с `(f - 1) * (n + 1) + m`."
   ]
 }

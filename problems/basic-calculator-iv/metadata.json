@@ -1,6 +1,6 @@
 {
   "id": "basic-calculator-iv",
-  "title": "770. Basic Calculator IV",
+  "title": "770. Базовый калькулятор IV",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/basic-calculator-iv/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "expression = \"e + 8 - a + 5\", evalvars = [\"e\"], evalints = [1]",
       "output": "[\"-1*a\",\"14\"]",
-      "explanation": "Substituting e=1 leaves 14 - a."
+      "explanation": "Замена e=1 оставляет 14 — a."
     },
     {
       "input": "expression = \"e - 8 + temperature - pressure\", evalvars = [\"e\",\"temperature\"], evalints = [1,12]",
       "output": "[\"-1*pressure\",\"5\"]",
-      "explanation": "Known vars collapse to the constant 5."
+      "explanation": "Известные вары сжимаются до постоянной 5."
     },
     {
       "input": "expression = \"(e + 8) * (e - 8)\", evalvars = [], evalints = []",
       "output": "[\"1*e*e\",\"-64\"]",
-      "explanation": "Expands to e*e - 64."
+      "explanation": "Расширяется до e*e - 64."
     }
   ],
   "starterCode": {
@@ -70,8 +70,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Represent a polynomial as a map from sorted variable list to coefficient; addition merges maps and multiplication takes pairwise products with merged sorted keys.",
-    "Parse with standard precedence (parentheses, then *, then +-) and replace any variable found in the eval map by its constant.",
-    "Portable note: the expression is a plain string and the answer is a string list ordered by degree descending then variable part ascending."
+    "Представление полинома как карты от сортированного списка переменных до коэффициента; сложение сливается с картами, а умножение принимает попарные продукты с объединенными сортированными ключами.",
+    "Парсировать со стандартным приоритетом (парентезы, затем *, затем +-) и заменять любую переменную, найденную на карте эваля, на ее постоянную.",
+    "Примечание: выражение представляет собой простую строку, а ответом является список строк, упорядоченный по степени нисходящего, а затем переменной части восходящего."
   ]
 }

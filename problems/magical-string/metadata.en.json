@@ -1,0 +1,58 @@
+{
+  "id": "magical-string",
+  "title": "545. Magical String",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/magical-string/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "n = 6",
+      "output": "3",
+      "explanation": "Prefix 122112 holds three 1s."
+    },
+    {
+      "input": "n = 1",
+      "output": "1",
+      "explanation": "Single prefix 1 holds one 1."
+    },
+    {
+      "input": "n = 10",
+      "output": "5",
+      "explanation": "First ten characters hold five 1s."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int magicalString(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def magicalString(self, n: int) -> int:\n        return 0\n",
+    "cpp": "class Solution {\npublic:\n    int magicalString(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MagicalString(int n)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn magical_string(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MagicalString(n int) int {\n    return 0\n}",
+    "typescript": "export function magicalString(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function magicalString($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 6
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 10
+    }
+  ],
+  "functionName": "magicalString",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Grow the string with a read pointer that says how many copies of the next digit to append.",
+    "Alternate the digit between 1 and 2 each time the pointer advances.",
+    "Stop once length reaches n, then count 1s in the prefix."
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "id": "nested-list-weight-sum",
-  "title": "422. Nested List Weight Sum",
+  "title": "422. Вложенный список Весовая сумма",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/nested-list-weight-sum/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "nestedList = \"[[1,1],2,[1,1]]\"",
       "output": "10",
-      "explanation": "Four 1s at depth 2 plus one 2 at depth 1 total 10."
+      "explanation": "Четыре 1s на глубине 2 плюс один 2 на глубине 1 всего 10."
     },
     {
       "input": "nestedList = \"[1,[4,[6]]]\"",
       "output": "27",
-      "explanation": "1*1 + 4*2 + 6*3 equals 27."
+      "explanation": "1*1 + 4*2 + 6*3 равные 27."
     },
     {
       "input": "nestedList = \"[0]\"",
       "output": "0",
-      "explanation": "Zero contributes nothing regardless of depth."
+      "explanation": "Ноль не вносит ничего, независимо от глубины."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Scan the characters while tracking current bracket depth.",
-    "Accumulate multi-digit (and negative) numbers, then add value * depth."
+    "Сканируйте персонажей, отслеживая глубину текущих скобок.",
+    "Накопите многозначные (и отрицательные) числа, затем добавьте значение * глубина."
   ]
 }

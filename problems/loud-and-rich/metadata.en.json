@@ -1,0 +1,69 @@
+{
+  "id": "loud-and-rich",
+  "title": "848. Loud and Rich",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/loud-and-rich/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "richer = [[1,0],[2,1],[3,1],[3,7],[4,2],[5,3],[6,3]], quiet = [3,2,5,4,6,1,7,0]",
+      "output": "[5,5,2,5,4,5,6,7]",
+      "explanation": "Each entry is the quietest among self plus richer ancestors."
+    },
+    {
+      "input": "richer = [], quiet = [0]",
+      "output": "[0]",
+      "explanation": "Single person answers themselves."
+    },
+    {
+      "input": "richer = [[1,0]], quiet = [1,0]",
+      "output": "[1,1]",
+      "explanation": "Person 1 is quieter than 0."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] loudAndRich(int[][] richer, int[] quiet) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def loudAndRich(self, richer: List[List[int]], quiet: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> loudAndRich(vector<vector<int>>& richer, vector<int>& quiet) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] LoudAndRich(int[][] richer, int[] quiet)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn loud_and_rich(richer: Vec<Vec<i32>>, quiet: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc LoudAndRich(richer [][]int, quiet []int) []int {\n    return []int{}\n}",
+    "typescript": "export function loudAndRich(richer: number[][], quiet: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $richer\n     * @param int[] $quiet\n     * @return int[]\n     */\n    public function loudAndRich($richer, $quiet) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "richer": "[[1,0],[2,1],[3,1],[3,7],[4,2],[5,3],[6,3]]",
+      "quiet": "[3,2,5,4,6,1,7,0]"
+    },
+    {
+      "richer": "[]",
+      "quiet": "[0]"
+    },
+    {
+      "richer": "[[1,0]]",
+      "quiet": "[1,0]"
+    },
+    {
+      "richer": "[[0,1]]",
+      "quiet": "[0,1]"
+    }
+  ],
+  "functionName": "loudAndRich",
+  "params": [
+    {
+      "name": "richer",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "quiet",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Reverse the edges: from each person point to those poorer than them, then propagate the quietest candidate forward.",
+    "Depth-first search with memoization computes answer[x] from already solved richer neighbours.",
+    "Compare quiet values, keeping the person with the smaller score."
+  ]
+}

@@ -1,9 +1,9 @@
-A password is strong when all of these hold: it spans `6` to `20` characters, it contains at least one lowercase letter, one uppercase letter and one digit, and no three identical characters sit consecutively.
+Пароль силен, когда все они держатся: он охватывает символы `6` до символов `20`, он содержит по крайней мере одну строчную букву, одну строчную букву и одну цифру, и три одинаковых символа не сидят последовательно.
 
-In one step you may insert a character anywhere, delete a character, or replace a character with another. Given `password`, return the smallest number of steps that makes it strong (zero when it already qualifies).
+На одном шаге вы можете вставить символ в любом месте, удалить символ или заменить символ другим. Учитывая `password`, верните наименьшее количество шагов, которое делает его сильным (ноль, когда он уже квалифицируется).
 
-Passwords hold letters, digits, `.` and `!`.
+Пароли содержат буквы, цифры, `.` и `!`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= password.length <= 50`
-- Characters are letters, digits, `.` or `!`.
+- Персонажи — это буквы, цифры, `.` или `!`.

@@ -1,6 +1,6 @@
 {
   "id": "integer-break",
-  "title": "229. Integer Break",
+  "title": "229. целочисленный разрыв",
   "difficulty": "Medium",
   "category": "dp",
   "link": "https://leetcode.com/problems/integer-break/",
@@ -73,7 +73,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "There is a simple O(n) solution to this problem.",
-    "You may check the breaking results of n ranging from 7 to 10 to discover the regularities."
+    "Существует простое решение этой проблемы.",
+    "Вы можете проверить результаты взлома n в диапазоне от 7 до 10, чтобы узнать закономерности."
   ]
 }

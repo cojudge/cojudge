@@ -1,9 +1,9 @@
-Given a string `s`, split it into pieces so that every piece reads the same forwards and backwards.
+При наличии строки `s` разбейте ее на куски так, чтобы каждая часть читала одинаково вперед и назад.
 
-Count cuts between pieces: a string that is already a palindrome needs `0` cuts, a split into two palindromes needs `1` cut, and so on.
+Граф разрезает между кусочками: струна, которая уже является палиндромом, нуждается в разрезах `0`, разделение на два палиндрома нуждается в разрезе `1` и так далее.
 
-Return the smallest number of cuts that achieves such a split.
+Верните наименьшее количество сокращений, которое достигает такого разделения.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 2000`
-- `s` contains only lowercase English letters.
+- `s` содержит только английские буквы.

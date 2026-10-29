@@ -1,6 +1,6 @@
 {
   "id": "minimum-window-substring",
-  "title": "52. Minimum Window Substring",
+  "title": "52. Минимальная оконная подставка",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/minimum-window-substring/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "s=\"ADOBECODEBANC\", t=\"ABC\"",
       "output": "\"BANC\"",
-      "explanation": "The minimum window in \"ADOBECODEBANC\" containing all chars of \"ABC\" is \"BANC\"."
+      "explanation": "Минимальным окном в «АДОБЕКОДЕБАНК», содержащим все загоны «АВС», является «БАНК»."
     },
     {
       "input": "s=\"a\", t=\"a\"",
       "output": "\"a\"",
-      "explanation": "The minimum window in \"a\" containing all chars of \"a\" is \"a\"."
+      "explanation": "Минимальное окно в \"a\", содержащее все загоны \"a\", является \"a\"."
     }
   ],
   "starterCode": {
@@ -53,6 +53,6 @@
   ],
   "outputType": "string",
   "hints": [
-    "Sliding window with a frequency map. Expand right to satisfy all requirements, then contract left to find the minimum window while maintaining validity."
+    "Раздвижное окно с частотной картой. Расширить право, чтобы удовлетворить все требования, затем заключить договор, чтобы найти минимальное окно при сохранении валидности."
   ]
 }

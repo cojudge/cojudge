@@ -3,26 +3,26 @@
   "difficulty": "Medium",
   "examples": [
     {
-      "explanation": "\"aaa\" is good; the full string fails since 'b' appears twice.",
+      "explanation": "\"aaa\" - это хорошо; полная строка не работает, так как \"b\" появляется дважды.",
       "input": "s = \"aaabb\", k = 3",
       "output": "3"
     },
     {
-      "explanation": "\"ababb\" is good ('a' twice, 'b' three times).",
+      "explanation": "«Абабб» — это хорошо («а» дважды, «б» трижды).",
       "input": "s = \"ababbc\", k = 2",
       "output": "5"
     },
     {
-      "explanation": "Every letter appears once, so no block qualifies.",
+      "explanation": "Каждая буква появляется один раз, поэтому блок не подходит.",
       "input": "s = \"abcde\", k = 2",
       "output": "0"
     }
   ],
   "functionName": "longestSubstring",
   "hints": [
-    "Any letter occurring fewer than k times in the current range can never belong to a good block covering that range.",
-    "Split the range at such rare letters and solve each piece independently.",
-    "A piece with no rare letters is itself good."
+    "Любая буква, встречающаяся менее чем в k раз в текущем диапазоне, никогда не может принадлежать хорошему блоку, покрывающему этот диапазон.",
+    "Разделите диапазон на такие редкие буквы и решайте каждую часть самостоятельно.",
+    "Само по себе произведение без редких букв — это хорошо."
   ],
   "id": "longest-substring-with-at-least-k-repeating-characters",
   "link": "https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/",
@@ -61,5 +61,5 @@
       "s": "abcde"
     }
   ],
-  "title": "470. Longest Substring with At Least K Repeating Characters"
+  "title": "470. Самая длинная подставка с повторяющимися персонажами, по крайней мере, K"
 }

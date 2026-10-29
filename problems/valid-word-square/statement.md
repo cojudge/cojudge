@@ -1,13 +1,13 @@
-You are handed a sequence of words `words`. Imagine stacking them as rows of a rectangle: the first word forms row 0, the second forms row 1, and so on. Such a stacking counts as a square layout when two requirements hold: the number of rows equals the length of the first word, and reading down column `c` spells exactly the word in row `c` for every valid `c`.
+Вам вручают последовательность слов `words`. Представьте, что вы складываете их в строки прямоугольника: первое слово формирует строку 0, второе формирует строку 1 и т. д. Такое укладывание считается квадратной компоновкой, когда удерживаются два требования: количество строк равно длине первого слова, а чтение столбца `c` заклинает именно слово в строке `c` для каждого действительного `c`.
 
-In other words, for every pair of positions `(i, j)` that falls inside the layout, the character at row `i`, column `j` must match the character at row `j`, column `i`. Rows may have different lengths; if either side of a compared pair is missing, the layout is invalid unless both sides are missing.
+Другими словами, для каждой пары позиций `(i, j)`, которая попадает в компоновку, символ в строке `i`, столбец `j` должен соответствовать персонажу в строке `j`, столбец `i`. Ряды могут иметь разную длину; если одна из сторон сравниваемой пары отсутствует, компоновка недействительна, если обе стороны отсутствуют.
 
-Return `true` when `words` forms such a layout, otherwise `false`.
+Возврат `true`, когда `words` формирует такую компоновку, иначе `false`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= words.length <= 500`
 - `1 <= words[i].length <= 500`
-- `words[i]` holds only lowercase English letters.
-- All words together hold at most `250000` characters.
+- `words[i]` содержит только английские буквы.
+- Все слова вместе содержат максимум символов `250000`.
 
-Adaptation: the source signature takes a list of strings; here it is modeled as `string_array` (`String[]`) so every supported language runner can feed it directly.
+Адаптация: исходная подпись берет список строк; здесь она смоделирована как `string_array` (`String[]`), поэтому каждый поддерживаемый языковой бегун может кормить его напрямую.

@@ -1,8 +1,8 @@
-You are planning a walk over a terrain map `heights` with `rows` rows and `columns` columns, where `heights[row][col]` is the altitude of that square. The walk begins at the upper-left corner `(0, 0)` and must finish at the lower-right corner `(rows-1, columns-1)`, moving only to the four directly neighboring squares.
+Вы планируете прогулку по карте местности `heights` с рядами `rows` и колоннами `columns`, где `heights[row][col]` — высота этого квадрата.Прогулка начинается в верхнем левом углу `(0, 0)` и должна заканчиваться в нижнем правом углу `(rows-1, columns-1)`, перемещаясь только к четырем непосредственно соседним квадратам.
 
-For any chosen walk, look at the absolute altitude change between each pair of successive squares and take the largest of those changes; that maximum is the walk's effort. Among all possible walks, return the smallest achievable effort.
+Для любой выбранной прогулки посмотрите на абсолютное изменение высоты между каждой парой последовательных квадратов и возьмите самое большое из этих изменений; этот максимум - усилие ходьбы. Среди всех возможных прогулок возвращайте наименьшее достижимое усилие.
 
-**Constraints:**
+**Ограничения:**
 - `rows == heights.length`
 - `columns == heights[i].length`
 - `1 <= rows, columns <= 100`

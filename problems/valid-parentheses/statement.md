@@ -1,6 +1,6 @@
-You receive a string `s` assembled only from the six symbols `(`, `)`, `{`, `}`, `[` and `]`. Call the arrangement correctly nested when each closing symbol pairs with a previously seen unmatched opener of the identical shape, pairs finish in the reverse of the order in which they were opened, and no opener is left waiting at the end. Return `true` for correctly nested inputs and `false` otherwise.
+Вы получаете строку `s`, собранную только из шести символов `(`, `)`, `{`, `}`, `[` и `]`. Вызовите расположение правильно вложенных при каждом закрытии символов пар с ранее замеченным непревзойденным открывателем одинаковой формы, пары заканчиваются в обратном порядке того порядка, в котором они были открыты, и в конце не остается открывателя. Возврат `true` для правильно вложенных входов и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ s.length ≤ 10^4
-- s consists of parentheses only '()[]{}'.
+- s состоит из скобок только '()[]{]'.

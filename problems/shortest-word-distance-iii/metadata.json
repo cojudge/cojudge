@@ -1,6 +1,6 @@
 {
   "id": "shortest-word-distance-iii",
-  "title": "351. Shortest Word Distance III",
+  "title": "351. Самое короткое расстояние до слова III",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/shortest-word-distance-iii/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "wordsDict = [\"practice\",\"makes\",\"perfect\",\"coding\",\"makes\"], word1 = \"makes\", word2 = \"coding\"",
       "output": "1",
-      "explanation": "\"makes\" at index 4 neighbors \"coding\" at index 3."
+      "explanation": "«делает» в индексе 4 соседей, «кодирующих» в индексе 3."
     },
     {
       "input": "wordsDict = [\"practice\",\"makes\",\"perfect\",\"coding\",\"makes\"], word1 = \"makes\", word2 = \"makes\"",
       "output": "3",
-      "explanation": "\"makes\" occurs at indices 1 and 4, which are 3 apart."
+      "explanation": "«Makes» происходит в индексах 1 и 4, которые являются 3 отдельно."
     }
   ],
   "starterCode": {
@@ -60,7 +60,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "When the words differ, reuse the two-index single sweep.",
-    "When the words are equal, track only the previous occurrence and the current one."
+    "Когда слова различаются, повторно используйте двухиндексный размах.",
+    "Когда слова равны, отследите только предыдущее и текущее."
   ]
 }

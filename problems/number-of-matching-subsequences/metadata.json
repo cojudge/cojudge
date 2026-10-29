@@ -1,6 +1,6 @@
 {
   "id": "number-of-matching-subsequences",
-  "title": "790. Number of Matching Subsequences",
+  "title": "790. Количество совпадающих последовательностей",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/number-of-matching-subsequences/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"abcde\", words = [\"a\",\"bb\",\"acd\",\"ace\"]",
       "output": "3",
-      "explanation": "Three candidates embed as subsequences."
+      "explanation": "Три кандидата встраиваются в последовательности."
     },
     {
       "input": "s = \"dsahjpjauf\", words = [\"ahjpjau\",\"ja\",\"ahbwzgqnuk\",\"tnmlanowax\"]",
       "output": "2",
-      "explanation": "The first two candidates trace through s."
+      "explanation": "Первые два кандидата проходят s."
     },
     {
       "input": "s = \"abcd\", words = [\"abc\",\"abd\",\"acd\",\"bcd\",\"abcde\"]",
       "output": "4",
-      "explanation": "All length-3 deletions work; the longer word fails."
+      "explanation": "Все делеции длины 3 работают; более длинное слово не работает."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Precompute for each position in s the next occurrence of every letter so each word scans in O(word length).",
-    "Alternatively bucket words by their current needed character and stream once through s.",
-    "A plain two-pointer check per word is also fast enough for the given limits."
+    "Предвычислите для каждой позиции в следующем случае каждой буквы, чтобы каждое слово сканировалось в O (длине слова).",
+    "В качестве альтернативы ведра слова по их текущему необходимому характеру и поток один раз через s.",
+    "Простая двухточечная проверка на слово также достаточно быстра для заданных пределов."
   ]
 }

@@ -1,0 +1,58 @@
+{
+  "id": "delete-columns-to-make-sorted-iii",
+  "title": "946. Delete Columns to Make Sorted III",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/delete-columns-to-make-sorted-iii/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "strs = [\"babca\",\"bbazb\"]",
+      "output": "3",
+      "explanation": "Keeping only 2 of the 5 columns (for instance the middle ones) is the most that stays ordered, so 3 columns must go."
+    },
+    {
+      "input": "strs = [\"edcba\"]",
+      "output": "4",
+      "explanation": "One strictly falling row keeps at most a single column, forcing 4 deletions."
+    },
+    {
+      "input": "strs = [\"ghi\",\"def\",\"abc\"]",
+      "output": "0",
+      "explanation": "Each column already reads top-to-bottom in order, so nothing needs deleting."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minDeletionSize(String[] strs) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minDeletionSize(self, strs: List[str]) -> int:\n        return 0",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minDeletionSize(vector<string>& strs) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinDeletionSize(string[] strs)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_deletion_size(strs: Vec<String>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinDeletionSize(strs []string) int {\n    return 0\n}",
+    "typescript": "export function minDeletionSize(strs: string[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $strs\n     * @return int\n     */\n    public function minDeletionSize($strs) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "strs": "[\"babca\",\"bbazb\"]"
+    },
+    {
+      "strs": "[\"edcba\"]"
+    },
+    {
+      "strs": "[\"ghi\",\"def\",\"abc\"]"
+    }
+  ],
+  "functionName": "minDeletionSize",
+  "params": [
+    {
+      "name": "strs",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Maximizing kept columns is equivalent to minimizing deletions.",
+    "Column i can follow column j when no row decreases from j to i; this yields a longest-chain DP.",
+    "Compare all earlier columns j < i for every position i."
+  ]
+}

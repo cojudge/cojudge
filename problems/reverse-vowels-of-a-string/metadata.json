@@ -1,6 +1,6 @@
 {
   "id": "reverse-vowels-of-a-string",
-  "title": "426. Reverse Vowels of a String",
+  "title": "426. Обратные гласные одной строки",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/reverse-vowels-of-a-string/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "s = \"IceCreAm\"",
       "output": "\"AceCreIm\"",
-      "explanation": "The four vowels I,e,e,A are written back as A,e,e,I."
+      "explanation": "Четыре гласных I,e,e,A записаны обратно как A,e,e,I."
     },
     {
       "input": "s = \"leetcode\"",
       "output": "\"leotcede\"",
-      "explanation": "The vowels e,e,o,e are written back as e,o,e,e."
+      "explanation": "Огласки e,e,o,e записываются обратно как e,o,e,e."
     }
   ],
   "starterCode": {
@@ -46,7 +46,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Walk in from both ends, skipping non-vowels, and exchange vowels when both pointers land on one.",
-    "Test vowel membership case-insensitively against the set {a,e,i,o,u}."
+    "Проходите с обоих концов, пропуская негласные и обменивайтесь гласными, когда оба указателя приземляются на один.",
+    "Тестирование членства гласных бесчувственно против множества {a,e,i,o,u}."
   ]
 }

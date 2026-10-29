@@ -1,6 +1,6 @@
 {
   "id": "maximum-average-subarray-i",
-  "title": "665. Maximum Average Subarray I",
+  "title": "665. Максимальная средняя величина I",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/maximum-average-subarray-i/",
   "category": "sliding-window",
@@ -8,7 +8,7 @@
     {
       "input": "nums = [1,12,-5,-6,50,3], k = 4",
       "output": "\"12.75\"",
-      "explanation": "The block [12,-5,-6,50] sums to 51, averaging 12.75, the best of the three windows."
+      "explanation": "Блок [12,-5,-6,50] суммирует с 51, усредняя 12.75, лучшее из трех окон."
     },
     {
       "input": "nums = [5], k = 1",
@@ -56,8 +56,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "This is a portable adaptation: return the average as a finite, double-parseable decimal string.",
-    "Sum the first window, then slide it by adding the newcomer and dropping the leaver while tracking the best sum.",
-    "Divide the best sum by k only once, at the end."
+    "Это переносная адаптация: возвращайте среднее как конечную, двураздельную десятичную строку.",
+    "Соберите первое окно, а затем скользите по нему, добавив новичка и уронив оставляющего, отслеживая лучшую сумму.",
+    "Лучшую сумму делите на k только один раз, в конце."
   ]
 }

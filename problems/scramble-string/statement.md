@@ -1,8 +1,8 @@
-Two strings of equal length are called scrambles of each other when one can be turned into the other by recursively splitting into two non-empty halves and optionally swapping the halves at any split. A single character only matches itself.
+Две струны одинаковой длины называются скремблами друг друга, когда одна может быть превращена в другую путем рекурсивного расщепления на две непустые половинки и необязательной замены половин при любом расщеплении.
 
-Given `s1` and `s2`, decide whether `s2` is a scrambled version of `s1`. Equal strings always qualify; strings with different character counts never do.
+Учитывая `s1` и `s2`, решите, является ли `s2` скремблированной версией `s1`. Равные строки всегда квалифицируются; строки с разным количеством символов никогда не делают.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s1.length <= 30`
 - `s1.length == s2.length`
-- Both strings consist of lowercase English letters.
+- Обе строки состоят из строчных английских букв.

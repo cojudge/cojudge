@@ -1,6 +1,6 @@
 {
   "id": "pancake-sorting",
-  "title": "955. Pancake Sorting",
+  "title": "955. Сортировка блинов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/pancake-sorting/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "arr = [3,2,4,1]",
       "output": "[4,2,4,3]",
-      "explanation": "Flipping 4, then 2, then 4, then 3 sorts the array: [4,2,4,3] is one valid answer (any sorting sequence is accepted)."
+      "explanation": "Перелистывание 4, затем 2, затем 4, затем 3 сортирует массив: [4, 2, 4, 3] является одним действительным ответом (принимается любая последовательность сортировки)."
     },
     {
       "input": "arr = [3,2,1]",
       "output": "[]",
-      "explanation": "A single flip of the whole array reverses it into order, so [3] suffices."
+      "explanation": "Один разворот всего массива переворачивает его в порядок, так что [3] достаточно."
     },
     {
       "input": "arr = [1,2,3]",
       "output": "[3]",
-      "explanation": "The array is already sorted, so the empty flip sequence is correct."
+      "explanation": "Массив уже отсортирован, поэтому последовательность пустого сальто верна."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Fix the largest remaining pancake first: bring it to the top, then flip the whole prefix.",
-    "Each size costs at most two flips, comfortably inside the 10n budget.",
-    "The judge replays your flips, so any sorting sequence scores full marks."
+    "Сначала почините самый большой оставшийся блин: поднесите его наверх, затем переверните весь префикс.",
+    "Каждый размер стоит не более двух сальто, удобно в пределах 10-н бюджета.",
+    "Судья повторяет ваши сальто, так что любая сортировочная последовательность набирает полные оценки."
   ]
 }

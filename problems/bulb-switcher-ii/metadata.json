@@ -8,17 +8,17 @@
     {
       "input": "n = 1, presses = 1",
       "output": "2",
-      "explanation": "One lamp can end on or off after one press."
+      "explanation": "Одна лампа может включаться или выключаться после одного нажатия."
     },
     {
       "input": "n = 2, presses = 1",
       "output": "3",
-      "explanation": "With two lamps, one press yields three reachable patterns."
+      "explanation": "С двумя лампами один пресс дает три достижимых рисунка."
     },
     {
       "input": "n = 3, presses = 1",
       "output": "4",
-      "explanation": "With at least three lamps, one press yields four patterns."
+      "explanation": "При по меньшей мере трех лампах один пресс дает четыре рисунка."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Only the first three lamps matter; further lamps repeat the same behavior pattern.",
-    "Enumerate the four button effects and notice presses beyond a small bound stop creating new states.",
-    "Handle n = 1 and n = 2 separately, then use the capped table 1, 4, 7, 8 for n >= 3."
+    "Имеют значение только первые три лампы; последующие лампы повторяют ту же модель поведения.",
+    "Перечислите эффекты четырех кнопок и нажмите на заметку за пределами небольшой границы, чтобы перестать создавать новые состояния.",
+    "Рукоятка n = 1 и n = 2 отдельно, затем используйте заглавную таблицу 1, 4, 7, 8 для n >= 3."
   ]
 }

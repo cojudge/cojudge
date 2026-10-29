@@ -1,6 +1,6 @@
-Starting from the `root` of a binary tree, exchange every left and right child throughout the structure to create its mirror image, then return the `root` of the mirrored tree.
+Начиная с `root` двоичного дерева, обменяйте каждого левого и правого потомка по всей структуре, чтобы создать его зеркальное отражение, а затем верните `root` зеркального дерева.
 
-**Constraints:**
+**Ограничения:**
 
-- The number of nodes in the tree is in the range [0, 100].
+- Количество узлов в дереве находится в диапазоне [0, 100].
 - -100 ≤ Node.val ≤ 100

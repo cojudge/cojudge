@@ -1,11 +1,11 @@
-A frog sits on stones placed at distinct positions along a river, starting at position `0`. The positions are given in strictly increasing order in `stones`, and the frog wants to finish on the final stone.
+Лягушка сидит на камнях, расположенных в разных положениях вдоль реки, начиная с позиции `0`. Позиции приведены в строго возрастающем порядке в `stones`, и лягушка хочет закончить на последнем камне.
 
-The opening hop must cover exactly `1` unit. Suppose the previous hop covered `k` units; the next hop may cover `k - 1`, `k`, or `k + 1` units, and it must land on a stone ahead (jumps are always forward, and a hop of length zero or less is never allowed).
+Открывающий прыжок должен точно покрывать `1` Предположим, что предыдущий прыжок был покрыт `k` Очередной прыжок может покрыть `k - 1`, `k`или `k + 1` единицы, и он должен приземлиться на камень впереди (прыжки всегда вперед, и прыжок длиной ноль или меньше никогда не допускается).
 
-Decide whether the last stone is reachable under these rules.
+Решите, достижим ли последний камень в соответствии с этими правилами.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= stones.length <= 2000`
 - `0 <= stones[i] <= 2^31 - 1`
 - `stones[0] == 0`
-- Positions are strictly increasing.
+- Позиции строго увеличиваются.

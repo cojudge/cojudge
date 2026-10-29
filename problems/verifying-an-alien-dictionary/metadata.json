@@ -1,6 +1,6 @@
 {
   "id": "verifying-an-alien-dictionary",
-  "title": "216. Verifying an Alien Dictionary",
+  "title": "216. Проверка иностранного словаря",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/verifying-an-alien-dictionary/",
   "category": "graph",
@@ -8,7 +8,7 @@
     {
       "input": "words = [\"hello\",\"leetcode\"], order = \"hlabcdefgijkmnopqrstuvwxyz\"",
       "output": "true",
-      "explanation": "As 'h' comes before 'l' in this language, the sequence is sorted."
+      "explanation": "Поскольку «h» предшествует «l» на этом языке, последовательность сортируется."
     },
     {
       "input": "words = [\"word\",\"world\",\"row\"], order = \"worldabcefghijkmnpqstuvxyz\"",
@@ -56,6 +56,6 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Build a rank map from order, then compare adjacent words using that rank."
+    "Постройте карту ранга из порядка, а затем сравните соседние слова, используя этот ранг."
   ]
 }

@@ -1,0 +1,59 @@
+{
+  "id": "smallest-range-covering-elements-from-k-lists",
+  "title": "654. Smallest Range Covering Elements from K Lists",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "nums = [[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]",
+      "output": "[20,24]",
+      "explanation": "20 comes from list 2, 22/24 from others; span 4 is minimal."
+    },
+    {
+      "input": "nums = [[1,2,3],[1,2,3],[1,2,3]]",
+      "output": "[1,1]",
+      "explanation": "Picking 1 from each list gives a zero-width range."
+    },
+    {
+      "input": "nums = [[10,10],[11,11]]",
+      "output": "[10,11]",
+      "explanation": "One entry per list forces [10,11]."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int[] smallestRange(int[][] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def smallestRange(self, nums: List[List[int]]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> smallestRange(vector<vector<int>>& nums) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public int[] SmallestRange(int[][] nums) \n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn smallest_range(nums: Vec<Vec<i32>>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc SmallestRange(nums [][]int) []int {\n    \n}",
+    "typescript": "export function smallestRange(nums: number[][]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $nums\n     * @return int[]\n     */\n    public function smallestRange($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]"
+    },
+    {
+      "nums": "[[1,2,3],[1,2,3],[1,2,3]]"
+    },
+    {
+      "nums": "[[10,10],[11,11]]"
+    }
+  ],
+  "functionName": "smallestRange",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Seed a min-heap with the first entry of every list and record the maximum among them.",
+    "Repeatedly pop the minimum: the current [min, max] is a candidate covering all lists.",
+    "Then advance inside the popped list (updating the max) until some list runs dry; keep the shortest candidate, breaking ties by smaller start.",
+    "Adaptation: the nested input maps to int_array_2d and the two-element answer maps to int_array in this judge."
+  ]
+}

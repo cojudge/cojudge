@@ -1,6 +1,6 @@
 {
   "id": "remove-duplicates-from-sorted-array-ii",
-  "title": "272. Remove Duplicates from Sorted Array II",
+  "title": "272. Удалить дубликаты из Sorted Array II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1,1,1,2,2,3]",
       "output": "5",
-      "explanation": "The first 5 entries become [1,1,2,2,3]; one extra 1 is dropped."
+      "explanation": "Первые записи 5 становятся [1, 1, 2, 2, 3]; один дополнительный 1 отбрасывается."
     },
     {
       "input": "nums = [0,0,1,1,1,1,2,3,3]",
       "output": "7",
-      "explanation": "The first 7 entries become [0,0,1,1,2,3,3]; two extra 1s are dropped."
+      "explanation": "Первые записи 7 становятся [0, 0, 1, 1, 2, 3, 3]; два дополнительных 1s сбрасываются."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Because the array is sorted, compare each candidate with the element two positions before the write pointer.",
-    "Keep nums[i] when it differs from nums[k-2]; otherwise it would be a third copy.",
-    "Short arrays (length <= 2) are already valid and need no changes."
+    "Поскольку массив отсортирован, сравните каждого кандидата с элементом две позиции перед указателем записи.",
+    "Для тех, кто отличается от других,2]; в противном случае это была бы третья копия.",
+    "Короткие массивы (длина <= 2) уже действительны и не нуждаются в изменениях."
   ]
 }

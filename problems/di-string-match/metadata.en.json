@@ -1,0 +1,58 @@
+{
+  "id": "di-string-match",
+  "title": "929. DI String Match",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/di-string-match/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "s = \"IDID\"",
+      "output": "[0,4,1,3,2]",
+      "explanation": "Steps rise, fall, rise, fall as required."
+    },
+    {
+      "input": "s = \"III\"",
+      "output": "[0,1,2,3]",
+      "explanation": "All steps rise."
+    },
+    {
+      "input": "s = \"DDI\"",
+      "output": "[3,2,0,1]",
+      "explanation": "Two falls then a rise."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] diStringMatch(String s) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def diStringMatch(self, s: str) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> diStringMatch(string s) {\n        return {};\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public int[] DiStringMatch(string s) \n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn di_string_match(s: String) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc DiStringMatch(s string) []int {\n    return nil\n}",
+    "typescript": "export function diStringMatch(s: string): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int[]\n     */\n    public function diStringMatch($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "IDID"
+    },
+    {
+      "s": "III"
+    },
+    {
+      "s": "DDI"
+    }
+  ],
+  "functionName": "diStringMatch",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Keep two pools: the smallest unused number and the largest unused number.",
+    "Hand out the smallest remaining value on every I and the largest remaining value on every D; the final leftover fills the last slot.",
+    "Any valid ordering is accepted, so this greedy choice never needs backtracking."
+  ]
+}

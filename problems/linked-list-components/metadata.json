@@ -1,6 +1,6 @@
 {
   "id": "linked-list-components",
-  "title": "815. Linked List Components",
+  "title": "815. Связанные компоненты списка",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/linked-list-components/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "head = [0,1,2,3], nums = [0,1,3]",
       "output": "2",
-      "explanation": "Nodes 0-1 form one connected block and node 3 forms another; node 2 breaks the chain."
+      "explanation": "Узлы 0-1 формирует один подключенный блок и узел 3 формирует другой узел; 2 Сломает цепь."
     },
     {
       "input": "head = [0,1,2,3,4], nums = [0,3,1,4]",
       "output": "2",
-      "explanation": "Blocks 0-1 and 3-4 are each contiguous in the list."
+      "explanation": "Блоки 0-1 и 3-4 Каждый из них вписан в список."
     },
     {
       "input": "head = [1,2,0,4], nums = [0]",
       "output": "1",
-      "explanation": "A single matching node is one component."
+      "explanation": "Единый узел соответствия является одним компонентом."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Store nums in a hash set for O(1) membership checks while walking the list.",
-    "A new component starts at each matching node whose predecessor is missing or unmatched."
+    "Храните числа в хэш-наборе для проверки членства O (1) во время прохождения списка.",
+    "Новый компонент начинается на каждом соответствующем узле, предшественник которого отсутствует или не имеет себе равных."
   ]
 }

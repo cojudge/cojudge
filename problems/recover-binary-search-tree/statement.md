@@ -1,12 +1,12 @@
-Two entries of a binary search tree have had their values exchanged by accident. Restore the tree so it satisfies the search-tree ordering again, without altering its shape.
+Две записи двоичного дерева поиска случайно обменялись значениями. Восстановите дерево так, чтобы оно снова удовлетворяло порядку дерева поиска, не изменяя его форму.
 
-In a valid search tree, every node's left descendants hold smaller values and right descendants hold larger values. Equivalently, an inorder walk visits values in strictly ascending order. Exactly two nodes violate this order; find them and swap their values back.
+В действительном дереве поиска у каждого узла левые потомки имеют меньшие значения, а правые потомки имеют большие значения. Эквивалентно, беспорядочная прогулка посещает значения в строго восходящем порядке. Ровно два узла нарушают этот порядок; найдите их и поменяйте их значения назад.
 
-Return the root of the repaired tree.
+Верните корень отремонтированного дерева.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= number of nodes <= 1000`
 - `-2^31 <= Node.val <= 2^31 - 1`
-- The input tree is guaranteed to become a valid search tree after swapping exactly two node values.
+- Дерево ввода гарантированно станет действительным деревом поиска после замены ровно двух значений узла.
 
-**Adaptation note:** The classic formulation modifies the tree in place with no return value. This version returns the repaired `TreeNode` root so outputs can be serialized and checked.
+**Примечание по адаптации: ** Классическая формулировка изменяет дерево на месте без обратного значения. Эта версия возвращает отремонтированный корень `TreeNode`, чтобы выходы могли быть сериализованы и проверены.

@@ -1,6 +1,6 @@
 {
   "id": "design-search-autocomplete-system",
-  "title": "664. Design Search Autocomplete System",
+  "title": "664. Поисковая система Autocomplete",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/design-search-autocomplete-system/",
   "category": "trie",
@@ -8,12 +8,12 @@
     {
       "input": "operations = [\"AutocompleteSystem\",\"input\",\"input\",\"input\",\"input\"], values = [\"i love you:5;island:3;ironman:2;i love leetcode:2\", \"i\", \" \", \"a\", \"#\"]",
       "output": "[[\"i love you\",\"island\",\"i love leetcode\"],[\"i love you\",\"i love leetcode\"],[],[]]",
-      "explanation": "Prefix \"i\" matches three sentences by heat; \"i \" narrows to two; \"i a\" matches nothing; \"#\" stores \"i a\"."
+      "explanation": "Префикс «i» соответствует трем предложениям по теплу; «i» сужается до двух; «i» не соответствует ничему; «#» сохраняет «i»."
     },
     {
       "input": "operations = [\"AutocompleteSystem\",\"input\",\"input\"], values = [\"abc:2;abd:2;abe:2\", \"a\", \"b\"]",
       "output": "[[\"abc\",\"abd\",\"abe\"],[\"abc\",\"abd\",\"abe\"]]",
-      "explanation": "Tied heats fall back to ASCII order."
+      "explanation": "Тепло возвращается к заказу ASCII."
     }
   ],
   "starterCode": {
@@ -53,8 +53,8 @@
   ],
   "outputType": "string_list_2d",
   "hints": [
-    "Keep a map from sentence to heat plus a live prefix buffer; preload parses on ':' and ';'.",
-    "For a normal character, extend the prefix and collect every stored sentence starting with it.",
-    "Sort candidates by heat descending then ASCII ascending, keep three; '#' commits the prefix and resets it."
+    "Сохраняйте карту от предложения к теплу плюс буфер с живым префиксом; предварительная загрузка парсирует на ':' и ';'.",
+    "Для нормального персонажа расширьте префикс и соберите каждое сохраненное предложение, начиная с него.",
+    "Сортируйте кандидатов по теплу, опускающемуся, а затем поднимающемуся ASCII, сохраняйте три; '#' фиксирует префикс и сбрасывает его."
   ]
 }

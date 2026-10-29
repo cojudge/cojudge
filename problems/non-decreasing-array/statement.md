@@ -1,7 +1,7 @@
-You are given an array `nums`.
+Вы получаете массив `nums`.
 
-Decide whether it can become non-decreasing (each entry less than or equal to the next) by changing at most one entry to any value.
+Решите, может ли она стать неубывающей (каждая запись меньше или равна следующей), изменив максимум одну запись на любое значение.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^4`
 - `-10^5 <= nums[i] <= 10^5`

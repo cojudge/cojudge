@@ -1,6 +1,6 @@
 {
   "id": "sort-list",
-  "title": "305. Sort List",
+  "title": "305. Сортировать список",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/sort-list/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "head = [4,2,1,3]",
       "output": "[1,2,3,4]",
-      "explanation": "Sorting the values gives ascending order."
+      "explanation": "Сортировка ценностей дает восходящий порядок."
     },
     {
       "input": "head = [-1,5,3,4,0]",
       "output": "[-1,0,3,4,5]",
-      "explanation": "The same multiset of values appears in sorted order."
+      "explanation": "Один и тот же набор значений появляется в сортированном порядке."
     },
     {
       "input": "head = []",
       "output": "[]",
-      "explanation": "An empty list stays empty."
+      "explanation": "Пустой список остается пустым."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Split the list into halves with slow/fast pointers, sort each half, then merge.",
-    "Merging two sorted lists is linear and needs only pointer rewiring.",
-    "An iterative bottom-up merge pass can remove recursion depth."
+    "Разделите список на половинки с медленными / быстрыми указателями, сортируйте каждую половину, а затем сливайте.",
+    "Слияние двух отсортированных списков является линейным и требует только перезаписи указателей.",
+    "Итеративный слияние снизу вверх может удалить глубину рекурсии."
   ]
 }

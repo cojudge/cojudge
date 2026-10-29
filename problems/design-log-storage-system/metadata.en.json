@@ -1,0 +1,60 @@
+{
+  "id": "design-log-storage-system",
+  "title": "657. Design Log Storage System",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/design-log-storage-system/",
+  "category": "design",
+  "examples": [
+    {
+      "input": "operations = [\"LogSystem\",\"put\",\"put\",\"put\",\"retrieve\"], values = [\"\",\"1|2017:01:01:23:59:59\",\"2|2017:01:01:22:59:59\",\"3|2016:01:01:00:00:00\",\"2016:01:01:01:01:01|2017:01:01:23:00:00|Year\"]",
+      "output": "[[1,2,3]]",
+      "explanation": "At year precision all three records sit in 2016..2017."
+    },
+    {
+      "input": "operations = [\"LogSystem\",\"put\",\"put\",\"put\",\"retrieve\"], values = [\"\",\"1|2017:01:01:23:59:59\",\"2|2017:01:01:22:59:59\",\"3|2016:01:01:00:00:00\",\"2016:01:01:01:01:01|2017:01:01:23:00:00|Hour\"]",
+      "output": "[[1,2]]",
+      "explanation": "At hour precision only the two 2017 records land inside the window."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[][] runLogStorage(String[] operations, String[] values) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runLogStorage(self, operations: List[str], values: List[str]) -> List[List[int]]:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<vector<int>> runLogStorage(vector<string>& operations, vector<string>& values) {\n        return {};\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public int[][] RunLogStorage(string[] operations, string[] values) \n    {\n        return System.Array.Empty<int[]>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_log_storage(operations: Vec<String>, values: Vec<String>) -> Vec<Vec<i32>> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunLogStorage(operations []string, values []string) [][]int {\n    return nil\n}",
+    "typescript": "export function runLogStorage(operations: string[], values: string[]): number[][] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param string[] $values\n     * @return int[][]\n     */\n    public function runLogStorage($operations, $values) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"LogSystem\", \"put\", \"put\", \"put\", \"retrieve\"]",
+      "values": "[\"\", \"1|2017:01:01:23:59:59\", \"2|2017:01:01:22:59:59\", \"3|2016:01:01:00:00:00\", \"2016:01:01:01:01:01|2017:01:01:23:00:00|Year\"]"
+    },
+    {
+      "operations": "[\"LogSystem\", \"put\", \"put\", \"put\", \"retrieve\"]",
+      "values": "[\"\", \"1|2017:01:01:23:59:59\", \"2|2017:01:01:22:59:59\", \"3|2016:01:01:00:00:00\", \"2016:01:01:01:01:01|2017:01:01:23:00:00|Hour\"]"
+    },
+    {
+      "operations": "[\"LogSystem\", \"put\", \"retrieve\"]",
+      "values": "[\"\", \"7|2020:05:05:05:05:05\", \"2020:05:05:05:05:05|2020:05:05:05:05:05|Second\"]"
+    }
+  ],
+  "functionName": "runLogStorage",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int_array_2d",
+  "hints": [
+    "Split every timestamp on ':' and keep only the leading parts dictated by the granularity (Year=1 ... Second=6).",
+    "A record matches when its truncated stamp sorts no earlier than the truncated start and no later than the truncated end.",
+    "Collect one output row per retrieve call in call order; put and constructor calls add no rows."
+  ]
+}

@@ -1,8 +1,8 @@
-A pattern string `s` of length `n` uses only the letters `I` (rising) and `D` (falling). It sketches a permutation of the numbers `1..n+1`: for each slot `i`, `I` demands `perm[i] < perm[i+1]` while `D` demands `perm[i] > perm[i+1]`.
+Строка шаблонов `s` длины `n` использует только буквы `I` (подъем) и `D` (падение). Она рисует перестановку чисел `1..n+1`: для каждого слота `i` `I` требует `perm[i] < perm[i+1]`, в то время как `D` требует `perm[i] > perm[i+1]`.
 
-Many permutations can fit the same sketch. Build the smallest one in dictionary order.
+Многие перестановки могут соответствовать одному и тому же эскизу. Постройте самый маленький в словарном порядке.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= s.length <= 10^5`
-- Each `s[i]` is `I` or `D`.
+- Каждый `s[i]` является `I` или `D`.

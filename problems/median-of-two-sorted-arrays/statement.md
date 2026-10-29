@@ -1,12 +1,12 @@
-Two integer arrays `nums1` and `nums2` arrive already ordered from smallest to largest. Conceptually merge their contents and report the middle value, or the mean of the two middle values when the combined size is even. At least one of the two inputs contains an element.
+Два целочисленных массива `nums1` и `nums2` прибывают уже упорядоченными от наименьшего к наибольшему. Концептуально сливаются их содержимое и сообщают среднее значение, или среднее из двух средних значений при четном комбинированном размере. По меньшей мере один из двух входов содержит элемент.
 
-An efficient procedure is expected, with total running time `O(log(min(nums1.length, nums2.length)))`.
+Ожидается эффективная процедура с общим временем работы `O(log(min(nums1.length, nums2.length)))`.
 
-**Constraints:**
+**Ограничения:**
 
 - `0 <= nums1.length, nums2.length <= 1000`
 - `1 <= nums1.length + nums2.length <= 2000`
 - `-10^6 <= nums1[i], nums2[i] <= 10^6`
-- Both arrays are sorted in nondecreasing order.
+- Оба массива сортируются в неубывающем порядке.
 
-**Portable interface:** Provide `findMedianSortedArrays(nums1, nums2)`. Because floating-point rendering varies between languages, this version expresses the answer as a normalized decimal string: a whole-number median ends in `.0` and a halfway median ends in `.5`, such as `"2.0"`, `"2.5"`, or `"-0.5"`.
+**Портативный интерфейс: ** Обеспечить `findMedianSortedArrays(nums1, nums2)`. Поскольку рендеринг с плавающей запятой варьируется между языками, эта версия выражает ответ как нормализованную десятичную строку: медиана целого числа заканчивается в `.0` и полусредние концы в `.5`, такие как `"2.0"`, `"2.5"` или `"-0.5"`.

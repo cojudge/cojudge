@@ -1,18 +1,18 @@
 {
   "id": "basic-count-char",
-  "title": "31. Count Character",
+  "title": "31. Графический персонаж",
   "difficulty": "Easy",
   "category": "strings",
   "examples": [
     {
       "input": "s = \"hello\", ch = \"l\"",
       "output": "2",
-      "explanation": "l appears twice in hello."
+      "explanation": "Я дважды здоровался."
     },
     {
       "input": "s = \"hello\", ch = \"z\"",
       "output": "0",
-      "explanation": "z never appears."
+      "explanation": "z никогда не появляется."
     }
   ],
   "starterCode": {
@@ -52,7 +52,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Loop over `s` and compare each character with `ch`.",
-    "Count with an integer that starts at 0."
+    "Нажмите на `s` и сравните каждого персонажа с `ch`.",
+    "Счет с целым числом, начинающимся с 0."
   ]
 }

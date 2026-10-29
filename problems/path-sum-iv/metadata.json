@@ -1,6 +1,6 @@
 {
   "id": "path-sum-iv",
-  "title": "685. Path Sum IV",
+  "title": "685. Путь Сум IV",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/path-sum-iv/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [113,215,221]",
       "output": "12",
-      "explanation": "Paths 3->5 (=8) and 3->1 (=4) total 12."
+      "explanation": "Маршруты 3->5 (=8) и 3->1 (=4) суммарно 12."
     },
     {
       "input": "nums = [113,221]",
       "output": "4",
-      "explanation": "Single path 3 -> 1 totals 4."
+      "explanation": "Один путь 3 -> 1 составляет 4."
     },
     {
       "input": "nums = [111,222,333]",
       "output": "6",
-      "explanation": "Chain 1->2->3 sums to 6."
+      "explanation": "Цепочка 1->2->3 суммируется с 6."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Decode each entry: hundreds are depth, tens are position, ones are the node value.",
-    "Store the values in a map keyed by (depth, position); children of (d, p) sit at (d+1, 2p-1) and (d+1, 2p).",
-    "Depth-first walk from (1, 1), adding the running total whenever a node has no children in the map."
+    "Декодируйте каждую запись: сотни - глубина, десятки - положение, единицы - значение узла.",
+    "Храните значения на карте с ключом (глубина, положение); дети (d, p) сидят на (d + 1, 2p-1) и (d + 1, 2p).",
+    "Глубина первой ходьбы от (1, 1), добавляя общее количество запусков, когда у узла нет потомков на карте."
   ]
 }

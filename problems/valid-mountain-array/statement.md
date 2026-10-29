@@ -1,9 +1,9 @@
-Decide whether an array climbs strictly and then descends strictly, forming a single peak.
+Решите, поднимается ли массив строго, а затем строго опускается, образуя единую вершину.
 
-A valid mountain has at least three numbers. Reading left to right, values must rise by strict steps up to one summit, then fall by strict steps after it. The summit cannot sit at either end, and flat neighbours anywhere disqualify the array.
+Действительная гора имеет по крайней мере три числа.Читая слева направо, значения должны подниматься строгими шагами до одной вершины, а затем падать строгими шагами после нее. Саммит не может сидеть ни на одном конце, а плоские соседи где-либо дисквалифицируют массив.
 
-Given an integer array `arr`, return `true` when it is a mountain and `false` otherwise.
+Учитывая целочисленный массив `arr`, возвращайте `true`, когда это гора, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= arr.length <= 10^4`
 - `0 <= arr[i] <= 10^4`

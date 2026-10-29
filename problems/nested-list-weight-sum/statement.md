@@ -1,10 +1,10 @@
-You are given a nested structure written as text in `nestedList`, for example `"[[1,1],2,[1,1]]"`. Square brackets delimit lists, integers (possibly negative) are bare numbers, and commas separate elements. Nesting may be arbitrarily deep.
+Вам дается вложенная структура, написанная в виде текста в `nestedList`, например `"[[1,1],2,[1,1]]"`. Квадратные скобки разграничивают списки, целые числа (возможно, отрицательные) - голые числа, а запятые - отдельные элементы. Вложение может быть произвольно глубоким.
 
-The weight of each integer equals its depth: integers directly inside the outermost list sit at depth 1, integers one level deeper sit at depth 2, and so on. Compute the total of `integer * depth` over every integer in the structure.
+Вес каждого целого числа равен его глубине: целые числа непосредственно внутри самого внешнего списка сидят на глубине 1, целые числа на один уровень глубже сидят на глубине 2 и т. д. Вычислите общую сумму `integer * depth` по каждому целому числу в структуре.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nestedList.length <= 500`
-- Integers lie in `[-100, 100]`.
-- The text is always a valid nested list.
+- Целые числа лежат в `[-100, 100]`.
+- Текст всегда представляет собой вложенный список.
 
-**Adaptation note:** The original signature takes a list of `NestedInteger` objects. Here the same structure arrives serialized as a `string` (e.g. `"[[1,1],2,[1,1]]"`) and you return the integer total.
+**Примечание по адаптации: ** Оригинальная подпись содержит список объектов `NestedInteger`. Здесь та же структура прибывает серийно, что и `string` (например, `"[[1,1],2,[1,1]]"`), и вы возвращаете целое число.

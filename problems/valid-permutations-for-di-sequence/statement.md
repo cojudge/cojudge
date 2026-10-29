@@ -1,8 +1,8 @@
-You receive a pattern string `s` of length `n` where each character is either `D` (the next number must drop) or `I` (the next number must climb). Consider shuffles of the numbers `0` through `n` inclusive: a shuffle is acceptable when every neighbouring pair obeys the corresponding letter.
+Вы получаете строку шаблона `s` длины `n`, где каждый символ является либо `D` (следующее число должно упасть), либо `I` (следующее число должно подняться). Рассмотрим перетасовки чисел `0` через `n` включительно: перетасовка приемлема, когда каждая соседняя пара подчиняется соответствующей букве.
 
-Count the acceptable shuffles, giving the total modulo `10^9 + 7`.
+Подсчитывайте допустимые перетасовки, давая общий модуль `10^9 + 7`.
 
-**Constraints:**
+**Ограничения:**
 - `n == s.length`
 - `1 <= n <= 200`
-- `s[i]` is `'I'` or `'D'`.
+- `s[i]` - это `'I'` или `'D'`.

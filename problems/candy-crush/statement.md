@@ -1,13 +1,13 @@
-You are given a candy board where each cell holds a digit character from `1` to `5` (`0` means empty after crushing). Repeatedly settle the board:
+Вам дают конфетную доску, где каждая ячейка содержит цифровой символ от `1` до `5` (`0` означает пустой после дробления).
 
-1. Crush: every horizontal or vertical run of at least three equal non-zero values disappears at once (all such cells become `0`). Overlapping runs crush together.
-2. Drop: for each column, the surviving non-zero values fall to the bottom and zeros rise to the top.
+1. Краш: каждый горизонтальный или вертикальный прогон по меньшей мере трех равных ненулевых значений исчезает сразу (все такие ячейки становятся `0`).
+2. Капля: для каждой колонки уцелевшие ненулевые значения падают на дно, а нули поднимаются на вершину.
 
-Stop when a full scan finds nothing to crush. Return the stable board as one string per row (each row's characters joined left to right).
+Остановитесь, когда полное сканирование не найдет ничего, чтобы раздавить. Верните стабильную доску в виде одной строки на строку (символы каждой строки соединены слева направо).
 
-*Adaptation note:* the board arrives as `char_array_2d` and the answer is a `string_list` of row strings, mirroring the minesweeper layout so every language can express it. Digits stay single characters (`0` to `5`); Rust sees the board as its encoded string and parses it first.
+*Примечание: * плата приходит как `char_array_2d`, и ответ - `string_list` строк строк, отражая макет тральщика, чтобы каждый язык мог его выразить. Дигиты остаются одиночными символами (`0` до `5`); Rust видит доску как закодированную строку и сначала анализирует ее.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= board.length, board[i].length <= 50`
-- Each input cell is `1` to `5`; settled cells may be `0` to `5`.
-- The board is rectangular.
+- Каждая входная ячейка `1` для `5`; оседлые ячейки могут быть `0` для `5`.
+- Доска прямоугольная.

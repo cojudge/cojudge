@@ -1,9 +1,9 @@
-You are given a sorted array in which every value occurs exactly twice, except for one value that occurs exactly once. The pairs of equal values sit next to each other.
+Вам дается сортированный массив, в котором каждое значение происходит ровно дважды, за исключением одного значения, которое происходит ровно один раз.Пары равных значений сидят рядом друг с другом.
 
-Locate the lone value and return it. A solution that runs in logarithmic time with constant extra memory is expected.
+Найдите единственное значение и верните его. Ожидается решение, которое работает в логарифмическое время с постоянной дополнительной памятью.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^5`
-- `nums.length` is odd
+- `nums.length` - странный
 - `0 <= nums[i] <= 10^5`
-- `nums` is sorted in non-decreasing order and all but one value appear twice
+- `nums` сортируется в неубывающем порядке, и все, кроме одного значения, появляются дважды.

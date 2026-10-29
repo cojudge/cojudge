@@ -756,10 +756,10 @@
     </div>
     {#if visualType === 'undirected_edges' || visualType === 'adjacency_list'}
       <div class="zoom-controls">
-        <button on:click={zoomIn} title="Zoom in">+</button>
+        <button on:click={zoomIn} title="Взбейте.">+</button>
         <span class="zoom-level">{Math.round(zoomScale * 100)}%</span>
-        <button on:click={zoomOut} title="Zoom out">−</button>
-        <button on:click={resetZoom} title="Reset zoom">⟲</button>
+        <button on:click={zoomOut} title="Забудь.">−</button>
+        <button on:click={resetZoom} title="Сбросить зум">⟲</button>
       </div>
     {/if}
   </div>

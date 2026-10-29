@@ -6,9 +6,9 @@
 
 <div class="demo-banner">
 	<p>
-		This is a demo site. Run the judge locally -
+		Это демо-сайт. Запусти судью на месте.
 		<button class="demo-banner-link" onclick={() => (showInstall = true)}>
-			[instruction]
+			[инструкция]
 		</button>
 	</p>
 	<div class="demo-banner-actions">
@@ -17,7 +17,7 @@
 			href="https://github.com/cojudge/cojudge"
 			target="_blank"
 			rel="noreferrer"
-			aria-label="Cojudge on GitHub"
+			aria-label="Судья на GitHub"
 			data-tip="View Source Code"
 		>
 			<svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">

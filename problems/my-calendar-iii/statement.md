@@ -1,13 +1,13 @@
-Consider a booking service for half-open slots `[start, end)` with no refusal rule: every requested slot is stored. After each booking, the service reports the largest number of stored slots covering any single point in time (the peak overlap so far).
+Рассмотрим услугу бронирования для полуоткрытых слотов `[start, end)` без правила отказа: каждый запрашиваемый слот хранится.После каждого бронирования сервис сообщает о наибольшем количестве хранимых слотов, охватывающих любую точку времени (пиковое перекрытие до сих пор).
 
-You get an ordered call sequence. The first entry creates the calendar; each later entry books `[start, end)` with `start < end` and always succeeds.
+Вы получаете упорядоченную последовательность вызовов. Первая запись создает календарь; каждая более поздняя запись записывает `[start, end)` с `start < end` и всегда успевает.
 
-Implement `runCalendarThree(operations, args)`:
+Внедрение `runCalendarThree(operations, args)`:
 
-- `operations[i]` is `"MyCalendarThree"` for the creation entry, then `"book"` afterwards.
-- `args[i]` is `[]` for creation and `[start, end]` for a booking.
-- Return one integer per booking (creation excluded): the peak overlap after that booking is stored.
+- `operations[i]` - это `"MyCalendarThree"` для записи создания, а затем `"book"`.
+- `args[i]` - это `[]` для создания и `[start, end]` для бронирования.
+- Возврат одного целого числа за бронирование (создание исключено): пиковое перекрытие после этого бронирования сохраняется.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= operations.length <= 400`
 - `0 <= start < end <= 10^9`

@@ -1,6 +1,6 @@
 {
   "id": "print-binary-tree",
-  "title": "675. Print Binary Tree",
+  "title": "675. Бинарное дерево Binary Tree",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/print-binary-tree/",
   "category": "tree",
@@ -44,8 +44,8 @@
   ],
   "outputType": "string_list_2d",
   "hints": [
-    "The height h sets the canvas size: h rows and 2^h - 1 columns filled with empty strings.",
-    "Put the root at the middle of the top row, then place each child at the middle of its own side region one row down.",
-    "A depth-first fill that carries the left and right column bounds keeps every label centered."
+    "Высота h устанавливает размер холста: h рядов и 2^h — 1 столбцов, заполненных пустыми строками.",
+    "Положите корень в середину верхнего ряда, затем поместите каждого потомка в середину его собственной боковой области на один ряд вниз.",
+    "Глубинное наполнение, которое несет левую и правую границы колонки, держит каждую этикетку в центре."
   ]
 }

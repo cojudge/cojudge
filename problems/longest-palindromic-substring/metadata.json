@@ -1,6 +1,6 @@
 {
   "id": "longest-palindromic-substring",
-  "title": "57. Longest Palindromic Substring",
+  "title": "57. Самая длинная палиндромная подложка",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/longest-palindromic-substring/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "s=\"babad\"",
       "output": "\"bab\" or \"aba\"",
-      "explanation": "The longest palindromic substring in \"babad\" is \"bab\" or \"aba\" (both length 3)."
+      "explanation": "Самой длинной палиндромной подстрочкой в «babad» является «bab» или «aba» (оба длины 3)."
     },
     {
       "input": "s=\"cbbd\"",
       "output": "\"bb\"",
-      "explanation": "The longest palindromic substring in \"cbbd\" is \"bb\" (length 2)."
+      "explanation": "Самой длинной палиндромной подстрочкой в «cbbd» является «bb» (длина 2)."
     }
   ],
   "starterCode": {
@@ -49,6 +49,6 @@
   ],
   "outputType": "string",
   "hints": [
-    "Expand around centers (both odd and even) to find the longest palindromic substring in O(n^2) time and O(1) space."
+    "Расширяйтесь вокруг центров (как странных, так и четных), чтобы найти самую длинную палиндромную подстроку во времени O (n^2) и пространстве O (1)."
   ]
 }

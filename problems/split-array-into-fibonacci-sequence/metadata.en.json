@@ -1,0 +1,61 @@
+{
+  "id": "split-array-into-fibonacci-sequence",
+  "title": "840. Split Array into Fibonacci Sequence",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/split-array-into-fibonacci-sequence/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "num = \"1101111\"",
+      "output": "[11,0,11,11]",
+      "explanation": "11+0=11 and 0+11=11."
+    },
+    {
+      "input": "num = \"11235813\"",
+      "output": "[1,1,2,3,5,8,13]",
+      "explanation": "Each value sums the prior two."
+    },
+    {
+      "input": "num = \"112358130\"",
+      "output": "[]",
+      "explanation": "No valid partition exists."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<Integer> splitIntoFibonacci(String num) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def splitIntoFibonacci(self, num: str) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> splitIntoFibonacci(string num) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<int> SplitIntoFibonacci(string num)\n    {\n        return new List<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn split_into_fibonacci(num: String) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc SplitIntoFibonacci(num string) []int {\n    return []int{}\n}",
+    "typescript": "export function splitIntoFibonacci(num: string): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $num\n     * @return int[]\n     */\n    public function splitIntoFibonacci($num) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "num": "1101111"
+    },
+    {
+      "num": "11235813"
+    },
+    {
+      "num": "112358130"
+    },
+    {
+      "num": "000"
+    }
+  ],
+  "functionName": "splitIntoFibonacci",
+  "params": [
+    {
+      "name": "num",
+      "type": "string"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Try every split for the first two numbers (at most 10 digits each given the 32-bit cap), then extend deterministically.",
+    "Reject any piece with a leading zero unless it is exactly '0', and stop when a value exceeds 2147483647.",
+    "Once the first pair is fixed, the rest of the sequence is forced: keep matching the expected sum as a prefix."
+  ]
+}

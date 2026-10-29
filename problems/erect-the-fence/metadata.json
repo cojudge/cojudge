@@ -1,6 +1,6 @@
 {
   "id": "erect-the-fence",
-  "title": "629. Erect the Fence",
+  "title": "629. Строить забор",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/erect-the-fence/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "trees = [[1,1],[2,2],[2,0],[2,4],[3,3],[4,2]]",
       "output": "[[1,1],[2,0],[4,2],[3,3],[2,4]]",
-      "explanation": "These five points wrap all trees; interior points stay inside."
+      "explanation": "Эти пять точек заворачивают все деревья; внутренние точки остаются внутри."
     },
     {
       "input": "trees = [[1,2],[2,2],[4,2]]",
       "output": "[[1,2],[2,2],[4,2]]",
-      "explanation": "All three lie on one line, so all belong to the boundary."
+      "explanation": "Все три лежат на одной линии, поэтому все принадлежат к границе."
     },
     {
       "input": "trees = [[0,0],[1,0],[2,0]]",
       "output": "[[0,0],[1,0],[2,0]]",
-      "explanation": "Collinear points are all kept."
+      "explanation": "Все коллинеарные точки сохранены."
     }
   ],
   "starterCode": {
@@ -51,9 +51,9 @@
   ],
   "outputType": "int_list_2d",
   "hints": [
-    "Sort points and build the convex hull; points lying on hull edges count as boundary too.",
-    "After finding hull corners, scan every input point for collinearity with each hull edge and keep those between the endpoints.",
-    "Compare squared distances to avoid floating point; order of the answer does not matter.",
-    "Adaptation: the nested output maps to int_list_2d in this judge."
+    "Сортируйте точки и стройте выпуклый корпус; точки, лежащие на краях корпуса, также считаются границей.",
+    "После нахождения углов корпуса сканируйте каждую входную точку на коллинеарность с каждым краем корпуса и удерживайте их между конечными точками.",
+    "Сравните квадратные расстояния, чтобы избежать плавающей точки; порядок ответа не имеет значения.",
+    "Адаптация: вложенные выходные карты для int_list_2d в этом решении."
   ]
 }

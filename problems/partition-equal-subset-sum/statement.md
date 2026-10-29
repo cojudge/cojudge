@@ -1,7 +1,7 @@
-Given an array `nums` of positive integers, return `true` if you can partition the
-array into two subsets whose sums are equal. Every element must belong to exactly one
-of the two subsets.
+Учитывая массив `nums` положительных целых чисел, верните `true`, если вы можете разделить
+массив в два подмножества, суммы которых равны. Каждый элемент должен принадлежать ровно одному
+из двух подгрупп.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 200`
 - `1 <= nums[i] <= 100`

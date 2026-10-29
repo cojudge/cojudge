@@ -1,6 +1,6 @@
 {
   "id": "find-pivot-index",
-  "title": "731. Find Pivot Index",
+  "title": "731. Найти Pivot Index",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/find-pivot-index/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,7,3,6,5,6]",
       "output": "3",
-      "explanation": "Left of index 3 sums to 11 and right also sums to 11."
+      "explanation": "Слева от индекса 3 суммы 11 и справа также суммы 11."
     },
     {
       "input": "nums = [1,2,3]",
       "output": "-1",
-      "explanation": "No position balances both sides."
+      "explanation": "Никакая позиция не уравновешивает обе стороны."
     },
     {
       "input": "nums = [2,1,-1]",
       "output": "0",
-      "explanation": "Left of index 0 is 0 and right (1 + -1) is also 0."
+      "explanation": "Слева от индекса 0 находится 0, а справа (1 + -1) также находится 0."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "The right sum at i equals total minus left sum minus nums[i].",
-    "Sweep once keeping the left sum and compare against the implied right sum.",
-    "Return the first index that balances; return -1 when none does."
+    "Правая сумма при i равна общей минус левой сумме минус нумс[i].",
+    "Заметьте один раз, сохраняя левую сумму, и сравните с подразумеваемой правой суммой.",
+    "Возврат первого индекса, который балансирует; возврат -1, когда никто не делает."
   ]
 }

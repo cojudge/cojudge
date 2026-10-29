@@ -1,0 +1,57 @@
+{
+  "id": "power-of-four",
+  "title": "425. Power of Four",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/power-of-four/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 16",
+      "output": "true",
+      "explanation": "16 is 4 squared."
+    },
+    {
+      "input": "n = 5",
+      "output": "false",
+      "explanation": "No integer exponent of 4 equals 5."
+    },
+    {
+      "input": "n = 1",
+      "output": "true",
+      "explanation": "4 to the power 0 is 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isPowerOfFour(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def isPowerOfFour(self, n: int) -> bool:\n        pass",
+    "cpp": "class Solution {\npublic:\n    bool isPowerOfFour(int n) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool IsPowerOfFour(int n)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_power_of_four(n: i32) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc IsPowerOfFour(n int) bool {\n    return false\n}",
+    "typescript": "export function isPowerOfFour(n: number): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return bool\n     */\n    public function isPowerOfFour($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 16
+    },
+    {
+      "n": 5
+    },
+    {
+      "n": 1
+    }
+  ],
+  "functionName": "isPowerOfFour",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "A power of four is a power of two whose single set bit sits in an odd position.",
+    "Check positivity, a single set bit, and divisibility of (n - 1) by 3."
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "id": "length-of-longest-fibonacci-subsequence",
-  "title": "867. Length of Longest Fibonacci Subsequence",
+  "title": "867. Длительность самой длинной последовательности Фибоначчи",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/length-of-longest-fibonacci-subsequence/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "arr = [1,2,3,4,5,6,7,8]",
       "output": "5",
-      "explanation": "One longest pick is [1,2,3,5,8] since 1 + 2 = 3, 2 + 3 = 5 and 3 + 5 = 8."
+      "explanation": "Один из самых длинных пиков [...]1,2,3,5,8с тех пор 1 + 2 = 3, 2 + 3 = 5 и 3 + 5 = 8."
     },
     {
       "input": "arr = [1,3,7,11,12,14,18]",
       "output": "3",
-      "explanation": "The triples [1,11,12], [3,11,14] and [7,11,18] each follow the rule, and nothing longer does."
+      "explanation": "Тройки [1, 11, 12], [3, 11, 14] и [7, 11, 18] следуют правилу, и больше ничего не делает."
     },
     {
       "input": "arr = [1,2,4]",
       "output": "0",
-      "explanation": "The only triple is [1,2,4] and 1 + 2 is not 4."
+      "explanation": "Единственная тройка — 1, 2, 4 и 1 + 2 — это не 4."
     }
   ],
   "starterCode": {
@@ -54,7 +54,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Fix the last two positions of a candidate run; the value needed just before them is their difference, which you can look up with a value-to-index map.",
-    "Let dp[i][j] be the best run length ending with arr[i], arr[j]. If arr[j] - arr[i] appears earlier at index k, extend dp[k][i]; otherwise start a fresh pair of length 2."
+    "Исправьте последние две позиции кандидата; значение, необходимое непосредственно перед ними, - это их разница, которую вы можете найти с помощью карты «ценность-индекс».",
+    "Пусть dp[i][j] будет лучшей длиной пробега, заканчивающейся arr[i], arr[j].Если arr[j] — arr[i] появляется раньше при индексе k, удлините dp[k][i]; в противном случае начните новую пару длины 2."
   ]
 }

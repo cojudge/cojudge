@@ -1,0 +1,72 @@
+{
+  "id": "minimum-cost-to-hire-k-workers",
+  "title": "853. Minimum Cost to Hire K Workers",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/minimum-cost-to-hire-k-workers/",
+  "category": "heap",
+  "examples": [
+    {
+      "input": "quality = [10,20,5], wage = [70,50,30], k = 2",
+      "output": "\"105.0\"",
+      "explanation": "Pick qualities 5 and 10 at rate 7 for payments 35 and 70."
+    },
+    {
+      "input": "quality = [3,1,10,10,1], wage = [4,8,2,2,7], k = 3",
+      "output": "\"30.66667\"",
+      "explanation": "The cheapest feasible trio costs about 30.67 within tolerance."
+    },
+    {
+      "input": "quality = [5], wage = [10], k = 1",
+      "output": "\"10.0\"",
+      "explanation": "Only one choice, paid exactly the asking wage."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String mincostToHireWorkers(int[] quality, int[] wage, int k) {\n        return \"0.0\";\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def mincostToHireWorkers(self, quality: List[int], wage: List[int], k: int) -> str:\n        return \"0.0\"\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    string mincostToHireWorkers(vector<int>& quality, vector<int>& wage, int k) {\n        return \"0.0\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string MincostToHireWorkers(int[] quality, int[] wage, int k)\n    {\n        return \"0.0\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn mincost_to_hire_workers(quality: Vec<i32>, wage: Vec<i32>, k: i32) -> String {\n        \"0.0\".to_string()\n    }\n}",
+    "go": "package main\n\nfunc MincostToHireWorkers(quality []int, wage []int, k int) string {\n    return \"0.0\"\n}",
+    "typescript": "export function mincostToHireWorkers(quality: number[], wage: number[], k: number): string {\n    return \"0.0\";\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $quality\n     * @param int[] $wage\n     * @param int $k\n     * @return string\n     */\n    public function mincostToHireWorkers($quality, $wage, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "quality": "[10,20,5]",
+      "wage": "[70,50,30]",
+      "k": 2
+    },
+    {
+      "quality": "[3,1,10,10,1]",
+      "wage": "[4,8,2,2,7]",
+      "k": 3
+    },
+    {
+      "quality": "[5]",
+      "wage": "[10]",
+      "k": 1
+    }
+  ],
+  "functionName": "mincostToHireWorkers",
+  "params": [
+    {
+      "name": "quality",
+      "type": "int_array"
+    },
+    {
+      "name": "wage",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "This is a portable adaptation: return the minimum cost as a finite, double-parseable decimal string.",
+    "Sort candidates by the ratio wage / quality. Once the rate is fixed by the last person in order, earlier people are cheaper to include when their quality is small.",
+    "Scan the sorted order while keeping the `k` smallest qualities seen so far in a max-heap; the candidate cost at each step is heap-sum times the current ratio, and the best over all steps wins."
+  ]
+}

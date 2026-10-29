@@ -1,6 +1,6 @@
-Given a non-negative integer `n`, count how many trailing zeros appear in `n!` (n factorial).
+Учитывая неотрицательное целое число `n`, подсчитайте, сколько отходящих нулей появляется в `n!` (n факториал).
 
-Trailing zeros come from factors of 10, and there are always more factors of 2 than of 5, so the answer is the number of factors of 5 inside `1 * 2 * ... * n`.
+Трейлинговые нули происходят от факторов 10, и всегда больше факторов 2, чем 5, поэтому ответом является количество факторов 5 внутри `1 * 2 * ... * n`.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= n <= 10^4`

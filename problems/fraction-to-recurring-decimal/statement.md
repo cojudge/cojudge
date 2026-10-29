@@ -1,7 +1,7 @@
-Divide `numerator` by `denominator` and write the result as a decimal string. When the fractional part repeats forever, wrap the repeating block in parentheses.
+Разделите `numerator` на `denominator` и запишите результат в виде десятичной строки.Когда дробная часть повторяется навсегда, оберните повторяющийся блок в скобки.
 
-For example, `1 / 2` is `"0.5"`, while `4 / 333` repeats `"012"` and becomes `"0.(012)"`. A negative result carries a single leading minus sign, and an exact division shows no decimal point.
+Например, `1 / 2` является `"0.5"`, в то время как `4 / 333` повторяет `"012"` и становится `"0.(012)"`. Отрицательный результат несет один ведущий знак минус, а точное деление не показывает десятичной точки.
 
-**Constraints:**
+**Ограничения:**
 - `-2^31 <= numerator, denominator <= 2^31 - 1`
 - `denominator != 0`

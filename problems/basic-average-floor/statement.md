@@ -1,5 +1,5 @@
-Return the average of the numbers in `nums`, rounded down to an integer. All numbers are zero or positive, so plain integer division gives the answer. The array always contains at least one number.
+Возвращайте среднее число в `nums`, округленное до целого числа. Все числа равны нулю или положительны, поэтому ответ даёт простое целое деление. Массив всегда содержит по меньшей мере одно число.
 
-**Constraints:**
+**Ограничения:**
 - ``1 <= nums.length <= 1000``
 - ``0 <= nums[i] <= 1000``

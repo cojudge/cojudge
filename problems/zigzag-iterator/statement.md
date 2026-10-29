@@ -1,10 +1,10 @@
-Given two integer lists, produce their zigzag interleaving.
+При наличии двух целочисленных списков производят их зигзагообразное чередование.
 
-**Adaptation:** the original design asks for an iterator class with `next`
-and `hasNext`; here implement `zigzagIterate(v1, v2)` returning the whole
-traversal: take one element from `v1`, then one from `v2`, alternating, and
-drain whichever list remains when the other runs out.
+**Адаптация: ** Оригинальный дизайн требует класс итератора с `next`
+и `hasNext`; здесь реализуется `zigzagIterate(v1, v2)`, возвращающий весь
+переход: возьмите один элемент из `v1`, затем один из `v2`, чередуя, и
+Очистите любой список, когда другой иссякнет.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= v1.length, v2.length <= 1000`
 - `1 <= v1[i], v2[i] <= 1000` when present.

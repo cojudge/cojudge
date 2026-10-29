@@ -1,6 +1,6 @@
 {
   "id": "valid-parenthesis-string",
-  "title": "144. Valid Parenthesis String",
+  "title": "144. Валидная струна парентеза",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/valid-parenthesis-string/",
   "category": "greedy",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"()\"",
       "output": "true",
-      "explanation": "Simple matched parentheses."
+      "explanation": "Простые скобки."
     },
     {
       "input": "s = \"(*)\"",
       "output": "true",
-      "explanation": "The characters in \"(*)\" can be arranged so all parentheses are properly matched."
+      "explanation": "Персонажи в «(*)» могут быть расположены так, чтобы все скобки были правильно подобраны."
     },
     {
       "input": "s = \"(*))\"",
       "output": "true",
-      "explanation": "The characters in \"(*))\" can be arranged so all parentheses are properly matched."
+      "explanation": "Персонажи в «(*)» могут быть расположены так, чтобы все скобки были правильно подобраны."
     }
   ],
   "starterCode": {
@@ -57,8 +57,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Track a range of possible unmatched opening-parenthesis counts rather than choosing each star immediately.",
-    "An opening parenthesis increases both bounds; a closing parenthesis decreases both; a star can decrease the lower bound and increase the upper bound.",
-    "Clamp the lower bound at zero, reject if the upper bound becomes negative, and require the final lower bound to be zero."
+    "Отслеживайте диапазон возможных непревзойденных начальных параметров, а не выбирайте каждую звезду сразу.",
+    "Открывающий скобки увеличивает обе границы; закрывающий скобки уменьшает обе; звезда может уменьшить нижнюю границу и увеличить верхнюю границу.",
+    "Закрепите нижнюю границу на нуле, отклоните, если верхняя граница становится отрицательной, и потребуйте, чтобы конечная нижняя граница была нулевой."
   ]
 }

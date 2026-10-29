@@ -1,6 +1,6 @@
 {
   "id": "number-of-longest-increasing-subsequence",
-  "title": "692. Number of Longest Increasing Subsequence",
+  "title": "692. Количество наиболее длительных последствий",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/number-of-longest-increasing-subsequence/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,3,5,4,7]",
       "output": "2",
-      "explanation": "The best length is 4 via [1,3,4,7] and [1,3,5,7], so there are 2 such runs."
+      "explanation": "Лучшая длина - это 4 через1,3,4,7] и [1,3,5,7], так что есть 2 Такие пробежки."
     },
     {
       "input": "nums = [2,2,2,2,2]",
       "output": "5",
-      "explanation": "Every single element is a longest run of length 1, giving 5 runs."
+      "explanation": "Каждый отдельный элемент имеет самую длинную длину 1, что позволяет выполнять 5."
     },
     {
       "input": "nums = [1,2,3]",
       "output": "1",
-      "explanation": "Only one increasing run uses all three values."
+      "explanation": "Только один растущий забег использует все три значения."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "For each position store the length of the best increasing run ending there and how many such runs exist.",
-    "Extend position i from every earlier j with nums[j] < nums[i], keeping the max length and summing counts on ties.",
-    "The answer is the total count of positions whose length equals the global maximum."
+    "Для каждой позиции сохраняйте длину лучшего увеличивающегося пробега, заканчивающегося там, и сколько таких пробегов существует.",
+    "Расширяйте положение i от каждого более раннего j числами [j] <nums[i], сохраняя максимальную длину и суммируя счета на галстуках.",
+    "Ответ — общее количество позиций, длина которых равна глобальному максимуму."
   ]
 }

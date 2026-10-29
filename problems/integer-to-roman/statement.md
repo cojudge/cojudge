@@ -1,10 +1,10 @@
-Seven symbols form the basis of Roman numerals: `I` (1), `V` (5), `X` (10), `L` (50), `C` (100), `D` (500), and `M` (1000). Larger values are written from the biggest place value down to the smallest, using these composition rules:
+Семь символов составляют основу римских цифр: `I` (1), `V` (5), `X` (10), `L` (50), `C` (100), `D` (500) и `M` (1000). Более крупные значения пишутся от наибольшего значения места до наименьшего, используя эти правила композиции:
 
-- Otherwise, repeatedly take the largest symbol value that fits into what remains, append its symbol, and subtract.
-- The amounts 4, 9, 40, 90, 400, and 900 use subtractive pairs instead: `IV`, `IX`, `XL`, `XC`, `CD`, and `CM`.
-- The symbols `I`, `X`, `C`, and `M` may repeat at most three times in a row; `V`, `L`, and `D` are never repeated.
+- В противном случае, многократно возьмите самое большое значение символа, которое вписывается в то, что осталось, добавьте его символ и вычтите.
+- Суммы 4, 9, 40, 90, 400 и 900 вместо этого используют субтрактивные пары: `IV`, `IX`, `XL`, `XC`, `CD` и `CM`.
+- Символы `I`, `X`, `C` и `M` могут повторяться не более трех раз подряд; `V`, `L` и `D` никогда не повторяются.
 
-Given an integer `num`, produce its Roman numeral string.
+Получив целое число `num`, создайте его римскую числовую строку.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= num <= 3999`

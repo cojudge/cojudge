@@ -1,8 +1,8 @@
-You are given an array `hand` whose values are card ranks and a positive integer `groupSize`. Determine whether every card can be rearranged into groups of exactly `groupSize` consecutive ranks.
+Вам дается массив `hand`, значения которого являются рангами карты и положительным целым числом `groupSize`. Определите, можно ли перегруппировать каждую карту в группы именно последовательных рангов `groupSize`.
 
-Each card must be used exactly once.
+Каждая карточка должна использоваться ровно один раз.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= hand.length <= 10000`
 - `0 <= hand[i] <= 1000000000`

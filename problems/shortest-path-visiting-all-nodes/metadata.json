@@ -1,6 +1,6 @@
 {
   "id": "shortest-path-visiting-all-nodes",
-  "title": "844. Shortest Path Visiting All Nodes",
+  "title": "844. Самый короткий путь для посещения всех узлов",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/shortest-path-visiting-all-nodes/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "graph = [[1,2,3],[0],[0],[0]]",
       "output": "4",
-      "explanation": "Tour 1-0-2-0-3 uses four edges."
+      "explanation": "Тур 1-0-2-0-3 Использует четыре ребра."
     },
     {
       "input": "graph = [[1],[0,2,4],[1,3,4],[2],[1,2]]",
       "output": "4",
-      "explanation": "A four-edge walk covers all five nodes."
+      "explanation": "Четырехгранная прогулка охватывает все пять узлов."
     },
     {
       "input": "graph = [[]]",
       "output": "0",
-      "explanation": "Single node needs no travel."
+      "explanation": "Одиночный узел не нуждается в путешествиях."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Expand the state to (mask, node): which nodes are visited plus the current endpoint.",
-    "Start breadth-first search from every node with its own single-bit mask; the first time the full mask appears is optimal.",
-    "With n up to 12 there are at most n * 2^n states, easily fast enough."
+    "Расширьте состояние до (маска, узел): какие узлы посещаются плюс текущая конечная точка.",
+    "Начните поиск по ширине с каждого узла с помощью собственной однобитной маски; первый раз, когда появляется полная маска, является оптимальным.",
+    "С n до 12 существует максимум n * 2^n состояний, достаточно быстрых."
   ]
 }

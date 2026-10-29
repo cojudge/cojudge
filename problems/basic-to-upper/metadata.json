@@ -1,18 +1,18 @@
 {
   "id": "basic-to-upper",
-  "title": "32. To Uppercase",
+  "title": "32. В Верхний Случай",
   "difficulty": "Easy",
   "category": "strings",
   "examples": [
     {
       "input": "s = \"hello\"",
       "output": "\"HELLO\"",
-      "explanation": "All letters become capitals."
+      "explanation": "Все буквы становятся буквами."
     },
     {
       "input": "s = \"AbC123!\"",
       "output": "\"ABC123!\"",
-      "explanation": "Digits and punctuation are untouched."
+      "explanation": "Цифры и пунктуации не тронуты."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Lowercase and uppercase letters differ by 32 in ASCII.",
-    "Only shift characters between 'a' and 'z'."
+    "Нижняя и верхняя строчные буквы отличаются по 32 в ASCII.",
+    "Перемещайте символы только между «a» и «z»."
   ]
 }

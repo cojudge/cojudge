@@ -1,6 +1,6 @@
 {
   "id": "cheapest-flights-within-k-stops",
-  "title": "126. Cheapest Flights Within K Stops",
+  "title": "126. Самые дешевые авиабилеты в пределах K",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/cheapest-flights-within-k-stops/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "n = 4, flights = [[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]], src = 0, dst = 3, k = 1",
       "output": "700",
-      "explanation": "The cheapest price within K stops is 700."
+      "explanation": "Самая дешевая цена в пределах остановок K - 700."
     },
     {
       "input": "n = 3, flights = [[0,1,100],[1,2,100],[0,2,500]], src = 0, dst = 2, k = 1",
       "output": "200",
-      "explanation": "The cheapest price within K stops is 200."
+      "explanation": "Самая дешевая цена в пределах остановок K - 200."
     },
     {
       "input": "n = 3, flights = [[0,1,100],[1,2,100],[0,2,500]], src = 0, dst = 2, k = 0",
       "output": "500",
-      "explanation": "The cheapest price within K stops is 500."
+      "explanation": "Самая дешевая цена в пределах остановок K - 500."
     }
   ],
   "starterCode": {
@@ -81,8 +81,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "At most k stops means at most k + 1 flight edges.",
-    "Run k + 1 rounds of Bellman-Ford relaxation, reading each round from the previous round's distances.",
-    "Do not relax in place: doing so could use more than the permitted number of flights within one round."
+    "На большинстве k остановок означает на большинстве k + 1 края полета.",
+    "Запустите k + 1 раунды релаксации Беллмана-Форда, читая каждый раунд с дистанций предыдущего раунда.",
+    "Не расслабляйтесь на месте: для этого можно использовать больше разрешенного количества рейсов в течение одного раунда."
   ]
 }

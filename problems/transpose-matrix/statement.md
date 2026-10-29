@@ -1,8 +1,8 @@
-Take a 2D integer grid `matrix` and produce its mirrored form across the main diagonal.
+Возьмите 2D целочисленную сетку `matrix` и создайте ее зеркальную форму по главной диагонали.
 
-Reflecting in this way exchanges the row and column positions of every entry.
+Отражая таким образом, обменивается строками и столбцами позиций каждой записи.
 
-**Constraints:**
+**Ограничения:**
 
 - `m == matrix.length`
 - `n == matrix[i].length`

@@ -1,8 +1,8 @@
-A subsequence keeps a selection of characters in their original order while possibly skipping others. A candidate string is uncommon when it appears as a subsequence of none of the other given strings.
+Подпоследовательность сохраняет выбор символов в их первоначальном порядке, в то время как, возможно, пропуская другие. Кандидатская строка необычна, когда она появляется как подпоследовательность ни одной из других заданных строк.
 
-Given an array `strs`, return the length of the longest string in `strs` that is not a subsequence of any other string in `strs`. Return `-1` when every string is a subsequence of some other string.
+Учитывая массив `strs`, верните длину самой длинной строки в `strs`, которая не является последовательностью какой-либо другой строки в `strs`.Верните `-1`, когда каждая строка является последовательностью какой-либо другой строки.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= strs.length <= 50`
 - `1 <= strs[i].length <= 10`
-- `strs[i]` consists of lowercase English letters
+- `strs[i]` состоит из строчных английских букв

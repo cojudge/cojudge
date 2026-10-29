@@ -1,6 +1,6 @@
 {
   "id": "implement-stack-using-queues",
-  "title": "177. Implement Stack using Queues",
+  "title": "177. Внедрение Stack с помощью Queues",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/implement-stack-using-queues/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"push\",\"push\",\"top\",\"pop\",\"empty\"], values = [1,2,0,0,0]",
       "output": "[2,2,0]",
-      "explanation": "Push 1 then push 2. Top returns 2, pop removes and returns 2, then empty returns false (encoded as 0)."
+      "explanation": "Нажмите 1, затем нажмите 2. Top возвращает 2, pop удаляет и возвращает 2, а затем пустой возвращает ложный (закодированный как 0)."
     },
     {
       "input": "operations = [\"push\",\"top\",\"pop\",\"empty\"], values = [1,0,0,0]",
       "output": "[1,1,1]",
-      "explanation": "Push 1. Top returns 1, pop returns 1, then the stack is empty so empty returns true (encoded as 1)."
+      "explanation": "Нажмите 1. Верхний возвращает 1, поп возвращает 1, затем стек пустой, так что пустой возвращает истинный (закодированный как 1)."
     },
     {
       "input": "operations = [\"push\",\"push\",\"push\",\"pop\",\"pop\",\"top\",\"empty\"], values = [1,2,3,0,0,0,0]",
       "output": "[3,2,1,0]",
-      "explanation": "Push 1, 2, 3. Pop returns 3, pop returns 2, top returns 1, and empty returns false (0) because 1 remains."
+      "explanation": "Push 1, 2, 3. Поп возвращает 3, поп возвращает 2, топ возвращает 1 и пустой возвращает ложный (0), потому что 1 остается."
     }
   ],
   "starterCode": {
@@ -62,7 +62,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Simulate a stack with two queues: on push, move all elements so the newest element is always at the front.",
-    "Pop and top read from the front of the primary queue; empty checks whether it has no elements. Encode empty as 1 for true and 0 for false."
+    "Имитация стопки с двумя очередями: нажатием, перемещением всех элементов, чтобы новейший элемент всегда был впереди.",
+    "Всплывающее и верхнее чтение с передней части основной очереди; пустое проверяет, нет ли в нем элементов. Закодируйте пустое как 1 для истинного и 0 для ложного."
   ]
 }

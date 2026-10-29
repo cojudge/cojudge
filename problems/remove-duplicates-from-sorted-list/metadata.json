@@ -1,6 +1,6 @@
 {
   "id": "remove-duplicates-from-sorted-list",
-  "title": "274. Remove Duplicates from Sorted List",
+  "title": "274. Удалить дубликаты из сортированного списка",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/remove-duplicates-from-sorted-list/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "head = [1,1,2]",
       "output": "[1,2]",
-      "explanation": "One of the two 1s is removed."
+      "explanation": "Одна из двух 1-х была удалена."
     },
     {
       "input": "head = [1,1,2,3,3]",
       "output": "[1,2,3]",
-      "explanation": "Extra copies of 1 and 3 are removed."
+      "explanation": "Дополнительные копии 1 и 3 удаляются."
     },
     {
       "input": "head = []",
       "output": "[]",
-      "explanation": "An empty list stays empty."
+      "explanation": "Пустой список остается пустым."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Walk the list with a single pointer and compare each node with its successor.",
-    "When values match, bypass the next node; otherwise advance.",
-    "No dummy node is needed because the head value is always kept."
+    "Пройдитесь по списку с одним указателем и сравните каждый узел с его преемником.",
+    "Когда значения совпадают, обойдите следующий узел; в противном случае вперед.",
+    "Ни один муляж не нужен, потому что значение головки всегда сохраняется."
   ]
 }

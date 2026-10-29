@@ -1,6 +1,6 @@
 {
   "id": "random-pick-with-blacklist",
-  "title": "718. Random Pick with Blacklist",
+  "title": "718. Случайный выбор с черным списком",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/random-pick-with-blacklist/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "n = 7, blacklist = [2,3,5], calls = [0,1,2,3]",
       "output": "[0,1,6,4]",
-      "explanation": "Valid numbers are 0, 1, 4 and 6. Each draw value is wrapped into that set; with tail remapping the four draws land on 0, 1, 6 and 4."
+      "explanation": "Действительными номерами являются 0, 1, 4 и 6. Каждое значение ничьей завернуто в этот набор; с переделкой хвоста четыре ничьих земли на 0, 1, 6 и 4."
     },
     {
       "input": "n = 4, blacklist = [2], calls = [0,1,2]",
       "output": "[0,1,3]",
-      "explanation": "Valid numbers are 0, 1 and 3. The third draw maps past the blocked value 2 onto 3."
+      "explanation": "Действительными номерами являются 0, 1 и 3. Третья чертежная карта проходит мимо заблокированного значения 2 на 3."
     },
     {
       "input": "n = 1, blacklist = [], calls = [5,-3]",
       "output": "[0,0]",
-      "explanation": "Only 0 is available, so every draw returns 0."
+      "explanation": "Доступен только 0, поэтому каждый розыгрыш возвращает 0."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Let sz = n - blacklist.length. Remap every blocked value below sz to a free value from the tail; wrapping each draw with a non-negative modulo gives an index in [0, sz).",
-    "Build a hash set of blocked values, then assign tail replacements from n-1 downward skipping blocked entries.",
-    "Adaptation: calls stands in for random draws so the task is deterministic. The checker only verifies that each answer lies in range and avoids the blacklist; any valid pick is accepted. Rust note: vectors arrive as usual integer lists."
+    "Пусть sz = n - blacklist.length. Перенаправьте каждое заблокированное значение ниже sz на свободное значение из хвоста; обертывая каждую ничью неотрицательным модулем, выдает индекс в [0, sz].",
+    "Создайте хеш-набор заблокированных значений, а затем назначьте замены хвоста из n-1, пропустив заблокированные записи.",
+    "Адаптация: вызовы стоят за случайными ничьими, поэтому задача детерминирована. Проверка только проверяет, что каждый ответ находится в диапазоне и избегает черного списка; принимается любой действительный выбор. Rust note: векторы прибывают как обычные целочисленные списки."
   ]
 }

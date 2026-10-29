@@ -1,11 +1,11 @@
-Picture a rectangular box of cells that is never empty. Each position stores one of three codes: `0` means the cell holds nothing, `1` means it holds a fresh orange, and `2` means it holds an already spoiled orange.
+Каждая позиция хранит один из трех кодов: `0` означает, что ячейка ничего не держит, `1` означает, что она держит свежий апельсин, а `2` означает, что она держит уже испорченный апельсин.
 
-Spoilage advances in rounds, one round per minute: every fresh orange that shares an edge — up, down, left, or right, but not diagonally — with a spoiled orange turns spoiled too, with all such changes in a round happening together.
+Спойлаж продвигается в раундах, один раунд в минуту: каждый свежий апельсин, который делит край — вверх, вниз, влево или вправо, но не по диагонали — с испорченными оранжевыми поворотами тоже испорчен, со всеми такими изменениями в раунде, происходящими вместе.
 
-Determine the smallest number of minutes needed before no fresh orange is left anywhere in the box. When some fresh orange can never be reached by the spread, answer `-1` instead.
+Определите наименьшее количество минут, необходимое для того, чтобы в коробке не осталось свежего апельсина. Когда до какого-то свежего апельсина никогда нельзя добраться по спреду, ответьте `-1` вместо этого.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= grid.length <= 10`
 - `1 <= grid[r].length <= 10`
-- Every row has the same length.
-- Every cell is `0`, `1`, or `2`.
+- Каждый ряд имеет одинаковую длину.
+- Каждая ячейка `0`, `1` или `2`.

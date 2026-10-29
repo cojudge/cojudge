@@ -1,16 +1,16 @@
-Implement a first-in-first-out (FIFO) queue using only standard stack operations.
+Внедряйте очередь «первый в первом» (FIFO), используя только стандартные операции стека.
 
-`operations[i]` is one of `push`, `pop`, `peek`, or `empty`. The aligned value
-`values[i]` is used only by `push`; it is ignored for every other operation.
-Return an array containing the result of each `pop`, `peek`, and `empty`
-operation, in the order those queries occur. `push` does not add anything to
-the returned array. Encode `empty` as `1` for true and `0` for false.
+`operations[i]` является одним из `push`, `pop`, `peek` или `empty`.
+`values[i]` используется только `push`; он игнорируется для любой другой операции.
+Возврат массива, содержащего результат каждого `pop`, `peek` и `empty`
+Операция, в порядке этих запросов. `push` ничего не добавляет к
+Закодируйте `empty` как `1` для истинного и `0` для ложного.
 
-Every trace is valid: `pop` and `peek` are never called on an empty queue.
+Все следы действительны: `pop` и `peek` никогда не вызываются в пустую очередь.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= operations.length == values.length <= 100`
-- `operations[i]` is `push`, `pop`, `peek`, or `empty`.
-- `1 <= values[i] <= 9` when `operations[i]` is `push`.
-- At most 100 calls are made in one trace.
+- `operations[i]` - это `push`, `pop`, `peek` или `empty`.
+- `1 <= values[i] <= 9`, когда `operations[i]` является `push`.
+- Звонки 100 совершаются в одном направлении.

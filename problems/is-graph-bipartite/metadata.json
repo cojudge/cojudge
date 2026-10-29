@@ -1,6 +1,6 @@
 {
   "id": "is-graph-bipartite",
-  "title": "784. Is Graph Bipartite?",
+  "title": "784. Граф двусторонний?",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/is-graph-bipartite/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "graph = [[1,2,3],[0,2],[0,1,3],[0,2]]",
       "output": "false",
-      "explanation": "Three mutually linked vertices form a triangle."
+      "explanation": "Три взаимосвязанные вершины образуют треугольник."
     },
     {
       "input": "graph = [[1,3],[0,2],[1,3],[0,2]]",
       "output": "true",
-      "explanation": "Even and odd vertices can take opposite colors."
+      "explanation": "Даже странные вершины могут принимать противоположные цвета."
     },
     {
       "input": "graph = [[1],[0]]",
       "output": "true",
-      "explanation": "A single edge is two-colorable."
+      "explanation": "Один край двухцветный."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Paint vertices with two colors using breadth-first search from every unvisited start.",
-    "When you cross an edge, the neighbor must take the opposite color; a clash means failure.",
-    "Disconnected pieces are handled by restarting the search at each uncolored vertex."
+    "Красочные вершины с двумя цветами с использованием поиска по ширине от каждого непосещенного начала.",
+    "Когда вы пересекаете край, сосед должен принять противоположный цвет; столкновение означает неудачу.",
+    "Отключенные части обрабатываются путем перезапуска поиска в каждой неокрашенной вершине."
   ]
 }

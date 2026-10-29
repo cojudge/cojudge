@@ -1,8 +1,8 @@
-A squirrel must carry each nut back to its tree on a grid where movement costs the Manhattan distance. The tree stands at `tree`, the squirrel starts at `squirrel`, and the nuts lie at the positions in `nuts`. The grid size (`height` rows, `width` columns) only bounds the coordinates.
+Белка должна нести каждый орех обратно к своему дереву на сетке, где движение стоит Манхэттенского расстояния. Дерево стоит на `tree`, белка начинается на `squirrel`, а орехи лежат на позициях в `nuts`. Размер сетки (ряды `height`, столбцы `width`) ограничивает только координаты.
 
-Carrying one nut home is a round trip from the tree, except the very first nut, which the squirrel fetches starting from its own position instead of the tree. So the total equals twice every tree-to-nut distance, adjusted once by picking the first nut that saves the most: the one minimizing `dist(squirrel, nut) - dist(tree, nut)`.
+Перевозка одного ореха домой - это круглая поездка от дерева, за исключением самого первого ореха, который белка вытаскивает, начиная с собственного положения, а не с дерева. Таким образом, общая сумма равняется вдвое каждому расстоянию от дерева до ореха, отрегулированное один раз, выбирая первый орех, который экономит больше всего: тот, который минимизирует `dist(squirrel, nut) - dist(tree, nut)`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= height, width <= 100`
 - `1 <= nuts.length <= 3000`
-- All positions lie inside the grid.
+- Все позиции лежат внутри сетки.

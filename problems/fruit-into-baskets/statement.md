@@ -1,7 +1,7 @@
-A row of trees holds fruit kinds recorded in `fruits`, where each entry names the kind on that tree. You carry two baskets, each dedicated to a single kind (the two kinds may end up the same only if you never use the second basket). Starting at any tree and stepping rightward, you must take exactly one fruit per tree while the kinds fit into your two baskets, and you halt before the first tree whose kind would demand a third basket.
+Ряд деревьев содержит виды фруктов, записанные в `fruits`, где каждая запись называет вид на этом дереве. Вы носите две корзины, каждая из которых предназначена для одного вида (два вида могут оказаться одинаковыми только в том случае, если вы никогда не используете вторую корзину). Начиная с любого дерева и шагая вправо, вы должны взять ровно один фрукт на дерево, в то время как виды вписываются в ваши две корзины, и вы останавливаетесь перед первым деревом, чей вид потребует третьей корзины.
 
-Find the greatest number of fruits obtainable under those rules — equivalently, the length of the longest contiguous segment using at most two distinct values.
+Найдите наибольшее количество плодов, которые можно получить в соответствии с этими правилами — эквивалентно длине самого длинного смежного сегмента, используя максимум два различных значения.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= fruits.length <= 10^5`
 - `0 <= fruits[i] < fruits.length`

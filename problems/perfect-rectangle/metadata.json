@@ -3,26 +3,26 @@
   "difficulty": "Hard",
   "examples": [
     {
-      "explanation": "The five small blocks tile the square from (1,1) to (4,4) without overlap.",
+      "explanation": "Пять небольших блоков плитки квадрат от (1, 1) до (4, 4) без перекрытия.",
       "input": "rectangles = [[1,1,3,3],[3,1,4,2],[3,2,4,4],[1,3,2,4],[2,3,3,4]]",
       "output": "true"
     },
     {
-      "explanation": "A hole sits where [2,1,3,4] would go, so the union is not solid.",
+      "explanation": "Отверстие находится там, где [2, 1, 3, 4] будет идти, так что союз не является твердым.",
       "input": "rectangles = [[1,1,2,3],[1,3,2,4],[3,1,4,2],[3,2,4,4]]",
       "output": "false"
     },
     {
-      "explanation": "The last two blocks overlap on [2,2,3,3].",
+      "explanation": "Последние два блока перекрываются на [2, 2, 3, 3].",
       "input": "rectangles = [[1,1,3,3],[3,1,4,2],[1,3,2,4],[2,2,4,4]]",
       "output": "false"
     }
   ],
   "functionName": "isRectangleCover",
   "hints": [
-    "Add up all small areas and compare with the area of the min/max bounding box.",
-    "Toggle each block corner in a set; interior corners appear an even number of times and cancel.",
-    "At the end exactly the four extreme corners must remain."
+    "Сложите все небольшие области и сравните с областью ограничительного ящика min/max.",
+    "Переключите каждый блок-угл в наборе; внутренние углы появляются четное количество раз и отменяются.",
+    "В конце концов, должны остаться четыре крайних угла."
   ],
   "id": "perfect-rectangle",
   "link": "https://leetcode.com/problems/perfect-rectangle/",
@@ -54,5 +54,5 @@
       "rectangles": "[[1,1,3,3],[3,1,4,2],[1,3,2,4],[2,2,4,4]]"
     }
   ],
-  "title": "467. Perfect Rectangle"
+  "title": "467. Идеальный прямоугольник"
 }

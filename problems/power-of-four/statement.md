@@ -1,6 +1,6 @@
-Given an integer `n`, decide whether it can be written as a power of four — that is, whether some non-negative integer `x` satisfies `n == 4^x` (1, 4, 16, 64, ...).
+Учитывая целое число `n`, решите, может ли оно быть записано как мощность четыре — то есть, удовлетворяет ли некоторое неотрицательное целое число `x` `n == 4^x` (1, 4, 16, 64, ...).
 
-Return `true` for such values and `false` otherwise. Zero, negatives, and numbers with odd prime factors never qualify.
+Возврат `true` для таких значений и `false` в противном случае. Ноль, негативы и числа с нечетными простыми факторами никогда не квалифицируются.
 
-**Constraints:**
+**Ограничения:**
 - `-2^31 <= n <= 2^31 - 1`

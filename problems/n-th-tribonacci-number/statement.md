@@ -1,11 +1,11 @@
-Define the Tribonacci numbers `T(n)` by these starting values and recurrence:
+Определите числа трибоначчи `T(n)` по этим начальным значениям и рецидивам:
 
 - `T(0) = 0`, `T(1) = 1`, `T(2) = 1`
-- Each later term is the sum of the preceding three: `T(n+3) = T(n) + T(n+1) + T(n+2)` for `n >= 0`
+- Каждый последующий термин является суммой трех предыдущих: `T(n+3) = T(n) + T(n+1) + T(n+2)` для `n >= 0`.
 
-For a given `n`, compute `T(n)`.
+Для данного `n` вычислите `T(n)`.
 
-**Constraints:**
+**Ограничения:**
 
 - `0 <= n <= 37`
-- The answer is guaranteed to fit within a 32-bit integer.
+- Ответ гарантированно вписывается в целое число 32-бит.

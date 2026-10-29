@@ -1,6 +1,6 @@
 {
   "id": "lonely-pixel-ii",
-  "title": "592. Lonely Pixel II",
+  "title": "592. Одинокий Pixel II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/lonely-pixel-ii/",
   "category": "matrix",
@@ -8,12 +8,12 @@
     {
       "input": "picture = [[\"W\",\"B\",\"W\",\"B\",\"B\",\"W\"],[\"W\",\"B\",\"W\",\"B\",\"B\",\"W\"],[\"W\",\"B\",\"W\",\"B\",\"B\",\"W\"],[\"W\",\"W\",\"B\",\"W\",\"B\",\"W\"]], N = 3",
       "output": "6",
-      "explanation": "Columns 1 and 3 each hold exactly 3 black pixels in identical rows, giving 3 times 2 = 6."
+      "explanation": "Колонки 1 и 3 содержат в точности черные пиксели 3 в одинаковых строках, что дает 3 раз 2 = 6."
     },
     {
       "input": "picture = [[\"W\",\"B\",\"W\"],[\"B\",\"W\",\"W\"]], N = 1",
       "output": "2",
-      "explanation": "Both black pixels sit in rows and columns that each hold exactly one black pixel."
+      "explanation": "Оба черных пикселя расположены в строках и столбцах, каждый из которых содержит ровно один черный пиксель."
     }
   ],
   "starterCode": {
@@ -49,8 +49,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Precompute each row's black-pixel count and each column's black-pixel count.",
-    "For a candidate pixel, confirm the counts equal N, then scan the column checking row equality.",
-    "Compare rows with a helper or by joining each row into a string key. Rust note: the picture arrives as its encoded string; parse it before counting."
+    "Предварительно вычислите количество черных пикселей в каждой строке и количество черных пикселей в каждой колонке.",
+    "Для пикселя-кандидата подтвердите числа равными N, затем сканируйте столбец, проверяя равенство строк.",
+    "Сравните строки с помощником или присоединив каждую строку к клавише строки.Примечание ржавчины: изображение поступает в виде закодированной строки; разберите его перед подсчетом."
   ]
 }

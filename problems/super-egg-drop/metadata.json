@@ -1,6 +1,6 @@
 {
   "id": "super-egg-drop",
-  "title": "878. Super Egg Drop",
+  "title": "878. Супер Яйцо Бросить",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/super-egg-drop/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "k = 1, n = 2",
       "output": "2",
-      "explanation": "With one egg there is no room for risk, so both floors must be tried from the bottom up."
+      "explanation": "С одним яйцом нет места для риска, поэтому оба пола должны быть проверены снизу вверх."
     },
     {
       "input": "k = 2, n = 6",
       "output": "3",
-      "explanation": "Three drops always suffice (for instance, first try floor 3), and two drops cannot cover 6 floors."
+      "explanation": "Трех капель всегда достаточно (например, первый этаж 3), а две капли не могут покрыть полы 6."
     },
     {
       "input": "k = 3, n = 14",
       "output": "4",
-      "explanation": "Four drops cover up to 4 + 6 + 4 = 14 floors with three eggs, and three drops fall short."
+      "explanation": "Четыре капли покрывают до 4 + 6 + 4 = полы 14 с тремя яйцами, и три капли опускаются."
     }
   ],
   "starterCode": {
@@ -62,7 +62,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Flip the question: with m drops and e eggs, the tallest tower you can resolve is dp[m][e] = dp[m-1][e-1] + dp[m-1][e] + 1.",
-    "Grow the drop count until the coverage reaches n; a one-dimensional table updated from high eggs to low eggs is enough."
+    "Переверните вопрос: с m каплями и e яйцами самая высокая башня, которую вы можете решить, это dp[m][e] = dp[m-1][e-1] + dp[m-1][e] + 1.",
+    "Увеличьте количество капель до тех пор, пока охват не достигнет n; достаточно одномерной таблицы, обновленной от высоких яиц до низких яиц."
   ]
 }

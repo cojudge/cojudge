@@ -1,6 +1,6 @@
 {
   "id": "substring-with-concatenation-of-all-words",
-  "title": "259. Substring with Concatenation of All Words",
+  "title": "259. Подстрочник с соединением всех слов",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/substring-with-concatenation-of-all-words/",
   "category": "hash-table",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"barfoothefoobarman\", words = [\"foo\",\"bar\"]",
       "output": "[0,9]",
-      "explanation": "Windows at 0 (barfoo) and 9 (foobar) each use every word once."
+      "explanation": "Windows на 0 (barfoo) и 9 (foobar) используют каждое слово один раз."
     },
     {
       "input": "s = \"wordgoodgoodgoodbestword\", words = [\"word\",\"good\",\"best\",\"word\"]",
       "output": "[]",
-      "explanation": "No window of length 16 contains each required word the right number of times."
+      "explanation": "Ни одно окно длины 16 не содержит каждое необходимое слово нужное количество раз."
     },
     {
       "input": "s = \"barfoofoobarthefoobarman\", words = [\"bar\",\"foo\",\"the\"]",
       "output": "[6,9,12]",
-      "explanation": "Each of these windows rearranges the three words with nothing left over."
+      "explanation": "Каждое из этих окон переставляет три слова без остатка."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Count how many times each word is needed, then slide a window whose length equals words.length * word.length.",
-    "Because words align to multiples of the word length, run one sliding pass per offset 0..wordLen-1 and shrink the window whenever a word appears too often."
+    "Подсчитайте, сколько раз нужно каждое слово, а затем выполните окно, длина которого равна слову.",
+    "Поскольку слова выравниваются к кратным длине слова, запустите один скользящий проход для смещения 0..wordLen-1 и уменьшите окно, когда слово появляется слишком часто."
   ]
 }

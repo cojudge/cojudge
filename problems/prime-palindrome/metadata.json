@@ -1,6 +1,6 @@
 {
   "id": "prime-palindrome",
-  "title": "861. Prime Palindrome",
+  "title": "861. Первичный палиндром",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/prime-palindrome/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "n = 6",
       "output": "7",
-      "explanation": "7 is the next prime palindrome."
+      "explanation": "7 – это следующий палиндром."
     },
     {
       "input": "n = 8",
       "output": "11",
-      "explanation": "11 is the first prime palindrome at or above 8."
+      "explanation": "11 является первым простым палиндромом на уровне или выше 8."
     },
     {
       "input": "n = 13",
       "output": "101",
-      "explanation": "101 is the first prime palindrome at or above 13."
+      "explanation": "101 является первым простым палиндромом на уровне или выше 13."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Even-length palindromes beyond 11 are all multiples of 11, so only the number 11 matters among them.",
-    "It is enough to build palindromes by mirroring the first half; generate odd-length candidates in increasing order plus the special 11.",
-    "Test primality by trial division up to the square root, skipping even divisors after 2."
+    "Равномерные палиндромы за пределами 11 являются кратными 11, поэтому среди них имеет значение только число 11.",
+    "Достаточно построить палиндромы, отражая первую половину; генерировать кандидатов нечетной длины в порядке увеличения плюс специальный 11.",
+    "Тестирование первичности методом пробного деления до квадратного корня, пропуская даже делители после 2."
   ]
 }

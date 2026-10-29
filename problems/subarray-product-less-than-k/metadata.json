@@ -1,6 +1,6 @@
 {
   "id": "subarray-product-less-than-k",
-  "title": "721. Subarray Product Less Than K",
+  "title": "721. Продукт Subarray меньше K",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/subarray-product-less-than-k/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [10,5,2,6], k = 100",
       "output": "8",
-      "explanation": "Eight windows qualify: the four singles plus [10,5], [5,2], [2,6] and [5,2,6]."
+      "explanation": "Восемь окон: четыре сингла плюс [10, 5], [5, 2], [2, 6] и [5, 2, 6]."
     },
     {
       "input": "nums = [1,2,3], k = 0",
       "output": "0",
-      "explanation": "All values are positive, so no product can fall below 0."
+      "explanation": "Все значения являются положительными, поэтому ни один продукт не может упасть ниже 0."
     },
     {
       "input": "nums = [1,1,1], k = 2",
       "output": "6",
-      "explanation": "Every one of the six windows multiplies to 1."
+      "explanation": "Все шесть окон умножаются на 1."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "All numbers are positive, so extending a window only grows its product and shrinking only lowers it.",
-    "Maintain a sliding window product; when it reaches k, move the left edge until it fits again.",
-    "Each right endpoint contributes (right - left + 1) new valid windows."
+    "Все числа положительны, поэтому расширение окна только увеличивает продукт, а сокращение только снижает его.",
+    "Сохраняйте раздвижное оконное изделие; когда оно достигает k, перемещайте левый край, пока оно снова не поместится.",
+    "Каждая правая конечная точка вносит (справа - слева + 1) новые действительные окна."
   ]
 }

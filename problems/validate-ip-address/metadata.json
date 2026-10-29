@@ -1,6 +1,6 @@
 {
   "id": "validate-ip-address",
-  "title": "533. Validate IP Address",
+  "title": "533. Проверить IP-адрес",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/validate-ip-address/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "queryIP = \"172.16.254.1\"",
       "output": "\"IPv4\"",
-      "explanation": "Four decimal groups, each 0-255 with no leading zeroes."
+      "explanation": "Четыре десятичные группы, каждая 0-255 без ведущих нулей."
     },
     {
       "input": "queryIP = \"2001:0db8:85a3:0:0:8A2E:0370:7334\"",
       "output": "\"IPv6\"",
-      "explanation": "Eight groups of 1-4 hexadecimal digits."
+      "explanation": "Восемь групп 1-4 шестнадцатеричных цифр."
     },
     {
       "input": "queryIP = \"256.256.256.256\"",
       "output": "\"Neither\"",
-      "explanation": "256 exceeds the largest allowed IPv4 group value of 255."
+      "explanation": "256 превышает максимально допустимое значение группы IPv4 255."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Split on dots and on colons separately, keeping empty pieces so missing groups are caught.",
-    "IPv4 forbids leading zeroes and values above 255; IPv6 needs exactly 8 groups of 1-4 hex digits with no shorthand."
+    "Разделяйтесь на точки и толстые кишки отдельно, сохраняя пустые кусочки, чтобы были пойманы пропавшие группы.",
+    "IPv4 запрещает ведущие нули и значения выше 255; IPv6 нуждается именно в группах 8 шестизначных цифр 1-4 без сокращения."
   ]
 }

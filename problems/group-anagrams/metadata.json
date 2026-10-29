@@ -1,6 +1,6 @@
 {
   "id": "group-anagrams",
-  "title": "54. Group Anagrams",
+  "title": "54. Группа Anagrams",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/group-anagrams/",
   "category": "string",
@@ -8,7 +8,7 @@
     {
       "input": "strs=[\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]",
       "output": "[[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]] (order may vary)",
-      "explanation": "\"eat\", \"tea\", \"ate\" have the same anagram; \"tan\" and \"nat\" have the same anagram; \"bat\" is alone."
+      "explanation": "«Ешь», «чай», «ешь» имеют одну и ту же анаграмму; «загар» и «нат» имеют одну и ту же анаграмму; «летучая мышь» одна."
     }
   ],
   "starterCode": {
@@ -52,6 +52,6 @@
   ],
   "outputType": "string_list_2d",
   "hints": [
-    "Hash strings by their sorted characters or character counts and aggregate into groups."
+    "Хеш-струны по их отсортированным персонажам или подсчетам персонажей и объединяются в группы."
   ]
 }

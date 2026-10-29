@@ -1,6 +1,6 @@
 {
   "id": "greatest-common-divisor-traversal",
-  "title": "226. Greatest Common Divisor Traversal",
+  "title": "226. Величайший общий перелом делителя",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/greatest-common-divisor-traversal/",
   "category": "graph",
@@ -48,6 +48,6 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Union indices that share a prime factor. If nums contains 1 and length > 1, return false."
+    "Союзные индексы, которые разделяют простой фактор.Если цифры содержат 1 и длину > 1, возвращайте ложные."
   ]
 }

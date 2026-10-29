@@ -1,7 +1,7 @@
-Given a string `s`, find the length of the longest piece that uses no more than two different characters.
+Учитывая строку `s`, найдите длину самого длинного фрагмента, который использует не более двух разных символов.
 
-Think of scanning from left to right while keeping track of the characters inside the current window. When a third distinct character appears, shrink the window from the left until only two distinct characters remain. The best window size seen during this scan is the answer.
+Подумайте о сканировании слева направо, отслеживая символы внутри текущего окна. Когда появляется третий отдельный символ, сжимайте окно слева, пока не останутся только два разных символа. Лучший размер окна, наблюдаемый во время этого сканирования, - это ответ.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= s.length <= 10^4`
-- `s` consists of lowercase and uppercase English letters
+- `s` состоит из строчных и строчных английских букв

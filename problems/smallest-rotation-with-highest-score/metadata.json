@@ -1,6 +1,6 @@
 {
   "id": "smallest-rotation-with-highest-score",
-  "title": "796. Smallest Rotation with Highest Score",
+  "title": "796. Самый маленький поворот с самым высоким счетом",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/smallest-rotation-with-highest-score/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [2,3,1,4,0]",
       "output": "3",
-      "explanation": "Rotation 3 gives the unique top score of 4."
+      "explanation": "Ротация 3 дает уникальный топ-балл 4."
     },
     {
       "input": "nums = [1,3,0,2,4]",
       "output": "0",
-      "explanation": "Rotation 0 ties for the best score."
+      "explanation": "Ротация 0 галстук за лучший счет."
     },
     {
       "input": "nums = [0]",
       "output": "0",
-      "explanation": "Only one rotation exists."
+      "explanation": "Существует только одна ротация."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Each element contributes to a contiguous circular interval of rotations; add +1 over that interval with a difference array.",
-    "For the element at index j with value v, the scoring rotations form the forward interval from j + 1 to j - v.",
-    "Prefix-summing the difference array yields every score, then the first maximum is the answer."
+    "Каждый элемент вносит свой вклад в смежный круговой интервал вращений; добавьте +1 через этот интервал с разностной матрицей.",
+    "Для элемента при индексе j со значением v повороты скоринга образуют передний интервал от j + 1 до j - v.",
+    "Префикс-суммирование разностного массива дает каждый балл, тогда первым максимумом является ответ."
   ]
 }

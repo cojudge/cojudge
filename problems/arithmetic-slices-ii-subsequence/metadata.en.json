@@ -1,0 +1,50 @@
+{
+  "id": "arithmetic-slices-ii-subsequence",
+  "title": "514. Arithmetic Slices II - Subsequence",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/arithmetic-slices-ii-subsequence/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "nums = [2,4,6,8,10]",
+      "output": "7",
+      "explanation": "Five triples with gap 2 plus [2,6,10] plus the length-5 progression."
+    },
+    {
+      "input": "nums = [7,7,7,7,7]",
+      "output": "16",
+      "explanation": "All 10 triples plus 5 quadruples plus 1 quintuple."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numberOfArithmeticSlices(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numberOfArithmeticSlices(self, nums: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int numberOfArithmeticSlices(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int NumberOfArithmeticSlices(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn number_of_arithmetic_slices(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumberOfArithmeticSlices(nums []int) int {\n    return 0\n}",
+    "typescript": "export function numberOfArithmeticSlices(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function numberOfArithmeticSlices($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[2,4,6,8,10]"
+    },
+    {
+      "nums": "[7,7,7,7,7]"
+    }
+  ],
+  "functionName": "numberOfArithmeticSlices",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "For each pair (j,i) record the gap; every earlier pair ending at j with the same gap extends to i.",
+    "Keep per-index maps from gap to count of weak pairs (length >= 2) ending there.",
+    "Only extensions that reach length 3 or more add to the answer."
+  ]
+}

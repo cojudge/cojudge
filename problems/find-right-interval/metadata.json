@@ -1,6 +1,6 @@
 {
   "id": "find-right-interval",
-  "title": "504. Find Right Interval",
+  "title": "504. Найдите правильный интервал",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/find-right-interval/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "intervals = [[1,2]]",
       "output": "[-1]",
-      "explanation": "No start reaches 2."
+      "explanation": "Ни один старт не достигает 2."
     },
     {
       "input": "intervals = [[3,4],[2,3],[1,2]]",
       "output": "[-1,0,1]",
-      "explanation": "Each end maps to the smallest sufficient start."
+      "explanation": "Каждый конец карты имеет наименьшее достаточное начало."
     },
     {
       "input": "intervals = [[1,4],[2,3],[3,4]]",
       "output": "[-1,2,-1]",
-      "explanation": "Only the middle interval finds a neighbor."
+      "explanation": "Только средний интервал находит соседа."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Sort interval indices by start value once.",
-    "For each end, binary-search the sorted starts for the first start at or beyond it.",
-    "Translate the found position back to the original index, or -1 when absent."
+    "Сортировать интервальные индексы по стартовому значению один раз.",
+    "Для каждого конца двоичный поиск начинается для первого начала в или за его пределами.",
+    "Переведите найденную позицию обратно в исходный индекс, или -1 при отсутствии."
   ]
 }

@@ -1,15 +1,15 @@
-Alice and Bob play a further row-removal contest. A row of stones carries integer scores listed in `stoneValue`.
+Алиса и Боб играют в очередном соревновании по удалению рядов. Ряд камней несет целочисленные баллы, перечисленные в `stoneValue`.
 
-Alice moves first, then the two alternate. Each move removes stones only from the front of the remaining row: the player picks up 1, 2, or 3 stones there.
+Алиса движется первой, затем двумя чередованием.Каждый ход удаляет камни только с передней части оставшегося ряда: игрок подбирает там камни 1, 2 или 3.
 
-Every stone a player picks up adds its value to that player's total. Both totals begin at 0.
+Каждый камень, который игрок поднимает, добавляет свою ценность к общей сумме этого игрока. Обе суммы начинаются с 0.
 
-Whoever holds the larger total once the row is gone wins; equal totals mean a drawn game. Play runs until every stone is gone.
+Тот, кто держит большую сумму после того, как ряд ушел, выигрывает; равные суммы означают ничью игру. Игра проходит до тех пор, пока не исчезнет каждый камень.
 
-Both sides act optimally.
+Обе стороны действуют оптимально.
 
-Return `"Alice"` when optimal play puts Alice in front, `"Bob"` when it puts Bob in front, and `"Tie"` when optimal play ends level.
+Возвращайте `"Alice"`, когда оптимальная игра ставит Алису впереди, `"Bob"`, когда она ставит Боба впереди, и `"Tie"`, когда оптимальная игра заканчивается на уровне.
 
-**Constraints:**
+**Ограничения:**
 - 1 ≤ stoneValue.length ≤ 5 × 10<sup>4</sup>
 - -1000 ≤ stoneValue[i] ≤ 1000

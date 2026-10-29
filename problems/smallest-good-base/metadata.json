@@ -1,6 +1,6 @@
 {
   "id": "smallest-good-base",
-  "title": "547. Smallest Good Base",
+  "title": "547. Самая маленькая хорошая база",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/smallest-good-base/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "n = \"13\"",
       "output": "\"3\"",
-      "explanation": "13 is 111 in base 3."
+      "explanation": "13 — 111 в базовой 3."
     },
     {
       "input": "n = \"4681\"",
       "output": "\"8\"",
-      "explanation": "4681 is 11111 in base 8."
+      "explanation": "4681 — 11111 в базовой 8."
     },
     {
       "input": "n = \"1000000000000000000\"",
       "output": "\"999999999999999999\"",
-      "explanation": "Only 11 in base n-1 works."
+      "explanation": "Работает только 11 в базовой n-1."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "A longer all-ones run means a smaller base, so try long lengths first.",
-    "For a fixed length, the value grows with the base: binary-search it.",
-    "Accumulate 1+k+...+k^m with early exit once the sum passes n to avoid overflow."
+    "Более длительный забег означает меньшую базу, поэтому сначала попробуйте длинные дистанции.",
+    "Для фиксированной длины значение растет вместе с основанием: двоичный поиск.",
+    "Накопите 1+k+...+k^m с ранним выходом, как только сумма пройдет n, чтобы избежать переполнения."
   ]
 }

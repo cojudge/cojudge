@@ -1,6 +1,6 @@
 {
   "id": "smallest-rectangle-enclosing-black-pixels",
-  "title": "395. Smallest Rectangle Enclosing Black Pixels",
+  "title": "395. Самый маленький прямоугольник, закрывающий черные пиксели",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/smallest-rectangle-enclosing-black-pixels/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "image = [[\"0\",\"0\",\"1\",\"0\"],[\"0\",\"1\",\"1\",\"0\"],[\"0\",\"1\",\"0\",\"0\"]], x = 0, y = 2",
       "output": "6",
-      "explanation": "Rows 0..2 and columns 1..2 enclose every black pixel."
+      "explanation": "Ряды 0..2 и столбцы 1..2 охватывают каждый черный пиксель."
     },
     {
       "input": "image = [[\"1\"]], x = 0, y = 0",
       "output": "1",
-      "explanation": "One pixel covers area 1."
+      "explanation": "Один пиксель покрывает область 1."
     },
     {
       "input": "image = [[\"1\",\"1\"],[\"1\",\"1\"]], x = 1, y = 1",
       "output": "4",
-      "explanation": "The full 2 x 2 frame is black."
+      "explanation": "Полный кадр 2 x 2 черный."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "The answer is (lowest black row .. highest) times (leftmost .. rightmost black column).",
-    "One linear scan of the picture suffices to find those four extremes.",
-    "The given (x, y) only guarantees a black pixel exists; the bounds still come from the whole picture."
+    "Ответ: (самый низкий черный ряд.. самый высокий) раз (самый левый... самый правый черный столбец).",
+    "Одного линейного сканирования достаточно, чтобы найти эти четыре крайности.",
+    "Приведенные (x, y) только гарантируют существование черного пикселя; границы все еще исходят из всей картины."
   ]
 }

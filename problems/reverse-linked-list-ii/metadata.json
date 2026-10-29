@@ -1,6 +1,6 @@
 {
   "id": "reverse-linked-list-ii",
-  "title": "191. Reverse Linked List II",
+  "title": "191. Обратный связанный список II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/reverse-linked-list-ii/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "head = [1,2,3,4,5], left = 2, right = 4",
       "output": "[1,4,3,2,5]",
-      "explanation": "Reverse positions 2 through 4: [2,3,4] becomes [4,3,2]."
+      "explanation": "Обратные позиции 2 через 4: [2, 3, 4] становится [4, 3, 2]."
     },
     {
       "input": "head = [5], left = 1, right = 1",
       "output": "[5]",
-      "explanation": "A single node reversed in place stays [5]."
+      "explanation": "Один узел, перевернутый на месте, остается [5]."
     },
     {
       "input": "head = [3,5], left = 1, right = 2",
       "output": "[5,3]",
-      "explanation": "Reverse the whole list [3,5] to [5,3]."
+      "explanation": "Переверните весь список [3, 5] на [5, 3]."
     }
   ],
   "starterCode": {
@@ -70,7 +70,7 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Use a dummy node so reversal starting at position 1 is handled uniformly.",
-    "Advance to the node before position left, then iteratively move each following node to the front of the sublist until position right is reached."
+    "Используйте фиктивный узел, поэтому разворот, начинающийся с позиции 1, обрабатывается равномерно.",
+    "Продвигаясь к узлу перед левой позицией, затем итеративно перемещайте каждый следующий узел в переднюю часть подсписка, пока не будет достигнута правая позиция."
   ]
 }

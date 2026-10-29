@@ -1,6 +1,6 @@
 {
   "id": "count-and-say",
-  "title": "264. Count and Say",
+  "title": "264. Считай и говори",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/count-and-say/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "n = 4",
       "output": "\"1211\"",
-      "explanation": "The chain runs \"1\" -> \"11\" -> \"21\" -> \"1211\"."
+      "explanation": "Сеть работает по принципу «1» -> «11» -> «21» -> «1211»."
     },
     {
       "input": "n = 1",
       "output": "\"1\"",
-      "explanation": "The sequence starts with \"1\"."
+      "explanation": "Последовательность начинается с «1»."
     },
     {
       "input": "n = 5",
       "output": "\"111221\"",
-      "explanation": "Reading \"1211\" aloud gives one 1, one 2, then two 1s."
+      "explanation": "Чтение «1211» вслух дает один 1, один 2, затем два 1s."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Build term k+1 from term k by scanning it once and counting each maximal run of equal characters.",
-    "Append the count (as decimal text) and then the digit for every run; repeat n-1 times starting from \"1\"."
+    "Создайте термин k+1 из термина k, отсканировав его один раз и посчитав каждый максимальный прогон равных символов.",
+    "Добавьте число (в виде десятичного текста), а затем цифру для каждого прогона; повторите n-1, начиная с «1»."
   ]
 }

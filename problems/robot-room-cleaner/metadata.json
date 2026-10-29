@@ -1,6 +1,6 @@
 {
   "id": "robot-room-cleaner",
-  "title": "553. Robot Room Cleaner",
+  "title": "553. Роботы убирают комнату",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/robot-room-cleaner/",
   "category": "graph",
@@ -8,12 +8,12 @@
     {
       "input": "room = [[1,1,1,1,1,0,1,1],[1,1,1,1,1,0,1,1],[1,0,1,1,1,1,1,1],[0,0,0,1,0,0,0,0],[1,1,1,1,1,1,1,1]], row = 1, col = 3",
       "output": "33",
-      "explanation": "Thirty-three free cells connect to the start; walls split off the rest."
+      "explanation": "Тридцать три свободные клетки соединяются с началом; стены откалываются от остальных."
     },
     {
       "input": "room = [[1]], row = 0, col = 0",
       "output": "1",
-      "explanation": "Only the starting cell is free and reachable."
+      "explanation": "Только стартовая клетка свободна и доступна."
     }
   ],
   "starterCode": {
@@ -60,8 +60,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Run a flood fill (breadth-first or depth-first search) from the start through cells containing 1.",
-    "Track visited cells so each free cell is counted once; walls (0) and out-of-bounds neighbors are skipped.",
-    "Adaptation: you do not simulate turns or the Robot API \u2014 just return the size of the connected free region."
+    "Запустите заливку (ширина-первый или глубина-первый поиск) с самого начала через ячейки, содержащие 1.",
+    "Отслеживайте посещенные ячейки, чтобы каждая свободная ячейка считалась один раз; стены (0) и соседи за пределами границ пропускаются.",
+    "Адаптация: вы не моделируете повороты или API-интерфейс робота — просто верните размер подключенной свободной области."
   ]
 }

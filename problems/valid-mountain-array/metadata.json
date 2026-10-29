@@ -1,6 +1,6 @@
 {
   "id": "valid-mountain-array",
-  "title": "928. Valid Mountain Array",
+  "title": "928. Горный массив Valid Mountain Array",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/valid-mountain-array/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "arr = [2,1]",
       "output": "false",
-      "explanation": "Too short for a climb plus a descent."
+      "explanation": "Слишком короткий для подъема плюс спуск."
     },
     {
       "input": "arr = [3,5,5]",
       "output": "false",
-      "explanation": "Equal neighbours break strictness."
+      "explanation": "Равные соседи нарушают строгий режим."
     },
     {
       "input": "arr = [0,3,2,1]",
       "output": "true",
-      "explanation": "Strict rise to 3 then strict fall."
+      "explanation": "Строгое повышение до 3, затем строгое падение."
     }
   ],
   "starterCode": {
@@ -63,7 +63,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Walk uphill while neighbours strictly increase, then walk downhill while they strictly decrease; a single index should carry you to the end.",
-    "Reject arrays whose climb never starts (peak at index 0) or never ends (peak at the last index)."
+    "Ходите в гору, в то время как соседи строго увеличиваются, а затем идете в гору, когда они строго уменьшаются; один индекс должен довести вас до конца.",
+    "Отклоните массивы, восхождение которых никогда не начинается (пик по индексу 0) или никогда не заканчивается (пик по последнему индексу)."
   ]
 }

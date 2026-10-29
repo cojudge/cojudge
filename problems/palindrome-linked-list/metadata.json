@@ -1,6 +1,6 @@
 {
   "id": "palindrome-linked-list",
-  "title": "344. Palindrome Linked List",
+  "title": "344. Связанный список Palindrome",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/palindrome-linked-list/",
   "category": "linked-list",
@@ -8,12 +8,12 @@
     {
       "input": "head = [1,2,2,1]",
       "output": "true",
-      "explanation": "The values read identically from either end."
+      "explanation": "Значения читаются одинаково с обоих концов."
     },
     {
       "input": "head = [1,2]",
       "output": "false",
-      "explanation": "Reading backward gives [2,1], which differs."
+      "explanation": "Чтение в обратном направлении дает [2, 1], что отличается."
     }
   ],
   "starterCode": {
@@ -49,7 +49,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Copy the values into an array, then check the array with two pointers from both ends.",
-    "For O(1) extra space, find the middle, reverse the second half in place, and compare the halves."
+    "Скопируйте значения в массив, а затем проверьте массив с двумя указателями с обоих концов.",
+    "Для O (1) дополнительное пространство, найдите середину, переверните вторую половину на место и сравните половинки."
   ]
 }

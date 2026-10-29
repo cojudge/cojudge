@@ -1,6 +1,6 @@
 {
   "id": "maximal-rectangle",
-  "title": "275. Maximal Rectangle",
+  "title": "275. Максимальный прямоугольник",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/maximal-rectangle/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "matrix = [[\"1\",\"0\",\"1\",\"0\",\"0\"],[\"1\",\"0\",\"1\",\"1\",\"1\"],[\"1\",\"1\",\"1\",\"1\",\"1\"],[\"1\",\"0\",\"0\",\"1\",\"0\"]]",
       "output": "6",
-      "explanation": "The 2x3 block of 1s in rows 2-3 (0-based rows 1-2), columns 1-3 has area 6."
+      "explanation": "Блок 2x3 1s в строках 2-3 (0- Основанные ряды 1-2), колонки 1-3 У нас есть область 6."
     },
     {
       "input": "matrix = [[\"0\"]]",
       "output": "0",
-      "explanation": "With no 1s, no rectangle exists."
+      "explanation": "При отсутствии 1s не существует прямоугольника."
     },
     {
       "input": "matrix = [[\"1\"]]",
       "output": "1",
-      "explanation": "The single cell forms a 1x1 rectangle."
+      "explanation": "Одна ячейка образует прямоугольник 1x1."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Build histogram heights column by column: reset to 0 on '0', else increment by 1.",
-    "Score each histogram with a monotone increasing stack, flushing with a sentinel 0 at the end.",
-    "Width for a popped bar is the distance to the new stack top minus one."
+    "Постройте гистограмму высотой столбец за столбцом: перезагрузите 0 на 0, а затем добавьте 1.",
+    "Оцените каждую гистограмму с увеличением стека монотонов, смывая с помощью часового 0 в конце.",
+    "Ширина для всплывающего бара - это расстояние до нового верхнего стека минус один."
   ]
 }

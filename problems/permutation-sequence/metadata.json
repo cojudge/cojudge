@@ -1,6 +1,6 @@
 {
   "id": "permutation-sequence",
-  "title": "268. Permutation Sequence",
+  "title": "268. Последовательность перестановок",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/permutation-sequence/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "n = 3, k = 3",
       "output": "\"213\"",
-      "explanation": "The orderings are 123, 132, 213, 231, 312, 321; the 3rd is 213."
+      "explanation": "Заказы: 123, 132, 213, 231, 312, 321; 3-й - 213."
     },
     {
       "input": "n = 4, k = 9",
       "output": "\"2314\"",
-      "explanation": "Among the 24 orderings of 1..4, the 9th in sorted order is 2314."
+      "explanation": "Среди 24 заказов 1..4, 9-й в сортированном порядке 2314."
     },
     {
       "input": "n = 3, k = 1",
       "output": "\"123\"",
-      "explanation": "The first ordering is the digits in increasing order."
+      "explanation": "Первый порядок — это цифры в возрастающем порядке."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "There are (n-1)! orderings starting with each choice for the first digit, so divide (k-1) by (n-1)! to pick it.",
-    "Convert k to 0-based, then repeatedly select index k / fact and update k = k % fact with shrinking factorials.",
-    "Keep the remaining digits in a list and remove the chosen digit at each step."
+    "Заказы (n-1)! начинаются с каждого выбора для первой цифры, поэтому разделите (k-1) на (n-1)!, чтобы выбрать его.",
+    "Преобразуйте k в 0, затем повторно выберите индекс k/факт и обновите k = k % факт с уменьшающимися факториалами.",
+    "Держите оставшиеся цифры в списке и удаляйте выбранную цифру на каждом шаге."
   ]
 }

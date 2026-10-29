@@ -1,6 +1,6 @@
 {
   "id": "keys-and-rooms",
-  "title": "839. Keys and Rooms",
+  "title": "839. Ключи и комнаты",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/keys-and-rooms/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "rooms = [[1],[2],[3],[]]",
       "output": "true",
-      "explanation": "Chain 0->1->2->3 visits all."
+      "explanation": "Цепочка 0->1->2->3 посещает все."
     },
     {
       "input": "rooms = [[1,3],[3,0,1],[2],[0]]",
       "output": "false",
-      "explanation": "Room 2 stays locked."
+      "explanation": "Комната 2 остается закрытой."
     },
     {
       "input": "rooms = [[]]",
       "output": "true",
-      "explanation": "Only room exists and starts open."
+      "explanation": "Есть только комната и она открывается."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Treat rooms as a directed graph with edges from room i to each key inside it.",
-    "Run depth-first or breadth-first search from node 0 and mark visited rooms.",
-    "Answer true exactly when the visited count equals the room count."
+    "Относитесь к комнатам как к направленному графу с краями от комнаты i до каждого ключа внутри нее.",
+    "Запустите поиск по глубине или ширине от узла 0 и отметьте посещенные номера.",
+    "Ответ верный, когда посещаемый счет равен счету комнаты."
   ]
 }

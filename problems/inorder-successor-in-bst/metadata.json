@@ -1,6 +1,6 @@
 {
   "id": "inorder-successor-in-bst",
-  "title": "383. Inorder Successor in BST",
+  "title": "383. Преемник порядка в BST",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/inorder-successor-in-bst/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [2,1,3], p = 1",
       "output": "2",
-      "explanation": "Inorder is [1,2,3]; after 1 comes 2."
+      "explanation": "Inorder is [1, 2, 3]; после 1 выходит 2."
     },
     {
       "input": "root = [2,1,3], p = 2",
       "output": "3",
-      "explanation": "After 2 comes 3."
+      "explanation": "После 2 появляется 3."
     },
     {
       "input": "root = [2,1,3], p = 3",
       "output": "-1",
-      "explanation": "3 is largest, so no successor."
+      "explanation": "3 является самым большим, поэтому преемника нет."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Adaptation: p is given as a value and the answer is the successor value, or -1 when p is largest (instead of a node/null).",
-    "Walk down using BST order, remembering the last ancestor greater than p.",
-    "Inorder successor is the smallest value larger than p."
+    "Адаптация: p дается как значение, а ответом является значение преемника, или -1, когда p является наибольшим (вместо узла / нуля).",
+    "Пройдите вниз, используя порядок BST, вспомнив последнего предка больше, чем p.",
+    "Преемник по порядку является наименьшим значением, большим, чем p."
   ]
 }

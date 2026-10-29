@@ -1,6 +1,6 @@
 {
   "id": "score-after-flipping-matrix",
-  "title": "856. Score After Flipping Matrix",
+  "title": "856. Скриншоты из игры After Flipping Matrix",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/score-after-flipping-matrix/",
   "category": "greedy",
@@ -8,17 +8,17 @@
     {
       "input": "grid = [[0,0,1,1],[1,0,1,0],[1,1,0,0]]",
       "output": "39",
-      "explanation": "Rows become 1111, 1001 and 1011 after optimal flips, totaling 39."
+      "explanation": "Строки становятся 1111, 1001 и 1011 после оптимальных сальто, всего 39."
     },
     {
       "input": "grid = [[0]]",
       "output": "1",
-      "explanation": "Flip the single cell to 1."
+      "explanation": "Переверните одну ячейку на 1."
     },
     {
       "input": "grid = [[0,1],[1,1]]",
       "output": "5",
-      "explanation": "Rows become 10 and 11, scoring 2 + 3 = 5."
+      "explanation": "Рядами становятся 10 и 11, забив 2 + 3 = 5."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "The leftmost column carries the largest weight, so first make every entry there a 1 using row flips; that choice never harms optimality.",
-    "Once the leading column is fixed, each remaining column can be decided independently by picking the majority value to maximize its contribution.",
-    "A column with `c` ones among `m` rows contributes `max(c, m - c) * 2^(n-1-j)` after the optimal column flip."
+    "Самая левая колонка имеет наибольший вес, поэтому сначала сделайте каждую запись там 1 с помощью переворачивания строк; этот выбор никогда не вредит оптимальности.",
+    "После того, как ведущая колонка фиксирована, каждая оставшаяся колонка может быть решена независимо, выбрав значение большинства для максимизации своего вклада.",
+    "Колонка с `c` среди строк `m` способствует `max(c, m - c) * 2^(n-1-j)` после оптимального переворачивания колонки."
   ]
 }

@@ -1,5 +1,5 @@
-Return `true` if `nums` is sorted in non-decreasing order (each element is greater than or equal to the previous one). Empty and single-element arrays count as sorted.
+Возврат `true`, если `nums` отсортирован в неубывающем порядке (каждый элемент больше или равен предыдущему). Пустые и одноэлементные массивы считаются отсортированными.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= nums.length <= 1000``
 - ``-10^9 <= nums[i] <= 10^9``

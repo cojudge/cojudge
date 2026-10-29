@@ -1,8 +1,8 @@
-You get a binary array. You may flip at most one `0` into a `1` (you can also flip nothing). After that single optional flip, how long can the longest block of consecutive `1`s become?
+Вы получаете двоичный массив. Вы можете перевернуть максимум один `0` в `1` (вы также можете ничего не переворачивать). После этого единственного необязательного переворачивания, как долго может стать самый длинный блок последовательных `1`?
 
-Return that maximum length.
+Верните максимальную длину.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= nums.length <= 10^5`
-- Each `nums[i]` is `0` or `1`.
+- Каждый `nums[i]` является `0` или `1`.

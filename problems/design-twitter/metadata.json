@@ -1,6 +1,6 @@
 {
   "id": "design-twitter",
-  "title": "106. Design Twitter",
+  "title": "106. Дизайн Твиттера",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/design-twitter/",
   "category": "heap",
@@ -8,12 +8,12 @@
     {
       "input": "operations = [\"Twitter\",\"postTweet\",\"getNewsFeed\",\"follow\",\"postTweet\",\"getNewsFeed\",\"unfollow\",\"getNewsFeed\"], args = [[],[1,5],[1],[1,2],[2,6],[1],[1,2],[1]]",
       "output": "[[5],[6,5],[5]]",
-      "explanation": "Only news-feed calls contribute rows to the result."
+      "explanation": "Только звонки в ленте новостей вносят ряды в результат."
     },
     {
       "input": "operations = [\"Twitter\",\"postTweet\",\"postTweet\",\"getNewsFeed\"], args = [[],[1,10],[1,11],[1]]",
       "output": "[[11,10]]",
-      "explanation": "Feeds are ordered from newest to oldest."
+      "explanation": "Корм заказывают от самых новых до самых старых."
     }
   ],
   "starterCode": {
@@ -53,8 +53,8 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Assign each posted tweet an increasing timestamp and store tweets by author.",
-    "For a feed, consider the user's own tweet list together with each followed user's list.",
-    "Use a max-heap to merge those already time-ordered lists and stop after 10 tweets."
+    "Назначьте каждому размещенному твиту увеличивающуюся временную метку и храните твиты автора.",
+    "Для ленты рассмотрите собственный список твитов пользователя вместе с каждым последующим списком пользователя.",
+    "Используйте максимальную кучу, чтобы объединить уже упорядоченные по времени списки и остановиться после твитов 10."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "the-maze-iii",
-  "title": "562. The Maze III",
+  "title": "562. Лабиринт III",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/the-maze-iii/",
   "category": "graph",
@@ -8,12 +8,12 @@
     {
       "input": "maze = [[0,0,0,0,0],[1,1,0,0,1],[0,0,0,0,0],[0,1,0,0,1],[0,1,0,0,0]], ball = [4,3], hole = [0,1]",
       "output": "\"lul\"",
-      "explanation": "Rolling left, up and left in three segments reaches the hole with minimal distance."
+      "explanation": "Прокат влево, вверх и влево в трех сегментах достигает отверстия с минимальным расстоянием."
     },
     {
       "input": "maze = [[0,0,0,0,0],[1,1,0,0,1],[0,0,0,0,0],[0,1,0,0,1],[0,1,0,0,0]], ball = [4,3], hole = [3,0]",
       "output": "\"impossible\"",
-      "explanation": "The hole sits in a pocket no rolling path can stop in."
+      "explanation": "Отверстие находится в кармане, и ни один из путей не может остановиться."
     }
   ],
   "starterCode": {
@@ -60,8 +60,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Treat stopping cells as nodes and rolling segments as weighted edges; Dijkstra over (distance, path) finds the optimum.",
-    "Stop a roll early as soon as the hole is entered, counting only steps up to the hole.",
-    "Order the priority queue by distance first and direction string second to get the lexicographically smallest shortest path."
+    "Относитесь к останавливающим ячейкам как к узлам и к подвижным сегментам как к взвешенным краям; Dijkstra over (расстояние, путь) находит оптимальный вариант.",
+    "Остановите рулон рано, как только отверстие введено, считая только шаги до отверстия.",
+    "Заказывайте очередь приоритета сначала по расстоянию, а затем по струне направления, чтобы получить лексикографически наименьший кратчайший путь."
   ]
 }

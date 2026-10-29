@@ -1,10 +1,10 @@
-Two integer arrays `nums1` and `nums2` are provided in non-decreasing order, together with integers `m` and `n` stating how many meaningful entries each one contributes.
+Два целочисленных массива `nums1` и `nums2` предоставляются в неснижающем порядке, вместе с целыми числами `m` и `n`, указывающими, сколько значимых записей вносит каждый из них.
 
-The array `nums1` has total capacity `m + n`: its leading `m` positions contain the values to keep, while its trailing `n` positions are placeholders filled with `0` and carry no information. The array `nums2` holds exactly `n` values.
+Массив `nums1` имеет общую емкость `m + n`: его ведущие позиции `m` содержат значения для сохранения, в то время как его позиции `n` являются заполнителями `0` и не несут никакой информации. Массив `nums2` содержит именно значения `n`.
 
-Combine the `m` kept values of `nums1` with the `n` values of `nums2` into one collection ordered from smallest to largest, and return that combined array.
+Объединение `m` сохранило значения `nums1` с значениями `n` `nums2` в одну коллекцию, упорядоченную от самой маленькой до самой большой, и возврат этого комбинированного массива.
 
-**Constraints:**
+**Ограничения:**
 
 - nums1.length == m + n
 - nums2.length == n

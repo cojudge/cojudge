@@ -1,6 +1,6 @@
 {
   "id": "course-schedule",
-  "title": "28. Course Schedule",
+  "title": "28. Расписание курсов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/course-schedule/",
   "category": "graph",
@@ -8,12 +8,12 @@
     {
       "input": "numCourses = 2, prerequisites = [[1,0]]",
       "output": "true",
-      "explanation": "All 2 courses can be completed (no prerequisite cycle)."
+      "explanation": "Все курсы 2 могут быть завершены (без обязательного цикла)."
     },
     {
       "input": "numCourses = 2, prerequisites = [[1,0],[0,1]]",
       "output": "false",
-      "explanation": "A cycle is detected in the prerequisite graph, so all 2 courses cannot be completed."
+      "explanation": "В графе предпосылок выявляется цикл, поэтому все курсы 2 не могут быть завершены."
     }
   ],
   "starterCode": {
@@ -53,6 +53,6 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Model courses as a directed graph with edges bi->ai. You can finish all courses iff the graph is acyclic. Use Kahn's algorithm (BFS on indegrees) or DFS cycle detection."
+    "Моделирование курсов как направленного графа с краями би->ай. Можно закончить все курсы, если граф является ациклическим. Используйте алгоритм Кана (BFS на indegrees) или DFS-обнаружение цикла."
   ]
 }

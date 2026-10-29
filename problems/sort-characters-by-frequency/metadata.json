@@ -1,6 +1,6 @@
 {
   "id": "sort-characters-by-frequency",
-  "title": "518. Sort Characters By Frequency",
+  "title": "518. Сортировка персонажей по частоте",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/sort-characters-by-frequency/",
   "category": "heap",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"tree\"",
       "output": "\"eert\"",
-      "explanation": "e appears twice, t and r once each."
+      "explanation": "e появляется дважды, t и r — один раз."
     },
     {
       "input": "s = \"cccaaa\"",
       "output": "\"aaaccc\"",
-      "explanation": "Equal frequencies allow either block order."
+      "explanation": "Равные частоты позволяют блокировать порядок."
     },
     {
       "input": "s = \"Aabb\"",
       "output": "\"bbAa\"",
-      "explanation": "b appears twice, A and a once each."
+      "explanation": "b появляется дважды, A и один раз каждый."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Count each character first; the rest is ordering by those counts.",
-    "Sorting distinct characters by descending count then repeating each by its count is simplest.",
-    "Bucketing by count gives linear time, but sorting distinct letters is fine for the given limits."
+    "Сначала сосчитайте каждого персонажа; остальное упорядочивается по этим счетам.",
+    "Сортировка отдельных символов по нисходящему счету, а затем повторение каждого по его счету, является самой простой.",
+    "Взлет по счету дает линейное время, но сортировка отдельных букв хороша для заданных пределов."
   ]
 }

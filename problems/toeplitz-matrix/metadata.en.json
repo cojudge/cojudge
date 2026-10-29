@@ -1,0 +1,56 @@
+{
+  "id": "toeplitz-matrix",
+  "title": "767. Toeplitz Matrix",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/toeplitz-matrix/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "matrix = [[1,2,3,4],[5,1,2,3],[9,5,1,2]]",
+      "output": "true",
+      "explanation": "Every upper-left to lower-right diagonal is constant."
+    },
+    {
+      "input": "matrix = [[1,2],[2,2]]",
+      "output": "false",
+      "explanation": "The main diagonal mixes 1 and 2."
+    },
+    {
+      "input": "matrix = [[1]]",
+      "output": "true"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isToeplitzMatrix(int[][] matrix) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def isToeplitzMatrix(self, matrix: List[List[int]]) -> bool:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool isToeplitzMatrix(vector<vector<int>>& matrix) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool IsToeplitzMatrix(int[][] matrix)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_toeplitz_matrix(matrix: Vec<Vec<i32>>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc IsToeplitzMatrix(matrix [][]int) bool {\n    return false\n}",
+    "typescript": "export function isToeplitzMatrix(matrix: number[][]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $matrix\n     * @return bool\n     */\n    public function isToeplitzMatrix($matrix) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "matrix": "[[1,2,3,4],[5,1,2,3],[9,5,1,2]]"
+    },
+    {
+      "matrix": "[[1,2],[2,2]]"
+    },
+    {
+      "matrix": "[[1]]"
+    }
+  ],
+  "functionName": "isToeplitzMatrix",
+  "params": [
+    {
+      "name": "matrix",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Compare each cell with its upper-left neighbor; any mismatch rejects the matrix.",
+    "Only cells with both r > 0 and c > 0 need a check, so one nested loop suffices."
+  ]
+}

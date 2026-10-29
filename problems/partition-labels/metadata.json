@@ -1,6 +1,6 @@
 {
   "id": "partition-labels",
-  "title": "143. Partition Labels",
+  "title": "143. Ярлыки разделов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/partition-labels/",
   "category": "greedy",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"ababcbacadefegdehijhklij\"",
       "output": "[9,7,8]",
-      "explanation": "The maximal split is ababcbaca, defegde, hijhklij."
+      "explanation": "Максимальный раскол — абабкбака, дефегде, хиджклидж."
     },
     {
       "input": "s = \"eccbbbbdec\"",
       "output": "[10]",
-      "explanation": "All characters in the string appear within a single contiguous segment, so the partition is [10]."
+      "explanation": "Все символы в строке появляются в пределах одного смежного сегмента, поэтому раздел [10]."
     },
     {
       "input": "s = \"abc\"",
       "output": "[1,1,1]",
-      "explanation": "Each character appears in its own contiguous segment, so the partition is [1,1,1]."
+      "explanation": "Каждый символ появляется в своем собственном смежном сегменте, поэтому раздел является [1, 1, 1]."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Record the last index where each letter occurs.",
-    "Scan from left to right while extending the current part's end to the latest final occurrence seen so far.",
-    "When the scan reaches that end, close the part immediately to maximize the total number of parts."
+    "Запишите последний индекс, где происходит каждая буква.",
+    "Сканируйте слева направо, продлевая конец текущей части до последнего финального события, наблюдаемого до сих пор.",
+    "Когда сканирование достигает этого конца, немедленно закройте часть, чтобы максимизировать общее количество частей."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "map-sum-pairs",
-  "title": "696. Map Sum Pairs",
+  "title": "696. Карта Sum Pairs",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/map-sum-pairs/",
   "category": "hash-table",
@@ -8,12 +8,12 @@
     {
       "input": "operations = [\"insert\",\"sum\",\"insert\",\"sum\"], keys = [\"apple\",\"ap\",\"app\",\"ap\"], vals = [3,0,2,0]",
       "output": "[3,5]",
-      "explanation": "After apple=3, prefix ap sums to 3. After app=2, prefix ap sums to 3+2=5."
+      "explanation": "После apple=3, префикс ap сумов 3. После app=2, префикс ap сумов 3+2=5."
     },
     {
       "input": "operations = [\"insert\",\"insert\",\"sum\"], keys = [\"aa\",\"aa\",\"a\"], vals = [2,3,0]",
       "output": "[3]",
-      "explanation": "The second insert overwrites aa to 3, so prefix a sums to 3."
+      "explanation": "Вторая вставка перезаписывает aa на 3, поэтому прикрепляет суммы к 3."
     }
   ],
   "starterCode": {
@@ -60,8 +60,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Design adaptation: implement runMapSum(operations, keys, vals); insert uses keys[i]/vals[i], sum uses keys[i] as the prefix and ignores vals[i].",
-    "Keep a map from full key to its current value; overwrites replace the old value.",
-    "A sum scans all stored keys with the given prefix and adds their values."
+    "Адаптация дизайна: реализуйте runMapSum (операции, ключи, валы); вставка использует ключи[i]/валы[i], сумма использует ключи[i] в качестве префикса и игнорирует валы[i].",
+    "Держите карту от полного ключа к ее текущему значению; перезаписи заменяют старое значение.",
+    "Сумма сканирует все сохраненные ключи с заданным префиксом и добавляет их значения."
   ]
 }

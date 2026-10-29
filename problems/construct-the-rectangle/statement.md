@@ -1,6 +1,6 @@
-A web page needs a rectangular shape whose area equals a given positive integer. Call its sides length `L` and width `W`. The design must satisfy two rules: the length is never shorter than the width (`L >= W`), and the gap between the sides (`L - W`) is as small as possible.
+Веб-странице нужна прямоугольная форма, площадь которой равна данному положительному целому числу. Назовите ее стороны длиной `L` и шириной `W`. Дизайн должен удовлетворять двум правилам: длина никогда не короче ширины (`L >= W`), а промежуток между сторонами (`L - W`) как можно меньше.
 
-Return the chosen pair as `[L, W]`.
+Верните выбранную пару в качестве `[L, W]`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= area <= 10^7`

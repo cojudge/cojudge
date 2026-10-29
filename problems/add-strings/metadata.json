@@ -1,6 +1,6 @@
 {
   "id": "add-strings",
-  "title": "488. Add Strings",
+  "title": "488. Добавить струны",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/add-strings/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "num1 = \"11\", num2 = \"123\"",
       "output": "\"134\"",
-      "explanation": "11 plus 123 is 134."
+      "explanation": "11 плюс 123 - это 134."
     },
     {
       "input": "num1 = \"456\", num2 = \"77\"",
       "output": "\"533\"",
-      "explanation": "Column addition with carries gives 533."
+      "explanation": "Добавление колонки с переносчиками дает 533."
     },
     {
       "input": "num1 = \"0\", num2 = \"0\"",
@@ -61,8 +61,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Add from the least significant digit toward the front, keeping a carry.",
-    "Each column sums two digits plus the carry; the digit is the remainder mod 10.",
-    "A leftover carry after the front-most column becomes a new leading digit."
+    "Добавьте из наименее значащей цифры к передней части, сохраняя переноску.",
+    "Каждый столбец суммирует две цифры плюс перенос; цифра - оставшийся мод 10.",
+    "Оставшийся носитель после самой передней колонки становится новой ведущей цифрой."
   ]
 }

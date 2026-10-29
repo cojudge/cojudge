@@ -1,6 +1,6 @@
 {
   "id": "largest-time-for-given-digits",
-  "title": "936. Largest Time for Given Digits",
+  "title": "936. Самое большое время для данных цифр",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/largest-time-for-given-digits/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "arr = [1,2,3,4]",
       "output": "\"23:41\"",
-      "explanation": "Latest among all valid arrangements."
+      "explanation": "Последние из всех действующих соглашений."
     },
     {
       "input": "arr = [5,5,5,5]",
       "output": "\"\"",
-      "explanation": "No valid hour and minute pair."
+      "explanation": "Нет действительных часовых и минутных пар."
     },
     {
       "input": "arr = [0,0,0,0]",
       "output": "\"00:00\"",
-      "explanation": "Midnight is the only build."
+      "explanation": "Полночь - единственное сооружение."
     }
   ],
   "starterCode": {
@@ -66,8 +66,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Only 24 orderings exist, so trying every placement of the four digits is cheap.",
-    "A placement is valid when its hour is below 24 and its minute below 60; keep the valid one with the most total minutes.",
-    "Format the winner with two digits on each side, or return empty when nothing qualified."
+    "Существуют только заказы 24, поэтому попробовать каждое размещение четырех цифр дешево.",
+    "Размещение является действительным, когда его час ниже 24 и его минута ниже 60; сохраняйте действительный с наибольшим количеством минут.",
+    "Формат победителя с двумя цифрами на каждой стороне или возвращение пустым, когда ничего не квалифицируется."
   ]
 }

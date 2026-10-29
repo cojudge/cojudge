@@ -1,6 +1,6 @@
 {
   "id": "convert-a-number-to-hexadecimal",
-  "title": "479. Convert a Number to Hexadecimal",
+  "title": "479. Преобразовать число в шестнадцатеричное",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/convert-a-number-to-hexadecimal/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "num = 26",
       "output": "\"1a\"",
-      "explanation": "26 equals 1 sixteen plus 10, written 1a."
+      "explanation": "26 равен 1 шестнадцать плюс 10, написанный 1a."
     },
     {
       "input": "num = -1",
       "output": "\"ffffffff\"",
-      "explanation": "Negative values use 32-bit two's complement, so -1 becomes eight f digits."
+      "explanation": "Отрицательные значения используют дополнение 32-бита два, поэтому -1 становится восемью f-значками."
     },
     {
       "input": "num = 0",
       "output": "\"0\"",
-      "explanation": "Zero maps to a single zero digit."
+      "explanation": "Нулевые карты на одну нулевую цифру."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Handle zero as a special case returning a single zero character.",
-    "Treat the value as an unsigned 32-bit pattern so negatives wrap via two's complement.",
-    "Peel off 4-bit groups from the low end, mapping 0-15 to 0-9a-f, until nothing remains."
+    "Обработайте ноль как особый случай, возвращающий один нулевой символ.",
+    "Относитесь к значению как к неподписанному шаблону 32-бита, поэтому негативы обертываются с помощью дополнения двух.",
+    "Отсоедините 4-битные группы от нижнего конца, сопоставив 0-15 с 0-9a-f, пока ничего не останется."
   ]
 }

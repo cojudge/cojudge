@@ -1,7 +1,7 @@
-A subsequence keeps some of the characters of a string in their original order while dropping the rest. Two subsequences count as the same whenever their letter sequences match, even if they were formed from different positions.
+Подпоследовательность сохраняет некоторые символы строки в их первоначальном порядке, оставляя остальные.Две подпоследовательности считаются одинаковыми, когда их последовательности букв совпадают, даже если они были сформированы из разных позиций.
 
-Given a string `s` built only from the letters `a`, `b`, `c` and `d`, count how many distinct non-empty subsequences of `s` read the same forwards and backwards. Because the total can be huge, return it modulo `1,000,000,007`.
+Дано струну `s` Построено только из букв `a`, `b`, `c` и `d`Подсчитайте, сколько различных непустых последовательностей `s` Прочтите то же самое вперед и назад. Потому что сумма может быть огромной, верните ее по модулю `1,000,000,007`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 1000`
-- `s` holds only `a`, `b`, `c`, `d`.
+- `s` имеет только `a`, `b`, `c`, `d`.

@@ -3,26 +3,26 @@
   "difficulty": "Easy",
   "examples": [
     {
-      "explanation": "'l' occurs once at index 0; 'e' repeats.",
+      "explanation": "«l» происходит один раз при индексе 0; «e» повторяется.",
       "input": "s = \"leetcode\"",
       "output": "0"
     },
     {
-      "explanation": "'l', 'o' and 'e' repeat; the first singleton is 'v' at index 2.",
+      "explanation": "«l», «o» и «e» повторяются; первый синглтон — «v» в индексе 2.",
       "input": "s = \"loveleetcode\"",
       "output": "2"
     },
     {
-      "explanation": "Both letters appear twice, so there is no singleton.",
+      "explanation": "Обе буквы появляются дважды, так что синглтона нет.",
       "input": "s = \"aabb\"",
       "output": "-1"
     }
   ],
   "functionName": "firstUniqChar",
   "hints": [
-    "Count how many times each of the 26 letters occurs in one pass.",
-    "Make a second left-to-right pass and stop at the first letter whose count is 1.",
-    "Two linear passes beat checking every pair of positions."
+    "Подсчитайте, сколько раз каждая из букв 26 происходит в одном проходе.",
+    "Сделайте второй проход слева направо и остановитесь на первой букве, счет которой 1.",
+    "Два линейных прохода бьют, проверяя каждую пару позиций."
   ],
   "id": "first-unique-character-in-a-string",
   "link": "https://leetcode.com/problems/first-unique-character-in-a-string/",
@@ -54,5 +54,5 @@
       "s": "aabb"
     }
   ],
-  "title": "463. First Unique Character in a String"
+  "title": "463. Первый уникальный персонаж в струне"
 }

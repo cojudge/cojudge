@@ -1,0 +1,65 @@
+{
+  "id": "stamping-the-sequence",
+  "title": "923. Stamping The Sequence",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/stamping-the-sequence/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "stamp = \"abc\", target = \"ababc\"",
+      "output": "[0,2]",
+      "explanation": "Stamp at 2 (\"??abc\"), then at 0 (\"ababc\")."
+    },
+    {
+      "input": "stamp = \"abca\", target = \"aabcaca\"",
+      "output": "[3,0,1]",
+      "explanation": "One valid build order."
+    },
+    {
+      "input": "stamp = \"abc\", target = \"acabc\"",
+      "output": "[]",
+      "explanation": "No order can create that middle character."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] movesToStamp(String stamp, String target) {\n        return new int[]{};\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def movesToStamp(self, stamp: str, target: str) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> movesToStamp(string stamp, string target) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] MovesToStamp(string stamp, string target)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn moves_to_stamp(stamp: String, target: String) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc MovesToStamp(stamp string, target string) []int {\n    return nil\n}",
+    "typescript": "export function movesToStamp(stamp: string, target: string): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $stamp\n     * @param string $target\n     * @return int[]\n     */\n    public function movesToStamp($stamp, $target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "stamp": "abc",
+      "target": "ababc"
+    },
+    {
+      "stamp": "abca",
+      "target": "aabcaca"
+    },
+    {
+      "stamp": "abc",
+      "target": "acabc"
+    }
+  ],
+  "functionName": "movesToStamp",
+  "params": [
+    {
+      "name": "stamp",
+      "type": "string"
+    },
+    {
+      "name": "target",
+      "type": "string"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Think in reverse: from the target, turn stamp-matching windows into wildcards.",
+    "A window is erasable when every non-wildcard matches the stamp and at least one cell is still concrete.",
+    "Reverse the erasure order to obtain a forward stamping sequence; failure to erase everything means impossible."
+  ]
+}

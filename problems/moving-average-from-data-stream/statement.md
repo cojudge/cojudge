@@ -1,18 +1,18 @@
-This is an offline adaptation of a streaming task. Instead of writing a class, you write one function that replays a whole session:
+Это офлайн-адаптация потоковой задачи. Вместо того, чтобы писать класс, вы пишете одну функцию, которая воспроизводит целую сессию:
 
 ```
-runMovingAverage(operations, args)
+RunMovingAverage (операции, args)
 ```
 
-`operations[i]` is either `"MovingAverage"` (build the averager) or `"next"` (feed a value). `args[i]` holds the constructor or call argument: `args[0]` is `[size]` (the window width), and each later entry is `[value]` for that `next` call. Both arrays share the same length, and the first operation is always `"MovingAverage"`.
+`operations[i]` - это либо `"MovingAverage"` (постройте усреднитель), либо `"next"` (поставьте значение). `args[i]` держит конструктор или аргумент вызова: `args[0]` - это `[size]` (ширина окна), и каждая более поздняя запись - `[value]` для этого вызова `next`. Оба массива имеют одинаковую длину, и первая операция всегда `"MovingAverage"`.
 
-The averager remembers at most the newest `size` fed values. Each `next` appends its value (dropping the oldest when full) and yields the mean of the stored window as a decimal string (for example `"1.0"`, `"5.5"`).
+Усреднитель запоминает максимум новейшие значения `size`. Каждый `next` добавляет свое значение (отбрасывая самое старое при заполнении) и дает среднее сохраненного окна в виде десятичной строки (например, `"1.0"`, `"5.5"`).
 
-Return the list of those decimal strings, one per `next` call, in order. Constructor steps contribute nothing to the output.
+Возвращайте список десятичных строк, по одной на вызов `next`, в порядке. Шаги конструктора ничего не вносят в вывод.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= size <= 1000`
 - `-10^5 <= value <= 10^5`
 - At most `10^4` `next` calls per session.
 
-**Adaptation note:** The classic formulation uses a `MovingAverage` class with a `next` method returning `double`. Here averages are transported as decimal `string` values (compared with tolerance), and only `next` results are returned.
+**Примечание по адаптации: ** Классическая формулировка использует класс `MovingAverage` с методом `next`, возвращающим `double`. Здесь средние значения переносятся как десятичные значения `string` (по сравнению с допуском), и возвращаются только результаты `next`.

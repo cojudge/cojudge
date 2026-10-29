@@ -1,0 +1,69 @@
+{
+  "id": "valid-mountain-array",
+  "title": "928. Valid Mountain Array",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/valid-mountain-array/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "arr = [2,1]",
+      "output": "false",
+      "explanation": "Too short for a climb plus a descent."
+    },
+    {
+      "input": "arr = [3,5,5]",
+      "output": "false",
+      "explanation": "Equal neighbours break strictness."
+    },
+    {
+      "input": "arr = [0,3,2,1]",
+      "output": "true",
+      "explanation": "Strict rise to 3 then strict fall."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean validMountainArray(int[] arr) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def validMountainArray(self, arr: List[int]) -> bool:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool validMountainArray(vector<int>& arr) {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public bool ValidMountainArray(int[] arr) \n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn valid_mountain_array(arr: Vec<i32>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc ValidMountainArray(arr []int) bool {\n    return false\n}",
+    "typescript": "export function validMountainArray(arr: number[]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @return bool\n     */\n    public function validMountainArray($arr) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "arr": [
+        2,
+        1
+      ]
+    },
+    {
+      "arr": [
+        3,
+        5,
+        5
+      ]
+    },
+    {
+      "arr": [
+        0,
+        3,
+        2,
+        1
+      ]
+    }
+  ],
+  "functionName": "validMountainArray",
+  "params": [
+    {
+      "name": "arr",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Walk uphill while neighbours strictly increase, then walk downhill while they strictly decrease; a single index should carry you to the end.",
+    "Reject arrays whose climb never starts (peak at index 0) or never ends (peak at the last index)."
+  ]
+}

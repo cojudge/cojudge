@@ -1,9 +1,9 @@
-An encoded message uses two symbol widths: `0` alone means a one-bit symbol, while `10` and `11` each mean a two-bit symbol. The given array `bits` is a valid encoding of at least one symbol.
+Закодированное сообщение использует две ширины символа: только `0` означает однобитный символ, в то время как `10` и `11` означают двухбитный символ.Заданный массив `bits` является действительным кодированием по меньшей мере одного символа.
 
-Decide whether the very last symbol occupies a single bit. In other words, walk the encoding greedily from the start — a `1` always consumes its follower, a `0` consumes only itself — and check whether the final `0` is read alone.
+Решите, занимает ли самый последний символ один бит. Другими словами, пройдите кодирование с самого начала — `1` всегда потребляет своего последователя, `0` потребляет только себя — и проверьте, читается ли последний `0` в одиночку.
 
-Return `true` when the tail symbol is one bit long, else `false`.
+Возвращайте `true`, когда символ хвоста имеет длину один бит, а не `false`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= bits.length <= 1000`
-- Each entry is `0` or `1`, and the last entry is `0`.
+- Каждая запись `0` или `1`, а последняя запись `0`.

@@ -1,6 +1,6 @@
 {
   "id": "string-to-integer-atoi",
-  "title": "252. String to Integer (atoi)",
+  "title": "252. Струна в целое число (atoi)",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/string-to-integer-atoi/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"42\"",
       "output": "42",
-      "explanation": "The string starts directly with digits, giving 42."
+      "explanation": "Струна начинается непосредственно с цифр, давая 42."
     },
     {
       "input": "s = \"   -042\"",
       "output": "-42",
-      "explanation": "Spaces are skipped, the minus sign is applied, and 042 parses to 42."
+      "explanation": "Пропущены пробелы, нанесен знак минус, а 042 парирует на 42."
     },
     {
       "input": "s = \"1337c0d3\"",
       "output": "1337",
-      "explanation": "Reading stops at the first non-digit, so the result is 1337."
+      "explanation": "Чтение останавливается на первой незначной цифре, поэтому в результате получается 1337."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Walk the string with an index: first spaces, then an optional sign, then digits. Anything else ends the parse.",
-    "Accumulate into a wider (64-bit) variable or check the bounds before each multiply-and-add so overflow clamps correctly."
+    "Пройдите по строке с индексом: сначала пробелы, затем факультативный знак, затем цифры. Все остальное завершает разбор.",
+    "Накопляйте в более широкую (64-бит) переменную или проверьте границы перед каждым умножением и добавлением, чтобы правильно переполнять зажимы."
   ]
 }

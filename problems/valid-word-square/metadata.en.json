@@ -1,0 +1,58 @@
+{
+  "id": "valid-word-square",
+  "title": "493. Valid Word Square",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/valid-word-square/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "words = [\"abcd\",\"bnrt\",\"crmy\",\"dtye\"]",
+      "output": "true",
+      "explanation": "Each row matches its corresponding column."
+    },
+    {
+      "input": "words = [\"ball\",\"area\",\"read\",\"lady\"]",
+      "output": "false",
+      "explanation": "Column 3 does not spell \"lady\"."
+    },
+    {
+      "input": "words = [\"abcd\",\"bnrt\",\"crm\",\"dt\"]",
+      "output": "true",
+      "explanation": "Shorter rows still mirror their columns."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean validWordSquare(String[] words) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def validWordSquare(self, words: List[str]) -> bool:\n        pass",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool validWordSquare(vector<string>& words) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool ValidWordSquare(string[] words) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn valid_word_square(words: Vec<String>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc ValidWordSquare(words []string) bool {\n    \n}",
+    "typescript": "export function validWordSquare(words: string[]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $words\n     * @return bool\n     */\n    public function validWordSquare($words) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "words": "[\"abcd\",\"bnrt\",\"crmy\",\"dtye\"]"
+    },
+    {
+      "words": "[\"ball\",\"area\",\"read\",\"lady\"]"
+    },
+    {
+      "words": "[\"abcd\",\"bnrt\",\"crm\",\"dt\"]"
+    }
+  ],
+  "functionName": "validWordSquare",
+  "params": [
+    {
+      "name": "words",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Compare words[i][j] against words[j][i] for every in-range pair.",
+    "Treat a missing character on exactly one side as a mismatch.",
+    "You only need to scan rows; columns are covered by symmetry."
+  ]
+}

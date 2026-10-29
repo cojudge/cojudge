@@ -1,10 +1,10 @@
-A safe opens with a secret code of exactly `n` digits, each digit ranging from `0` to `k - 1`. The lock inspects the most recent `n` digits after every key press, so a long typed string can test many codes in a row.
+Сейф открывается с секретным кодом именно цифр `n`, каждая цифра варьируется от `0` до `k - 1`. Блокировка проверяет самые последние цифры `n` после каждого нажатия клавиши, поэтому длинная набранная строка может тестировать множество кодов подряд.
 
-For example, with code length 3 and typed string `012345`, the lock checks `0`, `01`, `012`, `123`, `234` and finally `345`.
+Например, с длиной кода 3 и типизированной строкой `012345` блокировка проверяет `0`, `01`, `012`, `123`, `234` и, наконец, `345`.
 
-Produce any shortest possible string that contains every one of the `k^n` codes as a contiguous block somewhere inside it. Any minimal answer is accepted.
+Изготовить любую максимально короткую строку, содержащую каждый из кодов `k^n`, как смежный блок где-то внутри него.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 4`
 - `1 <= k <= 10`
 - `1 <= k^n <= 4096`

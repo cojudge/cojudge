@@ -1,4 +1,4 @@
-Return `true` if the integer `n` is even and `false` otherwise. Zero counts as even, and negative numbers work the same way as positive ones.
+Возвращайте `true`, если целое число `n` четное, а `false` четное. Ноль считается четным, а отрицательные числа работают так же, как и положительные.
 
-**Constraints:**
+**Ограничения:**
 - ``-10^9 <= n <= 10^9``

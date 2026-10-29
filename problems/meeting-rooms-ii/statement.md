@@ -1,12 +1,12 @@
-Given an array of meeting time intervals `intervals`, where
-`intervals[i] = [start_i, end_i]`, return the minimum number of conference rooms
-required to host every meeting.
+Дано множество интервалов времени встречи `intervals`, где
+`intervals[i] = [start_i, end_i]` - минимальное количество конференц-залов
+Требуется проводить каждую встречу.
 
-Meetings that overlap must use different rooms. If one meeting ends at the exact
-time another begins, the two meetings may use the same room.
+Встречи, которые пересекаются, должны проходить в разных комнатах.
+Когда начинается другая встреча, две встречи могут проходить в одной комнате.
 
 
-**Constraints:**
+**Ограничения:**
 
 - `0 <= intervals.length <= 10^4`
 - `intervals[i].length == 2`

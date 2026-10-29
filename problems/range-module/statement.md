@@ -1,13 +1,13 @@
-Maintain a set of half-open number ranges `[left, right)` supporting three actions:
+Поддерживайте набор полуоткрытых диапазонов чисел `[left, right)`, поддерживающих три действия:
 
-- `addRange(left, right)`: start tracking every number from `left` up to but not including `right`.
-- `queryRange(left, right)`: report whether every number in that span is currently tracked.
-- `removeRange(left, right)`: stop tracking numbers in that span.
+- `addRange(left, right)`: Начните отслеживать каждое число от `left` до, но не включая `right`.
+- `queryRange(left, right)`: сообщите, отслеживается ли каждое число в этом интервале.
+- `removeRange(left, right)`: остановите отслеживание номеров в этом интервале.
 
-Because the judge works with plain functions, calls are encoded as two parallel lists: `operations` names each step (starting with `RangeModule`) and `args` gives its `[left, right]` pair (`[]` for construction). Only `queryRange` produces an answer, recorded as `1` for covered and `0` otherwise, in call order.
+Поскольку судья работает с простыми функциями, звонки кодируются как два параллельных списка: `operations` называет каждый шаг (начиная с `RangeModule`) и `args` дает свою пару `[left, right]` (`[]` для строительства). Только `queryRange` дает ответ, записанный как `1` для покрытия и `0` в противном случае, в порядке вызова.
 
-*Adaptation note:* the entry point is `runRangeModule(operations, args)` returning the list of query answers.
+*Примечание по адаптации: * точка входа - `runRangeModule(operations, args)`, возвращающий список ответов на запросы.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= operations.length <= 2000`
-- Each `args[i]` has length 0 or 2 with `0 <= left < right <= 10^9`.
+- Каждый `args[i]` имеет длину 0 или 2 с `0 <= left < right <= 10^9`.

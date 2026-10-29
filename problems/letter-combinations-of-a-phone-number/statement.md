@@ -1,6 +1,6 @@
-Given a string `digits`, return all letter combinations that the digits could represent on a telephone keypad.
+С помощью строки `digits` возвращайте все комбинации букв, которые цифры могут отображать на телефонной клавиатуре.
 
-The digit-to-letter mapping is:
+Диаграмма от цифры к букве:
 
 - `2`: `abc`
 - `3`: `def`
@@ -11,8 +11,8 @@ The digit-to-letter mapping is:
 - `8`: `tuv`
 - `9`: `wxyz`
 
-The combinations may be returned in any order.
+Комбинации можно вернуть в любом порядке.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= digits.length <= 4`
-- Every character in `digits` is between `2` and `9`.
+- Каждый персонаж в `digits` находится между `2` и `9`.

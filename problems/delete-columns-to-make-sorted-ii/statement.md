@@ -1,10 +1,10 @@
-Delete the fewest columns so the remaining rows read in order.
+Удалите наименьшее количество столбцов, чтобы остальные строки читались в порядке.
 
-All strings share one length and may lose whole columns: choosing a column index removes that character from every row. After deletions, the rows must be lexicographically non-decreasing from top to bottom (each row is less than or equal to the next). Equal rows are fine.
+Все строки имеют одну длину и могут потерять целые столбцы: выбор индекса столбца удаляет этот символ из каждой строки. После удаления строки должны быть лексикографически не уменьшающимися сверху вниз (каждая строка меньше или равна следующей).
 
-Given `strs`, return the smallest number of columns to drop.
+Учитывая `strs`, верните наименьшее количество столбцов, чтобы они упали.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= strs.length <= 100`
 - `1 <= strs[i].length <= 100`
-- All rows share the same length and hold lowercase English letters.
+- Все строки имеют одинаковую длину и содержат строчные английские буквы.

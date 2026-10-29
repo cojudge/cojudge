@@ -1,19 +1,19 @@
-An undirected network has `n` vertices numbered `0` through `n-1`. For each
-vertex `u`, the list `graph[u]` names all vertices directly linked to `u`
-by an edge. The network has no loops, no duplicate edges, and every link is
-listed in both directions. It may split into several disconnected pieces.
+Ненаправленная сеть имеет вершины `n`, пронумерованные `0` через `n-1`.
+vertex `u`, список `graph[u]` именует все вершины, непосредственно связанные с `u`
+Сеть не имеет ни петель, ни двойных краев, и каждая ссылка
+Она может быть разделена на несколько разъединенных частей.
 
-The network is called two-colorable when every vertex can be painted with
-one of two colors so that no edge joins two vertices of the same color.
-Equivalently, the vertices split into two groups with all edges crossing
-between the groups.
+Сеть называется двухцветной, когда каждая вершина может быть окрашена с помощью
+Один из двух цветов так, что ни один край не соединяет две вершины одного цвета.
+Эквивалентно вершины разделяются на две группы со всеми пересекающимися краями.
+между группами.
 
-Given the adjacency lists, decide whether the network has this property.
+С учетом списков смежности, решить, имеет ли сеть это свойство.
 
-**Constraints:**
+**Ограничения:**
 - `graph.length == n`
 - `1 <= n <= 100`
 - `0 <= graph[u].length < n`
 - `0 <= graph[u][i] <= n - 1`
-- `graph[u]` holds no `u` itself and no repeats.
-- Whenever `v` appears in `graph[u]`, `u` appears in `graph[v]`.
+- `graph[u]` не содержит сам `u` и не повторяется.
+- Каждый раз, когда `v` появляется в `graph[u]`, `u` появляется в `graph[v]`.

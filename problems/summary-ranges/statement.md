@@ -1,8 +1,8 @@
-You are given a sorted array `nums` of distinct integers. Compress every maximal run of consecutive numbers into a short label: a lone value `a` becomes `"a"`, while a run from `a` to `b` (with `b > a`) becomes `"a->b"`.
+Вы получаете отсортированный массив `nums` различных целых чисел. Сжимайте каждый максимальный прогон последовательных чисел в короткую метку: единственное значение `a` становится `"a"`, в то время как бег от `a` до `b` (с `b > a`) становится `"a->b"`.
 
-Return the labels in the order the runs appear.
+Возвращайте этикетки в том порядке, в котором появляются прогоны.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= nums.length <= 20`
 - `-2^31 <= nums[i] <= 2^31 - 1`
-- `nums` is sorted in strictly increasing order.
+- `nums` сортируется в строго возрастающем порядке.

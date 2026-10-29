@@ -1,5 +1,5 @@
-From the digits 1 through 9, pick exactly `k` different digits whose values add up to `n`. Return every such selection; each selection is listed in increasing order and the order of the selections does not matter.
+Из цифр 1 через 9 выберите именно `k` различные цифры, значения которых складываются в `n`. Возвращайте каждый такой выбор; каждый выбор указан в порядке увеличения и порядок выбора не имеет значения.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= k <= 9`
 - `1 <= n <= 60`

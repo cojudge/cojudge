@@ -1,9 +1,9 @@
-Given two strings, you may delete any characters from either string. Each deleted letter costs its ASCII code. After deletions the two results must read identically, and you want the smallest possible total price.
+Учитывая две строки, вы можете удалить любые символы из любой строки. Каждая удаленная буква стоит своего кода ASCII. После удаления два результата должны читаться одинаково, и вы хотите наименьшую возможную общую цену.
 
-Keeping a shared subsequence for free while paying for everything else is the goal. For instance, turning `sea` into `eat` keeps `ea` and pays for one `s` plus one `t`.
+Например, превращение `sea` в `eat` сохраняет `ea` и платит за один `s` плюс один `t`.
 
-Return the minimum deletion cost.
+Возврат минимальных затрат на удаление.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s1.length, s2.length <= 1000`
-- Both strings contain lowercase English letters.
+- Обе строки содержат строчные английские буквы.

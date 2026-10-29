@@ -1,6 +1,6 @@
 {
   "id": "paint-house",
-  "title": "360. Paint House",
+  "title": "360. Красочный дом",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/paint-house/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "costs = [[17,2,17],[16,16,5],[14,3,19]]",
       "output": "10",
-      "explanation": "Paint house 0 blue (2), house 1 green (5) and house 2 blue (3) for 2 + 5 + 3 = 10."
+      "explanation": "Красочный дом 0 blue (2), дом 1 green (5) и дом 2 blue (3) для 2 + 5 + 3 = 10."
     },
     {
       "input": "costs = [[7,6,2]]",
       "output": "2",
-      "explanation": "With one house, pick the cheapest color, which costs 2."
+      "explanation": "С одним домом выберите самый дешевый цвет, который стоит 2."
     },
     {
       "input": "costs = [[1,5,3],[2,9,4]]",
       "output": "5",
-      "explanation": "Paint house 0 red (1) and house 1 green (4) for 1 + 4 = 5."
+      "explanation": "Красочный дом 0 красный (1) и дом 1 зеленый (4) для 1 + 4 = 5."
     }
   ],
   "starterCode": {
@@ -54,7 +54,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Track the cheapest total ending with each color after every house.",
-    "Each new total adds the current painting cost to the better of the two totals that used a different color before."
+    "Отслеживайте самый дешевый общий конец с каждым цветом после каждого дома.",
+    "Каждая новая сумма добавляет текущую стоимость картины к лучшему из двух сумм, которые раньше использовали другой цвет."
   ]
 }

@@ -1,11 +1,11 @@
-For a non-negative integer `x`, write `zeros(x)` for the count of trailing
-zeroes in the decimal form of `x!` (the factorial), with `zeros(0) = 0`
-since `0! = 1`. The function climbs in flat stretches: several consecutive
-`x` values share the same zero count, and some counts never occur at all.
+Для неотрицательного целого числа `x` напишите `zeros(x)` для подсчета отставания
+нули в десятичной форме `x!` (факториальный), с `zeros(0) = 0`
+начиная с `0! = 1`. Функция поднимается в плоских растяжках: несколько последовательных
+Значения `x` имеют один и тот же нулевой счет, а некоторые подсчеты вообще не происходят.
 
-Given `k`, count how many `x` satisfy `zeros(x) == k`. The answer turns out
-to be either five (a full block between multiples of five) or zero (a count
-that the factorial skips over).
+Учитывая `k`, посчитайте, сколько `x` удовлетворяет `zeros(x) == k`.
+быть либо пять (полный блок между кратными пяти), либо ноль (счет)
+что факториал проскальзывает.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= k <= 10^9`

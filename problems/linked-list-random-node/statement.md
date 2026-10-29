@@ -1,7 +1,7 @@
-Return any value stored in a linked list, standing in for a uniform random pick.
+Возвращайте любое значение, хранящееся в связанном списке, стоящем за однородным случайным выбором.
 
-You receive the head of a singly linked list with at least one node. Implement `getRandomNode(head)`, which returns the value of one node from the chain. The classic task additionally requires every node to be equally likely (usually via reservoir sampling) across repeated calls; this portable version calls the function once per test and accepts any value present in the list, so sampling fairness is not verified. Just make sure the returned integer actually occurs in the input chain.
+Вы получаете заголовок отдельно связанного списка с по меньшей мере одним узлом. Реализуйте `getRandomNode(head)`, который возвращает значение одного узла из цепочки. Классическая задача дополнительно требует, чтобы каждый узел был одинаково вероятным (обычно через выборку резервуара) при повторных вызовах; эта портативная версия вызывает функцию один раз за тест и принимает любое значение, присутствующее в списке, поэтому справедливость выборки не проверяется. Просто убедитесь, что возвращенное целое число фактически происходит в цепочке ввода.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= number of nodes <= 10^4`
 - `-10^4 <= Node.val <= 10^4`

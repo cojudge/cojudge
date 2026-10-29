@@ -1,9 +1,9 @@
-Given the root of a binary tree, determine whether it is height-balanced.
+Учитывая корень двоичного дерева, определите, является ли оно сбалансированным по высоте.
 
-A binary tree is height-balanced when, for every node, the heights of its left
-and right subtrees differ by at most one.
+Бинарное дерево уравновешивается по высоте, когда для каждого узла высота его левого края
+Правые и правые поддеревья отличаются друг от друга по максимуму.
 
-**Constraints:**
+**Ограничения:**
 
-- The tree contains between `0` and `5000` nodes.
+- Дерево содержит узлы `0` и `5000`.
 - `-10^4 <= node.val <= 10^4`

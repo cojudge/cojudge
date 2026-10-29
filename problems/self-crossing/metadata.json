@@ -1,6 +1,6 @@
 {
   "id": "self-crossing",
-  "title": "420. Self Crossing",
+  "title": "420. Самопересекающийся",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/self-crossing/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "distance = [2,1,1,2]",
       "output": "true",
-      "explanation": "The fourth leg lands back on the first leg's line."
+      "explanation": "Четвёртая нога приземляется на линию первой ноги."
     },
     {
       "input": "distance = [1,2,3,4]",
       "output": "false",
-      "explanation": "The spiral keeps widening, so no legs meet."
+      "explanation": "Спираль продолжает расширяться, поэтому ноги не встречаются."
     },
     {
       "input": "distance = [1,1,1,2,1]",
       "output": "true",
-      "explanation": "A later leg slices through an earlier leg in the compact spiral."
+      "explanation": "Более поздняя нога ломается через более раннюю ногу в компактной спирали."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Only the last few legs can meet the current one, so check local patterns at i >= 3, 4, 5.",
-    "Compare lengths: a leg crosses when it reaches past the line two steps back while the middle leg overlaps."
+    "Только последние несколько ног могут соответствовать текущему, поэтому проверьте локальные шаблоны на i >= 3, 4, 5.",
+    "Сравните длины: нога пересекается, когда она проходит через линию, на две ступени назад, в то время как средняя нога перекрывается."
   ]
 }

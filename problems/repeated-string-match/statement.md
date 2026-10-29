@@ -1,7 +1,7 @@
-You are given two strings `a` and `b`. Imagine concatenating copies of `a` (`a`, `a+a`, `a+a+a`, and so on).
+Вам даны две строки `a` и `b`. Представьте себе конкатенирующие копии `a` (`a`, `a+a`, `a+a+a` и так далее).
 
-Return the smallest number of copies whose concatenation contains `b` as a contiguous block, or `-1` when no repetition contains `b`.
+Возврат наименьшего количества копий, сцепление которых содержит `b` в виде смежного блока, или `-1`, когда повторение не содержит `b`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= a.length, b.length <= 10^4`
-- Both strings use lowercase English letters.
+- Обе строки используют английские буквы нижнего регистра.

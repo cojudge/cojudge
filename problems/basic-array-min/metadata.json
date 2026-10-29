@@ -1,18 +1,18 @@
 {
   "id": "basic-array-min",
-  "title": "19. Array Minimum",
+  "title": "19. Минимум массива",
   "difficulty": "Easy",
   "category": "arrays",
   "examples": [
     {
       "input": "nums = [3,1,4,2]",
       "output": "1",
-      "explanation": "1 is the smallest."
+      "explanation": "1 является самым маленьким."
     },
     {
       "input": "nums = [-7,-2,-9]",
       "output": "-9",
-      "explanation": "-9 is the smallest."
+      "explanation": "9 является самым маленьким."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Mirror the maximum problem but flip the comparison.",
-    "Start with the first element."
+    "Зеркало - максимальная проблема, но переверните сравнение.",
+    "Начните с первого элемента."
   ]
 }

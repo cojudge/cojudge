@@ -1,0 +1,72 @@
+{
+  "id": "powerful-integers",
+  "title": "956. Powerful Integers",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/powerful-integers/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "x = 2, y = 3, bound = 10",
+      "output": "[2,3,4,5,7,9,10]",
+      "explanation": "The sums 2^i + 3^j within bound are 2, 3, 4, 5, 7, 9 and 10 (order does not matter)."
+    },
+    {
+      "input": "x = 3, y = 5, bound = 15",
+      "output": "[2,4,6,8,10,14]",
+      "explanation": "Reachable sums are 2, 4, 6, 8, 10 and 14; everything else overshoots the bound."
+    },
+    {
+      "input": "x = 2, y = 1, bound = 10",
+      "output": "[2,3,5,9]",
+      "explanation": "Since 1^j is always 1, the sums are 2, 3, 5 and 9."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<Integer> powerfulIntegers(int x, int y, int bound) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def powerfulIntegers(self, x: int, y: int, bound: int) -> List[int]:\n        return []",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> powerfulIntegers(int x, int y, int bound) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<int> PowerfulIntegers(int x, int y, int bound)\n    {\n        return new List<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn powerful_integers(x: i32, y: i32, bound: i32) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc PowerfulIntegers(x int, y int, bound int) []int {\n    return nil\n}",
+    "typescript": "export function powerfulIntegers(x: number, y: number, bound: number): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int $x\n     * @param int $y\n     * @param int $bound\n     * @return int[]\n     */\n    public function powerfulIntegers($x, $y, $bound) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "x": 2,
+      "y": 3,
+      "bound": 10
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "bound": 15
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "bound": 10
+    }
+  ],
+  "functionName": "powerfulIntegers",
+  "params": [
+    {
+      "name": "x",
+      "type": "int"
+    },
+    {
+      "name": "y",
+      "type": "int"
+    },
+    {
+      "name": "bound",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Loop over powers of x and, nested inside, powers of y, keeping sums within bound.",
+    "A base of 1 never grows \u2014 take its single power and move on to avoid an infinite loop.",
+    "Deduplicate with a set; order is irrelevant to the judge."
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "id": "reverse-words-in-a-string-iii",
-  "title": "613. Reverse Words in a String III",
+  "title": "613. Обратные слова в строке III",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/reverse-words-in-a-string-iii/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"Let's take LeetCode contest\"",
       "output": "\"s'teL ekat edoCteeL tsetnoc\"",
-      "explanation": "Each word is flipped in place; gaps stay put."
+      "explanation": "Каждое слово переворачивается на место; пробелы остаются на месте."
     },
     {
       "input": "s = \"God Ding\"",
       "output": "\"doG gniD\"",
-      "explanation": "Both words are reversed independently."
+      "explanation": "Оба слова переворачиваются независимо."
     },
     {
       "input": "s = \"Hello\"",
       "output": "\"olleH\"",
-      "explanation": "A single word is simply mirrored."
+      "explanation": "Одно слово просто отражается."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Split the sentence on spaces to isolate each word.",
-    "Reverse every word on its own, then rejoin with single spaces.",
-    "A two-pointer scan that flips each word in place also works in one pass."
+    "Разделите предложение на пробелы, чтобы выделить каждое слово.",
+    "Обратите каждое слово вспять, а затем воссоединитесь с одним пространством.",
+    "Сканирование с двумя указателями, которое переворачивает каждое слово на месте, также работает за один проход."
   ]
 }

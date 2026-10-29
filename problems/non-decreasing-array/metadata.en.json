@@ -1,0 +1,58 @@
+{
+  "id": "non-decreasing-array",
+  "title": "684. Non-decreasing Array",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/non-decreasing-array/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [4,2,3]",
+      "output": "true",
+      "explanation": "Lower the 4 to 1 to get [1,2,3]."
+    },
+    {
+      "input": "nums = [4,2,1]",
+      "output": "false",
+      "explanation": "Two separate drops need two edits."
+    },
+    {
+      "input": "nums = [3,4,2,3]",
+      "output": "false",
+      "explanation": "Fixing either drop leaves another violation."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean checkPossibility(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def checkPossibility(self, nums: List[int]) -> bool:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool checkPossibility(vector<int>& nums) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool CheckPossibility(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn check_possibility(nums: Vec<i32>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc CheckPossibility(nums []int) bool {\n    \n}",
+    "typescript": "export function checkPossibility(nums: number[]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return bool\n     */\n    public function checkPossibility($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[4,2,3]"
+    },
+    {
+      "nums": "[4,2,1]"
+    },
+    {
+      "nums": "[3,4,2,3]"
+    }
+  ],
+  "functionName": "checkPossibility",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Scan for the first index i with nums[i] > nums[i+1]; more than one such spot (after a fix) means failure.",
+    "At a violation, either lower nums[i] to nums[i+1] or raise nums[i+1] to nums[i] \u2014 pick the one keeping neighbours valid.",
+    "Lowering the left entry works when i is 0 or nums[i-1] <= nums[i+1]; otherwise raise the right entry."
+  ]
+}

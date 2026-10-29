@@ -1,6 +1,6 @@
 {
   "id": "3sum-smaller",
-  "title": "363. 3Sum Smaller",
+  "title": "363. 3Sum Меньше",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/3sum-smaller/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [-2,0,1,3], target = 2",
       "output": "2",
-      "explanation": "The triples ([-2,0,1]) and ([-2,0,3]) sum to -1 and 1, both below 2."
+      "explanation": "Тройки (2, 0, 1) и (2, 0, 3) суммируются в -1 и 1, оба ниже 2."
     },
     {
       "input": "nums = [], target = 0",
       "output": "0",
-      "explanation": "Fewer than three values means no triple exists."
+      "explanation": "Меньше трех значений означает, что тройки не существует."
     },
     {
       "input": "nums = [3,1,0,-2], target = 4",
       "output": "3",
-      "explanation": "Three of the four possible triples fall below 4."
+      "explanation": "Три из четырех возможных тройок падают ниже 4."
     }
   ],
   "starterCode": {
@@ -62,7 +62,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sort the array so the two-pointer technique applies to each fixed first index.",
-    "When the current triple is below target, every index between the pointers pairs with the fixed index, adding that many triples at once."
+    "Сортируйте массив таким образом, чтобы метод с двумя указателями применялся к каждому фиксированному первому индексу.",
+    "Когда текущая тройка ниже целевого значения, каждый индекс между указателями соединяется с фиксированным индексом, добавляя, что много тройни одновременно."
   ]
 }

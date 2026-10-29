@@ -1,6 +1,6 @@
 {
   "id": "validate-stack-sequences",
-  "title": "933. Validate Stack Sequences",
+  "title": "933. Проверка последовательностей Stack",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/validate-stack-sequences/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "pushed = [1,2,3,4,5], popped = [4,5,3,2,1]",
       "output": "true",
-      "explanation": "Push and pop in an order that frees 4, 5, 3, 2, 1."
+      "explanation": "Push and pop в порядке, который освобождает 4, 5, 3, 2, 1."
     },
     {
       "input": "pushed = [1,2,3,4,5], popped = [4,3,5,1,2]",
       "output": "false",
-      "explanation": "1 is trapped beneath 2 when it is wanted."
+      "explanation": "1 попадает под 2, когда он находится в розыске."
     }
   ],
   "starterCode": {
@@ -81,7 +81,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Replay the process: push each value, then pop from the top while it matches the next wanted output.",
-    "The sequence is valid exactly when every wanted value gets popped by the end of the replay."
+    "Повторите процесс: подтолкните каждое значение, затем выскочите из верхней части, пока оно соответствует следующему желаемому выходу.",
+    "Последовательность действительна именно тогда, когда каждое желаемое значение всплывает к концу повтора."
   ]
 }

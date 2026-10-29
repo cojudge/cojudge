@@ -1,4 +1,4 @@
-Return how many steps the Collatz process takes to reach 1 starting from `n`: if `n` is 1 take 0 steps; if `n` is even halve it; if odd compute `3*n + 1`. Count each move as one step.
+Возвращайте, сколько шагов занимает процесс Collatz, чтобы достичь 1, начиная с `n`: если `n` — это 1, сделайте шаги 0; если `n` даже вдвое меньше; если нечетный вычислите `3*n + 1`.
 
-**Constraints:**
+**Ограничения:**
 - ``1 <= n <= 100000``

@@ -1,6 +1,6 @@
 {
   "id": "path-sum-iii",
-  "title": "505. Path Sum III",
+  "title": "505. Путь Сум III",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/path-sum-iii/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [10,5,-3,3,2,null,11,3,-2,null,1], targetSum = 8",
       "output": "3",
-      "explanation": "Three downward routes total 8."
+      "explanation": "Три нисходящих маршрута 8."
     },
     {
       "input": "root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22",
       "output": "3",
-      "explanation": "Three routes hit 22."
+      "explanation": "Три маршрута попали в 22."
     },
     {
       "input": "root = [], targetSum = 0",
       "output": "0",
-      "explanation": "No nodes means no paths."
+      "explanation": "Никакие узлы не означают никаких путей."
     }
   ],
   "starterCode": {
@@ -59,8 +59,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Carry prefix sums from the root: paths ending at the current node match earlier prefixes offset by targetSum.",
-    "A hash map of prefix frequencies updated on entry and removed on exit keeps the walk linear.",
-    "Use 64-bit sums to avoid overflow on deep paths."
+    "Носите с корнем суммы префиксов: пути, заканчивающиеся на текущем узле, совпадают с более ранними префиксами, компенсированными TargetSum.",
+    "Хэш-карта префиксных частот, обновленная при входе и удаленная при выходе, сохраняет линейность ходьбы.",
+    "Используйте 64-битовые суммы, чтобы избежать переполняемости на глубоких дорожках."
   ]
 }

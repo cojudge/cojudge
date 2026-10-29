@@ -1,8 +1,8 @@
-Given a nonempty integer array, every value appears exactly twice except for one value, which appears once. Return that single value.
+Учитывая непустую целочисленную матрицу, каждое значение появляется ровно дважды, за исключением одного значения, которое появляется один раз.
 
-Your solution should run in linear time and use constant extra space.
+Ваше решение должно работать в линейном времени и использовать постоянное дополнительное пространство.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 30000`
 - `-30000 <= nums[i] <= 30000`
-- Exactly one value appears once and every other distinct value appears exactly twice
+- Одно значение появляется один раз, а другое отдельное значение появляется ровно два раза.

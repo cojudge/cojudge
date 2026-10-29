@@ -1,11 +1,11 @@
-An integer `amount` plus an array `coins` holding mutually different token face values are provided.
-Every face value may be reused without bound.
-Count how many unordered selections total exactly `amount`.
-Permutations of an identical multiset merge into a single tally.
-The tally is promised to remain representable by a signed 32-bit integer.
+Предоставляется целое число `amount` плюс массив `coins`, содержащий взаимно разные номинальные значения токенов.
+Каждая номинальная стоимость может быть повторно использована без ограничений.
+Подсчитайте, сколько неупорядоченных подборов в точности соответствует `amount`.
+Преобразования одного и того же мультисета сливаются в один подсчет.
+Подсчет обещает оставаться репрезентативным с помощью подписанного 32-битного целого числа.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= amount <= 5000`
 - `1 <= coins.length <= 300`
 - `1 <= coins[i] <= 5000`
-- All values in `coins` are distinct.
+- Все значения в `coins` различны.

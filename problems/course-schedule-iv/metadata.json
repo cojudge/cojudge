@@ -1,6 +1,6 @@
 {
   "id": "course-schedule-iv",
-  "title": "219. Course Schedule IV",
+  "title": "219. Расписание курсов IV",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/course-schedule-iv/",
   "category": "graph",
@@ -62,6 +62,6 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Build reachability via Floyd-Warshall or DFS from each course."
+    "Постройте досягаемость с помощью Floyd-Warshall или DFS с каждого курса."
   ]
 }

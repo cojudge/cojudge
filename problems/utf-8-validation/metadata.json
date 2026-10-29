@@ -3,26 +3,26 @@
   "difficulty": "Medium",
   "examples": [
     {
-      "explanation": "11000101 10000010 00000001: a two-byte symbol plus a one-byte symbol.",
+      "explanation": "11000101 10000010 00000001: двухбайтовый символ плюс однобайтный символ.",
       "input": "data = [197,130,1]",
       "output": "true"
     },
     {
-      "explanation": "The third byte 00000100 does not start with 10, breaking the symbol.",
+      "explanation": "Третий байт 00000100 не начинается с 10, разбивая символ.",
       "input": "data = [235,140,4]",
       "output": "false"
     },
     {
-      "explanation": "11111111 has eight leading ones, which starts no valid symbol.",
+      "explanation": "11111111 имеет восемь ведущих символов, которые не запускаются.",
       "input": "data = [255]",
       "output": "false"
     }
   ],
   "functionName": "validUtf8",
   "hints": [
-    "Examine only the low 8 bits of each integer.",
-    "Count leading ones of a symbol start to learn how many trailing bytes to demand.",
-    "Each trailing byte must have the form 10xxxxxx; a lone 10xxxxxx or a 11111xxx start fails."
+    "Исследуйте только низкие биты 8 каждого целого числа.",
+    "Подсчитывайте ведущие символы, чтобы узнать, сколько байтов требуется.",
+    "Каждый байт должен иметь форму 10xxxxxx; одиночный 10xxxxxx или 11111xxx старт не удается."
   ],
   "id": "utf-8-validation",
   "link": "https://leetcode.com/problems/utf-8-validation/",
@@ -54,5 +54,5 @@
       "data": "[255]"
     }
   ],
-  "title": "469. UTF-8 Validation"
+  "title": "469. Проверка UTF-8"
 }

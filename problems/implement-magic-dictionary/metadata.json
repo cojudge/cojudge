@@ -1,6 +1,6 @@
 {
   "id": "implement-magic-dictionary",
-  "title": "695. Implement Magic Dictionary",
+  "title": "695. Реализуйте волшебный словарь",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/implement-magic-dictionary/",
   "category": "trie",
@@ -8,12 +8,12 @@
     {
       "input": "operations = [\"buildDict\",\"search\",\"search\",\"search\",\"search\"], words = [\"hello|leetcode\",\"hello\",\"hhllo\",\"hell\",\"leetcoded\"]",
       "output": "[0,1,0,0]",
-      "explanation": "Only hhllo differs by exactly one letter from a stored word of equal length."
+      "explanation": "Только hhllo отличается ровно одной буквой от сохраненного слова равной длины."
     },
     {
       "input": "operations = [\"buildDict\",\"search\",\"search\"], words = [\"hello|hallo\",\"hello\",\"hallo\"]",
       "output": "[1,1]",
-      "explanation": "hello matches hallo with one change and vice versa."
+      "explanation": "Здравствуйте, сравните привет с приветствием с одной переменой и наоборот."
     }
   ],
   "starterCode": {
@@ -53,8 +53,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "A search succeeds when some stored word has equal length and differs in exactly one position.",
-    "Design adaptation: this task uses runMagicDictionary(operations, words) instead of a class; for buildDict, words[i] packs the whole dictionary with '|' separators, while for search it holds the single query.",
-    "Compare each query against stored words of the same length and count mismatches with early exit past one."
+    "Поиск увенчается успехом, когда какое-то сохраненное слово имеет равную длину и отличается ровно в одной позиции.",
+    "Адаптация дизайна: эта задача использует runMagicDictionary (операции, слова) вместо класса; для buildDict слова [i] упаковывают весь словарь с разделителями « |», в то время как для поиска он содержит один запрос.",
+    "Сравните каждый запрос с сохраненными словами одинаковой длины и посчитайте несоответствия с ранним выходом за один."
   ]
 }

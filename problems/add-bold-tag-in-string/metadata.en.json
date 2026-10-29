@@ -1,0 +1,75 @@
+{
+  "id": "add-bold-tag-in-string",
+  "title": "645. Add Bold Tag in String",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/add-bold-tag-in-string/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"abcxyz123\", dict = [\"abc\",\"123\"]",
+      "output": "\"<b>abc</b>xyz<b>123</b>\"",
+      "explanation": "The two words cover disjoint spans, so each gets its own tag pair."
+    },
+    {
+      "input": "s = \"aaabbcc\", dict = [\"aaa\",\"aab\",\"bc\"]",
+      "output": "\"<b>aaabbc</b>c\"",
+      "explanation": "Matches overlap and touch, merging into one bold run from 0 to 5."
+    },
+    {
+      "input": "s = \"abc\", dict = [\"xyz\"]",
+      "output": "\"abc\"",
+      "explanation": "With no hit, the string is unchanged."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String addBoldTag(String s, String[] dict) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def addBoldTag(self, s: str, dict: List[str]) -> str:\n        pass",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    string addBoldTag(string s, vector<string>& dict) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string AddBoldTag(string s, string[] dict) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn add_bold_tag(s: String, dict: Vec<String>) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc AddBoldTag(s string, dict []string) string {\n    \n}",
+    "typescript": "export function addBoldTag(s: string, dict: string[]): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string[] $dict\n     * @return string\n     */\n    public function addBoldTag($s, $dict) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "abcxyz123",
+      "dict": [
+        "abc",
+        "123"
+      ]
+    },
+    {
+      "s": "aaabbcc",
+      "dict": [
+        "aaa",
+        "aab",
+        "bc"
+      ]
+    },
+    {
+      "s": "abc",
+      "dict": [
+        "xyz"
+      ]
+    }
+  ],
+  "functionName": "addBoldTag",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "dict",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Mark a boolean array: for every dictionary word, flag all characters of each occurrence in s.",
+    "Find occurrences with repeated substring search from each next start so overlaps are not skipped.",
+    "Emit <b> when entering a flagged run and </b> when leaving one; touching runs merge automatically.",
+    "Adaptation: the word list maps to string_array in this judge."
+  ]
+}

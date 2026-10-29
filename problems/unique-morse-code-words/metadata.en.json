@@ -1,0 +1,58 @@
+{
+  "id": "unique-morse-code-words",
+  "title": "802. Unique Morse Code Words",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/unique-morse-code-words/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "words = [\"gin\",\"zen\",\"gig\",\"msg\"]",
+      "output": "2",
+      "explanation": "Two distinct Morse strings occur."
+    },
+    {
+      "input": "words = [\"a\"]",
+      "output": "1",
+      "explanation": "One word gives one encoding."
+    },
+    {
+      "input": "words = [\"abc\",\"def\",\"ghi\"]",
+      "output": "3",
+      "explanation": "All encodings differ."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int uniqueMorseRepresentations(String[] words) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def uniqueMorseRepresentations(self, words: List[str]) -> int:\n        return 0",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int uniqueMorseRepresentations(vector<string>& words) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int UniqueMorseRepresentations(string[] words) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn unique_morse_representations(words: Vec<String>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc UniqueMorseRepresentations(words []string) int {\n    return 0\n}",
+    "typescript": "export function uniqueMorseRepresentations(words: string[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $words\n     * @return int\n     */\n    public function uniqueMorseRepresentations($words) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "words": "[\"gin\", \"zen\", \"gig\", \"msg\"]"
+    },
+    {
+      "words": "[\"a\"]"
+    },
+    {
+      "words": "[\"abc\", \"def\", \"ghi\"]"
+    }
+  ],
+  "functionName": "uniqueMorseRepresentations",
+  "params": [
+    {
+      "name": "words",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Store the 26 letter codes in an array indexed by character offset from 'a'.",
+    "Build each word encoding with a string builder and insert it into a hash set.",
+    "The set size is the answer."
+  ]
+}

@@ -1,7 +1,7 @@
-You are handed an array `nums` of length `n` where each entry satisfies `0 <= nums[i] < n`. Rotating left by `k` produces a new arrangement `rot` with `rot[i] = nums[(i + k) % n]`. The score of that rotation counts indices with `rot[i] <= i`.
+Вам вручается массив `nums` длины `n`, где каждая запись удовлетворяет `0 <= nums[i] < n`. Вращение, оставленное `k`, создает новое расположение `rot` с `rot[i] = nums[(i + k) % n]`. Оценка этого вращения учитывает индексы с `rot[i] <= i`.
 
-Return the smallest rotation index `k` that achieves the highest possible score. If several rotations tie, pick the least `k`.
+Возвращайте наименьший индекс вращения `k`, который достигает максимально возможного балла.Если несколько вращений связаны, выберите наименьший `k`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 2000`
 - `0 <= nums[i] < nums.length`

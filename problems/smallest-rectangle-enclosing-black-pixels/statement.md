@@ -1,9 +1,9 @@
-A binary picture is given as rows of `'0'` (white) and `'1'` (black) characters holding at
-least one black pixel; all black pixels link together through shared sides. You are also
-given the coordinates `(x, y)` of one black pixel. Return the area of the smallest
-axis-aligned rectangle that covers every black pixel.
+Бинарное изображение дается в виде строк `'0'` (белый) и `'1'` (черный) символов, держащихся на
+По крайней мере, один черный пиксель; все черные пиксели соединяются вместе через общие стороны.
+учитывая координаты `(x, y)` одного черного пикселя, вернуть площадь наименьшего
+Прямоугольник, выровненный по оси, который покрывает каждый черный пиксель.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= m, n <= 850`
 - `image[x][y] == '1'`.
-- The picture contains at least one `'1'`, all linked 4-directionally.
+- Картинка содержит по меньшей мере один `'1'`, все связанные 4-направленно.

@@ -1,6 +1,6 @@
 {
   "id": "reconstruct-original-digits-from-english",
-  "title": "494. Reconstruct Original Digits from English",
+  "title": "494. Реконструкция оригинальных чертежей с английского",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/reconstruct-original-digits-from-english/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "s = \"owoztneoer\"",
       "output": "\"012\"",
-      "explanation": "The letters form zero, one and two."
+      "explanation": "Буквы образуют ноль, один и два."
     },
     {
       "input": "s = \"fviefuro\"",
       "output": "\"45\"",
-      "explanation": "The bundle splits into four and five."
+      "explanation": "Пакет делится на четыре и пять."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Some letters appear in only one digit name; count those first to pin down certain digits.",
-    "Subtract the letters of identified digits before resolving the remaining ones.",
-    "Process distinctive letters in an order where each step reveals a new digit."
+    "Некоторые буквы появляются только в одном имени цифры; посчитайте те, которые первыми, чтобы закрепить определенные цифры.",
+    "Вычтите буквы идентифицированных цифр, прежде чем решить оставшиеся.",
+    "Обработайте отличительные буквы в порядке, где каждый шаг показывает новую цифру."
   ]
 }

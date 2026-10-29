@@ -3,26 +3,26 @@
   "difficulty": "Hard",
   "examples": [
     {
-      "explanation": "Hidden word is the first entry; guess it via master.guess within 10 calls.",
+      "explanation": "Скрытое слово - это первая запись; угадайте его через master.guess в звонках 10.",
       "input": "wordlist = [\"acckzz\",\"ccbazz\",\"eiowzz\",\"abcczz\"], secret = \"acckzz\"",
       "output": "solved"
     },
     {
-      "explanation": "Filtering by match scores leaves the secret; guess it via the judge.",
+      "explanation": "Фильтрация по партитурам оставляет секрет; угадайте его через судью.",
       "input": "wordlist = [\"hamada\",\"khaled\"], secret = \"khaled\"",
       "output": "solved"
     },
     {
-      "explanation": "Return the hidden entry through the guessing API.",
+      "explanation": "Верните скрытую запись через API угадывания.",
       "input": "wordlist = [\"abcdef\",\"abcdeg\",\"abcdeh\"], secret = \"abcdeg\"",
       "output": "solved"
     }
   ],
   "functionName": "findSecretWord",
   "hints": [
-    "Score any pair by counting equal positions; this is the value master.guess returns.",
-    "After each guess keep only candidates whose score against the guess equals the reported score.",
-    "Pick the guess minimizing the largest score-group (minimax) so the candidate pool shrinks fastest."
+    "Оцените любую пару, подсчитав равные позиции; это значение master.guess возвращается.",
+    "После каждой догадки держат только кандидатов, чей счет против догадки равен отчетному счету.",
+    "Выберите догадку, минимизирующую наибольшую группу баллов (минимакс), чтобы пул кандидатов сокращался быстрее."
   ],
   "id": "guess-the-word",
   "interactive": {
@@ -76,5 +76,5 @@
       ]
     }
   ],
-  "title": "841. Guess the Word"
+  "title": "841. Угадай слово"
 }

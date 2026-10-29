@@ -1,7 +1,7 @@
-You are given two strings `s` and `goal` of the same alphabet. You may pick exactly two positions `i` and `j` with `i != j` and exchange the characters at those spots in `s`. After that single exchange, the result must equal `goal`.
+Вам даны две строки `s` и `goal` одного алфавита. Вы можете выбрать ровно две позиции `i` и `j` с `i != j` и обменять символы в этих местах в `s`. После этого одиночного обмена результат должен равняться `goal`.
 
-Decide whether such an exchange exists. Note that the two positions must be different even when the strings already look alike; in that case a swap of two equal letters is the only way to succeed.
+Обратите внимание, что две позиции должны быть разными даже тогда, когда строки уже выглядят одинаково; в этом случае обмен двумя равными буквами является единственным способом добиться успеха.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 2 * 10^4`
-- `s` and `goal` contain only lowercase English letters.
+- `s` и `goal` содержат только английские буквы.

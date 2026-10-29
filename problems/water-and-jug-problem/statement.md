@@ -1,14 +1,14 @@
-You hold two jugs holding exactly `x` and `y` litres, plus an unlimited water
-supply. In any step you may fill a jug completely, empty a jug completely, or
-pour from one jug into the other until either the source is empty or the
-destination is full.
+Вы держите два кувшина с литрами `x` и `y`, плюс неограниченная вода.
+На любой стадии вы можете заполнить кувшин полностью, опорожнить кувшин полностью, или
+из одного кувшина в другой до тех пор, пока источник не опустеет или
+Пункт назначения полон.
 
-Decide whether these moves can leave exactly `target` litres combined across
-both jugs.
+Решите, могут ли эти движения оставлять литры `target` вместе.
+Оба кувшина.
 
-A useful insight: every reachable total is a multiple of the greatest common
-divisor of the two capacities, and any such multiple up to `x + y` is
-reachable. A target of zero is always reachable (both jugs empty).
+Полезное понимание: каждая достижимая сумма является кратной наибольшей общей сумме.
+делитель двух емкостей, и любое такое кратное до `x + y`
+Цель ноль всегда достижима (оба кувшина пусты).
 
-**Constraints:**
+**Ограничения:**
 - `0 <= x, y, target <= 10^3`

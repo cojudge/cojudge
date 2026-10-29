@@ -1,7 +1,7 @@
-Given an integer array `nums` that may contain duplicate values, return all distinct subsets of its values.
+При наличии целочисленного массива `nums`, который может содержать дублирующиеся значения, возвращают все отдельные подмножества его значений.
 
-The result must not contain duplicate subsets. The subsets and the values within each subset may be returned in any order.
+Результат не должен содержать дублирующихся подмножеств. Подмножества и значения внутри каждого подмножества могут быть возвращены в любом порядке.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10`
 - `-10 <= nums[i] <= 10`

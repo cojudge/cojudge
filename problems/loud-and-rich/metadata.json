@@ -1,6 +1,6 @@
 {
   "id": "loud-and-rich",
-  "title": "848. Loud and Rich",
+  "title": "848. Громкий и богатый",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/loud-and-rich/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "richer = [[1,0],[2,1],[3,1],[3,7],[4,2],[5,3],[6,3]], quiet = [3,2,5,4,6,1,7,0]",
       "output": "[5,5,2,5,4,5,6,7]",
-      "explanation": "Each entry is the quietest among self plus richer ancestors."
+      "explanation": "Каждый вход самый тихий среди себя плюс более богатые предки."
     },
     {
       "input": "richer = [], quiet = [0]",
       "output": "[0]",
-      "explanation": "Single person answers themselves."
+      "explanation": "Одинокий человек отвечает сам себе."
     },
     {
       "input": "richer = [[1,0]], quiet = [1,0]",
       "output": "[1,1]",
-      "explanation": "Person 1 is quieter than 0."
+      "explanation": "Человек 1 тише, чем 0."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Reverse the edges: from each person point to those poorer than them, then propagate the quietest candidate forward.",
-    "Depth-first search with memoization computes answer[x] from already solved richer neighbours.",
-    "Compare quiet values, keeping the person with the smaller score."
+    "Переверните края: от каждого человека укажите на тех, кто беднее их, а затем пропагандируйте самого тихого кандидата вперед.",
+    "Глубина поиска с запоминанием вычисляет ответ [x] от уже решенных более богатых соседей.",
+    "Сравните тихие ценности, удерживая человека с меньшим счетом."
   ]
 }

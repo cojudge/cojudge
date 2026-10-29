@@ -1,6 +1,6 @@
 {
   "id": "moving-average-from-data-stream",
-  "title": "427. Moving Average from Data Stream",
+  "title": "427. Скользящая средняя от потока данных",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/moving-average-from-data-stream/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"MovingAverage\",\"next\",\"next\",\"next\",\"next\"], args = [[3],[1],[10],[3],[5]]",
       "output": "[\"1.0\",\"5.5\",\"4.666666666666667\",\"6.0\"]",
-      "explanation": "Sliding windows of width 3 give means 1.0, 5.5, 14/3, 6.0."
+      "explanation": "Раздвижные окна шириной 3 дают средства 1.0, 5.5, 14/3, 6.0."
     },
     {
       "input": "operations = [\"MovingAverage\",\"next\",\"next\"], args = [[1],[4],[5]]",
       "output": "[\"4.0\",\"5.0\"]",
-      "explanation": "Width 1 always averages the single newest value."
+      "explanation": "Ширина 1 всегда усредняет одно новейшее значение."
     },
     {
       "input": "operations = [\"MovingAverage\",\"next\",\"next\",\"next\"], args = [[2],[-1],[3],[5]]",
       "output": "[\"-1.0\",\"1.0\",\"4.0\"]",
-      "explanation": "Width-2 windows give -1.0, then 1.0, then 4.0."
+      "explanation": "Окна Width-2 дают -1.0, затем 1.0, затем 4.0."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Adaptation: replay the trace with a queue and a running sum instead of building a class.",
-    "Subtract the evicted value when the window is full so each mean is O(1).",
-    "Format each mean with the language default double-to-string conversion; checking allows small tolerance."
+    "Адаптация: переигрывание трассы с очередями и беговой суммой вместо построения класса.",
+    "Вычтите выселенное значение, когда окно заполнено, чтобы каждое среднее значение было O (1).",
+    "Форматировать каждое среднее значение с языковым по умолчанию двойным преобразованием в строку; проверка позволяет небольшую толерантность."
   ]
 }

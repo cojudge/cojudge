@@ -1,0 +1,62 @@
+{
+  "id": "missing-number",
+  "title": "14. Missing Number",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/missing-number/",
+  "category": "binary",
+  "examples": [
+    {
+      "input": "nums = [3,0,1]",
+      "output": "2",
+      "explanation": "The expected sum of [0,3] is 6, but the given numbers sum to 4. The missing number is 6 - 4 = 2."
+    },
+    {
+      "input": "nums = [0,1]",
+      "output": "2",
+      "explanation": "The expected sum of [0,2] is 3, but the given numbers sum to 1. The missing number is 3 - 1 = 2."
+    },
+    {
+      "input": "nums = [9,6,4,2,3,5,7,0,1]",
+      "output": "8",
+      "explanation": "The expected sum of [0,9] is 45, but the given numbers sum to 37. The missing number is 45 - 37 = 8."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int missingNumber(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def missingNumber(self, nums: List[int]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int missingNumber(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MissingNumber(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn missing_number(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MissingNumber(nums []int) int {\n    \n}",
+    "typescript": "export function missingNumber(nums: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function missingNumber($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[3,0,1]"
+    },
+    {
+      "nums": "[0,1]"
+    },
+    {
+      "nums": "[9,6,4,2,3,5,7,0,1]"
+    },
+    {
+      "nums": "[0]"
+    },
+    {
+      "nums": "[1]"
+    }
+  ],
+  "functionName": "missingNumber",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use XOR: XOR all indices and values to cancel pairs, the result is the missing number. Alternatively use sum formula."
+  ]
+}

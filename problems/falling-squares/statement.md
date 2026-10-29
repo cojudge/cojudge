@@ -1,8 +1,8 @@
-Squares fall one by one onto a flat baseline. Each entry `positions[i] = [left, size]` describes a square whose side length equals `size` and whose left edge starts at coordinate `left`. A square drops straight down until it rests on the baseline or on top of a previously placed square. Touching only at a vertical edge does not count as support.
+Каждый вход `positions[i] = [left, size]` описывает квадрат, длина стороны которого равна `size` и левый край которого начинается с координаты `left`. Квадрат падает прямо вниз, пока он не покоится на базовой линии или поверх ранее размещенного квадрата. Прикосновение только к вертикальному краю не считается поддержкой.
 
-After every drop, record how tall the tallest stack has become. Return those maxima in order.
+После каждой капли записывайте, насколько высоким стал самый высокий стек, и верните эти максимумы в порядок.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= positions.length <= 1000`
 - `0 <= left <= 10^8`
 - `1 <= size <= 10^6`

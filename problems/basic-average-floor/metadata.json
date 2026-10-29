@@ -1,18 +1,18 @@
 {
   "id": "basic-average-floor",
-  "title": "23. Floor Average",
+  "title": "23. Средний этаж",
   "difficulty": "Easy",
   "category": "arrays",
   "examples": [
     {
       "input": "nums = [1,2,3]",
       "output": "2",
-      "explanation": "The average is exactly 2."
+      "explanation": "Средний показатель равен 2."
     },
     {
       "input": "nums = [1,2]",
       "output": "1",
-      "explanation": "The average 1.5 rounds down to 1."
+      "explanation": "Средний 1.5 округляется до 1."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "First compute the sum.",
-    "Then divide by the length using integer division."
+    "Сначала вычислите сумму.",
+    "Затем разделить на длину, используя целое деление."
   ]
 }

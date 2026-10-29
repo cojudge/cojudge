@@ -1,6 +1,6 @@
 {
   "id": "permutation-in-string",
-  "title": "85. Permutation in String",
+  "title": "85. Пермутация в струне",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/permutation-in-string/",
   "category": "sliding-window",
@@ -8,17 +8,17 @@
     {
       "input": "s1 = \"ab\", s2 = \"eidbaooo\"",
       "output": "true",
-      "explanation": "The substring \"ba\" is a permutation of \"ab\"."
+      "explanation": "Подстрочкой «ba» является перестановка «ab»."
     },
     {
       "input": "s1 = \"ab\", s2 = \"eidboaoo\"",
       "output": "false",
-      "explanation": "No permutation of \"ab\" appears as a contiguous substring in \"eidboaoo\"."
+      "explanation": "Никакая перестановка «ab» не появляется в виде смежной подстроки в «eidboaoo»."
     },
     {
       "input": "s1 = \"adc\", s2 = \"dcda\"",
       "output": "true",
-      "explanation": "The substring \"cda\" is a permutation of \"adc\"."
+      "explanation": "Подстрочкой «cda» является перестановка «adc»."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "A permutation is determined by character frequencies, not character order.",
-    "Maintain a window in s2 whose length is exactly s1.length.",
-    "Update only the counts for the character entering and leaving the window."
+    "Пермутация определяется частотами символов, а не порядком символов.",
+    "Поддерживайте окно в s2, длина которого точно равна s1.",
+    "Обновляйте только количество символов, входящих и выходящих из окна."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "valid-tic-tac-toe-state",
-  "title": "792. Valid Tic-Tac-Toe State",
+  "title": "792. Действительный Tic-Tac-Toe State",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/valid-tic-tac-toe-state/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "board = [\"O--\",\"---\",\"---\"]",
       "output": "false",
-      "explanation": "The first mark must be X, so a lone O is impossible."
+      "explanation": "Первая отметка должна быть X, поэтому одинокая O невозможна."
     },
     {
       "input": "board = [\"XOX\",\"-X-\",\"---\"]",
       "output": "false",
-      "explanation": "Four X against one O violates strict alternation."
+      "explanation": "Четыре Х против одного О нарушает строгое чередование."
     },
     {
       "input": "board = [\"XOX\",\"O-O\",\"XOX\"]",
       "output": "true",
-      "explanation": "Five X and four O with no line is a complete draw."
+      "explanation": "Пять X и четыре O без линии — это полная ничья."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Count the marks first: O can never outnumber X, and X can lead by at most one because X moves first.",
-    "Scan the eight possible lines for an X win and an O win; both winning together is always illegal.",
-    "An X win needs exactly one extra X, while an O win needs equal counts, since the winner made the final move. Adaptation: empty is '-'."
+    "Сначала посчитайте отметки: О никогда не может превосходить число X, а X может руководить, по крайней мере, одним, потому что X движется первым.",
+    "Просканируйте восемь возможных линий для победы X и победы O; оба выигрыша вместе всегда незаконны.",
+    "Победа X требует ровно одного дополнительного X, в то время как победа O требует равного количества, так как победитель сделал последний ход. Адаптация: пустой - это '-'."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "letter-case-permutation",
-  "title": "783. Letter Case Permutation",
+  "title": "783. Письмо Дело Пермутация",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/letter-case-permutation/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"a1b2\"",
       "output": "[\"a1b2\",\"a1B2\",\"A1b2\",\"A1B2\"]",
-      "explanation": "Two letters give four case combinations."
+      "explanation": "Две буквы дают четыре комбинации чехлов."
     },
     {
       "input": "s = \"3z4\"",
       "output": "[\"3z4\",\"3Z4\"]",
-      "explanation": "Only the middle letter varies."
+      "explanation": "Разница только в средней букве."
     },
     {
       "input": "s = \"123\"",
       "output": "[\"123\"]",
-      "explanation": "No letters means a single result."
+      "explanation": "Никакие буквы не означают единого результата."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Walk the string depth-first: digits are forced, letters branch into two cases.",
-    "Build a mutable character buffer and backtrack after each branch.",
-    "The total output size doubles with every additional letter."
+    "Сначала пройдите по струне глубиной: вынуждают цифры, буквы разветвляются на два корпуса.",
+    "Постройте изменяемый буфер символов и обратный путь после каждой ветви.",
+    "Общий объем выпуска удваивается с каждой дополнительной буквой."
   ]
 }

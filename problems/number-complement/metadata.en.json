@@ -1,0 +1,58 @@
+{
+  "id": "number-complement",
+  "title": "540. Number Complement",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/number-complement/",
+  "category": "binary",
+  "examples": [
+    {
+      "input": "num = 5",
+      "output": "2",
+      "explanation": "101 becomes 010."
+    },
+    {
+      "input": "num = 1",
+      "output": "0",
+      "explanation": "1 becomes 0."
+    },
+    {
+      "input": "num = 7",
+      "output": "0",
+      "explanation": "111 becomes 000."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findComplement(int num) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def findComplement(self, num: int) -> int:\n        return 0\n",
+    "cpp": "class Solution {\npublic:\n    int findComplement(int num) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int FindComplement(int num)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_complement(num: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FindComplement(num int) int {\n    return 0\n}",
+    "typescript": "export function findComplement(num: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $num\n     * @return int\n     */\n    public function findComplement($num) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "num": 5
+    },
+    {
+      "num": 1
+    },
+    {
+      "num": 7
+    }
+  ],
+  "functionName": "findComplement",
+  "params": [
+    {
+      "name": "num",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Build a mask of all 1s with the same bit-length as num.",
+    "XOR the mask with num to flip exactly those bits.",
+    "Shifting a 64-bit value avoids overflow when num is near 2^31."
+  ]
+}

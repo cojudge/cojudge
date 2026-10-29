@@ -1,7 +1,7 @@
-Two integers `n` and `x` are supplied. Consider positive-integer arrays `nums` of length `n` that climb strictly at each position, so `nums[i + 1]` is always larger than `nums[i]` for `0 <= i < n - 1`, and whose cumulative bitwise AND across all positions equals `x`.
+Предлагается два целых числа `n` и `x`. Рассмотрим положительно-целочисленные массивы `nums` длины `n`, которые поднимаются строго в каждой позиции, поэтому `nums[i + 1]` всегда больше, чем `nums[i]` для `0 <= i < n - 1`, и чьи совокупные битовые AND по всем позициям равны `x`.
 
-Among every array meeting those two requirements, make the final entry `nums[n - 1]` as small as possible, and output that smallest achievable final value.
+Среди каждого массива, отвечающего этим двум требованиям, сделайте окончательную запись `nums[n - 1]` как можно меньше и выведите наименьшее достижимое конечное значение.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= n, x <= 10^8`

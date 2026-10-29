@@ -1,12 +1,12 @@
-Collect every root-to-leaf chain whose values add up to a target total.
+Соберите каждую цепочку от корня до листа, значения которой складываются в целевую сумму.
 
-Explore the tree depth-first while keeping the current path. At each node, extend the path and reduce the remaining sum. When a leaf is reached, keep a snapshot of the path if its sum matches the target; otherwise discard it. Then backtrack and try the next branch.
+Исследуйте сначала глубину дерева, сохраняя текущий путь. На каждом узле продлевайте путь и уменьшайте оставшуюся сумму. Когда достигается лист, сохраняйте снимок пути, если его сумма соответствует цели; в противном случае отбросьте его. Затем отойдите назад и попробуйте следующую ветку.
 
-Return all matching paths as value lists ordered from root to leaf. The checker treats path order as insignificant but each individual path must run root-first.
+Возвращайте все соответствующие пути в виде списков значений, упорядоченных от корня к листу. Шекер рассматривает порядок пути как незначительный, но каждый отдельный путь должен идти корнем первым.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= number of nodes <= 5000`
 - `-1000 <= Node.val <= 1000`
 - `-1000 <= targetSum <= 1000`
 
-**Adaptation note:** The nested value list is represented as `int_list_2d` in this judge.
+**Примечание по адаптации: ** Список вложенных значений представлен как `int_list_2d`.

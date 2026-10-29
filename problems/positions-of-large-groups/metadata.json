@@ -1,6 +1,6 @@
 {
   "id": "positions-of-large-groups",
-  "title": "828. Positions of Large Groups",
+  "title": "828. Позиции крупных групп",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/positions-of-large-groups/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "s = \"abbxxxxzzy\"",
       "output": "[[3,6]]",
-      "explanation": "Only the run of x's qualifies."
+      "explanation": "Квалифицируется только бег х."
     },
     {
       "input": "s = \"abc\"",
       "output": "[]",
-      "explanation": "Every run has length 1."
+      "explanation": "Каждый бег имеет длину 1."
     },
     {
       "input": "s = \"abcdddeeeeaabbbcd\"",
@@ -50,8 +50,8 @@
   ],
   "outputType": "int_list_2d",
   "hints": [
-    "Walk the string once, tracking where the current run of equal letters started.",
-    "A run ends when the next character differs or the string ends; record it only if its length is 3 or more.",
-    "Pairs are naturally produced in increasing order, so no extra sorting is needed."
+    "Прогуляйтесь по струне один раз, отслеживая, где начался текущий поток одинаковых букв.",
+    "Бег заканчивается, когда следующий символ отличается или строка заканчивается; записывайте его только в том случае, если его длина 3 или больше.",
+    "Пары естественным образом производятся в возрастающем порядке, поэтому дополнительная сортировка не требуется."
   ]
 }

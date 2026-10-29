@@ -1,9 +1,9 @@
-Count how many different non-empty subsequences a string has.
+Подсчитайте, сколько различных непустых последовательностей имеет строка.
 
-A subsequence is formed by erasing zero or more characters while keeping the order of the survivors. Two subsequences count as the same whenever their final texts match exactly, even if they were built from different positions. For instance, the two single `a` characters inside `"aba"` yield just one distinct subsequence `"a"`.
+Последовательность формируется путем стирания нуля или более символов при сохранении порядка выживших. Две последовательности считаются одинаковыми, когда их окончательные тексты точно совпадают, даже если они были построены с разных позиций. Например, два одиночных символа `a` внутри `"aba"` дают только одну отдельную последовательность `"a"`.
 
-Given a string `s` of lowercase letters, return the number of distinct non-empty subsequences, modulo `10^9 + 7`.
+Учитывая строку `s` строчных букв, верните число различных непустых последовательностей, модулю `10^9 + 7`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 2000`
-- `s` holds lowercase English letters.
+- `s` содержит английские буквы.

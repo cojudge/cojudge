@@ -1,12 +1,12 @@
-An N-ary tree and a binary tree can stand in for each other through the left-child right-sibling encoding: a node's first child becomes its left link, and each sibling becomes the previous sibling's right link.
+Дерево N-ary и двоичное дерево могут стоять друг за друга через кодирование правого брата левого потомка: первый потомок узла становится его левым звеном, а каждый брат становится правым звеном предыдущего брата.
 
-Implement a `Codec` class with two methods that work on level-order text:
+Внедряйте класс `Codec` двумя методами, которые работают с текстом уровня:
 
-- `encode(naryData)` parses an N-ary tree from breadth-first text (`null` separates sibling groups, e.g. `[1,null,3,2,4,null,5,6]`) and returns the converted binary tree as level-order text with `null` placeholders for missing children and trailing nulls trimmed (e.g. `[1,3,null,5,2,null,6,null,4]`). An empty tree encodes to `[]`.
-- `decode(binaryData)` parses that binary level-order text and returns the canonical N-ary breadth-first text (trailing empty groups dropped, `[]` for empty).
+- `encode(naryData)` анализирует дерево N-ary из первого текста (`null` разделяет группы братьев и сестер, например, `[1,null,3,2,4,null,5,6]`) и возвращает преобразованное двоичное дерево в виде текста уровня с заполнителями `null` для пропавших потомков и обрезанными нулями (например, `[1,3,null,5,2,null,6,null,4]`). пустое дерево кодирует `[]`.
+- `decode(binaryData)` парсирует текст двоичного порядка уровней и возвращает канонический N-ary ширина-первый текст (след пустых групп упал, `[]` для пустых).
 
-The judge creates one `Codec` per test case, encodes the input twice, decodes the first binary string, and checks that both encodes agree, the decoded text equals the canonical N-ary form, and the binary text parses to exactly the left-child right-sibling structure of the input. Inputs are already canonical; your binary text must still earn its structure — echoing the input fails the structural check.
+Судья создает один `Codec` в тестовом случае, кодирует ввод дважды, декодирует первую двоичную строку и проверяет, что оба кода согласуются, декодированный текст равен канонической форме N-ary, а двоичный текст парсирует в точности структуру ввода с правым-младшим потомком. Вводы уже канонические; ваш двоичный текст все равно должен заработать свою структуру — эхо входа не дает структурной проверки.
 
-**Constraints:**
+**Ограничения:**
 - Node count lies in `[0, 10^4]`.
-- Values are integers.
+- Ценности являются целыми числами.

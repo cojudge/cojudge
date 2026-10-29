@@ -1,6 +1,6 @@
 {
   "id": "fruit-into-baskets",
-  "title": "893. Fruit Into Baskets",
+  "title": "893. Фрукты в корзины",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/fruit-into-baskets/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "fruits = [1,2,1]",
       "output": "3",
-      "explanation": "Whole row uses two kinds."
+      "explanation": "Весь ряд использует два вида."
     },
     {
       "input": "fruits = [0,1,2,2]",
       "output": "3",
-      "explanation": "Best stretch is [1,2,2]."
+      "explanation": "Наилучшим растяжением является [1, 2, 2]."
     },
     {
       "input": "fruits = [1,2,3,2,2]",
       "output": "4",
-      "explanation": "Best stretch is [2,3,2,2]."
+      "explanation": "Наилучшим растяжением является [2, 3, 2, 2]."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Slide a window with left and right ends, keeping counts of each kind inside.",
-    "When a third distinct kind enters, move the left end forward until only two kinds remain; record the largest window seen."
+    "Сдвиньте окно с левым и правым концами, сохраняя счет каждого вида внутри.",
+    "Когда входит третий отдельный вид, двигайте левый конец вперед, пока не останется только два вида; запишите самое большое увиденное окно."
   ]
 }

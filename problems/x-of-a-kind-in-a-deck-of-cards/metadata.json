@@ -1,6 +1,6 @@
 {
   "id": "x-of-a-kind-in-a-deck-of-cards",
-  "title": "902. X of a Kind in a Deck of Cards",
+  "title": "902. X of a Kind в карточной колоде",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/x-of-a-kind-in-a-deck-of-cards/",
   "category": "array",
@@ -8,22 +8,22 @@
     {
       "input": "deck = [1,2,3,4,4,3,2,1]",
       "output": "true",
-      "explanation": "Split into four pairs: [1,1], [2,2], [3,3], [4,4]."
+      "explanation": "Разделение на четыре пары: [1, 1], [2, 2], [3, 3], [4, 4]."
     },
     {
       "input": "deck = [1,1,1,2,2,2,3,3]",
       "output": "false",
-      "explanation": "No group size X >= 2 divides every value count (3, 3, 2)."
+      "explanation": "Ни один размер группы X >= 2 не делит каждое количество значений (3, 3, 2)."
     },
     {
       "input": "deck = [1,1,2,2,2,2]",
       "output": "true",
-      "explanation": "Use X = 2: [1,1], [2,2], [2,2]."
+      "explanation": "Используйте X = 2: [1, 1], [2, 2], [2, 2]."
     },
     {
       "input": "deck = [1]",
       "output": "false",
-      "explanation": "A single card cannot form a group of size at least 2."
+      "explanation": "Одна карта не может образовывать группу размера по меньшей мере 2."
     }
   ],
   "starterCode": {
@@ -56,8 +56,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Count how many times each distinct value appears; every count must be a multiple of the shared group size X.",
-    "That is possible exactly when the greatest common divisor of all counts is at least 2.",
-    "A deck with fewer than 2 cards, or with a count of 1 anywhere while others disagree, fails."
+    "Подсчитайте, сколько раз появляется каждое отдельное значение; каждое число должно быть кратно общему размеру группы X.",
+    "Это возможно именно тогда, когда наибольшим общим делителем всех чисел является, по крайней мере, 2.",
+    "Палуба с картами 2 или с количеством 1 в любом месте, в то время как другие не согласны, не работает."
   ]
 }

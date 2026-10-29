@@ -1,9 +1,9 @@
-All words in the list share one length. You may reorder letters freely, but only within the even slots among themselves and within the odd slots among themselves. Swapping two characters that both sit on even positions, or both on odd positions, is allowed as many times as you like.
+Все слова в списке имеют одну длину. Можно свободно переупорядочивать буквы, но только в пределах четных слотов между собой и в пределах нечетных слотов между собой. Перемещение двух символов, которые оба сидят на четных позициях, или оба на нечетных позициях, допускается столько раз, сколько вам нравится.
 
-Two words belong together when one can be turned into the other through such swaps. That happens exactly when their even-position multiset and their odd-position multiset match. Words that mutually match form a family; families do not overlap. Report how many distinct families appear.
+Два слова принадлежат друг другу, когда одно может быть превращено в другое через такие свопы. Это происходит именно тогда, когда их четное положение мультисет и их нечетное положение мультисет совпадают. Слова, которые взаимно совпадают, образуют семью; семьи не пересекаются. Сообщите, сколько различных семей появляются.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= words.length <= 1000`
 - `1 <= words[i].length <= 20`
-- `words[i]` holds only lowercase English letters.
-- Every word has the same length.
+- `words[i]` содержит только английские буквы.
+- Каждое слово имеет одинаковую длину.

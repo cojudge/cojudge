@@ -1,15 +1,15 @@
-Strip comments from a program given as one string per line. Two comment forms exist:
+Комментарии из программы, заданной как одна строка на строку. Существуют две формы комментариев:
 
-- `//` discards the rest of its line when seen outside a block comment.
-- `/*` opens a block that discards everything until its matching `*/`, possibly across many lines. Blocks do not nest.
+- `//` отбрасывает остальную часть своей строки при просмотре вне комментария блока.
+- `/*` открывает блок, который отбрасывает все до его соответствия `*/`, возможно, по многим линиям.
 
-Code outside comments is kept verbatim (including spaces). After processing a source line, if the current output buffer is nonempty and no block is open, it becomes one answer line and the buffer resets only at that point — so fragments before and after a multi-line block join together.
+После обработки исходной строки, если текущий выходной буфер не пуст и ни один блок не открыт, он становится одной линией ответа, и буфер сбрасывает только в этой точке — так что фрагменты до и после многолинейного блока объединяются.
 
-Return the surviving lines in order.
+Верните уцелевшие линии в порядок.
 
-*Adaptation note:* input type is `string_array` and output type is `string_list`.
+*Примечание по адаптации: * тип ввода - `string_array`, а тип вывода - `string_list`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= source.length <= 100`
 - `0 <= source[i].length <= 80`
-- Each line consists of printable ASCII without quote characters.
+- Каждая строка состоит из печатаемого ASCII без символов цитаты.

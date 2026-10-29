@@ -1,12 +1,12 @@
-You are given a binary grid `grid` holding only `0` and `1`.
+Вы получаете двоичную сетку `grid`, содержащую только `0` и `1`.
 
-An axis-aligned corner rectangle is a choice of two different rows `r1 < r2` and two different columns `c1 < c2` such that all four crossings `(r1,c1)`, `(r1,c2)`, `(r2,c1)` and `(r2,c2)` hold `1`. Cells inside or on the edges may be anything; only the four corners matter.
+Угловой прямоугольник, выровненный по оси, представляет собой выбор из двух разных рядов `r1 < r2` и двух разных столбцов `c1 < c2`, так что все четыре пересечения `(r1,c1)`, `(r1,c2)`, `(r2,c1)` и `(r2,c2)` удерживают `1`. Ячейки внутри или по краям могут быть любыми; только четыре угла имеют значение.
 
-Return how many such rectangles appear in the grid.
+Вернитесь, сколько таких прямоугольников появляется в сетке.
 
-**Constraints:**
+**Ограничения:**
 - `m == grid.length`, `n == grid[i].length`
 - `1 <= m <= 200`
 - `1 <= n <= 200`
-- Each entry is `0` or `1`.
-- The count fits in a 32-bit signed integer.
+- Каждая запись `0` или `1`.
+- Подсчет помещается в 32-бит подписанного целого числа.

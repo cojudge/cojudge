@@ -1,6 +1,6 @@
 {
   "id": "reverse-words-in-a-string",
-  "title": "307. Reverse Words in a String",
+  "title": "307. Обратные слова в строке",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/reverse-words-in-a-string/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"the sky is blue\"",
       "output": "\"blue is sky the\"",
-      "explanation": "The four words appear in opposite order."
+      "explanation": "Четыре слова появляются в противоположном порядке."
     },
     {
       "input": "s = \"  hello world  \"",
       "output": "\"world hello\"",
-      "explanation": "Extra edge spaces disappear in the answer."
+      "explanation": "В ответе исчезают дополнительные пространства."
     },
     {
       "input": "s = \"a good   example\"",
       "output": "\"example good a\"",
-      "explanation": "Multiple gaps between words shrink to one space."
+      "explanation": "Множественные пробелы между словами сжимаются до одного места."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Split on whitespace and drop empty tokens, then reverse the word list.",
-    "Join with a single space to normalize all gaps automatically.",
-    "A two-pointer in-place variant can also run in O(1) extra space."
+    "Разделите на белое пространство и опустите пустые токены, а затем переверните список слов.",
+    "Присоединяйтесь к одному пространству, чтобы автоматически нормализовать все пробелы.",
+    "Двухточечный вариант на месте также может работать в дополнительном пространстве O (1)."
   ]
 }

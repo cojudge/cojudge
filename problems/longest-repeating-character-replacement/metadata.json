@@ -1,6 +1,6 @@
 {
   "id": "longest-repeating-character-replacement",
-  "title": "51. Longest Repeating Character Replacement",
+  "title": "51. Самая длинная замена повторяющегося персонажа",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/longest-repeating-character-replacement/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "s=\"ABAB\", k=2",
       "output": "4",
-      "explanation": "Replace the two 'B's with 'A' (or the two 'A's with 'B') to get \"AAAA\" (\"BBBB\"), a substring of 4 identical characters."
+      "explanation": "Замените два «B» на «A» (или два «A» на «B»), чтобы получить «AAAA» («BBBB»), подстроку идентичных символов 4."
     },
     {
       "input": "s=\"AABABBA\", k=1",
       "output": "4",
-      "explanation": "Replace the 'B' at index 3 with 'A' to get \"AAAABBA\", giving a \"AAAA\" substring of length 4. Alternatively, replace the 'A' at index 4 with 'B' to get \"AABBBBA\", giving a \"BBBB\" substring."
+      "explanation": "Заменить \"B\" в индексе 3 на \"A\", чтобы получить \"AAAABBA\", давая \"AAAA\" подстроку длины 4. Альтернативно, заменить \"A\" в индексе 4 на \"B\", чтобы получить \"AABBBBA\", давая \"BBBB\" подстроку."
     }
   ],
   "starterCode": {
@@ -53,6 +53,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use a sliding window with frequency counts of letters and track the highest frequency in the window. Shrink the window when (window size - maxFreq) > k."
+    "Используйте раздвижное окно с частотным подсчетом букв и отслеживайте самую высокую частоту в окне. Уменьшите окно, когда (размер окна - maxFreq) > k."
   ]
 }

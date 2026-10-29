@@ -1,6 +1,6 @@
 {
   "id": "implement-rand10-using-rand7",
-  "title": "535. Implement Rand10() Using Rand7()",
+  "title": "535. Внедрение Rand10() с использованием Rand7()",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/implement-rand10-using-rand7/",
   "category": "math",
@@ -8,12 +8,12 @@
     {
       "input": "calls = 1",
       "output": "[4]",
-      "explanation": "Any single value from 1 to 10 is acceptable; the judge only checks the range."
+      "explanation": "Любое единственное значение от 1 до 10 приемлемо; судья проверяет только диапазон."
     },
     {
       "input": "calls = 3",
       "output": "[7,2,9]",
-      "explanation": "Return one independent uniform draw per requested call."
+      "explanation": "Возвращайте одну независимую розыгрыш униформы за запрошенный звонок."
     }
   ],
   "starterCode": {
@@ -46,7 +46,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Two rand7 draws combine into 49 equally likely pairs; map them to the numbers 1-40 and retry on 41-49.",
-    "Each accepted value `r` in 1..40 converts with `(r - 1) % 10 + 1`."
+    "Два ничьих ранда7 объединяются в пары 49 с одинаковой вероятностью; сопоставьте их с числами 1-40 и повторите на 41-49.",
+    "Каждое принятое значение `r` в 1..40 конвертируется в `(r - 1) % 10 + 1`."
   ]
 }

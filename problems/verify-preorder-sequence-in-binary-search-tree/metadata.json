@@ -1,6 +1,6 @@
 {
   "id": "verify-preorder-sequence-in-binary-search-tree",
-  "title": "359. Verify Preorder Sequence in Binary Search Tree",
+  "title": "359. Проверить последовательность предзаказа в двоичном дерево поиска",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/verify-preorder-sequence-in-binary-search-tree/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "preorder = [5,2,1,3,6]",
       "output": "true",
-      "explanation": "Root 5 with left child 2 (children 1 and 3) and right child 6 produces this order."
+      "explanation": "Корень 5 с левым потомком 2 (потомки 1 и 3) и правым потомком 6 даёт такой порядок обхода."
     },
     {
       "input": "preorder = [5,2,6,1,3]",
       "output": "false",
-      "explanation": "After 6 enters the right subtree of 5, the later value 1 cannot return to the left side."
+      "explanation": "После того, как 6 входит в правое поддерево 5, более позднее значение 1 не может вернуться в левую сторону."
     },
     {
       "input": "preorder = [1]",
       "output": "true",
-      "explanation": "A single node always forms a valid walk."
+      "explanation": "Один узел всегда образует действительную прогулку."
     }
   ],
   "starterCode": {
@@ -54,7 +54,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Track the smallest value allowed for the next entry; it rises whenever the walk moves into a right subtree.",
-    "Keep a stack of ancestors and pop while the current value is larger, updating the lower bound to the last popped value."
+    "Отслеживайте наименьшее значение, допустимое для следующего входа; оно поднимается всякий раз, когда прогулка перемещается в правое поддерево.",
+    "Держите стопку предков и поп, в то время как текущее значение больше, обновляя нижнюю границу до последнего поп-значения."
   ]
 }

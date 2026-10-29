@@ -1,11 +1,11 @@
-A ball rolls through a rectangular grid. Cells holding `0` are open floor and cells holding `1` are walls. From any open cell the ball can be launched in one of the four straight directions (up, down, left, right). Once moving it keeps rolling until a wall or the outer border stops it; it cannot halt partway. Each step onto a neighboring open cell adds one to the travelled length.
+Шарик катится по прямоугольной сетке. Ячейки, удерживающие `0`, представляют собой открытый пол, а ячейки, удерживающие `1`, представляют собой стены. Из любой открытой ячейки шар можно запустить в одном из четырех прямых направлений (вверх, вниз, влево, вправо). После перемещения он продолжает катиться до тех пор, пока стенка или внешняя граница не остановит его; он не может остановиться на полпути. Каждый шаг на соседнюю открытую ячейку добавляет один к пройденной длине.
 
-Given the grid `maze`, a `start` cell `[row, col]` and a `destination` cell `[row, col]`, compute the smallest total travel length that carries the ball from `start` to `destination` while obeying the rolling rule. The ball must come to rest exactly on `destination`. Return `-1` when the destination cannot be reached this way.
+Учитывая сетку `maze`, ячейку `start` `[row, col]` и ячейку `destination` `[row, col]`, вычислите наименьшую общую длину перемещения, которая переносит мяч из `start` в `destination`, соблюдая при этом правило качения. Мяч должен прийти, чтобы отдохнуть именно на `destination`. Возврат `-1`, когда пункт назначения не может быть достигнут таким образом.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= maze.length, maze[0].length <= 100`
-- `maze[i][j]` is `0` (open) or `1` (wall)
-- `start.length == 2` and `destination.length == 2`
+- `maze[i][j]` - это `0` (открытый) или `1` (стена)
+- `start.length == 2` и `destination.length == 2`
 - `0 <= start[0], destination[0] < maze.length`
 - `0 <= start[1], destination[1] < maze[0].length`
-- Both `start` and `destination` are open cells
+- `start` и `destination` являются открытыми ячейками.

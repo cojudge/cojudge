@@ -1,6 +1,6 @@
-You are given an array `words` of lowercase strings. Consider pairs of words that share no letter in common (no character appearing in both). For each such pair, multiply their lengths; return the largest product found. When no disjoint pair exists, return `0`.
+Вам дается массив `words` строчек нижнего регистра. Рассмотрим пары слов, которые не имеют общей буквы (никакого символа, появляющегося в обеих). Для каждой такой пары умножьте их длины; верните самый большой найденный продукт. Когда не существует разъединенной пары, верните `0`.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= words.length <= 1000`
 - `1 <= words[i].length <= 1000`
-- Each `words[i]` holds only lowercase English letters.
+- Каждый `words[i]` содержит только английские буквы.

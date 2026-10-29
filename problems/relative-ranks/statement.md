@@ -1,8 +1,8 @@
-Competitors finish a race with pairwise different scores, where a larger score means a better placement. Rank the competitors from best (rank 1) to worst (rank n) and label each original position: rank 1 becomes `"Gold Medal"`, rank 2 becomes `"Silver Medal"`, rank 3 becomes `"Bronze Medal"`, and every later rank `k` becomes the plain number `"k"`.
+Конкуренты заканчивают гонку с парными разными баллами, где больший балл означает лучшее размещение. Ранг конкурентов от лучшего (ранг 1) до худшего (ранг n) и маркировка каждой исходной позиции: ранг 1 становится `"Gold Medal"`, ранг 2 становится `"Silver Medal"`, ранг 3 становится `"Bronze Medal"`, а каждый более поздний ранг `k` становится простым номером `"k"`.
 
-Given the scores in starting order, return the label for each competitor in that same order.
+Учитывая результаты в стартовом порядке, верните ярлык для каждого конкурента в том же порядке.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= score.length <= 10^4`
 - `0 <= score[i] <= 10^6`
-- All values in `score` are distinct
+- Все значения в `score` различны.

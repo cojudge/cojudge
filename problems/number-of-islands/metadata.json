@@ -1,6 +1,6 @@
 {
   "id": "number-of-islands",
-  "title": "30. Number of Islands",
+  "title": "30. Количество островов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/number-of-islands/",
   "category": "graph",
@@ -8,12 +8,12 @@
     {
       "input": "grid = [[1,1,1,1,0],[1,1,0,1,0],[1,1,0,0,0],[0,0,0,0,0]]",
       "output": "1",
-      "explanation": "There is 1 island in the 4x5 grid."
+      "explanation": "Остров 1 находится в сетке 4x5."
     },
     {
       "input": "grid = [[1,1,0,0,0],[1,1,0,0,0],[0,0,1,0,0],[0,0,0,1,1]]",
       "output": "3",
-      "explanation": "There are 3 islands in the 4x5 grid."
+      "explanation": "Острова 3 находятся в сетке 4x5."
     }
   ],
   "starterCode": {
@@ -102,6 +102,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use DFS/BFS to flood-fill each unvisited land cell and count components."
+    "Используйте DFS / BFS для заполнения каждого непосещенного наземного элемента и подсчета компонентов."
   ]
 }

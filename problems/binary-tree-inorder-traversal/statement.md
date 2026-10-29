@@ -1,6 +1,6 @@
-Take the `root` of a binary tree and list its node values in inorder sequence: for every subtree, first enumerate everything in its left branch, then record the subtree's own root value, and finally enumerate everything in its right branch.
+Возьмите `root` двоичного дерева и перечислите его значения узлов в последовательности по порядку: для каждого поддеревья сначала перечислите все в его левой ветви, затем запишите собственное корневое значение поддеревья и, наконец, перечислите все в его правой ветви.
 
-**Constraints:**
+**Ограничения:**
 
-- The number of nodes in the tree is in the range `[0, 100]`.
+- Количество узлов в дереве находится в диапазоне `[0, 100]`.
 - `-100 <= Node.val <= 100`

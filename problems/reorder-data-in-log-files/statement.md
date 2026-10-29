@@ -1,9 +1,9 @@
-Each log is a string starting with an identifier, followed by either words (a letter-log) or numbers (a digit-log). Reorder all logs so that letter-logs come first, sorted by their content and then by identifier when contents tie, while digit-logs keep their original relative order at the end.
+Каждый журнал представляет собой строку, начинающуюся с идентификатора, за которой следуют либо слова (письменный журнал), либо цифры (цифровой журнал). Переупорядочивайте все журналы так, чтобы сначала приходили буквенные журналы, отсортированные по их содержанию, а затем по идентификатору, когда содержимое связывается, в то время как цифровые журналы сохраняют свой первоначальный относительный порядок в конце.
 
-Return the reordered logs as a list. The judge stores string arrays as native lists and expects a string list back.
+Верните переупорядоченные журналы в список. Судья хранит строковые массивы в виде родных списков и ожидает, что список строк вернется.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= logs.length <= 100`
-- Each log has an identifier plus at least one word or number, separated by single spaces.
+- Каждый журнал имеет идентификатор плюс, по меньшей мере, одно слово или число, разделенное отдельными пространствами.
 
-Adaptation: input logs use `string_array` while the ordered result uses `string_list`.
+Адаптация: журналы ввода используют `string_array`, а упорядоченный результат использует `string_list`.

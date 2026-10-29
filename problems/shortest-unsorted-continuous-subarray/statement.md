@@ -1,7 +1,7 @@
-Given an integer array `nums`, find the length of the shortest continuous subarray that, once sorted in non-decreasing order, makes the entire array sorted. Return 0 when the array is already sorted.
+Учитывая целочисленный массив `nums`, найдите длину кратчайшего непрерывного подкатегории, которая после сортировки в неубывающем порядке делает весь массив отсортированным. Возврат 0, когда массив уже отсортирован.
 
-Compare against the fully sorted copy: the leftmost index where they differ starts the window and the rightmost such index ends it. Everything outside the window already sits in its final place.
+Сравните с полностью отсортированной копией: самый левый индекс, где они отличаются, запускает окно, а самый правый такой индекс заканчивает его.Все за окном уже сидит на своем последнем месте.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^4`
 - `-10^5 <= nums[i] <= 10^5`

@@ -1,6 +1,6 @@
 {
   "id": "intersection-of-two-arrays",
-  "title": "429. Intersection of Two Arrays",
+  "title": "429. Пересечение двух массивов",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/intersection-of-two-arrays/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "nums1 = [1,2,2,1], nums2 = [2,2]",
       "output": "[2]",
-      "explanation": "2 is the only value present on both sides."
+      "explanation": "2 — это единственное значение, которое присутствует с обеих сторон."
     },
     {
       "input": "nums1 = [4,9,5], nums2 = [9,4,9,8,4]",
       "output": "[9,4]",
-      "explanation": "4 and 9 are shared; any order of them is accepted."
+      "explanation": "4 и 9 являются общими; любой заказ из них принимается."
     }
   ],
   "starterCode": {
@@ -49,7 +49,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Load one list into a hash set for O(1) membership tests.",
-    "Insert matches into a second set to suppress duplicates, then return them."
+    "Загрузите один список в хеш-набор для тестов членства O (1).",
+    "Вставьте спички во второй набор для подавления дубликатов, затем верните их."
   ]
 }

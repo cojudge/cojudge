@@ -1,6 +1,6 @@
 {
   "id": "convert-sorted-list-to-binary-search-tree",
-  "title": "288. Convert Sorted List to Binary Search Tree",
+  "title": "288. Преобразовать сортированный список в дерево бинарного поиска",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "head = [-10,-3,0,5,9]",
       "output": "[0,-3,9,-10,null,5]",
-      "explanation": "The ordered values become a balanced search tree; any balanced arrangement with the same inorder sequence is accepted."
+      "explanation": "Упорядоченные значения становятся уравновешенным деревом поиска; принимается любое уравновешенное расположение с одной и той же последовательностью порядков."
     },
     {
       "input": "head = []",
       "output": "[]",
-      "explanation": "An empty list yields an empty tree."
+      "explanation": "Пустой лист дает пустое дерево."
     },
     {
       "input": "head = [1]",
       "output": "[1]",
-      "explanation": "One value becomes one node."
+      "explanation": "Одно значение становится одним узлом."
     }
   ],
   "starterCode": {
@@ -57,8 +57,8 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Copy the list values into an array first; then the task matches building a balanced tree from a sorted array.",
-    "Alternatively use slow/fast pointers to find each subtree midpoint without extra storage.",
-    "The checker validates search ordering, balance, and exact value multiset \u2014 not one fixed shape."
+    "Сначала скопируйте значения списка в массив; затем задача соответствует построению сбалансированного дерева из сортированного массива.",
+    "В качестве альтернативы используйте медленные / быстрые указатели, чтобы найти каждую середину дерева без дополнительного хранения.",
+    "Проверка проверяет порядок поиска, баланс и точный набор значений, а не одну фиксированную форму."
   ]
 }

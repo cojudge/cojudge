@@ -1,0 +1,65 @@
+{
+  "id": "broken-calculator",
+  "title": "974. Broken Calculator",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/broken-calculator/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "startValue = 2, target = 3",
+      "output": "2",
+      "explanation": "Double to 4, then subtract once."
+    },
+    {
+      "input": "startValue = 5, target = 8",
+      "output": "2",
+      "explanation": "Subtract to 4, then double to 8."
+    },
+    {
+      "input": "startValue = 3, target = 10",
+      "output": "3",
+      "explanation": "Double to 6, subtract to 5, double to 10."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int brokenCalc(int startValue, int target) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def brokenCalc(self, startValue: int, target: int) -> int:\n        return 0",
+    "cpp": "class Solution {\npublic:\n    int brokenCalc(int startValue, int target) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int BrokenCalc(int startValue, int target) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn broken_calc(start_value: i32, target: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc BrokenCalc(startValue int, target int) int {\n    return 0\n}",
+    "typescript": "export function brokenCalc(startValue: number, target: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $startValue\n     * @param int $target\n     * @return int\n     */\n    public function brokenCalc($startValue, $target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "startValue": 2,
+      "target": 3
+    },
+    {
+      "startValue": 5,
+      "target": 8
+    },
+    {
+      "startValue": 3,
+      "target": 10
+    }
+  ],
+  "functionName": "brokenCalc",
+  "params": [
+    {
+      "name": "startValue",
+      "type": "int"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Going forward, doubling overshoots while subtracting crawls; think backwards from target instead.",
+    "Reversed, the moves are halve (when even) and add one: an odd target must first be bumped up to become even.",
+    "Once target drops to startValue or below, the rest is plain subtraction."
+  ]
+}

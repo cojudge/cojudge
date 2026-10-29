@@ -1,13 +1,13 @@
-A sentence is made of words separated by single spaces, with no leading or trailing spaces. Transform it into a playful variant with these rules, applied to each word in order:
+Предложение состоит из слов, разделенных отдельными пробелами, без ведущих или задающих пробелов. Преобразуйте его в игривый вариант с этими правилами, применяемыми к каждому слову в порядке:
 
-- If a word begins with a vowel (`a`, `e`, `i`, `o`, `u`, in either lowercase or uppercase), leave the word as is.
-- Otherwise, remove its first letter and append that letter to the end of the word.
-- Append the two letters `ma` to every modified word above.
-- Finally, append the letter `a` once for the first word, twice for the second word, three times for the third word, and so on.
+- Если слово начинается с гласного (`a`, `e`, `i`, `o`, `u`, в нижнем регистре или верхнем регистре), оставьте слово как есть.
+- В противном случае удалите первую букву и добавьте ее в конец слова.
+- Добавьте две буквы `ma` к каждому измененному слову.
+- Наконец, добавьте букву `a` один раз для первого слова, два раза для второго слова, три раза для третьего слова и так далее.
 
-Return the transformed words joined with single spaces.
+Возвращайте преображенные слова, соединенные с едиными пространствами.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= sentence.length <= 150`
-- `sentence` consists of English letters and single spaces only
-- Words are separated by exactly one space, with no leading or trailing spaces
+- `sentence` состоит только из английских букв и отдельных пространств.
+- Слова разделены точно одним пространством, без ведущих или задающих пространств.

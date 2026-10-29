@@ -1,0 +1,60 @@
+{
+  "id": "generate-parentheses",
+  "title": "81. Generate Parentheses",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/generate-parentheses/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "n = 3",
+      "output": "[\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]",
+      "explanation": "Each string uses 3 pairs of parentheses arranged so that every opening bracket is properly closed before the string ends."
+    },
+    {
+      "input": "n = 1",
+      "output": "[\"()\"]",
+      "explanation": "With only one pair, the only valid way to arrange them is \"()\"."
+    },
+    {
+      "input": "n = 2",
+      "output": "[\"(())\",\"()()\"]",
+      "explanation": "\"(())\" nests the two pairs, while \"()()\" places them consecutively."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\n\nclass Solution {\n    public List<String> generateParenthesis(int n) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def generateParenthesis(self, n: int) -> List[str]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> generateParenthesis(int n) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\n\npublic class Solution\n{\n    public List<string> GenerateParenthesis(int n)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn generate_parenthesis(n: i32) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc GenerateParenthesis(n int) []string {\n    return []string{}\n}",
+    "typescript": "export function generateParenthesis(n: number): string[] {\n    return [];\n}\n",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return string[]\n     */\n    public function generateParenthesis($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 1
+    },
+    {
+      "n": 2
+    },
+    {
+      "n": 3
+    },
+    {
+      "n": 4
+    }
+  ],
+  "functionName": "generateParenthesis",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Build each result from left to right while tracking the counts of open and closed parentheses.",
+    "Add an opening parenthesis while fewer than n have been used, and add a closing one only when it cannot make the prefix invalid."
+  ]
+}

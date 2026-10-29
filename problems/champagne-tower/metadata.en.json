@@ -1,0 +1,72 @@
+{
+  "id": "champagne-tower",
+  "title": "797. Champagne Tower",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/champagne-tower/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "poured = 1, query_row = 1, query_glass = 1",
+      "output": "\"0.0\"",
+      "explanation": "Only the top glass fills."
+    },
+    {
+      "input": "poured = 2, query_row = 1, query_glass = 1",
+      "output": "\"0.5\"",
+      "explanation": "Half the overflow reaches each glass below."
+    },
+    {
+      "input": "poured = 4, query_row = 2, query_glass = 1",
+      "output": "\"0.5\"",
+      "explanation": "Two levels of splitting leave half a cup."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String champagneTower(int poured, int query_row, int query_glass) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def champagneTower(self, poured: int, query_row: int, query_glass: int) -> str:\n        return \"\"",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string champagneTower(int poured, int query_row, int query_glass) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string ChampagneTower(int poured, int query_row, int query_glass) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn champagne_tower(poured: i32, query_row: i32, query_glass: i32) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc ChampagneTower(poured int, query_row int, query_glass int) string {\n    return \"\"\n}",
+    "typescript": "export function champagneTower(poured: number, query_row: number, query_glass: number): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param int $poured\n     * @param int $query_row\n     * @param int $query_glass\n     * @return string\n     */\n    public function champagneTower($poured, $query_row, $query_glass) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "poured": 1,
+      "query_row": 1,
+      "query_glass": 1
+    },
+    {
+      "poured": 2,
+      "query_row": 1,
+      "query_glass": 1
+    },
+    {
+      "poured": 4,
+      "query_row": 2,
+      "query_glass": 1
+    }
+  ],
+  "functionName": "champagneTower",
+  "params": [
+    {
+      "name": "poured",
+      "type": "int"
+    },
+    {
+      "name": "query_row",
+      "type": "int"
+    },
+    {
+      "name": "query_glass",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "This is a portable adaptation: return the amount as a finite decimal string; the checker allows 1e-9 absolute plus 1e-5 relative error.",
+    "Simulate row by row, pushing half the excess of each full glass to its two children.",
+    "Cap the queried glass at 1.0 before formatting the answer."
+  ]
+}

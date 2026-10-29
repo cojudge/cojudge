@@ -1,6 +1,6 @@
 {
   "id": "longest-continuous-increasing-subsequence",
-  "title": "693. Longest Continuous Increasing Subsequence",
+  "title": "693. Наиболее длительное непрерывное возрастание",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/longest-continuous-increasing-subsequence/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,3,5,4,7]",
       "output": "3",
-      "explanation": "The run [1,3,5] has length 3; the later run [4,7] has length 2."
+      "explanation": "Пробег [1, 3, 5] имеет длину 3; более поздний пробег [4, 7] имеет длину 2."
     },
     {
       "input": "nums = [2,2,2,2,2]",
       "output": "1",
-      "explanation": "No adjacent pair increases, so the best is a single element."
+      "explanation": "Ни одна соседняя пара не увеличивается, поэтому лучшим является один элемент."
     },
     {
       "input": "nums = [1,3,5,7]",
       "output": "4",
-      "explanation": "The whole array is strictly increasing."
+      "explanation": "Весь массив строго увеличивается."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Only neighbors matter: extend the current run when nums[i] > nums[i-1], else restart at 1.",
-    "Keep the maximum run seen so far.",
-    "An empty array yields 0."
+    "Только соседи имеют значение: продлевайте текущий прогон, когда nums[i] > nums[i-1], иначе перезапустите на 1.",
+    "Максимальный пробег, который мы видим до сих пор.",
+    "Пустой массив дает 0."
   ]
 }

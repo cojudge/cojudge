@@ -1,10 +1,10 @@
-You are given an integer array `deck` where each entry is the value written on one card. Decide whether the whole deck can be split into groups satisfying all of these rules:
+Вам дается целочисленный массив `deck`, где каждая запись является значением, записанным на одной карте.Решите, можно ли разделить всю колоду на группы, удовлетворяющие всем этим правилам:
 
-- Every group contains the same number of cards `X`, with `X >= 2`.
-- All cards inside a single group show the same value.
+- Каждая группа содержит одинаковое количество карт `X` с `X >= 2`.
+- Все карты внутри одной группы имеют одинаковое значение.
 
-Return `true` if such a split exists, otherwise `false`.
+Возвращайте `true`, если такое разделение существует, иначе `false`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= deck.length <= 10^4`
 - `0 <= deck[i] < 10^4`

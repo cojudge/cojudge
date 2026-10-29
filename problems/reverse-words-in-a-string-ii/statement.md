@@ -1,8 +1,8 @@
-This is an offline adaptation of an in-place task. The original asks you to reverse the order of words inside a character array without extra space. Here you receive the text as a string and return a new string with the words in reverse order.
+Это офлайн-адаптация задачи на месте. Оригинал просит обратить порядок слов внутри массива символов без дополнительного пространства. Здесь вы получаете текст в виде строки и возвращаете новую строку со словами в обратном порядке.
 
-Words are separated by single spaces, with no leading or trailing spaces. Keep every word intact and join them with single spaces in the new order.
+Слова разделены единичными пространствами, без передних или заднепроходных пространств. Держите каждое слово неповрежденным и присоединяйте к ним единичные пространства в новом порядке.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 10^4`
-- `s` holds letters and single spaces between words.
-- No leading or trailing spaces appear.
+- `s` содержит буквы и отдельные промежутки между словами.
+- Не появляются ни ведущие, ни задающие пространства.

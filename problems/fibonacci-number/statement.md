@@ -1,6 +1,6 @@
-The Fibonacci progression starts with 0 and 1, and every later term is the sum of the two preceding ones: 0, 1, 1, 2, 3, 5, 8, 13, and so on. Formally, F(0) = 0, F(1) = 1, and F(n) = F(n-1) + F(n-2) for n above 1.
+Прогрессия Фибоначчи начинается с 0 и 1, и каждый более поздний термин является суммой двух предыдущих: 0, 1, 1, 2, 3, 5, 8, 13 и т. д. Формально F(0) = 0, F(1) = 1 и F(n) = F(n-1) + F(n-2) для n выше 1.
 
-Given `n`, return F(n).
+С учетом `n`, возвращаем F(n).
 
-**Constraints:**
+**Ограничения:**
 - `0 <= n <= 30`

@@ -1,6 +1,6 @@
-You are handed a string `s`. Decide whether removing at most one character — either none at all or exactly one at any position — can leave behind a string that reads identically forward and backward. Return `true` when the input is already mirror-symmetric or becomes so after a single deletion, and `false` otherwise.
+Вам вручается строка `s`. Решите, может ли удаление максимум одного символа - либо вообще ни одного, либо точно одного в любой позиции - оставить за строкой, которая читается одинаково вперед и назад. Возврат `true`, когда вход уже зеркально-симметричен или становится таковым после одного удаления, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ s.length ≤ 10^5
-- s consists of lowercase English letters.
+- s состоит из английских букв нижнего регистра.

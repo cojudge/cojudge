@@ -1,6 +1,6 @@
-You are given an array `nums` containing only positive values and a positive threshold `target`. Look at all contiguous blocks inside `nums`. Determine the shortest block length whose elements add up to at least `target`. When no block reaches the threshold, return 0.
+Вы получаете массив `nums`, содержащий только положительные значения и положительный порог `target`. Посмотрите на все смежные блоки внутри `nums`. Определите самую короткую длину блока, элементы которого складываются по меньшей мере в `target`. Когда ни один блок не достигает порога, верните 0.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ target ≤ 10^9
 - 1 ≤ nums.length ≤ 10^5

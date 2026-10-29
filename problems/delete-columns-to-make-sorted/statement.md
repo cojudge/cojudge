@@ -1,10 +1,10 @@
-Count the grid columns that break top-to-bottom order.
+Подсчитайте столбцы сетки, которые нарушают порядок сверху вниз.
 
-The input strings all share one length, so they form rows of a grid. A column is fine when its letters never decrease from the first row to the last; otherwise that whole column must be removed. Columns are judged independently of each other.
+Все входные строки имеют одну длину, поэтому они образуют ряды сетки. Колонка хороша, когда ее буквы никогда не уменьшаются с первой строки до последней; в противном случае весь столбец должен быть удален. Колонки оцениваются независимо друг от друга.
 
-Given the row array `strs`, return how many columns need removal.
+Учитывая массив строк `strs`, верните, сколько столбцов нужно удалить.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= strs.length <= 100`
 - `1 <= strs[i].length <= 1000`
-- All rows share the same length and hold lowercase English letters.
+- Все строки имеют одинаковую длину и содержат строчные английские буквы.

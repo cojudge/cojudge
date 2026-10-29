@@ -1,9 +1,9 @@
-Assemble the latest valid clock time from four digit tiles.
+Соберите последнее действительное время часов из четырех цифр.
 
-A 24-hour time looks like `"HH:MM"` with hours from `00` to `23` and minutes from `00` to `59`. You must use each of the four given digits exactly once. When several valid times exist, keep the latest one; when none exists, return the empty string.
+Время 24-час выглядит как `"HH:MM"` с часами от `00` до `23` и минутами от `00` до `59`. Вы должны использовать каждую из четырех заданных цифр ровно один раз. Когда существует несколько действительных раз, сохраняйте последнюю; когда ее нет, верните пустую строку.
 
-Given `arr` of four digits, return the best time or `""`.
+Если `arr` состоит из четырех цифр, то возвращайте лучшее время или `""`.
 
-**Constraints:**
+**Ограничения:**
 - `arr.length == 4`
 - `0 <= arr[i] <= 9`

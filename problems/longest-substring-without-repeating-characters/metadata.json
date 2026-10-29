@@ -1,6 +1,6 @@
 {
   "id": "longest-substring-without-repeating-characters",
-  "title": "50. Longest Substring Without Repeating Characters",
+  "title": "50. Самая длинная подложка без повторяющихся символов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/longest-substring-without-repeating-characters/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s=\"abcabcbb\"",
       "output": "3",
-      "explanation": "The answer is \"abc\" with length 3."
+      "explanation": "Ответ - \"abc\" с длиной 3."
     },
     {
       "input": "s=\"bbbbb\"",
       "output": "1",
-      "explanation": "The answer is \"b\" with length 1."
+      "explanation": "Ответ: «b» с длиной 1."
     },
     {
       "input": "s=\"pwwkew\"",
       "output": "3",
-      "explanation": "The answer is \"wke\" with length 3."
+      "explanation": "Ответ: «Wke» с длиной 3."
     }
   ],
   "starterCode": {
@@ -60,6 +60,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use a sliding window with a character index map to track the latest position of each character. Move the left bound when you encounter a repeat to maintain a window with all unique characters."
+    "Используйте раздвижное окно с картой индекса символов для отслеживания последней позиции каждого персонажа. Переместите левую границу, когда вы столкнетесь с повтором, чтобы поддерживать окно со всеми уникальными символами."
   ]
 }

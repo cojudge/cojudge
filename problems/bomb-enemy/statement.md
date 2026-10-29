@@ -1,14 +1,14 @@
-You are given a rectangular board whose cells hold `'W'` (wall), `'E'`
-(enemy) or `'0'` (empty ground). Dropping a bomb on an empty cell destroys
-every enemy standing in the same row and column, with the blast stopped in
-each direction by the first wall (or the board edge).
+Вы получаете прямоугольную доску, клетки которой содержат `'W'` (стена), `'E'`.
+(враг) или `'0'` (пустая земля). Сбрасывание бомбы на пустую ячейку разрушает
+Каждый враг, стоящий в одном ряду и колонне, с остановкой взрыва
+Каждое направление по первой стене (или краю доски).
 
-Report the largest number of enemies any single bomb placement can destroy.
-When the board has no empty cell, the answer is zero.
+Сообщите о наибольшем количестве врагов, которое может уничтожить любое размещение бомбы.
+Когда на доске нет пустой ячейки, ответ равен нулю.
 
-**Type note:** the board arrives as a 2D char array; in Rust it is passed as
-one string holding the JSON-encoded board.
+** Примечание к типу: ** доска прибывает в виде массива 2D-угольника; в Rust она передается в виде
+Одна строка, держащая закодированную JSON доску.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= grid.length, grid[i].length <= 50`
-- Each cell is one of `'W'`, `'E'`, `'0'`
+- Каждая ячейка `'W'`, `'E'`, `'0'`

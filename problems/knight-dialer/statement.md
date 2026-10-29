@@ -1,6 +1,6 @@
-A chess knight moves on a phone pad laid out as `1 2 3 / 4 5 6 / 7 8 9 / * 0 #`. From a digit it jumps in the usual L shape; `*` and `#` are never used, and `5` has no outgoing jump.
+Шахматный рыцарь движется по телефонной площадке, выложенной как `1 2 3 / 4 5 6 / 7 8 9 / * 0 #`. Из цифры он прыгает в обычной форме L; `*` и `#` никогда не используются, а `5` не имеет исходящего прыжка.
 
-Count how many distinct digit strings of length `n` the knight can trace, starting from any of the ten digits. Return the count modulo `1_000_000_007`.
+Подсчитайте, сколько различных цифровых струн длины `n` может проследить рыцарь, начиная с любой из десяти цифр. Верните графу модулю `1_000_000_007`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 5000`

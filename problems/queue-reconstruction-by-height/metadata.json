@@ -1,6 +1,6 @@
 {
   "id": "queue-reconstruction-by-height",
-  "title": "480. Queue Reconstruction by Height",
+  "title": "480. Реконструкция очередей на высоте",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/queue-reconstruction-by-height/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]",
       "output": "[[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]",
-      "explanation": "Sorting tall-first then slotting each person at their k index rebuilds the line."
+      "explanation": "Сортировка сначала высокого, а затем выравнивание каждого человека по индексу k восстанавливает линию."
     },
     {
       "input": "people = [[6,0],[5,0],[4,0],[3,2],[2,2],[1,4]]",
       "output": "[[4,0],[5,0],[2,2],[3,2],[1,4],[6,0]]",
-      "explanation": "Shorter people slide into the gaps left by taller ones already placed."
+      "explanation": "Более короткие люди скользят в пробелы, оставленные более высокими, которые уже размещены."
     }
   ],
   "starterCode": {
@@ -49,8 +49,8 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Order people by height descending, breaking ties by k ascending.",
-    "Insert each person at index k of the growing line; taller people already placed are exactly the ones each k counts.",
-    "Insertion into a list gives O(n^2) time, fine for n up to 2000."
+    "Порядок людей по высоте нисходит, разрывая связи по k восходит.",
+    "Вставьте каждого человека в указатель k растущей линии; более высокие люди, уже размещенные, являются именно теми, кого считает каждый k.",
+    "Включение в список дает время O (n^2), отличное для n до 2000."
   ]
 }

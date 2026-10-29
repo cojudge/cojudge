@@ -1,13 +1,13 @@
-Consider a family of binary rows built step by step. The first row holds a
-single `0`. To form each later row, every symbol of the previous row is
-expanded: each `0` turns into the pair `01` and each `1` turns into the pair
-`10`. So the rows grow as `0`, then `01`, then `0110`, then `01101001`,
-and so on, with row `n` holding `2^(n-1)` entries.
+Рассмотрим семейство двоичных рядов, построенных шаг за шагом.
+Одиночный `0`. Чтобы сформировать каждую позднюю строку, каждый символ предыдущей строки
+каждый `0` превращается в пару `01` и каждый `1` превращается в пару
+`10`. Так что ряды растут как `0`, затем `01`, затем `0110`, затем `01101001`,
+и так далее, с строкой `n`, содержащей записи `2^(n-1)`.
 
-You are given a row index `n` (counting from 1) and a position `k`
-(counting from 1 inside that row). Report the symbol that appears at that
-spot.
+Вы получаете индекс строки `n` (с учетом от 1) и позицию `k`.
+(считая от 1 внутри этой строки). Сообщите о символе, который появляется в этой строке.
+пятно.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 30`
 - `1 <= k <= 2^(n-1)`

@@ -1,6 +1,6 @@
 {
   "id": "minimum-index-sum-of-two-lists",
-  "title": "638. Minimum Index Sum of Two Lists",
+  "title": "638. Минимальная сумма индексов двух списков",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/minimum-index-sum-of-two-lists/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "list1 = [\"Shogun\",\"Tapioca Express\",\"Burger King\",\"KFC\"], list2 = [\"Piatti\",\"The Grill at Torrey Pines\",\"Hungry Hunter Steakhouse\",\"Shogun\"]",
       "output": "[\"Shogun\"]",
-      "explanation": "Only Shogun appears in both."
+      "explanation": "В обоих случаях появляется только сёгун."
     },
     {
       "input": "list1 = [\"Shogun\",\"Tapioca Express\",\"Burger King\",\"KFC\"], list2 = [\"KFC\",\"Shogun\",\"Burger King\"]",
       "output": "[\"Shogun\"]",
-      "explanation": "Sums are 3, 4 and 4, so Shogun wins alone."
+      "explanation": "Суммы 3, 4 и 4, поэтому Сёгун выигрывает в одиночку."
     },
     {
       "input": "list1 = [\"happy\",\"sad\",\"good\"], list2 = [\"sad\",\"happy\",\"good\"]",
       "output": "[\"sad\",\"happy\"]",
-      "explanation": "Sad and happy both sum to 1."
+      "explanation": "Грустные и счастливые обе суммы 1."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Index the second list for O(1) lookups.",
-    "Scan the first list, adding indices for shared names and tracking the smallest sum.",
-    "Collect every shared name reaching that minimum."
+    "Индекс второй список для поиска O (1).",
+    "Сканируйте первый список, добавляя индексы для общих имен и отслеживая наименьшую сумму.",
+    "Соберите каждое общее имя, достигающее этого минимума."
   ]
 }

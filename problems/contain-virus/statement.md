@@ -1,13 +1,13 @@
-A laboratory floor is modeled as a binary grid `isInfected`, where `0` means a healthy cell and `1` means an infected cell. One wall can be raised on the shared edge between two neighboring cells that touch up, down, left, or right.
+Лабораторный пол моделируется как двоичная сетка `isInfected`, где `0` означает здоровую клетку, а `1` означает инфицированную клетку.Одну стенку можно поднять на совместном краю между двумя соседними клетками, которые касаются вверх, вниз, влево или вправо.
 
-Time advances in days. Each morning you pick exactly one connected block of infected cells and seal it completely: every edge touching a healthy cell gets a wall, and that block never spreads again. Each night every unsealed infected block copies itself into all four neighbors unless a wall or the grid border stops it.
+Каждое утро вы выбираете ровно один подключенный блок инфицированных клеток и запечатываете его полностью: каждый край, касающийся здоровой клетки, получает стену, и этот блок никогда не распространяется снова. Каждую ночь каждый незапечатанный инфицированный блок копирует себя во всех четырех соседей, если стена или граница сетки не останавливает его.
 
-On each day you must pick the block that endangers the most distinct healthy cells for the coming night; the task guarantees this choice is never tied while spreading is still possible. Sealed cells are frozen and healthy cells that get touched become infected for the next day.
+Каждый день вы должны выбирать блок, который угрожает самым различным здоровым клеткам на предстоящую ночь; задача гарантирует, что этот выбор никогда не будет связан, в то время как распространение все еще возможно. Запечатанные клетки заморожены, а здоровые клетки, к которым прикасаются, заражаются на следующий день.
 
-Return the total number of walls raised until no unsealed infection can reach a healthy cell. If the whole floor ends up infected, return the walls raised along the way.
+Верните общее количество стен, поднятых до тех пор, пока никакая незапечатанная инфекция не достигнет здоровой клетки. Если весь пол окажется зараженным, верните стены, поднятые по пути.
 
-**Constraints:**
+**Ограничения:**
 - `m == isInfected.length`, `n == isInfected[i].length`
 - `1 <= m, n <= 50`
-- Each entry is `0` or `1`.
-- While spreading continues, one block always threatens strictly more healthy cells than any other.
+- Каждая запись `0` или `1`.
+- Хотя распространение продолжается, один блок всегда угрожает более здоровым клеткам, чем любой другой.

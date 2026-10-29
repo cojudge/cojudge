@@ -1,4 +1,5 @@
-import { generateJavaRunner, generateJavaRunnerWithMarker, generateJavaClassSolution, generateJavaInteractiveRunner, generateJavaInteractiveRunnerWithMarker, javaJudgeClass, javaImage, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from "$lib/utils/javaUtil";
+import { javaImage } from '$lib/server/runtimeImages';
+import { generateJavaRunner, generateJavaRunnerWithMarker, generateJavaClassSolution, generateJavaInteractiveRunner, generateJavaInteractiveRunnerWithMarker, javaJudgeClass, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from "$lib/utils/javaUtil";
 import { getInteractive, judgeFileForKind } from "$lib/utils/interactiveUtil";
 import { extractOperations } from "$lib/utils/util";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";

@@ -1,4 +1,4 @@
-Describe temperature `t` in degrees Celsius: `"Freezing"` below 0, `"Cold"` from 0 up to (but not including) 15, `"Warm"` from 15 up to (but not including) 25, and `"Hot"` at 25 and above.
+Опишите температуру `t` в градусах Цельсия: `"Freezing"` ниже 0, `"Cold"` от 0 до (но не включая) 15, `"Warm"` от 15 до (но не включая) 25 и `"Hot"` в 25 и выше.
 
-**Constraints:**
+**Ограничения:**
 - ``-100 <= t <= 100``

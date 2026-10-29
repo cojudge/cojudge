@@ -1,7 +1,7 @@
-A word uses capitals correctly when one of three patterns holds: every letter is uppercase (e.g. `"USA"`), every letter is lowercase (e.g. `"leetcode"`), or only the first letter is uppercase and the rest are lowercase (e.g. `"Google"`).
+Слово правильно использует заглавные буквы, когда удерживает один из трех шаблонов: каждая буква имеет верхний регистр (например, `"USA"`), каждая буква имеет нижний регистр (например, `"leetcode"`), или только первая буква имеет верхний регистр, а остальные являются нижним регистром (например, `"Google"`).
 
-Given `word`, return `true` when its capitalization follows one of these patterns and `false` otherwise.
+Учитывая `word`, возвращайте `true`, когда его капитализация следует одной из этих моделей, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= word.length <= 100`
-- `word` consists of English letters
+- `word` состоит из английских букв.

@@ -1,6 +1,6 @@
 {
   "id": "cut-off-trees-for-golf-event",
-  "title": "694. Cut Off Trees for Golf Event",
+  "title": "694. Срубить деревья для гольфа",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/cut-off-trees-for-golf-event/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "forest = [[1,2,3],[0,0,4],[7,6,5]]",
       "output": "6",
-      "explanation": "Visit heights 2,3,4,5,6,7 in order; the shortest walk uses 6 steps."
+      "explanation": "Посещение высот 2, 3, 4, 5, 6, 7 в порядке; самая короткая прогулка использует шаги 6."
     },
     {
       "input": "forest = [[1,2,3],[0,0,0],[7,6,5]]",
       "output": "-1",
-      "explanation": "The middle wall disconnects the lower trees, so the tour is impossible."
+      "explanation": "Средняя стена отсоединяет нижние деревья, поэтому экскурсия невозможна."
     },
     {
       "input": "forest = [[2,3,4],[0,0,5],[8,7,6]]",
       "output": "6",
-      "explanation": "Start on height 2, then walk to 3,4,5,6,7,8 with 6 moves."
+      "explanation": "Начните с высоты 2, затем перейдите в 3, 4, 5, 6, 7, 8 с ходами 6."
     }
   ],
   "starterCode": {
@@ -52,8 +52,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Collect every cell above 1 and sort those trees by height; that is the visiting order.",
-    "Between consecutive targets run breadth-first search avoiding 0 cells.",
-    "Adaptation note: forest grids use int_array_2d where 0 blocks, 1 is open ground, and values above 1 are tree heights to cut in ascending order."
+    "Соберите каждую ячейку выше 1 и сортируйте эти деревья по высоте.",
+    "Между последовательными мишенями выполняется поиск по ширине, избегая ячеек 0.",
+    "Примечание по адаптации: лесные сетки используют int_array_2d, где блоки 0, 1 находятся на открытом грунте, а значения выше 1 - это высота деревьев, чтобы сократить в порядке возрастания."
   ]
 }

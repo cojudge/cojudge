@@ -1,10 +1,10 @@
-Build the shortest string `s` such that every entry of `words` appears in `s` as a suffix of a `#`-terminated block. In other words, `s` is a concatenation of pieces `word + "#"`, and each input word must equal the tail of at least one piece (ignoring the `#`).
+Постройте самую короткую строку `s` так, чтобы каждая запись `words` появлялась в `s` как суффикс блока, оконченного `#`. Другими словами, `s` представляет собой конкатенацию частей `word + "#"`, и каждое вводимое слово должно равняться хвосту по меньшей мере одной части (игнорируя `#`).
 
-If one word is the ending of another, the shorter one comes for free. For example, `["me","time"]` needs only `"time#"` of length 5.
+Если одно слово является окончанием другого, то более короткое приходит бесплатно.Например, `["me","time"]` нужен только `"time#"` длины 5.
 
-Return the minimum possible length of `s`.
+Возврат минимально возможной длины `s`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= words.length <= 2000`
 - `1 <= words[i].length <= 7`
-- Each word holds lowercase English letters.
+- Каждое слово содержит английские буквы.

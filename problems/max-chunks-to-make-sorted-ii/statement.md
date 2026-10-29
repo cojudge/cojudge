@@ -1,7 +1,7 @@
-You are given an integer array `arr` that may contain duplicates. Cut it into the greatest possible number of contiguous blocks (chunks) so that sorting each block separately and then gluing the blocks back together produces the fully sorted array.
+Вы получаете целочисленный массив `arr`, который может содержать дубликаты. Разрежьте его на максимально возможное количество смежных блоков (кусков), чтобы сортировка каждого блока по отдельности, а затем склеивание блоков обратно вместе производило полностью отсортированный массив.
 
-Return how many blocks that finest valid split contains.
+Верните, сколько блоков содержит лучший действительный раскол.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= arr.length <= 2000`
 - `0 <= arr[i] <= 10^8`

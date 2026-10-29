@@ -1,8 +1,8 @@
-You are given distinct integers `arr`. A factored binary tree is a binary tree where every node value belongs to `arr`, and each non-leaf node's value equals the product of its two children.
+Вам даны отдельные целые числа `arr`. Коэффициентированное двоичное дерево - это двоичное дерево, где каждое значение узла принадлежит `arr`, а значение каждого нелистового узла равняется продукту его двух потомков.
 
-Count all such trees (order of the two children matters, so swapping left and right creates a different tree). Return the count modulo 1,000,000,007.
+Подсчитайте все такие деревья (порядок двух потомков имеет значение, поэтому замена налево и направо создает другое дерево).Возвратите граф модуло 1, 000, 000, 007.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= arr.length <= 1000`
 - `2 <= arr[i] <= 10^9`
-- All values are distinct.
+- Все ценности различны.

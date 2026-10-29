@@ -1,10 +1,10 @@
-There are `n` gas stations arranged in a circle. `gas[i]` is the fuel available at station `i`, and `cost[i]` is the fuel needed to drive from station `i` to station `(i + 1) mod n`.
+Заправочные станции `n` расположены по кругу. `gas[i]` - это топливо, доступное на станции `i`, а `cost[i]` - это топливо, необходимое для движения от станции `i` до станции `(i + 1) mod n`.
 
-You begin with an empty tank. Return the index from which you can complete one clockwise circuit without the tank becoming negative. If no such station exists, return `-1`. If a valid starting station exists, it is guaranteed to be unique.
+Вы начинаете с пустого бака. Возвращаете индекс, из которого вы можете завершить один круг по часовой стрелке без того, чтобы бак стал отрицательным. Если такой станции не существует, возвращайте `-1`. Если действительная стартовая станция существует, она гарантированно будет уникальной.
 
-**Constraints:**
+**Ограничения:**
 
 - `gas.length == cost.length`
 - `1 <= gas.length <= 100000`
 - `0 <= gas[i], cost[i] <= 10000`
-- If a valid starting station exists, it is unique.
+- Если и существует действующая стартовая станция, то она уникальна.

@@ -1,6 +1,6 @@
 {
   "id": "rectangle-overlap",
-  "title": "834. Rectangle Overlap",
+  "title": "834. прямоугольное перекрытие",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/rectangle-overlap/",
   "category": "math",
@@ -8,12 +8,12 @@
     {
       "input": "rec1 = [0,0,2,2], rec2 = [1,1,3,3]",
       "output": "true",
-      "explanation": "The shared square [1,2]x[1,2] has area 1."
+      "explanation": "Общий квадрат [1, 2]x [1, 2] имеет площадь 1."
     },
     {
       "input": "rec1 = [0,0,1,1], rec2 = [1,0,2,1]",
       "output": "false",
-      "explanation": "Edge contact is not an overlap."
+      "explanation": "Контакт края не является перекрытием."
     },
     {
       "input": "rec1 = [0,0,1,1], rec2 = [2,2,3,3]",
@@ -87,8 +87,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Project both rectangles onto the x-axis and the y-axis; a real overlap needs a positive-length intersection on both axes.",
-    "Strict inequalities matter: use < rather than <= so edge and corner touches return false.",
-    "No geometry beyond four comparisons is required."
+    "Проект обоих прямоугольников на оси x и оси y; реальное перекрытие требует пересечения положительной длины на обеих осях.",
+    "Строгое неравенство имеет значение: используйте <, а не <=, поэтому краевые и угловые прикосновения возвращаются ложными.",
+    "Не требуется никакой геометрии, кроме четырех сравнений."
   ]
 }

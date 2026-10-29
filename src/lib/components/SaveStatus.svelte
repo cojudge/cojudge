@@ -5,14 +5,14 @@
 </script>
 
 {#if $saveStatus !== 'idle'}
-    <Tooltip text={`${$saveStatus === 'saving' ? 'Saving' : 'Saved'} to local storage`}>
+    <Tooltip text={$saveStatus === 'saving' ? 'Сохранение в локальное хранилище' : 'Сохранено в локальном хранилище'}>
         <span 
             class="save-status" 
             class:saving={$saveStatus === 'saving'}
             class:saved={$saveStatus === 'saved'}
             transition:fade={{ duration: 200 }}
         >
-            {$saveStatus === 'saving' ? 'Saving' : 'Saved'}
+            {$saveStatus === 'saving' ? 'Сохранение' : 'Сохранено'}
         </span>
     </Tooltip>
 {/if}

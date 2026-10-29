@@ -1,13 +1,13 @@
-You are handed the root of a binary search tree, where every left descendant
-is smaller than its parent and every right descendant is larger. Look at all
-pairs of distinct nodes and measure the absolute gap between their values.
-Return the smallest gap you can find.
+Вам вручают корень двоичного дерева поиска, где каждый левый потомок
+Он меньше своего родителя, и каждый правый потомок больше.
+пары различных узлов и измеряют абсолютный разрыв между их значениями.
+Верните наименьший разрыв, который вы можете найти.
 
-Because the values arrive in sorted order during an in-order walk, the
-closest pair in value must sit next to each other in that order, so a single
-pass is enough.
+Поскольку ценности приходят в сортированном порядке во время прогулки в порядке,
+Ближайшая пара по стоимости должна находиться рядом друг с другом в таком порядке, поэтому одна пара должна находиться рядом друг с другом.
+Пропуска достаточно.
 
-**Constraints:**
-- The tree holds between 2 and 100 nodes.
+**Ограничения:**
+- Дерево находится между узлами 2 и 100.
 - `0 <= Node.val <= 10^5`
-- The input is guaranteed to satisfy search-tree ordering.
+- Ввод гарантированно удовлетворяет заказу дерева поиска.

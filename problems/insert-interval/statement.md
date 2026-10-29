@@ -1,10 +1,10 @@
-Insert a new interval into a list of non-overlapping, start-sorted intervals and merge if necessary.
+Включить новый интервал в список неперекрывающихся, сортированных по началу интервалов и при необходимости слиться.
 
-**Constraints:**
+**Ограничения:**
 
 - 0 ≤ intervals.length ≤ 10^4
 - intervals[i].length == 2
 - 0 ≤ starti ≤ endi ≤ 10^5
-- intervals is sorted by starti in ascending order.
+- Интервалы сортируются по стартам в порядке возрастания.
 - newInterval.length == 2
 - 0 ≤ start ≤ end ≤ 10^5

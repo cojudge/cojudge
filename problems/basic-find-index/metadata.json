@@ -1,18 +1,18 @@
 {
   "id": "basic-find-index",
-  "title": "21. Find Index",
+  "title": "21. Найти индекс",
   "difficulty": "Easy",
   "category": "arrays",
   "examples": [
     {
       "input": "nums = [5,3,7], target = 3",
       "output": "1",
-      "explanation": "3 sits at index 1."
+      "explanation": "3 находится в индексе 1."
     },
     {
       "input": "nums = [5,3,7], target = 9",
       "output": "-1",
-      "explanation": "9 never appears."
+      "explanation": "9 никогда не появляется."
     }
   ],
   "starterCode": {
@@ -52,7 +52,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Loop with an index variable.",
-    "Return immediately when you find a match; return -1 after the loop."
+    "Петля с переменной индекса.",
+    "Возвращайтесь сразу же, когда найдете совпадение; возвращайте -1 после петли."
   ]
 }

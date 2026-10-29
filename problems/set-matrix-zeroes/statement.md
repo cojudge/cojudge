@@ -1,8 +1,8 @@
-You are shown an `m x n` table of integers. Wherever a cell holds `0`, change every cell in that same row and every cell in that same column to `0`.
+Вам показана таблица целых чисел `m x n`. Где бы ячейка не держала `0`, измените каждую ячейку в той же строке и каждую ячейку в той же колонке на `0`.
 
-Hand back the table once all such changes have been applied together.
+Возвращайтесь к таблице, как только все эти изменения будут применены вместе.
 
-**Constraints:**
+**Ограничения:**
 - `m == matrix.length`
 - `n == matrix[i].length`
 - `1 <= m, n <= 200`

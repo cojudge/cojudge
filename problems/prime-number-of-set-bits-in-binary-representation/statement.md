@@ -1,7 +1,7 @@
-Given two integers `left` and `right` with `left <= right`, count how many integers `x` in the closed interval `[left, right]` have a prime number of `1` bits in their binary form.
+Учитывая два целых числа `left` и `right` с `left <= right`, посчитайте, сколько целых чисел `x` в закрытом интервале `[left, right]` имеют простое число битов `1` в их двоичной форме.
 
-The bit count of `x` is the number of ones when `x` is written in base two; for instance `21 = 10101` has three such bits.
+Количество битов `x` — это число битов, когда `x` записывается в основании два; например, `21 = 10101` имеет три таких бита.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= left <= right <= 10^6`
 - `0 <= right - left <= 10^4`

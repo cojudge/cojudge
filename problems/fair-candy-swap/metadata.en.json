@@ -1,0 +1,68 @@
+{
+  "id": "fair-candy-swap",
+  "title": "879. Fair Candy Swap",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/fair-candy-swap/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "aliceSizes = [1,1], bobSizes = [2,2]",
+      "output": "[1,2]",
+      "explanation": "After swapping a 1 for a 2, both totals equal 3."
+    },
+    {
+      "input": "aliceSizes = [1,2], bobSizes = [2,3]",
+      "output": "[1,2]",
+      "explanation": "After swapping a 1 for a 2, both totals equal 4."
+    },
+    {
+      "input": "aliceSizes = [2], bobSizes = [1,3]",
+      "output": "[2,3]",
+      "explanation": "After swapping the 2 for the 3, both totals equal 3."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] fairCandySwap(int[] aliceSizes, int[] bobSizes) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def fairCandySwap(self, aliceSizes: List[int], bobSizes: List[int]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> fairCandySwap(vector<int>& aliceSizes, vector<int>& bobSizes) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] FairCandySwap(int[] aliceSizes, int[] bobSizes) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn fair_candy_swap(alice_sizes: Vec<i32>, bob_sizes: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc FairCandySwap(aliceSizes []int, bobSizes []int) []int {\n    \n}",
+    "typescript": "export function fairCandySwap(aliceSizes: number[], bobSizes: number[]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $aliceSizes\n     * @param int[] $bobSizes\n     * @return int[]\n     */\n    public function fairCandySwap($aliceSizes, $bobSizes) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "aliceSizes": "[1,1]",
+      "bobSizes": "[2,2]"
+    },
+    {
+      "aliceSizes": "[1,2]",
+      "bobSizes": "[2,3]"
+    },
+    {
+      "aliceSizes": "[2]",
+      "bobSizes": "[1,3]"
+    },
+    {
+      "aliceSizes": "[1,2,5]",
+      "bobSizes": "[2,4]"
+    }
+  ],
+  "functionName": "fairCandySwap",
+  "params": [
+    {
+      "name": "aliceSizes",
+      "type": "int_array"
+    },
+    {
+      "name": "bobSizes",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "If Alice leads by D in total, her box must exceed Bob's box by exactly D / 2.",
+    "Put Bob's sizes in a hash set and test each of Alice's boxes against the needed partner."
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "id": "longest-increasing-path-in-a-matrix",
-  "title": "133. Longest Increasing Path in a Matrix",
+  "title": "133. Самый длинный путь в матрице",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/longest-increasing-path-in-a-matrix/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "matrix = [[9,9,4],[6,6,8],[2,1,1]]",
       "output": "4",
-      "explanation": "One longest path is 1 -> 2 -> 6 -> 9."
+      "explanation": "Один из самых длинных путей - 1 -> 2 -> 6 -> 9."
     },
     {
       "input": "matrix = [[3,4,5],[3,2,6],[2,2,1]]",
       "output": "4",
-      "explanation": "One longest increasing path is 3 -> 4 -> 5 -> 6, which has length 4."
+      "explanation": "Самый длинный путь увеличения - 3 -> 4 -> 5 -> 6, который имеет длину 4."
     },
     {
       "input": "matrix = [[1]]",
       "output": "1",
-      "explanation": "The only cell is 1, so the longest increasing path length is 1."
+      "explanation": "Единственной ячейкой является 1, поэтому самой длинной увеличивающейся длиной пути является 1."
     }
   ],
   "starterCode": {
@@ -55,7 +55,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Treat each move from a lower value to a higher value as an edge in a directed acyclic graph.",
-    "Memoized DFS or a layer-by-layer topological traversal visits each cell only a constant number of times."
+    "Относитесь к каждому движению от более низкого значения к более высокому значению как к краю в направленном ациклическом графе.",
+    "Запомненный DFS или послойный топологический обход посещает каждую клетку только постоянное количество раз."
   ]
 }

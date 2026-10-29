@@ -1,8 +1,8 @@
-You are handed the daily prices of one stock as an array `prices`, where `prices[i]` is the price on day `i`. You may complete at most `k` round-trip trades: each trade means buying one share on some day and selling it on a later day. You cannot hold more than one share at a time (sell before buying again).
+Вам вручают ежедневные цены одной акции в виде массива `prices`, где `prices[i]` является ценой на день `i`. Вы можете завершить максимум сделки `k` в оба конца: каждая сделка означает покупку одной акции в какой-то день и продажу ее на более поздний день. Вы не можете держать более одной акции за раз (продать, прежде чем покупать снова).
 
-Compute the greatest total profit achievable. If no profitable trade exists, the answer is 0.
+Вычислите наибольшую общую прибыль, достижимую. Если прибыльной торговли не существует, ответ - 0.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= k <= 100`
 - `0 <= prices.length <= 1000`
 - `0 <= prices[i] <= 1000`

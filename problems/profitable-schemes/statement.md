@@ -1,8 +1,8 @@
-A gang wants to run criminal schemes. There are `group.length` schemes; scheme `i` needs `group[i]` members and yields `profit[i]` coins. You have at most `n` members in total, and each scheme can be used at most once.
+Банда хочет управлять преступными схемами. Есть схемы `group.length`; схема `i` нуждается в членах `group[i]` и дает монеты `profit[i]`. У вас в общей сложности есть члены `n`, и каждая схема может быть использована максимум один раз.
 
-A plan is any collection of schemes whose member requirement fits within `n` people and whose total profit reaches at least `minProfit`. Count all such plans, including the choice of running nothing when it qualifies. Return the count modulo `10^9 + 7`.
+План - это любой набор схем, требование к члену которых соответствует людям `n` и общая прибыль которых достигает, по крайней мере, `minProfit`. Подсчитайте все такие планы, включая выбор ничего не запускающего, когда он квалифицируется. Верните графу модулю `10^9 + 7`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 100`
 - `0 <= minProfit <= 100`
 - `1 <= group.length <= 100`

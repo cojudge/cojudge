@@ -1,15 +1,15 @@
-You receive `n` jobs numbered `0` through `n - 1`, packed as a 2D integer table `tasks` where `tasks[i] = [enqueueTimei, processingTimei]`: job `i` shows up at moment `enqueueTimei` and needs `processingTimei` units to finish.
+Вы получаете задания `n`, пронумерованные `0` через `n - 1`, упакованные в виде 2D-целочисленной таблицы `tasks`, где `tasks[i] = [enqueueTimei, processingTimei]`: работа `i` появляется в данный момент `enqueueTimei` и нуждается в единицах `processingTimei` для завершения.
 
-A single-thread processor handles at most one job at a time under these rules:
+Однопоточный процессор обрабатывает максимум одну работу за раз в соответствии с этими правилами:
 
-- with nothing waiting while idle, it simply waits;
-- once idle with work waiting, it takes the waiting job with the briefest processing span, using the smaller label to break ties;
-- a begun job runs to completion with no pause;
-- finishing one job, it may begin the next immediately with no gap.
+- Когда ничего не ждет, пока он простаивает, он просто ждет.
+- когда вы простаиваете с ожиданием работы, требуется работа ожидания с самым коротким интервалом обработки, используя меньшую этикетку для разрыва связей;
+- Начатая работа завершается без паузы;
+- Заканчивая одну работу, она может начать следующую сразу же без пробелов.
 
-List the labels in the sequence the processor handles them.
+Перечислите метки в последовательности, с которой обрабатывает их процессор.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= tasks.length <= 10^5`
 - `1 <= enqueueTimei, processingTimei <= 10^9`

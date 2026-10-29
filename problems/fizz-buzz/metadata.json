@@ -1,6 +1,6 @@
 {
   "id": "fizz-buzz",
-  "title": "485. Fizz Buzz",
+  "title": "485. Физза Базз",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/fizz-buzz/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "n = 3",
       "output": "[\"1\",\"2\",\"Fizz\"]",
-      "explanation": "Multiples of 3 become Fizz."
+      "explanation": "Несколько 3 становятся Fizz."
     },
     {
       "input": "n = 5",
       "output": "[\"1\",\"2\",\"Fizz\",\"4\",\"Buzz\"]",
-      "explanation": "Multiples of 5 become Buzz."
+      "explanation": "Несколько 5 становятся Buzz."
     },
     {
       "input": "n = 15",
       "output": "[\"1\",\"2\",\"Fizz\",\"4\",\"Buzz\",\"Fizz\",\"7\",\"8\",\"Fizz\",\"Buzz\",\"11\",\"Fizz\",\"13\",\"14\",\"FizzBuzz\"]",
-      "explanation": "Multiples of both 3 and 5 become FizzBuzz."
+      "explanation": "Несколько 3 и 5 становятся FizzBuzz."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Check divisibility by 3 and 5 first for the combined case.",
-    "Otherwise emit Fizz for multiples of 3 and Buzz for multiples of 5.",
-    "All other positions hold the decimal form of the index."
+    "Проверить делимость по 3 и 5 сначала для комбинированного случая.",
+    "В противном случае излучайте Fizz для кратных 3 и Buzz для кратных 5.",
+    "Все остальные позиции имеют десятичную форму индекса."
   ]
 }

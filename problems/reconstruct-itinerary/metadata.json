@@ -1,6 +1,6 @@
 {
   "id": "reconstruct-itinerary",
-  "title": "122. Reconstruct Itinerary",
+  "title": "122. Реконструировать маршрут",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/reconstruct-itinerary/",
   "category": "graph",
@@ -8,12 +8,12 @@
     {
       "input": "from = [\"MUC\",\"JFK\",\"SFO\",\"LHR\"], to = [\"LHR\",\"MUC\",\"SJC\",\"SFO\"]",
       "output": "[\"JFK\",\"MUC\",\"LHR\",\"SFO\",\"SJC\"]",
-      "explanation": "Starting from JFK, the itinerary travels to MUC, then LHR, then SFO, and finally SJC, using each ticket exactly once."
+      "explanation": "Начиная с JFK, маршрут отправляется в MUC, затем в LHR, затем в SFO и, наконец, в SJC, используя каждый билет ровно один раз."
     },
     {
       "input": "from = [\"JFK\",\"JFK\",\"SFO\",\"ATL\",\"ATL\"], to = [\"SFO\",\"ATL\",\"ATL\",\"JFK\",\"SFO\"]",
       "output": "[\"JFK\",\"ATL\",\"JFK\",\"SFO\",\"ATL\",\"SFO\"]",
-      "explanation": "Starting from JFK, the itinerary travels to ATL, back to JFK, then to SFO, to ATL, and finally to SFO, using each ticket exactly once."
+      "explanation": "Начиная с JFK, маршрут отправляется в ATL, обратно в JFK, затем в SFO, в ATL и, наконец, в SFO, используя каждый билет ровно один раз."
     }
   ],
   "starterCode": {
@@ -53,8 +53,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "View tickets as directed edges and the requested itinerary as an Eulerian trail from JFK.",
-    "Always consume the smallest available destination, but append an airport only after all of its outgoing tickets have been consumed.",
-    "Hierholzer's algorithm with a min-heap per departure airport produces the lexical minimum in O(E log E) time."
+    "Просмотр билетов в виде направленных краев и запрошенного маршрута в виде эйлеровской тропы от JFK.",
+    "Всегда потребляйте наименьшее доступное место назначения, но добавляйте аэропорт только после того, как все его исходящие билеты были потреблены.",
+    "Алгоритм Иерхольцера с минимальной кучей на аэропорт вылета производит лексический минимум во времени O (E log E)."
   ]
 }

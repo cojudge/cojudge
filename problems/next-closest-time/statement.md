@@ -1,8 +1,8 @@
-You are given a time string `time` in 24-hour format `"HH:MM"`.
+Вы получаете временную строку `time` в формате 24-час `"HH:MM"`.
 
-Using only the digits that already appear in `time` (each may be reused any number of times), form the next time strictly after `time` when read on a clock that wraps from `23:59` to `00:00`. The answer must itself be a valid time.
+Используя только цифры, которые уже появляются в `time` (каждый из них может быть повторно использован любое количество раз), формируйте следующий раз строго после `time` при чтении на часах, которые обертываются от `23:59` до `00:00`.
 
-Return that next time as `"HH:MM"`.
+Вернитесь в следующий раз как `"HH:MM"`.
 
-**Constraints:**
-- `time` matches `"HH:MM"` with `00 <= HH <= 23` and `00 <= MM <= 59`.
+**Ограничения:**
+- `time` соответствует `"HH:MM"` с `00 <= HH <= 23` и `00 <= MM <= 59`.

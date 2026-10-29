@@ -1,5 +1,5 @@
-Return how many times the single character `ch` appears in the string `s`. The match is case-sensitive.
+Верните, сколько раз одиночный персонаж `ch` появляется в строке `s`. Матч чувствителен к случаю.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= s.length <= 1000``
-- ``ch` is exactly one character`
+- `ch` — это один персонаж.

@@ -1,6 +1,6 @@
-You are given a positive integer `n`. Look at its binary representation without leading zeros.
+Вам дано положительное целое число `n`. Посмотрите на его двоичное представление без ведущих нулей.
 
-Whenever the representation holds at least two `1` bits, measure the distance between every pair of neighboring `1` bits, where distance means the difference of their bit positions (equivalently, the number of steps between them). Return the largest such distance. If fewer than two `1` bits appear, return `0`.
+Всякий раз, когда представление содержит по меньшей мере два бита `1`, измеряйте расстояние между каждой парой соседних битов `1`, где расстояние означает разницу их битовых позиций (эквивалентно, количество шагов между ними). Возвращайте наибольшее такое расстояние. Если появляется меньше двух битов `1`, возвращайте `0`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 10^9`

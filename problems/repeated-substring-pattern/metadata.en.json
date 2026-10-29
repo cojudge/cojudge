@@ -1,0 +1,57 @@
+{
+  "id": "repeated-substring-pattern",
+  "title": "526. Repeated Substring Pattern",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/repeated-substring-pattern/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"abab\"",
+      "output": "true",
+      "explanation": "The block \"ab\" appears twice in a row."
+    },
+    {
+      "input": "s = \"aba\"",
+      "output": "false",
+      "explanation": "No block repeated whole times rebuilds the string."
+    },
+    {
+      "input": "s = \"abcabcabcabc\"",
+      "output": "true",
+      "explanation": "The block \"abc\" appears four times in a row."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean repeatedSubstringPattern(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def repeatedSubstringPattern(self, s: str) -> bool:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool repeatedSubstringPattern(string s) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool RepeatedSubstringPattern(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn repeated_substring_pattern(s: String) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc RepeatedSubstringPattern(s string) bool {\n    \n}",
+    "typescript": "export function repeatedSubstringPattern(s: string): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return bool\n     */\n    public function repeatedSubstringPattern($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "abab"
+    },
+    {
+      "s": "aba"
+    },
+    {
+      "s": "abcabcabcabc"
+    }
+  ],
+  "functionName": "repeatedSubstringPattern",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "A repeating block must have a length that divides the whole string length.",
+    "Try every divisor length of `n` up to `n / 2` and check whether copies of the prefix rebuild the string."
+  ]
+}

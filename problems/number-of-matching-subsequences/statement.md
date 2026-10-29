@@ -1,13 +1,13 @@
-You are given a long host string `s` and a list of candidate words `words`.
-A candidate counts when it appears as a subsequence of `s`: its characters
-must occur in `s` in the same relative order, though not necessarily next
-to each other, with some characters of `s` possibly skipped. Repeated words
-count repeatedly.
+Вам предоставляется длинная строка хоста `s` и список слов-кандидатов `words`.
+Кандидат учитывает, когда он появляется в виде последовательности `s`: его символы
+должно происходить в `s` в том же относительном порядке, хотя и не обязательно в следующем.
+друг другу, с некоторыми символами `s`, возможно, пропущенными.
+Считать неоднократно.
 
-Return how many entries of `words` satisfy that property.
+Верните, сколько записей `words` удовлетворяют этому свойству.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 5 * 10^4`
 - `1 <= words.length <= 5000`
 - `1 <= words[i].length <= 50`
-- `s` and each word hold only lower-case English letters.
+- `s` и каждое слово содержат только английские буквы.

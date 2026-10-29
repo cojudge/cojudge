@@ -1,6 +1,6 @@
 {
   "id": "perfect-squares",
-  "title": "228. Perfect Squares",
+  "title": "228. Идеальные площади",
   "difficulty": "Medium",
   "category": "dp",
   "link": "https://leetcode.com/problems/perfect-squares/",
@@ -73,7 +73,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use dynamic programming. dp[i] = minimum number of perfect squares that sum to i.",
-    "dp[0] = 0. For each i, try all perfect squares j*j <= i and update dp[i] = min(dp[i], dp[i - j*j] + 1)."
+    "Используйте динамическое программирование. dp[i] = минимальное число идеальных квадратов, которые суммируются в i.",
+    "dp[0] = 0. Для каждого i попробуйте все идеальные квадраты j*j <= i и обновите dp[i] = min(dp[i], dp[i — j*j] + 1."
   ]
 }

@@ -1,7 +1,7 @@
-You receive two integer lists `nums1` and `nums2`. Collect every value that occurs in both lists, keeping each shared value exactly once.
+Вы получаете два целых списка `nums1` и `nums2`. Соберите каждое значение, которое встречается в обоих списках, сохраняя каждое совместное значение ровно один раз.
 
-The order of the answer carries no meaning — any arrangement of the shared values is accepted.
+Порядок ответа не несет в себе никакого смысла — принимается любое расположение общих ценностей.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums1.length, nums2.length <= 1000`
 - `0 <= nums1[i], nums2[i] <= 1000`

@@ -1,6 +1,6 @@
 {
   "id": "triangle",
-  "title": "297. Triangle",
+  "title": "297. Треугольник",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/triangle/",
   "category": "dp",
@@ -8,12 +8,12 @@
     {
       "input": "triangle = [[2],[3,4],[6,5,7],[4,1,8,3]]",
       "output": "11",
-      "explanation": "One cheapest route is 2 -> 3 -> 5 -> 1, which sums to 11."
+      "explanation": "Один из самых дешевых маршрутов - 2 -> 3 -> 5 -> 1, что соответствует 11."
     },
     {
       "input": "triangle = [[-10]]",
       "output": "-10",
-      "explanation": "A single row forces that value."
+      "explanation": "Один ряд заставляет это значение."
     }
   ],
   "starterCode": {
@@ -28,13 +28,44 @@
   },
   "testCases": [
     {
-      "triangle": [[2], [3, 4], [6, 5, 7], [4, 1, 8, 3]]
+      "triangle": [
+        [
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          6,
+          5,
+          7
+        ],
+        [
+          4,
+          1,
+          8,
+          3
+        ]
+      ]
     },
     {
-      "triangle": [[-10]]
+      "triangle": [
+        [
+          -10
+        ]
+      ]
     },
     {
-      "triangle": [[1], [2, 3]]
+      "triangle": [
+        [
+          1
+        ],
+        [
+          2,
+          3
+        ]
+      ]
     }
   ],
   "functionName": "minimumTotal",
@@ -46,8 +77,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Work bottom-up: each cell adds its value to the smaller of its two children.",
-    "You can reuse the bottom row as the DP array for O(n) extra space.",
-    "A top-down memo on (row, index) also works."
+    "Работа снизу вверх: каждая клетка добавляет свою ценность к меньшему из двух своих детей.",
+    "Вы можете повторно использовать нижнюю строку в качестве массива DP для дополнительного пространства O(n).",
+    "Записка сверху вниз (ряд, индекс) также работает."
   ]
 }

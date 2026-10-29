@@ -1,5 +1,5 @@
-Imagine an automaton placed on an m by n board that may advance solely toward the right or downward. Determine how many distinct routes carry it from the upper-left cell to the lower-right cell.
+Представьте себе автомат, размещенный на плате m на n, который может продвигаться только вправо или вниз. Определите, сколько различных маршрутов переносят его из верхней левой ячейки в нижнюю правую ячейку.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= m, n <= 100`
-- The test cases are generated so that the answer will be less than or equal to `2 * 10^9`.
+- Тестовые случаи генерируются таким образом, что ответ будет меньше или равен `2 * 10^9`.

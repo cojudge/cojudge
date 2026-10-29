@@ -1,5 +1,5 @@
-Return the highest frequency of any value in `nums`. For example, in `[1,2,2,3]` the value 2 appears twice, which beats every other value, so the answer is 2.
+Возвращайте самую высокую частоту любого значения в `nums`. Например, в `[1,2,2,3]` значение 2 появляется дважды, что превосходит любое другое значение, поэтому ответ 2.
 
-**Constraints:**
+**Ограничения:**
 - ``1 <= nums.length <= 500``
 - ``-10^9 <= nums[i] <= 10^9``

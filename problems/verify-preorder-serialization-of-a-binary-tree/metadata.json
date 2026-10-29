@@ -1,6 +1,6 @@
 {
   "id": "verify-preorder-serialization-of-a-binary-tree",
-  "title": "417. Verify Preorder Serialization of a Binary Tree",
+  "title": "417. Проверить предзаказ сериализации двоичного дерева",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/verify-preorder-serialization-of-a-binary-tree/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "preorder = \"9,3,4,#,#,1,#,#,2,#,6,#,#\"",
       "output": "true",
-      "explanation": "Every real node provides two child slots and every marker consumes one, ending exactly balanced."
+      "explanation": "Каждый реальный узел предоставляет два детских слота, и каждый маркер потребляет один, заканчивая точно сбалансированным."
     },
     {
       "input": "preorder = \"1,#\"",
       "output": "false",
-      "explanation": "Only one child token follows the root, so one required slot is never filled."
+      "explanation": "Только один детский токен следует за корнем, поэтому один необходимый слот никогда не заполняется."
     },
     {
       "input": "preorder = \"9,#,#,1\"",
       "output": "false",
-      "explanation": "The tree finishes after three tokens, leaving the final value orphaned."
+      "explanation": "Дерево заканчивается после трех жетонов, оставляя конечную стоимость осиротевшей."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Track open slots: start with one, spend one per token, and add two for each real node.",
-    "Fail early when slots go negative, and accept only when exactly zero remain at the end."
+    "Отслеживайте открытые слоты: начните с одного, потратьте один на токен и добавьте два для каждого реального узла.",
+    "Провал рано, когда слоты становятся отрицательными, и принимать только тогда, когда точно ноль остается в конце."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "buddy-strings",
-  "title": "855. Buddy Strings",
+  "title": "855. Бадди Стрингс",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/buddy-strings/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"ab\", goal = \"ba\"",
       "output": "true",
-      "explanation": "Exchanging the two characters turns \"ab\" into \"ba\"."
+      "explanation": "Обмен двумя персонажами превращает «ab» в «ba»."
     },
     {
       "input": "s = \"ab\", goal = \"ab\"",
       "output": "false",
-      "explanation": "No swap of distinct positions keeps them equal."
+      "explanation": "Никакой обмен различными позициями не уравнивает их."
     },
     {
       "input": "s = \"aa\", goal = \"aa\"",
       "output": "true",
-      "explanation": "Swapping the two equal letters leaves \"aa\"."
+      "explanation": "Перемены двух одинаковых букв оставляют «аа»."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "If the lengths differ, success is impossible without even checking letters.",
-    "When the strings are already identical, look for any repeated character that allows a harmless swap.",
-    "Otherwise there must be exactly two mismatching spots, and the letters must cross-match."
+    "Если длина отличается, успех невозможен даже без проверки букв.",
+    "Когда струны уже идентичны, ищите любой повторяющийся символ, который позволяет безвредный обмен.",
+    "В противном случае должно быть ровно два несоответствия пятен, а буквы должны пересекаться."
   ]
 }

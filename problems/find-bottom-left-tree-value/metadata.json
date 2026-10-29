@@ -1,6 +1,6 @@
 {
   "id": "find-bottom-left-tree-value",
-  "title": "573. Find Bottom Left Tree Value",
+  "title": "573. Найти значение нижнего левого дерева",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/find-bottom-left-tree-value/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [2,1,3]",
       "output": "1",
-      "explanation": "The deepest level holds 1 and 3; the leftmost of the two is 1."
+      "explanation": "Самый глубокий уровень содержит 1 и 3; самый левый из них - 1."
     },
     {
       "input": "root = [1,2,3,4,null,5,6,null,null,7]",
       "output": "7",
-      "explanation": "Level by level the tree has [1], [2,3], [4,5,6], [7]; the bottom row's only entry is 7."
+      "explanation": "По уровню дерево имеет [1], [2, 3], [4, 5, 6], [7]; единственная запись нижнего ряда - 7."
     },
     {
       "input": "root = [1]",
       "output": "1",
-      "explanation": "A single node is both the top and the bottom-left choice."
+      "explanation": "Один узел является как верхним, так и нижним левым выбором."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Breadth-first search visits rows top to bottom; the first node of the last row visited is the answer.",
-    "Enqueue right children before left ones and the final node dequeued is the bottom-left value."
+    "Поиск по ширине сначала посещает строки сверху вниз; первый узел последней посещенной строки является ответом.",
+    "Очередь правых потомков перед левыми и окончательный узел в очереди - это лево-нижнее значение."
   ]
 }

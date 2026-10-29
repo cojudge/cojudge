@@ -1,6 +1,6 @@
 {
   "id": "n-ary-tree-postorder-traversal",
-  "title": "632. N-ary Tree Postorder Traversal",
+  "title": "632. N-ary Tree Postorder Traversal (недоступная ссылка)",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/n-ary-tree-postorder-traversal/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "data = \"[1,null,3,2,4,null,5,6]\"",
       "output": "[5,6,3,2,4,1]",
-      "explanation": "Children come before their parent, left to right."
+      "explanation": "Дети идут впереди своих родителей, слева направо."
     },
     {
       "input": "data = \"[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]\"",
       "output": "[6,11,7,2,12,8,3,13,9,4,14,10,5,1]",
-      "explanation": "Every subtree is fully listed before its root."
+      "explanation": "Каждое дерево полностью перечислено перед его корнем."
     },
     {
       "input": "data = \"[]\"",
       "output": "[]",
-      "explanation": "No nodes means no visits."
+      "explanation": "Никакие узлы не означают никаких посещений."
     }
   ],
   "starterCode": {
@@ -51,9 +51,9 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Rebuild the tree from the bracket string with a queue first.",
-    "Walk depth-first, emitting a node only after all its children.",
-    "An empty input yields an empty list.",
-    "Adaptation: the N-ary Node input is encoded as a level-order string; output maps to int_list."
+    "Сначала отремонтируйте дерево из веревки скобки с очередью.",
+    "Прогуляйтесь сначала по глубине, испуская узел только после всех его потомков.",
+    "Пустой вход приводит к пустому списку.",
+    "Адаптация: вход N-ary Node кодируется как строка уровня; вывод карты в int_list."
   ]
 }

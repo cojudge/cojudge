@@ -1,6 +1,6 @@
 {
   "id": "cracking-the-safe",
-  "title": "755. Cracking the Safe",
+  "title": "755. Сломать сейф",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/cracking-the-safe/",
   "category": "graph",
@@ -8,12 +8,12 @@
     {
       "input": "n = 1, k = 2",
       "output": "\"01\"",
-      "explanation": "Contains 0 and 1; 10 also works."
+      "explanation": "Содержит 0 и 1; 10 также работает."
     },
     {
       "input": "n = 2, k = 2",
       "output": "\"01100\"",
-      "explanation": "Contains 01, 11, 10, 00 exactly once each."
+      "explanation": "Содержит 01, 11, 10, 00 ровно по одному разу."
     }
   ],
   "starterCode": {
@@ -49,8 +49,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Model each (n-1)-digit suffix as a graph node with k outgoing edges appending each digit.",
-    "An Euler circuit using every edge once spells a shortest string; visit edges depth-first in post-order to avoid getting stuck.",
-    "The final length must be k^n + n - 1, and the n = 1 case is simply all digits in a row."
+    "Моделируйте каждый (n-1)-цифровой суффикс в качестве графового узла с k выходящими краями, придающими каждую цифру.",
+    "Схема Эйлера, использующая каждый край, однажды заклинает самую короткую строку; сначала посетите края по глубине в пост-заказе, чтобы не застрять.",
+    "Окончательная длина должна быть k^n + n - 1, а корпус n = 1 - это просто все цифры подряд."
   ]
 }

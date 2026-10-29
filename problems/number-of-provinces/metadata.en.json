@@ -1,0 +1,57 @@
+{
+  "id": "number-of-provinces",
+  "title": "604. Number of Provinces",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/number-of-provinces/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "isConnected = [[1,1,0],[1,1,0],[0,0,1]]",
+      "output": "2",
+      "explanation": "One pair plus one singleton."
+    },
+    {
+      "input": "isConnected = [[1,0,0],[0,1,0],[0,0,1]]",
+      "output": "3",
+      "explanation": "Three isolated cities."
+    },
+    {
+      "input": "isConnected = [[1,1,1],[1,1,1],[1,1,1]]",
+      "output": "1"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findCircleNum(int[][] isConnected) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findCircleNum(self, isConnected: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int findCircleNum(vector<vector<int>>& isConnected) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindCircleNum(int[][] isConnected) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_circle_num(is_connected: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindCircleNum(isConnected [][]int) int {\n    \n}",
+    "typescript": "export function findCircleNum(isConnected: number[][]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $isConnected\n     * @return int\n     */\n    public function findCircleNum($isConnected) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "isConnected": "[[1,1,0],[1,1,0],[0,0,1]]"
+    },
+    {
+      "isConnected": "[[1,0,0],[0,1,0],[0,0,1]]"
+    },
+    {
+      "isConnected": "[[1,1,1],[1,1,1],[1,1,1]]"
+    }
+  ],
+  "functionName": "findCircleNum",
+  "params": [
+    {
+      "name": "isConnected",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Treat the table as an adjacency matrix and run depth-first search from each unvisited city.",
+    "Each fresh search discovers one whole province; count how many searches start.",
+    "A union-find structure merging linked pairs is an equivalent alternative."
+  ]
+}

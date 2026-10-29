@@ -1,11 +1,11 @@
-You are given two arrays, `quality` and `wage`, each with `n` entries describing `n` candidates. Candidate `i` produces `quality[i]` units of work and asks for at least `wage[i]` in pay. You must hire exactly `k` people.
+Вам даны два массива, `quality` и `wage`, каждый с записями `n`, описывающими кандидатов `n`. Кандидат `i` производит единицы работы `quality[i]` и просит по крайней мере `wage[i]` в оплате. Вы должны нанять именно людей `k`.
 
-All hired people are paid under one common rate `r` (pay per unit of quality), so person `i` receives `r * quality[i]`. The rate must be high enough that everyone hired gets at least what they asked for. Among all choices of `k` people and all feasible rates, minimize the total payroll.
+Всех нанятых людей оплачивают по одной общей ставке `r` (плата за единицу качества), поэтому человек `i` получает `r * quality[i]`. Ставка должна быть достаточно высокой, чтобы каждый нанятый получал хотя бы то, что он просил. Среди всех вариантов `k` люди и все возможные ставки минимизируют общую заработную плату.
 
-Because the answer can be fractional, return it as a finite decimal string (for example `"105.0"`). A response is accepted when it matches the true minimum within a small tolerance.
+Поскольку ответ может быть дробным, верните его как конечную десятичную строку (например, `"105.0"`).Ответ принимается, когда он соответствует истинному минимуму в пределах небольшой терпимости.
 
-Adaptation note: the original task expects a floating number; here you return the value encoded as a decimal string so every language uses the same `string` type.
+Адаптационное примечание: исходная задача ожидает плавающего числа; здесь вы возвращаете значение, закодированное как десятичная строка, поэтому каждый язык использует один и тот же тип `string`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= k <= n <= 10^4`
 - `1 <= quality[i], wage[i] <= 10^4`

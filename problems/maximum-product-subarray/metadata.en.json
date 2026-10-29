@@ -1,0 +1,51 @@
+{
+  "id": "maximum-product-subarray",
+  "title": "6. Maximum Product Subarray",
+  "difficulty": "Medium",
+  "category": "array",
+  "link": "https://leetcode.com/problems/maximum-product-subarray/",
+  "examples": [
+    {
+      "input": "nums = [2,3,-2,4]",
+      "output": "6",
+      "explanation": "The subarray [2, 3] yields the maximum product 6."
+    },
+    {
+      "input": "nums = [-2,0,-1]",
+      "output": "0",
+      "explanation": "The subarray [0] yields the maximum product 0, since any non-zero product would be negative."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxProduct(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxProduct(self, nums: List[int]) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int maxProduct(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MaxProduct(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_product(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MaxProduct(nums []int) int {\n    \n}",
+    "typescript": "export function maxProduct(nums: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function maxProduct($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[2,3,-2,4]"
+    },
+    {
+      "nums": "[-2,0,-1]"
+    },
+    {
+      "nums": "[0,2]"
+    }
+  ],
+  "functionName": "maxProduct",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Track the maximum and minimum product ending at each position (since a negative flips the sign). Swap when encountering negatives, update current max/min, and keep a global best."
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "id": "heaters",
-  "title": "539. Heaters",
+  "title": "539. нагреватели",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/heaters/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "houses = [1,2,3], heaters = [2]",
       "output": "1",
-      "explanation": "Radius 1 from heater 2 reaches every house."
+      "explanation": "Радиус 1 от обогревателя 2 добирается до каждого дома."
     },
     {
       "input": "houses = [1,2,3,4], heaters = [1,4]",
       "output": "1",
-      "explanation": "Each heater covers its two nearest houses."
+      "explanation": "Каждый из них покрывает два ближайших дома."
     },
     {
       "input": "houses = [1,5], heaters = [2]",
       "output": "3",
-      "explanation": "House 5 is distance 3 from the heater."
+      "explanation": "Дом 5 находится на расстоянии 3 от нагревателя."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sort both arrays first.",
-    "For each house, binary-search the nearest heater and record the distance.",
-    "The answer is the largest of those nearest distances."
+    "Сначала сортируйте оба массива.",
+    "Для каждого дома двоичный поиск ближайшего обогревателя и запись расстояния.",
+    "Ответ самый большой из ближайших расстояний."
   ]
 }

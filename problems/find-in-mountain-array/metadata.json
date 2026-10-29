@@ -1,6 +1,6 @@
 {
   "id": "find-in-mountain-array",
-  "title": "1095. Find in Mountain Array",
+  "title": "1095. Найти в Mountain Array",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/find-in-mountain-array/",
   "category": "binary-search",
@@ -8,17 +8,17 @@
     {
       "input": "mountainArr = [1,2,3,4,5,3,1], target = 3",
       "output": "2",
-      "explanation": "3 occurs at indices 2 and 5; the minimum index is 2."
+      "explanation": "3 встречается в индексах 2 и 5; минимальный индекс — 2."
     },
     {
       "input": "mountainArr = [0,1,2,4,2,1], target = 3",
       "output": "-1",
-      "explanation": "3 does not occur in the array."
+      "explanation": "3 не встречается в массиве."
     },
     {
       "input": "mountainArr = [1,5,2], target = 5",
       "output": "1",
-      "explanation": "5 is the peak at index 1."
+      "explanation": "5 является пиком индекса 1."
     }
   ],
   "starterCode": {
@@ -67,8 +67,8 @@
     "maxGuesses": 100
   },
   "hints": [
-    "The judge never reveals the array; only mountainArr.get(i) and mountainArr.length() are available, with at most 100 get calls.",
-    "Binary-search the peak: arr[mid] < arr[mid+1] means the peak is to the right.",
-    "Binary-search the increasing left side for the target with the usual ascending order, then the decreasing right side with reversed comparisons, and return the left-side hit first to get the minimum index."
+    "Судья никогда не раскрывает массив; доступны только MountainArr.get(i) и MountainArr.length() с максимумом 100.",
+    "Бинарный поиск пика: arr[mid] < arr[mid+1] означает, что пик находится справа.",
+    "Бинарный поиск увеличивающейся левой стороны для цели с обычным восходящим порядком, затем уменьшающейся правой стороны с обратными сравнениями и возврат левой стороны удара сначала, чтобы получить минимальный индекс."
   ]
 }

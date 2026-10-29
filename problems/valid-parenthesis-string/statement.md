@@ -1,8 +1,8 @@
-Given a string `s` containing only `(`, `)` and `*`, return whether it can represent a valid parenthesis string.
+Учитывая строку `s`, содержащую только `(`, `)` и `*`, верните, может ли она представлять действительную строку скобки.
 
-Each `*` may independently be treated as `(`, as `)`, or as an empty string. A valid parenthesis string has matching pairs in the correct order.
+Каждый `*` может независимо трактоваться как `(`, как `)` или как пустая строка.Правильная строка скобки имеет соответствующие пары в правильном порядке.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= s.length <= 100`
-- Every character in `s` is `(`, `)` or `*`.
+- Каждый персонаж в `s` — это `(`, `)` или `*`.

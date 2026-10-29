@@ -1,6 +1,6 @@
 {
   "id": "bricks-falling-when-hit",
-  "title": "801. Bricks Falling When Hit",
+  "title": "801. Кирпичи падают, когда бьют",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/bricks-falling-when-hit/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "grid = [[1,0,0,0],[1,1,1,0]], hits = [[1,0]]",
       "output": "[2]",
-      "explanation": "Two bricks lose their top connection."
+      "explanation": "Два кирпича теряют связь."
     },
     {
       "input": "grid = [[1,0,0,0],[1,1,0,0]], hits = [[1,1],[1,0]]",
       "output": "[0,0]",
-      "explanation": "No extra bricks fall."
+      "explanation": "Никаких лишних кирпичей."
     },
     {
       "input": "grid = [[1,1,1],[0,1,0],[0,0,0]], hits = [[0,2],[2,0]]",
       "output": "[0,0]",
-      "explanation": "Empty-cell hit gives zero."
+      "explanation": "Пустая ячейка дает ноль."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "A brick survives exactly when a four-directional path of bricks reaches the top row.",
-    "Recompute the top-connected count after each removal with a flood fill from the first row.",
-    "Fallen bricks equal the drop in connected count minus one for the erased brick, floored at zero."
+    "Кирпич выживает именно тогда, когда четырехнаправленный путь кирпичей достигает верхнего ряда.",
+    "Вычислите верхний подключенный счет после каждого удаления с заполнением потока из первого ряда.",
+    "Падающие кирпичи равны падению в соединенном счете минус один для стертого кирпича, настилаемого на нуле."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "flatten-binary-tree-to-linked-list",
-  "title": "292. Flatten Binary Tree to Linked List",
+  "title": "292. Флаттеновое двоичное дерево в связанный список",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/flatten-binary-tree-to-linked-list/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,2,5,3,4,null,6]",
       "output": "[1,null,2,null,3,null,4,null,5,null,6]",
-      "explanation": "Preorder visits 1,2,3,4,5,6; the flattened chain links them via right pointers with all left pointers empty."
+      "explanation": "Предзаказ посещает 1, 2, 3, 4, 5, 6; сплющенная цепь связывает их через правые указатели со всеми левыми указателями, пустыми."
     },
     {
       "input": "root = []",
       "output": "[]",
-      "explanation": "Nothing to flatten."
+      "explanation": "Нечего сплющивать."
     },
     {
       "input": "root = [0]",
       "output": "[0]",
-      "explanation": "A lone node is already flat."
+      "explanation": "Одинокий узел уже плоский."
     }
   ],
   "starterCode": {
@@ -58,9 +58,9 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "The final right-leaning chain follows preorder: root, left subtree, then right subtree.",
-    "One simple route gathers preorder values first, then rebuilds a chain of right-only nodes.",
-    "An in-place alternative rewires each node by splicing its left subtree between itself and its right subtree.",
-    "Adaptation: the original edits in place with no return; here return the flattened root for checking."
+    "Окончательная цепочка правого наклона следует за предзаказом: корень, левое поддерево, затем правое поддерево.",
+    "Один простой маршрут сначала собирает значения предварительного заказа, а затем восстанавливает цепочку только правых узлов.",
+    "Альтернатива на месте перестраивает каждый узел, сплайсируя его левое поддерево между собой и его правым поддеревом.",
+    "Адаптация: оригинальные правки на месте без возврата; здесь возвращают сплюснутый корень для проверки."
   ]
 }

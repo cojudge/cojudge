@@ -1,6 +1,6 @@
 {
   "id": "sequence-reconstruction",
-  "title": "512. Sequence Reconstruction",
+  "title": "512. Реконструкция последовательности",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/sequence-reconstruction/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,2,3], sequences = [[1,2],[1,3]]",
       "output": "false",
-      "explanation": "Both 1,2,3 and 1,3,2 fit, so the order is not unique."
+      "explanation": "Оба 1, 2, 3 и 1, 3, 2 подходят, поэтому заказ не является уникальным."
     },
     {
       "input": "nums = [1,2,3], sequences = [[1,2],[1,3],[2,3]]",
       "output": "true",
-      "explanation": "The three pairs force 1 before 2 before 3."
+      "explanation": "Три пары заставляют 1 перед 2 перед 3."
     },
     {
       "input": "nums = [4,1,5,2,6,3], sequences = [[5,2,6,3],[4,1,5,2]]",
       "output": "true",
-      "explanation": "Chained pairs fix the full order."
+      "explanation": "Цепные пары фиксируют полный порядок."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Turn each adjacent pair in every sequence into a directed edge.",
-    "A breadth-first topological walk must always have exactly one ready node; two choices means not unique.",
-    "The walk must emit exactly nums in order, and every value of nums must appear in sequences."
+    "Превратите каждую соседнюю пару в каждой последовательности в направленный край.",
+    "Топологическая прогулка по ширине всегда должна иметь один готовый узел; два варианта не являются уникальными.",
+    "Ходьба должна излучать точно числа в порядке, и каждое значение чисел должно появляться в последовательностях."
   ]
 }

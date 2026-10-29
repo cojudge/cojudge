@@ -1,8 +1,8 @@
-You receive an integer list `nums` together with an integer `k`. Count how many contiguous, non-empty slices of `nums` add up to exactly `k`, and return that count.
+Вы получаете целочисленный список `nums` вместе с целым числом `k`. Подсчитайте, сколько смежных, непустых срезов `nums` складываются в точно `k`, и верните это количество.
 
-Here a slice means a run of neighboring entries taken straight from `nums` with nothing skipped.
+Здесь кусочек означает ряд соседних записей, взятых прямо из `nums` без пропуска.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ nums.length ≤ 2 * 10^4
 - -1000 ≤ nums[i] ≤ 1000

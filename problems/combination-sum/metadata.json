@@ -1,6 +1,6 @@
 {
   "id": "combination-sum",
-  "title": "108. Combination Sum",
+  "title": "108. Комбинированная сумма",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/combination-sum/",
   "category": "backtracking",
@@ -8,12 +8,12 @@
     {
       "input": "candidates = [2,3,6,7], target = 7",
       "output": "[[2,2,3],[7]]",
-      "explanation": "All combinations from [2, 3, 6, 7] that sum to 7 are [[2,2,3],[7]]."
+      "explanation": "Все комбинации из [2, 3, 6, 7], которые суммируются в 7, являются [[2, 2, 3], [7]]."
     },
     {
       "input": "candidates = [2,3,5], target = 8",
       "output": "[[2,2,2,2],[2,3,3],[3,5]]",
-      "explanation": "Candidates may be reused any number of times."
+      "explanation": "Кандидаты могут быть повторно использованы любое количество раз."
     }
   ],
   "starterCode": {
@@ -53,8 +53,8 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Sort the candidates so a branch can stop once the next value exceeds the remaining target.",
-    "Backtrack with a start index to avoid generating permutations of the same combination.",
-    "When choosing a candidate, recurse with the same index because that value may be reused."
+    "Сортируйте кандидатов так, чтобы ветвь могла остановиться, как только следующее значение превысит оставшуюся цель.",
+    "Откат с начальным индексом, чтобы избежать генерации перестановок одной и той же комбинации.",
+    "При выборе кандидата, повторите с тем же индексом, потому что это значение может быть повторно использовано."
   ]
 }

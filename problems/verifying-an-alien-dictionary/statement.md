@@ -1,9 +1,9 @@
-Suppose a foreign tongue writes with the usual English lowercase letters, yet arranges its alphabet in a different sequence captured by the permutation string `order`.
+Предположим, что иностранный язык пишет обычными английскими строчными буквами, но при этом упорядочены его алфавит в другой последовательности, захваченной строкой перестановки `order`.
 
-You are handed a list `words` written in that tongue. Return `true` exactly when the list advances in non-decreasing dictionary sequence under the foreign alphabet ordering, and `false` otherwise. In particular, whenever one entry forms a prefix of the following entry, the shorter entry is required to come first.
+Вам вручают список `words`, написанный на этом языке. Возвращайте `true` именно тогда, когда список продвигается в неснижающейся последовательности словаря под заказом иностранного алфавита, и `false` в противном случае. В частности, всякий раз, когда одна запись формирует префикс следующей записи, более короткая запись должна прийти первой.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= words.length <= 100`
 - `1 <= words[i].length <= 20`
 - `order.length == 26`
-- All characters in `words[i]` and `order` are English lowercase letters
+- Все символы в `words[i]` и `order` - английские строчные буквы.

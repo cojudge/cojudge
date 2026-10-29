@@ -1,11 +1,11 @@
-You are given a picture as a grid of `B` (black) and `W` (white) pixels, plus a positive integer `N`. A black pixel at position `(r, c)` is counted when all three of these hold:
-1. Row `r` contains exactly `N` black pixels.
-2. Column `c` contains exactly `N` black pixels.
-3. Every row that has a black pixel in column `c` looks exactly like row `r` (same pattern of black and white cells).
+Вам дается изображение в виде сетки пикселей `B` (черный) и `W` (белый) плюс положительное целое число `N`. Черный пиксель в положении `(r, c)` считается, когда все три из них удерживаются:
+1. Row `r` содержит в точности черные пиксели `N`.
+2. Колонка `c` содержит в точности черные пиксели `N`.
+3. Каждая строка с черным пикселем в столбце `c` выглядит точно так же, как строка `r` (один и тот же рисунок черных и белых ячеек).
 
-Return the total number of black pixels satisfying all three conditions.
+Верните общее количество черных пикселей, удовлетворяющих всем трем условиям.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= picture.length, picture[i].length <= 500`
-- The grid is rectangular and holds only `B` and `W`.
+- Сетка прямоугольная и содержит только `B` и `W`.
 - `1 <= N <= picture.length`

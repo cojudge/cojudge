@@ -1,0 +1,71 @@
+{
+  "id": "kth-smallest-number-in-multiplication-table",
+  "title": "687. Kth Smallest Number in Multiplication Table",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/kth-smallest-number-in-multiplication-table/",
+  "category": "binary-search",
+  "examples": [
+    {
+      "input": "m = 3, n = 3, k = 5",
+      "output": "3",
+      "explanation": "The 3 by 3 table holds [1,2,3,2,4,6,3,6,9]; ordered they are [1,2,2,3,3,4,6,6,9], so the 5th value is 3."
+    },
+    {
+      "input": "m = 2, n = 3, k = 6",
+      "output": "6",
+      "explanation": "The 2 by 3 table holds [1,2,3,2,4,6]; the 6th smallest is 6."
+    },
+    {
+      "input": "m = 1, n = 1, k = 1",
+      "output": "1"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findKthNumber(int m, int n, int k) {\n        \n    }\n}",
+    "python": "class Solution:\n    def findKthNumber(self, m: int, n: int, k: int) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int findKthNumber(int m, int n, int k) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindKthNumber(int m, int n, int k) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_kth_number(m: i32, n: i32, k: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FindKthNumber(m int, n int, k int) int {\n    return 0\n}",
+    "typescript": "export function findKthNumber(m: number, n: number, k: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $m\n     * @param int $n\n     * @param int $k\n     * @return int\n     */\n    public function findKthNumber($m, $n, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "m": 3,
+      "n": 3,
+      "k": 5
+    },
+    {
+      "m": 2,
+      "n": 3,
+      "k": 6
+    },
+    {
+      "m": 1,
+      "n": 1,
+      "k": 1
+    }
+  ],
+  "functionName": "findKthNumber",
+  "params": [
+    {
+      "name": "m",
+      "type": "int"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Count how many table entries are at most mid by adding min(n, mid / row) over each row.",
+    "The count grows monotonically with mid, so binary-search the smallest mid whose count reaches k.",
+    "Rows and columns are symmetric; iterate over the smaller dimension when counting."
+  ]
+}

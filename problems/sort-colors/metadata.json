@@ -1,6 +1,6 @@
 {
   "id": "sort-colors",
-  "title": "159. Sort Colors",
+  "title": "159. Сортировать цвета",
   "difficulty": "Medium",
   "category": "array",
   "link": "https://leetcode.com/problems/sort-colors/",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [2,0,2,1,1,0]",
       "output": "[0,0,1,1,2,2]",
-      "explanation": "Reds (0), then whites (1), then blues (2) are grouped in order."
+      "explanation": "Красные (0), затем белые (1), затем блюз (2) сгруппированы по порядку."
     },
     {
       "input": "nums = [2,0,1]",
       "output": "[0,1,2]",
-      "explanation": "One of each color sorts to [0,1,2]."
+      "explanation": "Каждый из цветовых оттенков [...]0,1,2]."
     },
     {
       "input": "nums = [0]",
       "output": "[0]",
-      "explanation": "A single element is already sorted."
+      "explanation": "Один элемент уже отсортирован."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Count 0s, 1s, and 2s in one pass, then overwrite the array (counting sort).",
-    "Or use the Dutch national flag: three pointers (low, mid, high) for a single-pass O(1)-space sort."
+    "Считайте 0, 1 и 2 в одном проходе, а затем перезапишите массив (сорт подсчета).",
+    "Или используйте национальный флаг Нидерландов: три указателя (низкий, средний, высокий) для однопроходного O (1)-пространства."
   ]
 }

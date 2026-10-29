@@ -1,10 +1,10 @@
-Given citation counts already sorted in non-decreasing order, compute the h-index in logarithmic time.
+Учитывая количество цитирований, уже отсортированных в неубывающем порядке, вычислите h-индекс в логарифмическое время.
 
-The h-index is the largest `h` with at least `h` papers cited at least `h`
-times. Implement `hIndex(citations)` where `citations` is ascending, using a
-binary search rather than a linear scan.
+h-индекс является крупнейшим `h`, по крайней мере, в документах `h` упоминается как минимум `h`.
+Внедрить `hIndex(citations)`, где `citations` поднимается, используя
+Бинарный поиск вместо линейного сканирования.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= citations.length <= 10^5`
 - `0 <= citations[i] <= 1000`
-- `citations` is sorted ascending.
+- `citations` сортируется по восходящей.

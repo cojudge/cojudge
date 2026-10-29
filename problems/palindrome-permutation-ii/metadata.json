@@ -1,6 +1,6 @@
 {
   "id": "palindrome-permutation-ii",
-  "title": "369. Palindrome Permutation II",
+  "title": "369. Перестройка палиндрома II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/palindrome-permutation-ii/",
   "category": "backtracking",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"aabb\"",
       "output": "[\"abba\",\"baab\"]",
-      "explanation": "Halves \"ab\" and \"ba\" mirror to full palindromes \"abba\" and \"baab\"."
+      "explanation": "Половины «Аб» и «Ба» зеркально отражают полные палиндромы «Абба» и «Бааб»."
     },
     {
       "input": "s = \"abc\"",
       "output": "[]",
-      "explanation": "Three different characters mean more than one odd count, so no palindrome exists."
+      "explanation": "Три разных символа означают более одного нечетного числа, поэтому никакого палиндрома не существует."
     },
     {
       "input": "s = \"aaa\"",
       "output": "[\"aaa\"]",
-      "explanation": "All characters match, giving a single distinct palindrome."
+      "explanation": "Все персонажи совпадают, давая один отдельный палиндром."
     }
   ],
   "starterCode": {
@@ -54,7 +54,7 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Count characters first; more than one odd count means the answer is empty.",
-    "Build palindromes from half the characters plus the middle character, permuting only the half uniquely."
+    "Сначала сосчитайте символы; более одного нечетного числа означает, что ответ пуст.",
+    "Постройте палиндромы из половины персонажей плюс средний персонаж, изменяя только половину уникально."
   ]
 }

@@ -1,14 +1,14 @@
-Call the XOR-combination of a list the result of XOR-ing all of its entries together, with the empty list assigned `0`.
+Вызовите XOR-комбинацию списка результатом XOR-ing всех его записей вместе с пустым списком, назначенным `0`.
 
-- As an illustration, the XOR-combination of `[2,5,6]` is `2 XOR 5 XOR 6 = 1`.
+- В качестве иллюстрации, XOR-комбинация `[2,5,6]` является `2 XOR 5 XOR 6 = 1`.
 
-Starting from an input list `nums`, consider each of its subsets and compute that subset's XOR-combination. Return the total obtained by adding all of those values together.
+Начиная со входного списка `nums`, рассмотрим каждое из его подмножеств и вычислим XOR-комбинацию этого подмножества. Возвращаем полученную сумму, сложив все эти значения вместе.
 
-**Note:** Selections that look alike but arise from different positions count separately.
+**Примечание: ** Выборы, которые выглядят одинаково, но возникают из разных позиций, учитываются отдельно.
 
-Here a subset means any collection obtainable from `b` by discarding zero or more entries, keeping the rest, when written as `a` drawn from `b`.
+Здесь подмножество означает любую коллекцию, полученную от `b`, отбрасывая ноль или более записей, сохраняя остальные, когда они написаны как `a`, взятые из `b`.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= nums.length <= 12`
 - `1 <= nums[i] <= 20`

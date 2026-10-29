@@ -1,12 +1,12 @@
-Given an `m x n` integer matrix where each row is sorted in increasing order from left to right and each column is sorted in increasing order from top to bottom, decide whether a `target` value appears in the matrix.
+Учитывая целочисленную матрицу `m x n`, где каждая строка отсортирована в порядке увеличения слева направо, а каждая колонка отсортирована в порядке увеличения сверху вниз, решите, появляется ли значение `target` в матрице.
 
-Exploit the ordering rather than scanning every cell: values grow toward the bottom and the right, and shrink toward the top and the left.
+Используйте упорядочение, а не сканирование каждой ячейки: значения растут внизу и справа и сжимаются вверху и слева.
 
-Return `true` when `target` is present, otherwise return `false`.
+Возврат `true` при наличии `target`, в противном случае возврат `false`.
 
-**Constraints:**
+**Ограничения:**
 - `m == matrix.length`, `n == matrix[i].length`
 - `1 <= m, n <= 300`
 - `-10^9 <= matrix[i][j] <= 10^9`
-- Each row and each column is sorted in ascending order.
+- Каждая строка и каждая колонка сортируются в порядке возрастания.
 - `-10^9 <= target <= 10^9`

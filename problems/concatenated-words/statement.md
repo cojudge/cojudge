@@ -1,11 +1,11 @@
-You are handed a list of different lowercase words with no repeats. A word from the list counts as *joined* when it can be built by gluing together at least two other entries from the same list, where each piece must be strictly shorter than the whole and pieces may be reused.
+Вам вручается список различных строчных слов без повторов. Слово из списка считается «присоединенным», когда оно может быть построено путем склеивания по крайней мере двух других записей из того же списка, где каждая часть должна быть строго короче, чем целое, и части могут быть повторно использованы.
 
-Return every joined word. The order of the returned words does not matter for grading.
+Возвращать каждое соединенное слово. Порядок возвращаемых слов не имеет значения для градации.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= words.length <= 10^4`
 - `1 <= words[i].length <= 30`
-- Each `words[i]` holds only lowercase English letters.
-- All entries in `words` are distinct.
-- The total of all word lengths is at most `10^5`.
+- Каждый `words[i]` содержит только английские буквы.
+- Все записи в `words` отличаются.
+- Общая сумма всех длин слов составляет максимум `10^5`.

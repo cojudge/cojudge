@@ -149,7 +149,7 @@
 	}
 
 	function dropPlayground() {
-		if (!confirm('Delete the ENTIRE playground workspace? Your problem solutions are kept. This cannot be undone.')) return;
+		if (!confirm("Удалить все рабочее место на детской площадке? Ваши решения проблем сохранены. Это нельзя отменить.")) return;
 		try {
 			const files = readFiles();
 			delete files.playground;
@@ -227,15 +227,14 @@
 </script>
 
 <svelte:head>
-	<title>Recovery | Cojudge</title>
+	<title>Восстановление - Судья</title>
 </svelte:head>
 
 <div class="container">
-	<h1>Recovery (safe mode)</h1>
+	<h1>Восстановление (безопасный режим)</h1>
 	<p class="muted">
-		This page never renders your files — it only measures them — so it stays usable when the
-		playground hangs. Actions apply instantly to this device and reload the page.
-		<a href="/">Back home</a> · <a href="/playground">Open playground</a>
+		Эта страница никогда не отображает ваши файлы - она только измеряет их - поэтому она остается полезной, когда игровая площадка висит. Действия применяются мгновенно к этому устройству и перезагружают страницу.
+		<a href="/">На главную</a> · <a href="/playground">Открытая игровая площадка</a>
 	</p>
 
 	{#if notice}
@@ -243,21 +242,21 @@
 	{/if}
 
 	{#if !loaded}
-		<p>Loading…</p>
+		<p>Загрузка…</p>
 	{:else}
 		<div class="actions">
-			<button class="btn" onclick={downloadBackup} title="Download the full backup in the app (no server round-trip)">Download backup</button>
+			<button class="btn" onclick={downloadBackup} title="Скачать полную резервную копию в приложении (без сервера туда и обратно)">Скачать Backup</button>
 			{#if isDesktop}
-				<button class="btn" onclick={savePartsToDownloads} title="Save files + images as two small files in Downloads via the desktop backend">Save parts to Downloads</button>
+				<button class="btn" onclick={savePartsToDownloads} title="Сохраните файлы + изображения в виде двух небольших файлов в Downloads через бэкэнд рабочего стола">Сохранить части для загрузки</button>
 			{/if}
-			<button class="btn" onclick={stripRunState} title="Clear persisted run output/logs everywhere (code and notes are kept)">Strip run output</button>
-			<button class="btn" onclick={closePreviewTabs} title="Close preview tabs so the playground opens on an editor tab">Close preview tabs</button>
-			<button class="btn danger" onclick={dropPlayground} title="Delete the whole playground workspace (problem solutions are kept)">Delete playground</button>
+			<button class="btn" onclick={stripRunState} title="Повсюду четкий непрерывный вывод / журналы выполнения (код и заметки сохраняются)">Стрип-выпуск</button>
+			<button class="btn" onclick={closePreviewTabs} title="Закройте вкладки предварительного просмотра, чтобы игровая площадка открывалась на вкладке редактора">Закрытые вкладки предварительного просмотра</button>
+			<button class="btn danger" onclick={dropPlayground} title="Удалить все рабочее пространство игровой площадки (проблемные решения сохранены)">Удалить игровую площадку</button>
 		</div>
 
-		<h2>Storage keys ({formatBytes(keyRows.reduce((t, r) => t + r.chars, 0))} total)</h2>
+		<h2>Клавиши для хранения ({formatBytes(keyRows.reduce((t, r) => t + r.chars, 0))} суммарно</h2>
 		<table>
-			<thead><tr><th>Key</th><th>Size</th></tr></thead>
+			<thead><tr><th>Ключ</th><th>Размер</th></tr></thead>
 			<tbody>
 				{#each keyRows as row}
 					<tr><td><code>{row.key}</code></td><td>{formatBytes(row.chars)}</td></tr>
@@ -265,16 +264,16 @@
 			</tbody>
 		</table>
 
-		<h2>Pasted images (IndexedDB): {imageCount} images, {formatBytes(imageBytes)}</h2>
-		<p class="muted">Screenshots embedded in markdown notes. They are bundled into every backup export, so they dominate export size.</p>
+		<h2>Вставленные изображения (IndexedDB): {imageCount} изображения, {formatBytes(imageBytes)}</h2>
+		<p class="muted">Скриншоты, встроенные в заметки о разметке. Они упакованы в каждый резервный экспорт, поэтому они доминируют над размером экспорта.</p>
 
 		{#each slugs as slug}
-			<h2>Workspace <code>{slug.slug}</code> ({formatBytes(slug.chars)})</h2>
+			<h2>Рабочее пространство <code>{slug.slug}</code> ({formatBytes(slug.chars)})</h2>
 			{#if slug.error}
-				<p class="notice-error">Could not parse this workspace: {slug.error}. Delete individual files is unavailable; use “Delete playground” above if this is the broken one.</p>
+				<p class="notice-error">Не удалось разобрать это рабочее пространство: {slug.error}Удаление отдельных файлов недоступно; используйте «Удалить игровую площадку» выше, если это сломанный файл.</p>
 			{:else if slug.rows}
 				<table>
-					<thead><tr><th>File</th><th>Lang</th><th>Content</th><th>Output</th><th>Logs</th><th></th></tr></thead>
+					<thead><tr><th>Файл</th><th>Лэнг</th><th>Контент</th><th>Результат</th><th>Логс</th><th></th></tr></thead>
 					<tbody>
 						{#each slug.rows as row}
 							<tr>
@@ -283,7 +282,7 @@
 								<td>{formatBytes(row.contentChars)}</td>
 								<td>{formatBytes(row.outputChars)}</td>
 								<td>{formatBytes(row.logsChars)}</td>
-								<td><button class="btn small" onclick={() => deleteFile(slug.slug, row.fileId, row.fileName)}>Delete</button></td>
+								<td><button class="btn small" onclick={() => deleteFile(slug.slug, row.fileId, row.fileName)}>Удалить</button></td>
 							</tr>
 						{/each}
 					</tbody>

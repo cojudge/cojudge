@@ -1,6 +1,6 @@
-A positive whole number is called perfect when it equals the sum of all its proper divisors, meaning every divisor except the number itself. For instance, 6 qualifies because 1 + 2 + 3 = 6, while 8 does not because 1 + 2 + 4 = 7.
+Положительное целое число называется идеальным, когда оно равняется сумме всех его собственных делителей, то есть каждого делителя, кроме самого числа.Например, 6 квалифицируется потому, что 1 + 2 + 3 = 6, а 8 не потому, что 1 + 2 + 4 = 7.
 
-Given `num`, decide whether it is perfect.
+Учитывая `num`, решите, является ли он идеальным.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= num <= 10^8`

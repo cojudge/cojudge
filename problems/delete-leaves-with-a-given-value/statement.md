@@ -1,7 +1,7 @@
-You are given the root of a binary tree plus an integer `target`. Strip out every leaf whose value equals `target`.
+Вам дают корень двоичного дерева плюс целое число `target`. Вытрите каждый лист, значение которого равно `target`.
 
-Removal cascades: after deleting such a leaf, when its parent turns into a leaf that also stores `target`, that parent is stripped as well. Repeat this pruning until no matching leaf is left, then return the resulting root.
+Удаление каскадов: после удаления такого листа, когда его родитель превращается в лист, который также хранит `target`, этот родитель также удаляется. Повторите эту обрезку, пока не останется соответствующий лист, а затем верните полученный корень.
 
-**Constraints:**
-- The number of nodes in the tree is in the range `[1, 3000]`
+**Ограничения:**
+- Количество узлов в дереве находится в диапазоне `[1, 3000]`
 - `1 <= Node.val, target <= 1000`

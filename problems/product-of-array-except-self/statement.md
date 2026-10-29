@@ -1,7 +1,7 @@
-Your input is an integer array `nums`. Build and return an array `answer` where each slot `answer[i]` holds the product of every entry of `nums` apart from `nums[i]` itself. Every prefix or suffix product of `nums` is promised to fit inside a 32-bit integer.
+Ваш ввод представляет собой целочисленный массив `nums`. Постройте и верните массив `answer`, где каждый слот `answer[i]` содержит продукт каждой записи `nums`, кроме самого `nums[i]`. Каждый префикс или суффикс продукта `nums` обещают вписаться в 32-битовое целое число.
 
-**Constraints:**
+**Ограничения:**
 
 - 2 ≤ nums.length ≤ 10^5
 - -30 ≤ nums[i] ≤ 30
-- The input is generated such that answer[i] is guaranteed to fit in a 32-bit integer.
+- Ввод генерируется таким образом, что ответ [i] гарантированно вписывается в целое число 32-бит.

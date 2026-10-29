@@ -1,6 +1,6 @@
 {
   "id": "power-of-two",
-  "title": "342. Power of Two",
+  "title": "342. Сила двух",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/power-of-two/",
   "category": "binary",
@@ -18,7 +18,7 @@
     {
       "input": "n = 3",
       "output": "false",
-      "explanation": "No integer power of two equals 3."
+      "explanation": "Нет целочисленной мощности двух равной 3."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "A positive power of two has exactly one bit set in binary.",
-    "For n > 0, the expression (n & (n - 1)) == 0 detects a single set bit."
+    "Положительная сила двух имеет ровно один бит, установленный в двоичной системе.",
+    "Для n > 0 выражение (n & (n - 1)) == 0 обнаруживает один бит набора."
   ]
 }

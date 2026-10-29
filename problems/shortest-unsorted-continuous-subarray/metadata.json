@@ -1,6 +1,6 @@
 {
   "id": "shortest-unsorted-continuous-subarray",
-  "title": "626. Shortest Unsorted Continuous Subarray",
+  "title": "626. Самый короткий несортированный непрерывный подкатегория",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/shortest-unsorted-continuous-subarray/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [2,6,4,8,10,9,15]",
       "output": "5",
-      "explanation": "Sorting indices 1..5 repairs the array."
+      "explanation": "Индексы сортировки 1..5 восстанавливают массив."
     },
     {
       "input": "nums = [1,2,3,4]",
       "output": "0",
-      "explanation": "Already sorted needs no window."
+      "explanation": "Уже отсортированному не нужно окно."
     },
     {
       "input": "nums = [1]",
       "output": "0",
-      "explanation": "A single element is trivially sorted."
+      "explanation": "Один элемент сортируется тривиально."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sort a copy and compare with the original to find mismatching positions.",
-    "The first mismatch from the left and the first from the right bound the window.",
-    "With no mismatches the answer is 0; otherwise it is right - left + 1."
+    "Сортируйте копию и сравнивайте с оригиналом, чтобы найти несоответствующие позиции.",
+    "Первое несоответствие слева и первое справа связали окно.",
+    "Без несоответствий ответ 0; в противном случае это право-лево + 1."
   ]
 }

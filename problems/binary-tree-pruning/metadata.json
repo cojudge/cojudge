@@ -1,6 +1,6 @@
 {
   "id": "binary-tree-pruning",
-  "title": "812. Binary Tree Pruning",
+  "title": "812. Бинарное дерево обрезка",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/binary-tree-pruning/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,null,0,0,1]",
       "output": "[1,null,0,null,1]",
-      "explanation": "The left-zero leaf with no 1 below it is removed, while the right branch survives because it holds a 1."
+      "explanation": "Лево-нулевой лист без 1 ниже него удаляется, в то время как правая ветвь выживает, потому что она содержит 1."
     },
     {
       "input": "root = [1,0,1,0,0,0,1]",
       "output": "[1,null,1,null,1]",
-      "explanation": "Zero-only subtrees on the left vanish; branches containing a 1 are kept."
+      "explanation": "Исчезают только нулевые поддеревья слева; сохраняются ветви, содержащие 1."
     },
     {
       "input": "root = [0,0,0]",
       "output": "[]",
-      "explanation": "No 1 appears anywhere, so the whole tree is pruned away."
+      "explanation": "1 нигде не появляется, поэтому все дерево обрезано."
     }
   ],
   "starterCode": {
@@ -52,7 +52,7 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Work bottom-up: prune the children before deciding about the current node.",
-    "A subtree survives exactly when it contains at least one 1; otherwise return null."
+    "Работать снизу вверх: обрезать потомков, прежде чем принимать решение о текущем узле.",
+    "Поддеревья выживают именно тогда, когда они содержат по крайней мере один 1; в противном случае возврат нулевой."
   ]
 }

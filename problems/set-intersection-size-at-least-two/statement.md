@@ -1,8 +1,8 @@
-You are given intervals `intervals`, where each entry `[start, end]` stands for all integers from `start` through `end` inclusive.
+Вам даны интервалы `intervals`, где каждая запись `[start, end]` обозначает все целые числа от `start` до `end` включительно.
 
-A containing set is a collection of integers that holds at least two distinct numbers inside every interval. Return the smallest possible size of such a set.
+Содержащий набор представляет собой набор целых чисел, который содержит по меньшей мере два различных числа внутри каждого интервала. Возвращают наименьший возможный размер такого набора.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= intervals.length <= 3000`
-- Each interval has exactly 2 entries `[start, end]`.
+- Каждый интервал имеет точно 2 записи `[start, end]`.
 - `0 <= start < end <= 10^8`

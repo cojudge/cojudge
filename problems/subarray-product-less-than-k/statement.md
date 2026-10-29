@@ -1,10 +1,10 @@
-Count the contiguous groups inside `nums` whose multiplied value stays strictly below `k`.
+Подсчитайте смежные группы внутри `nums`, умноженное значение которых остается строго ниже `k`.
 
-Every entry of `nums` is positive, so products grow when the window widens and shrink when it narrows. That monotonic behavior allows a linear scan instead of checking every pair.
+Каждая запись `nums` положительна, поэтому продукты растут, когда окно расширяется и сжимается, когда оно сужается. Это монотонное поведение позволяет проводить линейное сканирование вместо проверки каждой пары.
 
-Return the total number of qualifying subarrays.
+Возвратить общее количество квалификационных подкатегории.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 3 * 10^4`
 - `1 <= nums[i] <= 1000`
 - `0 <= k <= 10^6`

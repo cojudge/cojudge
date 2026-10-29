@@ -1,0 +1,65 @@
+{
+  "id": "lowest-common-ancestor-of-a-binary-search-tree",
+  "title": "70. Lowest Common Ancestor of BST",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root = [6,2,8,0,4,7,9,null,null,3,5], p = [2,0,4,null,null,3,5], q = [8,7,9]",
+      "output": "6",
+      "explanation": "Nodes 2 and 8 are in opposite subtrees of node 6, so 6 is the lowest common ancestor."
+    },
+    {
+      "input": "root = [6,2,8,0,4,7,9,null,null,3,5], p = [2,0,4,null,null,3,5], q = [4,3,5]",
+      "output": "2",
+      "explanation": "Node 4 is in the right subtree of node 2, and p=2 is the root of that subtree, so 2 is the lowest common ancestor."
+    },
+    {
+      "input": "root = [2,1], p = 2, q = 1",
+      "output": "2",
+      "explanation": "Node 1 is in the left subtree of node 2, and p=2 is the root, so 2 is the lowest common ancestor."
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\nclass Solution:\n    def lowestCommonAncestor(self, root, p, q):\n        pass\n",
+    "cpp": "/*\nDefinition for a binary tree node.\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\nclass Solution {\npublic:\n    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {\n        \n    }\n};\n",
+    "csharp": "/*\nDefinition for a binary tree node.\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\npublic class Solution \n{\n    public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) \n    {\n        \n    }\n}",
+    "rust": "// Definition for a binary tree node.\n// #[derive(Debug, PartialEq, Eq)]\n// pub struct TreeNode {\n//   pub val: i32,\n//   pub left: Option<Rc<RefCell<TreeNode>>>,\n//   pub right: Option<Rc<RefCell<TreeNode>>>,\n// }\n//\n// impl TreeNode {\n//   #[inline]\n//   pub fn new(val: i32) -> Self {\n//     TreeNode {\n//       val,\n//       left: None,\n//       right: None\n//     }\n//   }\n// }\nuse std::rc::Rc;\nuse std::cell::RefCell;\npub struct Solution;\n\nimpl Solution {\n    pub fn lowest_common_ancestor(root: Option<Rc<RefCell<TreeNode>>>, p: Option<Rc<RefCell<TreeNode>>>, q: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {\n        \n    }\n}",
+    "go": "// Definition for a binary tree node.\n// type TreeNode struct {\n//     Val int\n//     Left *TreeNode\n//     Right *TreeNode\n// }\npackage main\n\nfunc LowestCommonAncestor(root *TreeNode, p *TreeNode, q *TreeNode) *TreeNode {\n    \n}",
+    "typescript": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    val: number;\n    left: TreeNode | null;\n    right: TreeNode | null;\n    constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {\n        this.val = val ?? 0;\n        this.left = left ?? null;\n        this.right = right ?? null;\n    }\n}\n*/\nimport { TreeNode } from './TreeNode';\nexport function lowestCommonAncestor(root: TreeNode | null, p: TreeNode | null, q: TreeNode | null): TreeNode | null {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param TreeNode|null $root\n     * @param TreeNode|null $p\n     * @param TreeNode|null $q\n     * @return TreeNode|null\n     */\n    public function lowestCommonAncestor($root, $p, $q) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "root": "[6,2,8,0,4,7,9,null,null,3,5]",
+      "q": "[8,7,9]",
+      "p": "[2,0,4,null,null,3,5]"
+    },
+    {
+      "root": "[6,2,8,0,4,7,9,null,null,3,5]",
+      "p": "[2,0,4,null,null,3,5]",
+      "q": "[4,3,5]"
+    }
+  ],
+  "functionName": "lowestCommonAncestor",
+  "params": [
+    {
+      "name": "root",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    },
+    {
+      "name": "p",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    },
+    {
+      "name": "q",
+      "type": "tree_node",
+      "visualizeType": "tree_node"
+    }
+  ],
+  "outputType": "tree_node"
+}

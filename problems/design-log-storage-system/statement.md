@@ -1,27 +1,27 @@
-You maintain an append-only log store. Each record has an integer `id` and a timestamp string shaped `Year:Month:Day:Hour:Minute:Second` (for example `"2017:01:01:23:59:59"`). Every component is zero-padded, so plain string order matches chronological order.
+У каждой записи есть целое число `id` и временная метка в виде строки `Year:Month:Day:Hour:Minute:Second` (например, `"2017:01:01:23:59:59"`). Каждый компонент имеет нулевую прокладку, поэтому простой порядок строк соответствует хронологическому порядку.
 
-Two behaviors are needed:
+Необходимы два вида поведения:
 
-- `put(id, timestamp)` stores one record.
-- `retrieve(start, end, granularity)` lists the `id` values whose timestamps fall inside `[start, end]` once both bounds and the record are cut down to the requested `granularity`. The granularity is one of `Year`, `Month`, `Day`, `Hour`, `Minute`, or `Second`. Cutting down means keeping only the leading components: `Year` keeps 1 part, `Month` keeps 2, and so on up to `Second` which keeps all 6.
+- `put(id, timestamp)` хранит один рекорд.
+- `retrieve(start, end, granularity)` перечисляет значения `id`, временные метки которых попадают в `[start, end]` после того, как обе границы и запись сведены к запрашиваемому `granularity`. Гранулярность является одной из `Year`, `Month`, `Day`, `Hour`, `Minute` или `Second`. Сокращение означает сохранение только ведущих компонентов: `Year` сохраняет часть 1, `Month` сохраняет 2 и так далее до `Second`, который сохраняет все 6.
 
-This task uses a portable function adaptation instead of a class. Implement:
+В этой задаче используется переносная функциональная адаптация вместо класса.
 
 ```
-runLogStorage(operations, values)
+runLogStorage (операции, значения)
 ```
 
-The two arrays are parallel. `operations[i]` is one of `"LogSystem"`, `"put"`, or `"retrieve"`, and `values[i]` packs that call's arguments with `|` separators:
+`operations[i]` является одним из `"LogSystem"`, `"put"`, или `"retrieve"`, и `values[i]` пакеты, которые вызывают аргументы с `|` сепараторы:
 
-- `"LogSystem"` with `""` resets the store and is always first.
-- `"put"` with `"id|timestamp"`, e.g. `"1|2017:01:01:23:59:59"`.
-- `"retrieve"` with `"start|end|granularity"`, e.g. `"2016:01:01:01:01:01|2017:01:01:23:00:00|Year"`.
+- `"LogSystem"` с `""` сбрасывает магазин и всегда на первом месте.
+- `"put"` с `"id|timestamp"`, например, `"1|2017:01:01:23:59:59"`.
+- `"retrieve"` с `"start|end|granularity"`, например, `"2016:01:01:01:01:01|2017:01:01:23:00:00|Year"`.
 
-Return one integer row per `retrieve` call (in call order), each row listing matching `id` values in insertion order. Constructor and `put` calls produce no rows. There is intentionally no class wrapper.
+Возвращайте одну целочисленную строку на вызов `retrieve` (в порядке вызова), каждый список строк, соответствующий значениям `id` в порядке вставки. Конструктор и вызовы `put` не производят строк. Преднамеренно нет обертки класса.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= operations.length == values.length <= 500`
-- The first operation is `"LogSystem"` with `""`.
-- Each `id` is in `1..10^9`; timestamps match the fixed 6-part shape with valid calendar ranges.
-- Granularity is exactly one of `Year`, `Month`, `Day`, `Hour`, `Minute`, `Second`.
-- `start` is never later than `end` at the requested granularity.
+- Первая операция — `"LogSystem"` с `""`.
+- Каждый `id` находится в `1..10^9`; временные метки соответствуют фиксированной форме 6-части с действительными календарными диапазонами.
+- Гранулярность является одним из `Year`, `Month`, `Day`, `Hour`, `Minute`, `Second`.
+- `start` никогда не бывает позже `end` по запрашиваемой гранулярности.

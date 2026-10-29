@@ -1,6 +1,6 @@
 {
   "id": "house-robber-iii",
-  "title": "200. House Robber III",
+  "title": "200. Домой Грабитель III",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/house-robber-iii/",
   "category": "tree",
@@ -47,6 +47,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "For each node return [rob_this, skip_this]. rob_this = val + skip_left + skip_right."
+    "Для каждого узла возвращается [rob_this, skip_this]. rob_this = val + skip_left + skip_right."
   ]
 }

@@ -1,11 +1,11 @@
-Build a container with stack behavior whose removal rule is frequency-based: each `pop` extracts the value that currently occurs most often.
+Постройте контейнер с поведением стека, правило удаления которого основано на частоте: каждый `pop` извлекает значение, которое в настоящее время встречается чаще всего.
 
-A test is encoded as two parallel arrays, `operations` and `values`: `operations[i]` states whether step `i` is a `push` or a `pop`. The companion entry `values[i]` supplies the argument for a `push` and carries no meaning for a `pop`. Collect the value yielded by every `pop`, preserving their order; a `push` contributes no entry to that output. If several values share the highest frequency, remove the one that was pushed most recently (nearest the top).
+Тест кодируется как два параллельных массива, `operations` и `values`: `operations[i]` указывает, является ли шаг `i` `push` или `pop`. Сопутствующая запись `values[i]` предоставляет аргумент для `push` и не несет никакого смысла для `pop`. Соберите значение, полученное каждым `pop`, сохраняя их порядок; `push` не вносит никакого вклада в этот выход. Если несколько значений имеют самую высокую частоту, удалите тот, который был выдвинут совсем недавно (ближайшая вершина).
 
-Each sequence is guaranteed to be legal: `pop` never appears when the structure holds nothing.
+Каждая последовательность гарантированно является законной: `pop` никогда не появляется, когда структура ничего не удерживает.
 
-**Constraints:**
+**Ограничения:**
 
-- `0 <= values[i] <= 10^9` when `operations[i]` is `push`.
+- `0 <= values[i] <= 10^9`, когда `operations[i]` является `push`.
 - `1 <= operations.length == values.length <= 20000`
-- At most `2 * 10^4` calls are made in one trace.
+- Звонки `2 * 10^4` совершаются в одном направлении.

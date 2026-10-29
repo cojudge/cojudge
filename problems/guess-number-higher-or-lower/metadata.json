@@ -1,6 +1,6 @@
 {
   "id": "guess-number-higher-or-lower",
-  "title": "374. Guess Number Higher or Lower",
+  "title": "374. Угадайте число выше или ниже",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/guess-number-higher-or-lower/",
   "category": "binary-search",
@@ -8,17 +8,17 @@
     {
       "input": "n = 10, pick = 6",
       "output": "6",
-      "explanation": "The hidden number is 6; binary search with the guess API finds 6."
+      "explanation": "Скрытым номером является 6; двоичный поиск с помощью угадывания API находит 6."
     },
     {
       "input": "n = 1, pick = 1",
       "output": "1",
-      "explanation": "With only one possible number, the answer is 1."
+      "explanation": "Если есть только одно возможное число, то ответ будет 1."
     },
     {
       "input": "n = 2, pick = 1",
       "output": "1",
-      "explanation": "Guessing 1 hits immediately; otherwise the API directs the search to 1."
+      "explanation": "Угадайте, что 1 попадает сразу; в противном случае API направляет поиск на 1."
     }
   ],
   "starterCode": {
@@ -67,8 +67,8 @@
     "maxGuesses": 100
   },
   "hints": [
-    "The judge never reveals pick; call game.guess(mid) to learn whether mid is higher (-1), lower (1), or equal (0).",
-    "Binary-search the inclusive interval [1, n]; move to [mid+1, right] when the guess is low and [left, mid-1] when it is high.",
-    "Compute mid as left + (right - left) / 2 to avoid overflow."
+    "Судья никогда не раскрывает выбор; позвоните на game.guess (mid), чтобы узнать, является ли середина выше (-1), ниже (1) или равной (0).",
+    "Бинарный поиск включающий интервал [1, n]; перейдите к [mid+1, справа], когда догадка низкая, и [left, mid-1], когда она высокая.",
+    "Вычислить середину как левую + (право-лево) / 2, чтобы избежать переполнения."
   ]
 }

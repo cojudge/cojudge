@@ -1,6 +1,6 @@
 {
   "id": "strobogrammatic-number-ii",
-  "title": "353. Strobogrammatic Number II",
+  "title": "353. Стробограмматический номер II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/strobogrammatic-number-ii/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "n = 2",
       "output": "[\"11\",\"69\",\"88\",\"96\"]",
-      "explanation": "These are all length-2 strings whose rotation mirrors correctly with a non-zero lead."
+      "explanation": "Это все струны длины 2, вращение которых правильно отражается ненулевым свинцом."
     },
     {
       "input": "n = 1",
       "output": "[\"0\",\"1\",\"8\"]",
-      "explanation": "Only 0, 1, and 8 rotate to themselves as single digits."
+      "explanation": "Только 0, 1 и 8 вращаются как однозначные цифры."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Build the strings from the outside in, wrapping inner results with each rotation pair.",
-    "The outermost pair cannot use 0 as the leading digit.",
-    "Recurse with length n - 2 until reaching length 0 (empty middle) or 1 (0, 1, 8)."
+    "Постройте струны снаружи, обернув внутренние результаты с каждой парой вращения.",
+    "Самая внешняя пара не может использовать 0 в качестве ведущей цифры.",
+    "Рекурсия с длиной n - 2 до достижения длины 0 (пустая середина) или 1 (0, 1, 8)."
   ]
 }

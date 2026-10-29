@@ -1,0 +1,58 @@
+{
+  "id": "shortest-bridge",
+  "title": "921. Shortest Bridge",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/shortest-bridge/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "grid = [[0,1],[1,0]]",
+      "output": "1",
+      "explanation": "One diagonal gap needs a single flip."
+    },
+    {
+      "input": "grid = [[0,1,0],[0,0,0],[0,0,1]]",
+      "output": "2",
+      "explanation": "The gap spans two water cells."
+    },
+    {
+      "input": "grid = [[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]]",
+      "output": "1",
+      "explanation": "The inner cell is one step from the ring."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int shortestBridge(int[][] grid) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def shortestBridge(self, grid: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int shortestBridge(vector<vector<int>>& grid) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int ShortestBridge(int[][] grid)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn shortest_bridge(grid: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc ShortestBridge(grid [][]int) int {\n    return 0\n}",
+    "typescript": "export function shortestBridge(grid: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $grid\n     * @return int\n     */\n    public function shortestBridge($grid) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "grid": "[[0,1],[1,0]]"
+    },
+    {
+      "grid": "[[0,1,0],[0,0,0],[0,0,1]]"
+    },
+    {
+      "grid": "[[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]]"
+    }
+  ],
+  "functionName": "shortestBridge",
+  "params": [
+    {
+      "name": "grid",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Paint the first island and push all its cells as layer zero of a multi-source search.",
+    "Expand outward one ring at a time over water, skipping already seen cells.",
+    "The first time the expansion touches the second island, the layer count is the answer."
+  ]
+}

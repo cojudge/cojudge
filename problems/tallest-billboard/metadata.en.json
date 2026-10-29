@@ -1,0 +1,58 @@
+{
+  "id": "tallest-billboard",
+  "title": "942. Tallest Billboard",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/tallest-billboard/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "rods = [1,2,3,6]",
+      "output": "6",
+      "explanation": "Splitting into [1,2,3] and [6] gives two supports of height 6, which is the best achievable balance."
+    },
+    {
+      "input": "rods = [1,2,3,4,5,6]",
+      "output": "10",
+      "explanation": "Grouping [2,3,5] against [4,6] (or [1,4,5] against [2,3,... ]) reaches height 10; nothing taller balances."
+    },
+    {
+      "input": "rods = [1,2]",
+      "output": "0",
+      "explanation": "No two disjoint non-empty groups share a total, so the answer is 0."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int tallestBillboard(int[] rods) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def tallestBillboard(self, rods: List[int]) -> int:\n        return 0",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int tallestBillboard(vector<int>& rods) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int TallestBillboard(int[] rods)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn tallest_billboard(rods: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc TallestBillboard(rods []int) int {\n    return 0\n}",
+    "typescript": "export function tallestBillboard(rods: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $rods\n     * @return int\n     */\n    public function tallestBillboard($rods) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "rods": "[1,2,3,6]"
+    },
+    {
+      "rods": "[1,2,3,4,5,6]"
+    },
+    {
+      "rods": "[1,2]"
+    }
+  ],
+  "functionName": "tallestBillboard",
+  "params": [
+    {
+      "name": "rods",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Track the height difference between the two supports instead of both heights.",
+    "Let dp[d] be the tallest higher-support height reachable with difference d, and update it rod by rod.",
+    "Adding a rod to the shorter support only raises the taller height when the rod overtakes the gap."
+  ]
+}

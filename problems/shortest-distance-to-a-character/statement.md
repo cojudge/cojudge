@@ -1,8 +1,8 @@
-Given a string `s` and a target letter `c`, compute for every index the distance to the closest occurrence of `c` in `s`. The target is guaranteed to appear at least once.
+Учитывая строку `s` и целевую букву `c`, вычислите для каждого индекса расстояние до ближайшего появления `c` в `s`.
 
-Adaptation note: the original signature takes a `char`, which has no portable equivalent across all eight judges. Here `c` is a one-character string; implementations should read its first character.
+Примечание по адаптации: оригинальная подпись берет `char`, который не имеет портативного эквивалента во всех восьми судьях.Здесь `c` представляет собой односимвольную строку; реализации должны читать ее первый символ.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 10^4`
-- `s` and `c` consist of lowercase English letters.
-- `c` has length 1 and occurs in `s`.
+- `s` и `c` состоят из строчных английских букв.
+- `c` имеет длину 1 и встречается в `s`.

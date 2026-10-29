@@ -1,18 +1,18 @@
 {
   "id": "basic-is-even",
-  "title": "1. Is It Even?",
+  "title": "1. Это даже?",
   "difficulty": "Easy",
   "category": "if-else",
   "examples": [
     {
       "input": "n = 4",
       "output": "true",
-      "explanation": "4 is divisible by 2."
+      "explanation": "4 делится на 2."
     },
     {
       "input": "n = 7",
       "output": "false",
-      "explanation": "7 leaves a remainder of 1."
+      "explanation": "7 оставляет остаток от 1."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "An even number has remainder 0 when divided by 2.",
-    "In most languages the remainder operator is `%`."
+    "Остальная часть 0 делится на 2.",
+    "В большинстве языков оставшимся оператором является `%`."
   ]
 }

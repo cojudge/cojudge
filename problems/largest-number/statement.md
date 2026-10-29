@@ -1,7 +1,7 @@
-Given non-negative integers, arrange their order so that gluing them together forms the largest possible number. Return that number as a string.
+Учитывая неотрицательные целые числа, упорядочивайте их так, чтобы склеивание их вместе образовывало максимально возможное число. Возвращайте это число как строку.
 
-Comparison is by glued pairs: for two numbers `a` and `b`, place `a` before `b` when `a + b` is larger than `b + a`. When every number is zero, return `"0"` rather than a run of zeros.
+Сравнение проводится по склеенным парам: для двух чисел `a` и `b` поместите `a` перед `b`, когда `a + b` больше, чем `b + a`. Когда каждое число равно нулю, возвращайте `"0"`, а не серию нулей.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 100`
 - `0 <= nums[i] <= 10^9`

@@ -1,10 +1,10 @@
-Raise duplicates just enough to make every entry different.
+Поднимите дубликаты достаточно, чтобы каждая запись отличалась.
 
-In one move you may pick any position and add one to its value. Repeating moves, turn the array into one with all distinct numbers while using as few moves as possible.
+В одном движении вы можете выбрать любую позицию и добавить одну к ее значению. Повторяя движения, превратите массив в один со всеми различными числами, используя как можно меньше ходов.
 
-Given an integer array `nums`, return that smallest possible move count.
+Учитывая целочисленный массив `nums`, верните наименьшее возможное количество ходов.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^5`
 - `0 <= nums[i] <= 10^5`
-- The answer fits in a 32-bit signed integer.
+- Ответ помещается в 32-бит подписанного целого числа.

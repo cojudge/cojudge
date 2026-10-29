@@ -1,6 +1,6 @@
 {
   "id": "employee-free-time",
-  "title": "761. Employee Free Time",
+  "title": "761. Работник Свободное время",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/employee-free-time/",
   "category": "interval",
@@ -8,12 +8,12 @@
     {
       "input": "schedule = [[1,2,5,6],[1,3],[4,10]]",
       "output": "[[3,4]]",
-      "explanation": "Merged busy [1,3],[4,10]; gap 3-4."
+      "explanation": "Слияние занятых [1, 3], [4, 10]; разрыв 3-4."
     },
     {
       "input": "schedule = [[1,3,6,7],[2,4],[2,5,9,12]]",
       "output": "[[5,6],[7,9]]",
-      "explanation": "Merged busy [1,5],[6,7],[9,12]; gaps 5-6,7-9."
+      "explanation": "Слияние занятых [1,5],[6,7],[9,12]; пробелы 5-6,7-9."
     }
   ],
   "starterCode": {
@@ -43,8 +43,8 @@
   ],
   "outputType": "int_list_2d",
   "hints": [
-    "Unflatten each row into [start,end] pairs, pool all pairs, and sort by start time.",
-    "Sweep once keeping the farthest busy end seen; a gap opens whenever the next start exceeds it.",
-    "Record [prevEnd, start] for each gap and extend prevEnd by the max end otherwise."
+    "Разбейте каждый ряд на пары [старт, конец], объедините все пары и сортируйте по времени начала.",
+    "Заметьте один раз, что самый дальний загруженный конец виден; разрыв открывается всякий раз, когда следующий старт превышает его.",
+    "Записывайте [prevEnd, start] для каждого пробела и продлевайте prevEnd до максимального конца в противном случае."
   ]
 }

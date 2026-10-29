@@ -1,14 +1,14 @@
-You are given an array `nums` with all distinct values.
+Вы получаете массив `nums` со всеми различными значениями.
 
-Build the maximum binary tree as follows, applied recursively to each slice of the array:
+Постройте максимальное двоичное дерево следующим образом, прикладываемое рекурсивно к каждому куску массива:
 
-- Find the largest value in the slice; it becomes the root of this branch.
-- The part of the slice left of that maximum forms the left subtree by the same rule.
-- The part of the slice right of that maximum forms the right subtree by the same rule.
+- Найдите наибольшее значение в срезе; он становится корнем этой ветви.
+- Часть среза слева от этого максимума образует левое поддерево по тому же правилу.
+- Часть права на срез этого максимума образует правое поддерево по тому же правилу.
 
-Return the root of the finished tree.
+Верните корень готового дерева.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 1000`
 - `0 <= nums[i] <= 1000`
-- All values are distinct.
+- Все ценности различны.

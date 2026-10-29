@@ -1,14 +1,14 @@
-A prefix tree, spoken like "try" and often called a trie, organizes a collection of strings so that entries sharing a beginning share structure. Typical uses include predictive text and spelling assistance.
+Дерево префикса, на котором говорят как «попробуй» и часто называют тройкой, организует коллекцию строк, так что записи, разделяющие структуру начального обмена, обычно используют прогностический текст и помощь в написании.
 
-Build a class named `Trie` supporting:
+Создайте класс под названием `Trie`, поддерживающий:
 
-- `Trie()` Creates a fresh empty structure.
-- `void insert(String word)` Adds the string `word` to the stored collection.
-- `boolean search(String word)` Reports `true` when `word` was added earlier as a complete entry, and `false` otherwise.
-- `boolean startsWith(String prefix)` Reports `true` when some previously added `word` begins with `prefix`, and `false` otherwise.
+- `Trie()` создает новую пустую структуру.
+- `void insert(String word)` добавляет строку `word` в сохраненную коллекцию.
+- `boolean search(String word)` сообщает о `true`, когда `word` был добавлен ранее в качестве полной записи, и `false` в противном случае.
+- `boolean startsWith(String prefix)` сообщает о `true`, когда некоторые ранее добавленные `word` начинаются с `prefix`, а `false` иначе.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= word.length, prefix.length <= 2000`
-- Both `word` and `prefix` use only lowercase English letters.
-- No more than `3 * 10^4` invocations of `insert`, `search`, and `startsWith` occur in total.
+- Как `word`, так и `prefix` используют только строчные английские буквы.
+- В общей сложности происходит не больше, чем вызовы `3 * 10^4` `insert`, `search` и `startsWith`.

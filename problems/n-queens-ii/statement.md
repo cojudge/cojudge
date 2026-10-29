@@ -1,7 +1,7 @@
-Place `n` queens on an `n x n` board so that no two queens share a row, column, or diagonal — this is the classic **n-queens** arrangement.
+Поместите королевы `n` на доску `n x n` так, чтобы ни одна из двух королев не разделяла строку, колонку или диагональ — это классическое расположение **n-queens**.
 
-For a given board size `n`, count how many different valid arrangements exist. Two arrangements differ when at least one queen occupies a different square.
+Для заданного размера доски `n` подсчитайте, сколько существует различных действительных аранжировок.Две аранжировки различаются, когда по крайней мере одна королева занимает другой квадрат.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= n <= 9`

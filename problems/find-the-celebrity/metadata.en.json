@@ -1,0 +1,67 @@
+{
+  "id": "find-the-celebrity",
+  "title": "277. Find the Celebrity",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/find-the-celebrity/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "graph = [[1,1,0],[0,1,0],[1,1,1]]",
+      "output": "1",
+      "explanation": "Person 1 is known by 0 and 2 while knowing nobody else."
+    },
+    {
+      "input": "graph = [[1,0,1],[1,1,0],[0,1,1]]",
+      "output": "-1",
+      "explanation": "No person satisfies both celebrity conditions."
+    },
+    {
+      "input": "graph = [[1,0],[1,1]]",
+      "output": "0",
+      "explanation": "Person 0 knows nobody else and person 1 knows 0."
+    }
+  ],
+  "starterCode": {
+    "java": "/**\n * // This is the knows API interface.\n * // You should not implement it, or speculate about its implementation\n * // class Relation {\n * //     public boolean knows(int a, int b);\n * // }\n * // knows(a, b) tells whether person a knows person b; n is the party size.\n * // Eliminate in O(n) calls, then verify the survivor.\n * // The judge counts your calls: at most 10 + 5*n per test case.\n */\nclass Solution {\n    public int findCelebrity(int n, Relation relation) {\n        return -1;\n    }\n}",
+    "python": "# The knows API is provided by the judge as `relation`.\n# You should not implement it, or speculate about its implementation\n# class Relation:\n#     def knows(self, a: int, b: int) -> bool:\n#         ...\n# knows(a, b) tells whether person a knows person b; n is the party size.\n# Eliminate in O(n) calls, then verify the survivor.\n# The judge counts your calls: at most 10 + 5*n per test case.\nfrom typing import List\nclass Solution:\n    def findCelebrity(self, n: int, relation: 'Relation') -> int:\n        return -1",
+    "cpp": "/**\n * // This is the knows API interface.\n * // You should not implement it, or speculate about its implementation\n * class Relation {\n *   public:\n *     bool knows(int a, int b);\n * };\n * // knows(a, b) tells whether person a knows person b; n is the party size.\n * // Eliminate in O(n) calls, then verify the survivor.\n * // The judge counts your calls: at most 10 + 5*n per test case.\n */\nclass Solution {\npublic:\n    int findCelebrity(int n, Relation& relation) {\n        return -1;\n    }\n};",
+    "csharp": "/**\n * // This is the knows API interface.\n * // You should not implement it, or speculate about its implementation\n * // class Relation {\n * //     public bool Knows(int a, int b);\n * // }\n * // Knows(a, b) tells whether person a knows person b; n is the party size.\n * // Eliminate in O(n) calls, then verify the survivor.\n * // The judge counts your calls: at most 10 + 5*n per test case.\n */\npublic class Solution \n{\n    public int FindCelebrity(int n, Relation relation) \n    {\n        return -1;\n    }\n}",
+    "rust": "// This is the knows API interface.\n// You should not implement it, or speculate about its implementation\n// struct Relation;\n// impl Relation {\n//     pub fn knows(&mut self, a: i32, b: i32) -> bool;\n// }\n// knows(a, b) tells whether person a knows person b; n is the party size.\n// Eliminate in O(n) calls, then verify the survivor.\n// The judge counts your calls: at most 10 + 5*n per test case.\npub struct Solution;\n\nimpl Solution {\n    pub fn find_celebrity(n: i32, relation: &mut Relation) -> i32 {\n        -1\n    }\n}",
+    "go": "package main\n\n// This is the knows API interface.\n// You should not implement it, or speculate about its implementation\n// type Relation struct { }\n// func (r *Relation) Knows(a int, b int) bool\n// Knows(a, b) tells whether person a knows person b; n is the party size.\n// Eliminate in O(n) calls, then verify the survivor.\n// The judge counts your calls: at most 10 + 5*n per test case.\nfunc FindCelebrity(n int, relation *Relation) int {\n    return -1\n}",
+    "typescript": "import { Relation } from './Relation';\n// This is the knows API interface.\n// You should not implement it, or speculate about its implementation\n// class Relation {\n//     knows(a: number, b: number): boolean;\n// }\n// knows(a, b) tells whether person a knows person b; n is the party size.\n// Eliminate in O(n) calls, then verify the survivor.\n// The judge counts your calls: at most 10 + 5*n per test case.\nexport function findCelebrity(n: number, relation: Relation): number {\n    return -1;\n}",
+    "php": "// This is the knows API interface.\n// You should not implement it, or speculate about its implementation\n// class Relation {\n//     public function knows($a, $b);\n// }\n// knows($a, $b) tells whether person a knows person b; n is the party size.\n// Eliminate in O(n) calls, then verify the survivor.\n// The judge counts your calls: at most 10 + 5*n per test case.\nclass Solution {\n    /**\n     * @param int $n\n     * @param Relation $relation\n     * @return int\n     */\n    public function findCelebrity($n, $relation) {\n        return -1;\n    }\n}"
+  },
+  "testCases": [
+    {
+      "graph": "[[1,1,0],[0,1,0],[1,1,1]]"
+    },
+    {
+      "graph": "[[1,0,1],[1,1,0],[0,1,1]]"
+    },
+    {
+      "graph": "[[1,0],[1,1]]"
+    },
+    {
+      "graph": "[[1]]"
+    }
+  ],
+  "functionName": "findCelebrity",
+  "params": [
+    {
+      "name": "graph",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "interactive": {
+    "kind": "celebrity",
+    "secretField": "graph",
+    "maxGuesses": 10,
+    "perN": 5
+  },
+  "hints": [
+    "The judge never reveals the matrix; only relation.knows(a, b) is available (at most 10 + 5*n calls).",
+    "Eliminate non-candidates: if candidate knows i, candidate cannot be the celebrity so move to i.",
+    "Verify the survivor knows nobody else and is known by everybody; else return -1."
+  ]
+}

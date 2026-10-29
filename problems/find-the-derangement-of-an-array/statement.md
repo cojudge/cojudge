@@ -1,6 +1,6 @@
-Start from the sorted array `[1, 2, ..., n]`. A derangement is a rearrangement where no value stays in its original slot (so 1 is not first, 2 is not second, and so on).
+Начните с отсортированного массива `[1, 2, ..., n]`. Разлад - это перестановка, при которой в исходном слоте не остается никакого значения (так что 1 не первый, 2 не второй и так далее).
 
-Count how many derangements exist, returning the total modulo 1000000007.
+Подсчитайте, сколько существует нарушений, возвращая общий модуль 1000000007.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 10^6`

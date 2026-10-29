@@ -1,11 +1,11 @@
-You are given several axis-aligned rectangles that never overlap. Each rectangle is written as `[a, b, x, y]`, where `(a, b)` is its bottom-left corner and `(x, y)` is its top-right corner. Every integer coordinate point on the border or inside counts as covered.
+Каждый прямоугольник записывается как `[a, b, x, y]`, где `(a, b)` находится в левом нижнем углу, а `(x, y)` - в правом верхнем углу. Каждая целочисленная точка координат на границе или внутри считается покрытой.
 
-The original challenge asks for a class that returns a uniformly random covered integer point on each `pick` call. This offline adaptation simplifies the task: implement a function that returns any single integer point `[u, v]` lying inside at least one of the rectangles.
+Первоначальная задача запрашивает класс, который возвращает однородно случайную целочисленную точку на каждом вызове `pick`. Эта офлайн-адаптация упрощает задачу: реализовать функцию, которая возвращает любую единичную целочисленную точку `[u, v]`, лежащую внутри по меньшей мере одного из прямоугольников.
 
-The checker does not test randomness or distribution — it only verifies containment. Hence returning a corner of the first rectangle is accepted, as is any other covered point.
+Проверка не проверяет случайность или распределение — она только проверяет сдерживание, поэтому принимается возврат уголка первого прямоугольника, как и любая другая закрытая точка.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= rects.length <= 100`
-- Each rectangle has 4 entries with `a < x` or `a == x` allowed only for degenerate single points; generally `a <= x` and `b <= y`
-- Coordinates fit in 32-bit signed range
-- Rectangles do not overlap
+- Каждый прямоугольник имеет записи 4 с `a < x` или `a == x`, разрешенные только для вырожденных одиночных точек; обычно `a <= x` и `b <= y`
+- Координаты вписываются в подписанный диапазон 32-bit
+- Прямоугольники не перекрываются

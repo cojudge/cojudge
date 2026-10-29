@@ -1,8 +1,8 @@
-Each node of a binary tree holds some number of coins, and the total number of coins equals the number of nodes. In one move you may shift a single coin from a node to one of its directly connected neighbors (parent or child).
+Каждый узел двоичного дерева содержит некоторое количество монет, а общее количество монет равно количеству узлов.В одном движении вы можете переместить одну монету из узла в одного из его непосредственно связанных соседей (родителя или потомка).
 
-Rearrange the coins so that every node ends with exactly one coin. Return the smallest possible number of moves.
+Перегруппируйте монеты так, чтобы каждый узел заканчивался ровно одной монетой. Верните наименьшее возможное количество ходов.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= number of nodes <= 100`
 - `0 <= node value <= number of nodes`
-- The sum of all node values equals the number of nodes.
+- Сумма всех значений узлов равна количеству узлов.

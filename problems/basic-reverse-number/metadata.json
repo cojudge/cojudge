@@ -1,18 +1,18 @@
 {
   "id": "basic-reverse-number",
-  "title": "13. Reverse Number",
+  "title": "13. Обратное число",
   "difficulty": "Easy",
   "category": "loops",
   "examples": [
     {
       "input": "n = 123",
       "output": "321",
-      "explanation": "Reading 123 backwards gives 321."
+      "explanation": "Чтение 123 задом наперед дает 321."
     },
     {
       "input": "n = 120",
       "output": "21",
-      "explanation": "The leading zero of 021 is dropped."
+      "explanation": "Ноль-лидер 021 упал."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Build the answer digit by digit: multiply it by 10, then add the next digit.",
-    "Take the next digit from `n % 10`."
+    "Постройте ответ цифрой за цифрой: умножьте его на 10, затем добавьте следующую цифру.",
+    "Возьмите следующую цифру от `n % 10`."
   ]
 }

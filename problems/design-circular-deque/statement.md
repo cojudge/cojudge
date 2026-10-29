@@ -1,22 +1,22 @@
-Build a fixed-capacity double-ended queue that supports insertion and removal at both ends in constant time.
+Постройте двухконечную очередь с фиксированной емкостью, которая поддерживает вставку и удаление на обоих концах в постоянное время.
 
-This task uses a portable function adaptation instead of a class. Implement:
+В этой задаче используется переносная функциональная адаптация вместо класса.
 
 ```
-runCircularDeque(operations, values)
+runCircularDeque (операции, значения)
 ```
 
-The two arrays are parallel. `operations[i]` is one of `"MyCircularDeque"`, `"insertFront"`, `"insertLast"`, `"deleteFront"`, `"deleteLast"`, `"getFront"`, `"getRear"`, `"isEmpty"`, `"isFull"`, and `values[i]` carries that call's integer argument:
+Два массива параллельны. `operations[i]` является одним из `"MyCircularDeque"`, `"insertFront"`, `"insertLast"`, `"deleteFront"`, `"deleteLast"`, `"getFront"`, `"getRear"`, `"isEmpty"`, `"isFull"` и `values[i]` несет в себе целочисленный аргумент этого вызова:
 
-- `"MyCircularDeque"` with `k` creates a deque of capacity `k` and is always first.
-- `"insertFront"` / `"insertLast"` with `v` insert `v` at that end; answer `1` on success, `0` when full.
-- `"deleteFront"` / `"deleteLast"` with `0` remove that end; answer `1` on success, `0` when empty.
-- `"getFront"` / `"getRear"` with `0` answer the end value, or `-1` when empty.
-- `"isEmpty"` / `"isFull"` with `0` answer `1` for true and `0` for false.
+- `"MyCircularDeque"` с `k` создает деке емкости `k` и всегда на первом месте.
+- `"insertFront"` / `"insertLast"` с вставкой `v` `v` с этой целью; ответ `1` на успех, `0` при заполнении.
+- `"deleteFront"` / `"deleteLast"` с `0` удалите этот конец; ответьте `1` на успех, `0`, когда пуст.
+- `"getFront"` / `"getRear"` с `0` отвечают конечному значению, или `-1`, когда пуст.
+- `"isEmpty"` / `"isFull"` с `0` отвечают `1` за истинное и `0` за ложное.
 
-Return one integer per operation after the constructor, in call order. There is intentionally no class wrapper.
+Возвращать одно целое число за операцию после конструктора в порядке вызова.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= operations.length == values.length <= 3000`
-- The first operation is `"MyCircularDeque"` with `1 <= k <= 1000`.
-- Inserted values satisfy `0 <= v <= 1000`; other calls carry `0`.
+- Первая операция — `"MyCircularDeque"` с `1 <= k <= 1000`.
+- Вставленные значения удовлетворяют `0 <= v <= 1000`; другие вызовы несут `0`.

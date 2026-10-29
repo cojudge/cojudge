@@ -1,6 +1,6 @@
 {
   "id": "insert-interval",
-  "title": "35. Insert Interval",
+  "title": "35. Включить интервал",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/insert-interval/",
   "category": "interval",
@@ -8,17 +8,17 @@
     {
       "input": "intervals = [[1,3],[6,9]], newInterval = [2,5]",
       "output": "[[1,5],[6,9]]",
-      "explanation": "[2,5] overlaps with [1,3], so they merge into [1,5]. [6,9] is unchanged."
+      "explanation": "[2, 5] пересекается с [1, 3], поэтому они сливаются в [1, 5]. [6, 9] остается неизменным."
     },
     {
       "input": "intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]",
       "output": "[[1,2],[3,10],[12,16]]",
-      "explanation": "[4,8] overlaps with [3,5], [6,7], and [8,10], merging into [3,10]. [1,2] and [12,16] are unchanged."
+      "explanation": "[4, 8] пересекается с [3, 5], [6, 7] и [8, 10], сливаясь в [3, 10]. [1, 2] и [12, 16] неизменны."
     },
     {
       "input": "intervals = [], newInterval = [5,7]",
       "output": "[[5,7]]",
-      "explanation": "The interval list is empty, so the result is just [[5,7]]."
+      "explanation": "Список интервалов пуст, поэтому результат просто [[5, 7]]."
     }
   ],
   "starterCode": {
@@ -121,9 +121,9 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Walk through intervals in order: add all intervals ending before newInterval starts.",
-    "For overlapping intervals, merge by expanding newInterval to [min(start), max(end)] until overlaps end.",
-    "After merging, append the merged newInterval, then append the remaining intervals.",
-    "You don't need to sort if the input is already sorted and non-overlapping."
+    "Пройдите через интервалы в порядке: добавьте все интервалы, заканчивающиеся до начала нового интервала.",
+    "Для перекрывающихся интервалов сливаются путем расширения нового интервала до [min(start), max(end)], пока не закончатся перекрытия.",
+    "После слияния добавьте слитый новый Interval, затем добавьте оставшиеся интервалы.",
+    "Вам не нужно сортировать, если вход уже отсортирован и не перекрывается."
   ]
 }

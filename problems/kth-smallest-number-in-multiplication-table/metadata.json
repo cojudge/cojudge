@@ -1,6 +1,6 @@
 {
   "id": "kth-smallest-number-in-multiplication-table",
-  "title": "687. Kth Smallest Number in Multiplication Table",
+  "title": "687. Кт наименьшее число в таблице умножения",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/kth-smallest-number-in-multiplication-table/",
   "category": "binary-search",
@@ -8,12 +8,12 @@
     {
       "input": "m = 3, n = 3, k = 5",
       "output": "3",
-      "explanation": "The 3 by 3 table holds [1,2,3,2,4,6,3,6,9]; ordered they are [1,2,2,3,3,4,6,6,9], so the 5th value is 3."
+      "explanation": "The 3 через 3 Столик держится.1,2,3,2,4,6,3,6,9]; предписано им [1,2,2,3,3,4,6,6,9], так что 5-е значение 3."
     },
     {
       "input": "m = 2, n = 3, k = 6",
       "output": "6",
-      "explanation": "The 2 by 3 table holds [1,2,3,2,4,6]; the 6th smallest is 6."
+      "explanation": "2 по таблице 3 удерживает [1, 2, 3, 2, 4, 6]; 6-й наименьший — 6."
     },
     {
       "input": "m = 1, n = 1, k = 1",
@@ -64,8 +64,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Count how many table entries are at most mid by adding min(n, mid / row) over each row.",
-    "The count grows monotonically with mid, so binary-search the smallest mid whose count reaches k.",
-    "Rows and columns are symmetric; iterate over the smaller dimension when counting."
+    "Подсчитайте, сколько записей в таблице находится максимум в середине, добавив мин (n, середина / строка) по каждой строке.",
+    "Количество растет монотонно с серединой, поэтому двоичный поиск наименьшая середина, количество которой достигает k.",
+    "Ряды и столбцы симметричны; итерировать по меньшему размеру при подсчете."
   ]
 }

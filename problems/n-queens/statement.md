@@ -1,6 +1,6 @@
-Place `n` queens on an `n x n` chessboard so that no two queens attack each other. Return every distinct valid board.
+Поместите королев `n` на шахматную доску `n x n` так, чтобы две королевы не нападали друг на друга.
 
-Each board is represented by `n` strings of length `n`. A `Q` marks a queen and a `.` marks an empty square. The boards may be returned in any order.
+Каждая доска представлена строками `n` длины `n`. `Q` обозначает королеву, а `.` обозначает пустой квадрат. Доски могут быть возвращены в любом порядке.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 9`

@@ -1,6 +1,6 @@
 {
   "id": "score-of-parentheses",
-  "title": "852. Score of Parentheses",
+  "title": "852. Счет парентезов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/score-of-parentheses/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"()\"",
       "output": "1",
-      "explanation": "A single pair is worth one."
+      "explanation": "Одна пара стоит одного."
     },
     {
       "input": "s = \"(())\"",
       "output": "2",
-      "explanation": "The inner pair scores 1, and the outer layer doubles it."
+      "explanation": "Внутренняя пара набирает 1, а внешний слой удваивает его."
     },
     {
       "input": "s = \"()()\"",
       "output": "2",
-      "explanation": "Two adjacent pairs each score 1, and 1 + 1 = 2."
+      "explanation": "Две соседние пары оценивают 1 и 1 + 1 = 2."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Track nesting depth: a pair `()` that closes at its own depth contributes a power of two determined by how deeply it sits.",
-    "A stack holding the running total of each open level lets you add the inner score doubled into the outer level, or use a depth counter and add `1 << depth` for every primitive `()`."
+    "Глубина гнездования трека: пара `()`, которая закрывается на собственной глубине, вносит силу двух, определяемую тем, насколько глубоко она сидит.",
+    "Стек, удерживающий общую сумму пробега каждого открытого уровня, позволяет добавить внутреннюю оценку, удвоенную на внешний уровень, или использовать счетчик глубины и добавить `1 << depth` для каждого примитивного `()`."
   ]
 }

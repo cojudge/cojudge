@@ -1,21 +1,21 @@
-There are `numCourses` subjects numbered `0` through `numCourses - 1`. An entry `prerequisites[i] = [ai, bi]` declares that subject `ai` has to precede subject `bi`.
+Там есть `numCourses` Субъекты нумеруются `0` через `numCourses - 1`Вход. `prerequisites[i] = [ai, bi]` заявляет, что этот предмет `ai` должен предшествовать субъекту `bi`.
 
-Dependence carries transitively: whenever `a` must precede `b` and `b` must precede `c`, then `a` must also precede `c`.
+Зависимость носит транзитивный характер: если `a` должен предшествовать `b`, а `b` должен предшествовать `c`, то `a` также должен предшествовать `c`.
 
-You additionally receive a list `queries`, where each `queries[j] = [uj, vj]` asks whether subject `uj` is a (direct or indirect) requirement of subject `vj`.
+Вы также получаете список `queries`, где каждый `queries[j] = [uj, vj]` спрашивает, является ли предмет `uj` (прямым или косвенным) требованием предмета `vj`.
 
-Respond with a boolean array `answer`, whose `j`-th slot answers the `j`-th query.
+Ответьте булевым массивом `answer`, чей слот `j`-th отвечает на запрос `j`-th.
 
-**Note:** In this judge the returned collection uses the strings `"true"` and `"false"`.
+**Примечание: ** В этом решении в возвращенной коллекции используются строки `"true"` и `"false"`.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= numCourses <= 100`
 - `0 <= prerequisites.length <= (numCourses * (numCourses - 1) / 2)`
 - `prerequisites[i].length == 2`
 - `0 <= ai, bi <= numCourses - 1`
 - `ai != bi`
-- All pairs `[ai, bi]` are unique
-- The prerequisites graph has no cycles
+- Все пары `[ai, bi]` уникальны.
+- График предпосылок не имеет циклов
 - `1 <= queries.length <= 10^4`
 - `0 <= ui, vi <= numCourses - 1`
 - `ui != vi`

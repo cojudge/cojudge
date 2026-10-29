@@ -1,6 +1,6 @@
 {
   "id": "ugly-number-ii",
-  "title": "366. Ugly Number II",
+  "title": "366. Уродливый номер II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/ugly-number-ii/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "n = 10",
       "output": "12",
-      "explanation": "The first ten ugly numbers are [1,2,3,4,5,6,8,9,10,12], so the tenth is 12."
+      "explanation": "Первые десять уродливых чисел []1,2,3,4,5,6,8,9,10,12], так что десятая часть 12."
     },
     {
       "input": "n = 1",
       "output": "1",
-      "explanation": "1 is the first ugly number."
+      "explanation": "1 — первое уродливое число."
     },
     {
       "input": "n = 11",
       "output": "15",
-      "explanation": "After 12 comes 15, since 11, 13 and 14 all contain other prime factors."
+      "explanation": "После 12 приходит 15, так как 11, 13 и 14 содержат другие простые факторы."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Every ugly number after 1 is twice, three times or five times an earlier ugly number.",
-    "Keep three pointers into the built list for multiples of 2, 3 and 5, and always take the smallest candidate next.",
-    "Advance every pointer whose candidate equals the chosen value so duplicates appear only once."
+    "Каждое уродливое число после 1 в два, три или пять раз больше предыдущего уродливого числа.",
+    "Держите три указателя в встроенном списке для кратных 2, 3 и 5 и всегда следуйте наименьшему кандидату.",
+    "Продвигайте каждый указатель, кандидат которого равен выбранному значению, чтобы дубликаты появлялись только один раз."
   ]
 }

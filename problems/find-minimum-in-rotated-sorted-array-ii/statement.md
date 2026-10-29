@@ -1,9 +1,9 @@
-Imagine an ascending array rotated between 1 and n times, where duplicates are allowed. For example, `[0,1,4,4,5,6,7]` rotated 4 times can become `[4,5,6,7,0,1,4]`.
+Представьте себе восходящий массив, вращающийся между 1 и n раз, где допускаются дубликаты. Например, `[0,1,4,4,5,6,7]`, вращающийся 4, может стать `[4,5,6,7,0,1,4]`.
 
-Given such a rotated array `nums`, return its smallest element. Try to reduce the number of steps as much as possible, even though duplicates prevent a pure logarithmic guarantee.
+Учитывая такой вращающийся массив `nums`, верните его наименьший элемент.Постарайтесь максимально сократить количество шагов, даже если дубликаты препятствуют чистой логарифмической гарантии.
 
-**Constraints:**
+**Ограничения:**
 - `n == nums.length`
 - `1 <= n <= 5000`
 - `-5000 <= nums[i] <= 5000`
-- `nums` is a sorted array rotated between 1 and n times.
+- `nums` представляет собой сортированный массив, вращающийся между 1 и n раз.

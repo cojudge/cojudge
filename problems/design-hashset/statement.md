@@ -1,12 +1,12 @@
-Create a set of distinct keys from scratch without relying on any ready-made hash table facility.
+Создайте набор отдельных ключей с нуля, не полагаясь на готовый хеш-стол.
 
-Work is driven by a recorded script: `operations[i]` names one of `MyHashSet`, `add`, `remove`, or `contains`, while the parallel entry `values[i]` gives the key for `add`, `remove`, and `contains` (it is disregarded for the `MyHashSet` construction step).
+Работа управляется записанным скриптом: `operations[i]` называет один из `MyHashSet`, `add`, `remove` или `contains`, в то время как параллельная запись `values[i]` дает ключ для `add`, `remove` и `contains` (это игнорируется для этапа строительства `MyHashSet`).
 
-Collect one number per `contains` — `1` when the key is present and `0` when it is absent — preserving the order in which those checks appear. Construction, `add`, and `remove` contribute no entries to the collected output.
+Соберите одно число на `contains` — `1` Если ключ присутствует и `0` при его отсутствии — сохранение порядка, в котором появляются эти проверки. `add`и `remove` не вносить никаких записей в собранный результат.
 
-Each script opens with `MyHashSet`, every key obeys `0 <= key <= 10^6`, and at most `10^4` invocations occur.
+Каждый скрипт открывается с помощью `MyHashSet`, каждый ключ подчиняется `0 <= key <= 10^6`, и в большинстве случаев происходят вызовы `10^4`.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= key <= 10^6`
-- At most `10^4` calls to `add`, `remove`, and `contains`.
-- Every trace begins with `MyHashSet`.
+- В большинстве случаев `10^4` вызывает `add`, `remove` и `contains`.
+- Каждый трек начинается с `MyHashSet`.

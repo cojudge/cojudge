@@ -1,7 +1,7 @@
-Reorder `nums` so that every even entry comes before every odd entry. The relative order inside the even block and inside the odd block does not matter — any arrangement with all evens first is accepted.
+Переупорядочение `nums` так, чтобы каждая четная запись шла перед каждой нечетной записью.Относительный порядок внутри четного блока и внутри нечетного блока не имеет значения — любая договоренность со всеми четными числами принимается первой.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 5000`
 - `0 <= nums[i] <= 5000`
 
-> **Grading note:** outputs are checked by multiset equality plus the evens-first property, not by exact sequence match.
+**Примечание: ** результаты проверяются равенством множества плюс свойством четности, а не точным соответствием последовательности.

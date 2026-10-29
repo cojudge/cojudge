@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Whiteboard · Cojudge</title>
+	<title>Уайтборд - Коюдж</title>
 	<meta
 		name="description"
 		content="A fast, local-first sketching whiteboard for diagrams, notes, and interview planning."

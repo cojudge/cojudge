@@ -1,6 +1,6 @@
 {
   "id": "construct-binary-tree-from-inorder-and-postorder-traversal",
-  "title": "285. Construct Binary Tree from Inorder and Postorder Traversal",
+  "title": "285. Постройте двоичное дерево из Inorder и Postorder Traversal",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "inorder = [9,3,15,20,7], postorder = [9,15,7,20,3]",
       "output": "[3,9,20,null,null,15,7]",
-      "explanation": "The last postorder entry (3) is the root; it splits inorder into left [9] and right [15,20,7], then recursion finishes both sides."
+      "explanation": "Последняя запись почтового ордера (3) является корнем; он разделяет порядок на левый [9] и правый [15, 20, 7], затем рекурсия завершает обе стороны."
     },
     {
       "input": "inorder = [-1], postorder = [-1]",
       "output": "[-1]",
-      "explanation": "A single entry in both walks describes a lone node."
+      "explanation": "Однократный вход в обе прогулки описывает одиночный узел."
     }
   ],
   "starterCode": {
@@ -57,8 +57,8 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "The final entry of the postorder walk is always the current subtree root.",
-    "Look that root value up in the inorder walk: everything left of it forms the left subtree, everything right forms the right subtree.",
-    "Build the right subtree before the left one when consuming postorder from the end, using an index map for O(1) splits."
+    "Окончательное вступление в постпорядковую прогулку всегда является текущим корнем поддеревов.",
+    "Посмотрите, что корень ценится в ходьбе по порядку: все, что от него осталось, образует левое поддерево, все, что правильно, образует правое поддерево.",
+    "Постройте правое поддерево перед левым при потреблении почтового заказа с конца, используя карту индекса для разделов O(1)."
   ]
 }

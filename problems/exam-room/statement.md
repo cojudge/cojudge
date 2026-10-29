@@ -1,10 +1,10 @@
-Simulate a socially distanced waiting room (function-style adaptation).
+Имитация социально удаленного зала ожидания (адаптация в функциональном стиле).
 
-A room holds numbered seats `0` to `N-1`. Operation `seat()` picks the free seat maximizing the distance to the nearest occupied seat, breaking ties by the smallest index (with the special cases: first student takes seat 0, and an empty-ended interval picks its end). Operation `leave(p)` frees seat `p`, which is guaranteed occupied.
+В номере есть пронумерованные сиденья `0` до `N-1`. Операция `seat()` выбирает свободное сиденье, максимально увеличивая расстояние до ближайшего занятого места, разрывая связи по наименьшему индексу (в особых случаях: первый студент занимает место 0, а пустой интервал выбирает его конец). Операция `leave(p)` освобождает сиденье `p`, которое гарантированно занято.
 
-The classic design asks for an `ExamRoom` class, which this judge cannot express with the supported types. The portable adaptation is `runExamRoom(operations, values)`: both arrays run in parallel, `operations[i]` is one of `"ExamRoom"`, `"seat"`, `"leave"`, and `values[i]` carries the argument (`N` for construction, the seat number for `leave`, ignored `0` for `seat`). Return the list of `seat()` results in call order. Example: operations `["ExamRoom","seat","seat","seat","leave","seat"]` with values `[10,0,0,0,4,0]` seats 0, 9, 4, frees 4, then seats 4 again, yielding `[0,9,4,4]`.
+Классический дизайн запрашивает класс `ExamRoom`, который этот судья не может выразить с поддерживаемыми типами. Портативная адаптация `runExamRoom(operations, values)`: оба массива работают параллельно, `operations[i]` является одним из `"ExamRoom"`, `"seat"`, `"leave"` и `values[i]` несет аргумент (`N` для строительства, номер сиденья для `leave`, проигнорировал `0` для `seat`). Возвратить список результатов `seat()` в порядке вызова. Пример: операции `["ExamRoom","seat","seat","seat","leave","seat"]` со значениями `[10,0,0,0,4,0]` сидений 0, 9, 4, освобождает 4, затем сиденья 4 снова, уступая `[0,9,4,4]`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= N <= 10^9` (tests use small N for speed).
 - `1 <= operations.length <= 200`
-- `leave(p)` always names an occupied seat.
+- `leave(p)` всегда называет место, которое занято.

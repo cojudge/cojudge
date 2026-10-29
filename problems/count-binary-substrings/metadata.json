@@ -1,6 +1,6 @@
 {
   "id": "count-binary-substrings",
-  "title": "710. Count Binary Substrings",
+  "title": "710. Подсчет бинарных подстрок",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/count-binary-substrings/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"00110011\"",
       "output": "6",
-      "explanation": "Six overlapping balanced runs."
+      "explanation": "Шесть перекрывающихся сбалансированных пробегов."
     },
     {
       "input": "s = \"10101\"",
       "output": "4",
-      "explanation": "Four adjacent pairs."
+      "explanation": "Четыре соседние пары."
     },
     {
       "input": "s = \"000111\"",
       "output": "3",
-      "explanation": "Runs of 3 and 3 give 3."
+      "explanation": "Запуски 3 и 3 дают 3."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Compress the string into run lengths (for example 00110011 becomes 2,2,2,2).",
-    "Each neighbouring pair of runs contributes the smaller of the two lengths.",
-    "Sum those minima in one linear pass."
+    "Сжимайте строку в длину (например, 00110011 становится 2, 2, 2, 2).",
+    "Каждая соседняя пара пробегов вносит меньший из двух длин.",
+    "Составьте эти минимумы в один линейный проход."
   ]
 }

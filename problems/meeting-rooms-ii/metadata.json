@@ -1,6 +1,6 @@
 {
   "id": "meeting-rooms-ii",
-  "title": "39. Meeting Rooms II",
+  "title": "39. Залы заседаний II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/meeting-rooms-ii/",
   "category": "interval",
@@ -8,12 +8,12 @@
     {
       "input": "intervals = [[0,30],[5,10],[15,20]]",
       "output": "2",
-      "explanation": "Intervals [5,10] and [15,20] both overlap within [0,30], so 2 rooms are needed."
+      "explanation": "Интервалы [5, 10] и [15, 20] пересекаются внутри [0, 30], поэтому необходимы комнаты 2."
     },
     {
       "input": "intervals = [[7,10],[2,4]]",
       "output": "1",
-      "explanation": "Intervals [7,10] and [2,4] do not overlap, so 1 room suffices."
+      "explanation": "Интервалы [7, 10] и [2, 4] не пересекаются, поэтому достаточно комнаты 1."
     }
   ],
   "starterCode": {
@@ -68,8 +68,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use a min-heap of end times: for each interval in start-sorted order, free rooms with end <= start, then add current end; heap size is rooms needed.",
-    "Equivalent two-pointer approach: sort starts and ends separately, advance pointers and track concurrent meetings.",
-    "Edge case: empty input requires 0 rooms."
+    "Используйте min-heap конечного времени: для каждого интервала в старт-сортированном порядке свободные комнаты с концом <= старт, затем добавьте текущий конец; размер кучи необходимы комнаты.",
+    "Эквивалентный двухточечный подход: сортировка начинается и заканчивается отдельно, предварительные указатели и отслеживание параллельных встреч.",
+    "Крайний случай: пустой вход требует 0 номеров."
   ]
 }

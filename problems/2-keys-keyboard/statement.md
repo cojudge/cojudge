@@ -1,6 +1,6 @@
-You start with one `A` on screen and two operations: copy everything currently shown, and paste the clipboard's contents to the end. The clipboard starts empty; a copy overwrites it, and a paste does not change it.
+Вы начинаете с одного `A` на экране и двух операций: копируете все, что показано в настоящее время, и вставляете содержимое буфера обмена до конца. буфер обмена начинается пустым; копия перезаписывает его, и паста не меняет его.
 
-Implement `minSteps(n)` returning the fewest operations that leave exactly `n` characters on screen.
+Внедряйте `minSteps(n)`, возвращая наименьшее количество операций, которые оставляют на экране именно символы `n`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 1000`

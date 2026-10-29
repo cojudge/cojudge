@@ -1,7 +1,7 @@
-Decide whether one string can be assembled from the letters of another.
+Решите, может ли одна строка быть собрана из букв другой.
 
-Given a target text `ransomNote` and a source text `magazine`, both made of lowercase English letters, determine whether the target can be built by taking letters from the source. Each source character may be used at most once, so the source must contain every needed letter at least as many times as the target asks for it. Return `true` when construction is possible and `false` otherwise.
+Учитывая целевой текст `ransomNote` и исходный текст `magazine`, оба выполнены из строчных английских букв, определяют, можно ли построить цель, беря буквы из источника. Каждый исходный символ может использоваться не более одного раза, поэтому источник должен содержать каждую необходимую букву по крайней мере столько раз, сколько цель просит. Возврат `true`, когда строительство возможно, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= ransomNote.length, magazine.length <= 10^5`
-- Both strings consist of lowercase English letters.
+- Обе строки состоят из строчных английских букв.

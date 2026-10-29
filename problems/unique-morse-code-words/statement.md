@@ -1,8 +1,8 @@
-International Morse code maps each lowercase letter to a sequence of dots and dashes. The table begins `a -> .-`, `b -> -...`, `c -> -.-.`, and continues through `z -> --..` in the usual order.
+Международный азбучный код отображает каждую строчную букву в последовательность точек и тире.Стол начинается с `a -> .-`, `b -> -...`, `c -> -.-.` и продолжается через `z -> --..` в обычном порядке.
 
-The encoding of a whole word is formed by replacing every letter with its code and joining the pieces without separators. Given a list of words, determine how many distinct encodings appear.
+Кодирование целого слова формируется путём замены каждой буквы её кодом и соединения частей без разделителей.Учитывая список слов, определите, сколько различных кодировок появляется.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= words.length <= 100`
 - `1 <= words[i].length <= 12`
-- Each word contains only lowercase English letters
+- Каждое слово содержит только строчные английские буквы

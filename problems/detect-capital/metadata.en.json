@@ -1,0 +1,65 @@
+{
+  "id": "detect-capital",
+  "title": "579. Detect Capital",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/detect-capital/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "word = \"USA\"",
+      "output": "true",
+      "explanation": "All letters are uppercase."
+    },
+    {
+      "input": "word = \"leetcode\"",
+      "output": "true",
+      "explanation": "All letters are lowercase."
+    },
+    {
+      "input": "word = \"Google\"",
+      "output": "true",
+      "explanation": "Only the leading letter is uppercase."
+    },
+    {
+      "input": "word = \"FlaG\"",
+      "output": "false",
+      "explanation": "Uppercase letters appear in the tail without covering the whole word."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean detectCapitalUse(String word) {\n        \n    }\n}",
+    "python": "class Solution:\n    def detectCapitalUse(self, word: str) -> bool:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool detectCapitalUse(string word) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool DetectCapitalUse(string word) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn detect_capital_use(word: String) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc DetectCapitalUse(word string) bool {\n    \n}",
+    "typescript": "export function detectCapitalUse(word: string): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $word\n     * @return bool\n     */\n    public function detectCapitalUse($word) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "word": "USA"
+    },
+    {
+      "word": "leetcode"
+    },
+    {
+      "word": "Google"
+    },
+    {
+      "word": "FlaG"
+    }
+  ],
+  "functionName": "detectCapitalUse",
+  "params": [
+    {
+      "name": "word",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Count uppercase letters: zero means all-lowercase and length-many means all-uppercase.",
+    "Otherwise exactly one uppercase letter is allowed, and it must sit at index 0."
+  ]
+}

@@ -3,26 +3,26 @@
   "difficulty": "Medium",
   "examples": [
     {
-      "explanation": "Strings starting with '1' come first, then the remaining single digits.",
+      "explanation": "Сначала идут струны, начинающиеся с «1», а затем оставшиеся однозначные цифры.",
       "input": "n = 13",
       "output": "[1,10,11,12,13,2,3,4,5,6,7,8,9]"
     },
     {
-      "explanation": "With only two values, dictionary order matches numeric order.",
+      "explanation": "Имея только два значения, словарный порядок соответствует числовому порядку.",
       "input": "n = 2",
       "output": "[1,2]"
     },
     {
-      "explanation": "Single-digit values keep their natural order.",
+      "explanation": "Однозначные значения сохраняют свой естественный порядок.",
       "input": "n = 9",
       "output": "[1,2,3,4,5,6,7,8,9]"
     }
   ],
   "functionName": "lexicalOrder",
   "hints": [
-    "Think of numbers 1..n as a ten-way tree where each value x has children x*10 .. x*10+9.",
-    "Walk that tree depth-first: go deeper with x*10 when possible, otherwise step sideways and climb past trailing 9s.",
-    "Keep a single cursor and emit one number per step instead of sorting strings."
+    "Подумайте о числах 1.n как о десятистороннем дереве, где у каждого значения x есть потомки x*10 .. x*10+9.",
+    "Во-первых, пройдитесь по этому дереву поглубже: идите поглубже с x*10, когда это возможно, в противном случае шагните в сторону и пройдите мимо 9-х трасс.",
+    "Держите один курсор и излучайте одно число на шаг вместо сортировки строк."
   ],
   "id": "lexicographical-numbers",
   "link": "https://leetcode.com/problems/lexicographical-numbers/",
@@ -54,5 +54,5 @@
       "n": 9
     }
   ],
-  "title": "462. Lexicographical Numbers"
+  "title": "462. Лексикографические числа"
 }

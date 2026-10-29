@@ -1,0 +1,53 @@
+{
+  "id": "find-all-numbers-disappeared-in-an-array",
+  "title": "516. Find All Numbers Disappeared in an Array",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [4,3,2,7,8,2,3,1]",
+      "output": "[5,6]",
+      "explanation": "Values 5 and 6 from 1..8 are absent."
+    },
+    {
+      "input": "nums = [1,1]",
+      "output": "[2]",
+      "explanation": "With n = 2, value 2 never shows up."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<Integer> findDisappearedNumbers(int[] nums) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findDisappearedNumbers(self, nums: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> findDisappearedNumbers(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<int> FindDisappearedNumbers(int[] nums)\n    {\n        return new List<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_disappeared_numbers(nums: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc FindDisappearedNumbers(nums []int) []int {\n    return []int{}\n}",
+    "typescript": "export function findDisappearedNumbers(nums: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function findDisappearedNumbers($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[4,3,2,7,8,2,3,1]"
+    },
+    {
+      "nums": "[1,1]"
+    },
+    {
+      "nums": "[1]"
+    }
+  ],
+  "functionName": "findDisappearedNumbers",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Mark every value you see in a boolean table indexed by value.",
+    "A second pass from 1 to n collects the unmarked entries in order.",
+    "Both passes are linear; the table costs O(n) extra memory."
+  ]
+}

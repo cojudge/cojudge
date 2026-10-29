@@ -3,26 +3,26 @@
   "difficulty": "Medium",
   "examples": [
     {
-      "explanation": "The prefix is \"123...\", so position 3 holds 3.",
+      "explanation": "Префикс «123...», поэтому позиция 3 удерживает 3.",
       "input": "n = 3",
       "output": "3"
     },
     {
-      "explanation": "Positions 10-11 hold \"10\"; the second is 0.",
+      "explanation": "Позиции 10-11 удерживать10\"; второе - это 0.",
       "input": "n = 11",
       "output": "0"
     },
     {
-      "explanation": "Position 15 is the '2' of 12.",
+      "explanation": "Позиция 15 - это 2 от 12.",
       "input": "n = 15",
       "output": "2"
     }
   ],
   "functionName": "findNthDigit",
   "hints": [
-    "Group numbers by digit length: 9 one-digit, 90 two-digit, 900 three-digit, and so on.",
-    "Subtract whole groups from n until the target group is found.",
-    "Within the group, locate the exact number and the digit offset inside it."
+    "Номера групп по длине цифр: 9 однозначный, 90 двузначный, 900 трехзначный и так далее.",
+    "Вычтите целые группы из n до тех пор, пока не будет найдена целевая группа.",
+    "Внутри группы найдите точное число и цифру, смещенную внутри него."
   ],
   "id": "nth-digit",
   "link": "https://leetcode.com/problems/nth-digit/",

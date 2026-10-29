@@ -1,6 +1,6 @@
 {
   "id": "masking-personal-information",
-  "title": "829. Masking Personal Information",
+  "title": "829. Маскировка личной информации",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/masking-personal-information/",
   "category": "string",
@@ -8,7 +8,7 @@
     {
       "input": "s = \"LeetCode@LeetCode.com\"",
       "output": "\"l*****e@leetcode.com\"",
-      "explanation": "Name keeps first and last letters with five stars inside."
+      "explanation": "Имя содержит первые и последние буквы с пятью звездами внутри."
     },
     {
       "input": "s = \"AB@qq.com\"",
@@ -53,8 +53,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Decide the branch by checking whether the string contains '@'; emails and phones share no formatting.",
-    "For emails, lowercase everything first and only then pick the first and last name characters.",
-    "For phones, strip every non-digit and let the digit count (10-13) dictate how many country stars appear."
+    "Решите ветвь, проверив, содержит ли строка «@»; электронные письма и телефоны не имеют общего форматирования.",
+    "Для электронной почты, сначала понижайте все, а затем выберите первый и последний символы.",
+    "Для телефонов, стричь все не-цифры и пусть цифры считать (10-13) указать, сколько звезд страны появляется."
   ]
 }

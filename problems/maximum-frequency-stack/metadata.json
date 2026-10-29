@@ -1,6 +1,6 @@
 {
   "id": "maximum-frequency-stack",
-  "title": "183. Maximum Frequency Stack",
+  "title": "183. Максимальная частота стека",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/maximum-frequency-stack/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"push\",\"push\",\"push\",\"push\",\"push\",\"push\",\"pop\",\"pop\",\"pop\",\"pop\"], values = [5,7,5,7,4,5,0,0,0,0]",
       "output": "[5,7,5,4]",
-      "explanation": "Push 5, 7, 5, 7, 4, 5. Frequencies are 5:3, 7:2, 4:1. Pop returns 5 (most frequent), then 7 (tie between 7:2 and 5:2 broken by recency), then 5, then 4."
+      "explanation": "Толкать 5, 7, 5, 7, 4, 5Частоты - это 5:3, 7:2, 4:1Поп возвращается 5 (чаще всего), затем 7 (связь между 7:2 и 5:2 разорванный в чине, затем 5Тогда 4."
     },
     {
       "input": "operations = [\"push\",\"push\",\"pop\",\"pop\"], values = [1,1,0,0]",
       "output": "[1,1]",
-      "explanation": "Push 1 twice. Both pops return 1."
+      "explanation": "Дважды нажмите 1. Оба всплывающих окна возвращают 1."
     },
     {
       "input": "operations = [\"push\",\"push\",\"push\",\"pop\",\"pop\",\"pop\"], values = [4,6,4,0,0,0]",
       "output": "[4,6,4]",
-      "explanation": "Push 4, 6, 4. Pop returns 4 (freq 2), then 6 and 4 tie at freq 1 so recency pops 6 then 4."
+      "explanation": "Push 4, 6, 4. Поп возвращает 4 (freq 2), затем 6 и 4 связываются на freq 1, так что ресенс-поп 6, затем 4."
     }
   ],
   "starterCode": {
@@ -62,7 +62,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Track each value's frequency and group values by frequency in stacks.",
-    "Keep the current maximum frequency; push appends to its frequency group and pop removes from the max group, decreasing max when empty."
+    "Отслеживайте частоту каждого значения и групповые значения по частоте в стеках.",
+    "Сохраняйте текущую максимальную частоту; нажимайте на приложение к его частотной группе, и поп удаляется из группы max, уменьшая max при пустом."
   ]
 }

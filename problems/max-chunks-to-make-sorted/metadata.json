@@ -1,6 +1,6 @@
 {
   "id": "max-chunks-to-make-sorted",
-  "title": "769. Max Chunks To Make Sorted",
+  "title": "769. Max Chunks для сортировки",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/max-chunks-to-make-sorted/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "arr = [4,3,2,1,0]",
       "output": "1",
-      "explanation": "No early cut keeps values in range."
+      "explanation": "Ни одно раннее сокращение не сохраняет значения в диапазоне."
     },
     {
       "input": "arr = [1,0,2,3,4]",
       "output": "4",
-      "explanation": "Chunks [1,0], [2], [3], [4] work."
+      "explanation": "Чанки [1, 0], [2], [3], [4] работают."
     },
     {
       "input": "arr = [0,1,2]",
       "output": "3",
-      "explanation": "Sorted input splits into singletons."
+      "explanation": "Сортированный вход разделен на одиночки."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Because the values are 0..n-1, a prefix can stand alone exactly when its maximum equals its last index.",
-    "Scan once tracking the running maximum; cut after every position where max == index.",
-    "Count those cut points."
+    "Поскольку значения 0..n-1, префикс может стоять отдельно, когда его максимум равен его последнему индексу.",
+    "Сканируйте один раз, отслеживая максимум бега; разрезайте после каждой позиции, где max == индекс.",
+    "Подсчитайте эти пункты."
   ]
 }

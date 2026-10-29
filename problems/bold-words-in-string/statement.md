@@ -1,11 +1,11 @@
-You are given keyword list `words` and a text string `s`, both using lowercase letters.
+Вам предоставляется список ключевых слов `words` и текстовая строка `s`, оба с использованием строчных букв.
 
-Mark every occurrence of any keyword inside `s`, including overlaps. Then merge all marked spans that overlap or touch edge to edge into the fewest possible groups. Wrap each group with an opening tag `<b>` and a closing tag `</b>`, leaving unmarked parts untouched.
+Отметьте каждое появление любого ключевого слова внутри `s`, включая перекрытия. Затем сольте все отмеченные промежутки, которые перекрывают или касаются края к краю, в наименьшие возможные группы. Оберните каждую группу открывающим тегом `<b>` и закрывающим тегом `</b>`, оставляя незамеченные части нетронутыми.
 
-Return the tagged string.
+Верните тегированную строку.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 500`
 - `0 <= words.length <= 50`
 - `1 <= words[i].length <= 10`
-- `s` and each word hold lowercase English letters.
+- `s` и каждое слово содержат английские буквы.

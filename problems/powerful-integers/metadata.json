@@ -1,6 +1,6 @@
 {
   "id": "powerful-integers",
-  "title": "956. Powerful Integers",
+  "title": "956. Мощные целые числа",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/powerful-integers/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "x = 2, y = 3, bound = 10",
       "output": "[2,3,4,5,7,9,10]",
-      "explanation": "The sums 2^i + 3^j within bound are 2, 3, 4, 5, 7, 9 and 10 (order does not matter)."
+      "explanation": "Суммы 2^i + 3^j в пределах связи 2, 3, 4, 5, 7, 9 и 10 (заказ не имеет значения)."
     },
     {
       "input": "x = 3, y = 5, bound = 15",
       "output": "[2,4,6,8,10,14]",
-      "explanation": "Reachable sums are 2, 4, 6, 8, 10 and 14; everything else overshoots the bound."
+      "explanation": "Достижимыми суммами являются 2, 4, 6, 8, 10 и 14; все остальное выходит за рамки."
     },
     {
       "input": "x = 2, y = 1, bound = 10",
       "output": "[2,3,5,9]",
-      "explanation": "Since 1^j is always 1, the sums are 2, 3, 5 and 9."
+      "explanation": "Так как 1^j всегда 1, суммы 2, 3, 5 и 9."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Loop over powers of x and, nested inside, powers of y, keeping sums within bound.",
-    "A base of 1 never grows \u2014 take its single power and move on to avoid an infinite loop.",
-    "Deduplicate with a set; order is irrelevant to the judge."
+    "Петля над силами x и, вложенная внутрь, над силами y, удерживая суммы в рамках.",
+    "База 1 никогда не растёт — возьмите её единственную мощность и двигайтесь дальше, чтобы избежать бесконечного цикла.",
+    "Дублировать с набором; приказ не имеет отношения к судье."
   ]
 }

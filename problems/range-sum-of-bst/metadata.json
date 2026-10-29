@@ -1,6 +1,6 @@
 {
   "id": "range-sum-of-bst",
-  "title": "925. Range Sum of BST",
+  "title": "925. Обсуждение Range Sum of BST",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/range-sum-of-bst/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [10,5,15,3,7,null,18], low = 7, high = 15",
       "output": "32",
-      "explanation": "Nodes 7, 10, and 15 sum to 32."
+      "explanation": "Узлы 7, 10 и 15 суммируются в 32."
     },
     {
       "input": "root = [10,5,15,3,7,13,18,1,null,6], low = 6, high = 10",
       "output": "23",
-      "explanation": "Nodes 6, 7, and 10 sum to 23."
+      "explanation": "Узлы 6, 7 и 10 суммируются в 23."
     },
     {
       "input": "root = [5,3,8,1,4,7,9], low = 1, high = 9",
       "output": "37",
-      "explanation": "Every node falls inside."
+      "explanation": "Каждый узел падает внутрь."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "In a BST, values left of a node are smaller and right are larger, so whole subtrees can be skipped.",
-    "Only add the node when low <= val <= high.",
-    "Recurse left when val > low and right when val < high."
+    "В BST значения слева от узла меньше, а справа больше, поэтому можно пропустить целые поддеревья.",
+    "Добавляйте узел только при низком <= val <= высоком.",
+    "Повторение слева, когда val > низкий, и справа, когда val < высокий."
   ]
 }

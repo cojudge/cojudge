@@ -1,7 +1,7 @@
-Write down the integer `x` several times in a row, placing one operator — `+`, `-`, `*` or `/` — between each pair of neighbours, forming one flat chain with no parentheses anywhere. The chain is scored by evaluating it with the usual precedence (multiplication and division before addition and subtraction); division produces exact rational values, and a leading minus sign is forbidden.
+Запишите целое число `x` несколько раз подряд, поместив одного оператора — `+`, `-`, `*` или `/` — между каждой парой соседей, образуя одну плоскую цепь без скобок в любом месте. Цепь оценивается путем оценки ее с обычным приоритетом (умножение и деление перед сложением и вычитанием); деление производит точные рациональные значения, а ведущий знак минус запрещен.
 
-Using as few operators as possible, build a chain whose value equals `target`, and return that smallest operator count.
+Используя как можно меньше операторов, создайте цепочку, значение которой равно `target`, и верните наименьшее количество операторов.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= x <= 100`
 - `1 <= target <= 10^9`

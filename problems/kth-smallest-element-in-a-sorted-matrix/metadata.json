@@ -1,6 +1,6 @@
 {
   "id": "kth-smallest-element-in-a-sorted-matrix",
-  "title": "454. Kth Smallest Element in a Sorted Matrix",
+  "title": "454. Самый маленький элемент в сортированной матрице",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/",
   "category": "heap",
@@ -8,17 +8,17 @@
     {
       "input": "matrix = [[1,5,9],[10,11,13],[12,13,15]], k = 8",
       "output": "13",
-      "explanation": "8th of the nine ordered values."
+      "explanation": "8-е из девяти упорядоченных значений."
     },
     {
       "input": "matrix = [[-5]], k = 1",
       "output": "-5",
-      "explanation": "Single cell."
+      "explanation": "Одиночная камера."
     },
     {
       "input": "matrix = [[1,2],[3,4]], k = 3",
       "output": "3",
-      "explanation": "Ordered values [1,2,3,4]."
+      "explanation": "Заказанные значения [1, 2, 3, 4]."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Seed a min-heap with the first cell of every row.",
-    "Pop the smallest k-1 times, pushing the right neighbor of each pop.",
-    "The k-th pop is the answer; binary search on the value range is an alternative."
+    "Семя мин-куча с первой ячейкой каждого ряда.",
+    "Поп самый маленький k-1 раз, подталкивая правого соседа каждой поп-музыки.",
+    "K-th pop - это ответ; бинарный поиск по диапазону значений - это альтернатива."
   ]
 }

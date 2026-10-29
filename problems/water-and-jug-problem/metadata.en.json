@@ -1,0 +1,77 @@
+{
+  "id": "water-and-jug-problem",
+  "title": "444. Water and Jug Problem",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/water-and-jug-problem/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "x = 3, y = 5, target = 4",
+      "output": "true",
+      "explanation": "A fill-pour-empty cycle can isolate exactly 4 litres."
+    },
+    {
+      "input": "x = 2, y = 6, target = 5",
+      "output": "false",
+      "explanation": "Every reachable total is even, so 5 can never appear."
+    },
+    {
+      "input": "x = 1, y = 2, target = 3",
+      "output": "true",
+      "explanation": "Fill both jugs."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean canMeasureWater(int x, int y, int target) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def canMeasureWater(self, x: int, y: int, target: int) -> bool:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool canMeasureWater(int x, int y, int target) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool CanMeasureWater(int x, int y, int target) \n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_measure_water(x: i32, y: i32, target: i32) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc CanMeasureWater(x int, y int, target int) bool {\n    \n}",
+    "typescript": "export function canMeasureWater(x: number, y: number, target: number): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $x\n     * @param int $y\n     * @param int $target\n     * @return bool\n     */\n    public function canMeasureWater($x, $y, $target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "x": 3,
+      "y": 5,
+      "target": 4
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "target": 5
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "target": 3
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "target": 0
+    }
+  ],
+  "functionName": "canMeasureWater",
+  "params": [
+    {
+      "name": "x",
+      "type": "int"
+    },
+    {
+      "name": "y",
+      "type": "int"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Model reachable totals with the greatest common divisor of x and y.",
+    "The target must not exceed x + y, and zero is always reachable.",
+    "Otherwise the target works exactly when it is a multiple of gcd(x, y)."
+  ]
+}

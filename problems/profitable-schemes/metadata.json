@@ -1,6 +1,6 @@
 {
   "id": "profitable-schemes",
-  "title": "871. Profitable Schemes",
+  "title": "871. Прибыльные схемы",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/profitable-schemes/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "n = 5, minProfit = 3, group = [2,2], profit = [2,3]",
       "output": "2",
-      "explanation": "Running only the second scheme earns 3, and running both earns 5; both plans fit in 5 members."
+      "explanation": "Запуск только второй схемы зарабатывает 3, а запуск обоих зарабатывает 5; оба плана подходят для членов 5."
     },
     {
       "input": "n = 10, minProfit = 5, group = [2,3,5], profit = [6,7,8]",
       "output": "7",
-      "explanation": "Every non-empty collection earns at least 5 and uses at most 10 members, giving 2^3 - 1 = 7 plans."
+      "explanation": "Каждая непустая коллекция зарабатывает как минимум 5 и использует максимум членов 10, давая планы 2^3 - 1 = 7."
     },
     {
       "input": "n = 1, minProfit = 1, group = [1], profit = [1]",
       "output": "1",
-      "explanation": "The single scheme fits and earns exactly 1."
+      "explanation": "Единая схема подходит и зарабатывает именно 1."
     }
   ],
   "starterCode": {
@@ -78,7 +78,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Treat this as a knapsack over people and profit: dp[j][p] counts ways using j members to reach profit p.",
-    "Cap every profit at minProfit so the table stays small, iterate members and profit downward per scheme, and take all counts modulo 10^9 + 7."
+    "Относитесь к этому как к рюкзаку над людьми и прибылью: dp[j][p] подсчитывает способы использования членов j для получения прибыли p.",
+    "Ограничьте каждую прибыль в minProfit, чтобы таблица оставалась небольшой, итеративных участников и прибыль вниз по схеме, и возьмите все счета modulo 10^9 + 7."
   ]
 }

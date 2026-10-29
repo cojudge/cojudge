@@ -1,6 +1,6 @@
 {
   "id": "longest-palindrome",
-  "title": "483. Longest Palindrome",
+  "title": "483. Самый длинный палиндром",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/longest-palindrome/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"abccccdd\"",
       "output": "7",
-      "explanation": "Rearrange to dccaccd, which reads the same both ways."
+      "explanation": "Повторите с dccaccd, который читается одинаково в обоих направлениях."
     },
     {
       "input": "s = \"a\"",
       "output": "1",
-      "explanation": "A single letter is already a palindrome."
+      "explanation": "Одна буква уже палиндром."
     },
     {
       "input": "s = \"Aa\"",
       "output": "1",
-      "explanation": "Upper and lower case are distinct, so only one can be used."
+      "explanation": "Верхний и нижний корпус различны, поэтому можно использовать только один."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Count how many times each letter appears; case matters.",
-    "Pairs of equal letters can sit symmetrically on both sides.",
-    "At most one leftover single can sit in the center."
+    "Подсчитайте, сколько раз каждое письмо появляется; дело имеет значение.",
+    "Пары одинаковых букв могут располагаться симметрично с обеих сторон.",
+    "Самое большее, один оставшийся один может сидеть в центре."
   ]
 }

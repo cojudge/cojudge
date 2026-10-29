@@ -1,6 +1,6 @@
 {
   "id": "concatenated-words",
-  "title": "537. Concatenated Words",
+  "title": "537. Связанные слова",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/concatenated-words/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "words = [\"cat\",\"cats\",\"catsdogcats\",\"dog\",\"dogcatsdog\",\"hippopotamuses\",\"rat\",\"ratcatdogcat\"]",
       "output": "[\"catsdogcats\",\"dogcatsdog\",\"ratcatdogcat\"]",
-      "explanation": "\"catsdogcats\" is \"cats\"+\"dog\"+\"cats\"; \"dogcatsdog\" is \"dog\"+\"cats\"+\"dog\"; \"ratcatdogcat\" is \"rat\"+\"cat\"+\"dog\"+\"cat\"."
+      "explanation": "«catsdogcats» — это «cats» + «dog» + «cats»; «dogcatsdog» — «dog» + «cats» + «dog» + «cat»; «ratcatdogcat» — «rat» + «cat» + «dog» + «cat»."
     },
     {
       "input": "words = [\"cat\",\"dog\",\"catdog\"]",
       "output": "[\"catdog\"]",
-      "explanation": "Only \"catdog\" breaks into listed pieces \"cat\" and \"dog\"."
+      "explanation": "Только «собака» разбивается на перечисленные части «кошка» и «собака»."
     },
     {
       "input": "words = [\"hello\",\"world\"]",
       "output": "[]",
-      "explanation": "No word can be assembled from other entries."
+      "explanation": "Никакие слова не могут быть собраны из других записей."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Sort words by length and only build from strictly shorter words seen so far.",
-    "Each candidate is a word-break check against the shorter-word set.",
-    "Compare outputs as sets: order does not matter."
+    "Сортируйте слова по длине и стройте только из строго коротких слов, которые мы видели до сих пор.",
+    "Каждый кандидат - это проверка слов против набора более коротких слов.",
+    "Сравните результаты как наборы: порядок не имеет значения."
   ]
 }

@@ -1,8 +1,8 @@
-Given an array `preorder` of distinct integers, decide whether it could be the preorder walk of some binary search tree. In a preorder walk the root comes first, then the whole left subtree, then the whole right subtree, and every left descendant is smaller than its ancestor while every right descendant is larger.
+Учитывая массив `preorder` различных целых чисел, решайте, может ли это быть прогулка предзаказа какого-то двоичного дерева поиска. В прогулке предзаказа корень приходит сначала, затем целое левое поддерево, затем целое правое поддерево, и каждый левый потомок меньше своего предка, в то время как каждый правый потомок больше.
 
-Return `true` when such a tree exists and `false` otherwise.
+Возврат `true`, когда такое дерево существует, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= preorder.length <= 10^4`
 - `-10^4 <= preorder[i] <= 10^4`
-- All values in `preorder` are distinct.
+- Все значения в `preorder` различны.

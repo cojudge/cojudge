@@ -1,13 +1,13 @@
-You are given a rectangular grid `forest` of integers. Adaptation note: the grid is passed as `int_array_2d`.
+Вам дается прямоугольная сетка `forest` целых чисел.Примечание по адаптации: сетка передается как `int_array_2d`.
 
-- `0` means a blocked cell that cannot be entered,
-- `1` means walkable ground with no tree,
-- any value above `1` means a tree whose height equals that value.
+- `0` означает заблокированную ячейку, которая не может быть введена.
+- `1` – это прогулочная земля без дерева.
+- Любое значение выше `1` означает дерево, высота которого равна этому значению.
 
-Start at the top-left cell `(0,0)`. Repeatedly walk to the nearest remaining tree with the smallest height (using 4-directional moves through non-blocked cells), cut it (it becomes walkable), and continue. The walk length between trees is the shortest path distance.
+Начните с верхней левой ячейки `(0,0)`. Неоднократно пройдите к ближайшему оставшемуся дереву с наименьшей высотой (используя 4-направленные движения через неблокированные ячейки), разрежьте его (он становится доступным для ходьбы) и продолжайте. Длина ходьбы между деревьями - самое короткое расстояние пути.
 
-Return the total number of steps over the whole tour, or `-1` when some tree cannot be reached. When no tree above height 1 exists, the total is `0`.
+Возвращайте общее количество шагов в течение всего тура, или `-1`, когда какое-то дерево не может быть достигнуто.Когда нет дерева выше высоты 1, общее количество `0`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= forest.length, forest[0].length <= 50`
 - `0 <= forest[i][j] <= 10^9`

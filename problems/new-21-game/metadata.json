@@ -1,6 +1,6 @@
 {
   "id": "new-21-game",
-  "title": "835. New 21 Game",
+  "title": "835. Новая игра 21",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/new-21-game/",
   "category": "dp",
@@ -8,12 +8,12 @@
     {
       "input": "n = 10, k = 1, maxPts = 10",
       "output": "\"1.0\"",
-      "explanation": "Every first draw stops the game within the limit."
+      "explanation": "Каждая первая ничья останавливает игру в пределах лимита."
     },
     {
       "input": "n = 6, k = 1, maxPts = 10",
       "output": "\"0.6\"",
-      "explanation": "Six of ten faces stay within 6."
+      "explanation": "Шесть из десяти лиц остаются в 6."
     },
     {
       "input": "n = 21, k = 17, maxPts = 10",
@@ -64,8 +64,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "This is a portable adaptation: return the probability as a finite decimal string; grading allows 1e-5 absolute error.",
-    "Let dp[i] be the chance of ever holding exactly i points; then dp[i] is the average of the previous maxPts values that are still below k.",
-    "Maintain a sliding window sum so each dp[i] is O(1), and add up dp[k] through dp[n] for the answer."
+    "Это переносная адаптация: возвращаем вероятность как конечную десятичную строку; градация допускает абсолютную ошибку 1e-5.",
+    "Пусть dp [i] будет шансом когда-либо удерживать точно i баллов; тогда dp [i] является средним из предыдущих значений maxPts, которые все еще ниже k.",
+    "Для каждого из них (или для каждого из них) будет выделено по одному окошку.1), и добавить dp [k] через dp [n] для ответа."
   ]
 }

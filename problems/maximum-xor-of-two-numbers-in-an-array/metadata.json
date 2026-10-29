@@ -1,6 +1,6 @@
 {
   "id": "maximum-xor-of-two-numbers-in-an-array",
-  "title": "492. Maximum XOR of Two Numbers in an Array",
+  "title": "492. Максимальный XOR двух чисел в массиве",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [3,10,5,25,2,8]",
       "output": "28",
-      "explanation": "5 XOR 25 equals 28, and no pair reaches a larger value."
+      "explanation": "5 XOR 25 равен 28, и ни одна пара не достигает большего значения."
     },
     {
       "input": "nums = [14,70,53,83,49,91,36,80,92,51,66,70]",
       "output": "127",
-      "explanation": "Some pair in the list XORs to 127, which is the best achievable score."
+      "explanation": "Некоторые пары в списке XORs к 127, что является лучшим достижимым счетом."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Think bit by bit from the most significant position downward, keeping the set of prefixes seen so far.",
-    "A binary trie of the numbers lets you greedily walk toward the opposite bit at each level.",
-    "Trying to build the answer greedily works: check whether a candidate prefix pattern is attainable from pairs of number prefixes."
+    "Подумайте понемногу с самого важного положения вниз, сохраняя набор префиксов до сих пор.",
+    "Бинарная тройка чисел позволяет вам жадно идти к противоположному биту на каждом уровне.",
+    "Попытка выстроить ответ жадно работает: проверьте, достижим ли шаблон префикса-кандидата из пар префиксов чисел."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "knight-probability-in-chessboard",
-  "title": "703. Knight Probability in Chessboard",
+  "title": "703. Вероятность рыцаря в шахматной доске",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/knight-probability-in-chessboard/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "n = 3, k = 2, row = 0, column = 0",
       "output": "\"0.0625\"",
-      "explanation": "Two first jumps survive and the total survival chance is 1/16."
+      "explanation": "Два первых прыжка выживают, и общая вероятность выживания - 1 / 16."
     },
     {
       "input": "n = 1, k = 0, row = 0, column = 0",
       "output": "\"1.0\"",
-      "explanation": "No jumps means certain survival."
+      "explanation": "Никакие прыжки не означают определенного выживания."
     },
     {
       "input": "n = 1, k = 1, row = 0, column = 0",
       "output": "\"0.0\"",
-      "explanation": "All jumps leave a 1x1 board."
+      "explanation": "Все прыжки оставляют доску 1х1."
     }
   ],
   "starterCode": {
@@ -72,8 +72,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "This is a portable adaptation: return the probability as a finite decimal string; the checker allows 1e-9 absolute plus 1e-5 relative error.",
-    "Keep a table of survival likelihoods per square and roll it forward one jump at a time, spreading each square's mass over its valid knight neighbours divided by 8.",
-    "Only two layers are needed; the answer is the sum of the final layer."
+    "Это переносная адаптация: возвращаем вероятность как конечную десятичную строку; шашка допускает абсолютную 1e-9 плюс относительную ошибку 1e-5.",
+    "Держите таблицу вероятностей выживания на квадрат и переворачивайте ее вперед по одному прыжку за раз, распространяя массу каждого квадрата над его действительными соседями-рыцарями, разделенными 8.",
+    "Необходимы только два слоя; ответ — сумма конечного слоя."
   ]
 }

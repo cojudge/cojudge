@@ -1,9 +1,9 @@
-You receive a collection of strings. Identify the longest leading segment that every one of them shares.
+Вы получаете коллекцию строк. Определите самый длинный ведущий сегмент, который разделяет каждый из них.
 
-When the strings share no leading character at all, give back an empty string `""`.
+Когда струны не имеют общего ведущего персонажа, верните пустую строку `""`.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ strs.length ≤ 200
 - 0 ≤ strs[i].length ≤ 200
-- strs[i] consists of only lowercase English letters if it is non-empty.
+- strs[i] состоит только из строчных английских букв, если она не пуста.

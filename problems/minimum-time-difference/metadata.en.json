@@ -1,0 +1,58 @@
+{
+  "id": "minimum-time-difference",
+  "title": "597. Minimum Time Difference",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/minimum-time-difference/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "timePoints = [\"23:59\",\"00:00\"]",
+      "output": "1",
+      "explanation": "One minute apart across midnight."
+    },
+    {
+      "input": "timePoints = [\"00:00\",\"23:59\",\"00:00\"]",
+      "output": "0",
+      "explanation": "A repeated moment gives gap zero."
+    },
+    {
+      "input": "timePoints = [\"12:30\",\"15:45\",\"12:35\"]",
+      "output": "5",
+      "explanation": "12:30 and 12:35 are closest."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findMinDifference(String[] timePoints) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findMinDifference(self, timePoints: List[str]) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int findMinDifference(vector<string>& timePoints) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindMinDifference(string[] timePoints) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_min_difference(time_points: Vec<String>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindMinDifference(timePoints []string) int {\n    \n}",
+    "typescript": "export function findMinDifference(timePoints: string[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $timePoints\n     * @return int\n     */\n    public function findMinDifference($timePoints) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "timePoints": "[\"23:59\",\"00:00\"]"
+    },
+    {
+      "timePoints": "[\"00:00\",\"23:59\",\"00:00\"]"
+    },
+    {
+      "timePoints": "[\"12:30\",\"15:45\",\"12:35\"]"
+    }
+  ],
+  "functionName": "findMinDifference",
+  "params": [
+    {
+      "name": "timePoints",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Turn every \"HH:MM\" entry into minutes since midnight, then sort the numbers.",
+    "The answer is the minimum of adjacent differences in sorted order plus the wrap-around gap (first + 1440 - last).",
+    "A duplicate minute forces the answer to zero; with more than 1440 entries the answer is always zero."
+  ]
+}

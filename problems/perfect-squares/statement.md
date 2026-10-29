@@ -1,6 +1,6 @@
-You receive an integer `n`. Split it into a sum of perfect-square addends using as few addends as possible, and report that smallest achievable count.
+Вы получаете целое число `n`. Разделите его на сумму дополнений идеального квадрата с использованием как можно меньшего количества добавлений и сообщите о наименьшем достижимом количестве.
 
-A perfect square is what you get when a whole number is multiplied by itself — the square of an integer. That makes `1`, `4`, `9`, and `16` perfect squares, whereas `3` and `11` fall outside that family.
+Идеальный квадрат — это то, что вы получаете, когда целое число умножается само по себе — квадрат целого числа. Это делает `1`, `4`, `9` и `16` идеальными квадратами, тогда как `3` и `11` выходят за пределы этого семейства.
 
-**Constraints:**
+**Ограничения:**
 - 1 ≤ n ≤ 10<sup>4</sup>

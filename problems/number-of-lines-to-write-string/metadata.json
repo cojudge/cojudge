@@ -1,6 +1,6 @@
 {
   "id": "number-of-lines-to-write-string",
-  "title": "804. Number of Lines To Write String",
+  "title": "804. Количество строк для написания строк",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/number-of-lines-to-write-string/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "widths = [10 x 26], s = \"abcdefghijklmnopqrstuvwxyz\"",
       "output": "[3,60]",
-      "explanation": "Two full lines plus 60 units."
+      "explanation": "Две полные линии плюс 60."
     },
     {
       "input": "widths = [4,10 x 25], s = \"bbbcccdddaaa\"",
       "output": "[2,4]",
-      "explanation": "Overflow creates a second line of width 4."
+      "explanation": "Перелив создает вторую линию ширины 4."
     },
     {
       "input": "widths = [10 x 26], s = \"a\"",
       "output": "[1,10]",
-      "explanation": "Single letter, single line."
+      "explanation": "Одна буква, одна строка."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Walk the string once, keeping the current line width.",
-    "Start a new line exactly when adding the next width would exceed 100.",
-    "The answer is the line count and the final occupied width."
+    "Пройдите по струне один раз, сохраняя ширину текущей линии.",
+    "Начните новую линию именно тогда, когда прибавление следующей ширины превысит 100.",
+    "Ответом является количество линий и конечная занятая ширина."
   ]
 }

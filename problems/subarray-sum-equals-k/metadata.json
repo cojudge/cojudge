@@ -1,6 +1,6 @@
 {
   "id": "subarray-sum-equals-k",
-  "title": "163. Subarray Sum Equals K",
+  "title": "163. Субаррэй сумма равна K",
   "difficulty": "Medium",
   "category": "array",
   "link": "https://leetcode.com/problems/subarray-sum-equals-k/",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1,1,1], k = 2",
       "output": "2",
-      "explanation": "Subarrays [1,1] starting at index 0 and index 1 both sum to 2."
+      "explanation": "Subarrays [1, 1], начиная с индекса 0 и индекса 1, оба суммируются в 2."
     },
     {
       "input": "nums = [1,2,3], k = 3",
       "output": "2",
-      "explanation": "Subarrays [1,2] and [3] both sum to 3."
+      "explanation": "Субаррэи [1, 2] и [3] оба суммируются в 3."
     }
   ],
   "starterCode": {
@@ -49,7 +49,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use prefix sums with a hash map of frequencies: count how many times prefix-k has occurred.",
-    "Initialize the map with {0:1} so subarrays starting at index 0 are counted."
+    "Используйте префиксные суммы с хеш-картой частот: подсчитайте, сколько раз происходил префикс-к.",
+    "Инициализируйте карту с помощью {0:1}, чтобы подкатегории, начинающиеся с индекса 0, были подсчитаны."
   ]
 }

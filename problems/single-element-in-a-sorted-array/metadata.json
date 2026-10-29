@@ -1,6 +1,6 @@
 {
   "id": "single-element-in-a-sorted-array",
-  "title": "598. Single Element in a Sorted Array",
+  "title": "598. Один элемент в сортированном массиве",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/single-element-in-a-sorted-array/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,1,2,3,3,4,4,8,8]",
       "output": "2",
-      "explanation": "Only 2 appears once."
+      "explanation": "Только 2 появляется один раз."
     },
     {
       "input": "nums = [3,3,7,7,10,11,11]",
       "output": "10",
-      "explanation": "The unpaired entry is 10."
+      "explanation": "Непарная запись - 10."
     },
     {
       "input": "nums = [1]",
       "output": "1",
-      "explanation": "Single-element array."
+      "explanation": "Одноэлементный массив."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Pairs normally start at even indices; the single element shifts that alignment.",
-    "Binary search on even midpoints: if nums[mid] equals nums[mid+1] the single is to the right, else to the left.",
-    "Always force the midpoint to be even before comparing with its neighbour."
+    "Пары обычно начинаются с четных индексов; один элемент сдвигает выравнивание.",
+    "Бинарный поиск по четным средним точкам: если nums [mid] равен nums [mid + 1], то сингл находится справа, а другой слева.",
+    "Всегда заставляйте середину быть ровным счетом, прежде чем сравнивать ее с соседом."
   ]
 }

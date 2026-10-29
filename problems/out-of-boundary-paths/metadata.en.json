@@ -1,0 +1,86 @@
+{
+  "id": "out-of-boundary-paths",
+  "title": "625. Out of Boundary Paths",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/out-of-boundary-paths/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "m = 2, n = 2, maxMove = 2, startRow = 0, startColumn = 0",
+      "output": "6",
+      "explanation": "Six short sequences exit the corner in time."
+    },
+    {
+      "input": "m = 1, n = 3, maxMove = 3, startRow = 0, startColumn = 1",
+      "output": "12",
+      "explanation": "Twelve sequences of up to three moves leave the row."
+    },
+    {
+      "input": "m = 1, n = 1, maxMove = 1, startRow = 0, startColumn = 0",
+      "output": "4",
+      "explanation": "Every first step exits the lone cell."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def findPaths(self, m: int, n: int, maxMove: int, startRow: int, startColumn: int) -> int:\n        return 0\n",
+    "cpp": "class Solution {\npublic:\n    int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int FindPaths(int m, int n, int maxMove, int startRow, int startColumn)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_paths(m: i32, n: i32, max_move: i32, start_row: i32, start_column: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FindPaths(m int, n int, maxMove int, startRow int, startColumn int) int {\n    return 0\n}",
+    "typescript": "export function findPaths(m: number, n: number, maxMove: number, startRow: number, startColumn: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $m\n     * @param int $n\n     * @param int $maxMove\n     * @param int $startRow\n     * @param int $startColumn\n     * @return int\n     */\n    public function findPaths($m, $n, $maxMove, $startRow, $startColumn) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "m": 2,
+      "n": 2,
+      "maxMove": 2,
+      "startRow": 0,
+      "startColumn": 0
+    },
+    {
+      "m": 1,
+      "n": 3,
+      "maxMove": 3,
+      "startRow": 0,
+      "startColumn": 1
+    },
+    {
+      "m": 1,
+      "n": 1,
+      "maxMove": 1,
+      "startRow": 0,
+      "startColumn": 0
+    }
+  ],
+  "functionName": "findPaths",
+  "params": [
+    {
+      "name": "m",
+      "type": "int"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "maxMove",
+      "type": "int"
+    },
+    {
+      "name": "startRow",
+      "type": "int"
+    },
+    {
+      "name": "startColumn",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Memoize on (row, column, moves left): leaving the grid scores 1, zero moves scores 0.",
+    "Otherwise sum the four neighbors' counts modulo 1,000,000,007.",
+    "An iterative DP layer per move works too and avoids deep recursion."
+  ]
+}

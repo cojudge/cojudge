@@ -1,6 +1,6 @@
 {
   "id": "delete-operation-for-two-strings",
-  "title": "628. Delete Operation for Two Strings",
+  "title": "628. Удалить операцию на две струны",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/delete-operation-for-two-strings/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "word1 = \"sea\", word2 = \"eat\"",
       "output": "2",
-      "explanation": "Remove s from the first and t from the second to get ea in both."
+      "explanation": "Удалите s от первого и t от второго, чтобы получить ea в обоих."
     },
     {
       "input": "word1 = \"a\", word2 = \"b\"",
       "output": "2",
-      "explanation": "Nothing matches, so both characters must go."
+      "explanation": "Ничего не совпадает, поэтому оба персонажа должны уйти."
     },
     {
       "input": "word1 = \"abc\", word2 = \"abc\"",
       "output": "0",
-      "explanation": "The strings already match."
+      "explanation": "Струны уже совпадают."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Only deletions are allowed, so the kept characters must appear in order in both strings.",
-    "The longest keepable part is the longest common subsequence of the two words.",
-    "Answer equals len(word1) + len(word2) - 2 * LCS length."
+    "Допускается только удаление, поэтому сохраненные символы должны отображаться в порядке в обеих строках.",
+    "Самая длинная сохраняемая часть является самой длинной общей последовательностью двух слов.",
+    "Ответ равен len(word1) + len(word2) - 2 * длина LCS."
   ]
 }

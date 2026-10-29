@@ -1,5 +1,5 @@
-You are given a binary tree `root` and a number `targetSum`. Count the downward paths whose node values add up to `targetSum`. A path may begin at any node and finish at any descendant of that start (the start and end may coincide); it must follow parent-to-child links only.
+Вам дают двоичное дерево `root` и число `targetSum`. Подсчитайте нисходящие пути, значения узлов которых складываются в `targetSum`. Путь может начинаться у любого узла и заканчиваться у любого потомка этого старта (начало и конец могут совпадать); он должен следовать только ссылкам между родителями и детьми.
 
-**Constraints:**
-- Node count lies in `[0, 1000]`.
-- Node values and `targetSum` fit the stated ranges; sums may exceed 32-bit during accumulation, so use 64-bit counters internally.
+**Ограничения:**
+- Количество узлов находится в `[0, 1000]`.
+- Значения узлов и `targetSum` соответствуют заявленным диапазонам; суммы могут превышать 32-бит при накоплении, поэтому используйте счетчики 64-бит внутри.

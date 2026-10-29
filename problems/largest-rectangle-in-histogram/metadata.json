@@ -1,6 +1,6 @@
 {
   "id": "largest-rectangle-in-histogram",
-  "title": "84. Largest Rectangle in Histogram",
+  "title": "84. Самый большой прямоугольник в гистограмме",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/largest-rectangle-in-histogram/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "heights = [2,1,5,6,2,3]",
       "output": "10",
-      "explanation": "The adjacent bars of heights 5 and 6 form an area of 10."
+      "explanation": "Соседние полосы высот 5 и 6 образуют область 10."
     },
     {
       "input": "heights = [2,4]",
       "output": "4",
-      "explanation": "In [2, 4], the bar of height 4 alone covers the largest area of 4."
+      "explanation": "В [2, 4] планка высоты 4 сама по себе покрывает наибольшую площадь 4."
     },
     {
       "input": "heights = [2,2,2]",
       "output": "6",
-      "explanation": "In [2, 2, 2], all three bars can form a rectangle of width 3 and height 2, giving area 6."
+      "explanation": "В [2, 2, 2] все три полосы могут образовывать прямоугольник ширины 3 и высоты 2, придавая площади 6."
     }
   ],
   "starterCode": {
@@ -54,7 +54,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Keep indices of bars in non-decreasing height order on a stack.",
-    "When a shorter bar appears, pop taller bars; the current index determines their right boundary and the new stack top determines their left boundary."
+    "Держите индексы баров в неубывающем порядке высоты на стопке.",
+    "При появлении более короткой полосы появляются более высокие полосы; текущий индекс определяет их правую границу, а новый верх стека определяет их левую границу."
   ]
 }

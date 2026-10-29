@@ -1,6 +1,6 @@
 {
   "id": "course-schedule-iii",
-  "title": "652. Course Schedule III",
+  "title": "652. Расписание курса III",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/course-schedule-iii/",
   "category": "heap",
@@ -8,17 +8,17 @@
     {
       "input": "courses = [[100,200],[200,1300],[1000,1250],[2000,3200]]",
       "output": "3",
-      "explanation": "Take the first three courses (100 + 200 + 1000 = 1300 by day 1300); the 2000-long course cannot fit."
+      "explanation": "Возьмите первые три курса (100 + 200 + 1000 = 1300 днем 1300); 2000-длинный курс не подходит."
     },
     {
       "input": "courses = [[1,2]]",
       "output": "1",
-      "explanation": "The single course finishes exactly on time."
+      "explanation": "Одиночный курс заканчивается точно в срок."
     },
     {
       "input": "courses = [[3,2],[4,3]]",
       "output": "0",
-      "explanation": "Each course alone already misses its deadline."
+      "explanation": "Каждый из них уже пропускает свой срок."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Order courses by deadline so earlier cutoffs are considered first.",
-    "Keep taken durations in a max-heap plus their running total.",
-    "When the total passes the current deadline, drop the longest taken course; the heap size at the end is the answer."
+    "Заказать курсы к крайнему сроку, поэтому более ранние отсечки считаются первыми.",
+    "Продолжайте принимать длительности в максимальной куче плюс их общее количество.",
+    "Когда общая сумма проходит текущий крайний срок, пропустите самый длинный взятый курс; размер кучи в конце - это ответ."
   ]
 }

@@ -1,13 +1,13 @@
-Design an algorithm that reports the `k`th largest value in an integer stream after each new value arrives.
+Создайте алгоритм, который сообщает наибольшее значение `k`th в потоке целых чисел после каждого нового значения.
 
-Implement `kthLargestStream(k, nums, additions)`. Initialize the stream with every value in `nums`. Then process `additions` from left to right. After inserting each value, append the current `k`th largest stream value to the result.
+Внедряйте `kthLargestStream(k, nums, additions)`. Инициируйте поток с каждым значением в `nums`. Затем обработайте `additions` слева направо. После вставки каждого значения добавьте к результату текущее самое большое значение потока `k`th.
 
-This is a portable function adaptation of the original constructor-and-`add` API. `nums` may initially contain fewer than `k` values, but after every insertion from `additions` the stream contains at least `k` values.
+Это портативная функциональная адаптация оригинального конструктора.`add` АПИ. `nums` Вначале может содержать меньше `k` значениях, но после каждого введения из `additions` Поток содержит по меньшей мере `k` ценностей.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= k <= nums.length + 1`
 - `0 <= nums.length <= 10^4`
 - `1 <= additions.length <= 10^4`
 - `-10^4 <= nums[i], additions[i] <= 10^4`
-- After each addition, the total number of stream values is at least `k`.
+- После каждого добавления общее количество значений потока составляет по меньшей мере `k`.

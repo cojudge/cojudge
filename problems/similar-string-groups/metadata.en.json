@@ -1,0 +1,75 @@
+{
+  "id": "similar-string-groups",
+  "title": "837. Similar String Groups",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/similar-string-groups/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "strs = [\"tars\",\"rats\",\"arts\",\"star\"]",
+      "output": "2",
+      "explanation": "First three link by swaps; star is separate."
+    },
+    {
+      "input": "strs = [\"omv\",\"ovm\"]",
+      "output": "1",
+      "explanation": "One swap converts between them."
+    },
+    {
+      "input": "strs = [\"abc\",\"def\",\"ghi\"]",
+      "output": "3",
+      "explanation": "No pair is one swap apart."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numSimilarGroups(String[] strs) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def numSimilarGroups(self, strs: List[str]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int numSimilarGroups(vector<string>& strs) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int NumSimilarGroups(string[] strs)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_similar_groups(strs: Vec<String>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc NumSimilarGroups(strs []string) int {\n    return 0\n}",
+    "typescript": "export function numSimilarGroups(strs: string[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $strs\n     * @return int\n     */\n    public function numSimilarGroups($strs) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "strs": [
+        "tars",
+        "rats",
+        "arts",
+        "star"
+      ]
+    },
+    {
+      "strs": [
+        "omv",
+        "ovm"
+      ]
+    },
+    {
+      "strs": [
+        "abc",
+        "def",
+        "ghi"
+      ]
+    },
+    {
+      "strs": [
+        "a"
+      ]
+    }
+  ],
+  "functionName": "numSimilarGroups",
+  "params": [
+    {
+      "name": "strs",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Two words are directly alike when their mismatch count is 0 or exactly 2 with cross-matching letters.",
+    "Join directly alike pairs with a disjoint-set union (or BFS/DFS flood fill) and count distinct roots.",
+    "Compare every pair: with n up to 300 and length up to 300 this quadratic scan is fast enough."
+  ]
+}

@@ -1,7 +1,7 @@
-You are given balloons as segments `points`, where each entry `[xstart, xend]` spans that closed interval on a line. One arrow shot straight up at position `x` pops every balloon whose span contains `x`.
+Вам даются воздушные шары в виде сегментов `points`, где каждая запись `[xstart, xend]` охватывает этот закрытый интервал на линии. Одна стрелка, выстреленная прямо в положение `x`, выталкивает каждый воздушный шар, пролет которого содержит `x`.
 
-Find the smallest number of arrows that pop all balloons.
+Найдите наименьшее количество стрелок, которые всплывают на всех воздушных шарах.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= points.length <= 10^5`
-- Each entry has two values with `-2^31 <= xstart <= xend <= 2^31 - 1`.
+- Каждая запись имеет два значения с `-2^31 <= xstart <= xend <= 2^31 - 1`.

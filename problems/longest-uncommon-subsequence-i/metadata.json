@@ -1,6 +1,6 @@
 {
   "id": "longest-uncommon-subsequence-i",
-  "title": "580. Longest Uncommon Subsequence I",
+  "title": "580. Самая длинная необычная последовательность",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/longest-uncommon-subsequence-i/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "a = \"aba\", b = \"cdc\"",
       "output": "3",
-      "explanation": "\"aba\" itself is not a subsequence of \"cdc\", so the full length 3 qualifies."
+      "explanation": "Сама по себе «aba» не является последовательностью «cdc», поэтому квалифицируется полная длина 3."
     },
     {
       "input": "a = \"aaa\", b = \"bbb\"",
       "output": "3",
-      "explanation": "Either whole string is absent from the other side."
+      "explanation": "Вся струна отсутствует с другой стороны."
     },
     {
       "input": "a = \"aaa\", b = \"aaa\"",
       "output": "-1",
-      "explanation": "Both strings share exactly the same subsequences."
+      "explanation": "Обе строки имеют одинаковые подпоследовательности."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "When the strings are identical, every subsequence is shared, so the answer is -1.",
-    "Otherwise the longer whole string can never be a subsequence of the shorter one, giving max(len(a), len(b))."
+    "Когда строки идентичны, каждая последовательность разделяется, поэтому ответ -1.",
+    "В противном случае более длинная вся строка никогда не может быть последовательностью более короткой, давая max(len(a), len(b))."
   ]
 }

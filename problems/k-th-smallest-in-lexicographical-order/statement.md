@@ -1,6 +1,6 @@
-You are given two whole numbers `n` and `k`. Picture all numbers from `1` to `n` written out and then ordered the way words appear in a dictionary (so all numbers starting with `1` come before those starting with `2`, and `10` sits between `1` and `11`).
+Вам даны два целых числа `n` и `k`Изображение всех чисел из `1` то `n` выписано, а затем упорядочено, как слова появляются в словаре (так что все числа начинаются с `1` Приходите раньше тех, кто начинает `2`и `10` сидеть между `1` и `11`).
 
-Return the `k`-th number in that dictionary ordering, counting from `1`.
+Верните `k`-е число в этом словаре, считая от `1`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= k <= n <= 10^9`

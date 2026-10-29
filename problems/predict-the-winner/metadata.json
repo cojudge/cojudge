@@ -1,6 +1,6 @@
 {
   "id": "predict-the-winner",
-  "title": "550. Predict the Winner",
+  "title": "550. Предсказывать победителя",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/predict-the-winner/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,5,2]",
       "output": "false",
-      "explanation": "Second player always secures the 5 and wins."
+      "explanation": "Второй игрок всегда получает 5 и выигрывает."
     },
     {
       "input": "nums = [1,5,233,7]",
       "output": "true",
-      "explanation": "First player takes 1 then 233 to win."
+      "explanation": "Сначала игрок берет 1, затем 233, чтобы выиграть."
     },
     {
       "input": "nums = [1]",
       "output": "true",
-      "explanation": "Single pick wins."
+      "explanation": "Победа одиночного отбора."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Track the best net lead the player to move can build on any interval.",
-    "An interval's value is the better of taking the left or right end minus the opponent's reply.",
-    "Non-negative lead over the whole array means the first player ties or wins."
+    "Отслеживайте лучшее сетевое лидерство, которое игрок может перемещать, используя любой интервал.",
+    "Значение интервала лучше взять левый или правый конец минус ответ противника.",
+    "Неотрицательное лидерство по всему массиву означает, что первый игрок связывается или выигрывает."
   ]
 }

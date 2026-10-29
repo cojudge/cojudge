@@ -1,6 +1,6 @@
 {
   "id": "partition-list",
-  "title": "276. Partition List",
+  "title": "276. Список разделов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/partition-list/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "head = [1,4,3,2,5,2], x = 3",
       "output": "[1,2,2,4,3,5]",
-      "explanation": "Values 1, 2, 2 stay in order up front, followed by 4, 3, 5 in order."
+      "explanation": "Значения 1, 2, 2 остаются в порядке впереди, за ними следуют 4, 3, 5 в порядке."
     },
     {
       "input": "head = [2,1], x = 2",
       "output": "[1,2]",
-      "explanation": "The smaller value 1 moves ahead of 2."
+      "explanation": "Меньшее значение 1 опережает 2."
     },
     {
       "input": "head = [], x = 1",
       "output": "[]",
-      "explanation": "An empty list stays empty."
+      "explanation": "Пустой список остается пустым."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Build two separate chains (before and after) by appending each node to the matching tail.",
-    "Terminate the after-chain with null before joining to avoid cycles.",
-    "Link the before-chain tail to the after-chain head; if before is empty, return after head."
+    "Постройте две отдельные цепи (до и после), приложив каждый узел к соответствующему хвосту.",
+    "Прекратите послецепочечную цепь с нулем перед присоединением, чтобы избежать циклов.",
+    "Привяжите хвост до-цепи к голове после-цепи; если до пуст, возвращайтесь после головы."
   ]
 }

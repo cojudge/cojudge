@@ -1,8 +1,8 @@
-You are given the root of a binary search tree and an integer `val`. In such a tree, every left descendant is smaller than its ancestor and every right descendant is larger.
+Вам даны корень двоичного дерева поиска и целое число `val`. В таком дереве каждый левый потомок меньше своего предка и каждый правый потомок больше.
 
-Locate the node whose value equals `val` and return the whole subtree starting there (encoded in level order). If no node holds `val`, return an empty tree `[]`.
+Найдите узел, значение которого равно `val`, и верните все начинающееся там поддерево (закодированное в порядке уровня). Если ни один узел не удерживает `val`, верните пустое дерево `[]`.
 
-**Constraints:**
-- Node count lies in `[1, 5000]`.
+**Ограничения:**
+- Количество узлов находится в `[1, 5000]`.
 - `1 <= Node.val, val <= 10^7`
-- The input is a valid search tree.
+- Ввод является действительным деревом поиска.

@@ -1,6 +1,6 @@
 {
   "id": "4-keys-keyboard",
-  "title": "671. 4 Keys Keyboard",
+  "title": "671. 4 Клавиатура клавиш",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/4-keys-keyboard/",
   "category": "dp",
@@ -8,12 +8,12 @@
     {
       "input": "n = 3",
       "output": "3",
-      "explanation": "Type three times."
+      "explanation": "Тип три раза."
     },
     {
       "input": "n = 7",
       "output": "9",
-      "explanation": "Type, type, type, select, copy, paste, paste: 3 -> 6 -> 9."
+      "explanation": "Тип, тип, тип, выбор, копирование, вставка, вставка: 3 -> 6 -> 9."
     },
     {
       "input": "n = 1",
@@ -50,8 +50,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Let dp[i] be the best screen size with i presses; typing once more always gives dp[i-1] + 1.",
-    "Alternatively stop typing at some j, spend 2 presses on select+copy, then paste (i - j - 2) times to reach dp[j] * (i - j - 1).",
-    "Take the best j with at least one paste (j <= i - 3)."
+    "Пусть dp[i] будет лучшим размером экрана с i-нажатиями; набор текста еще раз всегда дает dp[i-1] + 1.",
+    "В качестве альтернативы прекратите печатать на некоторых j, потратьте нажатия 2 на выбранную + копию, затем вставьте (i - j - 2) время, чтобы достичь dp[j] * (i - j - 1).",
+    "Возьмите лучший j с по меньшей мере одной пастой (j <= i - 3)."
   ]
 }

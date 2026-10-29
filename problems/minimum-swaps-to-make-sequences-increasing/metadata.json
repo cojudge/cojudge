@@ -1,6 +1,6 @@
 {
   "id": "minimum-swaps-to-make-sequences-increasing",
-  "title": "799. Minimum Swaps To Make Sequences Increasing",
+  "title": "799. Минимальные свопы для увеличения последовательности",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/minimum-swaps-to-make-sequences-increasing/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "nums1 = [1,3,5,4], nums2 = [1,2,3,7]",
       "output": "1",
-      "explanation": "One swap at the end fixes both arrays."
+      "explanation": "Один своп в конце фиксирует оба массива."
     },
     {
       "input": "nums1 = [0,3,5,8,9], nums2 = [2,1,4,6,9]",
       "output": "1",
-      "explanation": "Swapping index 1 makes both strictly increasing."
+      "explanation": "Индекс свопа 1 делает их строго растущими."
     },
     {
       "input": "nums1 = [1], nums2 = [2]",
       "output": "0",
-      "explanation": "No swap is needed."
+      "explanation": "Своп не нужен."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Track two costs at each index: cheapest cost with no swap here versus with a swap here.",
-    "From the previous pair, transition only when the order constraints allow keeping or crossing the two arrangements.",
-    "Take the minimum of the two states at the final index."
+    "Отслеживайте две цены по каждому индексу: самая дешевая цена без свопа здесь по сравнению со свопом здесь.",
+    "Из предыдущей пары переход возможен только в том случае, если ограничения по порядку позволяют сохранить или пересечь обе договоренности.",
+    "Взять хотя бы минимум из двух штатов в итоговом индексе."
   ]
 }

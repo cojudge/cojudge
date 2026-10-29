@@ -1,20 +1,20 @@
-You are given a Minesweeper board where each cell holds one character:
-- `E`: an unrevealed empty square,
-- `M`: an unrevealed mine,
-- `B`: a revealed blank square (no neighboring mines),
-- `1`–`8`: a revealed square showing its count of neighboring mines,
-- `X`: a revealed mine.
+Вам предоставляется доска Minesweeper, где каждая ячейка содержит один символ:
+- `E`: нераскрытый пустой квадрат,
+- `M`: нераскрытая мина,
+- `B`: открытый пустой квадрат (без соседних шахт);
+- `1`-`8`: открытая площадь, показывающая количество соседних шахт,
+- `X`: Открытая шахта.
 
-You are also given a click position `[r, c]`. Apply one reveal step and return the updated board:
-- If the clicked square hides a mine (`M`), it becomes `X` and the game ends.
-- If the clicked square is empty (`E`), count its neighboring mines in all 8 directions (horizontal, vertical, diagonal). If the count is positive, write it as a digit character. If it is zero, write `B` and repeat the same reveal step for every neighboring square (neighbors that are already revealed stay as they are).
-- Clicking an already revealed square changes nothing.
+Вам также предоставляется позиция клика `[r, c]`. Применить один шаг раскрытия и вернуть обновленную доску:
+- Если нажатый квадрат скрывает мину (`M`), он становится `X` и игра заканчивается.
+- Если щелкнутый квадрат пуст (`E`), подсчитайте его соседние шахты во всех направлениях 8 (горизонтальный, вертикальный, диагональный). Если счет положительный, запишите его как цифровой символ. Если он равен нулю, запишите `B` и повторите один и тот же шаг раскрытия для каждого соседнего квадрата (соседи, которые уже выявлены, остаются такими, какие они есть).
+- Нажатие на уже открытый квадрат ничего не меняет.
 
-Return the updated board as a list of row strings: row `r` of the answer is the string formed by that row's characters from left to right.
+Верните обновленную доску в виде списка строк строк: строка `r` ответа - это строка, образованная символами этой строки слева направо.
 
-*Adaptation note:* the board is passed in as a 2D grid of characters and the answer is read back as a list of strings (one per row) so every supported language can express it.
+*Примечание по адаптации: * доска передается в виде 2D сетки символов, а ответ читается в виде списка строк (по одной строке), чтобы каждый поддерживаемый язык мог его выразить.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= board.length, board[i].length <= 50`
-- The board is rectangular; every cell holds one of `E`, `M`, `B`, `X`, or a digit `1`–`8`.
-- `click.length == 2` and the position is inside the board.
+- Доска прямоугольная; каждая ячейка содержит одну из `E`, `M`, `B`, `X` или цифру `1`-`8`.
+- `click.length == 2` и позиция внутри доски.

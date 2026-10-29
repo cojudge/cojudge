@@ -1,6 +1,6 @@
 {
   "id": "factor-combinations",
-  "title": "358. Factor Combinations",
+  "title": "358. Комбинации факторов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/factor-combinations/",
   "category": "backtracking",
@@ -8,17 +8,17 @@
     {
       "input": "n = 12",
       "output": "[[2,6],[3,4],[2,2,3]]",
-      "explanation": "12 equals 2 * 6, 3 * 4 and 2 * 2 * 3."
+      "explanation": "12 равен 2 * 6, 3 * 4 и 2 * 2 * 3."
     },
     {
       "input": "n = 37",
       "output": "[]",
-      "explanation": "37 is prime, so it cannot be split into smaller factors above 1."
+      "explanation": "37 является простым, поэтому его нельзя разделить на более мелкие факторы, чем 1."
     },
     {
       "input": "n = 1",
       "output": "[]",
-      "explanation": "1 has no factor above 1 to build a combination from."
+      "explanation": "1 не имеет коэффициента выше 1 для создания комбинации."
     }
   ],
   "starterCode": {
@@ -54,7 +54,7 @@
   ],
   "outputType": "int_list_2d",
   "hints": [
-    "Search depth-first, only trying divisors from the last chosen factor upward so each row stays non-decreasing.",
-    "When the remaining value is at least the current start, record current factors plus the remainder as one valid row."
+    "Сначала ищите глубину, пробуя только делители из последнего выбранного фактора вверх, чтобы каждая строка оставалась неубывающей.",
+    "Когда оставшееся значение является, по крайней мере, текущим началом, запишите текущие факторы плюс остаток в качестве одной действительной строки."
   ]
 }

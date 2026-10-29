@@ -1,14 +1,14 @@
-A firm wants to grow its funds before going public by completing selected ventures. It can complete no more than `k` different ventures.
+Фирма хочет увеличить свои средства, прежде чем стать публичной, заполнив выбранные предприятия. Она может завершить не более, чем различные предприятия `k`.
 
-There are `n` candidate ventures, where venture `i` yields a net gain of `profits[i]` and requires holding at least `capital[i]` before it may begin.
+Существуют венчурные компании-кандидаты `n`, в которых венчурное предприятие `i` приносит чистую прибыль `profits[i]` и требует владения по крайней мере `capital[i]` до его начала.
 
-You begin with `w` in capital. Completing a venture adds its gain to your holdings.
+Вы начинаете с `w` в капитале. Завершение предприятия добавляет прибыль к вашим активам.
 
-Choose up to `k` different ventures in a feasible sequence to leave your holdings as large as possible, and return that final holding amount.
+Выберите до `k` различные предприятия в возможной последовательности, чтобы оставить свои запасы как можно больше, и вернуть эту окончательную сумму владения.
 
-The result is guaranteed to fit in a 32-bit signed integer.
+Результат гарантированно впишется в целое число, подписанное 32-битом.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= k <= 10^5`
 - `0 <= w <= 10^9`

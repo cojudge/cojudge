@@ -1,13 +1,13 @@
-You receive an integer array `arr` already ordered from smallest to largest, plus two integers `k` and `x`. Select the `k` entries of `arr` that lie nearest to `x`, and return them likewise ordered from smallest to largest.
+Вы получаете целочисленный массив `arr`, уже заказанный от самого маленького до самого большого, плюс два целых числа `k` и `x`. Выберите записи `k` `arr`, которые лежат ближе всего к `x`, и верните их, также заказанные от самого маленького до самого большого.
 
-Closeness is judged as follows: a value `a` ranks ahead of a value `b` when
+Близость оценивается следующим образом: значение `a` опережает значение `b`, когда
 
-- `|a - x| < |b - x|`, or
-- `|a - x| == |b - x|` and `a < b`.
+- `|a - x| < |b - x|`, или
+- `|a - x| == |b - x|` и `a < b`.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= k <= arr.length`
 - `1 <= arr.length <= 10^4`
-- `arr` is ordered in ascending order.
+- `arr` упорядочен в порядке возрастания.
 - `-10^4 <= arr[i], x <= 10^4`

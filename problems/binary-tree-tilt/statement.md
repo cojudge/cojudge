@@ -1,7 +1,7 @@
-Given the root of a binary tree, compute its total tilt. The tilt of a single node is the absolute difference between the sum of all values in its left subtree and the sum of all values in its right subtree. The tilt of the whole tree is the sum of every node's tilt.
+Учитывая корень двоичного дерева, вычислите его общий наклон. Наклон одного узла — это абсолютная разница между суммой всех значений в его левом поддереве и суммой всех значений в его правом поддереве. Наклон всего дерева — это сумма наклона каждого узла.
 
-Empty subtrees contribute 0 to the sums. A leaf therefore always has tilt 0, while its value still counts toward its ancestors' sums.
+Пустые поддеревья вносят 0 в суммы. Поэтому лист всегда имеет наклон 0, в то время как его стоимость по-прежнему учитывается по отношению к суммам его предков.
 
-**Constraints:**
-- The node count is in `[0, 10^4]`.
+**Ограничения:**
+- Количество узлов находится в `[0, 10^4]`.
 - `-1000 <= Node.val <= 1000`

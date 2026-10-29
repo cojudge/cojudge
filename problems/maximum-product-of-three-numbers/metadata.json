@@ -1,6 +1,6 @@
 {
   "id": "maximum-product-of-three-numbers",
-  "title": "650. Maximum Product of Three Numbers",
+  "title": "650. Максимальный продукт из трех чисел",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/maximum-product-of-three-numbers/",
   "category": "array",
@@ -8,7 +8,7 @@
     {
       "input": "nums = [1,2,3]",
       "output": "6",
-      "explanation": "Only 1*2*3 = 6 exists."
+      "explanation": "Существует только 1*2*3 = 6."
     },
     {
       "input": "nums = [1,2,3,4]",
@@ -18,7 +18,7 @@
     {
       "input": "nums = [-1,-2,-3]",
       "output": "-6",
-      "explanation": "The single triple multiplies to -6."
+      "explanation": "Одинарная тройка умножается на -6."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Only two patterns can win: three largest values, or the largest value with the two smallest (most negative) values.",
-    "One linear scan tracking the top three maxima and bottom two minima is enough."
+    "Выиграют только две модели: три самых больших значения или самое большое значение с двумя наименьшими (наиболее отрицательными) значениями.",
+    "Достаточно одного линейного сканирования, отслеживающего три верхних максимума и два нижних минимума."
   ]
 }

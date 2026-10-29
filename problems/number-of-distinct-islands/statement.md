@@ -1,9 +1,9 @@
-A rectangular grid holds `0` for water and `1` for land. Cells touching up, down, left or right belong to the same island; diagonal contact does not join islands.
+Прямоугольная сетка удерживает `0` для воды и `1` для земли. Клетки, касающиеся вверх, вниз, влево или вправо, принадлежат одному и тому же острову; диагональный контакт не присоединяется к островам.
 
-Two islands share a shape when one can be slid (without rotation or flipping) to cover the other exactly. Count how many different shapes appear.
+Два острова имеют общую форму, когда один может быть скользящим (без вращения или переворачивания), чтобы покрыть другой точно.
 
-This is a portable adaptation: the grid arrives as `int_array_2d` and the answer is the integer shape count.
+Это портативная адаптация: сетка приходит как `int_array_2d`, и ответом является количество целочисленных форм.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= grid.length, grid[0].length <= 50`
-- Grid entries are `0` or `1`.
+- Записи в сети - `0` или `1`.

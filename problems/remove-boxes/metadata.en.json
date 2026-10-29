@@ -1,0 +1,57 @@
+{
+  "id": "remove-boxes",
+  "title": "603. Remove Boxes",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/remove-boxes/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "boxes = [1,3,2,2,2,3,4,3,1]",
+      "output": "23",
+      "explanation": "Clear 2s first, then merge 3s for the optimum."
+    },
+    {
+      "input": "boxes = [1,1,1]",
+      "output": "9",
+      "explanation": "Remove together for 9."
+    },
+    {
+      "input": "boxes = [1]",
+      "output": "1"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int removeBoxes(int[] boxes) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def removeBoxes(self, boxes: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int removeBoxes(vector<int>& boxes) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int RemoveBoxes(int[] boxes) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn remove_boxes(boxes: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc RemoveBoxes(boxes []int) int {\n    \n}",
+    "typescript": "export function removeBoxes(boxes: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $boxes\n     * @return int\n     */\n    public function removeBoxes($boxes) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "boxes": "[1,3,2,2,2,3,4,3,1]"
+    },
+    {
+      "boxes": "[1,1,1]"
+    },
+    {
+      "boxes": "[1]"
+    }
+  ],
+  "functionName": "removeBoxes",
+  "params": [
+    {
+      "name": "boxes",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Add a third dimension k counting extra boxes of the same colour attached to the left interval.",
+    "Compress leading equal colours, then either delete them now or merge them with a later equal colour after clearing the middle.",
+    "Memoise on (l, r, k) to avoid exponential recomputation."
+  ]
+}

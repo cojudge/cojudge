@@ -1,4 +1,4 @@
-Return the largest of the three integers `a`, `b`, and `c`.
+Возвращайте наибольшее из трех целых чисел `a`, `b` и `c`.
 
-**Constraints:**
+**Ограничения:**
 - ``-10^9 <= a, b, c <= 10^9``

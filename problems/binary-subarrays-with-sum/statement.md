@@ -1,6 +1,6 @@
-You are given a binary array `nums` (only `0`s and `1`s) and an integer `goal`. A subarray is a consecutive slice of the array. Return how many subarrays have a sum exactly equal to `goal`.
+Вам дается двоичный массив `nums` (только `0`s и `1`s) и целое число `goal`. Субаррэй - это последовательный кусочек массива. Возвращайте, сколько субаррей имеют сумму, точно равную `goal`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 30000`
-- Each entry is `0` or `1`.
+- Каждая запись `0` или `1`.
 - `0 <= goal <= nums.length`

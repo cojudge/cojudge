@@ -1,0 +1,65 @@
+{
+  "id": "reveal-cards-in-increasing-order",
+  "title": "937. Reveal Cards In Increasing Order",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/reveal-cards-in-increasing-order/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "deck = [17,13,11,2,3,5,7]",
+      "output": "[2,13,3,11,5,17,7]",
+      "explanation": "Reveal order is 2,3,5,7,11,13,17."
+    },
+    {
+      "input": "deck = [1,1000]",
+      "output": "[1,1000]",
+      "explanation": "Already reveals in order."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] deckRevealedIncreasing(int[] deck) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def deckRevealedIncreasing(self, deck: List[int]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> deckRevealedIncreasing(vector<int>& deck) {\n        return {};\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public int[] DeckRevealedIncreasing(int[] deck) \n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn deck_revealed_increasing(deck: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc DeckRevealedIncreasing(deck []int) []int {\n    return nil\n}",
+    "typescript": "export function deckRevealedIncreasing(deck: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $deck\n     * @return int[]\n     */\n    public function deckRevealedIncreasing($deck) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "deck": [
+        17,
+        13,
+        11,
+        2,
+        3,
+        5,
+        7
+      ]
+    },
+    {
+      "deck": [
+        1,
+        1000
+      ]
+    },
+    {
+      "deck": [
+        1
+      ]
+    }
+  ],
+  "functionName": "deckRevealedIncreasing",
+  "params": [
+    {
+      "name": "deck",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Sort the values first: the smallest card is revealed first, so its slot is known.",
+    "Replay the routine on slot indices with a queue: take the front slot for the next smallest card, then rotate the new front slot to the back."
+  ]
+}

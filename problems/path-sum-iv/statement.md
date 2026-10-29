@@ -1,15 +1,15 @@
-You are given an array `nums` encoding a binary tree. Each entry is a three-digit number:
+Вам дается массив `nums`, кодирующий двоичное дерево. Каждая запись представляет собой трехзначное число:
 
-- hundreds digit: depth `d` (root is depth 1),
-- tens digit: position `p` within that depth (counting from 1),
-- ones digit: node value `v` (0..9).
+- сотни цифр: глубина `d` (корень — глубина 1),
+- десятки цифр: положение `p` в пределах этой глубины (с учетом от 1),
+- Цифра: значение узла `v` (0..9).
 
-The tree is consistent: every code except the root has its parent present, and positions follow heap rules where children of `(d, p)` are `(d+1, 2p-1)` and `(d+1, 2p)`.
+Дерево последовательно: каждый код, кроме корня, имеет своего родителя, и позиции следуют куче правил, где потомки `(d, p)` являются `(d+1, 2p-1)` и `(d+1, 2p)`.
 
-Add up the sums of all root-to-leaf paths and return the total.
+Сложите суммы всех путей от корня до листа и верните общую сумму.
 
-**Adaptation:** the encoded entries map to an int array in this judge.
+**Адаптация: ** закодированная карта входов в массив int в этом судье.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 50`
-- Each code is between 111 and 459 with value digit 0..9 and forms a valid tree.
+- Каждый код находится между 111 и 459 со стоимостной цифрой 0..9 и образует действующее дерево.

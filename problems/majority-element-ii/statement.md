@@ -1,8 +1,8 @@
-Consider an integer array `nums` holding `n` entries. List each distinct number whose total frequency is strictly larger than `n / 3`.
+Рассмотрим целочисленный массив `nums`, содержащий записи `n`. Перечислите каждое отдельное число, общая частота которого строго больше, чем `n / 3`.
 
-The qualifying values may be presented in any sequence.
+Квалифицирующие значения могут быть представлены в любой последовательности.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ nums.length ≤ 5 * 10^4
 - -10^9 ≤ nums[i] ≤ 10^9

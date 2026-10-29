@@ -1,6 +1,6 @@
 {
   "id": "minimum-moves-to-equal-array-elements",
-  "title": "520. Minimum Moves to Equal Array Elements",
+  "title": "520. Минимальные движения к равным элементам массива",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/minimum-moves-to-equal-array-elements/",
   "category": "math",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1,2,3]",
       "output": "3",
-      "explanation": "Three moves raise everything to 4."
+      "explanation": "Три хода поднимают все до 4."
     },
     {
       "input": "nums = [1,1,1]",
       "output": "0",
-      "explanation": "Already equal."
+      "explanation": "Уже равный."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Adding 1 to n-1 entries is the same as subtracting 1 from the one left out.",
-    "So every entry must drop to the current minimum, costing nums[i]-min each.",
-    "The answer is the sum minus min times n."
+    "Добавление 1 в записи n-1 равносильно вычитанию 1 из оставленного.",
+    "Таким образом, каждая запись должна опускаться до текущего минимума, стоимость каждого из которых составляет несколько нумов.",
+    "Ответом является сумма минус мин раз n."
   ]
 }

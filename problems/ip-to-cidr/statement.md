@@ -1,10 +1,10 @@
-An IPv4 address writes a 32-bit number as four decimal groups joined by dots. A CIDR block adds a slash and a prefix length, such as `255.0.0.8/29`, meaning all addresses sharing the first 29 bits with the base.
+Адрес IPv4 записывает число 32-бит в виде четырех десятичных групп, соединенных точками. Блок CIDR добавляет слэш и длину префикса, такую как `255.0.0.8/29`, что означает, что все адреса разделяют первые биты 29 с базой.
 
-You are given a starting address `ip` and a count `n`. Cover exactly the `n` consecutive addresses from `ip` upward with as few CIDR blocks as possible, using no address outside the range.
+Вам предоставляется начальный адрес `ip` и счетчик `n`. Покройте последовательные адреса `n` от `ip` вверх с как можно меньшим количеством блоков CIDR, не используя адрес за пределами диапазона.
 
-Return the blocks as strings in increasing address order.
+Возвращайте блоки в виде строк в порядке увеличения адреса.
 
-**Constraints:**
-- `ip` is a valid IPv4 address.
-- Every address from `ip` through `ip + n - 1` is valid.
+**Ограничения:**
+- `ip` является действительным адресом IPv4.
+- Каждый адрес от `ip` до `ip + n - 1` действителен.
 - `1 <= n <= 1000`

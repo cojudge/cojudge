@@ -1,9 +1,9 @@
-You are given a string `queryIP`. Return `"IPv4"` if it is a valid IPv4 address, `"IPv6"` if it is a valid IPv6 address, and `"Neither"` otherwise.
+Вы получаете строку `queryIP`. Возврат `"IPv4"`, если это действительный адрес IPv4, `"IPv6"`, если это действительный адрес IPv6, и `"Neither"` в противном случае.
 
-A valid IPv4 address has 4 decimal groups separated by dots: each group has 1-3 digits, holds a value from 0 to 255, and must not have leading zeroes (so `"0"` is fine but `"01"` is not).
+Действительный адрес IPv4 имеет 4 десятичные группы, разделенные точками: каждая группа имеет 1-3 Цифры, держат значение от 0 то 255и не должны иметь ведущих нулей (поэтому `"0"` Хорошо, но `"01"` Это не так.
 
-A valid IPv6 address has 8 groups separated by colons: each group has 1-4 hexadecimal digits (`0-9`, `a-f`, `A-F`). The `::` shorthand is not allowed here, so empty groups are invalid.
+Действительный адрес IPv6 имеет 8 группы, разделенные толстыми кишками: каждая группа имеет 1-4 шестидесятичные цифры (`0-9`, `a-f`, `A-F`.The `::` Здесь не допускается сокращение, поэтому пустые группы недействительны.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= queryIP.length <= 500`
-- `queryIP` consists of digits, English letters, `'.'` and `':'`.
+- `queryIP` состоит из цифр, английских букв, `'.'` и `':'`.

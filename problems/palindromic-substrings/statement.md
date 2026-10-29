@@ -1,6 +1,6 @@
-You are given a string `s`. Count the contiguous blocks that read identically forward and backward. Blocks at different starting or ending positions are counted separately even when their text matches.
+Вам дается строка `s`. Подсчитайте смежные блоки, которые одинаково читаются вперед и назад. Блоки в разных начальных или конечных положениях подсчитываются отдельно, даже когда их текст совпадает.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ s.length ≤ 1000
-- s consists of lowercase English letters.
+- s состоит из английских букв нижнего регистра.

@@ -1,5 +1,5 @@
-Return the index of the first occurrence of `target` in `nums`, or `-1` if `target` never appears. The first position is index 0.
+Верните индекс первого появления `target` в `nums`, или `-1`, если `target` никогда не появится.Первая позиция - индекс 0.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= nums.length <= 1000``
 - ``-10^9 <= nums[i], target <= 10^9``

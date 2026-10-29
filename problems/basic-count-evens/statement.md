@@ -1,5 +1,5 @@
-Return how many numbers in the array `nums` are even.
+Верните, сколько чисел в массиве `nums`.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= nums.length <= 1000``
 - ``-10^9 <= nums[i] <= 10^9``

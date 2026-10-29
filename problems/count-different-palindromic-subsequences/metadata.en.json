@@ -1,0 +1,57 @@
+{
+  "id": "count-different-palindromic-subsequences",
+  "title": "737. Count Different Palindromic Subsequences",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/count-different-palindromic-subsequences/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "s = \"bccb\"",
+      "output": "6",
+      "explanation": "Six distinct palindromes: b, c, bb, cc, bcb, bccb."
+    },
+    {
+      "input": "s = \"abcdabcdabcdabcd\"",
+      "output": "244",
+      "explanation": "Four repeats of abcd yield 244 distinct palindromic letter sequences."
+    },
+    {
+      "input": "s = \"a\"",
+      "output": "1"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int countPalindromicSubsequences(String s) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def countPalindromicSubsequences(self, s: str) -> int:\n        return 0\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int countPalindromicSubsequences(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int CountPalindromicSubsequences(string s) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_palindromic_subsequences(s: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc CountPalindromicSubsequences(s string) int {\n    return 0\n}",
+    "typescript": "export function countPalindromicSubsequences(s: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function countPalindromicSubsequences($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "bccb"
+    },
+    {
+      "s": "abcdabcdabcdabcd"
+    },
+    {
+      "s": "a"
+    }
+  ],
+  "functionName": "countPalindromicSubsequences",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Let dp[l][r] be the answer for the slice s[l..r]; grow the slice from short to long.",
+    "When the ends match, the inner answer doubles, then adjust using the next matching positions inside to avoid double counting.",
+    "When the ends differ, combine dp[l+1][r] and dp[l][r-1] and subtract dp[l+1][r-1]; keep everything modulo 1000000007."
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "id": "zigzag-conversion",
-  "title": "251. Zigzag Conversion",
+  "title": "251. Zigzag Конверсия",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/zigzag-conversion/",
   "category": "string",
@@ -8,7 +8,7 @@
     {
       "input": "s = \"PAYPALISHIRING\", numRows = 3",
       "output": "\"PAHNAPLSIIGYIR\"",
-      "explanation": "Rows are \"PAHN\", \"APLSIIG\", \"YIR\"."
+      "explanation": "Ряды — «ПАН», «АПЛСИИГ», «ЙИР»."
     },
     {
       "input": "s = \"PAYPALISHIRING\", numRows = 4",
@@ -56,7 +56,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Simulate the row index moving down then up, appending each character to its row.",
-    "If numRows is 1, the answer is the original string."
+    "Имитация индекса строки, движущегося вниз, а затем вверх, добавление каждого символа к его строке.",
+    "Если numRows — это 1, то ответ — исходная строка."
   ]
 }

@@ -1,10 +1,10 @@
-Think of `nums` as a ring of length `n` rather than a line: positions after the final entry continue at the first entry. Report the largest total attainable by any **non-empty** contiguous block on that ring.
+Подумайте о `nums` как о кольце длины `n`, а не о линии: позиции после окончательной записи продолжаются при первой записи. Сообщите о наибольшем общем объеме, достижимом любым **непустым** смежным блоком на этом кольце.
 
-In ring terms, the successor of position `nums[i]` is `nums[(i + 1) % n]` and its predecessor is `nums[(i - 1 + n) % n]`.
+В кольцевом выражении преемником позиции `nums[i]` является `nums[(i + 1) % n]`, а его предшественником — `nums[(i - 1 + n) % n]`.
 
-No slot of the underlying storage `nums` may be reused within one block. In other words, for a block written `nums[i], nums[i + 1], ..., nums[j]`, there are no indices `i <= k1, k2 <= j` with `k1 % n == k2 % n` unless `k1 == k2`.
+Ни один слот базового хранилища `nums` не может быть повторно использован в одном блоке.Другими словами, для блока, написанного `nums[i], nums[i + 1], ..., nums[j]`, нет индексов `i <= k1, k2 <= j` с `k1 % n == k2 % n`, если `k1 == k2`.
 
-**Constraints:**
+**Ограничения:**
 
 - `n == nums.length`
 - `1 <= n <= 3 * 10^4`

@@ -1,6 +1,6 @@
 {
   "id": "maximum-binary-tree",
-  "title": "674. Maximum Binary Tree",
+  "title": "674. Максимальное двоичное дерево",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/maximum-binary-tree/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [3,2,1,6,0,5]",
       "output": "[6,3,5,null,2,0,null,null,1]",
-      "explanation": "The largest entry 6 becomes the root; the left slice builds the left branch and the right slice builds the right branch."
+      "explanation": "Самый большой вход 6 становится корнем; левый срез строит левую ветвь, а правый срез строит правую ветвь."
     },
     {
       "input": "nums = [3,2,1]",
       "output": "[3,null,2,null,1]",
-      "explanation": "Each maximum sits at the top of its remaining slice, forming a right-leaning chain."
+      "explanation": "Каждый максимум находится в верхней части оставшегося среза, образуя цепочку правого наклона."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "The biggest entry of the current slice is the root of that branch.",
-    "Everything left of the maximum builds the left child; everything right builds the right child.",
-    "Recurse on each slice until it is empty."
+    "Самый большой вход в текущий срез является корнем этой ветви.",
+    "Все, что осталось от максимума, строит левого потомка; все, что справа, строит правильного потомка.",
+    "Повторяйте каждый кусочек, пока он не опустеет."
   ]
 }

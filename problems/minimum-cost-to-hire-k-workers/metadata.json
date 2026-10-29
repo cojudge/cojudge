@@ -1,6 +1,6 @@
 {
   "id": "minimum-cost-to-hire-k-workers",
-  "title": "853. Minimum Cost to Hire K Workers",
+  "title": "853. Минимальная стоимость найма работников K",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/minimum-cost-to-hire-k-workers/",
   "category": "heap",
@@ -8,17 +8,17 @@
     {
       "input": "quality = [10,20,5], wage = [70,50,30], k = 2",
       "output": "\"105.0\"",
-      "explanation": "Pick qualities 5 and 10 at rate 7 for payments 35 and 70."
+      "explanation": "Выберите качества 5 и 10 по курсу 7 для платежей 35 и 70."
     },
     {
       "input": "quality = [3,1,10,10,1], wage = [4,8,2,2,7], k = 3",
       "output": "\"30.66667\"",
-      "explanation": "The cheapest feasible trio costs about 30.67 within tolerance."
+      "explanation": "Самая дешевая трио стоит около 30.67 в пределах допуска."
     },
     {
       "input": "quality = [5], wage = [10], k = 1",
       "output": "\"10.0\"",
-      "explanation": "Only one choice, paid exactly the asking wage."
+      "explanation": "Только один выбор, оплачиваемый точно запрашиваемой заработной платой."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "This is a portable adaptation: return the minimum cost as a finite, double-parseable decimal string.",
-    "Sort candidates by the ratio wage / quality. Once the rate is fixed by the last person in order, earlier people are cheaper to include when their quality is small.",
-    "Scan the sorted order while keeping the `k` smallest qualities seen so far in a max-heap; the candidate cost at each step is heap-sum times the current ratio, and the best over all steps wins."
+    "Это портативная адаптация: возвращайте минимальную стоимость в виде конечной, двухраздельной десятичной строки.",
+    "Сортировать кандидатов по соотношению заработная плата/качество.Как только ставка фиксируется последним человеком в порядке, более ранним людям дешевле включать, когда их качество невелико.",
+    "Отсканируйте отсортированный порядок, сохраняя при этом наименьшие качества `k`, наблюдаемые до сих пор в максимальной куче; стоимость кандидата на каждом шаге превышает текущее соотношение, и выигрывает лучший из всех шагов."
   ]
 }

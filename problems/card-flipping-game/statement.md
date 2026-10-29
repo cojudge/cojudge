@@ -1,9 +1,9 @@
-There are cards with a number on the front and a (possibly different) number on the back. In one move you may flip any card over. After any sequence of flips, look at the upward faces: a value is called good when no upward face equals that value on a downward face of the same card — equivalently, the value never sits on a card whose two sides are both that value after hiding? The working rule is simpler: any value that occupies both sides of at least one card is permanently disqualified, because that card always shows it on one side.
+Есть карты с номером спереди и (возможно, разным) номером сзади. В одном движении вы можете перевернуть любую карту. После любой последовательности перевернутий посмотрите на восходящие лица: значение называется хорошим, когда ни одно восходящее лицо не равняется этому значению на нисходящем лице одной и той же карты — эквивалентно, значение никогда не сидит на карте, две стороны которой являются этим значением после сокрытия? Рабочее правило проще: любое значение, которое занимает обе стороны по крайней мере одной карты, постоянно дисквалифицируется, потому что эта карта всегда показывает его с одной стороны.
 
-Find the smallest good value among all numbers appearing on either side. Return 0 when every value is disqualified.
+Найдите наименьшее хорошее значение среди всех чисел, появляющихся с обеих сторон. Возврат 0, когда каждое значение дисквалифицировано.
 
-Adaptation note: this task uses portable `int_array` inputs and an `int` output.
+Примечание по адаптации: в этой задаче используются переносные входы `int_array` и выход `int`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= fronts.length == backs.length <= 1000`
 - `1 <= fronts[i], backs[i] <= 2000`

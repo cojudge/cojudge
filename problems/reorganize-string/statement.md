@@ -1,8 +1,8 @@
-Take a string `s` and shuffle its characters into a new order in which no two neighbours match.
+Возьмите строку `s` и перетасуйте ее персонажей в новый порядок, в котором не совпадают два соседа.
 
-Produce any such shuffle, or produce `""` when no valid shuffle exists.
+Производить любую такую перетасовку или производить `""`, когда не существует действительной перетасовки.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= s.length <= 500`
-- `s` consists of lowercase English letters.
+- `s` состоит из строчных английских букв.

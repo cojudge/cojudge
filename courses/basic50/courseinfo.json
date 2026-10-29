@@ -1,6 +1,6 @@
 {
   "title": "Basic 50",
-  "description": "Basic 50 is a set of 50 original Cojudge introductory problems that bridge the gap before Blind 75. It teaches the building blocks of an introductory programming class \u2014 if/else, loops, arrays, strings, nested loops, and recursion \u2014 with small, friendly tasks. Start here if you are new to programming.",
+  "description": "Basic 50 — 50 вводных задач Cojudge для начинающих. Условия, циклы, массивы, строки, вложенные циклы и рекурсия: основные приёмы, которые пригодятся перед переходом к Blind 75.",
   "category-order": [
     "if-else",
     "loops",

@@ -1,6 +1,6 @@
 {
   "id": "insert-delete-getrandom-o1",
-  "title": "456. Insert Delete GetRandom O(1)",
+  "title": "456. Включить Удалить GetRandom O (1)",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/insert-delete-getrandom-o1/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"RandomizedSet\",\"insert\",\"remove\",\"insert\",\"getRandom\",\"remove\",\"insert\",\"getRandom\"], values = [0,1,2,2,0,1,2,0]",
       "output": "[1,0,1,X,1,0,2] (X is 1 or 2)",
-      "explanation": "getRandom entries may be any current member."
+      "explanation": "GetRandom может быть любым действующим участником."
     },
     {
       "input": "operations = [\"RandomizedSet\",\"insert\",\"insert\",\"getRandom\"], values = [0,5,5,0]",
       "output": "[1,0,5]",
-      "explanation": "Duplicate insert records 0; only 5 is available."
+      "explanation": "Двойная запись вставки 0; доступен только 5."
     },
     {
       "input": "operations = [\"RandomizedSet\",\"insert\",\"remove\",\"remove\"], values = [0,3,3,3]",
       "output": "[1,1,0]",
-      "explanation": "Second removal of 3 misses."
+      "explanation": "Второе удаление промахов 3."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Pair a value-to-index map with a dense list of values.",
-    "Insert appends at the end; removal swaps the target with the last entry and pops.",
-    "getRandom picks a uniform index; the judge accepts any current member."
+    "Соедините карту от значения к индексу с плотным списком значений.",
+    "Вставить придатки в конце; удаление смещает цель с последней записью и всплывающими окнами.",
+    "GetRandom выбирает единый индекс; судья принимает любого действующего члена."
   ]
 }

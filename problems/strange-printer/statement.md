@@ -1,7 +1,7 @@
-A printer paints a string one turn at a time. In a turn it chooses a group of positions (not necessarily adjacent after earlier paints) and overwrites them with a single letter. Later turns may overwrite earlier paint.
+Принтер рисует строку один оборот за раз. В повороте он выбирает группу положений (не обязательно смежных после более ранних красок) и перезаписывает их одной буквой. Более поздние повороты могут перезаписывать более раннюю краску.
 
-Given `s`, return the fewest turns needed to paint it starting from a blank page.
+Учитывая `s`, верните наименьшее количество оборотов, необходимое для рисования, начиная с пустой страницы.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 100`
-- `s` holds lowercase English letters.
+- `s` содержит английские буквы.

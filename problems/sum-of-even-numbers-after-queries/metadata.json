@@ -1,6 +1,6 @@
 {
   "id": "sum-of-even-numbers-after-queries",
-  "title": "968. Sum of Even Numbers After Queries",
+  "title": "968. Сумма четных чисел после запросов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/sum-of-even-numbers-after-queries/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1,2,3,4], queries = [[1,0],[-3,1],[-4,0],[2,3]]",
       "output": "[8,6,2,4]",
-      "explanation": "After each addition the even total becomes 8, then 6, then 2, then 4."
+      "explanation": "После каждого добавления четная сумма становится 8, затем 6, затем 2, затем 4."
     },
     {
       "input": "nums = [1], queries = [[4,0]]",
       "output": "[0]",
-      "explanation": "The single entry becomes 5 (odd), so the even total is 0."
+      "explanation": "Однократная запись становится 5 (нечетное число), поэтому четная сумма составляет 0."
     }
   ],
   "starterCode": {
@@ -49,8 +49,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Maintain the sum of currently even entries instead of rescanning the array per query.",
-    "Before applying queries[i] = [val, idx], subtract nums[idx] from the total if it is even.",
-    "After the update, add nums[idx] back if it is even, and record the total."
+    "Сохраняйте сумму даже записей в настоящее время вместо сканирования массива на запрос.",
+    "Перед применением запросов [i] = [val, idx] вычтите числа [idx] из общей суммы, если она четная.",
+    "После обновления добавьте nums [idx] обратно, если он ровный, и запишите общее количество."
   ]
 }

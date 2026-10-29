@@ -1,7 +1,7 @@
-You are given the head of a singly linked list. Exchange every pair of neighboring nodes (positions 1-2, 3-4, and so on) and return the head of the rearranged list.
+Вам дается глава единственно связанного списка. Обменяйте каждую пару соседних узлов (позиции) 1-2, 3-4и так далее) и вернуть главу переставленного списка.
 
-When the list holds an odd number of nodes, the final node has no partner and stays where it is. You must relink the existing nodes themselves; just overwriting their values is not allowed.
+Когда список содержит нечетное число узлов, у конечного узла нет партнера и остается там, где он есть. Вы должны перелинковать существующие узлы сами; просто перезаписывать их значения не разрешается.
 
-**Constraints:**
-- The number of nodes in the list is in the range `[0, 100]`.
+**Ограничения:**
+- Количество узлов в списке находится в диапазоне `[0, 100]`.
 - `0 <= Node.val <= 100`

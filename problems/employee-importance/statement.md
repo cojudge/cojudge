@@ -1,11 +1,11 @@
-A company stores its staff as a table. Each row describes one person as `[id, importance, sub1, sub2, ...]`, where `id` is the unique number of the employee, `importance` is their personal score, and any remaining entries list the ids of their direct reports. A row with only two entries has no direct reports.
+Каждая строка описывает одного человека как `[id, importance, sub1, sub2, ...]`, где `id` - это уникальный номер сотрудника, `importance` - их личный счет, а любые оставшиеся записи перечисляют идентификаторы их прямых отчетов. В строке только с двумя записями нет прямых отчетов.
 
-Given the whole table `employees` and a starting `id`, add up the importance of that person together with everyone reachable below them through direct and indirect reporting lines.
+Учитывая всю таблицу `employees` и стартовый `id`, сложите важность этого человека вместе со всеми доступными ниже них через прямые и косвенные линии отчетности.
 
-This is a portable adaptation: the original object list is flattened into integer rows so that only `int_array_2d` plus `int` are needed. Ids are positive and distinct; every subordinate id appears as some row's id.
+Это переносная адаптация: первоначальный список объектов сплющен в целые ряды так, что нужны только `int_array_2d` плюс `int`. Иды положительные и отчетливые; каждый подчинённый идентификатор появляется как идентификатор некоторого ряда.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= employees.length <= 2000`
-- Each row has at least two numbers; `1 <= id <= 2000`
+- Каждая строка имеет по крайней мере два числа; `1 <= id <= 2000`
 - `-100 <= importance <= 100`
-- Each employee has at most `100` direct reports.
+- У каждого сотрудника есть максимум прямых отчетов `100`.

@@ -1,0 +1,58 @@
+{
+  "id": "regions-cut-by-slashes",
+  "title": "945. Regions Cut by Slashes",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/regions-cut-by-slashes/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "grid = \" /|/ \"",
+      "output": "2",
+      "explanation": "The two strokes join into one diagonal wall that splits the square into 2 zones."
+    },
+    {
+      "input": "grid = \" /|  \"",
+      "output": "1",
+      "explanation": "A lone stroke touching the border fails to enclose anything, leaving 1 zone."
+    },
+    {
+      "input": "grid = \"/\\|\\/\"",
+      "output": "5",
+      "explanation": "The crossing strokes carve the square into 5 separate pockets."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int regionsBySlashes(String grid) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def regionsBySlashes(self, grid: str) -> int:\n        return 0",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int regionsBySlashes(string grid) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int RegionsBySlashes(string grid)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn regions_by_slashes(grid: String) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc RegionsBySlashes(grid string) int {\n    return 0\n}",
+    "typescript": "export function regionsBySlashes(grid: string): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string $grid\n     * @return int\n     */\n    public function regionsBySlashes($grid) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "grid": " /|/ "
+    },
+    {
+      "grid": " /|  "
+    },
+    {
+      "grid": "/\\|\\/"
+    }
+  ],
+  "functionName": "regionsBySlashes",
+  "params": [
+    {
+      "name": "grid",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Expand every cell into a 3x3 pixel block so diagonal walls become axis-aligned barriers.",
+    "A '/' blocks the anti-diagonal pixels and a backslash blocks the main diagonal pixels.",
+    "Count connected components of the remaining open pixels with flood fill."
+  ]
+}

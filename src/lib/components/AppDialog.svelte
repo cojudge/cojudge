@@ -80,7 +80,7 @@
 	<div class="dialog-shell">
 		<button
 			class="dialog-backdrop"
-			aria-label={$activeDialog.kind === 'confirm' ? 'Cancel' : 'Close'}
+			aria-label={$activeDialog.kind === 'confirm' ? "Отмена" : "Закрыть"}
 			tabindex="-1"
 			onclick={() => close(null)}
 		></button>

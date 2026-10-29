@@ -1,6 +1,6 @@
 {
   "id": "third-maximum-number",
-  "title": "487. Third Maximum Number",
+  "title": "487. Третье максимальное число",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/third-maximum-number/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [3,2,1]",
       "output": "1",
-      "explanation": "Distinct values sorted are 3, 2, 1; the third is 1."
+      "explanation": "Отдельные значения сортируются 3, 2, 1; третье - 1."
     },
     {
       "input": "nums = [1,2]",
       "output": "2",
-      "explanation": "Only two distinct values exist, so the maximum 2 is returned."
+      "explanation": "Существует только два различных значения, поэтому возвращается максимум 2."
     },
     {
       "input": "nums = [2,2,3,1]",
       "output": "1",
-      "explanation": "Distinct values are 3, 2, 1; duplicates do not create extra ranks."
+      "explanation": "Отличительные значения — 3, 2, 1; дубликаты не создают дополнительных рангов."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Rank distinct values only; repeats never advance the rank.",
-    "Track the top three distinct values in one pass.",
-    "If a third distinct value never appears, answer the overall maximum."
+    "Только ранговые значения; повторы никогда не повышают ранг.",
+    "Отслеживайте три основных значения за один проход.",
+    "Если третье отдельное значение никогда не появляется, ответьте на общий максимум."
   ]
 }

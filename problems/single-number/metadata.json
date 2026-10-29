@@ -1,6 +1,6 @@
 {
   "id": "single-number",
-  "title": "150. Single Number",
+  "title": "150. Одноместный номер",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/single-number/",
   "category": "binary",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [2,2,1]",
       "output": "1",
-      "explanation": "Every number in [2, 2, 1] appears twice except 1, so 1 is the single number."
+      "explanation": "Каждое число в [2, 2, 1] появляется дважды, кроме 1, поэтому 1 является единственным числом."
     },
     {
       "input": "nums = [4,1,2,1,2]",
       "output": "4",
-      "explanation": "Every number in [4, 1, 2, 1, 2] appears twice except 4, so 4 is the single number."
+      "explanation": "Каждое число в [4, 1, 2, 1, 2] появляется дважды, за исключением 4, поэтому 4 является единственным номером."
     },
     {
       "input": "nums = [1]",
       "output": "1",
-      "explanation": "The only number in [1] is 1, which appears once, so 1 is the single number."
+      "explanation": "Единственным числом в 1 является 1, который появляется один раз, поэтому 1 является единственным числом."
     }
   ],
   "starterCode": {
@@ -57,7 +57,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "XOR is associative and commutative, and a value XOR itself is zero.",
-    "XOR every array element together; each pair cancels and the unpaired value remains."
+    "XOR является ассоциативным и коммутативным, а само значение XOR равно нулю.",
+    "XOR - каждый элемент массива вместе; каждая пара отменяется, и неспаренное значение остается."
   ]
 }

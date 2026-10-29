@@ -1,6 +1,6 @@
 {
   "id": "magical-string",
-  "title": "545. Magical String",
+  "title": "545. Волшебная струна",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/magical-string/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "n = 6",
       "output": "3",
-      "explanation": "Prefix 122112 holds three 1s."
+      "explanation": "Префикс 122112 содержит три 1s."
     },
     {
       "input": "n = 1",
       "output": "1",
-      "explanation": "Single prefix 1 holds one 1."
+      "explanation": "Один префикс 1 содержит один 1."
     },
     {
       "input": "n = 10",
       "output": "5",
-      "explanation": "First ten characters hold five 1s."
+      "explanation": "Первые десять символов содержат пять 1."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Grow the string with a read pointer that says how many copies of the next digit to append.",
-    "Alternate the digit between 1 and 2 each time the pointer advances.",
-    "Stop once length reaches n, then count 1s in the prefix."
+    "Вырастите строку с указателем чтения, который говорит, сколько копий следующей цифры добавить.",
+    "Замените цифру между 1 и 2 каждый раз, когда указатель продвигается.",
+    "Остановка после того, как длина достигает n, затем сосчитайте 1s в префиксе."
   ]
 }

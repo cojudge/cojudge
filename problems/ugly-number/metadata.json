@@ -1,6 +1,6 @@
 {
   "id": "ugly-number",
-  "title": "365. Ugly Number",
+  "title": "365. Уродливое число",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/ugly-number/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "n = 6",
       "output": "true",
-      "explanation": "6 factors as 2 * 3, using only allowed primes."
+      "explanation": "6 факторы как 2 * 3, используя только разрешенные простые числа."
     },
     {
       "input": "n = 1",
       "output": "true",
-      "explanation": "1 has no prime factors, so it is ugly by definition."
+      "explanation": "1 не имеет простых факторов, поэтому он уродлив по определению."
     },
     {
       "input": "n = 14",
       "output": "false",
-      "explanation": "14 includes the prime factor 7, which is not allowed."
+      "explanation": "14 включает основной фактор 7, который не допускается."
     }
   ],
   "starterCode": {
@@ -54,7 +54,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Non-positive values can never be ugly.",
-    "Divide out factors 2, 3 and 5 completely; the value is ugly exactly when 1 remains."
+    "Неположительные ценности никогда не могут быть уродливыми.",
+    "Разделите факторы 2, 3 и 5 полностью; значение уродливо именно тогда, когда 1 остается."
   ]
 }

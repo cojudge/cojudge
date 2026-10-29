@@ -1,6 +1,6 @@
-You stand at the first position of an integer array `nums`, where `nums[i]` states the longest forward stride permitted from position `i`. Determine whether the final position can be reached by a sequence of such strides.
+Вы стоите в первом положении целочисленного массива `nums`, где `nums[i]` указывает самый длинный шаг вперед, разрешенный с позиции `i`. Определите, может ли конечная позиция быть достигнута последовательностью таких шагов.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ nums.length ≤ 10^4
 - 0 ≤ nums[i] ≤ 10^5

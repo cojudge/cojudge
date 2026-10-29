@@ -1,4 +1,5 @@
-import { generatePythonRunner, generatePythonInteractiveRunner, generatePythonClassSolution, pythonImage, pythonListNodeClass, pythonTreeNodeClass, pythonGraphNodeClass } from "$lib/utils/pythonUtil";
+import { pythonImage } from '$lib/server/runtimeImages';
+import { generatePythonRunner, generatePythonInteractiveRunner, generatePythonClassSolution, pythonListNodeClass, pythonTreeNodeClass, pythonGraphNodeClass } from "$lib/utils/pythonUtil";
 import { getInteractive } from "$lib/utils/interactiveUtil";
 import { extractOperations } from "$lib/utils/util";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";

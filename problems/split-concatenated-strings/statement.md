@@ -1,9 +1,9 @@
-You are given an array of strings `strs`. You will build a circular loop by concatenating the strings in their given order, but before joining you may flip any individual string (write it backwards) or keep it as is.
+Вам дается массив строк `strs`. Вы будете строить круговую петлю, сцепляя строки в заданном порядке, но перед присоединением вы можете перевернуть любую отдельную строку (записать ее назад) или сохранить ее как есть.
 
-Once the loop is fixed, choose any cut position inside it and straighten the circle into a linear string beginning at the cut. Among every choice of flips and every cut, return the lexicographically largest stringobtainable. (Compare strings character by character with usual alphabet order.)
+После того, как петля фиксирована, выберите любое положение разреза внутри нее и выпрямите круг в линейную строку, начинающуюся на разрезе. Среди каждого выбора переворачивания и каждого разреза, верните лексикографически самую большую струну, которую можно получить. (Сравните строки по характеру с обычным алфавитным порядком.)
 
-**Constraints:**
+**Ограничения:**
 - `1 <= strs.length <= 1000`
 - `1 <= strs[i].length <= 1000`
-- `strs[i]` holds lowercase English letters
-- Total characters across `strs` fit comfortably for quadratic scanning
+- `strs[i]` содержит английские буквы
+- Общие символы `strs` удобно подходят для квадратного сканирования

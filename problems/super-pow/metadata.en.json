@@ -1,0 +1,69 @@
+{
+  "id": "super-pow",
+  "title": "450. Super Pow",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/super-pow/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "a = 2, b = [3]",
+      "output": "8",
+      "explanation": "Exponent 3 gives 2^3 = 8."
+    },
+    {
+      "input": "a = 2, b = [1,0]",
+      "output": "1024",
+      "explanation": "Exponent 10 gives 1024."
+    },
+    {
+      "input": "a = 1, b = [4,3,3,8,5,2]",
+      "output": "1",
+      "explanation": "Powers of 1 stay 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int superPow(int a, int[] b) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def superPow(self, a: int, b: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int superPow(int a, vector<int>& b) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int SuperPow(int a, int[] b)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn super_pow(a: i32, b: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc SuperPow(a int, b []int) int {\n    return 0\n}",
+    "typescript": "export function superPow(a: number, b: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $a\n     * @param int[] $b\n     * @return int\n     */\n    public function superPow($a, $b) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "a": 2,
+      "b": "[3]"
+    },
+    {
+      "a": 2,
+      "b": "[1,0]"
+    },
+    {
+      "a": 1,
+      "b": "[4,3,3,8,5,2]"
+    },
+    {
+      "a": 2147483647,
+      "b": "[1]"
+    }
+  ],
+  "functionName": "superPow",
+  "params": [
+    {
+      "name": "a",
+      "type": "int"
+    },
+    {
+      "name": "b",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Fold digits with result = result^10 * a^digit (mod 1337) at each step.",
+    "Write a small modular power helper using binary exponentiation.",
+    "Reduce the base modulo 1337 first; large exponents never fit in one integer."
+  ]
+}

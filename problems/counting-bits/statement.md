@@ -1,4 +1,4 @@
-You are given a non-negative integer `n`. Produce an array `ans` with `n + 1` slots, where slot `i` (for each `0 <= i <= n`) stores how many `1` bits occur in the binary form of `i`.
+Вы получаете неотрицательное целое число `n`. Производите массив `ans` со слотами `n + 1`, где слот `i` (для каждого `0 <= i <= n`) хранит, сколько битов `1` происходит в двоичной форме `i`.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= n <= 10^5`

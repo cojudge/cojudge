@@ -1,8 +1,8 @@
-Supplied with two integers `n` and `k`, assemble every `k`-element subset drawn from the interval `[1, n]`.
+Поставляемые с двумя целыми числами `n` и `k`, собирают каждое подмножество элементов `k`, полученное из интервала `[1, n]`.
 
-The collection may be emitted in whatever sequence is convenient.
+Сбор может быть испущен в любой удобной последовательности.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= n <= 20`
 - `1 <= k <= n`

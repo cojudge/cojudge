@@ -1,6 +1,6 @@
 {
   "id": "flood-fill",
-  "title": "740. Flood Fill",
+  "title": "740. Наводнение заполнило",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/flood-fill/",
   "category": "matrix",
@@ -8,7 +8,7 @@
     {
       "input": "image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, color = 2",
       "output": "[[2,2,2],[2,2,0],[2,0,1]]",
-      "explanation": "The 4-connected block of 1s is repainted to 2."
+      "explanation": "Блок 1s, подключенный к 4, перекрашивается в 2."
     },
     {
       "input": "image = [[0,0,0],[0,0,0]], sr = 0, sc = 0, color = 0",
@@ -70,8 +70,8 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Remember the starting cell's original color first; if it already equals the new color, return immediately.",
-    "Explore with depth-first or breadth-first search, stepping only to in-bounds neighbours holding the original color.",
-    "Recolor on visit so cells are never processed twice."
+    "Сначала запомните первоначальный цвет исходной клетки; если он уже равен новому цвету, немедленно вернитесь.",
+    "Исследуйте с глубиной или широтой поиска, шагая только к соседям, удерживающим первоначальный цвет.",
+    "Повторяйте цвет при посещении, чтобы клетки никогда не обрабатывались дважды."
   ]
 }

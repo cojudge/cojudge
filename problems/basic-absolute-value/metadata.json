@@ -1,18 +1,18 @@
 {
   "id": "basic-absolute-value",
-  "title": "8. Absolute Value",
+  "title": "8. Абсолютная ценность",
   "difficulty": "Easy",
   "category": "if-else",
   "examples": [
     {
       "input": "n = -5",
       "output": "5",
-      "explanation": "The absolute value of -5 is 5."
+      "explanation": "Абсолютным значением -5 является 5."
     },
     {
       "input": "n = 3",
       "output": "3",
-      "explanation": "Positive numbers are unchanged."
+      "explanation": "Положительные цифры неизменны."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Branch on whether `n` is negative.",
-    "Negating a negative number makes it positive."
+    "Отделение по `n` является отрицательным.",
+    "Отрицание отрицательного числа делает его положительным."
   ]
 }

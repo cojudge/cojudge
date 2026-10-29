@@ -1,5 +1,5 @@
-You are given the root of a binary search tree and two bounds `low` and `high`. Add up every node value that lies inside the inclusive interval `[low, high]`.
+Вам дают корень двоичного дерева поиска и две границы `low` и `high`. Сложите каждое значение узла, которое находится внутри инклюзивного интервала `[low, high]`.
 
-**Constraints:**
-- The tree holds `1` to `10000` nodes with values `1..100000` and respects BST order.
+**Ограничения:**
+- Дерево удерживает узлы `1` до `10000` со значениями `1..100000` и уважает порядок BST.
 - `1 <= low <= high <= 100000`

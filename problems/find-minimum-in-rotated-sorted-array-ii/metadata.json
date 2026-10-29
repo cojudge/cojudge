@@ -1,6 +1,6 @@
 {
   "id": "find-minimum-in-rotated-sorted-array-ii",
-  "title": "308. Find Minimum in Rotated Sorted Array II",
+  "title": "308. Найти минимум в Rotated Sorted Array II",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1,3,5]",
       "output": "1",
-      "explanation": "The array is already sorted, so the first element is minimal."
+      "explanation": "Массив уже отсортирован, поэтому первый элемент минимален."
     },
     {
       "input": "nums = [2,2,2,0,1]",
       "output": "0",
-      "explanation": "Rotation moved the minimum 0 into the middle."
+      "explanation": "Вращение переместило минимальный 0 в середину."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Compare the middle element with the right end to decide which half holds the minimum.",
-    "When they are equal, shrink the right end by one since duplicates give no information.",
-    "Otherwise the classic rotated-array binary search choice applies."
+    "Сравните средний элемент с правильным концом, чтобы решить, какая половина содержит минимум.",
+    "Когда они равны, сжимайте правый конец на один, так как дубликаты не дают никакой информации.",
+    "В противном случае применяется классический выбор бинарного поиска с вращающимся массивом."
   ]
 }

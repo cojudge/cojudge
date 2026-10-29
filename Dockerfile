@@ -55,6 +55,7 @@ COPY --from=build /usr/src/app/courses ./courses
 COPY --from=build /usr/src/app/problems ./problems
 COPY --from=build /usr/src/app/package.json ./package.json
 COPY --from=build /usr/src/app/node_modules ./node_modules
+COPY --from=build /usr/src/app/src/lib/i18n/MONACO-LICENSE.txt ./licenses/MONACO-LICENSE.txt
 
 EXPOSE 3000
 

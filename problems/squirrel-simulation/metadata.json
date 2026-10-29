@@ -1,6 +1,6 @@
 {
   "id": "squirrel-simulation",
-  "title": "623. Squirrel Simulation",
+  "title": "623. Симуляция белки",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/squirrel-simulation/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "height = 5, width = 7, tree = [2,2], squirrel = [4,4], nuts = [[3,0],[2,5]]",
       "output": "12",
-      "explanation": "Round trips cost 12 and no first pick saves extra."
+      "explanation": "Круглые поездки стоят 12, и никакой первый выбор не экономит больше."
     },
     {
       "input": "height = 1, width = 3, tree = [0,1], squirrel = [0,0], nuts = [[0,2]]",
       "output": "3",
-      "explanation": "Fetch over distance 2, carry home over distance 1."
+      "explanation": "Приходите на расстояние 2, переносите домой на расстояние 1."
     },
     {
       "input": "height = 4, width = 4, tree = [0,0], squirrel = [3,3], nuts = [[1,1],[2,2]]",
       "output": "10",
-      "explanation": "Round trips cost 12; fetching (2,2) first saves 2."
+      "explanation": "Круглые поездки стоят 12; выбор (2, 2) сначала сохраняет 2."
     }
   ],
   "starterCode": {
@@ -79,8 +79,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sum twice the tree-to-nut Manhattan distance over all nuts as the baseline.",
-    "Choosing nut i first replaces one tree leg with a squirrel leg, changing the total by dist(squirrel,i) - dist(tree,i).",
-    "Take the minimum such adjustment over all nuts and add it to the baseline."
+    "В два раза больше расстояния от дерева до ореха, чем от всех орехов в качестве базовой линии.",
+    "Выбор ореха i сначала заменяет одну ногу дерева беличьей ногой, изменяя общую на дист (белка, i) - дист (дерево, i).",
+    "Возьмите минимальную такую корректировку по всем орехам и добавьте ее к исходному уровню."
   ]
 }

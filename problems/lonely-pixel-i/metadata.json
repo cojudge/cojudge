@@ -1,6 +1,6 @@
 {
   "id": "lonely-pixel-i",
-  "title": "590. Lonely Pixel I",
+  "title": "590. Одинокий Pixel I",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/lonely-pixel-i/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "picture = [[\"W\",\"W\",\"B\"],[\"W\",\"B\",\"W\"],[\"B\",\"W\",\"W\"]]",
       "output": "3",
-      "explanation": "Each black pixel sits alone in its row and column."
+      "explanation": "Каждый черный пиксель сидит один в своем ряду и столбце."
     },
     {
       "input": "picture = [[\"B\",\"B\"],[\"B\",\"W\"]]",
       "output": "0",
-      "explanation": "Every black pixel shares its row or column with another black pixel."
+      "explanation": "Каждый черный пиксель делит свою строку или столбец с другим черным пикселем."
     },
     {
       "input": "picture = [[\"W\",\"B\",\"W\"]]",
       "output": "1",
-      "explanation": "The single black pixel has no company in its row or column."
+      "explanation": "Один черный пиксель не имеет компании в строке или столбце."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Count the black pixels in each row and each column first.",
-    "A black pixel is lonely exactly when its row count and its column count are both 1.",
-    "Rust note: the picture arrives as its encoded string; parse it before counting."
+    "Сначала посчитайте черные пиксели в каждой строке и в каждой колонке.",
+    "Черный пиксель одинок именно тогда, когда его количество строк и количество столбцов являются 1.",
+    "Примечание: изображение поступает в виде закодированной строки; разберите его перед подсчетом."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "design-in-memory-file-system",
-  "title": "630. Design In-Memory File System",
+  "title": "630. Дизайн файловой системы In-Memory",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/design-in-memory-file-system/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"FileSystem\",\"mkdir\",\"ls\",\"addContentToFile\",\"readContentFromFile\",\"ls\"], paths = [\"/\",\"/a/b/c\",\"/\",\"/a/b/c/d\",\"/a/b/c/d\",\"/a/b/c\"], contents = [\"\",\"\",\"\",\"hello\",\"\",\"\"]",
       "output": "[[\"a\"],[\"hello\"],[\"d\"]]",
-      "explanation": "Listing root shows a; reading the file gives hello; listing its folder shows d."
+      "explanation": "Корень листинга показывает a; чтение файла дает привет; перечисление его папки показывает d."
     },
     {
       "input": "operations = [\"FileSystem\",\"mkdir\",\"ls\",\"addContentToFile\",\"ls\",\"readContentFromFile\"], paths = [\"/\",\"/x/y\",\"/\",\"/x/y/f\",\"/x/y\",\"/x/y/f\"], contents = [\"\",\"\",\"\",\"data\",\"\",\"\"]",
       "output": "[[\"x\"],[\"f\"],[\"data\"]]",
-      "explanation": "Root holds x; the folder holds f; the file holds data."
+      "explanation": "Корень содержит x; папка содержит f; файл содержит данные."
     },
     {
       "input": "operations = [\"FileSystem\",\"ls\"], paths = [\"/\"], contents = [\"\"]",
       "output": "[[]]",
-      "explanation": "An empty tree lists nothing."
+      "explanation": "Пустое дерево ничего не указывает."
     }
   ],
   "starterCode": {
@@ -65,9 +65,9 @@
   ],
   "outputType": "string_list_2d",
   "hints": [
-    "Keep a set of directory paths plus a map from file path to its text.",
-    "mkdir adds every missing prefix; adding content creates parent dirs first and appends.",
-    "ls on a file returns its name; ls on a directory returns sorted immediate children.",
-    "Adaptation: implement runFileSystem(operations, paths, contents); void calls produce no rows, while ls and read each append one row."
+    "Сохраняйте набор путей каталога плюс карту от пути файла к его тексту.",
+    "mkdir добавляет каждый отсутствующий префикс; добавление контента сначала создает родительские dirs и приложения.",
+    "ls в файле возвращает свое имя; ls в каталоге возвращает отсортированных детей.",
+    "Адаптация: реализуйте runFileSystem (операции, пути, содержимое); вызовы void не производят строк, в то время как ls и считывайте каждое приложение по одной строке."
   ]
 }

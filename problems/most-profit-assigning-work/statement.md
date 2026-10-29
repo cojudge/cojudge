@@ -1,8 +1,8 @@
-You are given three arrays. `difficulty[i]` is how hard job `i` is, `profit[i]` is what job `i` pays, and `worker[j]` is the skill level of worker `j`. A worker can only take a job whose difficulty does not exceed their skill, and each worker takes at most the single best-paying job available to them (workers may also take nothing if every job is too hard). Every worker chooses independently, so the same job can be taken by many workers.
+`difficulty[i]` - это то, насколько тяжела работа `i`, `profit[i]` - это та работа, которую оплачивает `i`, а `worker[j]` - это уровень квалификации работника `j`. Работник может взять только работу, сложность которой не превышает его мастерства, и каждый работник берет максимум одну самую высокооплачиваемую работу, доступную ему (рабочие также могут ничего не брать, если каждая работа слишком сложна). Каждый работник выбирает самостоятельно, поэтому одну и ту же работу могут взять многие работники.
 
-Return the greatest total pay all workers can earn together.
+Возвращайте самую большую общую заработную плату, которую все работники могут заработать вместе.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= difficulty.length == profit.length <= 10^4`
 - `1 <= difficulty[i], profit[i] <= 10^5`
 - `1 <= worker.length <= 10^4`

@@ -1,6 +1,6 @@
 {
   "id": "alien-dictionary",
-  "title": "32. Alien Dictionary",
+  "title": "32. Инопланетный словарь",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/alien-dictionary/",
   "category": "graph",
@@ -8,12 +8,12 @@
     {
       "input": "words = [\"wrt\",\"wrf\",\"er\",\"ett\",\"rftt\"]",
       "output": "\"wertf\" (one valid order)",
-      "explanation": "The valid character order derived from the given words is \"wertf\"."
+      "explanation": "Действительный порядок символов, полученный из данных слов, является «wertf»."
     },
     {
       "input": "words = [\"z\",\"x\"]",
       "output": "\"zx\"",
-      "explanation": "The valid character order derived from the given words is \"zx\"."
+      "explanation": "Действительный порядок символов, полученный из данных слов, является «zx»."
     }
   ],
   "starterCode": {
@@ -46,6 +46,6 @@
   ],
   "outputType": "string",
   "hints": [
-    "Build a graph of precedence constraints from adjacent words and perform topological sort. If a cycle exists or an invalid prefix condition occurs, return an empty string."
+    "Постройте график ограничений приоритета из соседних слов и выполните топологическую сортировку.Если существует цикл или возникает недействительное условие префикса, верните пустую строку."
   ]
 }

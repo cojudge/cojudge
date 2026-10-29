@@ -1,0 +1,64 @@
+{
+  "id": "flip-equivalent-binary-trees",
+  "title": "938. Flip Equivalent Binary Trees",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/flip-equivalent-binary-trees/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "root1 = [1,2,3,4,5,6,null,null,null,7,8], root2 = [1,3,2,null,6,4,5,null,null,null,null,8,7]",
+      "output": "true",
+      "explanation": "Flips at a few nodes align both trees."
+    },
+    {
+      "input": "root1 = [], root2 = []",
+      "output": "true",
+      "explanation": "Empty trees match."
+    },
+    {
+      "input": "root1 = [], root2 = [1]",
+      "output": "false",
+      "explanation": "A missing node cannot appear."
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public boolean flipEquiv(TreeNode root1, TreeNode root2) {\n        return false;\n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def flipEquiv(self, root1, root2) -> bool:\n        pass",
+    "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    bool flipEquiv(TreeNode* root1, TreeNode* root2) {\n        return false;\n    }\n};",
+    "csharp": "/*\nDefinition for a binary tree node.\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\npublic class Solution \n{\n    public bool FlipEquiv(TreeNode root1, TreeNode root2) \n    {\n        return false;\n    }\n}",
+    "rust": "// Definition for a binary tree node.\n// #[derive(Debug, PartialEq, Eq)]\n// pub struct TreeNode {\n//   pub val: i32,\n//   pub left: Option<Rc<RefCell<TreeNode>>>,\n//   pub right: Option<Rc<RefCell<TreeNode>>>,\n// }\nuse std::rc::Rc;\nuse std::cell::RefCell;\npub struct Solution;\n\nimpl Solution {\n    pub fn flip_equiv(root1: Option<Rc<RefCell<TreeNode>>>, root2: Option<Rc<RefCell<TreeNode>>>) -> bool {\n        false\n    }\n}",
+    "go": "// Definition for a binary tree node.\n// type TreeNode struct {\n//     Val int\n//     Left *TreeNode\n//     Right *TreeNode\n// }\npackage main\n\nfunc FlipEquiv(root1 *TreeNode, root2 *TreeNode) bool {\n    return false\n}",
+    "typescript": "// Definition for a binary tree node.\n// class TreeNode {\n//     val: number\n//     left: TreeNode | null\n//     right: TreeNode | null\n//     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {\n//         this.val = val ?? 0;\n//         this.left = left ?? null;\n//         this.right = right ?? null;\n//     }\n// }\nimport { TreeNode } from './TreeNode';\n\nexport function flipEquiv(root1: TreeNode | null, root2: TreeNode | null): boolean {\n    return false;\n}",
+    "php": "/**\n * Definition for a binary tree node.\n * class TreeNode {\n *     public $val = 0;\n *     public $left = null;\n *     public $right = null;\n * }\n */\nclass Solution {\n    /**\n     * @param TreeNode|null $root1\n     * @param TreeNode|null $root2\n     * @return bool\n     */\n    public function flipEquiv($root1, $root2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "root1": "[1,2,3,4,5,6,null,null,null,7,8]",
+      "root2": "[1,3,2,null,6,4,5,null,null,null,null,8,7]"
+    },
+    {
+      "root1": "[]",
+      "root2": "[]"
+    },
+    {
+      "root1": "[]",
+      "root2": "[1]"
+    }
+  ],
+  "functionName": "flipEquiv",
+  "params": [
+    {
+      "name": "root1",
+      "type": "tree_node"
+    },
+    {
+      "name": "root2",
+      "type": "tree_node"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Matching roots must hold equal values; empty trees match only each other.",
+    "For non-empty roots, try both alignments: straight (left-left, right-right) and crossed (left-right, right-left); one of them must fully match."
+  ]
+}

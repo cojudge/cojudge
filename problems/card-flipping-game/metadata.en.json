@@ -1,0 +1,64 @@
+{
+  "id": "card-flipping-game",
+  "title": "820. Card Flipping Game",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/card-flipping-game/",
+  "category": "hash-table",
+  "examples": [
+    {
+      "input": "fronts = [1,2,4,4,7], backs = [1,3,4,1,3]",
+      "output": "2",
+      "explanation": "Values 1 and 4 each appear on both sides of some card and are disqualified; the smallest remaining value is 2."
+    },
+    {
+      "input": "fronts = [1], backs = [1]",
+      "output": "0",
+      "explanation": "The only value is double-sided on its card, so no good number exists."
+    },
+    {
+      "input": "fronts = [2,3], backs = [4,5]",
+      "output": "2",
+      "explanation": "No card shows the same value twice, so the minimum of all faces wins."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int flipgame(int[] fronts, int[] backs) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def flipgame(self, fronts: List[int], backs: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int flipgame(vector<int>& fronts, vector<int>& backs) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int Flipgame(int[] fronts, int[] backs) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn flipgame(fronts: Vec<i32>, backs: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc Flipgame(fronts []int, backs []int) int {\n    return 0\n}",
+    "typescript": "export function flipgame(fronts: number[], backs: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $fronts\n     * @param int[] $backs\n     * @return int\n     */\n    public function flipgame($fronts, $backs) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "fronts": "[1,2,4,4,7]",
+      "backs": "[1,3,4,1,3]"
+    },
+    {
+      "fronts": "[1]",
+      "backs": "[1]"
+    },
+    {
+      "fronts": "[2,3]",
+      "backs": "[4,5]"
+    }
+  ],
+  "functionName": "flipgame",
+  "params": [
+    {
+      "name": "fronts",
+      "type": "int_array"
+    },
+    {
+      "name": "backs",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "A value appearing on both faces of any single card can never be the hidden answer.",
+    "Collect those forbidden values, then take the minimum over all faces not in the set (0 when empty)."
+  ]
+}

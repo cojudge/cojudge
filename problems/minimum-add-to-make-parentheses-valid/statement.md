@@ -1,5 +1,5 @@
-You are given a string `s` containing only `'('` and `')'`. In one move you may insert a single parenthesis at any position. Return the smallest number of moves that turns `s` into a balanced (valid) parenthesis string, where every opening bracket is closed by a later closing bracket in the usual nested order.
+Вам дается строка `s`, содержащая только `'('` и `')'`. В одном движении вы можете вставить один скобок в любое положение. Возвратить наименьшее количество ходов, которое превращает `s` в сбалансированную (действительную) струну скобки, где каждая открывающая скобка закрывается более поздней закрывающей скобкой в обычном вложенном порядке.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 1000`
-- `s` consists of `'('` and `')'` only
+- `s` состоит только из `'('` и `')'`.

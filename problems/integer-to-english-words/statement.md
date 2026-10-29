@@ -1,10 +1,10 @@
-Convert a non-negative integer into its English words form.
+Преобразуйте неотрицательное целое число в его английскую форму слов.
 
-Write `numberToWords(num)` that spells out `num` using words for each
-three-digit block combined with scale names `Thousand`, `Million`, and
-`Billion`. A block that is zero is skipped (except when the whole number
-is zero, which is `"Zero"`). Separate words with single spaces and use no
-leading or trailing spaces.
+Напишите `numberToWords(num)`, который описывает `num`, используя слова для каждого.
+трехзначный блок в сочетании с именами масштаба `Thousand`, `Million` и
+`Billion`. Блок, равный нулю, пропускается (за исключением случаев, когда пропущено целое число).
+`"Zero"`. Отдельные слова с одним пробелом и не использовать
+Пространства для прогулок или прогулок.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= num <= 2^31 - 1`

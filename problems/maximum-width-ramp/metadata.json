@@ -1,6 +1,6 @@
 {
   "id": "maximum-width-ramp",
-  "title": "948. Maximum Width Ramp",
+  "title": "948. Максимальная ширина фары",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/maximum-width-ramp/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [6,0,8,2,1,5]",
       "output": "4",
-      "explanation": "Pairing index 1 (value 0) with index 5 (value 5) spans 4 positions, wider than any other valid pair."
+      "explanation": "Парный индекс 1 (значение 0) с индексом 5 (значение 5) охватывает позиции 4, шире, чем любая другая действительная пара."
     },
     {
       "input": "nums = [9,8,1,0,1,9,4,0,4,1]",
       "output": "7",
-      "explanation": "Index 2 (value 1) to index 9 (value 1) gives width 7, the best possible here."
+      "explanation": "Индекс 2 (значение 1) для индекса 9 (значение 1) дает ширину 7, наилучшую из возможных здесь."
     },
     {
       "input": "nums = [5,4,3,2,1]",
       "output": "0",
-      "explanation": "Strictly falling values admit no pair with i < j and nums[i] <= nums[j], so the width is 0."
+      "explanation": "Строго падающие значения не допускают пары с i < j и nums[i] <= nums[j], поэтому ширина 0."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Candidate left ends are exactly the positions holding new prefix minima.",
-    "Keep those minima on a decreasing stack, then match each right end from the far right.",
-    "Each index enters and leaves the stack once, giving linear time."
+    "Кандидатские левые концы — это как раз те позиции, на которых держится новый префикс minima.",
+    "Держите эти минимумы на уменьшающемся стеке, а затем сопоставьте каждый правый конец с крайним правым.",
+    "Каждый индекс входит и выходит из стека один раз, давая линейное время."
   ]
 }

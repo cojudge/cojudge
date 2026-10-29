@@ -1,12 +1,12 @@
-Two integer arrays `preorder` and `inorder` capture traversals of a common binary tree: `preorder` lists vertices in root-left-right order, while `inorder` lists them in left-root-right order.
-Rebuild the underlying tree and hand back its root.
+Два целых массива `preorder` и `inorder` захватывают обходы общего двоичного дерева: `preorder` перечисляет вершины в лево-правом порядке, а `inorder` перечисляет их в лево-правом порядке.
+Восстановите подстилающее дерево и верните его корень.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ preorder.length ≤ 3000
 - inorder.length == preorder.length
-- -3000 ≤ preorder[i], inorder[i] ≤ 3000
-- preorder and inorder consist of unique values.
-- Each value of inorder also appears in preorder.
-- preorder is guaranteed to be the preorder traversal of the tree.
-- inorder is guaranteed to be the inorder traversal of the tree.
+- -3000 ≤ предзаказ[i], в порядке[i] ≤ 3000
+- Предзаказ и порядок состоят из уникальных значений.
+- Каждое значение непорядка также появляется в предзаказе.
+- Предзаказ гарантированно является предзаказным обходом дерева.
+- Непорядок гарантированно является непорядочным обходом дерева.

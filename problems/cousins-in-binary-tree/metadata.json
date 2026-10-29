@@ -1,6 +1,6 @@
 {
   "id": "cousins-in-binary-tree",
-  "title": "976. Cousins in Binary Tree",
+  "title": "976. Двоюродные братья в бинарном дереве",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/cousins-in-binary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,2,3,4], x = 4, y = 3",
       "output": "false",
-      "explanation": "Node 4 is at depth 2 while node 3 is at depth 1."
+      "explanation": "Узел 4 находится на глубине 2, а узел 3 находится на глубине 1."
     },
     {
       "input": "root = [1,2,3,null,4,null,5], x = 5, y = 4",
       "output": "true",
-      "explanation": "Both nodes are at depth 2 with different parents."
+      "explanation": "Оба узла находятся на глубине 2 с разными родителями."
     },
     {
       "input": "root = [1,2,3,null,4], x = 2, y = 3",
       "output": "false",
-      "explanation": "Same depth, but they share parent 1, so they are siblings."
+      "explanation": "То же самое, но у них общий родитель 1, поэтому они братья и сестры."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Walk the tree once, remembering each target's depth and parent node.",
-    "Cousins means equal depths with different (non-null) parents; siblings share a parent and fail.",
-    "Adaptation: the tree arrives as a tree_node while x and y are plain integer labels."
+    "Прогуляйтесь по дереву один раз, вспоминая глубину каждой цели и родительский узел.",
+    "Двоюродные братья означают равную глубину с разными (ненулевыми) родителями; братья и сестры разделяют родителя и терпят неудачу.",
+    "Адаптация: дерево прибывает как узел дерева, в то время как x и y являются простыми целыми ярлыками."
   ]
 }

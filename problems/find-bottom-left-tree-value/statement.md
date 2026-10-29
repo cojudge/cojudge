@@ -1,5 +1,5 @@
-In a binary tree, look at the deepest level that contains any node and pick the leftmost node sitting on that level. Return its value.
+В двоичном дереве посмотрите на самый глубокий уровень, который содержит любой узел, и выберите самый левый узел, сидящий на этом уровне.
 
-**Constraints:**
-- The number of nodes is in the range `[1, 10^4]`
+**Ограничения:**
+- Количество узлов находится в диапазоне `[1, 10^4]`
 - `-2^31 <= Node.val <= 2^31 - 1`

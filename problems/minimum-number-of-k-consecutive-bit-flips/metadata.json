@@ -1,6 +1,6 @@
 {
   "id": "minimum-number-of-k-consecutive-bit-flips",
-  "title": "977. Minimum Number of K Consecutive Bit Flips",
+  "title": "977. Минимальное количество K последовательных битовых скачков",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/minimum-number-of-k-consecutive-bit-flips/",
   "category": "greedy",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [0,1,0], k = 1",
       "output": "2",
-      "explanation": "Flip index 0, then flip index 2."
+      "explanation": "Flip index 0, затем flip index 2."
     },
     {
       "input": "nums = [1,1,0], k = 2",
       "output": "-1",
-      "explanation": "No sequence of length-2 flips can fix the last zero."
+      "explanation": "Ни одна последовательность сгибов длины 2 не может зафиксировать последний ноль."
     },
     {
       "input": "nums = [0,0,0,1,0,1,1,0], k = 3",
       "output": "3",
-      "explanation": "Flip starting at 0, then at 4, then at 5."
+      "explanation": "Переверните, начиная с 0, затем на 4, затем на 5."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Scan left to right: when position i is effectively 0, the only move that can still fix it starts at i, so flip there.",
-    "Track active flips with a running count plus a marker array (or queue) instead of flipping k cells each time.",
-    "If a zero is needed but fewer than k cells remain, the answer is -1."
+    "Сканирование слева направо: когда положение i фактически 0, единственное движение, которое все еще может исправить его, начинается на i, так что переверните туда.",
+    "Отслеживайте активные переворачивания с текущим счетом плюс массив маркеров (или очередь) вместо переворачивания k ячеек каждый раз.",
+    "Если требуется ноль, но остается меньше k-клеток, ответ -1."
   ]
 }

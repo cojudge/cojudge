@@ -1,7 +1,7 @@
-A snippet is valid when it consists of exactly one outer element with matched tags, optional text, and optional CDATA blocks. Tag names hold 1 to 9 uppercase letters. An opening tag looks like `<NAME>`, its closer like `</NAME>`, and a CDATA block looks like `<![CDATA[anything]]>` where the inside is taken literally.
+Сниппет действителен, когда он состоит ровно из одного внешнего элемента с сопоставленными тегами, необязательным текстом и необязательными блоками CDATA. Имена тегов содержат буквы 1 поверх букв 9. Тег открытия выглядит как `<NAME>`, его ближе как `</NAME>`, а блок CDATA выглядит как `<![CDATA[anything]]>`, где внутренняя часть взята буквально.
 
-Rules in plain terms: the snippet must start with an opening tag and end with its matching closer, with nothing before or after. Inside, plain text may appear only within some open tag, `<` must begin a valid tag or a well-formed CDATA, nested tags must close in reverse order, and every CDATA must terminate.
+Правила в простых терминах: фрагмент должен начинаться с открывающего тега и заканчиваться с его сопоставлением ближе, без чего-либо до или после.Внутри простой текст может появляться только в пределах некоторого открытого тега, `<` должен начинать действительный тег или хорошо сформированную CDATA, вложенные теги должны закрываться в обратном порядке, и каждый CDATA должен заканчиваться.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= code.length <= 500`
 - Code uses printable ASCII plus `<`, `>`, `/`, `!`, `[`, `]`.

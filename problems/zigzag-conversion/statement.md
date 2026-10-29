@@ -1,10 +1,10 @@
-Given a string `s` and a positive integer `numRows`, arrange the characters of `s` in a zigzag across `numRows` rows, then read the rows from top to bottom, left to right.
+Учитывая строку `s` и положительное целое число `numRows`, расположите символы `s` в зигзаге по строкам `numRows`, а затем прочитайте строки сверху вниз, слева направо.
 
-To picture the ordering, write the characters diagonally down and then diagonally up, repeating: move down one row at a time until the bottom row, then move up one row at a time until the top row, and repeat. Characters that land in the same row keep their original left-to-right order.
+Чтобы представить порядок, напишите символы по диагонали вниз, а затем по диагонали вверх, повторяя: двигайтесь вниз по одной строке за раз до нижней строки, затем двигайтесь вверх по одной строке за раз до верхней строки и повторяйте. Персонажи, которые приземляются в одной строке, сохраняют свой первоначальный порядок слева направо.
 
-Return the string obtained by concatenating the rows in order.
+Верните строку, полученную путем объединения строк по порядку.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 1000`
-- `s` consists of English letters, `,` and `.`
+- `s` состоит из английских букв, `,` и `.`.
 - `1 <= numRows <= 1000`

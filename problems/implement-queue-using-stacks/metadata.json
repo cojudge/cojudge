@@ -1,6 +1,6 @@
 {
   "id": "implement-queue-using-stacks",
-  "title": "178. Implement Queue using Stacks",
+  "title": "178. Внедрение очереди с использованием Stacks",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/implement-queue-using-stacks/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"push\",\"push\",\"peek\",\"pop\",\"empty\"], values = [1,2,0,0,0]",
       "output": "[1,1,0]",
-      "explanation": "Push 1 then push 2. Peek returns 1, pop removes and returns 1, then empty returns false (encoded as 0) because 2 remains."
+      "explanation": "Push 1 затем push 2. Peek возвращает 1, pop удаляет и возвращает 1, а затем пустой возвращает ложный (закодированный как 0), потому что 2 остается."
     },
     {
       "input": "operations = [\"push\",\"peek\",\"pop\",\"empty\"], values = [1,0,0,0]",
       "output": "[1,1,1]",
-      "explanation": "Push 1. Peek returns 1, pop returns 1, then the queue is empty so empty returns true (encoded as 1)."
+      "explanation": "Push 1. Peek возвращает 1, pop возвращает 1, затем очередь пуста, так что пустые возвраты верны (закодированы как 1)."
     },
     {
       "input": "operations = [\"push\",\"push\",\"push\",\"pop\",\"peek\",\"pop\",\"empty\"], values = [1,2,3,0,0,0,0]",
       "output": "[1,2,2,0]",
-      "explanation": "Push 1, 2, 3. Pop returns 1, peek returns 2, pop returns 2, and empty returns false (0) because 3 remains."
+      "explanation": "Push 1, 2, 3. Pop возвращает 1, peek возвращает 2, pop возвращает 2 и пустой возвращает ложный (0), потому что 3 остается."
     }
   ],
   "starterCode": {
@@ -62,7 +62,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Use two stacks: push onto the input stack, and lazily move elements to the output stack when a peek or pop needs the front.",
-    "Empty checks whether both stacks have no elements. Encode empty as 1 for true and 0 for false."
+    "Используйте два стека: нажмите на входной стек и лениво переместите элементы в выходной стек, когда взгляду или хлопку нужен фронт.",
+    "Пусто проверяет, нет ли в обоих стеках элементов. Закодируйте пустое как 1 для истинного и 0 для ложного."
   ]
 }

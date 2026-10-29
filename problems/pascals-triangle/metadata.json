@@ -1,6 +1,6 @@
 {
   "id": "pascals-triangle",
-  "title": "295. Pascal's Triangle",
+  "title": "295. Треугольник Паскаля",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/pascals-triangle/",
   "category": "dp",
@@ -8,12 +8,12 @@
     {
       "input": "numRows = 5",
       "output": "[[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]",
-      "explanation": "Each interior entry is the sum of the two entries above it."
+      "explanation": "Каждая внутренняя запись представляет собой сумму двух входов над ней."
     },
     {
       "input": "numRows = 1",
       "output": "[[1]]",
-      "explanation": "The apex alone forms row 1."
+      "explanation": "Только вершина формирует строку 1."
     }
   ],
   "starterCode": {
@@ -52,8 +52,8 @@
   ],
   "outputType": "int_list_2d",
   "hints": [
-    "Start with [[1]] and grow one row at a time.",
-    "Each interior entry equals the sum of the two entries diagonally above it; row edges are always 1.",
-    "Adaptation: the nested list maps to int_list_2d in this judge."
+    "Начните с [[1]] и растите один ряд за раз.",
+    "Каждая внутренняя запись равна сумме двух записей по диагонали над ней; края рядов всегда 1.",
+    "Адаптация: вложенные карты списка int_list_2d в этом решении."
   ]
 }

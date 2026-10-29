@@ -1,12 +1,12 @@
-Evaluate an arithmetic expression written in Reverse Polish Notation and return
-its integer value.
+Оцените арифметическое выражение, написанное в Обратной польской нотации и верните
+его целочисленное значение.
 
-Each token is either an integer or one of the operators `+`, `-`, `*`, and `/`.
-Division between two integers truncates toward zero. The expression is always
-valid, and no division by zero occurs.
+Каждый токен является либо целым числом, либо одним из операторов `+`, `-`, `*` и `/`.
+Разделение между двумя целыми числами усечено к нулю. Выражение всегда
+действительный, и никакого деления на ноль не происходит.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= tokens.length <= 10000`
-- Every numeric token represents an integer in the range `[-200, 200]`.
-- Every intermediate result and the final answer fit in a signed 32-bit integer.
+- Каждый цифровой токен представляет собой целое число в диапазоне `[-200, 200]`.
+- Каждый промежуточный результат и окончательный ответ укладываются в подписанное 32-битовое целое число.

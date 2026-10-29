@@ -1,0 +1,58 @@
+{
+  "id": "h-index-ii",
+  "title": "374. H-Index II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/h-index-ii/",
+  "category": "binary-search",
+  "examples": [
+    {
+      "input": "citations = [0,1,3,5,6]",
+      "output": "3",
+      "explanation": "Three papers have at least 3 citations (3, 5, 6)."
+    },
+    {
+      "input": "citations = [1,2,100]",
+      "output": "2",
+      "explanation": "Two papers have at least 2 citations (2, 100)."
+    },
+    {
+      "input": "citations = [0]",
+      "output": "0",
+      "explanation": "No citation reaches 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int hIndex(int[] citations) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def hIndex(self, citations: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int hIndex(vector<int>& citations) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int HIndex(int[] citations) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn h_index(citations: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc HIndex(citations []int) int {\n    \n}",
+    "typescript": "export function hIndex(citations: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $citations\n     * @return int\n     */\n    public function hIndex($citations) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "citations": "[0,1,3,5,6]"
+    },
+    {
+      "citations": "[1,2,100]"
+    },
+    {
+      "citations": "[0]"
+    }
+  ],
+  "functionName": "hIndex",
+  "params": [
+    {
+      "name": "citations",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Input is already ascending, so binary-search the first index i with citations[i] >= n - i.",
+    "The answer is n - i for that first feasible i, or 0 when none qualifies.",
+    "Expected time is O(log n)."
+  ]
+}

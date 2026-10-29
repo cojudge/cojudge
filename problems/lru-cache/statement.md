@@ -1,29 +1,29 @@
-Implement the behavior of a Least Recently Used (LRU) cache through one portable
-batch function.
+Реализуйте поведение кэша LRU (наименее недавно использованного) через один портативный кэш.
+пакетная функция.
 
-`operations` and `args` are parallel arrays. The first operation is always
-`"LRUCache"` with one argument, the positive cache capacity. Every later operation
-is one of:
+`operations` и `args` являются параллельными массивами.
+`"LRUCache"` с одним аргументом, положительная емкость кэша.
+является одним из:
 
-- `"put"` with `[key, value]`: insert or update the key. If insertion exceeds
-  capacity, evict the least recently used key.
-- `"get"` with `[key]`: return the value when present, otherwise return `-1`.
-  A successful `get` makes that key the most recently used.
+- `"put"` с `[key, value]`: вставить или обновить ключ.
+  Вместимость, выселить наименее недавно использованный ключ.
+- `"get"` с `[key]`: возвращайте значение при наличии, в противном случае возвращайте `-1`.
+  Успешный `get` делает этот ключ наиболее часто используемым.
 
-Return an array containing results from `get` operations only, in order. The
-constructor and `put` operations do not add entries to the returned array.
+Возврат массива, содержащего результаты только операций `get`, в порядке.
+Операции конструктора и `put` не добавляют записи в возвращенный массив.
 
-This batch function is a portable adaptation of the usual class-design problem;
-implement `runLruCache` directly rather than declaring an `LRUCache` user class.
-Both `get` and `put` should run in average `O(1)` time.
+Эта пакетная функция является переносной адаптацией обычной задачи классового дизайна.
+Реализуйте `runLruCache` напрямую, а не объявляя класс пользователя `LRUCache`.
+`get` и `put` должны работать в среднем времени `O(1)`.
 
-**Constraints:**
+**Ограничения:**
 
 - `operations.length == args.length`
 - `1 <= operations.length <= 200001`
 - `operations[0] == "LRUCache"`
-- `args[0].length == 1` and `1 <= args[0][0] <= 3000`
-- A `put` row has two integers `[key, value]`.
-- A `get` row has one integer `[key]`.
+- `args[0].length == 1` и `1 <= args[0][0] <= 3000`
+- Ряд `put` имеет два целых числа `[key, value]`.
+- Ряд `get` имеет одно целое число `[key]`.
 - `0 <= key <= 10000`
 - `0 <= value <= 100000`

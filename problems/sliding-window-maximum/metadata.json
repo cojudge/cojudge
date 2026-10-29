@@ -1,6 +1,6 @@
 {
   "id": "sliding-window-maximum",
-  "title": "86. Sliding Window Maximum",
+  "title": "86. Максимальное раздвижное окно",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/sliding-window-maximum/",
   "category": "sliding-window",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,3,-1,-3,5,3,6,7], k = 3",
       "output": "[3,3,5,5,6,7]",
-      "explanation": "The maximums of the 6 sliding windows of size 3 are [3, 3, 5, 5, 6, 7]."
+      "explanation": "Максимумами раздвижных окон 6 размера 3 являются [3, 3, 5, 5, 6, 7]."
     },
     {
       "input": "nums = [1], k = 1",
       "output": "[1]",
-      "explanation": "The only sliding window of size 1 is [1], so its maximum is [1]."
+      "explanation": "Единственным раздвижным окном размера 1 является [1], поэтому его максимум — [1]."
     },
     {
       "input": "nums = [9,11], k = 2",
       "output": "[11]",
-      "explanation": "The only sliding window of size 2 is [9,11], so its maximum is [11]."
+      "explanation": "Единственным раздвижным окном размера 2 является [9, 11], поэтому его максимум — [11]."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "A heap can find maxima, but removing values that leave the window is awkward.",
-    "Keep indices in a deque and remove an index from the front once it is outside the window.",
-    "Maintain decreasing values in the deque, so its front is always the current maximum."
+    "Куча может найти максимумы, но удаление значений, которые выходят из окна, неудобно.",
+    "Держите индексы в деке и удаляйте индекс спереди, как только он находится за окном.",
+    "Поддерживайте уменьшающиеся значения в деке, поэтому его передняя часть всегда является текущим максимумом."
   ]
 }

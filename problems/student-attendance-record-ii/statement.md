@@ -1,6 +1,6 @@
-Consider all strings of length `n` built from the letters `P`, `L`, and `A`. A string is rewardable when it contains fewer than two `A` characters and never contains three consecutive `L` characters.
+Рассмотрим все строки длины `n`, построенные из букв `P`, `L` и `A`. Струна вознаграждается, когда она содержит менее двух символов `A` и никогда не содержит трех последовательных символов `L`.
 
-Given `n`, count how many rewardable strings exist. Because the total can be huge, return it modulo `10^9 + 7`.
+Учитывая `n`, подсчитайте, сколько существует поощрительных струн. Поскольку сумма может быть огромной, верните ее модулю `10^9 + 7`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 10^5`

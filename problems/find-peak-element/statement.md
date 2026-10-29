@@ -1,8 +1,8 @@
-A peak is an element that is strictly larger than its neighbours. The first and last elements each have a single neighbour to beat. Every non-empty array has at least one peak, and you may return the index of any of them.
+Пик — это элемент, который строго больше своих соседей. Первый и последний элементы имеют по одному соседу, каждый непустый массив имеет по крайней мере один пик, и вы можете вернуть индекс любого из них.
 
-Your answer is checked by position, not by exact index: any index whose element beats its neighbours is accepted.
+Ваш ответ проверяется позицией, а не точным индексом: принимается любой индекс, элемент которого бьет своих соседей.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^4`
 - `-2^31 <= nums[i] <= 2^31 - 1`
 - Adjacent elements differ (`nums[i] != nums[i+1]`).

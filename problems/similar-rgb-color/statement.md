@@ -1,8 +1,8 @@
-You are given a color string of the form `"#RRGGBB"`, where each pair is a two-digit hexadecimal value for the red, green, and blue channels. A shorthand color has the form `"#rgb"` and stands for `"#rrggbb"` where each digit is doubled (so `a` means `aa`).
+Вам дана цветовая строка формы `"#RRGGBB"`, где каждая пара представляет собой двухзначное шестнадцатеричное значение для красного, зеленого и синего каналов.Сокращение цвета имеет форму `"#rgb"` и обозначает `"#rrggbb"`, где каждая цифра удваивается (так `a` означает `aa`).
 
-Among all shorthand colors, return the one whose expanded form is closest to the input. Closeness is measured per channel by squared numeric difference, and channels are independent, so each channel can be optimized on its own. Return your answer as a seven-character lowercase string `"#rrggbb"` with each pair using identical digits.
+Среди всех сокращенных цветов возвращайте тот, чья расширенная форма ближе всего к входу. Близость измеряется на канал квадратной разницей чисел, а каналы независимы, поэтому каждый канал может быть оптимизирован сам по себе. Верните свой ответ в виде семизначной строчки нижнего регистра `"#rrggbb"` с каждой парой с использованием идентичных цифр.
 
-**Constraints:**
+**Ограничения:**
 - `color.length == 7`
 - `color[0] == '#'`
-- Remaining characters are hexadecimal digits `0-9`, `a-f`, or `A-F`
+- Оставшиеся символы — шестидесятичные цифры `0-9`, `a-f` или `A-F`.

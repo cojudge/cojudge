@@ -3,26 +3,26 @@
   "difficulty": "Medium",
   "examples": [
     {
-      "explanation": "Dropping '4', '3' and one '2' leaves \"1219\".",
+      "explanation": "Сбрасывая «4», «3» и один «2» покидает «1219».",
       "input": "num = \"1432219\", k = 3",
       "output": "\"1219\""
     },
     {
-      "explanation": "Removing the leading '1' gives \"0200\", normalized to \"200\".",
+      "explanation": "Удаление ведущего 1 дает «0200», нормализованный до «200».",
       "input": "num = \"10200\", k = 1",
       "output": "\"200\""
     },
     {
-      "explanation": "Deleting everything leaves nothing, reported as \"0\".",
+      "explanation": "Удаление всего ничего не оставляет, сообщается как «0».",
       "input": "num = \"10\", k = 2",
       "output": "\"0\""
     }
   ],
   "functionName": "removeKdigits",
   "hints": [
-    "Build the answer left to right, discarding a previous larger digit whenever a smaller one arrives and deletions remain.",
-    "If deletions remain after the scan, drop from the right end.",
-    "Strip leading zeros at the end; an empty result means \"0\"."
+    "Постройте ответ слева направо, отбрасывая предыдущую большую цифру всякий раз, когда прибывает меньшая, и удаления остаются.",
+    "Если удаления остаются после сканирования, опуститесь с правого конца.",
+    "Полоса, ведущая нули в конце; пустой результат означает «0»."
   ],
   "id": "remove-k-digits",
   "link": "https://leetcode.com/problems/remove-k-digits/",
@@ -61,5 +61,5 @@
       "num": "10"
     }
   ],
-  "title": "476. Remove K Digits"
+  "title": "476. Удалить K Digits"
 }

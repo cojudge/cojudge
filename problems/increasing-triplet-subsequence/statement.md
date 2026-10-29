@@ -1,7 +1,7 @@
-You are handed a list of integers `nums`. Determine whether it hides three positions `i < j < k` whose values climb strictly, i.e. `nums[i] < nums[j] < nums[k]`.
+Вам вручают список целых чисел `nums`. Определите, скрывает ли он три позиции `i < j < k`, значения которых строго поднимаются, то есть `nums[i] < nums[j] < nums[k]`.
 
-The three entries need not sit next to each other — only their order and values matter. Return `true` when such a triple exists and `false` otherwise.
+Три записи не должны сидеть рядом друг с другом — только их порядок и значения имеют значение. Возврат `true`, когда такая тройка существует, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 5 * 10^5`
 - `-2^31 <= nums[i] <= 2^31 - 1`

@@ -1,6 +1,6 @@
 {
   "id": "minimum-height-trees",
-  "title": "222. Minimum Height Trees",
+  "title": "222. Деревья минимальной высоты",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/minimum-height-trees/",
   "category": "graph",
@@ -51,6 +51,6 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Peel leaves layer by layer until 1 or 2 nodes remain — those are the MHT roots."
+    "Кожура оставляет слой за слоем до тех пор, пока не останутся узлы 1 или 2 — это корни MHT."
   ]
 }

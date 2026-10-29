@@ -1,9 +1,9 @@
-You are given an array `nums` of non-negative integers representing balloons. If you burst balloon `i`, you gain `nums[i - 1] * nums[i] * nums[i + 1]` coins. After the balloon is burst, its two neighbors become adjacent.
+Вам дают массив `nums` неотрицательных целых чисел, представляющих воздушные шары. Если вы лопнете воздушный шар `i`, вы получите монеты `nums[i - 1] * nums[i] * nums[i + 1]`. После того, как воздушный шар лопнет, два его соседа станут смежными.
 
-Treat positions outside the current array as balloons with value `1`. Return the maximum number of coins you can collect by bursting every balloon.
+Относитесь к позициям за пределами текущего массива как к воздушным шарам со значением `1`. Верните максимальное количество монет, которые вы можете собрать, разорвав каждый воздушный шар.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= nums.length <= 300`
 - `0 <= nums[i] <= 100`
-- The maximum coin total fits in a signed 32-bit integer.
+- Максимальная сумма монет вписывается в подписанное 32-битовое целое число.

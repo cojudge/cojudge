@@ -1,6 +1,6 @@
 {
   "id": "binary-tree-longest-consecutive-sequence",
-  "title": "392. Binary Tree Longest Consecutive Sequence",
+  "title": "392. Бинарное дерево — самая длинная последовательность",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/binary-tree-longest-consecutive-sequence/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,null,3,2,4,null,null,null,5]",
       "output": "3",
-      "explanation": "The downward path 3 -> 4 -> 5 is the longest consecutive run."
+      "explanation": "Нисходящий путь 3 -> 4 -> 5 является самым длинным последовательным пробегом."
     },
     {
       "input": "root = [2,null,3,2,null,1]",
       "output": "2",
-      "explanation": "Both 2 -> 3 and 1 -> 2 reach length 2."
+      "explanation": "2 -> 3 и 1 -> 2 достигают длины 2."
     },
     {
       "input": "root = []",
       "output": "0",
-      "explanation": "An empty tree has no path."
+      "explanation": "Пустое дерево не имеет пути."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Carry the current run length down the recursion: extend it when the child equals parent + 1, else restart at 1.",
-    "A path may start at any node, so track the best run seen anywhere, not just runs through the root.",
-    "Only parent-to-child direction counts; a run cannot turn around at a node."
+    "Проведите текущую длину пробега вниз по рекурсии: продлите ее, когда ребенок равен родителю + 1, иначе перезапустите на 1.",
+    "Путь может начинаться в любом узле, поэтому отслеживайте лучший пробег, который можно увидеть в любом месте, а не просто проходит через корень.",
+    "Только направление от родителя к потомку считается; бег не может развернуться в узле."
   ]
 }

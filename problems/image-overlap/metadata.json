@@ -1,6 +1,6 @@
 {
   "id": "image-overlap",
-  "title": "833. Image Overlap",
+  "title": "833. Изображение: Overlap",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/image-overlap/",
   "category": "matrix",
@@ -8,7 +8,7 @@
     {
       "input": "img1 = [[1,1,0],[0,1,0],[0,1,0]], img2 = [[0,0,0],[0,1,1],[0,0,1]]",
       "output": "3",
-      "explanation": "The best shift aligns three ones."
+      "explanation": "Лучшая смена выравнивает три."
     },
     {
       "input": "img1 = [[1]], img2 = [[1]]",
@@ -104,8 +104,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Only the positions of ones matter, so collect their coordinates from both matrices first.",
-    "Each pair of ones (one from each matrix) votes for the shift vector that would align them; the most popular vector wins.",
-    "An empty set of ones on either side means the answer is immediately zero."
+    "Важно только положение одного из них, поэтому сначала соберите их координаты из обеих матриц.",
+    "Каждая пара (по одному от каждой матрицы) голосует за вектор сдвига, который выровнял бы их; побеждает самый популярный вектор.",
+    "Пустой набор с обеих сторон означает, что ответ сразу равен нулю."
   ]
 }

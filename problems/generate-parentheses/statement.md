@@ -1,6 +1,6 @@
-Given an integer `n`, return every distinct string containing `n` pairs of
-well-formed parentheses. The strings may be returned in any order.
+Получив целое число `n`, возвращайте каждую отдельную строку, содержащую пары `n`.
+Хорошо сформированные скобки. Струны могут быть возвращены в любом порядке.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= n <= 8`

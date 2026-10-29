@@ -1,10 +1,10 @@
-Determine whether any root-to-leaf chain in a binary tree adds up to a given total.
+Определите, складывается ли какая-либо цепь от корня до листа в двоичном дереве в заданную сумму.
 
-Start at the root with the full target. At each step, subtract the current node's value and continue to its children. When a leaf (a node with no children) is reached, success means the leftover amount is zero. Interior nodes never count, even if the partial sum matches early.
+Начните с корня с полной цели. На каждом шаге вычтите значение текущего узла и продолжайте его детям. Когда достигается лист (узел без потомков), успех означает, что оставшаяся сумма равна нулю. Внутренние узлы никогда не учитываются, даже если частичная сумма совпадает рано.
 
-Return `true` if at least one qualifying leaf route exists, otherwise `false`.
+Возврат `true`, если существует хотя бы один маршрут листьев, в противном случае `false`.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= number of nodes <= 5000`
 - `-1000 <= Node.val <= 1000`
 - `-1000 <= targetSum <= 1000`

@@ -1,6 +1,6 @@
 {
   "id": "binary-gap",
-  "title": "862. Binary Gap",
+  "title": "862. Бинарный разрыв",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/binary-gap/",
   "category": "bit-manipulation",
@@ -8,17 +8,17 @@
     {
       "input": "n = 22",
       "output": "2",
-      "explanation": "Binary 10110 has gaps 2 and 2."
+      "explanation": "Бинарный 10110 имеет зазоры 2 и 2."
     },
     {
       "input": "n = 8",
       "output": "0",
-      "explanation": "Binary 1000 has a single one."
+      "explanation": "Бинарный 1000 имеет один."
     },
     {
       "input": "n = 5",
       "output": "2",
-      "explanation": "Binary 101 has one gap of 2."
+      "explanation": "Бинарный 101 имеет один пробел в 2."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Scan bits from least significant to most, remembering the index of the previous `1`.",
-    "Update the best gap each time another `1` appears; trailing zeros after the last one never form a gap.",
-    "Shifting the number right one bit at a time visits every position exactly once."
+    "Сканируйте биты от наименее значимых до большинства, запоминая индекс предыдущего `1`.",
+    "Обновляйте лучший зазор каждый раз, когда появляется другой `1`; после последнего никогда не образуется зазор.",
+    "Смещение числа на один бит за раз посещает каждую позицию ровно один раз."
   ]
 }

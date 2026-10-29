@@ -1,8 +1,8 @@
-Given two matrices `mat1` of size `m x k` and `mat2` of size `k x n`, return their product,
-an `m x n` matrix where each entry `(i, j)` is the dot product of row `i` of `mat1` with
-column `j` of `mat2`. The inputs are called sparse because most entries are zero, so a good
-solution skips zero entries instead of multiplying everything blindly.
+Учитывая две матрицы `mat1` размера `m x k` и `mat2` размера `k x n`, верните свой продукт,
+матрица `m x n`, где каждая запись `(i, j)` является точечным продуктом строки `i` `mat1` с
+Колонка `j` `mat2`. Входные данные называются редкими, потому что большинство записей равно нулю.
+Решение пропускает нулевые записи вместо того, чтобы слепо умножать все.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= m, k, n <= 100`
 - `-100 <= mat1[i][j], mat2[i][j] <= 100`.

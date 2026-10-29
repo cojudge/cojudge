@@ -1,6 +1,6 @@
 {
   "id": "sum-of-left-leaves",
-  "title": "478. Sum of Left Leaves",
+  "title": "478. Сумма левых листьев",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/sum-of-left-leaves/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [3,9,20,null,null,15,7]",
       "output": "24",
-      "explanation": "Left leaves are 9 and 15, summing to 24."
+      "explanation": "Левыми листьями являются 9 и 15, суммируя с 24."
     },
     {
       "input": "root = [1]",
       "output": "0",
-      "explanation": "The single node has no children, so there is no left leaf."
+      "explanation": "У одного узла нет потомков, поэтому нет левого листа."
     },
     {
       "input": "root = [1,2,3,4,5]",
       "output": "4",
-      "explanation": "Only node 4 is a leaf reached as a left child."
+      "explanation": "Только узел 4 представляет собой лист, достигаемый в качестве левого потомка."
     }
   ],
   "starterCode": {
@@ -55,8 +55,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "A left leaf is a node without children that hangs off the left side of its parent.",
-    "Walk depth-first, carrying whether the current node is a left child.",
-    "Add the value only when both conditions hold: left-child status and leaf status."
+    "Левый лист - это узел без потомков, который свисает с левой стороны его родителя.",
+    "Сначала пройдитесь по глубине, неся, является ли текущий узел левым потомком.",
+    "Добавьте значение только тогда, когда оба условия сохраняются: статус левого ребенка и статус листа."
   ]
 }

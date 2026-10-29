@@ -1,9 +1,9 @@
-You receive two integer lists `nums1` and `nums2`. Return the values they share, respecting repetition counts: each distinct value should appear in the answer as many times as it appears in both lists simultaneously (the minimum of its two frequencies).
+Вы получаете два целых списка `nums1` и `nums2`. Возвращайте значения, которые они разделяют, с учетом количества повторений: каждое отдельное значение должно появляться в ответе столько раз, сколько оно появляется в обоих списках одновременно (минимум двух его частот).
 
-The order of the answer carries no meaning.
+Порядок ответа не несет никакого смысла.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums1.length, nums2.length <= 1000`
 - `0 <= nums1[i], nums2[i] <= 1000`
 
-**Follow up:** Sort both lists first and walk them with two pointers to use less extra memory; for already-sorted inputs this needs only output space.
+**Сортируйте оба списка сначала и проведите их с двумя указателями, чтобы использовать меньше дополнительной памяти; для уже отсортированных входов это требует только выходного пространства.

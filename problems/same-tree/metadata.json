@@ -1,6 +1,6 @@
 {
   "id": "same-tree",
-  "title": "61. Same Tree",
+  "title": "61. Одно и то же дерево",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/same-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "p = [1,2,3], q = [1,2,3]",
       "output": "true",
-      "explanation": "Both trees [1,2,3] and [1,2,3] have identical structure and node values at every position."
+      "explanation": "Оба дерева [1, 2, 3] и [1, 2, 3] имеют одинаковую структуру и значения узлов в каждой позиции."
     },
     {
       "input": "p = [1,2], q = [1,null,2]",
       "output": "false",
-      "explanation": "Tree p has a left child 2, while tree q has a right child 2 — the structure differs."
+      "explanation": "У дерева p есть левый потомок 2, в то время как у дерева q есть правый потомок 2 — структура отличается."
     },
     {
       "input": "p = [], q = []",
       "output": "true",
-      "explanation": "Both trees are empty, so they are identical."
+      "explanation": "Оба дерева пустые, поэтому они идентичны."
     }
   ],
   "starterCode": {
@@ -68,6 +68,6 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Compare two binary trees recursively to verify identical structure and node values."
+    "Сравните два двоичных дерева рекурсивно, чтобы проверить идентичную структуру и значения узлов."
   ]
 }

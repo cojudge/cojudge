@@ -1,6 +1,6 @@
 {
   "id": "sum-of-subarray-minimums",
-  "title": "896. Sum of Subarray Minimums",
+  "title": "896. Суммы минимумов Subarray",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/sum-of-subarray-minimums/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "arr = [3,1,2,4]",
       "output": "17",
-      "explanation": "Ten slice minima sum to 17."
+      "explanation": "Десять ломтиков минимальной суммы 17."
     },
     {
       "input": "arr = [11,81,94,43,3]",
       "output": "444",
-      "explanation": "All slice minima sum to 444."
+      "explanation": "Все минимальная сумма к 444."
     },
     {
       "input": "arr = [1,2,3]",
       "output": "10",
-      "explanation": "Minima 1,2,3,1,2,1 total 10."
+      "explanation": "Минимум 1, 2, 3, 1, 2, 1 всего 10."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Each position serves as the minimum for a rectangle of subarrays bounded by the previous strictly smaller element and the next smaller-or-equal element.",
-    "Use a monotone increasing stack to find those borders in linear time, then add arr[i] * leftCount * rightCount."
+    "Каждое положение служит минимумом для прямоугольника подрешеток, ограниченного предыдущим строго меньшим элементом и следующим меньшим или равным элементом.",
+    "Используйте стек увеличения монотонов, чтобы найти эти границы в линейном времени, а затем добавьте arr [i] * LeftCount * RightCount."
   ]
 }

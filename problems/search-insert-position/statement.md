@@ -1,11 +1,11 @@
-You are shown `nums`, a list of different integers already running from smallest to largest, plus a separate integer `target`.
+Вам показывают `nums`, список различных целых чисел, уже работающих от наименьшего до самого большого, плюс отдельное целое число `target`.
 
-Give back the position of `target` when it is present. When it is absent, give back the position where `target` would sit so that the ordering stays intact.
+Верните положение `target`, когда он присутствует. Когда он отсутствует, верните положение, где `target` будет сидеть, чтобы заказ оставался нетронутым.
 
-Your method must run in `O(log n)` time.
+Ваш метод должен работать во времени `O(log n)`.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= nums.length <= 10^4`
 - `-10^4 <= nums[i], target <= 10^4`
-- `nums` contains distinct values sorted in ascending order.
+- `nums` содержит различные значения, отсортированные по восходящему порядку.

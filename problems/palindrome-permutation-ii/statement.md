@@ -1,5 +1,5 @@
-Given a string `s`, return all distinct orderings of its characters that read the same forward and backward. Each result must use every character exactly once. Return the results in any order, or an empty list when no palindromic ordering exists.
+Заданная строка `s` возвращает все отдельные упорядочения своих символов, которые читаются одинаково вперед и назад. Каждый результат должен использовать каждый символ ровно один раз. Возвращает результаты в любом порядке, или пустой список, когда не существует палиндромного упорядочения.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 16`
-- `s` consists of lowercase English letters.
+- `s` состоит из строчных английских букв.

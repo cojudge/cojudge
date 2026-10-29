@@ -1,6 +1,6 @@
 {
   "id": "decode-ways",
-  "title": "24. Decode Ways",
+  "title": "24. Декодировать способы",
   "difficulty": "Medium",
   "category": "dp",
   "link": "https://leetcode.com/problems/decode-ways/",
@@ -8,12 +8,12 @@
     {
       "input": "s=\"12\"",
       "output": "2",
-      "explanation": "\"12\" can be decoded in 2 ways (as \"1,2\" or \"12\")."
+      "explanation": "«12» может быть декодировано в 2 способами (как «1, 2» или «12»)."
     },
     {
       "input": "s=\"226\"",
       "output": "3",
-      "explanation": "\"226\" can be decoded in 3 ways (as \"2,26\", \"22,6\", or \"2,2,6\")."
+      "explanation": "«226» может быть декодировано в 3 способами (как «2, 26», «22, 6», или «2, 2, 6»)."
     }
   ],
   "starterCode": {
@@ -46,6 +46,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "DP where dp[i] depends on single-digit and two-digit decodings ending at i."
+    "DP, где dp[i] зависит от однозначных и двузначных декодировок, заканчивающихся на i."
   ]
 }

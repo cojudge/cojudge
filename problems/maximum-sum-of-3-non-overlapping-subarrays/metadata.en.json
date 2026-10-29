@@ -1,0 +1,65 @@
+{
+  "id": "maximum-sum-of-3-non-overlapping-subarrays",
+  "title": "704. Maximum Sum of 3 Non-Overlapping Subarrays",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/maximum-sum-of-3-non-overlapping-subarrays/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "nums = [1,2,1,2,6,7,5,1], k = 2",
+      "output": "[0,3,5]",
+      "explanation": "Blocks sum to 3 + 8 + 12 = 23."
+    },
+    {
+      "input": "nums = [1,2,1,2,1,2,1,2,1], k = 2",
+      "output": "[0,2,4]",
+      "explanation": "All windows tie, so the earliest triple wins."
+    },
+    {
+      "input": "nums = [4,5,10,6,11,17,4,8,1,20], k = 1",
+      "output": "[4,5,9]",
+      "explanation": "Best single spots 11, 17 and 20."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] maxSumOfThreeSubarrays(int[] nums, int k) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxSumOfThreeSubarrays(self, nums: List[int], k: int) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> maxSumOfThreeSubarrays(vector<int>& nums, int k) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] MaxSumOfThreeSubarrays(int[] nums, int k)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_sum_of_three_subarrays(nums: Vec<i32>, k: i32) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc MaxSumOfThreeSubarrays(nums []int, k int) []int {\n    return []int{}\n}",
+    "typescript": "export function maxSumOfThreeSubarrays(nums: number[], k: number): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $k\n     * @return int[]\n     */\n    public function maxSumOfThreeSubarrays($nums, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,1,2,6,7,5,1]",
+      "k": 2
+    },
+    {
+      "nums": "[1,2,1,2,1,2,1,2,1]",
+      "k": 2
+    },
+    {
+      "nums": "[4,5,10,6,11,17,4,8,1,20]",
+      "k": 1
+    }
+  ],
+  "functionName": "maxSumOfThreeSubarrays",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Precompute every window sum of length k with one sliding pass.",
+    "For each position remember the best window start on its left (smallest index on ties) and on its right.",
+    "Try every middle window and join it with the best compatible left and right choices; keep the dictionary-smallest among maximal totals."
+  ]
+}

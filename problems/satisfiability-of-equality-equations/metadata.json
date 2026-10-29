@@ -1,6 +1,6 @@
 {
   "id": "satisfiability-of-equality-equations",
-  "title": "973. Satisfiability of Equality Equations",
+  "title": "973. Удовлетворяемость уравнений равенства",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/satisfiability-of-equality-equations/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "equations = [\"a==b\",\"b!=a\"]",
       "output": "false",
-      "explanation": "a and b cannot be equal and different simultaneously."
+      "explanation": "a и b не могут быть равными и разными одновременно."
     },
     {
       "input": "equations = [\"b==a\",\"a==b\"]",
       "output": "true",
-      "explanation": "Setting both to the same value satisfies each equation."
+      "explanation": "Установка обоих значений на одно и то же значение удовлетворяет каждому уравнению."
     },
     {
       "input": "equations = [\"a==b\",\"b!=c\",\"c==a\"]",
       "output": "false",
-      "explanation": "The equalities force a, b and c together, contradicting b!=c."
+      "explanation": "Равноправия сближают a, b и c, что противоречит b!=c."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Handle all == equations first by merging the two sides into shared groups with a union-find structure.",
-    "Then check every != equation: if both sides landed in the same group, the system is contradictory.",
-    "Only 26 variables exist, so the union-find arrays stay tiny."
+    "Сначала обрабатывайте все уравнения ==, объединяя две стороны в общие группы со структурой нахождения союза.",
+    "Затем проверьте каждое уравнение !=: если обе стороны приземлились в одной группе, система противоречива.",
+    "Существуют только переменные 26, поэтому массивы поиска союза остаются крошечными."
   ]
 }

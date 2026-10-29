@@ -1,6 +1,6 @@
 {
   "id": "basic-sum-of-digits",
-  "title": "12. Sum of Digits",
+  "title": "12. Сумма дигитов",
   "difficulty": "Easy",
   "category": "loops",
   "examples": [
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "The last digit is `n % 10`.",
-    "Drop the last digit with integer division by 10 and repeat."
+    "Последняя цифра — `n % 10`.",
+    "Опустите последнюю цифру с целым делением на 10 и повторите."
   ]
 }

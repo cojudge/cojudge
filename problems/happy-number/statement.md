@@ -1,6 +1,6 @@
-Write a function that determines whether a positive integer is a **happy number**.
+Напишите функцию, которая определяет, является ли положительное целое число счастливым числом.
 
-Starting with the integer, repeatedly replace it with the sum of the squares of its decimal digits. A number is happy if this process eventually reaches `1`. If the process enters a cycle that does not contain `1`, the number is not happy.
+Начиная с целого числа, неоднократно заменяйте его суммой квадратов его десятичных цифр. Число счастливо, если этот процесс в конечном итоге достигает `1`. Если процесс входит в цикл, не содержащий `1`, число не счастливо.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 2^31 - 1`

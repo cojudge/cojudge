@@ -1,1 +1,58 @@
-{"category": "string", "difficulty": "Hard", "examples": [{"explanation": "The longest palindromic prefix has length 7; mirroring the leftover \"a\" gives \"aaacecaaa\".", "input": "s = \"aacecaaa\"", "output": "\"aaacecaaa\""}, {"explanation": "Only \"a\" is a palindromic prefix, so \"dcb\" is prepended.", "input": "s = \"abcd\"", "output": "\"dcbabcd\""}, {"explanation": "Already a palindrome, so nothing is added.", "input": "s = \"aba\"", "output": "\"aba\""}], "functionName": "shortestPalindrome", "hints": ["Only the longest prefix of s that is already a palindrome can stay; everything after it must be mirrored to the front.", "Find that prefix length with KMP on s + '#' + reverse(s): the final prefix-function value is the answer length.", "The result is reverse(suffix) + s, where suffix is the part after the palindromic prefix."], "id": "shortest-palindrome", "link": "https://leetcode.com/problems/shortest-palindrome/", "outputType": "string", "params": [{"name": "s", "type": "string"}], "starterCode": {"cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string shortestPalindrome(string s) {\n        return \"\";\n    }\n};", "csharp": "public class Solution \n{\n    public string ShortestPalindrome(string s) \n    {\n        return \"\";\n    }\n}", "go": "package main\n\nfunc ShortestPalindrome(s string) string {\n    return \"\"\n}", "java": "class Solution {\n    public String shortestPalindrome(String s) {\n        return \"\";\n    }\n}", "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string\n     */\n    public function shortestPalindrome($s) {\n\n    }\n}", "python": "class Solution:\n    def shortestPalindrome(self, s: str) -> str:\n        return \"\"\n", "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn shortest_palindrome(s: String) -> String {\n        String::new()\n    }\n}", "typescript": "export function shortestPalindrome(s: string): string {\n    return \"\";\n}"}, "testCases": [{"s": "aacecaaa"}, {"s": "abcd"}, {"s": "aba"}], "title": "332. Shortest Palindrome"}
+{
+  "category": "string",
+  "difficulty": "Hard",
+  "examples": [
+    {
+      "explanation": "Самый длинный палиндромный префикс имеет длину 7; зеркальное отображение оставшегося «a» дает «aaacecaaa».",
+      "input": "s = \"aacecaaa\"",
+      "output": "\"aaacecaaa\""
+    },
+    {
+      "explanation": "Только «а» является палиндромным префиксом, поэтому «dcb» является препринтом.",
+      "input": "s = \"abcd\"",
+      "output": "\"dcbabcd\""
+    },
+    {
+      "explanation": "Уже палиндром, поэтому ничего не добавляется.",
+      "input": "s = \"aba\"",
+      "output": "\"aba\""
+    }
+  ],
+  "functionName": "shortestPalindrome",
+  "hints": [
+    "Оставаться может только самый длинный префикс s, который уже является палиндромом; все после него должно быть зеркально отражено в передней части.",
+    "Найдите длину префикса с KMP на s + '#' + reverse(s): конечным значением функции префикса является длина ответа.",
+    "Результатом является обратный (суффикс) + с, где суффикс является частью после палиндромного префикса."
+  ],
+  "id": "shortest-palindrome",
+  "link": "https://leetcode.com/problems/shortest-palindrome/",
+  "outputType": "string",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "starterCode": {
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string shortestPalindrome(string s) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string ShortestPalindrome(string s) \n    {\n        return \"\";\n    }\n}",
+    "go": "package main\n\nfunc ShortestPalindrome(s string) string {\n    return \"\"\n}",
+    "java": "class Solution {\n    public String shortestPalindrome(String s) {\n        return \"\";\n    }\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string\n     */\n    public function shortestPalindrome($s) {\n\n    }\n}",
+    "python": "class Solution:\n    def shortestPalindrome(self, s: str) -> str:\n        return \"\"\n",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn shortest_palindrome(s: String) -> String {\n        String::new()\n    }\n}",
+    "typescript": "export function shortestPalindrome(s: string): string {\n    return \"\";\n}"
+  },
+  "testCases": [
+    {
+      "s": "aacecaaa"
+    },
+    {
+      "s": "abcd"
+    },
+    {
+      "s": "aba"
+    }
+  ],
+  "title": "332. Самый короткий палиндром"
+}

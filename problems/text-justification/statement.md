@@ -1,9 +1,9 @@
-Spread a list of words across fully justified lines of exactly `maxWidth` characters. Pack as many words as possible into each line, then distribute blanks so the line reaches the required width.
+Распространяйте список слов по вполне обоснованным строкам именно символов `maxWidth`. Упаковывайте в каждую строку как можно больше слов, затем распределяйте заготовки, чтобы строка достигла требуемой ширины.
 
-For every line except the last, pad the gaps between words as evenly as possible, giving leftover single spaces to the leftmost gaps first. A line holding only one word is left-aligned with trailing blanks. The final line is left-aligned with single spaces between words and trailing blanks to fill the width.
+Для каждой строки, за исключением последней, прокладывайте промежутки между словами как можно более равномерно, давая оставшиеся отдельные пробелы для самых левых пробелов. Линия, удерживающая только одно слово, выровнена слева с пробелами. Последняя линия выровнена слева с отдельными пробелами между словами и пробелами для заполнения ширины.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= words.length <= 300`
 - `1 <= words[i].length <= 20`
 - `1 <= maxWidth <= 100`
-- Each word contains letters and symbols without spaces.
+- Каждое слово содержит буквы и символы без пробелов.

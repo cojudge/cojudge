@@ -1,0 +1,51 @@
+{
+  "id": "valid-palindrome",
+  "title": "56. Valid Palindrome",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/valid-palindrome/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s=\"A man, a plan, a canal: Panama\"",
+      "output": "true",
+      "explanation": "\"A man, a plan, a canal: Panama\" reads the same forwards and backwards when only alphanumeric characters are compared case-insensitively."
+    },
+    {
+      "input": "s=\"race a car\"",
+      "output": "false",
+      "explanation": "\"race a car\" reads \"raceacar\" forwards but \"racaecar\" backwards when only alphanumeric characters are considered, so it is not a palindrome."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isPalindrome(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def isPalindrome(self, s: str) -> bool:\n        pass\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool isPalindrome(string s) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool IsPalindrome(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_palindrome(s: String) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc IsPalindrome(s string) bool {\n    \n}",
+    "typescript": "export function isPalindrome(s: string): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return bool\n     */\n    public function isPalindrome($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "A man, a plan, a canal: Panama"
+    },
+    {
+      "s": "race a car"
+    },
+    {
+      "s": " "
+    }
+  ],
+  "functionName": "isPalindrome",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Use two pointers from both ends, skipping non-alphanumeric characters and comparing case-insensitively."
+  ]
+}

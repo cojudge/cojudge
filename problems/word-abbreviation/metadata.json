@@ -1,6 +1,6 @@
 {
   "id": "word-abbreviation",
-  "title": "586. Word Abbreviation",
+  "title": "586. Слово аббревиатура",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/word-abbreviation/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "words = [\"like\",\"god\",\"internal\",\"me\",\"internet\",\"interval\",\"intension\",\"face\",\"intrusion\"]",
       "output": "[\"l2e\",\"god\",\"internal\",\"me\",\"i6t\",\"interval\",\"inte4n\",\"f2e\",\"intr4n\"]",
-      "explanation": "\"internal\" and \"interval\" collide until the full word is needed; \"intension\" and \"intrusion\" separate with longer prefixes."
+      "explanation": "«Внутренний» и «интервальный» сталкиваются до тех пор, пока не понадобится полное слово; «напряжение» и «вторжение» разделяются более длинными префиксами."
     },
     {
       "input": "words = [\"abcdef\",\"abcdeg\"]",
       "output": "[\"a4f\",\"a4g\"]",
-      "explanation": "One-letter prefixes already separate the two words."
+      "explanation": "Однобуквенные приставки уже разделяют два слова."
     },
     {
       "input": "words = [\"word\",\"world\",\"would\"]",
       "output": "[\"w2d\",\"world\",\"would\"]",
-      "explanation": "Further prefixes would not shorten \"world\"/\"would\", so both keep full forms that are already unique."
+      "explanation": "Дальнейшие префиксы не сократили бы «мир»/«будет», поэтому оба сохраняют полные формы, которые уже уникальны."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Start every word with a one-letter prefix abbreviation, keeping the original when it is not shorter.",
-    "Group words by their current abbreviation; any group with more than one member needs longer prefixes.",
-    "Repeat the growth step until every group holds exactly one word."
+    "Начните каждое слово с однобуквенной префиксной аббревиатурой, сохраняя оригинал, когда он не короче.",
+    "Групповые слова по их текущей аббревиатуре; любая группа с более чем одним членом нуждается в более длинных приставках.",
+    "Повторяйте шаг роста, пока каждая группа не выдержит ровно одно слово."
   ]
 }

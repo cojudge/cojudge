@@ -1,6 +1,6 @@
 {
   "id": "solve-the-equation",
-  "title": "662. Solve the Equation",
+  "title": "662. Решить уравнение",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/solve-the-equation/",
   "category": "math",
@@ -8,7 +8,7 @@
     {
       "input": "equation = \"x+5-3+x=6+x-2\"",
       "output": "\"x=2\"",
-      "explanation": "The left side groups to 2x+2 and the right side to x+4, so x = 2."
+      "explanation": "Левая сторона группируется в 2x+2, а правая сторона в x+4, поэтому x = 2."
     },
     {
       "input": "equation = \"x=x\"",
@@ -49,8 +49,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Parse each side separately into (x-coefficient, constant) by scanning sign by sign.",
-    "A missing number before x means 1; a lone sign before x means +1 or -1.",
-    "Move everything to one side: (lc - rc) * x = rconst - lconst, then branch on a zero coefficient."
+    "Разделите каждую сторону на (x-коэффициент, константа) путем сканирования знака по знаку.",
+    "Отсутствующее число перед x означает 1; одинокий знак перед x означает +1 или -1.",
+    "Переместите все в одну сторону: (lc - rc) * x = rconst - lconst, затем ветвитесь на нулевой коэффициент."
   ]
 }

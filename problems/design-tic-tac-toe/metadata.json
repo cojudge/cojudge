@@ -1,6 +1,6 @@
 {
   "id": "design-tic-tac-toe",
-  "title": "428. Design Tic-Tac-Toe",
+  "title": "428. Дизайн Tic-Tac-Toe",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/design-tic-tac-toe/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"TicTacToe\",\"move\",\"move\",\"move\",\"move\",\"move\",\"move\",\"move\"], args = [[3],[0,0,1],[0,2,2],[2,2,1],[1,1,2],[2,0,1],[1,0,2],[2,1,1]]",
       "output": "[0,0,0,0,0,0,1]",
-      "explanation": "Player 1 seals the bottom row on the last placement."
+      "explanation": "Игрок 1 запечатывает нижний ряд на последнем размещении."
     },
     {
       "input": "operations = [\"TicTacToe\",\"move\",\"move\",\"move\"], args = [[2],[0,0,1],[1,1,2],[0,1,1]]",
       "output": "[0,0,1]",
-      "explanation": "Player 1 completes the top row of the small board."
+      "explanation": "Игрок 1 завершает верхний ряд маленькой доски."
     },
     {
       "input": "operations = [\"TicTacToe\",\"move\",\"move\",\"move\"], args = [[3],[0,0,1],[1,1,1],[2,2,1]]",
       "output": "[0,0,1]",
-      "explanation": "Player 1 completes the main diagonal."
+      "explanation": "Игрок 1 завершает основную диагональ."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Adaptation: replay the trace with counters rather than building a class.",
-    "Score player 1 as +1 and player 2 as -1 across per-row, per-column, and two diagonal tallies.",
-    "A tally reaching +n or -n means that player owns the whole line."
+    "Адаптация: переиграйте трассу счетчиками, а не стройте класс.",
+    "Забивайте игроку 1 как +1 и игроку 2 как -1 по каждой строке, каждой колонке и двум диагональным показателям.",
+    "Подсчет, достигающий +n или -n, означает, что игрок владеет всей линией."
   ]
 }

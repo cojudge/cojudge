@@ -1,6 +1,6 @@
 {
   "id": "generate-parentheses",
-  "title": "81. Generate Parentheses",
+  "title": "81. Генерировать парентезы",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/generate-parentheses/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "n = 3",
       "output": "[\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]",
-      "explanation": "Each string uses 3 pairs of parentheses arranged so that every opening bracket is properly closed before the string ends."
+      "explanation": "Каждая строка использует пары скобок 3, расположенных так, чтобы каждая открывающая скобка была должным образом закрыта до окончания строки."
     },
     {
       "input": "n = 1",
       "output": "[\"()\"]",
-      "explanation": "With only one pair, the only valid way to arrange them is \"()\"."
+      "explanation": "При наличии только одной пары единственным правильным способом их организации является «()»."
     },
     {
       "input": "n = 2",
       "output": "[\"(())\",\"()()\"]",
-      "explanation": "\"(())\" nests the two pairs, while \"()()\" places them consecutively."
+      "explanation": "\"(())\" - гнезда двух пар, в то время как \"()()\" помещает их последовательно."
     }
   ],
   "starterCode": {
@@ -54,7 +54,7 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Build each result from left to right while tracking the counts of open and closed parentheses.",
-    "Add an opening parenthesis while fewer than n have been used, and add a closing one only when it cannot make the prefix invalid."
+    "Постройте каждый результат слева направо, отслеживая количество открытых и закрытых скобок.",
+    "Добавить открывающий скобки, в то время как меньше, чем n было использовано, и добавить закрывающий только тогда, когда он не может сделать префикс недействительным."
   ]
 }

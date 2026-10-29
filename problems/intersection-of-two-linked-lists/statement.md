@@ -1,10 +1,10 @@
-You are given the heads of two singly linked lists, `headA` and `headB`.
+Вам даны главы двух списков, `headA` и `headB`.
 
-In the original setting the two lists join at some shared node. Because this offline judge builds each list separately, intersection is defined by values instead: the lists intersect when they end with the same non-empty run of values. That is, there are positions `i` in the first list and `j` in the second list such that the remaining tails are equal element by element.
+В исходной настройке два списка соединяются на каком-то общем узле. Поскольку этот офлайн-судья строит каждый список отдельно, пересечение определяется значениями вместо этого: списки пересекаются, когда они заканчиваются одним и тем же непустым прогоном значений. То есть в первом списке есть позиции `i` и `j` во втором списке так, что оставшиеся хвосты равны элемент за элементом.
 
-Return the intersecting tail (the suffix starting at its first shared value), or null when the lists share no common ending values. Test data avoids coincidental single-value matches for non-intersecting cases, so a shared ending genuinely represents a meeting point.
+Возврат пересекающегося хвоста (суффикс, начинающийся с его первого общего значения) или нуль, когда списки не имеют общих конечных значений. Данные теста избегают случайных однозначных совпадений для не пересекающихся случаев, поэтому общий конец действительно представляет точку встречи.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= number of nodes <= 10^4`
 - `0 <= Node.val <= 100`
-- Each list is acyclic.
+- Каждый список является ацикличным.

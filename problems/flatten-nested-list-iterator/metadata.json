@@ -1,6 +1,6 @@
 {
   "id": "flatten-nested-list-iterator",
-  "title": "424. Flatten Nested List Iterator",
+  "title": "424. Flatten Nested List Iterator (альбом)",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/flatten-nested-list-iterator/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "nestedList = \"[[1,1],2,[1,1]]\"",
       "output": "[1,1,2,1,1]",
-      "explanation": "Left-to-right depth-first reading yields 1,1,2,1,1."
+      "explanation": "В первом чтении слева направо показаны 1, 1, 2, 1, 1."
     },
     {
       "input": "nestedList = \"[1,[4,[6]]]\"",
       "output": "[1,4,6]",
-      "explanation": "Descending level by level gives 1, then 4, then 6."
+      "explanation": "Спускающийся уровень по уровню дает 1, затем 4, затем 6."
     },
     {
       "input": "nestedList = \"[]\"",
       "output": "[]",
-      "explanation": "Nothing is stored, so the result is empty."
+      "explanation": "Ничего не хранится, поэтому результат пуст."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Adaptation: simulate what repeated next calls would produce and return it as one array.",
-    "Parse recursively (a list) or iteratively with a stack, appending integers in encounter order."
+    "Адаптация: смоделируйте то, что будут производить повторные вызовы, и верните его в виде одного массива.",
+    "Парсировать рекурсивно (список) или итеративно со стеком, добавляя целые числа в порядке встречи."
   ]
 }

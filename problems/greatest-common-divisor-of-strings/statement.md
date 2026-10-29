@@ -1,8 +1,8 @@
-Call a string `t` a divisor of a string `s` precisely when building `s` is possible by writing `t` consecutively one or more times, i.e. `s = t + t + ... + t`.
+Назовите строку `t` делителем строки `s` именно тогда, когда создание `s` возможно путем последовательного написания `t` один или более раз, т.е. `s = t + t + ... + t`.
 
-Given two strings `str1` and `str2`, find the longest string `x` that divides each of them.
+Учитывая две строки `str1` и `str2`, найдите самую длинную строку `x`, которая делит каждую из них.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= str1.length, str2.length <= 1000`
-- `str1` and `str2` use only uppercase English letters.
+- `str1` и `str2` используют только английские буквы.

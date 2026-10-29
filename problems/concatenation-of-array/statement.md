@@ -1,11 +1,11 @@
-An integer array `nums` holding `n` entries is supplied.
-Fabricate an array `ans` twice as long (`2n`), defined (using 0-based positions) by `ans[i] == nums[i]` together with `ans[i + n] == nums[i]` for each `0 <= i < n`.
+Предоставляется целочисленный массив `nums`, содержащий записи `n`.
+Изготовьте массив `ans` в два раза длиннее (`2n`), определенный (с использованием позиций на основе 0) `ans[i] == nums[i]` вместе с `ans[i + n] == nums[i]` для каждого `0 <= i < n`.
 
-Put differently, `ans` places two successive copies of `nums` back to back.
+Другими словами, `ans` размещает две последовательные копии `nums`.
 
-Hand back `ans`.
+Отдай назад `ans`.
 
-**Constraints:**
+**Ограничения:**
 
 - n == nums.length
 - 1 ≤ n ≤ 1000

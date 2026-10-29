@@ -68,11 +68,11 @@
     transition:fade={{ duration: 200 }}
 >
     <div class="modal" transition:scale={{ start: 0.95, duration: 200 }}>
-        <button class="close-btn" on:click={close} aria-label="Close">&times;</button>
-        <h2>Game History: {problemTitle}</h2>
+        <button class="close-btn" on:click={close} aria-label="Закрыть">&times;</button>
+        <h2>История игр: {problemTitle}</h2>
 
         {#if sorted.length === 0}
-            <p class="empty">No game results yet.</p>
+            <p class="empty">Пока нет результатов игры.</p>
         {:else}
             <div class="results-list">
                 {#each sorted as result, i}
@@ -92,7 +92,7 @@
                                 >
                                     {result.rank}
                                 </span>
-                                <span class="result-score">{result.totalScore} pts</span>
+                                <span class="result-score">{result.totalScore} шт.</span>
                             </div>
                             <div class="result-right">
                                 <span class="result-date">{formatDate(result.timestamp)}</span>
@@ -104,19 +104,19 @@
                                 <table class="detail-stats">
                                     <tbody>
                                         <tr>
-                                            <td>Run Code</td>
-                                            <td>{result.runCount} time{result.runCount !== 1 ? 's' : ''}</td>
-                                            <td>({result.runScore} pts)</td>
+                                            <td>Запустить код</td>
+                                            <td>{result.runCount} время{result.runCount !== 1 ? 's' : ''}</td>
+                                            <td>({result.runScore} Птс)</td>
                                         </tr>
                                         <tr>
-                                            <td>Submit Code</td>
-                                            <td>{result.submitCount} time{result.submitCount !== 1 ? 's' : ''}</td>
-                                            <td>({result.submitScore} pts)</td>
+                                            <td>Отправить решение</td>
+                                            <td>{result.submitCount} время{result.submitCount !== 1 ? 's' : ''}</td>
+                                            <td>({result.submitScore} Птс)</td>
                                         </tr>
                                         <tr>
-                                            <td>Time Spent</td>
+                                            <td>Проведенное время</td>
                                             <td>{formatTime(result.timeSpent)}</td>
-                                            <td>({result.timeScore.toFixed(1)} pts)</td>
+                                            <td>({result.timeScore.toFixed(1)} Птс)</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -127,7 +127,7 @@
                                             class="copy-btn"
                                             on:click={() => copyCode(i, result.code)}
                                         >
-                                            {copiedIndex === i ? 'Copied' : 'Copy'}
+                                            {copiedIndex === i ? "Скопировано" : "Копировать"}
                                         </button>
                                     </div>
                                     <pre class="code-block"><code>{@html highlightCodeHtml(result.code, result.language)}</code></pre>

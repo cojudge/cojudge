@@ -1,0 +1,68 @@
+{
+  "id": "3sum-smaller",
+  "title": "363. 3Sum Smaller",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/3sum-smaller/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [-2,0,1,3], target = 2",
+      "output": "2",
+      "explanation": "The triples ([-2,0,1]) and ([-2,0,3]) sum to -1 and 1, both below 2."
+    },
+    {
+      "input": "nums = [], target = 0",
+      "output": "0",
+      "explanation": "Fewer than three values means no triple exists."
+    },
+    {
+      "input": "nums = [3,1,0,-2], target = 4",
+      "output": "3",
+      "explanation": "Three of the four possible triples fall below 4."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int threeSumSmaller(int[] nums, int target) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def threeSumSmaller(self, nums: List[int], target: int) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int threeSumSmaller(vector<int>& nums, int target) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int ThreeSumSmaller(int[] nums, int target)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn three_sum_smaller(nums: Vec<i32>, target: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc ThreeSumSmaller(nums []int, target int) int {\n    return 0\n}",
+    "typescript": "export function threeSumSmaller(nums: number[], target: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $target\n     * @return int\n     */\n    public function threeSumSmaller($nums, $target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[-2,0,1,3]",
+      "target": 2
+    },
+    {
+      "nums": "[]",
+      "target": 0
+    },
+    {
+      "nums": "[0]",
+      "target": 0
+    },
+    {
+      "nums": "[3,1,0,-2]",
+      "target": 4
+    }
+  ],
+  "functionName": "threeSumSmaller",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sort the array so the two-pointer technique applies to each fixed first index.",
+    "When the current triple is below target, every index between the pointers pairs with the fixed index, adding that many triples at once."
+  ]
+}

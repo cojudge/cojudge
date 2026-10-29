@@ -1,6 +1,6 @@
 {
   "id": "find-k-th-smallest-pair-distance",
-  "title": "727. Find K-th Smallest Pair Distance",
+  "title": "727. Найдите K-е самое маленькое расстояние",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/find-k-th-smallest-pair-distance/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,3,1], k = 1",
       "output": "0",
-      "explanation": "Pairs give distances 0, 2 and 2; the smallest is 0."
+      "explanation": "Пары дают расстояния 0, 2 и 2; наименьшим является 0."
     },
     {
       "input": "nums = [1,1,1], k = 2",
       "output": "0",
-      "explanation": "Every pair distance is 0."
+      "explanation": "Каждое расстояние в паре 0."
     },
     {
       "input": "nums = [1,6,1], k = 3",
       "output": "5",
-      "explanation": "Distances are 0, 5 and 5, so the third smallest is 5."
+      "explanation": "Расстояния — 0, 5 и 5, поэтому третьим по величине является 5."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sort first; counting pairs within a distance limit is then a linear two-pointer sweep.",
-    "The count grows monotonically with the limit, so binary-search the smallest limit with at least k pairs.",
-    "For a fixed right endpoint, all left positions from the low pointer onward form valid pairs."
+    "Сначала сортируйте; подсчет пар в пределах предела расстояния является линейной двухточечной проверкой.",
+    "Количество растет монотонно с пределом, поэтому двоичный поиск наименьшего предела с по меньшей мере k пар.",
+    "Для фиксированной правой конечной точки все левые позиции от низкого указателя вперед образуют действительные пары."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "transpose-matrix",
-  "title": "246. Transpose Matrix",
+  "title": "246. Перенести матрицу",
   "difficulty": "Easy",
   "category": "array",
   "link": "https://leetcode.com/problems/transpose-matrix/",
@@ -41,7 +41,7 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "The transpose of a matrix swaps rows and columns: result[j][i] = matrix[i][j].",
-    "No special algorithm is needed; just build a result matrix with swapped dimensions."
+    "Перенос матрицы свопами строк и столбцов: результат[j][i] = матрица[i][j].",
+    "Не требуется никакого специального алгоритма; просто создайте матрицу результатов со сменными размерами."
   ]
 }

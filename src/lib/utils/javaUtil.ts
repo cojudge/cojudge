@@ -2,8 +2,6 @@ import type { Param } from "./util";
 import type { InteractiveConfig } from "./interactiveUtil";
 import { interactiveBudget, isTranscriptKind } from "./interactiveUtil";
 
-export const javaImage = 'alpine/java:22-jdk';
-
 // Master judge for interactive guess-word problems. The runner builds one
 // per test case from (secret, wordlist); user code calls master.guess(word).
 export const javaMasterClass = `

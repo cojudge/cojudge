@@ -1,0 +1,69 @@
+{
+  "id": "construct-binary-tree-from-preorder-and-postorder-traversal",
+  "title": "880. Construct Binary Tree from Preorder and Postorder Traversal",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "preorder = [1,2,4,5,3,6,7], postorder = [4,5,2,6,7,3,1]",
+      "output": "[1,2,3,4,5,6,7]",
+      "explanation": "The root is 1. Its left child 2 parents 4 and 5, and its right child 3 parents 6 and 7."
+    },
+    {
+      "input": "preorder = [1], postorder = [1]",
+      "output": "[1]",
+      "explanation": "A single node forms the whole tree."
+    },
+    {
+      "input": "preorder = [1,2,3], postorder = [2,3,1]",
+      "output": "[1,2,3]",
+      "explanation": "Both children hang directly under the root 1."
+    }
+  ],
+  "starterCode": {
+    "java": "/*\nDefinition for a binary tree node.\nclass TreeNode {\n    int val;\n    TreeNode left;\n    TreeNode right;\n    TreeNode() {}\n    TreeNode(int val) { this.val = val; }\n    TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left = left; this.right = right; }\n}\n*/\nclass Solution {\n    public TreeNode constructFromPrePost(int[] preorder, int[] postorder) {\n        \n    }\n}",
+    "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\nclass Solution:\n    def constructFromPrePost(self, preorder, postorder):\n        # TODO: rebuild and return the tree root\n        pass",
+    "cpp": "/*\nstruct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(): val(0), left(nullptr), right(nullptr) {}\n    TreeNode(int x): val(x), left(nullptr), right(nullptr) {}\n    TreeNode(int x, TreeNode* left, TreeNode* right): val(x), left(left), right(right) {}\n};\n*/\nclass Solution {\npublic:\n    TreeNode* constructFromPrePost(vector<int>& preorder, vector<int>& postorder) {\n        \n    }\n};",
+    "csharp": "/*\npublic class TreeNode {\n    public int val;\n    public TreeNode left;\n    public TreeNode right;\n    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n*/\npublic class Solution \n{\n    public TreeNode ConstructFromPrePost(int[] preorder, int[] postorder) \n    {\n        \n    }\n}",
+    "rust": "// Definition for a binary tree node.\n// #[derive(Debug, PartialEq, Eq)]\n// pub struct TreeNode {\n//   pub val: i32,\n//   pub left: Option<Rc<RefCell<TreeNode>>>,\n//   pub right: Option<Rc<RefCell<TreeNode>>>,\n// }\n//\n// impl TreeNode {\n//   #[inline]\n//   pub fn new(val: i32) -> Self {\n//     TreeNode {\n//       val,\n//       left: None,\n//       right: None\n//     }\n//   }\n// }\nuse std::rc::Rc;\nuse std::cell::RefCell;\npub struct Solution;\n\nimpl Solution {\n    pub fn construct_from_pre_post(preorder: Vec<i32>, postorder: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {\n        \n    }\n}",
+    "go": "package main\n\n/*\nDefinition for a binary tree node.\ntype TreeNode struct {\n    Val int\n    Left *TreeNode\n    Right *TreeNode\n}\n*/\n\nfunc ConstructFromPrePost(preorder []int, postorder []int) *TreeNode {\n    return nil\n}",
+    "typescript": "// Definition for a binary tree node.\n// class TreeNode {\n//     val: number\n//     left: TreeNode | null\n//     right: TreeNode | null\n//     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {\n//         this.val = val ?? 0;\n//         this.left = left ?? null;\n//         this.right = right ?? null;\n//     }\n// }\nimport { TreeNode } from './TreeNode';\nexport function constructFromPrePost(preorder: number[], postorder: number[]): TreeNode | null {\n    return null;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $preorder\n     * @param int[] $postorder\n     * @return TreeNode|null\n     */\n    public function constructFromPrePost($preorder, $postorder) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "preorder": "[1,2,4,5,3,6,7]",
+      "postorder": "[4,5,2,6,7,3,1]"
+    },
+    {
+      "preorder": "[1]",
+      "postorder": "[1]"
+    },
+    {
+      "preorder": "[1,2,3]",
+      "postorder": "[2,3,1]"
+    },
+    {
+      "preorder": "[1,2]",
+      "postorder": "[2,1]"
+    }
+  ],
+  "functionName": "constructFromPrePost",
+  "params": [
+    {
+      "name": "preorder",
+      "type": "int_array"
+    },
+    {
+      "name": "postorder",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "tree_node",
+  "hints": [
+    "The first preorder value is the root and the last postorder value is the same root.",
+    "The value right after the root in preorder starts the left subtree; find it in postorder to learn where the left subtree ends and the right one begins, then recurse.",
+    "A lone child may be attached on either side, so any placement that reproduces both traversals counts."
+  ]
+}

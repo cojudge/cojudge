@@ -1,6 +1,6 @@
 {
   "id": "find-eventual-safe-states",
-  "title": "800. Find Eventual Safe States",
+  "title": "800. Найти безопасные государства",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/find-eventual-safe-states/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "graph = [[1,2],[2,3],[5],[0],[5],[],[]]",
       "output": "[2,4,5,6]",
-      "explanation": "Cycle-free tails are safe."
+      "explanation": "Хвосты без циклов безопасны."
     },
     {
       "input": "graph = [[1,2,3,4],[1,2],[3,4],[0,4],[]]",
       "output": "[4]",
-      "explanation": "Only the terminal survives."
+      "explanation": "Выживает только терминал."
     },
     {
       "input": "graph = [[],[0,2,3],[3],[4],[]]",
       "output": "[0,1,2,3,4]",
-      "explanation": "Acyclic graph, all nodes safe."
+      "explanation": "Ациклический график, все узлы безопасны."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Colour vertices during depth-first search: visiting versus fully explored distinguishes cycles from safe tails.",
-    "A node is safe exactly when all of its successors are safe.",
-    "Adaptation: the nested input maps to int_array_2d and the flat output maps to int_list in this judge."
+    "Цветовые вершины во время поиска по глубине: посещение по сравнению с полностью исследованными отличает циклы от безопасных хвостов.",
+    "Узел безопасен именно тогда, когда все его преемники в безопасности.",
+    "Адаптация: вложенные карты ввода в int_array_2d и плоские карты вывода в int_list в этом решении."
   ]
 }

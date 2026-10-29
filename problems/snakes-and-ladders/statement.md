@@ -1,8 +1,8 @@
-An `n x n` board holds the squares numbered `1` to `n * n`. Numbering starts at the bottom-left corner with `1`, runs left to right across the bottom row, then continues right to left on the row above, alternating direction on every row (boustrophedon order).
+Доска `n x n` удерживает квадраты, пронумерованные от `1` до `n * n`. Нумерация начинается в нижнем левом углу с `1`, проходит слева направо по нижнему ряду, затем продолжается справа налево по строке выше, чередуя направление на каждом ряду (заказ бустрофедон).
 
-Each cell is either `-1` (nothing happens there) or the number of a destination square: landing on it via a die throw forces an immediate jump to that destination (a ladder when the destination is larger, a snake when it is smaller). You start on square `1`. Each throw lets you pick any of the next 1 to 6 squares ahead (never past `n * n`); if the chosen square holds a jump, you take it at once. Return the smallest number of throws needed to land exactly on square `n * n`, or `-1` if it cannot be reached.
+Каждая ячейка представляет собой либо `-1` (ничего там не происходит), либо число квадрата места назначения: посадка на него с помощью броска дроби заставляет немедленно прыгать к этому месту назначения (лестница, когда пункт назначения больше, змея, когда она меньше). Вы начинаете на квадрате `1`. Каждый броск позволяет вам выбрать любой из следующих квадратов 1 к квадратам 6 впереди (никогда не мимо `n * n`); если выбранный квадрат держит прыжок, вы берете его сразу. Верните наименьшее количество бросков, необходимых для приземления точно на квадрат `n * n` или `-1`, если его невозможно достичь.
 
-**Constraints:**
+**Ограничения:**
 - `n == board.length == board[i].length`
 - `2 <= n <= 20`
-- `board[i][j]` is `-1` or an integer in `[1, n * n]`
+- `board[i][j]` - это `-1` или целое число в `[1, n * n]`.

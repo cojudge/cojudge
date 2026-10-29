@@ -1,0 +1,109 @@
+{
+  "id": "find-and-replace-in-string",
+  "title": "831. Find And Replace in String",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/find-and-replace-in-string/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"abcd\", indices = [0,2], sources = [\"a\",\"cd\"], targets = [\"eee\",\"ffff\"]",
+      "output": "\"eeebffff\"",
+      "explanation": "Both sources match, so both replacements fire."
+    },
+    {
+      "input": "s = \"abcd\", indices = [0,2], sources = [\"ab\",\"ec\"], targets = [\"eee\",\"ffff\"]",
+      "output": "\"eeecd\"",
+      "explanation": "Only the first source matches."
+    },
+    {
+      "input": "s = \"vmokgggqzp\", indices = [3,5,1], sources = [\"kg\",\"nnn\",\"mo\"], targets = [\"s\",\"asa\",\"b\"]",
+      "output": "\"vbsggqzp\"",
+      "explanation": "Both \"mo\" and \"kg\" match; \"nnn\" does not."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String findReplaceString(String s, int[] indices, String[] sources, String[] targets) {\n        return \"\";\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findReplaceString(self, s: str, indices: List[int], sources: List[str], targets: List[str]) -> str:\n        return \"\"\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string findReplaceString(string s, vector<int>& indices, vector<string>& sources, vector<string>& targets) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string FindReplaceString(string s, int[] indices, string[] sources, string[] targets) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_replace_string(s: String, indices: Vec<i32>, sources: Vec<String>, targets: Vec<String>) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc FindReplaceString(s string, indices []int, sources []string, targets []string) string {\n    return \"\"\n}",
+    "typescript": "export function findReplaceString(s: string, indices: number[], sources: string[], targets: string[]): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param int[] $indices\n     * @param string[] $sources\n     * @param string[] $targets\n     * @return string\n     */\n    public function findReplaceString($s, $indices, $sources, $targets) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "abcd",
+      "indices": [
+        0,
+        2
+      ],
+      "sources": [
+        "a",
+        "cd"
+      ],
+      "targets": [
+        "eee",
+        "ffff"
+      ]
+    },
+    {
+      "s": "abcd",
+      "indices": [
+        0,
+        2
+      ],
+      "sources": [
+        "ab",
+        "ec"
+      ],
+      "targets": [
+        "eee",
+        "ffff"
+      ]
+    },
+    {
+      "s": "vmokgggqzp",
+      "indices": [
+        3,
+        5,
+        1
+      ],
+      "sources": [
+        "kg",
+        "nnn",
+        "mo"
+      ],
+      "targets": [
+        "s",
+        "asa",
+        "b"
+      ]
+    }
+  ],
+  "functionName": "findReplaceString",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "indices",
+      "type": "int_array"
+    },
+    {
+      "name": "sources",
+      "type": "string_array"
+    },
+    {
+      "name": "targets",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Reorder the edits by index first; the input order carries no meaning.",
+    "Compare each source against the original string (never against partially replaced text).",
+    "Advance a single cursor over the original string so matches emit targets and mismatches emit the raw character."
+  ]
+}

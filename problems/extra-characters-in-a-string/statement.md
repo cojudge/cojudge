@@ -1,11 +1,11 @@
-You are handed a string `s` indexed from `0` alongside a word list `dictionary`. Split `s` into one or more chunks that do not overlap, where every kept chunk must show up verbatim in `dictionary`. Characters of `s` that fall outside all kept chunks count as leftover.
+Вам вручают строку `s`, проиндексированную от `0` вместе со списком слов `dictionary`. Разделите `s` на один или несколько кусков, которые не пересекаются, где каждый сохраненный куск должен отображаться дословно в `dictionary`. Персонажи `s`, которые выходят за пределы всех сохраненных кусков, считаются остатками.
 
-Arrange the split so that the total count of leftover characters is as small as possible, and report that minimum.
+Устройте разделение так, чтобы общее количество оставшихся символов было как можно меньше, и сообщите об этом минимуме.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= s.length <= 50`
 - `1 <= dictionary.length <= 50`
 - `1 <= dictionary[i].length <= 50`
-- `dictionary[i]` and `s` consist of only lowercase English letters.
-- `dictionary` holds distinct words.
+- `dictionary[i]` и `s` состоят только из английских букв.
+- `dictionary` содержит различные слова.

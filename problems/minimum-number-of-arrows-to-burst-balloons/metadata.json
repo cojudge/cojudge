@@ -1,6 +1,6 @@
 {
   "id": "minimum-number-of-arrows-to-burst-balloons",
-  "title": "519. Minimum Number of Arrows to Burst Balloons",
+  "title": "519. Минимальное количество стрел, чтобы сжигать шары",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/",
   "category": "interval",
@@ -8,17 +8,17 @@
     {
       "input": "points = [[10,16],[2,8],[1,6],[7,12]]",
       "output": "2",
-      "explanation": "Arrows at 6 and 12 pop all."
+      "explanation": "Стрелы на 6 и 12 поп все."
     },
     {
       "input": "points = [[1,2],[3,4],[5,6],[7,8]]",
       "output": "4",
-      "explanation": "Disjoint spans need separate arrows."
+      "explanation": "Разъединенные пролеты нуждаются в отдельных стрелках."
     },
     {
       "input": "points = [[1,2],[2,3],[3,4],[4,5]]",
       "output": "2",
-      "explanation": "Touching endpoints share an arrow."
+      "explanation": "Прикосновение к конечным точкам разделяет стрелку."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Order balloons by right endpoint; the earliest finishing balloon dictates the first arrow.",
-    "Place an arrow at that endpoint, skip every balloon it hits, then repeat.",
-    "Touching endpoints overlap, so only a strictly greater start needs a new arrow."
+    "Закажите воздушные шары по правой конечной точке; самый ранний завершающий воздушный шар диктует первую стрелку.",
+    "Поместите стрелу в эту конечную точку, пропустите каждый шар, который она ударит, а затем повторите.",
+    "Прикосновение к конечным точкам перекрывается, поэтому только строго большее начало требует новой стрелки."
   ]
 }

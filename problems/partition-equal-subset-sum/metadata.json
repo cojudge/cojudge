@@ -1,6 +1,6 @@
 {
   "id": "partition-equal-subset-sum",
-  "title": "128. Partition Equal Subset Sum",
+  "title": "128. Раздел равный подмножеству Sum",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/partition-equal-subset-sum/",
   "category": "dp",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1,5,11,5]",
       "output": "true",
-      "explanation": "The subsets [1,5,5] and [11] have the same sum."
+      "explanation": "Подмножества [1, 5, 5] и [11] имеют одинаковую сумму."
     },
     {
       "input": "nums = [1,2,3,5]",
       "output": "false",
-      "explanation": "The total sum is 11 (odd), so the array cannot be split into two equal-sum subsets."
+      "explanation": "Общая сумма 11 (нечетная), поэтому массив не может быть разделен на два подмножества с равной суммой."
     }
   ],
   "starterCode": {
@@ -49,7 +49,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "An odd total sum can never be split equally.",
-    "Reduce the problem to finding a subset with sum total / 2, and update reachable sums backward."
+    "Странная сумма никогда не может быть разделена поровну.",
+    "Уменьшите проблему до поиска подмножества с суммой / 2 и обновите доступные суммы назад."
   ]
 }

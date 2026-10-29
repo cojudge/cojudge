@@ -1,9 +1,9 @@
-You start at position `0` on an endless number line and want to reach `target`, which is never zero.
+Вы начинаете с позиции `0` на бесконечной строке чисел и хотите достичь `target`, который никогда не равен нулю.
 
-On move number `i` (counting from 1), you must walk exactly `i` steps either to the left or to the right. Moves accumulate: after three moves you have walked 1 + 2 + 3 steps split by direction choices.
+При движении по номеру `i` (с учетом от 1) необходимо пройти ровно шаги `i` либо влево, либо вправо. Движения накапливаются: после трех ходов вы прошли шаги 1 + 2 + 3, разделенные по выбору направления.
 
-Return the smallest number of moves that can land exactly on `target`.
+Верните наименьшее количество ходов, которые могут приземлиться точно на `target`.
 
-**Constraints:**
+**Ограничения:**
 - `-10^9 <= target <= 10^9`
 - `target != 0`

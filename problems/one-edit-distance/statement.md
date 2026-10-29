@@ -1,7 +1,7 @@
-Decide whether two strings are exactly one edit apart. A single edit means inserting one character, deleting one character, or replacing one character.
+Решите, являются ли две строки точно одним редактированием.Одно редактирование означает вставку одного символа, удаление одного символа или замену одного символа.
 
-The strings must differ by precisely one such step. Identical strings need zero edits, so they do not count; strings that need two or more steps also do not count.
+Струны должны отличаться точно одним таким шагом.Идентичные строки нуждаются в нулевых правках, поэтому они не учитываются; строки, которым нужно два или более шагов, также не учитываются.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= s.length, t.length <= 10^4`
-- Strings consist of letters and digits.
+- Струны состоят из букв и цифр.

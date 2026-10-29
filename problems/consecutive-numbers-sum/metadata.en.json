@@ -1,0 +1,58 @@
+{
+  "id": "consecutive-numbers-sum",
+  "title": "827. Consecutive Numbers Sum",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/consecutive-numbers-sum/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 5",
+      "output": "2",
+      "explanation": "Writings are [5] and [2,3]."
+    },
+    {
+      "input": "n = 9",
+      "output": "3",
+      "explanation": "Writings are [9], [4,5], and [2,3,4]."
+    },
+    {
+      "input": "n = 15",
+      "output": "4",
+      "explanation": "Writings are [15], [7,8], [4,5,6], and [1,2,3,4,5]."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int consecutiveNumbersSum(int n) {\n        return 0;\n    }\n}",
+    "python": "class Solution:\n    def consecutiveNumbersSum(self, n: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int consecutiveNumbersSum(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int ConsecutiveNumbersSum(int n) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn consecutive_numbers_sum(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc ConsecutiveNumbersSum(n int) int {\n    return 0\n}",
+    "typescript": "export function consecutiveNumbersSum(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function consecutiveNumbersSum($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 5
+    },
+    {
+      "n": 9
+    },
+    {
+      "n": 15
+    }
+  ],
+  "functionName": "consecutiveNumbersSum",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "A block of k consecutive numbers starting at x sums to k*x + k*(k-1)/2, so x must be a positive integer.",
+    "For each possible length k, check whether n minus k*(k-1)/2 is a positive multiple of k.",
+    "Only lengths with k*(k-1)/2 < n can work, which bounds the loop near sqrt(2n)."
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "id": "uncommon-words-from-two-sentences",
-  "title": "875. Uncommon Words from Two Sentences",
+  "title": "875. Необычные слова из двух предложений",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/uncommon-words-from-two-sentences/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s1 = \"this apple is sweet\", s2 = \"this apple is sour\"",
       "output": "[\"sweet\",\"sour\"]",
-      "explanation": "\"this\", \"apple\" and \"is\" each appear twice, while \"sweet\" and \"sour\" appear once."
+      "explanation": "«это», «яблоко» и «есть» появляются дважды, в то время как «сладкое» и «кислое» появляются один раз."
     },
     {
       "input": "s1 = \"apple apple\", s2 = \"banana\"",
       "output": "[\"banana\"]",
-      "explanation": "\"apple\" appears twice in total and \"banana\" appears once."
+      "explanation": "«Яблоко» появляется дважды, а «банан» — один раз."
     },
     {
       "input": "s1 = \"apple banana\", s2 = \"apple banana cherry\"",
       "output": "[\"cherry\"]",
-      "explanation": "\"apple\" and \"banana\" each appear twice, and \"cherry\" appears once."
+      "explanation": "«Яблоко» и «банан» появляются дважды, а «вишня» появляется один раз."
     }
   ],
   "starterCode": {
@@ -62,7 +62,7 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Split both sentences into words and count every word with a frequency map.",
-    "Collect the words whose total count is exactly one; any order is accepted."
+    "Разделите оба предложения на слова и посчитайте каждое слово с помощью карты частот.",
+    "Соберите слова, общий счет которых точно один; любой порядок принимается."
   ]
 }

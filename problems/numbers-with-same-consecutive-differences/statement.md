@@ -1,6 +1,6 @@
-List every non-negative integer with exactly `n` digits (no leading zeros, except that `0` itself counts as the single one-digit number) in which the absolute difference between every two consecutive digits equals `k`. Return the qualifying numbers in increasing order as an integer list.
+Перечислите каждое неотрицательное целое число с точно цифрами `n` (без ведущих нулей, за исключением того, что сам `0` считается единственным однозначным числом), в котором абсолютная разница между каждыми двумя последовательными цифрами равна `k`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 9`
 - `0 <= k <= 9`
-- The answers form an integer list.
+- Ответы образуют целочисленный список.

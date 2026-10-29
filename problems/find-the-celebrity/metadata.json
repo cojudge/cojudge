@@ -1,6 +1,6 @@
 {
   "id": "find-the-celebrity",
-  "title": "277. Find the Celebrity",
+  "title": "277. Найти знаменитость",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/find-the-celebrity/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "graph = [[1,1,0],[0,1,0],[1,1,1]]",
       "output": "1",
-      "explanation": "Person 1 is known by 0 and 2 while knowing nobody else."
+      "explanation": "Человек 1 известен как 0 и 2, не зная никого другого."
     },
     {
       "input": "graph = [[1,0,1],[1,1,0],[0,1,1]]",
       "output": "-1",
-      "explanation": "No person satisfies both celebrity conditions."
+      "explanation": "Ни один человек не удовлетворяет обоим условиям знаменитости."
     },
     {
       "input": "graph = [[1,0],[1,1]]",
       "output": "0",
-      "explanation": "Person 0 knows nobody else and person 1 knows 0."
+      "explanation": "Человек 0 не знает никого, а человек 1 знает 0."
     }
   ],
   "starterCode": {
@@ -60,8 +60,8 @@
     "perN": 5
   },
   "hints": [
-    "The judge never reveals the matrix; only relation.knows(a, b) is available (at most 10 + 5*n calls).",
-    "Eliminate non-candidates: if candidate knows i, candidate cannot be the celebrity so move to i.",
-    "Verify the survivor knows nobody else and is known by everybody; else return -1."
+    "Судья никогда не раскрывает матрицу; доступен только relation.knows (a, b) (на большинстве звонков 10 + 5*n).",
+    "Устраните некандидатов: если кандидат знает меня, он не может быть знаменитостью, поэтому перейдите к нему.",
+    "Убедитесь, что выживший не знает никого и известен всем; другие возвращаются - 1."
   ]
 }

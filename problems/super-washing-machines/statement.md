@@ -1,7 +1,7 @@
-A row of `n` washing machines holds `machines[i]` garments each. In one move, any number of machines may each hand a single garment to a neighboring machine (left or right). The goal is an even split where every machine ends with the same count.
+Ряд стиральных машин `n` удерживает одежду `machines[i]` каждая. В одном движении любое количество машин может передать одну одежду соседней машине (слева или справа). Цель - четное разделение, где каждая машина заканчивается одним и тем же счетом.
 
-Return the smallest number of moves that achieves the split, or `-1` when the total garment count is not divisible by `n` and sharing is therefore impossible.
+Возврат наименьшего количества ходов, которые достигают разделения, или `-1`, когда общее количество одежды не делится на `n`, и поэтому обмен невозможен.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= machines.length <= 10^4`
 - `0 <= machines[i] <= 10^5`

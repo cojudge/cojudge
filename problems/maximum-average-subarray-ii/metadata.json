@@ -1,6 +1,6 @@
 {
   "id": "maximum-average-subarray-ii",
-  "title": "666. Maximum Average Subarray II",
+  "title": "666. Максимальная средняя подложка II",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/maximum-average-subarray-ii/",
   "category": "binary-search",
@@ -8,7 +8,7 @@
     {
       "input": "nums = [1,12,-5,-6,50,3], k = 4",
       "output": "\"12.75\"",
-      "explanation": "The length-4 block [12,-5,-6,50] averages 12.75, beating every longer block."
+      "explanation": "Блок 4 [12,-5,-6,50] усредняет 12.75, обгоняя каждый более длинный блок."
     },
     {
       "input": "nums = [5], k = 1",
@@ -17,7 +17,7 @@
     {
       "input": "nums = [1,2,3,4,5], k = 1",
       "output": "\"5.0\"",
-      "explanation": "With minimum length 1 the best block is the single largest element."
+      "explanation": "При минимальной длине 1 лучшим блоком является один самый большой элемент."
     }
   ],
   "starterCode": {
@@ -57,8 +57,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "This is a portable adaptation: return the average as a finite, double-parseable decimal string.",
-    "Binary-search the answer: for a candidate mid, check whether any block of length >= k in (nums[i] - mid) has a non-negative sum.",
-    "The check uses prefix sums with the smallest prefix seen at least k steps back; about 50 iterations settle 1e-5 precision."
+    "Это переносная адаптация: возвращайте среднее как конечную, двураздельную десятичную строку.",
+    "Бинарный поиск ответа: для кандидата середины проверьте, имеет ли какой-либо блок длины >= k в (числа [i] - середина) неотрицательную сумму.",
+    "В чеке используются суммы префиксов с наименьшим префиксом, видимым по меньшей мере на k шагов назад; примерно итерации 50 устанавливают точность 1e-5."
   ]
 }

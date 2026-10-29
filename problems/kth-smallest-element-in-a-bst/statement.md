@@ -1,7 +1,7 @@
-You are given the `root` of a binary search tree together with an integer `k`. Return the value occupying the `k`-th place (counting from 1) when all node values are listed from smallest to largest.
+Вы получаете `root` двоичного дерева поиска вместе с целым числом `k`. Возвращайте значение, занимающее `k`-е место (с учетом 1), когда все значения узлов перечислены от наименьшего до наибольшего.
 
-**Constraints:**
+**Ограничения:**
 
-- The number of nodes in the tree is n.
+- Число узлов в дереве равно n.
 - 1 ≤ k ≤ n ≤ 10^4
 - 0 ≤ Node.val ≤ 10^4

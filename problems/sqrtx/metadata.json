@@ -8,17 +8,17 @@
     {
       "input": "x = 4",
       "output": "2",
-      "explanation": "The square root of 4 is 2."
+      "explanation": "Квадратный корень 4 — 2."
     },
     {
       "input": "x = 8",
       "output": "2",
-      "explanation": "The square root of 8 is 2.82842..., rounded down to 2."
+      "explanation": "Квадратный корень 8 — 2.82842..., округленный до 2."
     },
     {
       "input": "x = 1",
       "output": "1",
-      "explanation": "The square root of 1 is 1."
+      "explanation": "Квадратный корень 1 — 1."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Binary-search the answer in [0, x]: for mid, compare mid with x / mid instead of mid * mid to avoid overflow.",
-    "When mid <= x / mid, mid is feasible and the answer is at least mid; otherwise it is smaller.",
-    "Handle x = 0 and x = 1 as direct answers."
+    "Бинарный поиск ответ в [0, x]: для середины, сравните середину с x / серединой вместо середины * середина, чтобы избежать переполнения.",
+    "Когда середина <= x / середина, середина осуществима, и ответ, по крайней мере, середина; в противном случае она меньше.",
+    "Обработка x = 0 и x = 1 в качестве прямых ответов."
   ]
 }

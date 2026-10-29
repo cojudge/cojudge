@@ -1,8 +1,8 @@
-Given a decimal string `n` (no leading zeros except `"0"` itself), return the closest palindromic integer different from `n` itself, as a string. Closeness is measured by absolute numeric difference; when two palindromes tie, pick the smaller one.
+Учитывая десятичную строку `n` (никаких ведущих нулей, кроме самого `"0"`), возвращайте ближайшее палиндромное целое число, отличное от самого `n`, в виде строки. Близость измеряется абсолютной разностью чисел; когда два палиндрома связаны, выберите меньшее.
 
-Only the value matters, not the spelling: candidates are built by mirroring a prefix. Also consider the powers-of-ten neighbors (`99..9` and `100..01`), which cover length changes the mirroring may miss.
+Важно только значение, а не орфография: кандидаты строятся путем зеркалирования префикса. Также учитывайте возможности десяти соседей (`99..9` и `100..01`), которые могут пропустить изменения длины покрытия.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n.length <= 18`
-- `n` has no leading zeros.
-- `n` fits in a signed 64-bit integer.
+- `n` не имеет ведущих нулей.
+- `n` вписывается в подписанное 64-битовое целое число.

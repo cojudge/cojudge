@@ -1,9 +1,9 @@
-Write the hexadecimal form of a signed 32-bit integer `num`, using lowercase letters.
+Напишите шестнадцатеричную форму подписанного 32-битового целого числа `num`, используя строчные буквы.
 
-Non-negative values convert in the usual base-16 way with no leading zeros (except that zero itself becomes `"0"`). Negative values first wrap into their 32-bit two's complement bit pattern and then convert that unsigned pattern the same way. For instance, `-1` has all 32 bits set, giving eight `f` characters.
+Неотрицательные значения преобразуются обычным образом в базовый 16 без ведущих нулей (кроме того, что сам ноль становится `"0"`). Отрицательные значения сначала обертываются в свой битовый шаблон дополнения 32-бита два, а затем преобразуют этот неподписанный шаблон таким же образом. Например, `-1` имеет все наборы битов 32, давая восемь символов `f`.
 
-Do not call a built-in base-conversion helper; build the digits directly.
+Не называйте встроенного помощника по преобразованию базы; постройте цифры напрямую.
 
-**Constraints:**
+**Ограничения:**
 - `-2^31 <= num <= 2^31 - 1`
-- Output uses only `0-9` and `a-f`, with no leading zeros unless the value is zero.
+- Выход использует только `0-9` и `a-f`, без ведущих нулей, если значение не равно нулю.

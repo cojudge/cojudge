@@ -1,8 +1,8 @@
-Produce the first `numRows` rows of Pascal's triangle.
+Создайте первые строки `numRows` треугольника Паскаля.
 
-Begin with a single `1` at the top. Every later row starts and ends with `1`, and each interior position holds the sum of the two numbers directly above it from the previous row. Collect all rows from top to bottom and return them.
+Начните с одного `1` вверху. Каждый последующий ряд начинается и заканчивается `1`, и каждое внутреннее положение удерживает сумму двух чисел непосредственно над ним из предыдущего ряда. Соберите все строки сверху вниз и верните их.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= numRows <= 30`
 
-**Adaptation note:** The nested value list is represented as `int_list_2d` in this judge.
+**Примечание по адаптации: ** Список вложенных значений представлен как `int_list_2d`.

@@ -1,6 +1,6 @@
 {
   "id": "global-and-local-inversions",
-  "title": "775. Global and Local Inversions",
+  "title": "775. Глобальные и локальные инверсии",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/global-and-local-inversions/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,0,2]",
       "output": "true",
-      "explanation": "One global and one local inversion coincide."
+      "explanation": "Одна глобальная и одна локальная инверсия совпадают."
     },
     {
       "input": "nums = [1,2,0]",
       "output": "false",
-      "explanation": "Two globals but one local."
+      "explanation": "Два глобала, но один местный."
     },
     {
       "input": "nums = [0,2,1]",
       "output": "true",
-      "explanation": "A single adjacent swap."
+      "explanation": "Один соседний своп."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Extra global inversions always span at least two positions, so compare each prefix maximum with later values.",
-    "Track the maximum of nums[0..i-2] while scanning i from 2 upward; if it ever exceeds nums[i], a non-local inversion exists.",
-    "Equivalently, an ideal permutation satisfies |nums[i] - i| <= 1 for every index."
+    "Дополнительные глобальные инверсии всегда охватывают как минимум две позиции, поэтому сравните каждый максимум префикса с более поздними значениями.",
+    "Отслеживайте максимум чисел [0..i-2] при сканировании i от 2 вверх; если он когда-либо превышает числа [i], существует нелокальная инверсия.",
+    "Эквивалентно, идеальная перестановка удовлетворяет |nums[i] — i | <= 1 для каждого индекса."
   ]
 }

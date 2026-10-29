@@ -1,10 +1,10 @@
-You are given daily share prices and a fixed fee charged on every sale. You may complete any number of buys and sells, but you can hold at most one share at a time.
+Вам выдаются ежедневные цены на акции и фиксированная плата, взимаемая с каждой продажи. Вы можете совершить любое количество покупок и продаж, но вы можете держать максимум одну акцию за раз.
 
-Buying costs the listed price; selling gains the price minus the fee. Passing on quiet days is always allowed.
+Покупка стоит указанной цены; продажа выигрывает цену за вычетом комиссии. Прохождение в тихие дни всегда разрешено.
 
-Return the greatest profit achievable, or zero when no trade helps.
+Возврат наибольшей достижимой прибыли, или нулевой прибыли, когда никакая торговля не помогает.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= prices.length <= 50000`
 - `0 <= prices[i] < 50000`
 - `0 <= fee < 50000`

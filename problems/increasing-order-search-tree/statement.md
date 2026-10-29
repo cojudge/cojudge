@@ -1,7 +1,7 @@
-Start from the root of a binary search tree. Gather its values from smallest to largest and rebuild them as a spine that leans only to the right: the tiniest value becomes the new root, each node keeps an empty left hand and points rightward to the next larger value.
+Начните с корня дерева двоичного поиска. Соберите его значения от наименьшего до наибольшего и перестройте их как позвоночник, который наклоняется только вправо: мельчайшее значение становится новым корнем, каждый узел держит пустую левую руку и указывает вправо на следующее большее значение.
 
-Return the head of that right-leaning chain.
+Верните голову этой правой цепи.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nodes in tree <= 100`
 - `0 <= Node.val <= 1000`

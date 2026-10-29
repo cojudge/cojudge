@@ -1,6 +1,6 @@
 {
   "id": "longest-word-in-dictionary",
-  "title": "728. Longest Word in Dictionary",
+  "title": "728. Самое длинное слово в словаре",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/longest-word-in-dictionary/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "words = [\"w\",\"wo\",\"wor\",\"worl\",\"world\"]",
       "output": "\"world\"",
-      "explanation": "Each prefix of world appears, so the full word is buildable and longest."
+      "explanation": "Появляется каждый префикс мира, поэтому полное слово является строимым и самым длинным."
     },
     {
       "input": "words = [\"a\",\"banana\",\"app\",\"appl\",\"ap\",\"apply\",\"apple\"]",
       "output": "\"apple\"",
-      "explanation": "Both apple and apply are buildable at length 5; apple is alphabetically smaller."
+      "explanation": "И яблоко, и приложение могут быть построены в длину 5; яблоко в алфавитном порядке меньше."
     },
     {
       "input": "words = [\"abc\",\"bcd\"]",
       "output": "\"\"",
-      "explanation": "No single-letter word exists, so nothing is buildable."
+      "explanation": "Одно-буквенного слова не существует, поэтому ничего нельзя построить."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "A word is buildable exactly when every one of its prefixes occurs in the set.",
-    "Check words from longest to shortest (ties alphabetically) and return the first buildable one, or sort ascending and track the best.",
-    "A trie also works, but a hash set of words plus prefix scans is simplest."
+    "Слово строится именно тогда, когда каждый из его префиксов встречается в наборе.",
+    "Проверяйте слова от самого длинного до самого короткого (в алфавитном порядке) и возвращайте первое построенное, или сортируйте восходящие и отслеживайте лучшие.",
+    "Три также работает, но хеш-набор слов плюс сканирование приставок является самым простым."
   ]
 }

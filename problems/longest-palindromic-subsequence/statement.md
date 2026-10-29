@@ -1,7 +1,7 @@
-A subsequence keeps a selection of characters in their original relative order while possibly skipping others. A palindrome reads identically forward and backward.
+Последовательность сохраняет выбор символов в их первоначальном относительном порядке, возможно, пропуская других. Палиндром читает одинаково вперед и назад.
 
-Given a string `s`, determine the length of the longest subsequence of `s` that forms a palindrome. The subsequence itself need not be contiguous.
+Учитывая строку `s`, определите длину самой длинной последовательности `s`, которая образует палиндром. Сама последовательность не обязательно должна быть смежным.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 1000`
-- `s` consists of lowercase English letters
+- `s` состоит из строчных английских букв

@@ -1,6 +1,6 @@
 {
   "id": "fair-candy-swap",
-  "title": "879. Fair Candy Swap",
+  "title": "879. Fair Candy Swap (Справедливый конфетный своп)",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/fair-candy-swap/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "aliceSizes = [1,1], bobSizes = [2,2]",
       "output": "[1,2]",
-      "explanation": "After swapping a 1 for a 2, both totals equal 3."
+      "explanation": "После замены 1 на 2, оба показателя равны 3."
     },
     {
       "input": "aliceSizes = [1,2], bobSizes = [2,3]",
       "output": "[1,2]",
-      "explanation": "After swapping a 1 for a 2, both totals equal 4."
+      "explanation": "После замены 1 на 2, оба показателя равны 4."
     },
     {
       "input": "aliceSizes = [2], bobSizes = [1,3]",
       "output": "[2,3]",
-      "explanation": "After swapping the 2 for the 3, both totals equal 3."
+      "explanation": "После замены 2 на 3, оба показателя равны 3."
     }
   ],
   "starterCode": {
@@ -62,7 +62,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "If Alice leads by D in total, her box must exceed Bob's box by exactly D / 2.",
-    "Put Bob's sizes in a hash set and test each of Alice's boxes against the needed partner."
+    "Если Алиса лидирует по D в целом, ее коробка должна превышать коробку Боба точно по D / 2.",
+    "Поместите размеры Боба в хеш-набор и проверьте каждый из ящиков Алисы на нужного партнера."
   ]
 }

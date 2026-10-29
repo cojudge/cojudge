@@ -1,8 +1,8 @@
-Two lowercase strings are given. The second string is formed by shuffling the characters of the first one and then inserting exactly one additional lowercase letter at some position. Identify which letter was inserted.
+Даются две строчки нижнего регистра. Вторая строка образована перетасовкой символов первой и затем вставкой ровно одной дополнительной строчной буквы в некоторое положение. Определите, какая буква была вставлена.
 
-*Interface note:* the original statement returns a single character. In this repo every language models that answer as a one-character `string`, so return e.g. `"e"` rather than `'e'`.
+*Интерфейс примечание: * оригинальное утверждение возвращает один символ. В этом репо каждая языковая модель отвечает как односимвольная `string`, поэтому возвращайте, например, `"e"`, а не `'e'`.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= s.length <= 1000`
 - `t.length == s.length + 1`
-- `s` and `t` contain only lowercase English letters.
+- `s` и `t` содержат только английские буквы.

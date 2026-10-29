@@ -1,8 +1,8 @@
-Given a rectangular grid of numbers, list its entries in diagonal zigzag order. Start at the top-left corner heading up-and-right, then alternate between down-and-left and up-and-right each time a border is reached. When a border blocks the diagonal step, sidestep along the border to the next row or column and flip direction.
+Учитывая прямоугольную сетку чисел, перечислите ее записи в диагональном зигзагообразном порядке. Начните в верхнем левом углу, направляющемся вверх-вправо, затем чередуйте между нижним и левым и вверх-вправо каждый раз, когда достигается граница. Когда граница блокирует диагональный шаг, шагните вдоль границы к следующему ряду или столбцу и переверните направление.
 
-Continue until every cell has been emitted once, and return the resulting flat list.
+Продолжайте до тех пор, пока каждая ячейка не будет выделена один раз, и верните полученный плоский список.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= mat.length * mat[i].length <= 10^4`
-- Each row has the same length
+- Каждая строка имеет одинаковую длину
 - `-10^5 <= mat[i][j] <= 10^5`

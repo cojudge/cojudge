@@ -1,6 +1,6 @@
 {
   "id": "basic-array-sum",
-  "title": "17. Array Sum",
+  "title": "17. Аррей Сум",
   "difficulty": "Easy",
   "category": "arrays",
   "examples": [
@@ -12,7 +12,7 @@
     {
       "input": "nums = []",
       "output": "0",
-      "explanation": "An empty array sums to 0."
+      "explanation": "Пустой массив суммируется в 0."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Loop over the array and accumulate a total.",
-    "Start the total at 0 so empty arrays work."
+    "Нажмите на массив и накопите общую сумму.",
+    "Начните с 0, чтобы пустые массивы работали."
   ]
 }

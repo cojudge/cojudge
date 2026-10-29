@@ -1,6 +1,6 @@
 {
   "id": "word-ladder",
-  "title": "121. Word Ladder",
+  "title": "121. Лестница слов",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/word-ladder/",
   "category": "graph",
@@ -8,12 +8,12 @@
     {
       "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]",
       "output": "5",
-      "explanation": "One shortest sequence is hit -> hot -> dot -> dog -> cog."
+      "explanation": "Одна из самых коротких последовательностей - удар -> горячая -> точка -> собака -> винтик."
     },
     {
       "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\"]",
       "output": "0",
-      "explanation": "The end word is not in the list."
+      "explanation": "Конечного слова в списке нет."
     }
   ],
   "starterCode": {
@@ -60,8 +60,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Words are graph nodes; two words share an edge when they differ in exactly one position.",
-    "Generate neighbors by replacing each character with every lowercase letter instead of comparing every pair of words.",
-    "Bidirectional BFS from beginWord and endWord can substantially reduce the explored search space."
+    "Слова — это графовые узлы; два слова имеют общий край, когда они различаются в одной позиции.",
+    "Создавайте соседей, заменяя каждый символ на каждую строчную букву вместо сравнения каждой пары слов.",
+    "Двунаправленная BFS от startWord и endWord может существенно сократить исследуемое пространство поиска."
   ]
 }

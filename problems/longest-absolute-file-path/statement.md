@@ -1,8 +1,8 @@
-A toy file system is flattened into one string. Newline characters separate entries, and the number of leading tab characters tells how deeply an entry is nested: no tabs means the top level, one tab means a child of the previous top-level entry, and so on. Names of folders contain only letters, digits and spaces, while names of files add a dot plus an extension (so a dot marks a file).
+Файловая система игрушек сплющена в одну строку. Новые символы отдельных записей, а количество ведущих символов вкладок говорит о том, насколько глубоко вложена запись: никакие вкладки не означают верхний уровень, одна вкладка означает ребенка предыдущей записи верхнего уровня и т. д. Имена папок содержат только буквы, цифры и пробелы, а имена файлов добавляют точку плюс расширение (так что точка отмечает файл).
 
-The absolute path of an entry joins its ancestor names with `'/'` characters, for example `dir/subdir2/file.ext`. Given the flattened encoding, determine the character count of the longest absolute path that ends at a file. When the encoding holds no file at all, the answer is `0`.
+Абсолютный путь записи соединяет имена своих предков с символами `'/'`, например `dir/subdir2/file.ext`. Учитывая сплюснутое кодирование, определите количество символов самого длинного абсолютного пути, который заканчивается в файле. Когда кодирование вообще не содержит файла, ответ `0`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= input.length <= 10^4`
-- `input` holds letters, digits, spaces, dots, newlines (`\n`) and tabs (`\t`).
-- Every name is non-empty and the nesting described by the tabs is valid.
+- `input` содержит буквы, цифры, пробелы, точки, новые линии (`\n`) и вкладки (`\t`).
+- Каждое имя не пустое, и гнездование, описанное вкладками, является действительным.

@@ -1,6 +1,6 @@
 {
   "id": "surrounded-regions",
-  "title": "118. Surrounded Regions",
+  "title": "118. Окруженные регионы",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/surrounded-regions/",
   "category": "graph",
@@ -8,12 +8,12 @@
     {
       "input": "board = [\"XXXX\",\"XOOX\",\"XXOX\",\"XOXX\"]",
       "output": "[\"XXXX\",\"XXXX\",\"XXXX\",\"XOXX\"]",
-      "explanation": "The lower-left `O` touches the boundary; the other `O` cells are captured."
+      "explanation": "Нижний левый `O` касается границы; другие ячейки `O` захватываются."
     },
     {
       "input": "board = [\"X\"]",
       "output": "[\"X\"]",
-      "explanation": "There are no 'O's to flip, so the board remains [\"X\"]."
+      "explanation": "Нет никакого «О», чтобы перевернуть, так что доска остается «Х»."
     }
   ],
   "starterCode": {
@@ -47,7 +47,7 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Start from boundary `O` cells and mark every `O` reachable from them.",
-    "After the traversal, capture only unmarked `O` cells and restore the marked cells."
+    "Начните с граничных ячеек `O` и отметьте все достижимые от них ячейки `O`.",
+    "После прохождения захватите только немаркированные клетки `O` и восстановите отмеченные клетки."
   ]
 }

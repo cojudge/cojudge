@@ -1,9 +1,9 @@
-Given a set of distinct points on the integer grid, consider every rectangle (of any tilt, not just axis-aligned) whose four corners all belong to the set. Return the smallest such rectangle's area, or 0 when no four points form a rectangle.
+Учитывая набор различных точек на целочисленной сетке, рассмотрим каждый прямоугольник (любого наклона, а не только выровненного по оси), четыре угла которого все принадлежат множеству.Верните наименьшую площадь такого прямоугольника или 0, когда никакие четыре точки не образуют прямоугольник.
 
-Adaptation note: because all coordinates are integers, the area of any qualifying rectangle is always a whole number, so this task returns that exact integer area rather than a floating-point value.
+Адаптационное примечание: поскольку все координаты являются целыми числами, площадь любого квалифицируемого прямоугольника всегда является целым числом, поэтому эта задача возвращает точную целочисленную область, а не значение с плавающей точкой.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= points.length <= 50`
-- All points are distinct.
+- Все точки различны.
 - `0 <= points[i][0], points[i][1] <= 40000`
-- The points arrive as a 2D integer array.
+- Точки поступают как 2D-целочисленный массив.

@@ -1,6 +1,6 @@
 {
   "id": "swap-nodes-in-pairs",
-  "title": "256. Swap Nodes in Pairs",
+  "title": "256. Своп-узлы в паре",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/swap-nodes-in-pairs/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "head = [1,2,3,4]",
       "output": "[2,1,4,3]",
-      "explanation": "Nodes 1 and 2 trade places, and nodes 3 and 4 trade places."
+      "explanation": "Узлы 1 и 2 торгуют местами, а узлы 3 и 4 торгуют местами."
     },
     {
       "input": "head = []",
       "output": "[]",
-      "explanation": "An empty list has nothing to swap."
+      "explanation": "Пустому списку нечего менять."
     },
     {
       "input": "head = [1]",
       "output": "[1]",
-      "explanation": "A single node has no partner, so the list is unchanged."
+      "explanation": "У одного узла нет партнера, поэтому список не изменился."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Place a dummy node before the head so the first pair is handled exactly like every other pair.",
-    "For each pair (a, b), point the previous node to b, b back to a, and a forward to the rest; then advance two steps."
+    "Поместите муляж перед головой, чтобы первая пара обрабатывалась точно так же, как и любая другая пара.",
+    "Для каждой пары (a, b) укажите предыдущий узел на b, b назад к a и a вперед к остальным; затем выполните два шага."
   ]
 }

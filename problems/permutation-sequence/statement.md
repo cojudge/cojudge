@@ -1,9 +1,9 @@
-Consider the digits `1` through `n` arranged in increasing order. All `n!` orderings of these digits can be listed from smallest to largest in dictionary order. Given `n` and a 1-based position `k`, return the ordering that appears at that position.
+Рассмотрим цифры `1` через `n`, расположенные в порядке увеличения. Все `n!`-заказы этих цифр можно перечислить от наименьшего к наибольшему в словарном порядке. Учитывая `n` и позицию 1 на основе `k`, верните порядок, который появляется в этой позиции.
 
-For example, with `n = 3` the ordered list is `123`, `132`, `213`, `231`, `312`, `321`, so asking for `k = 3` yields `213`.
+Например, с `n = 3` упорядоченным списком является `123`, `132`, `213`, `231`, `312`, `321`, поэтому запрос на `k = 3` дает `213`.
 
-Do not generate every ordering; instead decide the result one place at a time by counting how many orderings start with each remaining digit.
+Не создавайте каждый заказ; вместо этого определите результат по одному месту за раз, подсчитав, сколько заказов начинается с каждой оставшейся цифры.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 9`
 - `1 <= k <= n!`

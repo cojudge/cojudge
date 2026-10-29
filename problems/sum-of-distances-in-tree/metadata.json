@@ -1,6 +1,6 @@
 {
   "id": "sum-of-distances-in-tree",
-  "title": "832. Sum of Distances in Tree",
+  "title": "832. Количество расстояний в дереве",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/sum-of-distances-in-tree/",
   "category": "tree",
@@ -8,7 +8,7 @@
     {
       "input": "n = 6, edges = [[0,1],[0,2],[2,3],[2,4],[2,5]]",
       "output": "[8,12,6,10,10,10]",
-      "explanation": "Node 2 is the most central with total 6."
+      "explanation": "Узел 2 является самым центральным с общим 6."
     },
     {
       "input": "n = 1, edges = []",
@@ -82,8 +82,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Root the tree at 0: a bottom-up pass counts subtree sizes and the distance sums inside each subtree.",
-    "Reroot with the relation childAnswer = parentAnswer - subtreeSize[child] + (n - subtreeSize[child]), since moving the root across one edge shortens paths into the child subtree and lengthens all others.",
-    "A second top-down pass propagates the root answer to every node in linear time."
+    "Корень дерева в 0: нижний верхний проход подсчитывает размеры поддеревов и суммы расстояния внутри каждого поддеревья.",
+    "Reroot with the relation childAnswer = parentAnswer - subtreeSize[child] + (n - subtreeSize[child]), так как перемещение корня по одному краю укорачивает пути в поддерево потомка и удлиняет все остальные.",
+    "Второй нисходящий проход распространяет корневой ответ на каждый узел в линейном времени."
   ]
 }

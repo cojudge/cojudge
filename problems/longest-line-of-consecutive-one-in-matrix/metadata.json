@@ -1,6 +1,6 @@
 {
   "id": "longest-line-of-consecutive-one-in-matrix",
-  "title": "617. Longest Line of Consecutive One in Matrix",
+  "title": "617. Самая длинная строка последовательного в матрице",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/longest-line-of-consecutive-one-in-matrix/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "mat = [[0,1,1,0],[0,1,1,0],[0,0,0,1]]",
       "output": "3",
-      "explanation": "Three 1s line up along the main diagonal."
+      "explanation": "Три 1 выстраиваются вдоль главной диагонали."
     },
     {
       "input": "mat = [[1,1,1],[1,0,1]]",
       "output": "3",
-      "explanation": "The entire top row is filled with 1s."
+      "explanation": "Весь верхний ряд заполнен 1s."
     },
     {
       "input": "mat = [[0,0],[0,0]]",
       "output": "0",
-      "explanation": "No 1 appears at all."
+      "explanation": "1 не появляется вообще."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Track four running lengths per cell: across, down, diagonal, and anti-diagonal.",
-    "Each direction extends the matching neighbor's count (upper, left, upper-left, upper-right).",
-    "A single dynamic-programming pass keeps the global maximum; zeros reset all four counts."
+    "Отслеживайте четыре длины бега на ячейку: поперечное, нижнее, диагональное и антидиагональное.",
+    "Каждое направление расширяет соответствующий счет соседа (верхний, левый, верхний левый, верхний правый).",
+    "Один пропуск динамического программирования сохраняет глобальный максимум; нули сбрасывают все четыре счета."
   ]
 }

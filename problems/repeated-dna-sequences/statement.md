@@ -1,7 +1,7 @@
-A DNA strand can be seen as a long string built only from the four letters `A`, `C`, `G` and `T`. Biologists care about short fragments that appear in more than one place, because repeats can point to something meaningful.
+Прядь ДНК можно рассматривать как длинную строку, построенную только из четырех букв `A`, `C`, `G` и `T`. Биологи заботятся о коротких фрагментах, которые появляются более чем в одном месте, потому что повторы могут указывать на что-то значимое.
 
-You are given such a string `s`. Gather every distinct substring of length exactly 10 that occurs two or more times in `s`. Each repeated fragment is listed once; the order of the answer does not matter.
+Вам дается такая строка `s`. Соберите каждую отдельную подстроку длины именно 10, что происходит два или более раз в `s`. Каждый повторяющийся фрагмент указан один раз; порядок ответа не имеет значения.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= s.length <= 10^5`
-- `s` consists of the characters `'A'`, `'C'`, `'G'` and `'T'`.
+- `s` состоит из символов `'A'`, `'C'`, `'G'` и `'T'`.

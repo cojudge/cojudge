@@ -1,11 +1,11 @@
-A row of colored balls sits on a board. Each ball shows one of five colors, written as single letters `R`, `Y`, `B`, `G` or `W`. You also hold a small collection of extra balls described by a second short string.
+Ряд цветных шаров сидит на доске. Каждый шарик показывает один из пяти цветов, написанных в виде одиночных букв `R`, `Y`, `B`, `G` или `W`. Вы также держите небольшую коллекцию дополнительных шаров, описанных второй короткой строкой.
 
-On each move you may take one ball from your hand and slide it into the row at any gap, including both ends. After the insertion, look for runs of three or more equal neighbors. Remove every such run. The removal can join previously separated equal balls, so keep deleting newly formed runs until none remain. If the row becomes empty you have cleared the board.
+На каждом ходу вы можете взять один шарик из руки и сдвинуть его в ряд при любом разрыве, включая оба конца. После вставки ищите пробеги трех и более равных соседей. Удалите каждый такой пробег. Удаление может соединить ранее разделенные равные шары, поэтому продолжайте удалять вновь сформированные пробеги до тех пор, пока не останется ни одного. Если ряд становится пустым, вы очистили доску.
 
-Your task is to use as few hand balls as possible to empty the row. Return that minimum count, or `-1` when the hand cannot finish the job.
+Ваша задача состоит в том, чтобы использовать как можно меньше шариков для опорожнения строки. Верните этот минимальный счет, или `-1`, когда рука не может закончить работу.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= board.length <= 16`
 - `1 <= hand.length <= 5`
-- Both strings use only `R`, `Y`, `B`, `G` and `W`
-- The starting row never already contains three equal neighbors in a row
+- В обеих строках используются только `R`, `Y`, `B`, `G` и `W`.
+- Стартовый ряд никогда не содержит трех равных соседей подряд.

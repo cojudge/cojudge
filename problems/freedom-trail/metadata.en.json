@@ -1,0 +1,65 @@
+{
+  "id": "freedom-trail",
+  "title": "574. Freedom Trail",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/freedom-trail/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "ring = \"godding\", key = \"gd\"",
+      "output": "4",
+      "explanation": "Keep the dial still and press 'g' (1), rotate two places to a 'd' (2), then press it (1), for 4 total."
+    },
+    {
+      "input": "ring = \"godding\", key = \"godding\"",
+      "output": "13",
+      "explanation": "Spelling the full word in order needs 6 rotations plus 7 presses."
+    },
+    {
+      "input": "ring = \"ab\", key = \"b\"",
+      "output": "2",
+      "explanation": "Rotate one step to 'b' (1) and press it (1)."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findRotateSteps(String ring, String key) {\n        \n    }\n}",
+    "python": "class Solution:\n    def findRotateSteps(self, ring: str, key: str) -> int:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int findRotateSteps(string ring, string key) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindRotateSteps(string ring, string key) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_rotate_steps(ring: String, key: String) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindRotateSteps(ring string, key string) int {\n    \n}",
+    "typescript": "export function findRotateSteps(ring: string, key: string): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $ring\n     * @param string $key\n     * @return int\n     */\n    public function findRotateSteps($ring, $key) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "ring": "godding",
+      "key": "gd"
+    },
+    {
+      "ring": "godding",
+      "key": "godding"
+    },
+    {
+      "ring": "ab",
+      "key": "b"
+    }
+  ],
+  "functionName": "findRotateSteps",
+  "params": [
+    {
+      "name": "ring",
+      "type": "string"
+    },
+    {
+      "name": "key",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Precompute, for each letter, the list of dial positions holding it so transitions only consider relevant stops.",
+    "Memoize over (key index, dial position): try every occurrence of the next character and add the circular distance plus one press.",
+    "Circular distance between i and j on a dial of length m is min(|i-j|, m-|i-j|)."
+  ]
+}

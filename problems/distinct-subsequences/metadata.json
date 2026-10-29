@@ -1,6 +1,6 @@
 {
   "id": "distinct-subsequences",
-  "title": "134. Distinct Subsequences",
+  "title": "134. Отличительные последствия",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/distinct-subsequences/",
   "category": "dp",
@@ -8,12 +8,12 @@
     {
       "input": "s = \"rabbbit\", t = \"rabbit\"",
       "output": "3",
-      "explanation": "The number of distinct subsequences of \"rabbbit\" equalling \"rabbit\" is 3."
+      "explanation": "Число различных последовательностей «раббита», равного «кролику», составляет 3."
     },
     {
       "input": "s = \"babgbag\", t = \"bag\"",
       "output": "5",
-      "explanation": "The number of distinct subsequences of \"babgbag\" equalling \"bag\" is 5."
+      "explanation": "Число различных последовательностей «babgbag», равное «bag», составляет 5."
     }
   ],
   "starterCode": {
@@ -57,7 +57,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "For each source character, either skip it or use it to match the next target character.",
-    "Update target-prefix counts from right to left so one source character is not reused."
+    "Для каждого исходного персонажа либо пропустите его, либо используйте его, чтобы соответствовать следующему целевому персонажу.",
+    "Обновить значение префикса-мишени справа налево, чтобы один символ источника не использовался повторно."
   ]
 }

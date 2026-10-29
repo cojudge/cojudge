@@ -1,8 +1,8 @@
-You are given an integer array `nums` and must reorder it so that strict ups and downs alternate: `nums[0] < nums[1] > nums[2] < nums[3] ...`. Every input given here admits at least one such ordering. Return any reordered array meeting the condition (it must reuse exactly the same elements).
+Вы получаете целочисленный массив `nums` и должны переупорядочивать его так, чтобы чередовались строгие взлеты и падения: `nums[0] < nums[1] > nums[2] < nums[3] ...`. Каждый введенный здесь вход допускает по крайней мере один такой порядок. Возвращайте любой переупорядоченный массив, отвечающий условию (он должен повторно использовать точно те же элементы).
 
-*Adaptation note:* the original statement rearranges the array in place without returning anything; here you return the reordered array instead, holding the same values.
+*Примечание по адаптации: * оригинальное утверждение перестраивает массив на месте, ничего не возвращая; здесь вы возвращаете переупорядоченный массив, удерживая те же значения.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 5 * 10^4`
 - `0 <= nums[i] <= 5000`
-- A valid answer always exists for the given input.
+- Для данного входа всегда существует действительный ответ.

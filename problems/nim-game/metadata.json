@@ -1,6 +1,6 @@
 {
   "id": "nim-game",
-  "title": "388. Nim Game",
+  "title": "388. Игра Nim",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/nim-game/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "n = 4",
       "output": "false",
-      "explanation": "Any first move leaves a winning reply for the opponent."
+      "explanation": "Любой первый ход оставляет победный ответ сопернику."
     },
     {
       "input": "n = 1",
       "output": "true",
-      "explanation": "Take the last stone at once."
+      "explanation": "Возьмите последний камень сразу."
     },
     {
       "input": "n = 2",
       "output": "true",
-      "explanation": "Take both stones at once."
+      "explanation": "Возьмите оба камня сразу."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Work out small piles by hand: 1, 2, 3 are wins; 4 is a loss; 5, 6, 7 are wins again.",
-    "A pile is losing exactly when the opponent can always return it to another losing pile.",
-    "Look for the repeating pattern in the pile size to get an O(1) rule."
+    "Отрабатывайте небольшие сваи вручную: 1, 2, 3 - это победы; 4 - это проигрыш; 5, 6, 7 - это снова победы.",
+    "Куча проигрывает именно тогда, когда противник всегда может вернуть ее в другую кучу потерь.",
+    "Ищите повторяющийся шаблон в размере сваи, чтобы получить правило O (1)."
   ]
 }

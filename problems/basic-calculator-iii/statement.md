@@ -1,11 +1,11 @@
-Implement a calculator for the string `s`, which holds non-negative integers, the four operators `+`, `-`, `*`, `/`, parentheses `(` `)`, and spaces. Division between integers discards any fractional part toward zero (for example `5 / 2` is `2` and `-5 / 2` is `-2`).
+Внедрите калькулятор для строки `s`, которая содержит неотрицательные целые числа, четыре оператора `+`, `-`, `*`, `/`, скобки `(` `)` и пробелы.Раздел между целыми числами отбрасывает любую дробную часть к нулю (например, `5 / 2` — `2`, а `-5 / 2` — `-2`).
 
-Evaluate using the standard order: innermost parentheses first, then multiplication and division left to right, then addition and subtraction left to right. A leading minus or a minus right after `(` acts as a unary negation.
+Оценить с помощью стандартного порядка: сначала внутренние скобки, затем умножение и деление слева направо, затем сложение и вычитание слева направо. Ведущий минус или минус сразу после `(` выступает в качестве унарного отрицания.
 
-Return the integer result. This is a portable string adaptation: the formula travels as a plain string and the answer is a plain integer.
+Возврат целого результата. Это переносная адаптация струн: формула перемещается как простая струна, а ответ — простое целое число.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 10^4`
-- `s` holds only digits, `+`, `-`, `*`, `/`, `(`, `)`, and spaces
-- `s` is a valid expression; division by zero never occurs
-- Intermediate results fit in a signed 32-bit integer
+- `s` содержит только цифры, `+`, `-`, `*`, `/`, `(`, `)` и пробелы
+- `s` является действительным выражением; деление на ноль никогда не происходит.
+- Промежуточные результаты укладываются в подписанное целое число 32-bit

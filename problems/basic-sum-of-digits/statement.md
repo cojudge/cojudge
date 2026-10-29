@@ -1,4 +1,4 @@
-Return the sum of the decimal digits of `n`. For example, `123` gives `1+2+3 = 6`.
+Возвратить сумму десятичных цифр `n`. Например, `123` дает `1+2+3 = 6`.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= n <= 10^9``

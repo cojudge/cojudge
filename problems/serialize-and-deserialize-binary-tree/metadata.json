@@ -1,6 +1,6 @@
 {
   "id": "serialize-and-deserialize-binary-tree",
-  "title": "72. Serialize and Deserialize Binary Tree",
+  "title": "72. Сериализация и десериализация бинарного дерева",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "root = [1,2,3,null,null,4,5]",
       "output": "[1,2,3,null,null,4,5]",
-      "explanation": "The tree is serialized and then deserialized back to the original tree."
+      "explanation": "Дерево сериализуется, а затем десерализуется обратно к первоначальному дереву."
     },
     {
       "input": "root = []",
       "output": "[]",
-      "explanation": "An empty tree serializes to an empty string and deserializes back to null."
+      "explanation": "Пустое дерево сериализуется до пустой струны и десериализируется обратно до нуля."
     }
   ],
   "classProblem": {
@@ -56,9 +56,9 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "You can use level-order (BFS) traversal for serialization, similar to LeetCode's format.",
-    "For deserialization, use two pointers or a queue to build nodes in level order.",
-    "Alternatively, use preorder traversal with a sentinel marker for null nodes.",
-    "A string like '1,2,#,#,3,4,#,#,5,#,#' using preorder with '#' for null can work well."
+    "Для сериализации можно использовать переход уровня (BFS), аналогичный формату LeetCode.",
+    "Для десериализации используйте два указателя или очередь для построения узлов в порядке уровня.",
+    "Альтернативно, используйте предзаказное прохождение с маркером сторожа для нулевых узлов.",
+    "Такие строки, как '1, 2, #, #, 3, 4, #, #, 5, #, #' с помощью предзаказа с '#' для нуля, могут хорошо работать."
   ]
 }

@@ -1,7 +1,7 @@
-Decide whether a string represents a valid decimal number. A valid value may include leading and trailing blanks, an optional `+`/`-` sign, digits with at most one decimal point, and an optional exponent part.
+Решите, представляет ли строка действительное десятичное число. Валидное значение может включать в себя ведущие и пропущенные бланки, необязательный знак `+`/`-`, цифры с не более одной десятичной точкой и необязательную экспонентную часть.
 
-The exponent, when present, starts with `e` or `E`, optionally followed by a sign, and must end with at least one digit. The base before the exponent must contain at least one digit, either before or after the point. Blanks are allowed only at the very start or end.
+Экспонент, когда он присутствует, начинается с `e` или `E`, за которым необязательно следует знак, и должен заканчиваться по меньшей мере одной цифрой. Основа перед экспонентой должна содержать по меньшей мере одну цифру, либо до, либо после точки. Зазоры допускаются только в самом начале или конце.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 20`
-- `s` consists of digits, signs, points, exponents, and spaces.
+- `s` состоит из цифр, знаков, точек, экспонентов и пространств.

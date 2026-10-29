@@ -1,6 +1,6 @@
 {
   "id": "rabbits-in-forest",
-  "title": "780. Rabbits in Forest",
+  "title": "780. Кролики в лесу",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/rabbits-in-forest/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "answers = [1,1,2]",
       "output": "5",
-      "explanation": "A pair plus a trio gives five rabbits."
+      "explanation": "Пара плюс трио дают пять кроликов."
     },
     {
       "input": "answers = [10,10,10]",
       "output": "11",
-      "explanation": "Three speakers fit inside one group of eleven."
+      "explanation": "Три динамика помещаются внутри одной группы из одиннадцати."
     },
     {
       "input": "answers = [0,0,1,1,1]",
       "output": "6",
-      "explanation": "Two lone rabbits plus two pairs (one with a silent partner) total six."
+      "explanation": "Два одиноких кролика плюс две пары (одна с молчаливым партнером) всего шесть."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Rabbits giving the same answer a can share groups of size a+1; count how many speakers gave each answer.",
-    "For each distinct answer, the number of groups needed is the ceiling of count/(a+1).",
-    "Multiply groups by group size and sum across all distinct answers."
+    "Кролики, дающие один и тот же ответ, могут делиться группами размера a+1; посчитайте, сколько ораторов дали каждый ответ.",
+    "Для каждого отдельного ответа необходимо количество групп (a + 1).",
+    "Умножьте группы по размеру группы и сумме по всем различным ответам."
   ]
 }

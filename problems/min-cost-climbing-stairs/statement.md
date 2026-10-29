@@ -1,7 +1,7 @@
-An array `cost` is given, where `cost[i]` represents the fee charged for standing on step `i`; once that fee is settled you may advance upward by one step or by two steps.
+Предоставляется массив `cost`, где `cost[i]` представляет собой плату, взимаемую за стояние на шаге `i`; после того, как эта плата будет урегулирована, вы можете продвинуться вверх на один шаг или на два шага.
 
-Climbing may begin at step `0` or at step `1` without paying for any earlier step. Compute the smallest total fee that reaches the summit, where the summit sits one position past the final index.
+Восхождение может начаться на шаге `0` или на шаге `1` без оплаты какого-либо предыдущего шага. Вычислите наименьшую общую плату, которая достигает вершины, где вершина занимает одну позицию после окончательного индекса.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= cost.length <= 1000`
 - `0 <= cost[i] <= 999`

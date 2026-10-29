@@ -1,8 +1,8 @@
-Given an array of positive integers `candidates` and a positive integer `target`, return all unique combinations whose values sum to `target`.
+Учитывая множество положительных целых чисел `candidates` и положительное целое число `target`, возвращайте все уникальные комбинации, значения которых суммируются в `target`.
 
-Each input element may be used at most once. The input may contain duplicate values, but the output must not contain duplicate combinations. The judge canonicalizes each combination and the outer result, so values and combinations may be returned in any order.
+Каждый входной элемент может использоваться не более одного раза. Вход может содержать дублирующие значения, но выход не должен содержать дублирующие комбинации. Судья канонизирует каждую комбинацию и внешний результат, поэтому значения и комбинации могут быть возвращены в любом порядке.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= candidates.length <= 100`
 - `1 <= candidates[i] <= 50`

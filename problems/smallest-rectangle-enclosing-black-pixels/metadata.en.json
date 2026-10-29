@@ -1,0 +1,72 @@
+{
+  "id": "smallest-rectangle-enclosing-black-pixels",
+  "title": "395. Smallest Rectangle Enclosing Black Pixels",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/smallest-rectangle-enclosing-black-pixels/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "image = [[\"0\",\"0\",\"1\",\"0\"],[\"0\",\"1\",\"1\",\"0\"],[\"0\",\"1\",\"0\",\"0\"]], x = 0, y = 2",
+      "output": "6",
+      "explanation": "Rows 0..2 and columns 1..2 enclose every black pixel."
+    },
+    {
+      "input": "image = [[\"1\"]], x = 0, y = 0",
+      "output": "1",
+      "explanation": "One pixel covers area 1."
+    },
+    {
+      "input": "image = [[\"1\",\"1\"],[\"1\",\"1\"]], x = 1, y = 1",
+      "output": "4",
+      "explanation": "The full 2 x 2 frame is black."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minArea(char[][] image, int x, int y) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minArea(self, image: List[List[str]], x: int, y: int) -> int:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int minArea(vector<vector<char>>& image, int x, int y) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MinArea(char[][] image, int x, int y)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_area(image: String, x: i32, y: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinArea(image [][]byte, x int, y int) int {\n    return 0\n}",
+    "typescript": "export function minArea(image: string[][], x: number, y: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string[][] $image\n     * @param int $x\n     * @param int $y\n     * @return int\n     */\n    public function minArea($image, $x, $y) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "image": "[[\"0\",\"0\",\"1\",\"0\"],[\"0\",\"1\",\"1\",\"0\"],[\"0\",\"1\",\"0\",\"0\"]]",
+      "x": 0,
+      "y": 2
+    },
+    {
+      "image": "[[\"1\"]]",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "image": "[[\"1\",\"1\"],[\"1\",\"1\"]]",
+      "x": 1,
+      "y": 1
+    }
+  ],
+  "functionName": "minArea",
+  "params": [
+    {
+      "name": "image",
+      "type": "char_array_2d"
+    },
+    {
+      "name": "x",
+      "type": "int"
+    },
+    {
+      "name": "y",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The answer is (lowest black row .. highest) times (leftmost .. rightmost black column).",
+    "One linear scan of the picture suffices to find those four extremes.",
+    "The given (x, y) only guarantees a black pixel exists; the bounds still come from the whole picture."
+  ]
+}

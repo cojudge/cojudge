@@ -1,11 +1,11 @@
-You are given a changeable array `nums` plus a script of operations to replay in order.
-Each operation is either `"sumRange"` with values `[left, right]`, asking for the sum of
-`nums[left] + ... + nums[right]`, or `"update"` with values `[index, value]`, assigning
-`nums[index] = value`. Return the answers of the `"sumRange"` operations in order.
-(This is the function-style view of the classic mutable-array design task usually solved
-with a segment tree or binary indexed tree.)
+Вам предоставляется изменяемый массив `nums` плюс скрипт операций для воспроизведения в порядке.
+Каждая операция представляет собой либо `"sumRange"` со значениями `[left, right]`, запрашивая сумму
+`nums[left] + ... + nums[right]`, или `"update"` со значениями `[index, value]`, присваивая
+`nums[index] = value`. Верните ответы на операции `"sumRange"` в порядке.
+(Это вид функционального стиля классической задачи проектирования мутабельных решеток, обычно решаемой)
+Дерево сегмента или двоичное индексированное дерево.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 3 * 10^4`
 - `-100 <= nums[i], value <= 100`
-- Indices in every operation are valid; at least one `"sumRange"` appears.
+- Индексы в каждой операции действительны; появляется по крайней мере один `"sumRange"`.

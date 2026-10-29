@@ -1,0 +1,79 @@
+{
+  "id": "reaching-points",
+  "title": "779. Reaching Points",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/reaching-points/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "sx = 1, sy = 1, tx = 3, ty = 5",
+      "output": "true",
+      "explanation": "A forward chain such as (1,1) -> (1,2) -> (3,2) -> (3,5) reaches the goal."
+    },
+    {
+      "input": "sx = 1, sy = 1, tx = 2, ty = 2",
+      "output": "false",
+      "explanation": "No sequence of allowed jumps produces (2,2) from (1,1)."
+    },
+    {
+      "input": "sx = 1, sy = 1, tx = 1, ty = 1",
+      "output": "true",
+      "explanation": "Start equals target, so no move is needed."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean reachingPoints(int sx, int sy, int tx, int ty) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def reachingPoints(self, sx: int, sy: int, tx: int, ty: int) -> bool:\n        return False\n",
+    "cpp": "class Solution {\npublic:\n    bool reachingPoints(int sx, int sy, int tx, int ty) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool ReachingPoints(int sx, int sy, int tx, int ty)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reaching_points(sx: i32, sy: i32, tx: i32, ty: i32) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc ReachingPoints(sx int, sy int, tx int, ty int) bool {\n    return false\n}",
+    "typescript": "export function reachingPoints(sx: number, sy: number, tx: number, ty: number): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $sx\n     * @param int $sy\n     * @param int $tx\n     * @param int $ty\n     * @return bool\n     */\n    public function reachingPoints($sx, $sy, $tx, $ty) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "sx": 1,
+      "sy": 1,
+      "tx": 3,
+      "ty": 5
+    },
+    {
+      "sx": 1,
+      "sy": 1,
+      "tx": 2,
+      "ty": 2
+    },
+    {
+      "sx": 1,
+      "sy": 1,
+      "tx": 1,
+      "ty": 1
+    }
+  ],
+  "functionName": "reachingPoints",
+  "params": [
+    {
+      "name": "sx",
+      "type": "int"
+    },
+    {
+      "name": "sy",
+      "type": "int"
+    },
+    {
+      "name": "tx",
+      "type": "int"
+    },
+    {
+      "name": "ty",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Work backwards from the target: the larger coordinate must have come from subtracting the smaller one.",
+    "When one coordinate already matches the start, check divisibility: the gap on the other axis must be a multiple of the fixed coordinate.",
+    "Use remainders instead of single subtractions so huge coordinates shrink in logarithmic steps."
+  ]
+}

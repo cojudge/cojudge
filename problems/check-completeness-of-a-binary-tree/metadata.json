@@ -1,6 +1,6 @@
 {
   "id": "check-completeness-of-a-binary-tree",
-  "title": "944. Check Completeness of a Binary Tree",
+  "title": "944. Проверьте полноту двоичного дерева",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/check-completeness-of-a-binary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,2,3,4,5,6]",
       "output": "true",
-      "explanation": "Every level is full, so the tree satisfies the completeness rule."
+      "explanation": "Каждый уровень полон, поэтому дерево удовлетворяет правилу полноты."
     },
     {
       "input": "root = [1,2,3,4,5,null,7]",
       "output": "false",
-      "explanation": "Node 3 is missing its left child yet has a right child 7, which breaks left-alignment."
+      "explanation": "Узел 3 не хватает своего левого потомка, но у него есть правый потомок 7, который нарушает левое выравнивание."
     },
     {
       "input": "root = [1,null,2]",
       "output": "false",
-      "explanation": "The root lacks a left child while holding a right child, so the tree is incomplete."
+      "explanation": "Корень не имеет левого потомка, держа правого потомка, поэтому дерево неполное."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Walk the tree level by level, enqueueing empty child slots as well as real nodes.",
-    "Once the first empty slot appears, any later real node disqualifies the tree.",
-    "An empty tree counts as complete."
+    "Прогуляйтесь по дереву по уровню, оставляя пустые детские слоты, а также настоящие узлы.",
+    "Как только появляется первый пустой слот, любой более поздний реальный узел дисквалифицирует дерево.",
+    "Пустое дерево считается полным."
   ]
 }

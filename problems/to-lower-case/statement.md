@@ -1,7 +1,7 @@
-Convert every uppercase English letter in `s` to its lowercase form and return the result.
+Преобразуйте каждую строчную английскую букву в `s` в нижнюю форму и верните результат.
 
-Only characters from `A` to `Z` change. Lowercase letters, digits, spaces, punctuation and any other symbols stay exactly as they are. The transformation is done character by character from left to right.
+Меняются только символы от `A` до `Z`. Нижние буквы, цифры, пробелы, пунктуация и любые другие символы остаются именно такими, какие они есть. Трансформация осуществляется персонажем по характеру слева направо.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 100`
-- `s` consists of printable ASCII characters.
+- `s` состоит из печатаемых символов ASCII.

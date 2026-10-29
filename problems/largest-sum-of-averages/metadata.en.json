@@ -1,0 +1,65 @@
+{
+  "id": "largest-sum-of-averages",
+  "title": "811. Largest Sum of Averages",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/largest-sum-of-averages/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "nums = [9,1,2,3,9], k = 3",
+      "output": "\"20.0\"",
+      "explanation": "Split as [9],[1,2,3],[9] with averages 9, 2 and 9 summing to 20."
+    },
+    {
+      "input": "nums = [1,2,3,4,5,6,7], k = 4",
+      "output": "\"20.5\"",
+      "explanation": "An optimal cut places larger values in their own groups to lift the total."
+    },
+    {
+      "input": "nums = [5], k = 1",
+      "output": "\"5.0\"",
+      "explanation": "A single group averages to its only element."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String largestSumOfAverages(int[] nums, int k) {\n        return \"0.0\";\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def largestSumOfAverages(self, nums: List[int], k: int) -> str:\n        return \"0.0\"\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    string largestSumOfAverages(vector<int>& nums, int k) {\n        return \"0.0\";\n    }\n};",
+    "csharp": "public class Solution\n{\n    public string LargestSumOfAverages(int[] nums, int k)\n    {\n        return \"0.0\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn largest_sum_of_averages(nums: Vec<i32>, k: i32) -> String {\n        \"0.0\".to_string()\n    }\n}",
+    "go": "package main\n\nfunc LargestSumOfAverages(nums []int, k int) string {\n    return \"0.0\"\n}",
+    "typescript": "export function largestSumOfAverages(nums: number[], k: number): string {\n    return \"0.0\";\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $k\n     * @return string\n     */\n    public function largestSumOfAverages($nums, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[9,1,2,3,9]",
+      "k": 3
+    },
+    {
+      "nums": "[1,2,3,4,5,6,7]",
+      "k": 4
+    },
+    {
+      "nums": "[5]",
+      "k": 1
+    }
+  ],
+  "functionName": "largestSumOfAverages",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "This is a portable adaptation: return the score as a finite, double-parseable decimal string.",
+    "Precompute prefix sums so the average of any interval is O(1), then DP over prefixes and group counts.",
+    "Let dp[i][g] be the best total for the first i numbers in g groups; extend it by trying every start of the last group."
+  ]
+}

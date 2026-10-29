@@ -1,6 +1,6 @@
 {
   "id": "number-of-provinces",
-  "title": "604. Number of Provinces",
+  "title": "604. Количество провинций",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/number-of-provinces/",
   "category": "graph",
@@ -8,12 +8,12 @@
     {
       "input": "isConnected = [[1,1,0],[1,1,0],[0,0,1]]",
       "output": "2",
-      "explanation": "One pair plus one singleton."
+      "explanation": "Одна пара плюс один синглон."
     },
     {
       "input": "isConnected = [[1,0,0],[0,1,0],[0,0,1]]",
       "output": "3",
-      "explanation": "Three isolated cities."
+      "explanation": "Три изолированных города."
     },
     {
       "input": "isConnected = [[1,1,1],[1,1,1],[1,1,1]]",
@@ -50,8 +50,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Treat the table as an adjacency matrix and run depth-first search from each unvisited city.",
-    "Each fresh search discovers one whole province; count how many searches start.",
-    "A union-find structure merging linked pairs is an equivalent alternative."
+    "Относитесь к таблице как к матрице смежности и выполняйте поиск по глубине из каждого непосещенного города.",
+    "Каждый новый поиск обнаруживает одну целую провинцию; подсчитайте, сколько поисков начинается.",
+    "Структура, объединяющая связанные пары, является эквивалентной альтернативой."
   ]
 }

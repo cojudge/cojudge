@@ -1,6 +1,6 @@
 {
   "id": "remove-nth-node-from-end-of-list",
-  "title": "44. Remove Nth Node From End Of List",
+  "title": "44. Удаление N-го узла из конца списка",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "head = [1,2,3,4,5], n = 2",
       "output": "[1,2,3,5]",
-      "explanation": "The 2nd node from the end of [1,2,3,4,5] is 4, so removing it yields [1,2,3,5]."
+      "explanation": "2-й узел от конца [1,2,3,4,5] 4Удаляя его, вы получаете [1,2,3,5]."
     },
     {
       "input": "head = [1], n = 1",
       "output": "[]",
-      "explanation": "The 1st node from the end of [1] is the only node, so removing it yields []."
+      "explanation": "1-й узел от конца [1] является единственным узлом, поэтому удаление его дает []."
     },
     {
       "input": "head = [1,2], n = 1",
       "output": "[1]",
-      "explanation": "The 1st node from the end of [1,2] is 2, so removing it yields [1]."
+      "explanation": "1-й узел от конца [1, 2] — 2, поэтому удаление его дает [1]."
     }
   ],
   "starterCode": {
@@ -62,6 +62,6 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Given the head of a linked list, remove the nth node from the end of the list and return its head."
+    "Учитывая заголовок связанного списка, удалите n-й узел из конца списка и верните его голову."
   ]
 }

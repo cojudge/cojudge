@@ -1,7 +1,7 @@
-From the array `nums`, consider its distinct values sorted from largest to smallest. Return the third one. When fewer than three distinct values exist, return the largest value instead.
+Из массива `nums` рассмотрим его отдельные значения, отсортированные от наибольшего к наименьшему. Возвращаем третье. Когда существует менее трех различных значений, возвращаем наибольшее значение.
 
-Duplicates are collapsed first: `[2,2,3,1]` behaves like `[3,2,1]`.
+Дубликаты сначала разрушаются: `[2,2,3,1]` ведет себя как `[3,2,1]`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^4`
 - `-2^31 <= nums[i] <= 2^31 - 1`

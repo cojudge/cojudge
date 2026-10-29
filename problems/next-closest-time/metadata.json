@@ -1,6 +1,6 @@
 {
   "id": "next-closest-time",
-  "title": "698. Next Closest Time",
+  "title": "698. Следующий Closest Time",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/next-closest-time/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "time = \"19:34\"",
       "output": "\"19:39\"",
-      "explanation": "39 is the next minute whose digits both appear in 19:34."
+      "explanation": "39 - это следующая минута, цифры которой появляются в 19: 34."
     },
     {
       "input": "time = \"23:59\"",
       "output": "\"22:22\"",
-      "explanation": "Wrapping past midnight, 22:22 is the earliest reachable time."
+      "explanation": "22: 22 - самое раннее доступное время."
     },
     {
       "input": "time = \"00:00\"",
       "output": "\"00:00\"",
-      "explanation": "Only digit 0 is available, so the next valid time is the same."
+      "explanation": "Доступна только цифра 0, поэтому следующий действительный раз тот же."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Collect the distinct digits appearing in the input.",
-    "Step forward minute by minute (wrapping after 23:59) and test whether every digit of the candidate belongs to the set.",
-    "At most 24*60 steps are needed."
+    "Соберите различные цифры, появляющиеся во входе.",
+    "Шаг вперед минута за минутой (заворачиваясь после 23: 59) и проверьте, принадлежит ли каждая цифра кандидата набору.",
+    "В большинстве случаев необходимо выполнить шаги 24*60."
   ]
 }

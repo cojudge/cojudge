@@ -1,6 +1,6 @@
 {
   "id": "largest-palindrome-product",
-  "title": "543. Largest Palindrome Product",
+  "title": "543. Крупнейший палиндромный продукт",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/largest-palindrome-product/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "n = 2",
       "output": "987",
-      "explanation": "9009 = 99x91 is the largest palindrome product; 9009 % 1337 = 987."
+      "explanation": "9009 = 99x91 является крупнейшим продуктом палиндрома; 9009 % 1337 = 987."
     },
     {
       "input": "n = 1",
       "output": "9",
-      "explanation": "9 is the largest palindromic single-digit product."
+      "explanation": "9 является крупнейшим палиндромным однозначным продуктом."
     },
     {
       "input": "n = 3",
       "output": "123",
-      "explanation": "906609 = 993x913 is the largest palindrome product; 906609 % 1337 = 123."
+      "explanation": "906609 = 993x913 является крупнейшим продуктом палиндрома; 906609 % 1337 = 123."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Only even-length palindromes need checking for n > 1; build them from the top half downward.",
-    "For each candidate, test divisors from the top down and stop once divisor squared drops below it.",
-    "The n = 8 palindrome exceeds 53-bit precision, so reduce modulo 1337 without forming the full product in float."
+    "Только палиндромы четной длины нуждаются в проверке на n > 1; создайте их из верхней половины вниз.",
+    "Для каждого кандидата проверьте делители сверху вниз и остановитесь, как только делитель в квадрате упадет ниже него.",
+    "Палиндром n = 8 превосходит точность 53-бита, поэтому уменьшайте модуль 1337 без формирования полного продукта в поплавке."
   ]
 }

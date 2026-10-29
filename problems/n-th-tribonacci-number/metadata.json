@@ -1,6 +1,6 @@
 {
   "id": "n-th-tribonacci-number",
-  "title": "227. N-th Tribonacci Number",
+  "title": "227. N-е число трибоначчи",
   "difficulty": "Easy",
   "category": "dp-1d",
   "link": "https://leetcode.com/problems/n-th-tribonacci-number/",
@@ -52,6 +52,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Iterate from the base cases T(0)=0, T(1)=1, T(2)=1, keeping only the last three values: T(n) = T(n-1) + T(n-2) + T(n-3)."
+    "Итерировать из базовых случаев T(0)=0, T(1)=1, T(2)=1, сохраняя только последние три значения: T(n) = T(n-1) + T(n-2) + T(n-3)."
   ]
 }

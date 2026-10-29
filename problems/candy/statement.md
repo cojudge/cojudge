@@ -1,15 +1,15 @@
-`n` youngsters form a single queue.
+Молодежь `n` формирует единую очередь.
 
-An integer array `ratings` assigns each youngster a score.
+Целый массив `ratings` присваивает каждому ребенку оценку.
 
-Sweets are handed out under both of these stipulations:
+Сладости раздаются в соответствии с обоими этими положениями:
 
-- Every youngster collects at least one sweet.
-- Whenever one youngster's score exceeds an immediate neighbour's score, the higher-scored youngster collects strictly more sweets than that neighbour.
+- Каждый ребенок собирает по крайней мере один сладкий.
+- Всякий раз, когда оценка одного ребенка превышает оценку ближайшего соседа, более высокий ребенок собирает строго больше сладостей, чем этот сосед.
 
-Report the least total quantity of sweets sufficient to satisfy the whole queue.
+Сообщите о наименьшем общем количестве сладостей, достаточном для удовлетворения всей очереди.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= n == ratings.length <= 5 * 10^4`
 - `0 <= ratings[i] <= 5 * 10^4`

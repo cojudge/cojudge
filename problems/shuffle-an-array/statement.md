@@ -1,8 +1,8 @@
-Return a rearrangement of the input array through one portable function.
+Возвратить перестановку входного массива через одну портативную функцию.
 
-This is a deterministic, function-style adaptation of the classic shuffle design: implement `shuffleArray(nums)`, which returns an array holding exactly the same multiset of values as `nums` but in a shuffled order. The classic task additionally requires every permutation to be equally likely (usually via Fisher-Yates) across repeated calls; this portable version calls the function once per test and accepts any permutation, so fairness across calls is not verified. Even returning the input unchanged is accepted as long as the multiset matches — aim for a uniform shuffle anyway.
+Это детерминированная, функциональная адаптация классического дизайна перетасовки: реализуйте `shuffleArray(nums)`, который возвращает массив, содержащий точно такой же набор значений, как `nums`, но в перетасованном порядке. Классическая задача дополнительно требует, чтобы каждая перестановка была одинаково вероятной (обычно через Фишера-Ятеса) при повторных вызовах; эта портативная версия вызывает функцию один раз за тест и принимает любую перестановку, поэтому справедливость между вызовами не проверяется. Даже возвращение ввода без изменений принимается до тех пор, пока мультисет соответствует - цель для равномерной перетасовки в любом случае.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 50`
 - `-10^6 <= nums[i] <= 10^6`
-- All values of `nums` are unique.
+- Все значения `nums` уникальны.

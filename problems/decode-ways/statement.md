@@ -1,4 +1,4 @@
-A message containing letters from A-Z can be encoded into numbers using the following mapping:
+Сообщение, содержащее буквы от A-Z, может быть закодировано в числа, используя следующее отображение:
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 100`

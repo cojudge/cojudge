@@ -1,9 +1,9 @@
-The *gap* between two integers is the number of bit slots where their binary forms differ. Given an array `nums`, add up that gap over every unordered pair of positions.
+*gap* между двумя целыми числами - это количество битовых слотов, где их двоичные формы различаются. Учитывая массив `nums`, сложите этот разрыв по каждой неупорядоченной паре позиций.
 
-Return the total sum.
+Верните общую сумму.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= nums.length <= 10^4`
 - `0 <= nums[i] <= 10^9`
-- The total fits in a signed 32-bit integer.
+- Суммарное значение вписывается в подписанное 32-битовое целое число.

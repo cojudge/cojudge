@@ -1,9 +1,9 @@
-A calculator starts by showing `startValue`. It has only two buttons: doubling
-the displayed number, and subtracting one from it. Each button press counts as
-one operation.
+Калькулятор начинается с показа `startValue`. Он имеет только две кнопки: удвоение.
+Отображаемый номер и вычитание из него. Каждое нажатие кнопки считается как
+Одна операция.
 
-Given `startValue` and `target`, return the smallest number of operations that
-reaches exactly `target` from `startValue`.
+Учитывая `startValue` и `target`, возвращайте наименьшее количество операций.
+`target` от `startValue`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= startValue, target <= 10^9`

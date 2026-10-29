@@ -1,6 +1,6 @@
 {
   "id": "majority-element-ii",
-  "title": "162. Majority Element II",
+  "title": "162. Элемент II большинства",
   "difficulty": "Medium",
   "category": "array",
   "link": "https://leetcode.com/problems/majority-element-ii/",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [3,2,3]",
       "output": "[3]",
-      "explanation": "3 appears twice, which is more than 3/3 = 1."
+      "explanation": "3 появляется дважды, что больше, чем 3/3 = 1."
     },
     {
       "input": "nums = [1]",
       "output": "[1]",
-      "explanation": "A single element trivially appears more than 1/3 times."
+      "explanation": "Один элемент тривиально появляется больше, чем 1/3 раз."
     },
     {
       "input": "nums = [1,2]",
       "output": "[1,2]",
-      "explanation": "Both 1 and 2 appear once, which is more than 2/3."
+      "explanation": "1 и 2 появляются один раз, что больше, чем 2 / 3."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "At most two elements can appear more than n/3 times.",
-    "Extended Boyer-Moore with two candidates and counts finds them in O(n) time and O(1) space, followed by a verification pass."
+    "В большинстве случаев два элемента могут появляться более n/3 раз.",
+    "Расширенный Бойер-Мур с двумя кандидатами и счетчиками находит их во времени O(n) и пространстве O(1), за которым следует проверочный пропуск."
   ]
 }

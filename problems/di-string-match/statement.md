@@ -1,7 +1,7 @@
-Rebuild a permutation from its up/down pattern.
+Восстановите перестановку из ее восходящей / нисходящей модели.
 
-You are given a pattern string `s` whose characters are `I` (the next number goes up) and `D` (the next number goes down). Build any ordering `perm` of the integers `0` through `n` (where `n` is the pattern length) such that each neighbouring pair obeys the pattern: `perm[i] < perm[i+1]` wherever `s[i]` is `I`, and `perm[i] > perm[i+1]` wherever it is `D`. Many orderings may qualify; return any one of them.
+Вам дается строка шаблона `s`, символами которой являются `I` (следующее число идет вверх) и `D` (следующее число идет вниз). Постройте любой заказ `perm` целых чисел `0` через `n` (где `n` является длиной шаблона) так, чтобы каждая соседняя пара подчинялась шаблону: `perm[i] < perm[i+1]`, где `s[i]` является `I`, и `perm[i] > perm[i+1]`, где это `D`. Многие заказы могут квалифицироваться; верните любой из них.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 10^5`
-- Each character of `s` is `I` or `D`.
+- Каждый символ `s` - это `I` или `D`.

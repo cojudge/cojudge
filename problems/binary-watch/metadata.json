@@ -3,26 +3,26 @@
   "difficulty": "Easy",
   "examples": [
     {
-      "explanation": "One lit lamp sets either one minute bit or one hour bit.",
+      "explanation": "Одна освещенная лампа устанавливает один бит в минуту или один час.",
       "input": "turnedOn = 1",
       "output": "[\"0:01\",\"0:02\",\"0:04\",\"0:08\",\"0:16\",\"0:32\",\"1:00\",\"2:00\",\"4:00\",\"8:00\"]"
     },
     {
-      "explanation": "At most 8 lamps can ever be lit, so 9 has no reading.",
+      "explanation": "В большинстве случаев лампы 8 могут быть зажжены, поэтому 9 не имеет считывания.",
       "input": "turnedOn = 9",
       "output": "[]"
     },
     {
-      "explanation": "With nothing lit the watch reads 0:00.",
+      "explanation": "Часы с надписью 0: 00.",
       "input": "turnedOn = 0",
       "output": "[\"0:00\"]"
     }
   ],
   "functionName": "readBinaryWatch",
   "hints": [
-    "Try every hour 0..11 and minute 0..59 and count set bits.",
-    "A pair fits when the two popcounts add up to turnedOn.",
-    "Format minutes with two digits via %02d-style padding."
+    "Попробуйте каждый час 0..11 и минуту 0..59 и посчитайте биты.",
+    "Пара подходит, когда два поп-счета складываются в TurnOn.",
+    "Формат минут с двумя цифрами через прокладку в стиле %02d."
   ],
   "id": "binary-watch",
   "link": "https://leetcode.com/problems/binary-watch/",
@@ -54,5 +54,5 @@
       "turnedOn": 0
     }
   ],
-  "title": "475. Binary Watch"
+  "title": "475. Binary Watch смотреть"
 }

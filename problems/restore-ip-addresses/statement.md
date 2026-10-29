@@ -1,9 +1,9 @@
-Given a string containing only digits, insert three dots to split it into four decimal parts that together form a valid IPv4 address. Each part must be between `0` and `255` inclusive, must use only its own digits, and must not carry a leading zero unless the part is exactly `"0"`.
+Учитывая строку, содержащую только цифры, вставьте три точки, чтобы разделить ее на четыре десятичных части, которые вместе образуют действительный адрес IPv4. Каждая часть должна быть между `0` и `255` включительно, должна использовать только свои собственные цифры и не должна нести ведущий ноль, если часть не является точно `"0"`.
 
-Return every distinct address that uses all the input characters exactly once. The order of the results does not matter.
+Возвращайте каждый отдельный адрес, который использует все входные символы ровно один раз. Порядок результатов не имеет значения.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 20`
-- `s` consists of digits only.
+- `s` состоит только из цифр.
 
-> **Adaptation note:** the original LeetCode return type is `List<String>`; this problem uses the portable `string_list` output type with identical contents.
+**Примечание: ** Оригинальный тип возврата LeetCode - `List<String>`; эта проблема использует портативный тип вывода `string_list` с идентичным содержимым.

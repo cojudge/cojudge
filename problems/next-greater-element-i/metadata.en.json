@@ -1,0 +1,60 @@
+{
+  "id": "next-greater-element-i",
+  "title": "559. Next Greater Element I",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/next-greater-element-i/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "nums1 = [4,1,2], nums2 = [1,3,4,2]",
+      "output": "[-1,3,-1]",
+      "explanation": "4 has nothing larger to its right; 1 sees 3 next; 2 is last."
+    },
+    {
+      "input": "nums1 = [2,4], nums2 = [1,2,3,4]",
+      "output": "[3,-1]",
+      "explanation": "2 is followed by 3; 4 has no larger successor."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] nextGreaterElement(int[] nums1, int[] nums2) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] NextGreaterElement(int[] nums1, int[] nums2) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn next_greater_element(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc NextGreaterElement(nums1 []int, nums2 []int) []int {\n    \n}",
+    "typescript": "export function nextGreaterElement(nums1: number[], nums2: number[]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums1\n     * @param int[] $nums2\n     * @return int[]\n     */\n    public function nextGreaterElement($nums1, $nums2) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums1": "[4,1,2]",
+      "nums2": "[1,3,4,2]"
+    },
+    {
+      "nums1": "[2,4]",
+      "nums2": "[1,2,3,4]"
+    },
+    {
+      "nums1": "[1]",
+      "nums2": "[1]"
+    }
+  ],
+  "functionName": "nextGreaterElement",
+  "params": [
+    {
+      "name": "nums1",
+      "type": "int_array"
+    },
+    {
+      "name": "nums2",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Precompute next-greater for all of nums2 in one pass with a decreasing monotonic stack.",
+    "Store the computed mapping in a hash table, then answer each nums1 query in O(1).",
+    "Elements left on the stack at the end map to -1."
+  ]
+}

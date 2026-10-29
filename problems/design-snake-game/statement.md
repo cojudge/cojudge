@@ -1,28 +1,28 @@
-A snake moves on a `height x width` board, starting as a single cell at the
-top-left corner `(0, 0)`. A list of food cells is given in the order they
-appear: there is always at most one food cell on the board, and the next one
-shows up only after the current one is eaten.
+Змея перемещается на доске `height x width`, начиная как одна клетка.
+верхний левый угол `(0, 0)`. Перечень пищевых клеток приведен в том порядке, в котором они
+появляются: на доске всегда находится максимум одна пищевая клетка, а следующая
+Он появляется только после того, как его съели.
 
-For each step you receive one direction: `U` (up), `D` (down), `L` (left) or
-`R` (right). The snake advances its head one cell that way:
+Для каждого шага вы получаете одно направление: `U` (вверх), `D` (вниз), `L` (слева) или
+`R` Змея продвигает голову одной клеткой таким образом:
 
-- When the new head leaves the board, the game ends.
-- When the new head hits the snake's own body (excluding the tail cell that is
-  vacated in the same step, unless the step eats food and the tail stays), the
-  game ends.
-- When the new head reaches the current food cell, the snake grows by one (the
-  tail does not move) and the score increases by one.
-- Otherwise the head advances and the tail vacates its cell; the score is
-  unchanged.
+- Когда новый глава покидает доску, игра заканчивается.
+- Когда новая голова попадает в собственное тело змеи (исключая хвостовую клетку).
+  Если на этом же шаге не съедает пищу, а хвост остается,
+  Игра заканчивается.
+- Когда новая голова достигает текущей пищевой клетки, змея растет на одну.
+  Хвост не двигается) и счет увеличивается на единицу.
+- В противном случае голова продвигается, а хвост освобождает свою ячейку;
+  без изменений.
 
-Each move reports the current score, or `-1` once the game is over (every later
-move also reports `-1`).
+Каждый ход сообщает текущий счет или `-1` после окончания игры (каждый раз позже).
+Об этом сообщает `-1`.
 
-**Adaptation note:** instead of a stateful class, implement
-`runSnakeGame(width, height, food, moves)`, which replays the move list and
-returns one score per move.
+**Примечание по адаптации: ** вместо государственного класса, осуществить
+`runSnakeGame(width, height, food, moves)`, который воспроизводит список ходов и
+возвращает один балл за ход.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= width, height <= 20`
-- `0 <= food.length <= 50`, each `food[i] = [r, c]` with `0 <= r < height`, `0 <= c < width`
-- `0 <= moves.length <= 200`, each move is one of `"U"`, `"D"`, `"L"`, `"R"`
+- `0 <= food.length <= 50`, каждый `food[i] = [r, c]` с `0 <= r < height`, `0 <= c < width`
+- `0 <= moves.length <= 200`, каждый ход является одним из `"U"`, `"D"`, `"L"`, `"R"`

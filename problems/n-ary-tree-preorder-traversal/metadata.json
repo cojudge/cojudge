@@ -1,6 +1,6 @@
 {
   "id": "n-ary-tree-preorder-traversal",
-  "title": "631. N-ary Tree Preorder Traversal",
+  "title": "631. N-ary Tree Preorder Traversal (Перенаправлено с N-ary Tree)",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/n-ary-tree-preorder-traversal/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "data = \"[1,null,3,2,4,null,5,6]\"",
       "output": "[1,3,5,6,2,4]",
-      "explanation": "Visit the root, then each child subtree left to right."
+      "explanation": "Посетить корень, затем каждое детское дерево слева направо."
     },
     {
       "input": "data = \"[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]\"",
       "output": "[1,2,6,7,11,3,8,12,4,9,13,5,10,14]",
-      "explanation": "Depth-first order follows child order at every node."
+      "explanation": "Глубина первого порядка следует за порядком потомка в каждом узле."
     },
     {
       "input": "data = \"[]\"",
       "output": "[]",
-      "explanation": "No nodes means no visits."
+      "explanation": "Никакие узлы не означают никаких посещений."
     }
   ],
   "starterCode": {
@@ -51,9 +51,9 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Rebuild the tree from the bracket string: each null-terminated group belongs to the next queued node.",
-    "Walk depth-first, emitting a node before its children.",
-    "An empty input yields an empty list.",
-    "Adaptation: the N-ary Node input is encoded as a level-order string; output maps to int_list."
+    "Восстановите дерево из струны скобки: каждая нулевая группа принадлежит следующему очерченному узлу.",
+    "Прогуляйтесь сначала по глубине, испуская узел перед своими детьми.",
+    "Пустой вход приводит к пустому списку.",
+    "Адаптация: вход N-ary Node кодируется как строка уровня; вывод карты в int_list."
   ]
 }

@@ -1,11 +1,11 @@
-You are given a permutation `nums` of the integers `0` through `n - 1`.
+Вы получаете перестановку `nums` целых чисел `0` через `n - 1`.
 
-A global inversion is a pair of positions `i < j` with `nums[i] > nums[j]`. A local inversion is an index `i` with `nums[i] > nums[i+1]` (an adjacent global inversion). Every local inversion is global, but not vice versa.
+Глобальная инверсия — это пара позиций `i < j` с `nums[i] > nums[j]`. Локальная инверсия — это индекс `i` с `nums[i] > nums[i+1]` (прилегающая глобальная инверсия). Каждая локальная инверсия является глобальной, но не наоборот.
 
-Return `true` when the two counts coincide and `false` otherwise.
+Возврат `true`, когда оба счета совпадают, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - `n == nums.length`
 - `1 <= n <= 10^5`
 - `0 <= nums[i] < n`
-- All values are distinct
+- Все ценности различны

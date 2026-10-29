@@ -1,6 +1,6 @@
 {
   "id": "sum-root-to-leaf-numbers",
-  "title": "300. Sum Root to Leaf Numbers",
+  "title": "300. Sum Root to Leaf Numbers (недоступная ссылка)",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/sum-root-to-leaf-numbers/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "root = [1,2,3]",
       "output": "25",
-      "explanation": "Paths 1->2 (12) and 1->3 (13) sum to 25."
+      "explanation": "Пути 1->2 (12) и 1->3 (13) суммируются в 25."
     },
     {
       "input": "root = [4,9,0,5,1]",
       "output": "1026",
-      "explanation": "Paths give 495 + 491 + 40 = 1026."
+      "explanation": "Пути дают 495 + 491 + 40 = 1026."
     }
   ],
   "starterCode": {
@@ -47,8 +47,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Carry the prefix value down: child prefix = parent prefix * 10 + child digit.",
-    "Add the prefix to the answer only at leaves.",
-    "Both DFS and BFS with the running number work."
+    "Несите значение префикса вниз: детский префикс = родительский префикс * 10 + детская цифра.",
+    "Добавить приставку к ответу можно только на листьях.",
+    "Работают как DFS, так и BFS с рабочим номером."
   ]
 }

@@ -1,6 +1,6 @@
-An ugly number is a positive integer whose prime factors are only 2, 3 and 5. The ordered list of ugly numbers starts 1, 2, 3, 4, 5, 6, 8, 9, 10, 12 and continues without gaps.
+Уродливое число — это положительное целое число, основными факторами которого являются только 2, 3 и 5. Упорядоченный список уродливых чисел начинается 1, 2, 3, 4, 5, 6, 8, 9, 10, 12 и продолжается без пробелов.
 
-Given `n`, return the `n`th ugly number, counting from 1.
+Учитывая `n`, верните уродливое число `n`th, считая от 1.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 1690`

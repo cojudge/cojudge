@@ -1,6 +1,6 @@
 {
   "id": "serialize-and-deserialize-n-ary-tree",
-  "title": "497. Serialize and Deserialize N-ary Tree",
+  "title": "497. Сериализация и десериализация N-арного дерева",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/serialize-and-deserialize-n-ary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "data = \"[1,null,3,2,4,null,5,6]\"",
       "output": "\"[1,null,3,2,4,null,5,6]\"",
-      "explanation": "Parsing and re-serializing preserves the grouping."
+      "explanation": "Парсинг и ресериализация сохраняют группировку."
     },
     {
       "input": "data = \"[]\"",
       "output": "\"[]\"",
-      "explanation": "The empty tree round-trips to itself."
+      "explanation": "Пустое дерево круглое к себе."
     },
     {
       "input": "data = \"[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]\"",
       "output": "\"[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]\"",
-      "explanation": "A deeper tree survives the double round-trip unchanged."
+      "explanation": "Более глубокое дерево выживает в двойном круговом движении без изменений."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Parse the bracket string by splitting on commas and treating null as a group boundary.",
-    "Rebuild with a queue: each group after a null belongs to the next queued node.",
-    "Serializing is the mirror: emit root, then each node's children group separated by null."
+    "Пропарируйте строку скобки, разделив на запятые и рассматривая нуль как групповую границу.",
+    "Восстановление с очередью: каждая группа после нуля относится к следующему очерченному узлу.",
+    "Сериализация — это зеркало: испускайте корень, затем детскую группу каждого узла разделяйте на нуль."
   ]
 }

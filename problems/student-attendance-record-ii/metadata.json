@@ -1,6 +1,6 @@
 {
   "id": "student-attendance-record-ii",
-  "title": "608. Student Attendance Record II",
+  "title": "608. Посещаемость учащихся II",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/student-attendance-record-ii/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "n = 2",
       "output": "8",
-      "explanation": "Only AA excluded."
+      "explanation": "Исключено только АА."
     },
     {
       "input": "n = 1",
       "output": "3",
-      "explanation": "All single letters qualify."
+      "explanation": "Все буквы имеют право."
     },
     {
       "input": "n = 10101",
       "output": "183236316",
-      "explanation": "Modulo result."
+      "explanation": "Результат по модулю."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Track six states: whether an A has been used (0/1) crossed with trailing L count (0/1/2).",
-    "Each day extend states with P (resets trailing L), A (if unused), or L (if fewer than two trailing).",
-    "Apply modulo 1e9+7 at every addition."
+    "Шесть состояний трека: используется ли A (0/1), пересекаемый с отслеживающим L-счетом (0/1/2).",
+    "Каждый день продлевают состояния с P (перезагрузка следов L), A (если не используется) или L (если менее двух следов).",
+    "Применяйте модуль 1e9+7 при каждом добавлении."
   ]
 }

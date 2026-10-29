@@ -1,5 +1,5 @@
-Return the greatest common divisor of `a` and `b` using Euclid's idea: `gcd(a, 0) = a`, otherwise `gcd(a, b) = gcd(b, a % b)`. Inputs are not both zero.
+Возвращайте наибольший общий делитель `a` и `b`, используя идею Евклида: `gcd(a, 0) = a`, иначе `gcd(a, b) = gcd(b, a % b)`.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= a, b <= 10^9``
-- ``a` and `b` are not both 0`
+- `a` и `b` не являются одновременно 0.

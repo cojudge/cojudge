@@ -1,11 +1,11 @@
-You are given a list `nums` with `n` entries. Every value lies between `1` and `n`. Each number shows up once or twice; some values show up twice and the rest show up once.
+Вам предоставляется список `nums` с записями `n`. Каждое значение находится между `1` и `n`. Каждое число отображается один или два раза; некоторые значения отображаются два раза, а остальные отображаются один раз.
 
-Collect every value that shows up twice and return them.
+Соберите каждое значение, которое появляется дважды, и верните его.
 
-The order of the returned values does not matter.
+Порядок возврата ценностей не имеет значения.
 
-> **Adaptation note:** the original LeetCode return type is `List<Integer>`; this problem uses the portable `int_list` output type with the same values.
+**Примечание: ** Оригинальный тип возврата LeetCode - `List<Integer>`; эта проблема использует переносной тип вывода `int_list` с теми же значениями.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^5`
 - `1 <= nums[i] <= nums.length`

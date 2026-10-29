@@ -1,6 +1,6 @@
 {
   "id": "remove-duplicates-from-sorted-list-ii",
-  "title": "273. Remove Duplicates from Sorted List II",
+  "title": "273. Удалить дубликаты из списка II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "head = [1,2,3,3,4,4,5]",
       "output": "[1,2,5]",
-      "explanation": "Values 3 and 4 repeat, so all their nodes are removed."
+      "explanation": "Значения 3 и 4 повторяются, поэтому все их узлы удаляются."
     },
     {
       "input": "head = [1,1,1,2,3]",
       "output": "[2,3]",
-      "explanation": "The three leading 1s are all dropped."
+      "explanation": "Все три лидирующих 1-х сброшены."
     },
     {
       "input": "head = [1,1,2,2]",
       "output": "[]",
-      "explanation": "Every value repeats, so nothing remains."
+      "explanation": "Каждая ценность повторяется, поэтому ничего не остается."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Use a dummy head so removals at the front need no special case.",
-    "When the next two values match, advance past the entire run of equal values before linking.",
-    "Only advance the predecessor when the next node is confirmed unique."
+    "Используйте фиктивную голову, чтобы удаление на передней панели не требовало специального случая.",
+    "Когда следующие два значения совпадают, пройдите весь цикл равных значений, прежде чем связываться.",
+    "Продвиньте предшественника только тогда, когда следующий узел будет подтвержден уникальным."
   ]
 }

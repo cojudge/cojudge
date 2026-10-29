@@ -1,6 +1,6 @@
 {
   "id": "find-permutation",
-  "title": "548. Find Permutation",
+  "title": "548. Найти перестановку",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/find-permutation/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"I\"",
       "output": "[1,2]",
-      "explanation": "Only [1,2] rises."
+      "explanation": "Только [1, 2] поднимается."
     },
     {
       "input": "s = \"DI\"",
       "output": "[2,1,3]",
-      "explanation": "[2,1,3] is the smallest of the two matches."
+      "explanation": "[2, 1, 3] — самый маленький из двух матчей."
     },
     {
       "input": "s = \"DDI\"",
       "output": "[3,2,1,4]",
-      "explanation": "Descending run reverses the first three slots."
+      "explanation": "Спускающийся бег переворачивает первые три слота."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Start from 1..n+1, which is already the smallest ordering.",
-    "Each maximal D-block must appear reversed; I slots need no change.",
-    "Scan with two pointers and reverse each D-segment in place."
+    "Начните с 1..n+1, который уже является самым маленьким заказом.",
+    "Каждый максимальный D-блок должен казаться обратным; слоты не нуждаются в изменениях.",
+    "Сканируйте двумя указателями и переверните каждый D-сегмент на месте."
   ]
 }

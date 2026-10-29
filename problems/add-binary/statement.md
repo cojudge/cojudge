@@ -1,7 +1,7 @@
-Two binary numerals arrive as strings `a` and `b`. Add them together arithmetically and emit the total, again written as a binary string.
+Две двоичные цифры прибывают в виде строк `a` и `b`. Сложите их вместе арифметически и испустите общее, снова записанное в виде двоичной строки.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= a.length, b.length <= 10^4`
-- `a` and `b` consist only of `'0'` or `'1'` characters.
-- Each string does not contain leading zeros except for the zero itself.
+- `a` и `b` состоят только из символов `'0'` или `'1'`.
+- Каждая строка не содержит ведущих нулей, за исключением самого нуля.

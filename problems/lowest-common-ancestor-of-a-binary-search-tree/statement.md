@@ -1,9 +1,9 @@
-You receive a binary search tree (BST) together with two of its nodes. Locate the deepest node that sits above both of them — their lowest common ancestor (LCA). Every value in the tree is distinct.
+Вы получаете двоичное дерево поиска (BST) вместе с двумя его узлами. Найдите самый глубокий узел, который находится над обоими из них - их самый низкий общий предок (LCA). Каждое значение в дереве различно.
 
-**Constraints:**
+**Ограничения:**
 
-- The number of nodes in the tree is in the range [2, 10^5].
+- Количество узлов в дереве находится в диапазоне [2, 10^5].
 - -10^9 ≤ Node.val ≤ 10^9
-- All Node.val are unique.
+- Все Node.val уникальны.
 - p != q
-- p and q will exist in the BST.
+- p и q будут существовать в БСТ.

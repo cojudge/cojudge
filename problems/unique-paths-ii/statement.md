@@ -1,13 +1,13 @@
-An `m x n` integer board named `grid` holds an automaton that begins in the upper-left cell (`grid[0][0]`) and aims for the lower-right cell (`grid[m - 1][n - 1]`). At each step the automaton may advance only downward or rightward.
+Целевая плата `m x n` под названием `grid` содержит автомат, который начинается в верхней левой ячейке (`grid[0][0]`) и нацелен на нижнюю правую ячейку (`grid[m - 1][n - 1]`).
 
-Cells of `grid` hold `1` for a blocked cell and `0` for a free cell. No traveled route may pass through a blocked cell.
+Ячейки `grid` содержат `1` для заблокированной ячейки и `0` для свободной ячейки. Ни один пройденный маршрут не может пройти через заблокированную ячейку.
 
-Count how many distinct admissible routes reach the destination.
+Подсчитайте, сколько различных допустимых маршрутов достигают пункта назначения.
 
-The test data is constructed so the count never exceeds `2 * 10^9`.
+Тестовые данные построены таким образом, что их количество никогда не превышает `2 * 10^9`.
 
-**Constraints:**
+**Ограничения:**
 - m == obstacleGrid.length
 - n == obstacleGrid[i].length
 - 1 ≤ m, n ≤ 100
-- obstacleGrid[i][j] is 0 or 1.
+- [i][j] — 0 или 1.

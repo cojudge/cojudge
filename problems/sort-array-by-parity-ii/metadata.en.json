@@ -1,0 +1,50 @@
+{
+  "id": "sort-array-by-parity-ii",
+  "title": "909. Sort Array By Parity II",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/sort-array-by-parity-ii/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [4,2,5,7]",
+      "output": "[4,5,2,7]",
+      "explanation": "Even indices hold even values and odd indices hold odd values; other valid orders are also accepted."
+    },
+    {
+      "input": "nums = [2,3]",
+      "output": "[2,3]",
+      "explanation": "Already satisfies the parity placement."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] sortArrayByParityII(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def sortArrayByParityII(self, nums: List[int]) -> List[int]:\n        ",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> sortArrayByParityII(vector<int>& nums) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] SortArrayByParityII(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn sort_array_by_parity_ii(nums: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc SortArrayByParityII(nums []int) []int {\n    \n}",
+    "typescript": "export function sortArrayByParityII(nums: number[]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function sortArrayByParityII($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[4,2,5,7]"
+    },
+    {
+      "nums": "[2,3]"
+    }
+  ],
+  "functionName": "sortArrayByParityII",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Even positions need even values and odd positions need odd values; any arrangement meeting that is accepted.",
+    "Collect evens and odds separately, then deal them into even and odd slots.",
+    "Alternatively sweep two pointers (one on even slots, one on odd slots) swapping misplaced pairs."
+  ]
+}

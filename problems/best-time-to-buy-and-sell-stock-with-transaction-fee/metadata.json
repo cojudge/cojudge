@@ -1,6 +1,6 @@
 {
   "id": "best-time-to-buy-and-sell-stock-with-transaction-fee",
-  "title": "722. Best Time to Buy and Sell Stock with Transaction Fee",
+  "title": "722. Лучшее время для покупки и продажи акций с комиссией за транзакции",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "prices = [1,3,2,8,4,9], fee = 2",
       "output": "8",
-      "explanation": "Buy at 1, sell at 8 (profit 5), then buy at 4 and sell at 9 (profit 3) for 8 total."
+      "explanation": "Покупайте в 1, продавайте в 8 (прибыль 5), затем покупайте в 4 и продавайте в 9 (прибыль 3) для 8 всего."
     },
     {
       "input": "prices = [1,3,7,5,10,3], fee = 3",
       "output": "6",
-      "explanation": "One round trip from 1 to 10 nets 9 minus the 3 fee."
+      "explanation": "Одна поездка туда-обратно от 1 до 10 приносит 9 минус плата 3."
     },
     {
       "input": "prices = [5,4,3,2,1], fee = 1",
       "output": "0",
-      "explanation": "Prices only fall, so skipping every trade is best."
+      "explanation": "Цены только падают, поэтому лучше всего пропустить каждую сделку."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Track two states per day: the best balance holding a share and the best balance holding cash.",
-    "Holding updates from yesterday's hold or today's cash minus the price; cash updates from yesterday's cash or today's hold plus price minus fee.",
-    "Start holding at -prices[0] and cash at 0; the cash state at the end is the answer."
+    "Отслеживайте два состояния в день: лучший баланс с долей и лучший баланс с наличными.",
+    "Проведение обновлений со вчерашнего трюма или сегодняшних денежных средств за вычетом цены; денежные обновления со вчерашних денежных средств или сегодняшних трюмов плюс цена за вычетом комиссии.",
+    "Начните держать по -ценам [0] и наличными по 0; состояние наличности в конце - это ответ."
   ]
 }

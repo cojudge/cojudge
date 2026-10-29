@@ -1,12 +1,12 @@
-Given a string `expression` made of non-negative integers and the operators `+`, `-`, and `*`, compute every distinct value obtainable by parenthesizing the expression in all possible ways.
+Учитывая строку `expression`, состоящую из неотрицательных целых чисел, и операторов `+`, `-` и `*`, вычислите каждое отдельное значение, получаемое путем скобки выражения всеми возможными способами.
 
-Each operator can serve as the final operation to evaluate: split the string there, solve both sides recursively, and combine each left result with each right result using that operator. A string with no operator is just the number itself.
+Каждый оператор может служить конечной операцией для оценки: разделять там строку, рекурсивно решать обе стороны и комбинировать каждый левый результат с каждым правым, используя этого оператора.Строка без оператора — это просто само число.
 
-Return all possible results in any order.
+Вернуть все возможные результаты в любом порядке.
 
-*Type note:* the original signature returns a list of integers; here it maps to `int_list`.
+*Примечание типа: * оригинальная подпись возвращает список целых чисел; здесь она отображается в `int_list`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= expression.length <= 20`
-- The expression holds digits and the operators `+`, `-`, `*`.
-- Each number in the expression is in the range `[0, 99]` with no sign prefix.
+- Выражение содержит цифры и операторы `+`, `-`, `*`.
+- Каждое число в выражении находится в диапазоне `[0, 99]` без префикса знака.

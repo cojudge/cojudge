@@ -1,6 +1,6 @@
 {
   "id": "equal-tree-partition",
-  "title": "682. Equal Tree Partition",
+  "title": "682. Равный раздел дерева",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/equal-tree-partition/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "root = [5,10,10,null,null,2,3]",
       "output": "true",
-      "explanation": "Cutting the edge to the right child splits 25 into 10 + 15? Actually left 10 plus right 15? The right branch sums to 15 and the remainder 15? Total 30 halves into 15 and 15."
+      "explanation": "Разрезая край справа, потомок делит 25 на 10 + 15? На самом деле 10 плюс правый 15? Правая ветвь суммирует 15, а остальная 15? Всего 30 делит на 15 и 15."
     },
     {
       "input": "root = [1,2,10,null,null,2,20]",
       "output": "false",
-      "explanation": "Total 35 is odd, so no single cut can halve it."
+      "explanation": "Общий 35 является странным, поэтому ни один разрез не может уменьшить его вдвое."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Add up the whole tree first; a valid cut needs total to be even.",
-    "A cut works exactly when some proper branch sums to total / 2.",
-    "Collect branch sums with one post-order walk, excluding the full tree itself."
+    "Сначала сложите все дерево; действительный срез должен быть ровным.",
+    "Разрез работает именно тогда, когда какая-то правильная ветвь суммируется в общую / 2.",
+    "Соберите суммы ветвей с одной прогулкой после заказа, исключая само дерево."
   ]
 }

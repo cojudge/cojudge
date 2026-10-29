@@ -1,12 +1,12 @@
-Each entry `accounts[i]` opens with a holder name in `accounts[i][0]`, followed by one or more email addresses attached to that entry.
+Каждая запись `accounts[i]` открывается именем владельца в `accounts[i][0]`, за которым следует один или несколько адресов электронной почты, прикрепленных к этой записи.
 
-Entries that share at least one email address must be fused, since that overlap proves they describe the same individual. People may happen to share a name while remaining different individuals, so a matching name alone never justifies a fusion. One person may start out with arbitrarily many entries, but every entry of theirs carries an identical name.
+Записи, которые имеют по крайней мере один адрес электронной почты, должны быть слиты, так как это совпадение доказывает, что они описывают одного и того же человека. Люди могут делиться именем, оставаясь разными людьми, поэтому одно и то же имя никогда не оправдывает слияние. Один человек может начать с произвольно большого количества записей, но каждая их запись носит одно и то же имя.
 
-Once fusing is finished, emit each merged person as a single list: the shared name first, then all of their distinct emails arranged in sorted order. The merged people themselves may appear in any order.
+После того, как слияние завершено, издавайте каждого объединенного человека в виде единого списка: сначала общее имя, затем все их отдельные электронные письма, расположенные в отсортированном порядке. Сами объединенные люди могут появиться в любом порядке.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= accounts.length <= 1000`
 - `2 <= accounts[i].length <= 10`
 - `1 <= accounts[i][j].length <= 30`
-- `accounts[i][0]` consists of English letters
-- `accounts[i][j] (j > 0)` is a valid email
+- `accounts[i][0]` состоит из английских букв.
+- `accounts[i][j] (j > 0)` - это действительное электронное письмо

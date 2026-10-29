@@ -1,6 +1,6 @@
 {
   "id": "divide-two-integers",
-  "title": "258. Divide Two Integers",
+  "title": "258. Разделите два целых числа",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/divide-two-integers/",
   "category": "math",
@@ -53,7 +53,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Work with the absolute values as 64-bit numbers, then apply the sign at the end; handle MIN_VALUE / -1 as a special case.",
-    "Repeatedly subtract the largest doubled chunk of the divisor that still fits (exponential search with bit shifts) instead of subtracting one at a time."
+    "Работайте с абсолютными значениями как 64-битные числа, затем примените знак в конце; обработайте MIN_VALUE / -1 в качестве специального случая.",
+    "Неоднократно вычитайте самый большой удвоенный кусок делителя, который все еще подходит (экспоненциальный поиск с битовыми сдвигами), вместо того, чтобы вычитать один за раз."
   ]
 }

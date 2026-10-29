@@ -1,6 +1,6 @@
 {
   "id": "island-perimeter",
-  "title": "215. Island Perimeter",
+  "title": "215. Островной периметр",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/island-perimeter/",
   "category": "graph",
@@ -8,7 +8,7 @@
     {
       "input": "grid = [[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]]",
       "output": "16",
-      "explanation": "The perimeter is the 16 yellow edges."
+      "explanation": "По периметру расположены желтые края 16."
     },
     {
       "input": "grid = [[1]]",
@@ -49,6 +49,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Count each land cell contribution of 4, subtract 2 for each adjacent land pair."
+    "Подсчитайте вклад каждой наземной ячейки 4, вычтите 2 для каждой соседней пары земель."
   ]
 }

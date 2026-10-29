@@ -1,11 +1,11 @@
-You are given a text `s` and a list of keywords `dict`. Every slice of `s` that equals one of the keywords must appear bold in the answer.
+Вам предоставляется текст `s` и список ключевых слов `dict`. Каждый кусочек `s`, который равен одному из ключевых слов, должен отображаться жирным шрифтом в ответе.
 
-Marking works character by character: a character is bold when it belongs to at least one keyword occurrence (overlapping occurrences all count, and searching continues from each next index so overlaps are found). Neighboring or overlapping bold characters fuse into a single run. Wrap each maximal bold run with an opening `<b>` and a closing `</b>` tag, leaving other characters untouched.
+Маркировка работает характер за характером: символ смелый, когда он принадлежит по крайней мере к одному ключевому слову (перекрывающиеся явления все считаются, и поиск продолжается с каждого следующего индекса, поэтому обнаруживаются перекрытия). Соседние или перекрывающиеся жирные символы сливаются в один прогон. Оберните каждый максимальный смелый прогон с открывающим `<b>` и закрывающим тегом `</b>`, оставляя другие символы нетронутыми.
 
-Return the tagged string. If no keyword occurs, return `s` unchanged.
+Если ключевое слово не найдено, верните `s` без изменений.
 
-**Constraints:**
-- `s` and each keyword hold lowercase letters (and digits in tests here).
-- Lengths are small enough for direct scanning.
+**Ограничения:**
+- `s` и каждое ключевое слово содержат строчные буквы (и цифры в тестах здесь).
+- Длина достаточно мала для прямого сканирования.
 
-*Adaptation: the keyword list maps to `string_array` in this judge.*
+*Адаптация: карта списка ключевых слов для `string_array` в этом решении.*

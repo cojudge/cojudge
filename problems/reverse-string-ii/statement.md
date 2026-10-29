@@ -1,10 +1,10 @@
-You are given a string `s` and a positive integer `k`. Walk through the string from left to right in consecutive blocks of `2k` characters.
+Вам дается строка `s` и положительное целое число `k`. Пройдите по строке слева направо в последовательных блоках символов `2k`.
 
-Within each block, flip the order of the first `k` characters and leave the remaining characters of that block untouched. When fewer than `k` characters remain at the end, flip all of them. When between `k` and `2k` characters remain, flip the first `k` and keep the rest as is.
+В каждом блоке переверните порядок первых символов `k` и оставьте оставшиеся символы этого блока нетронутыми. Когда в конце остается меньше символов `k`, переверните их все. Когда между символами `k` и `2k` остаются символы, переверните первый `k` и сохраните остальные как есть.
 
-Return the resulting string.
+Верните полученную строку.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 10^4`
-- `s` holds only lowercase English letters
+- `s` содержит только английские буквы
 - `1 <= k <= 10^4`

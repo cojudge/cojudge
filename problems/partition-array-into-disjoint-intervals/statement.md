@@ -1,7 +1,7 @@
-You are given an integer array `nums`. Cut it into two non-empty contiguous pieces, a left piece and a right piece, such that every value in the left piece is less than or equal to every value in the right piece.
+Вы получаете целочисленный массив `nums`. Разрежьте его на две непустые смежные части, левую часть и правую часть, так что каждое значение в левой части меньше или равно каждому значению в правой части.
 
-Return the smallest possible length of the left piece. Every test input admits at least one such cut.
+Возвращайте наименьшую возможную длину левой части. Каждый вход теста допускает по крайней мере один такой разрез.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= nums.length <= 30000`
 - `0 <= nums[i] <= 10^6`

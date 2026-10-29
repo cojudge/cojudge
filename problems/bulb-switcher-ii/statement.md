@@ -1,12 +1,12 @@
-There are `n` lamps in a row, all starting switched on. Four buttons are available:
+Есть лампы `n` в ряд, все стартовые включены. Доступны четыре кнопки:
 
-- flip every lamp,
-- flip lamps at even positions,
-- flip lamps at odd positions,
-- flip lamps whose position leaves remainder 1 when divided by 3 (positions 1, 4, 7, ...).
+- Перевернуть каждую лампу,
+- лампы накаливания в четных положениях,
+- светильники в нечетных положениях,
+- Флип-лампы, положение которых оставляет остаток 1 при делении на 3 (положения 1, 4, 7, ...).
 
-Press any button exactly `presses` times in total (the same button may be pressed repeatedly). Return how many distinct on/off patterns can result.
+Нажмите любую кнопку ровно `presses` раз в целом (одна и та же кнопка может быть нажата несколько раз).Верните, сколько различных шаблонов включения / выключения может привести.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 1000`
 - `0 <= presses <= 1000`

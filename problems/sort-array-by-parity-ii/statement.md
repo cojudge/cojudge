@@ -1,9 +1,9 @@
-You are given an integer array `nums` of even length where exactly half the entries are odd and half are even. Rearrange it so that every even index holds an even number and every odd index holds an odd number.
+Вы получаете целочисленный массив `nums` четной длины, где ровно половина записей нечетная, а половина четная. Перегруппируйте его так, чтобы каждый четный индекс содержал четное число, а каждый нечетный индекс содержал нечетное число.
 
-Return any such arrangement.
+Возвратить любую такую договоренность.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= nums.length <= 2 * 10^4`
-- `nums.length` is even
-- Half the entries are odd and half are even
+- `nums.length` - это даже
+- Половина записей нечетные, а половина четные
 - `0 <= nums[i] <= 1000`

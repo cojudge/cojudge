@@ -1,6 +1,6 @@
-Return `base^exp` computed recursively: anything to the power 0 is 1 (including `0^0 = 1` here), otherwise multiply `base` by the result for `exp - 1`.
+Возврат `base^exp` вычисляется рекурсивно: все, что касается мощности 0, это 1 (включая `0^0 = 1` здесь), в противном случае умножьте `base` на результат для `exp - 1`.
 
-**Constraints:**
+**Ограничения:**
 - ``-10 <= base <= 10``
 - ``0 <= exp <= 9``
 - `The result fits in a 32-bit signed integer for all test inputs`

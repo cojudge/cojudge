@@ -1,10 +1,10 @@
-An array `people` records body masses, with `people[i]` belonging to traveller `i`.
-An unbounded fleet of dinghies is available; no dinghy tolerates a combined load above `limit`.
-No dinghy accepts more than a pair of travellers simultaneously, and any pair aboard must jointly weigh no more than `limit`.
+Массив `people` записывает массы тела, а `people[i]` принадлежит путешественнику `i`.
+Доступен неограниченный парк шлюпок; ни одна шлюпка не переносит комбинированную нагрузку выше `limit`.
+Ни одна шлюпка не принимает больше, чем пара путешественников одновременно, и любая пара на борту должна весить не больше, чем `limit`.
 
-Determine the smallest fleet size capable of ferrying the whole group.
+Определить наименьший размер флота, способный переправлять всю группу.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ people.length ≤ 5 * 10^4
 - 1 ≤ people[i] ≤ limit ≤ 3 * 10^4

@@ -1,6 +1,6 @@
 {
   "id": "shuffle-an-array",
-  "title": "460. Shuffle an Array",
+  "title": "460. Перетасовать массив",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/shuffle-an-array/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,2,3]",
       "output": "[2,1,3]",
-      "explanation": "Any permutation with the same values is valid."
+      "explanation": "Любая перестановка с одинаковыми значениями действительна."
     },
     {
       "input": "nums = [5]",
       "output": "[5]",
-      "explanation": "Only one arrangement exists."
+      "explanation": "Существует только одна договоренность."
     },
     {
       "input": "nums = [1,2,3,4]",
       "output": "[3,1,4,2]",
-      "explanation": "Same multiset in a new order."
+      "explanation": "Тот же мультиплеер в новом порядке."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Fisher-Yates: walk from the end, swapping each slot with a uniform earlier-or-equal slot.",
-    "Clone the input first so the caller's array is never mutated.",
-    "The judge checks permutation equality, not the shuffle distribution."
+    "Фишер-Йейтс: ходите от конца, заменяя каждый слот однородным ранее или равным слотом.",
+    "Сначала клонируйте вход, чтобы массив звонящего никогда не мутировал.",
+    "Судья проверяет равенство перестановок, а не распределение перетасовок."
   ]
 }

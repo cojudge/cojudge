@@ -1,6 +1,6 @@
 {
   "id": "k-th-symbol-in-grammar",
-  "title": "778. K-th Symbol in Grammar",
+  "title": "778. K-й символ в грамматике",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/k-th-symbol-in-grammar/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "n = 1, k = 1",
       "output": "0",
-      "explanation": "The opening row is a single 0."
+      "explanation": "В первом ряду находится один 0."
     },
     {
       "input": "n = 2, k = 1",
       "output": "0",
-      "explanation": "The second row starts with 0."
+      "explanation": "Второй ряд начинается с 0."
     },
     {
       "input": "n = 2, k = 2",
       "output": "1",
-      "explanation": "The second row ends with 1."
+      "explanation": "Второй ряд заканчивается 1."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Each position inherits from its parent at index (k+1)/2 in the previous row; an even k flips the parent value.",
-    "Equivalently the answer equals the parity of the number of ones in the binary form of k-1.",
-    "Recursion or a simple loop over the bits both run in O(n) time."
+    "Каждая позиция наследуется от своего родителя по индексу (k + 1) / 2 в предыдущем ряду; четное k переворачивает родительское значение.",
+    "Эквивалентно ответ равен четности числа единиц в двоичной форме k-1.",
+    "Рекурсия или простая петля над битами, которые выполняются во время O(n)."
   ]
 }

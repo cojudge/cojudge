@@ -1,6 +1,6 @@
 {
   "id": "design-hit-counter",
-  "title": "441. Design Hit Counter",
+  "title": "441. Дизайн Hit Counter",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/design-hit-counter/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "operations = [\"HitCounter\",\"hit\",\"hit\",\"hit\",\"getHits\",\"hit\",\"getHits\",\"getHits\"], timestamps = [0,1,2,3,4,300,300,301]",
       "output": "[3,4,3]",
-      "explanation": "At time 4 there are 3 fresh hits; at 300 there are 4; at 301 the oldest has expired leaving 3."
+      "explanation": "В то время как 4 есть 3 свежие хиты; в 300 есть 4; в 301 самый старый истек, оставив 3."
     },
     {
       "input": "operations = [\"HitCounter\",\"hit\",\"getHits\",\"getHits\"], timestamps = [0,5,5,305]",
       "output": "[1,0]",
-      "explanation": "The single hit counts at time 5 but has expired by time 305."
+      "explanation": "Однократный хит считается в момент времени 5, но истек к моменту времени 305."
     }
   ],
   "starterCode": {
@@ -57,8 +57,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Keep hits in a queue in arrival order; timestamps never decrease.",
-    "Before each query, drop every hit at or below T - 300.",
-    "The queue size after cleanup is the answer; constructor entries produce no output."
+    "Храните попадания в очереди в порядке прибытия; метки времени никогда не уменьшаются.",
+    "Перед каждым запросом выпадайте каждый удар на или ниже T - 300.",
+    "Размер очереди после очистки является ответом; записи конструктора не производят никакого вывода."
   ]
 }

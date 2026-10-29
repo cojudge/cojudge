@@ -1,6 +1,6 @@
 {
   "id": "design-add-and-search-words-data-structure",
-  "title": "71. Design Add and Search Words Data Structure",
+  "title": "71. Дизайн Добавить и Поиск Слова Структура данных",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "operations = [\"WordDictionary\",\"addWord\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\",\"search\"]\nvalues = [\"\",\"bad\",\"dad\",\"mad\",\"pad\",\"bad\",\".ad\",\"b..\"]",
       "output": "[null,null,null,null,false,true,true,true]",
-      "explanation": "After adding 'bad', 'dad', and 'mad', searching 'pad' returns false, 'bad' returns true, '.ad' matches 'bad'/'dad'/'mad', 'b..' matches 'bad'."
+      "explanation": "После добавления «плохой», «папа» и «сумасшедший», поиск «пад» возвращает ложные, «плохие» возвращает истинные, «.ad» соответствует «плохому» / «папа» / «сумасшедший», «b..» соответствует «плохому»."
     },
     {
       "input": "operations = [\"WordDictionary\",\"addWord\",\"search\",\"search\",\"search\"]\nvalues = [\"\",\"a\",\".\",\"a\",\"aa\"]",
       "output": "[null,null,true,true,false]",
-      "explanation": "After adding 'a', searching '.' matches 'a', searching 'a' matches 'a', searching 'aa' returns false."
+      "explanation": "После добавления 'a', поиска '.' соответствует 'a', поиска 'a' соответствует 'a', поиска 'aa' возвращает ложное."
     }
   ],
   "classProblem": {
@@ -52,7 +52,7 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Use a Trie (prefix tree) as the underlying data structure for efficient prefix matching.",
-    "For the search method with '.', use DFS/backtracking to try all 26 possible child nodes when a dot is encountered."
+    "Используйте Trie (дерево префиксов) в качестве базовой структуры данных для эффективного сопоставления префиксов.",
+    "Для метода поиска с помощью '.', используйте DFS/backtracking, чтобы попробовать все возможные узлы 26 при встрече с точкой."
   ]
 }

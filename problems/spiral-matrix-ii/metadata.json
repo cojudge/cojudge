@@ -1,6 +1,6 @@
 {
   "id": "spiral-matrix-ii",
-  "title": "267. Spiral Matrix II",
+  "title": "267. Спиральная матрица II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/spiral-matrix-ii/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "n = 3",
       "output": "[[1,2,3],[8,9,4],[7,6,5]]",
-      "explanation": "The outer ring is 1-8 clockwise and the center is 9."
+      "explanation": "Наружное кольцо 1-8 по часовой стрелке, а центр 9."
     },
     {
       "input": "n = 1",
       "output": "[[1]]",
-      "explanation": "A 1x1 grid holds only the value 1."
+      "explanation": "Сетка 1x1 имеет только значение 1."
     },
     {
       "input": "n = 2",
       "output": "[[1,2],[4,3]]",
-      "explanation": "Going right gives 1, 2, then down to 3 and left to 4."
+      "explanation": "Справа выдается 1, 2, затем до 3 и слева до 4."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Maintain four boundaries (top, bottom, left, right) and fill one edge at a time, shrinking the boundary after each edge.",
-    "Place numbers 1 to n*n in order; the loop ends when the top boundary passes the bottom or the left passes the right."
+    "Сохраняйте четыре границы (верхняя, нижняя, левая, правая) и заполняйте один край за раз, сокращая границу после каждого края.",
+    "Поместите номера 1 в n*n по порядку; петля заканчивается, когда верхняя граница проходит внизу или левая проходит вправо."
   ]
 }

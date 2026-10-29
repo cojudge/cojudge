@@ -1,8 +1,8 @@
-You are given two strings `s1` and `s2`. Find the shortest contiguous block of `s1` that contains `s2` as a subsequence — meaning the characters of `s2` appear in order inside the block, possibly with other characters in between.
+Вам даны две строки `s1` и `s2`. Найдите самый короткий смежный блок `s1`, который содержит `s2` в качестве последовательности — это означает, что символы `s2` появляются в порядке внутри блока, возможно, с другими символами между ними.
 
-If several blocks share the same minimal length, return the one that starts earliest. When no block of `s1` contains `s2` as a subsequence, return the empty string.
+Если несколько блоков имеют одинаковую минимальную длину, верните тот, который начинается раньше.Когда ни один блок `s1` не содержит `s2` в качестве последовательности, верните пустую строку.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s1.length <= 20000`
 - `1 <= s2.length <= 100`
-- Both strings hold lowercase English letters.
+- Обе строки содержат строчные английские буквы.

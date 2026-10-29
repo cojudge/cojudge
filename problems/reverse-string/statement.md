@@ -1,6 +1,6 @@
-Given a string `s`, reverse the string and return the reversed string.
+При наличии строки `s` переверните строку и верните обратную строку.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ s.length ≤ 10^5
-- s[i] is a printable ascii character.
+- s[i] — печатный асциевый символ.

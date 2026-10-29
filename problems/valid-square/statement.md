@@ -1,5 +1,5 @@
-Four points in order-free form are given as `p1` through `p4`, each `[x,y]`. Decide whether they are exactly the four corners of a square, in any order. Sides must be positive and equal, diagonals equal and longer by a factor of two in squared length.
+Четыре точки в беспорядочной форме даются как `p1` через `p4`, каждый `[x,y]`. Решите, являются ли они точно четырьмя углами квадрата, в любом порядке. Стороны должны быть положительными и равными, диагонали равными и длиннее в два раза по квадратной длине.
 
-**Constraints:**
-- Coordinates fit in 32-bit integers.
-- Points may repeat or be collinear.
+**Ограничения:**
+- Координаты вписываются в целые числа 32-бит.
+- Точки могут повторяться или быть коллинеарными.

@@ -1,6 +1,6 @@
 {
   "id": "n-ary-tree-level-order-traversal",
-  "title": "498. N-ary Tree Level Order Traversal",
+  "title": "498. N-ary Tree Level Order Traversal (недоступная ссылка)",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/n-ary-tree-level-order-traversal/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "data = \"[1,null,3,2,4,null,5,6]\"",
       "output": "[[1],[3,2,4],[5,6]]",
-      "explanation": "Depth 0 holds 1, depth 1 its children, depth 2 the grandchildren."
+      "explanation": "Глубина 0 удерживает 1, глубина 1 у его детей, глубина 2 у внуков."
     },
     {
       "input": "data = \"[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]\"",
       "output": "[[1],[2,3,4,5],[6,7,8,9,10],[11,12,13],[14]]",
-      "explanation": "Each depth collects the nodes at that distance from the root."
+      "explanation": "Каждая глубина собирает узлы на таком расстоянии от корня."
     },
     {
       "input": "data = \"[]\"",
       "output": "[]",
-      "explanation": "No nodes means no levels."
+      "explanation": "Ни один узел не означает никаких уровней."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int_list_2d",
   "hints": [
-    "Parse the bracket string into tokens and rebuild the N-ary tree with a queue.",
-    "Then run a standard breadth-first walk, slicing the queue per level.",
-    "An empty input yields an empty list of levels."
+    "Разберите веревку скобки в жетоны и отремонтируйте дерево N-ary с очередью.",
+    "Затем пройдите стандартную прогулку по ширине, разрезав очередь на уровень.",
+    "Пустой вход дает пустой список уровней."
   ]
 }

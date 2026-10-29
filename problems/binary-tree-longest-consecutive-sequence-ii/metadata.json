@@ -1,6 +1,6 @@
 {
   "id": "binary-tree-longest-consecutive-sequence-ii",
-  "title": "606. Binary Tree Longest Consecutive Sequence II",
+  "title": "606. Бинарное дерево с самой длинной последовательностью II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/binary-tree-longest-consecutive-sequence-ii/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "root = [1,2,3]",
       "output": "2",
-      "explanation": "Best pair is 1-2."
+      "explanation": "Лучшая пара — 1-2."
     },
     {
       "input": "root = [2,1,3]",
       "output": "3",
-      "explanation": "Path 1-2-3 through the root."
+      "explanation": "Путь 1-2-3 через корень."
     },
     {
       "input": "root = [1]",
@@ -50,8 +50,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "For each node return the longest increasing run and longest decreasing run starting there.",
-    "A child extends the increasing run when child value equals parent + 1, and the decreasing run when it equals parent - 1.",
-    "A trail through a node can join one increasing and one decreasing arm, giving inc + dec - 1."
+    "Для каждого узла возвращается самый длинный увеличивающийся и самый длинный уменьшающийся бег, начинающийся там.",
+    "Ребенок продлевает возрастающий пробег, когда значение ребенка равно родительскому + 1, и уменьшающийся пробег, когда он равен родительскому - 1.",
+    "След через узел может присоединяться к одной увеличивающейся и одной уменьшающейся руке, давая inc + dec - 1."
   ]
 }

@@ -1,9 +1,9 @@
-You start from a blank row of `'?'` characters with the same length as `target`. Stamping with `stamp` at position `i` overwrites that segment with the stamp text. Repeating stamps in some order must produce `target`.
+Вы начинаете с чистого ряда символов `'?'` с той же длиной, что и `target`. Закрепление `stamp` на позиции `i` перезаписывает этот сегмент текстом штампа. Повторение штампов в некотором порядке должно производить `target`.
 
-Return any stamp index sequence (at most `10 * target.length` moves) that builds `target`, or an empty array when impossible. The checker replays your moves rather than demanding one exact order.
+Возвращайте любую последовательность индекса штампа (в большинстве ходов `10 * target.length`), которая создает `target`, или пустой массив, когда это невозможно.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= stamp.length, target.length <= 100`
-- Both strings use lowercase English letters.
+- Обе строки используют английские буквы нижнего регистра.
 
-Adaptation: the result uses `int_array`; an empty array signals impossibility, and any valid build is accepted.
+Адаптация: в результате используется `int_array`; пустой массив сигнализирует о невозможности, и принимается любая действительная сборка.

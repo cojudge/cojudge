@@ -1,8 +1,8 @@
-Consider all index pairs `(i, j)` with `i < j` in an integer list. Call such a pair reversed when the earlier value is larger than twice the later value, that is `nums[i] > 2 * nums[j]`.
+Рассмотрим все индексные пары `(i, j)` с `i < j` в целочисленном списке.Назовите такую пару обратной, когда более раннее значение больше, чем в два раза более позднее значение, то есть `nums[i] > 2 * nums[j]`.
 
-Count how many reversed pairs the list contains and return that total.
+Подсчитайте, сколько обратных пар содержит список, и верните эту сумму.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 5 * 10^4`
 - `-2^31 <= nums[i] <= 2^31 - 1`
-- Use 64-bit arithmetic when doubling to avoid overflow
+- Используйте арифметику 64-бит при удвоении, чтобы избежать переполнения

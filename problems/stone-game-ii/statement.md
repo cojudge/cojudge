@@ -1,13 +1,13 @@
-Alice and Bob play another take-away contest on a row of piles, where `piles[i]` gives the stone count of the `i`-th pile, a positive integer. Whoever gathers the most stones by the end wins.
+Алиса и Боб играют еще один конкурс на вынос на ряд свай, где `piles[i]` дает каменный счет `i`-й свай, положительное целое число. Тот, кто собирает больше камней к концу, выигрывает.
 
-Alice opens and the two alternate moves.
+Алиса открывается и два альтернативных хода.
 
-A move always consumes piles from the front of what is left. If `M` is the current limit, the player selects some `X` with `1 <= X <= 2M` and collects the first `X` piles. Afterwards the limit becomes `M = max(M, X)`. The limit starts at `M = 1`.
+Если `M` является текущим пределом, игрок выбирает `X` с `1 <= X <= 2M` и собирает первые сваи `X`. После этого предел становится `M = max(M, X)`. Предел начинается с `M = 1`.
 
-Removal continues until no pile remains.
+Удаление продолжается до тех пор, пока не останется ни одной кучи.
 
-Both competitors choose optimally. Return the largest total Alice can finish with.
+Оба соперника выбирают оптимально. Возвратить самый большой итог, с которым может финишировать Алиса.
 
-**Constraints:**
+**Ограничения:**
 - 1 ≤ piles.length ≤ 100
 - 1 ≤ piles[i] ≤ 10<sup>4</sup>

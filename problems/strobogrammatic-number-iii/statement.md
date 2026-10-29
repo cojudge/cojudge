@@ -1,10 +1,10 @@
-A strobogrammatic number reads the same after a 180-degree rotation, using the digit pairs `0 -> 0`, `1 -> 1`, `6 -> 9`, `8 -> 8`, and `9 -> 6`.
+Стробограмматическое число читает то же самое после вращения 180-градус, используя пары цифр `0 -> 0`, `1 -> 1`, `6 -> 9`, `8 -> 8` и `9 -> 6`.
 
-Given numeric strings `low` and `high` (neither has leading zeros except the number `"0"` itself), count how many strobogrammatic numbers `x` satisfy `low <= x <= high` in numeric value. Numbers of different lengths compare by length first.
+Учитывая числовые строки `low` и `high` (ни одна из них не имеет ведущих нулей, кроме самого числа `"0"`), подсчитайте, сколько стробограмматических чисел `x` удовлетворяют `low <= x <= high` в численном значении.
 
-Return that count.
+Верните этот счет.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= low.length, high.length <= 15`
-- `low` and `high` hold digits only, with no leading zeros except `"0"`.
-- The numeric value of `low` does not exceed that of `high`.
+- `low` и `high` имеют только цифры, без ведущих нулей, кроме `"0"`.
+- Цифровое значение `low` не превышает значение `high`.

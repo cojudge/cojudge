@@ -1,6 +1,6 @@
 {
   "id": "contains-duplicate-ii",
-  "title": "173. Contains Duplicate II",
+  "title": "173. Содержит Duplicate II",
   "difficulty": "Easy",
   "category": "sliding-window",
   "link": "https://leetcode.com/problems/contains-duplicate-ii/",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,2,3,1], k = 3",
       "output": "true",
-      "explanation": "nums[0] == nums[3] and abs(0 - 3) = 3 <= 3."
+      "explanation": "nums[0] == nums[3] и abs(0 — 3) = 3 <= 3."
     },
     {
       "input": "nums = [1,0,1,1], k = 1",
       "output": "true",
-      "explanation": "nums[2] == nums[3] and abs(2 - 3) = 1 <= 1."
+      "explanation": "nums[2] == nums[3] и abs(2 — 3) = 1 <= 1."
     },
     {
       "input": "nums = [1,2,3,1,2,3], k = 2",
       "output": "false",
-      "explanation": "No two equal values are within distance 2."
+      "explanation": "Нет двух одинаковых значений в пределах расстояния 2."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Keep a sliding window of the last k elements in a hash set.",
-    "For each element, if it is already in the set return true; otherwise insert it and evict the element falling out of the window."
+    "Держите раздвижное окно последних k элементов в хеш-наборе.",
+    "Для каждого элемента, если он уже находится в наборе, возвращайте истинное; в противном случае вставьте его и выселите элемент, выпадающий из окна."
   ]
 }

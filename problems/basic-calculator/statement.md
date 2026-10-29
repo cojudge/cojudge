@@ -1,8 +1,8 @@
-You are given a string `s` holding an arithmetic expression with non-negative integers, the operators `+` and `-`, parentheses `(` and `)`, and spaces. Evaluate the expression and return its integer value.
+Вы получаете строку `s`, содержащую арифметическое выражение с неотрицательными целыми числами, операторы `+` и `-`, скобки `(` и `)` и пробелы. Оцените выражение и верните его целое значение.
 
-Division never appears. Numbers may have multiple digits, a minus may be unary (as in `-2` or `(-3+1)`), and the expression is always valid.
+Номера могут иметь несколько цифр, минус может быть унарным (как в `-2` или `(-3+1)`), и выражение всегда действительно.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 3 * 10^5`
-- `s` consists of digits, `'+'`, `'-'`, `'('`, `')'` and spaces.
-- Every number fits in a 32-bit signed integer and the result fits as well.
+- `s` состоит из цифр, `'+'`, `'-'`, `'('`, `')'` и пробелов.
+- Каждое число вписывается в подписанное целое число 32-бита, и результат также вписывается.

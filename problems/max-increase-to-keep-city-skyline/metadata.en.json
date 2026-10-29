@@ -1,0 +1,58 @@
+{
+  "id": "max-increase-to-keep-city-skyline",
+  "title": "805. Max Increase to Keep City Skyline",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/max-increase-to-keep-city-skyline/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "grid = [[3,0,8,4],[2,4,5,7],[9,2,6,3],[0,3,1,0]]",
+      "output": "35",
+      "explanation": "Each cell rises to min(row max, column max)."
+    },
+    {
+      "input": "grid = [[0,0,0],[0,0,0],[0,0,0]]",
+      "output": "0",
+      "explanation": "Nothing can be raised."
+    },
+    {
+      "input": "grid = [[5]]",
+      "output": "0",
+      "explanation": "Single cell already at its caps."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxIncreaseKeepingSkyline(int[][] grid) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxIncreaseKeepingSkyline(self, grid: List[List[int]]) -> int:\n        return 0",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int maxIncreaseKeepingSkyline(vector<vector<int>>& grid) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MaxIncreaseKeepingSkyline(int[][] grid) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_increase_keeping_skyline(grid: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MaxIncreaseKeepingSkyline(grid [][]int) int {\n    return 0\n}",
+    "typescript": "export function maxIncreaseKeepingSkyline(grid: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $grid\n     * @return int\n     */\n    public function maxIncreaseKeepingSkyline($grid) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "grid": "[[3, 0, 8, 4], [2, 4, 5, 7], [9, 2, 6, 3], [0, 3, 1, 0]]"
+    },
+    {
+      "grid": "[[0, 0, 0], [0, 0, 0], [0, 0, 0]]"
+    },
+    {
+      "grid": "[[5]]"
+    }
+  ],
+  "functionName": "maxIncreaseKeepingSkyline",
+  "params": [
+    {
+      "name": "grid",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Precompute each row maximum and each column maximum first.",
+    "A cell at (i,j) can rise to min(rowMax[i], colMax[j]) without changing the skyline.",
+    "Sum those caps minus the original heights for the answer."
+  ]
+}

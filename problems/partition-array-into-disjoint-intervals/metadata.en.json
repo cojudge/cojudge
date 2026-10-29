@@ -1,0 +1,58 @@
+{
+  "id": "partition-array-into-disjoint-intervals",
+  "title": "903. Partition Array into Disjoint Intervals",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/partition-array-into-disjoint-intervals/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [5,0,3,8,6]",
+      "output": "3",
+      "explanation": "Split into [5,0,3] and [8,6]: the left maximum 5 does not exceed the right minimum 6. No shorter left part works."
+    },
+    {
+      "input": "nums = [1,1,1,0,6,12]",
+      "output": "4",
+      "explanation": "Split into [1,1,1,0] and [6,12]: 1 <= 6 holds, and every shorter left part fails."
+    },
+    {
+      "input": "nums = [1,2,3,4,5]",
+      "output": "1",
+      "explanation": "The first element alone (1) is already no larger than everything after it."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int partitionDisjoint(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def partitionDisjoint(self, nums: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int partitionDisjoint(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int PartitionDisjoint(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn partition_disjoint(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc PartitionDisjoint(nums []int) int {\n    \n}",
+    "typescript": "export function partitionDisjoint(nums: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function partitionDisjoint($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[5,0,3,8,6]"
+    },
+    {
+      "nums": "[1,1,1,0,6,12]"
+    },
+    {
+      "nums": "[1,2,3,4,5]"
+    }
+  ],
+  "functionName": "partitionDisjoint",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "For each split position compare the maximum of the left side with the minimum of the right side.",
+    "Precompute prefix maximums left-to-right and suffix minimums right-to-left so every split is checked in O(1).",
+    "Return the first (shortest left side) split whose left maximum does not exceed its right minimum."
+  ]
+}

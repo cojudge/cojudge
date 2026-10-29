@@ -1,6 +1,6 @@
 {
   "id": "letter-combinations-of-a-phone-number",
-  "title": "113. Letter Combinations of a Phone Number",
+  "title": "113. Комбинации букв в телефонном номере",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/",
   "category": "backtracking",
@@ -8,17 +8,17 @@
     {
       "input": "digits = \"23\"",
       "output": "[\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]",
-      "explanation": "Digits '2' and '3' map to ['abc', 'def'] respectively. There are 9 total letter combinations: [\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]."
+      "explanation": "Цифры '2' и '3' соотносятся с ['abc', 'def'].Существуют 9 суммарные буквенные комбинации: ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']."
     },
     {
       "input": "digits = \"7\"",
       "output": "[\"p\",\"q\",\"r\",\"s\"]",
-      "explanation": "Each digit \"7\" maps to ['pqrs']. There are 4 total letter combinations: [\"p\",\"q\",\"r\",\"s\"]."
+      "explanation": "Каждая цифра \"7\" отображает ['pqrs']. Есть 4 полные комбинации букв: [\"p\", \"q\", \"r\", \"s\"]."
     },
     {
       "input": "digits = \"2\"",
       "output": "[\"a\",\"b\",\"c\"]",
-      "explanation": "Each digit \"2\" maps to ['abc']. There are 3 total letter combinations: [\"a\",\"b\",\"c\"]."
+      "explanation": "Каждая цифра \"2\" отображает ['abc']. Есть 3 полные комбинации букв: [\"a\", \"b\", \"c\"]."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Associate each digit with its keypad letters.",
-    "Backtrack through the digits, appending one mapped letter at each position."
+    "Свяжите каждую цифру с ее буквами клавиатуры.",
+    "Обратный путь через цифры, приложив одну нанесенную на карту букву в каждой позиции."
   ]
 }

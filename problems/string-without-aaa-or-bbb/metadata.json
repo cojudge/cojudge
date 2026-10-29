@@ -1,6 +1,6 @@
 {
   "id": "string-without-aaa-or-bbb",
-  "title": "967. String Without AAA or BBB",
+  "title": "967. Струна без AAA или BBB",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/string-without-aaa-or-bbb/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "a = 1, b = 2",
       "output": "\"abb\"",
-      "explanation": "One valid arrangement is abb; it uses one a and two b's with no triple."
+      "explanation": "Одно действительное расположение - abb; он использует один a и два b без тройного."
     },
     {
       "input": "a = 4, b = 1",
       "output": "\"aabaa\"",
-      "explanation": "aabaa uses four a's and one b while avoiding aaa and bbb."
+      "explanation": "aabaa использует четыре a и один b, избегая aaa и bbb."
     }
   ],
   "starterCode": {
@@ -49,8 +49,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Always try to emit the currently more plentiful letter, unless doing so would create three in a row.",
-    "When the last two emitted letters are equal, you are forced to emit the other letter next.",
-    "This greedy choice keeps the construction feasible whenever max(a,b) <= 2*(min(a,b)+1)."
+    "Всегда пытайтесь издать более обильную букву, если только это не приведет к появлению трех букв подряд.",
+    "Когда последние две излучаемые буквы равны, вы вынуждены излучать другую букву следующей.",
+    "Этот жадный выбор делает строительство возможным всякий раз, когда max(a,b) <= 2*(min(a,b)+1)."
   ]
 }

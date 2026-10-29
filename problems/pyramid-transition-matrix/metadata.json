@@ -1,6 +1,6 @@
 {
   "id": "pyramid-transition-matrix",
-  "title": "758. Pyramid Transition Matrix",
+  "title": "758. Переходная матрица пирамиды",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/pyramid-transition-matrix/",
   "category": "backtracking",
@@ -8,12 +8,12 @@
     {
       "input": "bottom = \"BCD\", allowed = [\"BCC\",\"CDE\",\"CEA\",\"FFF\"]",
       "output": "true",
-      "explanation": "Build CE then A."
+      "explanation": "Постройте CE, затем A."
     },
     {
       "input": "bottom = \"AAAA\", allowed = [\"AAB\",\"AAC\",\"BCD\",\"BBE\",\"DEF\"]",
       "output": "false",
-      "explanation": "No second row leads to a full pyramid."
+      "explanation": "Ни один второй ряд не ведет к полной пирамиде."
     }
   ],
   "starterCode": {
@@ -60,8 +60,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Group allowed triples by their two-letter base so each pair quickly yields its possible tops.",
-    "Build the next row one position at a time with backtracking; abandon a row as soon as a pair has no options.",
-    "Memoize failed rows to avoid re-exploring dead ends from different paths."
+    "Группа допустила тройки по их двухбуквенному основанию, поэтому каждая пара быстро дает свои возможные вершины.",
+    "Постройте следующую строку по одной позиции за раз с обратным движением; откажитесь от строки, как только у пары не будет вариантов.",
+    "Мемоизучить неудачные ряды, чтобы избежать повторного изучения тупиков с разных путей."
   ]
 }

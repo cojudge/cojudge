@@ -1,9 +1,9 @@
-List the values of a binary tree starting from the lowest level and ending at the root. Within each level keep left-to-right order.
+Перечислите значения двоичного дерева, начиная с самого низкого уровня и заканчивая корнем. Внутри каждого уровня сохраняйте порядок слева направо.
 
-For example, rows collected top-down as `[[3],[9,20],[15,7]]` should be returned as `[[15,7],[9,20],[3]]`.
+Например, строки, собранные сверху вниз как `[[3],[9,20],[15,7]]`, должны быть возвращены как `[[15,7],[9,20],[3]]`.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= number of nodes <= 2000`
 - `-1000 <= Node.val <= 1000`
 
-**Adaptation note:** The nested value list is represented as `int_list_2d` in this judge.
+**Примечание по адаптации: ** Список вложенных значений представлен как `int_list_2d`.

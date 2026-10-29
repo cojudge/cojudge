@@ -1,6 +1,6 @@
 {
   "id": "largest-plus-sign",
-  "title": "765. Largest Plus Sign",
+  "title": "765. Самый большой плюс знак",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/largest-plus-sign/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "n = 5, mines = [[4,2]]",
       "output": "2",
-      "explanation": "One mine still leaves a center with one-step arms."
+      "explanation": "Одна мина по-прежнему оставляет центр с одноступенчатыми руками."
     },
     {
       "input": "n = 1, mines = [[0,0]]",
       "output": "0",
-      "explanation": "No 1-cell remains."
+      "explanation": "1-ячейки не осталось."
     },
     {
       "input": "n = 3, mines = []",
       "output": "2",
-      "explanation": "The middle of a full grid reaches one cell each way."
+      "explanation": "Середина полной сетки достигает одной ячейки в каждом направлении."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Build a banned set from mines, then precompute consecutive-one runs left, right, up, and down for every cell.",
-    "Each direction can be filled in one linear sweep; the plus at (r,c) is the minimum of the four runs.",
-    "Track the maximum of those minima over all cells."
+    "Постройте запрещенный набор из шахт, а затем предвычислите последовательно один курс влево, вправо, вверх и вниз для каждой ячейки.",
+    "Каждое направление может быть заполнено одним линейным размахом; плюс при (r,c) - минимум четырех пробегов.",
+    "Отслеживайте максимум этих минимумов во всех клетках."
   ]
 }

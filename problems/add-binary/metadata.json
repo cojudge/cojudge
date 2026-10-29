@@ -1,6 +1,6 @@
 {
   "id": "add-binary",
-  "title": "248. Add Binary",
+  "title": "248. Добавить Binary",
   "difficulty": "Easy",
   "category": "string",
   "link": "https://leetcode.com/problems/add-binary/",
@@ -47,7 +47,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Add the two strings bit by bit from the least significant digit (rightmost), carrying a 1 into the next position when a column sums to 2.",
-    "Pad the shorter string with leading zeros, or stop once both are consumed and the carry is zero."
+    "Добавьте две строки бит за битом из наименее значимой цифры (самой правой), перенося 1 в следующую позицию, когда столбец суммируется в 2.",
+    "Установите более короткую строку с ведущими нулями или остановитесь, как только оба будут потреблены, и перенос будет равен нулю."
   ]
 }

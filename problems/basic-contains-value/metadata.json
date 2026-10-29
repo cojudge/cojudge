@@ -1,18 +1,18 @@
 {
   "id": "basic-contains-value",
-  "title": "22. Contains Value",
+  "title": "22. Содержит ценность",
   "difficulty": "Easy",
   "category": "arrays",
   "examples": [
     {
       "input": "nums = [5,3,7], target = 7",
       "output": "true",
-      "explanation": "7 is in the array."
+      "explanation": "7 находится в массиве."
     },
     {
       "input": "nums = [5,3,7], target = 9",
       "output": "false",
-      "explanation": "9 is not in the array."
+      "explanation": "9 отсутствует в массиве."
     }
   ],
   "starterCode": {
@@ -52,7 +52,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Same scan as Find Index, but return a boolean.",
-    "Return `true` on the first match and `false` at the end."
+    "То же сканирование, что и индекс поиска, но возвращайте булеву.",
+    "Возврат `true` в первом матче и `false` в конце."
   ]
 }

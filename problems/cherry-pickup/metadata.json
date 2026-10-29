@@ -1,6 +1,6 @@
 {
   "id": "cherry-pickup",
-  "title": "746. Cherry Pickup",
+  "title": "746. Вишневый пикап",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/cherry-pickup/",
   "category": "dp",
@@ -8,12 +8,12 @@
     {
       "input": "grid = [[0,1,-1],[1,0,-1],[1,1,1]]",
       "output": "5",
-      "explanation": "Two coordinated forward paths gather five cherries around the thorns."
+      "explanation": "Два скоординированных тропинки собирают вокруг шипов пять вишней."
     },
     {
       "input": "grid = [[1,1,-1],[1,-1,1],[-1,1,1]]",
       "output": "0",
-      "explanation": "No pair of thorn-free routes reaches the goal."
+      "explanation": "Ни одна пара маршрутов без шипов не достигает цели."
     },
     {
       "input": "grid = [[1]]",
@@ -50,8 +50,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Treat the round trip as two walkers stepping from (0,0) to (n-1,n-1) in lockstep, so both take the same number of steps.",
-    "State (r1, c1, r2) fixes c2 by steps: c2 = r1 + c1 - r2; keep the best cherries for each reachable triple.",
-    "A shared cell contributes its cherry once; unreachable or thorn states stay at negative infinity, and a negative best means answer 0."
+    "Относитесь к круглому путешествию как к двум ходункам, шагающим от (0, 0) до (n-1, n-1) по логическому шагу, поэтому оба делают одинаковое количество шагов.",
+    "Состояние (r1, c1, r2) фиксирует c2 по шагам: c2 = r1 + c1 - r2; сохраняйте лучшие вишни для каждой достижимой тройки.",
+    "Общая клетка вносит свой вклад один раз; недостижимые или колючие состояния остаются на отрицательной бесконечности, а отрицательный лучший ответ означает 0."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "subsets-ii",
-  "title": "111. Subsets II",
+  "title": "111. Подмножества II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/subsets-ii/",
   "category": "backtracking",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1,2,2]",
       "output": "[[],[1],[1,2],[1,2,2],[2],[2,2]]",
-      "explanation": "Repeated choices that would create the same subset are included only once."
+      "explanation": "Повторяющиеся варианты, которые создают одно и то же подмножество, включаются только один раз."
     },
     {
       "input": "nums = [0]",
       "output": "[[],[0]]",
-      "explanation": "The unique subsets of [0] are [[],[0]]."
+      "explanation": "Уникальные подмножества [0] являются [[0]]."
     }
   ],
   "starterCode": {
@@ -46,7 +46,7 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Sort the values first so equal choices are adjacent.",
-    "At one recursion depth, skip a value when it is equal to the previous candidate at that same depth."
+    "Сначала сортируйте значения так, чтобы равные выборы были смежными.",
+    "При одной глубине рекурсии пропустите значение, когда оно равно предыдущему кандидату на той же глубине."
   ]
 }

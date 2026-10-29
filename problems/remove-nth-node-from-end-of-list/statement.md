@@ -1,8 +1,8 @@
-Take a singly linked list, drop its nth node counting back from the tail, and hand back the head of the resulting list.
+Возьмите по одному связанному списку, сбросьте его n-й узел, отсчитывающий назад от хвоста, и отдайте голову полученного списка.
 
-**Constraints:**
+**Ограничения:**
 
-- The number of nodes in the list is sz.
+- Количество узлов в списке sz.
 - 1 ≤ sz ≤ 30
 - 0 ≤ Node.val ≤ 100
 - 1 ≤ n ≤ sz

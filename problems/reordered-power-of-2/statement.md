@@ -1,8 +1,8 @@
-You are given a positive integer `n`. You may reorder its decimal digits arbitrarily, but the rearranged number must not have a leading zero.
+Вам дано положительное целое число `n`. Вы можете произвольно переупорядочить его десятичные цифры, но переупорядоченное число не должно иметь ведущего нуля.
 
-Determine whether some rearrangement equals a power of two (1, 2, 4, 8, 16, 32, and so on). Return `true` when possible and `false` otherwise.
+Определите, равна ли некоторая перегруппировка мощности двух (1, 2, 4, 8, 16, 32 и т. д.) Возврат `true`, когда это возможно, и `false` в противном случае.
 
-Only the multiset of digits matters: two numbers with the same digit counts are rearrangements of each other.
+Имеет значение только множество цифр: два числа с одинаковыми цифрами являются перестановками друг друга.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 10^9`

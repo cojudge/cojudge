@@ -1,9 +1,9 @@
-You are given an integer array `nums` and two non-negative limits `indexDiff` and `valueDiff`. Decide whether there exist two different positions `i` and `j` such that the positions are close and the values are close at the same time:
+Вы получаете целочисленный массив `nums` и два неотрицательных предела `indexDiff` и `valueDiff`. Решите, существуют ли две разные позиции `i` и `j`, так что позиции близки и значения близки одновременно:
 
-- `abs(i - j) <= indexDiff`, and
+- `abs(i - j) <= indexDiff` и
 - `abs(nums[i] - nums[j]) <= valueDiff`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^5`
 - `-2^31 <= nums[i] <= 2^31 - 1`
 - `0 <= indexDiff <= 10^5`

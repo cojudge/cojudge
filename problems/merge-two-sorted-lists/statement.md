@@ -1,7 +1,7 @@
-Two singly linked lists `list1` and `list2`, each already arranged from smallest to largest, are given. Interleave their nodes into one list that stays ordered increasingly, and return its head.
+Приведены два односвязных списка `list1` и `list2`, каждый из которых уже устроен от самого маленького до самого большого.Переведите свои узлы в один список, который остается упорядоченным все чаще, и верните его голову.
 
-**Constraints:**
+**Ограничения:**
 
-- The number of nodes in both lists is in the range [0, 50].
+- Количество узлов в обоих списках находится в диапазоне [0, 50].
 - -100 ≤ Node.val ≤ 100
-- Both list1 and list2 are sorted in non-decreasing order.
+- Оба списка 1 и список 2 сортируются в неубывающем порядке.

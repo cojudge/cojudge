@@ -1,6 +1,6 @@
 {
   "id": "concatenation-of-array",
-  "title": "152. Concatenation of Array",
+  "title": "152. Конкатенация массива",
   "difficulty": "Easy",
   "category": "array",
   "link": "https://leetcode.com/problems/concatenation-of-array/",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1,2,1]",
       "output": "[1,2,1,1,2,1]",
-      "explanation": "The array ans is formed as follows: ans = [nums[0],nums[1],nums[2],nums[0],nums[1],nums[2]] = [1,2,1,1,2,1]."
+      "explanation": "Ансы образуются следующим образом: ans = [nums].0], число[1], число[2], число[0], число[1], число[2]] = [1,2,1,1,2,1]."
     },
     {
       "input": "nums = [1,3,2,1]",
       "output": "[1,3,2,1,1,3,2,1]",
-      "explanation": "The array ans is formed as follows: ans = [nums[0],nums[1],nums[2],nums[3],nums[0],nums[1],nums[2],nums[3]] = [1,3,2,1,1,3,2,1]."
+      "explanation": "Ансы образуются следующим образом: ans = [nums].0], число[1], число[2], число[3], число[0], число[1], число[2], число[3]] = [1,3,2,1,1,3,2,1]."
     }
   ],
   "starterCode": {
@@ -43,6 +43,6 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Build an array of size 2 * n and assign nums[i] to ans[i] and ans[i + n]."
+    "Постройте массив размером 2 * n и назначьте числа [i] ans[i] и ans[i + n]."
   ]
 }

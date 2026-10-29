@@ -1,7 +1,7 @@
-Measure the ground covered by a set of rectangles.
+Измерьте землю, покрытую набором прямоугольников.
 
-Each entry of `rectangles` is `[x1, y1, x2, y2]` with `x1 < x2` and `y1 < y2`, describing an axis-aligned rectangle including its interior. Rectangles may overlap. Return the total area covered by at least one rectangle, modulo 1,000,000,007.
+Каждый вход `rectangles` это `[x1, y1, x2, y2]` с `x1 < x2` и `y1 < y2`, описывающий прямоугольник, выровненный по оси, включая его внутреннюю часть. Прямоугольники могут перекрываться. Возвращать общую площадь, покрытую, по меньшей мере, одним прямоугольником, модуль 1,000,000,007.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= rectangles.length <= 200`
-- Each rectangle holds four integers with `0 <= x1 < x2 <= 10^9` and `0 <= y1 < y2 <= 10^9`.
+- Каждый прямоугольник содержит четыре целых числа с `0 <= x1 < x2 <= 10^9` и `0 <= y1 < y2 <= 10^9`.

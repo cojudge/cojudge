@@ -1,4 +1,4 @@
-Return `s` reversed, computed recursively: an empty (or single-character) string returns itself, otherwise move the first character to the end of the reversed remainder.
+Возврат `s` обратный, вычисляется рекурсивно: пустая (или односимвольная) строка возвращается сама, в противном случае переместить первый символ в конец обратного остатка.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= s.length <= 200``

@@ -1,6 +1,6 @@
 {
   "id": "reordered-power-of-2",
-  "title": "863. Reordered Power of 2",
+  "title": "863. Упорядоченная мощность 2",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/reordered-power-of-2/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "n = 1",
       "output": "true",
-      "explanation": "1 is a power of two."
+      "explanation": "1 - это сила двух."
     },
     {
       "input": "n = 10",
       "output": "false",
-      "explanation": "No rearrangement is a power of two."
+      "explanation": "Никакая перегруппировка не является силой двух."
     },
     {
       "input": "n = 16",
       "output": "true",
-      "explanation": "16 itself is a power of two."
+      "explanation": "16 сам по себе является силой двух."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Compare sorted digit strings: `n` works exactly when its digit signature matches that of some power of two with the same length.",
-    "Precompute the signatures of all powers of two up to 2^30 once, then each query is a lookup.",
-    "Counting digits avoids enumerating permutations, which would be far too slow."
+    "Сравните отсортированные цифровые строки: `n` работает именно тогда, когда его цифровая подпись соответствует некоторой мощности двух с одинаковой длиной.",
+    "Предварительно вычислите подписи всех степеней до 2^30 один раз, тогда каждый запрос является поиском.",
+    "Подсчет цифр позволяет избежать перечисления перестановок, которые были бы слишком медленными."
   ]
 }

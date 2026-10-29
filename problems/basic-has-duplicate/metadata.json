@@ -1,18 +1,18 @@
 {
   "id": "basic-has-duplicate",
-  "title": "36. Has Duplicate?",
+  "title": "36. Дублируете?",
   "difficulty": "Easy",
   "category": "nested-loops",
   "examples": [
     {
       "input": "nums = [1,2,3,1]",
       "output": "true",
-      "explanation": "1 appears twice."
+      "explanation": "1 появляется дважды."
     },
     {
       "input": "nums = [1,2,3]",
       "output": "false",
-      "explanation": "All values are unique."
+      "explanation": "Все ценности уникальны."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Compare every pair of positions with nested loops.",
-    "Return `true` at the first equal pair."
+    "Сравните каждую пару позиций с вложенными петлями.",
+    "Возврат `true` в первой равной паре."
   ]
 }

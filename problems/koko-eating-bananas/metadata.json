@@ -1,6 +1,6 @@
 {
   "id": "koko-eating-bananas",
-  "title": "89. Koko Eating Bananas",
+  "title": "89. Коко ест бананы",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/koko-eating-bananas/",
   "category": "binary-search",
@@ -8,17 +8,17 @@
     {
       "input": "piles = [3,6,7,11], h = 8",
       "output": "4",
-      "explanation": "At 4 bananas/hour Koko takes ceil(3/4)+ceil(6/4)+ceil(7/4)+ceil(11/4) = 1+2+2+3 = 8 hours; at 3 bananas/hour she would take 1+2+3+4 = 10 hours, exceeding the 8-hour limit."
+      "explanation": "в 4 бананы/час Коко принимает потолок3/4) + потолок()6/4) + потолок()7/4) + потолок()11/4) = 1+2+2+3 = 8 часов; в 3 Час, который вы должны были взять 1+2+3+4 = 10 часов, превышающих 8- часовой лимит."
     },
     {
       "input": "piles = [30,11,23,4,20], h = 5",
       "output": "30",
-      "explanation": "At 30 bananas/hour Koko takes ceil(30/30)+ceil(11/30)+ceil(23/30)+ceil(4/30)+ceil(20/30) = 1+1+1+1+1 = 5 hours; at 29 bananas/hour she would take 2+1+1+1+1 = 6 hours, exceeding the 5-hour limit."
+      "explanation": "в 30 бананы/час Коко принимает потолок30/30) + потолок()11/30) + потолок()23/30) + потолок()4/30) + потолок()20/30) = 1+1+1+1+1 = 5 часов; в 29 Час, который вы должны были взять 2+1+1+1+1 = 6 часов, превышающих 5- часовой лимит."
     },
     {
       "input": "piles = [30,11,23,4,20], h = 6",
       "output": "23",
-      "explanation": "At 23 bananas/hour Koko takes ceil(30/23)+ceil(11/23)+ceil(23/23)+ceil(4/23)+ceil(20/23) = 2+1+1+1+1 = 6 hours; at 22 bananas/hour she would take 2+1+2+1+1 = 7 hours, exceeding the 6-hour limit."
+      "explanation": "в 23 бананы/час Коко принимает потолок30/23) + потолок()11/23) + потолок()23/23) + потолок()4/23) + потолок()20/23) = 2+1+1+1+1 = 6 часов; в 22 Час, который вы должны были взять 2+1+2+1+1 = 7 часов, превышающих 6- часовой лимит."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "For a fixed speed k, one pile of size p takes ceil(p / k) hours.",
-    "If a speed is fast enough, every larger speed is also fast enough.",
-    "Binary-search speeds from 1 through the largest pile and accumulate hours in a wide integer type."
+    "Для фиксированной скорости k одна куча величины p занимает часы ceil(p/k).",
+    "Если скорость достаточно быстрая, каждая большая скорость также достаточно быстра.",
+    "Бинарные поисковые скорости от 1 через самую большую кучу и накапливают часы в широком целочисленном типе."
   ]
 }

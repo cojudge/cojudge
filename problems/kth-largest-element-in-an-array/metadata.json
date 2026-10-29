@@ -1,6 +1,6 @@
 {
   "id": "kth-largest-element-in-an-array",
-  "title": "104. Kth Largest Element in an Array",
+  "title": "104. Kth Самый большой элемент в массиве",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/kth-largest-element-in-an-array/",
   "category": "heap",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [3,2,1,5,6,4], k = 2",
       "output": "5",
-      "explanation": "Sorted descending: [6,5,4,3,2,1]. The 2nd largest element is 5."
+      "explanation": "Сортированное спускание: [6, 5, 4, 3, 2, 1]. 2-й по величине элемент — 5."
     },
     {
       "input": "nums = [3,2,3,1,2,4,5,5,6], k = 4",
       "output": "4",
-      "explanation": "Sorted descending: [6,5,5,4,3,3,2,2,1]. The 4th largest element (counting duplicates) is 4."
+      "explanation": "Сортированное спускание: [6,5,5,4,3,3,2,2,1]. 4-й по величине элемент (счет дубликатов) — 4."
     }
   ],
   "starterCode": {
@@ -53,8 +53,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "A full sort works, but it does more ordering than the problem requires.",
-    "Keep a min-heap of the k largest values seen so far; its root is the answer.",
-    "Quickselect can achieve expected linear time by partitioning around a pivot."
+    "Полный сорт работает, но он делает больше заказов, чем требует проблема.",
+    "Сохраняйте мини-кучу из k самых больших значений, которые мы видели до сих пор; ее корень — ответ.",
+    "Quickselect может достичь ожидаемого линейного времени путем разделения вокруг поворота."
   ]
 }

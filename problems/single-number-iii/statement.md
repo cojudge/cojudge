@@ -1,8 +1,8 @@
-Given an integer array `nums` where every value appears twice except for exactly two values that appear once, find those two single values. Return them in any order.
+Учитывая целочисленный массив `nums`, где каждое значение появляется дважды, за исключением ровно двух значений, которые появляются один раз, найдите эти два единичных значения. Верните их в любом порядке.
 
-Your algorithm should run in linear time and use only constant extra space.
+Алгоритм должен работать в линейном времени и использовать только постоянное дополнительное пространство.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= nums.length <= 3 * 10^4`
 - `-2^31 <= nums[i] <= 2^31 - 1`
-- Exactly two values appear once and all others appear twice.
+- Два значения появляются один раз, а все остальные — два.

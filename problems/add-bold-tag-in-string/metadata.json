@@ -1,6 +1,6 @@
 {
   "id": "add-bold-tag-in-string",
-  "title": "645. Add Bold Tag in String",
+  "title": "645. Добавить Bold Tag в String",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/add-bold-tag-in-string/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"abcxyz123\", dict = [\"abc\",\"123\"]",
       "output": "\"<b>abc</b>xyz<b>123</b>\"",
-      "explanation": "The two words cover disjoint spans, so each gets its own tag pair."
+      "explanation": "Два слова покрывают разрозненные пролеты, поэтому каждый получает свою собственную пару тегов."
     },
     {
       "input": "s = \"aaabbcc\", dict = [\"aaa\",\"aab\",\"bc\"]",
       "output": "\"<b>aaabbc</b>c\"",
-      "explanation": "Matches overlap and touch, merging into one bold run from 0 to 5."
+      "explanation": "Матчи перекрываются и касаются, сливаясь в один смелый забег от 0 до 5."
     },
     {
       "input": "s = \"abc\", dict = [\"xyz\"]",
       "output": "\"abc\"",
-      "explanation": "With no hit, the string is unchanged."
+      "explanation": "Без удара струна остается неизменной."
     }
   ],
   "starterCode": {
@@ -67,9 +67,9 @@
   ],
   "outputType": "string",
   "hints": [
-    "Mark a boolean array: for every dictionary word, flag all characters of each occurrence in s.",
-    "Find occurrences with repeated substring search from each next start so overlaps are not skipped.",
-    "Emit <b> when entering a flagged run and </b> when leaving one; touching runs merge automatically.",
-    "Adaptation: the word list maps to string_array in this judge."
+    "Отметьте булевый массив: для каждого словарного слова, пометьте все символы каждого события в s.",
+    "Найдите случаи с повторным поиском подстрок с каждого следующего старта, чтобы перекрытия не пропускались.",
+    "Emit <b> при входе в помеченный пробег и </b> при выходе из него; касание пробегов сливаются автоматически.",
+    "Адаптация: карта списка слов для string_array в этом решении."
   ]
 }

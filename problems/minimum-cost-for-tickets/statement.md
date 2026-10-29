@@ -1,8 +1,8 @@
-You plan to travel on the calendar days listed in the strictly increasing array `days`. There are three pass kinds with prices in `costs`: `costs[0]` covers one day, `costs[1]` covers any 7 consecutive days, and `costs[2]` covers any 30 consecutive days. A pass can start on any day and covers that day plus the following days in its window.
+Вы планируете путешествовать по календарным дням, перечисленным в строго увеличивающемся массиве `days`. В `costs` есть три вида пропусков с ценами: `costs[0]` покрывает один день, `costs[1]` покрывает любые дни подряд 7, а `costs[2]` покрывает любые дни подряд 30. Пропуск может начинаться в любой день и охватывает этот день плюс следующие дни в его окне.
 
-Buy passes so that every listed travel day is covered with the smallest possible total price. Return that minimum price.
+Купить пропуска так, чтобы каждый перечисленный день путешествия покрывался наименьшей возможной общей ценой.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= days.length <= 365`
 - `1 <= days[i] <= 365`, strictly increasing.
 - `1 <= costs.length == 3`, `1 <= costs[i] <= 1000`.

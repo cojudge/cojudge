@@ -1,14 +1,14 @@
-You are given a string `s` that is either an email address or a phone number. Mask it as follows and return the result.
+Вам дается строка `s`, которая является либо адресом электронной почты, либо номером телефона. Маскируйте ее следующим образом и верните результат.
 
-If `s` contains `@`, it is an email with a name part, an `@` sign, and a domain part:
-- Convert the entire address to lowercase.
-- Keep the first and last characters of the name part, replacing everything between them with exactly five `*` characters (the name always has at least two characters).
+Если `s` содержит `@`, это электронное письмо с частью имени, знаком `@` и частью домена:
+- Преобразуйте весь адрес в нижний регистр.
+- Сохраните первый и последний символы части имени, заменив все между ними ровно пятью символами `*` (имя всегда имеет как минимум два символа).
 
-If `s` has no `@`, it is a phone number holding 10 to 13 digits mixed with separators such as spaces, `+`, `-`, `(`, and `)`:
-- Keep only the last four digits; mask the first six significant digits as `***-***-`.
-- When there are more than 10 digits, the leading extra digits form a country block: output `+`, then one `*` per extra digit, then `-`, followed by the masked local part. So 10 digits give `***-***-1234`, 11 digits give `+*-***-***-1234`, 12 digits give `+**-***-***-1234`, and 13 digits give `+***-***-***-1234`.
+Если `s` не имеет `@`, это телефонный номер, содержащий цифры 10 до 13, смешанные с разделителями, такими как пробелы, `+`, `-`, `(` и `)`:
+- Храните только последние четыре цифры; маскируйте первые шесть значащих цифр как `***-***-`.
+- Когда цифр 10 больше, ведущие дополнительные цифры образуют блок страны: выход `+`, затем один `*` на дополнительную цифру, затем `-`, за которым следует маскированная локальная часть.Так что цифры 10 дают `***-***-1234`, цифры 11 дают `+*-***-***-1234`, цифры 12 дают `+**-***-***-1234`, а цифры 13 дают `+***-***-***-1234`.
 
-**Constraints:**
-- `s` is a valid email or phone number as described above
-- Emails contain exactly one `@`, a name of length at least 2, and a domain with at least one `.`
-- Phone numbers contain 10 to 13 digits
+**Ограничения:**
+- `s` - действительный номер электронной почты или телефона, как описано выше.
+- Электронные письма содержат ровно один `@`, имя длины по меньшей мере 2 и домен с по меньшей мере одним `.`.
+- Номера телефонов содержат цифры 10-13

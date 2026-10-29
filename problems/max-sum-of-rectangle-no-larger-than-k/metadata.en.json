@@ -1,0 +1,64 @@
+{
+  "id": "max-sum-of-rectangle-no-larger-than-k",
+  "title": "442. Max Sum of Rectangle No Larger Than K",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "matrix = [[1,0,1],[0,-2,3]], k = 2",
+      "output": "2",
+      "explanation": "The single cell holding 2 is the best rectangle at or below k."
+    },
+    {
+      "input": "matrix = [[2,2,-1]], k = 3",
+      "output": "3",
+      "explanation": "The submatrix [[2,2,-1]] itself sums to 3."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxSumSubmatrix(int[][] matrix, int k) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxSumSubmatrix(self, matrix: List[List[int]], k: int) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int maxSumSubmatrix(vector<vector<int>>& matrix, int k) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MaxSumSubmatrix(int[][] matrix, int k) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_sum_submatrix(matrix: Vec<Vec<i32>>, k: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MaxSumSubmatrix(matrix [][]int, k int) int {\n    \n}",
+    "typescript": "export function maxSumSubmatrix(matrix: number[][], k: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $matrix\n     * @param int $k\n     * @return int\n     */\n    public function maxSumSubmatrix($matrix, $k) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "matrix": "[[1,0,1],[0,-2,3]]",
+      "k": 2
+    },
+    {
+      "matrix": "[[2,2,-1]]",
+      "k": 3
+    },
+    {
+      "matrix": "[[5]]",
+      "k": 5
+    },
+    {
+      "matrix": "[[-1,-2],[-3,-4]]",
+      "k": -2
+    }
+  ],
+  "functionName": "maxSumSubmatrix",
+  "params": [
+    {
+      "name": "matrix",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Fix left and right column borders and compress rows into 1D column sums.",
+    "For the 1D problem, scan prefix sums while keeping them in an ordered set.",
+    "For each prefix cur, the ceiling of (cur - k) in the set yields the best subarray ending here."
+  ]
+}

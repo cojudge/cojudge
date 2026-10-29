@@ -1,6 +1,6 @@
 {
   "id": "strange-printer",
-  "title": "683. Strange Printer",
+  "title": "683. Странный принтер",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/strange-printer/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"aaabbb\"",
       "output": "2",
-      "explanation": "Print all a at once, then overwrite the tail with b."
+      "explanation": "Распечатайте все а сразу, а затем перезапишите хвост b."
     },
     {
       "input": "s = \"aba\"",
       "output": "2",
-      "explanation": "Print aaa first, then paint the middle b."
+      "explanation": "Сначала распечатайте ааа, затем покрасьте середину b."
     },
     {
       "input": "s = \"abc\"",
       "output": "3",
-      "explanation": "All letters differ, so each needs its own turn."
+      "explanation": "Все буквы разные, поэтому каждому нужен свой черед."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Squeeze out consecutive repeats first; they never cost extra.",
-    "For interval [l, r], start with solving [l, r-1] plus one turn for s[r].",
-    "When s[k] equals s[r], the turn painting s[r] can share the turn painting s[k]: try dp[l][k] + dp[k+1][r-1]."
+    "Сначала выдавите последовательные повторы; они никогда не стоят дороже.",
+    "Для интервала [l, r] начните с решения [l, r-1] плюс один поворот для s[r].",
+    "Когда s[k] равняется s[r], повернутая картина s[r] может разделить повернутую картину s[k]: попробуйте dp[l][k] + dp[k+1][r-1]."
   ]
 }

@@ -1,0 +1,65 @@
+{
+  "id": "read-n-characters-given-read4",
+  "title": "310. Read N Characters Given Read4",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/read-n-characters-given-read4/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "file = \"abc\", n = 4",
+      "output": "\"abc\"",
+      "explanation": "Only three characters exist, so the reader stops early."
+    },
+    {
+      "input": "file = \"abcde\", n = 5",
+      "output": "\"abcde\"",
+      "explanation": "Exactly the whole file is requested."
+    },
+    {
+      "input": "file = \"abcdABCD1234\", n = 12",
+      "output": "\"abcdABCD1234\"",
+      "explanation": "Twelve characters fill three read4 calls exactly."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String read(String file, int n) {\n        return \"\";\n    }\n}",
+    "python": "class Solution:\n    def read(self, file: str, n: int) -> str:\n        return \"\"",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string read(string file, int n) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string Read(string file, int n) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn read(file: String, n: i32) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc Read(file string, n int) string {\n    return \"\"\n}",
+    "typescript": "export function read(file: string, n: number): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $file\n     * @param int $n\n     * @return string\n     */\n    public function read($file, $n) {\n        return \"\";\n    }\n}"
+  },
+  "testCases": [
+    {
+      "file": "abc",
+      "n": 4
+    },
+    {
+      "file": "abcde",
+      "n": 5
+    },
+    {
+      "file": "abcdABCD1234",
+      "n": 12
+    }
+  ],
+  "functionName": "read",
+  "params": [
+    {
+      "name": "file",
+      "type": "string"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "The answer is simply the file prefix of length min(n, file length).",
+    "Think in read4 chunks: full groups of four plus one final partial group.",
+    "An empty file or n = 0 both yield an empty string."
+  ]
+}

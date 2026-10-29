@@ -1,0 +1,85 @@
+{
+  "id": "making-a-large-island",
+  "title": "825. Making A Large Island",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/making-a-large-island/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "grid = [[1,0],[0,1]]",
+      "output": "3",
+      "explanation": "One flip connects both ones plus the flipped cell."
+    },
+    {
+      "input": "grid = [[1,1],[1,0]]",
+      "output": "4",
+      "explanation": "The flip completes the square."
+    },
+    {
+      "input": "grid = [[1,1],[1,1]]",
+      "output": "4",
+      "explanation": "No flip is needed."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int largestIsland(int[][] grid) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def largestIsland(self, grid: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int largestIsland(vector<vector<int>>& grid) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int LargestIsland(int[][] grid) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn largest_island(grid: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc LargestIsland(grid [][]int) int {\n    return 0\n}",
+    "typescript": "export function largestIsland(grid: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $grid\n     * @return int\n     */\n    public function largestIsland($grid) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "grid": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "grid": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "grid": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    }
+  ],
+  "functionName": "largestIsland",
+  "params": [
+    {
+      "name": "grid",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Label each existing island with a unique id and record its cell count first.",
+    "For every zero, gather the distinct neighbouring island ids and add their sizes plus one for the flip.",
+    "Handle the all-ones grid separately since no zero exists to flip."
+  ]
+}

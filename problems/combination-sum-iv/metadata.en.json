@@ -1,0 +1,81 @@
+{
+  "id": "combination-sum-iv",
+  "title": "21. Combination Sum IV",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/combination-sum-iv/",
+  "examples": [
+    {
+      "input": "nums=[1,2,3], target=4",
+      "output": "7",
+      "explanation": "The number of ways to form 4 is 7."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int combinationSum4(int[] nums, int target) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def combinationSum4(self, nums: List[int], target: int) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int combinationSum4(vector<int>& nums, int target) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int CombinationSum4(int[] nums, int target) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn combination_sum4(nums: Vec<i32>, target: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc CombinationSum4(nums []int, target int) int {\n    \n}",
+    "typescript": "export function combinationSum4(nums: number[], target: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $target\n     * @return int\n     */\n    public function combinationSum4($nums, $target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3]",
+      "target": 4
+    },
+    {
+      "nums": "[9]",
+      "target": 3
+    },
+    {
+      "nums": "[1]",
+      "target": 5
+    },
+    {
+      "nums": "[1,2]",
+      "target": 5
+    },
+    {
+      "nums": "[3,5]",
+      "target": 7
+    },
+    {
+      "nums": "[1,2,5]",
+      "target": 5
+    },
+    {
+      "nums": "[10,20,30]",
+      "target": 50
+    },
+    {
+      "nums": "[1,2,3]",
+      "target": 10
+    },
+    {
+      "nums": "[2]",
+      "target": 100
+    },
+    {
+      "nums": "[1,2,3,4]",
+      "target": 100
+    }
+  ],
+  "functionName": "combinationSum4",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "DP over target values: dp[t] = sum(dp[t - x]) for all x in nums with t-x >= 0."
+  ]
+}

@@ -1,13 +1,13 @@
-Build a word store that supports a fuzzy lookup. Design adaptation: instead of implementing a class, you implement `runMagicDictionary(operations, words)` using only the allowed array types.
+Создайте текстовый магазин, который поддерживает нечеткий поиск. Адаптация дизайна: вместо реализации класса вы реализуете `runMagicDictionary(operations, words)`, используя только разрешенные типы массивов.
 
-Calling convention:
+Вызовите конвенцию:
 
-- `operations[i]` is either `"buildDict"` or `"search"`.
-- When it is `"buildDict"`, `words[i]` packs the entire dictionary as words joined by `"|"` (for example `"hello|leetcode"`). An empty string means an empty dictionary. This call replaces any prior dictionary and produces no output entry.
-- When it is `"search"`, `words[i]` is a single query word. Append `1` to the answer when some dictionary word has the same length and differs in exactly one position; otherwise append `0`.
+- `operations[i]` - это `"buildDict"` или `"search"`.
+- Когда это `"buildDict"`, `words[i]` упаковывает весь словарь в виде слов, к которым присоединяется `"|"` (например, `"hello|leetcode"`). Пустая строка означает пустой словарь. Этот вызов заменяет любой предыдущий словарь и не производит входной выход.
+- Когда это `"search"`, `words[i]` - одно слово запроса.Приложите `1` к ответу, когда какое-то словарное слово имеет одинаковую длину и отличается ровно в одной позиции; в противном случае приложите `0`.
 
-Return the list of `1/0` answers for the search calls in order.
+Верните список ответов `1/0` для поисковых вызовов в порядке.
 
-**Constraints:**
-- Operation count per test is between 1 and 20.
-- Words use lowercase letters; packed dictionaries use '|' only as a separator.
+**Ограничения:**
+- Количество операций в тесте находится между 1 и 20.
+- Слова используют строчные буквы; упакованные словари используют только как разделитель.

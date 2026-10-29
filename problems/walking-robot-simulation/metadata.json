@@ -1,6 +1,6 @@
 {
   "id": "walking-robot-simulation",
-  "title": "868. Walking Robot Simulation",
+  "title": "868. Моделирование робота Walking Robot",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/walking-robot-simulation/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "commands = [4,-1,3], obstacles = []",
       "output": "25",
-      "explanation": "The robot walks to (0, 4), turns east, then walks to (3, 4), where 3*3 + 4*4 = 25."
+      "explanation": "Робот идет к (0, 4), поворачивает на восток, затем идет к (3, 4), где 3*3 + 4*4 = 25."
     },
     {
       "input": "commands = [4,-1,4,-2,4], obstacles = [[2,4]]",
       "output": "65",
-      "explanation": "The robot reaches (0, 4), is stopped by the obstacle at (2, 4) and halts at (1, 4), then turns north and finishes at (1, 8), giving 1 + 64 = 65."
+      "explanation": "Робот достигает (0, 4), останавливается на препятствие (2, 4) и останавливается на (1, 4), затем поворачивает на север и финиширует на (1, 8), давая 1 + 64 = 65."
     },
     {
       "input": "commands = [6,-1,-1,6], obstacles = []",
       "output": "36",
-      "explanation": "The robot walks north to (0, 6), turns around, and walks back to the origin. The farthest point is (0, 6) with distance squared 36."
+      "explanation": "Робот идет на север (0, 6), поворачивается и возвращается к происхождению. Самая дальняя точка - (0, 6) с квадратом расстояния 36."
     }
   ],
   "starterCode": {
@@ -62,7 +62,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Store every obstacle in a hash set so each single-step move can be checked in O(1).",
-    "Keep a direction index 0..3 for north, east, south, west; -2 subtracts one (mod 4) and -1 adds one."
+    "Храните каждое препятствие в хэш-наборе, чтобы каждый шаг можно было проверить в O (1).",
+    "Держите указатель направления 0..3 для севера, востока, юга, запада; -2 вычитает один (mod 4) и -1 добавляет один."
   ]
 }

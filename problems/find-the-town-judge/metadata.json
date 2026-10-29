@@ -1,6 +1,6 @@
 {
   "id": "find-the-town-judge",
-  "title": "217. Find the Town Judge",
+  "title": "217. Найдите городского судью",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/find-the-town-judge/",
   "category": "graph",
@@ -55,6 +55,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "The judge is trusted by everyone else and trusts nobody. Track in/out degree."
+    "Судье доверяют все остальные, и он никому не доверяет."
   ]
 }

@@ -1,14 +1,14 @@
-You are given a string `s` that contains only the characters `(` and `)`. The string is balanced, meaning every opening bracket is eventually closed in the correct order.
+Вам дается строка `s`, которая содержит только символы `(` и `)`. Струна сбалансирована, то есть каждая открывающая скобка в конечном итоге закрывается в правильном порядке.
 
-A score is assigned to such strings using the following ideas, applied in your own reasoning:
+Оценка присваивается таким строкам с использованием следующих идей, применяемых в собственных рассуждениях:
 
-- The smallest balanced pair `()` is worth one point.
-- When two balanced blocks sit side by side, their values add up.
-- When one balanced block is wrapped inside an extra pair of brackets, its value doubles.
+- Самая маленькая сбалансированная пара `()` стоит одного балла.
+- Когда два уравновешенных блока сидят бок о бок, их значения складываются.
+- Когда один сбалансированный блок завернут в дополнительную пару скобок, его значение удваивается.
 
-Compute the total score of `s`.
+Вычислите общий балл `s`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 50`
-- `s` holds only `(` and `)` and forms a balanced sequence.
-- `s.length` is even.
+- `s` содержит только `(` и `)` и образует сбалансированную последовательность.
+- `s.length` является четным.

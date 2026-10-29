@@ -1,8 +1,8 @@
-A permutation of `1..n` is called beautiful when no three indices `i < j < k` form an arithmetic progression in values, meaning `2 * arr[j] != arr[i] + arr[k]` for every triple.
+Прекрасной называется перестановка `1..n`, когда три индекса `i < j < k` не образуют арифметической прогрессии в значениях, то есть `2 * arr[j] != arr[i] + arr[k]` для каждой тройки.
 
-Given `n`, return any beautiful permutation. The checker verifies the permutation property and the progression rule rather than matching one exact order.
+Учитывая `n`, верните любую красивую перестановку. Проверка проверяет свойство перестановки и правило прогрессии, а не соответствие одному точному порядку.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 1000`
 
-Adaptation: the output uses `int_array`; any valid beautiful array is accepted.
+Адаптация: на выходе используется `int_array`; принимается любой действительный красивый массив.

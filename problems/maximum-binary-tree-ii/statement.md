@@ -1,15 +1,15 @@
-A maximum binary tree is built from an array by a simple rule: the largest
-value becomes the root, the same rule applied to the part left of it builds
-the left subtree, and the same rule applied to the part right of it builds the
-right subtree.
+Максимальное двоичное дерево строится из массива по простому правилу: самое большое
+Значение становится корнем, то же правило применяется к левой части строится
+левое дерево, и то же правило, применяемое к правой его части, строит
+Правое дерево.
 
-You are given the `root` of such a tree (constructed from some array `a`) and
-a new integer `val` that is appended to `a`. Rebuild the tree for the extended
-array, returning its new root. The original tree must be reused rather than
-reconstructed from scratch: the change only affects nodes along one path.
+Вы получаете `root` такого дерева (построенного из некоторого массива `a`) и
+новое целое число `val`, которое прилагается к `a`.
+массив, возвращающий свой новый корень. Оригинальное дерево должно быть повторно использовано, а не
+реконструируется с нуля: изменение влияет только на узлы по одному пути.
 
-**Constraints:**
-- The number of nodes is between `1` and `100`.
+**Ограничения:**
+- Количество узлов находится между `1` и `100`.
 - `1 <= Node.val <= 100`
-- All node values are distinct.
+- Все значения узлов различны.
 - `1 <= val <= 100`

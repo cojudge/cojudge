@@ -1,6 +1,6 @@
 {
   "id": "exam-room",
-  "title": "851. Exam Room",
+  "title": "851. Экзаменная комната",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/exam-room/",
   "category": "design",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"ExamRoom\",\"seat\",\"seat\",\"seat\",\"leave\",\"seat\"]\nvalues = [10,0,0,0,4,0]",
       "output": "[0,9,4,4]",
-      "explanation": "Seats spread to ends then middle; freed 4 is retaken."
+      "explanation": "Сиденья распространяются на концы, а затем на середину; освобождается 4."
     },
     {
       "input": "operations = [\"ExamRoom\",\"seat\",\"seat\",\"leave\",\"seat\"]\nvalues = [4,0,0,0,0]",
       "output": "[0,3,0]",
-      "explanation": "Take 0 and 3, free 0, then retake 0."
+      "explanation": "Возьмите 0 и 3, бесплатно 0, а затем снова возьмите 0."
     },
     {
       "input": "operations = [\"ExamRoom\",\"seat\"]\nvalues = [1,0]",
       "output": "[0]",
-      "explanation": "Only seat available."
+      "explanation": "Доступно только место."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Keep occupied seats in an ordered set; the best seat always lies at an end or midway between two neighbours.",
-    "For an interior gap (a,b) the candidate is (a+b)//2 with distance (b-a)//2; for edges use 0 or N-1 directly.",
-    "Scan all gaps per seat() call: with few operations this linear scan is simplest and fast enough."
+    "Держите занятые места в упорядоченном наборе; лучшее место всегда находится в конце или на полпути между двумя соседями.",
+    "Для внутреннего зазора (a,b) кандидатом является (a+b)//2 с расстоянием (b-a)//2; для краев используют 0 или N-1 напрямую.",
+    "Сканирование всех зазоров на сиденье () вызов: с небольшим количеством операций это линейное сканирование является самым простым и достаточно быстрым."
   ]
 }

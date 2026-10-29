@@ -1,10 +1,10 @@
-Decide whether the array can be split into pairs where one entry doubles the other.
+Решите, можно ли разделить массив на пары, где одна запись удваивает другую.
 
-The array length is even. You must partition all entries into pairs `(a, b)` with `b = 2 * a`. Zeros pair with zeros, negatives follow the same doubling rule (for example `-2` pairs with `-4`), and every element is used exactly once.
+Вы должны разделить все записи на пары `(a, b)` с `b = 2 * a`. Нулевая пара с нулями, отрицательные следуют тому же правилу удвоения (например, пары `-2` с `-4`), и каждый элемент используется ровно один раз.
 
-Given `arr`, return `true` when such a pairing exists and `false` otherwise.
+Учитывая `arr`, возвращайте `true`, когда такое сопряжение существует, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= arr.length <= 3 * 10^4`
-- Length is even.
+- Длина ровная.
 - `-10^5 <= arr[i] <= 10^5`

@@ -1,6 +1,6 @@
 {
   "id": "expression-add-operators",
-  "title": "380. Expression Add Operators",
+  "title": "380. Экспрессионные операторы Add",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/expression-add-operators/",
   "category": "backtracking",
@@ -8,17 +8,17 @@
     {
       "input": "num = \"123\", target = 6",
       "output": "[\"1+2+3\",\"1*2*3\"]",
-      "explanation": "Both expressions evaluate to 6 (order may vary)."
+      "explanation": "Оба выражения оцениваются по 6 (порядок может изменяться)."
     },
     {
       "input": "num = \"232\", target = 8",
       "output": "[\"2+3*2\",\"2*3+2\"]",
-      "explanation": "Multiplication binds tighter than addition."
+      "explanation": "Умножение связывается сильнее, чем сложение."
     },
     {
       "input": "num = \"3456237490\", target = 9191",
       "output": "[]",
-      "explanation": "No insertion reaches the target."
+      "explanation": "Никакая вставка не достигает цели."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Backtrack over split positions, carrying the running value plus the last operand to handle * precedence.",
-    "Skip any multi-digit chunk with a leading zero.",
-    "Use long arithmetic since intermediate products can exceed int range."
+    "Обратный путь по разделенным позициям, несущий значение бега плюс последний операнд для обработки *преимущества.",
+    "Пропустите любой многозначный кусок с ведущим нулем.",
+    "Используйте длинную арифметику, так как промежуточные продукты могут превышать диапазон int."
   ]
 }

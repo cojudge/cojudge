@@ -1,0 +1,58 @@
+{
+  "id": "reverse-words-in-a-string",
+  "title": "307. Reverse Words in a String",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/reverse-words-in-a-string/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"the sky is blue\"",
+      "output": "\"blue is sky the\"",
+      "explanation": "The four words appear in opposite order."
+    },
+    {
+      "input": "s = \"  hello world  \"",
+      "output": "\"world hello\"",
+      "explanation": "Extra edge spaces disappear in the answer."
+    },
+    {
+      "input": "s = \"a good   example\"",
+      "output": "\"example good a\"",
+      "explanation": "Multiple gaps between words shrink to one space."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String reverseWords(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def reverseWords(self, s: str) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string reverseWords(string s) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string ReverseWords(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reverse_words(s: String) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc ReverseWords(s string) string {\n    \n}",
+    "typescript": "export function reverseWords(s: string): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string\n     */\n    public function reverseWords($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "the sky is blue"
+    },
+    {
+      "s": "  hello world  "
+    },
+    {
+      "s": "a good   example"
+    }
+  ],
+  "functionName": "reverseWords",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Split on whitespace and drop empty tokens, then reverse the word list.",
+    "Join with a single space to normalize all gaps automatically.",
+    "A two-pointer in-place variant can also run in O(1) extra space."
+  ]
+}

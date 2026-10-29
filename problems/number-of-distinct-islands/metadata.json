@@ -1,6 +1,6 @@
 {
   "id": "number-of-distinct-islands",
-  "title": "709. Number of Distinct Islands",
+  "title": "709. Количество отдельных островов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/number-of-distinct-islands/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "grid = [[1,1,0,0,0],[1,1,0,0,0],[0,0,0,1,1],[0,0,0,1,1]]",
       "output": "1",
-      "explanation": "Two 2x2 blocks share one shape."
+      "explanation": "Два блока 2x2 имеют одну форму."
     },
     {
       "input": "grid = [[1,1,0,1,1],[1,0,0,0,0],[0,0,0,0,1],[1,1,0,1,1]]",
       "output": "3",
-      "explanation": "Four islands fall into three shapes."
+      "explanation": "Четыре острова имеют три формы."
     },
     {
       "input": "grid = [[0,0,0],[0,0,0]]",
       "output": "0",
-      "explanation": "No land."
+      "explanation": "Нет земли."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Adaptation: input is int_array_2d and output is the integer count of translation-distinct shapes.",
-    "Flood-fill each island and record every cell relative to the island's first cell; sorting those offsets gives a translation-free signature.",
-    "Store signatures in a set; its size is the answer."
+    "Адаптация: вход - int_array_2d, а выход - целочисленное количество переводо-отличимых форм.",
+    "Наводнение заполняет каждый остров и записывает каждую ячейку относительно первой ячейки острова; сортировка этих смещений дает подпись без перевода.",
+    "Храните подписи в наборе; его размер является ответом."
   ]
 }

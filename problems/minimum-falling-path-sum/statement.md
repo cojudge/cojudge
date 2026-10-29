@@ -1,7 +1,7 @@
-You are given a square integer matrix. A falling path starts at any cell in the top row and moves down one row at a time, each step shifting to the column directly below, diagonally left-below, or diagonally right-below when those columns exist.
+Вам дана квадратная целочисленная матрица. Путь падения начинается в любой ячейке верхнего ряда и движется вниз по одной строке за раз, каждый шаг смещается к столбцу прямо внизу, по диагонали слева внизу или по диагонали справа внизу, когда эти столбцы существуют.
 
-Return the smallest possible sum of a falling path from the top row to the bottom row.
+Верните наименьшую возможную сумму падающего пути от верхнего ряда к нижнему ряду.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= matrix.length <= 100`
-- The matrix is square with values between `-100` and `100`.
+- Матрица является квадратной со значениями между `-100` и `100`.

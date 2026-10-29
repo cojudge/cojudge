@@ -1,18 +1,18 @@
 {
   "id": "basic-count-above",
-  "title": "26. Count Above Threshold",
+  "title": "26. Граф выше порога",
   "difficulty": "Easy",
   "category": "arrays",
   "examples": [
     {
       "input": "nums = [1,5,10], t = 4",
       "output": "2",
-      "explanation": "5 and 10 exceed 4."
+      "explanation": "5 и 10 превосходят 4."
     },
     {
       "input": "nums = [1,2,3], t = 5",
       "output": "0",
-      "explanation": "Nothing exceeds 5."
+      "explanation": "Ничто не превосходит 5."
     }
   ],
   "starterCode": {
@@ -52,7 +52,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Loop with a counter like Count Evens.",
-    "The condition is `x > t`."
+    "Петля со счетчиком, как у графа Эвенса.",
+    "Условием является `x > t`."
   ]
 }

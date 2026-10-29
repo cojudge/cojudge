@@ -1,19 +1,19 @@
-This is an offline adaptation of a game task. Instead of writing a class, you write one function that replays a whole match:
+Это оффлайн-адаптация игрового задания. Вместо того, чтобы писать класс, вы пишете одну функцию, которая воспроизводит весь матч:
 
 ```
-runTicTacToe(operations, args)
+RunTicTacToe (операции, args)
 ```
 
-`operations[i]` is either `"TicTacToe"` (create a board) or `"move"`. `args[i]` carries the matching argument: `args[0]` is `[n]` (board is `n x n`), and each later entry is `[row, col, player]` describing a placement by player 1 or 2. Both arrays share the same length, and every placement targets an empty cell.
+`operations[i]` - это либо `"TicTacToe"` (создайте доску), либо `"move"`. `args[i]` несет в себе соответствующий аргумент: `args[0]` - это `[n]` (доска - `n x n`), и каждая более поздняя запись - `[row, col, player]`, описывающая размещение игроком 1 или 2. Оба массива имеют одинаковую длину, и каждое размещение нацелено на пустую ячейку.
 
-After each placement, determine the game state: return `1` when player 1 has just completed a full row, column, or diagonal; `2` when player 2 has done so; otherwise `0`. Moves never undo a decided win in the test data beyond reporting it.
+После каждого размещения определите состояние игры: верните `1`, когда игрок 1 только что завершил полный ряд, столбец или диагональ; `2`, когда игрок 2 сделал это; в противном случае `0`.
 
-Return the list of those results, one per `move`, in order. The constructor contributes nothing.
+Верните список этих результатов, по одному на `move`. Конструктор ничего не вносит.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= n <= 100`
 - `0 <= row, col < n`
-- `player` is `1` or `2`.
-- Each cell is used at most once.
+- `player` - это `1` или `2`.
+- Каждая клетка используется не более одного раза.
 
-**Adaptation note:** The classic version exposes a `TicTacToe` class with a `move` method. Here moves are replayed by `runTicTacToe` returning all `move` outcomes.
+**Примечание по адаптации:** Классическая версия показывает класс `TicTacToe` методом `move`. Здесь ходы воспроизводятся `runTicTacToe`, возвращая все результаты `move`.

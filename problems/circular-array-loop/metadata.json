@@ -1,6 +1,6 @@
 {
   "id": "circular-array-loop",
-  "title": "524. Circular Array Loop",
+  "title": "524. Круглая петля массива",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/circular-array-loop/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [2,-1,1,2,2]",
       "output": "true",
-      "explanation": "Starting at index 0, the jumps visit 0 -> 2 -> 3 -> 0, a loop of length 3 where every jump is forward."
+      "explanation": "Начиная с индекса 0, прыжки посещают 0 -> 2 -> 3 -> 0, цикл длины 3, где каждый прыжок вперед."
     },
     {
       "input": "nums = [-1,2]",
       "output": "false",
-      "explanation": "From index 0 the jump goes backward to index 1, but from index 1 the jump goes forward to index 0, so the directions mix and no valid loop exists."
+      "explanation": "От индекса 0 прыжок идет назад к индексу 1, но от индекса 1 прыжок идет вперед к индексу 0, поэтому направления смешиваются, и не существует действительной петли."
     },
     {
       "input": "nums = [-2,1,-1,-2,-2]",
       "output": "false",
-      "explanation": "Every walk either changes direction or collapses onto a single index, so there is no loop of length greater than 1."
+      "explanation": "Каждая прогулка либо изменяет направление, либо коллапсирует на один индекс, поэтому нет петли длиной больше, чем 1."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "From each start index, walk forward following the jumps while every step keeps the starting direction.",
-    "A walk that revisits one of its own indices (with a real move, not a self-loop) proves a valid cycle exists."
+    "От каждого стартового индекса шаг вперед после прыжков, в то время как каждый шаг сохраняет начальное направление.",
+    "Прогулка, которая пересматривает один из своих собственных показателей (с реальным движением, а не самопетлей), доказывает, что действительный цикл существует."
   ]
 }

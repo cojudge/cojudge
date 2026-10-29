@@ -1,5 +1,5 @@
-Spreadsheet columns are labelled A through Z, then AA, AB, and so on, like base-26 numbers but with digits 1-26 instead of 0-25. Given a column label, return its number: A is 1, Z is 26, AA is 27, AB is 28.
+Столбцы таблиц помечены как A через Z, затем AA, AB и т. Д.26 числа, но с цифрами 1-26 вместо того, чтобы 0-25При наличии ярлыка столбца верните его номер: A 1Z - это 26АА - это 27AB является 28.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= columnTitle.length <= 7`
-- `columnTitle` holds only uppercase English letters.
+- `columnTitle` содержит только английские буквы.

@@ -1,6 +1,6 @@
 {
   "id": "design-linked-list",
-  "title": "715. Design Linked List",
+  "title": "715. Дизайн Связанный список",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/design-linked-list/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"MyLinkedList\",\"addAtHead\",\"addAtTail\",\"addAtIndex\",\"get\",\"deleteAtIndex\",\"get\"], args = [[],[1],[3],[1,2],[1],[1],[1]]",
       "output": "[2,3]",
-      "explanation": "List becomes [1,2,3]; reads give 2 then 3."
+      "explanation": "Список становится [1, 2, 3]; читается 2, затем 3."
     },
     {
       "input": "operations = [\"MyLinkedList\",\"addAtHead\",\"get\"], args = [[],[5],[0]]",
       "output": "[5]",
-      "explanation": "Single insert then read."
+      "explanation": "После этого прочитайте одиночный вставку."
     },
     {
       "input": "operations = [\"MyLinkedList\",\"get\",\"addAtIndex\",\"get\"], args = [[],[0],[5,10],[0]]",
       "output": "[-1,-1]",
-      "explanation": "Empty read and ignored insert."
+      "explanation": "Пустая прочитанная и проигнорированная вставка."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Adaptation: implement runLinkedList that replays operations and returns only the get results in order.",
-    "Keep an array-backed list: get checks bounds, addAtIndex handles head/append/ignore cases, delete removes when valid.",
-    "Reset the list whenever MyLinkedList appears."
+    "Адаптация: реализуйте runLinkedList, который воспроизводит операции и возвращает только результаты в порядке.",
+    "Сохраняйте список с поддержкой массива: получайте границы проверок, добавляйте, что AtIndex обрабатывает чехлы / добавление / игнорирование, удаляйте удаляет, когда это действительно.",
+    "Сбросьте список всякий раз, когда появляется MyLinkedList."
   ]
 }

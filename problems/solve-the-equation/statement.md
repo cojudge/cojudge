@@ -1,13 +1,13 @@
-You get a string equation with exactly one `=` sign, for example `"x+5-3+x=6+x-2"`. Each side is a sum of integer constants and `x` terms such as `"2x"`, `"-x"`, or `"x"`. There are no parentheses and no powers.
+Вы получаете уравнение строк с точно одним знаком `=`, например `"x+5-3+x=6+x-2"`. Каждая сторона представляет собой сумму целочисленных констант и терминов `x`, таких как `"2x"`, `"-x"` или `"x"`. Скобки и полномочия отсутствуют.
 
-Solve for `x` and implement `solveEquation(equation)`:
+Решить для `x` и реализовать `solveEquation(equation)`:
 
 - If exactly one integer solution exists, return `"x=<value>"`, e.g. `"x=2"`.
-- If every integer satisfies the equation, return `"Infinite solutions"`.
-- If no value satisfies it, return `"No solution"`.
+- Если каждое целое число удовлетворяет уравнению, верните `"Infinite solutions"`.
+- Если значение не удовлетворяет его, верните `"No solution"`.
 
-**Constraints:**
+**Ограничения:**
 - `3 <= equation.length <= 1000`
-- The equation holds digits, `x`, `+`, `-`, and exactly one `=`.
-- Every term is valid; a bare `x` means coefficient 1 and `-x` means -1.
-- If a unique solution exists, it fits in a 32-bit signed integer.
+- Уравнение содержит цифры `x`, `+`, `-` и ровно один `=`.
+- Каждый термин действителен; голый `x` означает коэффициент 1, а `-x` означает -1.
+- Если уникальное решение существует, оно вписывается в целое число с подписью 32-бит.

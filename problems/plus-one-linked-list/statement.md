@@ -1,8 +1,8 @@
-Add one to a number stored digit-by-digit in forward order in a linked list.
+Добавьте один к номеру, сохраненному цифрой за цифрой в прямом порядке в связанном списке.
 
-Each node of the singly linked list holds one decimal digit, with the most significant digit at the head. Interpret the whole chain as a non-negative integer without leading zeros (except the single digit `0` itself) and return the head of the list that represents the value plus one. The length may grow by one digit when every digit rolls over, for example `[9,9]` becoming `[1,0,0]`.
+Каждый узел единственно связанного списка содержит одну десятичную цифру, с самой значительной цифрой в голове. Интерпретировать всю цепочку как неотрицательное целое число без ведущих нулей (кроме самой однозначной цифры `0`) и вернуть голову списка, которая представляет значение плюс один. Длина может расти на одну цифру, когда каждая цифра переворачивается, например `[9,9]` становится `[1,0,0]`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= number of nodes <= 100`
 - `0 <= Node.val <= 9`
-- The digits contain no leading zeros except the number zero itself.
+- Цифры не содержат ведущих нулей, кроме самого нуля.

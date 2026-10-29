@@ -1,6 +1,6 @@
-An integer array `nums` of even length `2 * N` contains `N + 1` distinct values, and exactly one of those values shows up `N` times (every other value appears just once). Find and return the value that is repeated.
+Целый массив `nums` четной длины `2 * N` содержит различные значения `N + 1`, и точно одно из этих значений показывает время `N` (каждое другое значение появляется только один раз).
 
-**Constraints:**
-- `2 <= nums.length <= 10^4` and the length is even.
+**Ограничения:**
+- `2 <= nums.length <= 10^4` и его длина равны.
 - `0 <= nums[i] <= 10^3`.
-- Exactly one value occurs `length / 2` times.
+- Точно одно значение имеет время `length / 2`.

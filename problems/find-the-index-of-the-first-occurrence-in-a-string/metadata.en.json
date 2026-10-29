@@ -1,0 +1,59 @@
+{
+  "id": "find-the-index-of-the-first-occurrence-in-a-string",
+  "title": "257. Find the Index of the First Occurrence in a String",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/",
+  "category": "two-pointers",
+  "examples": [
+    {
+      "input": "haystack = \"sadbutsad\", needle = \"sad\"",
+      "output": "0",
+      "explanation": "The pattern appears at index 0 and again at 6; the first occurrence wins."
+    },
+    {
+      "input": "haystack = \"leetcode\", needle = \"leeto\"",
+      "output": "-1",
+      "explanation": "No substring of the text equals the pattern."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int strStr(String haystack, String needle) {\n        \n    }\n}",
+    "python": "class Solution:\n    def strStr(self, haystack: str, needle: str) -> int:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int strStr(string haystack, string needle) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int StrStr(string haystack, string needle) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn str_str(haystack: String, needle: String) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc StrStr(haystack string, needle string) int {\n    \n}",
+    "typescript": "export function strStr(haystack: string, needle: string): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $haystack\n     * @param string $needle\n     * @return int\n     */\n    public function strStr($haystack, $needle) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "haystack": "sadbutsad",
+      "needle": "sad"
+    },
+    {
+      "haystack": "leetcode",
+      "needle": "leeto"
+    },
+    {
+      "haystack": "hello",
+      "needle": "ll"
+    }
+  ],
+  "functionName": "strStr",
+  "params": [
+    {
+      "name": "haystack",
+      "type": "string"
+    },
+    {
+      "name": "needle",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Try every start position from 0 up to len(haystack) - len(needle) and compare character by character.",
+    "For a faster scan, precompute the longest-prefix-suffix table (KMP) so a mismatch never re-examines text characters."
+  ]
+}

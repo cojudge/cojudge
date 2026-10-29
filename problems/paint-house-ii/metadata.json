@@ -1,6 +1,6 @@
 {
   "id": "paint-house-ii",
-  "title": "367. Paint House II",
+  "title": "367. Красочный дом II",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/paint-house-ii/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "costs = [[1,5,3],[2,9,4]]",
       "output": "5",
-      "explanation": "Paint house 0 with color 0 (1) and house 1 with color 2 (4) for 1 + 4 = 5."
+      "explanation": "Красочный дом 0 с цветом 0 (1) и дом 1 с цветом 2 (4) для 1 + 4 = 5."
     },
     {
       "input": "costs = [[1,3],[2,4]]",
       "output": "5",
-      "explanation": "Either 1 + 4 or 3 + 2 gives 5 while keeping neighbors different."
+      "explanation": "1 + 4 или 3 + 2 дает 5, сохраняя при этом соседей разными."
     },
     {
       "input": "costs = [[7,6,2]]",
       "output": "2",
-      "explanation": "With one house, pick the cheapest of its colors."
+      "explanation": "С одним домом выберите самый дешевый из его цветов."
     }
   ],
   "starterCode": {
@@ -54,7 +54,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "For each house, only the smallest and second-smallest totals from the previous house matter.",
-    "A color reuses the smallest previous total unless it used the same color, in which case it falls back to the second smallest."
+    "Для каждого дома важны только самые маленькие и вторые по величине суммы из предыдущего дома.",
+    "Цвет повторно использует наименьшую предыдущую сумму, если он не использует тот же самый цвет, и в этом случае он возвращается ко второй наименьшей сумме."
   ]
 }

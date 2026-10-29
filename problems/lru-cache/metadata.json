@@ -1,6 +1,6 @@
 {
   "id": "lru-cache",
-  "title": "95. LRU Cache",
+  "title": "95. ЛРУ Кэш",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/lru-cache/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"LRUCache\",\"put\",\"put\",\"get\",\"put\",\"get\",\"put\",\"get\",\"get\",\"get\"], args = [[2],[1,1],[2,2],[1],[3,3],[2],[4,4],[1],[3],[4]]",
       "output": "[1,-1,-1,3,4]",
-      "explanation": "Capacity is 2; after putting (1,1) and (2,2), key 1 is still cached so get(1) returns 1. Putting (3,3) evicts key 2, making get(2) return -1. Putting (4,4) evicts key 1, so get(1) returns -1, while keys 3 and 4 remain cached."
+      "explanation": "Вместимость - это 2После того, как положим ()1,1) и ()2,2), ключ 1 Все еще кэшируется, так что получи()1) возвращение 1Поставляю.3,3) Выселить ключ 2Чтобы получить()2) возвращение -1Поставляю.4,4) Выселить ключ 1Так что получи.1) возвращается -1В то время как ключи 3 и 4 Оставайся в клетке."
     },
     {
       "input": "operations = [\"LRUCache\",\"put\",\"get\",\"put\",\"get\",\"get\"], args = [[1],[2,1],[2],[3,2],[2],[3]]",
       "output": "[1,-1,2]",
-      "explanation": "Capacity is 1; after putting (2,1), get(2) returns 1. Then put(3,2) evicts key 2, so get(2) returns -1, but get(3) returns 2."
+      "explanation": "Емкость 1; после размещения (2, 1), get(2) возвращает 1. Затем put(3, 2) вытесняет ключ 2, поэтому get(2) возвращает -1, но get(3) возвращает 2."
     },
     {
       "input": "operations = [\"LRUCache\",\"put\",\"put\",\"get\",\"get\"], args = [[2],[1,1],[1,9],[1],[2]]",
       "output": "[9,-1]",
-      "explanation": "Capacity is 2; put(1,1) then put(1,9) updates the value of key 1 to 9, so get(1) returns 9. Key 2 was never inserted, so get(2) returns -1."
+      "explanation": "Емкость 2; put(1,1) затем put(1,9) обновляет значение ключа 1 до 9, поэтому get(1) возвращает 9. Key 2 никогда не вставлялся, поэтому get(2) возвращает -1."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Combine a hash map for key lookup with a doubly linked recency list.",
-    "Move an existing key to the most-recent end after a successful `get` or an updating `put`.",
-    "When a new insertion exceeds capacity, remove the least-recent node from both the list and the map."
+    "Объедините хеш-карту для поиска ключей с двойным списком вакансий.",
+    "Переместите существующий ключ на самый последний конец после успешного `get` или обновления `put`.",
+    "Когда новая вставка превышает емкость, удалите наименее недавний узел из списка и карты."
   ]
 }

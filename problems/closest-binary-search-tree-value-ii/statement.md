@@ -1,10 +1,10 @@
-Given the root of a binary search tree, a decimal `target` passed as a string (for example `"3.714286"`) and an integer `k`, return the `k` tree values numerically closest to `target`. Return them in any order.
+Учитывая корень дерева двоичного поиска, десятичный `target`, пройденный в виде строки (например, `"3.714286"`) и целого числа `k`, возвращайте значения дерева `k`, численно наиболее близкие к `target`. Верните их в любом порядке.
 
-This is a portable adaptation: parse `target` as a double and compare distances numerically. A checker accepts any set of `k` values whose largest distance does not exceed the smallest distance outside the set.
+Это переносная адаптация: разбор `target` как двойной и сравнение расстояний численно. Шекер принимает любой набор значений `k`, наибольшее расстояние которого не превышает наименьшего расстояния вне набора.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= number of nodes <= 10^4`
 - `1 <= k <= number of nodes`
 - `-10^4 <= Node.val <= 10^4`
-- The tree is a valid binary search tree.
-- `target` is a decimal string parseable by a double.
+- Дерево является действительным двоичным деревом поиска.
+- `target` — десятичная строка, которую можно разобрать на двойную.

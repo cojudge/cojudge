@@ -1,8 +1,8 @@
-Given a non-decreasing integer array, keep at most two copies of each distinct value while preserving the relative order. Rearrange the front of the array so the first `k` entries hold the kept values, and return `k`.
+Учитывая неубывающий целочисленный массив, сохраняйте не более двух копий каждого отдельного значения при сохранении относительного порядка. Перегруппируйте переднюю часть массива так, чтобы первые записи `k` удерживали сохраненные значения, и верните `k`.
 
-Only the returned length is graded; the contents beyond position `k` are ignored. The update must reuse the input array without allocating another large array.
+Только возвращенная длина оценивается; содержимое за пределами позиции `k` игнорируется.Обновление должно повторно использовать входной массив без выделения другого большого массива.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 30000`
 - `-10000 <= nums[i] <= 10000`
-- `nums` is sorted in non-decreasing order.
+- `nums` сортируется в неубывающем порядке.

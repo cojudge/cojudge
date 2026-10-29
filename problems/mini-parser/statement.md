@@ -1,11 +1,11 @@
-Parse a nested-list string and hand back its canonical spelling.
+Просмотрите вложенную строку списка и отдайте ее каноническое правописание.
 
-You receive a string `s` that encodes either a single integer (for example `"324"`) or a nested list of integers and lists (for example `"[123,[456,[789]]]"`). It uses only digits, `-`, `,`, `[`, and `]`, and it is guaranteed to be a valid encoding with values in `[-10^6, 10^6]`. Implement `deserialize(s)`, which parses this structure and returns its normalized serialization: the same canonical text with no extra spacing, integers in plain decimal form, and lists wrapped in matched brackets separated by single commas.
+Вы получаете строку `s`, которая кодирует либо одно целое число (например, `"324"`), либо вложенный список целых чисел и списков (например, `"[123,[456,[789]]]"`). В ней используются только цифры, `-`, `,`, `[` и `]`, и она гарантированно является действительной кодировкой со значениями в `[-10^6, 10^6]`. Внедряйте `deserialize(s)`, который анализирует эту структуру и возвращает ее нормализованную сериализацию: тот же канонический текст без дополнительного интервала, целые числа в простой десятичной форме и списки, обернутые в совпадающие скобки, разделенные одиночными запятыми.
 
-*Portable adaptation:* the classic version returns a `NestedInteger` object graph, which this judge cannot express; returning the canonical string captures the same parsing work and is compared structurally, so harmless spelling differences that parse to the same shape are still accepted.
+*Портативная адаптация:* классическая версия возвращает объектный граф `NestedInteger`, который этот судья не может выразить; возвращение канонической строки захватывает ту же самую работу разбора и сравнивается структурно, так что безвредные орфографические различия, которые разбирают к той же самой форме, все еще принимаются.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 5 * 10^4`
-- `s` holds only digits, `-`, `,`, `[`, `]`.
-- `s` is a valid nested-list serialization.
+- `s` содержит только цифры, `-`, `,`, `[`, `]`.
+- `s` - это действительная сериализация вложенного списка.
 - Every integer lies in `[-10^6, 10^6]`.

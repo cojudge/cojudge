@@ -1,9 +1,9 @@
-You are given the roots of two binary trees, `root1` and `root2`, each in level-order form.
+Вам даны корни двух двоичных деревьев, `root1` и `root2`, каждое в форме уровня-порядка.
 
-For a tree, write down the values of its leaves (nodes with no children) in left-to-right order. This list is the leaf sequence.
+Для дерева запишите значения его листьев (узлов без потомков) в порядке слева направо. Этот список представляет собой последовательность листьев.
 
-Return `true` when the two trees share exactly the same leaf sequence, and `false` otherwise. Empty trees have an empty sequence.
+Возвращайте `true`, когда два дерева имеют одну и ту же последовательность листьев, и `false`, иначе пустые деревья имеют пустую последовательность.
 
-**Constraints:**
-- Each tree holds `1 <= n <= 200` nodes in these tests (empty `[]` also handled as edge).
+**Ограничения:**
+- Каждое дерево содержит узлы `1 <= n <= 200` в этих тестах (пустые `[]` также обрабатываются как край).
 - `0 <= node.val <= 200`

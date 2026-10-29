@@ -1,6 +1,6 @@
 {
   "id": "shortest-word-distance-ii",
-  "title": "350. Shortest Word Distance II",
+  "title": "350. Самое короткое расстояние Word II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/shortest-word-distance-ii/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "wordsDict = [\"practice\",\"makes\",\"perfect\",\"coding\",\"makes\"], word1s = [\"coding\",\"makes\"], word2s = [\"practice\",\"coding\"]",
       "output": "[3,1]",
-      "explanation": "\"coding\" vs \"practice\" are 3 apart; \"makes\" vs \"coding\" are adjacent."
+      "explanation": "«кодирование» vs «практика» - это 3 отдельно; «делает» vs «кодирование» смежными."
     },
     {
       "input": "wordsDict = [\"a\",\"b\",\"c\",\"a\"], word1s = [\"a\"], word2s = [\"c\"]",
       "output": "[1]",
-      "explanation": "The closest \"a\" to \"c\" is one position away."
+      "explanation": "Ближайшее «а» к «с» находится в одной позиции."
     }
   ],
   "starterCode": {
@@ -60,8 +60,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Precompute the sorted position list of every distinct word once.",
-    "Answer each query by merging its two position lists with a two-pointer walk.",
-    "This mirrors building the WordDistance index in the constructor and reusing it per query."
+    "Вычислите сортированный список позиций каждого отдельного слова один раз.",
+    "Ответьте на каждый запрос, объединив два списка позиций с двухточечной прогулкой.",
+    "Это отражает построение индекса WordDistance в конструкторе и повторное использование его в запросе."
   ]
 }

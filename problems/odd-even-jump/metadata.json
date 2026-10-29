@@ -1,6 +1,6 @@
 {
   "id": "odd-even-jump",
-  "title": "960. Odd Even Jump",
+  "title": "960. Даже прыжок",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/odd-even-jump/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "arr = [10,13,12,14,15]",
       "output": "2",
-      "explanation": "Starting at values 13 and 15 reaches the final index through alternating smallest-larger and largest-smaller hops."
+      "explanation": "Начиная с значений 13 и 15 достигает конечного индекса путем чередования наименьшего-большего и наибольшего-меньшего прыжков."
     },
     {
       "input": "arr = [2,3,1,1,4]",
       "output": "3",
-      "explanation": "Three start positions can hop to the end under the odd/even rules."
+      "explanation": "Три стартовые позиции могут прыгать до конца по нечетным / четным правилам."
     },
     {
       "input": "arr = [5,1,3,4,2]",
       "output": "3",
-      "explanation": "Three starts succeed; the others get stuck."
+      "explanation": "Три старта увенчались успехом, остальные застряли."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Process positions from right to left while keeping an ordered map from value to nearest index on the right.",
-    "For each position, the odd hop target is the ceiling entry and the even hop target is the floor entry in that map.",
-    "Track two boolean tables (can reach the end on an odd turn / on an even turn) and propagate them through the hop targets."
+    "Обработка позиций справа налево при сохранении упорядоченной карты от значения до ближайшего индекса справа.",
+    "Для каждой позиции нечетной хмелевой целью является вход в потолок, а четной хмелевой целью является вход в пол на этой карте.",
+    "Отслеживайте два булевых стола (могут дойти до конца на нечетном повороте / на ровном повороте) и распространяйте их через хмельные цели."
   ]
 }

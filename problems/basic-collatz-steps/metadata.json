@@ -1,6 +1,6 @@
 {
   "id": "basic-collatz-steps",
-  "title": "50. Collatz Steps",
+  "title": "50. Ступени Коллатца",
   "difficulty": "Easy",
   "category": "recursion",
   "examples": [
@@ -12,7 +12,7 @@
     {
       "input": "n = 1",
       "output": "0",
-      "explanation": "Already at 1."
+      "explanation": "Уже в 1."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "The base case is `n == 1`.",
-    "Otherwise add 1 to the recursive step count for the next value."
+    "Базовый случай — `n == 1`.",
+    "В противном случае добавьте 1 к счетчику рекурсивных шагов для следующего значения."
   ]
 }

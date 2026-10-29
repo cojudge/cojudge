@@ -1,6 +1,6 @@
 {
   "id": "bag-of-tokens",
-  "title": "935. Bag of Tokens",
+  "title": "935. Мешок токенов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/bag-of-tokens/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "tokens = [100], power = 150",
       "output": "1",
-      "explanation": "One affordable face-up play."
+      "explanation": "Одна доступная игра на лице."
     },
     {
       "input": "tokens = [100,200,300,400], power = 200",
       "output": "2",
-      "explanation": "Two cheap wins peak the score at 2."
+      "explanation": "Две дешевые победы достигают пика на 2."
     },
     {
       "input": "tokens = [71,55,82], power = 54",
       "output": "0",
-      "explanation": "Nothing affordable, no points to trade."
+      "explanation": "Ничего доступного, никаких точек для торговли."
     }
   ],
   "starterCode": {
@@ -68,8 +68,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sort the tokens so the cheapest wins and the richest refuels are easy to pick.",
-    "Always spend the cheapest affordable token face-up; only when stuck, cash in the priciest remaining token face-down.",
-    "Record the best score seen, since late trades can dip before climbing again."
+    "Сортируйте токены так, чтобы самые дешевые выигрыши и самые богатые виды топлива были легко подобраны.",
+    "Всегда тратьте самые дешевые доступные токены лицом к лицу; только когда застряли, наличные деньги в самых дорогих оставшихся токенах лицом вниз.",
+    "Запишите лучший результат, так как поздние сделки могут упасть, прежде чем снова подняться."
   ]
 }

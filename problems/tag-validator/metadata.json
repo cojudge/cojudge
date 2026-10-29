@@ -8,17 +8,17 @@
     {
       "input": "code = \"<DIV>This is the first line <![CDATA[<div>]]></DIV>\"",
       "output": "true",
-      "explanation": "One outer block wraps text plus a CDATA chunk."
+      "explanation": "Один внешний блок заворачивает текст плюс кусок CDATA."
     },
     {
       "input": "code = \"<DIV>>>  ![cdata[]] <![CDATA[<div>]>]]>]]>>]</DIV>\"",
       "output": "true",
-      "explanation": "Nested-looking symbols inside CDATA do not break parsing."
+      "explanation": "Вложенные символы внутри CDATA не нарушают разбора."
     },
     {
       "input": "code = \"<A>  <B> </A>   </B>\"",
       "output": "false",
-      "explanation": "Closing order does not match opening order."
+      "explanation": "Порядок закрытия не соответствует порядку открытия."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "The whole string must be exactly one outer tag pair with nothing outside it.",
-    "Track open tags on a stack; CDATA sections only count when the stack is non-empty.",
-    "Tag names use 1-9 uppercase letters; CDATA opens with <![CDATA[ and closes with ]]> ."
+    "Вся струна должна быть точно одной внешней парой тегов, без чего-либо снаружи.",
+    "Отслеживайте открытые теги на стеке; секции CDATA учитываются только тогда, когда стек не пуст.",
+    "Названия тегов используют заглавные буквы 1-9; CDATA открывается с помощью <![CDATA[ and closes with ]]>."
   ]
 }

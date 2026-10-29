@@ -1,7 +1,7 @@
-Given an integer array `nums`, consider all strictly increasing subsequences (not necessarily contiguous).
+Учитывая целочисленный массив `nums`, рассмотрим все строго возрастающие последовательности (не обязательно смежные).
 
-Return how many distinct subsequences attain the maximum possible length. Two subsequences count separately when their index sets differ, even if the values look alike.
+Возвращайте, сколько различных последовательностей достигают максимально возможной длины. Две последовательности учитываются отдельно, когда их индексные наборы различаются, даже если значения выглядят одинаково.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 2000`
 - `-1000 <= nums[i] <= 1000`

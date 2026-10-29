@@ -1,6 +1,6 @@
 {
   "id": "valid-triangle-number",
-  "title": "644. Valid Triangle Number",
+  "title": "644. Действительный треугольный номер",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/valid-triangle-number/",
   "category": "two-pointer",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [2,2,3,4]",
       "output": "3",
-      "explanation": "Triples (2,3,4) once and (2,2,3) twice satisfy the side rule, giving 3."
+      "explanation": "Трижды (2, 3, 4) один раз и (2, 2, 3) дважды удовлетворяют боковому правилу, давая 3."
     },
     {
       "input": "nums = [4,2,3,4]",
       "output": "4",
-      "explanation": "All triples except (2,3,4)? Actually sorting to [2,3,4,4] leaves four valid triples."
+      "explanation": "Все трое (кроме одного)2,3,4На самом деле, сортировка на2,3,4,4] оставляет четыре действительных тройки."
     },
     {
       "input": "nums = [1,1,1]",
       "output": "1",
-      "explanation": "The single triple 1+1>1 is valid."
+      "explanation": "Однократный тройной 1+1>1 действителен."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sort the lengths first; then the triangle test for a triple reduces to checking the two smaller sides against the largest.",
-    "Fix the largest side and use two pointers on the prefix: when the pair sum beats the largest, every index between them also works.",
-    "Move the right pointer down on success (counting a batch) and the left pointer up otherwise."
+    "Сначала сортируйте длины, затем тест треугольника для тройки сводится к проверке двух меньших сторон против самых больших.",
+    "Исправьте самую большую сторону и используйте два указателя на приставке: когда сумма пары бьет самую большую, каждый индекс между ними также работает.",
+    "Переместите правый указатель вниз на успех (счет партии) и левый указатель вверх в противном случае."
   ]
 }

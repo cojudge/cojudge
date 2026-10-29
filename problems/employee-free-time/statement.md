@@ -1,13 +1,13 @@
-You are given every employee's busy periods in `schedule`. Because the judge has no interval objects, each employee's timetable is flattened into one integer row: `[start0, end0, start1, end1, ...]` holding consecutive `[start, end]` pairs in increasing order with no overlaps.
+Вам даются периоды занятости каждого сотрудника в `schedule`. Поскольку у судьи нет объектов интервала, расписание каждого сотрудника сплющено в одну целочисленную строку: `[start0, end0, start1, end1, ...]` держит последовательные пары `[start, end]` в возрастающем порядке без перекрытий.
 
-For example, an employee busy during `[1,2]` and `[5,6]` appears as `[1,2,5,6]`, so the whole input `[[[1,2],[5,6]],[[1,3]],[[4,10]]]` is encoded as `[[1,2,5,6],[1,3],[4,10]]`.
+Например, сотрудник, занятый во время `[1,2]` и `[5,6]`, выглядит как `[1,2,5,6]`, поэтому весь вход `[[[1,2],[5,6]],[[1,3]],[[4,10]]]` кодируется как `[[1,2,5,6],[1,3],[4,10]]`.
 
-Combine all busy blocks, merge overlaps, and return the finite gaps where everyone is free, ordered by start time. Zero-length touching points do not count, and the endless stretches before the first meeting and after the last one are ignored.
+Объединить все занятые блоки, слить перекрытия и вернуть конечные промежутки, где все свободны, упорядоченные временем начала.Точки касания нулевой длины не считаются, а бесконечные растяжки до первой встречи и после последней игнорируются.
 
-Adaptation for this judge: the original signature uses nested interval objects; here both the input rows and the output use plain integer arrays, with the output type `int_list_2d` (a list of `[start, end]` pairs).
+Адаптация для этого судьи: оригинальная подпись использует вложенные интервальные объекты; здесь и входные строки, и выход используют простые целые массивы с выходным типом `int_list_2d` (список пар `[start, end]`).
 
-**Constraints:**
+**Ограничения:**
 - `1 <= schedule.length <= 50`
-- Each row holds an even count of entries forming `[start, end]` pairs.
+- Каждая строка содержит четное количество записей, образующих пары `[start, end]`.
 - `0 <= start < end <= 10^8`
-- Pairs inside one row are sorted and non-overlapping.
+- Пары внутри одного ряда сортируются и не перекрываются.

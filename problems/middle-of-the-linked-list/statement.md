@@ -1,5 +1,5 @@
-You are given the head of a singly linked list. Walk to the middle of the list and return that node: when the list has an odd number of nodes, return the exact center; when it has an even number, return the second of the two central nodes.
+Вам дается глава единственно связанного списка. Пройдите к середине списка и верните тот узел: когда список имеет нечетное число узлов, верните точный центр; когда у него есть четное число, верните второй из двух центральных узлов.
 
-**Constraints:**
-- The list holds between `1` and `100` nodes.
+**Ограничения:**
+- Список находится между узлами `1` и `100`.
 - `1 <= Node.val <= 100`

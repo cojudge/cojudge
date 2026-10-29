@@ -1,6 +1,6 @@
 {
   "id": "k-empty-slots",
-  "title": "699. K Empty Slots",
+  "title": "699. K Пустые слоты",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/k-empty-slots/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "bulbs = [1,3,2], k = 1",
       "output": "2",
-      "explanation": "On day 2 the lamps at positions 1 and 3 are on with exactly one gap at position 2."
+      "explanation": "В день 2 лампы в положениях 1 и 3 находятся ровно в одном зазоре в положении 2."
     },
     {
       "input": "bulbs = [1,2,3], k = 1",
       "output": "-1",
-      "explanation": "No day leaves exactly one unlit slot between two lit lamps."
+      "explanation": "Ни один день не оставляет ровно одного незажженного промежутка между двумя зажженными лампами."
     },
     {
       "input": "bulbs = [6,5,8,9,7,1,10,2,3,4], k = 2",
       "output": "8",
-      "explanation": "Day 8 is the earliest day with two empty slots between lit neighbors."
+      "explanation": "День 8 — самый ранний день с двумя пустыми слотами между освещенными соседями."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Invert the input: days[position] records when that slot lights up.",
-    "A valid window [l, r] with r = l + k + 1 needs days[l] and days[r] earlier than every day inside.",
-    "Slide the window with two pointers, jumping past any interior day that blooms too early."
+    "Переверните входные данные: дни записи, когда этот слот загорается.",
+    "Для действительного окна [l, r] с r = l + k + 1 нужны дни [l] и дни [r] раньше, чем каждый день внутри.",
+    "Сдвиньте окно с двумя указателями, прыгая мимо любого внутреннего дня, который цветет слишком рано."
   ]
 }

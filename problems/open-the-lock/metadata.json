@@ -1,6 +1,6 @@
 {
   "id": "open-the-lock",
-  "title": "218. Open the Lock",
+  "title": "218. Открой замок",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/open-the-lock/",
   "category": "graph",
@@ -55,6 +55,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "BFS from \"0000\". Each move turns one wheel up or down by one."
+    "BFS от \"0000\". Каждый ход поворачивает одно колесо вверх или вниз на одно."
   ]
 }

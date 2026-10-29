@@ -1,7 +1,7 @@
-A robot starts at position (0, 0) on a grid. It follows a string `moves` made of the letters `U` (up), `D` (down), `L` (left) and `R` (right), each moving one step.
+Робот начинает в положении (0, 0) на сетке. Он следует за строкой `moves`, состоящей из букв `U` (вверху), `D` (внизу), `L` (слева) и `R` (справа), каждый из которых перемещается на один шаг.
 
-Return `true` when the robot finishes back at the origin, otherwise `false`.
+Возвращайте `true`, когда робот закончит работу, в противном случае `false`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= moves.length <= 2 * 10^4`
-- `moves` contains only `U`, `D`, `L`, `R`.
+- `moves` содержит только `U`, `D`, `L`, `R`.

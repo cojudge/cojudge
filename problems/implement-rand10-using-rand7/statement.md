@@ -1,8 +1,8 @@
-In the original form of this task you are given a uniform generator `rand7()` producing integers 1 through 7, and you must build a uniform `rand10()` producing integers 1 through 10 from it.
+В исходной форме этой задачи вам дается унифицированный генератор `rand7()`, производящий целые числа 1 через 7, и вы должны построить унифицированный `rand10()`, производящий целые числа 1 через 10 из него.
 
-**Offline adaptation used here:** implement `runRand10(calls)`, which returns an array of length `calls` where each entry is an integer from 1 to 10. Inside your solution you may write your own `rand7` helper (a uniform 1..7 source) and derive each draw with rejection sampling: combine two `rand7` results into a uniform value `r` in 1..49 via `r = (rand7() - 1) * 7 + rand7()`, keep it when `r <= 40` as `(r - 1) % 10 + 1`, and retry otherwise. The reference judge simulates `rand7` with a fixed seed internally.
+** Оффлайн-адаптация, используемая здесь: ** `runRand10(calls)`, который возвращает массив длины `calls` где каждая запись представляет собой целое число от 1 то 10Внутри вашего решения вы можете написать свой собственный `rand7` Помощник (униформа) 1..7 источник) и вывести каждую ничью с отбраковкой: совместить две `rand7` Результат в однородную величину `r` в 1..49 через `r = (rand7() - 1) * 7 + rand7()`Держите его, когда `r <= 40` как `(r - 1) % 10 + 1`, и повторите иначе. Ссылочный судья имитирует `rand7` с фиксированным семенем внутри.
 
-Grading checks that the returned array has exactly `calls` entries and that every entry lies in 1..10. On longer runs (`calls >= 100`) every face 1..10 must also appear at least once — a constant array passes the range check but fails coverage, so the draws must genuinely vary (distribution uniformity beyond coverage is not measured).
+Оценка проверяет, что возвращенный массив имеет точно записи `calls` и что каждая запись находится в 1..10. При более длительных запусках (`calls >= 100`) каждое лицо 1..10 также должно появиться по крайней мере один раз - постоянный массив проходит проверку диапазона, но не обеспечивает покрытие, поэтому ничьи должны действительно варьироваться (однородность распределения за пределами покрытия не измеряется).
 
-**Constraints:**
+**Ограничения:**
 - `1 <= calls <= 1000`

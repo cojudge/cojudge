@@ -1,6 +1,6 @@
 {
   "id": "fibonacci-number",
-  "title": "571. Fibonacci Number",
+  "title": "571. Число Фибоначчи",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/fibonacci-number/",
   "category": "dp",
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Only the previous two values are needed to build the next one, so two rolling variables suffice.",
-    "Seed them with F(0) = 0 and F(1) = 1 and iterate upward to n."
+    "Для построения следующего необходимо только два предыдущих значения, поэтому достаточно двух переменных.",
+    "Засейте их с помощью F(0) = 0 и F(1) = 1 и итерируйте вверх до n."
   ]
 }

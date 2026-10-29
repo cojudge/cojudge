@@ -1,8 +1,8 @@
-Given an integer array `nums` and a minimum length `k`, look at every contiguous block of length at least `k` and return the largest block average.
+Учитывая целочисленный массив `nums` и минимальную длину `k`, посмотрите на каждый смежный блок длины по меньшей мере `k` и верните наибольшее среднее значение блока.
 
-Because averages are fractional, this judge passes them as decimal strings: implement `findMaxAverage(nums, k)` returning a string parseable as a double. An answer is accepted when it sits within `1e-5` of the true optimum.
+Поскольку средние являются дробными, этот судья передает их как десятичные строки: реализуйте `findMaxAverage(nums, k)`, возвращая строку, которую можно разобрать как двойную. Ответ принимается, когда он находится в `1e-5` истинного оптимума.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= k <= nums.length <= 10^4`
 - `-10^4 <= nums[i] <= 10^4`
-- The output must be a finite decimal string parseable as a double.
+- Выход должен быть конечной десятичной строкой, разборчивой как двойная.

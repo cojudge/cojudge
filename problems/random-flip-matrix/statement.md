@@ -1,9 +1,9 @@
-A binary matrix with `m` rows and `n` columns starts filled with zeros. Flipping picks a uniformly random cell holding 0, sets it to 1, and reports its coordinates; resetting restores all zeros.
+Бинарная матрица с строками `m` и столбцами `n` начинает заполняться нулями. Перелистывание выбирает равномерно случайную ячейку, удерживающую 0, устанавливает ее на 1 и сообщает ее координаты; сброс восстанавливает все нули.
 
-**Adaptation used here.** Randomness cannot be graded by exact comparison, so this version asks for a batch directly: given `m`, `n` and `count`, return `count` distinct valid cell positions `[row, col]` as they would come out of successive flips. The grader accepts any set that is the right size, lies inside the board, and contains no duplicates. When `count` exceeds the board capacity `m * n`, return every cell exactly once (any order).
+**Адаптация, используемая здесь. ** Случайность не может быть оценена по точному сравнению, поэтому эта версия запрашивает партию напрямую: учитывая `m`, `n` и `count`, возвращайте `count` различные действительные позиции ячейки `[row, col]`, поскольку они будут выходить из последовательных перевернутий. Градер принимает любой набор, который имеет правильный размер, лежит внутри доски и не содержит дубликатов. Когда `count` превышает емкость доски `m * n`, возвращайте каждую ячейку ровно один раз (любой заказ).
 
-Given `m`, `n` and `count`, return the list of positions.
+Учитывая `m`, `n` и `count`, верните список позиций.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= m, n <= 100`
 - `0 <= count <= m * n`

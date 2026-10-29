@@ -1,0 +1,69 @@
+{
+  "id": "insert-delete-getrandom-o1",
+  "title": "456. Insert Delete GetRandom O(1)",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/insert-delete-getrandom-o1/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "operations = [\"RandomizedSet\",\"insert\",\"remove\",\"insert\",\"getRandom\",\"remove\",\"insert\",\"getRandom\"], values = [0,1,2,2,0,1,2,0]",
+      "output": "[1,0,1,X,1,0,2] (X is 1 or 2)",
+      "explanation": "getRandom entries may be any current member."
+    },
+    {
+      "input": "operations = [\"RandomizedSet\",\"insert\",\"insert\",\"getRandom\"], values = [0,5,5,0]",
+      "output": "[1,0,5]",
+      "explanation": "Duplicate insert records 0; only 5 is available."
+    },
+    {
+      "input": "operations = [\"RandomizedSet\",\"insert\",\"remove\",\"remove\"], values = [0,3,3,3]",
+      "output": "[1,1,0]",
+      "explanation": "Second removal of 3 misses."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runRandomizedSet(String[] operations, int[] values) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def runRandomizedSet(self, operations: List[str], values: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runRandomizedSet(vector<string>& operations, vector<int>& values) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunRandomizedSet(string[] operations, int[] values)\n    {\n        return new int[0];\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_randomized_set(operations: Vec<String>, values: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunRandomizedSet(operations []string, values []int) []int {\n    return []int{}\n}",
+    "typescript": "export function runRandomizedSet(operations: string[], values: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[] $values\n     * @return int[]\n     */\n    public function runRandomizedSet($operations, $values) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"RandomizedSet\",\"insert\",\"remove\",\"insert\",\"getRandom\",\"remove\",\"insert\",\"getRandom\"]",
+      "values": "[0,1,2,2,0,1,2,0]"
+    },
+    {
+      "operations": "[\"RandomizedSet\",\"insert\",\"insert\",\"getRandom\"]",
+      "values": "[0,5,5,0]"
+    },
+    {
+      "operations": "[\"RandomizedSet\",\"insert\",\"remove\",\"remove\"]",
+      "values": "[0,3,3,3]"
+    },
+    {
+      "operations": "[\"RandomizedSet\",\"insert\",\"getRandom\"]",
+      "values": "[0,7,0]"
+    }
+  ],
+  "functionName": "runRandomizedSet",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Pair a value-to-index map with a dense list of values.",
+    "Insert appends at the end; removal swaps the target with the last entry and pops.",
+    "getRandom picks a uniform index; the judge accepts any current member."
+  ]
+}

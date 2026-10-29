@@ -1,9 +1,9 @@
-Given a nonempty rectangular binary grid, return the largest area of an island.
+Учитывая непустую прямоугольную двойную сетку, возвращайте самую большую площадь острова.
 
-An island is a group of `1` cells connected horizontally or vertically. Its area is the number of cells in the group. Return `0` when the grid contains no land.
+Остров представляет собой группу ячеек `1`, соединенных горизонтально или вертикально. Его площадь — количество ячеек в группе. Возврат `0`, когда сетка не содержит земли.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= grid.length <= 50`
 - `1 <= grid[r].length <= 50`
-- Every row has the same length.
-- Every cell is `0` or `1`.
+- Каждый ряд имеет одинаковую длину.
+- Каждая ячейка `0` или `1`.

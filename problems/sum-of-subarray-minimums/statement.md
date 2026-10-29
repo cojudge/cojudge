@@ -1,5 +1,5 @@
-For every contiguous slice of `arr` (the slice must be non-empty and keep neighbours together), note its tiniest entry. Add those minima together and report the sum modulo `10^9 + 7`.
+Для каждого смежного кусочка `arr` (срез должен быть непустым и держать соседей вместе), обратите внимание на его мельчайшую запись. Добавьте эти минимумы вместе и сообщите сумму modulo `10^9 + 7`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= arr.length <= 3 * 10^4`
 - `1 <= arr[i] <= 3 * 10^4`

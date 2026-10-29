@@ -1,6 +1,6 @@
-You are given a nonnegative integer `num`. You may exchange two of its decimal digits at most once.
+Вам дано неотрицательное целое число `num`. Вы можете обменять две его десятичные цифры максимум один раз.
 
-Return the greatest value obtainable after zero or one such exchange. Keeping the number unchanged is allowed.
+Возврат наибольшего значения, получаемого после нуля или одного такого обмена.Сохранение числа неизменным допускается.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= num <= 10^8`

@@ -1,7 +1,7 @@
-You are given four integer lists `nums1`, `nums2`, `nums3` and `nums4`, each of length `n`. Count the tuples `(i, j, k, l)` with one index from each list such that `nums1[i] + nums2[j] + nums3[k] + nums4[l]` equals zero.
+Вам даны четыре целочисленных списка `nums1`, `nums2`, `nums3` и `nums4`, каждый из длины `n`. Подсчитайте кортежи `(i, j, k, l)` с одним индексом из каждого списка так, что `nums1[i] + nums2[j] + nums3[k] + nums4[l]` равен нулю.
 
-Indices may repeat across lists but each tuple position comes from its own list.
+Индексы могут повторяться в разных списках, но каждая позиция кортежа исходит из собственного списка.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 500`
 - `-2^28 <= nums1[i], nums2[i], nums3[i], nums4[i] <= 2^28`

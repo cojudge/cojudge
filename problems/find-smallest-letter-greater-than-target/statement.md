@@ -1,12 +1,12 @@
-You are handed a list of lowercase letters sorted from smallest to largest, holding at least two different letters, plus a single target letter.
+Вам вручают список строчных букв, отсортированных от самых маленьких до самых больших, с двумя разными буквами плюс одна целевая буква.
 
-Scan the list and pick the smallest entry that comes strictly after the target in alphabetical order. If every entry is at or before the target, wrap around and return the first entry of the list.
+Просканируйте список и выберите наименьшую запись, которая поступает строго после цели в алфавитном порядке.Если каждая запись находится на или перед целью, обернитесь и верните первую запись списка.
 
-Adaptation for this judge: the original statement uses a character array and single characters; here each letter is a one-character string, so `letters` is a string array and both `target` and the answer are strings.
+Адаптация для этого судьи: в оригинальном утверждении используется массив символов и одиночные символы; здесь каждая буква представляет собой односимвольную строку, поэтому `letters` представляет собой строковый массив, и `target`, и ответ являются строками.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= letters.length <= 10^4`
-- Each entry of `letters` is a lowercase English letter.
-- `letters` is sorted in non-decreasing order.
-- `letters` holds at least two distinct letters.
-- `target` is a lowercase English letter.
+- Каждая запись `letters` является английской буквой.
+- `letters` сортируется в неубывающем порядке.
+- `letters` содержит по крайней мере две отдельные буквы.
+- `target` — английская буква в нижнем регистре.

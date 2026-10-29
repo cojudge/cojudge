@@ -1,4 +1,4 @@
-Convert a numeric `score` (0 to 100) into a letter grade: `A` for 90 and above, `B` for 80 and above, `C` for 70 and above, `D` for 60 and above, and `F` otherwise.
+Преобразуйте числовой `score` (0 в 100) в буквенный класс: `A` для 90 и выше, `B` для 80 и выше, `C` для 70 и выше, `D` для 60 и выше и `F` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= score <= 100``

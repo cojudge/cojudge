@@ -1,6 +1,6 @@
 {
   "id": "subarray-sums-divisible-by-k",
-  "title": "959. Subarray Sums Divisible by K",
+  "title": "959. Субаррэй делится на K",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/subarray-sums-divisible-by-k/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [4,5,0,-2,-3,1], k = 5",
       "output": "7",
-      "explanation": "Seven contiguous blocks have totals divisible by 5, including [4,5,0,-2,-3,1] and [5]."
+      "explanation": "Семь смежных блоков имеют общую сумму, делимую на 5, включая [4, 5, 0,-2,-3, 1] и [5]."
     },
     {
       "input": "nums = [5], k = 9",
       "output": "0",
-      "explanation": "The single block totals 5, which is not a multiple of 9."
+      "explanation": "Единый блок содержит 5, который не является кратным 9."
     }
   ],
   "starterCode": {
@@ -49,8 +49,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Track running prefix totals modulo k; two prefixes with the same remainder delimit a block divisible by k.",
-    "Normalize negative remainders into the range 0..k-1 before counting.",
-    "Keep a frequency table of remainders: each new prefix adds as many answers as its remainder has appeared before."
+    "Префикс трека содержит modulo k; два префикса с одним и тем же остатком разграничивают блок, делимый на k.",
+    "Нормализуйте отрицательные остатки в диапазоне 0..k-1 перед подсчетом.",
+    "Держите частотную таблицу остатков: каждый новый префикс добавляет столько ответов, сколько его остаток появился раньше."
   ]
 }

@@ -1,11 +1,11 @@
-There are `n` network nodes labeled from `1` to `n`. Each directed edge
+Сетевые узлы `n` помечены от `1` до `n`.
 `times[i] = [u, v, w]` means that a signal takes `w` time units to travel from
-`u` to `v`.
+`u` - `v`.
 
-A signal is sent from node `k`. Return the minimum time required for every node
-to receive the signal. Return `-1` if at least one node cannot be reached.
+Сигнал отправляется из узла `k`. Возвратить минимальное время, необходимое для каждого узла
+возвращать `-1`, если по крайней мере один узел не может быть достигнут.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= n <= 100`
 - `1 <= times.length <= 6000`
@@ -13,4 +13,4 @@ to receive the signal. Return `-1` if at least one node cannot be reached.
 - `1 <= u, v, k <= n`
 - `u != v`
 - `0 <= w <= 100`
-- Directed node pairs in `times` are unique.
+- Пары узлов в `times` уникальны.

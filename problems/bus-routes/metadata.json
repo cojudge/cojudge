@@ -1,6 +1,6 @@
 {
   "id": "bus-routes",
-  "title": "813. Bus Routes",
+  "title": "813. Автобусные маршруты",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/bus-routes/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "routes = [[1,2,7],[3,6,7]], source = 1, target = 6",
       "output": "2",
-      "explanation": "Ride the first bus to stop 7, then change to the second bus to reach 6."
+      "explanation": "Отправляйтесь на первом автобусе, чтобы остановить 7, а затем перейдите на второй автобус, чтобы добраться до 6."
     },
     {
       "input": "routes = [[7,12],[4,5,15],[6],[15,19],[9,12,13]], source = 15, target = 12",
       "output": "-1",
-      "explanation": "No chain of shared stops connects 15 to 12."
+      "explanation": "Ни одна цепочка общих остановок не соединяет 15 с 12."
     },
     {
       "input": "routes = [[1,2,3]], source = 1, target = 1",
       "output": "0",
-      "explanation": "Start and destination coincide, so no bus is needed."
+      "explanation": "Пуск и пункт назначения совпадают, поэтому автобус не нужен."
     }
   ],
   "starterCode": {
@@ -65,7 +65,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Index every stop to the list of buses serving it, turning transfers into graph edges.",
-    "Breadth-first search over buses (not stops) starting from all buses at the source; the first time a bus reaches the target its depth is the answer."
+    "Проиндексируйте каждую остановку в списке автобусов, обслуживающих ее, превращая трансферы в графовые края.",
+    "Поиск по широте автобусов (не останавливается), начиная со всех автобусов в источнике; первый раз, когда автобус достигает цели, его глубина является ответом."
   ]
 }

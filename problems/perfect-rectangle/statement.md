@@ -1,8 +1,8 @@
-Each entry of `rectangles` describes one axis-aligned block by its lower-left corner `(xi, yi)` and its upper-right corner `(ai, bi)`, with `xi < ai` and `yi < bi`. Decide whether the blocks fit together perfectly: jointly they must fill some larger rectangle exactly, with no overlaps and no gaps.
+Каждая запись `rectangles` описывает один блок, выровненный по оси, его нижним левым углом `(xi, yi)` и его верхним правым углом `(ai, bi)`, с `xi < ai` и `yi < bi`. Решите, идеально ли подходят блоки друг к другу: совместно они должны точно заполнять какой-то больший прямоугольник, без перекрытий и зазоров.
 
-That means two things must hold at once: the total covered area must equal the area of the bounding box, and the block corners must cancel out everywhere except at the four extreme corners.
+Это означает, что две вещи должны держаться одновременно: общая площадь должна равняться площади ограничивающего ящика, а блок-углы должны отменяться везде, кроме четырех крайних углов.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= rectangles.length <= 2 * 10^4`
 - `rectangles[i].length == 4`
 - `-10^5 <= xi < ai <= 10^5`

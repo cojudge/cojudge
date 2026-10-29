@@ -1,6 +1,6 @@
 {
   "id": "bold-words-in-string",
-  "title": "760. Bold Words in String",
+  "title": "760. Смелые слова в струнах",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/bold-words-in-string/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "words = [\"ab\",\"bc\"], s = \"aabcd\"",
       "output": "\"a<b>abc</b>d\"",
-      "explanation": "Spans at 1 and 2 merge into 1-3."
+      "explanation": "Спайны 1 и 2 сливаются в 1-3."
     },
     {
       "input": "words = [\"ab\",\"cb\"], s = \"aabcd\"",
       "output": "\"a<b>ab</b>cd\"",
-      "explanation": "Only span 1-2 is bold."
+      "explanation": "Только пролет 1-2 смелый."
     }
   ],
   "starterCode": {
@@ -55,8 +55,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "First build a boolean mask marking every character covered by any keyword occurrence, scanning all start positions.",
-    "Two marked blocks belong together when they overlap or sit directly adjacent with no gap.",
-    "Emit <b> at each group start and </b> at each group end while copying the original characters."
+    "Сначала создайте булеву маску, помечающую каждый символ, покрытый любым ключевым словом, сканируя все начальные позиции.",
+    "Два отмеченных блока принадлежат друг другу, когда они пересекаются или сидят непосредственно рядом без зазора.",
+    "Emit <b> в начале каждой группы и </b> в конце каждой группы при копировании оригинальных символов."
   ]
 }

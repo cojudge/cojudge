@@ -1,8 +1,8 @@
-Given a string `s` and a non-negative integer `k`, find the length of the longest contiguous block that uses no more than `k` different characters.
+Учитывая строку `s` и неотрицательное целое число `k`, найдите длину самого длинного смежного блока, который использует не более чем `k` различных символов.
 
-A block is any run of consecutive positions. When `k` is zero, or `s` is empty, no non-empty block qualifies and the answer is zero.
+Когда `k` равен нулю, или `s` пуст, ни один непустый блок не квалифицируется, и ответ равен нулю.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= s.length <= 10^4`
 - `0 <= k <= 100`
-- `s` consists of printable ASCII characters.
+- `s` состоит из печатаемых символов ASCII.

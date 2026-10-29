@@ -1,10 +1,10 @@
-A triplet is an array of three positive integers. You are given `triplets` and a positive target triplet `target`.
+Триплет представляет собой массив из трех положительных целых чисел. Вам дают `triplets` и положительный целевой триплет `target`.
 
-You may repeatedly choose two different triplets and replace one of them with their element-wise maximum. Return `true` if some sequence of operations can produce `target`; otherwise, return `false`.
+Вы можете многократно выбирать две разные тройни и заменять одну из них на их элементно-мудрый максимум. Возвращать `true`, если какая-то последовательность операций может производить `target`; в противном случае возвращать `false`.
 
-Equivalently, you may choose a subset of the input rows whose element-wise maximum is exactly `target`.
+Эквивалентно, вы можете выбрать подмножество входных строк, чей элементный максимум точно `target`.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= triplets.length <= 100000`
 - `triplets[i].length == 3`

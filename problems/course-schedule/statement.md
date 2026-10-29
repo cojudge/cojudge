@@ -1,9 +1,9 @@
-Given numCourses and a list of prerequisite pairs prerequisites[i] = [ai, bi], return true if you can finish all courses (i.e., the directed graph has no cycle).
+Учитывая numCourses и список предпосылок пары предпосылок[i] = [ai, bi], вернитесь истинным, если сможете закончить все курсы (т.е. направленный граф не имеет цикла).
 
-**Constraints:**
+**Ограничения:**
 
-- 1 ≤ numCourses ≤ 2000
+- 1 ≤ numCouress ≤ 2000
 - 0 ≤ prerequisites.length ≤ 5000
 - prerequisites[i].length == 2
 - 0 ≤ ai, bi < numCourses
-- All the pairs prerequisites[i] are unique.
+- Все предпосылки для пар являются уникальными.

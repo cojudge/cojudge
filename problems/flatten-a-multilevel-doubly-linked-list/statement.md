@@ -1,7 +1,7 @@
-You receive the head of a linked list and must return the head of its flattened form: the same values in the same order, with every node linked through `next`.
+Вы получаете заголовок связанного списка и должны вернуть заголовок его сплющенной формы: те же значения в том же порядке, с каждым узлом, связанным через `next`.
 
-**Constraints:**
-- Node count lies in `[0, 1000]`.
+**Ограничения:**
+- Количество узлов находится в `[0, 1000]`.
 - `1 <= Node.val <= 10^5`.
 
-Adaptation: the source uses a multilevel doubly node with `prev`, `next` and `child` links, which this judge cannot express (only singly `list_node` exists). Child and previous links are therefore omitted: input is a single-level chain modeled as `list_node`, and flattening preserves its order. Implement a faithful copy that keeps the value sequence.
+Адаптация: источник использует многоуровневый двойной узел со ссылками `prev`, `next` и `child`, которые этот судья не может выразить (существует только один `list_node`). Ребенка и предыдущие ссылки поэтому опущены: вход представляет собой одноуровневую цепочку, смоделированную как `list_node`, и сплющивание сохраняет свой порядок. Реализуйте верную копию, которая сохраняет последовательность значений.

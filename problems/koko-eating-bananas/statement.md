@@ -1,13 +1,13 @@
-Koko has several piles of bananas. `piles[i]` is the number of bananas in pile `i`, and Koko has `h` hours before the guards return.
+`piles[i]` - это количество бананов в куче `i`, а у Коко есть `h` за несколько часов до возвращения охранников.
 
-Koko chooses one positive integer eating speed `k` in bananas per hour. During each hour, she chooses one pile and eats up to `k` bananas from it. If that pile has fewer than `k` bananas, she finishes the pile and does not eat from another pile during the same hour.
+Коко выбирает одно положительное целое число скорости поедания `k` в бананах в час. В течение каждого часа она выбирает одну кучу и съедает из нее до `k` бананов. Если у этой кучи меньше, чем у `k` бананов, она доедает кучу и не ест из другой кучи в течение того же часа.
 
-Return the minimum integer speed that lets Koko finish all piles within `h` hours.
+Верните минимальную целочисленную скорость, которая позволяет Koko закончить все сваи в течение часов `h`.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= piles.length <= 10^4`
 - `1 <= piles[i] <= 10^9`
 - `piles.length <= h <= 10^9`
 
-**Portable interface:** Implement `minEatingSpeed(piles, h)` directly. The judge supplies positive pile sizes and returns the minimum speed as an integer.
+**Портативный интерфейс:** Реализуйте `minEatingSpeed(piles, h)` напрямую. Судья поставляет положительные размеры свай и возвращает минимальную скорость в виде целого числа.

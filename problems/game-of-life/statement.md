@@ -1,13 +1,13 @@
-Compute one step of Conway's Game of Life.
+Вычислите один шаг из «Игры жизни» Конвея.
 
-Each cell is live (`1`) or dead (`0`). Count its eight neighbors, then apply
-simultaneously: a live cell with fewer than two or more than three live
-neighbors dies; a live cell with two or three lives on; a dead cell with
-exactly three becomes live.
+Каждая ячейка живая (`1`) или мертвая (`0`).
+одновременно: живая клетка с менее чем двумя или более чем тремя живыми клетками
+соседи умирают; живая клетка с двумя или тремя жизнями; мертвая клетка с двумя или тремя жизнями
+Три из них становятся живыми.
 
-**Adaptation:** instead of a void in-place update, implement
-`gameOfLife(board)` returning the next-state board.
+**Адаптация: ** вместо обновления на месте, реализуй
+`gameOfLife(board)` возвращает совет следующего штата.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= m, n <= 25`
-- `board[i][j]` is `0` or `1`.
+- `board[i][j]` - это `0` или `1`.

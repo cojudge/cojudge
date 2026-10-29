@@ -1,9 +1,9 @@
-You are given the root of a binary tree.
+Вам даны корни двоичного дерева.
 
-Imagine numbering positions level by level as in a complete tree: the root is 1, and a node numbered `i` has children numbered `2*i` and `2*i+1`. Missing nodes still occupy numbers.
+Представьте себе нумерацию позиций по уровням, как в полном дереве: корень 1, а узел с номером `i` имеет потомков с номерами `2*i` и `2*i+1`.
 
-The width of a level is the distance between its leftmost and rightmost present nodes, inclusive of gaps: `last - first + 1`. Return the largest width over all levels.
+Ширина уровня — это расстояние между его левым и правым наиболее присутствующими узлами, включая промежутки: `last - first + 1`. Возвращайте наибольшую ширину по всем уровням.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= number of nodes <= 3000`
 - `-100 <= node value <= 100`

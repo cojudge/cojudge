@@ -1,6 +1,6 @@
 {
   "id": "array-of-doubled-pairs",
-  "title": "940. Array of Doubled Pairs",
+  "title": "940. Удвоенные пары / Doubled Pairs",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/array-of-doubled-pairs/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "arr = [3,1,3,6]",
       "output": "false",
-      "explanation": "The 1 has no doubling partner."
+      "explanation": "У 1 нет двойного партнера."
     },
     {
       "input": "arr = [2,1,2,6]",
       "output": "false",
-      "explanation": "Leftover values cannot pair up."
+      "explanation": "Оставшиеся значения не могут спариваться."
     },
     {
       "input": "arr = [4,-2,2,-4]",
       "output": "true",
-      "explanation": "Pairs (-2,-4) and (2,4)."
+      "explanation": "Пары (-2,-4) и (2,4)."
     }
   ],
   "starterCode": {
@@ -66,8 +66,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Count occurrences, then handle values from the smallest absolute value upward so halves are settled before their doubles.",
-    "Each copy of x consumes one copy of 2*x; zeros are special and need an even count.",
-    "Sorting keys by absolute value keeps negative pairs (like -2 with -4) working the same way."
+    "Подсчитывайте события, затем обрабатывайте значения от наименьшего абсолютного значения вверх, чтобы половина была урегулирована до их удвоения.",
+    "Каждая копия x потребляет одну копию 2*x; нолики являются специальными и требуют четного счета.",
+    "Сортировка ключей по абсолютному значению удерживает отрицательные пары (например, -2 с -4) работающими одинаково."
   ]
 }

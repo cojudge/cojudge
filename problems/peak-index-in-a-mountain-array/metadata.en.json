@@ -1,0 +1,61 @@
+{
+  "id": "peak-index-in-a-mountain-array",
+  "title": "849. Peak Index in a Mountain Array",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/peak-index-in-a-mountain-array/",
+  "category": "binary-search",
+  "examples": [
+    {
+      "input": "arr = [0,1,0]",
+      "output": "1",
+      "explanation": "Peak at index 1."
+    },
+    {
+      "input": "arr = [0,2,1,0]",
+      "output": "1",
+      "explanation": "Maximum at index 1."
+    },
+    {
+      "input": "arr = [0,10,5,2]",
+      "output": "1",
+      "explanation": "Summit at index 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int peakIndexInMountainArray(int[] arr) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def peakIndexInMountainArray(self, arr: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int peakIndexInMountainArray(vector<int>& arr) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int PeakIndexInMountainArray(int[] arr)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn peak_index_in_mountain_array(arr: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc PeakIndexInMountainArray(arr []int) int {\n    return 0\n}",
+    "typescript": "export function peakIndexInMountainArray(arr: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @return int\n     */\n    public function peakIndexInMountainArray($arr) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "arr": "[0,1,0]"
+    },
+    {
+      "arr": "[0,2,1,0]"
+    },
+    {
+      "arr": "[0,10,5,2]"
+    },
+    {
+      "arr": "[3,4,5,1]"
+    }
+  ],
+  "functionName": "peakIndexInMountainArray",
+  "params": [
+    {
+      "name": "arr",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The slope tells the side: when arr[mid] < arr[mid+1] the peak lies to the right, otherwise to the left.",
+    "Binary-search that slope test for O(log n); a linear max scan also works but is slower.",
+    "Keep the loop invariant lo < hi and return lo when they meet."
+  ]
+}

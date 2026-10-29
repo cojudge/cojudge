@@ -1,5 +1,5 @@
-Write the binary form of a positive integer without extra leading zeroes, then swap every `0` to `1` and every `1` to `0`. Return the integer value of the swapped form.
+Запишите двоичную форму положительного целого числа без дополнительных ведущих нулей, затем поменяйте каждый `0` на `1` и каждый `1` на `0`.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= num < 2^31`

@@ -1,6 +1,6 @@
 {
   "id": "long-pressed-name",
-  "title": "912. Long Pressed Name",
+  "title": "912. Долгое имя в печати",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/long-pressed-name/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "name = \"alex\", typed = \"aaleex\"",
       "output": "true",
-      "explanation": "The letters 'a' and 'e' were held a little longer."
+      "explanation": "Буквы «а» и «е» продержались чуть дольше."
     },
     {
       "input": "name = \"saeed\", typed = \"ssaaedd\"",
       "output": "false",
-      "explanation": "The count of 'e' does not line up."
+      "explanation": "Счет «е» не выстраивается."
     },
     {
       "input": "name = \"leelee\", typed = \"lleeelee\"",
@@ -57,8 +57,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Track one index into the intended name while scanning the typed text from left to right.",
-    "A typed character either consumes the next needed name character or repeats the previous typed character.",
-    "If the scan ends with unmatched name characters left over, the answer is false."
+    "Отслеживайте один индекс в предполагаемое имя при сканировании набранного текста слева направо.",
+    "Типизированный символ либо потребляет следующий необходимый символ имени, либо повторяет предыдущий типизированный символ.",
+    "Если сканирование заканчивается непревзойденными символами имен, то ответ будет ложным."
   ]
 }

@@ -1,8 +1,8 @@
-Decide whether every room can be entered starting from room zero.
+Решите, можно ли войти в каждую комнату, начиная с нулевой комнаты.
 
-There are `n` rooms numbered `0` to `n-1`. The array `rooms[i]` lists the keys found inside room `i`: each key `k` unlocks room `k`. You begin in room 0 with it already open, collect its keys, and repeatedly open any room for which you hold a key. Return `true` when this process can reach all rooms, otherwise `false`.
+Там есть `n` Номера нумеруются `0` то `n-1`Решетка `rooms[i]` Список ключей, найденных внутри комнаты `i`Каждый ключ `k` разблокировать комнату `k`Ты начинаешь в комнате. 0 с ним уже открывают, собирают его ключи, а также многократно открывают любое помещение, за которое держат ключ. `true` Когда этот процесс может достичь всех комнат, в противном случае `false`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= rooms.length <= 1000`
 - `0 <= rooms[i].length <= 1000`
 - `0 <= rooms[i][j] < rooms.length`

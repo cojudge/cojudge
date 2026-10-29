@@ -1,6 +1,6 @@
 {
   "id": "basic-calculator-iii",
-  "title": "772. Basic Calculator III",
+  "title": "772. Базовый калькулятор III",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/basic-calculator-iii/",
   "category": "stack",
@@ -12,12 +12,12 @@
     {
       "input": "s = \"6-4/2\"",
       "output": "4",
-      "explanation": "Division first: 6 - 2 = 4."
+      "explanation": "Первое подразделение: 6 - 2 = 4."
     },
     {
       "input": "s = \"2*(5+5*2)/3+(6/2+8)\"",
       "output": "21",
-      "explanation": "Parentheses, then * and /, then +."
+      "explanation": "Парентезы, затем * и /, затем +."
     }
   ],
   "starterCode": {
@@ -50,8 +50,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Parse with precedence levels: an expression handles + and -, a term handles * and /, and a factor handles numbers, parentheses, and unary signs.",
-    "Portable note: the formula is a plain string; skip spaces and treat a leading - (or one after '(') as negation.",
-    "Integer division must truncate toward zero, which Java and most languages do natively for ints."
+    "Парс с уровнями приоритета: выражение обрабатывает + и -, термин обрабатывает * и /, а фактор обрабатывает числа, скобки и унарные знаки.",
+    "Переносное примечание: формула представляет собой простую строку; пропустить пробелы и рассматривать ведущий - (или один после '(') как отрицание).",
+    "Целое деление должно сокращаться до нуля, что Java и большинство языков делают изначально для интов."
   ]
 }

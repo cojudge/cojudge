@@ -1,8 +1,8 @@
-Picture an `n` by `n` board. On the cell in row `i`, column `j` you pile up `grid[i][j]` unit cubes, one on top of another, forming a small tower (a zero means the cell stays empty). Towers that touch side-by-side hide the faces where they meet, and cubes stacked vertically hide the faces between them.
+Изобразите `n` по доске `n`. На ячейке в ряду `i`, столбец `j` вы складываете кубики блока `grid[i][j]`, один поверх другого, образуя небольшую башню (ноль означает, что ячейка остается пустой). Башни, которые касаются бок о бок, скрывают лица, где они встречаются, а кубы, сложенные вертикально, скрывают лица между ними.
 
-Count every square that remains visible from the outside, counting the underside that rests on the table as well.
+Подсчитайте каждый квадрат, который остается видимым снаружи, подсчитав нижнюю часть, которая также лежит на столе.
 
-**Constraints:**
+**Ограничения:**
 - `n == grid.length == grid[i].length`
 - `1 <= n <= 50`
 - `0 <= grid[i][j] <= 50`

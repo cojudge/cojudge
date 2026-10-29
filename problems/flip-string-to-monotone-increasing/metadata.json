@@ -1,6 +1,6 @@
 {
   "id": "flip-string-to-monotone-increasing",
-  "title": "913. Flip String to Monotone Increasing",
+  "title": "913. Флип-струна для увеличения монотонности",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/flip-string-to-monotone-increasing/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"00110\"",
       "output": "1",
-      "explanation": "Flip the last '0' to '1'."
+      "explanation": "Переверните последний «0» на «1»."
     },
     {
       "input": "s = \"010110\"",
       "output": "2",
-      "explanation": "Two flips reach a block of zeros then ones."
+      "explanation": "Два сальто достигают блока нулей, а затем единиц."
     },
     {
       "input": "s = \"00011000\"",
       "output": "2",
-      "explanation": "Clearing the two ones leaves all zeros."
+      "explanation": "Очистка двух оставляет все нули."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Every monotone string is zeros then ones, so the split point is the only choice.",
-    "While scanning, remember how many ones have appeared; they are the cost of forcing all zeros.",
-    "For each zero, compare flipping it versus flipping all prior ones."
+    "Каждая монотонная строка является нулем, а затем единицей, поэтому точка разделения является единственным выбором.",
+    "При сканировании вспомните, сколько их появилось; это затраты на принуждение всех нулей.",
+    "Для каждого нуля сравните его перелистывание с перелистыванием всех предыдущих."
   ]
 }

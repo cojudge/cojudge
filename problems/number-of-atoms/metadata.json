@@ -1,6 +1,6 @@
 {
   "id": "number-of-atoms",
-  "title": "733. Number of Atoms",
+  "title": "733. Количество атомов",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/number-of-atoms/",
   "category": "stack",
@@ -8,12 +8,12 @@
     {
       "input": "formula = \"H2O\"",
       "output": "\"H2O\"",
-      "explanation": "Two H and one O; the count 1 is hidden."
+      "explanation": "Два H и один O; граф 1 скрыт."
     },
     {
       "input": "formula = \"Mg(OH)2\"",
       "output": "\"H2MgO2\"",
-      "explanation": "Doubling (OH) yields H2, Mg and O2 in sorted order."
+      "explanation": "Удвоение (OH) дает H2, Mg и O2 в сортированном порядке."
     },
     {
       "input": "formula = \"K4(ON(SO3)2)2\"",
@@ -50,8 +50,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Scan with a stack of count maps: push a fresh map on '(' and pop on ')', multiplying the popped counts before merging.",
-    "Parse element names as one uppercase letter plus following lowercase letters, then read the optional digits as the multiplier.",
-    "Sort the final keys alphabetically and skip the digit 1 when building the answer."
+    "Сканирование с помощью стопки графовых карт: нажмите свежую карту на '(' и pop on ')', умножив отснятые счета перед слиянием.",
+    "Имена элементов парс как одна строчная буква плюс следующие строчные буквы, затем прочитайте дополнительные цифры как множитель.",
+    "Сортируйте окончательные клавиши в алфавитном порядке и пропустите цифру 1 при построении ответа."
   ]
 }

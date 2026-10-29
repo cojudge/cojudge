@@ -1,15 +1,15 @@
-You are given airline tickets as two parallel arrays. Ticket `i` travels from
-`from[i]` to `to[i]`. Reconstruct an itinerary that begins at `"JFK"` and uses
-every ticket exactly once.
+Вам выдаются авиабилеты в виде двух параллельных массивов. Билет `i` путешествует от
+`from[i]` до `to[i]`. Реконструировать маршрут, который начинается на `"JFK"` и использует
+Каждый билет один раз.
 
-If several valid itineraries exist, return the lexicographically smallest one
-when the airport sequence is compared from left to right. The input is
-guaranteed to admit at least one itinerary from `"JFK"`.
+Если существует несколько действительных маршрутов, верните лексикографически наименьший.
+когда последовательность аэропортов сравнивается слева направо.
+Гарантируется допуск хотя бы одного маршрута от `"JFK"`.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= from.length == to.length <= 300`
-- Every airport code consists of three uppercase English letters.
+- Каждый код аэропорта состоит из трех английских букв.
 - `from[i] != to[i]`
-- Duplicate tickets are allowed and must each be used once.
-- At least one itinerary uses every ticket and starts at `"JFK"`.
+- Разрешены дубликаты билетов, и каждый из них должен быть использован один раз.
+- По крайней мере, один маршрут использует каждый билет и начинается в `"JFK"`.

@@ -1,6 +1,6 @@
 {
   "id": "3sum-closest",
-  "title": "255. 3Sum Closest",
+  "title": "255. 3 Самая близкая",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/3sum-closest/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [-1,2,1,-4], target = 1",
       "output": "2",
-      "explanation": "The triple (-1, 2, 1) sums to 2, the closest achievable total to 1."
+      "explanation": "Тройной (-1, 2, 1) суммируется с 2, ближайшим достижимым итогом к 1."
     },
     {
       "input": "nums = [0,0,0], target = 1",
       "output": "0",
-      "explanation": "The only triple sums to 0."
+      "explanation": "Единственная тройная сумма для 0."
     }
   ],
   "starterCode": {
@@ -53,7 +53,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sort the array first; then for each fixed first element, sweep the other two with inward-moving pointers.",
-    "Track the best total seen so far and move the left pointer up when the sum is below target, else move the right pointer down."
+    "Сначала сортируйте массив, затем для каждого фиксированного первого элемента проведите два других с указателями, движущимися внутрь.",
+    "Отслеживайте лучшую общую сумму, которую вы видели до сих пор, и перемещайте левый указатель вверх, когда сумма находится ниже цели, а затем перемещайте правый указатель вниз."
   ]
 }

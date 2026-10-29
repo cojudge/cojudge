@@ -1,6 +1,6 @@
 {
   "id": "lemonade-change",
-  "title": "236. Lemonade Change",
+  "title": "236. Смена лимонада",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/lemonade-change/",
   "category": "greedy",
@@ -8,12 +8,12 @@
     {
       "input": "bills = [5,5,5,10,20]",
       "output": "true",
-      "explanation": "From the first 3 customers, we collect three $5 bills. From the fourth, we collect a $10 and give back a $5. From the fifth, we give a $10 and a $5."
+      "explanation": "От первых клиентов 3 мы собираем три $5 bills. From the fourth, we collect a $10 и возвращаем $5. From the fifth, we give a $XQ4QXZ и $5."
     },
     {
       "input": "bills = [5,5,10,10,20]",
       "output": "false",
-      "explanation": "From the first two customers we collect two $5. From the third and fourth we collect two $10 and give back two $5. For the fifth we cannot give $15 change."
+      "explanation": "От первых двух клиентов мы собираем два $5. From the third and fourth we collect two $10 и возвращаем два изменения $5. For the fifth we cannot give $XQ3QXZ."
     }
   ],
   "starterCode": {
@@ -46,6 +46,6 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Track counts of $5 and $10 bills. Prefer giving a $10+$5 when possible for a $20."
+    "Отслеживайте счета $5 and $10. Предпочитаю давать $10+$5, когда это возможно, за $20."
   ]
 }

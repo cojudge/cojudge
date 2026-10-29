@@ -1,6 +1,6 @@
 {
   "id": "reaching-points",
-  "title": "779. Reaching Points",
+  "title": "779. Достижение точек",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/reaching-points/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "sx = 1, sy = 1, tx = 3, ty = 5",
       "output": "true",
-      "explanation": "A forward chain such as (1,1) -> (1,2) -> (3,2) -> (3,5) reaches the goal."
+      "explanation": "Передняя цепь, такая как (1, 1) -> (1, 2) -> (3, 2) -> (3, 5) достигает цели."
     },
     {
       "input": "sx = 1, sy = 1, tx = 2, ty = 2",
       "output": "false",
-      "explanation": "No sequence of allowed jumps produces (2,2) from (1,1)."
+      "explanation": "Никакой последовательности разрешенных скачков не производится (2, 2) из (1, 1)."
     },
     {
       "input": "sx = 1, sy = 1, tx = 1, ty = 1",
       "output": "true",
-      "explanation": "Start equals target, so no move is needed."
+      "explanation": "Старт равен цели, поэтому никакого движения не требуется."
     }
   ],
   "starterCode": {
@@ -72,8 +72,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Work backwards from the target: the larger coordinate must have come from subtracting the smaller one.",
-    "When one coordinate already matches the start, check divisibility: the gap on the other axis must be a multiple of the fixed coordinate.",
-    "Use remainders instead of single subtractions so huge coordinates shrink in logarithmic steps."
+    "Работайте в обратном направлении от цели: большая координата должна быть получена от вычитания меньшей.",
+    "Когда одна координата уже соответствует старту, проверьте делимость: разрыв на другой оси должен быть кратным фиксированной координате.",
+    "Используйте остатки вместо отдельных вычитаний, так что огромные координаты сжимаются в логарифмических шагах."
   ]
 }

@@ -1,8 +1,8 @@
-Every value in `nums` occurs exactly three times except for one value that occurs once. Find that lone value.
+Каждое значение в `nums` происходит ровно три раза, за исключением одного значения, которое происходит один раз.
 
-Your algorithm should run in linear time and use only constant extra space.
+Алгоритм должен работать в линейном времени и использовать только постоянное дополнительное пространство.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 3 * 10^4`
 - `-2^31 <= nums[i] <= 2^31 - 1`
-- All but one element appear three times; one appears once.
+- Все, кроме одного элемента, появляются три раза; один появляется один раз.

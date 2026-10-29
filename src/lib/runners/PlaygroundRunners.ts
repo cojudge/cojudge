@@ -1,9 +1,10 @@
+import { javaImage, pythonImage } from '$lib/server/runtimeImages';
 import { cppImage } from "$lib/utils/cppUtil";
 import { csharpImage } from "$lib/utils/csharpUtil";
 import { goImage } from "$lib/utils/goUtil";
-import { javaImage } from "$lib/utils/javaUtil";
+
 import { phpImage } from "$lib/utils/phpUtil";
-import { pythonImage } from "$lib/utils/pythonUtil";
+
 import { rustImage } from "$lib/utils/rustUtil";
 import { tsImage } from "$lib/utils/tsUtil";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, TIMEOUT_MESSAGE } from "$lib/utils/util";

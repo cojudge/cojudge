@@ -1,9 +1,9 @@
-You are handed a fixed array `nums` plus a batch of `queries`, where each query is a pair
-`[left, right]` with `0 <= left <= right`. For every query, report the sum of
-`nums[left] + ... + nums[right]`. (This is the function-style view of the classic
-immutable prefix-sum design task: precompute once, then answer each query fast.)
+Вам вручается фиксированный массив `nums` плюс партия `queries`, где каждый запрос представляет собой пару.
+`[left, right]` с `0 <= left <= right`. Для каждого запроса сообщите сумму
+`nums[left] + ... + nums[right]`. (Это вид классического функционального стиля)
+Неизменяемая задача дизайна префикс-сумма: вычислить один раз, а затем быстро ответить на каждый запрос.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^4`
 - `-10^5 <= nums[i] <= 10^5`
-- `1 <= queries.length <= 10^4`, each query holds exactly two indices.
+- `1 <= queries.length <= 10^4`, каждый запрос содержит ровно два индекса.

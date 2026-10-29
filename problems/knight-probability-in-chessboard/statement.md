@@ -1,11 +1,11 @@
-On an `n x n` board a knight begins on square `(row, column)` with zero-based coordinates. At every turn the knight picks uniformly among its eight L-shaped jumps (two squares one way and one square sideways), even when a jump would leave the board. The walk ends after exactly `k` jumps, or sooner if the knight steps outside.
+На доске `n x n` рыцарь начинается на квадрате `(row, column)` с нулевыми координатами. На каждом повороте рыцарь выбирает равномерно среди своих восьми L-образных прыжков (два квадрата в одну сторону и один квадрат вбок), даже когда прыжок покидает доску. Прогулка заканчивается после того, как точно `k` прыгает, или раньше, если рыцарь выходит наружу.
 
-Estimate the chance that the knight is still on the board once the walk stops. Report the probability as a decimal string (for example `"0.0625"`).
+Оцените вероятность того, что рыцарь все еще находится на доске после того, как прогулка остановится. Сообщите о вероятности в виде десятичной струны (например, `"0.0625"`).
 
-This is a portable adaptation: Cojudge has no floating type, so inputs stay integers and the output is a decimal string compared with a small tolerance.
+Это портативная адаптация: Кожудж не имеет плавающего типа, поэтому входы остаются целыми числами, а выход представляет собой десятичную строку по сравнению с небольшим допуском.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 25`
 - `0 <= k <= 100`
 - `0 <= row, column < n`
-- Answers are compared with absolute tolerance `1e-9` plus relative tolerance `1e-5`.
+- Ответы сравниваются с абсолютной толерантностью `1e-9` плюс относительная толерантность `1e-5`.

@@ -1,6 +1,6 @@
 {
   "id": "populating-next-right-pointers-in-each-node",
-  "title": "293. Populating Next Right Pointers in Each Node",
+  "title": "293. Настройка следующих правильных указателей в каждом узле",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/populating-next-right-pointers-in-each-node/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "root = [1,2,3,4,5,6,7]",
       "output": "[1,2,3,4,5,6,7]",
-      "explanation": "Every level is fully filled; after linking, nodes on each row point left-to-right and the structure serializes unchanged."
+      "explanation": "Каждый уровень полностью заполнен; после связывания узлы на каждой точке строки слева направо и структура сериализуется в неизменном виде."
     },
     {
       "input": "root = []",
       "output": "[]",
-      "explanation": "Nothing to link."
+      "explanation": "Нечего связывать."
     }
   ],
   "starterCode": {
@@ -53,9 +53,9 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Process the tree one level at a time; within a level link each node to its successor.",
-    "Because the tree is perfect, each parent connects its two children and bridges the right child to the next parent's left child.",
-    "Breadth-first search with a queue solves it generally; a constant-space walk can reuse already-built links.",
-    "Adaptation: the original Node type carries a next pointer which this judge does not model; return the same tree and the checker confirms its values and shape are preserved."
+    "Обрабатывайте дерево по одному уровню за раз; внутри уровня связывайте каждый узел с его преемником.",
+    "Поскольку дерево идеально, каждый родитель соединяет двух своих потомков и соединяет правого потомка с левым потомком следующего родителя.",
+    "Поиск по ширине с очередью решает его в целом; прогулка в постоянном пространстве может повторно использовать уже построенные ссылки.",
+    "Адаптация: оригинальный тип узла несет следующий указатель, который этот судья не моделирует; возвращает то же дерево, и шашка подтверждает, что его значения и форма сохранены."
   ]
 }

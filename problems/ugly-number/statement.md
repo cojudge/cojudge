@@ -1,6 +1,6 @@
-An ugly number is a positive integer whose prime factors are only 2, 3 and 5. By convention, 1 has no prime factors and counts as ugly.
+Уродливое число — это положительное целое число, основными факторами которого являются только 2, 3 и 5По соглашению, 1 Не имеет основных факторов и считается уродливым.
 
-Given an integer `n`, return `true` when `n` is ugly and `false` otherwise.
+Учитывая целое число `n`, верните `true`, когда `n` уродлив и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - `-2^31 <= n <= 2^31 - 1`

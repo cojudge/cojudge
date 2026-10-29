@@ -1,6 +1,6 @@
 {
   "id": "longest-palindromic-subsequence",
-  "title": "576. Longest Palindromic Subsequence",
+  "title": "576. Самая длинная палиндромная последовательность",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/longest-palindromic-subsequence/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"bbbab\"",
       "output": "4",
-      "explanation": "Skipping one 'a' leaves \"bbbb\", a palindrome of length 4."
+      "explanation": "Пропуск одного «а» оставляет «bbbb», палиндром длины 4."
     },
     {
       "input": "s = \"cbbd\"",
       "output": "2",
-      "explanation": "\"bb\" is the longest palindromic subsequence."
+      "explanation": "«bb» — самая длинная палиндромная последовательность."
     },
     {
       "input": "s = \"a\"",
       "output": "1",
-      "explanation": "A single character is always a palindrome."
+      "explanation": "Один персонаж всегда палиндром."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Let dp[i][j] cover the substring s[i..j]; matching ends extend the inner answer by 2, mismatched ends take the better of the two shrunk intervals.",
-    "Fill the table by increasing substring length so inner results are ready, keeping only one row to save memory."
+    "Пусть dp[i][j] покрывает подстроку s[i..j]; совпадающие концы расширяют внутренний ответ 2, несоответствующие концы берут лучшее из двух сокращенных интервалов.",
+    "Заполните таблицу, увеличив длину подструн, чтобы внутренние результаты были готовы, сохраняя только один ряд для сохранения памяти."
   ]
 }

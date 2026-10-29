@@ -1,10 +1,10 @@
-Check whether the sentence `s` follows the letter pattern.
+Проверьте, соответствует ли предложение `s` буквенной схеме.
 
-Each letter in `pattern` must map to exactly one distinct word in `s` and
-each word to exactly one letter (a bijection). Words in `s` are separated by
-single spaces with no leading or trailing gaps. Implement
-`wordPattern(pattern, s)` returning true on a full match.
+Каждая буква в `pattern` должна отображаться точно по одному отдельному слову в `s`.
+Каждое слово в точности до одной буквы (биджекция). Слова в `s` разделены
+единичные пространства без ведущих или задающих пробелов.
+`wordPattern(pattern, s)` возвращается в полном составе.
 
-**Constraints:**
-- `1 <= pattern.length <= 300`, lowercase letters.
-- `1 <= s.length <= 3000`, lowercase letters and single spaces.
+**Ограничения:**
+- `1 <= pattern.length <= 300`, строчные буквы.
+- `1 <= s.length <= 3000`, строчные буквы и отдельные пробелы.

@@ -1,10 +1,10 @@
-You receive an integer list `nums` and an integer `k`. Cut `nums` into `k` neighbouring blocks that are all non-empty, aiming to push the biggest block total down as far as possible.
+Вы получаете целочисленный список `nums` и целочисленное `k`. Разрежьте `nums` в соседние блоки `k`, которые не являются пустыми, стремясь максимально снизить общую сумму блока.
 
-Hand back that smallest achievable biggest-block total.
+Отдайте назад этот самый маленький достижимый самый большой блок.
 
-A block here means a run of neighbours from the list with no gaps.
+Блок здесь означает бегство соседей из списка без пробелов.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 1000`
 - `0 <= nums[i] <= 10^6`
 - `1 <= k <= min(50, nums.length)`

@@ -1,6 +1,6 @@
 {
   "id": "k-closest-points-to-origin",
-  "title": "103. K Closest Points to Origin",
+  "title": "103. K Ближайшие точки к происхождению",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/k-closest-points-to-origin/",
   "category": "heap",
@@ -8,12 +8,12 @@
     {
       "input": "points = [[1,3],[-2,2]], k = 1",
       "output": "[[-2,2]]",
-      "explanation": "The squared distances are 10 and 8."
+      "explanation": "Квадратные расстояния 10 и 8."
     },
     {
       "input": "points = [[3,3],[5,-1],[-2,4]], k = 2",
       "output": "[[3,3],[-2,4]]",
-      "explanation": "The output order may vary."
+      "explanation": "Порядок вывода может варьироваться."
     }
   ],
   "starterCode": {
@@ -53,8 +53,8 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Compare `x*x + y*y`; the square root does not change the ordering.",
-    "Maintain a max-heap containing at most k points and discard the farthest point whenever the heap grows too large.",
-    "Points tied at the kth distance are interchangeable, so do not depend on one fixed tie order."
+    "Сравните `x*x + y*y`; квадратный корень не изменяет порядок.",
+    "Сохраняйте максимальную кучу, содержащую максимум k точек, и выбрасывайте самую дальнюю точку всякий раз, когда куча становится слишком большой.",
+    "Точки, привязанные на расстоянии kth, взаимозаменяемы, поэтому не зависят от одного фиксированного порядка галстука."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "insert-into-a-sorted-circular-linked-list",
-  "title": "716. Insert into a Sorted Circular Linked List",
+  "title": "716. Включить в сортированный круговой связанный список",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/insert-into-a-sorted-circular-linked-list/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "head = [3,4,1], insertVal = 2",
       "output": "[3,4,1,2]",
-      "explanation": "2 fits between 1 and 3."
+      "explanation": "2 находится между 1 и 3."
     },
     {
       "input": "head = [], insertVal = 1",
       "output": "[1]",
-      "explanation": "Single self-loop."
+      "explanation": "Одиночный замкнутый круг."
     },
     {
       "input": "head = [1], insertVal = 0",
       "output": "[1,0]",
-      "explanation": "Ring 1 -> 0 -> 1."
+      "explanation": "Кольцо 1 -> 0 -> 1."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Adaptation: the circular ring is encoded linearly from the head; the output must start from the same head (new node only when empty).",
-    "Walk the ring once: insert between cur and next when cur.val <= insertVal <= next.val, or at the max-to-min drop when insertVal lies outside the current span.",
-    "If no spot matches (all values equal), insert directly after the head."
+    "Адаптация: круглое кольцо кодируется линейно с головы; выход должен начинаться с той же головы (новый узел только при пустом).",
+    "Пройдите по кольцу один раз: вставьте между cur.val и next, когда cur.val <= вставитьVal <= next.val, или при max-to-min падении, когда insertVal лежит за пределами текущего пролета.",
+    "Если нет совпадений пятен (все значения равны), вставьте непосредственно после головы."
   ]
 }

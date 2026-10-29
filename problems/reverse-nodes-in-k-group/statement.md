@@ -1,13 +1,13 @@
-Take the head of a chain and walk along it flipping each consecutive block of
-`k` nodes, then hand back the head of the reworked chain.
+Возьмите голову цепи и идите по ней, переворачивая каждый последовательный блок цепи.
+Узлы `k`, затем отдайте назад головку переработанной цепи.
 
-A trailing block shorter than `k` nodes is left exactly as it is. Links may
-be rewired, but simply exchanging the values held by nodes is not allowed.
+Блок отслеживания короче, чем узлы `k`, оставлен точно таким, какой он есть.
+быть перемонтированы, но просто обмен значениями, удерживаемыми узлами, не допускается.
 
-**Constraints:**
+**Ограничения:**
 
-- The list contains between `1` and `5000` nodes.
+- Список содержит между узлами `1` и `5000`.
 - `0 <= node.val <= 1000`
-- `1 <= k <=` the length of the list
+- `1 <= k <=` - длина списка
 
-**Follow-up:** Is there a way to accomplish this with only `O(1)` extra memory?
+Следующая запись: Есть ли способ сделать это с помощью дополнительной памяти `O(1)`?

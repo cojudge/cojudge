@@ -1,0 +1,60 @@
+{
+  "id": "projection-area-of-3d-shapes",
+  "title": "874. Projection Area of 3D Shapes",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/projection-area-of-3d-shapes/",
+  "category": "matrix",
+  "examples": [
+    {
+      "input": "grid = [[1,2],[3,4]]",
+      "output": "17",
+      "explanation": "4 squares from above, 2 + 4 = 6 from the front, and 3 + 4 = 7 from the side."
+    },
+    {
+      "input": "grid = [[2]]",
+      "output": "5",
+      "explanation": "1 from above, 2 from the front, and 2 from the side."
+    },
+    {
+      "input": "grid = [[1,0],[0,2]]",
+      "output": "8",
+      "explanation": "2 from above, 1 + 2 = 3 from the front, and 1 + 2 = 3 from the side."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int projectionArea(int[][] grid) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def projectionArea(self, grid: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int projectionArea(vector<vector<int>>& grid) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int ProjectionArea(int[][] grid) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn projection_area(grid: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc ProjectionArea(grid [][]int) int {\n    \n}",
+    "typescript": "export function projectionArea(grid: number[][]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $grid\n     * @return int\n     */\n    public function projectionArea($grid) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "grid": "[[1,2],[3,4]]"
+    },
+    {
+      "grid": "[[2]]"
+    },
+    {
+      "grid": "[[1,0],[0,2]]"
+    },
+    {
+      "grid": "[[1,1,1],[1,0,1],[1,1,1]]"
+    }
+  ],
+  "functionName": "projectionArea",
+  "params": [
+    {
+      "name": "grid",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "The top view is simply the count of cells holding at least one cube.",
+    "The front view sums each row's maximum and the side view sums each column's maximum."
+  ]
+}

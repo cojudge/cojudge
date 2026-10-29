@@ -1,6 +1,6 @@
 {
   "id": "similar-rgb-color",
-  "title": "798. Similar RGB Color",
+  "title": "798. Похожие цвета RGB",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/similar-rgb-color/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "color = \"#09f166\"",
       "output": "\"#11ee66\"",
-      "explanation": "Each channel rounds to its nearest doubled digit."
+      "explanation": "Каждый канал округляется до ближайшей двузначной цифры."
     },
     {
       "input": "color = \"#000000\"",
       "output": "\"#000000\"",
-      "explanation": "Already optimal."
+      "explanation": "Уже оптимальный."
     },
     {
       "input": "color = \"#123456\"",
       "output": "\"#113355\"",
-      "explanation": "Independent per-channel rounding."
+      "explanation": "Независимая округление по каналам."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Handle the three channels independently since the total error is a sum of per-channel errors.",
-    "The shorthand values are 0, 17, 34, ..., 255 (multiples of 17); pick the nearest one per channel.",
-    "Compare case-insensitively but always emit lowercase with doubled digits."
+    "Обрабатывайте три канала самостоятельно, так как общая ошибка является суммой ошибок каждого канала.",
+    "Сокращенные значения 0, 17, 34, ..., 255 (множества 17); выбрать ближайший один на канал.",
+    "Сравните случай-бесчувственно, но всегда излучайте нижний регистр с удвоенными цифрами."
   ]
 }

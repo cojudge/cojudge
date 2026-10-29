@@ -1,6 +1,6 @@
 {
   "id": "longest-univalue-path",
-  "title": "702. Longest Univalue Path",
+  "title": "702. Долгосрочный однозначный путь",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/longest-univalue-path/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [5,4,5,1,1,null,5]",
       "output": "2",
-      "explanation": "Three 5s chain into two edges."
+      "explanation": "Три 5-х цепей на два края."
     },
     {
       "input": "root = [1,4,5,4,4,null,5]",
       "output": "2",
-      "explanation": "A 4 with two 4 children gives two edges."
+      "explanation": "4 с двумя детьми 4 дает два края."
     },
     {
       "input": "root = [1]",
       "output": "0",
-      "explanation": "A lone node has no edge."
+      "explanation": "Одинокий узел не имеет края."
     }
   ],
   "starterCode": {
@@ -52,8 +52,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Do a depth-first walk that returns the longest single-side chain of equal values starting at each node.",
-    "At a node, extend the left chain only when the left child shares the value (otherwise 0), and likewise on the right; the path through the node is the sum of both sides.",
-    "Keep a global best across all nodes; the answer is measured in edges."
+    "Сделайте первый шаг по глубине, который возвращает самую длинную одностороннюю цепочку равных значений, начиная с каждого узла.",
+    "На узле продлевайте левую цепочку только тогда, когда левый потомок разделяет значение (иначе 0), а также справа; путь через узел является суммой обеих сторон.",
+    "Сохраняйте глобальное лучшее во всех узлах; ответ измеряется по краям."
   ]
 }

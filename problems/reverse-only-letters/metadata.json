@@ -1,6 +1,6 @@
 {
   "id": "reverse-only-letters",
-  "title": "905. Reverse Only Letters",
+  "title": "905. Перевернуть только буквы",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/reverse-only-letters/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"ab-cd\"",
       "output": "\"dc-ba\"",
-      "explanation": "The letters reverse to d, c, b, a while the dash stays in place."
+      "explanation": "Буквы переворачиваются в d, c, b, в то время как тире остается на месте."
     },
     {
       "input": "s = \"a-bC-dEf-ghIj\"",
       "output": "\"j-Ih-gfE-dCba\"",
-      "explanation": "Reading the letters backwards gives j, I, h, g, f, E, d, C, b, a; dashes keep their spots."
+      "explanation": "Чтение букв назад дает j, I, h, g, f, E, d, C, b, a; тире сохраняют свои пятна."
     },
     {
       "input": "s = \"Test1ng-Leet=code-Q!\"",
       "output": "\"Qedo1ct-eeLg=ntse-T!\"",
-      "explanation": "Only English letters move; digits and punctuation never shift."
+      "explanation": "Перемещаются только английские буквы; цифры и пунктуация никогда не сдвигаются."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Walk in from both ends, skipping anything that is not an English letter.",
-    "Whenever both pointers sit on letters, swap them and move inward.",
-    "Non-letters are never moved, so they automatically end up where they started."
+    "Проходите с обоих концов, пропуская все, что не является английским письмом.",
+    "Всякий раз, когда оба указателя сидят на буквах, поменяйте их и двигайтесь внутрь.",
+    "Неписаные буквы никогда не перемещаются, поэтому они автоматически заканчиваются там, где они начались."
   ]
 }

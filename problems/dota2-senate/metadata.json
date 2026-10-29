@@ -1,6 +1,6 @@
 {
   "id": "dota2-senate",
-  "title": "240. Dota2 Senate",
+  "title": "240. Сенат Dota2",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/dota2-senate/",
   "category": "greedy",
@@ -8,12 +8,12 @@
     {
       "input": "senate = \"RD\"",
       "output": "\"Radiant\"",
-      "explanation": "The first senator comes from Radiant and he can just ban the next senator's right in round 1."
+      "explanation": "Первый сенатор родом из Радианта, и он может просто запретить право следующего сенатора в раунде 1."
     },
     {
       "input": "senate = \"RDD\"",
       "output": "\"Dire\"",
-      "explanation": "The first senator comes from Radiant and he can just ban the next senator's right in round 1."
+      "explanation": "Первый сенатор родом из Радианта, и он может просто запретить право следующего сенатора в раунде 1."
     }
   ],
   "starterCode": {
@@ -49,8 +49,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "A senator should always ban the closest opposite-party senator that comes after them.",
-    "Use two queues holding the indices of each party's senators.",
-    "The smaller index gets to act first, bans the other senator, and re-queues itself at the end with its index increased by senate.length to model the next round."
+    "Сенатор должен всегда запрещать ближайшим сенаторам противоположных партий, которые приходят после них.",
+    "Используйте две очереди, удерживающие индексы сенаторов каждой партии.",
+    "Меньший индекс начинает действовать первым, запрещает другого сенатора и перестраивается в очередь в конце, а его индекс увеличивается по длине сената, чтобы смоделировать следующий раунд."
   ]
 }

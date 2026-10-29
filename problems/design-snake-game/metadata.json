@@ -1,6 +1,6 @@
 {
   "id": "design-snake-game",
-  "title": "433. Design Snake Game",
+  "title": "433. Дизайн игры Snake",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/design-snake-game/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "width = 3, height = 2, food = [[1,2],[0,1]], moves = [\"R\",\"D\",\"R\",\"U\",\"L\",\"U\"]",
       "output": "[0,0,1,1,2,-1]",
-      "explanation": "The snake eats at (1,2) on the third move and at (0,1) on the fifth move, then crashes into itself on the last move."
+      "explanation": "Змея ест на третьем ходу (1, 2) и на пятом ходу (0, 1), а затем врезается в себя на последнем ходу."
     },
     {
       "input": "width = 2, height = 2, food = [], moves = [\"R\",\"D\",\"L\"]",
       "output": "[0,0,0]",
-      "explanation": "With no food the score stays zero while the snake loops safely."
+      "explanation": "Без еды счет остается нулевым, в то время как змея безопасно петляет."
     }
   ],
   "starterCode": {
@@ -73,8 +73,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Store the body in a queue (head at front) plus a hash set of occupied cells for O(1) collision checks.",
-    "When the step does not eat, remove the tail before testing self-collision so moving into the vacated cell is legal.",
-    "Once the game ends, every remaining move reports -1."
+    "Храните тело в очереди (голова спереди) плюс хеш-набор занятых клеток для проверки на столкновение O (1).",
+    "Когда шаг не ест, удалите хвост перед тестированием на столкновение с самим собой, поэтому перемещение в освободившуюся клетку является законным.",
+    "После окончания игры каждый оставшийся ход сообщает -1."
   ]
 }

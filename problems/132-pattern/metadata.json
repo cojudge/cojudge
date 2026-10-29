@@ -1,6 +1,6 @@
 {
   "id": "132-pattern",
-  "title": "523. 132 Pattern",
+  "title": "523. Модель 132",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/132-pattern/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,2,3,4]",
       "output": "false",
-      "explanation": "Every triple is increasing, so no middle value sits strictly between a smaller earlier value and a larger middle value."
+      "explanation": "Каждая тройка увеличивается, поэтому никакое среднее значение не находится строго между меньшим более ранним значением и большим средним значением."
     },
     {
       "input": "nums = [3,1,4,2]",
       "output": "true",
-      "explanation": "Indices 1, 2, 3 hold values 1, 4, 2, and 1 < 2 < 4."
+      "explanation": "Индексы 1, 2, 3 содержат значения 1, 4, 2 и 1 < 2 < 4."
     },
     {
       "input": "nums = [-1,3,2,0]",
       "output": "true",
-      "explanation": "The values -1, 3, 2 at indices 0, 1, 2 satisfy -1 < 2 < 3."
+      "explanation": "Значения -1, 3, 2 по индексам 0, 1, 2 удовлетворяют -1 < 2 < 3."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Scan from right to left while keeping candidates for the middle value on a decreasing stack.",
-    "Track the largest value popped so far as the best achievable `nums[k]`; any earlier smaller value completes the pattern."
+    "Сканируйте справа налево, сохраняя кандидатов на среднее значение на уменьшающемся стеке.",
+    "Отслеживайте наибольшее значение до самого лучшего достижимого `nums[k]`; любое более раннее меньшее значение завершает шаблон."
   ]
 }

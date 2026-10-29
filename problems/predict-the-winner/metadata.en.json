@@ -1,0 +1,58 @@
+{
+  "id": "predict-the-winner",
+  "title": "550. Predict the Winner",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/predict-the-winner/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "nums = [1,5,2]",
+      "output": "false",
+      "explanation": "Second player always secures the 5 and wins."
+    },
+    {
+      "input": "nums = [1,5,233,7]",
+      "output": "true",
+      "explanation": "First player takes 1 then 233 to win."
+    },
+    {
+      "input": "nums = [1]",
+      "output": "true",
+      "explanation": "Single pick wins."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean predictTheWinner(int[] nums) {\n        return false;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def predictTheWinner(self, nums: List[int]) -> bool:\n        return False\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool predictTheWinner(vector<int>& nums) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool PredictTheWinner(int[] nums)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn predict_the_winner(nums: Vec<i32>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc PredictTheWinner(nums []int) bool {\n    return false\n}",
+    "typescript": "export function predictTheWinner(nums: number[]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return bool\n     */\n    public function predictTheWinner($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,5,2]"
+    },
+    {
+      "nums": "[1,5,233,7]"
+    },
+    {
+      "nums": "[1]"
+    }
+  ],
+  "functionName": "predictTheWinner",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Track the best net lead the player to move can build on any interval.",
+    "An interval's value is the better of taking the left or right end minus the opponent's reply.",
+    "Non-negative lead over the whole array means the first player ties or wins."
+  ]
+}

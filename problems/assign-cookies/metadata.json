@@ -1,6 +1,6 @@
 {
   "id": "assign-cookies",
-  "title": "522. Assign Cookies",
+  "title": "522. Назначить Cookies",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/assign-cookies/",
   "category": "greedy",
@@ -8,17 +8,17 @@
     {
       "input": "g = [1,2,3], s = [1,1]",
       "output": "1",
-      "explanation": "Only one cookie can satisfy a child: one size-1 cookie covers the child with greed 1, and the other cookie is too small for greed 2 or 3."
+      "explanation": "Только одно печенье может удовлетворить ребенка: один размер-1 печенье покрывает ребенка с жадностью 1, а другой печенье слишком мало для жадности 2 или 3."
     },
     {
       "input": "g = [1,2], s = [1,2,3]",
       "output": "2",
-      "explanation": "Hand the size-1 cookie to the first child and the size-2 cookie to the second child."
+      "explanation": "Передайте файл cookie формата 1 первому ребенку, а файл cookie формата 2 второму ребенку."
     },
     {
       "input": "g = [10,9,8,7], s = [5,6,7,8]",
       "output": "2",
-      "explanation": "The two biggest cookies satisfy the two least greedy children."
+      "explanation": "Два самых больших печенья удовлетворяют двух наименее жадных детей."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sort both arrays, then always satisfy the least greedy remaining child with the smallest cookie that fits.",
-    "Walk through the cookies once with two pointers: advance the child pointer only when the current cookie is big enough."
+    "Сортируйте оба массива, а затем всегда удовлетворяйте наименее жадного оставшегося ребенка самым маленьким печеньем, которое подходит.",
+    "Пройдитесь по файлам cookie один раз с двумя указателями: продвигайте указатель ребенка только тогда, когда текущий файл cookie достаточно большой."
   ]
 }

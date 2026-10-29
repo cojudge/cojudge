@@ -1,6 +1,6 @@
 {
   "id": "subarrays-with-k-different-integers",
-  "title": "975. Subarrays with K Different Integers",
+  "title": "975. Субарражи с K различными целыми числами",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/subarrays-with-k-different-integers/",
   "category": "sliding-window",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1,2,1,2,3], k = 2",
       "output": "7",
-      "explanation": "Seven windows hold exactly two distinct values."
+      "explanation": "Семь окон имеют ровно два различных значения."
     },
     {
       "input": "nums = [1,2,1,3,4], k = 3",
       "output": "3",
-      "explanation": "The qualifying windows are [1,2,1,3], [2,1,3] and [1,3,4]."
+      "explanation": "Квалификационными окнами являются [1, 2, 1, 3], [2, 1, 3] и [1, 3, 4]."
     }
   ],
   "starterCode": {
@@ -53,8 +53,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Counting windows with exactly k distinct values directly is awkward; count windows with at most k instead.",
-    "Exactly-k equals atMost(k) minus atMost(k-1).",
-    "For atMost, slide a window with a frequency map: every right end contributes window-length new windows."
+    "Подсчет окон с точно k различными значениями напрямую неудобно; подсчитать окна с максимумом k вместо этого.",
+    "Ровно k равно aMost (k) минус aMost (k-1).",
+    "Для большинства, скользить окно с частотной картой: каждый правый конец способствует длине окна новых окон."
   ]
 }

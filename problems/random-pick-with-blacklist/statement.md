@@ -1,13 +1,13 @@
-You are given a range `0` to `n - 1` with some values blocked in `blacklist`. Each call should return a uniformly chosen unblocked number.
+Вам предоставляется диапазон `0` до `n - 1` с некоторыми значениями, заблокированными в `blacklist`. Каждый вызов должен возвращать однородно выбранный неблокированный номер.
 
-Because random output cannot be compared directly, this task uses a deterministic stand-in: `calls` holds one integer per draw. For each entry, wrap it into the set of valid numbers and return the corresponding valid value (blocked entries below `sz` are remapped to free tail values, where `sz = n - blacklist.length`). The reference method builds that remapping once and answers every draw with a binary-free O(1) lookup.
+Поскольку случайный выход нельзя сравнивать напрямую, эта задача использует детерминированный стенд-ин: `calls` удерживает одно целое число на ничью. Для каждой записи оберните его в набор действительных чисел и верните соответствующее действительное значение (заблокированные записи ниже `sz` переназначаются на свободные значения хвоста, где `sz = n - blacklist.length`). Ссылочный метод строит это переназначение один раз и отвечает на каждую ничью с помощью поиска O (1) без двоичного кода.
 
-Return one answer per entry of `calls`. The judge accepts any output whose entries are all inside `[0, n)` and avoid every blocked value, so any fair generator would pass; the wrapped-draw rule simply makes testing repeatable.
+Возврат одного ответа на вход `calls`Судья принимает любой выход, записи которого находятся внутри. `[0, n)` и избегать каждого заблокированного значения, так что любой справедливый генератор пройдет; правило обернутого рисунка просто делает тестирование повторяемым.
 
-*Adaptation note:* the function is named `runBlacklist` and takes `(n, blacklist, calls)` so every supported type stays within the allowed set. Correctness is validity-only.
+*Примечание по адаптации: * функция называется `runBlacklist` и принимает `(n, blacklist, calls)`, поэтому каждый поддерживаемый тип остается в пределах разрешенного набора.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 10^9`
 - `0 <= blacklist.length < n`
-- All blocked values are distinct and inside `[0, n)`.
+- Все заблокированные значения различны и находятся внутри `[0, n)`.
 - `1 <= calls.length <= 1000`

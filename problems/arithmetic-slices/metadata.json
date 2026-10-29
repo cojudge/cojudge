@@ -1,6 +1,6 @@
 {
   "id": "arithmetic-slices",
-  "title": "486. Arithmetic Slices",
+  "title": "486. Арифметические срезы",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/arithmetic-slices/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,2,3,4]",
       "output": "3",
-      "explanation": "Slices [1,2,3], [2,3,4] and [1,2,3,4] share a constant step."
+      "explanation": "Срезы [1,2,3], [2,3,4] и [1,2,3,4Поделитесь постоянным шагом."
     },
     {
       "input": "nums = [1]",
       "output": "0",
-      "explanation": "Fewer than three elements can never form a slice."
+      "explanation": "Меньше трех элементов никогда не могут образовать кусочек."
     },
     {
       "input": "nums = [7,7,7,7]",
       "output": "3",
-      "explanation": "Every contiguous run of length at least 3 with zero step counts."
+      "explanation": "Каждый непрерывный пробег длиной, по крайней мере, 3 с нулевым количеством шагов."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "A slice needs at least three entries with equal gaps between neighbours.",
-    "Extending a run ending at i adds as many new slices as the current streak length.",
-    "Keep a running streak: reset on a gap change, otherwise grow and accumulate."
+    "Для среза необходимо по крайней мере три записи с равными промежутками между соседями.",
+    "Продление пробега, заканчивающегося на i, добавляет столько же новых срезов, сколько текущая длина полосы.",
+    "Держите полосу бега: сбросьте на изменение разрыва, иначе расти и накапливаться."
   ]
 }

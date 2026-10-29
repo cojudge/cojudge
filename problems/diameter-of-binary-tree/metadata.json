@@ -1,6 +1,6 @@
 {
   "id": "diameter-of-binary-tree",
-  "title": "97. Diameter of Binary Tree",
+  "title": "97. Диаметр бинарного дерева",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/diameter-of-binary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,2,3,4,5]",
       "output": "3",
-      "explanation": "A longest path uses three edges, for example 4-2-1-3."
+      "explanation": "Самый длинный путь использует три края. 4-2-1-3."
     },
     {
       "input": "root = [1,2]",
       "output": "1",
-      "explanation": "The diameter (longest path between any two nodes) has length 1."
+      "explanation": "Диаметр (самый длинный путь между любыми двумя узлами) имеет длину 1."
     },
     {
       "input": "root = [1]",
       "output": "0",
-      "explanation": "The diameter (longest path between any two nodes) has length 0."
+      "explanation": "Диаметр (самый длинный путь между любыми двумя узлами) имеет длину 0."
     }
   ],
   "starterCode": {
@@ -55,8 +55,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "For each node, a path passing through it uses the deepest path in its left subtree plus the deepest path in its right subtree.",
-    "Compute subtree heights in postorder and track the largest sum of child heights.",
-    "Return the diameter in edges, not the number of nodes on the path."
+    "Для каждого узла путь, проходящий через него, использует самый глубокий путь в левом поддереве плюс самый глубокий путь в правом поддереве.",
+    "Вычислите высоту поддеревов в последовательности и отслеживайте самую большую сумму высоты потомка.",
+    "Верните диаметр по краям, а не количество узлов на пути."
   ]
 }

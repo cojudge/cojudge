@@ -1,7 +1,7 @@
-Starting at the origin of a grid, you walk in a repeating cycle of directions: first upward (north), then left (west), then downward (south), then right (east), then upward again, and so on. The array `distance` tells how far each leg reaches: leg 0 goes up by `distance[0]`, leg 1 goes left by `distance[1]`, leg 2 goes down by `distance[2]`, and the pattern continues counter-clockwise.
+Начиная с начала сетки, вы идете в повторяющемся цикле направлений: сначала вверх (север), затем влево (запад), затем вниз (юг), затем вправо (восток), затем снова вверх и так далее. Массив `distance` сообщает, как далеко каждая нога достигает: нога 0 поднимается на `distance[0]`, нога 1 уходит на `distance[1]`, нога 2 опускается на `distance[2]`, и рисунок продолжается против часовой стрелки.
 
-As the path grows it may touch or cross its own earlier trail. Return `true` when any such contact happens and `false` when the whole walk stays clear of itself.
+По мере того, как путь растет, он может касаться или пересекать свой собственный более ранний путь. Возврат `true`, когда происходит любой такой контакт, и `false`, когда вся прогулка остается чистой от себя.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= distance.length <= 10^5`
 - `1 <= distance[i] <= 10^5`

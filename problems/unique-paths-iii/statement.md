@@ -1,8 +1,8 @@
-A grid contains `1` (start), `2` (finish), `0` (open), and `-1` (blocked). From the start cell, move up, down, left, or right one step at a time without leaving the grid or entering blocked cells.
+Сетка содержит `1` (старт), `2` (финиш), `0` (открытый) и `-1` (блокированный). От стартовой ячейки перемещайтесь вверх, вниз, влево или вправо по одному шагу за раз, не выходя из сетки или не войдя в заблокированные ячейки.
 
-A valid walk must step on every non-blocked cell exactly once and finish on the `2` cell. Count such walks.
+Действительная прогулка должна наступить на каждую незаблокированную клетку ровно один раз и закончиться на клетке `2`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= grid.length, grid[0].length <= 20`
-- Values are only `-1`, `0`, `1`, or `2`.
-- Exactly one `1` and one `2` appear.
+- Значениями являются только `-1`, `0`, `1` или `2`.
+- Появляется один `1` и один `2`.

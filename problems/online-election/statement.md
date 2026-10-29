@@ -1,10 +1,10 @@
-Votes arrive over time: `persons[i]` receives one vote at moment `times[i]`, and `times` is strictly increasing. At any moment the leader is the person holding the most votes so far, with ties broken in favor of whoever was voted for most recently.
+Голоса приходят с течением времени: `persons[i]` получает один голос на данный момент `times[i]`, а `times` строго увеличивается.В любой момент лидером является человек, набравший наибольшее количество голосов до сих пор, с разорванными связями в пользу того, за кого голосовали совсем недавно.
 
-Instead of building the usual query class, implement `runElection(persons, times, queries)`: it receives the whole vote record plus a batch of query moments and returns, for each query `t`, the leader among votes cast at or before `t`. Every query time is guaranteed to be at least `times[0]`.
+Вместо построения обычного класса запросов реализуйте `runElection(persons, times, queries)`: он получает всю запись голосования плюс партию моментов запроса и возвращает, для каждого запроса `t` лидер среди голосов, отданных на или до `t`. Каждое время запроса гарантировано будет как минимум `times[0]`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= persons.length == times.length <= 5000`
-- `times` is strictly increasing, `0 <= times[i] <= 10^9`
+- `times` строго растет, `0 <= times[i] <= 10^9`
 - `0 <= persons[i] < persons.length`
 - `1 <= queries.length <= 10000`
 - `times[0] <= queries[j] <= 10^9`

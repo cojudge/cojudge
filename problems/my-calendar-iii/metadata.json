@@ -1,6 +1,6 @@
 {
   "id": "my-calendar-iii",
-  "title": "739. My Calendar III",
+  "title": "739. Мой календарь III",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/my-calendar-iii/",
   "category": "design",
@@ -8,7 +8,7 @@
     {
       "input": "operations = [\"MyCalendarThree\",\"book\",\"book\",\"book\",\"book\",\"book\",\"book\"]\nargs = [[],[10,20],[50,60],[10,40],[5,15],[5,10],[25,55]]",
       "output": "[1,1,2,3,3,3]",
-      "explanation": "Peak overlap climbs to 3 at the fourth booking and stays there."
+      "explanation": "Пик перекрытия поднимается до 3 при четвертом бронировании и остается там."
     },
     {
       "input": "operations = [\"MyCalendarThree\",\"book\",\"book\",\"book\"]\nargs = [[],[0,10],[10,20],[5,15]]",
@@ -56,8 +56,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Record +1 at each start and -1 at each end in an ordered map of time deltas.",
-    "After each booking, sweep the deltas in time order with a running total; the maximum is the current peak.",
-    "Half-open slots mean an ending at t frees the point before a slot starting at t begins, which the ordered sweep handles naturally."
+    "Запись +1 на каждом старте и -1 на каждом конце в упорядоченной карте дельт времени.",
+    "После каждого бронирования сметайте дельты в порядке времени с бегущей суммой; максимум - текущий пик.",
+    "Полуоткрытые слоты означают окончание в t освобождает точку перед слотом, начинающимся в t, который упорядоченная разметка обрабатывает естественным образом."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "shopping-offers",
-  "title": "660. Shopping Offers",
+  "title": "660. Торговые предложения",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/shopping-offers/",
   "category": "dp",
@@ -12,7 +12,7 @@
     {
       "input": "price = [2,3,4], special = [[1,1,0,4],[2,2,1,9]], needs = [1,2,1]",
       "output": "11",
-      "explanation": "Buying everything separately costs 12; the first bundle saves 1."
+      "explanation": "Покупка всего отдельно стоит 12; первый пакет экономит 1."
     },
     {
       "input": "price = [5], special = [[1,4]], needs = [3]",
@@ -63,8 +63,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Depth-first search over the remaining needs vector; the direct-purchase cost is always a valid upper bound.",
-    "Try every bundle that fits inside the remaining needs and add its price to the optimal cost of the reduced needs.",
-    "Memoize on the needs tuple so repeated states are solved once."
+    "Глубина первого поиска по остающемуся вектору потребностей; стоимость прямой покупки всегда является допустимой верхней границей.",
+    "Попробуйте каждый пакет, который соответствует оставшимся потребностям, и добавьте его цену к оптимальной стоимости уменьшенных потребностей.",
+    "Память о потребностях кортежа так повторяющиеся состояния решаются один раз."
   ]
 }

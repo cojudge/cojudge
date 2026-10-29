@@ -1,9 +1,9 @@
-You are given a binary array `arr`. Split it into three non-empty consecutive blocks so that each block represents the same binary value (leading zeros are ignored).
+Вы получаете двоичный массив `arr`. Разделите его на три непустых последовательных блока, чтобы каждый блок представлял одно и то же двоичное значение (ведущие нули игнорируются).
 
-Return indices `[i, j]` where the first block is `arr[0..i]`, the second is `arr[i+1..j-1]`, and the third is `arr[j..n-1]`. When no such split exists, return `[-1, -1]`. When several splits work (for example an all-zero array), any valid one is accepted.
+Индексы возврата `[i, j]`, где первым блоком является `arr[0..i]`, вторым — `arr[i+1..j-1]`, а третьим — `arr[j..n-1]`. Когда такого раскола не существует, возвращают `[-1, -1]`. Когда работают несколько расколов (например, нулевой массив), принимается любой действительный.
 
-**Constraints:**
+**Ограничения:**
 - `3 <= arr.length <= 30000`
-- Each entry is `0` or `1`.
+- Каждая запись `0` или `1`.
 
-Adaptation: the returned pair uses `int_array`; the checker accepts any valid split, not only the reference one.
+Адаптация: возвращенная пара использует `int_array`; шашка принимает любой действительный сплит, а не только эталонный.

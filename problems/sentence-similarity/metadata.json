@@ -1,6 +1,6 @@
 {
   "id": "sentence-similarity",
-  "title": "741. Sentence Similarity",
+  "title": "741. Сходство приговора",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/sentence-similarity/",
   "category": "hash-table",
@@ -8,7 +8,7 @@
     {
       "input": "sentence1 = [\"great\",\"acting\",\"skills\"], sentence2 = [\"fine\",\"drama\",\"talent\"], similarPairs = [[\"great\",\"fine\"],[\"drama\",\"acting\"],[\"skills\",\"talent\"]]",
       "output": "true",
-      "explanation": "Each position is covered by a listed pair (one of them reversed)."
+      "explanation": "Каждая позиция покрывается перечисленной парой (одна из них перевернута)."
     },
     {
       "input": "sentence1 = [\"great\"], sentence2 = [\"great\"], similarPairs = []",
@@ -63,8 +63,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Lengths must agree first; different word counts can never be similar.",
-    "Store each listed pair in both directions in a hash set of joined keys.",
-    "Identical words at a position pass without any lookup."
+    "Длины должны сначала совпадать; разные значения слов никогда не могут быть одинаковыми.",
+    "Храните каждую перечисленную пару в обоих направлениях в хэш-наборе соединенных ключей.",
+    "Идентичные слова на позиции проходят без какого-либо поиска."
   ]
 }

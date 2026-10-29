@@ -1,15 +1,15 @@
-You are given a lowercase string `s` and an integer `k`. Reorder its
-characters into a new string where any two equal letters are separated by at
-least `k` positions (there must be `k - 1` other characters between them).
-When no such ordering exists, return the empty string.
+Вы получаете нижнюю строку `s` и целое число `k`.
+символы в новую строку, где любые две равные буквы разделены на
+Позиции `k` (между ними должны быть другие символы `k - 1`).
+Когда такого порядка не существует, верните пустую строку.
 
-For example, `"aabbcc"` with `k = 3` can become `"abcabc"`, while `"aaabc"`
-with `k = 3` is impossible because three `a` letters need at least
-`3 + 2 * (3 - 1) = 7` slots but only 5 characters exist.
+Например, `"aabbcc"` с `k = 3` может стать `"abcabc"`, в то время как `"aaabc"`
+`k = 3` невозможен, потому что три буквы `a` нужны как минимум
+Слоты `3 + 2 * (3 - 1) = 7`, но существуют только символы 5.
 
-Note that many orderings may be valid; any correct one is accepted.
+Обратите внимание, что многие заказы могут быть действительными; любой правильный принимается.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 500`
-- `s` consists of lowercase English letters
+- `s` состоит из строчных английских букв
 - `1 <= k <= s.length`

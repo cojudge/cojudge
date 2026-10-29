@@ -1,6 +1,6 @@
 {
   "id": "time-based-key-value-store",
-  "title": "90. Time Based Key-Value Store",
+  "title": "90. Магазин ключевых ценностей, основанный на времени",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/time-based-key-value-store/",
   "category": "binary-search",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"set\",\"get\",\"get\",\"set\",\"get\",\"get\"], keys = [\"foo\",\"foo\",\"foo\",\"foo\",\"foo\",\"foo\"], values = [\"bar\",\"\",\"\",\"bar2\",\"\",\"\"], timestamps = [1,1,3,4,4,5]",
       "output": "[\"bar\",\"bar\",\"bar2\",\"bar2\"]",
-      "explanation": "For each key, timestamps are stored sorted. get() returns the value at the largest timestamp <= given timestamp."
+      "explanation": "Для каждого ключа временные метки сортируются. get() возвращает значение в наибольшей временной метки <= заданной временной метки."
     },
     {
       "input": "operations = [\"set\",\"set\",\"get\",\"get\",\"get\"], keys = [\"love\",\"love\",\"love\",\"love\",\"love\"], values = [\"high\",\"low\",\"\",\"\",\"\"], timestamps = [10,20,5,10,15]",
       "output": "[\"\",\"high\",\"high\"]",
-      "explanation": "For each key, timestamps are stored sorted. get() returns the value at the largest timestamp <= given timestamp."
+      "explanation": "Для каждого ключа временные метки сортируются. get() возвращает значение в наибольшей временной метки <= заданной временной метки."
     },
     {
       "input": "operations = [\"get\",\"set\",\"get\"], keys = [\"a\",\"a\",\"a\"], values = [\"ignored\",\"first\",\"ignored\"], timestamps = [10,1,10]",
       "output": "[\"\",\"first\"]",
-      "explanation": "Operations are processed in order, and values paired with get operations are ignored."
+      "explanation": "Операции обрабатываются в порядке, а значения в паре с получаемыми операциями игнорируются."
     }
   ],
   "starterCode": {
@@ -72,8 +72,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Store a timestamped sequence independently for each key.",
-    "The strictly increasing set timestamps mean each new pair can be appended.",
-    "For get, binary-search for the rightmost timestamp that is less than or equal to the query timestamp."
+    "Храните последовательность с меткой времени независимо для каждого ключа.",
+    "Строго увеличивающиеся временные метки означают, что каждая новая пара может быть добавлена.",
+    "Для получения, двоичный поиск для самой правильной временной метки, которая меньше или равна временной метки запроса."
   ]
 }

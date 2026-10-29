@@ -1,6 +1,6 @@
 {
   "id": "split-array-into-fibonacci-sequence",
-  "title": "840. Split Array into Fibonacci Sequence",
+  "title": "840. Расщепление массива в последовательности Фибоначчи",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/split-array-into-fibonacci-sequence/",
   "category": "backtracking",
@@ -8,17 +8,17 @@
     {
       "input": "num = \"1101111\"",
       "output": "[11,0,11,11]",
-      "explanation": "11+0=11 and 0+11=11."
+      "explanation": "11+0=11 и 0+11=11."
     },
     {
       "input": "num = \"11235813\"",
       "output": "[1,1,2,3,5,8,13]",
-      "explanation": "Each value sums the prior two."
+      "explanation": "Каждое значение суммирует два предыдущих."
     },
     {
       "input": "num = \"112358130\"",
       "output": "[]",
-      "explanation": "No valid partition exists."
+      "explanation": "Действительных разделов не существует."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Try every split for the first two numbers (at most 10 digits each given the 32-bit cap), then extend deterministically.",
-    "Reject any piece with a leading zero unless it is exactly '0', and stop when a value exceeds 2147483647.",
-    "Once the first pair is fixed, the rest of the sequence is forced: keep matching the expected sum as a prefix."
+    "Попробуйте каждое разделение для первых двух чисел (в большинстве цифр 10, каждый из которых имеет 32-бит), а затем расширьте детерминированно.",
+    "Отклоните любую часть с ведущим нулем, если она не является точно 0, и остановитесь, когда значение превышает 2147483647.",
+    "Как только первая пара фиксирована, остальная часть последовательности вынуждена: продолжайте соответствовать ожидаемой сумме в качестве префикса."
   ]
 }

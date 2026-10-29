@@ -1,6 +1,6 @@
 {
   "id": "complete-binary-tree-inserter",
-  "title": "906. Complete Binary Tree Inserter",
+  "title": "906. Бинарное дерево Inserter",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/complete-binary-tree-inserter/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,2], operations = [\"insert\",\"insert\",\"getRoot\"], values = [3,4,0]",
       "output": "[1,2,1]",
-      "explanation": "Inserting 3 under parent 1 and 4 under parent 2 keeps the tree complete; getRoot reports 1."
+      "explanation": "Вставка 3 под родительский 1 и 4 под родительский 2 сохраняет дерево полным; getRoot сообщает 1."
     },
     {
       "input": "root = [1], operations = [\"insert\",\"getRoot\",\"insert\"], values = [2,0,3]",
       "output": "[1,1,1]",
-      "explanation": "Both insertions attach to the root, whose value stays 1."
+      "explanation": "Обе вставки крепятся к корню, значение которого остается 1."
     },
     {
       "input": "root = [1,2,3,4,5,6], operations = [\"insert\",\"insert\",\"getRoot\"], values = [7,8,0]",
       "output": "[3,4,1]",
-      "explanation": "Node 7 fills the right child of 3 and node 8 the left child of 4."
+      "explanation": "Узел 7 заполняет правого потомка 3, а узел 8 — левого потомка 4."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "A complete tree fills level by level, so insertions always target the earliest node (in level order) missing a child.",
-    "Keep a queue of such candidate parents: use the head for each insert, drop it once both children exist, and append every new node.",
-    "Adaptation note: the original class interaction is flattened here into one batch call over operation traces."
+    "Полное дерево заполняет уровень за уровнем, поэтому вставки всегда нацелены на самый ранний узел (в порядке уровня), в котором отсутствует потомок.",
+    "Держите в очереди таких родителей-кандидатов: используйте головку для каждой вставки, опустите ее, как только появятся оба потомка, и приложите каждый новый узел.",
+    "Примечание по адаптации: оригинальное взаимодействие класса сплющено здесь в одну серию вызовов по операционным следам."
   ]
 }

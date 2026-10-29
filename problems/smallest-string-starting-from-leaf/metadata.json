@@ -1,6 +1,6 @@
 {
   "id": "smallest-string-starting-from-leaf",
-  "title": "971. Smallest String Starting From Leaf",
+  "title": "971. Самая маленькая струна, начинающаяся с листа",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/smallest-string-starting-from-leaf/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [0,1,2,3,4,3,4]",
       "output": "\"dba\"",
-      "explanation": "Leaf-to-root strings include dba, eba and others; dba is the smallest."
+      "explanation": "Листья к корню струны включают dba, eba и другие; dba является наименьшим."
     },
     {
       "input": "root = [25,1,3,1,3,0,2]",
       "output": "\"adz\"",
-      "explanation": "The covering leaf strings are compared; adz is minimal."
+      "explanation": "Сравниваются покрывающие листовые струны; adz минимален."
     },
     {
       "input": "root = [2,2,1,null,1,0,null,0]",
       "output": "\"abc\"",
-      "explanation": "Only a few root paths exist and abc is the smallest leaf-up spelling."
+      "explanation": "Существует только несколько корневых путей, и abc является наименьшим написанием листьев."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Map node values 0..25 to letters a..z and read each root-to-leaf path backwards (leaf first).",
-    "Depth-first search carrying the current root-to-leaf character path lets you build each candidate at the leaf.",
-    "Keep the lexicographically smallest candidate across all leaves."
+    "Узел карты обозначает 0..25 буквами a..z и читает каждый путь от корня к листу назад (первый лист).",
+    "Глубина поиска, несущая текущий путь от корня к листу, позволяет вам построить каждого кандидата на листе.",
+    "Держите лексикографически наименьшего кандидата на всех листьях."
   ]
 }

@@ -1,10 +1,10 @@
-You are given an integer array `nums` that may hold negative values, plus a target integer `k`. Consider all non-empty contiguous segments of the array. Each segment has a sum and a length.
+Вам дается целочисленный массив `nums`, который может содержать отрицательные значения, плюс целевое целое число `k`. Рассмотрим все непустые смежные сегменты массива. Каждый сегмент имеет сумму и длину.
 
-Find the length of the shortest segment whose sum is at least `k`. If no segment reaches the target, return `-1`.
+Найдите длину кратчайшего сегмента, сумма которого составляет как минимум `k`. Если ни один сегмент не достигает цели, верните `-1`.
 
-The challenge is that negatives prevent a simple sliding window, so a method that handles arbitrary values is required.
+Проблема заключается в том, что негативы предотвращают простое раздвижное окно, поэтому требуется метод, который обрабатывает произвольные значения.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^5`
 - `-10^5 <= nums[i] <= 10^5`
 - `1 <= k <= 10^9`

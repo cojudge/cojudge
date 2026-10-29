@@ -1,5 +1,5 @@
-A camera placed on a tree node watches its parent, itself, and its immediate children. Find the smallest number of cameras that together watch every node of the tree described by the level-order serialization `root`. (Node values are irrelevant; only the shape matters.) An empty tree needs no cameras.
+Камера, размещенная на древесном узле, смотрит на своего родителя, себя и своих ближайших потомков. Найдите наименьшее количество камер, которые вместе смотрят каждый узел дерева, описанный сериализацией уровня порядка `root`. (Значения узлов не имеют значения; важна только форма.) Пустое дерево не нуждается в камерах.
 
-**Constraints:**
-- The tree holds between 0 and 1000 nodes.
-- Node values are integers fitting in a 32-bit signed range.
+**Ограничения:**
+- Дерево находится между узлами 0 и 1000.
+- Значения узлов представляют собой целые числа, вписывающиеся в диапазон 32-бит.

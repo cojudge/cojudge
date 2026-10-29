@@ -1,6 +1,6 @@
 {
   "id": "basic-factorial",
-  "title": "10. Factorial",
+  "title": "10. факториальный",
   "difficulty": "Easy",
   "category": "loops",
   "examples": [
@@ -12,7 +12,7 @@
     {
       "input": "n = 0",
       "output": "1",
-      "explanation": "0! is defined as 1."
+      "explanation": "0! определяется как 1."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Like the sum problem, but multiply instead of add.",
-    "Start the running product at 1, not 0."
+    "Как и задача с суммой, но умножайте вместо того, чтобы добавлять.",
+    "Запуск продукта на 1, а не на 0."
   ]
 }

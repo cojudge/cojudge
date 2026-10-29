@@ -1,9 +1,9 @@
-Shift the letters of a string by suffix totals.
+Сдвиньте буквы строки на суффиксные суммы.
 
-You receive a lowercase string `s` and an array `shifts` of the same length. Conceptually, `shifts[i]` says how many forward steps (wrapping from z back to a) apply to the prefix ending at `i`; equivalently each position `i` moves by the sum of `shifts[j]` for all `j >= i`. Apply all shifts with modulo 26 and return the resulting string.
+Вы получаете строчку нижнего регистра `s` и массив `shifts` одинаковой длины. Концептуально `shifts[i]` говорит, сколько шагов вперед (обертывание от z назад к a) применяется к префиксу, заканчивающемуся на `i`; эквивалентно каждой позиции `i` движется суммой `shifts[j]` для всех `j >= i`. Применяйте все сдвиги модулем 26 и возвращайте полученную строку.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 10^5`
-- `s` holds lowercase English letters.
+- `s` содержит английские буквы.
 - `shifts.length == s.length`
 - `0 <= shifts[i] <= 10^9`

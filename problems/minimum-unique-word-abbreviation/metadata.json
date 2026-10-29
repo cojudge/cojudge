@@ -1,6 +1,6 @@
 {
   "id": "minimum-unique-word-abbreviation",
-  "title": "484. Minimum Unique Word Abbreviation",
+  "title": "484. Минимальное уникальное сокращение слова",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/minimum-unique-word-abbreviation/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "target = \"apple\", dictionary = [\"blade\"]",
       "output": "\"a4\"",
-      "explanation": "a4 keeps the leading a and skips four letters; blade starts with b so it cannot match."
+      "explanation": "a4 сохраняет лидерство a и пропускает четыре буквы; лезвие начинается с b, поэтому оно не может совпадать."
     },
     {
       "input": "target = \"apple\", dictionary = [\"plain\",\"amber\",\"blade\"]",
       "output": "\"1p3\"",
-      "explanation": "1p3 is the shortest shorthand of apple avoided by all three dictionary words."
+      "explanation": "1p3 - это самая короткая аббревиатура из всех трех словарных слов, которых избегали яблоки."
     },
     {
       "input": "target = \"a\", dictionary = []",
       "output": "\"1\"",
-      "explanation": "With no rivals, the whole word compresses to its length."
+      "explanation": "Не имея соперников, все слово сжимается до своей длины."
     }
   ],
   "starterCode": {
@@ -70,8 +70,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "An abbreviation matches a word when its letters line up and its numbers skip the right counts; leading zeros are illegal.",
-    "Only dictionary words with the same length as the target can collide.",
-    "Enumerate every abbreviation pattern by bitmask and keep the shortest one avoiding all rivals."
+    "Аббревиатура соответствует слову, когда его буквы выстраиваются в линию, а номера пропускают правильные подсчеты; ведущие нули являются незаконными.",
+    "Столкнуться могут только словари той же длины, что и цель.",
+    "Перечислите каждую аббревиатуру по битмаске и держите самую короткую, избегая всех соперников."
   ]
 }

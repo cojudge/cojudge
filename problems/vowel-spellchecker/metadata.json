@@ -1,6 +1,6 @@
 {
   "id": "vowel-spellchecker",
-  "title": "952. Vowel Spellchecker",
+  "title": "952. ГОЛОВНАЯ СПЕЛЬЧЕККА",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/vowel-spellchecker/",
   "category": "hash-table",
@@ -8,17 +8,17 @@
     {
       "input": "wordlist = [\"KiTe\",\"kite\",\"hare\",\"Hare\"], queries = [\"kite\",\"Kite\",\"KiTe\",\"Hare\",\"HARE\",\"Hear\",\"hear\",\"keti\",\"keet\",\"keto\"]",
       "output": "[\"kite\",\"KiTe\",\"KiTe\",\"Hare\",\"hare\",\"\",\"\",\"KiTe\",\"\",\"KiTe\"]",
-      "explanation": "Exact hits win first ('kite', 'KiTe', 'Hare'); case-insensitive matches resolve 'Kite' and 'HARE'; vowel-tolerant matches catch 'keti' and 'keto'."
+      "explanation": "Точные хиты выигрывают первыми («kite», «KiTe», «Hare»); нечувствительные к случаю матчи разрешают «Kite» и «HARE»; гласные матчи ловят «keti» и «keto»."
     },
     {
       "input": "wordlist = [\"yellow\"], queries = [\"YellOw\"]",
       "output": "[\"yellow\"]",
-      "explanation": "No exact hit exists, but lowercasing both sides matches 'yellow'."
+      "explanation": "Точного попадания не существует, но нижняя планка обеих сторон соответствует «желтой»."
     },
     {
       "input": "wordlist = [\"hello\",\"world\"], queries = [\"Hello\",\"WORLD\",\"hallo\",\"warld\",\"xyz\"]",
       "output": "[\"hello\",\"world\",\"hello\",\"world\",\"\"]",
-      "explanation": "'hallo' shares the consonant skeleton of 'hello', while 'xyz' matches nothing and yields an empty string."
+      "explanation": "«hallo» разделяет согласный скелет «hello», в то время как «xyz» ничего не соответствует и дает пустую строку."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Build the exact set plus lowercase-first and vowel-masked-first maps in a single pass.",
-    "Keep the first vocabulary word for each masked key; later duplicates must not overwrite it.",
-    "Lowercase before masking so uppercase vowels collapse to the same wildcard."
+    "Постройте точный набор плюс карты в нижнем регистре и в гласной маске за один проход.",
+    "Держите первое слово в словаре для каждого замаскированного ключа; последующие дубликаты не должны перезаписывать его.",
+    "Нижний чемодан перед маскированием, так что верхние гласные сжимаются до той же дикой карты."
   ]
 }

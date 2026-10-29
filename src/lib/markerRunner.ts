@@ -1,8 +1,9 @@
+import { javaImage } from '$lib/server/runtimeImages';
 import fs from 'fs/promises';
 import Dockerode from 'dockerode';
 import { resolveProblemFile } from './server/contentPaths';
 import tar from 'tar-stream';
-import { formatAndSplitJavaString, getDisplayFuncName, javaGetFullParam, javaHelperMethods, javaImage, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from './utils/javaUtil';
+import { formatAndSplitJavaString, getDisplayFuncName, javaGetFullParam, javaHelperMethods, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from './utils/javaUtil';
 import { isTranscriptKind } from './utils/interactiveUtil';
 import { ensureImageAvailable, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE, type Param } from './utils/util';
 import ContainerPool from './runners/ContainerPool';

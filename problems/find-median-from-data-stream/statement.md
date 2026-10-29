@@ -1,12 +1,12 @@
-The **median** of a sorted integer collection is its central entry. When the collection holds an even count, the median becomes the average of the two central entries.
+**Средний** отсортированной целочисленной коллекции является ее центральной записью.Когда коллекция содержит четное число, медиана становится средней из двух центральных записей.
 
-Build a structure that tracks this value as numbers arrive one by one:
+Постройте структуру, которая отслеживает это значение, когда числа приходят один за другим:
 
-- `MedianFinder()` creates a fresh `MedianFinder` tracker.
-- `void addNum(int num)` feeds one integer `num` from the stream into the tracker.
-- `double findMedian()` reports the median of everything fed in so far. Outputs landing within `10^-5` of the true median count as correct.
+- `MedianFinder()` создает новый трекер `MedianFinder`.
+- `void addNum(int num)` подает одно целое число `num` из потока в трекер.
+- `double findMedian()` сообщает о медиане всего, что было подано до сих пор. Выходы, приземляющиеся в `10^-5` истинного среднего числа, верны.
 
-**Constraints:**
+**Ограничения:**
 - `-10^5 <= num <= 10^5`
-- The tracker will hold at least one entry whenever `findMedian` is invoked.
-- No more than `5 * 10^4` invocations of `addNum` and `findMedian` combined will occur.
+- Трекер будет содержать по крайней мере одну запись при вызове `findMedian`.
+- Будет происходить не больше, чем вызовы `5 * 10^4` от `addNum` и `findMedian` вместе взятых.

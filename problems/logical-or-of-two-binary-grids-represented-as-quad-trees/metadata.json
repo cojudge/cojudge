@@ -1,6 +1,6 @@
 {
   "id": "logical-or-of-two-binary-grids-represented-as-quad-trees",
-  "title": "614. Logical OR of Two Binary Grids Represented as Quad-Trees",
+  "title": "614. Логическая или двух двоичных сеток, представленных как четырехдеревья",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/logical-or-of-two-binary-grids-represented-as-quad-trees/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "quadTree1 = [[1,1]], quadTree2 = [[1,0]]",
       "output": "[[1,1]]",
-      "explanation": "True OR False is True."
+      "explanation": "Истинно или ложно."
     },
     {
       "input": "quadTree1 = [[0,1],[1,0],[1,1],[1,1],[1,0]], quadTree2 = [[1,0]]",
       "output": "[[0,1],[1,0],[1,1],[1,1],[1,0]]",
-      "explanation": "OR with all-False keeps the first grid."
+      "explanation": "Иль с ложным держит первую сетку."
     },
     {
       "input": "quadTree1 = [[0,1],[1,0],[1,1],[1,1],[1,0]], quadTree2 = [[1,1]]",
       "output": "[[1,1]]",
-      "explanation": "OR with all-True gives all-True."
+      "explanation": "Иль все истинно, все истинно."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Rebuild both node trees from the BFS lists: leaves stop, internal nodes take the next four entries as children.",
-    "A leaf True dominates (result leaf True); a leaf False defers to the other subtree.",
-    "When both sides are internal, merge the four child pairs, then collapse uniform leaf children into one leaf."
+    "Восстановите оба узла из списков BFS: листья останавливаются, внутренние узлы берут следующие четыре записи в детстве.",
+    "Лист Истинный доминирует (результат лист Истинный); лист Лжеотносится к другому поддереву.",
+    "Когда обе стороны являются внутренними, слите четыре детские пары, а затем сверните однородных детей в один лист."
   ]
 }

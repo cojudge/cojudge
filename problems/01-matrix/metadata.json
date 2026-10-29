@@ -1,6 +1,6 @@
 {
   "id": "01-matrix",
-  "title": "600. 01 Matrix",
+  "title": "600. 01 Матрица",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/01-matrix/",
   "category": "matrix",
@@ -8,12 +8,12 @@
     {
       "input": "mat = [[0,0,0],[0,1,0],[0,0,0]]",
       "output": "[[0,0,0],[0,1,0],[0,0,0]]",
-      "explanation": "Centre cell is one step from zero."
+      "explanation": "Центральная ячейка находится в шаге от нуля."
     },
     {
       "input": "mat = [[0,0,0],[0,1,0],[1,1,1]]",
       "output": "[[0,0,0],[0,1,0],[1,2,1]]",
-      "explanation": "Bottom row distances grow with depth."
+      "explanation": "Расстояния нижних рядов растут с глубиной."
     },
     {
       "input": "mat = [[0]]",
@@ -50,7 +50,7 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Start a breadth-first search from all zero cells at once; the first visit to a cell gives its nearest distance.",
-    "Initialise ones as unvisited (-1) and expand level by level in the four directions."
+    "Начните поиск по ширине от всех нулевых ячеек одновременно; первое посещение ячейки дает ее ближайшее расстояние.",
+    "Инициируйте их как непосещенные (-1) и расширяйте уровень за уровнем в четырех направлениях."
   ]
 }

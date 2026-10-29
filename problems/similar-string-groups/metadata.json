@@ -1,6 +1,6 @@
 {
   "id": "similar-string-groups",
-  "title": "837. Similar String Groups",
+  "title": "837. Похожие струнные группы",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/similar-string-groups/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "strs = [\"tars\",\"rats\",\"arts\",\"star\"]",
       "output": "2",
-      "explanation": "First three link by swaps; star is separate."
+      "explanation": "Первые три звена по свопам; звезда отделена."
     },
     {
       "input": "strs = [\"omv\",\"ovm\"]",
       "output": "1",
-      "explanation": "One swap converts between them."
+      "explanation": "Один своп конвертируется между ними."
     },
     {
       "input": "strs = [\"abc\",\"def\",\"ghi\"]",
       "output": "3",
-      "explanation": "No pair is one swap apart."
+      "explanation": "Ни одна пара не может быть раздельной."
     }
   ],
   "starterCode": {
@@ -68,8 +68,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Two words are directly alike when their mismatch count is 0 or exactly 2 with cross-matching letters.",
-    "Join directly alike pairs with a disjoint-set union (or BFS/DFS flood fill) and count distinct roots.",
-    "Compare every pair: with n up to 300 and length up to 300 this quadratic scan is fast enough."
+    "Два слова напрямую похожи, когда их количество несоответствий - 0 или именно 2 с пересекающимися буквами.",
+    "Присоединяйтесь непосредственно к одинаковым парам с несвязанным союзом (или заполнением потока BFS / DFS) и подсчитывайте различные корни.",
+    "Сравните каждую пару: с n до 300 и длиной до 300 это квадратичное сканирование достаточно быстрое."
   ]
 }

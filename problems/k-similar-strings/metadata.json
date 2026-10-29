@@ -1,6 +1,6 @@
 {
   "id": "k-similar-strings",
-  "title": "850. K-Similar Strings",
+  "title": "850. K-подобные струны",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/k-similar-strings/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s1 = \"ab\", s2 = \"ba\"",
       "output": "1",
-      "explanation": "One swap suffices."
+      "explanation": "Одного свопа достаточно."
     },
     {
       "input": "s1 = \"abc\", s2 = \"bca\"",
       "output": "2",
-      "explanation": "Two swaps rotate the letters."
+      "explanation": "Два свопа вращают буквы."
     },
     {
       "input": "s1 = \"abac\", s2 = \"baca\"",
       "output": "2",
-      "explanation": "Two swaps align all spots."
+      "explanation": "Два свопа выравнивают все точки."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Breadth-first search over strings works: each level is one more swap, and the first visit to s2 is optimal.",
-    "Prune hard: only swap the first mismatched index i with a later j where s1[j] equals s2[i].",
-    "Skip already-seen strings with a visited set to keep the queue small."
+    "Работает поиск по строкам: каждый уровень — это еще один своп, а первое посещение s2 — оптимальное.",
+    "Твердая обрезка: только поменяйте первый несоответствующий индекс i на более поздний j, где s1[j] равен s2[i].",
+    "Пропустите уже замеченные струны с посещенным набором, чтобы сохранить очередь маленькой."
   ]
 }

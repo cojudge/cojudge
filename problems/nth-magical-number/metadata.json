@@ -1,6 +1,6 @@
 {
   "id": "nth-magical-number",
-  "title": "870. Nth Magical Number",
+  "title": "870. N-е магическое число",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/nth-magical-number/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "n = 1, a = 2, b = 3",
       "output": "2",
-      "explanation": "The magical numbers start 2, 3, 4, 6, 8, ..., so the first one is 2."
+      "explanation": "Волшебные числа начинаются с 2, 3, 4, 6, 8, ..., так что первым из них является 2."
     },
     {
       "input": "n = 4, a = 2, b = 3",
       "output": "6",
-      "explanation": "Listing them in order gives 2, 3, 4, 6, so the fourth is 6."
+      "explanation": "Перечисление их по порядку дает 2, 3, 4, 6, поэтому четвертым является 6."
     },
     {
       "input": "n = 5, a = 2, b = 4",
       "output": "10",
-      "explanation": "Every even number is magical here, so the fifth one is 10."
+      "explanation": "Каждое четное число здесь магическое, поэтому пятое — 10."
     }
   ],
   "starterCode": {
@@ -70,7 +70,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Count how many magical numbers are at most x with x/a + x/b - x/lcm(a,b), then binary search the smallest x whose count reaches n.",
-    "Use 64-bit integers for the search bounds and take the result modulo 10^9 + 7 only at the very end."
+    "Подсчитайте, сколько магических чисел самое большее x с x/a + x/b - x/lcm (a,b), затем выполните двоичный поиск наименьшего x, количество которого достигает n.",
+    "Используйте целочисленные числа 64 для границ поиска и возьмите результат по модулю 10^9 + 7 только в самом конце."
   ]
 }

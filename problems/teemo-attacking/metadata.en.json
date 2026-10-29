@@ -1,0 +1,60 @@
+{
+  "id": "teemo-attacking",
+  "title": "558. Teemo Attacking",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/teemo-attacking/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "timeSeries = [1,4], duration = 2",
+      "output": "4",
+      "explanation": "Spans [1,2] and [4,5] are disjoint, giving 2 + 2 seconds."
+    },
+    {
+      "input": "timeSeries = [1,2], duration = 2",
+      "output": "3",
+      "explanation": "Spans [1,2] and [2,3] overlap at second 2, giving 3 distinct seconds."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findPoisonedDuration(int[] timeSeries, int duration) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findPoisonedDuration(self, timeSeries: List[int], duration: int) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int findPoisonedDuration(vector<int>& timeSeries, int duration) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindPoisonedDuration(int[] timeSeries, int duration) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_poisoned_duration(time_series: Vec<i32>, duration: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindPoisonedDuration(timeSeries []int, duration int) int {\n    \n}",
+    "typescript": "export function findPoisonedDuration(timeSeries: number[], duration: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $timeSeries\n     * @param int $duration\n     * @return int\n     */\n    public function findPoisonedDuration($timeSeries, $duration) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "timeSeries": "[1,4]",
+      "duration": 2
+    },
+    {
+      "timeSeries": "[1,2]",
+      "duration": 2
+    },
+    {
+      "timeSeries": "[1]",
+      "duration": 5
+    }
+  ],
+  "functionName": "findPoisonedDuration",
+  "params": [
+    {
+      "name": "timeSeries",
+      "type": "int_array"
+    },
+    {
+      "name": "duration",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Only neighboring attacks can overlap because the list is sorted.",
+    "Each gap contributes min(duration, next - current); the final attack always adds a full duration.",
+    "A duration of zero means no poisoned seconds at all."
+  ]
+}

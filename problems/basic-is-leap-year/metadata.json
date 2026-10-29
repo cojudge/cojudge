@@ -1,23 +1,23 @@
 {
   "id": "basic-is-leap-year",
-  "title": "5. Leap Year",
+  "title": "5. Високосный год",
   "difficulty": "Easy",
   "category": "if-else",
   "examples": [
     {
       "input": "year = 2000",
       "output": "true",
-      "explanation": "2000 is divisible by 400."
+      "explanation": "2000 делится на 400."
     },
     {
       "input": "year = 1900",
       "output": "false",
-      "explanation": "1900 is divisible by 100 but not by 400."
+      "explanation": "1900 делится на 100, но не на 400."
     },
     {
       "input": "year = 2024",
       "output": "true",
-      "explanation": "2024 is divisible by 4 but not by 100."
+      "explanation": "2024 делится на 4, но не на 100."
     }
   ],
   "starterCode": {
@@ -50,7 +50,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Combine the divisibility checks with `&&`, `||`, and `!`.",
-    "Check the 400 rule first."
+    "Объедините проверки делимости с `&&`, `||` и `!`.",
+    "Сначала проверьте правило 400."
   ]
 }

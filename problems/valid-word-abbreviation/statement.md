@@ -1,10 +1,10 @@
-An abbreviation replaces blocks of letters with their lengths: for example, `w3d` could stand for a four-letter word starting with `w` and ending with `d` with three letters skipped in between.
+Аббревиатура заменяет блоки букв их длиной: например, `w3d` может означать слово из четырех букв, начиная с `w` и заканчивая `d` с тремя буквами, пропущенными между ними.
 
-Given a dictionary word `word` and a candidate shorthand `abbr` (letters and digits), decide whether `abbr` correctly abbreviates `word`. Read digits as a skipped count: leading zeros are forbidden (so `01` or `0` as a skip is invalid), and each skipped block must match that many characters. Plain letters must match exactly.
+Учитывая словарное слово `word` и стенограмму кандидата `abbr` (буквы и цифры), решите, правильно ли `abbr` сокращает `word`. Читай цифры как пропущенное число: ведущие нули запрещены (так что `01` или `0` как пропуск недействителен), и каждый пропущенный блок должен соответствовать многим символам. Обычные буквы должны точно соответствовать.
 
-Return `true` when the whole shorthand consumes the whole word, otherwise `false`.
+Возвращайте `true`, когда вся стенограмма потребляет целое слово, в противном случае `false`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= word.length <= 20`
 - `1 <= abbr.length <= 20`
-- `word` holds lowercase letters; `abbr` holds lowercase letters and digits.
+- `word` содержит строчные буквы; `abbr` содержит строчные буквы и цифры.

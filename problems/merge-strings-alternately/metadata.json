@@ -1,6 +1,6 @@
 {
   "id": "merge-strings-alternately",
-  "title": "167. Merge Strings Alternately",
+  "title": "167. Слияние струн поочередно",
   "difficulty": "Easy",
   "category": "two-pointer",
   "link": "https://leetcode.com/problems/merge-strings-alternately/",
@@ -8,17 +8,17 @@
     {
       "input": "word1 = \"abc\", word2 = \"pqr\"",
       "output": "\"apbqcr\"",
-      "explanation": "The merged string is \"apbqcr\"."
+      "explanation": "Слитая строка — «apbqcr»."
     },
     {
       "input": "word1 = \"ab\", word2 = \"pqrs\"",
       "output": "\"apbqrs\"",
-      "explanation": "As word2 is longer, \"rs\" is appended to the end."
+      "explanation": "Поскольку слово 2 длиннее, к концу добавляется слово «r»."
     },
     {
       "input": "word1 = \"abcd\", word2 = \"pq\"",
       "output": "\"apbqcd\"",
-      "explanation": "As word1 is longer, \"cd\" is appended to the end."
+      "explanation": "Поскольку слово 1 длиннее, к нему добавляется «cd»."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Use two pointers, one for each string, and alternately append characters.",
-    "When one pointer reaches the end, append the remainder of the other string."
+    "Используйте два указателя, по одному для каждой строки и поочередно добавляйте символы.",
+    "Когда один указатель достигает конца, добавьте остальную часть другой строки."
   ]
 }

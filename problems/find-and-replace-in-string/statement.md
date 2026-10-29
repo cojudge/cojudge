@@ -1,15 +1,15 @@
-You are given a base string `s` plus three parallel arrays describing candidate edits: `indices[i]` is a start position in `s`, `sources[i]` is the text expected at that position, and `targets[i]` is its replacement. Process all edits simultaneously against the original string:
+Вам дается базовая строка `s` плюс три параллельных массива, описывающих редактирование кандидатов: `indices[i]` - начальная позиция в `s`, `sources[i]` - текст, ожидаемый в этой позиции, и `targets[i]` - его замена. Обработка всех правок одновременно против исходной строки:
 
-- Sort the edits by their start index.
-- Walk the original string from left to right. When you reach an edit whose source text exactly matches the substring of `s` beginning at its index, emit the replacement and skip past the matched source.
-- If the source does not match there, leave that original character in place and continue (later edits still apply).
-- Overlapping edits never both fire, because the walk only advances forward.
+- Сортируйте правки по их стартовому индексу.
+- Пройдите по исходной строке слева направо. Когда вы достигнете редактирования, исходный текст которого точно соответствует подстрочке `s`, начинающейся с ее индекса, излучите замену и пропустите соответствующий источник.
+- Если источник не совпадает, оставьте этот оригинальный символ на месте и продолжайте (позже все еще применяются правки).
+- Перекрывающиеся правки никогда не стреляют, потому что прогулка только продвигается вперед.
 
-Return the final string.
+Верните последнюю строку.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 1000`
 - `1 <= indices.length <= 100`
 - `0 <= indices[i] < s.length`
 - `1 <= sources[i].length, targets[i].length <= 50`
-- All `indices` values are distinct
+- Все значения `indices` различны.

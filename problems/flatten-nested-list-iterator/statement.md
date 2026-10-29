@@ -1,14 +1,14 @@
-This is an offline adaptation of an iterator task. Instead of writing a class with `next` and `hasNext`, you write one function that returns the whole flattened order at once:
+Вместо того, чтобы писать класс с `next` и `hasNext`, вы пишете одну функцию, которая возвращает весь сплющенный порядок сразу:
 
 ```
-flattenNestedList(nestedList)
+Обсуждение flattenNestedList (nestedList)
 ```
 
-`nestedList` arrives serialized as text, e.g. `"[[1,1],2,[1,1]]"`: brackets delimit lists, bare numbers (possibly negative) are integers, commas separate elements. Flattening means reading all integers in left-to-right order, descending into every nested list. Return them as an array in that order.
+`nestedList` поступает в виде текста, например, `"[[1,1],2,[1,1]]"`: скобки разграничивают списки, голые числа (возможно, отрицательные) являются целыми числами, запятые - отдельными элементами. Флаттенирование означает чтение всех целых чисел в левом-правом порядке, опускаясь в каждый вложенный список. Вернуть их в виде массива в этом порядке.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nestedList.length <= 500`
 - Integers lie in `[-10^6, 10^6]`.
-- The text is always a valid nested list.
+- Текст всегда представляет собой вложенный список.
 
-**Adaptation note:** The classic version exposes a `NestedIterator` class over `NestedInteger` objects. Here the structure is passed as a serialized `string` and you return the full flattened `int_array`.
+**Примечание по адаптации:** Классическая версия показывает класс `NestedIterator` над объектами `NestedInteger`. Здесь структура передается как сериализованный `string` и вы возвращаете полный сплюснутый `int_array`.

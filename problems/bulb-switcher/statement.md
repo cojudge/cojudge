@@ -1,4 +1,4 @@
-There are `n` lamps, all switched off at the start. In round 1 every lamp is flipped on. In round 2 every second lamp is flipped, in round 3 every third lamp is flipped, and so on: during round `i`, each lamp whose 1-based position is a multiple of `i` changes state. After completing all `n` rounds, report how many lamps remain lit.
+Есть лампы `n`, все выключены в начале. В раунде 1 каждая лампа переворачивается. В раунде 2 переворачивается каждая вторая лампа, в раунде 3 переворачивается каждая третья лампа, и так далее: во время раунда `i` каждая лампа, чье положение на основе 1 является кратным состоянию изменения `i`. После завершения всех раундов `n` сообщите, сколько ламп остается зажженным.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= n <= 10^9`

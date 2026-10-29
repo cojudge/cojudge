@@ -1,6 +1,6 @@
 {
   "id": "length-of-last-word",
-  "title": "266. Length of Last Word",
+  "title": "266. Длина последнего слова",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/length-of-last-word/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"Hello World\"",
       "output": "5",
-      "explanation": "The last word is \"World\", which has 5 letters."
+      "explanation": "Последнее слово — «Мир», в котором есть буквы 5."
     },
     {
       "input": "s = \"   fly me   to   the moon  \"",
       "output": "4",
-      "explanation": "The last word is \"moon\" with length 4; surrounding spaces are ignored."
+      "explanation": "Последнее слово — «луна» с длиной 4; окружающие пространства игнорируются."
     },
     {
       "input": "s = \"luffy is still joyboy\"",
       "output": "6",
-      "explanation": "The last word is \"joyboy\", which has 6 letters."
+      "explanation": "Последнее слово — «joyboy», в котором есть буквы 6."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Walk in from the end: first skip trailing spaces, then count characters until the next space or the start.",
-    "No split or extra string is needed; two indices (or one moving index plus a counter) suffice."
+    "Войдите с конца: сначала пропустите прогулочные места, затем подсчитайте персонажей до следующего места или начала.",
+    "Нет необходимости в разделении или дополнительной строке; достаточно двух индексов (или одного движущегося индекса плюс счетчик)."
   ]
 }

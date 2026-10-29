@@ -1,7 +1,7 @@
-You are given the root of a binary tree. A consecutive trail is a sequence of nodes where each neighbouring pair differs by exactly one. The trail may climb upward and then descend (child-parent-child), and it may run either increasingly or decreasingly.
+Вам дан корень двоичного дерева. Последовательность троп - это последовательность узлов, где каждая соседняя пара отличается ровно на одну. Тропа может подниматься вверх, а затем опускаться (потомок-родитель-потомок), и она может бегать либо все больше, либо все меньше.
 
-Find the number of nodes in the longest such trail anywhere in the tree. A lone node counts as length one.
+Найдите число узлов в самой длинной такой тропе в любом месте дерева. Одинокий узел считается длиной один.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= number of nodes <= 3 * 10^4`
 - `-3 * 10^4 <= Node.val <= 3 * 10^4`

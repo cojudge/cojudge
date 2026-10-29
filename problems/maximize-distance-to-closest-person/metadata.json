@@ -1,6 +1,6 @@
 {
   "id": "maximize-distance-to-closest-person",
-  "title": "846. Maximize Distance to Closest Person",
+  "title": "846. Максимальное расстояние до самого близкого человека",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/maximize-distance-to-closest-person/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "seats = [1,0,0,0,1,0,1]",
       "output": "2",
-      "explanation": "Seat 2 is two away from both sides."
+      "explanation": "Место 2 находится на расстоянии двух сторон."
     },
     {
       "input": "seats = [1,0,0,0]",
       "output": "3",
-      "explanation": "Far end reaches distance 3."
+      "explanation": "Дальний конец достигает расстояния 3."
     },
     {
       "input": "seats = [0,1]",
       "output": "1",
-      "explanation": "Only free chair is adjacent."
+      "explanation": "Прилегает только свободный стул."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Edge gaps count fully (leading or trailing zeros), while interior gaps split in half rounding up.",
-    "Scan once remembering the previous occupied index to measure each empty stretch.",
-    "Track the maximum over edge stretches and halved interior stretches."
+    "Краевые зазоры считаются полностью (ведущими или следящими нулями), в то время как внутренние зазоры делятся пополам.",
+    "Сканируйте один раз, вспоминая предыдущий занятый индекс, чтобы измерить каждый пустой участок.",
+    "Отслеживайте максимальные растяжения по краям и вдвое меньшие внутренние растяжки."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "self-dividing-numbers",
-  "title": "735. Self Dividing Numbers",
+  "title": "735. Саморазделяющиеся числа",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/self-dividing-numbers/",
   "category": "math",
@@ -8,7 +8,7 @@
     {
       "input": "left = 1, right = 22",
       "output": "[1,2,3,4,5,6,7,8,9,11,12,15,22]",
-      "explanation": "Values with a zero digit or a non-dividing digit are left out."
+      "explanation": "Значения с нулевой цифрой или не делящейся цифрой опускаются."
     },
     {
       "input": "left = 47, right = 85",
@@ -56,8 +56,8 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Test each candidate by repeatedly taking x % 10 as the current digit and x / 10 as the remainder.",
-    "Reject immediately on a zero digit; otherwise require num % digit == 0 for every digit.",
-    "The interval holds at most 10000 values, so a direct scan is fast enough."
+    "Тестируйте каждого кандидата, неоднократно принимая x % 10 в качестве текущей цифры и x / 10 в качестве остатка.",
+    "Немедленно отклоняйте нулевую цифру; в противном случае требуется цифра num % == 0 для каждой цифры.",
+    "Интервал удерживает максимум значений 10000, поэтому прямое сканирование происходит достаточно быстро."
   ]
 }

@@ -1,0 +1,98 @@
+{
+  "id": "graph-valid-tree",
+  "title": "33. Graph Valid Tree",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/graph-valid-tree/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "n=5, edges=[[0,1],[0,2],[0,3],[1,4]]",
+      "output": "true",
+      "explanation": "The graph has 4 edges and all 5 nodes are reachable, so it is a valid tree."
+    },
+    {
+      "input": "n=5, edges=[[0,1],[1,2],[2,3],[1,3],[1,4]]",
+      "output": "false",
+      "explanation": "As shown in the diagram, nodes 1, 2, and 3 form a cycle, which violates the tree properties. Therefore, it is not a valid tree.\n\n![Graph cycle](/api/problems/graph-valid-tree/asset/explanation2.png)"
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public boolean validTree(int n, int[][] edges) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def validTree(self, n: int, edges: List[List[int]]) -> bool:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool validTree(int n, vector<vector<int>>& edges) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool ValidTree(int n, int[][] edges) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn valid_tree(n: i32, edges: Vec<Vec<i32>>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc ValidTree(n int, edges [][]int) bool {\n    \n}",
+    "typescript": "export function validTree(n: number, edges: number[][]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int[][] $edges\n     * @return bool\n     */\n    public function validTree($n, $edges) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          4
+        ]
+      ]
+    },
+    {
+      "n": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ]
+      ]
+    },
+    {
+      "n": 1,
+      "edges": []
+    }
+  ],
+  "functionName": "validTree",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "edges",
+      "type": "int_array_2d",
+      "visualizeType": "undirected_edges",
+      "numNodesRef": "n"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "An undirected graph is a tree iff it is connected and has exactly n-1 edges. Use Union-Find or BFS/DFS."
+  ]
+}

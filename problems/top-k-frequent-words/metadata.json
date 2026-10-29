@@ -1,6 +1,6 @@
 {
   "id": "top-k-frequent-words",
-  "title": "707. Top K Frequent Words",
+  "title": "707. Топ К. Частые слова",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/top-k-frequent-words/",
   "category": "heap",
@@ -8,17 +8,17 @@
     {
       "input": "words = [\"i\",\"love\",\"leetcode\",\"i\",\"love\",\"coding\"], k = 2",
       "output": "[\"i\",\"love\"]",
-      "explanation": "\"i\" and \"love\" tie at 2 and are dictionary-ordered."
+      "explanation": "«i» и «love» галстуки в 2 и заказываются в словаре."
     },
     {
       "input": "words = [\"the\",\"day\",\"is\",\"sunny\",\"the\",\"the\",\"the\",\"sunny\",\"is\",\"is\"], k = 4",
       "output": "[\"the\",\"is\",\"sunny\",\"day\"]",
-      "explanation": "Frequencies 4, 3, 2, 1."
+      "explanation": "Частоты 4, 3, 2, 1."
     },
     {
       "input": "words = [\"a\",\"b\",\"c\",\"a\",\"b\",\"a\"], k = 1",
       "output": "[\"a\"]",
-      "explanation": "\"a\" is most common."
+      "explanation": "«А» является наиболее распространенным."
     }
   ],
   "starterCode": {
@@ -83,8 +83,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Count every word with a hash map first.",
-    "Sort distinct words by falling frequency, using dictionary order to break ties, then take the first k.",
-    "A heap can do this faster, but sorting is clear and easily fast enough for the limits."
+    "Сначала посчитайте каждое слово с хеш-картой.",
+    "Сортируйте отдельные слова по падению частоты, используя словарный порядок, чтобы разорвать связи, затем возьмите первые k.",
+    "Куча может сделать это быстрее, но сортировка ясна и достаточно быстра для пределов."
   ]
 }

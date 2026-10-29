@@ -1,6 +1,6 @@
 {
   "id": "text-justification",
-  "title": "271. Text Justification",
+  "title": "271. Текстовое обоснование",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/text-justification/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "words = [\"This\",\"is\",\"an\",\"example\",\"of\",\"text\",\"justification.\"], maxWidth = 16",
       "output": "[\"This    is    an\",\"example  of text\",\"justification.  \"]",
-      "explanation": "The first two lines spread extra blanks across gaps; the last line is left-aligned."
+      "explanation": "Первые две линии распространяют дополнительные заготовки через щели; последняя линия выровнена слева."
     },
     {
       "input": "words = [\"What\",\"must\",\"be\",\"acknowledgment\",\"shall\",\"be\"], maxWidth = 16",
       "output": "[\"What   must   be\",\"acknowledgment  \",\"shall be        \"]",
-      "explanation": "The long word fills its own line with trailing blanks."
+      "explanation": "Длинное слово заполняет свою собственную линию пробелами."
     }
   ],
   "starterCode": {
@@ -28,15 +28,40 @@
   },
   "testCases": [
     {
-      "words": ["This", "is", "an", "example", "of", "text", "justification."],
+      "words": [
+        "This",
+        "is",
+        "an",
+        "example",
+        "of",
+        "text",
+        "justification."
+      ],
       "maxWidth": 16
     },
     {
-      "words": ["What", "must", "be", "acknowledgment", "shall", "be"],
+      "words": [
+        "What",
+        "must",
+        "be",
+        "acknowledgment",
+        "shall",
+        "be"
+      ],
       "maxWidth": 16
     },
     {
-      "words": ["Science", "is", "what", "we", "understand", "well", "enough", "to", "explain"],
+      "words": [
+        "Science",
+        "is",
+        "what",
+        "we",
+        "understand",
+        "well",
+        "enough",
+        "to",
+        "explain"
+      ],
       "maxWidth": 20
     }
   ],
@@ -53,8 +78,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Greedily pack words: keep adding while the total letters plus minimum single spaces fits maxWidth.",
-    "For justified lines, compute total blanks and share them as (blanks / gaps) with the first (blanks % gaps) gaps getting one extra.",
-    "Left-align the last line and any single-word line: join with single spaces then pad the end."
+    "Жадно упаковывайте слова: продолжайте добавлять, в то время как общие буквы плюс минимальные отдельные пробелы соответствуют maxWidth.",
+    "Для обоснованных линий вычислите полные пробелы и поделитесь ими как (зазоры / зазоры) с первыми (зазоры % зазоры) зазоры получают один дополнительный.",
+    "Лево-выровняйте последнюю строку и любую строку из одного слова: соединитесь с одними пробелами, а затем подготовьте конец."
   ]
 }

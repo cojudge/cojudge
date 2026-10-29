@@ -1,6 +1,6 @@
 {
   "id": "path-sum-ii",
-  "title": "291. Path Sum II",
+  "title": "291. Путь Сумма II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/path-sum-ii/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22",
       "output": "[[5,4,11,2],[5,8,4,5]]",
-      "explanation": "Two leaf-ending chains sum to 22: 5-4-11-2 and 5-8-4-5."
+      "explanation": "Две цепочки с концом листьев сводятся к 22: 5-4-11-2 и 5-8-4-5."
     },
     {
       "input": "root = [1,2,3], targetSum = 5",
       "output": "[]",
-      "explanation": "No leaf chain reaches 5."
+      "explanation": "Ни одна цепь листьев не достигает 5."
     },
     {
       "input": "root = [1,2], targetSum = 0",
       "output": "[]",
-      "explanation": "No leaf chain reaches 0."
+      "explanation": "Ни одна цепь листьев не достигает 0."
     }
   ],
   "starterCode": {
@@ -67,8 +67,8 @@
   ],
   "outputType": "int_list_2d",
   "hints": [
-    "Depth-first search with backtracking maintains the current root-to-node chain.",
-    "Copy the chain into the answer only at leaves whose values sum to the target.",
-    "Adaptation: the nested list maps to int_list_2d; order of paths is normalized by the checker."
+    "Поиск глубины с обратным отслеживанием поддерживает текущую цепочку root-to-node.",
+    "Скопируйте цепочку в ответ только на листьях, значения которых суммируются с целью.",
+    "Адаптация: карты вложенных списков int_list_2d; порядок траекторий нормализуется шашкой."
   ]
 }

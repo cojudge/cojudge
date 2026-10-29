@@ -1,6 +1,6 @@
 {
   "id": "friends-of-appropriate-ages",
-  "title": "823. Friends Of Appropriate Ages",
+  "title": "823. Друзья соответствующего возраста",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/friends-of-appropriate-ages/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "ages = [16,16]",
       "output": "2",
-      "explanation": "Both ordered pairs pass every rule."
+      "explanation": "Обе упорядоченные пары проходят все правила."
     },
     {
       "input": "ages = [16,17,18]",
       "output": "2",
-      "explanation": "Only the pairs (17,16) and (18,17) survive."
+      "explanation": "Выживают только пары (17, 16) и (18, 17)."
     },
     {
       "input": "ages = [20,30,100,110,120]",
@@ -63,8 +63,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Ages are bounded by 120, so count how many people have each age and evaluate pairs of distinct age values once.",
-    "For equal ages, multiply the count by one less than itself since nobody sends to themselves.",
-    "Check the three blocking rules in order and skip the pair as soon as any rule fires."
+    "Возраст ограничен 120, поэтому подсчитайте, сколько людей имеют каждый возраст, и оцените пары различных возрастных значений один раз.",
+    "Для равных возрастов, умножьте счет на один меньше, чем он сам, так как никто не посылает к себе.",
+    "Проверьте три правила блокировки в порядке и пропустите пару, как только какое-либо правило загорится."
   ]
 }

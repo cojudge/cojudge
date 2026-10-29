@@ -1,6 +1,6 @@
 {
   "id": "house-robber-ii",
-  "title": "23. House Robber II",
+  "title": "23. Домой Грабитель II",
   "difficulty": "Medium",
   "category": "dp",
   "link": "https://leetcode.com/problems/house-robber-ii/",
@@ -8,12 +8,12 @@
     {
       "input": "nums=[2,3,2]",
       "output": "3",
-      "explanation": "The houses form a circle, so house 0 (2) and house 2 (2) are adjacent. Robbing only house 1 (value 3) yields the maximum."
+      "explanation": "Дома образуют круг, поэтому дом 0 (2) и дом 2 (2) соседствуют. Разграбление только дома 1 (значение 3) дает максимум."
     },
     {
       "input": "nums=[1,2,3,1]",
       "output": "4",
-      "explanation": "The houses form a circle. Robbing houses 0 (1) and 2 (3) for a total of 4 is the maximum."
+      "explanation": "Разграбление домов 0 (1) и 2 (3) в общей сложности 4 является максимальным."
     }
   ],
   "starterCode": {
@@ -46,6 +46,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Split into two cases: rob from [0..n-2] or [1..n-1], and take the max."
+    "Разделить на два случая: отнять у [0..n-2] или [1..n-1], и взять максимум."
   ]
 }

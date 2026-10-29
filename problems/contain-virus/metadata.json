@@ -1,6 +1,6 @@
 {
   "id": "contain-virus",
-  "title": "752. Contain Virus",
+  "title": "752. Содержит вирус",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/contain-virus/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "isInfected = [[0,1,0,0,0,0,0,1],[0,1,0,0,0,0,0,1],[0,0,0,0,0,0,0,1],[0,0,0,0,0,0,0,0]]",
       "output": "10",
-      "explanation": "Seal left with 5 walls, let right spread, seal right with 5."
+      "explanation": "Тюлень, оставленный со стенками 5, да распространяется справа, запечатывается справа с 5."
     },
     {
       "input": "isInfected = [[1,1,1],[1,0,1],[1,1,1]]",
       "output": "4",
-      "explanation": "Four walls close the single ring."
+      "explanation": "Четыре стены закрывают одно кольцо."
     },
     {
       "input": "isInfected = [[1,1,1,0,0,0,0,0,0],[1,0,1,0,1,1,1,1,1],[1,1,1,0,0,0,0,0,0]]",
       "output": "13",
-      "explanation": "Left ring sealed first, then the right mass."
+      "explanation": "Сначала левое кольцо запечатано, затем правая масса."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Each day, flood-fill every connected block of 1s, collecting both its cells and the set of neighboring 0s plus the wall count.",
-    "Seal the block with the biggest threatened set, add its wall count to the answer, freeze its cells, and infect the threatened cells of all other blocks.",
-    "Repeat until no block touches a healthy cell; frozen cells behave as permanent barriers."
+    "Каждый день заполняйте каждый подключенный блок 1s, собирая как его ячейки, так и набор соседних 0s плюс количество стенок.",
+    "Запечатайте блок с наибольшим набором угроз, добавьте его количество стенок к ответу, заморозьте его клетки и заразите клетки, находящиеся под угрозой, всеми другими блоками.",
+    "Повторяйте, пока блок не коснется здоровой клетки; замороженные клетки ведут себя как постоянные барьеры."
   ]
 }

@@ -1,10 +1,10 @@
-You are given a file's full text `file` and a request size `n`. Imagine a reader that can only fetch four characters at a time (`read4`), called repeatedly until `n` characters are gathered or the file ends.
+Вам предоставляется полный текст файла `file` и размер запроса `n`. Представьте себе читателя, который может одновременно получать только четыре символа (`read4`), которые называются многократно, пока символы `n` не будут собраны или файл не закончится.
 
-Return the characters that such a reader would collect: the first `n` characters of `file`, or the whole file when it is shorter than `n`.
+Возвращайте символы, которые собирал бы такой читатель: первые символы `n` `file` или весь файл, когда он короче `n`.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= file.length <= 10^4`
-- `file` holds printable ASCII characters.
+- `file` имеет печатаемые символы ASCII.
 - `0 <= n <= 10^4`
 
-**Adaptation note:** The original LeetCode API exposes `read4` and asks you to fill a buffer. To fit the judge's plain-function model, the file content is passed directly as `file` and the answer is returned as a string instead of a count plus buffer. The observable behavior (first `min(n, len)` characters) is identical.
+**Примечание по адаптации: ** Оригинальный API LeetCode раскрывает `read4` и просит вас заполнить буфер. Чтобы соответствовать простой модели судьи, содержимое файла передается непосредственно как `file`, а ответ возвращается в виде строки вместо графа плюс буфер. Наблюдаемое поведение (первые символы `min(n, len)`) идентично.

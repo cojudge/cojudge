@@ -1,6 +1,6 @@
 {
   "id": "insert-greatest-common-divisors-in-linked-list",
-  "title": "245. Insert Greatest Common Divisors in Linked List",
+  "title": "245. Включить самые большие общие делители в связанный список",
   "difficulty": "Medium",
   "category": "linked-list",
   "link": "https://leetcode.com/problems/insert-greatest-common-divisors-in-linked-list/",
@@ -8,7 +8,7 @@
     {
       "input": "head = [18,6,10,3]",
       "output": "[18,6,6,2,10,1,3]",
-      "explanation": "gcd(18,6)=6, gcd(6,10)=2, gcd(10,3)=1 are inserted between adjacent nodes."
+      "explanation": "gcd(18,6)=6, gcd(6,10)=2, gcd(10,3)=1 вставляются между соседними узлами."
     },
     {
       "input": "head = [7]",
@@ -42,7 +42,7 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Walk the list while keeping a pointer to the current node; while the node has a next, insert a node with value gcd(current.val, next.val) in between.",
-    "After inserting, advance past the newly inserted node so each original adjacent pair is visited exactly once."
+    "Пройдите по списку, сохраняя указатель на текущий узел; в то время как узел имеет следующий, вставьте узел со значением gcd (current.val, next.val) между ними.",
+    "После вставки пройдите мимо вновь вставленного узла, чтобы каждая исходная соседняя пара была посещена ровно один раз."
   ]
 }

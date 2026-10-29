@@ -1,6 +1,6 @@
-You receive an integer array `nums` together with an integer `k`. Determine whether two separate positions `i` and `j` exist with matching values (`nums[i] == nums[j]`) whose separation satisfies `abs(i - j) <= k`. Return `true` when such a close repeated pair exists, and `false` otherwise.
+Вы получаете целочисленный массив `nums` вместе с целым числом `k`. Определите, существуют ли две отдельные позиции `i` и `j` с соответствующими значениями (`nums[i] == nums[j]`), разделение которых удовлетворяет `abs(i - j) <= k`. Возврат `true`, когда существует такая близкая повторяющаяся пара, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^5`
 - `-10^9 <= nums[i] <= 10^9`
 - `0 <= k <= 10^5`

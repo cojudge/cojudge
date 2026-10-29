@@ -1,6 +1,6 @@
-Given a list of integers `nums` and an integer `target`, locate two positions whose values total `target` and return those positions. When the list holds no such pair, return an empty list instead.
+Дан список целых чисел `nums` и целое число `target`. Найдите два элемента, сумма которых равна `target`, и верните их индексы. Если такой пары нет, верните пустой список.
 
-**Constraints:**
+**Ограничения:**
 - 2 <= nums.length <= 10^4
 - -10^9 <= nums[i] <= 10^9
 - -10^9 <= target <= 10^9

@@ -1,8 +1,8 @@
-Count from `1` to `n`, writing a label for each position. Positions divisible by both `3` and `5` become `"FizzBuzz"`, those divisible only by `3` become `"Fizz"`, those divisible only by `5` become `"Buzz"`, and every other position becomes its own number as a string.
+Граф из `1` то `n`, написание ярлыка для каждой позиции. Позиции, делимые на обе `3` и `5` становиться `"FizzBuzz"`которые делимы только на `3` становиться `"Fizz"`которые делимы только на `5` становиться `"Buzz"`И всякое другое положение становится своим собственным числом как струна.
 
-Return the labels in order as a list.
+Верните этикетки в порядке списка.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 10^4`
 
-**Adaptation note:** The original return type is a list of strings; here it maps to `string_list` with identical contents.
+**Примечание по адаптации: ** Оригинальный тип возврата представляет собой список строк; здесь он отображает `string_list` с идентичным содержимым.

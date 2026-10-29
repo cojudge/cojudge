@@ -1,6 +1,6 @@
 {
   "id": "next-permutation",
-  "title": "260. Next Permutation",
+  "title": "260. Следующая перестановка",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/next-permutation/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,2,3]",
       "output": "[1,3,2]",
-      "explanation": "Among orderings above [1,2,3], [1,3,2] is the smallest."
+      "explanation": "Среди заказов выше [1, 2, 3], [1, 3, 2] является самым маленьким."
     },
     {
       "input": "nums = [3,2,1]",
       "output": "[1,2,3]",
-      "explanation": "[3,2,1] is the largest ordering, so wrap to the smallest."
+      "explanation": "[3, 2, 1] - самый большой заказ, поэтому оберните его на самый маленький."
     },
     {
       "input": "nums = [1,1,5]",
       "output": "[1,5,1]",
-      "explanation": "With duplicates included, [1,5,1] is the next larger ordering."
+      "explanation": "С включенными дубликатами [1, 5, 1] является следующим большим заказом."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Scan from the right for the first position that is smaller than its successor (the pivot); everything right of it is descending.",
-    "Swap the pivot with the smallest element to its right that is larger than it, then reverse the suffix into ascending order."
+    "Сканируйте справа на первую позицию, которая меньше, чем ее преемник (разворот); все право на нее нисходит.",
+    "Поверните разворот с наименьшим элементом вправо, который больше, чем он, а затем переверните суффикс в восходящий порядок."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "title": "LeetCode 1000",
-  "description": "The first 1000 LeetCode problems (950 algorithm problems; database/shell problems excluded) for offline practice. Organized by pattern following the NeetCode 250 style (arrays-hashing through bit-manipulation), plus union-find and segment-tree for dedicated topics in this range, and prefix-sum, strings, sorting, simulation and design split out from the large array/string group. Numbers shown are Cojudge course numbers (1-950 in category order). If you notice anything wrong (e.g. missing test cases, incorrect grading, or a miscategorized problem), please open an issue in the [repo](https://github.com/cojudge/cojudge).",
+  "description": "Алгоритмические задачи из первой тысячи LeetCode: 950 задач, сгруппированных по темам. Задачи по базам данных и командной оболочке в эту подборку не входят. Все условия и тесты доступны локально; одна задача может входить в несколько подборок.",
   "category-order": [
     "arrays-hashing",
     "two-pointers",

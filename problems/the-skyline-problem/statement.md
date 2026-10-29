@@ -1,9 +1,9 @@
-A city skyline is described by a list of buildings, where each building is `[left, right, height]`: it spans the ground from `left` to `right` (exclusive of `right`) and rises to `height`. The skyline silhouette is the outline you see from afar.
+Городской горизонт описывается списком зданий, где каждое здание `[left, right, height]`: он охватывает землю от `left` до `right` (исключительно `right`) и поднимается до `height`. Силуэт горизонта - это контур, который вы видите издалека.
 
-Return the silhouette as a list of key points `[x, h]`, ordered by increasing `x`. Each key point marks where the visible height changes: consecutive points `[x1, h1], [x2, h2]` mean the height is `h1` on the stretch from `x1` to `x2`. The outline starts at the first edge where the height leaves 0 and must finish with a point whose height is 0. No two consecutive points share the same height.
+Верните силуэт в качестве списка ключевых точек `[x, h]`, заказанных путем увеличения `x`. Каждая ключевая точка отмечает, где видимая высота изменяется: последовательные точки `[x1, h1], [x2, h2]` означают, что высота `h1` на участке от `x1` до `x2`. Очертания начинаются с первого края, где высота покидает 0 и должны заканчиваться точкой, высота которой 0. Нет двух последовательных точек, имеющих одинаковую высоту.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= buildings.length <= 10^4`
 - `0 <= left < right <= 2^31 - 1`
 - `1 <= height <= 2^31 - 1`
-- The buildings are given in non-decreasing order of `left`.
+- Здания выдаются в неубывающем порядке `left`.

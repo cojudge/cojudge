@@ -1,6 +1,6 @@
 {
   "id": "flip-equivalent-binary-trees",
-  "title": "938. Flip Equivalent Binary Trees",
+  "title": "938. Флип эквивалентных двоичных деревьев",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/flip-equivalent-binary-trees/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root1 = [1,2,3,4,5,6,null,null,null,7,8], root2 = [1,3,2,null,6,4,5,null,null,null,null,8,7]",
       "output": "true",
-      "explanation": "Flips at a few nodes align both trees."
+      "explanation": "Переворачивание в нескольких узлах выравнивает оба дерева."
     },
     {
       "input": "root1 = [], root2 = []",
       "output": "true",
-      "explanation": "Empty trees match."
+      "explanation": "Пустые деревья совпадают."
     },
     {
       "input": "root1 = [], root2 = [1]",
       "output": "false",
-      "explanation": "A missing node cannot appear."
+      "explanation": "Отсутствующий узел не может появиться."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Matching roots must hold equal values; empty trees match only each other.",
-    "For non-empty roots, try both alignments: straight (left-left, right-right) and crossed (left-right, right-left); one of them must fully match."
+    "Сопоставление корней должно иметь равные значения; пустые деревья соответствуют только друг другу.",
+    "Для непустых корней попробуйте оба выравнивания: прямое (слева-лево, справа-право) и скрещенное (слева-право, справа-лево); одно из них должно полностью совпадать."
   ]
 }

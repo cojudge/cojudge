@@ -1,0 +1,64 @@
+{
+  "id": "assign-cookies",
+  "title": "522. Assign Cookies",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/assign-cookies/",
+  "category": "greedy",
+  "examples": [
+    {
+      "input": "g = [1,2,3], s = [1,1]",
+      "output": "1",
+      "explanation": "Only one cookie can satisfy a child: one size-1 cookie covers the child with greed 1, and the other cookie is too small for greed 2 or 3."
+    },
+    {
+      "input": "g = [1,2], s = [1,2,3]",
+      "output": "2",
+      "explanation": "Hand the size-1 cookie to the first child and the size-2 cookie to the second child."
+    },
+    {
+      "input": "g = [10,9,8,7], s = [5,6,7,8]",
+      "output": "2",
+      "explanation": "The two biggest cookies satisfy the two least greedy children."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findContentChildren(int[] g, int[] s) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findContentChildren(self, g: List[int], s: List[int]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    int findContentChildren(vector<int>& g, vector<int>& s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int FindContentChildren(int[] g, int[] s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_content_children(g: Vec<i32>, s: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc FindContentChildren(g []int, s []int) int {\n    \n}",
+    "typescript": "export function findContentChildren(g: number[], s: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $g\n     * @param int[] $s\n     * @return int\n     */\n    public function findContentChildren($g, $s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "g": "[1,2,3]",
+      "s": "[1,1]"
+    },
+    {
+      "g": "[1,2]",
+      "s": "[1,2,3]"
+    },
+    {
+      "g": "[10,9,8,7]",
+      "s": "[5,6,7,8]"
+    }
+  ],
+  "functionName": "findContentChildren",
+  "params": [
+    {
+      "name": "g",
+      "type": "int_array"
+    },
+    {
+      "name": "s",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Sort both arrays, then always satisfy the least greedy remaining child with the smallest cookie that fits.",
+    "Walk through the cookies once with two pointers: advance the child pointer only when the current cookie is big enough."
+  ]
+}

@@ -1,13 +1,13 @@
-Several rabbits each claim a number: when asked how many other rabbits share
-their fur color, rabbit `i` answers with `answers[i]`. Different rabbits
-that name the same number might belong to one shared color group or to
-several separate groups, and rabbits that name different numbers surely
-have different colors.
+Несколько кроликов претендуют на число: когда их спрашивают, сколько других кроликов делят
+Их цвет шерсти, кролики `i` отвечает с `answers[i]`.
+имя одного и того же номера может принадлежать к одной общей цветовой группе или
+Несколько отдельных групп, и кролики, которые называют разные числа, конечно,
+имеют разные цвета.
 
-Given all the answers, estimate the smallest total population that could
-have produced them. Every rabbit that spoke must fit into some color group
-whose size matches its answer plus one (itself plus the others it counted).
+Учитывая все ответы, оцените наименьшую общую численность населения, которая могла бы
+Каждый кролик, который говорил, должен вписываться в какую-то цветовую группу.
+Для тех, у кого он есть, есть и другие значения, а для тех, у кого он есть.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= answers.length <= 1000`
 - `0 <= answers[i] < 1000`

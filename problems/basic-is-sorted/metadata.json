@@ -1,18 +1,18 @@
 {
   "id": "basic-is-sorted",
-  "title": "39. Is Sorted?",
+  "title": "39. Сортирован?",
   "difficulty": "Easy",
   "category": "nested-loops",
   "examples": [
     {
       "input": "nums = [1,2,2,3]",
       "output": "true",
-      "explanation": "Never decreases."
+      "explanation": "Никогда не уменьшается."
     },
     {
       "input": "nums = [1,3,2]",
       "output": "false",
-      "explanation": "3 is followed by 2."
+      "explanation": "За 3 следует 2."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Compare each element with its neighbor.",
-    "Return `false` at the first decrease."
+    "Сравните каждый элемент со своим соседом.",
+    "Возврат `false` при первом снижении."
   ]
 }

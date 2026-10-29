@@ -1,7 +1,7 @@
-Given the head of a singly linked list, reorder its nodes in non-decreasing order and return the new head.
+Учитывая заголовок отдельно связанного списка, переупорядочив его узлы в неубывающем порядке и верните новую голову.
 
-Aim for `O(n log n)` time with `O(1)` extra space (recursion stack aside), for example via merge sort on linked lists.
+Стремитесь к времени `O(n log n)` с дополнительным пространством `O(1)` (отложите рекурсионный стек в сторону), например, через сортировку слияния в связанных списках.
 
-**Constraints:**
-- The list holds between 0 and 5 * 10^4 nodes.
+**Ограничения:**
+- Список находится между узлами 0 и 5 * 10^4.
 - `-10^5 <= Node.val <= 10^5`

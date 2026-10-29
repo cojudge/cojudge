@@ -1,6 +1,6 @@
 {
   "id": "find-k-closest-elements",
-  "title": "175. Find K Closest Elements",
+  "title": "175. Найти самые близкие элементы",
   "difficulty": "Medium",
   "category": "sliding-window",
   "link": "https://leetcode.com/problems/find-k-closest-elements/",
@@ -8,12 +8,12 @@
     {
       "input": "arr = [1,2,3,4,5], k = 4, x = 3",
       "output": "[1,2,3,4]",
-      "explanation": "The 4 closest elements to 3 are 1, 2, 3 and 4."
+      "explanation": "Ближайшими элементами 4 к 3 являются 1, 2, 3 и 4."
     },
     {
       "input": "arr = [1,2,3,4,5], k = 4, x = -1",
       "output": "[1,2,3,4]",
-      "explanation": "The 4 closest elements to -1 are 1, 2, 3 and 4."
+      "explanation": "Ближайшими элементами 4 к -1 являются 1, 2, 3 и 4."
     }
   ],
   "starterCode": {
@@ -60,7 +60,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Use two pointers shrinking from both ends until k elements remain, discarding the farther end each time.",
-    "Equivalently, binary-search the left bound of the size-k window."
+    "Используйте два указателя, сжимающиеся с обоих концов до тех пор, пока не останутся элементы k, каждый раз отбрасывая более дальний конец.",
+    "Эквивалентно, двоичный поиск левой границы окна размера-k."
   ]
 }

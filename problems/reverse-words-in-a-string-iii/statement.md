@@ -1,8 +1,8 @@
-Given a sentence `s` made of words separated by single spaces (no leading or trailing spaces), reverse the characters of each individual word while keeping the word order and spacing exactly the same.
+Учитывая предложение `s`, состоящее из слов, разделенных отдельными пространствами (без ведущих или задающих пробелов), переверните символы каждого отдельного слова, сохраняя порядок слов и расстояние точно таким же.
 
-For instance, each maximal block of non-space characters should appear backwards in the answer, but the blocks themselves stay where they were.
+Например, каждый максимальный блок непространственных символов должен отображаться в ответе задом наперед, но сами блоки остаются там, где они были.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 5 * 10^4`
-- `s` contains printable ASCII characters.
-- Words are separated by single spaces with no leading or trailing spaces.
+- `s` содержит распечатываемые символы ASCII.
+- Слова разделены отдельными пространствами без ведущих или задающих пространств.

@@ -1,6 +1,6 @@
-You receive two strings, text1 and text2. Count how long the longest shared subsequence of the pair can be — that is, the most characters that appear in both strings in the same relative order, though not necessarily side by side. When the pair shares no character in order, give back 0.
+Вы получаете две строки, text1 и text2. Подсчитайте, насколько длинной может быть самая длинная общая последовательность пары — то есть большинство символов, которые появляются в обеих строках в одном относительном порядке, хотя и не обязательно рядом. Когда пара не имеет общего персонажа в порядке, верните 0.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ text1.length, text2.length ≤ 1000
-- text1 and text2 consist of only lowercase English characters.
+- Текст 1 и текст 2 состоят только из английских символов.

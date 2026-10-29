@@ -1,9 +1,9 @@
-You hold a string `s` and a number `k`. One step lets you pick any of the first `k` characters and relocate it to the very end, preserving the order of everything else. Repeating steps can shuffle the string in restricted ways.
+Вы держите строку `s` и номер `k`. Один шаг позволяет выбрать любой из первых символов `k` и переместить его до самого конца, сохраняя порядок всего остального. Повторяющиеся шаги могут перетасовать строку ограниченными способами.
 
-Describe the smallest string (in dictionary order) that can be reached.
+Опишите наименьшую строку (в словарном порядке), которая может быть достигнута.
 
-When `k` equals one, only rotations are possible, so examine each rotation. When `k` exceeds one, any rearrangement becomes reachable, so the sorted characters form the optimum.
+Когда `k` равен единице, возможны только вращения, поэтому проверьте каждое вращение. Когда `k` превышает одно, любая перестановка становится доступной, поэтому отсортированные символы образуют оптимальный.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= k <= s.length <= 1000`
-- `s` holds only lowercase English letters.
+- `s` содержит только английские буквы.

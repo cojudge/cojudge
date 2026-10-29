@@ -1,6 +1,6 @@
 {
   "id": "evaluate-reverse-polish-notation",
-  "title": "80. Evaluate Reverse Polish Notation",
+  "title": "80. Обратная польская нотация",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/evaluate-reverse-polish-notation/",
   "category": "stack",
@@ -54,7 +54,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Push numbers onto a stack; an operator consumes the top two values and pushes its result.",
-    "For subtraction and division, preserve operand order: the second popped value is the left operand."
+    "Нажмите числа на стек; оператор потребляет два верхних значения и толкает его результат.",
+    "Для вычитания и деления сохраняйте операндный порядок: второе всплывающее значение — левый операнд."
   ]
 }

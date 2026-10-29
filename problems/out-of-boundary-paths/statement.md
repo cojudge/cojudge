@@ -1,8 +1,8 @@
-A ball sits on an `m x n` grid at (`startRow`, `startColumn`). In one move it may step to any of the four neighboring cells; a step that leaves the grid scores one successful path and ends that ball's journey. Count how many move sequences of at most `maxMove` moves take the ball out of bounds, returning the total modulo 1,000,000,007.
+Мяч сидит на одной `m x n` сетка в`startRow`, `startColumn`В одном движении он может перейти в любую из четырех соседних ячеек; шаг, который покидает сетку, забивает один успешный путь и заканчивается путешествием этого шара. `maxMove` ходы выводят мяч за пределы, возвращая общий модуль 1,000,000,007.
 
-Count paths by dynamic programming over positions and remaining moves: from each cell, the four exits either leave immediately (when no neighbor exists) or continue from the neighboring cell with one fewer move.
+Подсчитывайте пути с помощью динамического программирования над позициями и оставшимися ходами: из каждой ячейки четыре выхода либо уходят сразу (когда соседа нет), либо продолжаются из соседней ячейки с одним меньшим движением.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= m, n <= 50`
 - `0 <= maxMove <= 50`
 - `0 <= startRow < m`, `0 <= startColumn < n`

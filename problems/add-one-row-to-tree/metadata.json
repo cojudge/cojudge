@@ -1,6 +1,6 @@
 {
   "id": "add-one-row-to-tree",
-  "title": "647. Add One Row to Tree",
+  "title": "647. Добавить один ряд в дерево",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/add-one-row-to-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [4,2,6,3,1,5], val = 1, depth = 2",
       "output": "[4,1,1,2,null,null,6,3,1,5,null]",
-      "explanation": "Every depth-1 node gains a new val-1 child on each side; old subtrees hang below the new row."
+      "explanation": "Каждый узел глубины 1 получает нового потомка val-1 с каждой стороны; старые поддеревья висят ниже нового ряда."
     },
     {
       "input": "root = [4,2,null,3,1], val = 1, depth = 3",
       "output": "[4,2,null,1,1,3,null,null,1]",
-      "explanation": "Nodes at depth 2 each receive the new row; node 2 keeps 3 under its new left child and 1 under its new right child."
+      "explanation": "Узлы на глубине 2 получают новый ряд; узел 2 держит 3 под своим новым левым потомком и 1 под своим новым правым потомком."
     },
     {
       "input": "root = [1], val = 5, depth = 1",
       "output": "[5,1]",
-      "explanation": "Depth 1 replaces the root with a new node holding 5."
+      "explanation": "Depth 1 заменяет корень новым узлом, поддерживающим 5."
     }
   ],
   "starterCode": {
@@ -66,8 +66,8 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Depth 1 is special: build a new root holding val with the old tree as its left child.",
-    "Otherwise walk to depth-1 (breadth-first or recursion) and splice a new left and right node under each host.",
-    "The old left subtree becomes the left child of the new left node; the old right subtree becomes the right child of the new right node."
+    "Глубина 1 особенная: постройте новый корень, держащий вал со старым деревом в качестве левого потомка.",
+    "В противном случае выйдите на глубину-1 (ширина-первая или рекурсия) и сплайсируйте новый левый и правый узел под каждым хостом.",
+    "Старое левое дерево становится левым потомком нового левого узла; старое правое дерево становится правым потомком нового правого узла."
   ]
 }

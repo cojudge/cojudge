@@ -1,13 +1,13 @@
-Consider a connected, undirected, weighted graph holding `n` vertices labeled `0` through `n - 1`. Its edges arrive as an array `edges`, where `edges[i] = [ai, bi, weighti]` describes a two-way link between `ai` and `bi` carrying weight `weighti`. A minimum spanning tree (MST) is a cycle-free collection of edges that still links every vertex while keeping the summed weight as low as achievable.
+Рассмотрим подключенный, ненаправленный, взвешенный граф, содержащий вершины `n` с маркировкой `0` через `n - 1`. Его края прибывают в виде массива `edges`, где `edges[i] = [ai, bi, weighti]` описывает двустороннюю связь между `ai` и `bi`, несущим вес `weighti`. Минимальное дерево пролета (MST) - это бесцикловая коллекция краев, которая все еще связывает каждую вершину, сохраняя суммарный вес как низкий, как достижимо.
 
-Classify the edges of this graph's MSTs into two groups: an MST edge is critical when removing it from the graph forces every spanning tree to become strictly heavier than the optimum; it is pseudo-critical when it is absent from at least one MST yet present in a different MST of the same optimal weight.
+Классифицируйте края MST этого графа на две группы: край MST имеет решающее значение при удалении его из графа, заставляя каждое пролетающее дерево становиться строго тяжелее оптимума; он псевдокритичен, когда он отсутствует по крайней мере в одном MST, но присутствует в другом MST того же оптимального веса.
 
-Report the original positions of these edges as two lists. Either ordering of the indices is acceptable.
+Сообщите исходные позиции этих краев в виде двух списков. Любое упорядочение индексов приемлемо.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= n <= 100`
 - `1 <= edges.length <= min(200, n * (n - 1) / 2)`
 - `edges[i].length == 3`
 - `0 <= ai < bi < n`
 - `1 <= weighti <= 1000`
-- Every pair `(ai, bi)` appears at most once.
+- Каждая пара `(ai, bi)` появляется не более одного раза.

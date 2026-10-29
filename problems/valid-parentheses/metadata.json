@@ -1,6 +1,6 @@
 {
   "id": "valid-parentheses",
-  "title": "55. Valid Parentheses",
+  "title": "55. Действительные парентезы",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/valid-parentheses/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s=\"()\"",
       "output": "true",
-      "explanation": "Every opening bracket in \"()\" has a correctly matched closing bracket of the same type in the correct order."
+      "explanation": "Каждая открывающая скобка в \"()\" имеет правильно подобранную закрывающую скобку того же типа в правильном порядке."
     },
     {
       "input": "s=\"()[]{}\"",
       "output": "true",
-      "explanation": "Every opening bracket in \"()[]{}\" has a correctly matched closing bracket of the same type in the correct order."
+      "explanation": "Каждая открывающая скобка в \"()[]{}\" имеет правильно подобранную закрывающую скобку того же типа в правильном порядке."
     },
     {
       "input": "s=\"(]\"",
       "output": "false",
-      "explanation": "\"(\" is matched with \"]\", but \"]\" does not match the opening bracket type."
+      "explanation": "\"(\" сопоставляется с \"]\", но \"]\" не соответствует типу открывающей скобки."
     }
   ],
   "starterCode": {
@@ -57,6 +57,6 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Use a stack to match opening and closing brackets. Ensure types match and stack is empty at the end."
+    "Используйте стек, чтобы соответствовать открывающим и закрывающим скобкам. Убедитесь, что стек пуст в конце."
   ]
 }

@@ -1,8 +1,8 @@
-You receive an integer array `nums` together with an integer `val`. Erase every occurrence of `val` directly inside `nums`; the surviving entries may finish in any order. Then report how many entries of `nums` differ from `val`.
+Вы получаете целочисленный массив `nums` вместе с целым числом `val`. Стирайте каждое появление `val` непосредственно внутри `nums`; оставшиеся записи могут закончиться в любом порядке. Затем сообщите, сколько записей `nums` отличается от `val`.
 
-Denote that survivor count by `k`. For acceptance, rearrange `nums` so its first `k` slots store exactly the entries that differ from `val`, and return `k`. Whatever sits past position `k` is irrelevant.
+Обозначьте, что выжившие считают по `k`Для принятия, перегруппировка `nums` Таким образом, первый `k` Слоты хранят именно те записи, которые отличаются от `val`и возвратиться `k`Все, что находится в прошлом положении `k` Это не имеет значения.
 
-**Constraints:**
+**Ограничения:**
 
 - 0 ≤ nums.length ≤ 100
 - 0 ≤ nums[i] ≤ 50

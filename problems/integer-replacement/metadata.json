@@ -20,9 +20,9 @@
   ],
   "functionName": "integerReplacement",
   "hints": [
-    "Halve every even value immediately.",
-    "For odd values above 3, look at the lowest two bits: ...01 prefers decrement, ...11 prefers increment.",
-    "Treat 3 as a special case where decrementing wins."
+    "Немедленно удалите все четные значения.",
+    "Для нечетных значений выше 3, посмотрите на самые низкие два бита: ...01 предпочитает декремент, ...11 предпочитает инкремент.",
+    "Относитесь к 3 как к особому случаю, когда выиграют декременты."
   ],
   "id": "integer-replacement",
   "link": "https://leetcode.com/problems/integer-replacement/",
@@ -54,5 +54,5 @@
       "n": 4
     }
   ],
-  "title": "472. Integer Replacement"
+  "title": "472. Замена целых чисел"
 }

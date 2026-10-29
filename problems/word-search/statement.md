@@ -1,9 +1,9 @@
-You are handed a rectangular arrangement `board` of `m` rows by `n` columns holding single characters, plus a target string `word`. Decide whether `word` can be traced across the arrangement by stepping from cell to orthogonally touching cell — upward, downward, leftward, or rightward — matching its letters in order, without stepping onto any single cell twice within the same trace. Return `true` when such a trace exists, and `false` otherwise.
+Вам вручают прямоугольное расположение `board` строк `m` столбцами `n`, содержащими одиночные символы, плюс целевую строку `word`. Решите, можно ли проследить `word` через расположение, перейдя от ячейки к ортогонально касающейся ячейке - вверх, вниз, влево или вправо - сопоставляя ее буквы в порядке, не наступая на какую-либо одну ячейку дважды в пределах одного следа. Возврат `true`, когда такой след существует, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 
 - m == board.length
 - n = board[i].length
 - 1 ≤ m, n ≤ 6
 - 1 ≤ word.length ≤ 15
-- board and word consists of only lowercase and uppercase English letters.
+- Доска и слово состоят только из строчных и строчных английских букв.

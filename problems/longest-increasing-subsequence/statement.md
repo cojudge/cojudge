@@ -1,6 +1,6 @@
-You receive an integer array nums. Measure how long the longest subsequence whose values climb strictly from left to right can be.
+Вы получаете целые массивные числа. Измерьте, насколько длинной может быть самая длинная последовательность, значения которой поднимаются строго слева направо.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ nums.length ≤ 2500
 - -10^4 ≤ nums[i] ≤ 10^4

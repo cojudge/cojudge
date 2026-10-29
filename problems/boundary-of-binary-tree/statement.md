@@ -1,11 +1,11 @@
-You are given the root of a binary tree. List the values on its outer edge in counter-clockwise order, starting at the root.
+Вам дан корень двоичного дерева. Перечислите значения на его внешнем краю в порядке против часовой стрелки, начиная с корня.
 
-The required order is: the root first (unless the tree is empty), then the left edge from top to bottom excluding any leaves, then all leaves from left to right, then the right edge from bottom to top excluding any leaves. No node appears twice; when the root itself is a leaf it is listed once.
+Необходимый порядок: сначала корень (если дерево не пусто), затем левый край сверху вниз без каких-либо листьев, затем все листья слева направо, затем правый край снизу вверх без каких-либо листьев.Узел не появляется дважды; когда сам корень является листом, он перечисляется один раз.
 
-The left edge follows left children when possible, otherwise right children, down to but not including the leftmost leaf. The right edge mirrors this on the right side.
+Левый край следует за левыми детьми, когда это возможно, в противном случае за правыми детьми, вплоть до самого левого листа, но не включая его.
 
-Return the collected values as a list.
+Верните собранные значения в виде списка.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= number of nodes <= 10^4`
 - `-1000 <= Node.val <= 1000`

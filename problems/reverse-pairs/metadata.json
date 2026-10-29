@@ -1,6 +1,6 @@
 {
   "id": "reverse-pairs",
-  "title": "557. Reverse Pairs",
+  "title": "557. Обратные пары",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/reverse-pairs/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1,3,2,3,1]",
       "output": "2",
-      "explanation": "Two index pairs satisfy the greater-than-twice rule."
+      "explanation": "Две пары индексов удовлетворяют правилу больше чем два раза."
     },
     {
       "input": "nums = [2,4,3,5,1]",
       "output": "3",
-      "explanation": "Three index pairs satisfy the rule."
+      "explanation": "Три пары индексов удовлетворяют правилу."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "A modified merge sort can count cross pairs while sorting: both halves are sorted, so one linear scan counts for each left element.",
-    "Compare with long (64-bit) values because doubling a 32-bit integer may overflow.",
-    "The naive double loop is quadratic; divide and conquer brings it to O(n log n)."
+    "Модифицированная сортировка слияния может считать поперечные пары при сортировке: обе половины сортируются, поэтому для каждого левого элемента учитывается одно линейное сканирование.",
+    "Сравните с длинными (64-бит) значениями, потому что удвоение целого числа 32-бит может переполняться.",
+    "Наивная двойная петля квадратична; деление и покорение приводит ее к O(n log n)."
   ]
 }

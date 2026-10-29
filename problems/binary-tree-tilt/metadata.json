@@ -1,6 +1,6 @@
 {
   "id": "binary-tree-tilt",
-  "title": "618. Binary Tree Tilt",
+  "title": "618. Бинарное дерево Tilt",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/binary-tree-tilt/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,2,3]",
       "output": "1",
-      "explanation": "Leaves tilt 0; the root contributes |2 - 3|."
+      "explanation": "Оставляет наклон 0; корень вносит |2 — 3 |."
     },
     {
       "input": "root = [4,2,9,3,5,null,7]",
       "output": "15",
-      "explanation": "Node tilts 2, 7, and 6 sum to 15."
+      "explanation": "Узел наклоняет 2, 7 и 6 сумму до 15."
     },
     {
       "input": "root = []",
       "output": "0",
-      "explanation": "An empty tree has tilt 0."
+      "explanation": "Пустое дерево имеет наклон 0."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "A post-order walk returns each subtree's total while accumulating tilts on the side.",
-    "At every node add |leftSum - rightSum| to a running answer, then return val + leftSum + rightSum.",
-    "Leaves need no special case: both sums are 0 so their tilt is 0."
+    "Прогулка после заказа возвращает общее количество каждого дерева, накапливая наклоны на боку.",
+    "На каждый узел добавьте |leftSum — rightSum | к запущенному ответу, затем верните val + leftSum + rightSum.",
+    "Листья не нуждаются в особом случае: обе суммы 0, поэтому их наклон 0."
   ]
 }

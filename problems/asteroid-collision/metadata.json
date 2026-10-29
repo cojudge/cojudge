@@ -1,6 +1,6 @@
 {
   "id": "asteroid-collision",
-  "title": "179. Asteroid Collision",
+  "title": "179. Столкновение астероидов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/asteroid-collision/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "asteroids = [5,10,-5]",
       "output": "[5,10]",
-      "explanation": "The 10 and -5 collide resulting in 10. The 5 and 10 never collide."
+      "explanation": "10 и -5 сталкиваются, в результате чего 10. 5 и 10 никогда не сталкиваются."
     },
     {
       "input": "asteroids = [8,-8]",
       "output": "[]",
-      "explanation": "The 8 and -8 collide exploding each other."
+      "explanation": "8 и -8 сталкиваются друг с другом."
     },
     {
       "input": "asteroids = [10,2,-5]",
       "output": "[10]",
-      "explanation": "The 2 and -5 collide resulting in -5. The 10 and -5 collide resulting in 10."
+      "explanation": "Столкновения 2 и -5 приводят к столкновению -5. Столкновения 10 и -5 приводят к столкновению 10."
     }
   ],
   "starterCode": {
@@ -54,7 +54,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Keep survivors in a stack; only a right-moving top and a left-moving incoming asteroid can collide.",
-    "While the incoming left-moving asteroid destroys smaller right-moving tops, pop them; if sizes are equal, pop the top and discard the incoming one."
+    "Держите выживших в стеке; только правый верх и левый входящий астероид могут столкнуться.",
+    "В то время как входящий левый астероид разрушает меньшие правые вершины, всплывайте на них; если размеры равны, всплывайте на вершину и отбрасывайте входящую."
   ]
 }

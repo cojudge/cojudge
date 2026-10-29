@@ -1,6 +1,6 @@
 {
   "id": "ransom-note",
-  "title": "459. Ransom Note",
+  "title": "459. Записка Ransom",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/ransom-note/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "ransomNote = \"a\", magazine = \"b\"",
       "output": "false",
-      "explanation": "Letter a is missing."
+      "explanation": "Письмо А отсутствует."
     },
     {
       "input": "ransomNote = \"aa\", magazine = \"ab\"",
       "output": "false",
-      "explanation": "Only one a for two needed."
+      "explanation": "Только один а на двоих."
     },
     {
       "input": "ransomNote = \"aa\", magazine = \"aab\"",
       "output": "true",
-      "explanation": "Two a copies cover the request."
+      "explanation": "Две копии охватывают запрос."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Count how many times each letter appears in the magazine.",
-    "Walk the ransom note, spending one copy per letter and failing on shortage.",
-    "A fixed array of 26 counters is enough for lowercase letters."
+    "Подсчитайте, сколько раз каждая буква появляется в журнале.",
+    "Прогуляйтесь по записке о выкупе, потратив одну копию на письмо и не справившись с нехваткой.",
+    "Фиксированного массива счетчиков 26 достаточно для строчных букв."
   ]
 }

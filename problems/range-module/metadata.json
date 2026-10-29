@@ -1,6 +1,6 @@
 {
   "id": "range-module",
-  "title": "723. Range Module",
+  "title": "723. Модуль Range",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/range-module/",
   "category": "interval",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"RangeModule\",\"addRange\",\"queryRange\",\"removeRange\",\"queryRange\"], args = [[],[10,20],[10,14],[14,16],[10,14]]",
       "output": "[1,1]",
-      "explanation": "After tracking 10-20, the query 10-14 is fully covered. Removing 14-16 leaves 10-14 still covered."
+      "explanation": "После отслеживания 10-20, запрос 10-14 Полностью покрыта. Удаление 14-16 листья 10-14 все еще покрыта."
     },
     {
       "input": "operations = [\"RangeModule\",\"addRange\",\"addRange\",\"queryRange\"], args = [[],[10,15],[15,20],[10,20]]",
       "output": "[1]",
-      "explanation": "Two touching ranges merge into 10-20, so the full query succeeds."
+      "explanation": "Два сенсорных диапазона сливаются в 10-20, поэтому полный запрос удаётся."
     },
     {
       "input": "operations = [\"RangeModule\",\"addRange\",\"removeRange\",\"queryRange\"], args = [[],[5,10],[5,10],[5,10]]",
       "output": "[0]",
-      "explanation": "Adding then fully removing the same span leaves nothing covered."
+      "explanation": "Сложение, а затем полное удаление одного и того же пролета не оставляет ничего покрытым."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Store disjoint half-open intervals in an ordered map from start to end; merging and splitting stay local to neighbors.",
-    "For addRange, widen the new span over every overlapped entry before inserting once.",
-    "For queryRange, only the interval starting at or before left matters; removal may trim one interval into two pieces. Adaptation: operations and args run in parallel and only queryRange emits output (1 for true, 0 for false)."
+    "Храните разъединенные полуоткрытые интервалы на упорядоченной карте от начала до конца; слияние и разделение остаются локальными для соседей.",
+    "Для addRange расширьте новый пролет над каждой перекрывающейся записью, прежде чем вставлять один раз.",
+    "Для queryRange значение имеет только интервал, начинающийся в или перед оставленными делами; удаление может обрезать один интервал на две части. Адаптация: операции и args выполняются параллельно и только queryRange излучает выход (1 для истинного, 0 для ложного)."
   ]
 }

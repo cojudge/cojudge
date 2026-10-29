@@ -1,9 +1,9 @@
-You are given daily prices `prices[i]` for a stock. You may complete at most two separate trades, where each trade is one purchase followed by one later sale.
+Вам даны ежедневные цены `prices[i]` для акции. Вы можете завершить не более двух отдельных сделок, где каждая сделка является одной покупкой, а затем одной последующей продажей.
 
-You must sell before buying again, so the two trades never overlap. You may also choose to trade once or not at all.
+Вы должны продать, прежде чем покупать снова, так что две сделки никогда не пересекаются. Вы также можете выбрать торговать один раз или не торговать вообще.
 
-Return the greatest total profit achievable.
+Возврат наибольшей общей прибыли, достижимой.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= prices.length <= 10^5`
 - `0 <= prices[i] <= 10^5`

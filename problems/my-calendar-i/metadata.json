@@ -1,6 +1,6 @@
 {
   "id": "my-calendar-i",
-  "title": "736. My Calendar I",
+  "title": "736. Мой календарь I",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/my-calendar-i/",
   "category": "design",
@@ -8,7 +8,7 @@
     {
       "input": "operations = [\"MyCalendar\",\"book\",\"book\",\"book\"]\nargs = [[],[10,20],[15,25],[20,30]]",
       "output": "[1,0,1]",
-      "explanation": "The middle booking overlaps [10,20) and fails; touching at 20 is fine."
+      "explanation": "Среднее бронирование перекрывается [10, 20] и терпит неудачу; прикосновение к 20 нормально."
     },
     {
       "input": "operations = [\"MyCalendar\",\"book\",\"book\"]\nargs = [[],[5,10],[10,15]]",
@@ -56,8 +56,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Keep accepted slots sorted by start (for example in an ordered map) so each booking only checks its neighbours.",
-    "A booking [s,e) clashes with a stored [a,b) exactly when max(s,a) < min(e,b).",
-    "Touching endpoints are fine: [10,20) and [20,30) do not overlap."
+    "Держите принятые слоты отсортированными по началу (например, на упорядоченной карте), поэтому каждое бронирование проверяет только своих соседей.",
+    "Бронирование [s,e] сталкивается с сохраненным [a,b] именно тогда, когда max(s,a) < min(e,b).",
+    "Сенсорные конечные точки хороши: [10, 20] и [20, 30] не пересекаются."
   ]
 }

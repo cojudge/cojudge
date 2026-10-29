@@ -1,6 +1,6 @@
 {
   "id": "binary-tree-upside-down",
-  "title": "309. Binary Tree Upside Down",
+  "title": "309. Бинарное дерево вверх дном",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/binary-tree-upside-down/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,2,3,4,5]",
       "output": "[4,5,2,null,null,3,1]",
-      "explanation": "The leftmost leaf 4 becomes the new root; 5 becomes its left child and 2 (with its right subtree 3 and parent 1) becomes its right child."
+      "explanation": "Самый левый лист 4 становится новым корнем; 5 становится его левым потомком, а 2 (с его правым поддеревом 3 и родителем 1) становится его правым потомком."
     },
     {
       "input": "root = []",
       "output": "[]",
-      "explanation": "An empty tree stays empty."
+      "explanation": "Пустое дерево остается пустым."
     },
     {
       "input": "root = [1]",
       "output": "[1]",
-      "explanation": "A single node is already upside down."
+      "explanation": "Один узел уже перевернут вверх дном."
     }
   ],
   "starterCode": {
@@ -52,8 +52,8 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Walk down the left spine while remembering each node's right sibling.",
-    "For each step set left.left = old right and left.right = parent.",
-    "The leftmost node has no left child, so it becomes the new root."
+    "Пройдитесь по левому позвоночнику, вспоминая правого брата каждого узла.",
+    "На каждом шаге слева.лево = старый правый и левый.правый = родитель.",
+    "Левый узел не имеет левого потомка, поэтому он становится новым корнем."
   ]
 }

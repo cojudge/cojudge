@@ -1,8 +1,8 @@
-You are given an integer array `nums` already ordered from smallest to largest. It may contain negative values.
+Вам дается целочисленный массив `nums`, уже заказанный от наименьшего к наибольшему. Он может содержать отрицательные значения.
 
-Square every entry and return the results ordered from smallest to largest.
+Квадратный каждый вход и возврат результатов, заказанных от самого маленького до самого большого.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10000`
 - `-10000 <= nums[i] <= 10000`
-- `nums` is sorted in non-decreasing order.
+- `nums` сортируется в неубывающем порядке.

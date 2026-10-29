@@ -1,18 +1,18 @@
 {
   "id": "basic-power",
-  "title": "14. Integer Power",
+  "title": "14. Целая власть",
   "difficulty": "Easy",
   "category": "loops",
   "examples": [
     {
       "input": "base = 2, exp = 10",
       "output": "1024",
-      "explanation": "2 multiplied by itself 10 times is 1024."
+      "explanation": "2, умноженный на 10, является 1024."
     },
     {
       "input": "base = 5, exp = 0",
       "output": "1",
-      "explanation": "Anything to the power 0 is 1."
+      "explanation": "Все, что угодно для 0, это 1."
     }
   ],
   "starterCode": {
@@ -52,7 +52,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Multiply a running result by `base` exactly `exp` times.",
-    "Start the result at 1 so the `exp = 0` case works."
+    "Умножьте результат выполнения на `base` ровно на `exp` раз.",
+    "Начните результат на 1, чтобы дело `exp = 0` работало."
   ]
 }

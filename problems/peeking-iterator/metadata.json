@@ -1,6 +1,6 @@
 {
   "id": "peeking-iterator",
-  "title": "382. Peeking Iterator",
+  "title": "382. Итератор Peeking Iterator",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/peeking-iterator/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,2,3], operations = [\"next\",\"peek\",\"next\",\"next\",\"hasNext\"]",
       "output": "[1,2,2,3,0]",
-      "explanation": "next gives 1, peek previews 2, next gives 2, next gives 3, then nothing remains (0)."
+      "explanation": "Следующий дает 1, заглядывает в превью 2, следующий дает 2, следующий дает 3, затем ничего не остается (0)."
     },
     {
       "input": "nums = [1], operations = [\"hasNext\",\"next\",\"hasNext\"]",
       "output": "[1,1,0]",
-      "explanation": "One value present (1), next returns it, then empty (0)."
+      "explanation": "Одно значение, присутствующее (1), затем возвращает его, затем пустое (0)."
     },
     {
       "input": "nums = [1,2], operations = [\"peek\",\"peek\",\"next\",\"hasNext\"]",
       "output": "[1,1,1,1]",
-      "explanation": "Repeated peeks return 1 without advancing; next returns 1; one value remains."
+      "explanation": "Повторные заглядки возвращают 1 без продвижения; следующие возвращают 1; одно значение остается."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Adaptation: instead of a PeekingIterator class, implement runPeek(nums, operations) simulating the calls.",
-    "Keep an index: next returns nums[i++], peek returns nums[i], hasNext returns 1/0.",
-    "Cache nothing extra; peek never advances."
+    "Адаптация: вместо класса PeekingIterator реализуйте runPeek (числа, операции), имитирующие вызовы.",
+    "Сохраняйте индекс: следующий возвращает числа [i++], заглядывает возвращает числа [i], следующий возвращает 1/0.",
+    "Ничего лишнего, никогда не заглядывайте вперед."
   ]
 }

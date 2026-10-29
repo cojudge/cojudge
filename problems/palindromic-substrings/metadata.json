@@ -1,6 +1,6 @@
 {
   "id": "palindromic-substrings",
-  "title": "58. Palindromic Substrings",
+  "title": "58. Палиндромные подстроки",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/palindromic-substrings/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "s=\"abc\"",
       "output": "3",
-      "explanation": "The palindromic substrings in \"abc\" are \"a\", \"b\", and \"c\", for a total of 3."
+      "explanation": "Палиндромными подстроками в «abc» являются «a», «b» и «c», в общей сложности 3."
     },
     {
       "input": "s=\"aaa\"",
       "output": "6",
-      "explanation": "The palindromic substrings in \"aaa\" are \"a\" (×3), \"aa\" (×2), and \"aaa\" (×1), for a total of 6."
+      "explanation": "Палиндромными подстроками в «aaa» являются «a» (×3), «aa» (×2) и «aaa» (×1), в общей сложности 6."
     }
   ],
   "starterCode": {
@@ -46,6 +46,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Expand around centers for each position (odd and even) and count all palindromic substrings."
+    "Расширьте вокруг центров для каждой позиции (нечетные и четные) и подсчитайте все палиндромные подстроки."
   ]
 }

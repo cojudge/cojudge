@@ -1,12 +1,12 @@
-Two sentences are lists of words. They are called similar when every pair of words at the same position can be matched, using these rules:
+Два предложения — это списки слов. Они называются похожими, когда каждая пара слов в одной и той же позиции может быть сопоставлена, используя эти правила:
 
-- The sentences must hold the same number of words.
-- A word always matches itself.
-- Otherwise, words `a` and `b` match when the pair `(a, b)` or `(b, a)` appears in the given similarity list. Matching is symmetric but it does not chain: `a` matching `b` and `b` matching `c` does not make `a` match `c`.
+- Предложения должны содержать одинаковое количество слов.
+- Слово всегда совпадает с самим собой.
+- В противном случае слова `a` и `b` совпадают, когда пара `(a, b)` или `(b, a)` появляется в заданном списке сходства. Матчирование симметрично, но не является цепочкой: `a`, совпадающий с `b` и `b`, совпадающий с `c`, не делает `a`, совпадающим с `c`.
 
-Given `sentence1`, `sentence2` and the list `similarPairs` (each entry holds two words), decide whether the sentences are similar.
+Учитывая `sentence1`, `sentence2` и список `similarPairs` (каждая запись содержит два слова), решите, похожи ли предложения.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= sentence1.length, sentence2.length <= 1000`
 - `0 <= similarPairs.length <= 2000`
-- Words hold lowercase letters; each pair holds two words.
+- Слова содержат строчные буквы; каждая пара содержит два слова.

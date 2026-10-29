@@ -1,13 +1,13 @@
-You are given a row of stone piles `stones`, where `stones[i]` counts the stones
-in pile `i`, and an integer `k`. One move merges exactly `k` consecutive piles
-into a single pile, and the cost of that move equals the total number of
-stones in those `k` piles. The merged pile keeps the summed count and takes
-part in later moves.
+Вы получаете ряд каменных свай `stones`, где `stones[i]` считает камни.
+в свае `i`, и целое число `k`. Одно движение сливается точно `k` последовательные сваи
+в одну кучу, и стоимость этого перемещения равна общему числу
+Камни в этих кучах `k`. Слившаяся куча сохраняет суммарный счет и берет
+участвовать в последующих движениях.
 
-Repeat moves until a single pile remains. Return the smallest achievable total
-cost. When the piles can never collapse into one, return `-1`.
+Повторяйте движения до тех пор, пока не останется одна куча. Верните наименьшую достижимую сумму.
+Когда сваи никогда не свалятся в одну, верните `-1`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= stones.length <= 30`
 - `1 <= stones[i] <= 100`
 - `2 <= k <= 30`

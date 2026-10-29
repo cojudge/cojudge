@@ -1,6 +1,6 @@
 {
   "id": "read-n-characters-given-read4-ii-call-multiple-times",
-  "title": "311. Read N Characters Given Read4 II - Call Multiple Times",
+  "title": "311. Читай N Персонажи, данные Read4 II - Позвоните несколько раз",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/read-n-characters-given-read4-ii-call-multiple-times/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "file = \"abc\", queries = [1,2,1]",
       "output": "[\"a\",\"bc\",\"\"]",
-      "explanation": "First call takes \"a\", second takes \"bc\", and the third finds nothing left."
+      "explanation": "Первый вызов принимает «а», второй принимает «бк», а третий не находит ничего оставшегося."
     },
     {
       "input": "file = \"abc\", queries = [4,1]",
       "output": "[\"abc\",\"\"]",
-      "explanation": "The first call drains the file; the second returns empty."
+      "explanation": "Первый вызов истощает файл, второй возвращается пустым."
     }
   ],
   "starterCode": {
@@ -53,8 +53,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Keep one position pointer shared across all queries.",
-    "Each query takes file[pos:pos+q] and advances pos by the taken amount.",
-    "Once pos reaches the end, all later queries return empty strings."
+    "Держите один указатель позиции общим для всех запросов.",
+    "Каждый запрос принимает файл [pos:pos+q] и продвигается по заданной сумме.",
+    "Как только pos достигает конца, все последующие запросы возвращают пустые строки."
   ]
 }

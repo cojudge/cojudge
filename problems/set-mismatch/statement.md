@@ -1,8 +1,8 @@
-An array `nums` of length `n` should hold each number `1..n` exactly once, but one value appears twice while another value from the range is missing entirely. Find both.
+Массив `nums` длины `n` должен содержать каждое число `1..n` ровно один раз, но одно значение появляется дважды, в то время как другое значение из диапазона полностью отсутствует.
 
-Implement `findErrorNums(nums)` returning `[duplicate, missing]`: the repeated value first, then the absent value.
+Внедрить `findErrorNums(nums)`, возвращая `[duplicate, missing]`: сначала повторное значение, затем отсутствующее значение.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= nums.length <= 10^4`
 - `1 <= nums[i] <= nums.length`
-- Exactly one value repeats and exactly one value is missing.
+- Одно значение повторяется, а одно значение отсутствует.

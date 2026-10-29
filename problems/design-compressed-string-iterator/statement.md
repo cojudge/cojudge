@@ -1,7 +1,7 @@
-A compressed string stores each run as a letter followed by its repeat count, such as `"x3"` for `"xxx"` or `"a10"` for ten a's.
+Сжатая строка хранит каждую строку в виде буквы, за которой следует ее количество повторов, например, `"x3"` для `"xxx"` или `"a10"` для десяти а.
 
-**Adaptation note:** instead of a stateful iterator class, implement `runCompressedIterator(compressed, operations)`. Each entry of `operations` is `"next"` or `"hasNext"`. Return one string per operation in order: `next` gives the next letter as a one-character string, or `""` (empty string) when nothing remains; `hasNext` gives `"true"` or `"false"`.
+**Примечание по адаптации: ** вместо государственного класса итератора реализуйте `runCompressedIterator(compressed, operations)`. Каждая запись `operations` - `"next"` или `"hasNext"`. Возвращайте одну строку за операцию в порядке: `next` дает следующую букву в виде односимвольной строки, или `""` (пустая строка), когда ничего не остается; `hasNext` дает `"true"` или `"false"`.
 
-**Constraints:**
-- Compressed length is at most 1000; counts are at least 1.
-- At most 500 operations.
+**Ограничения:**
+- Сжатая длина составляет максимум 1000; количество равно, по крайней мере, 1.
+- В большинстве операций 500.

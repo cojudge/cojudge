@@ -1,6 +1,6 @@
 {
   "id": "find-median-from-data-stream",
-  "title": "74. Find Median from Data Stream",
+  "title": "74. Найти медиану в потоке данных",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/find-median-from-data-stream/",
   "category": "heap",
@@ -8,12 +8,12 @@
     {
       "input": "operations = [\"MedianFinder\",\"addNum\",\"findMedian\",\"addNum\",\"findMedian\"]\nvalues = [[],[1],[],[2],[]]",
       "output": "[null,null,1.0,null,1.5]",
-      "explanation": "After adding 1, the median is 1.0. After adding 2, the median is 1.5."
+      "explanation": "После добавления 1 медиана - 1.0. После добавления 2 медиана - 1.5."
     },
     {
       "input": "operations = [\"MedianFinder\",\"addNum\",\"addNum\",\"addNum\",\"addNum\",\"findMedian\"]\nvalues = [[],[1],[2],[3],[4],[]]",
       "output": "[null,null,null,null,null,2.5]",
-      "explanation": "After adding [1,2,3,4], the median is (2+3)/2 = 2.5."
+      "explanation": "После добавления [1, 2, 3, 4] медиана составляет (2+3)/2 = 2.5."
     }
   ],
   "classProblem": {
@@ -56,8 +56,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Use two heaps: a max-heap for the smaller half and a min-heap for the larger half.",
-    "When adding a number, add to the max-heap first, then balance by moving the largest from max-heap to min-heap. If the min-heap has more elements, move the smallest back to the max-heap.",
-    "The median is the top of the max-heap if sizes differ, or the average of both tops if sizes are equal."
+    "Используйте две кучи: максимальная куча для меньшей половины и мини-куча для большей половины.",
+    "При добавлении числа сначала добавьте к макс-куча, затем сбалансируйте, переместив наибольшую от макс-куча к мин-куча.Если мин-куча имеет больше элементов, переместите наименьшую обратно к макс-куча.",
+    "Медиана является вершиной максимальной кучи, если размеры отличаются, или средним значением обеих вершин, если размеры равны."
   ]
 }

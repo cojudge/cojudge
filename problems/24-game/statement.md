@@ -1,9 +1,9 @@
-You receive four cards, each showing an integer. Using the four arithmetic operators `+`, `-`, `*`, `/` and any placement of parentheses, decide whether an expression using every card exactly once can evaluate to 24.
+Вы получаете четыре карты, каждая из которых показывает целое число. Используя четыре арифметических оператора `+`, `-`, `*`, `/` и любое размещение скобок, решите, может ли выражение, использующее каждую карту ровно один раз, оценить 24.
 
-Division is real division (not integer division). Two values that differ by less than `1e-6` are treated as equal when checking for 24; this tolerance rule is part of the task because intermediate results are doubles.
+Два значения, которые отличаются меньше чем `1e-6`, рассматриваются как равные при проверке на 24; это правило толерантности является частью задачи, потому что промежуточные результаты являются двойными.
 
-Return `true` when such an expression exists, otherwise `false`.
+Возврат `true`, когда такое выражение существует, в противном случае `false`.
 
-**Constraints:**
+**Ограничения:**
 - `cards.length == 4`
 - `1 <= cards[i] <= 9`

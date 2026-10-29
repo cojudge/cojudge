@@ -1,14 +1,14 @@
-Given a string `s` and a pattern `p`, implement regular expression matching for the entire string. The pattern supports these special characters:
+Учитывая строку `s` и шаблон `p`, реализуйте регулярное выражение, соответствующее всей строке.
 
-- `.` matches any single character.
-- `*` matches zero or more occurrences of the immediately preceding element.
+- `.` соответствует любому персонажу.
+- `*` соответствует нулю или более случаев непосредственно предшествующего элемента.
 
-The match must consume all of `s`, not merely a substring.
+Матч должен потреблять все `s`, а не только подстроку.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= s.length <= 20`
 - `1 <= p.length <= 20`
-- `s` contains only lowercase English letters.
-- `p` contains only lowercase English letters, `.` and `*`.
-- Every `*` has a valid preceding element; patterns never begin with `*` or contain consecutive `*` characters.
+- `s` содержит только английские буквы.
+- `p` содержит только строчные английские буквы, `.` и `*`.
+- Каждый `*` имеет действительный предшествующий элемент; шаблоны никогда не начинаются с `*` или содержат последовательные символы `*`.

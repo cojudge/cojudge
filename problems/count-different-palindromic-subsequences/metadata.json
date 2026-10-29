@@ -1,6 +1,6 @@
 {
   "id": "count-different-palindromic-subsequences",
-  "title": "737. Count Different Palindromic Subsequences",
+  "title": "737. Подсчитывайте различные палиндромные последствия",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/count-different-palindromic-subsequences/",
   "category": "dp",
@@ -8,12 +8,12 @@
     {
       "input": "s = \"bccb\"",
       "output": "6",
-      "explanation": "Six distinct palindromes: b, c, bb, cc, bcb, bccb."
+      "explanation": "Шесть различных палиндромов: b, c, bb, cc, bcb, bccb."
     },
     {
       "input": "s = \"abcdabcdabcdabcd\"",
       "output": "244",
-      "explanation": "Four repeats of abcd yield 244 distinct palindromic letter sequences."
+      "explanation": "Четыре повтора abcd дают 244 различные последовательности палиндромных букв."
     },
     {
       "input": "s = \"a\"",
@@ -50,8 +50,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Let dp[l][r] be the answer for the slice s[l..r]; grow the slice from short to long.",
-    "When the ends match, the inner answer doubles, then adjust using the next matching positions inside to avoid double counting.",
-    "When the ends differ, combine dp[l+1][r] and dp[l][r-1] and subtract dp[l+1][r-1]; keep everything modulo 1000000007."
+    "Пусть dp [l] [r] будет ответом для среза s [l..r]; вырастите срез от короткого до длинного.",
+    "Когда заканчивается матч, внутренний ответ удваивается, а затем корректируется, используя следующие совпадающие позиции внутри, чтобы избежать двойного подсчета.",
+    "Когда концы отличаются, объединяйте dp[l+1][r] и dp[l][r-1] и вычитайте dp[l+1][r-1]; сохраняйте все по модулю 1000000007."
   ]
 }

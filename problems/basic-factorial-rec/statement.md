@@ -1,4 +1,4 @@
-Return `n!` computed recursively: `0! = 1` and otherwise `n! = n * (n-1)!`. A loop also passes, but practice the recursive shape.
+Возврат `n!` вычисляется рекурсивно: `0! = 1` и иначе `n! = n * (n-1)!`. Также проходит петля, но практикуется рекурсивная форма.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= n <= 12``

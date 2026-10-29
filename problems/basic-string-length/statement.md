@@ -1,4 +1,4 @@
-Return the number of characters in the string `s`. An empty string has length 0. Only basic ASCII letters, digits, spaces, and punctuation appear.
+Возвратить количество символов в строке `s`. Пустая строка имеет длину 0. Появляются только основные буквы ASCII, цифры, пробелы и пунктуации.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= s.length <= 1000``

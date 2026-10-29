@@ -1,6 +1,6 @@
-The array `prices` quotes one stock across successive days, with `prices[i]` being its quote on day `i`. You are allowed a single round trip at most: purchase one share on some day and, if you wish, unload it on a later day. Report the largest profit such a trip can lock in; when every possible trip would lose money, settle for `0` by trading nothing.
+Массив `prices` содержит цены одной акции по дням: `prices[i]` — её цена в день `i`. Можно совершить не более одной сделки: купить акцию в один из дней и продать её в один из последующих дней. Верните наибольшую возможную прибыль. Если получить прибыль нельзя, верните `0`, то есть не совершайте сделку.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ prices.length ≤ 10^5
 - 0 ≤ prices[i] ≤ 10^4

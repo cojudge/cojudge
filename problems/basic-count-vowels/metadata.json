@@ -1,18 +1,18 @@
 {
   "id": "basic-count-vowels",
-  "title": "28. Count Vowels",
+  "title": "28. Граф Вульф",
   "difficulty": "Easy",
   "category": "strings",
   "examples": [
     {
       "input": "s = \"hello\"",
       "output": "2",
-      "explanation": "e and o are vowels."
+      "explanation": "e и o являются гласными."
     },
     {
       "input": "s = \"XYZ\"",
       "output": "0",
-      "explanation": "No vowels present."
+      "explanation": "Никаких гласных."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Check each character against the ten vowel letters.",
-    "Convert the character to lowercase first to halve the checks."
+    "Проверьте каждый символ против десяти гласных букв.",
+    "Преобразуйте персонажа сначала в нижний регистр, чтобы вдвое уменьшить чеки."
   ]
 }

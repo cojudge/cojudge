@@ -1,6 +1,6 @@
 {
   "id": "sort-an-array",
-  "title": "158. Sort an Array",
+  "title": "158. Сортировать массив",
   "difficulty": "Medium",
   "category": "array",
   "link": "https://leetcode.com/problems/sort-an-array/",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [5,2,3,1]",
       "output": "[1,2,3,5]",
-      "explanation": "After sorting, 2 and 3 keep relative positions while 1 and 5 move."
+      "explanation": "После сортировки 2 и 3 сохраняют относительные позиции, в то время как 1 и 5 перемещаются."
     },
     {
       "input": "nums = [5,1,1,2,0,0]",
       "output": "[0,0,1,1,2,5]",
-      "explanation": "Values are not necessarily unique; duplicates are grouped together."
+      "explanation": "Ценности не обязательно уникальны; дубликаты сгруппированы вместе."
     }
   ],
   "starterCode": {
@@ -43,7 +43,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Implement merge sort or quicksort to achieve O(n log n) time without built-in sort.",
-    "Merge sort guarantees O(n log n) worst case with O(n) extra space; quicksort with random pivot is O(n log n) average with O(log n) stack."
+    "Внедрить сортировку слияний или сортировку для достижения времени O(n log n) без встроенной сортировки.",
+    "Сортировка слияния гарантирует O(n log n) наихудший случай с O(n) дополнительным пространством; сортировка со случайным поворотом является O(n log n) средним стеком O(log n)."
   ]
 }

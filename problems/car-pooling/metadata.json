@@ -1,6 +1,6 @@
 {
   "id": "car-pooling",
-  "title": "205. Car Pooling",
+  "title": "205. Пулирование автомобилей",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/car-pooling/",
   "category": "heap",
@@ -8,12 +8,12 @@
     {
       "input": "trips = [[2,1,5],[3,3,7]], capacity = 4",
       "output": "false",
-      "explanation": "At kilometer 1, 2 passengers are picked up, so the car holds 2."
+      "explanation": "На километре 1 подбирают пассажиров 2, поэтому автомобиль удерживает 2."
     },
     {
       "input": "trips = [[2,1,5],[3,3,7]], capacity = 5",
       "output": "true",
-      "explanation": "At kilometer 1, the car holds 2 passengers."
+      "explanation": "На километре 1 автомобиль удерживает пассажиров 2."
     }
   ],
   "starterCode": {
@@ -57,8 +57,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Sort the pickup and dropoff events by location, then process them in order.",
-    "Use a difference array: add passengers at `from`, subtract them at `to`, then sweep over all locations.",
-    "Passengers always drop off at `to` before others pick up at the same location, so subtract before adding at equal positions."
+    "Сортируйте события пикапа и высадки по местоположению, а затем обрабатывайте их по порядку.",
+    "Используйте разностный массив: добавьте пассажиров в `from`, вычтите их в `to`, а затем проведите по всем местам.",
+    "Пассажиры всегда вылетают в `to`, прежде чем другие заберут в том же месте, поэтому вычтите, прежде чем добавлять в равных положениях."
   ]
 }

@@ -1,0 +1,54 @@
+{
+  "id": "reverse-bits",
+  "title": "15. Reverse Bits",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/reverse-bits/",
+  "category": "binary",
+  "examples": [
+    {
+      "input": "n = 43261596 (00000010100101000001111010011100)",
+      "output": "964176192 (00111001011110000010100101000000)",
+      "explanation": "Reversing the 32-bit binary of 43261596 (binary: 0b10100101000001111010011100) gives the value 964176192 (00111001011110000010100101000000)."
+    },
+    {
+      "input": "n = 2 (00000000000000000000000000000010)",
+      "output": "1073741824 (01000000000000000000000000000000)",
+      "explanation": "Reversing the 32-bit binary of 2 (binary: 0b10) gives the value 1073741824 (01000000000000000000000000000000)."
+    }
+  ],
+  "starterCode": {
+    "java": "public class Solution {\n    public int reverseBits(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def reverseBits(self, n: int) -> int:\n        pass\n",
+    "cpp": "class Solution {\npublic:\n    uint32_t reverseBits(uint32_t n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int ReverseBits(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reverse_bits(n: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc ReverseBits(n int) int {\n    \n}",
+    "typescript": "export function reverseBits(n: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function reverseBits($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 43261596
+    },
+    {
+      "n": 0
+    },
+    {
+      "n": 2
+    },
+    {
+      "n": 2147483646
+    }
+  ],
+  "functionName": "reverseBits",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Iterate 32 times: shift result left and add the least significant bit of n, then unsigned right shift n."
+  ]
+}

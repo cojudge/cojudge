@@ -1,19 +1,19 @@
-A settlement holds `n` residents numbered `1` through `n`. Rumor says one of them covertly serves as the town judge.
+Поселение удерживает жителей `n` с номером `1` через `n`. Ходят слухи, что один из них тайно служит городским судьей.
 
-Whenever a judge is present, the following all hold:
+Всякий раз, когда присутствует судья, все придерживаются следующего:
 
-1. The town judge places trust in no one.
-2. Every other resident places trust in the town judge.
-3. Exactly one resident meets both conditions above.
+1. Городской судья никому не доверяет.
+2. Каждый житель города доверяет судье.
+3. Один житель удовлетворяет обоим вышеперечисленным условиям.
 
-You receive a list `trust` in which `trust[i] = [ai, bi]` means resident `ai` trusts resident `bi`. Any pair missing from `trust` indicates no trust flows there.
+Вы получаете список `trust`, в котором `trust[i] = [ai, bi]` означает резидент `ai` доверяет резиденту `bi`. Любая пара, отсутствующая в `trust`, указывает на отсутствие потоков доверия там.
 
-Identify the judge by number when such a uniquely determinable person exists; otherwise return `-1`.
+Определите судью по номеру, когда существует такое однозначно определяемое лицо; в противном случае верните `-1`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 1000`
 - `0 <= trust.length <= 10^4`
 - `trust[i].length == 2`
-- Every trust pair is different from the others.
+- Каждая пара доверия отличается от других.
 - `ai != bi`
 - `1 <= ai, bi <= n`

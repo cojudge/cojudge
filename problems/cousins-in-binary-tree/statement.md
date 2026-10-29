@@ -1,12 +1,12 @@
-In a binary tree, two nodes are cousins when they sit at the same depth but have
-different parents. The root is at depth 0, its children at depth 1, and so on.
-Each value in the tree appears exactly once.
+В двоичном дереве два узла являются двоюродными братьями, когда они находятся на одной глубине, но имеют
+Корень находится на глубине 0, его потомки на глубине 1 и так далее.
+Каждое значение в дереве появляется ровно один раз.
 
-Given the `root` of a binary tree and two distinct values `x` and `y`, return
-`true` if the nodes holding `x` and `y` are cousins, and `false` otherwise.
+Учитывая `root` двоичного дерева и два различных значения `x` и `y`, возврат
+`true`, если узлы, содержащие `x` и `y`, являются двоюродными братьями, а `false` — иными.
 
-**Constraints:**
-- The number of nodes is between `2` and `100`.
+**Ограничения:**
+- Количество узлов находится между `2` и `100`.
 - `1 <= Node.val <= 100`
-- All node values are distinct.
-- `x != y` and both values occur in the tree.
+- Все значения узлов различны.
+- `x != y` и оба значения встречаются в дереве.

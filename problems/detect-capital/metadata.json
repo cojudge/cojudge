@@ -1,6 +1,6 @@
 {
   "id": "detect-capital",
-  "title": "579. Detect Capital",
+  "title": "579. Обнаружение капитала",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/detect-capital/",
   "category": "string",
@@ -8,22 +8,22 @@
     {
       "input": "word = \"USA\"",
       "output": "true",
-      "explanation": "All letters are uppercase."
+      "explanation": "Все буквы являются верхними."
     },
     {
       "input": "word = \"leetcode\"",
       "output": "true",
-      "explanation": "All letters are lowercase."
+      "explanation": "Все буквы являются нижними."
     },
     {
       "input": "word = \"Google\"",
       "output": "true",
-      "explanation": "Only the leading letter is uppercase."
+      "explanation": "Только ведущее письмо является верхним."
     },
     {
       "input": "word = \"FlaG\"",
       "output": "false",
-      "explanation": "Uppercase letters appear in the tail without covering the whole word."
+      "explanation": "Верхние буквы появляются в хвосте, не закрывая всего слова."
     }
   ],
   "starterCode": {
@@ -59,7 +59,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Count uppercase letters: zero means all-lowercase and length-many means all-uppercase.",
-    "Otherwise exactly one uppercase letter is allowed, and it must sit at index 0."
+    "Подсчитывайте строчные буквы: ноль означает все нижнее, а длина-много означает все-верхнее.",
+    "В противном случае допускается только одна строчная буква, и она должна находиться в индексе 0."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "design-excel-sum-formula",
-  "title": "653. Design Excel Sum Formula",
+  "title": "653. Дизайн Excel Sum Formula",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/design-excel-sum-formula/",
   "category": "design",
@@ -8,12 +8,12 @@
     {
       "input": "operations = [\"Excel\",\"set\",\"get\",\"sum\",\"get\"], args = [[[\"3\",\"3\"]],[\"1\",\"1\",\"2\"],[\"1\",\"1\"],[\"1\",\"2\",\"A1\",\"A2\"],[\"1\",\"2\"]]",
       "output": "[2,4]",
-      "explanation": "Build a 3x3 sheet; set A1 to 2; get A1 is 2; sum A1+A2 into B1 gives 4 (A2 is 0); get B1 is 4."
+      "explanation": "Создайте лист 3x3; установите A1 на 2; получите A1 - 2; сумма A1 + A2 в B1 дает 4 (A2 - 0); получите B1 - 4."
     },
     {
       "input": "operations = [\"Excel\",\"set\",\"set\",\"sum\",\"get\"], args = [[[\"2\",\"2\"]],[\"1\",\"1\",\"5\"],[\"1\",\"2\",\"7\"],[\"2\",\"1\",\"A1\",\"B1\"],[\"2\",\"1\"]]",
       "output": "[12]",
-      "explanation": "A1=5 and B1=7, so the formula A1+B1 stored at A2 evaluates to 12."
+      "explanation": "A1=5 и B1=7, поэтому формула A1+B1, хранящаяся в A2, оценивает в 12."
     }
   ],
   "starterCode": {
@@ -49,10 +49,10 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Model columns as 1-based numbers (A=1, B=2, ...); keep a value grid plus a formula map keyed by cell.",
-    "set writes the value and clears any formula on that cell; get evaluates live (following formulas recursively).",
-    "sum stores the token list as the cell formula (each token is a cell like B2 or a rectangle like A1:B2) and returns the evaluated total.",
-    "Only get and sum produce outputs, collected in call order into the int_array result.",
-    "Adaptation: this judge drives the sheet through runExcel(operations, args) with all arguments stringified; the constructor takes [height, widthCount] and set/get/sum take 1-based [row, col] plus values or formula tokens."
+    "Модельные столбцы в виде чисел на основе 1 (A=1, B=2, ...); сохраняйте сетку значений плюс карту формулы с ключом от ячейки.",
+    "Набор записывает значение и очищает любую формулу на этой ячейке; получайте оценки вживую (следуя формулам рекурсивно).",
+    "Сумма хранит список токенов в виде формулы ячейки (каждый токен представляет собой ячейку, такую как B2, или прямоугольник, такой как A1:B2) и возвращает оцениваемое общее количество.",
+    "Получайте и суммируйте выходы, собранные в порядке вызова в результат int_array.",
+    "Адаптация: этот судья управляет листом через runExcel (операции, args) со всеми аргументами; конструктор берет [высоту, ширину] и берет набор / набор / сумму на основе 1 [ряд, col] плюс значения или токены формулы."
   ]
 }

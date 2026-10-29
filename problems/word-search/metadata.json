@@ -1,6 +1,6 @@
 {
   "id": "word-search",
-  "title": "49. Word Search",
+  "title": "49. Поиск слов",
   "difficulty": "Medium",
   "category": "matrix",
   "link": "https://leetcode.com/problems/word-search/",
@@ -8,17 +8,17 @@
     {
       "input": "board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"ABCCED\"",
       "output": "true",
-      "explanation": "The word \"ABCCED\" can be found in the board via adjacent cells."
+      "explanation": "Слово «ABCCED» можно найти в доске через соседние ячейки."
     },
     {
       "input": "board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"SEE\"",
       "output": "true",
-      "explanation": "The word \"SEE\" can be found in the board via adjacent cells."
+      "explanation": "Слово «SEE» можно найти в доске через соседние ячейки."
     },
     {
       "input": "board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"ABCB\"",
       "output": "false",
-      "explanation": "The word \"ABCB\" does not exist in the board."
+      "explanation": "Слово \"ABCB\" в доске не существует."
     }
   ],
   "starterCode": {
@@ -106,6 +106,6 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Backtracking/DFS from each starting cell, marking visited cells, exploring four directions, and backtracking on mismatch."
+    "Отслеживание / DFS от каждой стартовой ячейки, маркировка посещенных ячеек, изучение четырех направлений и отслеживание несоответствия."
   ]
 }

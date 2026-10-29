@@ -1,5 +1,5 @@
-Return the sum of all numbers in `nums`, computed recursively: the sum of an empty array is 0, otherwise add the first element to the sum of the rest.
+Верните сумму всех чисел в `nums`, вычисленную рекурсивно: сумма пустого массива 0, иначе добавьте первый элемент к сумме остальных.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= nums.length <= 200``
 - ``-1000 <= nums[i] <= 1000``

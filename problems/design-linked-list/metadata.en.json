@@ -1,0 +1,65 @@
+{
+  "id": "design-linked-list",
+  "title": "715. Design Linked List",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/design-linked-list/",
+  "category": "linked-list",
+  "examples": [
+    {
+      "input": "operations = [\"MyLinkedList\",\"addAtHead\",\"addAtTail\",\"addAtIndex\",\"get\",\"deleteAtIndex\",\"get\"], args = [[],[1],[3],[1,2],[1],[1],[1]]",
+      "output": "[2,3]",
+      "explanation": "List becomes [1,2,3]; reads give 2 then 3."
+    },
+    {
+      "input": "operations = [\"MyLinkedList\",\"addAtHead\",\"get\"], args = [[],[5],[0]]",
+      "output": "[5]",
+      "explanation": "Single insert then read."
+    },
+    {
+      "input": "operations = [\"MyLinkedList\",\"get\",\"addAtIndex\",\"get\"], args = [[],[0],[5,10],[0]]",
+      "output": "[-1,-1]",
+      "explanation": "Empty read and ignored insert."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runLinkedList(String[] operations, int[][] args) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runLinkedList(self, operations: List[str], args: List[List[int]]) -> List[int]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runLinkedList(vector<string>& operations, vector<vector<int>>& args) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunLinkedList(string[] operations, int[][] args)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_linked_list(operations: Vec<String>, args: Vec<Vec<i32>>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunLinkedList(operations []string, args [][]int) []int {\n    return []int{}\n}",
+    "typescript": "export function runLinkedList(operations: string[], args: number[][]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[][] $args\n     * @return int[]\n     */\n    public function runLinkedList($operations, $args) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"MyLinkedList\",\"addAtHead\",\"addAtTail\",\"addAtIndex\",\"get\",\"deleteAtIndex\",\"get\"]",
+      "args": "[[],[1],[3],[1,2],[1],[1],[1]]"
+    },
+    {
+      "operations": "[\"MyLinkedList\",\"addAtHead\",\"get\"]",
+      "args": "[[],[5],[0]]"
+    },
+    {
+      "operations": "[\"MyLinkedList\",\"get\",\"addAtIndex\",\"get\"]",
+      "args": "[[],[0],[5,10],[0]]"
+    }
+  ],
+  "functionName": "runLinkedList",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "args",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Adaptation: implement runLinkedList that replays operations and returns only the get results in order.",
+    "Keep an array-backed list: get checks bounds, addAtIndex handles head/append/ignore cases, delete removes when valid.",
+    "Reset the list whenever MyLinkedList appears."
+  ]
+}

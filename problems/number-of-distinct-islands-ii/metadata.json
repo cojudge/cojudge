@@ -1,6 +1,6 @@
 {
   "id": "number-of-distinct-islands-ii",
-  "title": "719. Number of Distinct Islands II",
+  "title": "719. Количество отдельных островов II",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/number-of-distinct-islands-ii/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "grid = [[1,1,0,0,0],[1,0,0,0,0],[0,0,0,0,1],[0,0,0,1,1]]",
       "output": "1",
-      "explanation": "Two L-shaped islands of different sizes? Actually both single-plus-one shapes are rotations of each other, so they count as one shape."
+      "explanation": "Два L-образных острова разных размеров? На самом деле обе формы один плюс один являются вращениями друг друга, поэтому они считаются одной формой."
     },
     {
       "input": "grid = [[1,1,0,0,0],[1,1,0,0,0],[0,0,0,1,1],[0,0,0,1,1]]",
       "output": "1",
-      "explanation": "Two 2x2 squares are identical under translation, so there is one distinct shape."
+      "explanation": "Два квадрата 2x2 идентичны при переводе, поэтому есть одна отдельная форма."
     },
     {
       "input": "grid = [[1,0,0],[0,1,1],[0,0,0]]",
       "output": "2",
-      "explanation": "A single cell and a domino are different even after rotation or reflection."
+      "explanation": "Одна клетка и домино отличаются даже после вращения или отражения."
     }
   ],
   "starterCode": {
@@ -125,8 +125,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Collect each island with flood fill, then normalize: translate points so the minimum is at the origin and sort them.",
-    "Generate all 8 rotations/reflections of the point set and keep the lexicographically smallest normalized encoding as the canonical key.",
-    "Count distinct canonical keys in a hash set."
+    "Соберите каждый остров с наводнением, затем нормализуйте: переведите точки так, чтобы минимум находился у истоков и отсортируйте их.",
+    "Создавайте все вращения / отражения точки 8 и сохраняйте лексикографически наименьшее нормализованное кодирование в качестве канонического ключа.",
+    "Подсчитывайте различные канонические ключи в хеш-наборе."
   ]
 }

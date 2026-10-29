@@ -1,7 +1,7 @@
-You receive a string s plus an integer k. You may switch up to k positions in the string to any other capital letter. After those edits, report the greatest length of a block made up of a single repeated letter.
+Вы получаете строку s плюс целое число k. Вы можете переключиться на k позиций в строке на любую другую заглавную букву. После этих правок сообщите о наибольшей длине блока, состоящего из одной повторяющейся буквы.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ s.length ≤ 10^5
-- s consists of only uppercase English letters.
+- s состоит только из английских букв.
 - 0 ≤ k ≤ s.length

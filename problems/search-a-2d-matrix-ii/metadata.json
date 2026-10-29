@@ -1,6 +1,6 @@
 {
   "id": "search-a-2d-matrix-ii",
-  "title": "347. Search a 2D Matrix II",
+  "title": "347. Поиск по 2D матрице",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/search-a-2d-matrix-ii/",
   "category": "matrix",
@@ -8,12 +8,12 @@
     {
       "input": "matrix = [[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]], target = 5",
       "output": "true",
-      "explanation": "The value 5 sits at row 1, column 1."
+      "explanation": "Значение 5 находится в строке 1, столбец 1."
     },
     {
       "input": "matrix = [[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]], target = 20",
       "output": "false",
-      "explanation": "No cell holds the value 20."
+      "explanation": "Ни одна ячейка не имеет значения 20."
     }
   ],
   "starterCode": {
@@ -53,8 +53,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Start at the top-right corner: moving left decreases the value, moving down increases it.",
-    "Compare the current cell with the target and step left on overshoot, down on undershoot.",
-    "Leaving the matrix bounds means the target is absent."
+    "Начните с верхнего правого угла: движение влево уменьшает значение, движение вниз увеличивает его.",
+    "Сравните текущую ячейку с мишенью и шаг, оставленный на перевылете, вниз на подвылете.",
+    "Выход из границ матрицы означает отсутствие цели."
   ]
 }

@@ -1,6 +1,6 @@
-Merge all overlapping intervals and return the resulting non-overlapping intervals covering the same ranges.
+Объединение всех перекрывающихся интервалов и возврат результирующих неперекрывающихся интервалов, охватывающих одни и те же диапазоны.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ intervals.length ≤ 10^4
 - intervals[i].length == 2

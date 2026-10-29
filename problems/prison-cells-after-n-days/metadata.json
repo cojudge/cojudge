@@ -1,6 +1,6 @@
 {
   "id": "prison-cells-after-n-days",
-  "title": "943. Prison Cells After N Days",
+  "title": "943. Тюремные камеры после N дней",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/prison-cells-after-n-days/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "cells = [0,1,0,1,1,0,0,1], N = 7",
       "output": "[0,0,1,1,0,0,0,0]",
-      "explanation": "After seven daily updates the row settles into [0,0,1,1,0,0,0,0]."
+      "explanation": "После семи ежедневных обновлений строка помещается в [0, 0, 1, 1, 0, 0, 0, 0]."
     },
     {
       "input": "cells = [1,0,0,1,0,0,1,0], N = 1",
       "output": "[0,0,0,1,0,0,1,0]",
-      "explanation": "A single update turns each interior cell on exactly when its two neighbours match."
+      "explanation": "Одно обновление поворачивает каждую внутреннюю ячейку точно в то время, когда ее два соседа совпадают."
     },
     {
       "input": "cells = [1,1,1,0,1,1,1,1], N = 2",
       "output": "[0,1,1,1,1,0,0,0]",
-      "explanation": "Two updates in a row propagate the single gap across the row."
+      "explanation": "Два обновления в строке распространяют один разрыв по строке."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Only 256 row layouts exist, so the evolution must eventually loop.",
-    "Record the first day each layout appears; on a repeat, skip whole cycles at once.",
-    "The two border cells always clear to 0 after day one."
+    "Существуют только макеты строк 256, поэтому эволюция должна в конечном итоге зациклиться.",
+    "Записывайте первый день появления каждого макета; повторите, пропустите целые циклы сразу.",
+    "Две пограничные ячейки всегда проходят через 0 после первого дня."
   ]
 }

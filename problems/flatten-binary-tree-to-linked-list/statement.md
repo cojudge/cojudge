@@ -1,11 +1,11 @@
-Reshape a binary tree into a right-leaning chain that follows preorder visiting order.
+Преобразуйте двоичное дерево в цепочку, которая следует за порядком посещения предварительного заказа.
 
-After flattening, every node's left pointer must be empty and each right pointer must lead to the next node in a preorder walk (root, then left subtree, then right subtree). The node values stay the same; only the links change.
+После сплющивания левый указатель каждого узла должен быть пустым, и каждый правый указатель должен привести к следующему узлу в прогулке предварительного заказа (корень, затем левое поддерево, затем правое поддерево). Значения узла остаются прежними; меняются только ссылки.
 
-Return the root of the reshaped tree.
+Возвратить корень переделанного дерева.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= number of nodes <= 2000`
 - `-100 <= Node.val <= 100`
 
-**Adaptation note:** The classic task rewrites the tree in place and returns nothing. This version returns the flattened root so the result can be serialized and graded.
+**Примечание по адаптации:** Классическая задача переписывает дерево на месте и ничего не возвращает. Эта версия возвращает сплющенный корень, чтобы результат можно было сериализовать и классифицировать.

@@ -1,12 +1,12 @@
-Create a key-value store from scratch without relying on any ready-made hash table facility.
+Создайте магазин с ключевым значением с нуля, не полагаясь на любой готовый хеш-стол.
 
-Work is driven by a recorded script: `operations[i]` names one of `MyHashMap`, `put`, `get`, or `remove`, while the parallel entry `args[i]` supplies its parameters — `[]` for building the store, `[key, value]` for `put`, and `[key]` for `get` plus `remove`.
+Работа управляется записанным скриптом: `operations[i]` называет один из `MyHashMap`, `put`, `get` или `remove`, в то время как параллельная запись `args[i]` поставляет свои параметры — `[]` для создания магазина, `[key, value]` для `put` и `[key]` для `get` плюс `remove`.
 
-Collect the outcome of every `get` (`-1` whenever the key is missing) preserving the order in which those lookups appear. Construction, `put`, and `remove` contribute no entries to the collected output.
+Соберите результат каждого `get` (`-1`, когда ключ отсутствует), сохраняя порядок, в котором появляются эти поиски. Строительство, `put` и `remove` не вносят никаких записей в собранный выход.
 
-Each script opens with `MyHashMap`, every key and value obeys `0 <= key, value <= 10^6`, and at most `10^4` invocations occur.
+Каждый скрипт открывается с помощью `MyHashMap`, каждый ключ и значение подчиняется `0 <= key, value <= 10^6`, и в большинстве случаев возникают вызовы `10^4`.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= key, value <= 10^6`
-- At most `10^4` calls to `put`, `get`, and `remove`.
-- Every trace begins with `MyHashMap`.
+- В большинстве случаев `10^4` вызывает `put`, `get` и `remove`.
+- Каждый трек начинается с `MyHashMap`.

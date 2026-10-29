@@ -1,12 +1,12 @@
-List the `k` pairs with the tiniest sums across two sorted arrays.
+Перечислите пары `k` с мельчайшими суммами в двух сортированных массивах.
 
-Both `nums1` and `nums2` arrive sorted from small to large. A pair takes one entry from each array, and its cost is the sum of the two entries. Return exactly `min(k, nums1.length * nums2.length)` pairs with the smallest costs, each written as a two-element row `[u, v]`. Pairs are compared by their sums; when several pairs share the same sum, any order among them is fine.
+И `nums1`, и `nums2` прибывают отсортированными от малого к большому. Пара берет одну запись из каждого массива, и ее стоимость составляет сумму двух записей. Возвращают точно пары `min(k, nums1.length * nums2.length)` с наименьшими затратами, каждая из которых записана в виде двухэлементного ряда `[u, v]`. Пары сравниваются по их суммам; когда несколько пар делят одну и ту же сумму, любой заказ среди них в порядке.
 
-*Portable adaptation:* the classic version returns a list of boxed lists; here return a plain 2D integer array with the same rows.
+*Портативная адаптация:* классическая версия возвращает список упакованных списков; здесь возвращают простой 2D-целочисленный массив с теми же строками.
 
-**Constraints:**
-- `1 <= nums1.length, nums2.length <= 1000` for this portable version (the classic allows larger).
+**Ограничения:**
+- `1 <= nums1.length, nums2.length <= 1000` для этой портативной версии (классика позволяет больше).
 - `-10^9 <= nums1[i], nums2[i] <= 10^9`
-- Both arrays are sorted in non-decreasing order.
+- Оба массива сортируются в неубывающем порядке.
 - `1 <= k <= 10^4`
 - `k <= nums1.length * nums2.length`

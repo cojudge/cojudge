@@ -1,8 +1,8 @@
-Given the root of a binary tree, find the longest route in which every visited node carries the same value. The route may go through a node and extend into both its left and right sides, or it may lie entirely inside one subtree; it does not have to include the root.
+Учитывая корень двоичного дерева, найдите самый длинный маршрут, по которому каждый посещаемый узел несет одно и то же значение.Маршрут может проходить через узел и простираться как в левую, так и в правую стороны, или он может лежать полностью внутри одного поддеревья; он не должен включать корень.
 
-Count the route by edges (the number of links between nodes), not by nodes. A single node alone therefore scores `0`, and an empty tree also scores `0`.
+Сосчитайте маршрут по краям (количество связей между узлами), а не по узлам. Поэтому один узел сам по себе набирает `0`, а пустое дерево также набирает `0`.
 
-**Constraints:**
-- The tree holds between `0` and `10^4` nodes.
+**Ограничения:**
+- Дерево находится между узлами `0` и `10^4`.
 - `-1000 <= Node.val <= 1000`
-- The depth never exceeds `1000`.
+- Глубина никогда не превышает `1000`.

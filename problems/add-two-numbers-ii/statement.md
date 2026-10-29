@@ -1,7 +1,7 @@
-Two non-negative numbers are stored as linked lists with the most significant digit first. Each node holds one digit, and there are no leading zeros except for the number zero itself.
+Два неотрицательных числа хранятся в виде связанных списков с самой значительной цифрой в первую очередь.Каждый узел содержит одну цифру, и нет ведущих нулей, кроме самого нуля.
 
-Given the heads `l1` and `l2`, add the two numbers and return the sum in the same forward layout, again without leading zeros.
+Учитывая головки `l1` и `l2`, добавьте два числа и верните сумму в одну и ту же переднюю компоновку, снова без ведущих нулей.
 
-**Constraints:**
-- Each list has `1` to `100` nodes.
-- Each node value lies in `0..9`.
+**Ограничения:**
+- В каждом списке есть узлы `1`-`100`.
+- Каждое значение узла находится в `0..9`.

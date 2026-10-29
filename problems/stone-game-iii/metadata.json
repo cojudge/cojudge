@@ -1,6 +1,6 @@
 {
   "id": "stone-game-iii",
-  "title": "230. Stone Game III",
+  "title": "230. Каменная игра III",
   "difficulty": "Hard",
   "category": "dp",
   "link": "https://leetcode.com/problems/stone-game-iii/",
@@ -8,17 +8,17 @@
     {
       "input": "stoneValue = [1,2,3,7]",
       "output": "\"Bob\"",
-      "explanation": "Alice will always lose. Her best move will be to take three piles and the score become 6. Now the score of Bob is 7 and Bob wins."
+      "explanation": "Алиса всегда проиграет. Ее лучшим ходом будет взять три сваи и счет станет 6. Теперь счет Боба - 7 и Боб побеждает."
     },
     {
       "input": "stoneValue = [1,2,3,-9]",
       "output": "\"Alice\"",
-      "explanation": "Alice must choose all the three piles at the first move to win and leave Bob with negative score."
+      "explanation": "Алиса должна выбрать все три сваи на первом ходу, чтобы выиграть и оставить Боба с отрицательным счетом."
     },
     {
       "input": "stoneValue = [1,2,3,6]",
       "output": "\"Tie\"",
-      "explanation": "Alice cannot win this game. She can end the game in a draw if she decided to choose all the first three piles, otherwise she will lose."
+      "explanation": "Элис не может выиграть эту игру, она может закончить игру вничью, если решит выбрать все первые три сваи, иначе проиграет."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "The game can be mapped to minmax game. Alice tries to maximize the total score and Bob tries to minimize it.",
-    "Use dynamic programming to simulate the game. If the total score was 0 the game is \"Tie\", and if it has positive value then \"Alice\" wins, otherwise \"Bob\" wins."
+    "Игра может быть сопоставлена с игрой minmax. Алиса пытается максимизировать общий счет, а Боб пытается минимизировать его.",
+    "Используйте динамическое программирование для имитации игры.Если суммарный балл был 0, то игра «Тие», а если она имеет положительное значение, то выигрывает «Алиса», в противном случае выигрывает «Боб»."
   ]
 }

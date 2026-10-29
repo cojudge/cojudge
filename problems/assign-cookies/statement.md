@@ -1,9 +1,9 @@
-You are handing out cookies to a group of children. Child `i` has a greed factor `g[i]`, which is the smallest cookie size that will make that child content. Cookie `j` has size `s[j]`.
+Ребенок `i` имеет фактор жадности `g[i]`, который является наименьшим размером файла cookie, который сделает этот детский контент. Cookie `j` имеет размер `s[j]`.
 
-A cookie of size `x` satisfies a child of greed `y` exactly when `x >= y`. Each child receives at most one cookie, and each cookie can be given to at most one child.
+Файл cookie размером `x` удовлетворяет ребенка жадности `y` именно тогда, когда `x >= y`. Каждый ребенок получает максимум один файл cookie, и каждый файл cookie может быть предоставлен максимум одному ребенку.
 
-Return the largest number of children that can be made content.
+Верните наибольшее количество детей, которые могут быть сделаны контентом.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= g.length, s.length <= 3 * 10^4`
 - `1 <= g[i], s[j] <= 2^31 - 1`

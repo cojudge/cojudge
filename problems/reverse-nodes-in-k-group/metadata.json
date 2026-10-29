@@ -1,6 +1,6 @@
 {
   "id": "reverse-nodes-in-k-group",
-  "title": "96. Reverse Nodes in k-Group",
+  "title": "96. Обратные узлы в k-группе",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/reverse-nodes-in-k-group/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "head = [1,2,3,4,5], k = 2",
       "output": "[2,1,4,3,5]",
-      "explanation": "Reversing every 2 nodes in the linked list [1,2,3,4,5] gives [2,1,4,3,5]."
+      "explanation": "Переворачивая все 2 узлы в связанном списке [1,2,3,4,5Дает []2,1,4,3,5]."
     },
     {
       "input": "head = [1,2,3,4,5], k = 3",
       "output": "[3,2,1,4,5]",
-      "explanation": "Reversing every 3 nodes in the linked list [1,2,3,4,5] gives [3,2,1,4,5]."
+      "explanation": "Переворачивая все 3 узлы в связанном списке [1,2,3,4,5Дает []3,2,1,4,5]."
     },
     {
       "input": "head = [1,2], k = 2",
       "output": "[2,1]",
-      "explanation": "Reversing every 2 nodes in the linked list [1,2] gives [2,1]."
+      "explanation": "Перевернуть все узлы 2 в связанном списке [1, 2] дает [2, 1]."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "list_node",
   "hints": [
-    "Use a dummy node before the head so reconnecting the first reversed group is no different from later groups.",
-    "Before reversing, walk `k` steps to confirm that a complete group remains and remember the node after it.",
-    "Reverse links until reaching the saved next-group node, then reconnect both ends of the group."
+    "Используйте фиктивный узел перед головкой, чтобы повторное соединение первой обратной группы не отличалось от более поздних групп.",
+    "Перед реверсом пройдите шаги `k`, чтобы подтвердить, что целая группа остается, и запомните узел после нее.",
+    "Обратные ссылки до достижения сохраненного узла следующей группы, затем повторно соединяют оба конца группы."
   ]
 }

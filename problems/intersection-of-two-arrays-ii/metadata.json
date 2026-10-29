@@ -1,6 +1,6 @@
 {
   "id": "intersection-of-two-arrays-ii",
-  "title": "430. Intersection of Two Arrays II",
+  "title": "430. Пересечение двух массивов II",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/intersection-of-two-arrays-ii/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "nums1 = [1,2,2,1], nums2 = [2,2]",
       "output": "[2,2]",
-      "explanation": "Two copies of 2 exist on both sides, so both are kept."
+      "explanation": "Две копии 2 существуют с обеих сторон, поэтому обе хранятся."
     },
     {
       "input": "nums1 = [4,9,5], nums2 = [9,4,9,8,4]",
       "output": "[4,9]",
-      "explanation": "One shared copy of 4 and one of 9 survive; order is free."
+      "explanation": "Одна общая копия 4 и одна из 9 выживают; заказ бесплатный."
     }
   ],
   "starterCode": {
@@ -49,7 +49,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Count occurrences of the first list in a frequency map.",
-    "Walk the second list, emitting a value while its remaining count is positive and decrementing."
+    "Подсчитывайте случаи первого списка на частотной карте.",
+    "Пройдите по второму списку, испуская значение, в то время как его оставшееся количество является положительным и уменьшающимся."
   ]
 }

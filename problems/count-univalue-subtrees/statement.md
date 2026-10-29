@@ -1,9 +1,9 @@
-Given the root of a binary tree, count the subtrees in which every node holds the same value. A single node (including each leaf) qualifies, and an empty tree contributes zero.
+Учитывая корень двоичного дерева, подсчитайте поддеревья, в которых каждый узел имеет одинаковое значение.Один узел (включая каждый лист) квалифицируется, и пустое дерево вносит ноль.
 
-A subtree rooted at some node is univalue when that node's value matches the values of its left and right subtrees and both of those subtrees are themselves univalue. Empty children count as univalue.
+Поддеревья, укорененные в каком-либо узле, являются однозначными, когда значение этого узла соответствует значениям его левого и правого поддеревов, и оба этих поддеревья сами являются однозначными. Пустые потомки считаются однозначными.
 
-Return the total number of such subtrees.
+Верните общее количество таких деревьев.
 
-**Constraints:**
-- The number of nodes is in the range `[0, 1000]`.
+**Ограничения:**
+- Количество узлов находится в диапазоне `[0, 1000]`.
 - `-1000 <= Node.val <= 1000`

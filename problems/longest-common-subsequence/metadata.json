@@ -1,6 +1,6 @@
 {
   "id": "longest-common-subsequence",
-  "title": "19. Longest Common Subsequence",
+  "title": "19. Самая длинная общая последовательность",
   "difficulty": "Medium",
   "category": "dp",
   "link": "https://leetcode.com/problems/longest-common-subsequence/",
@@ -8,12 +8,12 @@
     {
       "input": "text1 = \"abcde\", text2 = \"ace\"",
       "output": "3",
-      "explanation": "The longest subsequence common to both \"abcde\" and \"ace\" is \"ace\", which has length 3."
+      "explanation": "Самой длинной последовательностью, общей как для «abcde», так и для «ace», является «ace», который имеет длину 3."
     },
     {
       "input": "text1 = \"abc\", text2 = \"abc\"",
       "output": "3",
-      "explanation": "The strings \"abc\" and \"abc\" are identical, so the longest common subsequence is \"abc\" with length 3."
+      "explanation": "Струны «abc» и «abc» идентичны, поэтому самая длинная общая последовательность — «abc» с длиной 3."
     }
   ],
   "starterCode": {
@@ -53,6 +53,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Standard 2D DP: dp[i][j] is the LCS length of prefixes text1[0..i-1], text2[0..j-1]."
+    "Стандарт 2D DP: dp[i][j] — длина LCS префиксов text1[0..i-1], text2[0..j-1]."
   ]
 }

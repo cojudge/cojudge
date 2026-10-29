@@ -1,6 +1,6 @@
 {
   "id": "count-univalue-subtrees",
-  "title": "356. Count Univalue Subtrees",
+  "title": "356. Подсчет однозначных деревьев",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/count-univalue-subtrees/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [5,1,5,5,5,null,5]",
       "output": "4",
-      "explanation": "The univalue subtrees are the leaves 5, 5, 5 and the single node 1."
+      "explanation": "Однозначными поддеревьями являются листья 5, 5, 5 и единый узел 1."
     },
     {
       "input": "root = []",
       "output": "0",
-      "explanation": "An empty tree has no subtrees."
+      "explanation": "У пустого дерева нет поддеревов."
     },
     {
       "input": "root = [5,5,5,5,5,null,5]",
       "output": "4",
-      "explanation": "Four single nodes plus larger matching groups combine into 4 univalue subtrees."
+      "explanation": "Четыре одиночных узла плюс более крупные совпадающие группы объединяются в однозначные поддеревья 4."
     }
   ],
   "starterCode": {
@@ -52,8 +52,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Post-order traversal lets each node learn whether its children are univalue before deciding.",
-    "A node is univalue when both children are univalue (or absent) and match its value.",
-    "Count the node itself whenever that check passes."
+    "Пост-порядковое прохождение позволяет каждому узлу узнать, являются ли его потомки однозначными, прежде чем принимать решение.",
+    "Узел однозначен, когда оба потомка однозначны (или отсутствуют) и соответствуют его значению.",
+    "Подсчитывайте сам узел всякий раз, когда проходит проверка."
   ]
 }

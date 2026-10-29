@@ -1,9 +1,9 @@
-You own a stamp set holding single non-zero digits, for instance `["1","3","5"]`. By pressing stamps any number of times (repeats allowed) you can compose positive integers such as `13`, `551` or `1351315`; the order of stamps is the order of digits.
+У вас есть набор марок, содержащий одиночные ненулевые цифры, например `["1","3","5"]`. Нажимая марки любое количество раз (разрешено повторение), вы можете составлять положительные целые числа, такие как `13`, `551` или `1351315`; порядок марок - это порядок цифр.
 
-Given the sorted unique digit list `digits` and a ceiling `n`, tally how many distinct stamp-built numbers are less than or equal to `n`.
+Учитывая отсортированный уникальный список цифр `digits` и потолок `n`, подсчитайте, сколько отдельных номеров, построенных на марке, меньше или равно `n`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= digits.length <= 9`
 - `digits[i].length == 1`
-- Each entry is a digit from `'1'` to `'9'`, all distinct, sorted increasingly.
+- Каждая запись представляет собой цифру от `'1'` до `'9'`, все отчетливые, отсортированные все чаще.
 - `1 <= n <= 10^9`

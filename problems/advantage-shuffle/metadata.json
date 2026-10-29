@@ -1,6 +1,6 @@
 {
   "id": "advantage-shuffle",
-  "title": "864. Advantage Shuffle",
+  "title": "864. Преимущество Shuffle",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/advantage-shuffle/",
   "category": "greedy",
@@ -8,17 +8,17 @@
     {
       "input": "nums1 = [2,7,11,15], nums2 = [1,10,4,11]",
       "output": "[2,11,7,15]",
-      "explanation": "All four positions beat the opponent."
+      "explanation": "Все четыре позиции обыграли соперника."
     },
     {
       "input": "nums1 = [12,24,8,32], nums2 = [13,25,32,11]",
       "output": "[24,32,8,12]",
-      "explanation": "Three positions beat the opponent, optimal."
+      "explanation": "Три позиции обыграли соперника, оптимальные."
     },
     {
       "input": "nums1 = [1,1], nums2 = [1,1]",
       "output": "[1,1]",
-      "explanation": "No position can beat."
+      "explanation": "Ни одна позиция не может победить."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Sort one copy of `nums1` and pair each `nums2` value with its original index, then handle the opponent's values from smallest to largest.",
-    "For each opponent value in order, play the smallest remaining card that beats it; if none beats it, sacrifice the smallest remaining card.",
-    "A balanced multiset with lower-bound search, or two pointers over sorted arrays with a deque assignment, implements this greedy choice."
+    "Сортируйте одну копию `nums1` и сопоставьте каждое значение `nums2` с его исходным индексом, а затем обработайте значения противника от наименьшего до наибольшего.",
+    "Для каждого соперника играйте наименьшую оставшуюся карту, которая бьет ее; если никто не бьет ее, жертвуйте самой маленькой оставшейся картой.",
+    "Сбалансированный мультисет с более низким поиском или два указателя на отсортированные массивы с назначением дека реализует этот жадный выбор."
   ]
 }

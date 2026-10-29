@@ -1,0 +1,57 @@
+{
+  "id": "verify-preorder-serialization-of-a-binary-tree",
+  "title": "417. Verify Preorder Serialization of a Binary Tree",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/verify-preorder-serialization-of-a-binary-tree/",
+  "category": "stack",
+  "examples": [
+    {
+      "input": "preorder = \"9,3,4,#,#,1,#,#,2,#,6,#,#\"",
+      "output": "true",
+      "explanation": "Every real node provides two child slots and every marker consumes one, ending exactly balanced."
+    },
+    {
+      "input": "preorder = \"1,#\"",
+      "output": "false",
+      "explanation": "Only one child token follows the root, so one required slot is never filled."
+    },
+    {
+      "input": "preorder = \"9,#,#,1\"",
+      "output": "false",
+      "explanation": "The tree finishes after three tokens, leaving the final value orphaned."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isValidSerialization(String preorder) {\n        \n    }\n}",
+    "python": "class Solution:\n    def isValidSerialization(self, preorder: str) -> bool:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool isValidSerialization(string preorder) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool IsValidSerialization(string preorder) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_valid_serialization(preorder: String) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc IsValidSerialization(preorder string) bool {\n    \n}",
+    "typescript": "export function isValidSerialization(preorder: string): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $preorder\n     * @return bool\n     */\n    public function isValidSerialization($preorder) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "preorder": "9,3,4,#,#,1,#,#,2,#,6,#,#"
+    },
+    {
+      "preorder": "1,#"
+    },
+    {
+      "preorder": "9,#,#,1"
+    }
+  ],
+  "functionName": "isValidSerialization",
+  "params": [
+    {
+      "name": "preorder",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Track open slots: start with one, spend one per token, and add two for each real node.",
+    "Fail early when slots go negative, and accept only when exactly zero remain at the end."
+  ]
+}

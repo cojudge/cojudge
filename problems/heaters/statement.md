@@ -1,8 +1,8 @@
-Houses and heaters sit at integer spots on a single line. Every heater warms the interval centered on it with some shared radius `r`: a house at `h` is warm when some heater at `t` satisfies `|h - t| <= r`. All heaters must use the same radius.
+Дома и обогреватели сидят в целых пятнах на одной линии. Каждый нагреватель нагревает интервал, центрированный на нем, с некоторым общим радиусом `r`: дом в `h` теплый, когда какой-то нагреватель в `t` удовлетворяет `|h - t| <= r`. Все обогреватели должны использовать один и тот же радиус.
 
-Find the smallest radius that leaves every house warm.
+Найдите наименьший радиус, который оставляет тепло в каждом доме.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= houses.length, heaters.length <= 3 * 10^4`
 - `1 <= houses[i], heaters[i] <= 10^9`

@@ -1,6 +1,6 @@
 {
   "id": "non-decreasing-array",
-  "title": "684. Non-decreasing Array",
+  "title": "684. Не уменьшающийся массив",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/non-decreasing-array/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [4,2,3]",
       "output": "true",
-      "explanation": "Lower the 4 to 1 to get [1,2,3]."
+      "explanation": "Опустите 4 до 1, чтобы получить [1, 2, 3]."
     },
     {
       "input": "nums = [4,2,1]",
       "output": "false",
-      "explanation": "Two separate drops need two edits."
+      "explanation": "Две отдельные капли требуют двух правок."
     },
     {
       "input": "nums = [3,4,2,3]",
       "output": "false",
-      "explanation": "Fixing either drop leaves another violation."
+      "explanation": "Устранение любой капли оставляет еще одно нарушение."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Scan for the first index i with nums[i] > nums[i+1]; more than one such spot (after a fix) means failure.",
-    "At a violation, either lower nums[i] to nums[i+1] or raise nums[i+1] to nums[i] \u2014 pick the one keeping neighbours valid.",
-    "Lowering the left entry works when i is 0 or nums[i-1] <= nums[i+1]; otherwise raise the right entry."
+    "Сканирование для первого индекса i с числами [i] > числами [i+1]; более одного такого пятна (после исправления) означает отказ.",
+    "При нарушении либо уменьшите числа [i] до чисел [i + 1], либо поднимите числа [i + 1] до цифр [i] — выберите тот, который сохраняет соседей действительными.",
+    "Опускание левой записи работает, когда i - 0 или nums [i-1] <= nums [i+1]; в противном случае поднимите правую запись."
   ]
 }

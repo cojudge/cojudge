@@ -1,6 +1,6 @@
 {
   "id": "convex-polygon",
-  "title": "534. Convex Polygon",
+  "title": "534. Выпуклый полигон",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/convex-polygon/",
   "category": "math",
@@ -8,12 +8,12 @@
     {
       "input": "polygon = [[0,0],[0,1],[1,1],[1,0]]",
       "output": "true",
-      "explanation": "A unit square: every consecutive turn bends the same way."
+      "explanation": "Единичный квадрат: каждый последовательный поворот сгибается одинаково."
     },
     {
       "input": "polygon = [[0,0],[0,10],[10,10],[10,0],[5,5]]",
       "output": "false",
-      "explanation": "The last vertex dents inward, so one turn bends the opposite way from the rest."
+      "explanation": "Последняя вершина вмещается внутрь, поэтому один поворот изгибается противоположным образом от остальных."
     }
   ],
   "starterCode": {
@@ -43,7 +43,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "The sign of the cross product of each pair of consecutive edges tells you which way the boundary turns.",
-    "Straight (collinear) joints carry no turn information and can be skipped; everything else must agree in sign."
+    "Знак поперечного продукта каждой пары последовательных краев говорит вам, в какую сторону поворачивается граница.",
+    "Прямые (коллинеарные) соединения не несут информации о повороте и могут быть пропущены; все остальное должно быть согласовано в знаке."
   ]
 }

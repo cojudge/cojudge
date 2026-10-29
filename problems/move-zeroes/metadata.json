@@ -1,6 +1,6 @@
 {
   "id": "move-zeroes",
-  "title": "381. Move Zeroes",
+  "title": "381. Переместить нолики",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/move-zeroes/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [0,1,0,3,12]",
       "output": "[1,3,12,0,0]",
-      "explanation": "Non-zeros keep order [1,3,12]; zeros shift to the end."
+      "explanation": "Non-zeros keep order [1, 3, 12]; нули смещаются в конец."
     },
     {
       "input": "nums = [0]",
       "output": "[0]",
-      "explanation": "Single zero stays."
+      "explanation": "Один ноль остается."
     },
     {
       "input": "nums = [1,0,1]",
       "output": "[1,1,0]",
-      "explanation": "The zero moves past the trailing 1."
+      "explanation": "Ноль проходит мимо скользящего 1."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Adaptation: the original moves zeros in place with void; here return the rearranged array.",
-    "Two pointers: write each non-zero to the next free slot, then fill the tail with zeros.",
-    "Relative order of non-zeros is preserved."
+    "Адаптация: оригинал перемещает нули на место с пустотой; здесь возвращают перестроенный массив.",
+    "Два указателя: запишите каждый ненулевой в следующий свободный слот, а затем заполните хвост нулями.",
+    "Сохраняется относительный порядок незеро."
   ]
 }

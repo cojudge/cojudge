@@ -1,7 +1,7 @@
-You are given two strings: a longer text `haystack` and a shorter pattern `needle`. Locate the first position in `haystack` where the whole `needle` appears as a contiguous block, and return that starting index.
+Вам даны две строки: более длинный текст `haystack` и более короткий шаблон `needle`. Найдите первую позицию в `haystack`, где весь `needle` появляется как смежный блок, и верните этот стартовый индекс.
 
-Return `-1` when `needle` never occurs inside `haystack`.
+Возврат `-1`, когда `needle` никогда не встречается внутри `haystack`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= haystack.length, needle.length <= 10^4`
-- Both strings consist of lowercase English letters.
+- Обе строки состоят из строчных английских букв.

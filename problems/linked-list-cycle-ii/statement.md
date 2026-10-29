@@ -1,10 +1,10 @@
-A linked list may contain a loop: the last node can point back to some earlier node. You are given the list values `head` and a loop descriptor `pos`, where `pos` is the index the tail links to (`-1` means no loop).
+Связанный список может содержать петлю: последний узел может указывать на какой-то более ранний узел. Вам даны значения списка `head` и дескриптор петли `pos`, где `pos` является индексом, на который ссылаются хвостовые ссылки (`-1` означает отсутствие петли).
 
-Find where the loop starts and return its index. Return `-1` when there is no loop. Do not change the list.
+Найдите, где начинается цикл, и верните его индекс. Возврат `-1`, когда нет цикла. Не меняйте список.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= number of nodes <= 10^4`
 - `-10^5 <= Node.val <= 10^5`
-- `pos` is `-1` or a valid list index.
+- `pos` - это `-1` или действительный индекс списка.
 
-**Adaptation note:** The original LeetCode task returns the cycle-entry node (or null). Because a cyclic list cannot be serialized as an output value, this version returns the entry index (`-1` when absent). The `pos` field is test harness metadata used to build the loop and is not a function parameter.
+**Примечание по адаптации: ** Оригинальная задача LeetCode возвращает циклический узел (или нуль). Поскольку циклический список не может быть сериализован в качестве выходного значения, эта версия возвращает индекс ввода (`-1` при его отсутствии). Поле `pos` является тестовыми метаданными, используемыми для построения цикла, и не является параметром функции.

@@ -1,6 +1,6 @@
 {
   "id": "simplify-path",
-  "title": "181. Simplify Path",
+  "title": "181. Упростить путь",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/simplify-path/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "path = \"/home/\"",
       "output": "\"/home\"",
-      "explanation": "Trailing slash is removed; /home/ simplifies to /home."
+      "explanation": "Слэш-трейлинг удаляется; /home/ упрощается до /home."
     },
     {
       "input": "path = \"/home//foo/\"",
       "output": "\"/home/foo\"",
-      "explanation": "Multiple slashes collapse to one; trailing slash is removed."
+      "explanation": "Множественные слэши сжимаются до одного; следующая слэш удаляется."
     },
     {
       "input": "path = \"/home/user/Documents/../Pictures\"",
       "output": "\"/home/user/Pictures\"",
-      "explanation": "Documents/.. cancels, leaving /home/user/Pictures."
+      "explanation": "Документы/.. отменяются, оставляя /home/user/Pictures."
     }
   ],
   "starterCode": {
@@ -54,7 +54,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Split by '/' and use a stack: ignore empty parts and '.', pop on '..' when possible, otherwise push the directory name.",
-    "Join the stack with '/' prefixed; return '/' when the stack is empty."
+    "Разделите на '/' и используйте стек: игнорируйте пустые части и '.', всплывайте на '..', когда это возможно, иначе нажмите имя каталога.",
+    "Присоединяйтесь к стеку с префиксом '/'; верните '/', когда стек пуст."
   ]
 }

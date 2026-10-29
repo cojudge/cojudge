@@ -1,5 +1,5 @@
-You are given two integers `a` and `b`. Compute their combined total while steering clear of the `+` and `-` operators.
+Вам даны два целых числа `a` и `b`. Вычислите их общую сумму, избегая операторов `+` и `-`.
 
-**Constraints:**
+**Ограничения:**
 
 - -1000 ≤ a, b ≤ 1000

@@ -1,0 +1,90 @@
+{
+  "id": "number-of-connected-components-in-an-undirected-graph",
+  "title": "34. Number of Connected Components in an Undirected Graph",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "n=5, edges=[[0,1],[1,2],[3,4]]",
+      "output": "2",
+      "explanation": "The 5 nodes with 3 edges form 2 connected components."
+    },
+    {
+      "input": "n=5, edges=[[0,1],[1,2],[2,3],[3,4]]",
+      "output": "1",
+      "explanation": "The 5 nodes with 4 edges form 1 connected component."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int countComponents(int n, int[][] edges) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def countComponents(self, n: int, edges: List[List[int]]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int countComponents(int n, vector<vector<int>>& edges) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int CountComponents(int n, int[][] edges) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_components(n: i32, edges: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc CountComponents(n int, edges [][]int) int {\n    \n}",
+    "typescript": "export function countComponents(n: number, edges: number[][]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @param int[][] $edges\n     * @return int\n     */\n    public function countComponents($n, $edges) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "n": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "n": 4,
+      "edges": []
+    }
+  ],
+  "functionName": "countComponents",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "edges",
+      "type": "int_array_2d",
+      "visualizeType": "undirected_edges",
+      "numNodesRef": "n"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use Union-Find to union endpoints and count unique roots, or BFS/DFS to count visited components."
+  ]
+}

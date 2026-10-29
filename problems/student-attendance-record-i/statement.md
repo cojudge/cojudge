@@ -1,9 +1,9 @@
-You are given a string `s` recording one student's daily presence. Each character is `P` for present, `L` for late, or `A` for absent.
+Вам дается строка `s`, записывающая ежедневное присутствие одного студента.Каждый персонаж - `P` для настоящего, `L` для позднего или `A` для отсутствующего.
 
-The student earns an award exactly when both rules hold: fewer than two absences in total, and no run of three or more consecutive lates.
+Студент получает награду именно тогда, когда соблюдаются оба правила: менее двух отсутствий в общей сложности и без трех или более последовательных опозданий.
 
-Return `true` when the record qualifies, otherwise `false`.
+Возврат `true`, когда запись квалифицируется, иначе `false`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 1000`
-- Each character is `A`, `L`, or `P`
+- Каждый персонаж — `A`, `L` или `P`.

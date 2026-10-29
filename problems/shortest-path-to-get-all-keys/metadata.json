@@ -1,6 +1,6 @@
 {
   "id": "shortest-path-to-get-all-keys",
-  "title": "859. Shortest Path to Get All Keys",
+  "title": "859. Самый короткий путь, чтобы получить все ключи",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/shortest-path-to-get-all-keys/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "grid = [\"@.a..\",\"###.#\",\"b.A.B\"]",
       "output": "8",
-      "explanation": "One shortest walk needs eight steps."
+      "explanation": "Одна короткая прогулка требует восьми шагов."
     },
     {
       "input": "grid = [\"@..aA\",\"..B#.\",\"....b\"]",
       "output": "6",
-      "explanation": "Six moves suffice."
+      "explanation": "Шесть ходов достаточно."
     },
     {
       "input": "grid = [\"@Aa\"]",
       "output": "-1",
-      "explanation": "The key is unreachable."
+      "explanation": "Ключ недоступен."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Treat (row, col, key-mask) as the full state, since the same cell with different keys allows different futures.",
-    "Run breadth-first search from the start state; the first time you pop a state holding all keys, its distance is optimal.",
-    "Precompute the target mask from the count of distinct keys, and check doors with bit tests before entering."
+    "Относитесь (ряд, коль, ключ-маска) как к полному состоянию, так как одна и та же ячейка с разными ключами допускает разные фьючерсы.",
+    "Запустите поиск по ширине с начального состояния; когда вы впервые запустите состояние, содержащее все ключи, его расстояние является оптимальным.",
+    "Предварительно вычислите маску-мишень из числа различных ключей и проверьте двери с помощью бит-тестов перед входом."
   ]
 }

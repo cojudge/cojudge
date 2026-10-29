@@ -1,6 +1,6 @@
 {
   "id": "short-encoding-of-words",
-  "title": "818. Short Encoding of Words",
+  "title": "818. Короткое кодирование слов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/short-encoding-of-words/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "words = [\"time\", \"me\", \"bell\"]",
       "output": "10",
-      "explanation": "The string \"time#bell#\" holds every word as a #-terminated suffix and has length 10."
+      "explanation": "Струна «time#bell#» содержит каждое слово в виде суффикса, заканчивающегося на #, и имеет длину 10."
     },
     {
       "input": "words = [\"t\"]",
       "output": "2",
-      "explanation": "The encoding \"t#\" has length 2."
+      "explanation": "Кодировка «t#» имеет длину 2."
     },
     {
       "input": "words = [\"me\", \"time\"]",
       "output": "5",
-      "explanation": "me is already a suffix of time, so \"time#\" alone suffices."
+      "explanation": "У меня уже есть суффикс времени, так что достаточно только «времени»."
     }
   ],
   "starterCode": {
@@ -60,7 +60,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "A word that appears as the tail of a longer word never needs its own #-block.",
-    "Collect distinct words in a set, delete every proper suffix of every word, then sum length+1 over survivors."
+    "Слово, которое появляется как хвост более длинного слова, никогда не нуждается в собственном блоке.",
+    "Соберите отдельные слова в наборе, удалите каждый правильный суффикс каждого слова, а затем суммируйте длину + 1 над выжившими."
   ]
 }

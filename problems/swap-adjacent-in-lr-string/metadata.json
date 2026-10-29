@@ -1,6 +1,6 @@
 {
   "id": "swap-adjacent-in-lr-string",
-  "title": "777. Swap Adjacent in LR String",
+  "title": "777. Своп Adjacent в LR String",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/swap-adjacent-in-lr-string/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "start = \"RXXLRXRXL\", end = \"XRLXXRRLX\"",
       "output": "true",
-      "explanation": "A sequence of allowed slides reshapes the first row into the second one."
+      "explanation": "Последовательность разрешенных слайдов преобразует первый ряд во второй."
     },
     {
       "input": "start = \"X\", end = \"L\"",
       "output": "false",
-      "explanation": "An empty slot cannot become a token."
+      "explanation": "Пустой слот не может стать токеном."
     },
     {
       "input": "start = \"XL\", end = \"LX\"",
       "output": "true",
-      "explanation": "The L steps one slot left into the empty cell."
+      "explanation": "L шагает один слот, оставленный в пустой ячейке."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Ignore the empty slots first: after deleting every X, the remaining L/R order must match exactly.",
-    "Track positions of the remaining tokens: each L in the start must not sit to the right of its counterpart in the target, and each R must not sit to the left.",
-    "Scan both strings with two pointers that skip over X characters and compare token by token."
+    "Сначала проигнорируйте пустые слоты: после удаления каждого X оставшийся L/R-заказ должен точно совпадать.",
+    "Позиции трека остальных токенов: каждый L в старте не должен сидеть справа от своего аналога в цели, а каждый R не должен сидеть слева.",
+    "Сканируйте обе строки двумя указателями, которые пропускают символы X и сравнивают токен с токеном."
   ]
 }

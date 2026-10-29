@@ -1,6 +1,6 @@
 {
   "id": "k-th-smallest-in-lexicographical-order",
-  "title": "508. K-th Smallest in Lexicographical Order",
+  "title": "508. K-й самый маленький в лексикографическом порядке",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/k-th-smallest-in-lexicographical-order/",
   "category": "trie",
@@ -8,12 +8,12 @@
     {
       "input": "n = 13, k = 2",
       "output": "10",
-      "explanation": "Dictionary order begins 1, 10, 11, 12, 13, 2, .... The second entry is 10."
+      "explanation": "Заказ словаря начинается 1, 10, 11, 12, 13, 2, ....Вторая запись - 10."
     },
     {
       "input": "n = 1, k = 1",
       "output": "1",
-      "explanation": "Only one value exists."
+      "explanation": "Существует только одна ценность."
     }
   ],
   "starterCode": {
@@ -53,8 +53,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Think of numbers as a ten-way tree where children of x are x*10 through x*10+9.",
-    "Count how many values sit under a prefix without visiting each one, then skip whole subtrees or dive deeper.",
-    "Decrease k as you consume prefixes or descend, stopping when k reaches zero."
+    "Думайте о числах как о десятистороннем дереве, где потомки x — x*10 через x*10+9.",
+    "Подсчитайте, сколько значений находится под префиксом, не посещая каждый из них, а затем пропустите целые поддеревья или нырните глубже.",
+    "Уменьшите k при потреблении префиксов или спуститесь, остановившись, когда k достигнет нуля."
   ]
 }

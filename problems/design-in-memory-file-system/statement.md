@@ -1,13 +1,13 @@
-Model a tiny file tree that starts with only the root `/`. Four calls exist: list a path, make directories, append text to a file (creating it when needed), and read a file.
+Модель крошечного дерева файлов, которое начинается только с корня `/`. Существует четыре вызова: перечислить путь, сделать каталоги, добавить текст к файлу (создать его при необходимости) и прочитать файл.
 
-**Adaptation note:** instead of a stateful class, implement `runFileSystem(operations, paths, contents)`. The three arrays share one index per call: `operations[i]` names the call, `paths[i]` is its path, and `contents[i]` carries the extra text for append calls (empty otherwise). The constructor entry `"FileSystem"` is ignored. Directory and append calls produce no output rows; each `ls` appends the sorted entry list and each `readContentFromFile` appends a single-element row with the file text. Return those rows in order.
+**Примечание по адаптации: ** вместо государственного класса реализуйте `runFileSystem(operations, paths, contents)`. Три массива имеют один индекс на вызов: `operations[i]` называет вызов, `paths[i]` - его путь, а `contents[i]` несет дополнительный текст для вызовов приложений (пустое в противном случае). Запись конструктора `"FileSystem"` игнорируется. Записи каталогов и вызовов приложений не производят никаких строк вывода; каждый `ls` добавляет отсортированный список входов и каждый `readContentFromFile` добавляет строку одного элемента с текстом файла. Верните эти строки в порядок.
 
-- `ls(path)`: when the path is a file, return its file name; when it is a directory, return the sorted names directly inside it.
-- `mkdir(path)`: create the directory and any missing parents.
-- `addContentToFile(filePath, text)`: create parents when needed, then append `text`.
-- `readContentFromFile(filePath)`: return the stored text.
+- `ls(path)`: когда путь является файлом, верните его имя файла; когда это каталог, верните сортированные имена непосредственно внутри него.
+- `mkdir(path)`: создание каталога и любых пропавших родителей.
+- `addContentToFile(filePath, text)`: при необходимости создайте родителей, а затем добавьте `text`.
+- `readContentFromFile(filePath)`: возвращает сохраненный текст.
 
-**Constraints:**
-- `1 <= operations.length <= 500`, all three arrays share that length.
-- Paths use `/`-separated lowercase names; content is lowercase text.
-- Every read or list targets an existing path.
+**Ограничения:**
+- `1 <= operations.length <= 500`, все три массива имеют эту длину.
+- Пути используют `/`-отдельные строчные имена; содержание - строчный текст.
+- Каждое чтение или список нацелены на существующий путь.

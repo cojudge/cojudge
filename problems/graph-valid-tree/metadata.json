@@ -8,12 +8,12 @@
     {
       "input": "n=5, edges=[[0,1],[0,2],[0,3],[1,4]]",
       "output": "true",
-      "explanation": "The graph has 4 edges and all 5 nodes are reachable, so it is a valid tree."
+      "explanation": "Граф имеет края 4, и все узлы 5 доступны, поэтому это действительное дерево."
     },
     {
       "input": "n=5, edges=[[0,1],[1,2],[2,3],[1,3],[1,4]]",
       "output": "false",
-      "explanation": "As shown in the diagram, nodes 1, 2, and 3 form a cycle, which violates the tree properties. Therefore, it is not a valid tree.\n\n![Graph cycle](/api/problems/graph-valid-tree/asset/explanation2.png)"
+      "explanation": "Как показано на диаграмме, узлы 1, 2 и 3 образуют цикл, нарушающий свойства дерева.Поэтому это не действительное дерево.\n\n[Цикл графов](/api/problems/graph-valid-tree/asset/explanation2.png)"
     }
   ],
   "starterCode": {
@@ -93,6 +93,6 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "An undirected graph is a tree iff it is connected and has exactly n-1 edges. Use Union-Find or BFS/DFS."
+    "Ненаправленный граф — это древо, к которому он подключен и имеет точно n-1 края. Используйте Union-Find или BFS/DFS."
   ]
 }

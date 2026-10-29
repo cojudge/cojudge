@@ -1,9 +1,9 @@
-You receive an array `nums` that began in ascending order with all distinct entries and was then spun around a pivot. Locate and return its least element.
+Вы получаете массив `nums`, который начинался в порядке возрастания со всеми отдельными входами, а затем вращался вокруг поворота. Найдите и верните его наименьший элемент.
 
-**Constraints:**
+**Ограничения:**
 
 - `n == nums.length`
 - `1 <= n <= 5000`
 - `-5000 <= nums[i] <= 5000`
-- Every entry of `nums` is different from the others.
-- `nums` started sorted and was rotated between `1` and `n` positions.
+- Каждая запись `nums` отличается от других.
+- `nums` начал сортировку и был повернут между позициями `1` и `n`.

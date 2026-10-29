@@ -1,13 +1,13 @@
-A spellchecker holds a vocabulary `wordlist`. Each lookup query is answered by the first rule below that produces a match, scanning the vocabulary in order for rules 2 and 3:
+У орфографа есть словарь `wordlist`На каждый поисковый запрос отвечает первое правило ниже, которое создает совпадение, сканируя словарный запас для правил. 2 и 3:
 
-1. Exact match: the query appears in the vocabulary verbatim — return it unchanged.
-2. Case-insensitive match: some vocabulary word equals the query after lowercasing both — return that vocabulary word.
-3. Vowel-error match: some vocabulary word equals the query after lowercasing both and replacing every vowel (`a`, `e`, `i`, `o`, `u`) with a wildcard — return that vocabulary word.
-4. Otherwise return the empty string.
+1. Точное совпадение: запрос появляется в словаре дословно — вернуть его без изменений.
+2. Нечувствительное к делу совпадение: некоторое словарное слово равняется запросу после понижения обоих — верните это словарное слово.
+3. Совпадение гласных и ошибок: некоторые словарные слова равны запросу после снижения гласных и замены каждого гласного слова (`a`, `e`, `i`, `o`, `u`) на wildcard — верните это словарное слово.
+4. В противном случае возвращайте пустую строку.
 
-Answer every query in `queries` and return the answers in order as a string list.
+Ответьте на каждый запрос в `queries` и верните ответы в виде списка строк.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= wordlist.length, queries.length <= 5000`
-- Words contain only English letters; matching is described purely by the rules above.
-- The vocabulary arrives as a string array and the answers form a string list.
+- Слова содержат только английские буквы; соответствие описывается только правилами, приведенными выше.
+- Словарь поступает в виде массива строк, а ответы образуют список строк.

@@ -1,6 +1,6 @@
 {
   "id": "delete-columns-to-make-sorted",
-  "title": "931. Delete Columns to Make Sorted",
+  "title": "931. Удалить колонны для сортировки",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/delete-columns-to-make-sorted/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "strs = [\"cba\",\"daf\",\"ghi\"]",
       "output": "1",
-      "explanation": "Only the middle column dips."
+      "explanation": "Только средняя колонна падает."
     },
     {
       "input": "strs = [\"a\",\"b\"]",
       "output": "0",
-      "explanation": "Single ordered column."
+      "explanation": "Единая упорядоченная колонка."
     },
     {
       "input": "strs = [\"zyx\",\"wvu\",\"tsr\"]",
       "output": "3",
-      "explanation": "All three columns fall."
+      "explanation": "Все три колонны падают."
     }
   ],
   "starterCode": {
@@ -62,7 +62,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Handle each column on its own: scan its rows from top to bottom.",
-    "Delete the column as soon as any adjacent pair steps down; otherwise keep it."
+    "Обрабатывайте каждый столбец самостоятельно: сканируйте его строки сверху вниз.",
+    "Удалите колонку, как только любая соседняя пара спустится вниз; в противном случае держите ее."
   ]
 }

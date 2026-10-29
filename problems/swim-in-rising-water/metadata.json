@@ -1,6 +1,6 @@
 {
   "id": "swim-in-rising-water",
-  "title": "125. Swim in Rising Water",
+  "title": "125. Плавать в поднимающейся воде",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/swim-in-rising-water/",
   "category": "graph",
@@ -8,12 +8,12 @@
     {
       "input": "grid = [[0,2],[1,3]]",
       "output": "3",
-      "explanation": "Both routes from (0,0) to (1,1) have a maximum elevation of 3, making 3 the minimum time needed."
+      "explanation": "Оба маршрута от (0, 0) до (1, 1) имеют максимальную высоту 3, что делает 3 минимальным временем, необходимым."
     },
     {
       "input": "grid = [[0,1,2,3,4],[24,23,22,21,5],[12,13,14,15,16],[11,17,18,19,20],[10,9,8,7,6]]",
       "output": "16",
-      "explanation": "Every path from (0,0) to (4,4) must cross a cell with elevation at least 16, and there exists a path whose highest elevation is 16."
+      "explanation": "Каждый путь от (0, 0) до (4, 4) должен пересекать ячейку с возвышением по меньшей мере 16, и существует путь, самое высокое возвышение которого 16."
     }
   ],
   "starterCode": {
@@ -47,8 +47,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "A path's required time is the maximum elevation on that path; minimize that maximum.",
-    "Use Dijkstra's algorithm where entering a neighbor changes the path cost to max(currentCost, neighborElevation).",
-    "An alternative is binary search on time and a flood-fill reachability check."
+    "Требуемое время пути — это максимальное возвышение на этом пути; сведите к минимуму этот максимум.",
+    "Используйте алгоритм Dijkstra, при котором ввод соседа изменяет стоимость пути до максимума (currentCost, neighborElevation).",
+    "Альтернативой является бинарный поиск по времени и проверка доступности заполнения."
   ]
 }

@@ -1,7 +1,7 @@
-An integer `n` (given as its decimal text) has a *good base* `k >= 2` when writing `n` in base `k` uses only the digit `1` — that is, `n = 1 + k + k^2 + ... + k^m` for some length `m >= 1`. Every `n >= 3` has at least the trivial base `n - 1` (form `11`).
+Целое число `n` (учитывая его десятичный текст) имеет *хорошую базу * `k >= 2` при написании `n` в базе `k` использует только цифру `1` — то есть `n = 1 + k + k^2 + ... + k^m` для некоторой длины `m >= 1`. Каждый `n >= 3` имеет по крайней мере тривиальную базу `n - 1` (форма `11`).
 
-Return the smallest such base, again as decimal text.
+Возвращайте наименьшее такое основание, снова как десятичный текст.
 
-**Constraints:**
+**Ограничения:**
 
-- `n` is an integer in `[3, 10^18]` with no leading zeroes.
+- `n` - это целое число в `[3, 10^18]` без ведущих нулей.

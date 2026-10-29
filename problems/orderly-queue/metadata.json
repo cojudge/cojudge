@@ -1,6 +1,6 @@
 {
   "id": "orderly-queue",
-  "title": "889. Orderly Queue",
+  "title": "889. Упорядоченная очередь",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/orderly-queue/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"cba\", k = 1",
       "output": "\"acb\"",
-      "explanation": "Best of the three rotations."
+      "explanation": "Лучшее из трех направлений."
     },
     {
       "input": "s = \"baaca\", k = 3",
       "output": "\"aaabc\"",
-      "explanation": "Sorting is reachable when k exceeds 1."
+      "explanation": "Сортировка возможна, когда k превышает 1."
     },
     {
       "input": "s = \"aabbcc\", k = 2",
       "output": "\"aabbcc\"",
-      "explanation": "Already sorted."
+      "explanation": "Уже разобрались."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "For k equal to 1, build every rotation s[i:]+s[:i] and keep the minimum.",
-    "For k larger than 1, the process can simulate any swap, so returning the sorted characters is optimal."
+    "Для k, равного 1, стройте каждое вращение s[i:]+s[:i] и сохраняйте минимум.",
+    "Для k больше, чем 1, процесс может имитировать любой своп, поэтому возвращение отсортированных символов является оптимальным."
   ]
 }

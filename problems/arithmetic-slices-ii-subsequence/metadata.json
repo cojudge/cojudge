@@ -1,6 +1,6 @@
 {
   "id": "arithmetic-slices-ii-subsequence",
-  "title": "514. Arithmetic Slices II - Subsequence",
+  "title": "514. Арифметические срезы II - последовательность",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/arithmetic-slices-ii-subsequence/",
   "category": "dp",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [2,4,6,8,10]",
       "output": "7",
-      "explanation": "Five triples with gap 2 plus [2,6,10] plus the length-5 progression."
+      "explanation": "Пять тройных с разрывом 2 плюс [2, 6, 10] плюс длина-5 прогрессия."
     },
     {
       "input": "nums = [7,7,7,7,7]",
       "output": "16",
-      "explanation": "All 10 triples plus 5 quadruples plus 1 quintuple."
+      "explanation": "Все 10 тройные плюс 5 четверные плюс 1 пятнадцать."
     }
   ],
   "starterCode": {
@@ -43,8 +43,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "For each pair (j,i) record the gap; every earlier pair ending at j with the same gap extends to i.",
-    "Keep per-index maps from gap to count of weak pairs (length >= 2) ending there.",
-    "Only extensions that reach length 3 or more add to the answer."
+    "Для каждой пары (j,i) записывайте разрыв; каждая более ранняя пара, оканчивающаяся на j с одинаковым разрывом, распространяется на i.",
+    "Держите карты по индексу от разрыва до подсчета слабых пар (длина > = 2), заканчивающихся там.",
+    "К ответу добавляются только расширения, достигающие длины 3 или более."
   ]
 }

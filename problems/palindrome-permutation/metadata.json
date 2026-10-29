@@ -1,6 +1,6 @@
 {
   "id": "palindrome-permutation",
-  "title": "368. Palindrome Permutation",
+  "title": "368. Перестановка палиндрома",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/palindrome-permutation/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"code\"",
       "output": "false",
-      "explanation": "All four letters differ, so any ordering leaves more than one character with an odd count."
+      "explanation": "Все четыре буквы отличаются друг от друга, поэтому любой порядок оставляет более одного символа со странным счетом."
     },
     {
       "input": "s = \"aab\"",
       "output": "true",
-      "explanation": "Rearranged as \"aba\", it reads the same in both directions."
+      "explanation": "Переставленная как «аба», она читается одинаково в обоих направлениях."
     },
     {
       "input": "s = \"carerac\"",
       "output": "true",
-      "explanation": "Rearranged as \"racecar\", it is a palindrome."
+      "explanation": "Перестроенный как «гоночный автомобиль», это палиндром."
     }
   ],
   "starterCode": {
@@ -54,7 +54,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "A palindrome allows at most one character with an odd count.",
-    "Count characters with a set or map and check how many counts are odd."
+    "Палиндром позволяет по крайней мере одному персонажу с нечетным счетом.",
+    "Подсчитывайте символы с набором или картой и проверяйте, сколько чисел нечетно."
   ]
 }

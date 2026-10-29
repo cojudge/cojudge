@@ -1,8 +1,8 @@
-Each node of the given binary tree holds an integer, has either zero or two children, and every child value is at least as large as its parent value.
+Каждый узел данного двоичного дерева содержит целое число, имеет либо ноль, либо двух потомков, и каждое значение потомка по крайней мере такое же большое, как и его родительское значение.
 
-Find the second smallest distinct value appearing in the tree. If all nodes share the same value, return `-1`.
+Найдите второе наименьшее отдельное значение, появляющееся в дереве. Если все узлы имеют одинаковое значение, верните `-1`.
 
-**Constraints:**
-- The tree has between 1 and 25 nodes.
-- All values lie in `[1, 2^31 - 1]`.
-- Each interior node has exactly two children.
+**Ограничения:**
+- Дерево находится между узлами 1 и 25.
+- Все значения находятся в `[1, 2^31 - 1]`.
+- Каждый внутренний узел имеет ровно двух потомков.

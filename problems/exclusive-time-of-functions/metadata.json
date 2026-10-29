@@ -1,6 +1,6 @@
 {
   "id": "exclusive-time-of-functions",
-  "title": "658. Exclusive Time of Functions",
+  "title": "658. Эксклюзивное время функций",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/exclusive-time-of-functions/",
   "category": "stack",
@@ -8,12 +8,12 @@
     {
       "input": "n = 2, logs = [\"0:start:0\",\"1:start:2\",\"1:end:5\",\"0:end:6\"]",
       "output": "[3,4]",
-      "explanation": "Function 0 runs during [0,1] and [6,6] (3 units); function 1 runs during [2,5] (4 units)."
+      "explanation": "Функция 0 выполняется во время [0, 1] и [6, 6] (единицы 3); функция 1 выполняется во время [2, 5] (единицы 4)."
     },
     {
       "input": "n = 1, logs = [\"0:start:0\",\"0:start:2\",\"0:end:5\",\"0:start:6\",\"0:end:6\",\"0:end:7\"]",
       "output": "[8]",
-      "explanation": "Nested and sequential self-calls merge to 8 units over [0,7]."
+      "explanation": "Вложенные и последовательные самозвонки сливаются в 8 единицы над [0, 7]."
     },
     {
       "input": "n = 2, logs = [\"0:start:0\",\"0:end:0\",\"1:start:1\",\"1:end:1\"]",
@@ -57,8 +57,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Push each started function onto a stack and remember the timestamp of the previous log.",
-    "On a start event, credit the gap since the previous stamp to the function on top, then push the new id.",
-    "On an end event, credit the inclusive gap (stamp - previous + 1) to the popped id and move the cursor past the stamp."
+    "Нажмите каждую запущенную функцию на стек и запомните временную метку предыдущего журнала.",
+    "На стартовом событии зачислите разрыв с предыдущей отметки на функцию сверху, а затем нажмите новый идентификатор.",
+    "На конечном событии зачислите инклюзивный разрыв (штамп - предыдущий + 1) на всплывающий идентификатор и переместите курсор мимо штампа."
   ]
 }

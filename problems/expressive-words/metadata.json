@@ -1,6 +1,6 @@
 {
   "id": "expressive-words",
-  "title": "807. Expressive Words",
+  "title": "807. Выразительные слова",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/expressive-words/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"heeellooo\", words = [\"hello\", \"hi\", \"helo\"]",
       "output": "1",
-      "explanation": "Only \"hello\" can be stretched into \"heeellooo\": the e-group and o-group of s are long enough, while the other words fail on group counts."
+      "explanation": "Только «hello» можно растянуть на «heeellooo»: e-группа и o-группа s достаточно длинные, в то время как другие слова терпят неудачу при подсчете группы."
     },
     {
       "input": "s = \"zzzzzyyyy\", words = [\"zzyy\", \"zy\", \"zyyy\"]",
       "output": "3",
-      "explanation": "Each listed word uses the same two groups as s, and every group of s has length at least 3, so all three stretch."
+      "explanation": "Каждое перечисленное слово использует те же две группы, что и s, и каждая группа s имеет длину по меньшей мере 3, поэтому все три растягиваются."
     },
     {
       "input": "s = \"abcd\", words = [\"abc\"]",
       "output": "0",
-      "explanation": "The group structure differs (4 groups versus 3), so nothing stretches."
+      "explanation": "Структура группы отличается (группы 4 против 3), поэтому ничего не растягивается."
     }
   ],
   "starterCode": {
@@ -68,7 +68,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Compress both s and each word into (character, run-length) groups and compare group by group.",
-    "A word group may expand to the s group only when lengths match or when the s run has length at least 3 and is not shorter."
+    "Сжимайте как буквы s, так и каждое слово в группы (характер, длина строки) и сравнивайте группу за группой.",
+    "Группа слов может расширяться до группы слов только тогда, когда длины совпадают или когда бег имеет длину, по меньшей мере, 3 и не короче."
   ]
 }

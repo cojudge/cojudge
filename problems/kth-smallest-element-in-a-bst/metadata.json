@@ -1,6 +1,6 @@
 {
   "id": "kth-smallest-element-in-a-bst",
-  "title": "69. Kth Smallest Element in a BST",
+  "title": "69. Самый маленький элемент в BST",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/kth-smallest-element-in-a-bst/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "root = [3,1,4,null,2], k = 1",
       "output": "1",
-      "explanation": "The BST [3,1,4,null,2] sorted in ascending order is [1,2,3,4]; the 1st smallest value is 1."
+      "explanation": "BST [3, 1, 4,null, 2] отсортирован в порядке возрастания [1, 2, 3, 4]; 1-е наименьшее значение - 1."
     },
     {
       "input": "root = [5,3,6,2,4,null,7,1], k = 3",
       "output": "3",
-      "explanation": "The BST [5,3,6,2,4,null,7,1] sorted in ascending order is [1,2,3,4,5,6,7]; the 3rd smallest value is 3."
+      "explanation": "БСТ [5,3,6,2,4Нуль,7,1] сортируется по восходящему порядку [1,2,3,4,5,6,7]; 3-е наименьшее значение 3."
     }
   ],
   "starterCode": {
@@ -62,6 +62,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use in-order traversal to visit nodes in ascending order and stop at k."
+    "Используйте обход в порядке, чтобы посетить узлы в восходящем порядке и остановиться на k."
   ]
 }

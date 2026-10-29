@@ -1,16 +1,16 @@
-`n` automobiles head toward a finish line posted at mile marker `target`.
-Automobile `i` begins at `position[i]` and maintains the fixed pace `speed[i]`.
+Автомобили `n` направляются к финишной прямой, размещенной на отметке мили `target`.
+Автомобиль `i` начинается с `position[i]` и поддерживает фиксированный темп `speed[i]`.
 
-A quicker automobile is allowed to close the gap to a slower one ahead yet is forbidden from overtaking.
-All automobiles that rendezvous collapse into a single convoy that proceeds onward at the pace of its slowest member.
-An automobile merging into a convoy precisely upon crossing the finish line counts as part of that convoy.
+Более быстрому автомобилю разрешено закрывать зазор на более медленный впереди, но ему запрещено обгонять.
+Все автомобили, которые сближаются, сливаются в один конвой, который движется вперед со скоростью самого медленного члена.
+Автомобиль, сливающийся в конвой именно при пересечении финишной черты, считается частью этого конвоя.
 
-Count how many separate convoys cross the finish line.
+Подсчитайте, сколько отдельных конвоев пересекают финишную черту.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= position.length == speed.length <= 100000`
 - `1 <= target <= 1000000`
 - `0 <= position[i] < target`
-- All positions are unique.
+- Все позиции уникальны.
 - `1 <= speed[i] <= 1000000`

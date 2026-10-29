@@ -1,6 +1,6 @@
 {
   "id": "transform-to-chessboard",
-  "title": "781. Transform to Chessboard",
+  "title": "781. Трансформация в шахматную доску",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/transform-to-chessboard/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "board = [[\"0\",\"1\",\"1\",\"0\"],[\"0\",\"1\",\"1\",\"0\"],[\"1\",\"0\",\"0\",\"1\"],[\"1\",\"0\",\"0\",\"1\"]]",
       "output": "2",
-      "explanation": "One row swap plus one column swap reaches an alternating board."
+      "explanation": "Один рядный своп плюс один столбцовый своп достигает чередующейся доски."
     },
     {
       "input": "board = [[\"0\",\"1\"],[\"1\",\"0\"]]",
       "output": "0",
-      "explanation": "Neighbors already alternate."
+      "explanation": "Соседи уже чередуются."
     },
     {
       "input": "board = [[\"1\",\"0\"],[\"1\",\"0\"]]",
       "output": "-1",
-      "explanation": "The first column cannot be made alternating."
+      "explanation": "Первую колонку нельзя сделать чередующейся."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Every row must equal the first row or its exact opposite; the same holds for columns, otherwise return -1.",
-    "Count ones in the first row and column: each must be n/2 or (n+1)/2.",
-    "Mismatches against the two alternating edge patterns divided by two give row and column swaps; for odd n pick the pattern with an even mismatch count."
+    "Каждая строка должна равняться первой строке или ее полной противоположности; то же самое относится к столбцам, иначе возвращайте -1.",
+    "Счислите единицы в первой строке и столбце: каждый должен быть n/2 или (n+1)/2.",
+    "Несоответствия против двух чередующихся краевых узоров, разделенных на два, дают свопы строк и столбцов; для нечетного n выберите узор с четным количеством несоответствий."
   ]
 }

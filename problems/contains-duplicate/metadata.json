@@ -1,6 +1,6 @@
 {
   "id": "contains-duplicate",
-  "title": "3. Contains Duplicate",
+  "title": "3. Повторяющиеся элементы",
   "difficulty": "Easy",
   "category": "array",
   "link": "https://leetcode.com/problems/contains-duplicate/",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,2,3,1]",
       "output": true,
-      "explanation": "Value 1 appears at indices 0 and 3, so there is a duplicate."
+      "explanation": "Значение 1 появляется в индексах 0 и 3, поэтому есть дубликат."
     },
     {
       "input": "nums = [1,2,3,4]",
       "output": false,
-      "explanation": "All values are unique, no duplicates found."
+      "explanation": "Все значения уникальны, дубликатов не найдено."
     },
     {
       "input": "nums = [1,1,1,3,3,4,3,2,4,2]",
       "output": true,
-      "explanation": "Value 1 appears at indices 0 and 1, so there is a duplicate."
+      "explanation": "Значение 1 появляется в индексах 0 и 1, поэтому есть дубликат."
     }
   ],
   "starterCode": {
@@ -51,6 +51,6 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "A common solution runs in O(n) time using a hash set: iterate through the array and check whether the current element is already in the set. If so, return true; otherwise insert it. If no duplicates are found, return false."
+    "Общее решение запускается во времени O(n) с помощью хеш-набора: итерировать через массив и проверить, находится ли текущий элемент уже в наборе. Если это так, верните истинное; в противном случае вставьте его. Если не найдены дубликаты, верните ложное."
   ]
 }

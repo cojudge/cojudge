@@ -1,6 +1,6 @@
 {
   "id": "random-flip-matrix",
-  "title": "578. Random Flip Matrix",
+  "title": "578. Случайная матричная флип-карта",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/random-flip-matrix/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "m = 3, n = 1, count = 2",
       "output": "[[1,0],[2,0]]",
-      "explanation": "Any two of the three cells form a valid answer; one possibility is rows 1 and 2."
+      "explanation": "Любые две из трех ячеек образуют действительный ответ; одна из возможностей — строки 1 и 2."
     },
     {
       "input": "m = 2, n = 2, count = 4",
       "output": "[[0,0],[0,1],[1,0],[1,1]]",
-      "explanation": "Asking for the whole board must return each of the four cells once, in any order."
+      "explanation": "Попросив всю доску, необходимо вернуть каждую из четырех ячеек один раз, в любом порядке."
     },
     {
       "input": "m = 1, n = 1, count = 0",
       "output": "[]",
-      "explanation": "Zero flips produce an empty list."
+      "explanation": "Нулевые флипы создают пустой список."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Adaptation: the original class streams random flips with reset; here any distinct valid batch of the requested size is accepted.",
-    "A Fisher-Yates style draw over m*n virtual indices with a remap table yields distinct positions without storing the board.",
-    "Convert each drawn index k to [k / n, k % n] coordinates."
+    "Адаптация: исходный класс транслирует случайные перепады с сбросом; здесь принимается любая отдельная действительная партия запрашиваемого размера.",
+    "Рисунок в стиле Фишера-Яйтса по виртуальным индексам m*n с таблицей переназначения дает различные позиции без сохранения доски.",
+    "Преобразуйте каждый вычерченный индекс k в [k/n, k % n] координаты."
   ]
 }

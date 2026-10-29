@@ -1,17 +1,17 @@
-You receive an integer array `arr`. Report the extent of the largest **turbulent subarray** inside `arr`.
+Вы получаете целочисленный массив `arr`. Сообщите о степени наибольшего ** турбулентного подкатегории** внутри `arr`.
 
-Call a subarray **turbulent** when the direction of comparison reverses at every neighboring pair within it.
+Назовите подкатегорию ** турбулентным **, когда направление сравнения изменяется на каждой соседней паре внутри него.
 
-In precise terms, a slice `[arr[i], arr[i + 1], ..., arr[j]]` of `arr` counts as turbulent exactly when one of these patterns holds:
+Если быть точным, то кусочек `[arr[i], arr[i + 1], ..., arr[j]]` от `arr` считается турбулентным именно тогда, когда один из этих шаблонов удерживает:
 
 - For `i <= k < j`:
-  - `arr[k] > arr[k + 1]` when `k` is **odd**, and
-  - `arr[k] < arr[k + 1]` when `k` is **even**.
-- Or, for `i <= k < j`:
-  - `arr[k] > arr[k + 1]` when `k` is **even**, and
-  - `arr[k] < arr[k + 1]` when `k` is **odd**.
+  - `arr[k] > arr[k + 1]`, когда `k` является **odd**
+  - `arr[k] < arr[k + 1]`, когда `k` является ****.
+- Для `i <= k < j`:
+  - `arr[k] > arr[k + 1]`, когда `k` является **even**
+  - `arr[k] < arr[k + 1]`, когда `k` является **odd**.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= arr.length <= 4 * 10^4`
 - `0 <= arr[i] <= 10^9`

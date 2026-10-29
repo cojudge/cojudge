@@ -1,20 +1,20 @@
-This is an offline adaptation of a design task. Instead of writing a class, you write one function that replays a whole session:
+Это офлайн-адаптация задачи проектирования. Вместо того, чтобы писать класс, вы пишете одну функцию, которая воспроизводит целую сессию:
 
 ```
-runVector2D(vec, operations)
+runVector2D (vec, операции)
 ```
 
-`vec` is a 2D integer array such as `[[1,2],[3],[4]]`, and `operations` holds only `"next"` or `"hasNext"`, in the order they are called. The flattened view visits every integer row by row from left to right, skipping empty rows:
+`vec` представляет собой 2D-целочисленный массив, такой как `[[1,2],[3],[4]]`, а `operations` содержит только `"next"` или `"hasNext"`, в том порядке, в котором они называются. Сплюснутый вид посещает каждую целочисленную строку за строкой слева направо, пропуская пустые строки:
 
-- `"next"` returns the next integer in flattened order and moves forward.
-- `"hasNext"` returns `1` when integers remain and `0` otherwise.
+- `"next"` возвращает следующее целое число в сплющенном порядке и движется вперед.
+- `"hasNext"` возвращает `1`, когда целые числа остаются, и `0` в противном случае.
 
-Return the answers for every operation in order, encoding `"hasNext"` as `1` or `0`.
+Возвращайте ответы для каждой операции в порядке, кодируя `"hasNext"` как `1` или `0`.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= vec.length <= 100`
 - `0 <= vec[i].length <= 100`
 - `-10^4 <= vec[i][j] <= 10^4`
 - `1 <= operations.length <= 10^4`
-- Each operation is `"next"` or `"hasNext"`.
-- `"next"` is only called when `"hasNext"` would be true.
+- Каждая операция называется `"next"` или `"hasNext"`.
+- `"next"` называется только тогда, когда `"hasNext"` будет истинным.

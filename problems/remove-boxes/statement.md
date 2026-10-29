@@ -1,7 +1,7 @@
-You are given a row of boxes, each coloured with a positive integer. In one move you may pick any maximal run of consecutive boxes sharing one colour: if the run has length `k` you score `k*k` points and the run disappears, letting the left and right remainders join together.
+Вам дается ряд коробок, каждая из которых окрашена положительным целым числом. В одном движении вы можете выбрать любой максимальный пробег последовательных коробок, разделяющих один цвет: если пробег имеет длину `k`, вы набираете очки `k*k`, и пробег исчезает, позволяя левым и правым остаткам объединиться.
 
-Repeat until no box remains. Plan the removal order to earn the largest total score and return that maximum.
+Повторяйте до тех пор, пока не останется коробки. Запланируйте приказ об удалении, чтобы заработать самый большой общий балл и вернуть тот максимум.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= boxes.length <= 100`
 - `1 <= boxes[i] <= 100`

@@ -1,14 +1,14 @@
-You are given a string holding an expression from a tiny Lisp-like language. The language has integers (possibly negative) and three forms, each wrapped in parentheses with space-separated tokens:
+Вам дается строка, держащая выражение из крошечного языка, похожего на Lisp. Язык имеет целые числа (возможно, отрицательные) и три формы, каждая из которых обернута в скобки с пространственно-отделенными токенами:
 
-- `(add e1 e2)` evaluates both parts and returns their sum.
-- `(mult e1 e2)` evaluates both parts and returns their product.
-- `(let v1 e1 v2 e2 ... expr)` assigns values to variables in order, then evaluates the final `expr`. A variable name holds lowercase letters; later assignments to the same name hide earlier ones, and assignments made inside an inner `let` do not leak outward.
+- `(add e1 e2)` оценивает обе части и возвращает их сумму.
+- `(mult e1 e2)` оценивает обе части и возвращает их продукт.
+- `(let v1 e1 v2 e2 ... expr)` присваивает значения переменным по порядку, затем оценивает итоговый `expr`. Имя переменной содержит строчные буквы; более поздние назначения к тому же имени скрывают более ранние, а назначения, сделанные внутри внутреннего `let`, не утекают наружу.
 
-Variable lookup always uses the nearest enclosing assignment. The input expression is guaranteed valid and evaluates to an integer.
+Переменный поиск всегда использует ближайшее прилагающее задание. Выражение ввода гарантируется действительным и оценивается на целое число.
 
-Implement `evaluate(expression)`, which takes the expression string and returns its integer value.
+Внедрить `evaluate(expression)`, который берет строку выражения и возвращает ее целое значение.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= expression.length <= 2000`
-- Tokens are `(`, `)`, lowercase variable names, integers (with optional `-`), `add`, `mult`, `let`, separated by single spaces.
-- The expression is well-formed with balanced parentheses.
+- Токены `(`, `)`, имена переменных нижних регистров, целые числа (с дополнительными `-`), `add`, `mult`, `let`, разделенные отдельными пространствами.
+- Выражение хорошо сформировано сбалансированными скобками.

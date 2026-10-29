@@ -1,6 +1,6 @@
 {
   "id": "symmetric-tree",
-  "title": "283. Symmetric Tree",
+  "title": "283. Симметричное дерево",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/symmetric-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,2,2,3,4,4,3]",
       "output": "true",
-      "explanation": "Left and right subtrees mirror each other at every level."
+      "explanation": "Левые и правые поддеревья зеркально отражают друг друга на каждом уровне."
     },
     {
       "input": "root = [1,2,2,null,3,null,3]",
       "output": "false",
-      "explanation": "The right side has a 3 where the mirrored left side is empty, so the tree is not mirrored."
+      "explanation": "Правая сторона имеет 3, где зеркальная левая сторона пуста, поэтому дерево не зеркально."
     },
     {
       "input": "root = [1]",
       "output": "true",
-      "explanation": "A single node is trivially symmetric."
+      "explanation": "Один узел тривиально симметричен."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Compare the left and right subtrees as mirror images: left.left pairs with right.right and left.right pairs with right.left.",
-    "A recursive helper on node pairs handles empty cases: two empties match, one empty does not.",
-    "An iterative queue holding paired nodes works too and uses O(n) time."
+    "Сравните левое и правое поддеревья как зеркальные изображения: пары левого.левого с правым.правым и пары левого.правого с правым.левым.",
+    "Рекурсивный помощник на парах узлов обрабатывает пустые чехлы: две пустоты совпадают, одна пустая — нет.",
+    "Итеративная очередь, удерживающая парные узлы, также работает и использует время O(n)."
   ]
 }

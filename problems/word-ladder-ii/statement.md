@@ -1,14 +1,14 @@
-A ladder from `beginWord` to `endWord` is a chain where neighboring words differ by exactly one letter, every middle word belongs to `wordList`, and the final word equals `endWord`. The starting word itself does not need to appear in `wordList`.
+Лестница из `beginWord` то `endWord` Цепь, где соседние слова отличаются ровно одной буквой, каждое среднее слово принадлежит к одному слову. `wordList`И последнее слово равно `endWord`Само начальное слово не должно появляться в `wordList`.
 
-Return every shortest possible ladder as a list of words from start to finish. If no ladder exists, return an empty list. The order of the ladders does not matter.
+Возвращай каждую самую короткую лестницу как список слов от начала до конца Если лестницы нет, возвращай пустой список Порядок лестниц не имеет значения.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= beginWord.length <= 5`
 - `endWord.length == beginWord.length`
 - `1 <= wordList.length <= 500`
 - `wordList[i].length == beginWord.length`
-- All strings use lowercase English letters.
+- Все строки используют строчные английские буквы.
 - `beginWord != endWord`
-- All `wordList` entries are unique.
+- Все записи `wordList` уникальны.
 
-**Adaptation note:** The original return type is `List<List<String>>`. Here it is `string_list_2d`, with order-insensitive grading: any permutation of the ladder set is accepted.
+**Примечание по адаптации: ** Оригинальный тип возврата - `List<List<String>>`. Здесь это `string_list_2d` с чувствительной к порядку классификацией: принимается любая перестановка набора лестниц.

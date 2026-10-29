@@ -1,0 +1,58 @@
+{
+  "id": "maximum-swap",
+  "title": "689. Maximum Swap",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/maximum-swap/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "num = 2736",
+      "output": "7236",
+      "explanation": "Exchanging the 2 with the 7 yields the largest reachable value 7236."
+    },
+    {
+      "input": "num = 9973",
+      "output": "9973",
+      "explanation": "The digits are already in the best order, so no exchange improves the value."
+    },
+    {
+      "input": "num = 98368",
+      "output": "98863",
+      "explanation": "Swapping the small 3 with the later 8 gives 98863."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maximumSwap(int num) {\n        \n    }\n}",
+    "python": "class Solution:\n    def maximumSwap(self, num: int) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int maximumSwap(int num) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MaximumSwap(int num) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn maximum_swap(num: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MaximumSwap(num int) int {\n    return 0\n}",
+    "typescript": "export function maximumSwap(num: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $num\n     * @return int\n     */\n    public function maximumSwap($num) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "num": 2736
+    },
+    {
+      "num": 9973
+    },
+    {
+      "num": 98368
+    }
+  ],
+  "functionName": "maximumSwap",
+  "params": [
+    {
+      "name": "num",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Record the last position of each digit 0-9.",
+    "Scan from the most significant digit and look for a larger digit appearing later.",
+    "Swap at most once: the earliest improvable position with the largest possible later digit."
+  ]
+}

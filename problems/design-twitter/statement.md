@@ -1,22 +1,22 @@
-Implement the behavior of a simplified Twitter service through the portable function `runTwitter(operations, args)`.
+Реализуйте поведение упрощенного сервиса Twitter через портативную функцию `runTwitter(operations, args)`.
 
-The arrays are parallel. `operations[i]` names an operation and `args[i]` contains its integer arguments:
+`operations[i]` называет операцию, а `args[i]` содержит свои целочисленные аргументы:
 
-- `"Twitter"` with `[]` initializes the service and is always the first operation.
-- `"postTweet"` with `[userId, tweetId]` posts a new tweet.
-- `"getNewsFeed"` with `[userId]` requests up to the 10 most recent tweet IDs posted by that user or by users they follow.
-- `"follow"` with `[followerId, followeeId]` starts following a user.
-- `"unfollow"` with `[followerId, followeeId]` stops following a user; unfollowing a user who is not followed has no effect.
+- `"Twitter"` с `[]` инициализирует сервис и всегда является первой операцией.
+- `"postTweet"` с `[userId, tweetId]` публикует новый твит.
+- `"getNewsFeed"` с запросами `[userId]` до самых последних идентификаторов твитов 10, опубликованных этим пользователем или пользователями, за которыми они следуют.
+- `"follow"` с `[followerId, followeeId]` начинается после пользователя.
+- `"unfollow"` с `[followerId, followeeId]` перестает следовать за пользователем; не следовать за пользователем, который не следует, не имеет никакого эффекта.
 
-Return one row for each `getNewsFeed` operation and no row for constructors or mutating operations. Every feed row must be in exact reverse chronological order and contain at most 10 tweet IDs.
+Возвращайте одну строку для каждой операции `getNewsFeed` и никакой строки для конструкторов или мутирующих операций. Каждая строка подачи должна быть в точном обратном хронологическом порядке и содержать максимум идентификаторов твитов 10.
 
-This is a function adaptation of the original class-design problem. There is intentionally no `classProblem` wrapper.
+Это функциональная адаптация оригинальной задачи классового дизайна. Умышленно нет обертки `classProblem`.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= operations.length == args.length <= 30001`
-- The first operation is `"Twitter"` with an empty argument row.
-- Every later operation is one of `postTweet`, `getNewsFeed`, `follow`, or `unfollow` and has the argument count described above.
+- Первой операцией является `"Twitter"` с пустым аргументным рядом.
+- Каждая последующая операция является одной из `postTweet`, `getNewsFeed`, `follow` или `unfollow` и имеет количество аргументов, описанных выше.
 - `1 <= userId, followerId, followeeId <= 500`
-- `0 <= tweetId <= 10000`, and all posted tweet IDs in one test are unique.
+- `0 <= tweetId <= 10000` и все размещенные идентификаторы твитов в одном тесте уникальны.
 - `followerId != followeeId`.

@@ -1,18 +1,18 @@
-Design a stack that can also report and remove its maximum in addition to the usual push, pop and top.
+Создайте стек, который также может сообщать и удалять свой максимум в дополнение к обычному толчку, поп-музыке и топу.
 
-Supported steps, encoded as parallel lists `operations` and `values` (use `0` when a step takes no argument):
+Поддерживаемые шаги, закодированные в виде параллельных списков `operations` и `values` (используйте `0`, когда шаг не требует аргументации):
 
-- `push(x)`: place `x` on top.
-- `pop()`: remove and return the top value.
-- `top()`: return the top value without removing it.
-- `peekMax()`: return the largest value in the stack.
-- `popMax()`: remove and return the largest value; when several copies share the maximum, remove the one nearest the top.
+- `push(x)`: поставьте `x` на первое место.
+- `pop()`: удалите и верните верхнее значение.
+- `top()`: возвращайте верхнее значение без его удаления.
+- `peekMax()`: возврат наибольшего значения в стеке.
+- `popMax()`: удалите и верните наибольшее значение; когда несколько копий разделяют максимум, удалите одну, ближайшую к вершине.
 
-Only the last four actions produce output; collect those answers in call order.
+Только последние четыре действия производят результат; соберите эти ответы в порядке вызова.
 
-*Adaptation note:* the entry point is `runMaxStack(operations, values)` returning the answer list.
+*Примечание по адаптации: * точка входа - `runMaxStack(operations, values)`, возвращающий список ответов.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= operations.length <= 2000`
-- Values fit in a 32-bit signed integer.
-- Every pop, top, peekMax or popMax call has at least one element present.
+- Значения помещаются в целое число, подписанное 32.
+- Каждый вызов pop, top, peekMax или popMax содержит по крайней мере один элемент.

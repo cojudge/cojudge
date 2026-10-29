@@ -1,6 +1,6 @@
 {
   "id": "hand-of-straights",
-  "title": "141. Hand of Straights",
+  "title": "141. Рука прямая,",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/hand-of-straights/",
   "category": "greedy",
@@ -8,17 +8,17 @@
     {
       "input": "hand = [1,2,3,6,2,3,4,7,8], groupSize = 3",
       "output": "true",
-      "explanation": "The groups can be [1,2,3], [2,3,4], and [6,7,8]."
+      "explanation": "Группы могут быть [1, 2, 3], [2, 3, 4] и [6, 7, 8]."
     },
     {
       "input": "hand = [1,2,3,4,5], groupSize = 4",
       "output": "false",
-      "explanation": "The cards cannot be divided into groups of 4 consecutive cards."
+      "explanation": "Карты не могут быть разделены на группы последовательных карт 4."
     },
     {
       "input": "hand = [1,2,3,4,5], groupSize = 1",
       "output": "true",
-      "explanation": "The cards can be grouped into consecutive sequences of 1."
+      "explanation": "Карты могут быть сгруппированы в последовательные последовательности 1."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "The number of cards must be divisible by groupSize.",
-    "Count each rank in sorted order. The smallest remaining rank must begin a group because nothing smaller can precede it.",
-    "Use a sorted map to consume the required counts for each consecutive rank and detect a missing card immediately."
+    "Количество карт должно быть делимо по размеру группы.",
+    "Подсчитывайте каждый ранг в сортированном порядке, наименьший оставшийся ранг должен начинаться группой, потому что ничто меньшее не может предшествовать ему.",
+    "Используйте отсортированную карту, чтобы потреблять необходимые подсчеты для каждого последовательного ранга и немедленно обнаруживать отсутствующую карту."
   ]
 }

@@ -1,8 +1,8 @@
-You are given an array `nums` of positive integers that will be divided in order, like `nums[0] / nums[1] / nums[2] / ...`. You may insert any number of parenthesis pairs to force evaluation order.
+Вам дается массив `nums` положительных целых чисел, которые будут разделены по порядку, как `nums[0] / nums[1] / nums[2] / ...`. Вы можете вставить любое количество пар скобок для форсирования порядка оценки.
 
-Parentheses change the result because division is not associative. Add them so the final value is as large as possible, then return the corresponding expression as a string. Do not include redundant parentheses: a single number needs none, two numbers need none, and longer inputs need exactly one outer pair around everything after the first number.
+Парентезы изменяют результат, потому что деление не ассоциативно. Добавьте их так, чтобы итоговое значение было как можно больше, затем верните соответствующее выражение в виде строки. Не включайте избыточные скобки: одно число не нуждается ни в одном, два числа не нуждаются ни в одном, а более длинным входам нужна ровно одна внешняя пара вокруг всего после первого числа.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10`
 - `2 <= nums[i] <= 1000`
-- The optimum is unique for every input
+- Оптимум уникален для каждого входа

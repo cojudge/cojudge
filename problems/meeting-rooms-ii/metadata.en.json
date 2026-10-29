@@ -1,0 +1,75 @@
+{
+  "id": "meeting-rooms-ii",
+  "title": "39. Meeting Rooms II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/meeting-rooms-ii/",
+  "category": "interval",
+  "examples": [
+    {
+      "input": "intervals = [[0,30],[5,10],[15,20]]",
+      "output": "2",
+      "explanation": "Intervals [5,10] and [15,20] both overlap within [0,30], so 2 rooms are needed."
+    },
+    {
+      "input": "intervals = [[7,10],[2,4]]",
+      "output": "1",
+      "explanation": "Intervals [7,10] and [2,4] do not overlap, so 1 room suffices."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public int minMeetingRooms(int[][] intervals) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minMeetingRooms(self, intervals: List[List[int]]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int minMeetingRooms(vector<vector<int>>& intervals) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MinMeetingRooms(int[][] intervals) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_meeting_rooms(intervals: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MinMeetingRooms(intervals [][]int) int {\n    \n}",
+    "typescript": "export function minMeetingRooms(intervals: number[][]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $intervals\n     * @return int\n     */\n    public function minMeetingRooms($intervals) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "intervals": [
+        [
+          0,
+          30
+        ],
+        [
+          5,
+          10
+        ],
+        [
+          15,
+          20
+        ]
+      ]
+    },
+    {
+      "intervals": [
+        [
+          7,
+          10
+        ],
+        [
+          2,
+          4
+        ]
+      ]
+    },
+    {
+      "intervals": []
+    }
+  ],
+  "functionName": "minMeetingRooms",
+  "params": [
+    {
+      "name": "intervals",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Use a min-heap of end times: for each interval in start-sorted order, free rooms with end <= start, then add current end; heap size is rooms needed.",
+    "Equivalent two-pointer approach: sort starts and ends separately, advance pointers and track concurrent meetings.",
+    "Edge case: empty input requires 0 rooms."
+  ]
+}

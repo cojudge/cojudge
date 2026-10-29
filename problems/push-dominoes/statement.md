@@ -1,5 +1,5 @@
-A row of dominoes is written as a string where `L` means the piece already falls left, `R` means it falls right, and `.` means it stands upright. All standing dominoes then topple simultaneously in rounds: in each round, a standing piece falls left if its left neighbour already falls (or is falling) left, and falls right if its right neighbour falls right. A piece with one neighbour pulling left and the other pulling right stays upright (the forces balance). Fallen pieces never move again. Return the final configuration once nothing can change.
+Ряд домино пишется как строка, где `L` означает, что кусок уже падает влево, `R` означает, что он падает вправо, а `.` означает, что он стоит вправо. Все стоящие домино затем падают одновременно в раундах: в каждом раунде стоящая часть падает влево, если ее левый сосед уже падает (или падает) влево, и падает вправо, если его правый сосед падает вправо. Кусок с одним соседом тянет влево, а другой тянет вправо остается в вертикальном положении (баланс сил). Падшие части никогда не двигаются снова. Верните окончательную конфигурацию, как только ничто не может измениться.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= dominoes.length <= 10^5`
-- `dominoes[i]` is `L`, `R`, or `.`
+- `dominoes[i]` - это `L`, `R` или `.`.

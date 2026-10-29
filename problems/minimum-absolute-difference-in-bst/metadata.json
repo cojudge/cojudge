@@ -1,6 +1,6 @@
 {
   "id": "minimum-absolute-difference-in-bst",
-  "title": "589. Minimum Absolute Difference in BST",
+  "title": "589. Минимальная абсолютная разница в BST",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/minimum-absolute-difference-in-bst/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [4,2,6,1,3]",
       "output": "1",
-      "explanation": "The pair (2,3) differs by 1, and no pair is closer."
+      "explanation": "Пара (2, 3) отличается от 1, и ни одна пара не ближе."
     },
     {
       "input": "root = [1,0,48,null,null,12,49]",
       "output": "1",
-      "explanation": "The pair (48,49) differs by 1, the minimum over all pairs."
+      "explanation": "Пара (48, 49) отличается на 1, минимум по всем парам."
     },
     {
       "input": "root = [1,null,2]",
       "output": "1",
-      "explanation": "The only pair (1,2) differs by 1."
+      "explanation": "Единственная пара (1, 2) отличается от 1."
     }
   ],
   "starterCode": {
@@ -52,8 +52,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "An inorder walk of a BST visits values in ascending order.",
-    "In a sorted sequence, the closest pair must be neighbors, so compare each value with its predecessor.",
-    "Keep the previous value and the best gap seen; update both during the walk."
+    "Непорядочная прогулка BST посещает ценности в восходящем порядке.",
+    "В сортированной последовательности ближайшая пара должна быть соседней, поэтому сравните каждое значение со своим предшественником.",
+    "Сохраняйте предыдущее значение и наилучший видимый пробел; обновляйте оба во время прогулки."
   ]
 }

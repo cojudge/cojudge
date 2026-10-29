@@ -1,6 +1,6 @@
 {
   "id": "split-array-largest-sum",
-  "title": "189. Split Array Largest Sum",
+  "title": "189. Split Array Самая большая сумма",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/split-array-largest-sum/",
   "category": "binary-search",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [7,2,5,10,8], k = 2",
       "output": "18",
-      "explanation": "Split into [7,2,5] and [10,8] with largest sum 18."
+      "explanation": "Разделяем на [7, 2, 5] и [10, 8] с наибольшей суммой 18."
     },
     {
       "input": "nums = [1,2,3,4,5], k = 2",
       "output": "9",
-      "explanation": "Split into [1,2,3] and [4,5]."
+      "explanation": "Распределение на [1, 2, 3] и [4, 5]."
     }
   ],
   "starterCode": {
@@ -53,6 +53,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Binary search the answer. Check if you can split into at most k subarrays with sum <= mid."
+    "Бинарный поиск ответ. Проверьте, можно ли разделить на максимум k подкатегории с суммой <= середина."
   ]
 }

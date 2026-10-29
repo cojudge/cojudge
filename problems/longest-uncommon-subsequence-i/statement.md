@@ -1,7 +1,7 @@
-A subsequence keeps a selection of characters in their original order while possibly skipping others. A subsequence of one string is called uncommon when it never appears as a subsequence of the other string.
+Подпоследовательность сохраняет выбор символов в их первоначальном порядке, возможно, пропуская другие.Последовательность одной строки называется необычной, когда она никогда не появляется в качестве подпоследовательности другой строки.
 
-Given two strings `a` and `b`, return the length of the longest subsequence of one string that is not a subsequence of the other. Return `-1` when no such subsequence exists.
+Учитывая две строки `a` и `b`, возвращайте длину самой длинной последовательности одной строки, которая не является последовательности другой. Возвращайте `-1`, когда такой последовательности не существует.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= a.length, b.length <= 100`
-- `a` and `b` consist of lowercase English letters
+- `a` и `b` состоят из строчных английских букв

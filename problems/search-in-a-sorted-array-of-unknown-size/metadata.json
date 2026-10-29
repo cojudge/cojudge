@@ -1,6 +1,6 @@
 {
   "id": "search-in-a-sorted-array-of-unknown-size",
-  "title": "702. Search in a Sorted Array of Unknown Size",
+  "title": "702. Поиск в сортированном массиве неизвестного размера",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/search-in-a-sorted-array-of-unknown-size/",
   "category": "binary-search",
@@ -8,17 +8,17 @@
     {
       "input": "secret = [-1,0,3,5,9,12], target = 9",
       "output": "4",
-      "explanation": "9 at index 4."
+      "explanation": "9 в индексе 4."
     },
     {
       "input": "secret = [-1,0,3,5,9,12], target = 2",
       "output": "-1",
-      "explanation": "2 absent."
+      "explanation": "2 отсутствует."
     },
     {
       "input": "secret = [1,2,3,4,5], target = 1",
       "output": "0",
-      "explanation": "First entry."
+      "explanation": "Первый вход."
     }
   ],
   "starterCode": {
@@ -63,8 +63,8 @@
     "maxGuesses": 10000
   },
   "hints": [
-    "The judge never reveals the array or its length; only reader.get(i) is available, returning 2147483647 past the end.",
-    "Grow an index exponentially (1, 2, 4, 8, ...) until the value reaches target or the sentinel, then binary-search that window.",
-    "A single binary search over the whole array is impossible here because the length is unknown."
+    "Судья никогда не раскрывает массив или его длину; доступен только read.get(i), возвращая 2147483647 за конец.",
+    "Растите индекс экспоненциально (1, 2, 4, 8, ...) до тех пор, пока значение не достигнет цели или часового, а затем двоичный поиск этого окна.",
+    "Один двоичный поиск по всему массиву здесь невозможен, потому что длина неизвестна."
   ]
 }

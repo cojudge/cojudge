@@ -1,6 +1,6 @@
 {
   "id": "sudoku-solver",
-  "title": "263. Sudoku Solver",
+  "title": "263. Судоку Солверк",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/sudoku-solver/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "board = [\"53..7....\",\"6..195...\",\".98....6.\",\"8...6...3\",\"4..8.3..1\",\"7...2...6\",\".6....28.\",\"...419..5\",\"....8..79\"]",
       "output": "[\"534678912\",\"672195348\",\"198342567\",\"859761423\",\"426853791\",\"713924856\",\"961537284\",\"287419635\",\"345286179\"]",
-      "explanation": "The completed grid meets the row, column, and box rules while keeping all given digits."
+      "explanation": "Завершенная сетка соответствует правилам строки, столбца и коробки, сохраняя все заданные цифры."
     },
     {
       "input": "board = [\"5.4.7.9.2\",\"6.2.9.3.8\",\"1.8.4.5.7\",\"8.9.6.4.3\",\"4.6.5.7.1\",\"7.3.2.8.6\",\"9.1.3.2.4\",\"2.7.1.6.5\",\"3.5.8.1.9\"]",
       "output": "[\"534678912\",\"672195348\",\"198342567\",\"859761423\",\"426853791\",\"713924856\",\"961537284\",\"287419635\",\"345286179\"]",
-      "explanation": "With every other cell blanked, the givens still determine the same full solution."
+      "explanation": "С каждой другой ячейкой, забеленной, данные по-прежнему определяют то же самое полное решение."
     }
   ],
   "starterCode": {
@@ -46,7 +46,7 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Try digits cell by cell with depth-first search, undoing (backtracking) whenever a cell has no legal digit left.",
-    "Track used digits per row, column, and box as bit masks, and always branch on the empty cell with the fewest candidates."
+    "Попробуйте цифры ячейки по ячейке с поиском по глубине, отменив (отслеживая) всякий раз, когда у ячейки не осталось законной цифры.",
+    "Трек использовал цифры в строке, столбце и коробке в качестве битовых масок и всегда разветвлялся на пустой ячейке с наименьшим количеством кандидатов."
   ]
 }

@@ -1,10 +1,10 @@
-You are given distinct points `points` on a plane, each written as `[x, y]`. A boomerang is an ordered triple `(i, j, k)` of different indices where point `i` sits equally far from `j` and `k`. The order of the two outer points matters, so `(i,j,k)` and `(i,k,j)` count as two boomerangs when both qualify.
+Вы получаете различные точки `points` на плоскости, каждая из которых написана как `[x, y]`. Бумеранг - это упорядоченный тройной `(i, j, k)` различных индексов, где точка `i` находится одинаково далеко от `j` и `k`. Порядок двух внешних точек имеет значение, поэтому `(i,j,k)` и `(i,k,j)` считаются двумя бумерангами, когда оба квалифицируются.
 
-Return the total number of boomerangs.
+Возвращает общее количество бумерангов.
 
-Distances are compared by squared length, so no square roots are needed.
+Расстояния сравниваются по квадратной длине, поэтому квадратные корни не нужны.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= points.length <= 500`
-- Each point is `[x, y]` with `-10^4 <= x, y <= 10^4`.
-- All points are distinct.
+- Каждая точка `[x, y]` с `-10^4 <= x, y <= 10^4`.
+- Все точки различны.

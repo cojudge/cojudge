@@ -1,7 +1,7 @@
-Imagine the list wrapped into a circle so the element after the last position is the first position again. For each entry, look forward along this circular order for the first strictly larger value. If the full loop contains no larger value, record `-1` for that spot.
+Представьте, что список завернут в круг, так что элемент после последней позиции снова является первой позицией. Для каждой записи смотрите вперед вдоль этого кругового порядка для первого строго большего значения. Если полная петля не содержит большего значения, запишите `-1` для этого места.
 
-Return the list of answers aligned with the input order.
+Верните список ответов, согласованных с порядком ввода.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^4`
 - `-10^9 <= nums[i] <= 10^9`

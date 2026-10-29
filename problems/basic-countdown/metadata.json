@@ -1,18 +1,18 @@
 {
   "id": "basic-countdown",
-  "title": "15. Countdown List",
+  "title": "15. Обратный отсчет",
   "difficulty": "Easy",
   "category": "loops",
   "examples": [
     {
       "input": "n = 4",
       "output": "[4,3,2,1]",
-      "explanation": "Count down from 4 to 1."
+      "explanation": "Отсчитайте от 4 до 1."
     },
     {
       "input": "n = 1",
       "output": "[1]",
-      "explanation": "A countdown from 1 is just [1]."
+      "explanation": "Обратный отсчет от 1 - это просто [1]."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Create an array and fill it in a loop.",
-    "Position 0 holds `n`, position 1 holds `n-1`, and so on."
+    "Создавайте и наполняйте его в петле.",
+    "Позиция 0 удерживает `n`, позиция 1 удерживает `n-1` и так далее."
   ]
 }

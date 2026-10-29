@@ -1,6 +1,6 @@
-Given a positive integer `n`, look at its binary writing without leading zeros. Decide whether every pair of neighbouring bits differs (the pattern must alternate between `0` and `1`).
+Учитывая положительное целое число `n`, посмотрите на его двоичную запись без ведущих нулей. Решите, отличается ли каждая пара соседних битов (паттерн должен чередоваться между `0` и `1`).
 
-Return `true` for alternating numbers and `false` otherwise.
+Возврат `true` для чередующихся чисел и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 2^31 - 1`

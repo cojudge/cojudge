@@ -1,11 +1,11 @@
-You are given the current layout of a 3 by 3 tic-tac-toe board as an array of three strings. Each string has length 3 and each character is `X`, `O`, or `-` for an empty cell (the original statement uses a blank space, adapted here to a dash so that trailing blanks survive transport).
+Вы получаете текущий макет 3 от 3 tic-tac-toe платы в виде массива из трех строк. Каждая строка имеет длину 3, и каждый символ `X`, `O` или `-` для пустой ячейки (первоначальное утверждение использует пустое пространство, адаптированное здесь к приборной панели, так что следящие заготовки выживают транспорт).
 
-The opening move is always made by `X`, and the two sides then alternate strictly: `X`, `O`, `X`, `O`, and so on. A side claims victory as soon as any row, column, or diagonal is filled with three of its own marks. Play halts immediately after such a line appears, so no further marks are placed afterwards.
+Открывающий ход всегда делает `X`, и обе стороны затем чередуются строго: `X`, `O`, `X`, `O` и т. д. Сторона претендует на победу, как только какой-либо ряд, столбец или диагональ заполнены тремя собственными отметками. Игра останавливается сразу после появления такой линии, поэтому никаких дальнейших отметок не ставится впоследствии.
 
-Decide whether the supplied layout could have arisen from a legal game played under these rules.
+Решите, могла ли предоставленная схема возникнуть из правовой игры, в которую играют по этим правилам.
 
-**Constraints:**
+**Ограничения:**
 - `board.length == 3`
 - `board[i].length == 3`
-- Each character of `board` is `X`, `O`, or `-`
-- Adaptation: empty cells use `-` instead of a blank space.
+- Каждый символ `board` - это `X`, `O` или `-`.
+- Адаптация: пустые ячейки используют `-` вместо пустого пространства.

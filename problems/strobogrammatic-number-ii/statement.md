@@ -1,10 +1,10 @@
-Generate every strobogrammatic number of length `n`: a string of `n` digits that reads the same after a 180-degree rotation. Valid rotations are `0 -> 0`, `1 -> 1`, `6 -> 9`, `8 -> 8`, and `9 -> 6`.
+Генерировать каждое стробограмматическое число длины `n`: строку цифр `n`, которая читает то же самое после вращения 180-градус. Действительными вращениями являются `0 -> 0`, `1 -> 1`, `6 -> 9`, `8 -> 8` и `9 -> 6`.
 
-Numbers must not have a leading zero, except that the single-digit number `"0"` itself is allowed.
+Цифры не должны иметь ведущего нуля, за исключением того, что допускается однозначный номер `"0"`.
 
-Return all such numbers in any order.
+Возвращайте все эти цифры в любом порядке.
 
-*Type note:* the original signature returns a list of strings; here it maps to `string_list`.
+*Примечание типа: * оригинальная подпись возвращает список строк; здесь она отображается в `string_list`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 14`

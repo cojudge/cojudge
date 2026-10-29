@@ -1,6 +1,6 @@
 {
   "id": "minimum-depth-of-binary-tree",
-  "title": "289. Minimum Depth of Binary Tree",
+  "title": "289. Минимальная глубина двоичного дерева",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/minimum-depth-of-binary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [3,9,20,null,null,15,7]",
       "output": "2",
-      "explanation": "The shortest root-to-leaf route is 3 -> 9 with 2 nodes."
+      "explanation": "Самый короткий маршрут от корня до листа - 3 -> 9 с узлами 2."
     },
     {
       "input": "root = [2,null,3,null,4,null,5,null,6]",
       "output": "5",
-      "explanation": "Only one chain exists, so its length 5 is the minimum."
+      "explanation": "Существует только одна цепь, поэтому ее длина 5 является минимальной."
     },
     {
       "input": "root = []",
       "output": "0",
-      "explanation": "An empty tree has depth 0."
+      "explanation": "Дерево имеет глубину 0."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Depth counts nodes, not edges, and only leaf endpoints (no children) qualify.",
-    "When one child is missing, do not take min with zero \u2014 continue down the present side.",
-    "Breadth-first search can stop at the first leaf found for an early answer."
+    "Глубина подсчитывает узлы, а не края, и только конечные точки листьев (без детей) квалифицируются.",
+    "Когда один ребенок отсутствует, не принимайте мин с нулем — продолжайте вниз по теперешней стороне.",
+    "Поиск по ширине может остановиться на первом листе, найденном для раннего ответа."
   ]
 }

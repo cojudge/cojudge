@@ -1,0 +1,57 @@
+{
+  "id": "beautiful-array",
+  "title": "919. Beautiful Array",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/beautiful-array/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "n = 4",
+      "output": "[2,1,4,3]",
+      "explanation": "No triple is evenly spaced."
+    },
+    {
+      "input": "n = 5",
+      "output": "[1,5,3,2,4]",
+      "explanation": "Another valid ordering."
+    },
+    {
+      "input": "n = 1",
+      "output": "[1]"
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] beautifulArray(int n) {\n        return new int[]{};\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def beautifulArray(self, n: int) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> beautifulArray(int n) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] BeautifulArray(int n)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn beautiful_array(n: i32) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc BeautifulArray(n int) []int {\n    return nil\n}",
+    "typescript": "export function beautifulArray(n: number): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int[]\n     */\n    public function beautifulArray($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 4
+    },
+    {
+      "n": 5
+    },
+    {
+      "n": 1
+    }
+  ],
+  "functionName": "beautifulArray",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Putting all odds before all evens keeps any middle term from averaging across the split.",
+    "Apply the odd/even expansion repeatedly starting from [1], discarding values above n.",
+    "The checker accepts any permutation with no 3-term progression, so focus on the property, not one order."
+  ]
+}

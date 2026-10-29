@@ -1,9 +1,9 @@
-Given the head of a singly linked list, decide whether the sequence of values reads the same forward and backward.
+Учитывая заголовок отдельно связанного списка, решайте, читает ли последовательность значений то же самое вперед и назад.
 
-A list is a palindrome when reversing it leaves the value order unchanged. An empty list counts as a palindrome, and a single-node list is trivially one.
+Список - это палиндром, когда его изменение оставляет порядок значений неизменным. Пустой список считается палиндромом, а список с одним узлом тривиально один.
 
-Return `true` when the list is a palindrome, otherwise return `false`.
+Возврат `true`, когда список является палиндромом, в противном случае возврат `false`.
 
-**Constraints:**
-- The number of nodes is in the range `[0, 10^5]`.
+**Ограничения:**
+- Количество узлов находится в диапазоне `[0, 10^5]`.
 - `0 <= Node.val <= 9`

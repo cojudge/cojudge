@@ -1,7 +1,7 @@
-You are given directed edges that start from a rooted tree (each node except the root has exactly one parent, the root has none) plus one extra directed edge.
+Вам даны направленные края, которые начинаются с корневого дерева (каждый узел, кроме корня, имеет ровно одного родителя, корень не имеет ни одного) плюс один дополнительный направленный край.
 
-Return the extra edge whose removal restores a rooted tree. When several candidates work, return the one appearing last in the input.
+Верните лишний край, удаление которого восстанавливает корневое дерево. Когда несколько кандидатов работают, верните тот, который появляется последним во входе.
 
-**Constraints:**
-- The graph has `n` nodes labeled `1..n` and `n` edges.
-- Edge endpoints lie in `[1, n]`.
+**Ограничения:**
+- График имеет узлы `n` с маркировкой `1..n` и края `n`.
+- Конечные точки Edge находятся в `[1, n]`.

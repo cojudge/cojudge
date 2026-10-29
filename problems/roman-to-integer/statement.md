@@ -1,7 +1,7 @@
-Seven distinct glyphs encode Roman numerals: `I`, `V`, `X`, `L`, `C`, `D` and `M`.
+Семь различных глифов кодируют римские цифры: `I`, `V`, `X`, `L`, `C`, `D` и `M`.
 
 ```
-Symbol       Value
+Значение символа
 I             1
 V             5
 X             10
@@ -11,18 +11,18 @@ D             500
 M             1000
 ```
 
-For instance, `2` appears as `II` in Roman notation — two ones tallied together. `12` appears as `XII`, namely `X + II`. The value `27` appears as `XXVII`, namely `XX + V + II`.
+Например, `2` появляется как `II` в римской нотации — два из них соединены вместе. `12` появляется как `XII`, а именно `X + II`. Значение `27` появляется как `XXVII`, а именно `XX + V + II`.
 
-Ordinarily Roman glyphs run from the greatest value down to the least when read left to right. The value four breaks that pattern: rather than `IIII`, four is penned `IV`. Setting the one ahead of the five signals a subtraction that yields four. Nine follows the same device and is penned `IX`. Subtraction shows up in six pairings:
+Обычно римские глифы бегут от наибольшего значения вниз к наименьшему при чтении слева направо. Значение четыре нарушает этот шаблон: вместо `IIII` четыре пишется `IV`. Устанавливая один перед пятью сигналами вычитание, которое дает четыре. Девять следует за тем же устройством и записывается `IX`. Вычитание проявляется в шести парах:
 
-- A leading `I` ahead of `V` (5) and `X` (10) produces 4 and 9.
-- A leading `X` ahead of `L` (50) and `C` (100) produces 40 and 90.
-- A leading `C` ahead of `D` (500) and `M` (1000) produces 400 and 900.
+- Ведущий `I`, опережающий `V` (5) и `X` (10), выпускает 4 и 9.
+- Ведущий `X`, опережающий `L` (50) и `C` (100), выпускает 40 и 90.
+- Ведущий `C`, опережающий `D` (500) и `M` (1000), выпускает 400 и 900.
 
-Translate a supplied Roman numeral into its integer value.
+Переведите поставленную римскую цифру в ее целое значение.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= s.length <= 15`
-- `s` contains only the characters `('I', 'V', 'X', 'L', 'C', 'D', 'M')`.
-- It is guaranteed that `s` is a valid roman numeral in the range `[1, 3999]`.
+- `s` содержит только символы `('I', 'V', 'X', 'L', 'C', 'D', 'M')`.
+- Гарантируется, что `s` является действительной римской цифрой в диапазоне `[1, 3999]`.

@@ -1,5 +1,5 @@
-Return a new array with the elements of `nums` in reverse order. Do not modify the input.
+Возвратить новый массив с элементами `nums` в обратном порядке.Не модифицируйте вход.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= nums.length <= 1000``
 - ``-10^9 <= nums[i] <= 10^9``

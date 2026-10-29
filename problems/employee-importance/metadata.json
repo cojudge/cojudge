@@ -1,6 +1,6 @@
 {
   "id": "employee-importance",
-  "title": "705. Employee Importance",
+  "title": "705. Важность работника",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/employee-importance/",
   "category": "hash-table",
@@ -13,7 +13,7 @@
     {
       "input": "employees = [[1,2,2],[2,3]], id = 2",
       "output": "3",
-      "explanation": "No reports, so 3."
+      "explanation": "Нет сообщений, так что 3."
     },
     {
       "input": "employees = [[10,4,20,30],[20,2],[30,6,40],[40,1]], id = 10",
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Adaptation: each employee is one integer row [id, importance, sub1, sub2, ...]; build a map from id to its row.",
-    "Walk from the queried id with a stack or queue, adding importance and pushing all listed subordinates.",
-    "A visited set guards against accidental repeats."
+    "Адаптация: каждый сотрудник представляет собой один целочисленный ряд [id, importance, sub1, sub2, ...]; построить карту из id в его ряд.",
+    "Пройдите от запрашиваемого идентификатора со стопкой или очередью, добавляя важность и подталкивая всех перечисленных подчиненных.",
+    "Посещаемый набор охранников против случайных повторов."
   ]
 }

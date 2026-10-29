@@ -1,6 +1,6 @@
 {
   "id": "wiggle-sort",
-  "title": "378. Wiggle Sort",
+  "title": "378. Сортировка виглей",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/wiggle-sort/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [3,5,2,1,6,4]",
       "output": "[3,5,1,6,2,4]",
-      "explanation": "One valid wiggle is [3,5,1,6,2,4] with 3<=5>=1<=6>=2<=4."
+      "explanation": "Один верный хвастовство [3,5,1,6,2,4] с 3<=5>=1<=6>=2<=4."
     },
     {
       "input": "nums = [6,6,5,6,3,8]",
       "output": "[6,6,3,6,5,8]",
-      "explanation": "[6,6,3,6,5,8] satisfies the wiggle inequalities."
+      "explanation": "[6, 6, 3, 6, 5, 8] удовлетворяет неравенству в колебаниях."
     },
     {
       "input": "nums = [1]",
       "output": "[1]",
-      "explanation": "A single element already wiggles."
+      "explanation": "Один-единственный элемент уже шевелится."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Adaptation: the original asks for in-place void; here return the reordered array.",
-    "Scan once: for even i require nums[i] <= nums[i+1], for odd i require nums[i] >= nums[i+1]; swap when violated.",
-    "Any permutation with the wiggle property is accepted."
+    "Адаптация: оригинал запрашивает пустоту на месте; здесь возвращают переупорядоченный массив.",
+    "Сканирование один раз: для того, чтобы даже я потребовал nums [i] <= nums[i+1], for odd i require nums[i] >= nums [i+1]; обмен при нарушении.",
+    "Любые перестановки с свойством шевелиться принимаются."
   ]
 }

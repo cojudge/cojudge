@@ -1,0 +1,57 @@
+{
+  "id": "monotonic-array",
+  "title": "886. Monotonic Array",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/monotonic-array/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,2,2,3]",
+      "output": "true",
+      "explanation": "Non-decreasing so monotone."
+    },
+    {
+      "input": "nums = [6,5,4,4]",
+      "output": "true",
+      "explanation": "Non-increasing so monotone."
+    },
+    {
+      "input": "nums = [1,3,2]",
+      "output": "false",
+      "explanation": "Rises then falls."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isMonotonic(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def isMonotonic(self, nums: List[int]) -> bool:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool isMonotonic(vector<int>& nums) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool IsMonotonic(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_monotonic(nums: Vec<i32>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc IsMonotonic(nums []int) bool {\n    \n}",
+    "typescript": "export function isMonotonic(nums: number[]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return bool\n     */\n    public function isMonotonic($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,2,3]"
+    },
+    {
+      "nums": "[6,5,4,4]"
+    },
+    {
+      "nums": "[1,3,2]"
+    }
+  ],
+  "functionName": "isMonotonic",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Walk once while remembering whether you have seen an upward step and whether you have seen a downward step.",
+    "If both directions appear, the answer is false; otherwise it is true. A single element or all-equal list is true."
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "id": "find-all-anagrams-in-a-string",
-  "title": "506. Find All Anagrams in a String",
+  "title": "506. Найти все анаграммы в строке",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/find-all-anagrams-in-a-string/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "s = \"cbaebabacd\", p = \"abc\"",
       "output": "[0,6]",
-      "explanation": "Windows at 0 and 6 rearrange to abc."
+      "explanation": "Windows на 0 и 6 перестраиваются на abc."
     },
     {
       "input": "s = \"abab\", p = \"ab\"",
       "output": "[0,1,2]",
-      "explanation": "Every length-2 window qualifies."
+      "explanation": "Каждое окно длины 2 соответствует требованиям."
     }
   ],
   "starterCode": {
@@ -53,8 +53,8 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Compare 26-count signatures of p against each sliding window of s.",
-    "Update the window in O(1) by dropping the leftmost letter and adding the new rightmost one.",
-    "Track how many letter counts currently match to test windows in O(1)."
+    "Сравните подписи p со счетом 26 с каждым раздвижным окном s.",
+    "Обновите окно в O(1), отбрасывая самую левую букву и добавляя новую самую правую.",
+    "Отслеживайте, сколько букв в настоящее время соответствует тестовым окнам в O (1)."
   ]
 }

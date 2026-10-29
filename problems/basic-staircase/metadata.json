@@ -1,18 +1,18 @@
 {
   "id": "basic-staircase",
-  "title": "42. Staircase Stars",
+  "title": "42. Звезды лестницы",
   "difficulty": "Easy",
   "category": "nested-loops",
   "examples": [
     {
       "input": "n = 3",
       "output": "[\"*\",\"**\",\"***\"]",
-      "explanation": "Three rows of growing stars."
+      "explanation": "Три ряда растущих звезд."
     },
     {
       "input": "n = 1",
       "output": "[\"*\"]",
-      "explanation": "A single star."
+      "explanation": "Одна звезда."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Row `i` holds `i` copies of `*`.",
-    "Use an inner loop (or string repetition) to build each row."
+    "Row `i` содержит `i` копии `*`.",
+    "Используйте внутреннюю петлю (или повторение строки) для построения каждой строки."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "find-the-shortest-superstring",
-  "title": "930. Find the Shortest Superstring",
+  "title": "930. Найдите самую короткую суперструну",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/find-the-shortest-superstring/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "words = [\"alex\",\"loves\",\"leetcode\"]",
       "output": "\"alexlovesleetcode\"",
-      "explanation": "No overlaps, so concatenation in any order is best."
+      "explanation": "Никаких перекрытий, поэтому лучше всего сцепление в любом порядке."
     },
     {
       "input": "words = [\"catg\",\"ctaagt\",\"gcta\",\"ttca\",\"atgcatc\"]",
       "output": "\"gctaagttcatgcatc\"",
-      "explanation": "Best overlaps chain all words into 16 characters."
+      "explanation": "Лучше всего перекрывает цепочку всех слов в символы 16."
     }
   ],
   "starterCode": {
@@ -60,8 +60,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Precompute for every ordered pair how many trailing characters of the first equal the leading characters of the second.",
-    "Run a travelling-salesman style dynamic program over subsets: the state is (used set, last word) holding the best string so far.",
-    "Extend each state with every unused word using the precomputed overlap, keeping the shortest candidate (ties broken arbitrarily)."
+    "Предвычислите для каждой упорядоченной пары, сколько следящих символов первого равняется ведущим персонажам второго.",
+    "Запустите динамическую программу в стиле коммивояжера над подмножествами: состояние (используемый набор, последнее слово), удерживающее лучшую строку до сих пор.",
+    "Расширяйте каждое состояние с каждым неиспользованным словом, используя предварительно вычисленное перекрытие, сохраняя самого короткого кандидата."
   ]
 }

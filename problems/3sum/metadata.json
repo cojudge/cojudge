@@ -8,17 +8,17 @@
     {
       "input": "nums = [-1,0,1,2,-1,-4]",
       "output": "[[-1,-1,2],[-1,0,1]]",
-      "explanation": "The triplets [-1,-1,2] and [-1,0,1] each sum to 0."
+      "explanation": "Триплеты [-1,-1,2] и [-1,0,1] каждая сумма 0."
     },
     {
       "input": "nums = [0,1,1]",
       "output": "[]",
-      "explanation": "No three numbers sum to 0. The only possible triplets are (0,1,1) which sums to 2."
+      "explanation": "Нет трех номеров 0. Единственными возможными тройнями являются (0, 1, 1), которые суммируются с 2."
     },
     {
       "input": "nums = [0,0,0]",
       "output": "[[0,0,0]]",
-      "explanation": "All three zeros sum to 0: [[0,0,0]]."
+      "explanation": "Все три нуля суммируются в 0: [[0, 0, 0]]."
     }
   ],
   "starterCode": {
@@ -54,6 +54,6 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Sort the array and use a two-pointer sweep for each fixed i, skipping duplicates to avoid repeated triplets. Output can be in any order; duplicates are not allowed."
+    "Сортируйте массив и используйте двухточечную разметку для каждого фиксированного i, пропуская дубликаты, чтобы избежать повторных тройняшек.Вывод может быть в любом порядке; дубликаты не допускаются."
   ]
 }

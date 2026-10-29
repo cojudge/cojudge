@@ -1,6 +1,6 @@
 {
   "id": "maximum-swap",
-  "title": "689. Maximum Swap",
+  "title": "689. Максимальный своп",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/maximum-swap/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "num = 2736",
       "output": "7236",
-      "explanation": "Exchanging the 2 with the 7 yields the largest reachable value 7236."
+      "explanation": "Обмен 2 с 7 дает наибольшее достижимое значение 7236."
     },
     {
       "input": "num = 9973",
       "output": "9973",
-      "explanation": "The digits are already in the best order, so no exchange improves the value."
+      "explanation": "Цифры уже в лучшем порядке, поэтому никакой обмен не улучшает стоимость."
     },
     {
       "input": "num = 98368",
       "output": "98863",
-      "explanation": "Swapping the small 3 with the later 8 gives 98863."
+      "explanation": "Обмен небольшого 3 с более поздним 8 дает 98863."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Record the last position of each digit 0-9.",
-    "Scan from the most significant digit and look for a larger digit appearing later.",
-    "Swap at most once: the earliest improvable position with the largest possible later digit."
+    "Записывайте последнюю позицию каждой цифры 0-9.",
+    "Сканируйте с наиболее значимой цифры и ищите более крупную цифру, появляющуюся позже.",
+    "Своп максимум один раз: самая ранняя неправдоподобная позиция с самой большой возможной поздней цифрой."
   ]
 }

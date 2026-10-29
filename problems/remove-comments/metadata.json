@@ -1,6 +1,6 @@
 {
   "id": "remove-comments",
-  "title": "729. Remove Comments",
+  "title": "729. Удалить комментарии",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/remove-comments/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "source = [\"/*Test program */\", \"int main()\", \"{ \", \"  // variable declaration \", \"int a, b, c;\", \"/* This is a test\", \"   multiline  \", \"   comment for \", \"   testing */\", \"a = b + c;\", \"}\"]",
       "output": "[\"int main()\",\"{ \",\"  \",\"int a, b, c;\",\"a = b + c;\",\"}\"]",
-      "explanation": "Block and line comments are stripped; the declaration line keeps its two leading spaces."
+      "explanation": "Комментарии в блоке и строке удаляются; строка декларации сохраняет два ведущих пространства."
     },
     {
       "input": "source = [\"a/*comment\", \"line\", \"more_comment*/b\"]",
       "output": "[\"ab\"]",
-      "explanation": "A block spanning three lines joins the outer fragments into ab."
+      "explanation": "Блок, охватывающий три линии, соединяет внешние фрагменты в ab."
     },
     {
       "input": "source = [\"void f(){\", \"// do nothing\", \"}\"]",
       "output": "[\"void f(){\",\"}\"]",
-      "explanation": "The whole middle line is a line comment and disappears."
+      "explanation": "Вся средняя строка — это комментарий строки и исчезает."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Scan line by line keeping an in-block flag; // ends the line only when outside a block.",
-    "When /* opens outside a block, skip until its matching */ which may sit many lines later.",
-    "Buffer the surviving characters per logical line and emit the buffer only when nonempty and outside a block at line end. Adaptation: input is a string_array and output is a string_list."
+    "Сканировать линию за линией, сохраняющей внутриблоковый флаг; // заканчивает линию только тогда, когда находится вне блока.",
+    "Когда /* открывается за пределами блока, пропустите до его соответствия */, которое может занять много строк позже.",
+    "Буферизуйте уцелевшие символы на логическую линию и излучайте буфер только тогда, когда он не пуст и находится за пределами блока на конце строки. Адаптация: ввод — строка_массив, а вывод — строка_список."
   ]
 }

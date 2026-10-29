@@ -1,5 +1,5 @@
-Return how many words the string `s` contains. Words are separated by spaces; ignore any leading, trailing, or extra repeated spaces. An empty or all-space string has 0 words.
+Возвращайте, сколько слов содержит строка `s`. Слова разделены пространствами; игнорируйте любые ведущие, отстающие или дополнительные повторяющиеся пространства. Пустая или всепространственная строка имеет слова 0.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= s.length <= 1000``
 - `Only lowercase letters and spaces appear`

@@ -1,16 +1,16 @@
-Implement a last-in-first-out (LIFO) stack using only standard queue operations.
+Внедрите стек «последний в первом» (LIFO), используя только стандартные операции очереди.
 
-`operations[i]` is one of `push`, `pop`, `top`, or `empty`. The aligned value
-`values[i]` is used only by `push`; it is ignored for every other operation.
-Return an array containing the result of each `pop`, `top`, and `empty`
-operation, in the order those queries occur. `push` does not add anything to
-the returned array. Encode `empty` as `1` for true and `0` for false.
+`operations[i]` является одним из `push`, `pop`, `top` или `empty`.
+`values[i]` используется только `push`; он игнорируется для любой другой операции.
+Возврат массива, содержащего результат каждого `pop`, `top` и `empty`
+Операция, в порядке этих запросов. `push` ничего не добавляет к
+Закодируйте `empty` как `1` для истинного и `0` для ложного.
 
-Every trace is valid: `pop` and `top` are never called on an empty stack.
+Все следы действительны: `pop` и `top` никогда не вызываются в пустой стек.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= operations.length == values.length <= 100`
-- `operations[i]` is `push`, `pop`, `top`, or `empty`.
-- `1 <= values[i] <= 9` when `operations[i]` is `push`.
-- At most 100 calls are made in one trace.
+- `operations[i]` - это `push`, `pop`, `top` или `empty`.
+- `1 <= values[i] <= 9`, когда `operations[i]` является `push`.
+- Звонки 100 совершаются в одном направлении.

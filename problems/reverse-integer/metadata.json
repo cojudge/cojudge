@@ -1,6 +1,6 @@
 {
   "id": "reverse-integer",
-  "title": "151. Reverse Integer",
+  "title": "151. Обратное целое число",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/reverse-integer/",
   "category": "binary",
@@ -8,22 +8,22 @@
     {
       "input": "x = 123",
       "output": "321",
-      "explanation": "Reversing the digits of 123 gives 321."
+      "explanation": "Обратный ход цифр 123 дает 321."
     },
     {
       "input": "x = -123",
       "output": "-321",
-      "explanation": "Reversing the digits of -123 gives -321."
+      "explanation": "Перевернуть цифры -123 дает -321."
     },
     {
       "input": "x = 120",
       "output": "21",
-      "explanation": "Reversing the digits of 120 gives 21."
+      "explanation": "Обратный ход цифр 120 дает 21."
     },
     {
       "input": "x = 1534236469",
       "output": "0",
-      "explanation": "The reversed value is outside the signed 32-bit range."
+      "explanation": "Обратное значение находится за пределами подписанного диапазона 32-бит."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Repeatedly remove the last digit with remainder and append it to the result.",
-    "Check the signed 32-bit bounds before returning; the minimum input also needs safe handling.",
-    "Trailing zeroes in the input disappear naturally while digits are appended numerically."
+    "Неоднократно снимите последнюю цифру с остатка и добавьте ее к результату.",
+    "Проверьте подписанные 32-битные границы перед возвратом; минимальный вход также требует безопасной обработки.",
+    "Привлечение нулей во входе исчезает естественным образом, в то время как цифры прилагаются численно."
   ]
 }

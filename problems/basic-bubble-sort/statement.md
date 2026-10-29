@@ -1,5 +1,5 @@
-Return a sorted copy of `nums` in ascending order. Implement the classic bubble sort (repeated passes swapping adjacent out-of-order elements), or any correct sort — the judge only checks the result.
+Верните отсортированную копию `nums` в порядке возрастания. Реализуйте классический сорт пузырьков (повторяющиеся проходы, заменяющие соседние неупорядоченные элементы) или любой правильный сорт — судья проверяет только результат.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= nums.length <= 500``
 - ``-10^9 <= nums[i] <= 10^9``

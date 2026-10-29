@@ -1,7 +1,7 @@
-You are given a string holding only `'+'` and `'-'` characters. A single move picks an
-occurrence of `"++"` and flips both characters to `"--"`. Return every distinct board that
-can be reached with exactly one move. The order of the returned boards does not matter.
+Вы получаете строку, содержащую только символы `'+'` и `'-'`.
+`"++"` и переворачивает оба символа в `"--"`. Верните каждую отдельную доску, которая
+Добраться можно ровно одним ходом. Порядок возврата досок не имеет значения.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= currentState.length <= 100`
-- `currentState` contains only `'+'` and `'-'`.
+- `currentState` содержит только `'+'` и `'-'`.

@@ -1,9 +1,9 @@
-Test whether two binary trees can be made identical by swapping child pairs.
+Проверьте, могут ли два двоичных дерева быть идентичными, заменяя детские пары.
 
-One flip picks any node and exchanges its left and right subtrees. Applying flips anywhere, any number of times, reshapes a tree without changing its values.
+Один флип выбирает любой узел и обменивает его левое и правое поддеревья. Применяя флипы в любом месте, любое количество раз, меняет дерево, не изменяя его значения.
 
-Given the roots `root1` and `root2`, return `true` when the first tree can be turned into the second through flips, else `false`. An empty tree is written `[]`.
+Учитывая корни `root1` и `root2`Возвращение `true` когда первое дерево можно превратить во второе с помощью переворачивания, `false`Пустое дерево пишется `[]`.
 
-**Constraints:**
-- Each tree holds between 0 and 100 nodes.
-- Node values lie in `0..99` and are unique within a tree.
+**Ограничения:**
+- Каждое дерево находится между узлами 0 и 100.
+- Значения узлов лежат в `0..99` и уникальны в дереве.

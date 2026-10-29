@@ -1,8 +1,8 @@
-Find the shortest walk that touches every node of an undirected graph.
+Найдите самую короткую прогулку, которая касается каждого узла ненаправленного графа.
 
-The graph has `n` nodes labelled `0` to `n-1` and is given by adjacency lists `graph`, where `graph[i]` holds all neighbours of `i`. A walk may start and finish at any nodes and may revisit nodes and edges. Return the smallest possible number of edges in a walk that visits all nodes at least once. The graph is connected.
+Граф имеет узлы `n` с пометкой `0` на `n-1` и приведен списками смежности `graph`, где `graph[i]` удерживает всех соседей `i`. Прогулка может начинаться и заканчиваться на любых узлах и может повторно посещать узлы и края. Возвращать наименьшее возможное количество краев в прогулке, которая посещает все узлы по крайней мере один раз. Граф подключен.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= graph.length <= 12`
 - `0 <= graph[i].length < graph.length`
-- The graph is connected and has no self loops.
+- Граф подключен и не имеет самопетлей.

@@ -1,8 +1,8 @@
-Determine if a person could attend all meetings given start-end intervals.
+Определить, может ли человек присутствовать на всех собраниях с интервалами начала и конца.
 
-Two intervals that only touch at an endpoint are **not** considered overlapping: for interval `i` appearing before interval `j`, `intervals[i].end == intervals[j].start` does not cause overlap (only when `intervals[i].end > intervals[j].start`).
+Два интервала, которые касаются только конечной точки, считаются перекрывающимися: для интервала `i`, появляющегося перед интервалом `j`, `intervals[i].end == intervals[j].start` не вызывает перекрытия (только когда `intervals[i].end > intervals[j].start`).
 
-**Constraints:**
+**Ограничения:**
 
 - 0 <= intervals.length <= 10^4
 - intervals[i].length == 2

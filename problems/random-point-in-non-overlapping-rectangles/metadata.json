@@ -1,6 +1,6 @@
 {
   "id": "random-point-in-non-overlapping-rectangles",
-  "title": "560. Random Point in Non-overlapping Rectangles",
+  "title": "560. Случайная точка в непересекающихся прямоугольниках",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/random-point-in-non-overlapping-rectangles/",
   "category": "math",
@@ -8,12 +8,12 @@
     {
       "input": "rects = [[-2,-2,1,1],[2,2,4,6]]",
       "output": "[0,0]",
-      "explanation": "Both [0,0] (first rectangle) and [3,3] (second rectangle) are valid answers."
+      "explanation": "Оба [0, 0] (первый прямоугольник) и [3, 3] (второй прямоугольник) являются действительными ответами."
     },
     {
       "input": "rects = [[0,0,0,0]]",
       "output": "[0,0]",
-      "explanation": "The single-cell rectangle covers exactly one point."
+      "explanation": "Одноклеточный прямоугольник охватывает ровно одну точку."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Adaptation: return any covered integer point; the judge only checks that it falls inside some rectangle.",
-    "The bottom-left corner of the first rectangle is always a valid answer.",
-    "A fully random solution would weight rectangles by their point counts, but determinism also passes here."
+    "Адаптация: возвращайте любую закрытую целочисленную точку; судья проверяет только то, что она попадает внутрь какого-то прямоугольника.",
+    "Нижний левый угол первого прямоугольника всегда является верным ответом.",
+    "Полностью случайное решение будет взвешивать прямоугольники по их количеству точек, но детерминизм также проходит здесь."
   ]
 }

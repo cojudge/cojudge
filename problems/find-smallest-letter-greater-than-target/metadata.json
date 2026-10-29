@@ -1,6 +1,6 @@
 {
   "id": "find-smallest-letter-greater-than-target",
-  "title": "748. Find Smallest Letter Greater Than Target",
+  "title": "748. Найдите самую маленькую букву больше, чем цель",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/find-smallest-letter-greater-than-target/",
   "category": "binary-search",
@@ -8,17 +8,17 @@
     {
       "input": "letters = [\"c\",\"f\",\"j\"], target = \"a\"",
       "output": "\"c\"",
-      "explanation": "The smallest entry after \"a\" is \"c\"."
+      "explanation": "Самая маленькая запись после «a» — «c»."
     },
     {
       "input": "letters = [\"c\",\"f\",\"j\"], target = \"c\"",
       "output": "\"f\"",
-      "explanation": "The smallest entry after \"c\" is \"f\"."
+      "explanation": "Самая маленькая запись после «c» — «f»."
     },
     {
       "input": "letters = [\"x\",\"x\",\"y\",\"y\"], target = \"z\"",
       "output": "\"x\"",
-      "explanation": "Nothing exceeds \"z\", so wrap to the front."
+      "explanation": "Ничто не превосходит \"z\", так что заверните на передний план."
     }
   ],
   "starterCode": {
@@ -71,8 +71,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Because the list is sorted, a binary search for the first entry above the target runs in logarithmic time.",
-    "Remember the wrap rule: when the target is at or past the last distinct entry, the answer is letters[0].",
-    "Compare only the first character of each one-letter string."
+    "Поскольку список отсортирован, двоичный поиск первой записи над целью выполняется в логарифмическое время.",
+    "Помните правило обертывания: когда цель находится на последней отдельной записи или за ней, ответом являются буквы [0].",
+    "Сравните только первый символ каждой однобуквенной строки."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "sort-array-by-parity-ii",
-  "title": "909. Sort Array By Parity II",
+  "title": "909. Сортировать массив по паритету II",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/sort-array-by-parity-ii/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [4,2,5,7]",
       "output": "[4,5,2,7]",
-      "explanation": "Even indices hold even values and odd indices hold odd values; other valid orders are also accepted."
+      "explanation": "Даже индексы имеют четные значения, а нечетные индексы имеют нечетные значения; принимаются и другие действительные ордера."
     },
     {
       "input": "nums = [2,3]",
       "output": "[2,3]",
-      "explanation": "Already satisfies the parity placement."
+      "explanation": "Уже удовлетворяет распределению паритета."
     }
   ],
   "starterCode": {
@@ -43,8 +43,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Even positions need even values and odd positions need odd values; any arrangement meeting that is accepted.",
-    "Collect evens and odds separately, then deal them into even and odd slots.",
-    "Alternatively sweep two pointers (one on even slots, one on odd slots) swapping misplaced pairs."
+    "Даже позиции нуждаются в четных ценностях, а нечетные позиции нуждаются в нечетных ценностях; любое согласование, которое принимается.",
+    "Собирайте четности и коэффициенты отдельно, а затем раздавайте их в четные и нечетные слоты.",
+    "Альтернативно подметайте два указателя (один на четных слотах, один на нечетных слотах), меняя неуместные пары."
   ]
 }

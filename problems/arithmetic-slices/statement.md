@@ -1,7 +1,7 @@
-Call an array arithmetic when it holds at least three numbers and every neighbouring gap is identical — for instance `[3,-1,-5,-9]` steps by `-4` each time.
+Вызовите арифметику массива, когда она содержит по крайней мере три числа, и каждый соседний разрыв идентичен — например, `[3,-1,-5,-9]` выполняет шаги `-4` каждый раз.
 
-Given `nums`, count how many of its contiguous subarrays (of length three or more) are arithmetic. Overlapping slices each count separately.
+Учитывая `nums`, подсчитайте, сколько его смежных подкатегории (длины три и более) являются арифметическими.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 5000`
 - `-1000 <= nums[i] <= 1000`

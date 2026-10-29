@@ -1,0 +1,108 @@
+{
+  "id": "most-stones-removed-with-same-row-or-column",
+  "title": "934. Most Stones Removed with Same Row or Column",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/",
+  "category": "hash-table",
+  "examples": [
+    {
+      "input": "stones = [[0,0],[0,1],[1,0],[1,2],[2,1],[2,2]]",
+      "output": "5",
+      "explanation": "One linked group of six keeps a single survivor."
+    },
+    {
+      "input": "stones = [[0,0],[0,2],[1,1],[2,0],[2,2]]",
+      "output": "3",
+      "explanation": "A group of four plus an isolated stone."
+    },
+    {
+      "input": "stones = [[0,0]]",
+      "output": "0",
+      "explanation": "No partner exists."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int removeStones(int[][] stones) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def removeStones(self, stones: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int removeStones(vector<vector<int>>& stones) {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public int RemoveStones(int[][] stones) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn remove_stones(stones: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc RemoveStones(stones [][]int) int {\n    return 0\n}",
+    "typescript": "export function removeStones(stones: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $stones\n     * @return int\n     */\n    public function removeStones($stones) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "stones": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "stones": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "stones": [
+        [
+          0,
+          0
+        ]
+      ]
+    }
+  ],
+  "functionName": "removeStones",
+  "params": [
+    {
+      "name": "stones",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Link stones sharing a row or a column; each linked group of k stones can lose k - 1 of them.",
+    "A disjoint-set union over pairs (or a graph flood fill) finds the groups; the answer is stones minus group count."
+  ]
+}

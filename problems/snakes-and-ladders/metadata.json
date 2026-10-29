@@ -1,6 +1,6 @@
 {
   "id": "snakes-and-ladders",
-  "title": "898. Snakes and Ladders",
+  "title": "898. Змеи и лестницы",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/snakes-and-ladders/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "board = [[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,35,-1,-1,13,-1],[-1,-1,-1,-1,-1,-1],[-1,15,-1,-1,-1,-1]]",
       "output": "4",
-      "explanation": "Climb the ladder from square 2 to 15, then advance and ride the remaining jumps to reach square 36 in 4 throws."
+      "explanation": "Поднимитесь по лестнице от квадратного 2 до 15, затем пройдитесь по остальным прыжкам, чтобы достичь квадратного 36 в бросках 4."
     },
     {
       "input": "board = [[-1,-1],[-1,3]]",
       "output": "1",
-      "explanation": "Roll from square 1 to square 2, whose ladder leads directly to square 4."
+      "explanation": "Переверните с квадрата 1 на квадрат 2, лестница которого ведет прямо к квадрату 4."
     },
     {
       "input": "board = [[-1,-1,-1],[-1,-1,-1],[-1,-1,-1]]",
       "output": "2",
-      "explanation": "With no snakes or ladders, two throws of 6 reach square 9 (1 -> 7 -> 9)."
+      "explanation": "Без змей или лестниц два броска 6 достигают квадрата 9 (1 -> 7 -> 9)."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Number the squares from 1 at the bottom-left, snaking back and forth each row, so every cell maps to exactly one square.",
-    "From each square the reachable squares are the next 1 to 6 labels (capped at n squared), following any snake or ladder immediately.",
-    "Breadth-first search over squares gives the fewest throws; return -1 when the last square is never reached."
+    "Вычислите квадраты от 1 в нижнем левом углу, пробираясь взад и вперед каждый ряд, поэтому каждая ячейка отображает ровно один квадрат.",
+    "От каждого квадрата достижимые квадраты - это следующие ярлыки 1 до 6 (в квадрате n), сразу после любой змеи или лестницы.",
+    "Поиск по квадратам дает наименьшее количество бросков; возврат -1, когда последний квадрат не достигнут."
   ]
 }

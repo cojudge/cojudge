@@ -1,17 +1,17 @@
-There are `n` meeting rooms labelled `0` through `n - 1`.
+Залы заседаний `n` помечены как `0` через `n - 1`.
 
-A 2D integer array `meetings` lists the bookings, with `meetings[i] = [starti, endi]` denoting a booking that occupies the half-open span `[starti, endi)` (it includes `starti` and excludes `endi`). Every `starti` value occurs only once.
+2D-целочисленный массив `meetings` перечисляет бронирования, причем `meetings[i] = [starti, endi]` обозначает бронирование, которое занимает полуоткрытый диапазон `[starti, endi)` (он включает `starti` и исключает `endi`). Каждое значение `starti` происходит только один раз.
 
-Bookings occupy rooms according to these rules:
-1. A booking goes to the currently free room with the smallest label.
-2. When every room is occupied, the booking waits until some room is released; the postponed booking keeps its original length.
-3. Whenever a room is released, it is offered to the waiting booking whose original `starti` is earliest.
+Бронирование занимает комнаты по этим правилам:
+1. Бронирование идет в свободную комнату с самой маленькой этикеткой.
+2. Когда каждая комната занята, бронирование ждет, пока какая-то комната не будет освобождена; отложенное бронирование сохраняет свою первоначальную длину.
+3. Всякий раз, когда номер освобождается, он предлагается для бронирования ожидания, чей оригинальный `starti` является самым ранним.
 
-Count how many bookings each room hosts, and output the label of the room with the highest count. Break ties toward the smaller label.
+Подсчитайте, сколько заказов в каждой комнате, и выведите ярлык комнаты с наибольшим количеством. Разорвите связи с меньшим ярлыком.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 100`
 - `1 <= meetings.length <= 10^5`
 - `meetings[i].length == 2`
 - `0 <= starti < endi <= 5 * 10^5`
-- All the values of `starti` are unique
+- Все значения `starti` уникальны.

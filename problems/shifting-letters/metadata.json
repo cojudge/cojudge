@@ -1,6 +1,6 @@
 {
   "id": "shifting-letters",
-  "title": "845. Shifting Letters",
+  "title": "845. Сдвиг букв",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/shifting-letters/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"abc\", shifts = [3,5,9]",
       "output": "\"rpl\"",
-      "explanation": "Suffix sums 17,14,9 produce rpl."
+      "explanation": "Суффикс сумм 17, 14, 9 производят rpl."
     },
     {
       "input": "s = \"aaa\", shifts = [1,2,3]",
       "output": "\"gfd\"",
-      "explanation": "Suffix sums 6,5,3 shift each a."
+      "explanation": "Суффикс суммирует 6, 5, 3 смещения каждый а."
     },
     {
       "input": "s = \"z\", shifts = [52]",
       "output": "\"z\"",
-      "explanation": "52 steps is two full turns."
+      "explanation": "Шаги 52 — это два полных оборота."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Sweep once from right to left keeping a running suffix total modulo 26.",
-    "Shift character i by the current suffix total: (c - 'a' + total) % 26 + 'a'.",
-    "Take shifts[i] modulo 26 before adding to avoid overflow on large inputs."
+    "Сверните один раз справа налево, сохраняя общий суффикс 26.",
+    "Сдвиг символа i по текущему общему суффиксу: (c - 'a' + общее) % 26 + 'a'.",
+    "Принимайте изменения [i] modulo 26 перед добавлением, чтобы избежать переполнения на больших входах."
   ]
 }

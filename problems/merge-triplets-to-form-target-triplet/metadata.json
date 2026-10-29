@@ -1,6 +1,6 @@
 {
   "id": "merge-triplets-to-form-target-triplet",
-  "title": "142. Merge Triplets to Form Target Triplet",
+  "title": "142. Слияние триплетов для формирования целевых триплетов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/merge-triplets-to-form-target-triplet/",
   "category": "greedy",
@@ -8,17 +8,17 @@
     {
       "input": "triplets = [[2,5,3],[1,8,4],[1,7,5]], target = [2,7,5]",
       "output": "true",
-      "explanation": "The first and third rows merge to the target; the row exceeding the target is ignored."
+      "explanation": "Первая и третья строки сливаются с целью; строка, превышающая цель, игнорируется."
     },
     {
       "input": "triplets = [[3,4,5],[4,5,6]], target = [3,2,5]",
       "output": "false",
-      "explanation": "The target triplet cannot be formed by merging."
+      "explanation": "Триплет-мишень не может быть сформирован путем слияния."
     },
     {
       "input": "triplets = [[2,5,3],[2,3,4],[1,2,5],[5,2,3]], target = [5,5,5]",
       "output": "true",
-      "explanation": "The target [5,5,5] is achievable from the given triplets."
+      "explanation": "Цель [5, 5, 5] достижима из данных тройняшек."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Any row with a coordinate greater than the corresponding target coordinate can never be used, because maxima cannot decrease.",
-    "Among the remaining rows, record which target coordinates can be matched exactly.",
-    "The target is possible exactly when all three coordinates are matched by safe rows."
+    "Ни одна строка с координатой, превышающей соответствующую координату цели, никогда не может быть использована, потому что максимумы не могут уменьшаться.",
+    "Среди остальных строк запишите, какие координаты цели могут быть точно сопоставлены.",
+    "Цель возможна именно тогда, когда все три координаты сопоставляются безопасными рядами."
   ]
 }

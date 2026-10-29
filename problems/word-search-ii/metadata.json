@@ -1,6 +1,6 @@
 {
   "id": "word-search-ii",
-  "title": "73. Word Search II",
+  "title": "73. Поиск слов II",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/word-search-ii/",
   "category": "tree",
@@ -8,7 +8,7 @@
     {
       "input": "board = [[a,b,c,e],[s,f,c,s],[a,d,e,e]], words = [see,abcced,abcb]",
       "output": "[see,abcced]",
-      "explanation": "\"see\" is found via s(1,3)->e(2,3)->e(2,2). \"abcced\" is found via a(0,0)->b(0,1)->c(0,2)->c(1,2)->e(2,2)->d(2,1). \"abcb\" has no valid path."
+      "explanation": "\"Смотрите\" можно найти через s()1,3)->e(2,3)->e(2,2\"присоединился\" можно найти через a()0,0)->b(0,1)->c(0,2)->c(1,2)->e(2,2)->d(2,1\"Абсб\" не имеет правильного пути."
     }
   ],
   "starterCode": {
@@ -109,6 +109,6 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Build a trie of words and backtrack from each cell, pruning via the trie; mark visited cells and collect matches once per word."
+    "Постройте три слова и обратный путь из каждой ячейки, обрезая через три; отметьте посещенные ячейки и соберите совпадения один раз за слово."
   ]
 }

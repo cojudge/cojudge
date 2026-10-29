@@ -1,6 +1,6 @@
 {
   "id": "wiggle-subsequence",
-  "title": "453. Wiggle Subsequence",
+  "title": "453. Последовательность виглей",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/wiggle-subsequence/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,7,4,9,2,5]",
       "output": "6",
-      "explanation": "All five steps alternate."
+      "explanation": "Все пять шагов чередуются."
     },
     {
       "input": "nums = [1,17,5,10,13,15,10,5,16,8]",
       "output": "7",
-      "explanation": "A seven-entry subsequence alternates."
+      "explanation": "Семь входных последовательностей чередуются."
     },
     {
       "input": "nums = [1,2,3,4,5,6,7,8,9]",
       "output": "2",
-      "explanation": "Monotone climbs allow only length 2."
+      "explanation": "Подъемы на монотоне позволяют только длину 2."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Track the lengths of the best subsequences ending with an upward step and with a downward step.",
-    "A rise extends the best downward run; a fall extends the best upward run.",
-    "Equal neighbors extend nothing and are skipped."
+    "Отслеживайте длины лучших последовательностей, заканчивающихся восходящим шагом и нисходящим шагом.",
+    "Подъем продлевает лучший нисходящий бег; падение продлевает лучший восходящий бег.",
+    "Равные соседи ничего не продлевают и пропускают."
   ]
 }

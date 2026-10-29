@@ -1,11 +1,11 @@
-Check whether a pop order could have come from a push order through one stack.
+Проверьте, мог ли поп-заказ прийти из push-заказа через один стек.
 
-Items are pushed onto an empty stack in the order listed by `pushed`, and at any moment the top item may be popped. The popped items, in order, should equal `popped`. All values are distinct and `popped` is a rearrangement of `pushed`.
+Элементы выталкиваются на пустой стек в порядке, указанном `pushed`, и в любой момент верхний элемент может быть всплывающим. Всплывающие элементы, в порядке, должны быть равны `popped`. Все значения различны и `popped` представляет собой перестановку `pushed`.
 
-Given both orders, return `true` when the pop sequence is achievable and `false` otherwise.
+Учитывая оба заказа, возвращайте `true`, когда поп-последовательность достижима, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= pushed.length <= 1000`
 - `0 <= pushed[i] <= 1000`
-- Values in `pushed` are pairwise distinct.
-- `popped` holds exactly the same values in some order.
+- Значения в `pushed` попарно различны.
+- `popped` имеет точно такие же значения в некотором порядке.

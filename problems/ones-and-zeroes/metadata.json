@@ -1,6 +1,6 @@
 {
   "id": "ones-and-zeroes",
-  "title": "538. Ones and Zeroes",
+  "title": "538. Один и ноль",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/ones-and-zeroes/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "strs = [\"10\",\"0001\",\"111001\",\"1\",\"0\"], m = 5, n = 3",
       "output": "4",
-      "explanation": "\"10\",\"0001\",\"1\",\"0\" together consume 5 zeroes and 3 ones."
+      "explanation": "«10», «0001», «1», «0» вместе потребляют нули 5 и 3."
     },
     {
       "input": "strs = [\"10\",\"0\",\"1\"], m = 1, n = 1",
       "output": "2",
-      "explanation": "Choosing \"0\" and \"1\" exactly fills both budgets."
+      "explanation": "Выбор «0» и «1» в точности заполняет оба бюджета."
     },
     {
       "input": "strs = [\"0\",\"0\",\"1\",\"1\"], m = 2, n = 1",
       "output": "3",
-      "explanation": "Two zeroes plus one one is optimal."
+      "explanation": "Два нуля плюс одно оптимально."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Count zeroes and ones in each string once up front.",
-    "Treat the two budgets as a 2D 0/1 knapsack and update the table backwards.",
-    "Each string is either skipped or taken if its counts fit."
+    "Считайте нули и единицы в каждой строке один раз вперед.",
+    "Относитесь к двум бюджетам как к рюкзаку 2D 0 / 1 и обновите таблицу задом наперед.",
+    "Каждая струна либо пропущена, либо взята, если ее счет подходит."
   ]
 }

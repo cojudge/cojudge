@@ -59,32 +59,30 @@ xattr -dr com.apple.quarantine /Applications/Cojudge.app`;
 
 {#if open}
 	<div class="install-modal-shell">
-		<button class="install-modal-backdrop" aria-label="Close install instructions" tabindex="-1" onclick={onClose}></button>
+		<button class="install-modal-backdrop" aria-label="Закрыть инструкции по установке" tabindex="-1" onclick={onClose}></button>
 		<div class="install-modal-card" role="dialog" aria-modal="true" aria-labelledby="install-modal-title">
 			<div class="install-modal-header">
-				<h2 id="install-modal-title">Run Cojudge locally</h2>
-				<button class="install-modal-close" onclick={onClose} aria-label="Close"> &times; </button>
+				<h2 id="install-modal-title">Управляйте судьей локально</h2>
+				<button class="install-modal-close" onclick={onClose} aria-label="Закрыть"> &times; </button>
 			</div>
 			<p class="install-modal-sub">
-				The demo uses a free server for judging, so the speed could be limited. Install the desktop app for the full
-				offline judge with Docker sandboxing.
+				Демо использует бесплатный сервер для оценки, поэтому скорость может быть ограничена. Установите настольное приложение для полного автономного судьи с помощью песочницы Docker.
 			</p>
 
 			<section class="install-block">
 				<div class="install-block-head">
-					<h3>macOS <span>(Homebrew)</span></h3>
+					<h3>Мако <span>(Homebrew)</span></h3>
 					<button
 						class="install-copy-btn"
 						onclick={() => void copyBlock('macos', MACOS_COMMANDS)}
-						title={copiedBlock === 'macos' ? 'Copied' : 'Copy commands'}
+						title={copiedBlock === 'macos' ? "Скопировано" : "Копии команд"}
 					>
-						{copiedBlock === 'macos' ? 'Copied' : 'Copy'}
+						{copiedBlock === 'macos' ? "Скопировано" : "Копировать"}
 					</button>
 				</div>
 				<pre><code>{MACOS_COMMANDS}</code></pre>
 				<p class="install-note">
-					The <code>xattr</code> step is required on first install (ad-hoc signed, not yet
-					notarized). Update later with <code>brew upgrade --cask cojudge</code>.
+					The <code>xattr</code> Этап требуется при первой установке (ad-hoc подписан, еще не заверен нотариально). <code>brew upgrade --cask cojudge</code>.
 				</p>
 			</section>
 
@@ -94,14 +92,14 @@ xattr -dr com.apple.quarantine /Applications/Cojudge.app`;
 					<button
 						class="install-copy-btn"
 						onclick={() => void copyBlock('windows', WINDOWS_COMMANDS)}
-						title={copiedBlock === 'windows' ? 'Copied' : 'Copy command'}
+						title={copiedBlock === 'windows' ? "Скопировано" : "Командование копированием"}
 					>
-						{copiedBlock === 'windows' ? 'Copied' : 'Copy'}
+						{copiedBlock === 'windows' ? "Скопировано" : "Копировать"}
 					</button>
 				</div>
 				<pre><code>{WINDOWS_COMMANDS}</code></pre>
 				<p class="install-note">
-					Update later with <code>winget upgrade Cojudge.Cojudge</code>.
+					Обновление позже <code>winget upgrade Cojudge.Cojudge</code>.
 				</p>
 			</section>
 
@@ -110,9 +108,9 @@ xattr -dr com.apple.quarantine /Applications/Cojudge.app`;
 					<h3>Linux</h3>
 				</div>
 				<p class="install-note">
-					Download the <code>.deb</code>, <code>.rpm</code>, or <code>.AppImage</code> from
-					<a href={RELEASES_URL} target="_blank" rel="noreferrer">GitHub Releases</a>
-					— per-distro install commands are in the release notes.
+					Скачать <code>.deb</code>, <code>.rpm</code>или <code>.AppImage</code> из
+					<a href={RELEASES_URL} target="_blank" rel="noreferrer">GitHub выпустили</a>
+					— команды установки per-distro находятся в заметках к выпуску.
 				</p>
 			</section>
 		</div>

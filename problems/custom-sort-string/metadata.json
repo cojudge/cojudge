@@ -1,6 +1,6 @@
 {
   "id": "custom-sort-string",
-  "title": "789. Custom Sort String",
+  "title": "789. Сортная струна на заказ",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/custom-sort-string/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "order = \"cba\", s = \"abcd\"",
       "output": "\"cbad\"",
-      "explanation": "Ranked letters c, b, a lead; leftover d trails."
+      "explanation": "Ранжированные буквы c, b, a лид; оставшиеся d тропы."
     },
     {
       "input": "order = \"bcafg\", s = \"abcd\"",
       "output": "\"bcad\"",
-      "explanation": "Ranked prefix b, c, a with unranked d at the end."
+      "explanation": "Ранжированный префикс b, c, a с неранжированным d в конце."
     },
     {
       "input": "order = \"kqep\", s = \"pekeq\"",
       "output": "\"kqeep\"",
-      "explanation": "Characters reshuffled by rank k < q < e < p."
+      "explanation": "Персонажи перетасованы по рангу k < q < e < p."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Count how often each letter of s occurs.",
-    "Emit letters following the order string first, repeating by their counts.",
-    "Append any letters missing from order in any order at the end."
+    "Подсчитайте, как часто встречается каждая буква s.",
+    "Сначала эмитируйте буквы, следующие строке заказа, повторяя их по счетам.",
+    "Приложите любые буквы, отсутствующие в заказе, в любом порядке в конце."
   ]
 }

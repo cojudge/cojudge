@@ -1,11 +1,11 @@
-You receive a short string that mixes English letters with digits. For every
-letter you may independently decide to write it in lower case or in upper
-case, while digits must stay exactly as they are. Collect every distinct
-string that can be produced this way. The order of the collected strings
-does not matter.
+Вы получаете короткую строку, которая смешивает английские буквы с цифрами.
+письмо вы можете самостоятельно решить написать его в нижнем регистре или в верхнем
+в то время как цифры должны оставаться такими, какие они есть.
+строка, которая может быть изготовлена таким образом. Порядок собранных строк
+Это не имеет значения.
 
-If the input holds `m` letters, the result holds `2^m` entries.
+Если вход содержит буквы `m`, результат содержит записи `2^m`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 12`
-- `s` holds only English letters (either case) and digits.
+- `s` содержит только английские буквы (или случай) и цифры.

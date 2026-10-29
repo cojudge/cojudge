@@ -1,6 +1,6 @@
 {
   "id": "combination-sum-iv",
-  "title": "21. Combination Sum IV",
+  "title": "21. Комбинация Сумма IV",
   "difficulty": "Medium",
   "category": "dp",
   "link": "https://leetcode.com/problems/combination-sum-iv/",
@@ -8,7 +8,7 @@
     {
       "input": "nums=[1,2,3], target=4",
       "output": "7",
-      "explanation": "The number of ways to form 4 is 7."
+      "explanation": "Количество способов формирования 4 — 7."
     }
   ],
   "starterCode": {
@@ -76,6 +76,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "DP over target values: dp[t] = sum(dp[t - x]) for all x in nums with t-x >= 0."
+    "DP над целевыми значениями: dp[t] = sum(dp[t — x]) для всех x в числах с t-x >= 0."
   ]
 }

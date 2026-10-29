@@ -1,18 +1,18 @@
 {
   "id": "basic-repeat-string",
-  "title": "33. Repeat String",
+  "title": "33. Повторить струну",
   "difficulty": "Easy",
   "category": "strings",
   "examples": [
     {
       "input": "s = \"ab\", k = 3",
       "output": "\"ababab\"",
-      "explanation": "ab written three times."
+      "explanation": "АБ писал три раза."
     },
     {
       "input": "s = \"x\", k = 0",
       "output": "\"\"",
-      "explanation": "Zero repetitions give nothing."
+      "explanation": "Нулевые повторения ничего не дают."
     }
   ],
   "starterCode": {
@@ -52,7 +52,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Loop `k` times, appending `s` each round.",
-    "Start from the empty string."
+    "Введите время `k`, приложив `s` каждый раунд.",
+    "Начните с пустой строки."
   ]
 }

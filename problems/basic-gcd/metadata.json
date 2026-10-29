@@ -1,18 +1,18 @@
 {
   "id": "basic-gcd",
-  "title": "47. GCD",
+  "title": "47. ГКД",
   "difficulty": "Easy",
   "category": "recursion",
   "examples": [
     {
       "input": "a = 48, b = 18",
       "output": "6",
-      "explanation": "6 is the largest number dividing both."
+      "explanation": "6 — это наибольшее число, разделяющее оба."
     },
     {
       "input": "a = 7, b = 5",
       "output": "1",
-      "explanation": "7 and 5 share no larger divisor."
+      "explanation": "7 и 5 не имеют большого делителя."
     }
   ],
   "starterCode": {
@@ -52,7 +52,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "The base case is `b == 0`.",
-    "Otherwise recurse with `(b, a % b)`."
+    "Базовый случай — `b == 0`.",
+    "В противном случае повторите с `(b, a % b)`."
   ]
 }

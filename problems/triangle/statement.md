@@ -1,13 +1,13 @@
-Given a triangular array `triangle` where `triangle[i]` holds `i + 1` numbers, start at the top element and move down one step at a time.
+Учитывая треугольный массив `triangle`, где `triangle[i]` содержит номера `i + 1`, начните с верхнего элемента и двигайтесь вниз по одному шагу за раз.
 
-From position `i` in the current row you may step to position `i` or position `i + 1` in the row below. Each visited cell contributes its value to the total.
+Из позиции `i` в текущей строке вы можете перейти в позицию `i` или позицию `i + 1` в строке ниже. Каждая посещенная ячейка вносит свою ценность в общую сумму.
 
-Return the smallest possible total from the top to any bottom-row cell.
+Возвращайте наименьшую возможную сумму от верхней до нижней ячейки.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= triangle.length <= 200`
 - `triangle[0].length == 1`
 - `triangle[i].length == triangle[i-1].length + 1`
 - `-10^4 <= triangle[i][j] <= 10^4`
 
-**Adaptation note:** The original LeetCode signature uses `List<List<Integer>>`. Here the input is `int[][]` (`int_array_2d`) with identical layout.
+**Примечание по адаптации: ** Оригинальная подпись LeetCode использует `List<List<Integer>>`. Здесь вход `int[][]` (`int_array_2d`) с идентичным макетом.

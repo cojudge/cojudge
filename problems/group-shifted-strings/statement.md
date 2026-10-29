@@ -1,12 +1,12 @@
-Two strings belong to the same shift group when each character of one can be shifted forward by the same amount (wrapping from `z` to `a`) to obtain the other. For example, `"abc"` shifts to `"bcd"`, and `"az"` shifts to `"ba"`.
+Две строки принадлежат к одной и той же группе сдвига, когда каждый символ одной может быть сдвинут вперед на одну и ту же величину (обертывание от `z` к `a`) для получения другой. Например, `"abc"` смещается в `"bcd"`, а `"az"` смещается в `"ba"`.
 
-Given an array of lowercase strings `strings`, partition them so that strings in one group all shift into each other.
+При наличии массива строчек нижнего регистра `strings`, разделите их так, чтобы все струны в одной группе смещались друг в друга.
 
-Return the groups in any order, with the strings inside each group in any order.
+Возвращайте группы в любом порядке, с струнами внутри каждой группы в любом порядке.
 
-*Type note:* the original signature returns a list of lists of strings; here it maps to `string_list_2d`.
+*Примечание типа: * оригинальная подпись возвращает список списков строк; здесь она отображается в `string_list_2d`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= strings.length <= 300`
 - `1 <= strings[i].length <= 50`
-- Each string holds lowercase English letters.
+- Каждая строка содержит английские буквы.

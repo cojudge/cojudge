@@ -1,6 +1,6 @@
 {
   "id": "student-attendance-record-i",
-  "title": "607. Student Attendance Record I",
+  "title": "607. Посещаемость студентов I",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/student-attendance-record-i/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"PPALLP\"",
       "output": "true",
-      "explanation": "One absence, no triple late."
+      "explanation": "Одно отсутствие, без тройного опоздания."
     },
     {
       "input": "s = \"PPALLL\"",
       "output": "false",
-      "explanation": "Three consecutive lates."
+      "explanation": "Три последовательных опоздания."
     },
     {
       "input": "s = \"AA\"",
       "output": "false",
-      "explanation": "Two absences."
+      "explanation": "Два отсутствия."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Count how many times A appears; two or more fails immediately.",
-    "Scan for the substring LLL; its presence fails the record."
+    "Подсчитайте, сколько раз А появляется; два или более не сразу.",
+    "Сканирование для подстрочной LLL; его присутствие не соответствует рекорду."
   ]
 }

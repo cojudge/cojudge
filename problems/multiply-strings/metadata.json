@@ -1,6 +1,6 @@
 {
   "id": "multiply-strings",
-  "title": "148. Multiply Strings",
+  "title": "148. Умножить струны",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/multiply-strings/",
   "category": "math",
@@ -66,8 +66,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Allocate an integer array with num1.length + num2.length positions for the product digits.",
-    "The product of digits at indices i and j contributes to positions i + j and i + j + 1.",
-    "Propagate each carry while accumulating products, then skip at most one leading zero when building the result."
+    "Выделите целочисленный массив с позициями num1.length + num2.length для цифр продукта.",
+    "Продукт цифр в индексах i и j способствует позициям i + j и i + j + 1.",
+    "Распространяйте каждый носитель при накоплении продуктов, а затем пропустите не более одного ведущего нуля при построении результата."
   ]
 }

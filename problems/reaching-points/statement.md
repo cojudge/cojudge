@@ -1,13 +1,13 @@
-Starting from a lattice point, you may repeatedly replace `(x, y)` with
-either `(x + y, y)` or `(x, x + y)`. Both coordinates only grow, since all
-values stay positive. Given a launch point `(sx, sy)` and a destination
-`(tx, ty)`, determine whether the destination can ever be reached by a
-sequence of such jumps.
+Начиная с точки решетки, вы можете многократно заменять `(x, y)`.
+либо `(x + y, y)`, либо `(x, x + y)`. Обе координаты только растут, так как все
+Значения остаются положительными. Учитывая точку запуска `(sx, sy)` и пункт назначения
+`(tx, ty)`, определить, может ли пункт назначения когда-либо быть достигнут
+Последовательность таких прыжков.
 
-Think backwards: from the target, the previous step must have subtracted
-the smaller coordinate from the larger one. Repeating that reduction with
-division (rather than one subtraction at a time) keeps the process fast
-even for coordinates up to a billion.
+Подумайте задом наперед: из цели предыдущий шаг должен был вычесть
+меньший координата от большего, повторяя это сокращение с
+деление (а не одно вычитание за раз) удерживает процесс быстро;
+Даже для координат до миллиарда.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= sx, sy, tx, ty <= 10^9`

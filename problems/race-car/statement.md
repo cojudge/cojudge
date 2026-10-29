@@ -1,8 +1,8 @@
-A car starts at position 0 with speed 1. Two commands are available: `A` (accelerate) moves the car forward by its current speed and then doubles the speed, while `R` (reverse) turns the car around and resets the speed to 1 in the new direction (positions stay put on `R`).
+Автомобиль начинается с позиции 0 со скоростью 1. Доступны две команды: `A` (ускорение) перемещает автомобиль вперед по его текущей скорости, а затем удваивает скорость, в то время как `R` (обратный) поворачивает автомобиль и сбрасывает скорость на 1 в новом направлении (позиции остаются на `R`).
 
-Given a flag at integer `target > 0`, find the smallest number of commands that lands the car exactly on the flag. The car may pass the flag and come back.
+Учитывая флаг в целом `target > 0`, найдите наименьшее количество команд, которые приземляют автомобиль точно на флаг. Машина может пройти флаг и вернуться.
 
-Adaptation note: this task uses plain integers for input and output.
+Примечание по адаптации: эта задача использует простые целые числа для ввода и вывода.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= target <= 10000`

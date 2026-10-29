@@ -1,6 +1,6 @@
 {
   "id": "logger-rate-limiter",
-  "title": "438. Logger Rate Limiter",
+  "title": "438. Ограничитель тарифов Logger",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/logger-rate-limiter/",
   "category": "hash-table",
@@ -8,12 +8,12 @@
     {
       "input": "timestamps = [1,2,3,8,10,11], messages = [\"foo\",\"bar\",\"foo\",\"bar\",\"foo\",\"foo\"]",
       "output": "[1,1,0,0,0,1]",
-      "explanation": "A message prints only when 10 seconds have passed since its last printing."
+      "explanation": "Сообщение печатается только тогда, когда 10 секунды прошли с момента его последней печати."
     },
     {
       "input": "timestamps = [0,10,20], messages = [\"a\",\"a\",\"a\"]",
       "output": "[1,1,1]",
-      "explanation": "Each request lands exactly on the 10-second boundary."
+      "explanation": "Каждый запрос приземляется точно на границе 10-секунды."
     }
   ],
   "starterCode": {
@@ -57,8 +57,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Remember only the latest printed timestamp per distinct message.",
-    "A request prints exactly when the gap since that stored time is 10 or more.",
-    "Update the stored time on every printed request, never on rejected ones."
+    "Запомните только последнюю напечатанную временную метку на отдельное сообщение.",
+    "Запрос печатает именно тогда, когда разрыв, поскольку это сохраненное время, 10 или более.",
+    "Обновляйте сохраненное время по каждому напечатанному запросу, а не по отклоненному."
   ]
 }

@@ -1,10 +1,10 @@
-Given a paragraph and a list of banned words, return the most frequent word that is not banned. Compare words case-insensitively and treat punctuation as separators: `Bob`, `bob!` and `BOB` are the same word `bob`.
+Учитывая абзац и список запрещенных слов, верните наиболее часто встречающееся слово, которое не запрещено.Сравните слова казеиночувствительно и отнеситесь к пунктуации как к разделителям: `Bob`, `bob!` и `BOB` — это одно и то же слово `bob`.
 
-Split the paragraph into lowercase letter sequences, discard any word appearing in `banned`, and pick the remaining word with the largest frequency. Exactly one such word has the top count in every test.
+Разделите абзац на строчные буквенные последовательности, отбросьте любое слово, появляющееся в `banned`, и выберите оставшееся слово с наибольшей частотой. Ровно одно такое слово имеет верхнее значение в каждом тесте.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= paragraph.length <= 1000`
-- Paragraph holds letters, spaces and punctuation `!?',;.`
+- Параграф содержит буквы, пробелы и пунктуацию `!?',;.`
 - `0 <= banned.length <= 100`
-- Each banned word is lowercase letters, all distinct.
-- At least one non-banned word exists and the answer is unique.
+- Каждое запрещенное слово - это строчные буквы, все они разные.
+- Существует хотя бы одно незапрещенное слово, и ответ уникален.

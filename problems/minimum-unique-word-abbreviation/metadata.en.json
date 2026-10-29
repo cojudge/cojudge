@@ -1,0 +1,77 @@
+{
+  "id": "minimum-unique-word-abbreviation",
+  "title": "484. Minimum Unique Word Abbreviation",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/minimum-unique-word-abbreviation/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "target = \"apple\", dictionary = [\"blade\"]",
+      "output": "\"a4\"",
+      "explanation": "a4 keeps the leading a and skips four letters; blade starts with b so it cannot match."
+    },
+    {
+      "input": "target = \"apple\", dictionary = [\"plain\",\"amber\",\"blade\"]",
+      "output": "\"1p3\"",
+      "explanation": "1p3 is the shortest shorthand of apple avoided by all three dictionary words."
+    },
+    {
+      "input": "target = \"a\", dictionary = []",
+      "output": "\"1\"",
+      "explanation": "With no rivals, the whole word compresses to its length."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String minAbbreviation(String target, String[] dictionary) {\n        return \"\";\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minAbbreviation(self, target: str, dictionary: List[str]) -> str:\n        return \"\"",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    string minAbbreviation(string target, vector<string>& dictionary) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string MinAbbreviation(string target, string[] dictionary) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_abbreviation(target: String, dictionary: Vec<String>) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc MinAbbreviation(target string, dictionary []string) string {\n    return \"\"\n}",
+    "typescript": "export function minAbbreviation(target: string, dictionary: string[]): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string $target\n     * @param string[] $dictionary\n     * @return string\n     */\n    public function minAbbreviation($target, $dictionary) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "target": "apple",
+      "dictionary": [
+        "blade"
+      ]
+    },
+    {
+      "target": "apple",
+      "dictionary": [
+        "plain",
+        "amber",
+        "blade"
+      ]
+    },
+    {
+      "target": "a",
+      "dictionary": []
+    },
+    {
+      "target": "abc",
+      "dictionary": [
+        "def"
+      ]
+    }
+  ],
+  "functionName": "minAbbreviation",
+  "params": [
+    {
+      "name": "target",
+      "type": "string"
+    },
+    {
+      "name": "dictionary",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "An abbreviation matches a word when its letters line up and its numbers skip the right counts; leading zeros are illegal.",
+    "Only dictionary words with the same length as the target can collide.",
+    "Enumerate every abbreviation pattern by bitmask and keep the shortest one avoiding all rivals."
+  ]
+}

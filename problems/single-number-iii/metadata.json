@@ -1,6 +1,6 @@
 {
   "id": "single-number-iii",
-  "title": "364. Single Number III",
+  "title": "364. Одноместный номер III",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/single-number-iii/",
   "category": "bit-manipulation",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,2,1,3,2,5]",
       "output": "[3,5]",
-      "explanation": "1 and 2 each appear twice, leaving 3 and 5. Returning [5,3] is also accepted."
+      "explanation": "1 и 2 появляются дважды, оставляя 3 и 5. Возвращение [5, 3] также принимается."
     },
     {
       "input": "nums = [-1,0]",
       "output": "[-1,0]",
-      "explanation": "Both values appear once, so both are returned."
+      "explanation": "Оба значения появляются один раз, поэтому оба возвращаются."
     },
     {
       "input": "nums = [0,1]",
       "output": "[1,0]",
-      "explanation": "Either order is accepted."
+      "explanation": "Любой приказ принимается."
     }
   ],
   "starterCode": {
@@ -54,7 +54,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Xor all values to get the xor of the two answers, then isolate any set bit where they differ.",
-    "Split the array by that bit and xor each group separately to recover the two values."
+    "Xor все значения, чтобы получить xor двух ответов, затем изолировать любой бит, где они отличаются.",
+    "Разделите массив на этот бит и xor каждой группы отдельно, чтобы восстановить два значения."
   ]
 }

@@ -1,0 +1,57 @@
+{
+  "id": "valid-permutations-for-di-sequence",
+  "title": "892. Valid Permutations for DI Sequence",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/valid-permutations-for-di-sequence/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "s = \"DID\"",
+      "output": "5",
+      "explanation": "Five of the 24 orders obey down-up-down."
+    },
+    {
+      "input": "s = \"D\"",
+      "output": "1",
+      "explanation": "Only [1,0] descends."
+    },
+    {
+      "input": "s = \"I\"",
+      "output": "1",
+      "explanation": "Only [0,1] climbs."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int numPermsDISequence(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def numPermsDISequence(self, s: str) -> int:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int numPermsDISequence(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int NumPermsDISequence(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn num_perms_di_sequence(s: String) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc NumPermsDISequence(s string) int {\n    \n}",
+    "typescript": "export function numPermsDISequence(s: string): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function numPermsDISequence($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "DID"
+    },
+    {
+      "s": "D"
+    },
+    {
+      "s": "I"
+    }
+  ],
+  "functionName": "numPermsDISequence",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Let dp[i][j] count ways for the prefix ending with rank j among the first i+1 values.",
+    "For an I step, dp[i][j] is the prefix sum of dp[i-1] below j; for a D step it is the suffix sum above j-1. Use running sums modulo 1e9+7."
+  ]
+}

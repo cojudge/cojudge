@@ -1,0 +1,55 @@
+{
+  "id": "hamming-distance",
+  "title": "527. Hamming Distance",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/hamming-distance/",
+  "category": "bit-manipulation",
+  "examples": [
+    {
+      "input": "x = 1, y = 4",
+      "output": "2",
+      "explanation": "1 is 0001 and 4 is 0100 in binary, which differ in the lowest and third bits."
+    },
+    {
+      "input": "x = 3, y = 1",
+      "output": "1",
+      "explanation": "3 is 0011 and 1 is 0001, differing only in the second bit."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int hammingDistance(int x, int y) {\n        \n    }\n}",
+    "python": "class Solution:\n    def hammingDistance(self, x: int, y: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int hammingDistance(int x, int y) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int HammingDistance(int x, int y) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn hamming_distance(x: i32, y: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc HammingDistance(x int, y int) int {\n    \n}",
+    "typescript": "export function hammingDistance(x: number, y: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $x\n     * @param int $y\n     * @return int\n     */\n    public function hammingDistance($x, $y) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "x": 1,
+      "y": 4
+    },
+    {
+      "x": 3,
+      "y": 1
+    }
+  ],
+  "functionName": "hammingDistance",
+  "params": [
+    {
+      "name": "x",
+      "type": "int"
+    },
+    {
+      "name": "y",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "XOR the two numbers: the result has a 1 exactly where the inputs differ.",
+    "Count the set bits of `x ^ y`."
+  ]
+}

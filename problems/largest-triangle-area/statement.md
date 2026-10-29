@@ -1,10 +1,10 @@
-You are given a set of 2D points with integer coordinates. Pick any three distinct points as triangle corners and measure the triangle's area.
+Вам дается набор 2D точек с целыми координатами. Выберите любые три различные точки в виде углов треугольника и измерьте площадь треугольника.
 
-Return the largest achievable area.
+Верните самую большую достижимую площадь.
 
-Adaptation note: the original task returns a floating number. Here, return the area as a decimal string (for example `"2.0"` or `"0.5"`). The judge parses your string as a double and accepts it within an absolute tolerance of 1e-9 plus a relative tolerance of 1e-5.
+Адаптационное примечание: оригинальное задание возвращает плавающее число. Здесь возвращают площадь в виде десятичной строки (например, `"2.0"` или `"0.5"`). Судья оценивает вашу строку как двойную и принимает ее в пределах абсолютной терпимости 1e-9 плюс относительная терпимость 1e-5.
 
-**Constraints:**
+**Ограничения:**
 - `3 <= points.length <= 50`
 - `-50 <= points[i][j] <= 50`
-- All points are distinct.
+- Все точки различны.

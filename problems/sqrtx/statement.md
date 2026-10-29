@@ -1,7 +1,7 @@
-You receive a non-negative integer `x`. Work out the integer portion of its square root — that is, the greatest non-negative whole number whose square stays at or below `x`.
+Вы получаете неотрицательное целое число `x`. Вычислите целочисленную часть его квадратного корня — то есть наибольшее неотрицательное целое число, квадрат которого остается на уровне или ниже `x`.
 
-Do not call any power, exponent, or root helper supplied by the language.
+Не называйте никакой силой, выразителем или корневым помощником, предоставляемым языком.
 
-**Constraints:**
+**Ограничения:**
 
 - `0 <= x <= 2^31 - 1`

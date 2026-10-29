@@ -1,8 +1,8 @@
-Return a single 0-based row of Pascal's triangle.
+Возвращайте один ряд треугольника Паскаля на основе 0.
 
-Row 0 is `[1]`, row 1 is `[1,1]`, and each later row starts and ends with `1` while interior entries sum the two numbers above them. Given `rowIndex`, produce exactly that row without necessarily building the whole triangle.
+Row 0 — `[1]`, строка 1 — `[1,1]`, и каждая более поздняя строка начинается и заканчивается `1`, в то время как внутренние записи суммируют два числа над ними. Учитывая `rowIndex`, производят именно эту строку, не обязательно создавая весь треугольник.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= rowIndex <= 33`
 
-**Adaptation note:** The value list is represented as `int_array` in this judge.
+**Примечание по адаптации: ** Список значений представлен как `int_array`.

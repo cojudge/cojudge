@@ -1,0 +1,72 @@
+{
+  "id": "range-addition-ii",
+  "title": "637. Range Addition II",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/range-addition-ii/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "m = 3, n = 3, ops = [[2,2],[3,3]]",
+      "output": "4",
+      "explanation": "The overlap of both rectangles is 2 by 2."
+    },
+    {
+      "input": "m = 3, n = 3, ops = [[2,2],[3,3],[3,3],[3,3],[2,2],[3,3],[3,3],[3,3],[2,2],[3,3],[3,3],[3,3]]",
+      "output": "4",
+      "explanation": "The smallest operation still limits the overlap to 2 by 2."
+    },
+    {
+      "input": "m = 3, n = 3, ops = []",
+      "output": "9",
+      "explanation": "With no steps every cell stays maximal."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxCount(int m, int n, int[][] ops) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxCount(self, m: int, n: int, ops: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int maxCount(int m, int n, vector<vector<int>>& ops) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int MaxCount(int m, int n, int[][] ops)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_count(m: i32, n: i32, ops: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MaxCount(m int, n int, ops [][]int) int {\n    return 0\n}",
+    "typescript": "export function maxCount(m: number, n: number, ops: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $m\n     * @param int $n\n     * @param int[][] $ops\n     * @return int\n     */\n    public function maxCount($m, $n, $ops) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "m": 3,
+      "n": 3,
+      "ops": "[[2,2],[3,3]]"
+    },
+    {
+      "m": 3,
+      "n": 3,
+      "ops": "[[2,2],[3,3],[3,3],[3,3],[2,2],[3,3],[3,3],[3,3],[2,2],[3,3],[3,3],[3,3]]"
+    },
+    {
+      "m": 3,
+      "n": 3,
+      "ops": "[]"
+    }
+  ],
+  "functionName": "maxCount",
+  "params": [
+    {
+      "name": "m",
+      "type": "int"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "ops",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Each step adds one to the rectangle from the origin to (a,b).",
+    "Only the intersection of all rectangles reaches the highest count.",
+    "Track the minimum a and minimum b; an empty list means m*n."
+  ]
+}

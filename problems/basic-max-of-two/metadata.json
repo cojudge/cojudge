@@ -1,18 +1,18 @@
 {
   "id": "basic-max-of-two",
-  "title": "2. Max of Two",
+  "title": "2. Макс из двух",
   "difficulty": "Easy",
   "category": "if-else",
   "examples": [
     {
       "input": "a = 3, b = 7",
       "output": "7",
-      "explanation": "7 is larger than 3."
+      "explanation": "7 больше, чем 3."
     },
     {
       "input": "a = -5, b = -2",
       "output": "-2",
-      "explanation": "-2 is larger than -5."
+      "explanation": "-2 больше, чем -5."
     }
   ],
   "starterCode": {
@@ -52,7 +52,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use an `if` statement to compare `a` and `b`.",
-    "Remember to handle the equal case."
+    "Используйте заявление `if` для сравнения `a` и `b`.",
+    "Не забывайте обращаться с равным случаем."
   ]
 }

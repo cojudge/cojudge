@@ -1,6 +1,6 @@
 {
   "id": "combinations",
-  "title": "208. Combinations",
+  "title": "208. Комбинации",
   "difficulty": "Medium",
   "category": "backtracking",
   "link": "https://leetcode.com/problems/combinations/",
@@ -8,12 +8,12 @@
     {
       "input": "n = 4, k = 2",
       "output": "[[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]",
-      "explanation": "There are 4 choose 2 = 6 total combinations."
+      "explanation": "Есть 4 выбрать 2 = 6 общие комбинации."
     },
     {
       "input": "n = 1, k = 1",
       "output": "[[1]]",
-      "explanation": "There is 1 choose 1 = 1 total combination."
+      "explanation": "Существует 1 выбрать 1 = 1 общая комбинация."
     }
   ],
   "starterCode": {
@@ -53,7 +53,7 @@
   ],
   "outputType": "int_list_2d",
   "hints": [
-    "Build each combination one position at a time, always picking the next value from the values that come after the last chosen one.",
-    "Stop a branch as soon as enough values have been picked (current size == k) or not enough values remain to reach k."
+    "Постройте каждую комбинацию по одной позиции за раз, всегда выбирая следующее значение из значений, которые приходят после последнего выбранного.",
+    "Остановите ветвь, как только будет выбрано достаточное количество значений (текущий размер == k) или недостаточное количество значений останется для достижения k."
   ]
 }

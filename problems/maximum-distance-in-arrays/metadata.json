@@ -1,6 +1,6 @@
 {
   "id": "maximum-distance-in-arrays",
-  "title": "648. Maximum Distance in Arrays",
+  "title": "648. Максимальное расстояние в массивах",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/maximum-distance-in-arrays/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "arrays = [[1,2,3],[4,5],[1,2,3]]",
       "output": "4",
-      "explanation": "Pick 1 from the first array and 5 from the second; |1-5| = 4 is best."
+      "explanation": "Выберите 1 из первого массива и 5 из второго; |1-5 | = 4 лучше всего."
     },
     {
       "input": "arrays = [[1],[1]]",
       "output": "0",
-      "explanation": "Only 1 and 1 are available, so the gap is 0."
+      "explanation": "Доступны только 1 и 1, поэтому разрыв составляет 0."
     },
     {
       "input": "arrays = [[1,4],[2,5]]",
       "output": "4",
-      "explanation": "Pair 1 from the first array with 5 from the second for a gap of 4."
+      "explanation": "Пара 1 из первого массива с 5 из второго для разрыва 4."
     }
   ],
   "starterCode": {
@@ -51,9 +51,9 @@
   ],
   "outputType": "int",
   "hints": [
-    "Each array is sorted, so only its first and last entries can matter for extremes.",
-    "Track the smallest first-element and largest last-element seen so far while sweeping left to right.",
-    "For the current array, test its last against the running minimum and its first against the running maximum before folding it in; this guarantees different arrays.",
-    "Adaptation: the nested input maps to int_array_2d in this judge."
+    "Каждый массив отсортирован, поэтому только его первые и последние записи могут иметь значение для крайностей.",
+    "Отслеживайте самый маленький первый элемент и самый большой последний элемент, замеченный до сих пор, смещая слева направо.",
+    "Для текущего массива проверьте его последний на беговой минимум и первый на беговой максимум, прежде чем складывать его; это гарантирует разные массивы.",
+    "Адаптация: вложенные карты ввода int_array_2d в этом решении."
   ]
 }

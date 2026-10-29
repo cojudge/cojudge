@@ -1,0 +1,58 @@
+{
+  "id": "serialize-and-deserialize-n-ary-tree",
+  "title": "497. Serialize and Deserialize N-ary Tree",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/serialize-and-deserialize-n-ary-tree/",
+  "category": "tree",
+  "examples": [
+    {
+      "input": "data = \"[1,null,3,2,4,null,5,6]\"",
+      "output": "\"[1,null,3,2,4,null,5,6]\"",
+      "explanation": "Parsing and re-serializing preserves the grouping."
+    },
+    {
+      "input": "data = \"[]\"",
+      "output": "\"[]\"",
+      "explanation": "The empty tree round-trips to itself."
+    },
+    {
+      "input": "data = \"[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]\"",
+      "output": "\"[1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]\"",
+      "explanation": "A deeper tree survives the double round-trip unchanged."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String codecRoundTrip(String data) {\n        \n    }\n}",
+    "python": "class Solution:\n    def codecRoundTrip(self, data: str) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string codecRoundTrip(string data) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string CodecRoundTrip(string data) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn codec_round_trip(data: String) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc CodecRoundTrip(data string) string {\n    \n}",
+    "typescript": "export function codecRoundTrip(data: string): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $data\n     * @return string\n     */\n    public function codecRoundTrip($data) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "data": "[1,null,3,2,4,null,5,6]"
+    },
+    {
+      "data": "[]"
+    },
+    {
+      "data": "[1]"
+    }
+  ],
+  "functionName": "codecRoundTrip",
+  "params": [
+    {
+      "name": "data",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Parse the bracket string by splitting on commas and treating null as a group boundary.",
+    "Rebuild with a queue: each group after a null belongs to the next queued node.",
+    "Serializing is the mirror: emit root, then each node's children group separated by null."
+  ]
+}

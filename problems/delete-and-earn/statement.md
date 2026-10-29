@@ -1,7 +1,7 @@
-You are given an array `nums` of positive integers. You repeatedly pick a value `v` that still appears, gaining `v` points for every remaining copy of `v`, and simultaneously removing all copies of `v - 1` and `v + 1` (they award nothing). Each copy can be used at most once.
+Вы получаете массив `nums` положительных целых чисел. Вы неоднократно выбираете значение `v`, которое все еще появляется, получая очки `v` для каждой оставшейся копии `v` и одновременно удаляя все копии `v - 1` и `v + 1` (они ничего не присуждают).
 
-Return the maximum total points achievable.
+Верните максимальное количество очков.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 20000`
 - `1 <= nums[i] <= 10000`

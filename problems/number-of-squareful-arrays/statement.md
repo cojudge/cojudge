@@ -1,13 +1,13 @@
-A non-negative integer is a perfect square when some integer multiplied by
-itself equals it (for example, `1`, `4`, `9` and `16` are perfect squares).
+Неотрицательное целое число является идеальным квадратом, когда некоторое целое число умножается на
+Сам по себе равен ему (например, `1`, `4`, `9` и `16` являются идеальными квадратами).
 
-An array is squareful when every pair of adjacent elements adds up to a
-perfect square.
+Массив квадратный, когда каждая пара смежных элементов складывается в
+Идеальная площадь.
 
-Given an integer array `nums`, return how many distinct permutations of its
-elements are squareful. Permutations that look identical because of repeated
-values are counted once.
+Учитывая целочисленный массив `nums`, верните, сколько различных перестановок его
+Элементы квадратные, перестановки, которые выглядят одинаково из-за повторяющихся
+Значения учитываются один раз.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 12`
 - `0 <= nums[i] <= 10^9`

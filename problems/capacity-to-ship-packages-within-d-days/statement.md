@@ -1,9 +1,9 @@
-A conveyor belt has packages with weights `weights[i]`. Each day, packages
-are loaded onto the ship in the given order, without exceeding the ship's
-capacity. Given `weights` and `days`, return the least ship capacity that
-allows all packages to be shipped within `days` days.
+У конвейерной ленты есть упаковки с весами `weights[i]`. Каждый день упаковки
+погружены на судно в заданном порядке, не превышая
+Учитывая `weights` и `days`, возвращайте наименьшую грузоподъемность корабля, которая
+Позволяет отправлять все пакеты в течение дней `days`.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= days <= weights.length <= 5 * 10^4`
 - `1 <= weights[i] <= 500`

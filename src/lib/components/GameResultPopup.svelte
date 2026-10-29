@@ -41,12 +41,12 @@
 
 <div class="modal-backdrop" on:click={handleBackdropClick} on:keydown={handleKeydown} role="dialog" aria-modal="true" tabindex="-1" transition:fade={{ duration: 200 }}>
     <div class="modal" transition:scale={{ start: 0.95, duration: 200 }}>
-        <button class="close-btn" on:click={() => dispatch('close')} aria-label="Close">&times;</button>
-        <h2>{expired ? 'Time\'s Up' : 'Game Over'}</h2>
+        <button class="close-btn" on:click={() => dispatch('close')} aria-label="Закрыть">&times;</button>
+        <h2>{expired ? "Время вышло" : "Играть дальше"}</h2>
 
         {#if expired}
             <div class="rank-circle expired">F</div>
-            <p class="encouragement">Keep going — every attempt helps you get closer. Submit again when you’re ready!</p>
+            <p class="encouragement">Продолжайте идти — каждая попытка помогает вам стать ближе.</p>
         {:else}
             <div class="rank-circle" class:rank-s={rank === 'S'} class:rank-a={rank === 'A'} class:rank-b={rank === 'B'} class:rank-c={rank === 'C'}>
                 {rank}
@@ -56,30 +56,30 @@
         <table class="stats">
             <tbody>
                 <tr>
-                    <td>Run Code</td>
-                    <td class="val">{runCount} time{runCount !== 1 ? 's' : ''}</td>
-                    <td class="score">({runScore} pts)</td>
+                    <td>Запустить код</td>
+                    <td class="val">{runCount} время{runCount !== 1 ? 's' : ''}</td>
+                    <td class="score">({runScore} Птс)</td>
                 </tr>
                 <tr>
-                    <td>Submit Code</td>
-                    <td class="val">{submitCount} time{submitCount !== 1 ? 's' : ''}</td>
-                    <td class="score">({submitScore} pts)</td>
+                    <td>Отправить решение</td>
+                    <td class="val">{submitCount} время{submitCount !== 1 ? 's' : ''}</td>
+                    <td class="score">({submitScore} Птс)</td>
                 </tr>
                 <tr>
-                    <td>Time Spent</td>
+                    <td>Проведенное время</td>
                     <td class="val">{formattedTime}</td>
-                    <td class="score">({timeScore.toFixed(1)} pts)</td>
+                    <td class="score">({timeScore.toFixed(1)} Птс)</td>
                 </tr>
             </tbody>
         </table>
 
         {#if !expired}
             <div class="total">
-                Total Score: <strong>{totalScore}</strong> &rarr; Rank <strong class="rank-label" class:rank-s={rank === 'S'} class:rank-a={rank === 'A'} class:rank-b={rank === 'B'} class:rank-c={rank === 'C'}>{rank}</strong>
+                Всего баллов: <strong>{totalScore}</strong> Ранг <strong class="rank-label" class:rank-s={rank === 'S'} class:rank-a={rank === 'A'} class:rank-b={rank === 'B'} class:rank-c={rank === 'C'}>{rank}</strong>
             </div>
         {/if}
 
-        <button class="home-btn" on:click={goHome}>Back to Home</button>
+        <button class="home-btn" on:click={goHome}>На главную</button>
     </div>
 </div>
 

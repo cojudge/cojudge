@@ -1,6 +1,6 @@
 {
   "id": "basic-sum-digits-rec",
-  "title": "45. Sum of Digits (Recursive)",
+  "title": "45. Сумма цифр (рекурсивная)",
   "difficulty": "Easy",
   "category": "recursion",
   "examples": [
@@ -12,7 +12,7 @@
     {
       "input": "n = 7",
       "output": "7",
-      "explanation": "A single digit returns itself."
+      "explanation": "Одна цифра возвращается сама."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "The last digit is `n % 10` and the rest is `n / 10`.",
-    "Base case: numbers below 10 return themselves."
+    "Последняя цифра — `n % 10`, а остальная — `n / 10`.",
+    "Базовый случай: цифры ниже 10 возвращаются сами собой."
   ]
 }

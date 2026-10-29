@@ -1,6 +1,6 @@
 {
   "id": "rearrange-string-k-distance-apart",
-  "title": "437. Rearrange String K Distance Apart",
+  "title": "437. Установить расстояние K в отдельности",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/rearrange-string-k-distance-apart/",
   "category": "heap",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"aabbcc\", k = 3",
       "output": "\"abcabc\"",
-      "explanation": "Equal letters sit 3 apart, so the spacing rule holds."
+      "explanation": "Равные буквы находятся в 3 отдельно, поэтому правило интервала сохраняется."
     },
     {
       "input": "s = \"aaabc\", k = 3",
       "output": "\"\"",
-      "explanation": "The three copies of 'a' cannot all be kept far enough apart."
+      "explanation": "Все три экземпляра «а» не могут находиться достаточно далеко друг от друга."
     },
     {
       "input": "s = \"aaadbbcc\", k = 2",
       "output": "\"abacabcd\"",
-      "explanation": "One valid layout; every repeated letter has a gap of at least 2."
+      "explanation": "Один действительный макет; каждая повторяющаяся буква имеет пробел по крайней мере 2."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Always emit the currently most frequent remaining letter using a max-heap.",
-    "Hold the last k-1 emitted letters in a waiting queue before their counts re-enter the heap.",
-    "When k is 0 or 1, the original string is already valid."
+    "Всегда издавайте наиболее часто встречающиеся в настоящее время оставшиеся письма, используя максимальную кучу.",
+    "Держите последние буквы k-1 в очереди ожидания, прежде чем их подсчеты снова войдут в кучу.",
+    "Когда k — 0 или 1, исходная строка уже действительна."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "target-sum",
-  "title": "131. Target Sum",
+  "title": "131. Целевая сумма",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/target-sum/",
   "category": "dp",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1,1,1,1,1], target = 3",
       "output": "5",
-      "explanation": "Exactly five sign assignments evaluate to 3."
+      "explanation": "Ровно пять знаковых заданий оцениваются по 3."
     },
     {
       "input": "nums = [1], target = 1",
       "output": "1",
-      "explanation": "There is 1 way to assign +/- to [1] such that the sum equals 1."
+      "explanation": "Существует способ 1 присваивать +/- [1] таким образом, чтобы сумма равнялась 1."
     }
   ],
   "starterCode": {
@@ -57,7 +57,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "After each number, track how many assignments reach every sum from -sum(nums) to sum(nums).",
-    "A zero still has two sign choices, so both transitions must be counted."
+    "После каждого числа отследите, сколько заданий достигает каждой суммы от -суммы (нумов) до суммы (нумов).",
+    "Ноль по-прежнему имеет два выбора знаков, поэтому оба перехода должны быть подсчитаны."
   ]
 }

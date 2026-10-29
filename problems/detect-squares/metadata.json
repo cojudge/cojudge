@@ -1,6 +1,6 @@
 {
   "id": "detect-squares",
-  "title": "149. Detect Squares",
+  "title": "149. Обнаружение квадратов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/detect-squares/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"DetectSquares\",\"add\",\"add\",\"add\",\"count\",\"count\"]\npoints = [[0,0],[3,10],[11,2],[3,2],[11,10],[14,8]]",
       "output": "[1,0]",
-      "explanation": "Only count operations contribute entries to the returned array."
+      "explanation": "Только операции подсчета вносят записи в возвращенный массив."
     },
     {
       "input": "operations = [\"DetectSquares\",\"add\",\"add\",\"add\",\"count\",\"add\",\"count\"]\npoints = [[0,0],[3,10],[11,2],[3,2],[11,10],[11,2],[11,10]]",
       "output": "[1,2]",
-      "explanation": "The duplicate [11,2] is a distinct choice and doubles the second count."
+      "explanation": "Дубликат [11, 2] является отличным выбором и удваивает второе число."
     },
     {
       "input": "operations = [\"DetectSquares\",\"count\"]\npoints = [[0,0],[5,5]]",
       "output": "[0]",
-      "explanation": "The count of squares for the query is [0]."
+      "explanation": "Счет квадратов для запроса [0]."
     }
   ],
   "starterCode": {
@@ -62,9 +62,9 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "This is a function adaptation, not a class problem: skip the first constructor row and append results only for count operations.",
-    "Store the multiplicity of every added point; duplicate points must multiply the number of square choices.",
-    "For a query [x,y], enumerate stored points [otherX,y] on the same row. Their horizontal distance determines the only two possible opposite rows.",
-    "Multiply the frequencies of the three required stored corners for each possible square."
+    "Это функциональная адаптация, а не проблема класса: пропустите первый ряд конструкторов и добавьте результаты только для операций подсчета.",
+    "Храните кратность каждой добавленной точки; дублирующие точки должны умножать количество квадратных вариантов.",
+    "Для запроса [x,y] перечислите сохраненные точки [otherX,y] на одной строке. Их горизонтальное расстояние определяет только два возможных противоположных ряда.",
+    "Умножьте частоты трех необходимых углов для каждого квадрата."
   ]
 }

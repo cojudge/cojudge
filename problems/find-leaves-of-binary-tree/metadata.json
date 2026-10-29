@@ -1,6 +1,6 @@
 {
   "id": "find-leaves-of-binary-tree",
-  "title": "445. Find Leaves of Binary Tree",
+  "title": "445. Найти листья бинарного дерева",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/find-leaves-of-binary-tree/",
   "category": "tree",
@@ -8,7 +8,7 @@
     {
       "input": "root = [1,2,3,4,5]",
       "output": "[[4,5,3],[2],[1]]",
-      "explanation": "Leaves [4,5,3] fall first, then [2], then [1]."
+      "explanation": "Листья [4, 5, 3] падают первыми, затем [2], затем [1]."
     },
     {
       "input": "root = [1]",
@@ -53,8 +53,8 @@
   ],
   "outputType": "int_list_2d",
   "hints": [
-    "A node's removal round equals one plus the largest round of its children.",
-    "Compute heights bottom-up with depth-first search.",
-    "Append each value to the group indexed by its height minus one."
+    "Круг удаления узла равен одному плюс самый большой круг его потомков.",
+    "Вычислите высоту снизу вверх с помощью поиска глубины.",
+    "Прибавьте каждое значение к группе, проиндексированной по ее высоте минус одно."
   ]
 }

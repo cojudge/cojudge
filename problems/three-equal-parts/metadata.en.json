@@ -1,0 +1,58 @@
+{
+  "id": "three-equal-parts",
+  "title": "914. Three Equal Parts",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/three-equal-parts/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "arr = [1,0,1,0,1]",
+      "output": "[0,3]",
+      "explanation": "Blocks [1], [0,1], [0,1] share value 1."
+    },
+    {
+      "input": "arr = [1,1,0,1,1]",
+      "output": "[-1,-1]",
+      "explanation": "Four ones cannot split into three equal counts."
+    },
+    {
+      "input": "arr = [1,0,0,1,0,0,1,0,0]",
+      "output": "[2,6]",
+      "explanation": "Three copies of [1,0,0]."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] threeEqualParts(int[] arr) {\n        return new int[]{};\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def threeEqualParts(self, arr: List[int]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> threeEqualParts(vector<int>& arr) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] ThreeEqualParts(int[] arr)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn three_equal_parts(arr: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc ThreeEqualParts(arr []int) []int {\n    return nil\n}",
+    "typescript": "export function threeEqualParts(arr: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $arr\n     * @return int[]\n     */\n    public function threeEqualParts($arr) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "arr": "[1,0,1,0,1]"
+    },
+    {
+      "arr": "[1,1,0,1,1]"
+    },
+    {
+      "arr": "[1,0,0,1,0,0,1,0,0]"
+    }
+  ],
+  "functionName": "threeEqualParts",
+  "params": [
+    {
+      "name": "arr",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "If all entries are zero, any split with three non-empty parts is valid.",
+    "Otherwise the number of ones must divide by three; find the first one of each third.",
+    "The suffix after the third start (including trailing zeros) must repeat in the first two parts; overlapping tails mean impossible."
+  ]
+}

@@ -1,8 +1,8 @@
-You are given integers `n` and `k` with `1 <= k < n`.
+Вы получаете целые числа `n` и `k` с `1 <= k < n`.
 
-Build a list holding each number from 1 to `n` exactly once such that the absolute gaps between neighbours take exactly `k` distinct values.
+Постройте список, содержащий каждое число от 1 до `n` ровно один раз, так что абсолютные промежутки между соседями принимают точно разные значения `k`.
 
-Return any such list.
+Верните любой такой список.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= k < n <= 10^4`

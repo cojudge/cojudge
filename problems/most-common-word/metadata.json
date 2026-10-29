@@ -1,6 +1,6 @@
 {
   "id": "most-common-word",
-  "title": "817. Most Common Word",
+  "title": "817. Самое распространенное слово",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/most-common-word/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "paragraph = \"Bob hit a ball, the hit BALL flew far after it was hit.\", banned = [\"hit\"]",
       "output": "\"ball\"",
-      "explanation": "After lowercasing and stripping punctuation, ball appears twice while every other kept word appears once."
+      "explanation": "После нижнего удара и полоскания пунктуации мяч появляется дважды, а каждое другое сохраненное слово появляется один раз."
     },
     {
       "input": "paragraph = \"a.\", banned = []",
       "output": "\"a\"",
-      "explanation": "The only word is the answer."
+      "explanation": "Единственное слово - это ответ."
     },
     {
       "input": "paragraph = \"a, a, a, b,b,b,c, c\", banned = [\"a\"]",
       "output": "\"b\"",
-      "explanation": "Banned words are ignored, leaving b as the most frequent."
+      "explanation": "Запрещенные слова игнорируются, оставляя б как наиболее часто встречающиеся."
     }
   ],
   "starterCode": {
@@ -62,7 +62,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Lowercase the paragraph and treat every non-letter as a separator before splitting into words.",
-    "Count with a hash map while skipping banned words, then return the word with the highest count."
+    "Опустить абзац и рассматривать каждую неписьму как разделитель, прежде чем разделить на слова.",
+    "Сосчитайте с помощью хеш-карты, пропуская запрещенные слова, а затем верните слово с самым высоким счетом."
   ]
 }

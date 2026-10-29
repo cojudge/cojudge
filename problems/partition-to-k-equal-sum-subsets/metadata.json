@@ -1,6 +1,6 @@
 {
   "id": "partition-to-k-equal-sum-subsets",
-  "title": "211. Partition to K Equal Sum Subsets",
+  "title": "211. Разделение на K Подмножества равной суммы",
   "difficulty": "Medium",
   "category": "dp",
   "link": "https://leetcode.com/problems/partition-to-k-equal-sum-subsets/",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [4,3,2,3,5,2,1], k = 4",
       "output": "true",
-      "explanation": "It is possible to divide it into 4 subsets (5), (1, 4), (2,3), (2,3) with equal sums."
+      "explanation": "Можно разделить его на подмножества 4 (5), (1, 4), (2, 3), (2, 3) с равными суммами."
     },
     {
       "input": "nums = [1,2,3,4], k = 3",
       "output": "false",
-      "explanation": "The sum is 10, which is not divisible by 3, so an equal split is impossible."
+      "explanation": "Сумма 10, которая не делится на 3, поэтому равное разделение невозможно."
     }
   ],
   "starterCode": {
@@ -53,8 +53,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Each subset must sum to total / k, so the total sum must be divisible by k.",
-    "We can figure out what target each subset must sum to. Then, let's recursively search, where at each call to our function, we choose which of k subsets the next value will join.",
-    "Use memoization on the bitmask of already-used numbers to avoid re-exploring the same partial assignment."
+    "Каждое подмножество должно быть сведено к общему /k, поэтому общая сумма должна быть делима на k.",
+    "Мы можем выяснить, на какую цель должно быть рассчитано каждое подмножество. Тогда давайте рекурсивно поищем, где при каждом вызове к нашей функции мы выбираем, к какому из k подмножеств присоединится следующее значение.",
+    "Используйте запоминание на битмаске уже используемых чисел, чтобы избежать повторного изучения того же частичного назначения."
   ]
 }

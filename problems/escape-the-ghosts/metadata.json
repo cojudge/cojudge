@@ -1,6 +1,6 @@
 {
   "id": "escape-the-ghosts",
-  "title": "787. Escape The Ghosts",
+  "title": "787. Побег из призраков",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/escape-the-ghosts/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "ghosts = [[1,0],[0,3]], target = [0,1]",
       "output": "true",
-      "explanation": "You need 1 step while the closest ghost needs at least 2."
+      "explanation": "Вам нужен шаг 1, в то время как ближайшему призраку нужен по крайней мере 2."
     },
     {
       "input": "ghosts = [[1,0]], target = [2,0]",
       "output": "false",
-      "explanation": "The ghost sits on the way and arrives first."
+      "explanation": "Призрак садится по дороге и прибывает первым."
     },
     {
       "input": "ghosts = [[2,0]], target = [1,0]",
       "output": "false",
-      "explanation": "A tie still counts as a capture."
+      "explanation": "Связь по-прежнему считается захватом."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "On an open grid the shortest route length is the Manhattan distance.",
-    "Compute your distance from the origin and each ghost's distance to the target.",
-    "You escape exactly when your distance is strictly smaller than every ghost distance."
+    "На открытой сетке самая короткая длина маршрута - расстояние до Манхэттена.",
+    "Вычислите расстояние от источника и расстояние каждого призрака до цели.",
+    "Вы убегаете именно тогда, когда ваша дистанция строго меньше, чем любая дистанция призрака."
   ]
 }

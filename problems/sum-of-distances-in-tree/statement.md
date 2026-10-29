@@ -1,7 +1,7 @@
-You are given an undirected tree with `n` nodes labelled `0` to `n - 1` and an edge list `edges`, where each entry connects two nodes. For every node `i`, compute the sum of the distances (number of edges on the shortest path) from `i` to all other nodes. Return these sums as an array `answer` where `answer[i]` belongs to node `i`.
+Вам дается ненаправленное дерево с узлами `n` с маркировкой `0` на `n - 1` и список краев `edges`, где каждая запись соединяет два узла. Для каждого узла `i` вычислите сумму расстояний (число краев на кратчайшем пути) от `i` до всех других узлов. Возвращайте эти суммы в виде массива `answer`, где `answer[i]` принадлежит узлу `i`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 3 * 10^4`
 - `edges.length == n - 1`
 - `0 <= edges[i][0], edges[i][1] < n`
-- The edges form a valid tree
+- Края образуют действующее дерево

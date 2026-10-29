@@ -1,11 +1,11 @@
-You are given a binary array `nums` and an integer `k`. In one move you may pick
-any `k` consecutive elements and flip every bit in that window (`0` becomes
-`1` and `1` becomes `0`).
+Вы получаете двоичный массив `nums` и целое число `k`.
+любые последовательные элементы `k` и переверните каждый бит в этом окне (`0` становится
+`1` и `1` становятся `0`.
 
-Return the smallest number of moves that turns every element into `1`. If it
-is impossible, return `-1`.
+Верните наименьшее количество ходов, которое превращает каждый элемент в `1`.
+Невозможно вернуть `-1`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^5`
-- `nums[i]` is `0` or `1`.
+- `nums[i]` - это `0` или `1`.
 - `1 <= k <= nums.length`

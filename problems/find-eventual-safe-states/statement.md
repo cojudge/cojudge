@@ -1,9 +1,9 @@
-You receive a directed graph as an adjacency list `graph`, where `graph[i]` lists the neighbours reached by outgoing edges from node `i`. A node is called safe when every directed walk starting there must eventually arrive at a terminal node (one with no outgoing edges) and therefore can never loop forever.
+Вы получаете направленный граф в виде списка смежности `graph`, где `graph[i]` перечисляет соседей, достигаемых исходящими краями от узла `i`. Узел называется безопасным, когда каждая направленная прогулка, начинающаяся там, должна в конечном итоге прийти к конечному узлу (тому, у которого нет исходящих краев) и, следовательно, никогда не может зацикливаться навсегда.
 
-Return all safe nodes in increasing numerical order.
+Вернуть все безопасные узлы в увеличивающемся численном порядке.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= graph.length <= 10^4`
 - `0 <= graph[i].length <= graph.length`
-- Values in `graph[i]` are distinct and lie in range
-- Adaptation: the nested input maps to int_array_2d and the flat output maps to int_list in this judge.
+- Значения в `graph[i]` различны и лежат в диапазоне
+- Адаптация: вложенные карты ввода в int_array_2d и плоские карты вывода в int_list в этом решении.

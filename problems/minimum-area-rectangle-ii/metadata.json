@@ -1,6 +1,6 @@
 {
   "id": "minimum-area-rectangle-ii",
-  "title": "949. Minimum Area Rectangle II",
+  "title": "949. Минимальная площадь прямоугольника II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/minimum-area-rectangle-ii/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "points = [[1,2],[2,1],[1,0],[0,1]]",
       "output": "2",
-      "explanation": "The four points are the corners of a tilted square whose area is 2."
+      "explanation": "Четыре точки — это углы наклонного квадрата, площадь которого 2."
     },
     {
       "input": "points = [[0,1],[2,1],[1,1],[1,0],[2,0]]",
       "output": "1",
-      "explanation": "Points (1,0), (1,1), (2,0) and (2,1) outline a unit square of area 1."
+      "explanation": "Точки (1, 0), (1, 1), (2, 0) и (2, 1) очерчивают единичный квадрат площади 1."
     },
     {
       "input": "points = [[0,3],[1,2],[3,1],[1,3],[2,1]]",
       "output": "0",
-      "explanation": "No four of these points form a rectangle, so the answer is 0."
+      "explanation": "Никакие четыре из этих точек не образуют прямоугольник, поэтому ответ 0."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Two segments are a rectangle's diagonals exactly when they share midpoint and length.",
-    "Group point pairs by (midpoint, squared length) and check pairs within each group.",
-    "All coordinates are integers, so the area is an exact integer \u2014 no floating point needed."
+    "Два сегмента являются диагональю прямоугольника именно тогда, когда они разделяют среднюю точку и длину.",
+    "Групповые пары точек по (средней точке, квадратной длине) и контрольные пары в каждой группе.",
+    "Все координаты являются целыми числами, поэтому площадь является точным целым числом — плавающей точки не требуется."
   ]
 }

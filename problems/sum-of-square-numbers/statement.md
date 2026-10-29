@@ -1,6 +1,6 @@
-Given a non-negative integer `c`, decide whether two integer squares add up to it. That is, do there exist integers `a >= 0` and `b >= 0` with `a*a + b*b = c`?
+Учитывая неотрицательное целое число `c`, решайте, складываются ли в него два целых квадрата. То есть существуют ли целые числа `a >= 0` и `b >= 0` с `a*a + b*b = c`?
 
-Return true when such a pair exists and false otherwise.
+Вернуть истинное, когда такая пара существует, и ложное в противном случае.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= c <= 2^31 - 1`

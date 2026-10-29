@@ -1,14 +1,14 @@
-You are given the root of a binary tree. Build a compact text form of the tree by visiting nodes in root-first order (node, then left part, then right part).
+Вам дают корень двоичного дерева.Постройте компактную текстовую форму дерева, посетив узлы в корневом порядке (узел, затем левую часть, затем правую часть).
 
-Rules for each visited node with value `v`, left rendering `L` and right rendering `R`:
+Правила для каждого посещаемого узла со значением `v`, левого рендеринга `L` и правого рендеринга `R`:
 
-- When the node has no children, write just `v`.
-- When only a left child exists, write `v(L)`.
-- When both children exist, write `v(L)(R)`.
-- When the left child is absent but the right child is present, write `v()(R)` so the empty left slot is still visible. A missing right child with no right content contributes nothing.
+- Когда у узла нет потомков, напишите только `v`.
+- Когда существует только левый потомок, напишите `v(L)`.
+- Когда оба потомка существуют, напишите `v(L)(R)`.
+- Когда левый потомок отсутствует, а правый потомок присутствует, напишите `v()(R)`, чтобы пустой левый слот все еще был виден.
 
-Apply the same rules recursively to every subtree and return the full string for the whole tree. An empty tree yields an empty string.
+Примените те же правила рекурсивно к каждому поддереву и верните полную струну для всего дерева. Пустое дерево дает пустую струну.
 
-**Constraints:**
-- The tree holds between 0 and 10000 nodes.
-- Each node value lies between -1000 and 1000.
+**Ограничения:**
+- Дерево находится между узлами 0 и 10000.
+- Каждое значение узла находится между -1000 и 1000.

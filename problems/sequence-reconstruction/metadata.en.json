@@ -1,0 +1,65 @@
+{
+  "id": "sequence-reconstruction",
+  "title": "512. Sequence Reconstruction",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/sequence-reconstruction/",
+  "category": "graph",
+  "examples": [
+    {
+      "input": "nums = [1,2,3], sequences = [[1,2],[1,3]]",
+      "output": "false",
+      "explanation": "Both 1,2,3 and 1,3,2 fit, so the order is not unique."
+    },
+    {
+      "input": "nums = [1,2,3], sequences = [[1,2],[1,3],[2,3]]",
+      "output": "true",
+      "explanation": "The three pairs force 1 before 2 before 3."
+    },
+    {
+      "input": "nums = [4,1,5,2,6,3], sequences = [[5,2,6,3],[4,1,5,2]]",
+      "output": "true",
+      "explanation": "Chained pairs fix the full order."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean sequenceReconstruction(int[] nums, int[][] sequences) {\n        return false;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def sequenceReconstruction(self, nums: List[int], sequences: List[List[int]]) -> bool:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool sequenceReconstruction(vector<int>& nums, vector<vector<int>>& sequences) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool SequenceReconstruction(int[] nums, int[][] sequences)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn sequence_reconstruction(nums: Vec<i32>, sequences: Vec<Vec<i32>>) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc SequenceReconstruction(nums []int, sequences [][]int) bool {\n    return false\n}",
+    "typescript": "export function sequenceReconstruction(nums: number[], sequences: number[][]): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int[][] $sequences\n     * @return bool\n     */\n    public function sequenceReconstruction($nums, $sequences) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,2,3]",
+      "sequences": "[[1,2],[1,3]]"
+    },
+    {
+      "nums": "[1,2,3]",
+      "sequences": "[[1,2],[1,3],[2,3]]"
+    },
+    {
+      "nums": "[4,1,5,2,6,3]",
+      "sequences": "[[5,2,6,3],[4,1,5,2]]"
+    }
+  ],
+  "functionName": "sequenceReconstruction",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    },
+    {
+      "name": "sequences",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Turn each adjacent pair in every sequence into a directed edge.",
+    "A breadth-first topological walk must always have exactly one ready node; two choices means not unique.",
+    "The walk must emit exactly nums in order, and every value of nums must appear in sequences."
+  ]
+}

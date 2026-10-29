@@ -1,10 +1,10 @@
-Given two integer arrays `nums1` and `nums2` that hold exactly the same multiset of values (the second is a rearrangement of the first), build an index map for the first array into the second.
+Учитывая два целочисленных массива `nums1` и `nums2`, которые содержат точно такой же набор значений (второй является перегруппировкой первого), создайте карту индекса для первого массива во второй.
 
-For every position `i` in `nums1`, pick a position `P[i]` in `nums2` so that the values match: `nums1[i] == nums2[P[i]]`. When a value occurs several times, its copies may be matched to the repeated positions in any order. Return the array `P`.
+Для каждой позиции `i` в `nums1` выберите позицию `P[i]` в `nums2` так, чтобы значения совпадали: `nums1[i] == nums2[P[i]]`. Когда значение возникает несколько раз, его копии могут быть сопоставлены с повторяющимися позициями в любом порядке. Верните массив `P`.
 
-More than one answer can be valid; any mapping that pairs equal values is accepted.
+Более чем один ответ может быть действительным; любое отображение, что пары равные значения принимаются.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums1.length == nums2.length <= 100`
 - `0 <= nums1[i], nums2[i] <= 10^5`
-- `nums2` is a permutation of `nums1`
+- `nums2` представляет собой перестановку `nums1`

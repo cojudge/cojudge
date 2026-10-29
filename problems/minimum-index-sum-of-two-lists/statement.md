@@ -1,5 +1,5 @@
-Two friends each rank favorite eateries in order. The combined rank of a shared name is its index in the first list plus its index in the second. Return all shared names with the smallest combined rank, in any order.
+Два друга каждый ранжируют любимые закусочные по порядку. Комбинированный ранг общего имени - это его индекс в первом списке плюс его индекс во втором. Верните все общие имена с наименьшим комбинированным рангом в любом порядке.
 
-**Constraints:**
-- Each list holds 1 to 1000 distinct names.
-- At least one name is shared.
+**Ограничения:**
+- Каждый список содержит 1 в 1000 различные имена.
+- По крайней мере, одно имя является общим.

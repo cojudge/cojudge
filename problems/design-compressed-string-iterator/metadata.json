@@ -1,6 +1,6 @@
 {
   "id": "design-compressed-string-iterator",
-  "title": "640. Design Compressed String Iterator",
+  "title": "640. Дизайн сжатого итератора струн",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/design-compressed-string-iterator/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "compressed = \"L1e2t1C1o1d1e1\", operations = [\"next\",\"next\",\"next\",\"next\",\"next\",\"hasNext\",\"next\",\"hasNext\"]",
       "output": "[\"L\",\"e\",\"e\",\"t\",\"C\",\"true\",\"o\",\"true\"]",
-      "explanation": "Letters expand to L,e,e,t,C,o,d,e; queries consume them in order."
+      "explanation": "Письма расширяются до L,e,e,t,C,o,d,e; запросы потребляют их в порядке."
     },
     {
       "input": "compressed = \"x3\", operations = [\"next\",\"next\",\"next\",\"next\",\"hasNext\"]",
       "output": "[\"x\",\"x\",\"x\",\"\",\"false\"]",
-      "explanation": "After three x values the stream is empty, so next gives an empty string."
+      "explanation": "После трех значений x поток пуст, поэтому следующий дает пустую строку."
     },
     {
       "input": "compressed = \"a10\", operations = [\"hasNext\",\"next\",\"hasNext\"]",
       "output": "[\"true\",\"a\",\"true\"]",
-      "explanation": "Ten copies remain; one next still leaves more."
+      "explanation": "Осталось десять экземпляров; один следующий все еще оставляет больше."
     }
   ],
   "starterCode": {
@@ -58,9 +58,9 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Parse letter-plus-count runs once into queues.",
-    "Keep a pointer plus remaining count for the current run.",
-    "next emits the current letter or an empty string when empty; hasNext emits true/false strings.",
-    "Adaptation: implement runCompressedIterator(compressed, operations) returning one string per operation."
+    "Парсовая буква-плюс-счет натыкается один раз на очереди.",
+    "Держите указатель плюс оставшийся счет для текущего пробега.",
+    "Следующая излучает текущую букву или пустую строку, когда она пуста; следующая излучает истинные / ложные строки.",
+    "Адаптация: реализовать runCompressedIterator (сжатые, операции), возвращая одну строку за операцию."
   ]
 }

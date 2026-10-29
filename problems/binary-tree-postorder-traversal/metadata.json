@@ -8,7 +8,7 @@
     {
       "input": "root = [1,null,2,3]",
       "output": "[3,2,1]",
-      "explanation": "Postorder visits left, right, then root."
+      "explanation": "Пост-заказ посещений влево, вправо, затем корень."
     },
     {
       "input": "root = []",
@@ -53,6 +53,6 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Recursively traverse left, then right, then visit the root."
+    "Рекурсивно перейдите влево, затем вправо, затем посетите корень."
   ]
 }

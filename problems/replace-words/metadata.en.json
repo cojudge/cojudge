@@ -1,0 +1,65 @@
+{
+  "id": "replace-words",
+  "title": "669. Replace Words",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/replace-words/",
+  "category": "trie",
+  "examples": [
+    {
+      "input": "dictionary = [\"cat\",\"bat\",\"rat\"], sentence = \"the cattle was rattled by the battery\"",
+      "output": "\"the cat was rat by the bat\"",
+      "explanation": "\"cattle\" shortens to \"cat\", \"rattled\" to \"rat\", and \"battery\" to \"bat\"."
+    },
+    {
+      "input": "dictionary = [\"a\",\"b\",\"c\"], sentence = \"aadsfasf absbs bbab cadsfafs\"",
+      "output": "\"a a b c\"",
+      "explanation": "Every word starts with one of the single-letter roots."
+    },
+    {
+      "input": "dictionary = [\"abc\"], sentence = \"def ghi\"",
+      "output": "\"def ghi\"",
+      "explanation": "No word starts with \"abc\", so nothing changes."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String replaceWords(String[] dictionary, String sentence) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def replaceWords(self, dictionary: List[str], sentence: str) -> str:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string replaceWords(vector<string>& dictionary, string sentence) {\n        return \"\";\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public string ReplaceWords(string[] dictionary, string sentence) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn replace_words(dictionary: Vec<String>, sentence: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc ReplaceWords(dictionary []string, sentence string) string {\n    return \"\"\n}",
+    "typescript": "export function replaceWords(dictionary: string[], sentence: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $dictionary\n     * @param string $sentence\n     * @return string\n     */\n    public function replaceWords($dictionary, $sentence) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "dictionary": "[\"cat\", \"bat\", \"rat\"]",
+      "sentence": "the cattle was rattled by the battery"
+    },
+    {
+      "dictionary": "[\"a\", \"b\", \"c\"]",
+      "sentence": "aadsfasf absbs bbab cadsfafs"
+    },
+    {
+      "dictionary": "[\"abc\"]",
+      "sentence": "def ghi"
+    }
+  ],
+  "functionName": "replaceWords",
+  "params": [
+    {
+      "name": "dictionary",
+      "type": "string_array"
+    },
+    {
+      "name": "sentence",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Index every root in a prefix tree (trie) that marks word ends.",
+    "For each sentence word, walk the trie and stop at the first end marker: that is the shortest matching root.",
+    "If the walk dies before any marker, keep the original word."
+  ]
+}

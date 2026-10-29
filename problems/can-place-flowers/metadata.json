@@ -1,6 +1,6 @@
 {
   "id": "can-place-flowers",
-  "title": "641. Can Place Flowers",
+  "title": "641. Можно ли посадить цветы",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/can-place-flowers/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "flowerbed = [1,0,0,0,1], n = 1",
       "output": "true",
-      "explanation": "The middle gap fits one flower."
+      "explanation": "Средний промежуток соответствует одному цветку."
     },
     {
       "input": "flowerbed = [1,0,0,0,1], n = 2",
       "output": "false",
-      "explanation": "Only one gap exists."
+      "explanation": "Существует только один пробел."
     },
     {
       "input": "flowerbed = [0,0,0], n = 2",
       "output": "true",
-      "explanation": "Both ends can be used."
+      "explanation": "Можно использовать оба конца."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "A spot works when it and both neighbors are empty (edges need one neighbor).",
-    "Walk once, planting greedily; planting early never hurts.",
-    "Stop early once n flowers are placed."
+    "Пятно работает, когда оно и оба соседа пусты (край нуждается в одном соседе).",
+    "Ходите один раз, жадно сажая; рано сажать никогда не больно.",
+    "Прекратите рано, как только цветы будут размещены."
   ]
 }

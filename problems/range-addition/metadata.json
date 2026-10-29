@@ -1,6 +1,6 @@
 {
   "id": "range-addition",
-  "title": "449. Range Addition",
+  "title": "449. Дополнение Range",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/range-addition/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "length = 5, updates = [[1,3,2],[2,4,3],[0,2,-2]]",
       "output": "[-2,0,3,5,3]",
-      "explanation": "Apply each triple in order to the zero array."
+      "explanation": "Применяйте каждую тройку для нулевого массива."
     },
     {
       "input": "length = 3, updates = []",
       "output": "[0,0,0]",
-      "explanation": "No triples leave all zeros."
+      "explanation": "Никакие тройки не оставляют всех нулей."
     },
     {
       "input": "length = 1, updates = [[0,0,5]]",
       "output": "[5]",
-      "explanation": "One entry grows by 5."
+      "explanation": "Одна запись растет на 5."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Record only the boundaries: add inc at start and subtract it just after end.",
-    "One prefix pass over the boundary array rebuilds every final value.",
-    "This reaches O(k + n) time with O(n) memory."
+    "Записывайте только границы: добавляйте inc в начале и вычитайте его сразу после окончания.",
+    "Один префикс, проходящий через пограничный массив, восстанавливает каждое конечное значение.",
+    "Это достигает времени O(k + n) с памятью O(n)."
   ]
 }

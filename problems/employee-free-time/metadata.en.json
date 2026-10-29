@@ -1,0 +1,50 @@
+{
+  "id": "employee-free-time",
+  "title": "761. Employee Free Time",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/employee-free-time/",
+  "category": "interval",
+  "examples": [
+    {
+      "input": "schedule = [[1,2,5,6],[1,3],[4,10]]",
+      "output": "[[3,4]]",
+      "explanation": "Merged busy [1,3],[4,10]; gap 3-4."
+    },
+    {
+      "input": "schedule = [[1,3,6,7],[2,4],[2,5,9,12]]",
+      "output": "[[5,6],[7,9]]",
+      "explanation": "Merged busy [1,5],[6,7],[9,12]; gaps 5-6,7-9."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<List<Integer>> employeeFreeTime(int[][] schedule) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def employeeFreeTime(self, schedule: List[List[int]]) -> List[List[int]]:\n        return []",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> employeeFreeTime(vector<vector<int>>& schedule) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<List<int>> EmployeeFreeTime(int[][] schedule) \n    {\n        return new List<List<int>>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn employee_free_time(schedule: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc EmployeeFreeTime(schedule [][]int) [][]int {\n    return [][]int{}\n}",
+    "typescript": "export function employeeFreeTime(schedule: number[][]): number[][] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $schedule\n     * @return int[][]\n     */\n    public function employeeFreeTime($schedule) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "schedule": "[[1,2,5,6],[1,3],[4,10]]"
+    },
+    {
+      "schedule": "[[1,3,6,7],[2,4],[2,5,9,12]]"
+    }
+  ],
+  "functionName": "employeeFreeTime",
+  "params": [
+    {
+      "name": "schedule",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int_list_2d",
+  "hints": [
+    "Unflatten each row into [start,end] pairs, pool all pairs, and sort by start time.",
+    "Sweep once keeping the farthest busy end seen; a gap opens whenever the next start exceeds it.",
+    "Record [prevEnd, start] for each gap and extend prevEnd by the max end otherwise."
+  ]
+}

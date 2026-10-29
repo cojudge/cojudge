@@ -1,6 +1,6 @@
 {
   "id": "max-stack",
-  "title": "724. Max Stack",
+  "title": "724. Макс Стэк",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/max-stack/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"push\",\"push\",\"push\",\"top\",\"popMax\",\"top\",\"peekMax\",\"pop\",\"top\"], values = [5,1,5,0,0,0,0,0,0]",
       "output": "[5,5,1,5,1,5]",
-      "explanation": "Pushes 5,1,5. Top is 5; popMax removes the upper 5; top is 1; peekMax is 5; pop removes 1; top is 5."
+      "explanation": "Щелкать 5,1,5Верхняя часть 5PopMax удаляет верхнюю часть 5Верхний - это 1PeekMax является 5; pop скачать 1Верхний - это 5."
     },
     {
       "input": "operations = [\"push\",\"push\",\"popMax\",\"top\"], values = [1,2,0,0]",
       "output": "[2,1]",
-      "explanation": "Push 1 then 2; popMax removes 2; top is 1."
+      "explanation": "Нажмите 1, затем 2; popMax удаляет 2; верхняя часть 1."
     },
     {
       "input": "operations = [\"push\",\"push\",\"peekMax\",\"pop\",\"peekMax\"], values = [2,7,0,0,0]",
       "output": "[7,7,2]",
-      "explanation": "Push 2 then 7; max is 7; pop removes 7; max becomes 2."
+      "explanation": "Нажмите 2, затем 7; max - 7; pop удаляет 7; max становится 2."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Keep a plain list as the stack; scanning for the maximum is fine for correctness and keeps the reference simple.",
-    "popMax must delete the topmost copy of the maximum, not just any copy.",
-    "Only pop, top, peekMax and popMax append answers; push only mutates. Adaptation: operations and values run in parallel (0 marks no argument)."
+    "Держите простой список в качестве стека; сканирование по максимуму отлично подходит для правильности и упрощает ссылку.",
+    "PopMax должен удалить самую верхнюю копию максимума, а не просто любую копию.",
+    "Только pop, top, peekMax и popMax добавляют ответы; push только мутирует. Адаптация: операции и значения выполняются параллельно (0 не отмечает аргументов)."
   ]
 }

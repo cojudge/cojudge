@@ -3,26 +3,26 @@
   "difficulty": "Medium",
   "examples": [
     {
-      "explanation": "Valid answers are 2, 3 and 4; any one counts as correct.",
+      "explanation": "Правильные ответы - 2, 3 и 4; любой считается правильным.",
       "input": "nums = [1,2,3,3,3], target = 3",
       "output": "2"
     },
     {
-      "explanation": "Only index 0 holds the value 1.",
+      "explanation": "Только индекс 0 имеет значение 1.",
       "input": "nums = [1,2,3,3,3], target = 1",
       "output": "0"
     },
     {
-      "explanation": "Every index is valid; 1 is one acceptable choice.",
+      "explanation": "Каждый индекс действителен; 1 является одним из приемлемых вариантов.",
       "input": "nums = [5,5,5,5], target = 5",
       "output": "1"
     }
   ],
   "functionName": "pick",
   "hints": [
-    "Scan for positions holding target; any one of them is accepted by the checker.",
-    "The reference returns the first match, but returning a random match is equally valid.",
-    "Uniform randomness (e.g. reservoir sampling) is needed for the original class version, not for passing here."
+    "Сканирование позиций, удерживающих цель; любая из них принимается шашкой.",
+    "Ссылка возвращает первый матч, но возврат случайного матча одинаково действителен.",
+    "Единообразная случайность (например, выборка резервуара) необходима для исходной версии класса, а не для прохождения здесь."
   ],
   "id": "random-pick-index",
   "link": "https://leetcode.com/problems/random-pick-index/",

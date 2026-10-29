@@ -1,10 +1,10 @@
-A pile of rocks is described by the array `stones`, where each entry `stones[i]` records how heavy the `i`-th rock is.
+Груда камней описывается массивом `stones`, где каждая запись `stones[i]` записывает, насколько тяжела `i`-th порода.
 
-Each round proceeds as follows: select the two remaining rocks with the greatest weights, denote them `x <= y`, and crash them into each other. When the pair matches (`x == y`), both rocks vanish. When the pair differs, the lighter rock vanishes and the heavier rock continues with its weight lowered to `y - x`.
+Каждый раунд проходит следующим образом: выберите две оставшиеся породы с наибольшими весами, обозначьте их `x <= y`, и врежьте их друг в друга. Когда пара совпадает (`x == y`), обе породы исчезают. Когда пара отличается, более легкая порода исчезает, а более тяжелая порода продолжается с ее весом, пониженным до `y - x`.
 
-Report the weight of the single rock that survives at the end, or `0` when nothing survives.
+Сообщите о весе одиночного камня, который выживает в конце, или `0`, когда ничего не выживает.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= stones.length <= 30`
 - `1 <= stones[i] <= 1000`

@@ -1,14 +1,14 @@
-You are given the root of a binary tree in level-order form, an integer `target` identifying a node by its value, and an integer `k`. All node values in the tree are unique.
+Вам даны корень двоичного дерева в форме порядка уровней, целое число `target`, идентифицирующее узел по его значению, и целое число `k`. Все значения узла в дереве уникальны.
 
-Treat the tree as an undirected graph where each parent-child link can be walked in either direction. The distance between two nodes is the number of edges on the shortest such walk.
+Относитесь к дереву как к ненаправленному графу, по которому каждую родительско-детскую связь можно пройти в любом направлении.Расстояние между двумя узлами — это количество краев на самой короткой такой прогулке.
 
-Return the values of all nodes that sit exactly `k` edges away from the node holding `target`, sorted in ascending order.
+Возвращайте значения всех узлов, которые находятся точно по краям `k` от узла, удерживающего `target`, отсортированного в порядке возрастания.
 
-Adaptation note: the original task passes a node reference and accepts any order; here the target is given by value (values are unique) and the answer is required sorted so every language can be checked deterministically.
+Адаптационное примечание: оригинальная задача проходит ссылку на узел и принимает любой порядок; здесь цель задается значением (значения уникальны), и ответ требуется отсортировать, чтобы каждый язык можно было проверить детерминированно.
 
-**Constraints:**
-- The tree holds `1 <= n <= 500` nodes.
+**Ограничения:**
+- Дерево содержит узлы `1 <= n <= 500`.
 - `0 <= node.val <= 500`
-- All values are unique.
+- Все ценности уникальны.
 - `0 <= k <= 1000`
-- `target` appears exactly once in the tree.
+- `target` появляется на дереве ровно один раз.

@@ -1,6 +1,6 @@
 {
   "id": "burst-balloons",
-  "title": "136. Burst Balloons",
+  "title": "136. Воздушные шары Burst",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/burst-balloons/",
   "category": "dp-2d",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [3,1,5,8]",
       "output": "167",
-      "explanation": "One optimal order is 1, 5, 3, 8, which yields 167 coins."
+      "explanation": "Оптимальный заказ - 1, 5, 3, 8, который дает монеты 167."
     },
     {
       "input": "nums = [1,5]",
       "output": "10",
-      "explanation": "Max coins from [1, 5] is 10."
+      "explanation": "Монеты Max от 1, 5 — это 10."
     },
     {
       "input": "nums = [7]",
       "output": "7",
-      "explanation": "Max coins from [7] is 7."
+      "explanation": "Монеты Max от 7 — это 7."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Choosing the first balloon is awkward because its future neighbors are unknown; instead, choose the last balloon burst in an interval.",
-    "Pad the array with a value of 1 at each end and let dp[left][right] be the best result for that closed interval.",
-    "Try every index as the last balloon in each interval, building answers from shorter intervals to longer ones."
+    "Выбор первого воздушного шара неудобно, потому что его будущие соседи неизвестны; вместо этого выберите последний воздушный шар, лопнувший через интервал.",
+    "Нажмите на массив со значением 1 на каждом конце и позвольте dp [слева] [справа] быть лучшим результатом для этого закрытого интервала.",
+    "Попробуйте каждый индекс в качестве последнего шара в каждом интервале, создавая ответы от более коротких интервалов до более длинных."
   ]
 }

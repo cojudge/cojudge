@@ -1,7 +1,7 @@
-A hero crosses a grid from the top-left corner to the bottom-right corner, moving only right or down. Each cell holds an integer: a negative number drains health, a positive number restores it, and zero leaves it unchanged.
+Герой пересекает сетку от верхнего левого угла до нижнего правого угла, двигаясь только вправо или вниз.Каждая клетка держит целое число: отрицательное число истощает здоровье, положительное число восстанавливает его, а ноль оставляет его неизменным.
 
-Health must never drop to zero or below; it must stay at least 1 after every step, including the starting cell. Find the smallest starting health that lets the hero reach the goal along some path.
+Здоровье никогда не должно опускаться до нуля или ниже; оно должно оставаться по крайней мере 1 после каждого шага, включая стартовую клетку. Найдите наименьшее стартовое здоровье, которое позволяет герою достичь цели по какому-то пути.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= m, n <= 100`
 - `-1000 <= dungeon[i][j] <= 1000`

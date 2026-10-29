@@ -1,6 +1,6 @@
 {
   "id": "strobogrammatic-number-iii",
-  "title": "354. Strobogrammatic Number III",
+  "title": "354. Стробограмматический номер III",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/strobogrammatic-number-iii/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "low = \"50\", high = \"100\"",
       "output": "3",
-      "explanation": "The qualifying numbers are 69, 88, and 96."
+      "explanation": "Квалификационные номера 69, 88 и 96."
     },
     {
       "input": "low = \"0\", high = \"0\"",
       "output": "1",
-      "explanation": "Zero itself is strobogrammatic."
+      "explanation": "Нуль сам по себе является стробограмматическим."
     }
   ],
   "starterCode": {
@@ -53,8 +53,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Generate strobogrammatic strings for every length between low and high, then keep those within bounds.",
-    "Compare same-length candidates as strings; shorter lengths are always smaller numerically.",
-    "Reuse the outside-in construction, forbidding a leading zero for lengths above 1."
+    "Создавайте стробограмматические струны для каждой длины между низким и высоким, а затем удерживайте их в пределах.",
+    "Сравните кандидатов той же длины, что и струны; более короткие длины всегда меньше в цифрах.",
+    "Повторно используйте внешнюю конструкцию, запрещая ведущий ноль для длин выше 1."
   ]
 }

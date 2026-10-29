@@ -1,6 +1,6 @@
 {
   "id": "arranging-coins",
-  "title": "509. Arranging Coins",
+  "title": "509. Устанавливая монеты",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/arranging-coins/",
   "category": "math",
@@ -8,12 +8,12 @@
     {
       "input": "n = 5",
       "output": "2",
-      "explanation": "Rows of 1 and 2 use 3 coins; 2 remain, too few for row 3."
+      "explanation": "1 и 2 используют монеты 3; 2 остается слишком мало для ряда 3."
     },
     {
       "input": "n = 8",
       "output": "3",
-      "explanation": "Rows of 1, 2 and 3 use 6 coins; 2 remain, too few for row 4."
+      "explanation": "Ряды 1, 2 и 3 используют монеты 6; 2 остается слишком мало для ряда 4."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Rows 1 through k need k*(k+1)/2 coins in total.",
-    "Solve k*(k+1)/2 <= n directly with the quadratic formula.",
-    "Use 64-bit math for 8*n to avoid overflow, then floor the result."
+    "Пороги 1 через k нужны k*(k+1)/2 монеты в общей сложности.",
+    "Решите k*(k+1)/2 <= n непосредственно квадратичной формулой.",
+    "Используйте 64-битную математику для 8*n, чтобы избежать переполнения, а затем нажмите на результат."
   ]
 }

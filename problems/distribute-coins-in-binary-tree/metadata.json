@@ -1,6 +1,6 @@
 {
   "id": "distribute-coins-in-binary-tree",
-  "title": "963. Distribute Coins in Binary Tree",
+  "title": "963. Распределяйте монеты в двоичном дереве",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/distribute-coins-in-binary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [3,0,0]",
       "output": "2",
-      "explanation": "The root holds 3 coins but needs 1; moving one coin to each child costs 2 moves."
+      "explanation": "Корень содержит монеты 3, но нуждается в 1; перемещение одной монеты на каждого потомка стоит 2 ходов."
     },
     {
       "input": "root = [0,3,0]",
       "output": "3",
-      "explanation": "Three single-step coin moves balance the three nodes."
+      "explanation": "Три одношаговых движения монеты уравновешивают три узла."
     },
     {
       "input": "root = [1,0,2]",
       "output": "2",
-      "explanation": "One coin travels from the right child to the middle child in two steps via the root."
+      "explanation": "Одна монета проходит от правого потомка к среднему через корень."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Think bottom-up: each subtree reports its surplus (positive) or deficit (negative) of coins relative to one-per-node.",
-    "The coins crossing an edge equal the absolute surplus of the child subtree; add those crossings across all edges.",
-    "A post-order traversal computes both the balance and the accumulated moves in one pass."
+    "Подумайте снизу вверх: каждое поддерево сообщает о своем избытке (положительном) или дефиците (отрицательном) монет по отношению к одному узлу.",
+    "Монеты, пересекающие край, равны абсолютному избытку детского дерева; добавьте эти пересечения по всем краям.",
+    "Пост-заказное прохождение вычисляет как баланс, так и накопленные движения за один проход."
   ]
 }

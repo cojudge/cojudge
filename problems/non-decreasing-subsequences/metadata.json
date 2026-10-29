@@ -1,6 +1,6 @@
 {
   "id": "non-decreasing-subsequences",
-  "title": "555. Non-decreasing Subsequences",
+  "title": "555. Неуменьшение последствий",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/non-decreasing-subsequences/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [4,6,7,7]",
       "output": "[[4,6],[4,6,7],[4,6,7,7],[4,7],[4,7,7],[6,7],[6,7,7],[7,7]]",
-      "explanation": "All eight distinct non-decreasing groups with length at least two."
+      "explanation": "Все восемь различных неснижающихся групп длиной не менее двух."
     },
     {
       "input": "nums = [4,4,3,2,1]",
       "output": "[[4,4]]",
-      "explanation": "Only the leading equal pair is non-decreasing."
+      "explanation": "Только ведущая равная пара не уменьшается."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "int_list_2d",
   "hints": [
-    "Backtrack over positions, extending the current path only with values at least as large as its last element.",
-    "At each recursion depth skip a value already tried at that depth to avoid duplicate groups.",
-    "Add a copy of the path to the answer whenever its length reaches two or more."
+    "Откат по позициям, продлевая текущий путь только значениями, по крайней мере, такими же большими, как и его последний элемент.",
+    "При каждой рекурсионной глубине пропускайте значение, уже испытанное на этой глубине, чтобы избежать дублирования групп.",
+    "Добавьте копию пути к ответу всякий раз, когда его длина достигает двух или более."
   ]
 }

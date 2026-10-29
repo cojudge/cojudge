@@ -1,0 +1,58 @@
+{
+  "id": "robot-return-to-origin",
+  "title": "677. Robot Return to Origin",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/robot-return-to-origin/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "moves = \"UD\"",
+      "output": "true",
+      "explanation": "Up then down cancels out."
+    },
+    {
+      "input": "moves = \"LL\"",
+      "output": "false",
+      "explanation": "Two left steps end at (-2, 0)."
+    },
+    {
+      "input": "moves = \"URDL\"",
+      "output": "true",
+      "explanation": "Each direction appears once, so the robot is back home."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean judgeCircle(String moves) {\n        \n    }\n}",
+    "python": "class Solution:\n    def judgeCircle(self, moves: str) -> bool:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool judgeCircle(string moves) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool JudgeCircle(string moves) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn judge_circle(moves: String) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc JudgeCircle(moves string) bool {\n    \n}",
+    "typescript": "export function judgeCircle(moves: string): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $moves\n     * @return bool\n     */\n    public function judgeCircle($moves) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "moves": "UD"
+    },
+    {
+      "moves": "LL"
+    },
+    {
+      "moves": "URDL"
+    }
+  ],
+  "functionName": "judgeCircle",
+  "params": [
+    {
+      "name": "moves",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Track horizontal and vertical offsets separately.",
+    "U adds one to height, D subtracts one, R adds one to width, L subtracts one.",
+    "The answer is true exactly when both offsets are zero."
+  ]
+}

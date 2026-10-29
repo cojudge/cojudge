@@ -1,6 +1,6 @@
 {
   "id": "rotate-string",
-  "title": "794. Rotate String",
+  "title": "794. Поворотная струна",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/rotate-string/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"abcde\", goal = \"cdeab\"",
       "output": "true",
-      "explanation": "Two left moves produce the target."
+      "explanation": "Два левых хода создают цель."
     },
     {
       "input": "s = \"abcde\", goal = \"abced\"",
       "output": "false",
-      "explanation": "No rotation matches."
+      "explanation": "Никаких ротационных матчей."
     },
     {
       "input": "s = \"a\", goal = \"a\"",
       "output": "true",
-      "explanation": "Zero moves already match."
+      "explanation": "Нулевые ходы уже совпадают."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Lengths must agree first; different lengths can never match.",
-    "Every rotation of s appears as a length-m substring of s + s.",
-    "Checking whether goal occurs inside s + s settles the question."
+    "Длины должны быть согласованы в первую очередь; разные длины никогда не могут совпадать.",
+    "Каждое вращение s появляется в виде подстроки длины m s + s.",
+    "Проверка того, происходит ли цель внутри s + s, решает вопрос."
   ]
 }

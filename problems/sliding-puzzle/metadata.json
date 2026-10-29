@@ -1,6 +1,6 @@
 {
   "id": "sliding-puzzle",
-  "title": "773. Sliding Puzzle",
+  "title": "773. Раздвижная головоломка",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/sliding-puzzle/",
   "category": "matrix",
@@ -8,17 +8,17 @@
     {
       "input": "board = [[1,2,3],[4,0,5]]",
       "output": "1",
-      "explanation": "One slide of 5 finishes the board."
+      "explanation": "Один слайд 5 завершает доску."
     },
     {
       "input": "board = [[1,2,3],[5,4,0]]",
       "output": "-1",
-      "explanation": "This start is unsolvable."
+      "explanation": "Это начало неразрешимо."
     },
     {
       "input": "board = [[4,1,2],[5,0,3]]",
       "output": "5",
-      "explanation": "Five swaps along a shortest path."
+      "explanation": "Пять свопов по кратчайшему пути."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Flatten the board to a 6-character string and precompute where the empty slot can move (neighbors in the 2x3 layout).",
-    "Run breadth-first search from the start string to 123450, tracking visited states and distance.",
-    "Return the distance when the target is dequeued, or -1 when the queue empties."
+    "Растянуте доску до строки 6-символа и предвычислите, где пустой слот может перемещаться (соседи в компоновке 2x3).",
+    "Запустите поиск по ширине от начальной строки до 123450, отслеживая посещенные состояния и расстояние.",
+    "Верните расстояние, когда цель очерчена, или -1, когда очередь опустеет."
   ]
 }

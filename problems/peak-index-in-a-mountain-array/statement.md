@@ -1,8 +1,8 @@
-Locate the summit of a mountain array.
+Расположение вершины горного массива.
 
-An array `arr` is a mountain when its length is at least three and there is a single peak index `p` such that values rise strictly from the start to `p` and then fall strictly after `p`. Given such an array, return the peak index.
+Массив `arr` представляет собой гору, когда его длина не менее трех, и существует один пиковый индекс `p`, так что значения поднимаются строго с самого начала до `p`, а затем падают строго после `p`.
 
-**Constraints:**
+**Ограничения:**
 - `3 <= arr.length <= 10^4`
 - `0 <= arr[i] <= 10^6`
-- `arr` is guaranteed to be a mountain array.
+- `arr` гарантированно является горным массивом.

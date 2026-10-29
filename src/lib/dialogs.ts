@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import { ru } from '$lib/i18n/ru';
 
 export type DialogTone = 'default' | 'danger' | 'success';
 
@@ -33,6 +34,10 @@ function showNext(): void {
 }
 
 function enqueue(request: DialogRequest): void {
+    request.state.message = ru(request.state.message);
+    request.state.title = ru(request.state.title);
+    request.state.confirmLabel = ru(request.state.confirmLabel);
+    request.state.cancelLabel = ru(request.state.cancelLabel);
 	queue.push(request);
 	showNext();
 }

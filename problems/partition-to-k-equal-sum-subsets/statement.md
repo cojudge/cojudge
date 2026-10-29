@@ -1,7 +1,7 @@
-You are given an integer array `nums` and an integer `k`. Decide whether the entries can be split into `k` groups, each containing at least one element, so that every group adds up to the same total. Return `true` when such a split exists and `false` otherwise.
+Вы получаете целочисленный массив `nums` и целочисленное число `k`. Решите, можно ли разделить записи на группы `k`, каждая из которых содержит по меньшей мере один элемент, так что каждая группа складывается в одну и ту же общую сумму. Возврат `true`, когда такой раскол существует, и `false` в противном случае.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= k <= nums.length <= 16`
 - `1 <= nums[i] <= 10^4`
-- The frequency of each element is in the range `[1, 4]`.
+- Частота каждого элемента находится в диапазоне `[1, 4]`.

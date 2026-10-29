@@ -1,10 +1,10 @@
-Two non-negative integers are handed to you, each encoded as a non-empty linked list with the least significant digit first: every node stores a single decimal digit, so the head holds the ones place, the next node the tens place, and so on. Compute the arithmetic total of the two encoded integers and hand it back encoded the same way, least significant digit first.
+Вам вручают два неотрицательных целых числа, каждое из которых закодировано в виде непустого связанного списка с наименее значимой цифрой первым: каждый узел хранит одну десятичную цифру, поэтому головка удерживает одно место, следующий узел — десятое место и т. д. Вычислите арифметическое общее из двух закодированных целых чисел и передайте его обратно закодированным таким же образом, наименее значимой цифрой первым.
 
-Written out normally, neither input carries a leading zero, apart from the value zero itself, which is written as the lone digit zero.
+Как правило, ни один из входов не несет ведущего нуля, за исключением самого нуля, который записывается как нулевая цифра.
 
-**Constraints:**
+**Ограничения:**
 
-- Each list contains between `1` and `100` nodes.
+- Каждый список содержит между узлами `1` и `100`.
 - `0 <= node.val <= 9`
-- Each list represents a number without leading zeros, except the single-node
-  list `[0]`.
+- Каждый список представляет собой число без ведущих нулей, за исключением одного узла.
+  Список `[0]`.

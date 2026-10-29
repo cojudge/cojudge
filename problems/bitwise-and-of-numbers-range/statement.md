@@ -1,6 +1,6 @@
-You receive the endpoints `left` and `right` of a closed interval `[left, right]`.
-Compute the cumulative `AND` formed by combining every integer inside those bounds.
+Вы получаете конечные точки `left` и `right` замкнутого интервала `[left, right]`.
+Вычислите кумулятивный `AND`, образованный путем объединения каждого целого числа внутри этих границ.
 
-**Constraints:**
+**Ограничения:**
 
 - `0 <= left <= right <= 2^31 - 1`

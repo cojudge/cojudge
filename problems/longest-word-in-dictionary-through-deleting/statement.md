@@ -1,10 +1,10 @@
-You are given a string `s` and a list of candidate words called `dictionary`. By deleting zero or more characters from `s` (keeping the order of the remaining characters), you can form new strings. Among the dictionary words that can be formed this way, return the longest one. If several candidates share the maximum length, return the one that comes first alphabetically (lexicographically smallest).
+Вам дается строка `s` и список слов-кандидатов под названием `dictionary`. Удалив ноль или более символов из `s` (сохраняя порядок остальных символов), можно сформировать новые строки. Среди словарных слов, которые можно сформировать таким образом, вернуть самые длинные. Если несколько кандидатов разделяют максимальную длину, вернуть тот, который идет первым в алфавитном порядке (лексикографически наименьший).
 
-It is guaranteed that at least one dictionary word can be formed from `s`.
+Гарантируется, что из `s` может быть сформировано хотя бы одно словарное слово.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 1000`
 - `1 <= dictionary.length <= 1000`
 - `1 <= dictionary[i].length <= 1000`
-- `s` and every dictionary word contain only lowercase English letters.
-- At least one dictionary word is a subsequence of `s`.
+- `s` и каждое словарное слово содержат только строчные английские буквы.
+- По крайней мере, одно словарное слово является последовательностью `s`.

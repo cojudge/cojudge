@@ -1,17 +1,17 @@
-You are given the root of a binary tree and an integer array `voyage` that lists node values in some desired preorder order.
+Вам дается корень двоичного дерева и целочисленного массива `voyage`, в котором перечислены значения узлов в некотором желаемом порядке предварительного заказа.
 
-A flip operation swaps the left and right child of a chosen node. Performing any number of flips (each node flipped at most once conceptually) changes the preorder visit order of the tree.
+Операция флипа меняет левое и правое потомкище выбранного узла. Выполнение любого количества флипов (каждый узел переворачивается не более одного раза концептуально) изменяет порядок посещения предварительного заказа дерева.
 
-Return the values of the flipped nodes in the order they are flipped. When several answers exist the preorder walk described below yields the canonical one. When the voyage cannot be achieved, return `[-1]`. When no flip is needed, return an empty list.
+Вернуть значения перевернутых узлов в том порядке, в котором они перевернуты. Когда существует несколько ответов, описанная ниже прогулка предзаказа дает канонический. Когда рейс не может быть достигнут, вернуть `[-1]`. Когда переворачивание не требуется, вернуть пустой список.
 
-To determine the flips, traverse the tree in preorder while reading `voyage` from left to right with a single position pointer:
+Чтобы определить сальто, пройдите по дереву в предзаказе, читая `voyage` слева направо с помощью одного указателя положения:
 
-- Each visited node must equal the current voyage entry; otherwise the task is impossible.
-- If the node has a left child and that child does not equal the next voyage entry, flip the node (record its value) and traverse the right child before the left child.
-- Otherwise traverse left before right as usual.
+- Каждый посещаемый узел должен соответствовать текущему входу в рейс; в противном случае задача невозможна.
+- Если у узла есть левый потомок, и этот потомок не равен следующему входу в рейс, переверните узел (запишите его значение) и пройдите правого потомка перед левым потомком.
+- В противном случае перейдите налево, как обычно.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= number of nodes <= 100`
 - `1 <= node values, voyage[i] <= 100`
 - `voyage.length == number of nodes`
-- Values in the tree are unique.
+- Значения дерева уникальны.

@@ -1,13 +1,13 @@
-An abbreviation of a word keeps some letters and replaces consecutive skipped blocks with their counts: `a4` means `a` followed by four hidden letters, and `1p3` means one hidden letter, then `p`, then three hidden letters. Numbers never have leading zeros. Such a shorthand matches a word of the same length when its kept letters equal the word's letters at those spots.
+Аббревиатура слова сохраняет некоторые буквы и заменяет последовательные пропущенные блоки их счетами: `a4` означает `a`, за которым следуют четыре скрытые буквы, а `1p3` означает одну скрытую букву, затем `p`, затем три скрытые буквы. Числа никогда не имеют ведущих нулей. Такое сокращение соответствует слову одинаковой длины, когда его сохраненные буквы равны буквам слова в этих местах.
 
-Given a `target` word and a `dictionary` list, find the shortest abbreviation of `target` that matches none of the dictionary words having the same length. Words of different lengths can never collide and are ignored. When several shorthands tie for shortest, any one of them is acceptable, but the judge used here expects the length to be minimal and the shorthand to be valid and unique.
+Учитывая слово `target` и список `dictionary`, найдите самую короткую аббревиатуру `target`, которая не соответствует ни одному из словарных слов, имеющих одинаковую длину. Слова разной длины никогда не могут сталкиваться и игнорируются. Когда несколько сокращений связаны для самого короткого, любое из них приемлемо, но судья, используемый здесь, ожидает, что длина будет минимальной, а сокращение будет действительным и уникальным.
 
-Return that shortest unique shorthand.
+Возвращай самую короткую уникальную стенограмму.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= target.length <= 21`
 - `0 <= dictionary.length <= 100`
-- Words hold lowercase letters; only same-length entries matter.
-- At least one valid abbreviation always exists.
+- Слова содержат строчные буквы; важны только записи одинаковой длины.
+- По крайней мере, одна аббревиатура существует всегда.
 
-**Adaptation note:** Grading accepts any valid unique abbreviation whose length equals the true minimum.
+**Примечание по адаптации: ** Сортировка принимает любую действительную уникальную аббревиатуру, длина которой равна истинному минимуму.

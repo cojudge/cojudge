@@ -1,6 +1,6 @@
 {
   "id": "meeting-rooms-iii",
-  "title": "242. Meeting Rooms III",
+  "title": "242. Залы заседаний III",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/meeting-rooms-iii/",
   "category": "interval",
@@ -47,6 +47,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sort meetings by start. Use two heaps: free rooms and busy rooms (end time, room)."
+    "Сортировать встречи по началу. Используйте две кучи: свободные комнаты и занятые комнаты (конец времени, комната)."
   ]
 }

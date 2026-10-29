@@ -1,16 +1,16 @@
-Call a string `s` **happy** when each of these holds:
+Вызовите строку `s` **happy**, когда каждая из них содержит:
 
-- every character of `s` is one of `'a'`, `'b'`, or `'c'`.
-- neither `"aaa"`, `"bbb"`, nor `"ccc"` occurs anywhere inside `s`.
-- the count of `'a'` inside `s` is **no more than** `a`.
-- the count of `'b'` inside `s` is **no more than** `b`.
-- the count of `'c'` inside `s` is **no more than** `c`.
+- Каждый персонаж `s` является одним из `'a'`, `'b'` или `'c'`.
+- Ни `"aaa"`, ни `"bbb"`, ни `"ccc"` не встречаются где-либо внутри `s`.
+- Количество `'a'` внутри `s` не больше, чем ** `a`.
+- Количество `'b'` внутри `s` не больше, чем ** `b`.
+- Количество `'c'` внутри `s` не больше, чем ** `c`.
 
-You receive three integers `a`, `b`, and `c`. Build the lengthiest happy string achievable. When several answers tie for greatest length, any of them is accepted. When no non-empty happy string exists, give back the empty string `""`.
+Вы получаете три целых числа `a`, `b` и `c`. Постройте самую длинную счастливую строку. Когда несколько ответов связываются на наибольшую длину, любой из них принимается. Когда не существует непустой счастливой строки, верните пустую строку `""`.
 
-Here, a substring means a block of characters standing next to each other in the string.
+Здесь подстрока означает блок символов, стоящих рядом друг с другом в струне.
 
-**Constraints:**
+**Ограничения:**
 
 - `0 <= a, b, c <= 100`
 - `a + b + c > 0`

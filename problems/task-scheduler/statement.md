@@ -1,11 +1,11 @@
-You are given a string `tasks` whose uppercase letters represent CPU tasks and a nonnegative integer `n`. Each task takes one unit of time. Tasks may be executed in any order, but two executions of the same letter must be separated by at least `n` time units during which the CPU executes other tasks or is idle.
+Вам дается строка `tasks`, чьи верхние буквы представляют задачи ЦП и неотрицательное целое число `n`. Каждая задача занимает одну единицу времени. Задания могут выполняться в любом порядке, но два исполнения одной и той же буквы должны быть разделены по меньшей мере единицами времени `n`, в течение которых ЦП выполняет другие задачи или простаивает.
 
-Return the minimum number of time units needed to execute every task.
+Верните минимальное количество единиц времени, необходимое для выполнения каждой задачи.
 
-This portable API adapts the original character-array input to a string. Each character of `tasks` is one task.
+Этот портативный API адаптирует исходный ввод символов к строке. Каждый символ `tasks` является одной задачей.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= tasks.length <= 10^4`
-- Every character in `tasks` is an uppercase English letter from `A` through `Z`.
+- Каждый символ в `tasks` - это английская буква от `A` до `Z`.
 - `0 <= n <= 100`

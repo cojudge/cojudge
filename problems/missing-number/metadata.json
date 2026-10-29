@@ -1,6 +1,6 @@
 {
   "id": "missing-number",
-  "title": "14. Missing Number",
+  "title": "14. Пропавший номер",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/missing-number/",
   "category": "binary",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [3,0,1]",
       "output": "2",
-      "explanation": "The expected sum of [0,3] is 6, but the given numbers sum to 4. The missing number is 6 - 4 = 2."
+      "explanation": "Ожидаемая сумма [0, 3] — 6, но заданные цифры суммируются в 4. Недостающее число — 6 — 4 = 2."
     },
     {
       "input": "nums = [0,1]",
       "output": "2",
-      "explanation": "The expected sum of [0,2] is 3, but the given numbers sum to 1. The missing number is 3 - 1 = 2."
+      "explanation": "Ожидаемая сумма [0, 2] — 3, но заданные цифры суммируются в 1. Недостающее число — 3 — 1 = 2."
     },
     {
       "input": "nums = [9,6,4,2,3,5,7,0,1]",
       "output": "8",
-      "explanation": "The expected sum of [0,9] is 45, but the given numbers sum to 37. The missing number is 45 - 37 = 8."
+      "explanation": "Ожидаемая сумма [0, 9] — 45, но заданные цифры суммируются в 37. Недостающее число — 45 — 37 = 8."
     }
   ],
   "starterCode": {
@@ -57,6 +57,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use XOR: XOR all indices and values to cancel pairs, the result is the missing number. Alternatively use sum formula."
+    "Используйте XOR: XOR все индексы и значения для отмены пар, в результате получается недостающее число. Альтернативно используйте формулу суммы."
   ]
 }

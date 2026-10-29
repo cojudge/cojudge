@@ -1,6 +1,6 @@
 {
   "id": "binary-tree-inorder-traversal",
-  "title": "194. Binary Tree Inorder Traversal",
+  "title": "194. Binary Tree Inorder Traversal (недоступная ссылка)",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/binary-tree-inorder-traversal/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,null,2,3]",
       "output": "[1,3,2]",
-      "explanation": "The inorder traversal visits the left subtree, then the root, then the right subtree, giving [1,3,2]."
+      "explanation": "Поперечное движение по порядку посещает левое поддерево, затем корень, затем правое поддерево, давая [1, 3, 2]."
     },
     {
       "input": "root = []",
       "output": "[]",
-      "explanation": "An empty tree has an empty traversal."
+      "explanation": "У пустого дерева есть пустой проход."
     },
     {
       "input": "root = [1]",
       "output": "[1]",
-      "explanation": "A single-node tree traverses to [1]."
+      "explanation": "Одноузловое дерево пересекает [1]."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Recursively traverse left subtree, visit the root, then traverse the right subtree.",
-    "An iterative version can use a stack: push left children, pop, record, then move right."
+    "Рекурсивно пересечь левое поддерево, посетить корень, затем пересечь правое поддерево.",
+    "Итеративная версия может использовать стек: толкать левых потомков, поп, записывать, а затем двигаться вправо."
   ]
 }

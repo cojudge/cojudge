@@ -1,19 +1,19 @@
-You hold a square grid with `n` rows and `n` columns. Every cell shows one
-of two symbols, `0` or `1` (stored as single-character strings). In one step
-you may exchange any two whole rows, or any two whole columns. The order of
-cells inside a row or column otherwise stays fixed.
+Вы держите квадратную сетку с строками `n` и столбцами `n`. Каждая ячейка показывает одну
+из двух символов, `0` или `1` (сохраняется как односимвольные строки).
+Вы можете обменять любые два целых ряда или любые два целых столбца.
+Ячейки внутри строки или колонки иначе остаются фиксированными.
 
-A finished board is called alternating when no two cells that touch
-sideways (up, down, left, right) hold the same symbol — the pattern must
-look like a chessboard. Count the fewest row/column exchanges that turn the
-given board into an alternating one. When no sequence of swaps can do it,
-report `-1`.
+Готовая доска называется чередованием, когда нет двух ячеек, которые касаются.
+боковые (вверх, вниз, влево, вправо) держат один и тот же символ — рисунок должен быть
+Подсчитайте наименьшее количество строк / столбцов, которые поворачивают
+когда никакая последовательность свопов не может сделать это,
+Об этом сообщает `-1`.
 
-Note on types: the grid arrives as characters `'0'` and `'1'`, not as
-numbers, so compare symbols directly.
+Примечание по типам: сетка поставляется в виде символов `'0'` и `'1'`, а не в виде символов.
+Цифры, поэтому сравните символы напрямую.
 
-**Constraints:**
+**Ограничения:**
 - `n == board.length`
 - `n == board[i].length`
 - `2 <= n <= 30`
-- `board[i][j]` is `"0"` or `"1"`.
+- `board[i][j]` - это `"0"` или `"1"`.

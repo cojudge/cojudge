@@ -1,0 +1,62 @@
+{
+  "id": "zigzag-conversion",
+  "title": "251. Zigzag Conversion",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/zigzag-conversion/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"PAYPALISHIRING\", numRows = 3",
+      "output": "\"PAHNAPLSIIGYIR\"",
+      "explanation": "Rows are \"PAHN\", \"APLSIIG\", \"YIR\"."
+    },
+    {
+      "input": "s = \"PAYPALISHIRING\", numRows = 4",
+      "output": "\"PINALSIGYAHRPI\""
+    },
+    {
+      "input": "s = \"A\", numRows = 1",
+      "output": "\"A\""
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String convert(String s, int numRows) {\n        \n    }\n}",
+    "python": "class Solution:\n    def convert(self, s: str, numRows: int) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string convert(string s, int numRows) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string Convert(string s, int numRows) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn convert(s: String, num_rows: i32) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc Convert(s string, numRows int) string {\n    \n}",
+    "typescript": "export function convert(s: string, numRows: number): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param int $numRows\n     * @return string\n     */\n    public function convert($s, $numRows) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "PAYPALISHIRING",
+      "numRows": 3
+    },
+    {
+      "s": "PAYPALISHIRING",
+      "numRows": 4
+    },
+    {
+      "s": "A",
+      "numRows": 1
+    }
+  ],
+  "functionName": "convert",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "numRows",
+      "type": "int"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Simulate the row index moving down then up, appending each character to its row.",
+    "If numRows is 1, the answer is the original string."
+  ]
+}

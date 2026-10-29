@@ -1,15 +1,15 @@
-You are given the head of a singly linked list holding `n` values and an integer `k`. Your task is to divide the list into `k` consecutive groups.
+Вам дается глава отдельно связанного списка, содержащего значения `n` и целое число `k`. Ваша задача состоит в том, чтобы разделить список на последовательные группы `k`.
 
-Follow these rules when describing the groups:
+Следуйте этим правилам при описании групп:
 
-- Every value of the original list appears in exactly one group, and the groups preserve the original order.
-- The groups should be as close in size as possible: any two groups differ in length by at most one.
-- Groups at the front get the extra values. In other words, if `n` does not divide evenly, the first `n % k` groups each hold one additional node.
-- When there are more groups than values, the trailing groups are empty.
+- Каждое значение исходного списка появляется в одной группе, и группы сохраняют первоначальный порядок.
+- Группы должны быть как можно ближе по размеру: любые две группы отличаются по длине не более чем на одну.
+- Другими словами, если `n` не делится равномерно, первые группы `n % k` удерживают один дополнительный узел.
+- Когда групп больше, чем ценностей, группы, которые следуют за ними, пусты.
 
-Return the `k` groups in order, where each group is represented by the head of its chain (an empty group is represented by an empty chain).
+Возвращайте группы `k` по порядку, где каждая группа представлена главой своей цепи (пустая группа представлена пустой цепью).
 
-**Constraints:**
+**Ограничения:**
 - `0 <= n <= 1000`
 - `1 <= k <= 50`
 - `0 <= Node.val <= 1000`

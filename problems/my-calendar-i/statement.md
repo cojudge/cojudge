@@ -1,17 +1,17 @@
-Imagine a booking service that stores half-open time slots `[start, end)`: the slot covers `start` but stops just before `end`, so two slots that only touch at an endpoint do not clash.
+Представьте себе службу бронирования, которая хранит полуоткрытые слоты времени `[start, end)`: слот покрывает `start`, но останавливается непосредственно перед `end`, поэтому два слота, которые касаются только конечной точки, не сталкиваются.
 
-You receive a sequence of calls. The first entry always creates the calendar; every later entry asks to book one interval. Process the calls in order:
+Вы получаете последовательность звонков. Первая запись всегда создает календарь; каждая более поздняя запись просит забронировать один интервал. Обработайте звонки в порядке:
 
-- Creation entries carry no interval.
-- Each booking entry carries `[start, end)` with `start < end` and answers whether the booking succeeds: it succeeds exactly when it overlaps none of the previously accepted bookings, in which case it is stored.
+- Записи о создании не имеют интервала.
+- Каждая запись бронирования содержит `[start, end)` с `start < end` и отвечает на вопрос, является ли бронирование успешным: оно преуспевает именно тогда, когда оно не пересекается ни с одним из ранее принятых бронирований, и в этом случае оно хранится.
 
-Rather than building a class, implement `runCalendar(operations, args)`:
+Вместо того, чтобы создавать класс, введите `runCalendar(operations, args)`:
 
-- `operations[i]` is either `"MyCalendar"` (create, first entry) or `"book"`.
-- `args[i]` is the argument list for that call: `[]` for creation and `[start, end]` for a booking.
-- Return one integer per booking call (skipping the creation entry): `1` when the booking is accepted and `0` when it is rejected.
+- `operations[i]` - это `"MyCalendar"` (создание, первая запись) или `"book"`.
+- `args[i]` - это список аргументов для этого вызова: `[]` для создания и `[start, end]` для бронирования.
+- Возврат одного целого числа на вызов бронирования (пропуск записи создания): `1`, когда бронирование принято, и `0`, когда оно отклонено.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= operations.length <= 1000`
 - `0 <= start < end <= 10^9`
-- At most 1000 bookings.
+- Большинство заказов 1000.

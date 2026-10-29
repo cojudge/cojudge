@@ -1,7 +1,7 @@
-You are given an `n x n` binary grid containing exactly two islands (groups of `1`s connected up-down-left-right). Flipping a `0` to `1` extends land.
+Вы получаете двоичную сетку `n x n`, содержащую ровно два острова (группы `1`, соединенные вверх-вниз-лево-право). Перемещение `0` на `1` расширяет территорию.
 
-Return the smallest number of water cells that must be flipped so the two islands become one connected group.
+Возвращайте наименьшее количество водных элементов, которые должны быть перевернуты, чтобы два острова стали одной связанной группой.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= n <= 100`
-- The grid holds exactly two 4-directionally connected islands of `1`s.
+- Сетка содержит ровно два острова 4, связанных с `1`.

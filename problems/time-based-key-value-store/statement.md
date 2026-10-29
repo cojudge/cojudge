@@ -1,20 +1,20 @@
-Implement a time-based key-value store. A key may have several values, each associated with the timestamp at which it was set. A `get` query returns the value with the greatest set timestamp that is less than or equal to the query timestamp. If no such value exists, it returns the empty string.
+Внедрить хранилище значений ключей на основе времени. Ключ может иметь несколько значений, каждое из которых связано с временной меткой, в которой он был установлен. Запрос `get` возвращает значение с наибольшей установленной временной меткой, которая меньше или равна временной метке запроса. Если такого значения не существует, он возвращает пустую строку.
 
-This version uses a portable function interface instead of requiring a language-specific `TimeMap` class. The four input arrays are aligned:
+Эта версия использует переносной функциональный интерфейс вместо того, чтобы требовать класс `TimeMap` для конкретного языка. Четыре входных массива выровнены:
 
 - For `operations[i] == "set"`, store `values[i]` for `keys[i]` at `timestamps[i]`.
-- For `operations[i] == "get"`, ignore `values[i]` (which may be any placeholder, including the empty string), query `keys[i]` at `timestamps[i]`, and append the answer to the returned list.
-- Return results only for `get` operations. Do not return placeholders for `set` operations.
-- Each call starts with an empty store. Across the whole operation sequence, timestamps on `set` operations are strictly increasing.
+- Для `operations[i] == "get"` игнорируйте `values[i]` (который может быть любым заполнителем, включая пустую строку), запросите `keys[i]` в `timestamps[i]` и добавьте ответ в возвращенный список.
+- Результаты возврата только для операций `get`. Не возвращайте заполнителей для операций `set`.
+- Каждый звонок начинается с пустого магазина. По всей последовательности операций временные метки на операциях `set` строго увеличиваются.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= operations.length <= 2 * 10^5`
-- All four arrays have the same length.
-- Every operation is either `"set"` or `"get"`.
-- `1 <= keys[i].length <= 100`, and every key contains only lowercase English letters and digits.
-- For `set` operations, `1 <= values[i].length <= 100`, and the value contains only lowercase English letters and digits. Values paired with `get` operations are ignored placeholders and are not subject to this requirement.
+- Все четыре массива имеют одинаковую длину.
+- Каждая операция — `"set"` или `"get"`.
+- `1 <= keys[i].length <= 100`, и каждый ключ содержит только строчные английские буквы и цифры.
+- Для операций `set`, `1 <= values[i].length <= 100` и значение содержит только строчные английские буквы и цифры.Значения в паре с операциями `get` игнорируются заполнителями и не подпадают под это требование.
 - `1 <= timestamps[i] <= 10^7`
-- Timestamps on `set` operations are strictly increasing globally, in operation order.
+- Временные метки на операциях `set` строго увеличиваются во всем мире.
 
-**Portable interface:** Implement `runTimeMap(operations, keys, values, timestamps)`. This is intentionally function-based and must not be implemented as a class problem.
+**Портативный интерфейс: ** Внедрить `runTimeMap(operations, keys, values, timestamps)`. Это намеренно основано на функциях и не должно быть реализовано как проблема класса.

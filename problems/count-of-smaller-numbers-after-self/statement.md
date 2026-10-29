@@ -1,7 +1,7 @@
-You are given an integer array `nums`. For every position `i`, count how many elements strictly smaller than `nums[i]` appear to its right (at indices greater than `i`). Collect these counts into an array of the same length and return it.
+Вы получаете целочисленный массив `nums`Для каждой позиции `i`Подсчитайте, сколько элементов строго меньше, чем `nums[i]` в правую сторону (по показателям, превышающим `i`Соберите эти подсчеты в массив одинаковой длины и верните его.
 
-*Adaptation note:* the original statement returns a list of integers; here the result is returned as a plain integer array with identical contents and order.
+*Примечание по адаптации: * оригинальное утверждение возвращает список целых чисел; здесь результат возвращается в виде простого целого массива с идентичным содержимым и порядком.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^5`
 - `-10^4 <= nums[i] <= 10^4`

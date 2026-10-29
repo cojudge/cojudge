@@ -1,6 +1,6 @@
-Write the integers `1` through `n` in a row. Then repeatedly thin the row as follows: first sweep from left to right, deleting the first remaining value and then every second value after it; next sweep from right to left, deleting the last remaining value and then every second value before it. Keep alternating the sweep direction until a single value survives, and report it.
+Запишите целые числа `1` через `n` в строке. Затем многократно разрежьте строку следующим образом: сначала проведите слева направо, удалив первое оставшееся значение, а затем каждое второе значение после него; затем проведите с правой на левую, удалив последнее оставшееся значение, а затем каждое второе значение перед ним. Продолжайте чередовать направление разметки до тех пор, пока не выживет одно значение, и сообщите об этом.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 10^9`
 
-Simulating the deletions directly is far too slow for large `n`; track how the leading survivor and the step size evolve instead.
+Моделирование удалений напрямую слишком медленно для большого `n`; отследите, как развивается ведущий выживший и размер шага.

@@ -1,5 +1,5 @@
-For every node of a binary tree, consider the sum of all values in the subtree rooted at that node (the node itself plus everything below it). Collect one such total per node, count how many times each distinct total appears, and return every total that attains the highest frequency. The order of the returned totals does not matter.
+Для каждого узла двоичного дерева рассмотрим сумму всех значений в поддереве, укорененной в этом узле (сам узел плюс все ниже него). Соберите одну такую сумму на узел, подсчитайте, сколько раз появляется каждая отдельная сумма, и верните каждую сумму, которая достигает самой высокой частоты. Порядок возвращенных сумм не имеет значения.
 
-**Constraints:**
-- The number of nodes is in the range `[0, 10^4]`
+**Ограничения:**
+- Количество узлов находится в диапазоне `[0, 10^4]`
 - `-10^5 <= Node.val <= 10^5`

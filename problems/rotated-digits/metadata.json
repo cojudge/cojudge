@@ -1,6 +1,6 @@
 {
   "id": "rotated-digits",
-  "title": "786. Rotated Digits",
+  "title": "786. Вращенные дигиты",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/rotated-digits/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "n = 10",
       "output": "4",
-      "explanation": "Values 2, 5, 6, and 9 qualify."
+      "explanation": "Значения 2, 5, 6 и 9 квалифицируются."
     },
     {
       "input": "n = 1",
       "output": "0",
-      "explanation": "The number 1 spins to itself."
+      "explanation": "Число 1 вращается само по себе."
     },
     {
       "input": "n = 20",
       "output": "9",
-      "explanation": "Nine values up to 20 change under rotation."
+      "explanation": "Девять значений до 20 изменяются при ротации."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Check each number digit by digit: reject on 3, 4, or 7, and require at least one of 2, 5, 6, 9.",
-    "A lookup table for the ten digits keeps the inner test tiny.",
-    "With n capped at 10000, a straight scan from 1 to n is fast enough."
+    "Проверьте каждую цифру номера по цифре: отклонить на 3, 4 или 7, и требуется по крайней мере один из 2, 5, 6, 9.",
+    "Поисковая таблица для десяти цифр сохраняет внутренний тест крошечным.",
+    "С n, ограниченным 10000, прямое сканирование от 1 до n достаточно быстрое."
   ]
 }

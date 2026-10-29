@@ -1,6 +1,6 @@
 {
   "id": "minimize-max-distance-to-gas-station",
-  "title": "774. Minimize Max Distance to Gas Station",
+  "title": "774. Минимизируйте расстояние до газовой станции",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/minimize-max-distance-to-gas-station/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "stations = [1,2,3,4,5,6,7,8,9,10], k = 9",
       "output": "\"0.5\"",
-      "explanation": "Halve every unit gap."
+      "explanation": "Сократите разрыв в единицах."
     },
     {
       "input": "stations = [23,24,36,39,46,56,57,65,84,98], k = 1",
       "output": "\"14.0\"",
-      "explanation": "Splitting 65-84 leaves 84-98 as the max."
+      "explanation": "Расщепление 65-84 листья 84-98 как макс."
     },
     {
       "input": "stations = [1,10], k = 1",
       "output": "\"4.5\"",
-      "explanation": "Halve the single gap."
+      "explanation": "Сократите единый разрыв."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "This is a portable adaptation: take integer stations and return the optimum as a double-parseable decimal string (tolerance 1e-5).",
-    "Decide feasibility for a guess D: each gap of length g needs ceil(g / D) - 1 new stops; sum over gaps and compare with k.",
-    "Feasibility is monotone in D, so binary-search the smallest feasible D (about 60 halvings from [0, 1e8])."
+    "Это переносная адаптация: возьмите целые станции и верните оптимум в виде двухраздельной десятичной строки (толерантность 1e-5).",
+    "Решите целесообразность для догадки D: каждый разрыв длины g нуждается в потолке (g/D) - 1 новые остановки; суммируйте над промежутками и сравните с k.",
+    "Осуществимость является монотонной в D, поэтому двоичный поиск является наименьшим возможным D (примерно 60 в два раза меньше [0, 1e8])."
   ]
 }

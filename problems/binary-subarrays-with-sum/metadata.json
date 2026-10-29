@@ -1,6 +1,6 @@
 {
   "id": "binary-subarrays-with-sum",
-  "title": "917. Binary Subarrays With Sum",
+  "title": "917. Бинарные подложки с суммой",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/binary-subarrays-with-sum/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1,0,1,0,1], goal = 2",
       "output": "4",
-      "explanation": "Four slices contain exactly two ones."
+      "explanation": "Четыре ломтика содержат ровно два."
     },
     {
       "input": "nums = [0,0,0,0,0], goal = 0",
       "output": "15",
-      "explanation": "All 15 slices sum to zero."
+      "explanation": "Все кусочки 15 равны нулю."
     },
     {
       "input": "nums = [1,1,1,1,1], goal = 3",
@@ -57,8 +57,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Convert the task to counting prefix sums: a subarray sums to goal when two prefixes differ by goal.",
-    "Keep how many times each running total has appeared.",
-    "Initialize the empty prefix count to one so slices from the start are included."
+    "Преобразуйте задачу в подсчет префиксных сумм: субарейные суммы в цель, когда две префиксы различаются по цели.",
+    "Определите, сколько раз появлялась каждая общая сумма.",
+    "Инициализируйте пустое количество префиксов до одного, так что срезы с самого начала включены."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "decode-ways-ii",
-  "title": "661. Decode Ways II",
+  "title": "661. Декодировать пути II",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/decode-ways-ii/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"*\"",
       "output": "9",
-      "explanation": "Any digit 1 through 9 forms one valid letter."
+      "explanation": "Любая цифра 1 через 9 образует одну действительную букву."
     },
     {
       "input": "s = \"1*\"",
       "output": "18",
-      "explanation": "'1' pairs with each of the 9 options, and '11'..'19' are all valid pairs, giving 9 + 9."
+      "explanation": "Пара «1» с каждым из вариантов 9 и «11» ..«19» являются действительными парами, давая 9 + 9."
     },
     {
       "input": "s = \"2*\"",
       "output": "15",
-      "explanation": "9 single-step options plus the pairs '21'..'26' (6 options)."
+      "explanation": "Одноступенчатые опции 9 плюс пары '21'..'26' (варианты 6)."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Let dp[i] be the ways for the first i characters; each step adds single-character and two-character transitions.",
-    "A '*' alone contributes 9; as the second char of '1*' it contributes 9 pairs, of '2*' 6 pairs, and of '**' 15 pairs.",
-    "Take every addition modulo 1_000_000_007 and treat any chunk starting with '0' as invalid."
+    "Пусть dp [i] будет путями для первых i символов; каждый шаг добавляет односимволный и двухсимвольный переходы.",
+    "Один только «*» вносит вклад в 9; в качестве второго шара «1*» он вносит пары 9, пары 2*» 6 и пары «**» 15.",
+    "Возьмите каждый модуль 1_000_000_007 и отнеситесь к любому фрагменту, начинающемуся с 0, как к недействительному."
   ]
 }

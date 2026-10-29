@@ -1,6 +1,6 @@
 {
   "id": "combination-sum-ii",
-  "title": "109. Combination Sum II",
+  "title": "109. Комбинация Sum II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/combination-sum-ii/",
   "category": "backtracking",
@@ -8,12 +8,12 @@
     {
       "input": "candidates = [10,1,2,7,6,1,5], target = 8",
       "output": "[[1,1,6],[1,2,5],[1,7],[2,6]]",
-      "explanation": "All unique combinations from [10, 1, 2, 7, 6, 1, 5] summing to 8 are [[1,1,6],[1,2,5],[1,7],[2,6]]."
+      "explanation": "Все уникальные комбинации из [10, 1, 2, 7, 6, 1, 5], суммирующиеся с 8, являются [[1, 1, 6], [1, 2, 5], [1, 7], [2, 6]]."
     },
     {
       "input": "candidates = [2,5,2,1,2], target = 5",
       "output": "[[1,2,2],[5]]",
-      "explanation": "Each array position can be used once, and duplicate combinations are removed."
+      "explanation": "Каждое положение массива может быть использовано один раз, и дублирующие комбинации удаляются."
     }
   ],
   "starterCode": {
@@ -53,8 +53,8 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Sort the candidates before backtracking.",
-    "After choosing position i, recurse from i + 1 so that input element cannot be reused.",
-    "At one recursion depth, skip a value when it equals the previous candidate considered at that same depth."
+    "Сортируйте кандидатов перед отступлением.",
+    "После выбора позиции i, повторите из i + 1 так, чтобы входной элемент не мог быть повторно использован.",
+    "При одной глубине рекурсии пропустите значение, когда оно равняется предыдущему кандидату, рассматриваемому на той же глубине."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "trim-a-binary-search-tree",
-  "title": "688. Trim a Binary Search Tree",
+  "title": "688. Обрезать дерево бинарного поиска",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/trim-a-binary-search-tree/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "root = [1,0,2], low = 1, high = 2",
       "output": "[1,null,2]",
-      "explanation": "The node 0 falls below the kept interval and is dropped; its parent links directly to the surviving right child."
+      "explanation": "Узел 0 падает ниже сохраненного интервала и сбрасывается; его родитель связывается непосредственно с выжившим правильным потомком."
     },
     {
       "input": "root = [3,0,4,null,2,null,null,1], low = 1, high = 3",
       "output": "[3,2,null,1]",
-      "explanation": "Values outside [1,3] are removed while the relative order of the survivors is preserved."
+      "explanation": "Значения за пределами [1, 3] удаляются, в то время как относительный порядок выживших сохраняется."
     },
     {
       "input": "root = [], low = 1, high = 2",
@@ -65,8 +65,8 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Use the ordering guarantee: when the current value is too small the whole left subtree can be skipped.",
-    "When the current value is too large the whole right subtree can be skipped.",
-    "Otherwise trim both sides recursively and reattach them."
+    "Используйте гарантию заказа: когда текущее значение слишком мало, можно пропустить все левое дерево.",
+    "Когда текущее значение слишком велико, можно пропустить целое правое дерево.",
+    "В противном случае обе стороны рекурсивно обрезают и прикрепляют их."
   ]
 }

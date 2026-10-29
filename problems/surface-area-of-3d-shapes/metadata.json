@@ -1,6 +1,6 @@
 {
   "id": "surface-area-of-3d-shapes",
-  "title": "883. Surface Area of 3D Shapes",
+  "title": "883. Площадь поверхности 3D-форм",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/surface-area-of-3d-shapes/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "grid = [[1,2],[3,4]]",
       "output": "34",
-      "explanation": "Sum of lone-tower areas minus shared sides gives 34."
+      "explanation": "Сумма областей с одной башней минус общие стороны дает 34."
     },
     {
       "input": "grid = [[1,1,1],[1,0,1],[1,1,1]]",
       "output": "32",
-      "explanation": "Ring of eight cubes around a hole shows 32 faces."
+      "explanation": "Кольцо из восьми кубов вокруг отверстия показывает лица 32."
     },
     {
       "input": "grid = [[2,2,2],[2,1,2],[2,2,2]]",
       "output": "46",
-      "explanation": "Border towers of height 2 plus centre of height 1 total 46."
+      "explanation": "Пограничные башни высотой 2 плюс центр высоты 1 всего 46."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "A lone tower of height v shows 4*v+2 faces when v is positive and 0 otherwise.",
-    "Each pair of side-adjacent cells hides 2*min(v1,v2) faces; count each pair once by looking only right and down."
+    "Одинокая башня v показывает 4*v+2 лица, когда v положительно и 0 иначе.",
+    "Каждая пара боковых смежных ячеек скрывает лица 2*min(v1,v2); посчитайте каждую пару один раз, посмотрев только вправо и вниз."
   ]
 }

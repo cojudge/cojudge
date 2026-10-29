@@ -3,26 +3,26 @@
   "difficulty": "Easy",
   "examples": [
     {
-      "explanation": "Reordering \"abcd\" can produce \"abcd\"; the surplus letter is \"e\".",
+      "explanation": "Переупорядочение «abcd» может производить «abcd»; избыточная буква — «e».",
       "input": "s = \"abcd\", t = \"abcde\"",
       "output": "\"e\""
     },
     {
-      "explanation": "The first string is empty, so the only letter of \"t\" is the extra one.",
+      "explanation": "Первая строка пуста, поэтому единственная буква «t» — дополнительная.",
       "input": "s = \"\", t = \"y\"",
       "output": "\"y\""
     },
     {
-      "explanation": "Three 'a' letters pair up; one 'a' is left over.",
+      "explanation": "Три буквы «а» соединяются, одна «а» остается.",
       "input": "s = \"aaab\", t = \"aaaba\"",
       "output": "\"a\""
     }
   ],
   "functionName": "findTheDifference",
   "hints": [
-    "Adding up character codes of both strings leaves a difference equal to the extra letter.",
-    "XOR-ing all codes cancels paired letters and reveals the surplus one.",
-    "A 26-slot frequency table also works: the letter whose count differs is the answer."
+    "Сложение кодов символов обеих строк оставляет разницу, равную дополнительной букве.",
+    "XOR-ing все коды отменяют парные буквы и выявляют излишки.",
+    "Также работает таблица частот 26-слота: ответом является буква, количество которой отличается."
   ],
   "id": "find-the-difference",
   "link": "https://leetcode.com/problems/find-the-difference/",
@@ -61,5 +61,5 @@
       "t": "aaaba"
     }
   ],
-  "title": "465. Find the Difference"
+  "title": "465. Найдите разницу"
 }

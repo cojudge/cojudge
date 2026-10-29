@@ -1,6 +1,6 @@
 {
   "id": "balanced-binary-tree",
-  "title": "98. Balanced Binary Tree",
+  "title": "98. Сбалансированное бинарное дерево",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/balanced-binary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [3,9,20,null,null,15,7]",
       "output": "true",
-      "explanation": "At every node, the heights of the left and right subtrees differ by at most 1."
+      "explanation": "На каждом узле высота левого и правого поддеревов отличается максимум 1."
     },
     {
       "input": "root = [1,2,2,3,3,null,null,4,4]",
       "output": "false",
-      "explanation": "Some node has left and right subtree heights differing by more than 1."
+      "explanation": "Некоторые узлы имеют высоту левого и правого поддеревов, отличающуюся более чем 1."
     },
     {
       "input": "root = []",
       "output": "true",
-      "explanation": "At every node, the heights of the left and right subtrees differ by at most 1."
+      "explanation": "На каждом узле высота левого и правого поддеревов отличается максимум 1."
     }
   ],
   "starterCode": {
@@ -55,8 +55,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Compute subtree heights from the leaves upward rather than recomputing each height for every ancestor.",
-    "If either child subtree is already unbalanced, or their heights differ by more than one, the whole tree is unbalanced.",
-    "An empty subtree has height zero and is balanced."
+    "Вычислите высоту поддеревов от листьев вверх, а не пересчитывайте каждую высоту для каждого предка.",
+    "Если либо детское дерево уже несбалансировано, либо его высота отличается более чем на одну, то несбалансировано все дерево.",
+    "Пустое дерево имеет нулевую высоту и сбалансировано."
   ]
 }

@@ -1,6 +1,6 @@
-Houses are arranged in a circle. Find the maximum amount of money you can rob without robbing adjacent houses.
+Дома устроены по кругу. Найдите максимальную сумму денег, которую можно ограбить, не грабя соседние дома.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ nums.length ≤ 100
 - 0 ≤ nums[i] ≤ 1000

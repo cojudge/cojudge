@@ -1,0 +1,58 @@
+{
+  "id": "minimum-number-of-arrows-to-burst-balloons",
+  "title": "519. Minimum Number of Arrows to Burst Balloons",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/",
+  "category": "interval",
+  "examples": [
+    {
+      "input": "points = [[10,16],[2,8],[1,6],[7,12]]",
+      "output": "2",
+      "explanation": "Arrows at 6 and 12 pop all."
+    },
+    {
+      "input": "points = [[1,2],[3,4],[5,6],[7,8]]",
+      "output": "4",
+      "explanation": "Disjoint spans need separate arrows."
+    },
+    {
+      "input": "points = [[1,2],[2,3],[3,4],[4,5]]",
+      "output": "2",
+      "explanation": "Touching endpoints share an arrow."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int findMinArrowShots(int[][] points) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def findMinArrowShots(self, points: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int findMinArrowShots(vector<vector<int>>& points) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int FindMinArrowShots(int[][] points)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn find_min_arrow_shots(points: Vec<Vec<i32>>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc FindMinArrowShots(points [][]int) int {\n    return 0\n}",
+    "typescript": "export function findMinArrowShots(points: number[][]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $points\n     * @return int\n     */\n    public function findMinArrowShots($points) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "points": "[[10,16],[2,8],[1,6],[7,12]]"
+    },
+    {
+      "points": "[[1,2],[3,4],[5,6],[7,8]]"
+    },
+    {
+      "points": "[[1,2],[2,3],[3,4],[4,5]]"
+    }
+  ],
+  "functionName": "findMinArrowShots",
+  "params": [
+    {
+      "name": "points",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Order balloons by right endpoint; the earliest finishing balloon dictates the first arrow.",
+    "Place an arrow at that endpoint, skip every balloon it hits, then repeat.",
+    "Touching endpoints overlap, so only a strictly greater start needs a new arrow."
+  ]
+}

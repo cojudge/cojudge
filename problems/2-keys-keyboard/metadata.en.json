@@ -1,0 +1,58 @@
+{
+  "id": "2-keys-keyboard",
+  "title": "670. 2 Keys Keyboard",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/2-keys-keyboard/",
+  "category": "dp",
+  "examples": [
+    {
+      "input": "n = 3",
+      "output": "3",
+      "explanation": "Copy (1) then paste twice: 1 -> 2 -> 3."
+    },
+    {
+      "input": "n = 1",
+      "output": "0",
+      "explanation": "The single A is already there."
+    },
+    {
+      "input": "n = 6",
+      "output": "5",
+      "explanation": "Copy, paste to 2, copy, paste to 4, paste to 6."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minSteps(int n) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minSteps(self, n: int) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minSteps(int n) {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public int MinSteps(int n) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_steps(n: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinSteps(n int) int {\n    return 0\n}",
+    "typescript": "export function minSteps(n: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function minSteps($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 3
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 6
+    }
+  ],
+  "functionName": "minSteps",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "A paste run from size a to a multiple m*a costs one copy plus (m - 1) pastes, i.e. m steps for the factor m.",
+    "Hence the optimum equals the sum of the prime factors of n with multiplicity.",
+    "Peel off the smallest divisor repeatedly; whatever prime remains counts itself."
+  ]
+}

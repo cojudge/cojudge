@@ -1,0 +1,57 @@
+{
+  "id": "validate-ip-address",
+  "title": "533. Validate IP Address",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/validate-ip-address/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "queryIP = \"172.16.254.1\"",
+      "output": "\"IPv4\"",
+      "explanation": "Four decimal groups, each 0-255 with no leading zeroes."
+    },
+    {
+      "input": "queryIP = \"2001:0db8:85a3:0:0:8A2E:0370:7334\"",
+      "output": "\"IPv6\"",
+      "explanation": "Eight groups of 1-4 hexadecimal digits."
+    },
+    {
+      "input": "queryIP = \"256.256.256.256\"",
+      "output": "\"Neither\"",
+      "explanation": "256 exceeds the largest allowed IPv4 group value of 255."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String validIPAddress(String queryIP) {\n        \n    }\n}",
+    "python": "class Solution:\n    def validIPAddress(self, queryIP: str) -> str:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    string validIPAddress(string queryIP) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string ValidIPAddress(string queryIP) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn valid_ip_address(queryIP: String) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc ValidIPAddress(queryIP string) string {\n    \n}",
+    "typescript": "export function validIPAddress(queryIP: string): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $queryIP\n     * @return string\n     */\n    public function validIPAddress($queryIP) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "queryIP": "172.16.254.1"
+    },
+    {
+      "queryIP": "2001:0db8:85a3:0:0:8A2E:0370:7334"
+    },
+    {
+      "queryIP": "256.256.256.256"
+    }
+  ],
+  "functionName": "validIPAddress",
+  "params": [
+    {
+      "name": "queryIP",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Split on dots and on colons separately, keeping empty pieces so missing groups are caught.",
+    "IPv4 forbids leading zeroes and values above 255; IPv6 needs exactly 8 groups of 1-4 hex digits with no shorthand."
+  ]
+}

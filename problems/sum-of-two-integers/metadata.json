@@ -1,6 +1,6 @@
 {
   "id": "sum-of-two-integers",
-  "title": "11. Sum of Two Integers",
+  "title": "11. Сумма двух целых чисел",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/sum-of-two-integers/",
   "category": "binary",
@@ -57,6 +57,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use bitwise operations: the partial sum is `a ^ b` and the carry is `(a & b) << 1`. Iterate until the carry is zero."
+    "Используйте побитовые операции: частичная сумма `a ^ b` и несущая `(a & b) << 1`. Итерируйте до нуля несущей."
   ]
 }

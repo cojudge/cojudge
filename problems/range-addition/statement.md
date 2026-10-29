@@ -1,9 +1,9 @@
-Rebuild the final array after many interval increments.
+Восстановите конечный массив после многих интервальных приращений.
 
-Start with an array of `length` zeros. Each entry of `updates` is a triple `[start, end, inc]` meaning add `inc` to every position from `start` through `end` inclusive. Apply all triples in order and return the resulting array. When `updates` is empty the answer is all zeros; when `length` is zero the answer is the empty array.
+Начните с массива `length` нулей. Каждая запись `updates` представляет собой тройной `[start, end, inc]`, что означает добавление `inc` в каждую позицию от `start` до `end` включительно. Примените все тройки в порядке и верните полученный массив. Когда `updates` пуст, ответ - все нули; когда `length` равен нулю, ответ - пустой массив.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= length <= 10^4`
 - `0 <= updates.length <= 10^4`
-- Each triple has the form `[start, end, inc]` with `0 <= start <= end < length` when `length > 0`.
+- Каждая тройка имеет форму `[start, end, inc]` с `0 <= start <= end < length` при `length > 0`.
 - `-1000 <= inc <= 1000`

@@ -1,0 +1,70 @@
+{
+  "id": "delete-columns-to-make-sorted-ii",
+  "title": "941. Delete Columns to Make Sorted II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/delete-columns-to-make-sorted-ii/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "strs = [\"ca\",\"bb\",\"ac\"]",
+      "output": "1",
+      "explanation": "Drop the first column to get a, b, c."
+    },
+    {
+      "input": "strs = [\"xc\",\"yb\",\"za\"]",
+      "output": "0",
+      "explanation": "Rows already ordered."
+    },
+    {
+      "input": "strs = [\"zyx\",\"wvu\",\"tsr\"]",
+      "output": "3",
+      "explanation": "Every column steps down."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int minDeletionSize(String[] strs) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def minDeletionSize(self, strs: List[str]) -> int:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    int minDeletionSize(vector<string>& strs) {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Solution \n{\n    public int MinDeletionSize(string[] strs) \n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_deletion_size(strs: Vec<String>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc MinDeletionSize(strs []string) int {\n    return 0\n}",
+    "typescript": "export function minDeletionSize(strs: string[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $strs\n     * @return int\n     */\n    public function minDeletionSize($strs) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "strs": [
+        "ca",
+        "bb",
+        "ac"
+      ]
+    },
+    {
+      "strs": [
+        "xc",
+        "yb",
+        "za"
+      ]
+    },
+    {
+      "strs": [
+        "zyx",
+        "wvu",
+        "tsr"
+      ]
+    }
+  ],
+  "functionName": "minDeletionSize",
+  "params": [
+    {
+      "name": "strs",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Scan columns left to right, remembering which adjacent row pairs are already strictly ordered by kept columns.",
+    "Drop a column when an undecided pair steps down in it; otherwise keep it and mark newly ordered pairs as decided.",
+    "A kept column never harms decided pairs, so this greedy pass is optimal."
+  ]
+}

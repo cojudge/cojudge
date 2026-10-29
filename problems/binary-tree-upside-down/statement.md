@@ -1,8 +1,8 @@
-You are given the root of a binary tree in which every node either has no right child or its right child is a leaf, and every left child (when present) is an internal node with its own children. Turn the whole tree upside down and return the new root.
+Вам дан корень двоичного дерева, в котором каждый узел либо не имеет правого потомка, либо его правый потомок является листом, а каждый левый потомок (при его наличии) является внутренним узлом со своими собственными детьми.
 
-Rewiring follows one rule applied bottom-up along the left spine: for each node `p` with left child `l` and right child `r`, after the flip `l` takes `p`'s position, with `l.left = r` and `l.right = p`. The original root becomes a leaf.
+Перемонтаж следует одному правилу, применяемому снизу вверх вдоль левого позвоночника: для каждого узла `p` с левым потомком `l` и правым потомком `r`, после переворачивания `l` занимает позицию `p`, с `l.left = r` и `l.right = p`.
 
-**Constraints:**
-- The tree holds between 0 and 1000 nodes.
+**Ограничения:**
+- Дерево находится между узлами 0 и 1000.
 - `0 <= Node.val <= 100`
-- The input always satisfies the structural rule above (right children are leaves or absent).
+- Входные данные всегда удовлетворяют вышеприведенному структурному правилу (правые потомки либо остаются, либо отсутствуют).

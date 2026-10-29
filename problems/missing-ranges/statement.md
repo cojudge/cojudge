@@ -1,8 +1,8 @@
-You are given a sorted array `nums` with no duplicates, plus bounds `lower` and `upper`. Every integer from `lower` to `upper` should appear, but the ones already in `nums` are covered.
+Вам предоставляется сортированный массив `nums` без дубликатов, плюс границы `lower` и `upper`. Каждое целое число от `lower` до `upper` должно появиться, но те, которые уже есть в `nums`, покрыты.
 
-Return the missing pieces as strings. A lone missing number becomes just that number (for example `"2"`), while a run of consecutive missing numbers becomes `"start->end"` (for example `"4->49"`). List the pieces in increasing order. When nothing is missing, return an empty list.
+Одинокое недостающее число становится только этим числом (например, `"2"`), в то время как ряд последовательных недостающих чисел становится `"start->end"` (например, `"4->49"`). Перечислите части в порядке возрастания. Когда ничего не пропало, верните пустой список.
 
-**Constraints:**
+**Ограничения:**
 - `-10^9 <= lower <= upper <= 10^9`
 - `0 <= nums.length <= 10^4`
-- `nums` is sorted in strictly increasing order and every element lies within `[lower, upper]`.
+- `nums` сортируется в строго возрастающем порядке, и каждый элемент находится в `[lower, upper]`.

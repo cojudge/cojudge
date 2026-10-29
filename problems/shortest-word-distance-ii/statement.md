@@ -1,14 +1,14 @@
-You are given a fixed word list `wordsDict`. Afterwards many queries arrive, each asking for the shortest distance between two words in that list.
+Вам выдается фиксированный список слов. `wordsDict`После этого приходит много запросов, каждый из которых запрашивает самое короткое расстояние между двумя словами в этом списке.
 
-The `i`-th query pairs `word1s[i]` with `word2s[i]`, and its answer is the minimum `|j - k|` over all positions `j` holding the first word and positions `k` holding the second word. Every queried word occurs at least once, and the two words in a query differ.
+`i`-й запрос соединяет `word1s[i]` с `word2s[i]`, и его ответом является минимальный `|j - k|` по всем позициям `j`, держащим первое слово, и позициям `k`, держащим второе слово. Каждое запрашиваемое слово встречается по крайней мере один раз, и два слова в запросе различаются.
 
-Return one answer per query, in order.
+Возвращайте один ответ на запрос, по порядку.
 
-*Adaptation note:* the original statement defines a `WordDistance` class whose constructor stores the list and whose `shortest` method answers one query at a time. Following the function-adaptation pattern (as with the data-structure design problems), this version batches the work: the constructor input becomes `wordsDict` and the sequence of `shortest` calls becomes two parallel arrays `word1s` and `word2s`, with the results returned as an integer array.
+*Примечание по адаптации: * в первоначальном заявлении определяется класс `WordDistance`, чей конструктор хранит список и чей метод `shortest` отвечает на один запрос за раз. Следуя шаблону функциональной адаптации (как и при задачах проектирования структуры данных), эта версия выполняет работу: вход конструктора становится `wordsDict`, а последовательность вызовов `shortest` становится двумя параллельными массивами `word1s` и `word2s`, а результаты возвращаются в виде целочисленного массива.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= wordsDict.length <= 3 * 10^4`
 - `1 <= wordsDict[i].length <= 10`
-- Each word holds lowercase English letters.
+- Каждое слово содержит английские буквы.
 - `1 <= word1s.length == word2s.length <= 5000`
-- Each queried word occurs in `wordsDict`; the pair in a query differs.
+- Каждое запрашиваемое слово встречается в `wordsDict`; пара в запросе отличается.

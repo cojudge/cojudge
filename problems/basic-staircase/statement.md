@@ -1,4 +1,4 @@
-Return a staircase of stars with `n` rows: row 1 is `"*"`, row 2 is `"**"`, and so on up to row `n` with `n` stars. Return the rows as a list of strings.
+Возвращайте лестницу звёзд с рядами `n`: ряд 1 — `"*"`, ряд 2 — `"**"` и так далее до строки `n` со звёздами `n`. Возвращайте строки как список строк.
 
-**Constraints:**
+**Ограничения:**
 - ``1 <= n <= 25``

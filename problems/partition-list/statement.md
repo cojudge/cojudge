@@ -1,8 +1,8 @@
-Given the head of a linked list and a threshold `x`, reorder the nodes so that all values smaller than `x` appear before all values greater than or equal to `x`. The original relative order inside each of the two groups must be preserved.
+Учитывая заголовок связанного списка и порог `x`, переупорядочив узлы так, чтобы все значения меньше `x` появлялись перед всеми значениями больше или равными `x`.Оригинальный относительный порядок внутри каждой из двух групп должен быть сохранен.
 
-Only the links change; no new values are created. Return the head of the reordered list.
+Меняются только ссылки; не создаются новые значения.Верните заголовок переупорядоченного списка.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= number of nodes <= 200`
 - `-100 <= node value <= 100`
 - `-200 <= x <= 200`

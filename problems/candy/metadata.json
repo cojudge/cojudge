@@ -1,6 +1,6 @@
 {
   "id": "candy",
-  "title": "241. Candy",
+  "title": "241. конфетка",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/candy/",
   "category": "greedy",
@@ -8,12 +8,12 @@
     {
       "input": "ratings = [1,0,2]",
       "output": "5",
-      "explanation": "You can allocate to the first, second and third child with 2, 1, 2 candies respectively."
+      "explanation": "Вы можете выделить первому, второму и третьему ребенку конфеты 2, 1, 2 соответственно."
     },
     {
       "input": "ratings = [1,2,2]",
       "output": "4",
-      "explanation": "You can allocate to the first, second and third child with 1, 2, 1 candies respectively."
+      "explanation": "Вы можете выделить первому, второму и третьему ребенку конфеты 1, 2, 1 соответственно."
     }
   ],
   "starterCode": {
@@ -52,8 +52,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Start by giving every child one candy.",
-    "A left-to-right pass fixes the left neighbor requirement: if ratings[i] > ratings[i-1], give child i more than child i-1.",
-    "A right-to-left pass fixes the right neighbor requirement; take the max of the two passes for each child."
+    "Начните с того, что дайте каждому ребенку одну конфету.",
+    "Слева направо фиксирует требование левого соседа: если рейтинги [i] > рейтинги [i-1], дайте ребенку i больше, чем ребенку i-1.",
+    "Пропуск справа налево фиксирует требование правильного соседа; возьмите максимум двух пропусков для каждого ребенка."
   ]
 }

@@ -1,0 +1,57 @@
+{
+  "id": "ambiguous-coordinates",
+  "title": "814. Ambiguous Coordinates",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/ambiguous-coordinates/",
+  "category": "backtracking",
+  "examples": [
+    {
+      "input": "s = \"(123)\"",
+      "output": "[\"(1, 23)\",\"(1, 2.3)\",\"(12, 3)\",\"(1.2, 3)\"] (order may vary)",
+      "explanation": "Splitting the digits as 1|23 and 12|3 and decorating each side with an optional decimal point yields four valid pairs."
+    },
+    {
+      "input": "s = \"(00011)\"",
+      "output": "[\"(0.001, 1)\"]",
+      "explanation": "Leading-zero and trailing-zero rules leave only one legal rendering."
+    },
+    {
+      "input": "s = \"(0123)\"",
+      "output": "[\"(0, 123)\",\"(0, 12.3)\",\"(0, 1.23)\",\"(0.1, 23)\",\"(0.1, 2.3)\",\"(0.12, 3)\"] (order may vary)",
+      "explanation": "The left part must stay 0 or 0.xxx while the right part varies freely."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\n\nclass Solution {\n    public List<String> ambiguousCoordinates(String s) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def ambiguousCoordinates(self, s: str) -> List[str]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> ambiguousCoordinates(string s) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\n\npublic class Solution\n{\n    public List<string> AmbiguousCoordinates(string s)\n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn ambiguous_coordinates(s: String) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc AmbiguousCoordinates(s string) []string {\n    return []string{}\n}",
+    "typescript": "export function ambiguousCoordinates(s: string): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string[]\n     */\n    public function ambiguousCoordinates($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "(123)"
+    },
+    {
+      "s": "(00011)"
+    },
+    {
+      "s": "(0123)"
+    }
+  ],
+  "functionName": "ambiguousCoordinates",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Strip the outer parentheses, then try every split of the inner digits into left and right halves.",
+    "A piece is valid as an integer when it is exactly 0 or has no leading zero; as a decimal it needs no leading zero unless it starts with 0. and no trailing zero in the fraction."
+  ]
+}

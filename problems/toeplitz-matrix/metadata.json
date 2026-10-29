@@ -1,6 +1,6 @@
 {
   "id": "toeplitz-matrix",
-  "title": "767. Toeplitz Matrix",
+  "title": "767. Матрица Теплица",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/toeplitz-matrix/",
   "category": "matrix",
@@ -8,12 +8,12 @@
     {
       "input": "matrix = [[1,2,3,4],[5,1,2,3],[9,5,1,2]]",
       "output": "true",
-      "explanation": "Every upper-left to lower-right diagonal is constant."
+      "explanation": "Каждая верхняя левая диагональ по отношению к нижней правой является постоянной."
     },
     {
       "input": "matrix = [[1,2],[2,2]]",
       "output": "false",
-      "explanation": "The main diagonal mixes 1 and 2."
+      "explanation": "Основные диагональные смеси 1 и 2."
     },
     {
       "input": "matrix = [[1]]",
@@ -50,7 +50,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Compare each cell with its upper-left neighbor; any mismatch rejects the matrix.",
-    "Only cells with both r > 0 and c > 0 need a check, so one nested loop suffices."
+    "Сравните каждую ячейку с ее верхним левым соседом; любое несоответствие отвергает матрицу.",
+    "Только клетки с r > 0 и c > 0 нуждаются в проверке, поэтому достаточно одной вложенной петли."
   ]
 }

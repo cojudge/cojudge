@@ -1,0 +1,60 @@
+{
+  "id": "ugly-number",
+  "title": "365. Ugly Number",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/ugly-number/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 6",
+      "output": "true",
+      "explanation": "6 factors as 2 * 3, using only allowed primes."
+    },
+    {
+      "input": "n = 1",
+      "output": "true",
+      "explanation": "1 has no prime factors, so it is ugly by definition."
+    },
+    {
+      "input": "n = 14",
+      "output": "false",
+      "explanation": "14 includes the prime factor 7, which is not allowed."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isUgly(int n) {\n        return false;\n    }\n}",
+    "python": "class Solution:\n    def isUgly(self, n: int) -> bool:\n        return False\n",
+    "cpp": "class Solution {\npublic:\n    bool isUgly(int n) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool IsUgly(int n)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_ugly(n: i32) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc IsUgly(n int) bool {\n    return false\n}",
+    "typescript": "export function isUgly(n: number): boolean {\n    return false;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return bool\n     */\n    public function isUgly($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 6
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 14
+    },
+    {
+      "n": 8
+    }
+  ],
+  "functionName": "isUgly",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Non-positive values can never be ugly.",
+    "Divide out factors 2, 3 and 5 completely; the value is ugly exactly when 1 remains."
+  ]
+}

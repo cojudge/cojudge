@@ -1,18 +1,18 @@
 {
   "id": "basic-reverse-text-rec",
-  "title": "49. Reverse Text (Recursive)",
+  "title": "49. Обратный текст (рекурсивный)",
   "difficulty": "Easy",
   "category": "recursion",
   "examples": [
     {
       "input": "s = \"hello\"",
       "output": "\"olleh\"",
-      "explanation": "Reversed text."
+      "explanation": "Перевернутый текст."
     },
     {
       "input": "s = \"\"",
       "output": "\"\"",
-      "explanation": "Base case."
+      "explanation": "Базовое дело."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Base case: strings of length 0 or 1 return themselves.",
-    "Otherwise return `reverse(rest) + first`."
+    "Базовый случай: строки длины 0 или 1 возвращаются сами.",
+    "В противном случае возвращайте `reverse(rest) + first`."
   ]
 }

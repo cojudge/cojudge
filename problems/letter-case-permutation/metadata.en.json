@@ -1,0 +1,58 @@
+{
+  "id": "letter-case-permutation",
+  "title": "783. Letter Case Permutation",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/letter-case-permutation/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"a1b2\"",
+      "output": "[\"a1b2\",\"a1B2\",\"A1b2\",\"A1B2\"]",
+      "explanation": "Two letters give four case combinations."
+    },
+    {
+      "input": "s = \"3z4\"",
+      "output": "[\"3z4\",\"3Z4\"]",
+      "explanation": "Only the middle letter varies."
+    },
+    {
+      "input": "s = \"123\"",
+      "output": "[\"123\"]",
+      "explanation": "No letters means a single result."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\n\nclass Solution {\n    public List<String> letterCasePermutation(String s) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def letterCasePermutation(self, s: str) -> List[str]:\n        return []\n",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> letterCasePermutation(string s) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\n\npublic class Solution {\n    public List<string> LetterCasePermutation(string s) {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn letter_case_permutation(s: String) -> Vec<String> {\n        Vec::new()\n    }\n}",
+    "go": "package main\n\nfunc LetterCasePermutation(s string) []string {\n    return []string{}\n}",
+    "typescript": "export function letterCasePermutation(s: string): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return string[]\n     */\n    public function letterCasePermutation($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "a1b2"
+    },
+    {
+      "s": "3z4"
+    },
+    {
+      "s": "123"
+    }
+  ],
+  "functionName": "letterCasePermutation",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Walk the string depth-first: digits are forced, letters branch into two cases.",
+    "Build a mutable character buffer and backtrack after each branch.",
+    "The total output size doubles with every additional letter."
+  ]
+}

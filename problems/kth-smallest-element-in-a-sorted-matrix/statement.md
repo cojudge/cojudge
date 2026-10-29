@@ -1,10 +1,10 @@
-Pull the k-th tiniest value out of a fully sorted grid.
+Вытащите k-е мельчайшее значение из полностью отсортированной сетки.
 
-You get an `n x n` matrix whose rows and columns each grow from small to large. Collecting every cell and sorting would order all `n^2` values; return the `k`-th entry of that order (counting from 1), keeping duplicates as separate positions rather than collapsing them.
+Вы получаете матрицу `n x n`, строки и столбцы которой растут от маленьких до больших. Сбор каждой ячейки и сортировка заказывают все значения `n^2`; возвращают `k`-тую запись этого порядка (считая от 1), сохраняя дубликаты в виде отдельных позиций, а не разрушая их.
 
-**Constraints:**
+**Ограничения:**
 - `n == matrix.length == matrix[i].length`
 - `1 <= n <= 300`
 - `-10^9 <= matrix[i][j] <= 10^9`
-- Every row and every column is sorted in non-decreasing order.
+- Каждая строка и каждая колонка сортируются в неубывающем порядке.
 - `1 <= k <= n * n`

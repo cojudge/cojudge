@@ -1,6 +1,6 @@
 {
   "id": "excel-sheet-column-title",
-  "title": "243. Excel Sheet Column Title",
+  "title": "243. Название Excel Sheet Column",
   "difficulty": "Easy",
   "category": "math",
   "link": "https://leetcode.com/problems/excel-sheet-column-title/",
@@ -48,7 +48,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Repeatedly reduce columnNumber by taking (columnNumber - 1) % 26 to find each letter from the right.",
-    "Divide columnNumber by 26 after removing the offset so 1-based indexing maps to 'A' through 'Z'."
+    "Неоднократно уменьшайте столбецNumber, принимая (columnNumber - 1) % 26, чтобы найти каждую букву справа.",
+    "Разделите столбецNumber на 26 после удаления смещения, чтобы индексировать карты на основе 1 до «A» через «Z»."
   ]
 }

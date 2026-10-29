@@ -1,6 +1,6 @@
 {
   "id": "range-addition-ii",
-  "title": "637. Range Addition II",
+  "title": "637. Диапазон дополнения II",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/range-addition-ii/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "m = 3, n = 3, ops = [[2,2],[3,3]]",
       "output": "4",
-      "explanation": "The overlap of both rectangles is 2 by 2."
+      "explanation": "Наложение обоих прямоугольников 2 на 2."
     },
     {
       "input": "m = 3, n = 3, ops = [[2,2],[3,3],[3,3],[3,3],[2,2],[3,3],[3,3],[3,3],[2,2],[3,3],[3,3],[3,3]]",
       "output": "4",
-      "explanation": "The smallest operation still limits the overlap to 2 by 2."
+      "explanation": "Самая маленькая операция по-прежнему ограничивает перекрытие 2 2."
     },
     {
       "input": "m = 3, n = 3, ops = []",
       "output": "9",
-      "explanation": "With no steps every cell stays maximal."
+      "explanation": "Без каких-либо шагов каждая клетка остается максимальной."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Each step adds one to the rectangle from the origin to (a,b).",
-    "Only the intersection of all rectangles reaches the highest count.",
-    "Track the minimum a and minimum b; an empty list means m*n."
+    "Каждый шаг добавляет один к прямоугольнику от начала до (a,b).",
+    "Только пересечение всех прямоугольников достигает наивысшего счёта.",
+    "Отслеживайте минимум a и минимум b; пустой список означает m*n."
   ]
 }

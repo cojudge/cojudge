@@ -1,6 +1,6 @@
 {
   "id": "merge-two-binary-trees",
-  "title": "646. Merge Two Binary Trees",
+  "title": "646. Объединить два двоичных дерева",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/merge-two-binary-trees/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root1 = [1,3,2,5], root2 = [2,1,3,null,4,null,7]",
       "output": "[3,4,5,5,4,null,7]",
-      "explanation": "Overlapping values add (1+2=3, 3+1=4, 2+3=5); lone subtrees are kept as-is."
+      "explanation": "Добавить перекрывающиеся значения1+2=3, 3+1=4, 2+3=5Одинокие поддеревья хранятся как есть."
     },
     {
       "input": "root1 = [1], root2 = [1,2]",
       "output": "[2,2]",
-      "explanation": "Roots add to 2; the extra left child 2 is carried over."
+      "explanation": "Корни добавляются к 2; дополнительный левый потомок 2 переносится."
     },
     {
       "input": "root1 = [], root2 = []",
       "output": "[]",
-      "explanation": "Two empty trees merge to empty."
+      "explanation": "Два пустых дерева сливаются в пустые."
     }
   ],
   "starterCode": {
@@ -59,8 +59,8 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Handle the empty cases first: missing on one side means returning the other side.",
-    "Otherwise add the two values and recurse on the left pair and the right pair.",
-    "Build fresh nodes (or reuse carefully) so the checker comparing shapes sees the summed tree."
+    "Сначала разберитесь с пустыми делами: пропажа с одной стороны означает возвращение с другой.",
+    "В противном случае добавьте два значения и повторите на левой и правой паре.",
+    "Постройте свежие узлы (или повторно используйте осторожно), чтобы шашка, сравнивающая формы, видела суммированное дерево."
   ]
 }

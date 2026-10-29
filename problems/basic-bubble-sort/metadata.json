@@ -1,18 +1,18 @@
 {
   "id": "basic-bubble-sort",
-  "title": "38. Bubble Sort",
+  "title": "38. Сортировка пузырьков",
   "difficulty": "Easy",
   "category": "nested-loops",
   "examples": [
     {
       "input": "nums = [3,1,2]",
       "output": "[1,2,3]",
-      "explanation": "Sorted ascending."
+      "explanation": "Сортированный восходящий."
     },
     {
       "input": "nums = []",
       "output": "[]",
-      "explanation": "Nothing to sort."
+      "explanation": "Нечего сортировать."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Repeat passes over the array, swapping neighbors that are out of order.",
-    "After enough passes the largest unsorted value bubbles to its place each round."
+    "Повторяйте проходы над массивом, меняя соседей, которые не в порядке.",
+    "После достаточного количества проходит самый большой несортированный пузырь значения на свое место каждый раунд."
   ]
 }

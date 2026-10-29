@@ -1,6 +1,6 @@
 {
   "id": "interleaving-string",
-  "title": "132. Interleaving String",
+  "title": "132. Переплетение струн",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/interleaving-string/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbcbcac\"",
       "output": "true",
-      "explanation": "\"aadbbcbcac\" can be formed by interleaving the characters of \"aabcc\" and \"dbbca\" in order."
+      "explanation": "«aadbbcbcac» может быть образован путем переплетения символов «aabcc» и «dbbca» по порядку."
     },
     {
       "input": "s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbbaccc\"",
       "output": "false",
-      "explanation": "\"aadbbbaccc\" cannot be formed by interleaving \"aabcc\" and \"dbbca\"."
+      "explanation": "\"aadbbbaccc\" не может быть образован путем перемешивания \"aabcc\" и \"dbbca\"."
     },
     {
       "input": "s1 = \"\", s2 = \"\", s3 = \"\"",
       "output": "true",
-      "explanation": "Empty strings can always be interleaved to form an empty string."
+      "explanation": "Пустые струны всегда могут быть переплетены, чтобы сформировать пустую струну."
     }
   ],
   "starterCode": {
@@ -70,7 +70,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "First reject inputs whose lengths do not add up.",
-    "Use dp[j] to represent whether prefixes of s1 and s2 can form the corresponding prefix of s3."
+    "Сначала отклоняйте входы, длины которых не складываются.",
+    "Используйте dp[j] для представления того, могут ли префиксы s1 и s2 образовывать соответствующий префикс s3."
   ]
 }

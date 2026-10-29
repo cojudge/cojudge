@@ -1,12 +1,12 @@
-A square `n x n` grid describes stacks of unit cubes: `grid[i][j]` cubes are piled on cell `(i, j)`. Picture the solid from three sides and count the visible unit squares:
+Квадратная сетка `n x n` описывает стопки единичных кубов: кубы `grid[i][j]` сложены на ячейке `(i, j)`. Изобразите твердое тело с трех сторон и посчитайте видимые единичные квадраты:
 
-- From above, every non-empty cell shows exactly one square.
-- From the front, each row shows as many squares as its tallest stack.
-- From the side, each column shows as many squares as its tallest stack.
+- Сверху каждая непустая ячейка показывает ровно один квадрат.
+- Спереди каждый ряд показывает столько квадратов, сколько его самый высокий стек.
+- Сбоку каждая колонна показывает столько квадратов, сколько ее самый высокий стек.
 
-Return the sum of the three views.
+Верните сумму трех мнений.
 
-**Constraints:**
+**Ограничения:**
 - `n == grid.length == grid[i].length`
 - `1 <= n <= 50`
 - `0 <= grid[i][j] <= 100`

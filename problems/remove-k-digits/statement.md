@@ -1,5 +1,5 @@
-A non-negative integer arrives as its decimal text `num` (no leading zeros unless the value itself is zero). Delete exactly `k` of its digits, keeping the relative order of the survivors, so that the remaining text denotes the smallest achievable value. Strip any leading zeros from the result; when every digit is deleted or only zeros remain, answer `"0"`.
+Неотрицательное целое число прибывает как его десятичный текст `num` (нет ведущих нулей, если само значение не равно нулю). Удалите точно `k` его цифр, сохраняя относительный порядок выживших, так что оставшийся текст обозначает наименьшее достижимое значение. Удалите любые ведущие нули из результата; когда каждая цифра удалена или остаются только нули, ответьте `"0"`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= k <= num.length <= 10^5`
-- `num` holds only digits and has no leading zeros except for `"0"` itself.
+- `num` содержит только цифры и не имеет ведущих нулей, за исключением самого `"0"`.

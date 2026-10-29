@@ -1,9 +1,9 @@
-An `n`-bit Gray sequence lists every number from `0` to `2^n - 1` exactly once so that consecutive values differ in precisely one binary digit. Build any such ordering starting from `0`.
+Ан `n`-bit Gray последовательно перечисляет каждое число из `0` то `2^n - 1` ровно один раз, так что последовательные значения отличаются точно одной двоичной цифрой. `0`.
 
-One classic construction mirrors the previous sequence: prefix the old order with `0`, then append its reverse prefixed with `1`. Equivalently, entry `i` can be written directly as `i ^ (i >> 1)`.
+Одна классическая конструкция отражает предыдущую последовательность: префиксировать старый порядок с `0`, затем добавить его обратный префикс с `1`. Эквивалентно, запись `i` может быть записана непосредственно как `i ^ (i >> 1)`.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= n <= 16`
-- Any valid Gray ordering is accepted.
+- Любой действительный серый заказ принимается.
 
-> **Adaptation note:** the original LeetCode return type is `List<Integer>`; this problem uses the portable `int_list` output type with the same values.
+**Примечание: ** Оригинальный тип возврата LeetCode - `List<Integer>`; эта проблема использует переносной тип вывода `int_list` с теми же значениями.

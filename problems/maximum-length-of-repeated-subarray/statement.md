@@ -1,9 +1,9 @@
-Given two integer arrays, find the longest contiguous block that appears in both in the same order.
+Учитывая два целых массива, найдите самый длинный смежный блок, который появляется в обоих в одном порядке.
 
-The block must occupy consecutive positions in each array, though the starting offsets may differ. An empty overlap scores zero.
+Блок должен занимать последовательные позиции в каждом массиве, хотя стартовые смещения могут отличаться.
 
-Return that maximum length.
+Верните максимальную длину.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums1.length, nums2.length <= 1000`
 - `0 <= nums1[i], nums2[i] <= 100`

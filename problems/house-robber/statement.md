@@ -1,6 +1,6 @@
-A row of houses lines a street, and `nums[i]` records how much cash sits inside the `i`-th house. Choose which houses to enter during one night so the total haul is as large as possible, under the rule that entering two neighboring houses triggers the alarm. Report the greatest total obtainable while never entering an adjacent pair.
+Ряд домов выстилает улицу, и `nums[i]` записывает, сколько денег находится внутри `i`-го дома. Выберите, какие дома входить в течение одной ночи, чтобы общий улов был как можно больше, по правилу, что вход в два соседних дома вызывает тревогу. Сообщите о наибольшем общем количестве, доступном при никогда не входе в соседнюю пару.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 ≤ nums.length ≤ 100`
 - `0 ≤ nums[i] ≤ 400`

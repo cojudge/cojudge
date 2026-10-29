@@ -1,0 +1,53 @@
+{
+  "id": "reverse-pairs",
+  "title": "557. Reverse Pairs",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/reverse-pairs/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,3,2,3,1]",
+      "output": "2",
+      "explanation": "Two index pairs satisfy the greater-than-twice rule."
+    },
+    {
+      "input": "nums = [2,4,3,5,1]",
+      "output": "3",
+      "explanation": "Three index pairs satisfy the rule."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int reversePairs(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def reversePairs(self, nums: List[int]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int reversePairs(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int ReversePairs(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn reverse_pairs(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc ReversePairs(nums []int) int {\n    \n}",
+    "typescript": "export function reversePairs(nums: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function reversePairs($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,3,2,3,1]"
+    },
+    {
+      "nums": "[2,4,3,5,1]"
+    },
+    {
+      "nums": "[1,2,3,4,5]"
+    }
+  ],
+  "functionName": "reversePairs",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "A modified merge sort can count cross pairs while sorting: both halves are sorted, so one linear scan counts for each left element.",
+    "Compare with long (64-bit) values because doubling a 32-bit integer may overflow.",
+    "The naive double loop is quadratic; divide and conquer brings it to O(n log n)."
+  ]
+}

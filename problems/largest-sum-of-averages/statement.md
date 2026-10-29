@@ -1,10 +1,10 @@
-Split the array `nums` into exactly `k` non-empty consecutive groups. The score of a split is the sum of the average of each group. Return the maximum achievable score.
+Разделите массив `nums` на точно непустые последовательные группы `k`. Оценка раскола - это сумма среднего значения каждой группы. Верните максимально достижимый балл.
 
-For instance, `[9,1,2,3,9]` with `k = 3` is best cut as `[9]`, `[1,2,3]`, `[9]`, scoring `9 + 2 + 9 = 20`.
+Например, `[9,1,2,3,9]` с `k = 3` лучше всего вырезать как `[9]`, `[1,2,3]`, `[9]`, забив `9 + 2 + 9 = 20`.
 
-Adaptation note: the original task returns a floating number. Here, return the score as a decimal string (for example `"20.0"`). The judge parses your string as a double and accepts it within an absolute tolerance of 1e-9 plus a relative tolerance of 1e-5.
+Адаптационное примечание: оригинальное задание возвращает плавающее число. Здесь возвращают счет как десятичную строку (например, `"20.0"`). Судья оценивает вашу строку как двойную и принимает ее в пределах абсолютной толерантности 1e-9 плюс относительная терпимость 1e-5.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 100`
 - `1 <= nums[i] <= 10000`
 - `1 <= k <= nums.length`

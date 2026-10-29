@@ -1,6 +1,6 @@
-There are `n` different songs. A playlist is a list of exactly `goal` songs satisfying two rules: every one of the `n` songs appears at least once, and whenever a song repeats, at least `k` other songs sit between the two plays (positions of equal songs differ by more than `k`).
+Там есть `n` Плейлист - это точно список песен. `goal` Песни, удовлетворяющие двум правилам: каждый из них `n` Песни появляются, по крайней мере, один раз, и каждый раз, когда песня повторяется, по крайней мере, один раз. `k` Другие песни находятся между двумя пьесами (позиции одинаковых песен отличаются друг от друга). `k`).
 
-Return the number of valid playlists, modulo `10^9 + 7`.
+Возвратить количество действительных плейлистов, modulo `10^9 + 7`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= k < n <= goal <= 100`

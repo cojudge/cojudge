@@ -1,6 +1,6 @@
 {
   "id": "binary-number-with-alternating-bits",
-  "title": "708. Binary Number with Alternating Bits",
+  "title": "708. Бинарное число с переменными битами",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/binary-number-with-alternating-bits/",
   "category": "bit-manipulation",
@@ -8,17 +8,17 @@
     {
       "input": "n = 5",
       "output": "true",
-      "explanation": "101 alternates."
+      "explanation": "101 чередуется."
     },
     {
       "input": "n = 7",
       "output": "false",
-      "explanation": "111 does not."
+      "explanation": "111 — нет."
     },
     {
       "input": "n = 10",
       "output": "true",
-      "explanation": "1010 alternates."
+      "explanation": "1010 чередуется."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Compare each bit with the previous one while shifting right.",
-    "Alternatively, n ^ (n >> 1) should be of the form 0b111...1 for alternating values."
+    "Сравните каждый бит с предыдущим, сдвинувшись вправо.",
+    "Альтернативно, n ^ (n >> 1) должно иметь форму 0b111...1 для переменных значений."
   ]
 }

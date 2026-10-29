@@ -1,6 +1,6 @@
 {
   "id": "russian-doll-envelopes",
-  "title": "434. Russian Doll Envelopes",
+  "title": "434. Российские кукольные конверты",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/russian-doll-envelopes/",
   "category": "dp",
@@ -8,12 +8,12 @@
     {
       "input": "envelopes = [[5,4],[6,4],[6,7],[2,3]]",
       "output": "3",
-      "explanation": "The chain [2,3] -> [5,4] -> [6,7] nests three envelopes."
+      "explanation": "Цепь [2, 3] —> [5, 4] —> [6, 7] вмещает три конверта."
     },
     {
       "input": "envelopes = [[1,1],[1,1],[1,1]]",
       "output": "1",
-      "explanation": "Equal envelopes never fit inside each other."
+      "explanation": "Равные конверты никогда не помещаются друг в друга."
     }
   ],
   "starterCode": {
@@ -49,8 +49,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sort by width ascending, and by height descending when widths tie, so equal widths can never form a chain.",
-    "After sorting, the task becomes the longest strictly increasing subsequence of heights.",
-    "Maintain pile tops with binary search for an O(n log n) solution."
+    "Сортировать по ширине, восходящей, и по высоте, нисходящей, когда ширина связана, поэтому равные ширины никогда не могут образовывать цепь.",
+    "После сортировки задача становится самой длинной строго увеличивающейся последовательностью высот.",
+    "Поддерживайте свайные вершины с бинарным поиском решения O(n log n)."
   ]
 }

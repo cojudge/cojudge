@@ -1,6 +1,6 @@
 {
   "id": "flip-game",
-  "title": "389. Flip Game",
+  "title": "389. Игры Flip",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/flip-game/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "currentState = \"++++\"",
       "output": "[\"--++\",\"+--+\",\"++--\"]",
-      "explanation": "Each of the three adjacent pairs flips once."
+      "explanation": "Каждая из трех соседних пар переворачивается один раз."
     },
     {
       "input": "currentState = \"--++\"",
       "output": "[\"----\"]",
-      "explanation": "Only the trailing pair can flip."
+      "explanation": "Только пара может перевернуться."
     },
     {
       "input": "currentState = \"-+-\"",
       "output": "[]",
-      "explanation": "No \"++\" exists, so no move is possible."
+      "explanation": "«++» не существует, поэтому движение невозможно."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Scan every adjacent pair of positions once and test whether both hold '+'..., hide the literal: say both hold a plus sign.",
-    "Build each answer by copying the board and flipping just the chosen pair.",
-    "Boards with no flippable pair produce an empty result list."
+    "Просканируйте каждую соседнюю пару позиций один раз и проверьте, удерживают ли они «+»..., спрячьте буквальный знак: скажите, что оба удерживают знак плюс.",
+    "Создайте каждый ответ, копируя доску и переворачивая только выбранную пару.",
+    "Доски без гибкой пары создают пустой список результатов."
   ]
 }

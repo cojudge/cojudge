@@ -1,0 +1,58 @@
+{
+  "id": "minimum-window-substring",
+  "title": "52. Minimum Window Substring",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/minimum-window-substring/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s=\"ADOBECODEBANC\", t=\"ABC\"",
+      "output": "\"BANC\"",
+      "explanation": "The minimum window in \"ADOBECODEBANC\" containing all chars of \"ABC\" is \"BANC\"."
+    },
+    {
+      "input": "s=\"a\", t=\"a\"",
+      "output": "\"a\"",
+      "explanation": "The minimum window in \"a\" containing all chars of \"a\" is \"a\"."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String minWindow(String s, String t) {\n        \n    }\n}",
+    "python": "class Solution:\n    def minWindow(self, s: str, t: str) -> str:\n        pass\n",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string minWindow(string s, string t) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string MinWindow(string s, string t) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn min_window(s: String, t: String) -> String {\n        \n    }\n}",
+    "go": "package main\n\nfunc MinWindow(s string, t string) string {\n    \n}",
+    "typescript": "export function minWindow(s: string, t: string): string {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string $t\n     * @return string\n     */\n    public function minWindow($s, $t) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "ADOBECODEBANC",
+      "t": "ABC"
+    },
+    {
+      "s": "a",
+      "t": "a"
+    },
+    {
+      "s": "a",
+      "t": "aa"
+    }
+  ],
+  "functionName": "minWindow",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "t",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Sliding window with a frequency map. Expand right to satisfy all requirements, then contract left to find the minimum window while maintaining validity."
+  ]
+}

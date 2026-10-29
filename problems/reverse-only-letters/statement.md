@@ -1,7 +1,7 @@
-You are given a string `s`. Reverse only its English letters (`a` to `z` and `A` to `Z`): every other character (digits, punctuation, spaces) must remain exactly where it is, while the letters appear in reverse order in the letter positions.
+Вам дана струна `s`Перевернуть только его английские буквы.`a` то `z` и `A` то `Z`Каждый другой символ (цифры, пунктуации, пробелы) должен оставаться точно там, где он есть, в то время как буквы появляются в обратном порядке в положениях букв.
 
-Return the resulting string.
+Верните полученную строку.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 100`
-- `s` consists of printable ASCII characters
+- `s` состоит из распечатываемых символов ASCII

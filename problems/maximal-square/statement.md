@@ -1,5 +1,5 @@
-You are given a grid `matrix` of `'0'` and `'1'` characters. Find the largest square that consists entirely of `'1'`s and return its area (side length squared).
+Вы получаете сетку `matrix` символов `'0'` и `'1'`. Найдите самый большой квадрат, который полностью состоит из `'1'`s и верните его площадь (длина стороны в квадрате).
 
-**Constraints:**
+**Ограничения:**
 - `1 <= matrix.length, matrix[0].length <= 300`
-- `matrix[i][j]` is `'0'` or `'1'`.
+- `matrix[i][j]` - это `'0'` или `'1'`.

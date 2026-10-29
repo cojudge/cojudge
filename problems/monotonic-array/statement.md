@@ -1,7 +1,7 @@
-Call a list steadily rising when every later entry is at least as large as every earlier one, and steadily falling when every later entry is at most as large as every earlier one. A list that satisfies either pattern (including flat lists where all entries tie) counts as monotone.
+Вызовите список, который неуклонно растет, когда каждая более поздняя запись по крайней мере такая же большая, как и каждая более ранняя, и неуклонно падает, когда каждая более поздняя запись в лучшем случае такая же большая, как и каждая более ранняя. Список, который удовлетворяет любой шаблон (включая плоские списки, где все записи связаны) считается монотонным.
 
-Given `nums`, decide whether it is monotone in either direction.
+Учитывая `nums`, решите, является ли он монотонным в любом направлении.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^5`
 - `-10^5 <= nums[i] <= 10^5`

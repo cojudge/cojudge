@@ -1,6 +1,6 @@
 {
   "id": "last-stone-weight",
-  "title": "102. Last Stone Weight",
+  "title": "102. Последний каменный вес",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/last-stone-weight/",
   "category": "heap",
@@ -8,12 +8,12 @@
     {
       "input": "stones = [2,7,4,1,8,1]",
       "output": "1",
-      "explanation": "Repeatedly smashing the two heaviest stones leaves one stone of weight 1."
+      "explanation": "Неоднократное разбивание двух самых тяжелых камней оставляет один камень веса 1."
     },
     {
       "input": "stones = [2,2]",
       "output": "0",
-      "explanation": "Equal stones destroy each other."
+      "explanation": "Равные камни уничтожают друг друга."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "The next operation always needs the two largest remaining weights.",
-    "Use a max-heap so both stones can be removed in logarithmic time.",
-    "Insert `y - x` back into the heap only when the two weights differ."
+    "Следующая операция всегда требует двух самых больших оставшихся весов.",
+    "Используйте максимальную кучу, чтобы оба камня могли быть удалены в логарифмическое время.",
+    "Вставьте `y - x` обратно в кучу только тогда, когда два веса отличаются."
   ]
 }

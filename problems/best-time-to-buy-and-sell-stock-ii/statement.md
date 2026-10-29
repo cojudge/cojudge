@@ -1,10 +1,10 @@
-The integer array `prices` quotes one stock day by day, so `prices[i]` is its quote on day `i`.
+Целый массив `prices` котирует одну акцию день за днем, поэтому `prices[i]` - это его котировка на день `i`.
 
-Each day you may buy and/or sell, with the restriction that your hand never holds more than one share. Selling and immediately rebuying — even within the same day — is permitted, so any number of round trips is fair game.
+Каждый день вы можете покупать и / или продавать, с ограничением, что ваша рука никогда не держит более одной акции.Продажа и немедленное пополнение - даже в течение того же дня - разрешено, поэтому любое количество поездок туда и обратно - честная игра.
 
-Tally up the greatest combined profit these trips can produce.
+Сопоставьте наибольшую совокупную прибыль, которую могут принести эти поездки.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ prices.length ≤ 3 * 10^4
 - 0 ≤ prices[i] ≤ 10^4

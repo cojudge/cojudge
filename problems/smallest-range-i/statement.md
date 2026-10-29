@@ -1,8 +1,8 @@
-You are given an integer array `nums` and an integer `k`. For each element you may pick a shift amount between `-k` and `k` (each element gets its own choice, and choosing `0` leaves it unchanged) and add it to that element.
+Вы получаете целочисленный массив `nums` и целое число `k`Для каждого элемента вы можете выбрать количество сдвига между `-k` и `k` (каждый элемент получает свой собственный выбор и выбор). `0` оставить его без изменений) и добавить его к этому элементу.
 
-After all shifts, the score is the difference between the largest and the smallest value. Return the smallest score you can achieve.
+После всех смен счет - это разница между самым большим и самым маленьким значением. Возвращайте наименьший балл, которого вы можете достичь.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 50`
 - `0 <= nums[i] <= 10000`
 - `0 <= k <= 10000`

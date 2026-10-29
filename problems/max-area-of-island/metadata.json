@@ -1,6 +1,6 @@
 {
   "id": "max-area-of-island",
-  "title": "115. Max Area of Island",
+  "title": "115. Площадь острова Макс",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/max-area-of-island/",
   "category": "graph",
@@ -8,12 +8,12 @@
     {
       "input": "grid = [[0,0,1,0],[1,1,1,0],[0,1,0,1]]",
       "output": "5",
-      "explanation": "The five connected land cells form the largest island."
+      "explanation": "Пять соединенных наземных ячеек образуют самый большой остров."
     },
     {
       "input": "grid = [[0,0],[0,0]]",
       "output": "0",
-      "explanation": "The 2x2 grid contains no land cells, so the maximum island area is 0."
+      "explanation": "Сетка 2x2 не содержит наземных ячеек, поэтому максимальная площадь острова 0."
     }
   ],
   "starterCode": {
@@ -47,7 +47,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Start a flood fill from each unvisited land cell.",
-    "Count the cells reached by each flood fill and keep the largest count."
+    "Начните наводнение с каждой непосещенной наземной ячейки.",
+    "Подсчитайте ячейки, достигаемые каждым наводнением, и сохраните наибольшее количество."
   ]
 }

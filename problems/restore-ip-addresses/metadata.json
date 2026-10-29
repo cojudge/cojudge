@@ -1,6 +1,6 @@
 {
   "id": "restore-ip-addresses",
-  "title": "279. Restore IP Addresses",
+  "title": "279. Восстановление IP-адресов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/restore-ip-addresses/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"25525511135\"",
       "output": "[\"255.255.11.135\",\"255.255.111.35\"]",
-      "explanation": "Both splits use all digits with each octet in range and no bad leading zeros."
+      "explanation": "Оба сплита используют все цифры с каждым октетом в диапазоне и без плохих ведущих нулей."
     },
     {
       "input": "s = \"0000\"",
       "output": "[\"0.0.0.0\"]",
-      "explanation": "Each single zero is a valid octet."
+      "explanation": "Каждый ноль является действительным октетом."
     },
     {
       "input": "s = \"101023\"",
       "output": "[\"1.0.10.23\",\"1.0.102.3\",\"10.1.0.23\",\"10.10.2.3\",\"101.0.2.3\"]",
-      "explanation": "Five ways to cut the six digits into valid octets."
+      "explanation": "Пять способов разрезать шесть цифр на действительные октеты."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Backtrack over at most 4 parts, trying lengths 1-3 at each step and pruning when the remainder cannot fill the remaining parts.",
-    "Reject a part with a leading zero unless it is exactly \"0\", and reject values above 255.",
-    "Only record an address when 4 parts are placed and every character is consumed."
+    "Обратный путь по большинству частей 4, пробная длина 1-3 на каждом шаге и обрезка, когда остальная часть не может заполнить оставшиеся части.",
+    "Отклоните часть с ведущим нулем, если она не является точно «0», и отклоните значения выше 255.",
+    "Записывайте адрес только при размещении частей 4 и использовании каждого символа."
   ]
 }

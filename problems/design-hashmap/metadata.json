@@ -1,6 +1,6 @@
 {
   "id": "design-hashmap",
-  "title": "157. Design HashMap",
+  "title": "157. Дизайнер HashMap",
   "difficulty": "Easy",
   "category": "array",
   "link": "https://leetcode.com/problems/design-hashmap/",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"MyHashMap\",\"put\",\"put\",\"get\",\"get\",\"put\",\"get\",\"remove\",\"get\"], args = [[],[1,1],[2,2],[1],[3],[2,1],[2],[2],[2]]",
       "output": "[1,-1,1,-1]",
-      "explanation": "put(1,1) and put(2,2); get(1) is 1 and get(3) is -1. After put(2,1) updates key 2, get(2) is 1. After remove(2), get(2) is -1."
+      "explanation": "put(1,1) и put(2,2); get(1) - 1 и get(3) - -1. После put(2,1) обновления ключа 2, get(2) - 1. После удаления(2), get(2) -1."
     },
     {
       "input": "operations = [\"MyHashMap\",\"get\",\"put\",\"get\",\"remove\",\"get\"], args = [[],[5],[5,7],[5],[5],[5]]",
       "output": "[-1,7,-1]",
-      "explanation": "Initially get(5) is -1. After put(5,7), get(5) is 7. After remove(5), get(5) is -1."
+      "explanation": "Первоначально get(5) -1. После put(5,7), get(5) - 7. После remove(5), get(5) -1."
     },
     {
       "input": "operations = [\"MyHashMap\",\"put\",\"remove\"], args = [[],[3,9],[3]]",
       "output": "[]",
-      "explanation": "No get calls, so the result is empty."
+      "explanation": "Звонков нет, результат пустой."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Simulate the map with a hash map: put inserts or updates, remove deletes, get looks up with -1 default and records the result.",
-    "A direct array of size 1000001 with -1 sentinel also works since keys are bounded."
+    "Моделируйте карту с помощью хеш-карты: поставьте вставки или обновления, удалите удаления, получите просмотр по умолчанию -1 и запишите результат.",
+    "Прямой массив размером 1000001 с -1 также работает, так как ключи ограничены."
   ]
 }

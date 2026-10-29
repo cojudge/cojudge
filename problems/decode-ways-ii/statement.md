@@ -1,7 +1,7 @@
-A message uses `A=1` through `Z=26`. The string `s` may also hold `'*'`, which stands for any single digit `1..9`. Count how many original messages could produce `s` under the usual split rules: every chunk is `1..26`, and a chunk never starts with `0`.
+Сообщение использует `A=1` через `Z=26`Струна `s` Также может быть `'*'`, что означает любую единичную цифру `1..9`Подсчитайте, сколько оригинальных сообщений может быть получено. `s` В соответствии с обычными правилами разделения: каждый кусок `1..26`И кусок никогда не начинается с `0`.
 
-Return the count modulo `1_000_000_007`.
+Верните графу модуль `1_000_000_007`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 10^5`
-- `s` holds only digits and `'*'`.
+- `s` содержит только цифры и `'*'`.

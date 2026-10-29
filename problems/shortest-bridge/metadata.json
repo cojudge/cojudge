@@ -1,6 +1,6 @@
 {
   "id": "shortest-bridge",
-  "title": "921. Shortest Bridge",
+  "title": "921. Самый короткий мост",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/shortest-bridge/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "grid = [[0,1],[1,0]]",
       "output": "1",
-      "explanation": "One diagonal gap needs a single flip."
+      "explanation": "Один диагональный разрыв нуждается в одном сальто."
     },
     {
       "input": "grid = [[0,1,0],[0,0,0],[0,0,1]]",
       "output": "2",
-      "explanation": "The gap spans two water cells."
+      "explanation": "Разрыв охватывает две клетки воды."
     },
     {
       "input": "grid = [[1,1,1,1,1],[1,0,0,0,1],[1,0,1,0,1],[1,0,0,0,1],[1,1,1,1,1]]",
       "output": "1",
-      "explanation": "The inner cell is one step from the ring."
+      "explanation": "Внутренняя клетка находится в шаге от кольца."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Paint the first island and push all its cells as layer zero of a multi-source search.",
-    "Expand outward one ring at a time over water, skipping already seen cells.",
-    "The first time the expansion touches the second island, the layer count is the answer."
+    "Нарисуйте первый остров и вытолкните все его ячейки как нулевой слой многоисточникового поиска.",
+    "Расширяйте одно кольцо за раз над водой, пропуская уже замеченные клетки.",
+    "В первый раз, когда расширение касается второго острова, подсчёт слоя является ответом."
   ]
 }

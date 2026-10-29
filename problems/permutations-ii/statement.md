@@ -1,6 +1,6 @@
-You are handed an array `nums` whose entries may repeat. List every distinct ordering of its elements, each ordering exactly once, and return the collection in whatever sequence you prefer.
+Вам вручается массив `nums`, записи которого могут повторяться. Перечислите каждый отдельный порядок его элементов, каждый заказ точно один раз, и верните коллекцию в любой последовательности, которую вы предпочитаете.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= nums.length <= 8`
 - `-10 <= nums[i] <= 10`

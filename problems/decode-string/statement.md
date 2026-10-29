@@ -1,12 +1,12 @@
-You receive a compressed string and must restore its expanded form.
+Вы получаете сжатую струну и должны восстановить ее расширенную форму.
 
-Compression follows the pattern `k[encoded_string]`: the bracketed segment is written out consecutively exactly `k` times, where `k` is a positive integer.
+Сжатие следует шаблону `k[encoded_string]`: скобчатый сегмент записывается последовательно точно `k` раз, где `k` является положительным целым числом.
 
-Treat every input as correctly formed: there is no stray spacing, all brackets pair up properly, the payload before expansion holds no digits, and digits appear solely as those repetition counts `k`.
+Относитесь к каждому вводу как к правильно сформированному: нет блуждающего интервала, все скобки правильно спариваются, полезная нагрузка перед расширением не содержит цифр, и цифры появляются только по мере того, как эти повторения подсчитывают `k`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 30`
-- `s` consists of lowercase English letters, digits, and square brackets `[]`.
-- `s` is guaranteed to be a valid input.
-- All the integers in `s` are in the range `[1, 300]`.
-- The length of the output will never exceed `10^5`.
+- `s` состоит из строчных английских букв, цифр и квадратных скобок `[]`.
+- `s` гарантированно является действительным входом.
+- Все целые числа в `s` находятся в диапазоне `[1, 300]`.
+- Длина выхода никогда не будет превышать `10^5`.

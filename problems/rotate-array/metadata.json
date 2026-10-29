@@ -1,6 +1,6 @@
 {
   "id": "rotate-array",
-  "title": "171. Rotate Array",
+  "title": "171. Решетка поворота",
   "difficulty": "Medium",
   "category": "two-pointer",
   "link": "https://leetcode.com/problems/rotate-array/",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1,2,3,4,5,6,7], k = 3",
       "output": "[5,6,7,1,2,3,4]",
-      "explanation": "Rotate 1 step: [7,1,2,3,4,5,6]. Rotate 2 steps: [6,7,1,2,3,4,5]. Rotate 3 steps: [5,6,7,1,2,3,4]."
+      "explanation": "вращаться 1 Шаг:7,1,2,3,4,5,6Поворот 2 Шаги:6,7,1,2,3,4,5Поворот 3 Шаги:5,6,7,1,2,3,4]."
     },
     {
       "input": "nums = [-1,-100,3,99], k = 2",
       "output": "[3,99,-1,-100]",
-      "explanation": "Rotate 1 step: [99,-1,-100,3]. Rotate 2 steps: [3,99,-1,-100]."
+      "explanation": "Шаг 1: [99,-1,-100,3]. Шаги 2: [3,99,-1,-100]."
     }
   ],
   "starterCode": {
@@ -53,7 +53,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Reduce k modulo n to handle k larger than the array length.",
-    "Reverse the whole array, then reverse the first k elements and the remaining n-k elements."
+    "Уменьшите k modulo n, чтобы обрабатывать k больше длины массива.",
+    "Переверните весь массив, затем переверните первые k элементов и оставшиеся n-k элементов."
   ]
 }

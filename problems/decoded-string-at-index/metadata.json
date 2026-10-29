@@ -1,6 +1,6 @@
 {
   "id": "decoded-string-at-index",
-  "title": "872. Decoded String at Index",
+  "title": "872. Декодированная струна в индексе",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/decoded-string-at-index/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"leet2code3\", k = 10",
       "output": "\"o\"",
-      "explanation": "The tape grows to \"leet\", then \"leetleet\", then \"leetleetcode\", then three copies of that. The 10th character is \"o\"."
+      "explanation": "Лента вырастает до «leet», затем «leetleet», затем «leetleetcode», затем три копии этого. 10-й символ — «o»."
     },
     {
       "input": "s = \"ha22\", k = 5",
       "output": "\"h\"",
-      "explanation": "The tape grows to \"ha\", then \"haha\", then \"hahahaha\". The 5th character is \"h\"."
+      "explanation": "Лента вырастает до «ха», затем «хаха», затем «хахаха». 5-й персонаж — «х»."
     },
     {
       "input": "s = \"a2345678999999999999999\", k = 1",
       "output": "\"a\"",
-      "explanation": "The tape starts with \"a\" and is repeated a huge number of times, so the first character is \"a\"."
+      "explanation": "Лента начинается с «а» и повторяется огромное количество раз, поэтому первым персонажем является «а»."
     }
   ],
   "starterCode": {
@@ -62,7 +62,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "First sweep forward to learn the total tape length without storing the tape itself.",
-    "Then sweep backward, shrinking the length at each symbol and reducing k modulo that length; when k hits 0 on a letter, that letter is the answer."
+    "Сначала пройдите вперед, чтобы узнать общую длину ленты без хранения самой ленты.",
+    "Затем отметьте назад, уменьшив длину на каждом символе и уменьшив k модуля этой длины; когда k нажимает 0 на букву, эта буква является ответом."
   ]
 }

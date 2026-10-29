@@ -1,0 +1,55 @@
+{
+  "id": "number-of-digit-one",
+  "title": "343. Number of Digit One",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/number-of-digit-one/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 13",
+      "output": "6",
+      "explanation": "The digit 1 occurs once each in 1, 10, 12, 13, and twice in 11."
+    },
+    {
+      "input": "n = 0",
+      "output": "0",
+      "explanation": "The only value considered is 0, which contains no digit 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int countDigitOne(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def countDigitOne(self, n: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int countDigitOne(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int CountDigitOne(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_digit_one(n: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc CountDigitOne(n int) int {\n    \n}",
+    "typescript": "export function countDigitOne(n: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function countDigitOne($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 13
+    },
+    {
+      "n": 0
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 100
+    }
+  ],
+  "functionName": "countDigitOne",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Process the number one decimal position at a time using a place factor of 1, 10, 100, ...",
+    "For each position, split n into higher, current, and lower parts to count full cycles plus any partial cycle."
+  ]
+}

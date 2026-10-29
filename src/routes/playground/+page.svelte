@@ -260,7 +260,7 @@ echo "hello\\n";`,
             const entryType: 'editor' | 'preview' | 'whiteboard' =
                 f.type === 'preview' ? 'preview' : f.type === 'whiteboard' ? 'whiteboard' : 'editor';
             if (!existing) {
-                let name = entryType === 'whiteboard' ? 'Whiteboard' : (f.fileName || 'Solution');
+                let name = entryType === 'whiteboard' ? "Доска" : (f.fileName || 'Solution');
                 if (entryType === 'preview' && name.startsWith('Preview: ')) {
                     name = name.slice('Preview: '.length) || 'Solution';
                 }
@@ -681,10 +681,10 @@ echo "hello\\n";`,
         if (!name.trim()) return '';
         const normalized = name.replace(/["\u201C\u201D\u201E\u201F\uFF02]/g, '"');
         if (INVALID_FILE_NAME_CHAR.test(normalized)) {
-            return 'Invalid characters: " < > : / \\ | ? *';
+            return "Недействительные персонажи: «< > : / \\ | ? *";
         }
         if (normalized.length > 100) {
-            return 'Name must be 100 characters or fewer.';
+            return "Имя должно быть 100 символов или меньше.";
         }
         return '';
     }
@@ -1109,16 +1109,16 @@ echo "hello\\n";`,
                 if (result.success) {
                     const openFolder = await showChoice(`Saved to ${result.filePath}`, {
                         title: successTitle,
-                        confirmLabel: 'Open Containing Folder',
-                        cancelLabel: 'Close',
+                        confirmLabel: "Открытая контейнерная папка",
+                        cancelLabel: "Закрыть",
                         tone: 'success'
                     });
                     if (openFolder) await revealExportedFile(result.filePath);
                 } else {
-                    await showAlert(result.error || 'Failed to save file', { title: 'Download failed' });
+                    await showAlert(result.error || 'Failed to save file', { title: "Скачать Неудачный" });
                 }
             } catch (error: any) {
-                await showAlert(error?.message || 'Failed to save file', { title: 'Download failed' });
+                await showAlert(error?.message || 'Failed to save file', { title: "Скачать Неудачный" });
             }
             return;
         }
@@ -1266,7 +1266,7 @@ echo "hello\\n";`,
             try {
                 const parsed = JSON.parse(String(reader.result || ''));
                 if (!isExportNode(parsed)) {
-                    showAlert('Invalid folder export file.', { title: 'Import failed' });
+                    showAlert("Недействительный файл экспорта папок.", { title: "Импорт провалился" });
                     return;
                 }
                 const fkey = fileKey();
@@ -1311,7 +1311,7 @@ echo "hello\\n";`,
                 }
                 if (additions.length) tabs = [...tabs, ...additions];
             } catch {
-                showAlert('Could not parse the selected JSON file.', { title: 'Import failed' });
+                showAlert("Не удалось разобрать выбранный файл JSON.", { title: "Импорт провалился" });
             }
         };
         reader.readAsText(file);
@@ -1866,11 +1866,11 @@ echo "hello\\n";`,
             const names = [...skippedBinary, ...skippedLarge].slice(0, 5);
             const extra = skippedCount > names.length ? ` and ${skippedCount - names.length} more` : '';
             const reason = skippedBinary.length && !skippedLarge.length
-                ? 'Image, audio, and other binary files cannot be added to the Explorer.'
+                ? "Изображение, аудио и другие двоичные файлы не могут быть добавлены в проводник."
                 : skippedLarge.length && !skippedBinary.length
-                    ? 'Files larger than 2 MB cannot be added to the Explorer.'
-                    : 'Image, audio, binary, and files larger than 2 MB cannot be added to the Explorer.';
-            void showAlert(`${reason}\n\nSkipped: ${names.join(', ')}${extra}`, { title: 'Some files were skipped' });
+                    ? "Файлы размером более 2 MB не могут быть добавлены в Explorer."
+                    : "Изображения, аудио, двоичные файлы и файлы размером более 2 MB не могут быть добавлены в Explorer.";
+            void showAlert(`${reason}\n\nSkipped: ${names.join(', ')}${extra}`, { title: "Некоторые файлы были пропущены" });
         }
 
         if (pending.length === 0 && exportNodes.length === 0) return;
@@ -1883,7 +1883,7 @@ echo "hello\\n";`,
 
         // Deduplicate top-level import names against siblingNames
         for (const node of exportNodes) {
-            const rawName = (node.name || (node.type === 'folder' ? 'Folder' : 'Solution')).trim() || (node.type === 'folder' ? 'Folder' : 'Solution');
+            const rawName = (node.name || (node.type === 'folder' ? "Папка" : "Решение")).trim() || (node.type === 'folder' ? "Папка" : "Решение");
             const sanitized = sanitizeFileName(rawName);
             if (siblingNames.has(sanitized)) {
                 let unique = sanitized;
@@ -2352,11 +2352,11 @@ echo "hello\\n";`,
 
         if (!await showConfirm(
             isFolder
-                ? 'This folder and everything inside it will be permanently removed.'
-                : 'This file and any previews created from it will be permanently removed.',
+                ? "Эта папка и все, что внутри нее, будет удалено навсегда."
+                : "Этот файл и любые предварительные просмотры, созданные из него, будут удалены навсегда.",
             {
-                title: isFolder ? 'Remove folder?' : 'Remove file?',
-                confirmLabel: isFolder ? 'Remove folder' : 'Remove file',
+                title: isFolder ? "Удалить папку?" : "Удалить файл?",
+                confirmLabel: isFolder ? "Удалить папку" : "Удалить файл",
                 tone: 'danger'
             }
         )) return;
@@ -2694,9 +2694,9 @@ echo "hello\\n";`,
     }
 
     async function handleResetClick() {
-        const confirmed = await showConfirm('Your current code will be replaced with the starter code. This action cannot be undone.', {
-            title: 'Reset this file?',
-            confirmLabel: 'Reset code',
+        const confirmed = await showConfirm("Ваш текущий код будет заменен стартовым. Это действие не может быть отменено.", {
+            title: "Сбросьте этот файл?",
+            confirmLabel: "Сбросить код",
             tone: 'danger'
         });
         if (!confirmed) return;
@@ -5113,9 +5113,9 @@ echo "hello\\n";`,
     async function deletePreviewCodeBlock(wrapper: HTMLElement) {
         const sourceFileId = activeTab?.type === 'preview' ? activeTab.sourceFileId : null;
         if (!sourceFileId) return;
-        const confirmed = await showConfirm('Delete this code block? This action cannot be undone.', {
-            title: 'Delete code block',
-            confirmLabel: 'Delete',
+        const confirmed = await showConfirm("Удалить этот блок кода? Это действие не может быть отменено.", {
+            title: "Удалить блок кода",
+            confirmLabel: "Удалить",
             tone: 'danger'
         });
         if (!confirmed) return;
@@ -6038,7 +6038,7 @@ echo "hello\\n";`,
             const { content, language: lang, viewState, fileName } = forkData;
 
             // Add as new tab
-            const newTabName = fileName ? `Fork of ${fileName}` : `Forked Solution`;
+            const newTabName = fileName ? `Fork of ${fileName}` : "Раздвоенное решение";
             const nextId = uuidv4();
             const now = Date.now();
 
@@ -6088,7 +6088,7 @@ echo "hello\\n";`,
 
                     if (data.content && data.language) {
                         // Add as new tab
-                        const newTabName = data.fileName ? `Fork of ${data.fileName}` : `Forked Solution`;
+                        const newTabName = data.fileName ? `Fork of ${data.fileName}` : "Раздвоенное решение";
                         const nextId = uuidv4();
                         const now = Date.now();
 
@@ -6132,15 +6132,15 @@ echo "hello\\n";`,
                     newUrl.searchParams.delete('forkId');
                     window.history.replaceState({}, '', newUrl);
                 } else {
-                    await showAlert('No shared solution matches that code.', {
-                        title: 'Code does not exist',
+                    await showAlert("Никакое совместное решение не соответствует этому коду.", {
+                        title: "Кодекса не существует",
                         tone: 'danger'
                     });
                 }
             } catch (e) {
                 console.error('Error loading shared solution:', e);
-                await showAlert('The shared solution could not be loaded. Check your Firebase connection and try again.', {
-                    title: 'Load failed',
+                await showAlert("Совместное решение не может быть загружено. Проверьте соединение Firebase и попробуйте еще раз.", {
+                    title: "Загрузка провалилась",
                     tone: 'danger'
                 });
             }
@@ -6203,17 +6203,17 @@ echo "hello\\n";`,
                     lastSharedContent = content;
 
                     if (!silent) {
-                        await showAlert('Your existing share has been updated.', {
-                            title: 'Saved',
+                        await showAlert("Существующая доля была обновлена.", {
+                            title: "Сохранено",
                             tone: 'success'
                         });
                     }
                     return shareId;
                 } catch (e: any) {
                     if (e.code === 'permission-denied') {
-                        const createCopy = silent || await showConfirm('You do not own the existing share. A new link can be created for your copy.', {
-                            title: 'Create a new share?',
-                            confirmLabel: 'Create copy'
+                        const createCopy = silent || await showConfirm("Вы не владеете существующей долей. Для вашей копии может быть создана новая ссылка.", {
+                            title: "Создать новую акцию?",
+                            confirmLabel: "Создать копию"
                         });
                         if (createCopy) {
                             shareId = undefined; // Force create new
@@ -6255,7 +6255,7 @@ echo "hello\\n";`,
 
                 if (!silent) {
                     await showAlert(`Your share code is ${shareId}.`, {
-                        title: 'Saved',
+                        title: "Сохранено",
                         tone: 'success'
                     });
                 }
@@ -6264,8 +6264,8 @@ echo "hello\\n";`,
         } catch (e) {
             console.error('Error saving:', e);
             if (!silent) {
-                await showAlert('The shared solution could not be saved. Check your Firebase connection and try again.', {
-                    title: 'Save failed',
+                await showAlert("Совместное решение не удалось сохранить. Проверьте соединение Firebase и попробуйте еще раз.", {
+                    title: "Спасти не удалось",
                     tone: 'danger'
                 });
             }
@@ -6653,7 +6653,7 @@ echo "hello\\n";`,
         <div class="activity-bar-hover-zone" aria-hidden="true"></div>
     {/if}
     <div class="activity-bar">
-        <a href="/" class="activity-icon" title="Home">
+        <a href="/" class="activity-icon" title="Домой">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M9 22V12h6v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -6663,7 +6663,7 @@ echo "hello\\n";`,
             <button
                 class="activity-icon {activePanel === 'explorer' ? 'active' : ''}"
                 on:click={() => activatePanel('explorer')}
-                aria-label="Explorer"
+                aria-label="Файлы"
             >
                 <!-- Explorer Icon (Files) -->
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -6672,11 +6672,11 @@ echo "hello\\n";`,
                 </svg>
             </button>
         </Tooltip>
-        <Tooltip text={isMac ? "Search (Cmd+Shift+F)" : "Search (Ctrl+Shift+F)"} pos="right">
+        <Tooltip text={isMac ? "Поиск (Cmd+Shift+F)" : "Поиск (Ctrl+Shift+F)"} pos="right">
             <button
                 class="activity-icon {activePanel === 'search' ? 'active' : ''}"
                 on:click={() => activatePanel('search')}
-                aria-label="Search"
+                aria-label="Поиск"
             >
                 <!-- Search Icon -->
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -6685,11 +6685,11 @@ echo "hello\\n";`,
                 </svg>
             </button>
         </Tooltip>
-        <Tooltip text="Whiteboard" pos="right">
+        <Tooltip text="Доска" pos="right">
             <button
                 class="activity-icon {activeTab?.type === 'whiteboard' && activeTab.isOpen ? 'active' : ''}"
                 on:click={openWhiteboard}
-                aria-label="Whiteboard"
+                aria-label="Доска"
             >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <rect x="3" y="4" width="18" height="16" rx="2"></rect>
@@ -6697,11 +6697,11 @@ echo "hello\\n";`,
                 </svg>
             </button>
         </Tooltip>
-        <Tooltip text={isMac ? "Cloud Sync (Cmd+S)" : "Cloud Sync (Ctrl+S)"} pos="right">
+        <Tooltip text={isMac ? "Облачная синхронизация (Cmd+S)" : "Облачная синхронизация (Ctrl+S)"} pos="right">
             <button
                 class="activity-icon"
                 on:click={openCloudSettings}
-                title={$cloudSyncState.authStatus === 'signed-in' ? 'Cojudge Cloud' : 'Cojudge Cloud — Local only'}
+                title={$cloudSyncState.authStatus === 'signed-in' ? 'Cojudge Cloud' : "Cojudge Cloud — только локальное облако"}
                 bind:this={cloudActivityButton}
             >
                 {#if $cloudSyncState.authStatus === 'signed-in'}
@@ -6710,13 +6710,13 @@ echo "hello\\n";`,
                         <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     {#if $cloudSyncState.syncStatus === 'error' || $cloudSyncState.syncStatus === 'offline'}
-                        <span class="cloud-icon-legend error" title="Sync with Cojudge Cloud failed" aria-hidden="true"></span>
+                        <span class="cloud-icon-legend error" title="Синхронизация с Cojudge Cloud провалилась" aria-hidden="true"></span>
                     {:else if $cloudSyncState.syncStatus === 'syncing' || $cloudSyncState.remoteStatus === 'loading'}
-                        <span class="cloud-icon-legend loading" title="Syncing with Cojudge Cloud" aria-hidden="true"></span>
+                        <span class="cloud-icon-legend loading" title="Синхронизация с Cojudge Cloud" aria-hidden="true"></span>
                     {:else if showSyncSuccess}
-                        <span class="cloud-icon-legend success" title="Progress synced with Cojudge Cloud" aria-hidden="true"></span>
+                        <span class="cloud-icon-legend success" title="Прогресс синхронизирован с Cojudge Cloud" aria-hidden="true"></span>
                     {:else if $cloudSyncState.resolution}
-                        <span class="cloud-icon-legend" title="Local or conflicting cloud changes need attention" aria-hidden="true"></span>
+                        <span class="cloud-icon-legend" title="Местные или конфликтующие облачные изменения требуют внимания." aria-hidden="true"></span>
                     {/if}
                 {:else}
                     <!-- Offline Cloud Icon -->
@@ -6728,11 +6728,11 @@ echo "hello\\n";`,
             </button>
         </Tooltip>
         <div class="settings-wrapper activity-settings" bind:this={settingsContainer}>
-            <Tooltip text={"Settings"} pos="right">
+            <Tooltip text={"Настройки"} pos="right">
                 <button
                     class="activity-icon"
-                    title="Editor Settings"
-                    aria-label="Editor Settings"
+                    title="Настройки редактора"
+                    aria-label="Настройки редактора"
                     on:click={() => (showSettings = !showSettings)}
                 >
                     <!-- Cog icon -->
@@ -6743,33 +6743,33 @@ echo "hello\\n";`,
                 </button>
             </Tooltip>
             {#if showSettings}
-                <div class="settings-dropdown" role="dialog" aria-label="Editor settings">
-                    <label for="font-size-select">Font size</label>
+                <div class="settings-dropdown" role="dialog" aria-label="Настройки редактора">
+                    <label for="font-size-select">Размер шрифта</label>
                     <select id="font-size-select" bind:value={fontSize}>
                         {#each fontSizes as size}
-                            <option value={size}>{size}px</option>
+                            <option value={size}>{size}х</option>
                         {/each}
                     </select>
-                    <label for="theme-select">Theme</label>
+                    <label for="theme-select">Тема</label>
                     <select id="theme-select" bind:value={theme}>
-                        <option value="dark">Dark</option>
-                        <option value="light">Light</option>
+                        <option value="dark">Тёмная</option>
+                        <option value="light">Светлая</option>
                     </select>
-                    <label for="vim-mode-select">Key Bindings</label>
+                    <label for="vim-mode-select">Ключевые связывания</label>
                     <select id="vim-mode-select" bind:value={vimMode}>
-                        <option value="off">Standard</option>
-                        <option value="on">Vim</option>
+                        <option value="off">Стандарт</option>
+                        <option value="on">Виам</option>
                     </select>
-                    <label for="indent-select">Indentation</label>
+                    <label for="indent-select">углубление</label>
                     <select id="indent-select" bind:value={indentation}>
-                        <option value="2-spaces">2 spaces</option>
-                        <option value="4-spaces">4 spaces</option>
-                        <option value="tab">Tab</option>
+                        <option value="2-spaces">2 пробела</option>
+                        <option value="4-spaces">4 пробела</option>
+                        <option value="tab">Табличка</option>
                     </select>
-                    <label for="autohide-select">Auto-hide activity bar</label>
+                    <label for="autohide-select">Авто-скрытый бар активности</label>
                     <select id="autohide-select" bind:value={autoHideActivityBar}>
-                        <option value={false}>Off</option>
-                        <option value={true}>On</option>
+                        <option value={false}>Выкл.</option>
+                        <option value={true}>Вкл.</option>
                     </select>
                 </div>
             {/if}
@@ -6787,7 +6787,7 @@ echo "hello\\n";`,
     >
         {#if activePanel === 'explorer'}
         <div class="sidebar-header">
-            <span>EXPLORER</span>
+            <span>ФАЙЛЫ</span>
             <div class="sidebar-header-actions">
                 <input
                     type="file"
@@ -6798,8 +6798,8 @@ echo "hello\\n";`,
                 />
                 <button
                     class="icon-button"
-                    title="Import folder"
-                    aria-label="Import folder"
+                    title="Импортная папка"
+                    aria-label="Импортная папка"
                     on:click={() => importInputEl?.click()}
                 >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -6809,10 +6809,10 @@ echo "hello\\n";`,
                     </svg>
                 </button>
                 <div class="add-menu-wrapper" bind:this={addMenuContainer}>
-                    <Tooltip text={isDesktopMode ? (isMac ? 'CMD + N' : 'CTRL + N') : 'New'} pos="bottom">
+                    <Tooltip text={isDesktopMode ? (isMac ? 'CMD + N' : 'CTRL + N') : "Новый"} pos="bottom">
                     <button
                         class="icon-button"
-                        aria-label="New file or folder"
+                        aria-label="Новый файл или папка"
                         aria-haspopup="menu"
                         aria-expanded={showAddMenu}
                         on:click|stopPropagation={() => { closeFileActionsMenu(); showAddMenu = !showAddMenu; }}
@@ -6828,12 +6828,12 @@ echo "hello\\n";`,
                                 class="add-menu-item"
                                 role="menuitem"
                                 on:click={() => { showAddMenu = false; addNewTab('sidebar'); }}
-                            >New File</button>
+                            >Новый файл</button>
                             <button
                                 class="add-menu-item"
                                 role="menuitem"
                                 on:click={() => { showAddMenu = false; addNewFolder(); }}
-                            >New Folder</button>
+                            >Новая папка</button>
                         </div>
                     {/if}
                 </div>
@@ -6854,7 +6854,7 @@ echo "hello\\n";`,
                         data-explorer-id={t.fileId}
                         data-explorer-kind="folder"
                     >
-                        <span class="file-name">(empty)</span>
+                        <span class="file-name">(пустая)</span>
                     </div>
                 {:else}
                     <div
@@ -6891,8 +6891,8 @@ echo "hello\\n";`,
                             <button
                                 type="button"
                                 class="folder-chevron"
-                                title={isFolderExpanded(t.fileId) ? 'Collapse folder' : 'Expand folder'}
-                                aria-label={isFolderExpanded(t.fileId) ? 'Collapse folder' : 'Expand folder'}
+                                title={isFolderExpanded(t.fileId) ? "папка \"Коллапс\"" : "Расширить папку"}
+                                aria-label={isFolderExpanded(t.fileId) ? "папка \"Коллапс\"" : "Расширить папку"}
                                 aria-expanded={isFolderExpanded(t.fileId)}
                                 on:pointerdown|stopPropagation
                                 on:click|stopPropagation={() => toggleFolderExpanded(t.fileId)}
@@ -6938,7 +6938,7 @@ echo "hello\\n";`,
                             <button
                                 type="button"
                                 class="icon-button file-actions-trigger"
-                                aria-label="More actions"
+                                aria-label="Больше действий"
                                 aria-haspopup="menu"
                                 aria-expanded={fileActionsMenu?.fileId === t.fileId}
                                 on:pointerdown|stopPropagation
@@ -6959,7 +6959,7 @@ echo "hello\\n";`,
             <div
                 class="file-actions-menu"
                 role="menu"
-                aria-label="File actions"
+                aria-label="Файлы действий"
                 tabindex="-1"
                 bind:this={fileActionsMenuEl}
                 style="top: {fileActionsMenu.top}px; left: {fileActionsMenu.left != null ? fileActionsMenu.left + 'px' : 'auto'}; right: {fileActionsMenu.right != null ? fileActionsMenu.right + 'px' : 'auto'};"
@@ -6975,7 +6975,7 @@ echo "hello\\n";`,
                         <path d="M14 2v6h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M12 11v6M9 14h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                     </svg>
-                    New File
+                    Новый файл
                 </button>
                 <button
                     class="file-actions-menu-item"
@@ -6986,7 +6986,7 @@ echo "hello\\n";`,
                         <path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
                         <path d="M12 11v6M9 14h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                     </svg>
-                    New Folder
+                    Новая папка
                 </button>
                 {#if fileActionsMenu.kind === 'file'}
                     <button
@@ -6999,7 +6999,7 @@ echo "hello\\n";`,
                             <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        Download
+                        Скачать
                     </button>
                     <button
                         class="file-actions-menu-item"
@@ -7012,14 +7012,12 @@ echo "hello\\n";`,
                                 <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
                                 <path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                             </svg>
-                            Show in cloud
-                        {:else}
+                            Показать в облаке{:else}
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                                 <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="currentColor" stroke-width="2"/>
                                 <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
                             </svg>
-                            Hide from cloud
-                        {/if}
+                            Скрыться от облаков{/if}
                     </button>
                     <button
                         class="file-actions-menu-item"
@@ -7029,7 +7027,7 @@ echo "hello\\n";`,
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                             <path d="M8 16H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2m-6 12h8a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2z" stroke="currentColor" stroke-width="1.5"/>
                         </svg>
-                        Duplicate
+                        Дублировать
                     </button>
                 {:else}
                     <button
@@ -7042,7 +7040,7 @@ echo "hello\\n";`,
                             <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        Download
+                        Скачать
                     </button>
                 {/if}
                 <button
@@ -7054,7 +7052,7 @@ echo "hello\\n";`,
                         <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" stroke="currentColor" stroke-width="1.5"/>
                         <path d="M14.06 6.19l3.75 3.75 1.69-1.69a1.5 1.5 0 000-2.12L17.87 4.5a1.5 1.5 0 00-2.12 0l-1.69 1.69z" stroke="currentColor" stroke-width="1.5"/>
                     </svg>
-                    Rename
+                    Переименовать
                 </button>
                 <button
                     class="file-actions-menu-item"
@@ -7064,13 +7062,13 @@ echo "hello\\n";`,
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    Delete
+                    Удалить
                 </button>
             </div>
         {/if}
         {:else if activePanel === 'search'}
         <div class="sidebar-header">
-            <span>SEARCH</span>
+            <span>Поиск</span>
         </div>
         <div class="search-panel">
             <div class="search-input-row">
@@ -7078,7 +7076,7 @@ echo "hello\\n";`,
                     <input
                         type="text"
                         class="search-input"
-                        placeholder="Search"
+                        placeholder="Поиск"
                         bind:value={globalSearchQuery}
                         bind:this={globalSearchInputEl}
                         spellcheck="false"
@@ -7087,24 +7085,22 @@ echo "hello\\n";`,
                         <button
                             class="search-toggle-btn {globalSearchCaseSensitive ? 'active' : ''}"
                             on:click={() => { globalSearchCaseSensitive = !globalSearchCaseSensitive; persistPanel(); }}
-                            title="Match Case"
+                            title="Случай матча"
                         >Aa</button>
                         <button
                             class="search-toggle-btn {globalSearchRegex ? 'active' : ''}"
                             on:click={() => { globalSearchRegex = !globalSearchRegex; persistPanel(); }}
-                            title="Use Regular Expression"
+                            title="Используйте регулярное выражение"
                         >.*</button>
                     </div>
                 </div>
             </div>
             {#if globalSearchQuery.trim()}
                 <div class="search-results-summary">
-                    {#if globalSearchResults.length === 0}
-                        No results found.
-                    {:else}
+                    {#if globalSearchResults.length === 0}Результаты не найдены.{:else}
                         {@const contentMatches = globalSearchResults.reduce((sum, r) => sum + r.matches.length, 0)}
                         {@const fileNameOnlyMatches = globalSearchResults.filter(r => r.fileNameMatch && r.matches.length === 0).length}
-                        {contentMatches + " "}{#if contentMatches === 1} result{:else} results{/if}{#if fileNameOnlyMatches > 0} + {fileNameOnlyMatches} filename match{#if fileNameOnlyMatches !== 1}es{/if}{/if} in {globalSearchResults.length} file{#if globalSearchResults.length !== 1}s{/if}
+                        {contentMatches + " "}{#if contentMatches === 1}результат{:else}результаты{/if}{#if fileNameOnlyMatches > 0} + {fileNameOnlyMatches} Файловое имя{#if fileNameOnlyMatches !== 1}эс{/if}{/if} в {globalSearchResults.length} файл{#if globalSearchResults.length !== 1}s{/if}
                     {/if}
                 </div>
                 <div class="search-results">
@@ -7155,7 +7151,7 @@ echo "hello\\n";`,
         {#if hasOpenTabs}
         <div class="editor-header" style="display:flex;align-items:center;justify-content:space-between;padding:var(--spacing-2);border-bottom:1px solid var(--color-border);">
             <div class="tabs-container">
-                <div class="tab-bar" role="tablist" aria-label="Editor tabs">
+                <div class="tab-bar" role="tablist" aria-label="Вкладки редактора">
                     {#each tabs as t}
                         {#if t.isOpen}
                         <div
@@ -7213,8 +7209,8 @@ echo "hello\\n";`,
                             {#if t.type !== 'whiteboard'}
                                 <button
                                     class="tab-rename"
-                                    aria-label="Rename tab"
-                                    title="Rename"
+                                    aria-label="Переименовать вкладку"
+                                    title="Переименовать"
                                     on:click|stopPropagation={() => startRename(t.fileId, t.fileName, 'tab')}
                                 >
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -7227,8 +7223,8 @@ echo "hello\\n";`,
                             {#if tabs.length >= 1}
                                 <button
                                     class="tab-close"
-                                    aria-label="Close tab"
-                                    title="Close"
+                                    aria-label="Закрыть вкладку"
+                                    title="Закрыть"
                                     on:click|stopPropagation={() => closeTab(t.fileId)}
                                 >
                                     ×
@@ -7241,8 +7237,8 @@ echo "hello\\n";`,
                         <div class="tab-drop-indicator" style={tabDropIndicatorStyle} aria-hidden="true"></div>
                     {/if}
                 </div>
-                <Tooltip text={isDesktopMode ? (isMac ? 'CMD + N' : 'CTRL + N') : 'New tab'} pos="bottom">
-                    <button class="tab-add" aria-label="New tab" on:click={() => addNewTab('tab')}>+</button>
+                <Tooltip text={isDesktopMode ? (isMac ? 'CMD + N' : 'CTRL + N') : "Новая вкладка"} pos="bottom">
+                    <button class="tab-add" aria-label="Новая вкладка" on:click={() => addNewTab('tab')}>+</button>
                 </Tooltip>
             </div>
             {#if tabContextMenu}
@@ -7263,12 +7259,12 @@ echo "hello\\n";`,
             {/if}
             <div style="display:flex;align-items:center;gap:var(--spacing-2);">
                 {#if activeTab?.type === 'preview'}
-                    <div class="markdown-mode-switch" role="group" aria-label="Markdown view mode">
+                    <div class="markdown-mode-switch" role="group" aria-label="Режим Markdown View">
                         <button
                             class="markdown-mode-btn"
                             class:active={previewEditMode}
-                            title="WYSIWYG"
-                            aria-label="WYSIWYG"
+                            title="Визивиг"
+                            aria-label="Визивиг"
                             aria-pressed={previewEditMode}
                             on:click={() => setMarkdownMode('wysiwyg')}
                         >
@@ -7277,13 +7273,13 @@ echo "hello\\n";`,
                                 <path d="M18.5 13l.7 2.15L21.5 16l-2.3.78L18.5 19l-.7-2.22L15.5 16l2.3-.85L18.5 13z" fill="currentColor"/>
                                 <path d="M6.5 14l.55 1.68L8.8 16.3l-1.75.6L6.5 18.6l-.55-1.7L4.2 16.3l1.75-.62L6.5 14z" fill="currentColor"/>
                             </svg>
-                            WYSIWYG
+                            Визивиг
                         </button>
                         <button
                             class="markdown-mode-btn"
                             class:active={!previewEditMode}
-                            title="Preview"
-                            aria-label="Preview"
+                            title="Предпросмотр"
+                            aria-label="Предпросмотр"
                             aria-pressed={!previewEditMode}
                             on:click={() => setMarkdownMode('preview')}
                         >
@@ -7291,26 +7287,26 @@ echo "hello\\n";`,
                                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            Preview
+                            Предпросмотр
                         </button>
                         <button
                             class="markdown-mode-btn"
-                            title="Source"
-                            aria-label="Source"
+                            title="Источник"
+                            aria-label="Источник"
                             aria-pressed={false}
                             on:click={() => setMarkdownMode('source')}
                         >
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M16 18l6-6-6-6M8 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            Source
+                            Источник
                         </button>
                     </div>
                 {:else if activeTab?.type === 'whiteboard'}
-                    <span style="font-size:0.9rem;color:var(--color-text-secondary);">Whiteboard</span>
+                    <span style="font-size:0.9rem;color:var(--color-text-secondary);">Доска</span>
                 {:else}
                 <div style="display:flex;align-items:center;gap:var(--spacing-1);">
-                    <label for="language-select" style="font-size:0.9rem;color:var(--color-text-secondary);margin-right:4px;">Language</label>
+                    <label for="language-select" style="font-size:0.9rem;color:var(--color-text-secondary);margin-right:4px;">Язык</label>
                     <select
                         id="language-select"
                         bind:value={language}
@@ -7367,16 +7363,16 @@ echo "hello\\n";`,
                         <option value="csharp">C#</option>
                         <option value="rust">Rust</option>
                         <option value="go">Go</option>
-                        <option value="plaintext">Plaintext</option>
-                        <option value="markdown">Markdown</option>
+                        <option value="plaintext">простой текст</option>
+                        <option value="markdown">Маркдаун</option>
                     </select>
                 </div>
                 {#if language === 'markdown'}
-                    <div class="markdown-mode-switch" role="group" aria-label="Markdown view mode">
+                    <div class="markdown-mode-switch" role="group" aria-label="Режим Markdown View">
                         <button
                             class="markdown-mode-btn"
-                            title="WYSIWYG"
-                            aria-label="WYSIWYG"
+                            title="Визивиг"
+                            aria-label="Визивиг"
                             aria-pressed={false}
                             on:click={() => setMarkdownMode('wysiwyg')}
                         >
@@ -7385,12 +7381,12 @@ echo "hello\\n";`,
                                 <path d="M18.5 13l.7 2.15L21.5 16l-2.3.78L18.5 19l-.7-2.22L15.5 16l2.3-.85L18.5 13z" fill="currentColor"/>
                                 <path d="M6.5 14l.55 1.68L8.8 16.3l-1.75.6L6.5 18.6l-.55-1.7L4.2 16.3l1.75-.62L6.5 14z" fill="currentColor"/>
                             </svg>
-                            WYSIWYG
+                            Визивиг
                         </button>
                         <button
                             class="markdown-mode-btn"
-                            title="Preview"
-                            aria-label="Preview"
+                            title="Предпросмотр"
+                            aria-label="Предпросмотр"
                             aria-pressed={false}
                             on:click={() => setMarkdownMode('preview')}
                         >
@@ -7398,28 +7394,28 @@ echo "hello\\n";`,
                                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            Preview
+                            Предпросмотр
                         </button>
                         <button
                             class="markdown-mode-btn active"
-                            title="Source"
-                            aria-label="Source"
+                            title="Источник"
+                            aria-label="Источник"
                             aria-pressed={true}
                         >
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M16 18l6-6-6-6M8 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            Source
+                            Источник
                         </button>
                     </div>
                 {/if}
                 {/if}
                 {#if !isDesktopMode && isFirebaseAvailable && (activeTab?.type === 'preview' || !isSpecialTabType(tabs[activeTabId]?.type))}
-                    <Tooltip text={"Share"} pos={"bottom"}>
+                    <Tooltip text={"Поделиться"} pos={"bottom"}>
                         <button
                             class="icon-button"
-                            title="Share"
-                            aria-label="Share"
+                            title="Поделиться"
+                            aria-label="Поделиться"
                             on:click={handleShare}
                             style="position: relative;"
                         >
@@ -7436,11 +7432,11 @@ echo "hello\\n";`,
                     </Tooltip>
                 {/if}
                 {#if activeTab?.type === 'preview' || !isSpecialTabType(activeTab?.type)}
-                <Tooltip text={"Reset Code"} pos={"left"}>
+                <Tooltip text={"Сброс кода"} pos={"left"}>
                     <button
                         class="icon-button"
-                        title="Reset Code"
-                        aria-label="Reset Code"
+                        title="Сброс кода"
+                        aria-label="Сброс кода"
                         on:click={handleResetClick}
                     >
                         <!-- Reset icon -->
@@ -7468,55 +7464,55 @@ echo "hello\\n";`,
                         <!-- svelte-ignore a11y-no-static-element-interactions -->
                         <div class="wysiwyg-toolbar" on:mousedown={handleToolbarMouseDown} on:click={handleToolbarClick}>
                             <Tooltip text={isMac ? "Cmd+B" : "Ctrl+B"} pos="right">
-                                <button type="button" data-command="bold" aria-label="Bold">
+                                <button type="button" data-command="bold" aria-label="Смелый">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/></svg>
                                 </button>
                             </Tooltip>
                             <Tooltip text={isMac ? "Cmd+I" : "Ctrl+I"} pos="bottom">
-                                <button type="button" data-command="italic" aria-label="Italic">
+                                <button type="button" data-command="italic" aria-label="итальянский">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
                                 </button>
                             </Tooltip>
                             <Tooltip text={isMac ? "Cmd+Shift+X" : "Ctrl+Shift+X"} pos="bottom">
-                                <button type="button" data-command="strikeThrough" aria-label="Strikethrough">
+                                <button type="button" data-command="strikeThrough" aria-label="Прорыв">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4H9a3 3 0 0 0-2.83 4"/><path d="M14 12a4 4 0 0 1 0 8H6"/><line x1="4" x2="20" y1="12" y2="12"/></svg>
                                 </button>
                             </Tooltip>
                             <span class="wysiwyg-separator"></span>
-                            <button type="button" data-command="formatBlock" data-value="h1" title="Heading 1" aria-label="Heading 1"><span class="wysiwyg-text-btn">H1</span></button>
-                            <button type="button" data-command="formatBlock" data-value="h2" title="Heading 2" aria-label="Heading 2"><span class="wysiwyg-text-btn">H2</span></button>
-                            <button type="button" data-command="formatBlock" data-value="h3" title="Heading 3" aria-label="Heading 3"><span class="wysiwyg-text-btn">H3</span></button>
+                            <button type="button" data-command="formatBlock" data-value="h1" title="Заголовок: 1" aria-label="Заголовок: 1"><span class="wysiwyg-text-btn">H1</span></button>
+                            <button type="button" data-command="formatBlock" data-value="h2" title="Заголовок: 2" aria-label="Заголовок: 2"><span class="wysiwyg-text-btn">H2</span></button>
+                            <button type="button" data-command="formatBlock" data-value="h3" title="Заголовок: 3" aria-label="Заголовок: 3"><span class="wysiwyg-text-btn">H3</span></button>
                             <span class="wysiwyg-separator"></span>
-                            <button type="button" data-command="insertUnorderedList" title="Bulleted list" aria-label="Bulleted list">
+                            <button type="button" data-command="insertUnorderedList" title="Бюллетень в списке" aria-label="Бюллетень в списке">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
                             </button>
-                            <button type="button" data-command="insertOrderedList" title="Numbered list" aria-label="Numbered list">
+                            <button type="button" data-command="insertOrderedList" title="Номерной список" aria-label="Номерной список">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="10" x2="21" y1="6" y2="6"/><line x1="10" x2="21" y1="12" y2="12"/><line x1="10" x2="21" y1="18" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
                             </button>
-                            <button type="button" data-command="insertTaskList" title="Checklist" aria-label="Checklist">
+                            <button type="button" data-command="insertTaskList" title="Контрольный список" aria-label="Контрольный список">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="6" height="6" rx="1"/><path d="m4 8 1.5 1.5L9 6"/><line x1="13" y1="8" x2="21" y2="8"/><rect x="3" y="13" width="6" height="6" rx="1"/><line x1="13" y1="16" x2="21" y2="16"/></svg>
                             </button>
-                            <button type="button" data-command="formatBlock" data-value="blockquote" title="Quote" aria-label="Quote">
+                            <button type="button" data-command="formatBlock" data-value="blockquote" title="Цитата" aria-label="Цитата">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1zm12 0c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
                             </button>
-                            <button type="button" data-command="codeBlock" title="Code block" aria-label="Code block">
+                            <button type="button" data-command="codeBlock" title="Блокировка кода" aria-label="Блокировка кода">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
                             </button>
                             <Tooltip text={isMac ? "Cmd+E" : "Ctrl+E"} pos="bottom">
-                                <button type="button" data-command="inlineCode" aria-label="Inline code">
+                                <button type="button" data-command="inlineCode" aria-label="Встроенный код">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></svg>
                                 </button>
                             </Tooltip>
-                            <button type="button" data-command="insertHorizontalRule" title="Horizontal rule" aria-label="Horizontal rule">
+                            <button type="button" data-command="insertHorizontalRule" title="Горизонтальное правило" aria-label="Горизонтальное правило">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12"/></svg>
                             </button>
                             <span class="wysiwyg-separator"></span>
                             <Tooltip text={isMac ? "Cmd+K" : "Ctrl+K"} pos="bottom">
-                                <button type="button" data-command="link" aria-label="Insert link">
+                                <button type="button" data-command="link" aria-label="Включить ссылку">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                                 </button>
                             </Tooltip>
-                            <button type="button" data-command="removeFormat" title="Clear formatting" aria-label="Clear formatting">
+                            <button type="button" data-command="removeFormat" title="Четкое форматирование" aria-label="Четкое форматирование">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg>
                             </button>
                             {#if showLinkInput}
@@ -7524,7 +7520,7 @@ echo "hello\\n";`,
                                     class="wysiwyg-link-input"
                                     type="text"
                                     placeholder="https://example.com"
-                                    aria-label="Link URL"
+                                    aria-label="Ссылка URL"
                                     bind:value={linkUrl}
                                     bind:this={linkInputEl}
                                     on:keydown={(e) => {
@@ -7535,14 +7531,14 @@ echo "hello\\n";`,
                             {/if}
                         </div>
                         {#if wysiwygFindOpen}
-                            <div class="wysiwyg-find-bar" role="search" aria-label="Find in document">
+                            <div class="wysiwyg-find-bar" role="search" aria-label="Найти в документе">
                                 <div class="wysiwyg-find-input-wrap">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
                                     <input
                                         class="wysiwyg-find-input"
                                         type="text"
-                                        placeholder="Find"
-                                        aria-label="Find"
+                                        placeholder="Найти"
+                                        aria-label="Найти"
                                         value={wysiwygFindQuery}
                                         bind:this={wysiwygFindInputEl}
                                         on:input={(e) => { wysiwygFindQuery = (e.currentTarget as HTMLInputElement).value; updateWysiwygFindHighlights(); }}
@@ -7550,10 +7546,8 @@ echo "hello\\n";`,
                                     />
                                     {#if wysiwygFindQuery}
                                         <span class="wysiwyg-find-count">
-                                            {#if wysiwygFindMatches.length === 0}
-                                                No results
-                                            {:else}
-                                                {wysiwygFindActiveIndex + 1} of {wysiwygFindMatches.length}
+                                            {#if wysiwygFindMatches.length === 0}Нет результатов{:else}
+                                                {wysiwygFindActiveIndex + 1} из {wysiwygFindMatches.length}
                                             {/if}
                                         </span>
                                     {/if}
@@ -7562,16 +7556,16 @@ echo "hello\\n";`,
                                     <button
                                         type="button"
                                         class="wysiwyg-find-toggle {wysiwygFindCaseSensitive ? 'active' : ''}"
-                                        title="Match Case"
-                                        aria-label="Match Case"
+                                        title="Случай матча"
+                                        aria-label="Случай матча"
                                         aria-pressed={wysiwygFindCaseSensitive}
                                         on:click={() => { wysiwygFindCaseSensitive = !wysiwygFindCaseSensitive; updateWysiwygFindHighlights(); wysiwygFindInputEl?.focus(); }}
                                     >Aa</button>
                                     <button
                                         type="button"
                                         class="wysiwyg-find-toggle {wysiwygFindWholeWord ? 'active' : ''}"
-                                        title="Match Whole Word"
-                                        aria-label="Match Whole Word"
+                                        title="Сопоставить целое слово"
+                                        aria-label="Сопоставить целое слово"
                                         aria-pressed={wysiwygFindWholeWord}
                                         on:click={() => { wysiwygFindWholeWord = !wysiwygFindWholeWord; updateWysiwygFindHighlights(); wysiwygFindInputEl?.focus(); }}
                                     >
@@ -7580,8 +7574,8 @@ echo "hello\\n";`,
                                     <button
                                         type="button"
                                         class="wysiwyg-find-toggle {wysiwygFindRegex ? 'active' : ''}"
-                                        title="Use Regular Expression"
-                                        aria-label="Use Regular Expression"
+                                        title="Используйте регулярное выражение"
+                                        aria-label="Используйте регулярное выражение"
                                         aria-pressed={wysiwygFindRegex}
                                         on:click={() => { wysiwygFindRegex = !wysiwygFindRegex; updateWysiwygFindHighlights(); wysiwygFindInputEl?.focus(); }}
                                     >.*</button>
@@ -7590,8 +7584,8 @@ echo "hello\\n";`,
                                     <button
                                         type="button"
                                         class="wysiwyg-find-nav-btn"
-                                        title="Previous Match (Shift+Enter)"
-                                        aria-label="Previous Match"
+                                        title="Матч (Shift+Enter)"
+                                        aria-label="Предыдущий Матч"
                                         on:click={() => nextWysiwygFindMatch(-1)}
                                         disabled={wysiwygFindMatches.length === 0}
                                     >
@@ -7600,8 +7594,8 @@ echo "hello\\n";`,
                                     <button
                                         type="button"
                                         class="wysiwyg-find-nav-btn"
-                                        title="Next Match (Enter)"
-                                        aria-label="Next Match"
+                                        title="Следующий матч (вход)"
+                                        aria-label="Следующий матч"
                                         on:click={() => nextWysiwygFindMatch(1)}
                                         disabled={wysiwygFindMatches.length === 0}
                                     >
@@ -7611,8 +7605,8 @@ echo "hello\\n";`,
                                 <button
                                     type="button"
                                     class="wysiwyg-find-close"
-                                    title="Close (Esc)"
-                                    aria-label="Close"
+                                    title="Закрыть (Esc)"
+                                    aria-label="Закрыть"
                                     on:click={closeWysiwygFind}
                                 >
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -7627,7 +7621,7 @@ echo "hello\\n";`,
                             contenteditable="true"
                             role="textbox"
                             aria-multiline="true"
-                            aria-label="Markdown editor (WYSIWYG)"
+                            aria-label="Редактор Markdown (WYSIWYG)"
                             tabindex="0"
                             bind:this={wysiwygEl}
                             on:beforeinput={handleWysiwygBeforeInput}
@@ -7660,13 +7654,13 @@ echo "hello\\n";`,
                         class="lang-picker-popover"
                         style="position: fixed; top: {activeLangPicker.rect.bottom + 4}px; left: {Math.max(8, Math.min((typeof window !== 'undefined' ? window.innerWidth : 1000) - 230, activeLangPicker.rect.right - 220))}px;"
                         role="dialog"
-                        aria-label="Select code block language"
+                        aria-label="Выберите язык блокировки кода"
                     >
                         <div class="lang-picker-search">
                             <input
                                 type="text"
                                 class="lang-search-input"
-                                placeholder="Search for a language..."
+                                placeholder="В поисках языка..."
                                 bind:value={langSearchQuery}
                                 bind:this={langSearchInputEl}
                                 on:keydown={handleLangSearchKeyDown}
@@ -7714,7 +7708,7 @@ echo "hello\\n";`,
                                     on:click={() => selectCodeLanguage(langSearchQuery.trim())}
                                     on:mouseenter={() => langSelectedIndex = 0}
                                 >
-                                    <span class="lang-option-label">Use "{langSearchQuery.trim()}"</span>
+                                    <span class="lang-option-label">Используй.{langSearchQuery.trim()}"</span>
                                 </button>
                             {/if}
                         </div>
@@ -7736,9 +7730,7 @@ echo "hello\\n";`,
                     {debugJobId}
                     onPasteImage={language === 'markdown' ? markdownImageSnippet : undefined}
                 />
-            {:else}
-                Loading...
-            {/if}
+            {:else}Загрузка…{/if}
         </div>
         <div
             class="exec-panel-host"
@@ -7751,7 +7743,7 @@ echo "hello\\n";`,
             <div class="empty-state-content">
                 {#if recentFiles.length > 0}
                     <div class="empty-section">
-                        <div class="empty-section-title">Recent Files</div>
+                        <div class="empty-section-title">Последние файлы</div>
                         <div class="recent-files-grid">
                             {#each recentFiles as file}
                                 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -7789,31 +7781,31 @@ echo "hello\\n";`,
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <!-- svelte-ignore a11y-no-static-element-interactions -->
                     <div class="shortcut-row" on:click={() => openSearch()}>
-                        <span class="shortcut-label">Quick Open</span>
+                        <span class="shortcut-label">Быстрое открытие</span>
                         <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">P</span></span>
                     </div>
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <!-- svelte-ignore a11y-no-static-element-interactions -->
                     <div class="shortcut-row" on:click={() => { activePanel = activePanel === 'explorer' ? null : 'explorer'; persistPanel(); }}>
-                        <span class="shortcut-label">Toggle Explorer</span>
-                        <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">SHIFT</span><span class="key">E</span></span>
+                        <span class="shortcut-label">Скачать Explorer</span>
+                        <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">Быстрый</span><span class="key">E</span></span>
                     </div>
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <!-- svelte-ignore a11y-no-static-element-interactions -->
                     <div class="shortcut-row" on:click={() => { activePanel = activePanel !== null ? null : 'explorer'; persistPanel(); }}>
-                        <span class="shortcut-label">Toggle Sidebar</span>
+                        <span class="shortcut-label">Переключатель Sidebar</span>
                         <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">B</span></span>
                     </div>
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <!-- svelte-ignore a11y-no-static-element-interactions -->
                     <div class="shortcut-row" on:click={() => { activePanel = activePanel === 'search' ? null : 'search'; persistPanel(); if (activePanel === 'search') tick().then(() => globalSearchInputEl?.focus()); }}>
-                        <span class="shortcut-label">Search in Files</span>
-                        <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">SHIFT</span><span class="key">F</span></span>
+                        <span class="shortcut-label">Поиск в файлах</span>
+                        <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">Быстрый</span><span class="key">F</span></span>
                     </div>
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <!-- svelte-ignore a11y-no-static-element-interactions -->
                     <div class="shortcut-row" on:click={() => addNewTab('tab')}>
-                        <span class="shortcut-label">New Tab</span>
+                        <span class="shortcut-label">Новый Tab</span>
                         {#if isDesktopMode}
                         <span class="shortcut-keys"><span class="key">{isMac ? 'CMD' : 'CONTROL'}</span><span class="key">N</span></span>
                         {/if}
@@ -7837,15 +7829,15 @@ echo "hello\\n";`,
     {#if lightboxSrc}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div class="image-lightbox" role="dialog" aria-modal="true" aria-label="Full-size image" tabindex="-1" on:click={closeLightbox}>
-            <button type="button" class="lightbox-close" title="Close (Esc)" aria-label="Close image viewer" on:click|stopPropagation={closeLightbox}>
+        <div class="image-lightbox" role="dialog" aria-modal="true" aria-label="Полноразмерное изображение" tabindex="-1" on:click={closeLightbox}>
+            <button type="button" class="lightbox-close" title="Закрыть (Esc)" aria-label="Близкий просмотрщик изображений" on:click|stopPropagation={closeLightbox}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <line x1="18" y1="6" x2="6" y2="18"/>
                     <line x1="6" y1="6" x2="18" y2="18"/>
                 </svg>
             </button>
             <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-            <img src={lightboxSrc} alt="Full-size" on:click|stopPropagation={() => {}} />
+            <img src={lightboxSrc} alt="полноразмерный" on:click|stopPropagation={() => {}} />
         </div>
     {/if}
 
@@ -7857,7 +7849,7 @@ echo "hello\\n";`,
                 <input
                     bind:this={searchInputEl}
                     bind:value={searchQuery}
-                    placeholder="Search files by name..."
+                    placeholder="Поиск файлов по имени..."
                     class="search-file-input"
                     on:keydown={(e) => {
                         if (e.key === 'Escape') {
@@ -7903,7 +7895,7 @@ echo "hello\\n";`,
                             </span>
                             <span class="search-file-meta">
                                 {#if file.isOpen}
-                                    <span class="search-file-badge">Open</span>
+                                    <span class="search-file-badge">Открыть</span>
                                 {/if}
                                 {#if getFilePath(file.fileId) !== '/'}
                                     <span class="search-file-path">{getFilePath(file.fileId).replace(/^\/|\/$/g, '')}</span>
@@ -7912,7 +7904,7 @@ echo "hello\\n";`,
                         </div>
                     {/each}
                     {#if filteredFiles.length === 0}
-                        <div class="search-no-results">No matching files</div>
+                        <div class="search-no-results">Никаких файлов соответствия</div>
                     {/if}
                 </div>
             </div>
@@ -7923,7 +7915,7 @@ echo "hello\\n";`,
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div class="mention-popup" style={mentionPopupStyle} on:mousedown|preventDefault>
-            <div class="mention-popup-header">Search files by name...</div>
+            <div class="mention-popup-header">Поиск файлов по имени...</div>
             <div class="mention-results" bind:this={mentionResultsEl}>
                 {#each mentionFilteredFiles as file, i}
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -7950,7 +7942,7 @@ echo "hello\\n";`,
                     </div>
                 {/each}
                 {#if mentionFilteredFiles.length === 0}
-                    <div class="search-no-results">No matching files</div>
+                    <div class="search-no-results">Никаких файлов соответствия</div>
                 {/if}
             </div>
         </div>

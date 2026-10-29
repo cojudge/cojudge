@@ -1,5 +1,5 @@
-An expression strings together fractions with `+` and `-`, for example `"-1/2+1/2+1/3"`. Each fraction has a possibly signed numerator and a positive denominator. Evaluate the sum and return it as one reduced fraction `"num/den"` with a positive denominator and greatest-common-divisor 1; zero is written `"0/1"`.
+Экспрессионные строки объединяют дроби с `+` и `-`, например `"-1/2+1/2+1/3"`. Каждая дробь имеет, возможно, подписанный числитель и положительный знаменатель. Оцените сумму и верните ее как одну уменьшенную дробь `"num/den"` с положительным знаменателем и наибольшим общим делителем 1; ноль пишется `"0/1"`.
 
-**Constraints:**
-- Length is at most 500; numerators and denominators are small positive integers.
-- The first fraction may carry a leading sign.
+**Ограничения:**
+- Длина не более 500; числители и знаменатели представляют собой небольшие положительные целые числа.
+- Первая фракция может нести ведущий знак.

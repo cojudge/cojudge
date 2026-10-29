@@ -1,6 +1,6 @@
 {
   "id": "binary-tree-preorder-traversal",
-  "title": "195. Binary Tree Preorder Traversal",
+  "title": "195. Бинарное дерево предзаказ Traversal",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/binary-tree-preorder-traversal/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,null,2,3]",
       "output": "[1,2,3]",
-      "explanation": "The preorder traversal visits the root, then the left subtree, then the right subtree, giving [1,2,3]."
+      "explanation": "Прохождение предзаказа посещает корень, затем левое поддерево, затем правое поддерево, давая [1, 2, 3]."
     },
     {
       "input": "root = []",
       "output": "[]",
-      "explanation": "An empty tree has an empty traversal."
+      "explanation": "У пустого дерева есть пустой проход."
     },
     {
       "input": "root = [1]",
       "output": "[1]",
-      "explanation": "A single-node tree traverses to [1]."
+      "explanation": "Одноузловое дерево пересекает [1]."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Recursively visit the root, then traverse the left subtree, then the right subtree.",
-    "An iterative version can use a stack: push the root, pop, record, then push right before left."
+    "Рекурсивно посетите корень, затем перейдите левое поддерево, затем правое поддерево.",
+    "Итеративная версия может использовать стек: нажать на корень, поп, запись, затем нажать прямо перед левой."
   ]
 }

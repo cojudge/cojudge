@@ -1,6 +1,6 @@
 {
   "id": "4sum-ii",
-  "title": "521. 4Sum II",
+  "title": "521. 4 Сумма II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/4sum-ii/",
   "category": "hash-table",
@@ -8,12 +8,12 @@
     {
       "input": "nums1 = [1,2], nums2 = [-2,-1], nums3 = [-1,2], nums4 = [0,2]",
       "output": "2",
-      "explanation": "Two index tuples sum to zero."
+      "explanation": "Два индекса сводятся к нулю."
     },
     {
       "input": "nums1 = [0], nums2 = [0], nums3 = [0], nums4 = [0]",
       "output": "1",
-      "explanation": "The only tuple sums to zero."
+      "explanation": "Единственная сумма к нулю."
     }
   ],
   "starterCode": {
@@ -61,8 +61,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Split into two pair sums: every nums1+nums2 and every nums3+nums4.",
-    "Store frequencies of the first half in a hash map.",
-    "For each second-half sum, look up its negation in the map."
+    "Разделите на две пары: все числа 1 + числа 2 и все числа 3 + числа 4.",
+    "Храните частоты первой половины на хеш-карте.",
+    "Для каждой второй половины суммы посмотрите на ее отрицание на карте."
   ]
 }

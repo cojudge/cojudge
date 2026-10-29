@@ -1,0 +1,72 @@
+{
+  "id": "online-election",
+  "title": "900. Online Election",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/online-election/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "persons = [0,1,1,0,0,1,0], times = [0,5,10,15,20,25,30], queries = [3,12,25,15,24,8]",
+      "output": "[0,1,1,0,0,1]",
+      "explanation": "The leader after each vote is [0,1,1,0,0,1,0]; each query picks the latest leader at or before its time."
+    },
+    {
+      "input": "persons = [0,0,0,1,1], times = [0,10,20,30,40], queries = [0,10,25,40]",
+      "output": "[0,0,0,0]",
+      "explanation": "Person 0 leads from the first vote onward."
+    },
+    {
+      "input": "persons = [1,2,2,1,2], times = [5,10,15,20,25], queries = [5,14,20,100]",
+      "output": "[1,2,1,2]",
+      "explanation": "Ties go to the most recently voted person: at time 10 the tie picks 2, at time 20 it picks 1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runElection(int[] persons, int[] times, int[] queries) {\n        return new int[0];\n    }\n}",
+    "python": "from typing import List\n\nclass Solution:\n    def runElection(self, persons: List[int], times: List[int], queries: List[int]) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runElection(vector<int>& persons, vector<int>& times, vector<int>& queries) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunElection(int[] persons, int[] times, int[] queries)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_election(persons: Vec<i32>, times: Vec<i32>, queries: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunElection(persons []int, times []int, queries []int) []int {\n    return []int{}\n}",
+    "typescript": "export function runElection(persons: number[], times: number[], queries: number[]): number[] {\n    return [];\n}\n",
+    "php": "class Solution {\n    /**\n     * @param int[] $persons\n     * @param int[] $times\n     * @param int[] $queries\n     * @return int[]\n     */\n    public function runElection($persons, $times, $queries) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "persons": "[0,1,1,0,0,1,0]",
+      "times": "[0,5,10,15,20,25,30]",
+      "queries": "[3,12,25,15,24,8]"
+    },
+    {
+      "persons": "[0,0,0,1,1]",
+      "times": "[0,10,20,30,40]",
+      "queries": "[0,10,25,40]"
+    },
+    {
+      "persons": "[1,2,2,1,2]",
+      "times": "[5,10,15,20,25]",
+      "queries": "[5,14,20,100]"
+    }
+  ],
+  "functionName": "runElection",
+  "params": [
+    {
+      "name": "persons",
+      "type": "int_array"
+    },
+    {
+      "name": "times",
+      "type": "int_array"
+    },
+    {
+      "name": "queries",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Precompute who leads right after every vote: track vote counts and let the newest vote win ties.",
+    "Each query asks for the latest vote time at or before it, which is a binary search over the sorted times.",
+    "Adaptation note: the original class interaction is flattened here into one batch call returning every query answer."
+  ]
+}

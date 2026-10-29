@@ -1,6 +1,6 @@
-Given an integer array `nums` and an integer `target`, count the index triples `(i, j, k)` with `i < j < k` whose values sum to less than `target`.
+Учитывая целочисленный массив `nums` и целочисленное число `target`, подсчитайте индекс, утроенный `(i, j, k)` с `i < j < k`, значения которого составляют меньше, чем `target`.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= nums.length <= 10^4`
 - `-10^4 <= nums[i] <= 10^4`
 - `-10^4 <= target <= 10^4`

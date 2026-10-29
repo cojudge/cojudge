@@ -1,6 +1,6 @@
 {
   "id": "extra-characters-in-a-string",
-  "title": "214. Extra Characters in a String",
+  "title": "214. Дополнительные персонажи в струне",
   "difficulty": "Medium",
   "category": "trie",
   "link": "https://leetcode.com/problems/extra-characters-in-a-string/",
@@ -8,12 +8,12 @@
     {
       "input": "s = \"leetscode\", dictionary = [\"leet\",\"code\",\"leetcode\"]",
       "output": "1",
-      "explanation": "We can break s in two substrings: \"leet\" from index 0 to 3 and \"code\" from index 5 to 8. There is only 1 unused character (at index 4), so we return 1."
+      "explanation": "Мы можем разбить s на две подстроки: «Leet» от индекса 0 до 3 и «code» от индекса 5 до 8. Есть только неиспользованный символ 1 (при индексе 4), поэтому мы возвращаем 1."
     },
     {
       "input": "s = \"sayhelloworld\", dictionary = [\"hello\",\"world\"]",
       "output": "3",
-      "explanation": "We can break s in two substrings: \"hello\" from index 3 to 7 and \"world\" from index 8 to 12. The characters at indices 0, 1, 2 are not used in any substring and thus are considered as extra characters. Hence, we return 3."
+      "explanation": "Мы можем разбить s на две подстроки: «привет» из индекса 3 то 7 «Мир» из индекса 8 то 12Персонажи в индексах 0, 1, 2 не используются ни в одной подстрочке и, таким образом, рассматриваются как дополнительные символы. 3."
     }
   ],
   "starterCode": {
@@ -49,8 +49,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Can we use Dynamic Programming here?",
-    "Define dp[i] as the minimum number of extra characters if breaking up s[i:] optimally: either s[i] is unused (one extra character plus dp[i+1]) or it starts a dictionary word of some length len, giving dp[i + len].",
-    "A trie of the dictionary lets every word starting at the same position be found in one pass instead of re-scanning all dictionary entries at every index."
+    "Можно ли использовать динамическое программирование?",
+    "Определите dp[i] как минимальное количество дополнительных символов, если s[i:] оптимально: либо s[i] не используется (один дополнительный символ плюс dp[i+1]), либо начинается словарное слово некоторой длины len, давая dp[i+len].",
+    "Три словаря позволяют каждому слову, начинающемуся в одной и той же позиции, быть найденным в одном проходе вместо повторного сканирования всех записей словаря в каждом индексе."
   ]
 }

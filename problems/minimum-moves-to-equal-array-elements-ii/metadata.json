@@ -1,6 +1,6 @@
 {
   "id": "minimum-moves-to-equal-array-elements-ii",
-  "title": "528. Minimum Moves to Equal Array Elements II",
+  "title": "528. Минимальные движения для равных элементов массива II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/",
   "category": "math",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [1,2,3]",
       "output": "2",
-      "explanation": "Equalize at 2: one move raises 1 to 2 and one move lowers 3 to 2."
+      "explanation": "Уравнивайте в 2: один шаг поднимает 1 до 2, а один шаг снижает 3 до 2."
     },
     {
       "input": "nums = [1,10,2,9]",
       "output": "16",
-      "explanation": "Equalizing at any value between 2 and 9 costs 16 moves; for example target 5 needs 4 + 5 + 3 + 4 moves."
+      "explanation": "Уравнивание по любому значению между 2 и 9 стоит ходов 16; например, для цели 5 нужен ход 4 + 5 + 3 + 4."
     }
   ],
   "starterCode": {
@@ -43,7 +43,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "The total travel distance is minimized by picking a median of the array as the common target.",
-    "Sort the array, take the middle element, and add up absolute differences to it."
+    "Общая дистанция перемещения минимизируется путем выбора медианы массива в качестве общей цели.",
+    "Сортируйте массив, возьмите средний элемент и сложите в него абсолютные различия."
   ]
 }

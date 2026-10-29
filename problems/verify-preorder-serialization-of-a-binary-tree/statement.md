@@ -1,11 +1,11 @@
-A binary tree can be written down by walking it in preorder (node first, then left branch, then right branch). Each visited position contributes one token: the node's stored number when the position holds a real node, or the marker `#` when the position is an empty child. Tokens are joined with commas into a single line.
+Бинарное дерево можно записать, прогуливаясь по нему в предзаказе (сначала узел, затем левая ветвь, затем правая ветвь).Каждая посещенная позиция вносит один токен: сохраненный номер узла, когда позиция удерживает реальный узел, или маркер `#`, когда позиция является пустым потомком. Токены соединяются с запятыми в одну линию.
 
-For instance, a small tree might become `"9,3,4,#,#,1,#,#,2,#,6,#,#"`, where every `#` stands for a missing child.
+Например, небольшое дерево может стать `"9,3,4,#,#,1,#,#,2,#,6,#,#"`, где каждый `#` означает пропавшего потомка.
 
-You receive such a comma-separated line `preorder`. Decide whether it could have arisen from some binary tree walked in preorder. Each token is either a decimal integer or `#`, and the line itself is always well-formed (no blank tokens, no double commas).
+Вы получаете такую разделённую запятой линию `preorder`. Решите, могла ли она возникнуть из какого-то двоичного дерева, пройденного в предзаказе. Каждый токен является либо десятичным целым числом, либо `#`, а сама линия всегда хорошо сформирована (нет пустых токенов, нет двойных запятых).
 
-You must answer without rebuilding the tree.
+Вы должны ответить, не восстанавливая дерево.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= preorder.length <= 10^4`
-- Tokens are integers in `[0, 100]` or `#`, separated by single commas.
+- Токены представляют собой целые числа в `[0, 100]` или `#`, разделенные отдельными запятыми.

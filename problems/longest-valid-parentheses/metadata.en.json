@@ -1,0 +1,57 @@
+{
+  "id": "longest-valid-parentheses",
+  "title": "261. Longest Valid Parentheses",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/longest-valid-parentheses/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "s = \"(()\"",
+      "output": "2",
+      "explanation": "The trailing \"()\" is the longest valid block."
+    },
+    {
+      "input": "s = \")()())\"",
+      "output": "4",
+      "explanation": "The block \"()()\" is valid and has length 4."
+    },
+    {
+      "input": "s = \"\"",
+      "output": "0",
+      "explanation": "An empty string contains no pairs."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int longestValidParentheses(String s) {\n        \n    }\n}",
+    "python": "class Solution:\n    def longestValidParentheses(self, s: str) -> int:\n        pass",
+    "cpp": "#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    int longestValidParentheses(string s) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int LongestValidParentheses(string s) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn longest_valid_parentheses(s: String) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc LongestValidParentheses(s string) int {\n    \n}",
+    "typescript": "export function longestValidParentheses(s: string): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @return int\n     */\n    public function longestValidParentheses($s) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "(()"
+    },
+    {
+      "s": ")()())"
+    },
+    {
+      "s": ""
+    }
+  ],
+  "functionName": "longestValidParentheses",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Push indices of '(' onto a stack seeded with -1; on ')' pop and measure the distance to the new stack top.",
+    "Each time the stack empties, push the current index as the new base for future measurements."
+  ]
+}

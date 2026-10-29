@@ -1,6 +1,6 @@
 {
   "id": "complex-number-multiplication",
-  "title": "595. Complex Number Multiplication",
+  "title": "595. Комплексное умножение чисел",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/complex-number-multiplication/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "num1 = \"1+1i\", num2 = \"1+1i\"",
       "output": "\"0+2i\"",
-      "explanation": "(1+i) times (1+i) is 1 + 2i + i^2 = 0 + 2i."
+      "explanation": "(1+i) раз (1+i) - 1 + 2i + i^2 = 0 + 2i."
     },
     {
       "input": "num1 = \"1+-1i\", num2 = \"1+-1i\"",
       "output": "\"0+-2i\"",
-      "explanation": "(1-i) times (1-i) is 1 - 2i + i^2 = 0 - 2i."
+      "explanation": "(1-i) раз (1-i) - 1 - 2i + i^2 = 0 - 2i."
     },
     {
       "input": "num1 = \"2+3i\", num2 = \"4+5i\"",
       "output": "\"-7+22i\"",
-      "explanation": "Real part 2*4-3*5 = -7; imaginary part 2*5+3*4 = 22."
+      "explanation": "Реальная часть 2*4-3*5 = -7мнимая часть 2*5+3*4 = 22."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Split each input at the '+' into real and imaginary text (dropping the trailing 'i'), then parse both as integers.",
-    "Apply the product rule: real = a*c-b*d, imaginary = a*d+b*c.",
-    "Format the answer with the same pattern, keeping the '+' separator even for negative parts."
+    "Разделите каждый вход на «+» на реальный и воображаемый текст (сбросив следующее «i»), а затем разберите оба как целые числа.",
+    "Применяйте правило продукта: реальный = a*c-b*d, воображаемый = a*d+b*c.",
+    "Форматируйте ответ по той же схеме, сохраняя разделитель «+» даже для отрицательных частей."
   ]
 }

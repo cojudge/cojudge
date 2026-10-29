@@ -1,18 +1,18 @@
-Take a positive integer `k` alongside two collections of precedence pairs:
+Возьмите положительное целое число `k` вместе с двумя коллекциями пар приоритетов:
 - a 2D integer array `rowConditions` holding `n` pairs shaped `rowConditions[i] = [abovei, belowi]`, plus
 - a 2D integer array `colConditions` holding `m` pairs shaped `colConditions[i] = [lefti, righti]`.
 
-Every entry appearing in either collection lies between `1` and `k` inclusive.
+Каждая запись, появляющаяся в любой коллекции, находится между `1` и `k` включительно.
 
-Assemble a `k x k` grid holding each integer `1` through `k` a single time, filling every unused position with `0`.
+Соберите сетку `k x k`, удерживающую каждое целое число `1` через `k` за один раз, заполняя каждую неиспользуемую позицию `0`.
 
-The placement must additionally respect both families of precedence rules:
-- For each `i` from `0` to `n - 1`, the cell holding `abovei` sits in a strictly earlier row than the cell holding `belowi`.
-- For each `i` from `0` to `m - 1`, the cell holding `lefti` sits in a strictly earlier column than the cell holding `righti`.
+Кроме того, при размещении должны соблюдаться оба правила приоритета:
+- Для каждого `i` от `0` до `n - 1` ячейка, удерживающая `abovei`, находится в строго более раннем ряду, чем ячейка, удерживающая `belowi`.
+- Для каждого `i` от `0` до `m - 1` ячейка, содержащая `lefti`, находится в строго более ранней колонке, чем ячейка, содержащая `righti`.
 
-Produce any grid meeting all of the above; when the requirements conflict, produce a vacuous grid.
+Производить любую сеть, отвечающую всем вышеперечисленным требованиям; когда требования противоречат друг другу, создать пустую сеть.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= k <= 400`
 - `1 <= rowConditions.length, colConditions.length <= 10^4`
 - `rowConditions[i].length == colConditions[i].length == 2`

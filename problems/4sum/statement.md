@@ -1,12 +1,12 @@
-You receive an array `nums` of `n` integers plus an integer `target`. Gather every quadruplet of values `[nums[a], nums[b], nums[c], nums[d]]` picked from four pairwise-distinct positions:
+Вы получаете массив `nums` из целых чисел `n` плюс целое число `target`. Соберите каждый квадруплет значений `[nums[a], nums[b], nums[c], nums[d]]`, выбранных из четырех попарно-отличимых позиций:
 
-- each index satisfies 0 ≤ a, b, c, d < n
-- the four indices are all different from one another
-- the four chosen elements add up to exactly `target`: nums[a] + nums[b] + nums[c] + nums[d] == target
+- каждый индекс удовлетворяет 0 ≤ a, b, c, d < n
+- Все четыре индекса отличаются друг от друга.
+- Четыре выбранных элемента складываются в точности в `target`: nums[a] + nums[b] + nums[c] +nums[d] == целевой
 
-The collected quadruplets may come back in any order.
+Собранные четвероногие могут вернуться в любом порядке.
 
-**Constraints:**
+**Ограничения:**
 
 - 1 ≤ nums.length ≤ 200
 - -10^9 ≤ nums[i] ≤ 10^9

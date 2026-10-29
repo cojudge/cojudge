@@ -1,6 +1,6 @@
 {
   "id": "rotting-oranges",
-  "title": "117. Rotting Oranges",
+  "title": "117. Вращающиеся апельсины",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/rotting-oranges/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "grid = [[2,1,1],[1,1,0],[0,1,1]]",
       "output": "4",
-      "explanation": "All fresh oranges rot after 4 minutes."
+      "explanation": "Все свежие апельсины гниют после 4 минут."
     },
     {
       "input": "grid = [[2,1,1],[0,1,1],[1,0,1]]",
       "output": "-1",
-      "explanation": "The fresh orange in the lower-left corner cannot be reached."
+      "explanation": "Свежий апельсин в левом нижнем углу не может быть достигнут."
     },
     {
       "input": "grid = [[0,2]]",
       "output": "0",
-      "explanation": "There are no fresh oranges to rot."
+      "explanation": "Свежих апельсинов не бывает."
     }
   ],
   "starterCode": {
@@ -52,7 +52,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use all initially rotten oranges as the first layer of a breadth-first search.",
-    "Count fresh oranges and reduce the count whenever a BFS layer rots one."
+    "Используйте все изначально гнилые апельсины в качестве первого слоя поиска по ширине.",
+    "Подсчитайте свежие апельсины и уменьшите количество, когда слой BFS гниет."
   ]
 }

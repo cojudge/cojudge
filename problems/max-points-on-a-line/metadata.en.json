@@ -1,0 +1,53 @@
+{
+  "id": "max-points-on-a-line",
+  "title": "306. Max Points on a Line",
+  "difficulty": "Hard",
+  "link": "https://leetcode.com/problems/max-points-on-a-line/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "points = [[1,1],[2,2],[3,3]]",
+      "output": "3",
+      "explanation": "All three lie on the diagonal y = x."
+    },
+    {
+      "input": "points = [[1,1],[3,2],[5,3],[4,1],[2,3],[1,4]]",
+      "output": "4",
+      "explanation": "The line through [1,4], [2,3], [3,2], [4,1] holds four points, which is maximal."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int maxPoints(int[][] points) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def maxPoints(self, points: List[List[int]]) -> int:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int maxPoints(vector<vector<int>>& points) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int MaxPoints(int[][] points) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn max_points(points: Vec<Vec<i32>>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc MaxPoints(points [][]int) int {\n    \n}",
+    "typescript": "export function maxPoints(points: number[][]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $points\n     * @return int\n     */\n    public function maxPoints($points) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "points": [[1, 1], [2, 2], [3, 3]]
+    },
+    {
+      "points": [[1, 1], [3, 2], [5, 3], [4, 1], [2, 3], [1, 4]]
+    },
+    {
+      "points": [[0, 0]]
+    }
+  ],
+  "functionName": "maxPoints",
+  "params": [
+    {
+      "name": "points",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Fix one anchor point and count normalized slopes to every other point.",
+    "Reduce (dx, dy) by their gcd and a canonical sign so identical lines share a key.",
+    "Handle vertical lines (dx = 0) as their own slope bucket."
+  ]
+}

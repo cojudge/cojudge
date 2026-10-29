@@ -1,6 +1,6 @@
-You are given a square grid of zeros and ones. An island is a group of ones connected up, down, left, or right. You may flip at most one zero cell to one (or flip nothing). Return the largest island size achievable.
+Вам дана квадратная сетка нулей и единиц. Остров - это группа единиц, соединенных вверх, вниз, влево или вправо. Вы можете перевернуть максимум одну нулевую ячейку на одну (или не перевернуть ничего). Вернуть самый большой размер острова достижим.
 
-**Constraints:**
+**Ограничения:**
 - `n == grid.length == grid[i].length`
 - `1 <= n <= 500`
-- `grid[i][j]` is `0` or `1`
+- `grid[i][j]` — `0` или `1`

@@ -1,6 +1,6 @@
 {
   "id": "word-ladder-ii",
-  "title": "299. Word Ladder II",
+  "title": "299. Слово лестница II",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/word-ladder-ii/",
   "category": "graph",
@@ -8,12 +8,12 @@
     {
       "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]",
       "output": "[[\"hit\",\"hot\",\"dot\",\"dog\",\"cog\"],[\"hit\",\"hot\",\"lot\",\"log\",\"cog\"]]",
-      "explanation": "Both ladders use 5 words, which is minimal here."
+      "explanation": "В обеих лестницах используются слова 5, которые здесь минимальны."
     },
     {
       "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\"]",
       "output": "[]",
-      "explanation": "Without \"cog\" in the dictionary the target is unreachable."
+      "explanation": "Без «винтика» в словаре цель недостижима."
     }
   ],
   "starterCode": {
@@ -30,17 +30,34 @@
     {
       "beginWord": "hit",
       "endWord": "cog",
-      "wordList": ["hot", "dot", "dog", "lot", "log", "cog"]
+      "wordList": [
+        "hot",
+        "dot",
+        "dog",
+        "lot",
+        "log",
+        "cog"
+      ]
     },
     {
       "beginWord": "hit",
       "endWord": "cog",
-      "wordList": ["hot", "dot", "dog", "lot", "log"]
+      "wordList": [
+        "hot",
+        "dot",
+        "dog",
+        "lot",
+        "log"
+      ]
     },
     {
       "beginWord": "a",
       "endWord": "c",
-      "wordList": ["a", "b", "c"]
+      "wordList": [
+        "a",
+        "b",
+        "c"
+      ]
     }
   ],
   "functionName": "findLadders",
@@ -60,8 +77,8 @@
   ],
   "outputType": "string_list_2d",
   "hints": [
-    "BFS from the start records the shortest distance to each reachable word.",
-    "Revisit words level by level so every shortest predecessor is captured.",
-    "DFS backwards from the target through predecessors to enumerate all shortest ladders."
+    "BFS с самого начала записывает наименьшее расстояние до каждого достижимого слова.",
+    "Пересматривайте слова по уровням, чтобы запечатлеть каждого кратчайшего предшественника.",
+    "DFS от мишени к предшественникам, чтобы перечислить все самые короткие лестницы."
   ]
 }

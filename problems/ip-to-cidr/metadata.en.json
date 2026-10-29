@@ -1,0 +1,56 @@
+{
+  "id": "ip-to-cidr",
+  "title": "754. IP to CIDR",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/ip-to-cidr/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "ip = \"255.0.0.7\", n = 10",
+      "output": "[\"255.0.0.7/32\",\"255.0.0.8/29\",\"255.0.0.16/32\"]",
+      "explanation": "Sizes 1, 8, 1 cover ten addresses minimally."
+    },
+    {
+      "input": "ip = \"117.145.102.62\", n = 8",
+      "output": "[\"117.145.102.62/31\",\"117.145.102.64/30\",\"117.145.102.68/31\"]",
+      "explanation": "Sizes 2, 4, 2 cover eight addresses."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<String> ipToCIDR(String ip, int n) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def ipToCIDR(self, ip: str, n: int) -> List[str]:\n        return []",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<string> ipToCIDR(string ip, int n) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<string> IpToCIDR(string ip, int n) \n    {\n        return new List<string>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn ip_to_cidr(ip: String, n: i32) -> Vec<String> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc IpToCIDR(ip string, n int) []string {\n    return []string{}\n}",
+    "typescript": "export function ipToCIDR(ip: string, n: number): string[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param string $ip\n     * @param int $n\n     * @return string[]\n     */\n    public function ipToCIDR($ip, $n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "ip": "255.0.0.7",
+      "n": 10
+    },
+    {
+      "ip": "117.145.102.62",
+      "n": 8
+    }
+  ],
+  "functionName": "ipToCIDR",
+  "params": [
+    {
+      "name": "ip",
+      "type": "string"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "string_list",
+  "hints": [
+    "Translate the dotted address into a 32-bit integer so alignment becomes arithmetic.",
+    "From the current start, the biggest usable block is limited both by the lowest set bit of start and by the largest power of two fitting in the remainder.",
+    "Emit that block, advance start by its size, and repeat until n reaches zero."
+  ]
+}

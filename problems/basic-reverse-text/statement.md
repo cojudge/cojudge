@@ -1,4 +1,4 @@
-Return the string `s` written backwards. For example, `"hello"` becomes `"olleh"`.
+Верните строку `s`, написанную задом наперед. Например, `"hello"` становится `"olleh"`.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= s.length <= 1000``

@@ -1,0 +1,53 @@
+{
+  "id": "remove-duplicates-from-sorted-array-ii",
+  "title": "272. Remove Duplicates from Sorted Array II",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "nums = [1,1,1,2,2,3]",
+      "output": "5",
+      "explanation": "The first 5 entries become [1,1,2,2,3]; one extra 1 is dropped."
+    },
+    {
+      "input": "nums = [0,0,1,1,1,1,2,3,3]",
+      "output": "7",
+      "explanation": "The first 7 entries become [0,0,1,1,2,3,3]; two extra 1s are dropped."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int removeDuplicates(int[] nums) {\n        return 0;\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def removeDuplicates(self, nums: List[int]) -> int:\n        return 0\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int removeDuplicates(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int RemoveDuplicates(int[] nums)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn remove_duplicates(nums: Vec<i32>) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc RemoveDuplicates(nums []int) int {\n    return 0\n}",
+    "typescript": "export function removeDuplicates(nums: number[]): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function removeDuplicates($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[1,1,1,2,2,3]"
+    },
+    {
+      "nums": "[0,0,1,1,1,1,2,3,3]"
+    },
+    {
+      "nums": "[1,1,2,2,3,3]"
+    }
+  ],
+  "functionName": "removeDuplicates",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Because the array is sorted, compare each candidate with the element two positions before the write pointer.",
+    "Keep nums[i] when it differs from nums[k-2]; otherwise it would be a third copy.",
+    "Short arrays (length <= 2) are already valid and need no changes."
+  ]
+}

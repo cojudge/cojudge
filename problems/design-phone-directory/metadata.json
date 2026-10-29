@@ -1,6 +1,6 @@
 {
   "id": "design-phone-directory",
-  "title": "455. Design Phone Directory",
+  "title": "455. Дизайн телефонного справочника",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/design-phone-directory/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"PhoneDirectory\",\"get\",\"get\",\"check\",\"get\",\"check\",\"release\",\"check\"], args = [[3],[],[],[2],[],[2],[2],[2]]",
       "output": "[0,1,1,2,0,1]",
-      "explanation": "Smallest-free gets with check/release interleaved."
+      "explanation": "Самый маленький бесплатный чек / релиз чередуются."
     },
     {
       "input": "operations = [\"PhoneDirectory\",\"get\",\"check\",\"release\",\"get\"], args = [[1],[],[0],[0],[]]",
       "output": "[0,0,0]",
-      "explanation": "Single number handed out, checked, released, handed out again."
+      "explanation": "Единый номер раздавали, проверяли, отпускали, раздавали снова."
     },
     {
       "input": "operations = [\"PhoneDirectory\",\"get\",\"get\",\"get\"], args = [[2],[],[],[]]",
       "output": "[0,1,-1]",
-      "explanation": "Third get finds the pool empty."
+      "explanation": "В-третьих, найти бассейн пустым."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Keep a boolean taken/free array plus the count of free numbers.",
-    "get scans from 0 upward for the first free entry; record -1 when the scan fails.",
-    "check maps free to 1 and taken to 0; release only clears a taken entry."
+    "Держите булевую решетку, взятую / свободную, плюс счет свободных чисел.",
+    "Получите сканирование от 0 вверх для первой бесплатной записи; записывайте -1, когда сканирование не удается.",
+    "Проверяйте карты бесплатно на 1 и в 0; выпуск очищает только взятую запись."
   ]
 }

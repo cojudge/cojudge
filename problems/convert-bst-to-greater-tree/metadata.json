@@ -1,6 +1,6 @@
 {
   "id": "convert-bst-to-greater-tree",
-  "title": "596. Convert BST to Greater Tree",
+  "title": "596. Превратить BST в дерево",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/convert-bst-to-greater-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [4,1,6,0,2,5,7,null,null,null,3,null,null,null,8]",
       "output": "[30,36,21,36,35,26,15,null,null,null,33,null,null,null,8]",
-      "explanation": "Each node becomes its own value plus all larger values (e.g. 4 becomes 30)."
+      "explanation": "Каждый узел становится своим собственным значением плюс все большие значения (например, 4 становится 30)."
     },
     {
       "input": "root = [0,null,1]",
       "output": "[1,null,1]",
-      "explanation": "The node 1 keeps 1; the node 0 absorbs it and becomes 1."
+      "explanation": "Узел 1 сохраняет 1; узел 0 поглощает его и становится 1."
     },
     {
       "input": "root = [1,0,2]",
       "output": "[3,3,2]",
-      "explanation": "Node 2 keeps 2, node 1 becomes 3, node 0 becomes 3."
+      "explanation": "Узел 2 сохраняет 2, узел 1 становится 3, узел 0 становится 3."
     }
   ],
   "starterCode": {
@@ -52,8 +52,8 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Walk the tree right-first so keys are visited from largest to smallest.",
-    "Carry a running total: add each node's original value to it, then overwrite the node with the total.",
-    "The shape never changes; only the stored values are rewritten."
+    "Прогуляйтесь по дереву справа, чтобы ключи были посещены от самого большого до самого маленького.",
+    "Носите запущенную общую сумму: добавьте к ней первоначальное значение каждого узла, а затем перезапишите узел с общей суммой.",
+    "Форма никогда не меняется, переписываются только сохраненные значения."
   ]
 }

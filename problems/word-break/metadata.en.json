@@ -1,0 +1,70 @@
+{
+  "id": "word-break",
+  "title": "20. Word Break",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/word-break/",
+  "examples": [
+    {
+      "input": "s=\"leetcode\", wordDict=[\"leet\",\"code\"]",
+      "output": "true",
+      "explanation": "\"leetcode\" can be segmented into \"leet\" and \"code\", both in the dictionary."
+    },
+    {
+      "input": "s=\"applepenapple\", wordDict=[\"apple\",\"pen\"]",
+      "output": "true",
+      "explanation": "\"applepenapple\" can be segmented into \"apple\", \"pen\", and \"apple\", all in the dictionary."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public boolean wordBreak(String s, List<String> wordDict) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> bool:\n        pass\n",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    bool wordBreak(string s, vector<string>& wordDict) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool WordBreak(string s, IList<string> wordDict) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn word_break(s: String, word_dict: Vec<String>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc WordBreak(s string, wordDict []string) bool {\n    \n}",
+    "typescript": "export function wordBreak(s: string, wordDict: string[]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $s\n     * @param string[] $wordDict\n     * @return bool\n     */\n    public function wordBreak($s, $wordDict) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "s": "leetcode",
+      "wordDict": [
+        "leet",
+        "code"
+      ]
+    },
+    {
+      "s": "applepenapple",
+      "wordDict": [
+        "apple",
+        "pen"
+      ]
+    },
+    {
+      "s": "catsandog",
+      "wordDict": [
+        "cats",
+        "dog",
+        "sand",
+        "and",
+        "cat"
+      ]
+    }
+  ],
+  "functionName": "wordBreak",
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "wordDict",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "DP over prefixes: dp[i]=true if there exists j<i such that dp[j] and s[j..i) in dict. Optimize by max word length."
+  ]
+}

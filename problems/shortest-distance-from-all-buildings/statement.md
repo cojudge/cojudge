@@ -1,11 +1,11 @@
-You are given an `m x n` grid where each cell is one of three kinds: `1` marks a building, `0` marks empty land where you may build, and `2` marks an obstacle that cannot be crossed.
+Вам предоставляется сетка `m x n`, где каждая ячейка является одной из трех типов: `1` обозначает здание, `0` обозначает пустую землю, где вы можете строить, а `2` обозначает препятствие, которое невозможно пересечь.
 
-Starting from a candidate empty cell, the travel cost to a building is the length of the shortest 4-directional path that steps only through `0` cells (the destination building cell itself is the final step; paths may not go through other buildings or obstacles). The total cost of a candidate cell is the sum of these distances over every building on the grid.
+Начиная с пустой ячейки-кандидата, стоимость проезда до здания - это длина самого короткого пути 4-направления, который проходит только через ячейки `0` (сама ячейка здания назначения является заключительным шагом; пути не могут проходить через другие здания или препятствия).
 
-Find the empty cell with the smallest total cost and return that cost. If no empty cell can reach all buildings, return `-1`.
+Найдите пустую ячейку с наименьшей общей стоимостью и верните эту стоимость. Если пустая ячейка не может достичь всех зданий, верните `-1`.
 
-**Constraints:**
+**Ограничения:**
 - `m == grid.length`, `n == grid[i].length`
 - `1 <= m, n <= 50`
-- Each `grid[i][j]` is `0`, `1` or `2`.
-- The grid contains at least one building.
+- Каждый `grid[i][j]` - это `0`, `1` или `2`.
+- Сеть содержит по меньшей мере одно здание.

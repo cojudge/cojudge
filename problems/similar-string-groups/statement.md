@@ -1,10 +1,10 @@
-Count how many clusters of mutually reachable strings appear in a list.
+Подсчитайте, сколько кластеров взаимодосягаемых струн появляется в списке.
 
-Two strings of equal length are called directly alike when they match everywhere, or when swapping exactly one pair of positions in one of them makes the two equal. In other words, they differ in zero places, or in precisely two places `i` and `j` where the characters cross-match. Likeness links transitively: if A is alike B and B is alike C, all three belong to one cluster even when A and C are not directly alike.
+Две струны одинаковой длины называются прямо одинаковыми, когда они совпадают везде, или при замене ровно одной пары позиций в одной из них делает две равными.Другими словами, они различаются в нулевых местах, или ровно в двух местах `i` и `j`, где символы пересекаются.Словоподобие связывается транзитивно: если A равно B и B одинаково C, все три принадлежат к одному кластеру, даже когда A и C не похожи напрямую.
 
-Given an array `strs` where every entry has the same length, return the number of clusters.
+Учитывая массив `strs`, где каждая запись имеет одинаковую длину, верните количество кластеров.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= strs.length <= 300`
 - `1 <= strs[i].length <= 300`
-- All strings share the same length and hold lowercase English letters.
+- Все строки имеют одинаковую длину и содержат строчные английские буквы.

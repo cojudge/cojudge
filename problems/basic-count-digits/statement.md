@@ -1,4 +1,4 @@
-Return how many decimal digits `n` has. For example, `123` has 3 digits. The number `0` has 1 digit.
+Возвращайте, сколько десятичных цифр имеет `n`. Например, `123` имеет цифры 3. Номер `0` имеет цифру 1.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= n <= 10^9``

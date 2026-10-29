@@ -1,8 +1,8 @@
-You are given an integer array `nums` and an integer `k`. You must adjust every element by exactly `k`: each `nums[i]` becomes either `nums[i] + k` or `nums[i] - k` (your choice per element).
+Вы получаете целочисленный массив `nums` и целочисленное число `k`. Вы должны отрегулировать каждый элемент точно `k`: каждый `nums[i]` становится либо `nums[i] + k`, либо `nums[i] - k` (ваш выбор для элемента).
 
-After all adjustments, the score is the difference between the largest and the smallest value. Return the smallest score you can achieve.
+После всех корректировок счет - это разница между самым большим и самым маленьким значением. Возвращайте наименьший балл, которого вы можете достичь.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 2000`
 - `0 <= nums[i] <= 10000`
 - `0 <= k <= 10000`

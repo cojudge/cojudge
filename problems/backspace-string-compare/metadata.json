@@ -1,6 +1,6 @@
 {
   "id": "backspace-string-compare",
-  "title": "842. Backspace String Compare",
+  "title": "842. Сравнение Backspace String",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/backspace-string-compare/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"ab#c\", t = \"ad#c\"",
       "output": "true",
-      "explanation": "Both reduce to ac."
+      "explanation": "Оба они уменьшаются до ac."
     },
     {
       "input": "s = \"ab##\", t = \"c#d#\"",
       "output": "true",
-      "explanation": "Both reduce to empty."
+      "explanation": "Оба сводятся к пустому."
     },
     {
       "input": "s = \"a#c\", t = \"b\"",
       "output": "false",
-      "explanation": "Results c versus b differ."
+      "explanation": "Результаты c и b различаются."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Simulate each string with a stack-like builder: append letters, pop on '#' when possible.",
-    "Alternatively walk both strings from the end, skipping erased characters with a counter, for O(1) extra space.",
-    "Compare the two reduced forms for equality."
+    "Моделируйте каждую строку с помощью конструктора, похожего на стек: добавьте буквы, поп на #, когда это возможно.",
+    "В качестве альтернативы пройдите обе струны с конца, пропуская стертые символы со счетчиком, для дополнительного пространства O (1).",
+    "Сравните две сокращенные формы равенства."
   ]
 }

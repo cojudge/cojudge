@@ -1,0 +1,64 @@
+{
+  "id": "prime-number-of-set-bits-in-binary-representation",
+  "title": "764. Prime Number of Set Bits in Binary Representation",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/prime-number-of-set-bits-in-binary-representation/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "left = 6, right = 10",
+      "output": "4",
+      "explanation": "6, 7, 9, 10 have 2, 3, 2, 2 one-bits (all prime); 8 has 1."
+    },
+    {
+      "input": "left = 10, right = 15",
+      "output": "5",
+      "explanation": "Only 15 (4 bits) misses a prime count."
+    },
+    {
+      "input": "left = 1, right = 1",
+      "output": "0",
+      "explanation": "A single one-bit is not prime."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int countPrimeSetBits(int left, int right) {\n        \n    }\n}",
+    "python": "class Solution:\n    def countPrimeSetBits(self, left: int, right: int) -> int:\n        pass\n",
+    "cpp": "class Solution {\npublic:\n    int countPrimeSetBits(int left, int right) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int CountPrimeSetBits(int left, int right)\n    {\n        return 0;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn count_prime_set_bits(left: i32, right: i32) -> i32 {\n        0\n    }\n}",
+    "go": "package main\n\nfunc CountPrimeSetBits(left int, right int) int {\n    return 0\n}",
+    "typescript": "export function countPrimeSetBits(left: number, right: number): number {\n    return 0;\n}",
+    "php": "class Solution {\n    /**\n     * @param int $left\n     * @param int $right\n     * @return int\n     */\n    public function countPrimeSetBits($left, $right) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "left": 6,
+      "right": 10
+    },
+    {
+      "left": 10,
+      "right": 15
+    },
+    {
+      "left": 1,
+      "right": 1
+    }
+  ],
+  "functionName": "countPrimeSetBits",
+  "params": [
+    {
+      "name": "left",
+      "type": "int"
+    },
+    {
+      "name": "right",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Count one-bits with a loop or a builtin popcount, then test membership in the small prime set.",
+    "Values up to 10^6 need at most 20 bits, so only primes 2, 3, 5, 7, 11, 13, 17, 19 can occur."
+  ]
+}

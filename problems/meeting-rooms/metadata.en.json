@@ -1,0 +1,75 @@
+{
+  "id": "meeting-rooms",
+  "title": "38. Meeting Rooms",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/meeting-rooms/",
+  "category": "interval",
+  "examples": [
+    {
+      "input": "intervals = [[0,30],[5,10],[15,20]]",
+      "output": "false",
+      "explanation": "Intervals [0,30] overlaps with [5,10] and [15,20], so not all meetings can fit in one room."
+    },
+    {
+      "input": "intervals = [[7,10],[2,4]]",
+      "output": "true",
+      "explanation": "Intervals [7,10] and [2,4] do not overlap, so one room suffices."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public boolean canAttendMeetings(int[][] intervals) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def canAttendMeetings(self, intervals: List[List[int]]) -> bool:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    bool canAttendMeetings(vector<vector<int>>& intervals) {\n        return true;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public bool CanAttendMeetings(int[][] intervals) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn can_attend_meetings(intervals: Vec<Vec<i32>>) -> bool {\n        \n    }\n}",
+    "go": "package main\n\nfunc CanAttendMeetings(intervals [][]int) bool {\n    \n}",
+    "typescript": "export function canAttendMeetings(intervals: number[][]): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[][] $intervals\n     * @return bool\n     */\n    public function canAttendMeetings($intervals) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "intervals": [
+        [
+          0,
+          30
+        ],
+        [
+          5,
+          10
+        ],
+        [
+          15,
+          20
+        ]
+      ]
+    },
+    {
+      "intervals": [
+        [
+          7,
+          10
+        ],
+        [
+          2,
+          4
+        ]
+      ]
+    },
+    {
+      "intervals": []
+    }
+  ],
+  "functionName": "canAttendMeetings",
+  "params": [
+    {
+      "name": "intervals",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Sort intervals by start time and check adjacent pairs: if intervals[i].start < intervals[i-1].end then there's a conflict.",
+    "Alternatively, sort starts and ends separately and sweep with two pointers to detect overlaps.",
+    "Empty or single interval inputs are always attendable."
+  ]
+}

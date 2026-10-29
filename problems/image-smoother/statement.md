@@ -1,7 +1,7 @@
-You are given an `m x n` grid `img` of gray values.
+Вы получаете сетку `m x n` с серыми значениями `img`.
 
-Build a smoothed grid of the same size where each cell becomes the floor of the average of itself plus all valid neighbours (up to 8 surrounding cells plus itself). Cells on borders simply average fewer entries.
+Постройте сглаженную сетку того же размера, где каждая ячейка становится полом среднего себя плюс все действительные соседи (до 8, окружающих ячейки плюс сама себя).
 
-**Constraints:**
+**Ограничения:**
 - `1 <= m, n <= 200`
 - `0 <= img[i][j] <= 255`

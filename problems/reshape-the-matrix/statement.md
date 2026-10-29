@@ -1,8 +1,8 @@
-Given an `m x n` matrix `mat` and target dimensions `r` rows and `c` columns, return the reshaped matrix whose entries follow the original row-major order. If the total cell count differs (`r * c != m * n`), reshaping is impossible and the original matrix must be returned unchanged.
+Учитывая матрицу `m x n` `mat` и целевые размеры строк `r` и столбцов `c`, возвращайте переформатированную матрицу, записи которой следуют первоначальному порядку строки-основной. Если общее количество ячеек отличается (`r * c != m * n`), переформатирование невозможно, и исходная матрица должна быть возвращена без изменений.
 
-To rebuild, read the input left to right, top to bottom into a flat stream, then deal that stream into `r` rows of `c` entries each.
+Чтобы перестроить, прочитайте вход слева направо, сверху вниз в плоский поток, а затем нажмите этот поток в строки `r` записей `c` каждый.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= m, n <= 100`
 - `1 <= r, c <= 300`
 - `-1000 <= mat[i][j] <= 1000`

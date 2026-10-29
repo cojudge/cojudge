@@ -1,11 +1,11 @@
-An integer array `data` claims to hold a UTF-8 byte stream, one byte per entry (only the lowest eight bits of each integer matter). Multi-byte symbols follow a fixed prefix scheme:
+Целый массив `data` утверждает, что содержит поток байтов UTF-8, по одному байту на запись (только самые низкие восемь битов каждой целочисленной материи).
 
-- a single-byte symbol starts with bit `0`;
-- a symbol using `k` bytes (`2 <= k <= 4`) starts with `k` one-bits followed by a zero bit, and each of its `k - 1` trailing bytes starts with bits `10`;
-- the patterns `10xxxxxx` never start a symbol, and a leading run of five or more ones never starts one.
+- однобайтовый символ начинается с бита `0`;
+- символ, использующий байты `k` (`2 <= k <= 4`), начинается с одного бита `k`, за которым следует нулевой бит, и каждый из его байтов `k - 1` начинается с битов `10`;
+- Узоры `10xxxxxx` никогда не запускают символ, а ведущая серия из пяти или более никогда не запускает один.
 
-Check the whole array from left to right and return `true` exactly when it splits into valid symbols with no bytes left over.
+Проверьте весь массив слева направо и верните `true`, когда он расщепляется на действительные символы без байтов.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= data.length <= 2 * 10^4`
 - `0 <= data[i] <= 255`

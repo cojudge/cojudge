@@ -1,5 +1,5 @@
-A binary string uses only `0` and `1`. Count its non-empty pieces that contain equal numbers of zeros and ones, with all zeros bunched together and all ones bunched together (so each valid piece looks like some zeros followed by some ones, or vice versa, with matching run lengths). Pieces occurring at different positions count separately even when their text matches.
+Бинарная строка использует только `0` и `1`. Подсчитайте его непустые части, которые содержат равные числа нулей и единиц, со всеми нулями, сгруппированными вместе, и все единицы, сгруппированные вместе (так что каждая действительная часть выглядит как некоторые нули, за которыми следуют некоторые, или наоборот, с соответствующими длинами прогона).
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 10^5`
-- `s` contains only `0` and `1`.
+- `s` содержит только `0` и `1`.

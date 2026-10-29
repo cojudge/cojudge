@@ -1,11 +1,11 @@
-You receive a dictionary `words` holding distinct lowercase strings, all sharing one length. A word square is a sequence of that same length where row `k` and column `k` spell the same word for every `k`. In other words, if the sequence is `r0, r1, ..., r_{n-1}`, then the `j`-th letter of `ri` must equal the `j`-th letter of `rj` pattern: the prefix formed by the first `t` rows constrains which word may sit in row `t`.
+Вы получаете словарь `words`, содержащий отдельные строчки нижнего регистра, все из которых имеют одну длину. Слово квадратный представляет собой последовательность той же длины, где строка `k` и столбец `k` пишут одно и то же слово для каждого `k`. Другими словами, если последовательность `r0, r1, ..., r_{n-1}`, то `j`-я буква `ri` должна равняться `j`-я буква шаблона `rj`: префикс, образованный первыми строками `t`, ограничивает, какое слово может сидеть в строке `t`.
 
-List every word square you can assemble from `words`. Words may be reused. The order of the returned squares does not matter.
+Перечислите каждый квадрат слова, который вы можете собрать из `words`. Слова могут быть использованы повторно. Порядок возвращаемых квадратов не имеет значения.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= words.length <= 1000`
 - `1 <= words[i].length <= 5`
-- All words share the same length and are pairwise distinct.
-- All words use lowercase English letters.
+- Все слова имеют одинаковую длину и попарно различаются.
+- Все слова используют английские буквы.
 
-Adaptation: the source returns a nested list of strings; here it maps to `string_list_2d`.
+Адаптация: источник возвращает вложенный список строк; здесь он отображает `string_list_2d`.

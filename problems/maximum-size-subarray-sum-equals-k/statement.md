@@ -1,6 +1,6 @@
-You are given an integer array `nums` and an integer `k`. A *subarray* is a contiguous block of the array. Determine the greatest length among all subarrays whose elements add up to exactly `k`. If no such subarray exists, return `0`.
+Вам дают целочисленный массив `nums` и целочисленный `k`. A *subarray* является смежным блоком массива. Определите наибольшую длину среди всех подкатегории, элементы которых складываются именно в `k`. Если такой подкатегории не существует, верните `0`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 2 * 10^5`
 - `-10^4 <= nums[i] <= 10^4`
 - `-10^9 <= k <= 10^9`

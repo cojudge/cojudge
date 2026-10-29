@@ -1,10 +1,10 @@
-Given two nonempty lowercase strings `s1` and `s2`, return `true` if `s2` contains a contiguous substring that is a permutation of `s1`. Otherwise, return `false`.
+Дано два непустых нижнего регистра `s1` и `s2`Возвращение `true` если `s2` содержит прилежащую подстроку, которая является перестановкой `s1`В противном случае, возвращайтесь `false`.
 
-A permutation uses every character of `s1` exactly once, including duplicate characters.
+Пермутация использует каждый символ `s1` ровно один раз, включая дубликаты символов.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= s1.length, s2.length <= 10^4`
-- `s1` and `s2` contain only lowercase English letters.
+- `s1` и `s2` содержат только английские буквы.
 
-**Portable interface:** Implement `checkInclusion(s1, s2)` directly. The judge supplies both strings and expects a boolean result; no input parsing is required.
+**Портативный интерфейс: ** Реализуйте `checkInclusion(s1, s2)` напрямую. Судья поставляет обе строки и ожидает булевый результат; никакого парсинга ввода не требуется.

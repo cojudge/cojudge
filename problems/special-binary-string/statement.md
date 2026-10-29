@@ -1,8 +1,8 @@
-A binary string is called *balanced* when it holds equally many `1`s and `0`s and every prefix contains at least as many `1`s as `0`s.
+Бинарная строка называется сбалансированной, когда она содержит одинаковое количество `1`s и `0`s, и каждый префикс содержит по меньшей мере столько же `1`s, сколько `0`s.
 
-You are given a balanced string `s`. One move picks two neighboring non-empty balanced blocks that sit directly next to each other inside `s` and exchanges their order. After any number of such moves, return the lexicographically greatest string you can obtain (`1` sorts after `0`).
+Вы получаете сбалансированную строку `s`. Один ход выбирает два соседних непустых сбалансированных блока, которые сидят прямо рядом друг с другом внутри `s` и обмениваются их заказом. После любого количества таких ходов возвращайте лексикографически самую большую строку, которую вы можете получить (`1` сортирует после `0`).
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 50`
-- `s[i]` is `'0'` or `'1'`
-- `s` is balanced
+- `s[i]` — `'0'` или `'1'`
+- `s` сбалансирован

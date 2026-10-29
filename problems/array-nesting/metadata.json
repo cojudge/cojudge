@@ -8,17 +8,17 @@
     {
       "input": "nums = [5,4,0,3,1,6,2]",
       "output": "4",
-      "explanation": "Chain 0 -> 5 -> 6 -> 2 visits four values."
+      "explanation": "Цепочка 0 -> 5 -> 6 -> 2 посещает четыре значения."
     },
     {
       "input": "nums = [0,1,2]",
       "output": "1",
-      "explanation": "Every element is a self-loop."
+      "explanation": "Каждый элемент – это самообладание."
     },
     {
       "input": "nums = [1,2,0]",
       "output": "3",
-      "explanation": "One cycle covers all indices."
+      "explanation": "Один цикл охватывает все индексы."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Follow indices from each unvisited start, counting steps until you return to a visited index.",
-    "Mark every index you walk over so each position is processed only once overall.",
-    "The answer is the longest walk; it always corresponds to the longest cycle."
+    "Следуйте индексам с каждого непосещенного старта, подсчитывая шаги, пока вы не вернетесь к посещенному индексу.",
+    "Отметьте каждый индекс, по которому вы проходите, чтобы каждая позиция обрабатывалась только один раз в целом.",
+    "Ответ — самая длинная прогулка, она всегда соответствует самому длинному циклу."
   ]
 }

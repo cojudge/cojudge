@@ -1,6 +1,6 @@
 {
   "id": "split-concatenated-strings",
-  "title": "611. Split Concatenated Strings",
+  "title": "611. Сплит конкатенированные струны",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/split-concatenated-strings/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "strs = [\"abc\",\"xyz\"]",
       "output": "\"zyxcba\"",
-      "explanation": "Reverse both then cut at z."
+      "explanation": "Обратно оба вырезаны на z."
     },
     {
       "input": "strs = [\"abc\"]",
       "output": "\"cba\"",
-      "explanation": "Best rotation of the reversed loop."
+      "explanation": "Лучшее вращение обратного цикла."
     },
     {
       "input": "strs = [\"ab\",\"cd\"]",
@@ -50,8 +50,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "For every string except the one holding the cut, the better of it and its reversal is always optimal, so normalise those first.",
-    "Fix which original string contains the cut, build the middle from the other normalised strings, then try every split of the cut string in both orientations.",
-    "Compare all candidates and keep the lexicographic maximum."
+    "Для каждой струны, за исключением той, которая держит разрез, лучшее из нее и ее разворот всегда оптимальны, поэтому нормализуйте их первыми.",
+    "Исправьте, какая оригинальная строка содержит разрез, постройте середину из других нормализованных строк, а затем попробуйте каждый разрез строки в обеих ориентациях.",
+    "Сравните всех кандидатов и сохраните лексикографический максимум."
   ]
 }

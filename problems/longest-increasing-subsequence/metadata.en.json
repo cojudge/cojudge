@@ -1,0 +1,51 @@
+{
+  "id": "longest-increasing-subsequence",
+  "title": "18. Longest Increasing Subsequence",
+  "difficulty": "Medium",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/longest-increasing-subsequence/",
+  "examples": [
+    {
+      "input": "nums = [10,9,2,5,3,7,101,18]",
+      "output": "4",
+      "explanation": "The longest increasing subsequence in [10, 9, 2, 5, 3, 7, 101, 18] is [2, 3, 7, 101] or [2, 3, 7, 18], both of length 4."
+    },
+    {
+      "input": "nums = [0,1,0,3,2,3]",
+      "output": "4",
+      "explanation": "The longest increasing subsequence in [0, 1, 0, 3, 2, 3] is [0, 1, 2, 3], of length 4."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int lengthOfLIS(int[] nums) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def lengthOfLIS(self, nums: List[int]) -> int:\n        pass\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int lengthOfLIS(vector<int>& nums) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int LengthOfLIS(int[] nums) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn length_of_lis(nums: Vec<i32>) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc LengthOfLIS(nums []int) int {\n    \n}",
+    "typescript": "export function lengthOfLIS(nums: number[]): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int\n     */\n    public function lengthOfLIS($nums) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "nums": "[10,9,2,5,3,7,101,18]"
+    },
+    {
+      "nums": "[0,1,0,3,2,3]"
+    },
+    {
+      "nums": "[7,7,7,7,7,7,7]"
+    }
+  ],
+  "functionName": "lengthOfLIS",
+  "params": [
+    {
+      "name": "nums",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Patience sorting in O(n log n): maintain tails[i] = minimum tail of an increasing subsequence of length i+1."
+  ]
+}

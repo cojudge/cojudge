@@ -1,6 +1,6 @@
 {
   "id": "construct-binary-tree-from-preorder-and-postorder-traversal",
-  "title": "880. Construct Binary Tree from Preorder and Postorder Traversal",
+  "title": "880. Постройте двоичное дерево из предзаказа и постзаказа",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "preorder = [1,2,4,5,3,6,7], postorder = [4,5,2,6,7,3,1]",
       "output": "[1,2,3,4,5,6,7]",
-      "explanation": "The root is 1. Its left child 2 parents 4 and 5, and its right child 3 parents 6 and 7."
+      "explanation": "Корень является 1Его левый потомок 2 родители 4 и 5и его правильного потомка 3 родители 6 и 7."
     },
     {
       "input": "preorder = [1], postorder = [1]",
       "output": "[1]",
-      "explanation": "A single node forms the whole tree."
+      "explanation": "Один узел образует целое дерево."
     },
     {
       "input": "preorder = [1,2,3], postorder = [2,3,1]",
       "output": "[1,2,3]",
-      "explanation": "Both children hang directly under the root 1."
+      "explanation": "Оба потомка висят прямо под корнем 1."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "The first preorder value is the root and the last postorder value is the same root.",
-    "The value right after the root in preorder starts the left subtree; find it in postorder to learn where the left subtree ends and the right one begins, then recurse.",
-    "A lone child may be attached on either side, so any placement that reproduces both traversals counts."
+    "Первое значение предзаказа — корень, а последнее значение постзаказа — тот же корень.",
+    "Значение сразу после корня в предзаказе начинает левое поддерево; найдите его в постзаказе, чтобы узнать, где заканчивается левое поддерево и начинается правое, а затем повторить.",
+    "Одинокий ребенок может быть прикреплен с обеих сторон, поэтому любое размещение, которое воспроизводит оба прохода, имеет значение."
   ]
 }

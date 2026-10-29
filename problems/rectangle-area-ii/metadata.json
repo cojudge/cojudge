@@ -1,6 +1,6 @@
 {
   "id": "rectangle-area-ii",
-  "title": "847. Rectangle Area II",
+  "title": "847. Прямоугольная область II",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/rectangle-area-ii/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "rectangles = [[0,0,2,2],[1,0,2,3],[1,0,3,1]]",
       "output": "6",
-      "explanation": "Union covers six squares."
+      "explanation": "Союз охватывает шесть квадратов."
     },
     {
       "input": "rectangles = [[0,0,1000000000,1000000000]]",
       "output": "49",
-      "explanation": "10^18 mod 1e9+7 is 49."
+      "explanation": "10^18 mod 1e9+7 — 49."
     },
     {
       "input": "rectangles = [[0,0,1,1],[0,0,1,1]]",
       "output": "1",
-      "explanation": "Full overlap counts once."
+      "explanation": "Полное перекрытие считается один раз."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Compress coordinates: collect every distinct x and y border, sort them, and work on the small grid of cells between neighbours.",
-    "A compressed cell is covered when some rectangle fully contains it; add (dx * dy) modulo 1e9+7.",
-    "With at most 200 rectangles the compressed grid is at most 400x400."
+    "Координаты сжатия: собирайте каждую четкую границу x и y, сортируйте их и работайте над небольшой сеткой ячеек между соседями.",
+    "Сжатая ячейка покрывается, когда некоторый прямоугольник полностью содержит ее; добавьте (dx * dy) модуль 1e9 + 7.",
+    "При максимальном прямоугольнике 200 сжатая сетка составляет максимум 400x400."
   ]
 }

@@ -54,7 +54,7 @@
 </script>
 
 <svelte:head>
-	<title>Offline Code Judge for LeetCode-style problems - Cojudge</title>
+	<title>Cojudge — локальный тренажёр задач по программированию</title>
 	<link rel="icon" href={favicon} />
 </svelte:head>
 

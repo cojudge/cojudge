@@ -1,6 +1,6 @@
 {
   "id": "least-operators-to-express-number",
-  "title": "950. Least Operators to Express Number",
+  "title": "950. Наименее операторы могут выражать число",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/least-operators-to-express-number/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "x = 3, target = 19",
       "output": "5",
-      "explanation": "The flat chain 3*3+3*3+3/3 evaluates to 9+9+1 with 5 operators, and nothing shorter reaches 19."
+      "explanation": "Плоская цепь 3*3+3*3+3/3 оценивать на 9+9+1 с 5 Операторы и ничто более короткое не достигает 19."
     },
     {
       "input": "x = 5, target = 501",
       "output": "8",
-      "explanation": "The chain 5*5*5*5-5*5*5+5/5 evaluates to 625-125+1 with 8 operators, which is optimal."
+      "explanation": "Цепь 5*5*5*5-5*5*5+5/5 оценивать на 625-125+1 с 8 операторов, что является оптимальным."
     },
     {
       "input": "x = 100, target = 100000000",
       "output": "3",
-      "explanation": "The target equals 100^4, built with 3 multiplications and nothing else."
+      "explanation": "Цель равна 100^4, построенному с умножениями 3 и ничем другим."
     }
   ],
   "starterCode": {
@@ -58,8 +58,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Compare building up from the power below the target against overshooting the power above and subtracting.",
-    "Powers of x cost (exponent - 1) multiplications; the value 1 costs one division (x/x).",
-    "Memoize on the remaining value \u2014 only logarithmically many states appear."
+    "Сравните наращивание мощности ниже цели с превышением мощности выше и вычитанием.",
+    "Мощности умножения x (экспонент - 1); значение 1 стоит одного деления (x/x).",
+    "Запомните оставшееся значение — только логарифмически появляется много состояний."
   ]
 }

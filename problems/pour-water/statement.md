@@ -1,10 +1,10 @@
-You are given terrain heights `heights`, a number of water units `volume`, and a drop index `k`.
+Вы получаете высоты местности `heights`, ряд водных единиц `volume` и индекс падения `k`.
 
-Process the units one at a time. For each unit, decide where it settles by this rule. First look left: walk left while the level (terrain plus water already placed) never rises, and remember the leftmost lowest reachable spot. If that spot sits lower than the drop column, the unit rests there. Otherwise perform the mirror search to the right. If neither side offers a lower home, the unit stays at `k`. Each settled unit raises its column by one before the next unit falls.
+Обработайте единицы по одному за раз. Для каждой единицы решите, где она оседает по этому правилу. Сначала посмотрите влево: ходите влево, пока уровень (долина плюс вода уже размещена) никогда не поднимается, и вспомните самое левое нижнее достижимое место. Если это пятно находится ниже колонны падения, единица отдыхает там. В противном случае выполните зеркальный поиск вправо. Если ни одна из сторон не предлагает нижний дом, единица остается на `k`. Каждая оседлая единица поднимает свою колонну на одну, прежде чем упадет следующая единица.
 
-Return the final levels after all units settle. The input array may be updated in place.
+Верните конечные уровни после того, как все блоки уладятся. Вводный массив может быть обновлен на месте.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= heights.length <= 100`
 - `0 <= heights[i] <= 99`
 - `0 <= volume <= 2000`

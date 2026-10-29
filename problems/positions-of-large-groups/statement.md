@@ -1,5 +1,5 @@
-Given a string `s` of lowercase letters, a large group is a maximal run of the same character with length at least 3. Maximal means the run cannot be extended on either side with the same letter. Return the start and end indices of every large group as `[start, end]` pairs in left-to-right order.
+Учитывая строку `s` строчных букв, большая группа представляет собой максимальный прогон одного и того же символа с длиной по меньшей мере 3. Максимальный означает, что пробег не может быть расширен с обеих сторон одной и той же буквой. Возвращайте начальные и конечные индексы каждой большой группы, как пары `[start, end]` в левом-правом порядке.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 1000`
-- `s` consists of lowercase English letters only
+- `s` состоит только из английских букв

@@ -1,0 +1,78 @@
+{
+  "id": "find-smallest-letter-greater-than-target",
+  "title": "748. Find Smallest Letter Greater Than Target",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/find-smallest-letter-greater-than-target/",
+  "category": "binary-search",
+  "examples": [
+    {
+      "input": "letters = [\"c\",\"f\",\"j\"], target = \"a\"",
+      "output": "\"c\"",
+      "explanation": "The smallest entry after \"a\" is \"c\"."
+    },
+    {
+      "input": "letters = [\"c\",\"f\",\"j\"], target = \"c\"",
+      "output": "\"f\"",
+      "explanation": "The smallest entry after \"c\" is \"f\"."
+    },
+    {
+      "input": "letters = [\"x\",\"x\",\"y\",\"y\"], target = \"z\"",
+      "output": "\"x\"",
+      "explanation": "Nothing exceeds \"z\", so wrap to the front."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public String nextGreatestLetter(String[] letters, String target) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def nextGreatestLetter(self, letters: List[str], target: str) -> str:\n        pass",
+    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    string nextGreatestLetter(vector<string>& letters, string target) {\n        return \"\";\n    }\n};",
+    "csharp": "public class Solution \n{\n    public string NextGreatestLetter(string[] letters, string target) \n    {\n        return \"\";\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn next_greatest_letter(letters: Vec<String>, target: String) -> String {\n        String::new()\n    }\n}",
+    "go": "package main\n\nfunc NextGreatestLetter(letters []string, target string) string {\n    return \"\"\n}",
+    "typescript": "export function nextGreatestLetter(letters: string[], target: string): string {\n    return \"\";\n}",
+    "php": "class Solution {\n    /**\n     * @param string[] $letters\n     * @param string $target\n     * @return string\n     */\n    public function nextGreatestLetter($letters, $target) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "letters": [
+        "c",
+        "f",
+        "j"
+      ],
+      "target": "a"
+    },
+    {
+      "letters": [
+        "c",
+        "f",
+        "j"
+      ],
+      "target": "c"
+    },
+    {
+      "letters": [
+        "x",
+        "x",
+        "y",
+        "y"
+      ],
+      "target": "z"
+    }
+  ],
+  "functionName": "nextGreatestLetter",
+  "params": [
+    {
+      "name": "letters",
+      "type": "string_array"
+    },
+    {
+      "name": "target",
+      "type": "string"
+    }
+  ],
+  "outputType": "string",
+  "hints": [
+    "Because the list is sorted, a binary search for the first entry above the target runs in logarithmic time.",
+    "Remember the wrap rule: when the target is at or past the last distinct entry, the answer is letters[0].",
+    "Compare only the first character of each one-letter string."
+  ]
+}

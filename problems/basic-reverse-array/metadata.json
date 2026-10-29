@@ -1,18 +1,18 @@
 {
   "id": "basic-reverse-array",
-  "title": "24. Reverse Array",
+  "title": "24. Обратный массив",
   "difficulty": "Easy",
   "category": "arrays",
   "examples": [
     {
       "input": "nums = [1,2,3]",
       "output": "[3,2,1]",
-      "explanation": "The order is flipped."
+      "explanation": "Приказ перевернут."
     },
     {
       "input": "nums = []",
       "output": "[]",
-      "explanation": "Reversing nothing gives nothing."
+      "explanation": "Перевернуть ничего не дает ничего."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Read the input from the last index down to 0.",
-    "Append each visited element to the answer."
+    "Прочтите входной сигнал от последнего индекса до 0.",
+    "Приложите каждый элемент к ответу."
   ]
 }

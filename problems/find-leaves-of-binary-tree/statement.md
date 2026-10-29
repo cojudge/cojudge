@@ -1,14 +1,14 @@
-Repeatedly strip all current leaves from a binary tree: in round one remove
-every leaf, in round two remove the leaves of what remains, and so on until
-the tree is empty. Collect the removed values round by round.
+Неоднократно стричь все текущие листья с двоичного дерева: в первом раунде удалить
+Каждый лист, во втором раунде, удаляет листья того, что осталось, и так далее до тех пор, пока не исчезнут листья.
+Дерево пустое. Соберите убранные значения за раундом.
 
-For the tree `[1,2,3,4,5]` (root 1, children 2 and 3, with 2 parenting 4 and
-5), round one takes `[4,5,3]`, round two takes `[2]`, and round three takes
+Для дерева `[1,2,3,4,5]` (корень 1, потомки 2 и 3, с 2 родительский 4 и ZXQQXZ).
+5), первый раунд занимает `[4,5,3]`, второй раунд занимает `[2]`, а третий раунд занимает
 `[1]`.
 
-**Adaptation note:** the leaf groups are returned as a 2D integer list; values
-inside one round may appear in any order, but rounds stay ordered from the
-outer leaves inward.
+**Примечание по адаптации:** группы листьев возвращаются в виде 2D-целого списка; значения
+внутри одного раунда может появиться в любом порядке, но раунды остаются упорядоченными от
+Наружные листья внутрь.
 
-**Constraints:**
-- The tree holds between 0 and 100 nodes, with values in `[-100, 100]`.
+**Ограничения:**
+- Дерево держится между узлами 0 и 100 со значениями в `[-100, 100]`.

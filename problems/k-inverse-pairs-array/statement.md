@@ -1,5 +1,5 @@
-You consider all permutations of the numbers 1 through `n`. An inversion is a pair placed out of order (an earlier entry larger than a later one). Count how many permutations contain exactly `k` inversions, returning the count modulo 1000000007.
+Рассматриваются все перестановки чисел 1 через `n`. Инверсия — пара, размещённая не по порядку (более ранняя запись больше, чем более поздняя).Подсчитайте, сколько перестановок содержат именно инверсии `k`, возвращая графу модулю 1000000007.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 1000`
 - `0 <= k <= 1000`

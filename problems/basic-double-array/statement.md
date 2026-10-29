@@ -1,5 +1,5 @@
-Return a new array where each element of `nums` is multiplied by 2.
+Возвратить новый массив, где каждый элемент `nums` умножается на 2.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= nums.length <= 1000``
 - ``-10^6 <= nums[i] <= 10^6``

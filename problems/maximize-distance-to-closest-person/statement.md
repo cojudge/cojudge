@@ -1,7 +1,7 @@
-Choose an empty seat that stays farthest from anyone seated.
+Выберите пустое сиденье, которое находится дальше от любого сидящего.
 
-The array `seats` marks chairs with `1` for occupied and `0` for empty; at least one of each exists. You must sit in an empty chair. Your distance to the closest occupied chair should be as large as possible. Return that best achievable distance.
+Массив `seats` обозначает кресла с `1` для занятых и `0` для пустых; по крайней мере, один из них существует. Вы должны сидеть в пустом кресле. Ваше расстояние до ближайшего занятого кресла должно быть как можно большим. Верните это наилучшее достижимое расстояние.
 
-**Constraints:**
+**Ограничения:**
 - `2 <= seats.length <= 20000`
-- `seats[i]` is `0` or `1`, with at least one of each.
+- `seats[i]` - это `0` или `1`, по крайней мере, один из них.

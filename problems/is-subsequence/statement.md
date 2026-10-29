@@ -1,8 +1,8 @@
-Given a short string `s` and a longer string `t`, decide whether `s` can be obtained from `t` by erasing zero or more characters while leaving the order of the survivors untouched. For instance, keeping positions `0, 2, 4` of `"abcde"` yields `"ace"`, so `"ace"` qualifies, whereas swapping two letters does not.
+Учитывая короткую строку `s` и более длинную строку `t`, решите, можно ли получить `s` от `t`, стерев ноль или более символов, оставив нетронутым порядок выживших. Например, сохранение позиций `0, 2, 4` от `"abcde"` дает `"ace"`, поэтому `"ace"` квалифицируется, тогда как замена двух букв не происходит.
 
-Return `true` when such a deletion pattern exists and `false` otherwise. An empty `s` is a subsequence of every `t`.
+Возврат `true`, когда такая схема удаления существует, и `false` в противном случае. Пустой `s` является последовательностью каждого `t`.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= s.length <= 100`
 - `0 <= t.length <= 10^4`
-- `s` and `t` contain only lowercase English letters.
+- `s` и `t` содержат только английские буквы.

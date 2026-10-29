@@ -1,6 +1,6 @@
 {
   "id": "min-stack",
-  "title": "79. Min Stack",
+  "title": "79. Мин Стек",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/min-stack/",
   "category": "stack",
@@ -8,17 +8,17 @@
     {
       "input": "operations = [\"push\",\"push\",\"push\",\"getMin\",\"pop\",\"top\",\"getMin\"], values = [-2,0,-3,0,0,0,0]",
       "output": "[-3,0,-2]",
-      "explanation": "After pushing -2, 0, and -3, getMin returns -3. Pop removes -3, then top returns 0, and getMin returns -2."
+      "explanation": "После проталкивания -2, 0 и -3, получайте Min Returns -3. Pop удаляет -3, затем топ возвращает 0, и получайте Min Returns -2."
     },
     {
       "input": "operations = [\"push\",\"push\",\"getMin\",\"top\",\"pop\",\"getMin\"], values = [5,5,0,0,0,0]",
       "output": "[5,5,5]",
-      "explanation": "After pushing 5 twice, getMin returns 5 and top returns 5. Pop removes one 5, then getMin returns 5."
+      "explanation": "После двойного нажатия 5, getMin возвращает 5, а топ возвращает 5. Pop удаляет один 5, затем getMin возвращает 5."
     },
     {
       "input": "operations = [\"push\",\"top\",\"getMin\"], values = [7,0,0]",
       "output": "[7,7]",
-      "explanation": "After pushing 7, top returns 7 and getMin returns 7."
+      "explanation": "После продвижения 7, топ возвращает 7 и getMin возвращает 7."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Keep a normal stack and a second stack containing the minimum at each relevant depth.",
-    "Push to the minimum stack when a value is less than or equal to its current top so duplicate minima are handled correctly."
+    "Держите нормальный стек и второй стек, содержащий минимум на каждой соответствующей глубине.",
+    "Нажмите на минимальный стек, когда значение меньше или равно его текущему верху, чтобы правильно обрабатывать дублирующие минимумы."
   ]
 }

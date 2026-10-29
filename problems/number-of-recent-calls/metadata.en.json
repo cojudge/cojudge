@@ -1,0 +1,58 @@
+{
+  "id": "number-of-recent-calls",
+  "title": "920. Number of Recent Calls",
+  "difficulty": "Easy",
+  "link": "https://leetcode.com/problems/number-of-recent-calls/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "pings = [1,100,3001,3002]",
+      "output": "[1,2,3,3]",
+      "explanation": "The third call still sees the first one, the fourth drops it."
+    },
+    {
+      "input": "pings = [1,2,3,4]",
+      "output": "[1,2,3,4]",
+      "explanation": "All four fit inside one window."
+    },
+    {
+      "input": "pings = [1,4000,8000]",
+      "output": "[1,1,1]",
+      "explanation": "Gaps exceed the window."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runRecentCalls(int[] pings) {\n        return new int[]{};\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runRecentCalls(self, pings: List[int]) -> List[int]:\n        pass",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runRecentCalls(vector<int>& pings) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution\n{\n    public int[] RunRecentCalls(int[] pings)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_recent_calls(pings: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc RunRecentCalls(pings []int) []int {\n    return nil\n}",
+    "typescript": "export function runRecentCalls(pings: number[]): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int[] $pings\n     * @return int[]\n     */\n    public function runRecentCalls($pings) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "pings": "[1,100,3001,3002]"
+    },
+    {
+      "pings": "[1,2,3,4]"
+    },
+    {
+      "pings": "[1,4000,8000]"
+    }
+  ],
+  "functionName": "runRecentCalls",
+  "params": [
+    {
+      "name": "pings",
+      "type": "int_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Adaptation: replay the trace with a queue instead of building a class; each entry answers one ping in order.",
+    "Keep only times within [t-3000, t]; drop older front entries before recording the size.",
+    "The queue size after cleanup is the answer for that call."
+  ]
+}

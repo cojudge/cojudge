@@ -1,6 +1,6 @@
 {
   "id": "minesweeper",
-  "title": "588. Minesweeper",
+  "title": "588. тральщик",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/minesweeper/",
   "category": "matrix",
@@ -8,12 +8,12 @@
     {
       "input": "board = [[\"E\",\"E\",\"E\",\"E\",\"E\"],[\"E\",\"E\",\"M\",\"E\",\"E\"],[\"E\",\"E\",\"E\",\"E\",\"E\"],[\"E\",\"E\",\"E\",\"E\",\"E\"]], click = [3,0]",
       "output": "[\"B1E1B\",\"B1M1B\",\"B111B\",\"BBBBB\"]",
-      "explanation": "A blank region floods outward until it touches numbered squares bordering the mine."
+      "explanation": "Пустая область наводняет наружу, пока не коснется пронумерованных квадратов, граничащих с шахтой."
     },
     {
       "input": "board = [[\"B\",\"1\",\"E\",\"1\",\"B\"],[\"B\",\"1\",\"M\",\"1\",\"B\"],[\"B\",\"1\",\"1\",\"1\",\"B\"],[\"B\",\"B\",\"B\",\"B\",\"B\"]], click = [1,2]",
       "output": "[\"B1E1B\",\"B1X1B\",\"B111B\",\"BBBBB\"]",
-      "explanation": "The clicked square hides a mine, so it is marked X."
+      "explanation": "Нажатый квадрат скрывает мину, поэтому он обозначен X."
     }
   ],
   "starterCode": {
@@ -49,8 +49,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Handle the mine click first: M becomes X with no further changes.",
-    "For an empty square, count mines in all 8 neighboring cells before deciding between a digit and B.",
-    "Only blank (zero-neighbor) squares trigger recursion into still-unrevealed E neighbors; join each finished row into one answer string. Adaptation: the board is a char_array_2d input while the updated board is returned as row strings (string_list). Rust note: the board arrives as its encoded string; parse it before solving."
+    "Сначала обработайте щелчок шахты: M становится X без дальнейших изменений.",
+    "Для пустого квадрата подсчитайте мины во всех соседних ячейках 8, прежде чем выбирать между цифрой и B.",
+    "Только пустые (нулевой сосед) квадраты запускают рекурсию в еще нераскрытые E-соседи; соедините каждую законченную строку в одну строку ответа. Адаптация: плата представляет собой вход char_array_2d, в то время как обновленная доска возвращается в виде строк строк (string_list)."
   ]
 }

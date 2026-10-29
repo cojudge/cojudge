@@ -1,6 +1,6 @@
 {
   "id": "average-of-levels-in-binary-tree",
-  "title": "659. Average of Levels in Binary Tree",
+  "title": "659. Средний уровень в двоичном дереве",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/average-of-levels-in-binary-tree/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "root = [3,9,20,null,null,15,7]",
       "output": "[\"3.0\",\"14.5\",\"11.0\"]",
-      "explanation": "Level 0 is [3]; level 1 is [9,20] with mean 14.5; level 2 is [15,7] with mean 11.0."
+      "explanation": "Уровень 0 [3]; уровень 1 [9, 20] со средним значением 14.5; уровень 2 [15, 7] со средним значением 11.0."
     },
     {
       "input": "root = [3,9,20,15,7]",
       "output": "[\"3.0\",\"14.5\",\"11.0\"]",
-      "explanation": "Level 0 is [3]; level 1 is [9,20]; level 2 is [15,7]."
+      "explanation": "Уровень 0 [3]; уровень 1 [9, 20]; уровень 2 [15, 7]."
     },
     {
       "input": "root = [1]",
@@ -50,8 +50,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "Walk the tree level by level with a queue, summing values and counting nodes per depth.",
-    "Format each mean with Double.toString (or the language default) and return levels top-down.",
-    "Judging parses each entry as a double with 1e-5 tolerance, so any equivalent decimal form is fine."
+    "Прогулка по дереву уровня за уровнем с очередью, суммированием значений и подсчетом узлов на глубину.",
+    "Формат каждого означает Double.toString (или язык по умолчанию) и возвращает уровни сверху вниз.",
+    "Судя по анализу каждой записи в виде двойника с допуском 1e-5, любая эквивалентная десятичная форма хороша."
   ]
 }

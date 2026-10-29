@@ -1,6 +1,6 @@
 {
   "id": "encode-string-with-shortest-length",
-  "title": "536. Encode String with Shortest Length",
+  "title": "536. Код строки с самой короткой длиной",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/encode-string-with-shortest-length/",
   "category": "dp",
@@ -8,22 +8,22 @@
     {
       "input": "s = \"aaa\"",
       "output": "\"aaa\"",
-      "explanation": "Encoding as \"3[a]\" would be longer (4 vs 3), so the original string stays."
+      "explanation": "Кодирование как «3[a]» будет длиннее (4 против 3), поэтому исходная строка остается."
     },
     {
       "input": "s = \"aaaaa\"",
       "output": "\"5[a]\"",
-      "explanation": "Five copies of \"a\" compress to \"5[a]\"."
+      "explanation": "Пять копий компресса «a» на «5[a]»."
     },
     {
       "input": "s = \"ababab\"",
       "output": "\"3[ab]\"",
-      "explanation": "Three copies of \"ab\" compress to \"3[ab]\"."
+      "explanation": "Три копии сжатия «ab» на «3[ab]»."
     },
     {
       "input": "s = \"abbbabbbcabbbabbbc\"",
       "output": "\"2[2[abbb]c]\"",
-      "explanation": "The inner block \"abbbabbbc\" first compresses to \"2[abbb]c\", and doubling it gives the shortest form."
+      "explanation": "Внутренний блок «abbbabbbc» сначала сжимается до «2[abbb]c», а удвоение даёт самую короткую форму."
     }
   ],
   "starterCode": {
@@ -59,7 +59,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Let dp[i][j] be the shortest encoding of the slice s[i..j]: split it at every k and keep the best concatenation.",
-    "Also test whether the whole slice is a repetition of a smaller block, using the doubled-string trick to find the period."
+    "Пусть dp[i][j] будет самым коротким кодированием среза s[i..j]: разделите его на каждый k и сохраните наилучшую конкатенацию.",
+    "Также проверьте, является ли весь срез повторением меньшего блока, используя трюк с двойной строкой, чтобы найти период."
   ]
 }

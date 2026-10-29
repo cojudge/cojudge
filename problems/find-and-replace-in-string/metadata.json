@@ -1,6 +1,6 @@
 {
   "id": "find-and-replace-in-string",
-  "title": "831. Find And Replace in String",
+  "title": "831. Найти и заменить в струне",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/find-and-replace-in-string/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"abcd\", indices = [0,2], sources = [\"a\",\"cd\"], targets = [\"eee\",\"ffff\"]",
       "output": "\"eeebffff\"",
-      "explanation": "Both sources match, so both replacements fire."
+      "explanation": "Оба источника совпадают, поэтому оба заменяют огонь."
     },
     {
       "input": "s = \"abcd\", indices = [0,2], sources = [\"ab\",\"ec\"], targets = [\"eee\",\"ffff\"]",
       "output": "\"eeecd\"",
-      "explanation": "Only the first source matches."
+      "explanation": "Сопоставляется только первый источник."
     },
     {
       "input": "s = \"vmokgggqzp\", indices = [3,5,1], sources = [\"kg\",\"nnn\",\"mo\"], targets = [\"s\",\"asa\",\"b\"]",
       "output": "\"vbsggqzp\"",
-      "explanation": "Both \"mo\" and \"kg\" match; \"nnn\" does not."
+      "explanation": "И «мо», и «кг» совпадают; «ннн» — нет."
     }
   ],
   "starterCode": {
@@ -102,8 +102,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Reorder the edits by index first; the input order carries no meaning.",
-    "Compare each source against the original string (never against partially replaced text).",
-    "Advance a single cursor over the original string so matches emit targets and mismatches emit the raw character."
+    "Сначала переупорядочивайте правки по индексу; порядок ввода не несет никакого смысла.",
+    "Сравните каждый источник с исходной строкой (никогда с частично замененным текстом).",
+    "Продвигайте один курсор по оригинальной строке, чтобы совпадения испускали цели, а несоответствия испускали сырой символ."
   ]
 }

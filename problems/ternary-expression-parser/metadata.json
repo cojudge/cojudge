@@ -1,6 +1,6 @@
 {
   "id": "ternary-expression-parser",
-  "title": "507. Ternary Expression Parser",
+  "title": "507. Тернарная экспрессия Парсер",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/ternary-expression-parser/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "expression = \"T?2:3\"",
       "output": "\"2\"",
-      "explanation": "The condition is true, so the true branch 2 is picked."
+      "explanation": "Условие верно, поэтому выбрана истинная ветвь 2."
     },
     {
       "input": "expression = \"F?1:T?4:5\"",
       "output": "\"4\"",
-      "explanation": "The outer condition is false, so the inner true choice T?4:5 gives 4."
+      "explanation": "Внешнее условие ложно, поэтому внутренний истинный выбор T?4:5 дает 4."
     },
     {
       "input": "expression = \"T?T?F:5:3\"",
       "output": "\"F\"",
-      "explanation": "The inner T?F:5 is F, leaving T?F:3 which is F."
+      "explanation": "Внутреннее T?F:5 — это F, а T?F:3 — это F."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Choices group from the right, so scanning from right to left turns nesting into a simple stack process.",
-    "Push plain values and colons; when you meet '?', pop the true value, the colon, and the false value, then push back the picked one.",
-    "The character just before '?' is the condition: 'T' keeps the first value, 'F' keeps the second."
+    "Группа выбора справа, поэтому сканирование справа налево превращает гнездование в простой процесс стека.",
+    "Подталкивайте простые значения и толстые кишки; когда вы встречаете «?», выскакивайте истинное значение, толстую кишку и ложное значение, а затем отталкивайте выбранное.",
+    "Персонаж перед «?» — это условие: «T» сохраняет первое значение, «F» сохраняет второе."
   ]
 }

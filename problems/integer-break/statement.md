@@ -1,6 +1,6 @@
-Take an integer `n` and express it as a sum of `k` positive integers with `k >= 2`. Among all such decompositions, make the product of the parts as large as possible.
+Возьмите целое число `n` и выразите его как сумму положительных целых чисел `k` с `k >= 2`. Среди всех таких разложений сделайте изделие деталей максимально большим.
 
-Return that largest attainable product.
+Верните самый большой достижимый продукт.
 
-**Constraints:**
+**Ограничения:**
 - 2 ≤ n ≤ 58

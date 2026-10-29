@@ -1,21 +1,21 @@
-Maintain a sentence store where each sentence has a heat (usage count). Typing builds a prefix character by character; after every keystroke the system proposes up to three stored sentences starting with the current prefix, ordered by higher heat first and ASCII order for ties. Typing `#` ends the current query: the finished prefix is stored (heat 1) or bumped by 1, and the prefix resets.
+Сохраняйте хранилище предложений, в котором каждое предложение имеет тепло (количество использования). Typing создает префиксный символ по характеру; после каждого нажатия клавиш система предлагает до трех сохраненных предложений, начиная с текущего префикса, заказанного сначала более высоким теплом и ASCII-заказом для связей. Typing `#` завершает текущий запрос: готовый префикс хранится (тепло 1) или ударяется 1, а префикс сбрасывается.
 
-This task uses a portable function adaptation instead of a class. Implement:
+В этой задаче используется переносная функциональная адаптация вместо класса.
 
 ```
-runAutocomplete(operations, values)
+RunAutocomplete (операции, значения)
 ```
 
-The two arrays are parallel. `operations[i]` is `"AutocompleteSystem"` or `"input"`, and `values[i]` packs arguments as plain strings:
+Два массива параллельны. `operations[i]` - это `"AutocompleteSystem"` или `"input"`, а `values[i]` упаковывает аргументы в виде простых строк:
 
-- `"AutocompleteSystem"` with `"s1:t1;s2:t2;..."` preloads sentences and heats (`:` splits sentence from heat, `;` splits entries), e.g. `"i love you:5;island:3"`. An empty string preloads nothing.
-- `"input"` with a single character `c` (a lowercase letter, a space, or `"#"`).
+- `"AutocompleteSystem"` с предзагрузкой `"s1:t1;s2:t2;..."` предложения и нагревания (`:` разделяет предложение от тепла, `;` разделяет записи), например, `"i love you:5;island:3"`. Пустая строка ничего не загружает.
+- `"input"` с одним символом `c` (нижняя строчная буква, пробел или `"#"`).
 
-Return one string row per `input` call: the suggested sentences in order (possibly empty). Ending with `#` contributes an empty row. There is intentionally no class wrapper.
+Возврат одной строки на вызов `input`: предложенные предложения в порядке (возможно, пустые). Завершение `#` вносит пустую строку. Умышленно нет обертки класса.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= operations.length == values.length <= 500`
-- The first operation is `"AutocompleteSystem"`.
-- Preloaded sentences hold lowercase letters and spaces, length `1..100`; heats are `1..1000`.
-- `input` values are single characters: `a-z`, `' '`, or `'#'`.
-- At most 100 distinct sentences are stored per test.
+- Первая операция — `"AutocompleteSystem"`.
+- Предустановленные предложения содержат строчные буквы и пробелы, длина `1..100`; теплота `1..1000`.
+- Значения `input` представляют собой одиночные символы: `a-z`, `' '` или `'#'`.
+- В большинстве 100 отдельные предложения хранятся в тесте.

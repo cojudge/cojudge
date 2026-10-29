@@ -1,6 +1,6 @@
 {
   "id": "lowest-common-ancestor-of-a-binary-tree",
-  "title": "345. Lowest Common Ancestor of a Binary Tree",
+  "title": "345. Самый низкий общий предок двоичного дерева",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1",
       "output": "[3,5,1,6,2,0,8,null,null,7,4]",
-      "explanation": "Nodes 5 and 1 sit in opposite subtrees of 3, so the ancestor is 3."
+      "explanation": "Узлы 5 и 1 расположены в противоположных поддеревьях 3, поэтому предком является 3."
     },
     {
       "input": "root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4",
       "output": "[5,6,2,null,null,7,4]",
-      "explanation": "Node 4 is inside the subtree of 5, so the ancestor is 5 itself."
+      "explanation": "Узел 4 находится внутри поддеревья 5, поэтому предком является сам 5."
     },
     {
       "input": "root = [1,2], p = 1, q = 2",
       "output": "[1,2]",
-      "explanation": "Node 2 is a direct child of 1, so the ancestor is 1."
+      "explanation": "Узел 2 является прямым потомком 1, поэтому предком является 1."
     }
   ],
   "starterCode": {
@@ -66,7 +66,7 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Recurse: when the current node holds p or q, report it upward.",
-    "When the left and right subtrees each report a hit, the current node is the ancestor."
+    "Рекурсия: когда текущий узел удерживает p или q, сообщите об этом вверх.",
+    "Когда левое и правое поддеревья сообщают об ударе, текущий узел является предком."
   ]
 }

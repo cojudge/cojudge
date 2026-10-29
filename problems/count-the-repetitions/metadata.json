@@ -1,6 +1,6 @@
 {
   "id": "count-the-repetitions",
-  "title": "531. Count The Repetitions",
+  "title": "531. Посчитайте повторы",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/count-the-repetitions/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "s1 = \"acb\", n1 = 4, s2 = \"ab\", n2 = 2",
       "output": "2",
-      "explanation": "Repeating s1 four times gives \"acbacbacbacb\", which contains \"ab\" four times as a subsequence; 4 / 2 = 2."
+      "explanation": "Повторение s1 четыре раза дает «acbacbacbacb», который содержит «ab» четыре раза в качестве последовательности; 4 / 2 = 2."
     },
     {
       "input": "s1 = \"aaa\", n1 = 3, s2 = \"aa\", n2 = 1",
       "output": "4",
-      "explanation": "Nine a's contain \"aa\" four times as a subsequence; 4 / 1 = 4."
+      "explanation": "Девять а содержат «аа» четыре раза в качестве последовательности; 4 / 1 = 4."
     }
   ],
   "starterCode": {
@@ -61,7 +61,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Scanning all n1 copies is too slow; the position inside s2 after each copy must eventually repeat, forming a cycle.",
-    "Record the completed-copy count the first time each s2-offset appears, then fast-forward whole cycles with arithmetic."
+    "Сканирование всех n1-копий слишком медленное; положение внутри s2 после каждой копии должно в конечном итоге повторяться, образуя цикл.",
+    "Зафиксируйте количество завершенных копий при первом появлении каждого s2-оффсета, а затем быстро перенесите целые циклы с арифметикой."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "peak-index-in-a-mountain-array",
-  "title": "849. Peak Index in a Mountain Array",
+  "title": "849. Пиковый индекс в горном массиве",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/peak-index-in-a-mountain-array/",
   "category": "binary-search",
@@ -8,17 +8,17 @@
     {
       "input": "arr = [0,1,0]",
       "output": "1",
-      "explanation": "Peak at index 1."
+      "explanation": "Высота индекса 1."
     },
     {
       "input": "arr = [0,2,1,0]",
       "output": "1",
-      "explanation": "Maximum at index 1."
+      "explanation": "Максимальный индекс 1."
     },
     {
       "input": "arr = [0,10,5,2]",
       "output": "1",
-      "explanation": "Summit at index 1."
+      "explanation": "Саммит по индексу 1."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "The slope tells the side: when arr[mid] < arr[mid+1] the peak lies to the right, otherwise to the left.",
-    "Binary-search that slope test for O(log n); a linear max scan also works but is slower.",
-    "Keep the loop invariant lo < hi and return lo when they meet."
+    "Наклон указывает на сторону: когда arr [mid] < arr [mid+1] пик лежит справа, в противном случае слева.",
+    "Бинарный поиск, который наклонный тест для O(log n); линейное максимальное сканирование также работает, но медленнее.",
+    "Держите петлю инвариантной lo < hi и возвращайте lo, когда они встречаются."
   ]
 }

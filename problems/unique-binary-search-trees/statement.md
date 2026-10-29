@@ -1,6 +1,6 @@
-Count how many structurally unique binary search trees can be formed using the values `1` through `n` in order. Only the shape and the placement of values matter; two trees that differ in structure count separately even if they hold the same keys.
+Подсчитайте, сколько структурно уникальных деревьев двоичного поиска можно сформировать, используя значения `1` через `n` в порядке. Имеет значение только форма и расположение значений; два дерева, которые различаются по структуре, учитываются отдельно, даже если они содержат одни и те же ключи.
 
-The total follows the Catalan recurrence: with `r` as root, the left side contributes `count(r-1)` shapes and the right side contributes `count(n-r)` shapes. Summing the product over every choice of `r` gives the answer, with `count(0) = count(1) = 1`.
+Общий результат следует за каталонским рецидивом: с `r` в качестве корня левая сторона вносит формы `count(r-1)`, а правая сторона вносит формы `count(n-r)`. Резюмирование продукта по каждому выбору `r` дает ответ, с `count(0) = count(1) = 1`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 19`

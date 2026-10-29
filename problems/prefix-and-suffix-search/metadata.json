@@ -1,6 +1,6 @@
 {
   "id": "prefix-and-suffix-search",
-  "title": "749. Prefix and Suffix Search",
+  "title": "749. Префикс и суффикс поиск",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/prefix-and-suffix-search/",
   "category": "trie",
@@ -8,17 +8,17 @@
     {
       "input": "words = [\"apple\"], pref = \"a\", suff = \"e\"",
       "output": "0",
-      "explanation": "Index 0 fits both ends."
+      "explanation": "Индекс 0 подходит для обоих концов."
     },
     {
       "input": "words = [\"apple\",\"apply\",\"ape\"], pref = \"ap\", suff = \"e\"",
       "output": "2",
-      "explanation": "Indices 0 and 2 fit; return the larger."
+      "explanation": "Индексы 0 и 2 подходят; возвращайте больший."
     },
     {
       "input": "words = [\"hello\",\"world\"], pref = \"x\", suff = \"y\"",
       "output": "-1",
-      "explanation": "No word fits."
+      "explanation": "Ни слова не подходит."
     }
   ],
   "starterCode": {
@@ -74,8 +74,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Scanning indices from the end downward lets you return the first fit, which is automatically the largest.",
-    "A word fits when it starts with pref and ends with suff; both checks are linear in the word length.",
-    "For many repeated queries a combined prefix-suffix map or trie pays off, but a single scan is enough for one query."
+    "Индексы сканирования с конца вниз позволяют вернуть первую посадку, которая автоматически является самой большой.",
+    "Слово подходит, когда оно начинается с преф и заканчивается суффом; обе проверки линейны по длине слова.",
+    "Для многих повторных запросов окупается комбинированная префиксно-суффиксная карта или тройка, но для одного запроса достаточно одного сканирования."
   ]
 }

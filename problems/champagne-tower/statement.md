@@ -1,9 +1,9 @@
-A tower of champagne glasses is stacked so that row `r` holds `r + 1` glasses. You pour `poured` cups into the top glass. Each glass holds at most one cup; any surplus splits evenly to the two glasses directly below it (half to the lower-left, half to the lower-right). The pouring happens all at once and the liquid keeps flowing downward through full glasses.
+Башня из бокалов шампанского уложена так, что ряд `r` удерживает очки `r + 1`. Вы наливаете чашки `poured` в верхнее стекло. Каждое стекло держит максимум одну чашку; любой излишек равномерно делится на два стакана непосредственно под ним (половина на нижнюю левую, половина на нижнюю правую). Налив происходит все сразу, и жидкость продолжает течь вниз через полные стаканы.
 
-Given `query_row` and `query_glass`, report how full that particular glass ends up, capped at one. Because this judge avoids binary floating types, return the amount as a decimal string such as `"0.5"` or `"1.0"`; answers within a tiny tolerance are accepted.
+Учитывая `query_row` и `query_glass`, сообщите, насколько заполнено то или иное стекло, ограниченное одним. Поскольку этот судья избегает двоичных плавающих типов, верните сумму в виде десятичной строки, такой как `"0.5"` или `"1.0"`; принимаются ответы в пределах крошечного допуска.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= poured <= 10^9`
 - `0 <= query_row < 100`
 - `0 <= query_glass <= query_row`
-- This is a portable adaptation: the floating answer is exchanged as a decimal string with tolerance 1e-9 absolute plus 1e-5 relative.
+- Это переносная адаптация: плавающий ответ обменивается как десятичная строка с допуском 1e-9 абсолютный плюс 1e-5 относительный.

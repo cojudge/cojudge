@@ -1,6 +1,6 @@
 {
   "id": "find-the-closest-palindrome",
-  "title": "619. Find the Closest Palindrome",
+  "title": "619. Найдите самый близкий палиндром",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/find-the-closest-palindrome/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "n = \"123\"",
       "output": "\"121\"",
-      "explanation": "121 and 131 tie at distance 2; the smaller wins."
+      "explanation": "121 и 131 галстук на дистанции 2; меньшие победы."
     },
     {
       "input": "n = \"1\"",
       "output": "\"0\"",
-      "explanation": "The nearest palindrome besides 1 itself is 0."
+      "explanation": "Ближайший палиндром, кроме самого 1, — 0."
     },
     {
       "input": "n = \"99\"",
       "output": "\"101\"",
-      "explanation": "101 (gap 2) beats 88 (gap 11)."
+      "explanation": "101 (разрыв 2) обгоняет 88 (разрыв 11)."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "Mirror the first half onto the second half; also try the prefix plus and minus one before mirroring.",
-    "Add the length-change candidates 10^k + 1 and 10^(k-1) - 1 for inputs like 1000 or 999.",
-    "Drop the input itself from the candidates, then keep the smallest gap, preferring the smaller value on ties."
+    "Зеркало первой половины на вторую половину; также попробуйте приставку плюс и минус один перед зеркалированием.",
+    "Добавьте кандидатов с изменением длины 10^k + 1 и 10^(k-1) - 1 для входов, таких как 1000 или 999.",
+    "Откажитесь от кандидатов, а затем сохраните наименьший разрыв, предпочитая меньшее значение связям."
   ]
 }

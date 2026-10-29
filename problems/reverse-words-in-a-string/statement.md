@@ -1,8 +1,8 @@
-You are given a string `s` holding words separated by spaces. A word is a maximal run of non-space characters.
+Вам дается строка `s`, содержащая слова, разделенные пространствами. Слово — это максимальный прогон некосмических символов.
 
-Reverse the order of the words and join them with exactly one space. Remove any leading or trailing spaces, and collapse every run of interior spaces to a single separator.
+Переверните порядок слов и соедините их ровно с одним пространством. Удалите любые ведущие или задвинутые пространства и сведите каждый пробег внутренних пространств к одному разделителю.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 10^4`
-- `s` holds English letters (both cases), digits, and spaces.
-- At least one word exists in `s`.
+- `s` содержит английские буквы (оба корпуса), цифры и пробелы.
+- В `s` есть хотя бы одно слово.

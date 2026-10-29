@@ -1,6 +1,6 @@
 {
   "id": "n-queens",
-  "title": "114. N-Queens",
+  "title": "114. Н-Куинс",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/n-queens/",
   "category": "backtracking",
@@ -8,12 +8,12 @@
     {
       "input": "n = 4",
       "output": "[[\".Q..\",\"...Q\",\"Q...\",\"..Q.\"],[\"..Q.\",\"Q...\",\"...Q\",\".Q..\"]]",
-      "explanation": "All 2 distinct solutions for the 4-queens problem."
+      "explanation": "Все решения 2 для решения проблемы 4-квинов."
     },
     {
       "input": "n = 1",
       "output": "[[\"Q\"]]",
-      "explanation": "The only solution for the 1-queens problem."
+      "explanation": "Единственное решение проблемы 1-квинов."
     }
   ],
   "starterCode": {
@@ -46,7 +46,7 @@
   ],
   "outputType": "string_list_2d",
   "hints": [
-    "Place one queen per row and backtrack when a column or diagonal is already occupied.",
-    "The two diagonal families can be identified by `row - col` and `row + col`."
+    "Поместите одну королеву за строку и отступите назад, когда колонна или диагональ уже заняты.",
+    "Два диагональных семейства могут быть идентифицированы `row - col` и `row + col`."
   ]
 }

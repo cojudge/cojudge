@@ -1,6 +1,6 @@
 {
   "id": "merge-sorted-array",
-  "title": "168. Merge Sorted Array",
+  "title": "168. Сортированный массив Merge",
   "difficulty": "Easy",
   "category": "two-pointer",
   "link": "https://leetcode.com/problems/merge-sorted-array/",
@@ -8,17 +8,17 @@
     {
       "input": "nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3",
       "output": "[1,2,2,3,5,6]",
-      "explanation": "The arrays to merge are [1,2,3] and [2,5,6]; the merged sorted array is [1,2,2,3,5,6]."
+      "explanation": "Для того, чтобы слиться [1,2,3] и [2,5,6]; объединённая сортированная матрица [1,2,2,3,5,6]."
     },
     {
       "input": "nums1 = [1], m = 1, nums2 = [], n = 0",
       "output": "[1]",
-      "explanation": "The arrays to merge are [1] and []; the merged sorted array is [1]."
+      "explanation": "Для того, чтобы слиться [1] и []; слитый сортированный массив является [1]."
     },
     {
       "input": "nums1 = [0], m = 0, nums2 = [1], n = 1",
       "output": "[1]",
-      "explanation": "The arrays to merge are [] and [1]; the merged sorted array is [1]."
+      "explanation": "Слияние (слияние) и (слияние)1]; объединённая сортированная матрица [1]."
     }
   ],
   "starterCode": {
@@ -72,7 +72,7 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Merge from the back of nums1, comparing the largest remaining elements of each array.",
-    "When one array is exhausted, copy the remaining elements of the other array."
+    "Слиться с задней частью nums1, сравнивая самые большие оставшиеся элементы каждого массива.",
+    "Когда один массив исчерпан, скопируйте оставшиеся элементы другого массива."
   ]
 }

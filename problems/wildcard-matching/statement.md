@@ -1,8 +1,8 @@
-You are given a text `s` and a pattern `p` that may contain two special symbols: `'?'`, which stands for exactly one arbitrary character, and `'*'`, which stands for any (possibly empty) run of characters.
+Вам предоставляется текст `s` и шаблон `p`, который может содержать два специальных символа: `'?'`, который обозначает ровно один произвольный символ, и `'*'`, который обозначает любой (возможно, пустой) запуск символов.
 
-Decide whether the *entire* text matches the *entire* pattern under these rules — a partial overlap is not enough.
+Решите, соответствует ли текст *entire* шаблону *entire* в соответствии с этими правилами — частичного перекрытия недостаточно.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= s.length, p.length <= 2000`
-- `s` holds only lowercase English letters.
-- `p` holds only lowercase English letters, `'?'`, and `'*'`.
+- `s` содержит только английские буквы.
+- `p` содержит только строчные английские буквы, `'?'` и `'*'`.

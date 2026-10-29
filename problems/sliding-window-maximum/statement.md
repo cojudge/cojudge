@@ -1,9 +1,9 @@
-Given an integer array `nums` and an integer `k`, a window of length `k` moves from the left of the array to the right one position at a time. Return an array containing the maximum value in every window.
+При наличии целочисленного массива `nums` и целочисленного `k` окно длины `k` перемещается с левой стороны массива в правую по одному положению за раз. Возвратить массив, содержащий максимальное значение в каждом окне.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= nums.length <= 10^5`
 - `-10^4 <= nums[i] <= 10^4`
 - `1 <= k <= nums.length`
 
-**Portable interface:** Implement `maxSlidingWindow(nums, k)` directly. Arrays are supplied by the judge in the native array type for each language, and the function returns the window maxima as an integer array.
+** Портативный интерфейс: ** Реализуйте `maxSlidingWindow(nums, k)` напрямую. Решетки поставляются судьей в родном типе массива для каждого языка, и функция возвращает максимумы окна в виде целого массива.

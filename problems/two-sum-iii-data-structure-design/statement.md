@@ -1,17 +1,17 @@
-This is an offline adaptation of a design task. Instead of writing a class, you write one function that replays a whole session:
+Это офлайн-адаптация задачи проектирования. Вместо того, чтобы писать класс, вы пишете одну функцию, которая воспроизводит целую сессию:
 
 ```
-runTwoSum(operations, values)
+RunTwoSum (операции, значения)
 ```
 
-Both arrays have the same length. Each entry is one step:
+Оба массива имеют одинаковую длину. Каждая запись - один шаг:
 
-- `"add"` with `values[i] = number` stores the number for later queries and produces no output.
-- `"find"` with `values[i] = value` asks whether any pair of stored numbers (using two different stored entries) sums to `value`. Its answer (`1` for yes, `0` for no) is appended to the result.
+- `"add"` с `values[i] = number` сохраняет номер для последующих запросов и не производит выход.
+- `"find"` с `values[i] = value` спрашивает, является ли какая-либо пара сохраненных чисел (с использованием двух разных сохраненных записей) суммой `value`. Его ответ (`1` для да, `0` для нет) добавлен к результату.
 
-Return the answers for the `"find"` steps in order. Only `"find"` steps contribute entries.
+Возвращайте ответы для этапов `"find"` в порядке. Только этапы `"find"` вносят записи.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= number of steps <= 10^4`
 - `-10^5 <= number, value <= 10^5`
-- `operations` holds only `"add"` or `"find"`.
+- `operations` имеет только `"add"` или `"find"`.

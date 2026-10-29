@@ -1,6 +1,6 @@
 {
   "id": "minimum-number-of-refueling-stops",
-  "title": "865. Minimum Number of Refueling Stops",
+  "title": "865. Минимальное количество остановок дозаправки",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/minimum-number-of-refueling-stops/",
   "category": "heap",
@@ -8,17 +8,17 @@
     {
       "input": "target = 1, startFuel = 1, stations = []",
       "output": "0",
-      "explanation": "Reached without stopping."
+      "explanation": "Достигается без остановки."
     },
     {
       "input": "target = 100, startFuel = 1, stations = [[10,100]]",
       "output": "-1",
-      "explanation": "Run out before the station."
+      "explanation": "Беги до станции."
     },
     {
       "input": "target = 100, startFuel = 10, stations = [[10,60],[20,30],[30,30],[60,40]]",
       "output": "2",
-      "explanation": "Two well-chosen stops suffice."
+      "explanation": "Достаточно двух хорошо подобранных остановок."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Think of fuel as reach: always drive as far as current fuel allows, refueling only when stuck.",
-    "Keep every passed station's fuel in a max-heap; when you cannot reach the next point, pop the largest past offer.",
-    "Each pop corresponds to one optimal stop, and empty heap with insufficient reach means impossibility."
+    "Думайте о топливе как о досягаемости: всегда езжайте так далеко, как позволяет текущее топливо, заправляя топливо только при застрявании.",
+    "Держите топливо каждой пройденной станции в максимальной куче; когда вы не можете достичь следующей точки, сделайте самое большое предложение в прошлом.",
+    "Каждая поп-музыка соответствует одной оптимальной остановке, а пустая куча с недостаточным охватом означает невозможность."
   ]
 }

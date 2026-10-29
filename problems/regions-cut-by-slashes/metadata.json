@@ -1,6 +1,6 @@
 {
   "id": "regions-cut-by-slashes",
-  "title": "945. Regions Cut by Slashes",
+  "title": "945. Регионы, срезанные слэшами",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/regions-cut-by-slashes/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "grid = \" /|/ \"",
       "output": "2",
-      "explanation": "The two strokes join into one diagonal wall that splits the square into 2 zones."
+      "explanation": "Два штриха соединяются в одну диагональную стену, которая разделяет квадрат на зоны 2."
     },
     {
       "input": "grid = \" /|  \"",
       "output": "1",
-      "explanation": "A lone stroke touching the border fails to enclose anything, leaving 1 zone."
+      "explanation": "Одинокий удар, касающийся границы, ничего не закрывает, покидая зону 1."
     },
     {
       "input": "grid = \"/\\|\\/\"",
       "output": "5",
-      "explanation": "The crossing strokes carve the square into 5 separate pockets."
+      "explanation": "Перекрестные штрихи вырезают квадрат в отдельные карманы 5."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Expand every cell into a 3x3 pixel block so diagonal walls become axis-aligned barriers.",
-    "A '/' blocks the anti-diagonal pixels and a backslash blocks the main diagonal pixels.",
-    "Count connected components of the remaining open pixels with flood fill."
+    "Расширяйте каждую ячейку в блок пикселей 3x3, чтобы диагональные стены стали выровненными по оси барьерами.",
+    "A '/' блокирует антидиагональные пиксели, а обратная косая черта блокирует основные диагональные пиксели.",
+    "Подсчитайте подключенные компоненты оставшихся открытых пикселей с заливкой."
   ]
 }

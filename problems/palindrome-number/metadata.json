@@ -1,6 +1,6 @@
 {
   "id": "palindrome-number",
-  "title": "253. Palindrome Number",
+  "title": "253. Номер палиндрома",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/palindrome-number/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "x = 121",
       "output": "true",
-      "explanation": "121 is identical when read from either end."
+      "explanation": "121 идентичен при чтении с любого конца."
     },
     {
       "input": "x = -121",
       "output": "false",
-      "explanation": "The minus sign appears only on one side, so it cannot be a palindrome."
+      "explanation": "Знак минус появляется только с одной стороны, поэтому он не может быть палиндромом."
     },
     {
       "input": "x = 10",
       "output": "false",
-      "explanation": "Reversed, the digits form 01, which differs from 10."
+      "explanation": "Развернутые цифры образуют 01, который отличается от 10."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Negative numbers are never palindromes; neither are non-zero numbers ending in 0.",
-    "Reverse only half the digits and compare with the remaining half (dropping the middle digit for odd lengths) to avoid overflow."
+    "Отрицательные числа никогда не являются палиндромами; также не являются ненулевыми числами, заканчивающимися в 0.",
+    "Переверните только половину цифр и сравните с оставшейся половиной (сбрасывая среднюю цифру для нечетных длин), чтобы избежать переполнения."
   ]
 }

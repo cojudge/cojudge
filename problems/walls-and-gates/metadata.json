@@ -1,6 +1,6 @@
 {
   "id": "walls-and-gates",
-  "title": "116. Walls and Gates",
+  "title": "116. Стены и ворота",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/walls-and-gates/",
   "category": "graph",
@@ -8,12 +8,12 @@
     {
       "input": "rooms = [[2147483647,-1,0,2147483647],[2147483647,2147483647,2147483647,-1],[2147483647,-1,2147483647,-1],[0,-1,2147483647,2147483647]]",
       "output": "[[3,-1,0,1],[2,2,1,-1],[1,-1,2,-1],[0,-1,3,4]]",
-      "explanation": "The distances to the nearest gate are: [[3,-1,0,1],[2,2,1,-1],[1,-1,2,-1],[0,-1,3,4]]."
+      "explanation": "Расстояние до ближайших ворот:3,-1,0,1],[2,2,1,-1],[1,-1,2,-1],[0,-1,3,4]]."
     },
     {
       "input": "rooms = [[-1,2147483647],[0,2147483647]]",
       "output": "[[-1,2],[0,1]]",
-      "explanation": "The distances to the nearest gate are: [[-1,2],[0,1]]."
+      "explanation": "Расстояния до ближайших ворот: [[-1, 2], [0, 1]]."
     }
   ],
   "starterCode": {
@@ -47,7 +47,7 @@
   ],
   "outputType": "int_array_2d",
   "hints": [
-    "Start a breadth-first search from all gates at the same time.",
-    "The first time an empty room is reached is through its nearest gate."
+    "Начните поиск по ширине от всех ворот одновременно.",
+    "Первый раз в пустую комнату можно попасть через ближайшие ворота."
   ]
 }

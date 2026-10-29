@@ -1,6 +1,6 @@
 {
   "id": "mini-parser",
-  "title": "461. Mini Parser",
+  "title": "461. Мини Парсер",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/mini-parser/",
   "category": "string",
@@ -8,17 +8,17 @@
     {
       "input": "s = \"324\"",
       "output": "\"324\"",
-      "explanation": "Single integer round-trips."
+      "explanation": "Одиночные целочисленные круговые поездки."
     },
     {
       "input": "s = \"[123,[456,[789]]]\"",
       "output": "\"[123,[456,[789]]]\"",
-      "explanation": "Nesting preserved."
+      "explanation": "Несттинг сохранился."
     },
     {
       "input": "s = \"[123,456,[789,[]]]\"",
       "output": "\"[123,456,[789,[]]]\"",
-      "explanation": "Empty list survives."
+      "explanation": "Пустой список выживает."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "string",
   "hints": [
-    "A lone number with no brackets is its own answer.",
-    "Otherwise scan with a stack: push a new list on '[', close it on ']', and flush numbers on ',' or ']' boundaries.",
-    "Re-serialize the parsed tree canonically instead of echoing the raw input."
+    "Одинокий номер без скобок - это его собственный ответ.",
+    "В противном случае сканируйте со стеком: нажмите новый список на '[', закройте его на ']', и промойте числа на границах '','' или ''''.",
+    "Пересериализируйте разрезанное дерево канонически, вместо того, чтобы повторять сырой вход."
   ]
 }

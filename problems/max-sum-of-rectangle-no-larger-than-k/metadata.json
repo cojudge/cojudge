@@ -1,6 +1,6 @@
 {
   "id": "max-sum-of-rectangle-no-larger-than-k",
-  "title": "442. Max Sum of Rectangle No Larger Than K",
+  "title": "442. Max Sum из прямоугольника не больше K",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/",
   "category": "matrix",
@@ -8,12 +8,12 @@
     {
       "input": "matrix = [[1,0,1],[0,-2,3]], k = 2",
       "output": "2",
-      "explanation": "The single cell holding 2 is the best rectangle at or below k."
+      "explanation": "Одиночная ячейка, содержащая 2, является лучшим прямоугольником на уровне или ниже k."
     },
     {
       "input": "matrix = [[2,2,-1]], k = 3",
       "output": "3",
-      "explanation": "The submatrix [[2,2,-1]] itself sums to 3."
+      "explanation": "Субматрица [[2, 2,-1]] сама суммируется с 3."
     }
   ],
   "starterCode": {
@@ -57,8 +57,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Fix left and right column borders and compress rows into 1D column sums.",
-    "For the 1D problem, scan prefix sums while keeping them in an ordered set.",
-    "For each prefix cur, the ceiling of (cur - k) in the set yields the best subarray ending here."
+    "Исправьте границы левой и правой колонок и сжимайте строки в суммы колонок 1D.",
+    "Для проблемы 1D сканируйте суммы префиксов, сохраняя их в упорядоченном наборе.",
+    "Для каждого префикса cur потолок (cur - k) в наборе дает лучшее окончание подкатегории здесь."
   ]
 }

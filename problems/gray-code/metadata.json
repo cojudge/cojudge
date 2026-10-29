@@ -1,6 +1,6 @@
 {
   "id": "gray-code",
-  "title": "278. Gray Code",
+  "title": "278. Серый код",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/gray-code/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "n = 2",
       "output": "[0,1,3,2]",
-      "explanation": "Binary forms 00, 01, 11, 10 change one bit at each step."
+      "explanation": "Бинарные формы 00, 01, 11, 10 изменяют один бит на каждом шаге."
     },
     {
       "input": "n = 1",
       "output": "[0,1]",
-      "explanation": "With one bit, 0 then 1 differ in the only position."
+      "explanation": "С одним битом 0, затем 1 отличаются в единственной позиции."
     },
     {
       "input": "n = 0",
       "output": "[0]",
-      "explanation": "Zero bits still produce the single value 0."
+      "explanation": "Нулевые биты по-прежнему производят одно значение 0."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Entry i of the binary-reflected code is i ^ (i >> 1).",
-    "Alternatively mirror the (n-1)-bit sequence and set the top bit on the reversed copy.",
-    "Any ordering is accepted as long as it starts at 0, covers all values, and flips one bit per step."
+    "Ввод i двоичного отраженного кода i ^ (i >> 1).",
+    "Альтернативно отобразите последовательность (n-1)-бит и установите верхний бит на обратной копии.",
+    "Любой заказ принимается до тех пор, пока он начинается с 0, охватывает все значения и переворачивает один бит на шаг."
   ]
 }

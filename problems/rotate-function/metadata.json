@@ -3,26 +3,26 @@
   "difficulty": "Medium",
   "examples": [
     {
-      "explanation": "The four spins score 25, 16, 23 and 26; the best is 26.",
+      "explanation": "Четыре спина 25, 16, 23 и 26; лучший 26.",
       "input": "nums = [4,3,2,6]",
       "output": "26"
     },
     {
-      "explanation": "A single entry always scores 0.",
+      "explanation": "Однократная запись всегда набирает 0.",
       "input": "nums = [100]",
       "output": "0"
     },
     {
-      "explanation": "Scores are 8, 5 and 5; the best is 8.",
+      "explanation": "Оценки 8, 5 и 5; лучший - 8.",
       "input": "nums = [1,2,3]",
       "output": "8"
     }
   ],
   "functionName": "maxRotateFunction",
   "hints": [
-    "Write F(k) in terms of F(k-1): every entry shifts one slot up except the wrapped one.",
-    "F(k) = F(k-1) + total - n * last_moved, where total is the array sum.",
-    "Start from the directly computed F(0) and iterate."
+    "Напишите F(k) в терминах F(k-1): каждая запись сдвигает один слот вверх, за исключением завернутого.",
+    "F(k) = F(k-1) + Total - n * last_moved, где Total - сумма массива.",
+    "Начните с непосредственно вычисленного F (0) и повторите."
   ],
   "id": "rotate-function",
   "link": "https://leetcode.com/problems/rotate-function/",
@@ -54,5 +54,5 @@
       "nums": "[1,2,3]"
     }
   ],
-  "title": "471. Rotate Function"
+  "title": "471. Функция ротации"
 }

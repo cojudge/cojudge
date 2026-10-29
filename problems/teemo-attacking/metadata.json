@@ -1,6 +1,6 @@
 {
   "id": "teemo-attacking",
-  "title": "558. Teemo Attacking",
+  "title": "558. Теемо атакует",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/teemo-attacking/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "timeSeries = [1,4], duration = 2",
       "output": "4",
-      "explanation": "Spans [1,2] and [4,5] are disjoint, giving 2 + 2 seconds."
+      "explanation": "Spans [1, 2] и [4, 5] являются разъединенными, давая 2 + 2 секунды."
     },
     {
       "input": "timeSeries = [1,2], duration = 2",
       "output": "3",
-      "explanation": "Spans [1,2] and [2,3] overlap at second 2, giving 3 distinct seconds."
+      "explanation": "Spans [1, 2] и [2, 3] перекрываются на втором 2, давая 3 отдельные секунды."
     }
   ],
   "starterCode": {
@@ -53,8 +53,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Only neighboring attacks can overlap because the list is sorted.",
-    "Each gap contributes min(duration, next - current); the final attack always adds a full duration.",
-    "A duration of zero means no poisoned seconds at all."
+    "Только соседние атаки могут перекрываться, потому что список отсортирован.",
+    "Каждый пробел вносит мин (длительность, следующий - ток); финальная атака всегда добавляет полную продолжительность.",
+    "Длительность ноля означает отсутствие отравленных секунд."
   ]
 }

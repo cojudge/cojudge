@@ -1,10 +1,10 @@
-Each bus route is a list of stops it serves in order; you may board or alight at any stop on a route, and changing buses is allowed only at a shared stop. Given all `routes`, a starting stop `source` and a destination `target`, find the smallest number of buses you must ride to reach the destination.
+Каждый автобусный маршрут представляет собой список остановок, которые он обслуживает по порядку; вы можете сесть или сесть на любую остановку на маршруте, а смена автобусов допускается только на общей остановке. Учитывая все `routes`, стартовую остановку `source` и пункт назначения `target`, найдите наименьшее количество автобусов, на которых вы должны ездить, чтобы добраться до пункта назначения.
 
-If the start equals the destination, the answer is 0 without boarding. If the destination cannot be reached at all, return -1. Otherwise count each bus boarded, including the first and the last.
+Если старт равен пункту назначения, ответ - 0 без посадки. Если пункт назначения вообще не может быть достигнут, возвращайте -1. В противном случае посчитайте каждый посаженный автобус, включая первый и последний.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= routes.length <= 500`
 - `1 <= routes[i].length <= 10^5`
-- Total stops across routes is at most `10^5`.
+- Общее количество остановок по маршрутам `10^5`.
 - `0 <= routes[i][j] < 10^6`
 - `0 <= source, target < 10^6`

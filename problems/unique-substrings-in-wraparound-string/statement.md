@@ -1,7 +1,7 @@
-Consider the endless wraparound string `"...zabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabc..."` formed by repeating the alphabet forever.
+Рассмотрим бесконечную обернутую строку `"...zabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabc..."`, образованную повторением алфавита навсегда.
 
-You are given a string `s`. Count how many distinct non-empty substrings of `s` also appear somewhere in that endless wraparound string. A substring is a block of consecutive characters of `s`.
+Вам дается строка `s`. Подсчитайте, сколько различных непустых подстрок `s` также появляются где-то в этой бесконечной обернутой строке. Подстрока представляет собой блок последовательных символов `s`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 10^5`
-- `s` consists of lowercase English letters.
+- `s` состоит из строчных английских букв.

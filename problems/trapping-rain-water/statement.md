@@ -1,8 +1,8 @@
-Picture a skyline of `n` upright columns, each of width `1`, whose elevations are
-listed in `height`. After a rainfall, liquid settles in the dips between columns.
-Determine the total volume held in those dips.
+Нарисуйте горизонт вертикальных колонн `n`, каждая из которых имеет ширину `1`, высота которых равна
+перечисленные в `height`.После осадков жидкость оседает в провалах между колоннами.
+Определите общий объем, удерживаемый в этих провалах.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= height.length <= 20000`
 - `0 <= height[i] <= 100000`

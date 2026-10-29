@@ -1,9 +1,9 @@
-Answer quietness queries over a richer-than hierarchy.
+Отвечайте на вопросы о тишине по более богатой, чем иерархия.
 
-`richer[i] = [a, b]` means person `a` is richer than person `b`. Separately, `quiet[i]` scores how quiet person `i` is (smaller means quieter). For every person `x`, consider `x` together with everyone richer than `x`, directly or transitively. Return an array `answer` where `answer[x]` is the person in that set with the smallest quiet value (ties cannot happen since quiet values are distinct in tests, otherwise pick the smallest index among minima).
+`richer[i] = [a, b]` означает, что человек `a` богаче, чем человек `b`. Отдельно `quiet[i]` оценивает, насколько тихий человек `i` (меньше означает тихий). Для каждого человека `x`, рассмотрите `x` вместе со всеми, кто богаче, чем `x`, напрямую или транзитивно. Возвратите массив `answer`, где `answer[x]` является человеком в этом наборе с наименьшим тихим значением (в тестах не может произойти, поскольку тихие значения различаются, иначе выберите наименьший индекс среди минимумов).
 
-**Constraints:**
+**Ограничения:**
 - `1 <= quiet.length <= 500`
 - `0 <= richer.length <= quiet.length * (quiet.length - 1) / 2`
 - `0 <= richer[i][0], richer[i][1] < quiet.length`
-- `quiet` values are a permutation of `0..n-1` in tests (distinct).
+- Значения `quiet` представляют собой перестановку `0..n-1` в тестах (отличительные).

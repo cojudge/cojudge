@@ -1,6 +1,6 @@
 {
   "id": "vertical-order-traversal-of-a-binary-tree",
-  "title": "970. Vertical Order Traversal of a Binary Tree",
+  "title": "970. Вертикальный порядок обхода двоичного дерева",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [3,9,20,null,null,15,7]",
       "output": "[[9],[3,15],[20],[7]]",
-      "explanation": "Columns -1, 0, 1, 2 hold [9], [3,15], [20], [7]; within column 0 the shallower 3 precedes 15."
+      "explanation": "Колонки -1, 0, 1, 2 hold [9], [3, 15], [20], [7]; в колонке 0 более мелкий 3 предшествует 15."
     },
     {
       "input": "root = [1,2,3,4,5,6,7]",
       "output": "[[4],[2],[1,5,6],[3],[7]]",
-      "explanation": "Nodes sharing a column and row are ordered by value, so column 0 reads 1, 5, 6."
+      "explanation": "Узлы, разделяющие столбец и строку, упорядочены по значению, поэтому столбец 0 читает 1, 5, 6."
     },
     {
       "input": "root = [1,2,3,4,6,5,7]",
       "output": "[[4],[2],[1,5,6],[3],[7]]",
-      "explanation": "Swapping 5 and 6 keeps the same column report because same-row ties break by value."
+      "explanation": "Обмен 5 и 6 хранит один и тот же отчет в колонке, потому что связи одного и того же ряда разрываются на величину."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int_list_2d",
   "hints": [
-    "Record every node as a (column, row, value) triple with a depth-first walk: left decrements column, right increments it, both increment row.",
-    "Sort all triples by column, then row, then value.",
-    "Group the sorted values by column from leftmost to rightmost."
+    "Записывайте каждый узел как (колонка, строка, значение) тройной с глубиной-первой прогулкой: левый столбец приращения, правый приращения его, оба приращения ряд.",
+    "Сортируйте все тройки по столбцу, затем строку, затем значение.",
+    "Группируйте отсортированные значения по столбцу от самого левого к самому правому."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "univalued-binary-tree",
-  "title": "951. Univalued Binary Tree",
+  "title": "951. Однозначное двоичное дерево",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/univalued-binary-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,1,1,1,1,null,1]",
       "output": "true",
-      "explanation": "Every node present in the tree carries the value 1."
+      "explanation": "Каждый узел, присутствующий в дереве, несет значение 1."
     },
     {
       "input": "root = [1,1,1,1,1,null,2]",
       "output": "false",
-      "explanation": "The rightmost leaf holds a 2 while the rest hold 1, so the tree is not univalued."
+      "explanation": "Самый правый лист содержит 2, в то время как остальные держат 1, поэтому дерево не является однозначным."
     },
     {
       "input": "root = [1]",
       "output": "true",
-      "explanation": "A single node is trivially uniform."
+      "explanation": "Один узел тривиально однороден."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Compare every node's value against the root's value.",
-    "Either a recursive walk or an explicit stack works; stop at the first mismatch."
+    "Сравните значение каждого узла со значением корня.",
+    "Либо рекурсивная прогулка, либо явный стек работает; остановитесь при первом несоответствии."
   ]
 }

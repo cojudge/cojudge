@@ -1,11 +1,11 @@
-Simulate an iterator with lookahead over an integer array.
+Имитация итератора с видом сверху над целым массивом.
 
-**Adaptation:** the original design asks for a `PeekingIterator` class with
-`next`, `peek`, and `hasNext`; here implement `runPeek(nums, operations)`
-where `operations` lists the calls to run in order. Return one integer per
-operation: the value for `next`/`peek`, and `1`/`0` for `hasNext`
-true/false. Calls are guaranteed valid (peek/next only when data remains).
+**Адаптация: ** Оригинальный дизайн запрашивает класс `PeekingIterator`
+`next`, `peek` и `hasNext`; здесь реализован `runPeek(nums, operations)`
+где `operations` перечисляет вызовы для выполнения в порядке.
+Операция: значение для `next`/`peek` и `1`/`0` для `hasNext`
+Звонки гарантированно действительны (пик / следующий только тогда, когда данные остаются).
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 1000`
-- At most `1000` operations.
+- В большинстве операций `1000`.

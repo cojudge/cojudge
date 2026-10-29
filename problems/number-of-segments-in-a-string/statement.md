@@ -1,5 +1,5 @@
-A segment is a maximal run of characters that contains no spaces: it starts after a space (or at the string start) and ends before the next space (or at the string end). Given a string `s`, count how many such segments it holds.
+Сегмент — это максимальный пробег символов, не содержащий пробелов: он начинается после пробела (или в начале строки) и заканчивается до следующего пробела (или в конце строки). Учитывая строку `s`, подсчитайте, сколько таких сегментов он удерживает.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= s.length <= 300`
-- `s` uses letters, digits, punctuation and the space character only.
+- `s` использует только буквы, цифры, пунктуацию и пространственный символ.

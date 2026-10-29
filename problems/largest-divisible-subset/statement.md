@@ -1,10 +1,10 @@
-Pick the biggest group of numbers where every two members divide evenly one way or the other.
+Выберите самую большую группу чисел, где каждые два члена делятся равномерно.
 
-You are given an array `nums` of distinct positive integers. Choose a subset `answer` as large as possible such that for every pair of values `x`, `y` inside it, one of them divides the other (that is, `x % y == 0` or `y % x == 0`). The order of the returned group does not matter; when several biggest groups exist, any one of them is accepted.
+Вам дано множество `nums` Выберите подмножество положительных чисел. `answer` как можно больше, так что для каждой пары значений `x`, `y` Один из них отделяет другой от другого. `x % y == 0` или `y % x == 0`Порядок возвращаемой группы не имеет значения; когда существует несколько самых больших групп, любая из них принимается.
 
-*Portable adaptation:* the classic statement returns a list of boxed integers; here return a plain integer array holding the same values.
+*Портативная адаптация:* классическое утверждение возвращает список целых чисел в коробке; здесь возвращает простой массив целых чисел, содержащий те же значения.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 1000`
 - `1 <= nums[i] <= 2 * 10^9`
-- Every value in `nums` is distinct.
+- Каждое значение в `nums` отличается.

@@ -1,6 +1,6 @@
 {
   "id": "most-stones-removed-with-same-row-or-column",
-  "title": "934. Most Stones Removed with Same Row or Column",
+  "title": "934. Большинство камней убраны с тем же столбом или колонной",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/",
   "category": "hash-table",
@@ -8,17 +8,17 @@
     {
       "input": "stones = [[0,0],[0,1],[1,0],[1,2],[2,1],[2,2]]",
       "output": "5",
-      "explanation": "One linked group of six keeps a single survivor."
+      "explanation": "Одна связанная группа из шести человек сохраняет одного выжившего."
     },
     {
       "input": "stones = [[0,0],[0,2],[1,1],[2,0],[2,2]]",
       "output": "3",
-      "explanation": "A group of four plus an isolated stone."
+      "explanation": "Группа из четырех человек плюс изолированный камень."
     },
     {
       "input": "stones = [[0,0]]",
       "output": "0",
-      "explanation": "No partner exists."
+      "explanation": "Партнера не существует."
     }
   ],
   "starterCode": {
@@ -102,7 +102,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Link stones sharing a row or a column; each linked group of k stones can lose k - 1 of them.",
-    "A disjoint-set union over pairs (or a graph flood fill) finds the groups; the answer is stones minus group count."
+    "Связывающие камни, разделяющие ряд или колонну; каждая связанная группа k камней может потерять k - 1 из них.",
+    "Разъединенное соединение по парам (или графовое наполнение) находит группы; ответ - камни минус количество групп."
   ]
 }

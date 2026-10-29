@@ -1,6 +1,6 @@
 {
   "id": "implement-trie-prefix-tree",
-  "title": "65. Implement Trie (Prefix Tree)",
+  "title": "65. Реализация Trie (Prefix Tree)",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/implement-trie-prefix-tree/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "operations = [\"Trie\",\"insert\",\"search\",\"search\",\"startsWith\",\"insert\",\"search\"]\nvalues = [\"\",\"apple\",\"apple\",\"app\",\"app\",\"app\",\"app\"]",
       "output": "[null,null,true,false,true,null,true]",
-      "explanation": "After inserting 'apple', searching 'apple' returns true, searching 'app' returns false, startsWith('app') returns true. After inserting 'app', searching 'app' returns true."
+      "explanation": "После вставки «яблоко» поиск «яблоко» возвращается истинным, поиск «яблоко» возвращается ложным, начинается с «Приложение» возвращается истинным. После вставки «приложение» поиск «приложение» возвращается истинным."
     },
     {
       "input": "operations = [\"Trie\",\"insert\",\"search\",\"startsWith\"]\nvalues = [\"\",\"hello\",\"hello\",\"hell\"]",
       "output": "[null,null,true,true]",
-      "explanation": "After inserting 'hello', both search('hello') and startsWith('hell') return true."
+      "explanation": "После вставки «привет», оба поиска («привет») и начинаются с («ад») возврата истинного."
     }
   ],
   "classProblem": {
@@ -52,10 +52,10 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "A Trie (prefix tree) is a tree data structure used for efficient retrieval of keys in a dataset of strings.",
-    "Each node contains an array of child pointers (one for each character) and a boolean flag indicating whether the node marks the end of a word.",
-    "For insert: traverse character by character, creating nodes as needed, and mark the final node as end of word.",
-    "For search: traverse character by character; if a character is missing, return false; check the end-of-word flag at the final node.",
-    "For startsWith: same as search but return true if the path exists, regardless of the end-of-word flag."
+    "Trie (префиксное дерево) — это древовидная структура данных, используемая для эффективного извлечения ключей в наборе данных строк.",
+    "Каждый узел содержит множество детских указателей (по одному для каждого символа) и булевый флаг, указывающий, обозначает ли узел конец слова.",
+    "Для вставки: пересекайте символ по характеру, создавая узлы по мере необходимости, и помечайте конечный узел как конец слова.",
+    "Для поиска: перейдите символ по характеру; если персонаж отсутствует, верните ложный; проверьте флаг окончания слова на конечном узле.",
+    "Для начала: то же самое, что поиск, но возвращение истинно, если путь существует, независимо от флага конца слова."
   ]
 }

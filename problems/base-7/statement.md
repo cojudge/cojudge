@@ -1,6 +1,6 @@
-Write the supplied decimal integer in base seven. Use digits `0` through `6` with standard positional weighting. Zero is written as `"0"`. Negative inputs carry a leading minus sign followed by the base-seven form of the absolute value. No extra leading zeros appear.
+Запишите подаваемое десятичное целое число в основание семь. Используйте цифры `0` через `6` со стандартным позиционным взвешиванием. Ноль записывается как `"0"`. Отрицательные входы несут ведущий знак минус, за которым следует базово-семи форма абсолютного значения. Никаких дополнительных ведущих нулей не появляется.
 
-Return the resulting text.
+Верните полученный текст.
 
-**Constraints:**
+**Ограничения:**
 - `-10^7 <= num <= 10^7`

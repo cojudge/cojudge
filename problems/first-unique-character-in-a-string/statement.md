@@ -1,7 +1,7 @@
-Scan a lowercase word and locate the earliest position whose letter appears nowhere else in the word. Return that zero-based position. When every letter repeats, return `-1`.
+Сканируйте нижнее слово и найдите самую раннюю позицию, буква которой больше нигде не появляется в слове. Верните эту нулевую позицию. Когда каждая буква повторяется, верните `-1`.
 
-The scan must distinguish the *first* singleton by its left-to-right order, not the smallest letter alphabetically.
+Сканирование должно отличать «первый» синглтон по его лево-правому порядку, а не по самой маленькой букве в алфавитном порядке.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 10^5`
-- `s` contains only lowercase English letters.
+- `s` содержит только английские буквы.

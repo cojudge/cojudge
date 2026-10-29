@@ -1,12 +1,12 @@
-You obtain a list of variable pairs `equations` together with a list of real numbers `values`, where `equations[i] = [Ai, Bi]` paired with `values[i]` states the relation `Ai / Bi = values[i]`. Every `Ai` or `Bi` denotes one variable by name.
+Вы получаете список переменных пар `equations` вместе со списком реальных чисел `values`, где `equations[i] = [Ai, Bi]` в паре с `values[i]` указывает отношение `Ai / Bi = values[i]`. Каждый `Ai` или `Bi` обозначает одну переменную по имени.
 
-You also obtain a batch of `queries`, where `queries[j] = [Cj, Dj]` poses the `j`-th request for the value of `Cj / Dj = ?`.
+Вы также получаете партию `queries`, где `queries[j] = [Cj, Dj]` представляет запрос `j`-th на значение `Cj / Dj = ?`.
 
-Compute a response for every query in order. Whenever a requested ratio cannot be deduced from the supplied relations, answer `-1.0` for that position.
+Вычислите ответ для каждого запроса в порядке. Всякий раз, когда запрашиваемое соотношение не может быть выведено из поставляемых отношений, ответьте `-1.0` для этой позиции.
 
-**Note:** Every supplied input is consistent: no query forces division by zero and the relations contain no conflicts. Because decimal handling differs here, Cojudge passes `values` and expected answers around as decimal strings (for instance `"2.0"`, `"-1.00000"`).
+**Примечание: ** Каждый введенный вход является последовательным: ни одно деление сил запроса на ноль и отношения не содержат конфликтов. Поскольку десятичная обработка отличается здесь, Кожудж передает `values` и ожидаемые ответы в виде десятичных строк (например, `"2.0"`, `"-1.00000"`).
 
-**Constraints:**
+**Ограничения:**
 - `1 <= equations.length <= 20`
 - `equations[i].length == 2`
 - `1 <= Ai.length, Bi.length <= 5`
@@ -15,4 +15,4 @@ Compute a response for every query in order. Whenever a requested ratio cannot b
 - `1 <= queries.length <= 20`
 - `queries[i].length == 2`
 - `1 <= Cj.length, Dj.length <= 5`
-- `Ai, Bi, Cj, Dj` consist of lower case English letters and digits
+- `Ai, Bi, Cj, Dj` состоит из английских букв нижнего регистра и цифр

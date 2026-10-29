@@ -1,6 +1,6 @@
 {
   "id": "different-ways-to-add-parentheses",
-  "title": "348. Different Ways to Add Parentheses",
+  "title": "348. Различные способы добавления парентезов",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/different-ways-to-add-parentheses/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "expression = \"2-1-1\"",
       "output": "[0,2]",
-      "explanation": "(2-1)-1 gives 0, while 2-(1-1) gives 2."
+      "explanation": "(2-1)-1 дарить 0Пока 2-(1-1) дает 2."
     },
     {
       "input": "expression = \"2*3-4*5\"",
       "output": "[-34,-14,-10,-10,10]",
-      "explanation": "Parenthesizing as 2*(3-(4*5)) gives -34, and the other groupings give -14, -10, -10, and 10."
+      "explanation": "Парентезирование как 2*(3-(4*5) дает -34И другие группы дают -14, -10, -10и 10."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Treat every operator as a possible last evaluation step and recurse on both sides.",
-    "Combine each left value with each right value through the current operator.",
-    "Memoize results per substring to avoid recomputation."
+    "Относитесь к каждому оператору как к возможному последнему шагу оценки и повторению с обеих сторон.",
+    "Объедините каждое левое значение с каждым правым значением через текущего оператора.",
+    "Запомните результаты на подстроку, чтобы избежать пересчета."
   ]
 }

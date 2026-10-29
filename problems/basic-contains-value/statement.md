@@ -1,5 +1,5 @@
-Return `true` if `target` appears anywhere in `nums`, otherwise return `false`.
+Возвращайте `true`, если `target` появляется где-либо в `nums`, в противном случае возвращайте `false`.
 
-**Constraints:**
+**Ограничения:**
 - ``0 <= nums.length <= 1000``
 - ``-10^9 <= nums[i], target <= 10^9``

@@ -1,6 +1,6 @@
 {
   "id": "reverse-string-ii",
-  "title": "599. Reverse String II",
+  "title": "599. Обратная струна II",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/reverse-string-ii/",
   "category": "string",
@@ -8,12 +8,12 @@
     {
       "input": "s = \"abcdefg\", k = 2",
       "output": "\"bacdfeg\"",
-      "explanation": "Flip the first k of every 2k block."
+      "explanation": "Переверните первый k из каждого блока 2k."
     },
     {
       "input": "s = \"abcd\", k = 2",
       "output": "\"bacd\"",
-      "explanation": "First two flipped, last two kept."
+      "explanation": "Первые два перевернулись, последние два сохранились."
     },
     {
       "input": "s = \"a\", k = 2",
@@ -57,7 +57,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Step the start index by 2k and reverse the slice [start, min(start+k-1, end)].",
-    "Reversing can be done in place with two pointers moving toward each other."
+    "Шагните по стартовому индексу на 2k и переверните срез [start, min(start+k-1, end)].",
+    "Обратный ход может быть выполнен на месте с двумя указателями, движущимися навстречу друг другу."
   ]
 }

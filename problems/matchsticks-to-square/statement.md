@@ -1,8 +1,8 @@
-A collection of sticks is described by the integer array `matchsticks`, where the entry `matchsticks[i]` records how long the `ith` stick is. The goal is to arrange every single stick into the border of one square: sticks may be joined end to end, but none may be snapped or shortened, and each stick has to appear in the construction precisely once.
+Коллекция палочек описывается целочисленным массивом `matchsticks`, где запись `matchsticks[i]` записывает, как долго находится палка `ith`. Цель состоит в том, чтобы устроить каждую палку в границу одного квадрата: палки могут соединяться от конца к концу, но ни одна из них не может быть сломлена или укорочена, и каждая палка должна появиться в конструкции ровно один раз.
 
-Decide whether such an arrangement exists: produce `true` when the whole set can form a square, and `false` when it cannot.
+Решите, существует ли такое расположение: создайте `true`, когда весь набор может образовывать квадрат, и `false`, когда он не может.
 
-**Constraints:**
+**Ограничения:**
 
 - `1 <= matchsticks.length <= 15`
 - `1 <= matchsticks[i] <= 10^8`

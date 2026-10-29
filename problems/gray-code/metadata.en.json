@@ -1,0 +1,58 @@
+{
+  "id": "gray-code",
+  "title": "278. Gray Code",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/gray-code/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "n = 2",
+      "output": "[0,1,3,2]",
+      "explanation": "Binary forms 00, 01, 11, 10 change one bit at each step."
+    },
+    {
+      "input": "n = 1",
+      "output": "[0,1]",
+      "explanation": "With one bit, 0 then 1 differ in the only position."
+    },
+    {
+      "input": "n = 0",
+      "output": "[0]",
+      "explanation": "Zero bits still produce the single value 0."
+    }
+  ],
+  "starterCode": {
+    "java": "import java.util.*;\nclass Solution {\n    public List<Integer> grayCode(int n) {\n        return new ArrayList<>();\n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def grayCode(self, n: int) -> List[int]:\n        return []\n",
+    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> grayCode(int n) {\n        return {};\n    }\n};",
+    "csharp": "using System.Collections.Generic;\npublic class Solution \n{\n    public List<int> GrayCode(int n) \n    {\n        return new List<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn gray_code(n: i32) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "go": "package main\n\nfunc GrayCode(n int) []int {\n    return []int{}\n}",
+    "typescript": "export function grayCode(n: number): number[] {\n    return [];\n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int[]\n     */\n    public function grayCode($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 2
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 0
+    }
+  ],
+  "functionName": "grayCode",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int_list",
+  "hints": [
+    "Entry i of the binary-reflected code is i ^ (i >> 1).",
+    "Alternatively mirror the (n-1)-bit sequence and set the top bit on the reversed copy.",
+    "Any ordering is accepted as long as it starts at 0, covers all values, and flips one bit per step."
+  ]
+}

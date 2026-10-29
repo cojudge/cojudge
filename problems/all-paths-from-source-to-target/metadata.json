@@ -1,6 +1,6 @@
 {
   "id": "all-paths-from-source-to-target",
-  "title": "795. All Paths From Source to Target",
+  "title": "795. Все пути от источника к цели",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/all-paths-from-source-to-target/",
   "category": "graph",
@@ -8,17 +8,17 @@
     {
       "input": "graph = [[1,2],[3],[3],[]]",
       "output": "[[0,1,3],[0,2,3]]",
-      "explanation": "Two ways reach the final vertex."
+      "explanation": "Два пути достигают конечной вершины."
     },
     {
       "input": "graph = [[4,3,1],[3,2,4],[3],[4],[]]",
       "output": "[[0,4],[0,3,4],[0,1,3,4],[0,1,2,3,4],[0,1,4]]",
-      "explanation": "Five routes connect start to finish."
+      "explanation": "Пять маршрутов соединяют начало и конец."
     },
     {
       "input": "graph = [[1],[]]",
       "output": "[[0,1]]",
-      "explanation": "The lone edge is the answer."
+      "explanation": "Одинокий край - это ответ."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int_list_2d",
   "hints": [
-    "Depth-first search from 0 carrying the current path naturally enumerates every route.",
-    "Append a copy of the path once the final vertex is reached, then backtrack.",
-    "Adaptation: the nested input maps to int_array_2d and the nested output maps to int_list_2d in this judge."
+    "Поиск в глубине от 0, несущего текущий путь, естественно, перечисляет каждый маршрут.",
+    "Приложите копию пути, как только будет достигнута конечная вершина, а затем назад.",
+    "Адаптация: вложенные карты ввода в int_array_2d и вложенные карты вывода в int_list_2d в этом решении."
   ]
 }

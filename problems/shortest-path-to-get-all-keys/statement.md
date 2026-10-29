@@ -1,19 +1,19 @@
-You are given a rectangular grid encoded as an array of strings, where each string is one row. Each character means something:
+Вам дается прямоугольная сетка, закодированная как массив строк, где каждая строка является одной строкой. Каждый символ означает что-то:
 
-- `@` is your starting cell.
-- `.` is an empty cell you can walk on.
-- `#` is a wall you cannot enter.
-- Lowercase letters `a` to `f` are keys you must pick up (at most six distinct keys).
-- Uppercase letters `A` to `F` are locked doors that open only after you hold the matching lowercase key.
+- `@` - это ваша стартовая ячейка.
+- `.` — это пустая ячейка, по которой можно ходить.
+- `#` — это стена, в которую нельзя войти.
+- Нижние буквы `a` к `f` - это ключи, которые вы должны забрать (в большинстве шести разных ключей).
+- Верхние буквы `A` к `F` являются закрытыми дверями, которые открываются только после того, как вы держите соответствующий ключ нижнего регистра.
 
-In one move you can step up, down, left, or right to a neighboring cell that is inside the grid and not a wall or a locked door you cannot yet open. Walking onto a key cell collects that key automatically.
+Одним движением вы можете подняться, опуститься, слева или справа на соседнюю ячейку, которая находится внутри сетки, а не на стену или запертую дверь, которую вы еще не можете открыть.
 
-Return the smallest number of moves needed to collect every key present in the grid. If it cannot be done, return `-1`.
+Верните наименьшее количество ходов, необходимое для сбора каждого ключа, присутствующего в сетке. Если это невозможно сделать, верните `-1`.
 
-Adaptation note: the grid is passed as a string array (one string per row) and the answer is an integer, using only the allowed `string_array` and `int` types.
+Примечание по адаптации: сетка передается в виде строкового массива (одна строка на строку) и ответ представляет собой целое число, используя только разрешенные типы `string_array` и `int`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= grid.length <= 30`
 - `1 <= grid[i].length <= 30`
-- All rows have equal length.
-- Exactly one `@` appears; between zero and six keys appear.
+- Все ряды имеют одинаковую длину.
+- Появляется ровно один `@`; между нулем и шестью клавишами.

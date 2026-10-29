@@ -1,6 +1,6 @@
 {
   "id": "increasing-order-search-tree",
-  "title": "887. Increasing Order Search Tree",
+  "title": "887. Расширение поискового дерева порядка",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/increasing-order-search-tree/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [5,3,6,2,4,null,8,1,null,null,null,7,9]",
       "output": "[1,null,2,null,3,null,4,null,5,null,6,null,7,null,8,null,9]",
-      "explanation": "Sorted values 1..9 relinked right-only."
+      "explanation": "Сортированные значения 1..9 перелинкованы только справа."
     },
     {
       "input": "root = [5,1,7]",
       "output": "[1,null,5,null,7]",
-      "explanation": "Chain of [1,5,7]."
+      "explanation": "Цепочка [1, 5, 7]."
     },
     {
       "input": "root = [1]",
       "output": "[1]",
-      "explanation": "Single node unchanged."
+      "explanation": "Единый узел без изменений."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "tree_node",
   "hints": [
-    "Collect values with an in-order walk, which visits a search tree in sorted order.",
-    "Then create fresh nodes in that order, linking each as the right child of the previous one with no left children."
+    "Соберите значения с помощью прогулки в порядке, которая посещает дерево поиска в отсортированном порядке.",
+    "Затем создайте свежие узлы в этом порядке, связывая каждого из них как правильного потомка предыдущего без левых потомков."
   ]
 }

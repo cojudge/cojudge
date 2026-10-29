@@ -1,12 +1,12 @@
-You receive an integer array `nums` holding `n + 1` entries, each drawn from the interval `[1, n]`. One value occurs repeatedly; identify and return it.
+Вы получаете целочисленный массив `nums`, содержащий записи `n + 1`, каждая из которых взята из интервала `[1, n]`. Одно значение возникает неоднократно; идентифицируйте и верните его.
 
-A single distinct value is duplicated, though it may show up more than twice. Leave `nums` untouched and rely on only a constant amount of additional memory.
+Одно отдельное значение дублируется, хотя оно может отображаться более чем в два раза.Оставьте `nums` нетронутым и полагайтесь только на постоянное количество дополнительной памяти.
 
-**Constraints:**
+**Ограничения:**
 
 - `2 <= nums.length <= 100001`
 - `1 <= nums[i] < nums.length`
-- Precisely one distinct integer in `nums` shows up more than once.
-- That duplicated integer may occur more than twice.
+- Одно целое число в `nums` появляется более одного раза.
+- Это дублированное целое число может произойти более чем дважды.
 
-**Follow-up:** Is an `O(n)`-time approach achievable while keeping the input read-only and the extra memory at `O(1)`?
+**Достижим ли подход `O(n)`-времени, сохраняя при этом только ввод считывания и дополнительную память на `O(1)`?

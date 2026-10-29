@@ -1,6 +1,6 @@
 {
   "id": "capacity-to-ship-packages-within-d-days",
-  "title": "187. Capacity To Ship Packages Within D Days",
+  "title": "187. Вместимость для доставки пакетов в течение D дней",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/",
   "category": "binary-search",
@@ -8,17 +8,17 @@
     {
       "input": "weights = [1,2,3,4,5,6,7,8,9,10], days = 5",
       "output": "15",
-      "explanation": "Capacity 15 ships as [1,2,3,4,5],[6,7],[8],[9],[10] in 5 days; 14 needs 6 days."
+      "explanation": "Вместимость 15 поставляется как [1, 2, 3, 4, 5], [6, 7], [8], [9], [10] в дни 5; 14 нуждается в днях 6."
     },
     {
       "input": "weights = [3,2,2,4,1,4], days = 3",
       "output": "6",
-      "explanation": "Capacity 6 ships as [3,2],[2,4],[1,4] in 3 days; 5 needs 4 days."
+      "explanation": "Вместимость 6 поставляется как [3, 2], [2, 4], [1, 4] в дни 3; 5 нуждается в днях 4."
     },
     {
       "input": "weights = [1,2,3,1,1], days = 4",
       "output": "3",
-      "explanation": "Capacity 3 ships as [1,2],[3],[1],[1] in 4 days."
+      "explanation": "Вместимость 3 поставляется как [1, 2], [3], [1], [1] в дни 4."
     }
   ],
   "starterCode": {
@@ -62,8 +62,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "For a fixed capacity, greedily fill each day and count how many days are needed.",
-    "Feasibility is monotone: if capacity C works, every larger capacity works.",
-    "Binary-search between max(weights) and sum(weights)."
+    "Для фиксированной емкости жадно заполняйте каждый день и подсчитывайте, сколько дней нужно.",
+    "Осуществимость монотонна: если работает емкость С, работает каждая большая емкость.",
+    "Бинарный поиск между max (весами) и sum (весами)."
   ]
 }

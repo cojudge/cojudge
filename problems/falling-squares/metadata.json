@@ -1,6 +1,6 @@
 {
   "id": "falling-squares",
-  "title": "712. Falling Squares",
+  "title": "712. Падающие площади",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/falling-squares/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "positions = [[1,2],[2,3],[6,1]]",
       "output": "[2,5,5]",
-      "explanation": "Heights evolve 2 then 5 then stay 5."
+      "explanation": "Высоты эволюционируют 2, затем 5, а затем остаются 5."
     },
     {
       "input": "positions = [[100,100],[200,100]]",
       "output": "[100,100]",
-      "explanation": "Disjoint squares keep height 100."
+      "explanation": "Разъединенные квадраты сохраняют высоту 100."
     },
     {
       "input": "positions = [[0,2],[1,2],[3,1]]",
       "output": "[2,4,4]",
-      "explanation": "Second square stacks to 4."
+      "explanation": "Второй квадратный стек 4."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Remember each placed square as [left, right, top] and compare intervals for overlap.",
-    "A new square of side s sits on the highest top among overlapping squares (or 0), reaching base + s.",
-    "Track the running global maximum after every drop."
+    "Вспомните, что каждый из них (справа, слева, справа) и сравнивайте интервалы для перекрытия.",
+    "Новый квадрат боковых s находится на самой высокой вершине среди перекрывающихся квадратов (или 0), достигая основания + s.",
+    "Отслеживайте глобальный максимум после каждого падения."
   ]
 }

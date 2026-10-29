@@ -1,14 +1,14 @@
-A robot starts at position `(0, 0)` facing north. It follows a list of integer `commands`:
+Робот начинает с позиции `(0, 0)`, обращенной на север. Он следует за списком целых `commands`:
 
-- A value of `-2` turns it 90 degrees to the left without moving.
-- A value of `-1` turns it 90 degrees to the right without moving.
-- A value `k` between `1` and `9` moves it forward `k` steps, one cell at a time. If the next cell holds an obstacle, the robot stops that command early and stays where it is.
+- Значение `-2` превращает его в градусы 90 влево, не двигаясь.
+- Значение `-1` превращает его в градусы 90 вправо, не двигаясь.
+- Значение `k` между `1` и `9` перемещает его вперед шагами `k`, по одной ячейке за раз. Если следующая ячейка удерживает препятствие, робот останавливает эту команду рано и остается там, где он есть.
 
-`obstacles` lists the blocked cells as `[x, y]` pairs. After running every command, return the largest Euclidean distance squared (`x*x + y*y`) the robot ever reached.
+`obstacles` перечисляет заблокированные ячейки как пары `[x, y]`. После выполнения каждой команды возвращайте самое большое евклидово расстояние в квадрате (`x*x + y*y`), которое когда-либо достигал робот.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= commands.length <= 10^4`
-- Each command is `-2`, `-1`, or an integer from `1` to `9`.
+- Каждая команда `-2`, `-1` или целое число от `1` до `9`.
 - `0 <= obstacles.length <= 10^4`
 - `-30000 <= obstacles[i][0], obstacles[i][1] <= 30000`
-- The final answer fits in a 32-bit signed integer.
+- Окончательный ответ вписывается в целое число, подписанное 32.

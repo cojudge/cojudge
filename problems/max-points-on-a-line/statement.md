@@ -1,9 +1,9 @@
-You are given points `points[i] = [xi, yi]` on the plane. All points are distinct.
+Вам даны точки `points[i] = [xi, yi]` на плоскости. Все точки различны.
 
-A straight line can pass through any subset of them. Return the largest number of points that share one such line.
+Прямая линия может пройти через любое их подмножество. Возвращать наибольшее количество точек, которые разделяют одну такую линию.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= points.length <= 300`
 - `points[i].length == 2`
 - `-10^4 <= xi, yi <= 10^4`
-- All points are unique.
+- Все точки уникальны.

@@ -1,8 +1,8 @@
-An `m x n` grid starts as all water. Land cells are added one at a time in the order given
-by `positions` (adding an already-land cell changes nothing). After each addition, report
-how many islands exist; an island is a group of land cells linked through shared sides.
+Сетка `m x n` начинается как вся вода. Наземные ячейки добавляются по одному за раз в указанном порядке.
+`positions` (добавление и без того сухопутной ячейки ничего не меняет).
+Сколько существует островов; остров представляет собой группу наземных ячеек, связанных между собой общими сторонами.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= m, n <= 1000`
 - `1 <= positions.length <= 10^4`
-- Each position lies inside the grid.
+- Каждая позиция находится внутри сетки.

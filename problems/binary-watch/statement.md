@@ -1,6 +1,6 @@
-A novelty watch shows the time with ten tiny lamps: four lamps encode the hour (`0` to `11`) in binary and six lamps encode the minute (`0` to `59`) in binary, each lamp worth a power of two with the smallest values on the right. Exactly `turnedOn` lamps are lit. List every time the watch could be displaying.
+Новинка часов показывает время с десятью крошечными лампами: четыре лампы кодируют час (`0` до `11`) в двоичном и шесть ламп кодируют минуту (`0` до `59`) в двоичном, каждая лампа стоит мощность двух с наименьшими значениями справа. Точно лампы `turnedOn` зажигаются. Список каждый раз, когда часы могут отображаться.
 
-Format each answer as `h:mm`: the hour has no leading zero, while the minute always uses two digits (for instance `"1:00"`, never `"01:00"` or `"10:2"`). The order of the returned list does not matter.
+Формат каждого ответа как `h:mm`: час не имеет ведущего нуля, в то время как минута всегда использует две цифры (например, `"1:00"`, никогда `"01:00"` или `"10:2"`).
 
-**Constraints:**
+**Ограничения:**
 - `0 <= turnedOn <= 10`

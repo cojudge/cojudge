@@ -1,10 +1,10 @@
-Given `n`, build every structurally unique binary search tree that stores the values `1` through `n` in order. Each tree must satisfy the search property: every left descendant is smaller than its parent and every right descendant is larger.
+Учитывая `n`, создайте каждое структурно уникальное двоичное дерево поиска, которое хранит значения `1` через `n` в порядке. Каждое дерево должно удовлетворять свойству поиска: каждый левый потомок меньше своего родителя, а каждый правый потомок больше.
 
-Return each distinct tree shape encoded as a breadth-first (level-order) serialization such as `[1,2,3]`, with missing children written as `null` and trailing `null`s omitted. The order of the returned encodings does not matter.
+Возвращайте каждую отличную форму дерева, закодированную как последовательность широты-первого (порядка уровня), такую как `[1,2,3]`, с пропавшими детьми, написанными как `null` и отстающими `null`, опущенными. Порядок возвращаемых кодировок не имеет значения.
 
-For `n = 3` there are five trees; their serializations are `[1,null,2,null,3]`, `[1,null,3,2]`, `[2,1,3]`, `[3,1,null,null,2]` and `[3,2,null,1]`.
+Для `n = 3` есть пять деревьев; их сериализации `[1,null,2,null,3]`, `[1,null,3,2]`, `[2,1,3]`, `[3,1,null,null,2]` и `[3,2,null,1]`.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 8`
 
-> **Adaptation note:** the original LeetCode signature returns `List<TreeNode>`, which has no portable cross-language encoding here. This problem instead returns `string_list`: each entry is the BFS serialization of one tree (level order with `null` placeholders, trailing nulls trimmed, wrapped like `[2,1,3]`). Grading compares the sorted sets of serializations.
+**Примечание по адаптации: ** оригинальная подпись LeetCode возвращает `List<TreeNode>`, который не имеет портативного кросс-языкового кодирования здесь. Эта проблема вместо этого возвращает `string_list`: каждая запись представляет собой сериализацию BFS одного дерева (уровень порядка с заполнителями `null`, отстающие нули обрезаны, обернуты как `[2,1,3]`).

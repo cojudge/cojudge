@@ -1,8 +1,8 @@
-You are given an integer `n`. A prime palindrome is a number that reads the same forward and backward (in decimal, without leading zeros) and is also prime.
+Вы получаете целое число `n`. Простой палиндром - это число, которое читает то же самое вперед и назад (в десятичных числах, без ведущих нулей) и также является простым.
 
-Return the smallest prime palindrome that is greater than or equal to `n`.
+Возврат наименьшего простого палиндрома, который больше или равен `n`.
 
-Single-digit numbers that are prime (2, 3, 5, 7) already qualify, and two-digit 11 qualifies as well.
+Однозначные числа, которые являются простыми (2, 3, 5, 7) уже квалифицируются, а также двухзначные 11 квалифицируются.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 10^8`

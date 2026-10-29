@@ -1,6 +1,6 @@
 {
   "id": "longest-harmonious-subsequence",
-  "title": "636. Longest Harmonious Subsequence",
+  "title": "636. Самая длинная гармоничная последовательность",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/longest-harmonious-subsequence/",
   "category": "array",
@@ -8,17 +8,17 @@
     {
       "input": "nums = [1,3,2,2,5,2,3,7]",
       "output": "5",
-      "explanation": "Values 2 and 3 differ by one and appear five times together."
+      "explanation": "Значения 2 и 3 различаются по одному и появляются пять раз вместе."
     },
     {
       "input": "nums = [1,2,3,4]",
       "output": "2",
-      "explanation": "Any neighboring pair such as 1 and 2 works."
+      "explanation": "Работает любая соседняя пара, такая как 1 и 2."
     },
     {
       "input": "nums = [1,1,1,1]",
       "output": "0",
-      "explanation": "Only one distinct value exists."
+      "explanation": "Существует только одна отдельная ценность."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Count each value first.",
-    "A harmonious group uses exactly two neighboring values x and x+1.",
-    "Sum the counts for each such pair and keep the maximum."
+    "Сначала посчитайте каждое значение.",
+    "Гармоничная группа использует ровно два соседних значения x и x+1.",
+    "Подсчитайте количество для каждой такой пары и сохраните максимум."
   ]
 }

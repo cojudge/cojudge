@@ -1,6 +1,6 @@
-You have `n` coins. You stack them row by row: the first row uses `1` coin, the second row uses `2` coins, the third uses `3`, and so on. Each new row needs one more coin than the previous row.
+У вас есть монеты `n`. Вы складываете их ряд за рядом: первый ряд использует монету `1`, второй ряд использует монеты `2`, третий использует `3` и так далее. Каждому новому ряду нужна на одну монету больше, чем предыдущему ряду.
 
-Report how many full rows you can build before running out of coins. Any leftover coins that cannot fill the next row are ignored.
+Сообщите, сколько полных рядов вы можете построить, прежде чем иссякнут монеты. Любые оставшиеся монеты, которые не могут заполнить следующий ряд, игнорируются.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= n <= 2^31 - 1`

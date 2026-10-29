@@ -1,9 +1,9 @@
-Given the root of a binary tree, locate the biggest connected portion that itself obeys the binary search ordering, and report how many nodes it holds.
+Учитывая корень двоичного дерева, найдите самую большую связанную часть, которая сама подчиняется бинарному порядку поиска, и сообщите, сколько узлов она содержит.
 
-A portion qualifies when, for every node inside it, all values in its left descendant set are strictly smaller and all values in its right descendant set are strictly larger. A single node always qualifies, and an empty tree contributes size zero.
+Часть квалифицируется, когда для каждого узла внутри нее все значения в его левом потомственном множестве строго меньше, а все значения в его правом потомственном множестве строго больше.Один узел всегда квалифицируется, и пустое дерево вносит нулевой размер.
 
-Return the node count of the largest such portion.
+Возвращайте количество узлов самой большой такой части.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= number of nodes <= 10^4`
 - `-10^4 <= Node.val <= 10^4`

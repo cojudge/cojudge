@@ -1,18 +1,18 @@
 {
   "id": "basic-fibonacci",
-  "title": "44. Fibonacci",
+  "title": "44. Фибоначчи",
   "difficulty": "Easy",
   "category": "recursion",
   "examples": [
     {
       "input": "n = 6",
       "output": "8",
-      "explanation": "The sequence 0,1,1,2,3,5,8."
+      "explanation": "Последовательность 0, 1, 1, 2, 3, 5, 8."
     },
     {
       "input": "n = 0",
       "output": "0",
-      "explanation": "Base case."
+      "explanation": "Базовое дело."
     }
   ],
   "starterCode": {
@@ -45,7 +45,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Handle the two base cases first.",
-    "Otherwise add the two recursive calls."
+    "Сначала рассмотрим два базовых случая.",
+    "В противном случае добавьте два рекурсивных вызова."
   ]
 }

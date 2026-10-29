@@ -1,6 +1,6 @@
 {
   "id": "find-minimum-in-rotated-sorted-array",
-  "title": "7. Find Minimum in Rotated Sorted Array",
+  "title": "7. Найти минимум в Rotated Sorted Array",
   "difficulty": "Medium",
   "category": "array",
   "link": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/",
@@ -8,12 +8,12 @@
     {
       "input": "nums = [3,4,5,1,2]",
       "output": "1",
-      "explanation": "The array was rotated at index 3. The minimum element 1 is located at the rotation point."
+      "explanation": "Массив вращался по индексу 3. Минимальный элемент 1 расположен в точке вращения."
     },
     {
       "input": "nums = [4,5,6,7,0,1,2]",
       "output": "0",
-      "explanation": "The array was rotated at index 4. The minimum element 0 is located at the rotation point."
+      "explanation": "Массив вращался по индексу 4. Минимальный элемент 0 расположен в точке вращения."
     }
   ],
   "starterCode": {
@@ -46,6 +46,6 @@
   ],
   "outputType": "int",
   "hints": [
-    "Use binary search on the rotation pivot: if left half is sorted, the min is on the right; otherwise it's on the left. O(log n) time."
+    "Используйте двоичный поиск по повороту вращения: если левая половина отсортирована, мин находится справа; в противном случае он находится слева."
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "longest-common-prefix",
-  "title": "153. Longest Common Prefix",
+  "title": "153. Самый длинный префикс",
   "difficulty": "Easy",
   "category": "array",
   "link": "https://leetcode.com/problems/longest-common-prefix/",
@@ -8,12 +8,12 @@
     {
       "input": "strs = [\"flower\",\"flow\",\"flight\"]",
       "output": "\"fl\"",
-      "explanation": "The strings share the prefix \"fl\"; the third character differs ('o' vs 'i')."
+      "explanation": "Струны имеют приставку «fl»; третий символ отличается («o» против «i»)."
     },
     {
       "input": "strs = [\"dog\",\"racecar\",\"car\"]",
       "output": "\"\"",
-      "explanation": "There is no common prefix among the input strings."
+      "explanation": "Среди входных строк нет общего префикса."
     }
   ],
   "starterCode": {
@@ -43,7 +43,7 @@
   ],
   "outputType": "string",
   "hints": [
-    "Compare characters column by column: take the first string as reference and shrink the prefix while any other string mismatches.",
-    "Alternatively sort the array and only compare the first and last strings, since they differ the most."
+    "Сравните символы столбец за столбцом: возьмите первую строку в качестве ссылки и уменьшите префикс, в то время как любые другие строки не совпадают.",
+    "Альтернативно сортируйте массив и сравнивайте только первую и последнюю строки, так как они отличаются больше всего."
   ]
 }

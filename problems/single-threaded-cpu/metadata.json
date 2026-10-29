@@ -1,6 +1,6 @@
 {
   "id": "single-threaded-cpu",
-  "title": "202. Single-Threaded CPU",
+  "title": "202. Однопоточный CPU",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/single-threaded-cpu/",
   "category": "heap",
@@ -8,12 +8,12 @@
     {
       "input": "tasks = [[1,2],[2,4],[3,2],[4,1]]",
       "output": "[0,2,3,1]",
-      "explanation": "The events go as follows: at time 1 task 0 is available, CPU processes it until time 3. At time 3 tasks 1 and 2 are available, CPU picks task 2 (shorter). At time 5 task 3 is available with tasks 1, CPU picks task 3 (shortest), then task 1."
+      "explanation": "События идут следующим образом: в момент времени 1 задача 0 доступна, ЦП обрабатывает ее до времени 3. В момент времени 3 задачи 1 и 2 доступны, ЦП выбирает задачу 2 (короткий). В момент 5 задача 3 доступна с задачами 1, ЦП выбирает задачу 3 (короткий), затем задача 1."
     },
     {
       "input": "tasks = [[7,10],[7,12],[7,5],[7,4],[7,2]]",
       "output": "[4,3,2,0,1]",
-      "explanation": "All tasks are available at time 7. CPU picks them in order of processing time, breaking ties by index."
+      "explanation": "Все задачи доступны в момент времени 7. Процессор выбирает их в порядке времени обработки, разрывая связи по индексу."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Sort tasks by enqueue time, then simulate the CPU clock, pushing newly available tasks into a min-heap.",
-    "The heap orders by (processingTime, index) so the CPU always picks the shortest available task.",
-    "When the heap is empty, jump the clock forward to the next enqueue time."
+    "Сортируйте задачи по времени очереди, затем имитируйте часы процессора, толкая новые доступные задачи в мини-кучу.",
+    "Куча заказов по (processingTime, index) так что процессор всегда выбирает самую короткую доступную задачу.",
+    "Когда куча пуста, перепрыгните часы вперед к следующему времени очереди."
   ]
 }

@@ -1,0 +1,80 @@
+{
+  "id": "design-snake-game",
+  "title": "433. Design Snake Game",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/design-snake-game/",
+  "category": "array",
+  "examples": [
+    {
+      "input": "width = 3, height = 2, food = [[1,2],[0,1]], moves = [\"R\",\"D\",\"R\",\"U\",\"L\",\"U\"]",
+      "output": "[0,0,1,1,2,-1]",
+      "explanation": "The snake eats at (1,2) on the third move and at (0,1) on the fifth move, then crashes into itself on the last move."
+    },
+    {
+      "input": "width = 2, height = 2, food = [], moves = [\"R\",\"D\",\"L\"]",
+      "output": "[0,0,0]",
+      "explanation": "With no food the score stays zero while the snake loops safely."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int[] runSnakeGame(int width, int height, int[][] food, String[] moves) {\n        \n    }\n}",
+    "python": "from typing import List\nclass Solution:\n    def runSnakeGame(self, width: int, height: int, food: List[List[int]], moves: List[str]) -> List[int]:\n        pass",
+    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runSnakeGame(int width, int height, vector<vector<int>>& food, vector<string>& moves) {\n        return {};\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int[] RunSnakeGame(int width, int height, int[][] food, string[] moves) \n    {\n        return System.Array.Empty<int>();\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_snake_game(width: i32, height: i32, food: Vec<Vec<i32>>, moves: Vec<String>) -> Vec<i32> {\n        \n    }\n}",
+    "go": "package main\n\nfunc RunSnakeGame(width int, height int, food [][]int, moves []string) []int {\n    \n}",
+    "typescript": "export function runSnakeGame(width: number, height: number, food: number[][], moves: string[]): number[] {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $width\n     * @param int $height\n     * @param int[][] $food\n     * @param string[] $moves\n     * @return int[]\n     */\n    public function runSnakeGame($width, $height, $food, $moves) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "width": 3,
+      "height": 2,
+      "food": "[[1,2],[0,1]]",
+      "moves": "[\"R\",\"D\",\"R\",\"U\",\"L\",\"U\"]"
+    },
+    {
+      "width": 2,
+      "height": 2,
+      "food": "[]",
+      "moves": "[\"R\",\"D\",\"L\"]"
+    },
+    {
+      "width": 1,
+      "height": 1,
+      "food": "[]",
+      "moves": "[\"R\"]"
+    },
+    {
+      "width": 3,
+      "height": 3,
+      "food": "[[0,1],[0,2],[1,2]]",
+      "moves": "[\"R\",\"R\",\"D\"]"
+    }
+  ],
+  "functionName": "runSnakeGame",
+  "params": [
+    {
+      "name": "width",
+      "type": "int"
+    },
+    {
+      "name": "height",
+      "type": "int"
+    },
+    {
+      "name": "food",
+      "type": "int_array_2d"
+    },
+    {
+      "name": "moves",
+      "type": "string_array"
+    }
+  ],
+  "outputType": "int_array",
+  "hints": [
+    "Store the body in a queue (head at front) plus a hash set of occupied cells for O(1) collision checks.",
+    "When the step does not eat, remove the tail before testing self-collision so moving into the vacated cell is legal.",
+    "Once the game ends, every remaining move reports -1."
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "additive-number",
+  "title": "398. Additive Number",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/additive-number/",
+  "category": "string",
+  "examples": [
+    {
+      "input": "num = \"112358\"",
+      "output": "true",
+      "explanation": "Splits as 1, 1, 2, 3, 5."
+    },
+    {
+      "input": "num = \"199100199\"",
+      "output": "true",
+      "explanation": "Splits as 1, 99, 100, 199."
+    },
+    {
+      "input": "num = \"1023\"",
+      "output": "false",
+      "explanation": "No valid additive split exists."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public boolean isAdditiveNumber(String num) {\n        \n    }\n}",
+    "python": "class Solution:\n    def isAdditiveNumber(self, num: str) -> bool:\n        ",
+    "cpp": "#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    bool isAdditiveNumber(string num) {\n        return false;\n    }\n};",
+    "csharp": "public class Solution\n{\n    public bool IsAdditiveNumber(string num)\n    {\n        return false;\n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn is_additive_number(num: String) -> bool {\n        false\n    }\n}",
+    "go": "package main\n\nfunc IsAdditiveNumber(num string) bool {\n    return false\n}",
+    "typescript": "export function isAdditiveNumber(num: string): boolean {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param string $num\n     * @return bool\n     */\n    public function isAdditiveNumber($num) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "num": "112358"
+    },
+    {
+      "num": "199100199"
+    },
+    {
+      "num": "1023"
+    }
+  ],
+  "functionName": "isAdditiveNumber",
+  "params": [
+    {
+      "name": "num",
+      "type": "string"
+    }
+  ],
+  "outputType": "boolean",
+  "hints": [
+    "Only the first two numbers are free choices; everything after is forced by the sum rule.",
+    "Reject any candidate first or second number with a leading zero and length above one.",
+    "Add with digit strings (or big integers) since values can outgrow fixed-size types."
+  ]
+}

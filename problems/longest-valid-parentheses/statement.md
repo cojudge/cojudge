@@ -1,7 +1,7 @@
-You are given a string `s` made up only of the characters `'('` and `')'`. A substring is *valid* when its brackets pair up correctly (every closing bracket matches the most recent unmatched opening bracket, leaving nothing unmatched).
+Вам дается строка `s`, состоящая только из символов `'('` и `')'`. Подстроки *действительны*, когда их скобки правильно спариваются (каждая закрывающая скобка соответствует самой последней непревзойденной открывающей скобке, не оставляя ничего непревзойденного).
 
-Return the length of the longest contiguous valid substring. When no pair exists anywhere, the answer is `0`.
+Возвращайте длину самой длинной прилежащей действующей подстроки. Когда пары нигде нет, ответ `0`.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= s.length <= 3 * 10^4`
-- Each character of `s` is `'('` or `')'`.
+- Каждый символ `s` - это `'('` или `')'`.

@@ -1,6 +1,6 @@
 {
   "id": "set-mismatch",
-  "title": "667. Set Mismatch",
+  "title": "667. Установить Mismatch",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/set-mismatch/",
   "category": "array",
@@ -8,7 +8,7 @@
     {
       "input": "nums = [1,2,2,4]",
       "output": "[2,3]",
-      "explanation": "2 occurs twice and 3 never occurs."
+      "explanation": "2 встречается дважды, а 3 никогда не встречается."
     },
     {
       "input": "nums = [1,1]",
@@ -49,8 +49,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Count occurrences once; the value seen twice is the duplicate.",
-    "The missing value is the one count of zero, or n(n+1)/2 minus the set sum.",
-    "Return the pair as [duplicate, missing] in that order."
+    "Подсчитывайте события один раз; значение, увиденное дважды, является дубликатом.",
+    "Недостающее значение - это одно число ноль, или n(n+1)/2 за вычетом установленной суммы.",
+    "Возвращайте пару в таком порядке (двойное, пропущенное)."
   ]
 }

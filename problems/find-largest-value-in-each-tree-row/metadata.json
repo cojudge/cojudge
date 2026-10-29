@@ -1,6 +1,6 @@
 {
   "id": "find-largest-value-in-each-tree-row",
-  "title": "575. Find Largest Value in Each Tree Row",
+  "title": "575. Найдите самую большую ценность в каждом ряду деревьев",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/find-largest-value-in-each-tree-row/",
   "category": "tree",
@@ -8,17 +8,17 @@
     {
       "input": "root = [1,3,2,5,3,null,9]",
       "output": "[1,3,9]",
-      "explanation": "Row 0 holds [1], row 1 holds [3,2], row 2 holds [5,3,9]; the maxima are 1, 3 and 9."
+      "explanation": "Row 0 удерживает [1], ряд 1 удерживает [3, 2], ряд 2 удерживает [5, 3, 9]; максимумами являются 1, 3 и 9."
     },
     {
       "input": "root = [1,2,3]",
       "output": "[1,3]",
-      "explanation": "The rows are [1] and [2,3], giving maxima 1 and 3."
+      "explanation": "Строки [1] и [2, 3], дающие максимумы 1 и 3."
     },
     {
       "input": "root = []",
       "output": "[]",
-      "explanation": "An empty tree has no rows."
+      "explanation": "У пустого дерева нет рядов."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int_list",
   "hints": [
-    "Process the tree breadth-first so nodes are grouped by depth.",
-    "Track the running maximum inside each row and append it before moving to the next row."
+    "Обработайте сначала ширину дерева, чтобы узлы были сгруппированы по глубине.",
+    "Отслеживайте максимум бега внутри каждой строки и добавляйте его перед переходом в следующую строку."
   ]
 }

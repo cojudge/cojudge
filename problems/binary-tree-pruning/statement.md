@@ -1,9 +1,9 @@
-You are given the root of a binary tree whose nodes hold only `0` or `1`. Remove every subtree that contains no `1` anywhere inside it.
+Вам дают корень двоичного дерева, узлы которого содержат только `0` или `1`. Удалите каждое поддерево, которое не содержит `1` нигде внутри него.
 
-Concretely, process the tree from the leaves upward: if a node's entire subtree (itself plus all descendants) holds only zeros, delete that subtree. A node with value `1` always survives, and a zero node survives only when at least one descendant kept for the same reason exists.
+Конкретно обработайте дерево с листьев вверх: если целое поддерево узла (само плюс все потомки) содержит только нули, удалите это поддерево. Узел со значением `1` всегда выживает, а нулевой узел выживает только тогда, когда по крайней мере один потомок сохраняется по той же причине.
 
-Return the root of the trimmed tree, or null when nothing remains.
+Верните корень обрезанного дерева, или нуль, когда ничего не останется.
 
-**Constraints:**
-- The tree has at most 200 nodes.
-- Each node value is `0` or `1`.
+**Ограничения:**
+- Дерево имеет максимум узлов 200.
+- Каждое значение узла - `0` или `1`.

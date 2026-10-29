@@ -1,0 +1,57 @@
+{
+  "id": "climbing-stairs",
+  "title": "16. Climbing Stairs",
+  "difficulty": "Easy",
+  "category": "dp",
+  "link": "https://leetcode.com/problems/climbing-stairs/",
+  "examples": [
+    {
+      "input": "n = 2",
+      "output": "2",
+      "explanation": "There are 2 ways: 1 step + 1 step, or 2 steps."
+    },
+    {
+      "input": "n = 3",
+      "output": "3",
+      "explanation": "There are 3 ways: 1+1+1, 1+2, 2+1."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int climbStairs(int n) {\n        \n    }\n}",
+    "python": "class Solution:\n    def climbStairs(self, n: int) -> int:\n        pass\n",
+    "cpp": "class Solution {\npublic:\n    int climbStairs(int n) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int ClimbStairs(int n) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn climb_stairs(n: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc ClimbStairs(n int) int {\n    \n}",
+    "typescript": "export function climbStairs(n: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $n\n     * @return int\n     */\n    public function climbStairs($n) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "n": 1
+    },
+    {
+      "n": 2
+    },
+    {
+      "n": 3
+    },
+    {
+      "n": 4
+    },
+    {
+      "n": 5
+    }
+  ],
+  "functionName": "climbStairs",
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Classic DP: ways[n] = ways[n-1] + ways[n-2]. With O(1) space we can keep just the last two values."
+  ]
+}

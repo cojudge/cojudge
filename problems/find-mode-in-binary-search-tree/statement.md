@@ -1,7 +1,7 @@
-You are given the root of a binary search tree that may hold duplicate keys. Its ordering rule allows equality on either side: left subtree keys are less than or equal to the node, right subtree keys are greater than or equal to the node.
+Вам дают корень двоичного дерева поиска, которое может содержать дубликаты ключей.Его правило упорядочивания допускает равенство с обеих сторон: левые ключи поддеревов меньше или равны узлу, правые ключи поддеревов больше или равны узлу.
 
-A mode is a value occurring more often than any other value in the tree. Collect every mode and return them in any order.
+Режим — это значение, встречающееся чаще, чем любое другое значение в дереве. Соберите каждый режим и верните их в любом порядке.
 
-**Constraints:**
-- The tree holds between 1 and 10^4 nodes
+**Ограничения:**
+- Дерево держится между узлами 1 и 10^4
 - `-10^5 <= Node.val <= 10^5`

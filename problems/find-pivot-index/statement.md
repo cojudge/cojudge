@@ -1,9 +1,9 @@
-Find the leftmost position where the sum of elements strictly to its left equals the sum strictly to its right.
+Найдите самое левое положение, где сумма элементов строго слева равна сумме строго справа.
 
-Treat a missing side as zero. For `[1,7,3,6,5,6]`, index `3` works because `1+7+3 = 11` and `5+6 = 11`.
+Для `[1,7,3,6,5,6]` индекс `3` работает, потому что `1+7+3 = 11` и `5+6 = 11`.
 
-Return that index, or `-1` when every position is unbalanced.
+Возвращайте этот индекс, или `-1`, когда каждая позиция не сбалансирована.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 10^4`
 - `-1000 <= nums[i] <= 1000`

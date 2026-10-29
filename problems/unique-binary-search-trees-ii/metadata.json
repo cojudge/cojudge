@@ -1,6 +1,6 @@
 {
   "id": "unique-binary-search-trees-ii",
-  "title": "280. Unique Binary Search Trees II",
+  "title": "280. Уникальные двоичные деревья поиска II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/unique-binary-search-trees-ii/",
   "category": "tree",
@@ -8,12 +8,12 @@
     {
       "input": "n = 3",
       "output": "[\"[1,null,2,null,3]\",\"[1,null,3,2]\",\"[2,1,3]\",\"[3,1,null,null,2]\",\"[3,2,null,1]\"] (order may vary)",
-      "explanation": "All five BST shapes over 1..3 are returned in BFS form."
+      "explanation": "Все пять форм BST над 1..3 возвращаются в форме BFS."
     },
     {
       "input": "n = 1",
       "output": "[\"[1]\"]",
-      "explanation": "A single node is the only tree."
+      "explanation": "Один узел — единственное дерево."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "string_list",
   "hints": [
-    "For each root value r in [start, end], combine every left tree from [start, r-1] with every right tree from [r+1, end].",
-    "The empty interval yields a single null option so leaf parents still form.",
-    "Serialize each finished TreeNode with BFS (null placeholders, trim trailing nulls) and compare sorted lists."
+    "Для каждого корневого значения r в [старт, конец] объедините каждое левое дерево из [старт, r-1] с каждым правым деревом из [r+1, конец].",
+    "Пустой интервал дает один нулевой вариант, поэтому родители листьев все еще формируются.",
+    "Сериализируйте каждый готовый узел TreeNode с BFS (нулевыми заполнителями, обрезками, отсортированными нулями) и сравните отсортированные списки."
   ]
 }

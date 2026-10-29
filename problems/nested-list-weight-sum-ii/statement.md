@@ -1,18 +1,18 @@
-A nested list holds integers and nested lists to any depth, for example
-`[[1,1],2,[1,1]]` or `[1,[4,[6]]]`. Let the depth of an integer be the number
-of lists wrapping it (outermost integers sit at depth 1). Let `maxDepth` be
-the largest depth present. The inverse-depth sum weights each integer by
-`maxDepth - depth + 1`, so the deepest values count once and shallower values
-count more.
+Вложенный список содержит целые числа и вложенные списки на любую глубину.
+`[[1,1],2,[1,1]]` или `[1,[4,[6]]]`. Пусть глубина целого числа
+обертывающие списки (самые внешние целые числа находятся на глубине 1). Пусть `maxDepth`
+Большая глубина в настоящем. Сумма обратной глубины весит каждое целое число
+`maxDepth - depth + 1`, поэтому самые глубокие значения считаются однократными и более мелкими значениями
+Считай больше.
 
-Thus `[[1,1],2,[1,1]]` scores `1+1+4+1+1 = 8`, and `[1,[4,[6]]]` scores
+Таким образом, `[[1,1],2,[1,1]]` забивает `1+1+4+1+1 = 8`, а `[1,[4,[6]]]` забивает
 `3*1 + 2*4 + 1*6 = 17`.
 
-**Adaptation note:** the `NestedInteger` API is replaced by a plain string
-encoding such as `"[[1,1],2,[1,1]]"`. Implement
-`depthSumInverse(nestedList)`, which parses that string and returns the
-weighted sum.
+**Примечание по адаптации: ** API `NestedInteger` заменен простой строкой
+Кодирование, например, `"[[1,1],2,[1,1]]"`.
+`depthSumInverse(nestedList)`, который анализирует эту строку и возвращает
+взвешенная сумма.
 
-**Constraints:**
-- The encoding holds integers `0 <= v <= 100` nested in `[` `]` with commas.
-- Nesting depth is at most 20, total integers at most 100.
+**Ограничения:**
+- Кодирование содержит целые числа `0 <= v <= 100`, вложенные в `[` `]` с запятыми.
+- Глубина вложения составляет максимум 20, общее количество целых чисел - максимум 100.

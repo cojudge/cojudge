@@ -1,5 +1,5 @@
-A subsequence is harmonious when its largest and smallest values differ by exactly one. Given `nums`, return the length of the longest harmonious subsequence; return 0 when none exists. Order inside the subsequence does not matter, only values.
+Последовательность гармонична, когда ее наибольшие и наименьшие значения отличаются ровно на одно. Учитывая `nums`, возвращайте длину самой длинной гармоничной последовательности; возвращайте 0, когда их нет. Порядок внутри последовательности не имеет значения, только значения.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= nums.length <= 20000`
-- Values fit in 32-bit integers.
+- Значения вписываются в 32-бит целых чисел.

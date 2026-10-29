@@ -1,6 +1,6 @@
 {
   "id": "binary-trees-with-factors",
-  "title": "821. Binary Trees With Factors",
+  "title": "821. Бинарные деревья с факторами",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/binary-trees-with-factors/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "arr = [2,4]",
       "output": "3",
-      "explanation": "Trees are the single nodes 2 and 4 plus the tree with root 4 and children 2,2."
+      "explanation": "Деревья — это единые узлы 2 и 4 плюс дерево с корнем 4 и потомки 2, 2."
     },
     {
       "input": "arr = [2,4,5,10]",
       "output": "7",
-      "explanation": "Four singletons plus trees rooted at 4 (2,2), at 10 (2,5) and at 10 (5,2)."
+      "explanation": "Четыре синглтона плюс деревья, укорененные в 4 (2, 2), в 10 (2, 5) и в 10 (5, 2)."
     },
     {
       "input": "arr = [2,3]",
       "output": "2",
-      "explanation": "No product of two entries lands back in the set, so only singletons exist."
+      "explanation": "Ни один продукт из двух записей не попадает обратно в набор, поэтому существуют только одиночки."
     }
   ],
   "starterCode": {
@@ -51,7 +51,7 @@
   ],
   "outputType": "int",
   "hints": [
-    "Sort the values so every factor pair of a root has already been counted.",
-    "For each root, add dp[left] * dp[right] over all factor pairs left*right == root, starting from 1 for the singleton."
+    "Сортируйте значения так, чтобы каждая факторная пара корня уже была подсчитана.",
+    "Для каждого корня добавьте dp [слева] * dp [справа] по всем парам факторов лево*справа == корень, начиная от 1 для синглтона."
   ]
 }

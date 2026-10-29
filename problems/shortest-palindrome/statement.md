@@ -1,7 +1,7 @@
-You may only add characters to the front of a string `s`. Determine the shortest palindrome that can be produced this way and return it.
+Вы можете добавлять символы только в переднюю часть строки `s`. Определите самый короткий палиндром, который может быть создан таким образом, и верните его.
 
-In other words, find the smallest prefix to prepend so the whole result reads the same forwards and backwards.
+Другими словами, найдите наименьший префикс, чтобы предварить, так что весь результат читается одинаково вперед и назад.
 
-**Constraints:**
+**Ограничения:**
 - `0 <= s.length <= 5 * 10^4`
-- `s` consists of lowercase English letters.
+- `s` состоит из строчных английских букв.

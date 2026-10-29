@@ -1,6 +1,6 @@
 {
   "id": "guess-number-higher-or-lower-ii",
-  "title": "452. Guess Number Higher or Lower II",
+  "title": "452. Угадайте число выше или ниже II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/guess-number-higher-or-lower-ii/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "n = 1",
       "output": "0",
-      "explanation": "One candidate needs no payment."
+      "explanation": "Один кандидат не нуждается в оплате."
     },
     {
       "input": "n = 2",
       "output": "1",
-      "explanation": "Guessing 1 risks at most 1."
+      "explanation": "Угадайте риски 1 максимум 1."
     },
     {
       "input": "n = 10",
       "output": "16",
-      "explanation": "The best split caps the worst branch at 16."
+      "explanation": "Лучшие сплит-капы худшего филиала 16."
     }
   ],
   "starterCode": {
@@ -54,8 +54,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Define dp over intervals [lo, hi] as the cheapest worst-case cost inside.",
-    "Trying guess x costs x plus the worse of the left and right subproblems.",
-    "Fill intervals by increasing length; the answer is the cost over [1, n]."
+    "Определите dp через интервалы [lo, hi] как самую дешевую наихудшую цену внутри.",
+    "Попытка угадать x стоит x плюс худшие из левых и правых подзадач.",
+    "Интервалы заполнения за счет увеличения длины; ответом является стоимость [1, n]."
   ]
 }

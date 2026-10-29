@@ -1,4 +1,4 @@
-Reverse bits of a given 32-bit unsigned even integer.
+Обратные биты заданного 32-бита не подписаны даже целым числом.
 
-**Constraints:**
-- The input is a non-negative even integer.
+**Ограничения:**
+- Вход является неотрицательным четным числом.

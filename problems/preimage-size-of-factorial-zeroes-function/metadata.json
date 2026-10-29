@@ -1,6 +1,6 @@
 {
   "id": "preimage-size-of-factorial-zeroes-function",
-  "title": "791. Preimage Size of Factorial Zeroes Function",
+  "title": "791. Размер функции факторных нулей",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/preimage-size-of-factorial-zeroes-function/",
   "category": "math",
@@ -8,17 +8,17 @@
     {
       "input": "k = 0",
       "output": "5",
-      "explanation": "Values 0 through 4 have zero trailing zeroes."
+      "explanation": "Значения 0 через 4 имеют нулевые значения."
     },
     {
       "input": "k = 5",
       "output": "0",
-      "explanation": "The zero count skips from 4 to 6."
+      "explanation": "Ноль перескакивает от 4 к 6."
     },
     {
       "input": "k = 3",
       "output": "5",
-      "explanation": "Values 15 through 19 each give three zeroes."
+      "explanation": "Значения 15 через 19 дают три нуля."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Trailing zeroes of x! equal floor(x/5) + floor(x/25) + floor(x/125) + ... .",
-    "That count function is monotone, so binary-search the smallest x reaching at least k.",
-    "If that x yields exactly k, a full block of five consecutive values shares it; otherwise the answer is 0."
+    "Трейлинг нулей x! равный пол (x/5) + пол (x/25) + пол (x/125) + ... .",
+    "Эта функция подсчета является монотонной, поэтому двоичный поиск наименьшего x достигает по меньшей мере k.",
+    "Если x дает ровно k, то полный блок из пяти последовательных значений разделяет его; в противном случае ответ будет 0."
   ]
 }

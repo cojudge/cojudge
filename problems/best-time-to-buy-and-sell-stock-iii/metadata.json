@@ -1,6 +1,6 @@
 {
   "id": "best-time-to-buy-and-sell-stock-iii",
-  "title": "298. Best Time to Buy and Sell Stock III",
+  "title": "298. Лучшее время для покупки и продажи акций III",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "prices = [3,3,5,0,0,3,1,4]",
       "output": "6",
-      "explanation": "Buy at 0, sell at 3, then buy at 1 and sell at 4 for 3 + 3 = 6."
+      "explanation": "Покупайте в 0, продавайте в 3, затем покупайте в 1 и продавайте в 4 для 3 + 3 = 6."
     },
     {
       "input": "prices = [1,2,3,4,5]",
       "output": "4",
-      "explanation": "One trade from 1 to 5 already gives 4; a second trade adds nothing."
+      "explanation": "Одна сделка от 1 до 5 уже дает 4; вторая сделка ничего не добавляет."
     },
     {
       "input": "prices = [7,6,4,3,1]",
       "output": "0",
-      "explanation": "Prices only fall, so skipping all trades is best."
+      "explanation": "Цены только падают, поэтому лучше всего пропустить все сделки."
     }
   ],
   "starterCode": {
@@ -51,8 +51,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Track four states in one pass: first buy, first sell, second buy, second sell.",
-    "Update them in order so the second buy can reuse profit from the first sell.",
-    "Splitting at each day into best-left plus best-right profit also works."
+    "Отслеживайте четыре состояния за один проход: сначала покупайте, сначала продавайте, затем покупайте, затем продавайте.",
+    "Обновите их, чтобы вторая покупка могла повторно использовать прибыль от первой продажи.",
+    "Разделение на лучшие левые плюс лучшие левые прибыли также работает."
   ]
 }

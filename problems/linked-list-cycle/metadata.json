@@ -1,6 +1,6 @@
 {
   "id": "linked-list-cycle",
-  "title": "41. Detect Cycle in a Linked List",
+  "title": "41. Обнаружение цикла в связанном списке",
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/linked-list-cycle/",
   "category": "linked-list",
@@ -8,17 +8,17 @@
     {
       "input": "head = [3,2,0,-4], pos = 1",
       "output": "true",
-      "explanation": "The linked list has a cycle (tail connects to a previous node), so the output is true.\n\n![Linked list with cycle at index 1](/api/problems/linked-list-cycle/asset/tc01.png)"
+      "explanation": "Связанный список имеет цикл (хвост подключается к предыдущему узлу), поэтому вывод верный.\n\n![Связанный список с циклом по индексу 1](/api/problems/linked-list-cycle/asset/tc01.png)"
     },
     {
       "input": "head = [1,2], pos = 0",
       "output": "true",
-      "explanation": "The linked list has a cycle (tail connects to a previous node), so the output is true.\n\n![Linked list with cycle at head](/api/problems/linked-list-cycle/asset/tc02.png)"
+      "explanation": "Связанный список имеет цикл (хвост подключается к предыдущему узлу), поэтому вывод верный.\n\n! [Связанный список с циклом во главе] (/api/problems/linked-list-cycle/asset/tc02.png)"
     },
     {
       "input": "head = [1], pos = -1",
       "output": "false",
-      "explanation": "The linked list [1] has no cycle (pos=-1 means no connection), so the output is false.\n\n![Single node with no cycle](/api/problems/linked-list-cycle/asset/tc03.png)"
+      "explanation": "Связанный список [1] не имеет цикла (pos=-1 означает отсутствие соединения), поэтому вывод является ложным.\n\n[Единый узел без цикла](/api/problems/linked-list-cycle/asset/tc03.png)"
     }
   ],
   "starterCode": {
@@ -54,6 +54,6 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Use Floyd's Tortoise and Hare algorithm to detect if a cycle exists in a singly linked list."
+    "Используйте алгоритм черепахи и зайца Флойда, чтобы определить, существует ли цикл в отдельно связанном списке."
   ]
 }

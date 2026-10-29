@@ -1,8 +1,8 @@
-You receive an `n x n` 2D matrix standing in for a picture. Spin that picture 90 degrees clockwise.
+Вы получаете матрицу `n x n` 2D, стоящую за картинкой. Вращайте эту картинку 90 по часовой стрелке.
 
-Hand back the spun matrix.
+Отдай назад вращающуюся матрицу.
 
-**Constraints:**
+**Ограничения:**
 - `n == matrix.length == matrix[i].length`
 - `1 <= n <= 20`
 - `-1000 <= matrix[i][j] <= 1000`

@@ -1,6 +1,6 @@
-Starting from the `root` of a binary tree, examine every route that links a non-empty chain of nodes through parent-child edges. Score each route by totalling the values of the nodes it passes through, and return the highest such score.
+Начиная с `root` двоичного дерева, изучите каждый маршрут, который связывает непустую цепочку узлов через края родитель-потомок. Оцените каждый маршрут, суммируя значения узлов, через которые он проходит, и верните самый высокий такой балл.
 
-**Constraints:**
+**Ограничения:**
 
-- The number of nodes in the tree is in the range [1, 3 * 10^4].
+- Количество узлов в дереве находится в диапазоне [1, 3 * 10^4].
 - -1000 ≤ Node.val ≤ 1000

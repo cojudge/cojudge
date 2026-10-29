@@ -1,0 +1,59 @@
+{
+  "id": "divide-two-integers",
+  "title": "258. Divide Two Integers",
+  "difficulty": "Medium",
+  "link": "https://leetcode.com/problems/divide-two-integers/",
+  "category": "math",
+  "examples": [
+    {
+      "input": "dividend = 10, divisor = 3",
+      "output": "3",
+      "explanation": "10/3 = 3.333..., which truncates to 3."
+    },
+    {
+      "input": "dividend = 7, divisor = -3",
+      "output": "-2",
+      "explanation": "7/-3 = -2.333..., which truncates toward zero to -2."
+    }
+  ],
+  "starterCode": {
+    "java": "class Solution {\n    public int divide(int dividend, int divisor) {\n        \n    }\n}",
+    "python": "class Solution:\n    def divide(self, dividend: int, divisor: int) -> int:\n        pass",
+    "cpp": "class Solution {\npublic:\n    int divide(int dividend, int divisor) {\n        return 0;\n    }\n};",
+    "csharp": "public class Solution \n{\n    public int Divide(int dividend, int divisor) \n    {\n        \n    }\n}",
+    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn divide(dividend: i32, divisor: i32) -> i32 {\n        \n    }\n}",
+    "go": "package main\n\nfunc Divide(dividend int, divisor int) int {\n    \n}",
+    "typescript": "export function divide(dividend: number, divisor: number): number {\n    \n}",
+    "php": "class Solution {\n    /**\n     * @param int $dividend\n     * @param int $divisor\n     * @return int\n     */\n    public function divide($dividend, $divisor) {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "dividend": 10,
+      "divisor": 3
+    },
+    {
+      "dividend": 7,
+      "divisor": -3
+    },
+    {
+      "dividend": -2147483648,
+      "divisor": -1
+    }
+  ],
+  "functionName": "divide",
+  "params": [
+    {
+      "name": "dividend",
+      "type": "int"
+    },
+    {
+      "name": "divisor",
+      "type": "int"
+    }
+  ],
+  "outputType": "int",
+  "hints": [
+    "Work with the absolute values as 64-bit numbers, then apply the sign at the end; handle MIN_VALUE / -1 as a special case.",
+    "Repeatedly subtract the largest doubled chunk of the divisor that still fits (exponential search with bit shifts) instead of subtracting one at a time."
+  ]
+}

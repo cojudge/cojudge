@@ -1,7 +1,7 @@
-Given a nonempty lowercase string `s`, split it into substrings so that every substring is a palindrome. Return every possible palindrome partition of `s`.
+Учитывая пустую нижнюю строку `s`, разделите ее на подстроки так, чтобы каждая подстрока была палиндромом. Возвратите все возможные палиндромные разделы `s`.
 
-A palindrome reads the same from left to right and right to left. The partitions may be returned in any order, but the substrings within a partition must remain in their original order.
+Палиндром читает то же самое слева направо и справа налево. Перегородки могут быть возвращены в любом порядке, но подстроки внутри перегородки должны оставаться в своем первоначальном порядке.
 
-**Constraints:**
+**Ограничения:**
 - `1 <= s.length <= 16`
-- `s` contains only lowercase English letters.
+- `s` содержит только английские буквы.

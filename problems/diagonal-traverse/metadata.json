@@ -1,6 +1,6 @@
 {
   "id": "diagonal-traverse",
-  "title": "561. Diagonal Traverse",
+  "title": "561. Диагональный поперечный ход",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/diagonal-traverse/",
   "category": "array",
@@ -8,12 +8,12 @@
     {
       "input": "mat = [[1,2,3],[4,5,6],[7,8,9]]",
       "output": "[1,2,4,7,5,3,6,8,9]",
-      "explanation": "Diagonals are visited as [1], [2,4], [7,5,3], [6,8], [9] with alternating directions."
+      "explanation": "Диагонали посещаются как [1], [2, 4], [7, 5, 3], [6, 8], [9] с переменными направлениями."
     },
     {
       "input": "mat = [[1,2],[3,4]]",
       "output": "[1,2,3,4]",
-      "explanation": "The two middle cells form one diagonal visited bottom-up after the start."
+      "explanation": "Две средние клетки образуют одну диагональ, посещаемую снизу вверх после начала."
     }
   ],
   "starterCode": {
@@ -46,8 +46,8 @@
   ],
   "outputType": "int_array",
   "hints": [
-    "Simulate position plus a direction flag instead of precomputing diagonals.",
-    "Hitting the right or top border while moving up-right means stepping right or down and flipping to down-left (mirror for the other direction).",
-    "Single-row and single-column grids are just linear walks; the same border rules handle them."
+    "Имитировать положение плюс флаг направления вместо предварительной вычисления диагонали.",
+    "Удар по правой или верхней границе при движении вверх-вправо означает шаг вправо или вниз и переворачивание влево (зеркало в другом направлении).",
+    "Однорядные и одноколонные сетки — это просто линейные прогулки; с ними справляются те же пограничные правила."
   ]
 }

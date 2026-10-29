@@ -1,6 +1,6 @@
 {
   "id": "search-in-rotated-sorted-array-ii",
-  "title": "188. Search in Rotated Sorted Array II",
+  "title": "188. Обсуждение Rotated Sorted Array II",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/search-in-rotated-sorted-array-ii/",
   "category": "binary-search",
@@ -51,6 +51,6 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Binary search with duplicate handling: when nums[lo]==nums[mid]==nums[hi], shrink both ends."
+    "Бинарный поиск с двойной обработкой: когда nums[lo]==nums[mid]==nums[hi], сокращайте оба конца."
   ]
 }

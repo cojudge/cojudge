@@ -1,6 +1,6 @@
 {
   "id": "number-of-music-playlists",
-  "title": "907. Number of Music Playlists",
+  "title": "907. Количество музыкальных плейлистов",
   "difficulty": "Hard",
   "link": "https://leetcode.com/problems/number-of-music-playlists/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "n = 3, goal = 3, k = 1",
       "output": "6",
-      "explanation": "Every ordering of the 3 distinct songs works: 3! = 6."
+      "explanation": "Каждый заказ 3 отличается от других песен: 3! = 6."
     },
     {
       "input": "n = 2, goal = 3, k = 0",
       "output": "6",
-      "explanation": "Repeats are unrestricted (k = 0), so any of the 2^3 sequences with both songs present counts: 6."
+      "explanation": "Повторения не ограничены (k = 0), поэтому любая из последовательностей 2^3 с обеими песнями имеет значение: 6."
     },
     {
       "input": "n = 2, goal = 3, k = 1",
       "output": "2",
-      "explanation": "Only [1,2,1] and [2,1,2] keep every repeat at distance greater than 1."
+      "explanation": "Только [1, 2, 1] и [2, 1, 2] держат каждое повторение на расстоянии больше, чем 1."
     }
   ],
   "starterCode": {
@@ -65,8 +65,8 @@
   ],
   "outputType": "int",
   "hints": [
-    "Count lists by (length so far, distinct songs used): appending a new song has n - used choices.",
-    "Replaying an old song is allowed only when more than k distinct others separate repeats, giving used - k choices.",
-    "Take everything modulo 1,000,000,007 and answer with full length and all n songs used."
+    "Подсчет списков по (длине до сих пор использовались разные песни): добавление новой песни имеет n - использованные варианты.",
+    "Повторение старой песни допускается только тогда, когда более чем k отличных друг от друга отдельных повторов, давая использованные - k вариантов.",
+    "Возьмите все модули 1, 000, 000, 007 и ответьте полной длиной и всеми используемыми n песнями."
   ]
 }

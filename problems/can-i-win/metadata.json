@@ -1,6 +1,6 @@
 {
   "id": "can-i-win",
-  "title": "529. Can I Win",
+  "title": "529. Могу ли я выиграть",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/can-i-win/",
   "category": "dp",
@@ -8,17 +8,17 @@
     {
       "input": "maxChoosableInteger = 10, desiredTotal = 11",
       "output": "false",
-      "explanation": "Whatever the first player picks, the second player can always answer with a number that reaches 11 first."
+      "explanation": "Независимо от того, что выберет первый игрок, второй игрок всегда может ответить номером, который достигает 11 первым."
     },
     {
       "input": "maxChoosableInteger = 10, desiredTotal = 0",
       "output": "true",
-      "explanation": "The target is already met, so the first player has won without moving."
+      "explanation": "Цель уже достигнута, поэтому первый игрок победил, не двигаясь."
     },
     {
       "input": "maxChoosableInteger = 10, desiredTotal = 1",
       "output": "true",
-      "explanation": "The first player picks 1 and reaches the target immediately."
+      "explanation": "Первый игрок выбирает 1 и сразу же достигает цели."
     }
   ],
   "starterCode": {
@@ -58,7 +58,7 @@
   ],
   "outputType": "boolean",
   "hints": [
-    "Encode the set of used numbers as a bitmask and memoize game states so each reachable position is solved once.",
-    "If the sum 1 + 2 + ... + max falls short of the target, the first player can never win."
+    "Закодируйте набор используемых чисел в виде битмаска и запомните игровые состояния, чтобы каждая доступная позиция решалась один раз.",
+    "Если сумма 1 + 2 + ... + max не соответствует цели, первый игрок никогда не сможет выиграть."
   ]
 }
