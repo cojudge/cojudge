@@ -359,6 +359,245 @@ ${branches}
         return result
 `;
     }
+    // Stateful flip/reset design (e.g. Random Flip Matrix as FlipMatrix):
+    // constructor takes (m, n) from values[i]; flip() returns [r, c].
+    if (operations && operations.includes('flip')) {
+        return `
+from typing import List
+from ${className} import ${className}
+
+class Solution:
+    def solve(self, operations: List[str], values: List[List[int]]) -> List[str]:
+        result = []
+        obj = None
+        for i, op in enumerate(operations):
+            if op == "${className}":
+                obj = ${className}(values[i][0], values[i][1])
+                result.append("null")
+            elif op == "flip":
+                c = obj.flip()
+                result.append(f"[{c[0]},{c[1]}]")
+            elif op == "reset":
+                obj.reset()
+                result.append("null")
+        return result
+`;
+    }
+    // Class-design problems: constructor args and value-returning methods.
+    if (className === 'Shuffler') {
+        return `
+from typing import List
+from Shuffler import Shuffler
+
+class Solution:
+    def solve(self, operations: List[str], values: List[List[int]]) -> List[str]:
+        result = []
+        obj = None
+        for i, op in enumerate(operations):
+            if op == "Shuffler":
+                obj = Shuffler(values[i])
+                result.append("null")
+            elif op == "shuffle":
+                result.append("[" + ",".join(map(str, obj.shuffle())) + "]")
+            elif op == "reset":
+                result.append("[" + ",".join(map(str, obj.reset())) + "]")
+        return result
+`;
+    }
+    if (className === 'RandPoint') {
+        return `
+from typing import List
+from RandPoint import RandPoint
+
+class Solution:
+    def solve(self, operations: List[str], values: List[List[int]]) -> List[str]:
+        result = []
+        obj = None
+        for i, op in enumerate(operations):
+            if op == "RandPoint":
+                obj = RandPoint(values[i][0], values[i][1], values[i][2])
+                result.append("null")
+            elif op == "randPoint":
+                p = obj.randPoint()
+                result.append(f"[{p[0]},{p[1]}]")
+        return result
+`;
+    }
+    if (className === 'WeightedPicker') {
+        return `
+from typing import List
+from WeightedPicker import WeightedPicker
+
+class Solution:
+    def solve(self, operations: List[str], values: List[List[int]]) -> List[str]:
+        result = []
+        obj = None
+        for i, op in enumerate(operations):
+            if op == "WeightedPicker":
+                obj = WeightedPicker(values[i])
+                result.append("null")
+            elif op == "pickIndex":
+                result.append(str(obj.pickIndex()))
+        return result
+`;
+    }
+    if (className === 'TwoSum') {
+        return `
+from typing import List
+from TwoSum import TwoSum
+
+class Solution:
+    def solve(self, operations: List[str], values: List[List[int]]) -> List[str]:
+        result = []
+        obj = None
+        for i, op in enumerate(operations):
+            if op == "TwoSum":
+                obj = TwoSum()
+                result.append("null")
+            elif op == "add":
+                obj.add(values[i][0])
+                result.append("null")
+            elif op == "find":
+                result.append(str(obj.find(values[i][0])).lower())
+        return result
+`;
+    }
+    if (className === 'MaxStack') {
+        return `
+from typing import List
+from MaxStack import MaxStack
+
+class Solution:
+    def solve(self, operations: List[str], values: List[List[int]]) -> List[str]:
+        result = []
+        obj = None
+        for i, op in enumerate(operations):
+            if op == "MaxStack":
+                obj = MaxStack()
+                result.append("null")
+            elif op == "push":
+                obj.push(values[i][0])
+                result.append("null")
+            elif op == "pop":
+                result.append(str(obj.pop()))
+            elif op == "top":
+                result.append(str(obj.top()))
+            elif op == "peekMax":
+                result.append(str(obj.peekMax()))
+            elif op == "popMax":
+                result.append(str(obj.popMax()))
+        return result
+`;
+    }
+    if (className === 'MyHashSet') {
+        return `
+from typing import List
+from MyHashSet import MyHashSet
+
+class Solution:
+    def solve(self, operations: List[str], values: List[List[int]]) -> List[str]:
+        result = []
+        obj = None
+        for i, op in enumerate(operations):
+            if op == "MyHashSet":
+                obj = MyHashSet()
+                result.append("null")
+            elif op == "add":
+                obj.add(values[i][0])
+                result.append("null")
+            elif op == "remove":
+                obj.remove(values[i][0])
+                result.append("null")
+            elif op == "contains":
+                result.append(str(obj.contains(values[i][0])).lower())
+        return result
+`;
+    }
+    if (className === 'HitCounter') {
+        return `
+from typing import List
+from HitCounter import HitCounter
+
+class Solution:
+    def solve(self, operations: List[str], values: List[List[int]]) -> List[str]:
+        result = []
+        obj = None
+        for i, op in enumerate(operations):
+            if op == "HitCounter":
+                obj = HitCounter()
+                result.append("null")
+            elif op == "hit":
+                obj.hit(values[i][0])
+                result.append("null")
+            elif op == "getHits":
+                result.append(str(obj.getHits(values[i][0])))
+        return result
+`;
+    }
+    if (className === 'StockSpanner') {
+        return `
+from typing import List
+from StockSpanner import StockSpanner
+
+class Solution:
+    def solve(self, operations: List[str], values: List[List[int]]) -> List[str]:
+        result = []
+        obj = None
+        for i, op in enumerate(operations):
+            if op == "StockSpanner":
+                obj = StockSpanner()
+                result.append("null")
+            elif op == "next":
+                result.append(str(obj.next(values[i][0])))
+        return result
+`;
+    }
+    if (className === 'RandomizedSet' || className === 'RandomizedCollection') {
+        return `
+from typing import List
+from ${className} import ${className}
+
+class Solution:
+    def solve(self, operations: List[str], values: List[List[int]]) -> List[str]:
+        result = []
+        obj = None
+        for i, op in enumerate(operations):
+            if op == "${className}":
+                obj = ${className}()
+                result.append("null")
+            elif op == "insert":
+                result.append(str(obj.insert(values[i][0])).lower())
+            elif op == "remove":
+                result.append(str(obj.remove(values[i][0])).lower())
+            elif op == "getRandom":
+                result.append(str(obj.getRandom()))
+        return result
+`;
+    }
+    if (className === 'MyHashMap') {
+        return `
+from typing import List
+from MyHashMap import MyHashMap
+
+class Solution:
+    def solve(self, operations: List[str], values: List[List[int]]) -> List[str]:
+        result = []
+        obj = None
+        for i, op in enumerate(operations):
+            if op == "MyHashMap":
+                obj = MyHashMap()
+                result.append("null")
+            elif op == "put":
+                obj.put(values[i][0], values[i][1])
+                result.append("null")
+            elif op == "get":
+                result.append(str(obj.get(values[i][0])))
+            elif op == "remove":
+                obj.remove(values[i][0])
+                result.append("null")
+        return result
+`;
+    }
     const ops = operations || ['addNum', 'findMedian'];
     const branches = generatePythonBranches(ops, true);
     return `

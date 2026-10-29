@@ -1,64 +1,68 @@
 {
-  "id": "design-hit-counter",
-  "title": "441. Дизайн Hit Counter",
-  "difficulty": "Medium",
-  "link": "https://leetcode.com/problems/design-hit-counter/",
   "category": "array",
+  "classProblem": {
+    "userClassName": "HitCounter"
+  },
+  "difficulty": "Medium",
   "examples": [
     {
-      "input": "operations = [\"HitCounter\",\"hit\",\"hit\",\"hit\",\"getHits\",\"hit\",\"getHits\",\"getHits\"], timestamps = [0,1,2,3,4,300,300,301]",
-      "output": "[3,4,3]",
-      "explanation": "В то время как 4 есть 3 свежие хиты; в 300 есть 4; в 301 самый старый истек, оставив 3."
+      "explanation": "Обращения в моменты 1, 2 и 3 находятся в окне (4-300, 4], поэтому getHits(4) возвращает 3.",
+      "input": "operations = [\"HitCounter\",\"hit\",\"hit\",\"hit\",\"getHits\"], values = [[],[1],[2],[3],[4]]",
+      "output": "[null,null,null,null,3]"
     },
     {
-      "input": "operations = [\"HitCounter\",\"hit\",\"getHits\",\"getHits\"], timestamps = [0,5,5,305]",
-      "output": "[1,0]",
-      "explanation": "Однократный хит считается в момент времени 5, но истек к моменту времени 305."
+      "explanation": "В момент 301 учитывается окно (1, 301]: обращение в момент 1 уже устарело, а обращение в момент 2 ещё учитывается. В момент 302 оба обращения находятся вне окна (2, 302].",
+      "input": "operations = [\"HitCounter\",\"hit\",\"hit\",\"getHits\",\"getHits\"], values = [[],[1],[2],[301],[302]]",
+      "output": "[null,null,null,1,0]"
+    },
+    {
+      "explanation": "Обращений не было, поэтому запрос возвращает 0.",
+      "input": "operations = [\"HitCounter\",\"getHits\"], values = [[],[100]]",
+      "output": "[null,0]"
     }
   ],
-  "starterCode": {
-    "java": "class Solution {\n    public int[] runHitCounter(String[] operations, int[] timestamps) {\n        \n    }\n}",
-    "python": "from typing import List\nclass Solution:\n    def runHitCounter(self, operations: List[str], timestamps: List[int]) -> List[int]:\n        pass",
-    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runHitCounter(vector<string>& operations, vector<int>& timestamps) {\n        return {};\n    }\n};",
-    "csharp": "public class Solution \n{\n    public int[] RunHitCounter(string[] operations, int[] timestamps) \n    {\n        return System.Array.Empty<int>();\n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_hit_counter(operations: Vec<String>, timestamps: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
-    "go": "package main\n\nfunc RunHitCounter(operations []string, timestamps []int) []int {\n    \n}",
-    "typescript": "export function runHitCounter(operations: string[], timestamps: number[]): number[] {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[] $timestamps\n     * @return int[]\n     */\n    public function runHitCounter($operations, $timestamps) {\n\n    }\n}"
-  },
-  "testCases": [
-    {
-      "operations": "[\"HitCounter\",\"hit\",\"hit\",\"hit\",\"getHits\",\"hit\",\"getHits\",\"getHits\"]",
-      "timestamps": "[0,1,2,3,4,300,300,301]"
-    },
-    {
-      "operations": "[\"HitCounter\",\"hit\",\"getHits\",\"getHits\"]",
-      "timestamps": "[0,5,5,305]"
-    },
-    {
-      "operations": "[\"HitCounter\",\"getHits\"]",
-      "timestamps": "[0,100]"
-    },
-    {
-      "operations": "[\"HitCounter\",\"hit\",\"hit\",\"getHits\"]",
-      "timestamps": "[0,1,1,301]"
-    }
+  "functionName": "solve",
+  "hints": [
+    "Храните обращения в очереди в порядке поступления. Неубывающие временные метки сохраняют её отсортированной.",
+    "Перед каждым getHits(T) удаляйте обращения с меткой не больше T - 300.",
+    "После очистки размер очереди равен ответу. Конструктору и hit соответствует null."
   ],
-  "functionName": "runHitCounter",
+  "id": "design-hit-counter",
+  "link": "https://leetcode.com/problems/design-hit-counter/",
+  "outputType": "string_list",
   "params": [
     {
       "name": "operations",
       "type": "string_array"
     },
     {
-      "name": "timestamps",
-      "type": "int_array"
+      "name": "values",
+      "type": "int_array_2d"
     }
   ],
-  "outputType": "int_array",
-  "hints": [
-    "Храните попадания в очереди в порядке прибытия; метки времени никогда не уменьшаются.",
-    "Перед каждым запросом выпадайте каждый удар на или ниже T - 300.",
-    "Размер очереди после очистки является ответом; записи конструктора не производят никакого вывода."
-  ]
+  "starterCode": {
+    "cpp": "#include <queue>\nusing namespace std;\n\nclass HitCounter {\npublic:\n    HitCounter() {\n        \n    }\n\n    void hit(int timestamp) {\n        \n    }\n\n    int getHits(int timestamp) {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class HitCounter {\n    public HitCounter() {\n        \n    }\n\n    public void Hit(int timestamp) {\n        \n    }\n\n    public int GetHits(int timestamp) {\n        return 0;\n    }\n}",
+    "go": "package main\n\ntype HitCounter struct {\n\n}\n\nfunc Constructor() HitCounter {\n    return HitCounter{}\n}\n\nfunc (this *HitCounter) Hit(timestamp int) {\n\n}\n\nfunc (this *HitCounter) GetHits(timestamp int) int {\n    return 0\n}\n",
+    "java": "class HitCounter {\n    public HitCounter() {\n        \n    }\n\n    public void hit(int timestamp) {\n        \n    }\n\n    public int getHits(int timestamp) {\n        return 0;\n    }\n}\n",
+    "php": "class HitCounter {\n    public function __construct() {\n\n    }\n\n    /**\n     * @param int $timestamp\n     */\n    public function hit($timestamp) {\n\n    }\n\n    /**\n     * @param int $timestamp\n     * @return int\n     */\n    public function getHits($timestamp) {\n\n    }\n}\n",
+    "python": "from collections import deque\n\nclass HitCounter:\n    def __init__(self):\n\n    def hit(self, timestamp: int) -> None:\n\n    def getHits(self, timestamp: int) -> int:\n        return 0\n",
+    "rust": "use std::collections::VecDeque;\n\npub struct HitCounter {\n\n}\n\nimpl HitCounter {\n    pub fn new() -> Self {\n        HitCounter {}\n    }\n\n    pub fn hit(&mut self, timestamp: i32) {\n    }\n\n    pub fn get_hits(&self, timestamp: i32) -> i32 {\n        0\n    }\n}\n",
+    "typescript": "export class HitCounter {\n    constructor() {\n        \n    }\n\n    hit(timestamp: number): void {\n        \n    }\n\n    getHits(timestamp: number): number {\n        return 0;\n    }\n}\n"
+  },
+  "testCases": [
+    {
+      "operations": "[\"HitCounter\", \"hit\", \"hit\", \"hit\", \"getHits\"]",
+      "values": "[[], [1], [2], [3], [4]]"
+    },
+    {
+      "operations": "[\"HitCounter\", \"hit\", \"hit\", \"getHits\", \"getHits\"]",
+      "values": "[[], [1], [2], [301], [302]]"
+    },
+    {
+      "operations": "[\"HitCounter\", \"getHits\"]",
+      "values": "[[], [100]]"
+    }
+  ],
+  "title": "441. Счётчик обращений"
 }

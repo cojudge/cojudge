@@ -1,65 +1,68 @@
 {
   "id": "random-pick-with-weight",
-  "title": "587. Случайный выбор с весом",
+  "title": "587. Случайный выбор с весами",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/random-pick-with-weight/",
   "category": "array",
+  "classProblem": {
+    "userClassName": "WeightedPicker"
+  },
+  "functionName": "solve",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "string_list",
   "examples": [
     {
-      "input": "weights = [1,3], calls = [0,1,2,3]",
-      "output": "[0,1,1,1]",
-      "explanation": "Индекс 0 владеет позицией 0; индекс 1 владеет позициями 1-3."
+      "input": "operations = [\"WeightedPicker\",\"pickIndex\",\"pickIndex\",\"pickIndex\",\"pickIndex\"], values = [[1,3],[],[],[],[]]",
+      "output": "[null,1,0,1,1]",
+      "explanation": "Вес индекса 0 равен 1, а индекса 1 — 3. При каждом вызове проверка принимает любой индекс из допустимого диапазона."
     },
     {
-      "input": "weights = [2,5,3], calls = [0,2,7,9]",
-      "output": "[0,1,2,2]",
-      "explanation": "Позиции 0, 2, 7, 9 приземляются на сегменты 0, 1, 2, 2."
+      "input": "operations = [\"WeightedPicker\",\"pickIndex\",\"pickIndex\"], values = [[5],[],[]]",
+      "output": "[null,0,0]",
+      "explanation": "Индекс всего один, поэтому каждый выбор возвращает 0."
     },
     {
-      "input": "weights = [5], calls = [100,-3]",
-      "output": "[0,0]",
-      "explanation": "Один индекс владеет каждой позицией."
+      "input": "operations = [\"WeightedPicker\",\"pickIndex\",\"pickIndex\",\"pickIndex\"], values = [[2,5,3],[],[],[]]",
+      "output": "[null,0,1,2]",
+      "explanation": "Все индексы имеют положительные веса и должны иметь возможность появиться. При каждом вызове принимается любой допустимый индекс."
     }
   ],
   "starterCode": {
-    "java": "class Solution {\n    public int[] runWeightedPick(int[] weights, int[] calls) {\n        \n    }\n}",
-    "python": "from typing import List\nclass Solution:\n    def runWeightedPick(self, weights: List[int], calls: List[int]) -> List[int]:\n        pass",
-    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runWeightedPick(vector<int>& weights, vector<int>& calls) {\n        return {};\n    }\n};",
-    "csharp": "public class Solution \n{\n    public int[] RunWeightedPick(int[] weights, int[] calls) \n    {\n        \n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_weighted_pick(weights: Vec<i32>, calls: Vec<i32>) -> Vec<i32> {\n        \n    }\n}",
-    "go": "package main\n\nfunc RunWeightedPick(weights []int, calls []int) []int {\n    \n}",
-    "typescript": "export function runWeightedPick(weights: number[], calls: number[]): number[] {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $weights\n     * @param int[] $calls\n     * @return int[]\n     */\n    public function runWeightedPick($weights, $calls) {\n\n    }\n}"
+    "java": "class WeightedPicker {\n    public WeightedPicker(int[] w) {\n        \n    }\n\n    public int pickIndex() {\n        return 0;\n    }\n}",
+    "python": "from typing import List\n\nclass WeightedPicker:\n    def __init__(self, w: List[int]):\n\n    def pickIndex(self) -> int:\n        return 0",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass WeightedPicker {\npublic:\n    WeightedPicker(vector<int>& w) {\n        \n    }\n\n    int pickIndex() {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class WeightedPicker {\n    public WeightedPicker(int[] w) {\n        \n    }\n\n    public int PickIndex() {\n        return 0;\n    }\n}",
+    "go": "package main\n\ntype WeightedPicker struct {\n\n}\n\nfunc Constructor(w []int) WeightedPicker {\n    return WeightedPicker{}\n}\n\nfunc (this *WeightedPicker) PickIndex() int {\n    return 0\n}",
+    "rust": "pub struct WeightedPicker {\n\n}\n\nimpl WeightedPicker {\n    pub fn new(w: Vec<i32>) -> Self {\n        WeightedPicker {}\n    }\n\n    pub fn pick_index(&mut self) -> i32 {\n        0\n    }\n}",
+    "typescript": "export class WeightedPicker {\n    constructor(w: number[]) {\n        \n    }\n\n    pickIndex(): number {\n        return 0;\n    }\n}",
+    "php": "class WeightedPicker {\n    /**\n     * @param int[] $w\n     */\n    public function __construct($w) {\n\n    }\n\n    /**\n     * @return int\n     */\n    public function pickIndex() {\n\n    }\n}"
   },
   "testCases": [
     {
-      "weights": "[1,3]",
-      "calls": "[0,1,2,3]"
+      "operations": "[\"WeightedPicker\",\"pickIndex\",\"pickIndex\",\"pickIndex\",\"pickIndex\"]",
+      "values": "[[1,3],[],[],[],[]]"
     },
     {
-      "weights": "[2,5,3]",
-      "calls": "[0,2,7,9]"
+      "operations": "[\"WeightedPicker\",\"pickIndex\",\"pickIndex\"]",
+      "values": "[[5],[],[]]"
     },
     {
-      "weights": "[5]",
-      "calls": "[100,-3]"
+      "operations": "[\"WeightedPicker\",\"pickIndex\",\"pickIndex\",\"pickIndex\"]",
+      "values": "[[2,5,3],[],[],[]]"
     }
   ],
-  "functionName": "runWeightedPick",
-  "params": [
-    {
-      "name": "weights",
-      "type": "int_array"
-    },
-    {
-      "name": "calls",
-      "type": "int_array"
-    }
-  ],
-  "outputType": "int_array",
   "hints": [
-    "Постройте префикс суммой один раз; каждый розыгрыш сводится к тому, чтобы найти первый префикс строго больше, чем завернутое положение.",
-    "Восстановить позицию с неотрицательным модулем: ((c % Total) + Total) % Total.",
-    "Бинарный поиск по массиву префиксов отвечает на каждый вывод в O(log n)."
+    "Один раз вычислите префиксные суммы. При каждом выборе равномерно выбирайте t из [0, total) и находите первую префиксную сумму, строго большую t.",
+    "Двоичный поиск по префиксным суммам позволяет выполнять выбор за O(log n).",
+    "Проверка контролирует допустимость индекса при каждом вызове, а при 500 и более выборах — ещё и появление всех индексов. Распределение не проверяется."
   ]
 }

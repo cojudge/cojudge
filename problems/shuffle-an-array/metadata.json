@@ -1,61 +1,68 @@
 {
-  "id": "shuffle-an-array",
-  "title": "460. Перетасовать массив",
-  "difficulty": "Medium",
-  "link": "https://leetcode.com/problems/shuffle-an-array/",
   "category": "array",
+  "classProblem": {
+    "userClassName": "Shuffler"
+  },
+  "difficulty": "Medium",
   "examples": [
     {
-      "input": "nums = [1,2,3]",
-      "output": "[2,1,3]",
-      "explanation": "Любая перестановка с одинаковыми значениями действительна."
+      "explanation": "Одна допустимая последовательность: перемешиваем в [3,1,2], reset восстанавливает [1,2,3], затем перемешиваем в [2,3,1]. Для shuffle принимается любая перестановка.",
+      "input": "operations = [\"Shuffler\",\"shuffle\",\"reset\",\"shuffle\"], values = [[1,2,3],[],[],[]]",
+      "output": "[null,[3,1,2],[1,2,3],[2,3,1]]"
     },
     {
-      "input": "nums = [5]",
-      "output": "[5]",
-      "explanation": "Существует только одна договоренность."
+      "explanation": "У массива из одного элемента только одна перестановка.",
+      "input": "operations = [\"Shuffler\",\"shuffle\"], values = [[5],[]]",
+      "output": "[null,[5]]"
     },
     {
-      "input": "nums = [1,2,3,4]",
-      "output": "[3,1,4,2]",
-      "explanation": "Тот же мультиплеер в новом порядке."
+      "explanation": "Каждый shuffle должен сохранять элементы и число их вхождений. reset должен точно восстановить исходный порядок.",
+      "input": "operations = [\"Shuffler\",\"shuffle\",\"shuffle\",\"reset\"], values = [[1,2,3,4],[],[],[]]",
+      "output": "[null,[3,1,4,2],[4,2,1,3],[1,2,3,4]]"
+    }
+  ],
+  "functionName": "solve",
+  "hints": [
+    "Алгоритм Фишера — Йетса: идите с конца массива и меняйте текущий элемент со случайным элементом из диапазона от начала до текущего включительно.",
+    "Сначала скопируйте входной массив, чтобы не менять массив вызывающего кода. Для reset храните отдельную неизменённую копию.",
+    "Проверка контролирует состав перестановки, а не распределение результатов."
+  ],
+  "id": "shuffle-an-array",
+  "link": "https://leetcode.com/problems/shuffle-an-array/",
+  "outputType": "string_list",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array_2d"
     }
   ],
   "starterCode": {
-    "java": "class Solution {\n    public int[] shuffleArray(int[] nums) {\n        return new int[0];\n    }\n}",
-    "python": "from typing import List\n\nclass Solution:\n    def shuffleArray(self, nums: List[int]) -> List[int]:\n        return []\n",
-    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> shuffleArray(vector<int>& nums) {\n        return {};\n    }\n};",
-    "csharp": "public class Solution\n{\n    public int[] ShuffleArray(int[] nums)\n    {\n        return new int[0];\n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn shuffle_array(nums: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
-    "go": "package main\n\nfunc ShuffleArray(nums []int) []int {\n    return []int{}\n}",
-    "typescript": "export function shuffleArray(nums: number[]): number[] {\n    return [];\n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @return int[]\n     */\n    public function shuffleArray($nums) {\n\n    }\n}"
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass Shuffler {\npublic:\n    Shuffler(vector<int>& nums) {\n        \n    }\n\n    vector<int> shuffle() {\n        return {};\n    }\n\n    vector<int> reset() {\n        return {};\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class Shuffler {\n    public Shuffler(int[] nums) {\n        \n    }\n\n    public int[] Shuffle() {\n        return new int[0];\n    }\n\n    public int[] Reset() {\n        return new int[0];\n    }\n}",
+    "go": "package main\n\ntype Shuffler struct {\n\n}\n\nfunc Constructor(nums []int) Shuffler {\n    return Shuffler{}\n}\n\nfunc (this *Shuffler) Shuffle() []int {\n    return []int{}\n}\n\nfunc (this *Shuffler) Reset() []int {\n    return []int{}\n}",
+    "java": "class Shuffler {\n    public Shuffler(int[] nums) {\n        \n    }\n\n    public int[] shuffle() {\n        return new int[0];\n    }\n\n    public int[] reset() {\n        return new int[0];\n    }\n}",
+    "php": "class Shuffler {\n    /**\n     * @param int[] $nums\n     */\n    public function __construct($nums) {\n\n    }\n\n    /**\n     * @return int[]\n     */\n    public function shuffle() {\n\n    }\n\n    /**\n     * @return int[]\n     */\n    public function reset() {\n\n    }\n}",
+    "python": "from typing import List\n\nclass Shuffler:\n    def __init__(self, nums: List[int]):\n\n    def shuffle(self) -> List[int]:\n        return []\n\n    def reset(self) -> List[int]:\n        return []",
+    "rust": "pub struct Shuffler {\n\n}\n\nimpl Shuffler {\n    pub fn new(nums: Vec<i32>) -> Self {\n        Shuffler {}\n    }\n\n    pub fn shuffle(&mut self) -> Vec<i32> {\n        vec![]\n    }\n\n    pub fn reset(&mut self) -> Vec<i32> {\n        vec![]\n    }\n}",
+    "typescript": "export class Shuffler {\n    constructor(nums: number[]) {\n        \n    }\n\n    shuffle(): number[] {\n        return [];\n    }\n\n    reset(): number[] {\n        return [];\n    }\n}"
   },
   "testCases": [
     {
-      "nums": "[1,2,3]"
+      "operations": "[\"Shuffler\",\"shuffle\",\"reset\",\"shuffle\"]",
+      "values": "[[1,2,3],[],[],[]]"
     },
     {
-      "nums": "[5]"
+      "operations": "[\"Shuffler\",\"shuffle\"]",
+      "values": "[[5],[]]"
     },
     {
-      "nums": "[1,2,3,4]"
-    },
-    {
-      "nums": "[10,20]"
+      "operations": "[\"Shuffler\",\"shuffle\",\"shuffle\",\"reset\"]",
+      "values": "[[1,2,3,4],[],[],[]]"
     }
   ],
-  "functionName": "shuffleArray",
-  "params": [
-    {
-      "name": "nums",
-      "type": "int_array"
-    }
-  ],
-  "outputType": "int_array",
-  "hints": [
-    "Фишер-Йейтс: ходите от конца, заменяя каждый слот однородным ранее или равным слотом.",
-    "Сначала клонируйте вход, чтобы массив звонящего никогда не мутировал.",
-    "Судья проверяет равенство перестановок, а не распределение перетасовок."
-  ]
+  "title": "384. Перемешивание массива"
 }

@@ -1,72 +1,68 @@
 {
-  "id": "random-flip-matrix",
-  "title": "578. Случайная матричная флип-карта",
-  "difficulty": "Medium",
-  "link": "https://leetcode.com/problems/random-flip-matrix/",
   "category": "array",
+  "classProblem": {
+    "userClassName": "FlipMatrix"
+  },
+  "difficulty": "Medium",
   "examples": [
     {
-      "input": "m = 3, n = 1, count = 2",
-      "output": "[[1,0],[2,0]]",
-      "explanation": "Любые две из трех ячеек образуют действительный ответ; одна из возможностей — строки 1 и 2."
+      "explanation": "Одна допустимая последовательность: выбираются [1,0], [2,0], затем последняя свободная ячейка [0,0]. После reset можно снова выбрать любую ячейку, здесь [2,0].",
+      "input": "operations = [\"FlipMatrix\",\"flip\",\"flip\",\"flip\",\"reset\",\"flip\"], values = [[3,1],[],[],[],[],[]]",
+      "output": "[null,[1,0],[2,0],[0,0],null,[2,0]]"
     },
     {
-      "input": "m = 2, n = 2, count = 4",
-      "output": "[[0,0],[0,1],[1,0],[1,1]]",
-      "explanation": "Попросив всю доску, необходимо вернуть каждую из четырех ячеек один раз, в любом порядке."
+      "explanation": "При заполнении матрицы 2x2 каждая из четырёх ячеек должна встретиться ровно один раз, в любом порядке.",
+      "input": "operations = [\"FlipMatrix\",\"flip\",\"flip\",\"flip\",\"flip\"], values = [[2,2],[],[],[],[]]",
+      "output": "[null,[0,0],[0,1],[1,0],[1,1]]"
     },
     {
-      "input": "m = 1, n = 1, count = 0",
-      "output": "[]",
-      "explanation": "Нулевые флипы создают пустой список."
+      "explanation": "reset сбрасывает состояние, поэтому единственную ячейку можно выбрать повторно.",
+      "input": "operations = [\"FlipMatrix\",\"flip\",\"reset\",\"flip\"], values = [[1,1],[],[],[]]",
+      "output": "[null,[0,0],null,[0,0]]"
+    }
+  ],
+  "functionName": "solve",
+  "hints": [
+    "Представьте матрицу виртуальными индексами от 0 до m*n-1 и выбирайте их без повторений по схеме Фишера — Йетса. Таблица переназначений связывает выбранные позиции с ещё свободными, поэтому flip требует O(1) случайных выборов.",
+    "Преобразуйте индекс k в координаты [k / n, k % n], используя целочисленное деление.",
+    "reset очищает таблицу переназначений и восстанавливает число свободных позиций до m * n."
+  ],
+  "id": "random-flip-matrix",
+  "link": "https://leetcode.com/problems/random-flip-matrix/",
+  "outputType": "string_list",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array_2d"
     }
   ],
   "starterCode": {
-    "java": "class Solution {\n    public int[][] runFlip(int m, int n, int count) {\n        \n    }\n}",
-    "python": "from typing import List\nclass Solution:\n    def runFlip(self, m: int, n: int, count: int) -> List[List[int]]:\n        pass",
-    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    vector<vector<int>> runFlip(int m, int n, int count) {\n        return {};\n    }\n};",
-    "csharp": "public class Solution \n{\n    public int[][] RunFlip(int m, int n, int count) \n    {\n        \n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_flip(m: i32, n: i32, count: i32) -> Vec<Vec<i32>> {\n        \n    }\n}",
-    "go": "package main\n\nfunc RunFlip(m int, n int, count int) [][]int {\n    \n}",
-    "typescript": "export function runFlip(m: number, n: number, count: number): number[][] {\n    \n}",
-    "php": "class Solution {\n    /**\n     * @param int $m\n     * @param int $n\n     * @param int $count\n     * @return int[][]\n     */\n    public function runFlip($m, $n, $count) {\n\n    }\n}"
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass FlipMatrix {\npublic:\n    FlipMatrix(int m, int n) {\n        \n    }\n\n    vector<int> flip() {\n        return {};\n    }\n\n    void reset() {\n        \n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class FlipMatrix {\n    public FlipMatrix(int m, int n) {\n        \n    }\n\n    public int[] Flip() {\n        return new int[0];\n    }\n\n    public void Reset() {\n        \n    }\n}",
+    "go": "package main\n\ntype FlipMatrix struct {\n\n}\n\nfunc Constructor(m int, n int) FlipMatrix {\n    return FlipMatrix{}\n}\n\nfunc (this *FlipMatrix) Flip() []int {\n    return []int{}\n}\n\nfunc (this *FlipMatrix) Reset() {\n\n}",
+    "java": "class FlipMatrix {\n    public FlipMatrix(int m, int n) {\n        \n    }\n\n    public int[] flip() {\n        return new int[0];\n    }\n\n    public void reset() {\n        \n    }\n}",
+    "php": "class FlipMatrix {\n    /**\n     * @param int $m\n     * @param int $n\n     */\n    public function __construct($m, $n) {\n\n    }\n\n    /**\n     * @return int[]\n     */\n    public function flip() {\n\n    }\n\n    public function reset() {\n\n    }\n}",
+    "python": "from typing import List\n\nclass FlipMatrix:\n    def __init__(self, m: int, n: int):\n\n    def flip(self) -> List[int]:\n        return []\n\n    def reset(self) -> None:\n\n",
+    "rust": "pub struct FlipMatrix {\n\n}\n\nimpl FlipMatrix {\n    pub fn new(m: i32, n: i32) -> Self {\n        FlipMatrix {}\n    }\n\n    pub fn flip(&mut self) -> Vec<i32> {\n        vec![]\n    }\n\n    pub fn reset(&mut self) {\n    }\n}",
+    "typescript": "export class FlipMatrix {\n    constructor(m: number, n: number) {\n        \n    }\n\n    flip(): number[] {\n        return [];\n    }\n\n    reset(): void {\n        \n    }\n}"
   },
   "testCases": [
     {
-      "m": 3,
-      "n": 1,
-      "count": 2
+      "operations": "[\"FlipMatrix\",\"flip\",\"flip\",\"flip\",\"reset\",\"flip\"]",
+      "values": "[[3,1],[],[],[],[],[]]"
     },
     {
-      "m": 2,
-      "n": 2,
-      "count": 4
+      "operations": "[\"FlipMatrix\",\"flip\",\"flip\",\"flip\",\"flip\"]",
+      "values": "[[2,2],[],[],[],[]]"
     },
     {
-      "m": 1,
-      "n": 1,
-      "count": 0
+      "operations": "[\"FlipMatrix\",\"flip\",\"reset\",\"flip\"]",
+      "values": "[[1,1],[],[],[]]"
     }
   ],
-  "functionName": "runFlip",
-  "params": [
-    {
-      "name": "m",
-      "type": "int"
-    },
-    {
-      "name": "n",
-      "type": "int"
-    },
-    {
-      "name": "count",
-      "type": "int"
-    }
-  ],
-  "outputType": "int_array_2d",
-  "hints": [
-    "Адаптация: исходный класс транслирует случайные перепады с сбросом; здесь принимается любая отдельная действительная партия запрашиваемого размера.",
-    "Рисунок в стиле Фишера-Яйтса по виртуальным индексам m*n с таблицей переназначения дает различные позиции без сохранения доски.",
-    "Преобразуйте каждый вычерченный индекс k в [k/n, k % n] координаты."
-  ]
+  "title": "519. Случайное переключение ячеек матрицы"
 }

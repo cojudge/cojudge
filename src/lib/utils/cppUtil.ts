@@ -737,6 +737,368 @@ ${branches}
 };
 `;
     }
+    // Stateful flip/reset design (e.g. Random Flip Matrix as FlipMatrix):
+    // constructor takes (m, n) from values[i]; flip() returns vector<int>{r, c}.
+    if (operations && operations.includes('flip')) {
+        return `#include <vector>
+#include <string>
+#include <sstream>
+#include "${className}.cpp"
+using namespace std;
+
+class Solution {
+public:
+    vector<string> solve(vector<string>& operations, vector<vector<int>>& values) {
+        vector<string> result;
+        ${className}* obj = nullptr;
+        for (int i = 0; i < operations.size(); i++) {
+            string& op = operations[i];
+            if (op == "${className}") {
+                delete obj;
+                obj = new ${className}(values[i][0], values[i][1]);
+                result.push_back("null");
+            } else if (op == "flip") {
+                vector<int> c = obj->flip();
+                result.push_back("[" + to_string(c[0]) + "," + to_string(c[1]) + "]");
+            } else if (op == "reset") {
+                obj->reset();
+                result.push_back("null");
+            }
+        }
+        delete obj;
+        return result;
+    }
+};
+`;
+    }
+    // Class-design problems: constructor args and value-returning methods.
+    if (className === 'Shuffler') {
+        return `#include <vector>
+#include <string>
+#include <sstream>
+#include "Shuffler.cpp"
+using namespace std;
+
+class Solution {
+public:
+    vector<string> solve(vector<string>& operations, vector<vector<int>>& values) {
+        vector<string> result;
+        Shuffler* obj = nullptr;
+        for (int i = 0; i < operations.size(); i++) {
+            string& op = operations[i];
+            if (op == "Shuffler") {
+                delete obj;
+                obj = new Shuffler(values[i]);
+                result.push_back("null");
+            } else if (op == "shuffle") {
+                result.push_back(intArrayToString(obj->shuffle()));
+            } else if (op == "reset") {
+                result.push_back(intArrayToString(obj->reset()));
+            }
+        }
+        delete obj;
+        return result;
+    }
+private:
+    static string intArrayToString(const vector<int>& a) {
+        ostringstream ss;
+        ss << "[";
+        for (size_t j = 0; j < a.size(); j++) {
+            if (j > 0) ss << ",";
+            ss << a[j];
+        }
+        ss << "]";
+        return ss.str();
+    }
+};
+`;
+    }
+    if (className === 'RandPoint') {
+        return `#include <vector>
+#include <string>
+#include <sstream>
+#include "RandPoint.cpp"
+using namespace std;
+
+class Solution {
+public:
+    vector<string> solve(vector<string>& operations, vector<vector<int>>& values) {
+        vector<string> result;
+        RandPoint* obj = nullptr;
+        for (int i = 0; i < operations.size(); i++) {
+            string& op = operations[i];
+            if (op == "RandPoint") {
+                delete obj;
+                obj = new RandPoint(values[i][0], values[i][1], values[i][2]);
+                result.push_back("null");
+            } else if (op == "randPoint") {
+                vector<double> p = obj->randPoint();
+                ostringstream ss;
+                ss << "[" << p[0] << "," << p[1] << "]";
+                result.push_back(ss.str());
+            }
+        }
+        delete obj;
+        return result;
+    }
+};
+`;
+    }
+    if (className === 'WeightedPicker') {
+        return `#include <vector>
+#include <string>
+#include <sstream>
+#include "WeightedPicker.cpp"
+using namespace std;
+
+class Solution {
+public:
+    vector<string> solve(vector<string>& operations, vector<vector<int>>& values) {
+        vector<string> result;
+        WeightedPicker* obj = nullptr;
+        for (int i = 0; i < operations.size(); i++) {
+            string& op = operations[i];
+            if (op == "WeightedPicker") {
+                delete obj;
+                obj = new WeightedPicker(values[i]);
+                result.push_back("null");
+            } else if (op == "pickIndex") {
+                result.push_back(to_string(obj->pickIndex()));
+            }
+        }
+        delete obj;
+        return result;
+    }
+};
+`;
+    }
+    if (className === 'TwoSum') {
+        return `#include <vector>
+#include <string>
+#include <sstream>
+#include "TwoSum.cpp"
+using namespace std;
+
+class Solution {
+public:
+    vector<string> solve(vector<string>& operations, vector<vector<int>>& values) {
+        vector<string> result;
+        TwoSum* obj = nullptr;
+        for (int i = 0; i < operations.size(); i++) {
+            string& op = operations[i];
+            if (op == "TwoSum") {
+                delete obj;
+                obj = new TwoSum();
+                result.push_back("null");
+            } else if (op == "add") {
+                obj->add(values[i][0]);
+                result.push_back("null");
+            } else if (op == "find") {
+                result.push_back(obj->find(values[i][0]) ? "true" : "false");
+            }
+        }
+        delete obj;
+        return result;
+    }
+};
+`;
+    }
+    if (className === 'MaxStack') {
+        return `#include <vector>
+#include <string>
+#include <sstream>
+#include "MaxStack.cpp"
+using namespace std;
+
+class Solution {
+public:
+    vector<string> solve(vector<string>& operations, vector<vector<int>>& values) {
+        vector<string> result;
+        MaxStack* obj = nullptr;
+        for (int i = 0; i < operations.size(); i++) {
+            string& op = operations[i];
+            if (op == "MaxStack") {
+                delete obj;
+                obj = new MaxStack();
+                result.push_back("null");
+            } else if (op == "push") {
+                obj->push(values[i][0]);
+                result.push_back("null");
+            } else if (op == "pop") {
+                result.push_back(to_string(obj->pop()));
+            } else if (op == "top") {
+                result.push_back(to_string(obj->top()));
+            } else if (op == "peekMax") {
+                result.push_back(to_string(obj->peekMax()));
+            } else if (op == "popMax") {
+                result.push_back(to_string(obj->popMax()));
+            }
+        }
+        delete obj;
+        return result;
+    }
+};
+`;
+    }
+    if (className === 'MyHashSet') {
+        return `#include <vector>
+#include <string>
+#include <sstream>
+#include "MyHashSet.cpp"
+using namespace std;
+
+class Solution {
+public:
+    vector<string> solve(vector<string>& operations, vector<vector<int>>& values) {
+        vector<string> result;
+        MyHashSet* obj = nullptr;
+        for (int i = 0; i < operations.size(); i++) {
+            string& op = operations[i];
+            if (op == "MyHashSet") {
+                delete obj;
+                obj = new MyHashSet();
+                result.push_back("null");
+            } else if (op == "add") {
+                obj->add(values[i][0]);
+                result.push_back("null");
+            } else if (op == "remove") {
+                obj->remove(values[i][0]);
+                result.push_back("null");
+            } else if (op == "contains") {
+                result.push_back(obj->contains(values[i][0]) ? "true" : "false");
+            }
+        }
+        delete obj;
+        return result;
+    }
+};
+`;
+    }
+    if (className === 'HitCounter') {
+        return `#include <vector>
+#include <string>
+#include <sstream>
+#include "HitCounter.cpp"
+using namespace std;
+
+class Solution {
+public:
+    vector<string> solve(vector<string>& operations, vector<vector<int>>& values) {
+        vector<string> result;
+        HitCounter* obj = nullptr;
+        for (int i = 0; i < operations.size(); i++) {
+            string& op = operations[i];
+            if (op == "HitCounter") {
+                delete obj;
+                obj = new HitCounter();
+                result.push_back("null");
+            } else if (op == "hit") {
+                obj->hit(values[i][0]);
+                result.push_back("null");
+            } else if (op == "getHits") {
+                result.push_back(to_string(obj->getHits(values[i][0])));
+            }
+        }
+        delete obj;
+        return result;
+    }
+};
+`;
+    }
+    if (className === 'StockSpanner') {
+        return `#include <vector>
+#include <string>
+#include <sstream>
+#include "StockSpanner.cpp"
+using namespace std;
+
+class Solution {
+public:
+    vector<string> solve(vector<string>& operations, vector<vector<int>>& values) {
+        vector<string> result;
+        StockSpanner* obj = nullptr;
+        for (int i = 0; i < operations.size(); i++) {
+            string& op = operations[i];
+            if (op == "StockSpanner") {
+                delete obj;
+                obj = new StockSpanner();
+                result.push_back("null");
+            } else if (op == "next") {
+                result.push_back(to_string(obj->next(values[i][0])));
+            }
+        }
+        delete obj;
+        return result;
+    }
+};
+`;
+    }
+    if (className === 'RandomizedSet' || className === 'RandomizedCollection') {
+        return `#include <vector>
+#include <string>
+#include <sstream>
+#include "${className}.cpp"
+using namespace std;
+
+class Solution {
+public:
+    vector<string> solve(vector<string>& operations, vector<vector<int>>& values) {
+        vector<string> result;
+        ${className}* obj = nullptr;
+        for (int i = 0; i < operations.size(); i++) {
+            string& op = operations[i];
+            if (op == "${className}") {
+                delete obj;
+                obj = new ${className}();
+                result.push_back("null");
+            } else if (op == "insert") {
+                result.push_back(obj->insert(values[i][0]) ? "true" : "false");
+            } else if (op == "remove") {
+                result.push_back(obj->remove(values[i][0]) ? "true" : "false");
+            } else if (op == "getRandom") {
+                result.push_back(to_string(obj->getRandom()));
+            }
+        }
+        delete obj;
+        return result;
+    }
+};
+`;
+    }
+    if (className === 'MyHashMap') {
+        return `#include <vector>
+#include <string>
+#include <sstream>
+#include "MyHashMap.cpp"
+using namespace std;
+
+class Solution {
+public:
+    vector<string> solve(vector<string>& operations, vector<vector<int>>& values) {
+        vector<string> result;
+        MyHashMap* obj = nullptr;
+        for (int i = 0; i < operations.size(); i++) {
+            string& op = operations[i];
+            if (op == "MyHashMap") {
+                delete obj;
+                obj = new MyHashMap();
+                result.push_back("null");
+            } else if (op == "put") {
+                obj->put(values[i][0], values[i][1]);
+                result.push_back("null");
+            } else if (op == "get") {
+                result.push_back(to_string(obj->get(values[i][0])));
+            } else if (op == "remove") {
+                obj->remove(values[i][0]);
+                result.push_back("null");
+            }
+        }
+        delete obj;
+        return result;
+    }
+};
+`;
+    }
     const ops = operations || ['addNum', 'findMedian'];
     const branches = generateCppBranches(ops, true);
     return `#include <vector>

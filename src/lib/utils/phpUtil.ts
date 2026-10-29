@@ -529,7 +529,279 @@ ${calls}
 `;
 }
 
-export function generatePhpClassSolution(className: string, params?: Param[], outputType?: string): string {
+export function generatePhpClassSolution(className: string, params?: Param[], outputType?: string, operations?: string[]): string {
+    // Stateful flip/reset design (e.g. Random Flip Matrix as FlipMatrix):
+    // constructor takes (m, n) from values[i]; flip() returns [r, c].
+    if (operations && operations.includes('flip')) {
+        return `<?php
+require_once '${className}.php';
+
+class Solution {
+    public function solve($operations, $values) {
+        $result = [];
+        $obj = null;
+        foreach ($operations as $i => $op) {
+            if ($op === '${className}') {
+                $obj = new ${className}($values[$i][0], $values[$i][1]);
+                $result[] = 'null';
+            } elseif ($op === 'flip') {
+                $c = $obj->flip();
+                $result[] = '[' . $c[0] . ',' . $c[1] . ']';
+            } elseif ($op === 'reset') {
+                $obj->reset();
+                $result[] = 'null';
+            }
+        }
+        return $result;
+    }
+}
+`;
+    }
+    // Class-design problems: constructor args and value-returning methods.
+    if (className === 'Shuffler') {
+        return `<?php
+require_once 'Shuffler.php';
+
+class Solution {
+    public function solve($operations, $values) {
+        $result = [];
+        $obj = null;
+        foreach ($operations as $i => $op) {
+            if ($op === 'Shuffler') {
+                $obj = new Shuffler($values[$i]);
+                $result[] = 'null';
+            } elseif ($op === 'shuffle') {
+                $result[] = '[' . implode(',', $obj->shuffle()) . ']';
+            } elseif ($op === 'reset') {
+                $result[] = '[' . implode(',', $obj->reset()) . ']';
+            }
+        }
+        return $result;
+    }
+}
+`;
+    }
+    if (className === 'RandPoint') {
+        return `<?php
+require_once 'RandPoint.php';
+
+class Solution {
+    public function solve($operations, $values) {
+        $result = [];
+        $obj = null;
+        foreach ($operations as $i => $op) {
+            if ($op === 'RandPoint') {
+                $obj = new RandPoint($values[$i][0], $values[$i][1], $values[$i][2]);
+                $result[] = 'null';
+            } elseif ($op === 'randPoint') {
+                $p = $obj->randPoint();
+                $result[] = '[' . $p[0] . ',' . $p[1] . ']';
+            }
+        }
+        return $result;
+    }
+}
+`;
+    }
+    if (className === 'WeightedPicker') {
+        return `<?php
+require_once 'WeightedPicker.php';
+
+class Solution {
+    public function solve($operations, $values) {
+        $result = [];
+        $obj = null;
+        foreach ($operations as $i => $op) {
+            if ($op === 'WeightedPicker') {
+                $obj = new WeightedPicker($values[$i]);
+                $result[] = 'null';
+            } elseif ($op === 'pickIndex') {
+                $result[] = (string)$obj->pickIndex();
+            }
+        }
+        return $result;
+    }
+}
+`;
+    }
+    if (className === 'TwoSum') {
+        return `<?php
+require_once 'TwoSum.php';
+
+class Solution {
+    public function solve($operations, $values) {
+        $result = [];
+        $obj = null;
+        foreach ($operations as $i => $op) {
+            if ($op === 'TwoSum') {
+                $obj = new TwoSum();
+                $result[] = 'null';
+            } elseif ($op === 'add') {
+                $obj->add($values[$i][0]);
+                $result[] = 'null';
+            } elseif ($op === 'find') {
+                $result[] = $obj->find($values[$i][0]) ? 'true' : 'false';
+            }
+        }
+        return $result;
+    }
+}
+`;
+    }
+    if (className === 'MaxStack') {
+        return `<?php
+require_once 'MaxStack.php';
+
+class Solution {
+    public function solve($operations, $values) {
+        $result = [];
+        $obj = null;
+        foreach ($operations as $i => $op) {
+            if ($op === 'MaxStack') {
+                $obj = new MaxStack();
+                $result[] = 'null';
+            } elseif ($op === 'push') {
+                $obj->push($values[$i][0]);
+                $result[] = 'null';
+            } elseif ($op === 'pop') {
+                $result[] = (string)$obj->pop();
+            } elseif ($op === 'top') {
+                $result[] = (string)$obj->top();
+            } elseif ($op === 'peekMax') {
+                $result[] = (string)$obj->peekMax();
+            } elseif ($op === 'popMax') {
+                $result[] = (string)$obj->popMax();
+            }
+        }
+        return $result;
+    }
+}
+`;
+    }
+    if (className === 'MyHashSet') {
+        return `<?php
+require_once 'MyHashSet.php';
+
+class Solution {
+    public function solve($operations, $values) {
+        $result = [];
+        $obj = null;
+        foreach ($operations as $i => $op) {
+            if ($op === 'MyHashSet') {
+                $obj = new MyHashSet();
+                $result[] = 'null';
+            } elseif ($op === 'add') {
+                $obj->add($values[$i][0]);
+                $result[] = 'null';
+            } elseif ($op === 'remove') {
+                $obj->remove($values[$i][0]);
+                $result[] = 'null';
+            } elseif ($op === 'contains') {
+                $result[] = $obj->contains($values[$i][0]) ? 'true' : 'false';
+            }
+        }
+        return $result;
+    }
+}
+`;
+    }
+    if (className === 'HitCounter') {
+        return `<?php
+require_once 'HitCounter.php';
+
+class Solution {
+    public function solve($operations, $values) {
+        $result = [];
+        $obj = null;
+        foreach ($operations as $i => $op) {
+            if ($op === 'HitCounter') {
+                $obj = new HitCounter();
+                $result[] = 'null';
+            } elseif ($op === 'hit') {
+                $obj->hit($values[$i][0]);
+                $result[] = 'null';
+            } elseif ($op === 'getHits') {
+                $result[] = (string)$obj->getHits($values[$i][0]);
+            }
+        }
+        return $result;
+    }
+}
+`;
+    }
+    if (className === 'StockSpanner') {
+        return `<?php
+require_once 'StockSpanner.php';
+
+class Solution {
+    public function solve($operations, $values) {
+        $result = [];
+        $obj = null;
+        foreach ($operations as $i => $op) {
+            if ($op === 'StockSpanner') {
+                $obj = new StockSpanner();
+                $result[] = 'null';
+            } elseif ($op === 'next') {
+                $result[] = (string)$obj->next($values[$i][0]);
+            }
+        }
+        return $result;
+    }
+}
+`;
+    }
+    if (className === 'RandomizedSet' || className === 'RandomizedCollection') {
+        return `<?php
+require_once '${className}.php';
+
+class Solution {
+    public function solve($operations, $values) {
+        $result = [];
+        $obj = null;
+        foreach ($operations as $i => $op) {
+            if ($op === '${className}') {
+                $obj = new ${className}();
+                $result[] = 'null';
+            } elseif ($op === 'insert') {
+                $result[] = $obj->insert($values[$i][0]) ? 'true' : 'false';
+            } elseif ($op === 'remove') {
+                $result[] = $obj->remove($values[$i][0]) ? 'true' : 'false';
+            } elseif ($op === 'getRandom') {
+                $result[] = (string)$obj->getRandom();
+            }
+        }
+        return $result;
+    }
+}
+`;
+    }
+    if (className === 'MyHashMap') {
+        return `<?php
+require_once 'MyHashMap.php';
+
+class Solution {
+    public function solve($operations, $values) {
+        $result = [];
+        $obj = null;
+        foreach ($operations as $i => $op) {
+            if ($op === 'MyHashMap') {
+                $obj = new MyHashMap();
+                $result[] = 'null';
+            } elseif ($op === 'put') {
+                $obj->put($values[$i][0], $values[$i][1]);
+                $result[] = 'null';
+            } elseif ($op === 'get') {
+                $result[] = (string)$obj->get($values[$i][0]);
+            } elseif ($op === 'remove') {
+                $obj->remove($values[$i][0]);
+                $result[] = 'null';
+            }
+        }
+        return $result;
+    }
+}
+`;
+    }
     if (params && params.length > 0 && params[0]?.type === 'tree_node') {
         return `<?php
 require_once 'TreeNode.php';
@@ -676,6 +948,28 @@ function phpDocType(t: string): string {
 export function generatePhpStarterCode(functionName: string, params: Param[], outputType: string, classProblem?: any): string {
     if (classProblem) {
         const className = classProblem.userClassName || 'MedianFinder';
+        if (className === 'FlipMatrix') {
+            return `class FlipMatrix {
+    /**
+     * @param int $m
+     * @param int $n
+     */
+    public function __construct($m, $n) {
+
+    }
+
+    /**
+     * @return int[]
+     */
+    public function flip() {
+
+    }
+
+    public function reset() {
+
+    }
+}`;
+        }
         if (params && params.length > 0 && params[0]?.type === 'tree_node') {
             return `class ${className} {
     /**

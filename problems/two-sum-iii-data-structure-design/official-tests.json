@@ -1,1 +1,102 @@
-[{"operations": "[\"add\",\"add\",\"add\",\"find\",\"find\"]", "values": "[1,3,5,4,7]"}, {"operations": "[\"add\",\"add\",\"find\"]", "values": "[0,0,0]"}, {"operations": "[\"add\",\"find\",\"find\"]", "values": "[5,5,10]"}, {"operations": "[\"find\"]", "values": "[0]"}, {"operations": "[\"add\",\"find\"]", "values": "[1,2]"}, {"operations": "[\"add\",\"add\",\"find\"]", "values": "[1,2,3]"}, {"operations": "[\"add\",\"add\",\"find\"]", "values": "[1,1,2]"}, {"operations": "[\"add\",\"add\",\"add\",\"find\"]", "values": "[-1,-2,-3,-5]"}, {"operations": "[\"add\",\"add\",\"find\",\"find\"]", "values": "[3,3,6,5]"}, {"operations": "[\"add\",\"find\",\"add\",\"find\"]", "values": "[1,2,1,2]"}, {"operations": "[\"add\",\"add\",\"add\",\"add\",\"find\"]", "values": "[1,2,3,4,8]"}, {"operations": "[\"add\",\"add\",\"add\",\"add\",\"find\"]", "values": "[1,2,3,4,7]"}, {"operations": "[\"add\",\"add\",\"find\",\"find\",\"find\"]", "values": "[5,5,10,11,0]"}, {"operations": "[\"add\",\"add\",\"add\",\"find\",\"find\"]", "values": "[0,1,2,3,1]"}, {"operations": "[\"add\",\"find\"]", "values": "[100000,200000]"}, {"operations": "[\"add\",\"add\",\"find\"]", "values": "[-5,5,0]"}, {"operations": "[\"add\",\"add\",\"find\"]", "values": "[10000,10000,20000]"}, {"operations": "[\"add\",\"add\",\"add\",\"find\",\"find\",\"find\"]", "values": "[2,4,6,8,10,12]"}, {"operations": "[\"add\",\"find\",\"find\",\"find\"]", "values": "[7,7,14,0]"}, {"operations": "[\"add\",\"add\",\"add\",\"find\"]", "values": "[1,1,1,2]"}, {"operations": "[\"add\",\"add\",\"add\",\"find\"]", "values": "[1,1,1,3]"}, {"operations": "[\"add\",\"add\",\"find\"]", "values": "[-1,1,0]"}, {"operations": "[\"add\",\"add\",\"find\",\"add\",\"find\"]", "values": "[4,4,8,4,8]"}, {"operations": "[\"find\",\"find\"]", "values": "[1,2]"}, {"operations": "[\"add\",\"add\",\"add\",\"add\",\"add\",\"find\",\"find\"]", "values": "[1,2,3,4,5,9,3]"}, {"operations": "[\"add\",\"add\",\"find\"]", "values": "[0,1,1]"}]
+[
+  {
+    "operations": "[\"TwoSum\", \"add\", \"add\", \"add\", \"find\", \"find\"]",
+    "values": "[[], [1], [3], [5], [4], [7]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"add\", \"find\"]",
+    "values": "[[], [0], [0], [0]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"find\", \"find\"]",
+    "values": "[[], [5], [5], [10]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"find\"]",
+    "values": "[[], [0]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"add\", \"find\"]",
+    "values": "[[], [1], [2], [3]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"add\", \"find\"]",
+    "values": "[[], [1], [1], [2]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"add\", \"add\", \"find\"]",
+    "values": "[[], [-1], [-2], [-3], [-5]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"add\", \"find\", \"find\"]",
+    "values": "[[], [3], [3], [6], [5]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"find\", \"add\", \"find\"]",
+    "values": "[[], [1], [2], [1], [2]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"add\", \"find\"]",
+    "values": "[[], [-5], [5], [0]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"add\", \"find\"]",
+    "values": "[[], [10000], [10000], [20000]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"add\", \"add\", \"find\", \"find\", \"find\"]",
+    "values": "[[], [2], [4], [6], [8], [10], [12]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"add\", \"find\", \"find\"]",
+    "values": "[[], [1], [2], [3], [4]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"add\", \"find\", \"find\"]",
+    "values": "[[], [-1], [1], [0], [2]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"find\", \"add\", \"find\"]",
+    "values": "[[], [0], [0], [0], [0]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"add\", \"find\", \"find\"]",
+    "values": "[[], [5], [5], [10], [9]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"find\", \"add\", \"find\", \"add\", \"find\"]",
+    "values": "[[], [100], [50], [100], [50], [100]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"add\", \"find\", \"find\"]",
+    "values": "[[], [-5], [-3], [-8], [-7]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"add\", \"find\"]",
+    "values": "[[], [1000000], [-1000000], [0]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"find\", \"find\", \"add\", \"find\"]",
+    "values": "[[], [7], [7], [14], [7], [14]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"add\", \"add\", \"add\", \"find\", \"find\", \"find\"]",
+    "values": "[[], [1], [3], [5], [7], [8], [12], [2]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"add\", \"add\", \"find\", \"find\"]",
+    "values": "[[], [2], [2], [2], [4], [6]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"find\", \"find\"]",
+    "values": "[[], [0], [-1]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"add\", \"add\", \"find\", \"find\", \"find\"]",
+    "values": "[[], [10], [20], [30], [50], [40], [30]]"
+  },
+  {
+    "operations": "[\"TwoSum\", \"add\", \"add\", \"find\", \"add\", \"find\", \"find\"]",
+    "values": "[[], [-2], [4], [2], [-4], [0], [-6]]"
+  }
+]

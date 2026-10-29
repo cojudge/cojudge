@@ -1,64 +1,68 @@
 {
   "id": "design-hashmap",
-  "title": "157. Дизайнер HashMap",
+  "title": "157. Реализация HashMap",
   "difficulty": "Easy",
-  "category": "array",
   "link": "https://leetcode.com/problems/design-hashmap/",
-  "examples": [
-    {
-      "input": "operations = [\"MyHashMap\",\"put\",\"put\",\"get\",\"get\",\"put\",\"get\",\"remove\",\"get\"], args = [[],[1,1],[2,2],[1],[3],[2,1],[2],[2],[2]]",
-      "output": "[1,-1,1,-1]",
-      "explanation": "put(1,1) и put(2,2); get(1) - 1 и get(3) - -1. После put(2,1) обновления ключа 2, get(2) - 1. После удаления(2), get(2) -1."
-    },
-    {
-      "input": "operations = [\"MyHashMap\",\"get\",\"put\",\"get\",\"remove\",\"get\"], args = [[],[5],[5,7],[5],[5],[5]]",
-      "output": "[-1,7,-1]",
-      "explanation": "Первоначально get(5) -1. После put(5,7), get(5) - 7. После remove(5), get(5) -1."
-    },
-    {
-      "input": "operations = [\"MyHashMap\",\"put\",\"remove\"], args = [[],[3,9],[3]]",
-      "output": "[]",
-      "explanation": "Звонков нет, результат пустой."
-    }
-  ],
-  "starterCode": {
-    "java": "class Solution {\n    public int[] runHashMap(String[] operations, int[][] args) {\n        return new int[0];\n    }\n}",
-    "python": "from typing import List\n\nclass Solution:\n    def runHashMap(self, operations: List[str], args: List[List[int]]) -> List[int]:\n        return []\n",
-    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runHashMap(vector<string>& operations, vector<vector<int>>& args) {\n        return {};\n    }\n};",
-    "csharp": "public class Solution\n{\n    public int[] RunHashMap(string[] operations, int[][] args)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_hash_map(operations: Vec<String>, args: Vec<Vec<i32>>) -> Vec<i32> {\n        vec![]\n    }\n}",
-    "go": "package main\n\nfunc RunHashMap(operations []string, args [][]int) []int {\n    return []int{}\n}",
-    "typescript": "export function runHashMap(operations: string[], args: number[][]): number[] {\n    return [];\n}\n",
-    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[][] $args\n     * @return int[]\n     */\n    public function runHashMap($operations, $args) {\n\n    }\n}"
+  "category": "array",
+  "classProblem": {
+    "userClassName": "MyHashMap"
   },
-  "testCases": [
-    {
-      "operations": "[\"MyHashMap\",\"put\",\"put\",\"get\",\"get\",\"put\",\"get\",\"remove\",\"get\"]",
-      "args": "[[],[1,1],[2,2],[1],[3],[2,1],[2],[2],[2]]"
-    },
-    {
-      "operations": "[\"MyHashMap\",\"get\",\"put\",\"get\",\"remove\",\"get\"]",
-      "args": "[[],[5],[5,7],[5],[5],[5]]"
-    },
-    {
-      "operations": "[\"MyHashMap\",\"put\",\"remove\"]",
-      "args": "[[],[3,9],[3]]"
-    }
-  ],
-  "functionName": "runHashMap",
+  "functionName": "solve",
   "params": [
     {
       "name": "operations",
       "type": "string_array"
     },
     {
-      "name": "args",
+      "name": "values",
       "type": "int_array_2d"
     }
   ],
-  "outputType": "int_array",
+  "outputType": "string_list",
+  "examples": [
+    {
+      "input": "operations = [\"MyHashMap\",\"put\",\"put\",\"get\",\"get\",\"put\",\"get\",\"remove\",\"get\"], values = [[],[1,1],[2,2],[1],[3],[2,1],[2],[2],[2]]",
+      "output": "[null,null,null,1,-1,null,1,null,-1]",
+      "explanation": "После put(1,1) и put(2,2) вызов get(1) возвращает 1, а get(3) — -1. Вызов put(2,1) обновляет значение ключа 2 до 1. После remove(2) вызов get(2) возвращает -1."
+    },
+    {
+      "input": "operations = [\"MyHashMap\",\"get\",\"put\",\"get\",\"remove\",\"get\"], values = [[],[5],[5,7],[5],[5],[5]]",
+      "output": "[null,-1,null,7,null,-1]",
+      "explanation": "Изначально get(5) возвращает -1. После put(5,7) он возвращает 7, а после remove(5) — снова -1."
+    },
+    {
+      "input": "operations = [\"MyHashMap\",\"put\",\"remove\"], values = [[],[3,9],[3]]",
+      "output": "[null,null,null]",
+      "explanation": "Вызовов get нет, поэтому все элементы результата равны null."
+    }
+  ],
+  "testCases": [
+    {
+      "operations": "[\"MyHashMap\",\"put\",\"put\",\"get\",\"get\",\"put\",\"get\",\"remove\",\"get\"]",
+      "values": "[[],[1,1],[2,2],[1],[3],[2,1],[2],[2],[2]]"
+    },
+    {
+      "operations": "[\"MyHashMap\",\"get\",\"put\",\"get\",\"remove\",\"get\"]",
+      "values": "[[],[5],[5,7],[5],[5],[5]]"
+    },
+    {
+      "operations": "[\"MyHashMap\",\"put\",\"remove\"]",
+      "values": "[[],[3,9],[3]]"
+    }
+  ],
+  "starterCode": {
+    "java": "class MyHashMap {\n    public MyHashMap() {\n\n    }\n\n    public void put(int key, int value) {\n\n    }\n\n    public int get(int key) {\n        return -1;\n    }\n\n    public void remove(int key) {\n\n    }\n}",
+    "python": "class MyHashMap:\n    def __init__(self):\n        pass\n\n    def put(self, key: int, value: int) -> None:\n        pass\n\n    def get(self, key: int) -> int:\n        return -1\n\n    def remove(self, key: int) -> None:\n        pass",
+    "cpp": "class MyHashMap {\npublic:\n    MyHashMap() {\n\n    }\n\n    void put(int key, int value) {\n\n    }\n\n    int get(int key) {\n        return -1;\n    }\n\n    void remove(int key) {\n\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class MyHashMap {\n    public MyHashMap() {\n\n    }\n\n    public void Put(int key, int value) {\n\n    }\n\n    public int Get(int key) {\n        return -1;\n    }\n\n    public void Remove(int key) {\n\n    }\n}",
+    "go": "package main\n\ntype MyHashMap struct {\n\n}\n\nfunc Constructor() MyHashMap {\n    return MyHashMap{}\n}\n\nfunc (this *MyHashMap) Put(key int, value int) {\n\n}\n\nfunc (this *MyHashMap) Get(key int) int {\n    return -1\n}\n\nfunc (this *MyHashMap) Remove(key int) {\n\n}",
+    "rust": "pub struct MyHashMap {\n\n}\n\nimpl MyHashMap {\n    pub fn new() -> Self {\n        MyHashMap {}\n    }\n\n    pub fn put(&mut self, key: i32, value: i32) {\n    }\n\n    pub fn get(&self, key: i32) -> i32 {\n        -1\n    }\n\n    pub fn remove(&mut self, key: i32) {\n    }\n}",
+    "typescript": "export class MyHashMap {\n    constructor() {\n\n    }\n\n    put(key: number, value: number): void {\n\n    }\n\n    get(key: number): number {\n        return -1;\n    }\n\n    remove(key: number): void {\n\n    }\n}",
+    "php": "class MyHashMap {\n    public function __construct() {\n\n    }\n\n    public function put($key, $value) {\n\n    }\n\n    public function get($key) {\n\n    }\n\n    public function remove($key) {\n\n    }\n}"
+  },
   "hints": [
-    "Моделируйте карту с помощью хеш-карты: поставьте вставки или обновления, удалите удаления, получите просмотр по умолчанию -1 и запишите результат.",
-    "Прямой массив размером 1000001 с -1 также работает, так как ключи ограничены."
+    "Храните соответствия ключей и значений: put добавляет или обновляет запись, remove удаляет её, get возвращает значение либо -1.",
+    "Поскольку ключи ограничены, можно использовать массив длины 1000001 со значением -1 для отсутствующих записей.",
+    "Конструктору, put и remove соответствует null; get возвращает целое число."
   ]
 }

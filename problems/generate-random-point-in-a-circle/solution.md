@@ -1,10 +1,10 @@
 ## Approach
 
-Draw two independent uniforms `u` in `[0,1)` and an angle in `[0, 2*pi)`. Scaling the radius by `sqrt(u)` makes the area uniform (a plain `u * r` would bunch points near the center), then convert the polar offset back with cosine and sine and shift by the center. String inputs and outputs keep every language on the same floating-point path, and grading checks only the radius bound with a tiny tolerance.
+Sample uniformly by area with the polar method: draw `u` uniform in `[0,1)` and an angle `theta` uniform in `[0, 2*pi)`. Scaling the radius by `sqrt(u)` (not `u` itself, which would bunch points near the center) makes the area density uniform; convert the polar offset back with cosine and sine and shift by the center. The checker verifies only that each point lies within the circle (with a tiny tolerance), so returning the center is valid but not uniform.
 
 ## Complexity Analysis
 
-- **Time Complexity:** O(1) per point.
+- **Time Complexity:** O(1) per `randPoint`.
 - **Space Complexity:** O(1).
 
 ## Implementation
@@ -14,14 +14,16 @@ import math
 import random
 from typing import List
 
-class Solution:
-    def randPoint(self, radius: str, xCenter: str, yCenter: str) -> List[str]:
-        r = float(radius)
-        xc = float(xCenter)
-        yc = float(yCenter)
-        rnd = random.Random(12345)
-        u = rnd.random()
-        theta = rnd.random() * 2.0 * math.pi
-        d = r * math.sqrt(u)
-        return [repr(xc + d * math.cos(theta)), repr(yc + d * math.sin(theta))]
+class RandPoint:
+    def __init__(self, radius: float, x_center: float, y_center: float):
+        self.radius = radius
+        self.x_center = x_center
+        self.y_center = y_center
+
+    def randPoint(self) -> List[float]:
+        u = random.random()
+        theta = random.random() * 2.0 * math.pi
+        d = self.radius * math.sqrt(u)
+        return [self.x_center + d * math.cos(theta),
+                self.y_center + d * math.sin(theta)]
 ```

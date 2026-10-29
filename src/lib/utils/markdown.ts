@@ -169,10 +169,17 @@ function escapeHtmlText(value: string): string {
 }
 
 // True when the entire string is a single URL-like token (no whitespace).
-// Accepts http(s)://... and www....
+// Accepts http(s)://... and www...., in-app cojudge:// file links, and any
+// other scheme://... token (treated as a normal external link, e.g.
+// vicuna:// or app:// links that open another app). Pasted-image payload
+// links (cojudge://image/...) are never link-like.
 export function isUrlLike(text: string): boolean {
     const trimmed = text.trim();
     if (!trimmed || /\s/.test(trimmed)) return false;
+    if (parsePlaygroundFileId(trimmed)) return true;
+    if (/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(trimmed)) {
+        return !parsePastedImageLink(trimmed);
+    }
     try {
         if (/^https?:\/\//i.test(trimmed)) {
             const url = new URL(trimmed);
@@ -196,18 +203,77 @@ export function normalizeUrl(text: string): string {
 }
 
 // True when href points at a playground file (relative or absolute).
-// e.g. /playground?fileId=abc, https://host/playground?fileId=abc
+// e.g. /playground?fileId=abc, https://host/playground?fileId=abc,
+// cojudge://playground?fileId=abc, cojudge://file/abc. Only cojudge://
+// links address in-app files; every other custom scheme (vicuna://,
+// app://, ...) is a normal external link opened by the OS/browser.
+// The cojudge://image/... fake links used for pasted images are NOT
+// file links.
 export function parsePlaygroundFileId(href: string): string | null {
     if (!href) return null;
+    const trimmed = href.trim();
+    if (!trimmed) return null;
     try {
-        const url = new URL(href, 'http://local.invalid');
-        const path = url.pathname.replace(/\/+$/, '') || '/';
-        if (path !== '/playground') return null;
-        const fileId = url.searchParams.get('fileId');
-        return fileId && fileId.length > 0 ? fileId : null;
+        const url = new URL(trimmed, 'http://local.invalid');
+        const scheme = url.protocol.replace(/:$/, '').toLowerCase();
+        if (scheme === 'http' || scheme === 'https') {
+            const path = url.pathname.replace(/\/+$/, '') || '/';
+            if (path !== '/playground') return null;
+            const fileId = url.searchParams.get('fileId');
+            return fileId && fileId.length > 0 ? fileId : null;
+        }
+        if (scheme !== 'cojudge') return null;
+            // Pasted-image payload links live under the same schemes.
+            if (url.hostname.toLowerCase() === 'image') return null;
+            const fromQuery = url.searchParams.get('fileId');
+            if (fromQuery && fromQuery.length > 0) return fromQuery;
+            const host = url.hostname.toLowerCase();
+            const segments = url.pathname.split('/').filter(Boolean);
+            if ((host === 'file' || host === 'fileid') && segments.length === 1 && segments[0]) {
+                return segments[0];
+            }
+            if (!host && segments.length === 2 &&
+                (segments[0].toLowerCase() === 'file' || segments[0].toLowerCase() === 'fileid') &&
+                segments[1]) {
+                return segments[1];
+            }
+            // Bare id form: cojudge://<fileId> (the host carries the id).
+            if (segments.length === 0 && host &&
+                host !== 'playground' && host !== 'file' && host !== 'fileid' && host !== 'image') {
+                return url.hostname;
+            }
+            // Prefixed form: cojudge://<prefix>/<fileId>.
+            // The last path segment is the file id, except under the image
+            // namespace reserved for pasted-image payload links.
+            if (segments.length > 0 && segments[0].toLowerCase() !== 'image') {
+                const last = segments[segments.length - 1];
+                if (last) return last;
+            }
+            return null;
     } catch {
         return null;
     }
+}
+
+// Best-effort fileId extraction from pasted/freeform text: a bare file link,
+// a markdown link ([label](href)), or text with an embedded file link.
+export function extractPlaygroundFileId(text: string): string | null {
+    if (!text) return null;
+    const direct = parsePlaygroundFileId(text.trim());
+    if (direct) return direct;
+    const mdLink = /\[.*?\]\(([^)\s]+)\)/.exec(text);
+    if (mdLink) {
+        const fromMd = parsePlaygroundFileId(mdLink[1]);
+        if (fromMd) return fromMd;
+    }
+    const candidates = text.match(/(?:[a-zA-Z][a-zA-Z0-9+.-]*:\/\/[^\s)]+|\/playground\?[^\s)]*)/gi);
+    if (candidates) {
+        for (const candidate of candidates) {
+            const id = parsePlaygroundFileId(candidate.replace(/[.,;:!?]+$/, ''));
+            if (id) return id;
+        }
+    }
+    return null;
 }
 
 export function playgroundFileHref(fileId: string): string {

@@ -2,50 +2,12 @@
   "id": "design-hashset",
   "title": "156. Design HashSet",
   "difficulty": "Easy",
-  "category": "array",
   "link": "https://leetcode.com/problems/design-hashset/",
-  "examples": [
-    {
-      "input": "operations = [\"MyHashSet\",\"add\",\"add\",\"contains\",\"contains\",\"add\",\"contains\",\"remove\",\"contains\"], values = [0,1,2,1,3,2,2,2,2]",
-      "output": "[1,0,1,0]",
-      "explanation": "After add(1) and add(2), contains(1) is 1 and contains(3) is 0. After add(2) again, contains(2) is 1. After remove(2), contains(2) is 0."
-    },
-    {
-      "input": "operations = [\"MyHashSet\",\"contains\",\"add\",\"contains\",\"remove\",\"contains\"], values = [0,5,5,5,5,5]",
-      "output": "[0,1,0]",
-      "explanation": "Initially contains(5) is 0. After add(5), contains(5) is 1. After remove(5), contains(5) is 0."
-    },
-    {
-      "input": "operations = [\"MyHashSet\",\"add\",\"remove\"], values = [0,7,7]",
-      "output": "[]",
-      "explanation": "No contains calls, so the result is empty."
-    }
-  ],
-  "starterCode": {
-    "java": "class Solution {\n    public int[] runHashSet(String[] operations, int[] values) {\n        return new int[0];\n    }\n}",
-    "python": "from typing import List\n\nclass Solution:\n    def runHashSet(self, operations: List[str], values: List[int]) -> List[int]:\n        return []\n",
-    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runHashSet(vector<string>& operations, vector<int>& values) {\n        return {};\n    }\n};",
-    "csharp": "public class Solution\n{\n    public int[] RunHashSet(string[] operations, int[] values)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_hash_set(operations: Vec<String>, values: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
-    "go": "package main\n\nfunc RunHashSet(operations []string, values []int) []int {\n    return []int{}\n}",
-    "typescript": "export function runHashSet(operations: string[], values: number[]): number[] {\n    return [];\n}\n",
-    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[] $values\n     * @return int[]\n     */\n    public function runHashSet($operations, $values) {\n\n    }\n}"
+  "category": "array",
+  "classProblem": {
+    "userClassName": "MyHashSet"
   },
-  "testCases": [
-    {
-      "operations": "[\"MyHashSet\",\"add\",\"add\",\"contains\",\"contains\",\"add\",\"contains\",\"remove\",\"contains\"]",
-      "values": "[0,1,2,1,3,2,2,2,2]"
-    },
-    {
-      "operations": "[\"MyHashSet\",\"contains\",\"add\",\"contains\",\"remove\",\"contains\"]",
-      "values": "[0,5,5,5,5,5]"
-    },
-    {
-      "operations": "[\"MyHashSet\",\"add\",\"remove\"]",
-      "values": "[0,7,7]"
-    }
-  ],
-  "functionName": "runHashSet",
+  "functionName": "solve",
   "params": [
     {
       "name": "operations",
@@ -53,12 +15,54 @@
     },
     {
       "name": "values",
-      "type": "int_array"
+      "type": "int_array_2d"
     }
   ],
-  "outputType": "int_array",
+  "outputType": "string_list",
+  "examples": [
+    {
+      "input": "operations = [\"MyHashSet\",\"add\",\"add\",\"contains\",\"contains\",\"remove\",\"contains\"], values = [[],[1],[2],[1],[3],[2],[2]]",
+      "output": "[null,null,null,true,false,null,false]",
+      "explanation": "add(1), add(2); contains(1) is true, contains(3) is false; after remove(2), contains(2) is false."
+    },
+    {
+      "input": "operations = [\"MyHashSet\",\"contains\",\"add\",\"contains\",\"remove\",\"contains\"], values = [[],[5],[5],[5],[5],[5]]",
+      "output": "[null,false,null,true,null,false]",
+      "explanation": "Initially contains(5) is false. After add(5) it is true; after remove(5) it is false again."
+    },
+    {
+      "input": "operations = [\"MyHashSet\",\"add\",\"remove\"], values = [[],[7],[7]]",
+      "output": "[null,null,null]",
+      "explanation": "No contains calls, so every entry is null."
+    }
+  ],
+  "testCases": [
+    {
+      "operations": "[\"MyHashSet\",\"add\",\"add\",\"contains\",\"contains\",\"remove\",\"contains\"]",
+      "values": "[[],[1],[2],[1],[3],[2],[2]]"
+    },
+    {
+      "operations": "[\"MyHashSet\",\"contains\",\"add\",\"contains\",\"remove\",\"contains\"]",
+      "values": "[[],[5],[5],[5],[5],[5]]"
+    },
+    {
+      "operations": "[\"MyHashSet\",\"add\",\"remove\"]",
+      "values": "[[],[7],[7]]"
+    }
+  ],
+  "starterCode": {
+    "java": "class MyHashSet {\n    public MyHashSet() {\n\n    }\n\n    public void add(int key) {\n\n    }\n\n    public void remove(int key) {\n\n    }\n\n    public boolean contains(int key) {\n        return false;\n    }\n}",
+    "python": "class MyHashSet:\n    def __init__(self):\n        pass\n\n    def add(self, key: int) -> None:\n        pass\n\n    def remove(self, key: int) -> None:\n        pass\n\n    def contains(self, key: int) -> bool:\n        return False",
+    "cpp": "class MyHashSet {\npublic:\n    MyHashSet() {\n\n    }\n\n    void add(int key) {\n\n    }\n\n    void remove(int key) {\n\n    }\n\n    bool contains(int key) {\n        return false;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class MyHashSet {\n    public MyHashSet() {\n\n    }\n\n    public void Add(int key) {\n\n    }\n\n    public void Remove(int key) {\n\n    }\n\n    public bool Contains(int key) {\n        return false;\n    }\n}",
+    "go": "package main\n\ntype MyHashSet struct {\n\n}\n\nfunc Constructor() MyHashSet {\n    return MyHashSet{}\n}\n\nfunc (this *MyHashSet) Add(key int) {\n\n}\n\nfunc (this *MyHashSet) Remove(key int) {\n\n}\n\nfunc (this *MyHashSet) Contains(key int) bool {\n    return false\n}",
+    "rust": "pub struct MyHashSet {\n\n}\n\nimpl MyHashSet {\n    pub fn new() -> Self {\n        MyHashSet {}\n    }\n\n    pub fn add(&mut self, key: i32) {\n    }\n\n    pub fn remove(&mut self, key: i32) {\n    }\n\n    pub fn contains(&self, key: i32) -> bool {\n        false\n    }\n}",
+    "typescript": "export class MyHashSet {\n    constructor() {\n\n    }\n\n    add(key: number): void {\n\n    }\n\n    remove(key: number): void {\n\n    }\n\n    contains(key: number): boolean {\n        return false;\n    }\n}",
+    "php": "class MyHashSet {\n    public function __construct() {\n\n    }\n\n    public function add($key) {\n\n    }\n\n    public function remove($key) {\n\n    }\n\n    public function contains($key) {\n\n    }\n}"
+  },
   "hints": [
-    "Simulate the set with a hash set: add inserts, remove deletes, contains checks membership and records 1 or 0.",
-    "A boolean array of size 1000001 also works since keys are bounded, giving O(1) operations."
+    "Store the keys in a hash set: add inserts, remove deletes, contains checks membership.",
+    "A boolean array of size 1000001 also works since keys are bounded, giving O(1) operations.",
+    "Construction, add and remove report \"null\"; each contains reports \"true\" or \"false\"."
   ]
 }

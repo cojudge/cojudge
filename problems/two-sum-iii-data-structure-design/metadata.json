@@ -1,31 +1,13 @@
 {
-  "category": "array",
-  "difficulty": "Easy",
-  "examples": [
-    {
-      "explanation": "После хранения 1, 3, 5: 4 равняется 1 + 3 (да -> 1), в то время как пары 7 (нет -> 0) нет.",
-      "input": "operations = [\"add\",\"add\",\"add\",\"find\",\"find\"], values = [1,3,5,4,7]",
-      "output": "[1,0]"
-    },
-    {
-      "explanation": "Две сохраненные нули суммируются в 0. Пара должна использовать две разные сохраненные записи, которые существуют здесь.",
-      "input": "operations = [\"add\",\"add\",\"find\"], values = [0,0,0]",
-      "output": "[1]"
-    },
-    {
-      "explanation": "Один хранимый 5 не может соединяться с самим собой; 10 также еще не имеет пары.",
-      "input": "operations = [\"add\",\"find\",\"find\"], values = [5,5,10]",
-      "output": "[0,0]"
-    }
-  ],
-  "functionName": "runTwoSum",
-  "hints": [
-    "Держите подсчет каждого добавленного числа, чтобы обрабатывать дубликаты.",
-    "Для находки (значения) проверьте, было ли значение - x замечено для некоторых сохраненных x, требуя подсчета по меньшей мере 2, когда оба выбора являются одним и тем же числом."
-  ],
   "id": "two-sum-iii-data-structure-design",
+  "title": "320. Сумма двух чисел III: структура данных",
+  "difficulty": "Easy",
   "link": "https://leetcode.com/problems/two-sum-iii-data-structure-design/",
-  "outputType": "int_array",
+  "category": "array",
+  "classProblem": {
+    "userClassName": "TwoSum"
+  },
+  "functionName": "solve",
   "params": [
     {
       "name": "operations",
@@ -33,32 +15,54 @@
     },
     {
       "name": "values",
-      "type": "int_array"
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "string_list",
+  "examples": [
+    {
+      "input": "operations = [\"TwoSum\",\"add\",\"add\",\"add\",\"find\",\"find\"], values = [[],[1],[3],[5],[4],[7]]",
+      "output": "[null,null,null,null,true,false]",
+      "explanation": "После добавления 1, 3 и 5 сумма 4 получается как 1 + 3, поэтому ответ true. Пары с суммой 7 нет, ответ false."
+    },
+    {
+      "input": "operations = [\"TwoSum\",\"add\",\"add\",\"find\"], values = [[],[0],[0],[0]]",
+      "output": "[null,null,null,true]",
+      "explanation": "Два сохранённых нуля дают сумму 0."
+    },
+    {
+      "input": "operations = [\"TwoSum\",\"add\",\"find\",\"find\"], values = [[],[5],[5],[10]]",
+      "output": "[null,null,false,false]",
+      "explanation": "Единственное число 5 нельзя использовать дважды, поэтому ни для 5, ни для 10 подходящей пары пока нет."
+    }
+  ],
+  "testCases": [
+    {
+      "operations": "[\"TwoSum\",\"add\",\"add\",\"add\",\"find\",\"find\"]",
+      "values": "[[],[1],[3],[5],[4],[7]]"
+    },
+    {
+      "operations": "[\"TwoSum\",\"add\",\"add\",\"find\"]",
+      "values": "[[],[0],[0],[0]]"
+    },
+    {
+      "operations": "[\"TwoSum\",\"add\",\"find\",\"find\"]",
+      "values": "[[],[5],[5],[10]]"
     }
   ],
   "starterCode": {
-    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runTwoSum(vector<string>& operations, vector<int>& values) {\n        return {};\n    }\n};",
-    "csharp": "public class Solution\n{\n    public int[] RunTwoSum(string[] operations, int[] values)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
-    "go": "package main\n\nfunc RunTwoSum(operations []string, values []int) []int {\n    return []int{}\n}",
-    "java": "class Solution {\n    public int[] runTwoSum(String[] operations, int[] values) {\n        return new int[0];\n    }\n}",
-    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[] $values\n     * @return int[]\n     */\n    public function runTwoSum($operations, $values) {\n\n    }\n}",
-    "python": "from typing import List\n\nclass Solution:\n    def runTwoSum(self, operations: List[str], values: List[int]) -> List[int]:\n        return []\n",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_two_sum(operations: Vec<String>, values: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
-    "typescript": "export function runTwoSum(operations: string[], values: number[]): number[] {\n    return [];\n}"
+    "java": "class TwoSum {\n    public TwoSum() {\n\n    }\n\n    public void add(int number) {\n\n    }\n\n    public boolean find(int value) {\n        return false;\n    }\n}",
+    "python": "class TwoSum:\n    def __init__(self):\n        pass\n\n    def add(self, number: int) -> None:\n        pass\n\n    def find(self, value: int) -> bool:\n        return False",
+    "cpp": "class TwoSum {\npublic:\n    TwoSum() {\n\n    }\n\n    void add(int number) {\n\n    }\n\n    bool find(int value) {\n        return false;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class TwoSum {\n    public TwoSum() {\n\n    }\n\n    public void Add(int number) {\n\n    }\n\n    public bool Find(int value) {\n        return false;\n    }\n}",
+    "go": "package main\n\ntype TwoSum struct {\n\n}\n\nfunc Constructor() TwoSum {\n    return TwoSum{}\n}\n\nfunc (this *TwoSum) Add(number int) {\n\n}\n\nfunc (this *TwoSum) Find(value int) bool {\n    return false\n}",
+    "rust": "pub struct TwoSum {\n\n}\n\nimpl TwoSum {\n    pub fn new() -> Self {\n        TwoSum {}\n    }\n\n    pub fn add(&mut self, number: i32) {\n    }\n\n    pub fn find(&self, value: i32) -> bool {\n        false\n    }\n}",
+    "typescript": "export class TwoSum {\n    constructor() {\n\n    }\n\n    add(number: number): void {\n\n    }\n\n    find(value: number): boolean {\n        return false;\n    }\n}",
+    "php": "class TwoSum {\n    public function __construct() {\n\n    }\n\n    public function add($number) {\n\n    }\n\n    public function find($value) {\n\n    }\n}"
   },
-  "testCases": [
-    {
-      "operations": "[\"add\",\"add\",\"add\",\"find\",\"find\"]",
-      "values": "[1,3,5,4,7]"
-    },
-    {
-      "operations": "[\"add\",\"add\",\"find\"]",
-      "values": "[0,0,0]"
-    },
-    {
-      "operations": "[\"add\",\"find\",\"find\"]",
-      "values": "[5,5,10]"
-    }
-  ],
-  "title": "320. Two Sum III - Data Structure Design (недоступная ссылка)"
+  "hints": [
+    "Храните количество вхождений каждого добавленного числа. Для суммы 2*x нужны два вхождения x.",
+    "При find(value) проверьте для каждого сохранённого x наличие дополнения value - x.",
+    "Конструктору и add соответствует null; find возвращает true или false."
+  ]
 }

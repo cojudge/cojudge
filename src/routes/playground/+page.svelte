@@ -20,7 +20,7 @@
     import fileStore, { isDotFileName, type FileEntry, fileSyncVersion } from '$lib/stores/fileStore.js';
     import userSettingsStorage, { type ThemeChoice, type ActivePanel, type EditorIndentation } from '$lib/stores/userSettingsStorage';
     import { type ProgrammingLanguage } from '$lib/utils/util.js';
-    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, removeFencedCodeBlock, wrapImageThumbnails, wrapCodeBlocksWithCopy, highlightCodeBlocks, getCodeBlockLanguage, setCodeBlockLanguage, normalizeCodeLanguage, ensureTrailingEmptyLine, ensureFileMentionCarets, prepareTaskListCheckboxes, isTaskListItem, isEmptyTaskListItem, createTaskCheckbox, ensureTaskCheckbox, ensureTaskItemCaretAnchor, removeTaskCheckbox, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, CODE_COPY_WRAPPER_CLASS, CODE_LANGUAGE_INPUT_CLASS, CODE_LANGUAGE_DATALIST_ID, CODE_LANGUAGE_OPTIONS, resolvePastedImages, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref, fileMentionHtml, FILE_MENTION_CLASS } from '$lib/utils/markdown';
+    import { renderMarkdown, renderMarkdownPlain, htmlToMarkdown, removeFencedCodeBlock, wrapImageThumbnails, wrapCodeBlocksWithCopy, highlightCodeBlocks, getCodeBlockLanguage, setCodeBlockLanguage, normalizeCodeLanguage, ensureTrailingEmptyLine, ensureFileMentionCarets, prepareTaskListCheckboxes, isTaskListItem, isEmptyTaskListItem, createTaskCheckbox, ensureTaskCheckbox, ensureTaskItemCaretAnchor, removeTaskCheckbox, inlineCodeSpanHtml, INLINE_CODE_STYLE_MARKER, THUMB_WRAPPER_CLASS, THUMB_DELETE_CLASS, CODE_COPY_WRAPPER_CLASS, CODE_LANGUAGE_INPUT_CLASS, CODE_LANGUAGE_DATALIST_ID, CODE_LANGUAGE_OPTIONS, resolvePastedImages, isUrlLike, normalizeUrl, linkHtml, parsePlaygroundFileId, playgroundFileHref, extractPlaygroundFileId, fileMentionHtml, FILE_MENTION_CLASS } from '$lib/utils/markdown';
     import { storePastedImage, deletePastedImage, inlinePastedImageLinks, parsePastedImageLink } from '$lib/utils/imageStore';
     import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore/lite';
     import QRCode from 'qrcode';
@@ -2063,7 +2063,7 @@ echo "hello\\n";`,
         closeFileActionsMenu();
         showAddMenu = false;
         const menuW = 160;
-        const menuH = 120;
+        const menuH = 160;
         const x = Math.min(e.clientX, window.innerWidth - menuW - 8);
         const y = Math.min(e.clientY, window.innerHeight - menuH - 8);
         tabContextMenu = { x: Math.max(8, x), y: Math.max(8, y), fileId };
@@ -2343,6 +2343,51 @@ echo "hello\\n";`,
         closeTabContextMenu();
         if (!tab || tab.type === 'whiteboard') return;
         startRename(tab.fileId, tab.fileName, 'tab');
+    }
+
+    // Preview tabs share their display name with the source file; links always
+    // target the underlying source so they stay valid if the preview is closed.
+    function linkFileIdFor(fileId: string): string {
+        const tab = tabs.find((t) => t.fileId === fileId);
+        if (tab?.type === 'preview' && tab.sourceFileId) return tab.sourceFileId;
+        return fileId;
+    }
+
+    function fileLabelFor(fileId: string, fallback: string): string {
+        return tabs.find((t) => t.fileId === fileId)?.fileName || fallback;
+    }
+
+    // Copies an absolute playground file link. Opening it in a system browser
+    // loads the app with ?fileId=..., which activates the file on startup.
+    async function copyFileLink(fileId: string) {
+        const url = `${window.location.origin}${playgroundFileHref(linkFileIdFor(fileId))}`;
+        try {
+            await navigator.clipboard.writeText(url);
+        } catch (error) {
+            await showAlert(`Не удалось скопировать ссылку автоматически. Скопируйте её вручную:\n${url}`, { title: 'Не удалось скопировать ссылку' });
+        }
+    }
+
+    function copyLinkFromContext() {
+        const menu = tabContextMenu;
+        if (!menu) return;
+        closeTabContextMenu();
+        void copyFileLink(menu.fileId);
+    }
+
+    // Activates the file referenced by pasted/freeform link text (Cmd+P quick
+    // open, WYSIWYG paste). Returns false when the text is not a file link or
+    // the file is unknown.
+    function openFileLinkFromText(text: string): boolean {
+        const fileId = extractPlaygroundFileId(text);
+        if (!fileId) return false;
+        const tab = tabs.find((t) => t.fileId === fileId);
+        if (!tab) return false;
+        const targetId = tab.type === 'preview' && tab.sourceFileId ? tab.sourceFileId : tab.fileId;
+        if (!tabs.some((t) => t.fileId === targetId)) return false;
+        activateTab(targetId);
+        if (showSearch) closeSearch();
+        return true;
     }
 
     async function deleteFile(fileId: string) {
@@ -5345,13 +5390,13 @@ echo "hello\\n";`,
             }
         }
 
-        if (!isUrlLike(pasted)) {
+        const pastedFileId = extractPlaygroundFileId(pasted);
+        if (!isUrlLike(pasted) && !pastedFileId) {
             queueWysiwygHistoryEntry(historyBefore, 'insertFromPaste');
             return;
         }
 
         event.preventDefault();
-        const href = normalizeUrl(pasted);
         const selection = window.getSelection();
         const hasSelection =
             !!selection &&
@@ -5361,12 +5406,20 @@ echo "hello\\n";`,
             wysiwygEl.contains(selection.anchorNode);
 
         runWysiwygHistoryTransaction(() => {
-            if (hasSelection) {
-                document.execCommand('createLink', false, href);
-                ensureWysiwygLinksOpenInNewTab();
+            if (pastedFileId) {
+                // Insert file links as mention chips directly: execCommand
+                // createLink does not reliably create links for custom
+                // schemes, and only cojudge:// links become mentions.
+                const href = playgroundFileHref(pastedFileId);
+                const selectedText = hasSelection ? (selection?.toString() ?? '').trim() : '';
+                const label = selectedText || fileLabelFor(pastedFileId, pasted.trim());
+                document.execCommand('insertHTML', false, fileMentionHtml(href, label, getLanguageForTab(pastedFileId)));
+            } else if (hasSelection) {
+                document.execCommand('createLink', false, normalizeUrl(pasted));
             } else {
-                document.execCommand('insertHTML', false, linkHtml(href, pasted.trim()));
+                document.execCommand('insertHTML', false, linkHtml(normalizeUrl(pasted), pasted.trim()));
             }
+            ensureWysiwygLinksOpenInNewTab();
             handleWysiwygInput();
         }, historyBefore, 'insertFromPaste');
     }
@@ -5377,10 +5430,13 @@ echo "hello\\n";`,
             const href = a.getAttribute('href') || '';
             const fileId = parsePlaygroundFileId(href);
             if (fileId) {
-                // Upgrade plain playground links (e.g. from createLink) into mention chips.
-                if (!a.classList.contains(FILE_MENTION_CLASS)) {
+                // Upgrade plain playground links (e.g. from createLink) into mention chips,
+                // normalizing aliases (absolute URLs, cojudge:// / app:// links) to the
+                // canonical relative form so stored markdown stays consistent.
+                const canonical = playgroundFileHref(fileId);
+                if (!a.classList.contains(FILE_MENTION_CLASS) || href !== canonical) {
                     const label = (a.textContent || href).trim();
-                    a.outerHTML = fileMentionHtml(href, label, getLanguageForTab(fileId));
+                    a.outerHTML = fileMentionHtml(canonical, label, getLanguageForTab(fileId));
                 } else {
                     a.removeAttribute('target');
                     a.removeAttribute('rel');
@@ -5967,6 +6023,20 @@ echo "hello\\n";`,
                     selection?.removeAllRanges();
                     selection?.addRange(savedLinkRange);
                 }
+                const linkFileId = extractPlaygroundFileId(url);
+                if (linkFileId) {
+                    // Insert file links as mention chips directly: execCommand
+                    // createLink does not reliably create links for custom
+                    // schemes, and only cojudge:// links become mentions.
+                    const linkSelection = window.getSelection();
+                    const linkLabel = (linkSelection && !linkSelection.isCollapsed
+                        ? (linkSelection.toString() ?? '').trim()
+                        : '') || fileLabelFor(linkFileId, url);
+                    document.execCommand('insertHTML', false, fileMentionHtml(playgroundFileHref(linkFileId), linkLabel, getLanguageForTab(linkFileId)));
+                    ensureWysiwygLinksOpenInNewTab();
+                    handleWysiwygInput();
+                    return;
+                }
                 const href = isUrlLike(url) ? normalizeUrl(url) : url;
                 const selection = window.getSelection();
                 const hasSelection = !!selection && !selection.isCollapsed;
@@ -6313,6 +6383,16 @@ echo "hello\\n";`,
     }
 
     $: filteredFiles = (() => {
+        const linkId = extractPlaygroundFileId(searchQuery);
+        if (linkId) {
+            // A pasted file link surfaces the document as the single result;
+            // Enter/click opens it (no auto-navigation on paste).
+            const linked = tabs.find((t) => t.fileId === linkId);
+            const targetId = linked?.type === 'preview' && linked.sourceFileId ? linked.sourceFileId : linkId;
+            const target = tabs.find((t) => t.fileId === targetId && t.type !== 'preview')
+                ?? tabs.find((t) => t.fileId === targetId);
+            return target ? [target] : [];
+        }
         const files = tabs.filter((t) => t.type !== 'preview');
         return searchQuery
             ? files.filter((t) => t.fileName.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -6789,6 +6869,19 @@ echo "hello\\n";`,
         <div class="sidebar-header">
             <span>ФАЙЛЫ</span>
             <div class="sidebar-header-actions">
+                <Tooltip text={isMac ? "Быстрое открытие (Cmd+P)" : "Быстрое открытие (Ctrl+P)"} pos="bottom">
+                    <button
+                        class="icon-button"
+                        title="Быстрое открытие"
+                        aria-label="Быстрое открытие"
+                        on:click={() => openSearch()}
+                    >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                            <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </Tooltip>
                 <input
                     type="file"
                     accept="application/json,.json"
@@ -7022,6 +7115,17 @@ echo "hello\\n";`,
                     <button
                         class="file-actions-menu-item"
                         role="menuitem"
+                        on:click={() => runFileAction((m) => void copyFileLink(m.fileId))}
+                    >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Копировать ссылку
+                    </button>
+                    <button
+                        class="file-actions-menu-item"
+                        role="menuitem"
                         on:click={() => runFileAction((m) => void duplicateFile(m.fileId, m.fileName))}
                     >
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -7250,10 +7354,12 @@ echo "hello\\n";`,
                     closeLeftDisabled={tabContextPosition.index <= 0}
                     closeRightDisabled={tabContextPosition.index < 0 || tabContextPosition.index >= tabContextPosition.count - 1}
                     closeOthersDisabled={tabContextPosition.count <= 1}
+                    showCopyLink
                     on:close={() => closeTabsFromContext('close')}
                     on:closeLeft={() => closeTabsFromContext('left')}
                     on:closeRight={() => closeTabsFromContext('right')}
                     on:closeOthers={() => closeTabsFromContext('others')}
+                    on:copyLink={copyLinkFromContext}
                     on:rename={renameTabFromContext}
                 />
             {/if}
@@ -7849,7 +7955,7 @@ echo "hello\\n";`,
                 <input
                     bind:this={searchInputEl}
                     bind:value={searchQuery}
-                    placeholder="Поиск файлов по имени..."
+                    placeholder="Поиск файлов по имени или ссылке..."
                     class="search-file-input"
                     on:keydown={(e) => {
                         if (e.key === 'Escape') {
@@ -7866,9 +7972,12 @@ echo "hello\\n";`,
                             selectedIndex = (selectedIndex - 1 + filteredFiles.length) % filteredFiles.length;
                             scrollSelectedSearchResultIntoView();
                         }
-                        if (e.key === 'Enter' && filteredFiles.length > 0) {
-                            activateTab(filteredFiles[selectedIndex].fileId);
-                            closeSearch();
+                        if (e.key === 'Enter') {
+                            if (openFileLinkFromText(searchQuery)) return;
+                            if (filteredFiles.length > 0) {
+                                activateTab(filteredFiles[selectedIndex].fileId);
+                                closeSearch();
+                            }
                         }
                     }}
                 />

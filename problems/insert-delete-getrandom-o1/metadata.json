@@ -1,55 +1,35 @@
 {
-  "id": "insert-delete-getrandom-o1",
-  "title": "456. Включить Удалить GetRandom O (1)",
-  "difficulty": "Medium",
-  "link": "https://leetcode.com/problems/insert-delete-getrandom-o1/",
   "category": "array",
+  "classProblem": {
+    "userClassName": "RandomizedSet"
+  },
+  "difficulty": "Medium",
   "examples": [
     {
-      "input": "operations = [\"RandomizedSet\",\"insert\",\"remove\",\"insert\",\"getRandom\",\"remove\",\"insert\",\"getRandom\"], values = [0,1,2,2,0,1,2,0]",
-      "output": "[1,0,1,X,1,0,2] (X is 1 or 2)",
-      "explanation": "GetRandom может быть любым действующим участником."
+      "explanation": "Добавляем новые значения 1 и 2, затем удаляем 1. Все три операции возвращают true.",
+      "input": "operations = [\"RandomizedSet\",\"insert\",\"insert\",\"remove\"], values = [[],[1],[2],[1]]",
+      "output": "[null,true,true,true]"
     },
     {
-      "input": "operations = [\"RandomizedSet\",\"insert\",\"insert\",\"getRandom\"], values = [0,5,5,0]",
-      "output": "[1,0,5]",
-      "explanation": "Двойная запись вставки 0; доступен только 5."
+      "explanation": "Первая вставка 0 возвращает true, повторная — false. Удаление отсутствующего значения 1 возвращает false.",
+      "input": "operations = [\"RandomizedSet\",\"insert\",\"insert\",\"remove\"], values = [[],[0],[0],[1]]",
+      "output": "[null,true,false,false]"
     },
     {
-      "input": "operations = [\"RandomizedSet\",\"insert\",\"remove\",\"remove\"], values = [0,3,3,3]",
-      "output": "[1,1,0]",
-      "explanation": "Второе удаление промахов 3."
+      "explanation": "В множестве находится только 5, поэтому getRandom возвращает 5. Затем удаление 5 завершается успешно.",
+      "input": "operations = [\"RandomizedSet\",\"insert\",\"getRandom\",\"remove\"], values = [[],[5],[],[5]]",
+      "output": "[null,true,5,true]"
     }
   ],
-  "starterCode": {
-    "java": "class Solution {\n    public int[] runRandomizedSet(String[] operations, int[] values) {\n        return new int[0];\n    }\n}",
-    "python": "from typing import List\n\nclass Solution:\n    def runRandomizedSet(self, operations: List[str], values: List[int]) -> List[int]:\n        return []\n",
-    "cpp": "#include <string>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> runRandomizedSet(vector<string>& operations, vector<int>& values) {\n        return {};\n    }\n};",
-    "csharp": "public class Solution\n{\n    public int[] RunRandomizedSet(string[] operations, int[] values)\n    {\n        return new int[0];\n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_randomized_set(operations: Vec<String>, values: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
-    "go": "package main\n\nfunc RunRandomizedSet(operations []string, values []int) []int {\n    return []int{}\n}",
-    "typescript": "export function runRandomizedSet(operations: string[], values: number[]): number[] {\n    return [];\n}",
-    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[] $values\n     * @return int[]\n     */\n    public function runRandomizedSet($operations, $values) {\n\n    }\n}"
-  },
-  "testCases": [
-    {
-      "operations": "[\"RandomizedSet\",\"insert\",\"remove\",\"insert\",\"getRandom\",\"remove\",\"insert\",\"getRandom\"]",
-      "values": "[0,1,2,2,0,1,2,0]"
-    },
-    {
-      "operations": "[\"RandomizedSet\",\"insert\",\"insert\",\"getRandom\"]",
-      "values": "[0,5,5,0]"
-    },
-    {
-      "operations": "[\"RandomizedSet\",\"insert\",\"remove\",\"remove\"]",
-      "values": "[0,3,3,3]"
-    },
-    {
-      "operations": "[\"RandomizedSet\",\"insert\",\"getRandom\"]",
-      "values": "[0,7,0]"
-    }
+  "functionName": "solve",
+  "hints": [
+    "Используйте плотный список значений и отображение каждого значения в его индекс.",
+    "При вставке добавляйте элемент в конец. При удалении меняйте нужный элемент с последним и удаляйте последний.",
+    "getRandom выбирает равномерно случайный индекс. Проверка принимает любой элемент текущего множества."
   ],
-  "functionName": "runRandomizedSet",
+  "id": "insert-delete-getrandom-o1",
+  "link": "https://leetcode.com/problems/insert-delete-getrandom-o1/",
+  "outputType": "string_list",
   "params": [
     {
       "name": "operations",
@@ -57,13 +37,32 @@
     },
     {
       "name": "values",
-      "type": "int_array"
+      "type": "int_array_2d"
     }
   ],
-  "outputType": "int_array",
-  "hints": [
-    "Соедините карту от значения к индексу с плотным списком значений.",
-    "Вставить придатки в конце; удаление смещает цель с последней записью и всплывающими окнами.",
-    "GetRandom выбирает единый индекс; судья принимает любого действующего члена."
-  ]
+  "starterCode": {
+    "cpp": "#include <vector>\n#include <unordered_map>\nusing namespace std;\n\nclass RandomizedSet {\npublic:\n    RandomizedSet() {\n        \n    }\n\n    bool insert(int val) {\n        return false;\n    }\n\n    bool remove(int val) {\n        return false;\n    }\n\n    int getRandom() {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class RandomizedSet {\n    public RandomizedSet() {\n        \n    }\n\n    public bool Insert(int val) {\n        return false;\n    }\n\n    public bool Remove(int val) {\n        return false;\n    }\n\n    public int GetRandom() {\n        return 0;\n    }\n}",
+    "go": "package main\n\ntype RandomizedSet struct {\n\n}\n\nfunc Constructor() RandomizedSet {\n    return RandomizedSet{}\n}\n\nfunc (this *RandomizedSet) Insert(val int) bool {\n    return false\n}\n\nfunc (this *RandomizedSet) Remove(val int) bool {\n    return false\n}\n\nfunc (this *RandomizedSet) GetRandom() int {\n    return 0\n}\n",
+    "java": "class RandomizedSet {\n    public RandomizedSet() {\n        \n    }\n\n    public boolean insert(int val) {\n        return false;\n    }\n\n    public boolean remove(int val) {\n        return false;\n    }\n\n    public int getRandom() {\n        return 0;\n    }\n}\n",
+    "php": "class RandomizedSet {\n    public function __construct() {\n\n    }\n\n    /**\n     * @param int $val\n     * @return bool\n     */\n    public function insert($val) {\n\n    }\n\n    /**\n     * @param int $val\n     * @return bool\n     */\n    public function remove($val) {\n\n    }\n\n    /**\n     * @return int\n     */\n    public function getRandom() {\n\n    }\n}\n",
+    "python": "import random\n\nclass RandomizedSet:\n    def __init__(self):\n\n    def insert(self, val: int) -> bool:\n        return False\n\n    def remove(self, val: int) -> bool:\n        return False\n\n    def getRandom(self) -> int:\n        return 0\n",
+    "rust": "use std::collections::HashMap;\n\npub struct RandomizedSet {\n\n}\n\nimpl RandomizedSet {\n    pub fn new() -> Self {\n        RandomizedSet {}\n    }\n\n    pub fn insert(&mut self, val: i32) -> bool {\n        false\n    }\n\n    pub fn remove(&mut self, val: i32) -> bool {\n        false\n    }\n\n    pub fn get_random(&mut self) -> i32 {\n        0\n    }\n}\n",
+    "typescript": "export class RandomizedSet {\n    constructor() {\n        \n    }\n\n    insert(val: number): boolean {\n        return false;\n    }\n\n    remove(val: number): boolean {\n        return false;\n    }\n\n    getRandom(): number {\n        return 0;\n    }\n}\n"
+  },
+  "testCases": [
+    {
+      "operations": "[\"RandomizedSet\", \"insert\", \"insert\", \"remove\"]",
+      "values": "[[], [1], [2], [1]]"
+    },
+    {
+      "operations": "[\"RandomizedSet\", \"insert\", \"insert\", \"remove\"]",
+      "values": "[[], [0], [0], [1]]"
+    },
+    {
+      "operations": "[\"RandomizedSet\", \"insert\", \"getRandom\", \"remove\"]",
+      "values": "[[], [5], [], [5]]"
+    }
+  ],
+  "title": "456. Вставка, удаление и случайный элемент за O(1)"
 }

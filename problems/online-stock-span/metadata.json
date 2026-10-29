@@ -1,60 +1,68 @@
 {
-  "id": "online-stock-span",
-  "title": "180. Онлайн-фонд Stock Span",
-  "difficulty": "Medium",
-  "link": "https://leetcode.com/problems/online-stock-span/",
   "category": "stack",
+  "classProblem": {
+    "userClassName": "StockSpanner"
+  },
+  "difficulty": "Medium",
   "examples": [
     {
-      "input": "prices = [100,80,60,70,60,75,85]",
-      "output": "[1,1,1,2,1,4,6]",
-      "explanation": "Каждый отрезок отсчитывает последовательные дни назад с ценой, меньшей или равной сегодняшней: день 4 (70) охватывает 60 и 70 для отрезка 2; день 6 (75) охватывает 60, 70, 60, 75 для 4; день 7 (85) охватывает все, кроме 100 для 6."
+      "explanation": "Размах считает последовательные дни назад с ценой не выше текущей. День 4 с ценой 70 охватывает 60 и 70: размах 2. День 6 с ценой 75 охватывает 60, 70, 60, 75: размах 4. День 7 с ценой 85 охватывает все дни, кроме первого с ценой 100: размах 6.",
+      "input": "operations = [\"StockSpanner\",\"next\",\"next\",\"next\",\"next\",\"next\",\"next\",\"next\"], values = [[],[100],[80],[60],[70],[60],[75],[85]]",
+      "output": "[null,1,1,1,2,1,4,6]"
     },
     {
-      "input": "prices = [10,4,5,90,120,80]",
-      "output": "[1,1,2,4,5,1]",
-      "explanation": "5 охватывает 4 и 5, 90 охватывает все до него, 120 охватывает все до него, а 80 охватывает только себя."
+      "explanation": "Цена 5 охватывает дни с ценами 4 и 5; цена 90 — все дни до неё включительно; цена 120 — также все предшествующие дни и текущий. Цена 80 охватывает только текущий день.",
+      "input": "operations = [\"StockSpanner\",\"next\",\"next\",\"next\",\"next\",\"next\",\"next\"], values = [[],[10],[4],[5],[90],[120],[80]]",
+      "output": "[null,1,1,2,4,5,1]"
     },
     {
-      "input": "prices = [30,20,10]",
-      "output": "[1,1,1]",
-      "explanation": "Строго снижающиеся цены имеют диапазон 1."
+      "explanation": "Цены строго убывают, поэтому размах каждого дня равен 1.",
+      "input": "operations = [\"StockSpanner\",\"next\",\"next\",\"next\"], values = [[],[30],[20],[10]]",
+      "output": "[null,1,1,1]"
+    }
+  ],
+  "functionName": "solve",
+  "hints": [
+    "Храните монотонно убывающий стек пар (цена, размах).",
+    "Для новой цены извлекайте пары с ценой не выше текущей и суммируйте их размахи. Добавьте текущий день и положите объединённую пару в стек.",
+    "Каждый next возвращает целое число; null соответствует только конструктору."
+  ],
+  "id": "online-stock-span",
+  "link": "https://leetcode.com/problems/online-stock-span/",
+  "outputType": "string_list",
+  "params": [
+    {
+      "name": "operations",
+      "type": "string_array"
+    },
+    {
+      "name": "values",
+      "type": "int_array_2d"
     }
   ],
   "starterCode": {
-    "java": "class Solution {\n    public int[] stockSpan(int[] prices) {\n        return new int[0];\n    }\n}",
-    "python": "from typing import List\n\nclass Solution:\n    def stockSpan(self, prices: List[int]) -> List[int]:\n        return []\n",
-    "cpp": "#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<int> stockSpan(vector<int>& prices) {\n        return {};\n    }\n};",
-    "csharp": "public class Solution\n{\n    public int[] StockSpan(int[] prices)\n    {\n        return System.Array.Empty<int>();\n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn stock_span(prices: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
-    "go": "package main\n\nfunc StockSpan(prices []int) []int {\n    return []int{}\n}",
-    "typescript": "export function stockSpan(prices: number[]): number[] {\n    return [];\n}\n",
-    "php": "class Solution {\n    /**\n     * @param int[] $prices\n     * @return int[]\n     */\n    public function stockSpan($prices) {\n\n    }\n}"
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass StockSpanner {\npublic:\n    StockSpanner() {\n        \n    }\n\n    int next(int price) {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class StockSpanner {\n    public StockSpanner() {\n        \n    }\n\n    public int Next(int price) {\n        return 0;\n    }\n}",
+    "go": "package main\n\ntype StockSpanner struct {\n\n}\n\nfunc Constructor() StockSpanner {\n    return StockSpanner{}\n}\n\nfunc (this *StockSpanner) Next(price int) int {\n    return 0\n}\n",
+    "java": "class StockSpanner {\n    public StockSpanner() {\n        \n    }\n\n    public int next(int price) {\n        return 0;\n    }\n}\n",
+    "php": "class StockSpanner {\n    public function __construct() {\n\n    }\n\n    /**\n     * @param int $price\n     * @return int\n     */\n    public function next($price) {\n\n    }\n}\n",
+    "python": "class StockSpanner:\n    def __init__(self):\n\n    def next(self, price: int) -> int:\n        return 0\n",
+    "rust": "pub struct StockSpanner {\n\n}\n\nimpl StockSpanner {\n    pub fn new() -> Self {\n        StockSpanner {}\n    }\n\n    pub fn next(&mut self, price: i32) -> i32 {\n        0\n    }\n}\n",
+    "typescript": "export class StockSpanner {\n    constructor() {\n        \n    }\n\n    next(price: number): number {\n        return 0;\n    }\n}\n"
   },
   "testCases": [
     {
-      "prices": "[100,80,60,70,60,75,85]"
+      "operations": "[\"StockSpanner\", \"next\", \"next\", \"next\", \"next\", \"next\", \"next\", \"next\"]",
+      "values": "[[], [100], [80], [60], [70], [60], [75], [85]]"
     },
     {
-      "prices": "[10,4,5,90,120,80]"
+      "operations": "[\"StockSpanner\", \"next\", \"next\", \"next\", \"next\", \"next\", \"next\"]",
+      "values": "[[], [10], [4], [5], [90], [120], [80]]"
     },
     {
-      "prices": "[30,20,10]"
-    },
-    {
-      "prices": "[10]"
+      "operations": "[\"StockSpanner\", \"next\", \"next\", \"next\"]",
+      "values": "[[], [30], [20], [10]]"
     }
   ],
-  "functionName": "stockSpan",
-  "params": [
-    {
-      "name": "prices",
-      "type": "int_array"
-    }
-  ],
-  "outputType": "int_array",
-  "hints": [
-    "Держите монотонный убывающий стек (цена, пролет) пар.",
-    "Для каждой цены накапливайте пролеты, в то время как верхняя цена стека меньше или равна текущей цене, а затем толкайте комбинированный пролет."
-  ]
+  "title": "180. Размах цены акции в потоке"
 }

@@ -8,12 +8,14 @@
     export let closeRightDisabled = false;
     export let closeOthersDisabled = false;
     export let renameDisabled = false;
+    export let showCopyLink = false;
 
     const dispatch = createEventDispatcher<{
         close: void;
         closeLeft: void;
         closeRight: void;
         closeOthers: void;
+        copyLink: void;
         rename: void;
     }>();
 </script>
@@ -54,6 +56,14 @@
         disabled={closeOthersDisabled}
         on:click={() => dispatch('closeOthers')}
     >Закрыть остальные</button>
+    {#if showCopyLink}
+    <button
+        type="button"
+        class="tab-context-menu-item"
+        role="menuitem"
+        on:click={() => dispatch('copyLink')}
+    >Копировать ссылку</button>
+    {/if}
     <div class="tab-context-menu-separator" role="separator"></div>
     <button
         type="button"

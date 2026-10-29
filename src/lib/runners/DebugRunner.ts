@@ -953,7 +953,7 @@ export async function startProblemDebugSession(problemId: string, language: stri
         if (problemData.classProblem) {
             const className = problemData.classProblem.userClassName || 'MedianFinder';
             pack.entry({ name: `${className}.ts` }, Buffer.from(rewriteTsImportsForNode(userPrefix + code)));
-            const wrapperCode = generateTypeScriptClassSolution(className, problemData.params, problemData.outputType);
+            const wrapperCode = generateTypeScriptClassSolution(className, problemData.params, problemData.outputType, extractOperations(testCases, className));
             const wrapperPrefix = buildMissingTypeImports(typeImports, wrapperCode);
             pack.entry({ name: 'Solution.ts' }, Buffer.from(rewriteTsImportsForNode(wrapperPrefix + wrapperCode)));
             sourceFile = `${className}.ts`;
@@ -986,7 +986,7 @@ export async function startProblemDebugSession(problemId: string, language: stri
         if (problemData.classProblem) {
             const className = problemData.classProblem.userClassName || 'MedianFinder';
             pack.entry({ name: `${className}.php` }, Buffer.from(withImports(generatePhpDebugWrapper(code, debugLines))));
-            const wrapperCode = generatePhpClassSolution(className, problemData.params, problemData.outputType);
+            const wrapperCode = generatePhpClassSolution(className, problemData.params, problemData.outputType, extractOperations(testCases, className));
             pack.entry({ name: 'Solution.php' }, Buffer.from(wrapperCode));
             lintTarget = `${className}.php`;
         } else {

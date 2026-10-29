@@ -1,67 +1,68 @@
 {
   "id": "generate-random-point-in-a-circle",
-  "title": "542. Создайте случайную точку в круге",
+  "title": "542. Случайная точка в круге",
   "difficulty": "Medium",
   "link": "https://leetcode.com/problems/generate-random-point-in-a-circle/",
   "category": "math",
-  "examples": [
-    {
-      "input": "radius = \"1.0\", xCenter = \"0.0\", yCenter = \"0.0\"",
-      "output": "[\"0.0\",\"0.0\"]",
-      "explanation": "Центр — это расстояние 0 от себя, поэтому он всегда является достоверным (хотя и не случайным) ответом; любая точка с x^2+y^2<=1 также проходит."
-    },
-    {
-      "input": "radius = \"2.0\", xCenter = \"3.0\", yCenter = \"-1.0\"",
-      "output": "[\"3.0\",\"-1.0\"]",
-      "explanation": "Возвращение центра является действительным; принимается любая точка в пределах 2.0 (3.0,-1.0)."
-    }
-  ],
-  "starterCode": {
-    "java": "import java.util.*;\nclass Solution {\n    public List<String> randPoint(String radius, String xCenter, String yCenter) {\n        return new ArrayList<>();\n    }\n}",
-    "python": "from typing import List\nclass Solution:\n    def randPoint(self, radius: str, xCenter: str, yCenter: str) -> List[str]:\n        return []\n",
-    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\n\nclass Solution {\npublic:\n    vector<string> randPoint(string radius, string xCenter, string yCenter) {\n        return {};\n    }\n};",
-    "csharp": "using System.Collections.Generic;\npublic class Solution\n{\n    public List<string> RandPoint(string radius, string xCenter, string yCenter)\n    {\n        return new List<string>();\n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn rand_point(radius: String, x_center: String, y_center: String) -> Vec<String> {\n        vec![]\n    }\n}",
-    "go": "package main\n\nfunc RandPoint(radius string, xCenter string, yCenter string) []string {\n    return []string{}\n}",
-    "typescript": "export function randPoint(radius: string, xCenter: string, yCenter: string): string[] {\n    return [];\n}",
-    "php": "class Solution {\n    /**\n     * @param string $radius\n     * @param string $xCenter\n     * @param string $yCenter\n     * @return string[]\n     */\n    public function randPoint($radius, $xCenter, $yCenter) {\n\n    }\n}"
+  "classProblem": {
+    "userClassName": "RandPoint"
   },
-  "testCases": [
-    {
-      "radius": "1.0",
-      "xCenter": "0.0",
-      "yCenter": "0.0"
-    },
-    {
-      "radius": "2.0",
-      "xCenter": "3.0",
-      "yCenter": "-1.0"
-    },
-    {
-      "radius": "0.5",
-      "xCenter": "1.5",
-      "yCenter": "2.5"
-    }
-  ],
-  "functionName": "randPoint",
+  "functionName": "solve",
   "params": [
     {
-      "name": "radius",
-      "type": "string"
+      "name": "operations",
+      "type": "string_array"
     },
     {
-      "name": "xCenter",
-      "type": "string"
-    },
-    {
-      "name": "yCenter",
-      "type": "string"
+      "name": "values",
+      "type": "int_array_2d"
     }
   ],
   "outputType": "string_list",
+  "examples": [
+    {
+      "input": "operations = [\"RandPoint\",\"randPoint\",\"randPoint\",\"randPoint\"], values = [[1,0,0],[],[],[]]",
+      "output": "[null,[0.1,0.2],[0,0],[-0.5,0.5]]",
+      "explanation": "Принимается любая точка на расстоянии не больше 1 от начала координат, в том числе сам центр."
+    },
+    {
+      "input": "operations = [\"RandPoint\",\"randPoint\"], values = [[2,3,-1],[]]",
+      "output": "[null,[3,-1]]",
+      "explanation": "Центр (3,-1) находится на нулевом расстоянии от себя и проходит проверку, хотя постоянный возврат центра не даёт равномерного распределения."
+    },
+    {
+      "input": "operations = [\"RandPoint\",\"randPoint\",\"randPoint\"], values = [[5,2,-3],[],[]]",
+      "output": "[null,[2,-3],[6.5,-1.0]]",
+      "explanation": "И центр, и любая точка на расстоянии не больше 5.0 от (2,-3) проходят проверку."
+    }
+  ],
+  "starterCode": {
+    "java": "class RandPoint {\n    public RandPoint(double radius, double xCenter, double yCenter) {\n        \n    }\n\n    public double[] randPoint() {\n        return new double[0];\n    }\n}",
+    "python": "from typing import List\n\nclass RandPoint:\n    def __init__(self, radius: float, x_center: float, y_center: float):\n\n    def randPoint(self) -> List[float]:\n        return []",
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass RandPoint {\npublic:\n    RandPoint(double radius, double xCenter, double yCenter) {\n        \n    }\n\n    vector<double> randPoint() {\n        return {};\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class RandPoint {\n    public RandPoint(double radius, double xCenter, double yCenter) {\n        \n    }\n\n    public double[] NextPoint() {\n        return new double[0];\n    }\n}",
+    "go": "package main\n\ntype RandPoint struct {\n\n}\n\nfunc Constructor(radius float64, xCenter float64, yCenter float64) RandPoint {\n    return RandPoint{}\n}\n\nfunc (this *RandPoint) RandPoint() []float64 {\n    return []float64{}\n}",
+    "rust": "pub struct RandPoint {\n\n}\n\nimpl RandPoint {\n    pub fn new(radius: f64, x_center: f64, y_center: f64) -> Self {\n        RandPoint {}\n    }\n\n    pub fn rand_point(&mut self) -> Vec<f64> {\n        vec![]\n    }\n}",
+    "typescript": "export class RandPoint {\n    constructor(radius: number, xCenter: number, yCenter: number) {\n        \n    }\n\n    randPoint(): number[] {\n        return [];\n    }\n}",
+    "php": "class RandPoint {\n    /**\n     * @param float $radius\n     * @param float $xCenter\n     * @param float $yCenter\n     */\n    public function __construct($radius, $xCenter, $yCenter) {\n\n    }\n\n    /**\n     * @return float[]\n     */\n    public function randPoint() {\n\n    }\n}"
+  },
+  "testCases": [
+    {
+      "operations": "[\"RandPoint\",\"randPoint\",\"randPoint\",\"randPoint\"]",
+      "values": "[[1,0,0],[],[],[]]"
+    },
+    {
+      "operations": "[\"RandPoint\",\"randPoint\"]",
+      "values": "[[2,3,-1],[]]"
+    },
+    {
+      "operations": "[\"RandPoint\",\"randPoint\",\"randPoint\"]",
+      "values": "[[5,2,-3],[],[]]"
+    }
+  ],
   "hints": [
-    "Адаптация: двойники переносятся как десятичные струны; возвращают точку как две десятичные струны.",
-    "Образец равномерно по площади: шкалы радиуса с sqrt(u) и угол однородны в [0, 2*pi].",
-    "Шекер проверяет только расстояние <= радиус + допуск, используя фиксированный эталонный семенной материал."
+    "Для равномерного распределения по площади выберите радиус radius * sqrt(u), где u равномерно распределено на [0,1), а угол — равномерно на [0, 2*pi).",
+    "Переведите полярные координаты в декартовы с помощью косинуса и синуса, затем прибавьте координаты центра.",
+    "Проверка устанавливает только принадлежность точки кругу с небольшой погрешностью; распределение не проверяется."
   ]
 }

@@ -1,30 +1,42 @@
 import java.util.*;
-
 class Marker {
-    public int[] runHashMap(String[] operations, int[][] args) {
-        if (operations == null || args == null || operations.length != args.length) {
-            return new int[0];
-        }
-        Map<Integer, Integer> map = new HashMap<>();
-        List<Integer> answers = new ArrayList<>();
+    public List<String> solve(String[] operations, int[][] values) {
+        List<String> result = new ArrayList<>();
+        MyHashMap obj = null;
         for (int i = 0; i < operations.length; i++) {
             String op = operations[i];
             if (op.equals("MyHashMap")) {
-                map.clear();
+                obj = new MyHashMap();
+                result.add("null");
             } else if (op.equals("put")) {
-                map.put(args[i][0], args[i][1]);
+                obj.put(values[i][0], values[i][1]);
+                result.add("null");
             } else if (op.equals("get")) {
-                answers.add(map.getOrDefault(args[i][0], -1));
+                result.add(String.valueOf(obj.get(values[i][0])));
             } else if (op.equals("remove")) {
-                map.remove(args[i][0]);
-            } else {
-                throw new IllegalArgumentException("Unknown operation: " + op);
+                obj.remove(values[i][0]);
+                result.add("null");
             }
         }
-        return answers.stream().mapToInt(Integer::intValue).toArray();
+        return result;
     }
 
-    public boolean isCorrect(String[] operations, int[][] args, int[] output) {
-        return output != null && Arrays.equals(runHashMap(operations, args), output);
+    public boolean isCorrect(String[] operations, int[][] values, List<String> output) {
+        if (operations == null || values == null || output == null) return false;
+        if (values.length != operations.length || output.size() != operations.length) return false;
+        return solve(operations, values).equals(output);
+    }
+
+    static class MyHashMap {
+        private final Map<Integer, Integer> map = new HashMap<>();
+        void put(int key, int value) {
+            map.put(key, value);
+        }
+        int get(int key) {
+            return map.getOrDefault(key, -1);
+        }
+        void remove(int key) {
+            map.remove(key);
+        }
     }
 }

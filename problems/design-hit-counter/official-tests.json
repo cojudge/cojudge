@@ -1,106 +1,102 @@
 [
   {
-    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"hit\",\"getHits\",\"hit\",\"getHits\",\"getHits\"]",
-    "timestamps": "[0,1,2,3,4,300,300,301]"
+    "operations": "[\"HitCounter\", \"hit\", \"hit\", \"hit\", \"getHits\", \"hit\", \"getHits\", \"getHits\"]",
+    "values": "[[], [1], [2], [3], [4], [300], [300], [301]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"getHits\",\"getHits\"]",
-    "timestamps": "[0,5,5,305]"
+    "operations": "[\"HitCounter\", \"hit\", \"getHits\", \"getHits\"]",
+    "values": "[[], [5], [5], [305]]"
   },
   {
-    "operations": "[\"HitCounter\",\"getHits\"]",
-    "timestamps": "[0,100]"
+    "operations": "[\"HitCounter\", \"getHits\"]",
+    "values": "[[], [100]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"getHits\"]",
-    "timestamps": "[0,1,1,301]"
+    "operations": "[\"HitCounter\", \"hit\", \"hit\", \"getHits\"]",
+    "values": "[[], [1], [1], [301]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"getHits\"]",
-    "timestamps": "[0,1,301]"
+    "operations": "[\"HitCounter\", \"hit\", \"getHits\"]",
+    "values": "[[], [1], [302]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"getHits\"]",
-    "timestamps": "[0,1,302]"
+    "operations": "[\"HitCounter\", \"getHits\", \"getHits\"]",
+    "values": "[[], [0], [500]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"hit\",\"getHits\"]",
-    "timestamps": "[0,1,2,3,303]"
+    "operations": "[\"HitCounter\", \"hit\", \"hit\", \"getHits\", \"getHits\"]",
+    "values": "[[], [1], [300], [300], [301]]"
   },
   {
-    "operations": "[\"HitCounter\",\"getHits\",\"getHits\"]",
-    "timestamps": "[0,0,500]"
+    "operations": "[\"HitCounter\", \"hit\", \"getHits\", \"getHits\", \"getHits\"]",
+    "values": "[[], [299], [300], [599], [600]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"hit\",\"hit\",\"getHits\"]",
-    "timestamps": "[0,10,10,10,20,310]"
+    "operations": "[\"HitCounter\", \"hit\", \"hit\", \"getHits\"]",
+    "values": "[[], [0], [0], [299]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"getHits\",\"hit\",\"getHits\"]",
-    "timestamps": "[0,100,100,200,400]"
+    "operations": "[\"HitCounter\", \"hit\", \"hit\", \"getHits\"]",
+    "values": "[[], [0], [0], [300]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"getHits\",\"getHits\"]",
-    "timestamps": "[0,1,300,300,301]"
+    "operations": "[\"HitCounter\", \"hit\", \"getHits\"]",
+    "values": "[[], [0], [300]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"getHits\",\"getHits\",\"getHits\"]",
-    "timestamps": "[0,299,300,599,600]"
+    "operations": "[\"HitCounter\", \"hit\", \"getHits\"]",
+    "values": "[[], [0], [301]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"hit\",\"hit\",\"hit\",\"getHits\"]",
-    "timestamps": "[0,1,2,3,4,5,301]"
+    "operations": "[\"HitCounter\", \"getHits\"]",
+    "values": "[[], [0]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"getHits\",\"hit\",\"hit\",\"getHits\"]",
-    "timestamps": "[0,5,5,6,7,305]"
+    "operations": "[\"HitCounter\", \"hit\", \"getHits\"]",
+    "values": "[[], [1000000], [1000000]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"getHits\"]",
-    "timestamps": "[0,0,0,299]"
+    "operations": "[\"HitCounter\", \"getHits\", \"getHits\", \"hit\", \"hit\", \"getHits\", \"hit\", \"hit\", \"hit\", \"hit\"]",
+    "values": "[[], [73], [94], [126], [130], [175], [188], [203], [234], [255]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"getHits\"]",
-    "timestamps": "[0,0,0,300]"
+    "operations": "[\"HitCounter\", \"hit\", \"getHits\", \"getHits\", \"getHits\", \"hit\", \"getHits\"]",
+    "values": "[[], [61], [108], [111], [152], [158], [205]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"getHits\"]",
-    "timestamps": "[0,0,300]"
+    "operations": "[\"HitCounter\", \"hit\", \"hit\", \"hit\", \"hit\", \"getHits\"]",
+    "values": "[[], [48], [64], [79], [101], [148]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"getHits\"]",
-    "timestamps": "[0,0,301]"
+    "operations": "[\"HitCounter\", \"getHits\", \"hit\", \"hit\", \"hit\", \"getHits\"]",
+    "values": "[[], [50], [76], [100], [127], [147]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"hit\",\"getHits\",\"getHits\"]",
-    "timestamps": "[0,50,100,150,200,400]"
+    "operations": "[\"HitCounter\", \"hit\", \"hit\", \"hit\", \"hit\", \"getHits\", \"hit\", \"getHits\", \"hit\", \"getHits\", \"getHits\", \"getHits\"]",
+    "values": "[[], [65], [76], [115], [153], [188], [221], [258], [276], [335], [376], [424]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"hit\",\"getHits\"]",
-    "timestamps": "[0,1,1,1,2]"
+    "operations": "[\"HitCounter\", \"hit\", \"hit\", \"hit\", \"getHits\", \"hit\", \"hit\", \"getHits\", \"hit\"]",
+    "values": "[[], [62], [92], [112], [147], [174], [203], [260], [270]]"
   },
   {
-    "operations": "[\"HitCounter\",\"getHits\"]",
-    "timestamps": "[0,0]"
+    "operations": "[\"HitCounter\", \"hit\", \"hit\", \"hit\", \"hit\", \"getHits\"]",
+    "values": "[[], [20], [54], [65], [82], [118]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"hit\",\"hit\",\"getHits\",\"getHits\"]",
-    "timestamps": "[0,295,296,297,298,299,600]"
+    "operations": "[\"HitCounter\", \"getHits\", \"getHits\", \"hit\", \"hit\", \"hit\"]",
+    "values": "[[], [6], [34], [66], [69], [72]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"getHits\",\"getHits\"]",
-    "timestamps": "[0,10,309,310]"
+    "operations": "[\"HitCounter\", \"hit\", \"getHits\", \"hit\", \"hit\", \"getHits\", \"hit\", \"hit\"]",
+    "values": "[[], [83], [104], [137], [176], [184], [198], [224]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"getHits\",\"hit\",\"getHits\"]",
-    "timestamps": "[0,1,2,302,303,603]"
+    "operations": "[\"HitCounter\", \"hit\", \"hit\", \"hit\", \"getHits\", \"hit\"]",
+    "values": "[[], [51], [80], [98], [156], [188]]"
   },
   {
-    "operations": "[\"HitCounter\",\"hit\",\"hit\",\"hit\",\"hit\",\"hit\",\"hit\",\"getHits\"]",
-    "timestamps": "[0,1,2,3,4,5,6,300]"
-  },
-  {
-    "operations": "[\"HitCounter\",\"hit\",\"getHits\"]",
-    "timestamps": "[0,1000000,1000000]"
+    "operations": "[\"HitCounter\", \"hit\", \"getHits\", \"hit\", \"getHits\", \"hit\", \"hit\", \"hit\", \"hit\", \"hit\", \"hit\", \"getHits\"]",
+    "values": "[[], [3], [44], [54], [92], [103], [109], [125], [134], [142], [159], [203]]"
   }
 ]

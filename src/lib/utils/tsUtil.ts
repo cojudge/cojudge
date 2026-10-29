@@ -493,6 +493,22 @@ export function generateTypeScriptStarterCode(functionName: string, params: Para
 
     if (classProblem) {
         const className = classProblem.userClassName || 'MedianFinder';
+        if (className === 'FlipMatrix') {
+            return `${typeImports}
+export class FlipMatrix {
+    constructor(m: number, n: number) {
+
+    }
+
+    flip(): number[] {
+        return [];
+    }
+
+    reset(): void {
+
+    }
+}`;
+        }
         if (params && params.length > 0 && params[0]?.type === 'tree_node') {
             return `${typeImports}
 export class ${className} {
