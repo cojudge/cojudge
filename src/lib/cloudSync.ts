@@ -1,4 +1,5 @@
 import { browser } from '$app/environment';
+import { v4 as randomUUID } from 'uuid';
 import { get, writable } from 'svelte/store';
 import { onIdTokenChanged, type Auth, type Unsubscribe, type User } from 'firebase/auth';
 import {
@@ -521,7 +522,7 @@ function announceCloudRestore(localDataCleared = false): void {
 
 function startCoordination(): void {
 	if (typeof BroadcastChannel !== 'undefined') {
-		coordinationContextId = crypto.randomUUID();
+		coordinationContextId = randomUUID();
 		coordinationChannel = new BroadcastChannel('cojudge-cloud-sync');
 		coordinationChannel.addEventListener('message', (event) => {
 			const message = event.data;
@@ -592,7 +593,7 @@ async function coordinateOtherContexts(type: CoordinationAction): Promise<void> 
 	const channel = coordinationChannel;
 	if (!channel) return;
 
-	const requestId = crypto.randomUUID();
+	const requestId = randomUUID();
 	const peers = new Set<string>();
 	const handleProbe = (event: MessageEvent) => {
 		if (event.data?.type === 'probe-ack' && event.data.requestId === requestId) {
