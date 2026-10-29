@@ -1,33 +1,46 @@
 ## Approach
 
-Model the stack with a plain list. Push appends; pop and top touch the end. Both max queries scan for the largest value, and `popMax` deletes its topmost occurrence via a reverse search. Only the four read/remove actions append to the answer list.
+Keep two parallel stacks: a value stack and a max stack whose top always holds the maximum of everything below it. Pushing `x` appends `x` alongside `max(x, current max)`, so `top` and `peekMax` are O(1) reads and `pop` drops both tops. For `popMax`, move elements above the topmost maximum into a buffer, drop the maximum from both stacks, then push the buffered elements back (rebuilding their max entries). The full per-operation trace (`"null"` for construction and `push`, plain integers otherwise) is compared exactly against the reference.
 
 ## Complexity Analysis
 
-- **Time Complexity:** O(m*n) worst case over m calls on depth n due to max scans; easily fast for test sizes.
-- **Space Complexity:** O(n) for the stack plus answers.
+- **Time Complexity:** O(1) amortized per `push`, `pop`, `top` and `peekMax`; O(n) per `popMax` where n is the stack depth.
+- **Space Complexity:** O(n) for the two stacks.
 
 ## Implementation
 
 ```python
-from typing import List
-class Solution:
-    def runMaxStack(self, operations: List[str], values: List[int]) -> List[int]:
-        st: list[int] = []
-        ans: list[int] = []
-        for op, v in zip(operations, values):
-            if op == "push":
-                st.append(v)
-            elif op == "pop":
-                ans.append(st.pop())
-            elif op == "top":
-                ans.append(st[-1])
-            elif op == "peekMax":
-                ans.append(max(st))
-            elif op == "popMax":
-                mx = max(st)
-                idx = len(st) - 1 - st[::-1].index(mx)
-                st.pop(idx)
-                ans.append(mx)
-        return ans
+class MaxStack:
+    def __init__(self):
+        self.stack = []
+        self.max_stack = []
+
+    def push(self, x: int) -> None:
+        self.stack.append(x)
+        if not self.max_stack or x >= self.max_stack[-1]:
+            self.max_stack.append(x)
+        else:
+            self.max_stack.append(self.max_stack[-1])
+
+    def pop(self) -> int:
+        self.max_stack.pop()
+        return self.stack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1]
+
+    def peekMax(self) -> int:
+        return self.max_stack[-1]
+
+    def popMax(self) -> int:
+        mx = self.max_stack[-1]
+        buf = []
+        while self.stack[-1] != mx:
+            buf.append(self.stack.pop())
+            self.max_stack.pop()
+        self.stack.pop()
+        self.max_stack.pop()
+        while buf:
+            self.push(buf.pop())
+        return mx
 ```

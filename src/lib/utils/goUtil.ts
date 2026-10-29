@@ -641,6 +641,245 @@ ${branches}
     return result
 }`;
     }
+    // Stateful flip/reset design (e.g. Random Flip Matrix as FlipMatrix):
+    // constructor takes (m, n) from values[i]; Flip() returns []int{r, c}.
+    if (operations && operations.includes('flip')) {
+        return `
+func Solve(operations []string, values [][]int) []string {
+    result := []string{}
+    var obj *${className}
+    for i, op := range operations {
+        if op == "${className}" {
+            __obj := Constructor(values[i][0], values[i][1])
+            obj = &__obj
+            result = append(result, "null")
+        } else if op == "flip" {
+            __c := obj.Flip()
+            result = append(result, fmt.Sprintf("[%d,%d]", __c[0], __c[1]))
+        } else if op == "reset" {
+            obj.Reset()
+            result = append(result, "null")
+        }
+    }
+    return result
+}`;
+    }
+    // Class-design problems: constructor args and value-returning methods.
+    if (className === 'Shuffler') {
+        return `
+func Solve(operations []string, values [][]int) []string {
+    result := []string{}
+    var obj *Shuffler
+    for i, op := range operations {
+        if op == "Shuffler" {
+            __obj := Constructor(values[i])
+            obj = &__obj
+            result = append(result, "null")
+        } else if op == "shuffle" {
+            result = append(result, intArrayToString(obj.Shuffle()))
+        } else if op == "reset" {
+            result = append(result, intArrayToString(obj.Reset()))
+        }
+    }
+    return result
+}
+
+func intArrayToString(a []int) string {
+    __s := "["
+    for __j, __v := range a {
+        if __j > 0 {
+            __s += ","
+        }
+        __s += strconv.Itoa(__v)
+    }
+    return __s + "]"
+}`;
+    }
+    if (className === 'RandPoint') {
+        return `
+func Solve(operations []string, values [][]int) []string {
+    result := []string{}
+    var obj *RandPoint
+    for i, op := range operations {
+        if op == "RandPoint" {
+            __obj := Constructor(float64(values[i][0]), float64(values[i][1]), float64(values[i][2]))
+            obj = &__obj
+            result = append(result, "null")
+        } else if op == "randPoint" {
+            __p := obj.RandPoint()
+            result = append(result, "[" + strconv.FormatFloat(__p[0], 'f', -1, 64) + "," + strconv.FormatFloat(__p[1], 'f', -1, 64) + "]")
+        }
+    }
+    return result
+}`;
+    }
+    if (className === 'WeightedPicker') {
+        return `
+func Solve(operations []string, values [][]int) []string {
+    result := []string{}
+    var obj *WeightedPicker
+    for i, op := range operations {
+        if op == "WeightedPicker" {
+            __obj := Constructor(values[i])
+            obj = &__obj
+            result = append(result, "null")
+        } else if op == "pickIndex" {
+            result = append(result, strconv.Itoa(obj.PickIndex()))
+        }
+    }
+    return result
+}`;
+    }
+    if (className === 'TwoSum') {
+        return `
+func Solve(operations []string, values [][]int) []string {
+    result := []string{}
+    var obj *TwoSum
+    for i, op := range operations {
+        if op == "TwoSum" {
+            __obj := Constructor()
+            obj = &__obj
+            result = append(result, "null")
+        } else if op == "add" {
+            obj.Add(values[i][0])
+            result = append(result, "null")
+        } else if op == "find" {
+            result = append(result, strconv.FormatBool(obj.Find(values[i][0])))
+        }
+    }
+    return result
+}`;
+    }
+    if (className === 'MaxStack') {
+        return `
+func Solve(operations []string, values [][]int) []string {
+    result := []string{}
+    var obj *MaxStack
+    for i, op := range operations {
+        if op == "MaxStack" {
+            __obj := Constructor()
+            obj = &__obj
+            result = append(result, "null")
+        } else if op == "push" {
+            obj.Push(values[i][0])
+            result = append(result, "null")
+        } else if op == "pop" {
+            result = append(result, strconv.Itoa(obj.Pop()))
+        } else if op == "top" {
+            result = append(result, strconv.Itoa(obj.Top()))
+        } else if op == "peekMax" {
+            result = append(result, strconv.Itoa(obj.PeekMax()))
+        } else if op == "popMax" {
+            result = append(result, strconv.Itoa(obj.PopMax()))
+        }
+    }
+    return result
+}`;
+    }
+    if (className === 'MyHashSet') {
+        return `
+func Solve(operations []string, values [][]int) []string {
+    result := []string{}
+    var obj *MyHashSet
+    for i, op := range operations {
+        if op == "MyHashSet" {
+            __obj := Constructor()
+            obj = &__obj
+            result = append(result, "null")
+        } else if op == "add" {
+            obj.Add(values[i][0])
+            result = append(result, "null")
+        } else if op == "remove" {
+            obj.Remove(values[i][0])
+            result = append(result, "null")
+        } else if op == "contains" {
+            result = append(result, strconv.FormatBool(obj.Contains(values[i][0])))
+        }
+    }
+    return result
+}`;
+    }
+    if (className === 'HitCounter') {
+        return `
+func Solve(operations []string, values [][]int) []string {
+    result := []string{}
+    var obj *HitCounter
+    for i, op := range operations {
+        if op == "HitCounter" {
+            __obj := Constructor()
+            obj = &__obj
+            result = append(result, "null")
+        } else if op == "hit" {
+            obj.Hit(values[i][0])
+            result = append(result, "null")
+        } else if op == "getHits" {
+            result = append(result, strconv.Itoa(obj.GetHits(values[i][0])))
+        }
+    }
+    return result
+}`;
+    }
+    if (className === 'StockSpanner') {
+        return `
+func Solve(operations []string, values [][]int) []string {
+    result := []string{}
+    var obj *StockSpanner
+    for i, op := range operations {
+        if op == "StockSpanner" {
+            __obj := Constructor()
+            obj = &__obj
+            result = append(result, "null")
+        } else if op == "next" {
+            result = append(result, strconv.Itoa(obj.Next(values[i][0])))
+        }
+    }
+    return result
+}`;
+    }
+    if (className === 'RandomizedSet' || className === 'RandomizedCollection') {
+        return `
+func Solve(operations []string, values [][]int) []string {
+    result := []string{}
+    var obj *${className}
+    for i, op := range operations {
+        if op == "${className}" {
+            __obj := Constructor()
+            obj = &__obj
+            result = append(result, "null")
+        } else if op == "insert" {
+            result = append(result, strconv.FormatBool(obj.Insert(values[i][0])))
+        } else if op == "remove" {
+            result = append(result, strconv.FormatBool(obj.Remove(values[i][0])))
+        } else if op == "getRandom" {
+            result = append(result, strconv.Itoa(obj.GetRandom()))
+        }
+    }
+    return result
+}`;
+    }
+    if (className === 'MyHashMap') {
+        return `
+func Solve(operations []string, values [][]int) []string {
+    result := []string{}
+    var obj *MyHashMap
+    for i, op := range operations {
+        if op == "MyHashMap" {
+            __obj := Constructor()
+            obj = &__obj
+            result = append(result, "null")
+        } else if op == "put" {
+            obj.Put(values[i][0], values[i][1])
+            result = append(result, "null")
+        } else if op == "get" {
+            result = append(result, strconv.Itoa(obj.Get(values[i][0])))
+        } else if op == "remove" {
+            obj.Remove(values[i][0])
+            result = append(result, "null")
+        }
+    }
+    return result
+}`;
+    }
     const ops = operations || ['addNum', 'findMedian'];
     const branches = generateGoBranches(ops, true);
     return `
@@ -853,6 +1092,25 @@ export function generateGoStarterCode(functionName: string, params: Param[], out
 
     if (classProblem) {
         const className = classProblem.userClassName || 'Codec';
+        if (className === 'FlipMatrix') {
+            return `package main
+
+type FlipMatrix struct {
+
+}
+
+func Constructor(m int, n int) FlipMatrix {
+    return FlipMatrix{}
+}
+
+func (this *FlipMatrix) Flip() []int {
+    return []int{}
+}
+
+func (this *FlipMatrix) Reset() {
+
+}`;
+        }
         if (params && params.length > 0 && params[0]?.type === 'tree_node') {
             return `package main
 

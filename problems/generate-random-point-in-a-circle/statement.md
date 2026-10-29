@@ -1,16 +1,36 @@
-A circle is described by its radius and its center point. Write a routine that produces one point lying somewhere inside (or exactly on) that circle.
+Given the radius and the position of the center of a circle, implement the function `randPoint` which generates a uniform random point inside the circle.
 
-**Portable adaptation:** This task is a function version of a class design task. The radius and both center coordinates arrive as decimal strings so every language receives identical inputs, and the point is returned as a two-element list of decimal strings `[x, y]`. Floating answers are compared with tolerance rather than exact text match.
+Implement the `RandPoint` class:
 
-**Behavior:**
+- `RandPoint(double radius, double xCenter, double yCenter)` Initializes the object with the radius of the circle `radius` and the position of the center `(xCenter, yCenter)`.
+- `double[] randPoint()` Returns a random point inside the circle. A point on the circumference of the circle is considered to be in the circle. The answer is returned as an array `[x, y]`.
 
-- Parse `radius`, `xCenter`, `yCenter` as double-precision values.
-- Return two decimal strings that parse as finite doubles.
-- The returned point must satisfy `distance((x, y), center) <= radius + 1e-9`.
-- Any valid point counts as correct; the distribution is not graded. The reference uses a fixed seed for reproducibility, but user code may use any source of randomness (returning the center itself is also valid, though not uniform).
+The class is named `RandPoint` here instead of LeetCode's `Solution` because the judge harness reserves `Solution` for its driver; the constructor and methods match the original. (C# only: the point method is named `NextPoint`, since C# forbids a method sharing its class's name.)
+
+Grading: each `randPoint` output must parse as `[x,y]` doubles satisfying `(x - xCenter)^2 + (y - yCenter)^2 <= radius^2 * (1 + 1e-9) + 1e-9`. Any valid trace is accepted — uniformity over the disk is not statistically tested. In this judge the constructor arguments arrive as integers (integral radius and center, all valid LeetCode inputs); outputs use the compact `"[x,y]"` text form.
+
+**Example 1:**
+```
+Input: operations = ["RandPoint","randPoint","randPoint","randPoint"], values = [[1,0,0],[],[],[]]
+Output: [null,[0.1,0.2],[0,0],[-0.5,0.5]]
+Explanation: Any point within distance 1 of the origin is accepted; returning the center itself is valid.
+```
+
+**Example 2:**
+```
+Input: operations = ["RandPoint","randPoint"], values = [[2,3,-1],[]]
+Output: [null,[3,-1]]
+Explanation: The center (3,-1) is distance 0 from itself, so it is always a valid (though not uniform) answer.
+```
+
+**Example 3:**
+```
+Input: operations = ["RandPoint","randPoint","randPoint"], values = [[5,2,-3],[],[]]
+Output: [null,[2,-3],[6.5,-1.0]]
+Explanation: Both the center and any point within 5.0 of (2,-3) pass the checker.
+```
 
 **Constraints:**
-
 - `0 < radius <= 10^8`
 - `-10^7 <= xCenter, yCenter <= 10^7`
-- Inputs are finite decimal strings.
+- At most `3 * 10^4` calls will be made to `randPoint`.

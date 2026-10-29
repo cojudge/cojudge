@@ -1,30 +1,25 @@
 ## Approach
 
-Simulate a hash map over the trace. Keep a Python `dict` cleared on `MyHashMap`. On `put` store `args[i][0] -> args[i][1]` (updating existing keys); on `remove` delete the key if present; on `get` append the mapped value or `-1`. Only `get` produces output, preserving query order.
+Simulate the map over the trace with a hash map: construction starts empty, `put` inserts or overwrites, `remove` deletes (a no-op when absent), and `get` looks up with a `-1` default. Construction, `put` and `remove` report `"null"` while each `get` reports the plain integer result; the full per-operation trace is compared exactly against the reference.
 
 ## Complexity Analysis
 
-- **Time Complexity:** `O(m)` average for `m` operations, with `O(1)` average per map operation.
-- **Space Complexity:** `O(k)` where `k` is the number of stored keys (plus `O(q)` for `q` get answers).
+- **Time Complexity:** O(1) average per `put`, `get` and `remove`.
+- **Space Complexity:** O(k) where k is the number of stored keys.
 
 ## Implementation
 
 ```python
-from typing import List
+class MyHashMap:
+    def __init__(self):
+        self.m = {}
 
+    def put(self, key: int, value: int) -> None:
+        self.m[key] = value
 
-class Solution:
-    def runHashMap(self, operations: List[str], args: List[List[int]]) -> List[int]:
-        m = {}
-        answers: List[int] = []
-        for operation, arg in zip(operations, args):
-            if operation == "MyHashMap":
-                m.clear()
-            elif operation == "put":
-                m[arg[0]] = arg[1]
-            elif operation == "get":
-                answers.append(m.get(arg[0], -1))
-            elif operation == "remove":
-                m.pop(arg[0], None)
-        return answers
+    def get(self, key: int) -> int:
+        return self.m.get(key, -1)
+
+    def remove(self, key: int) -> None:
+        self.m.pop(key, None)
 ```

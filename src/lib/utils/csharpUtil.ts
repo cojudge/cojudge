@@ -681,6 +681,289 @@ ${branches}
     }
 }`;
     }
+    // Stateful flip/reset design (e.g. Random Flip Matrix as FlipMatrix):
+    // constructor takes (m, n) from values[i]; Flip() returns int[]{r, c}.
+    if (operations && operations.includes('flip')) {
+        return `
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public List<string> Solve(string[] operations, int[][] values) {
+        var result = new List<string>();
+        ${className} obj = null;
+        for (int i = 0; i < operations.Length; i++) {
+            string op = operations[i];
+            if (op == "${className}") {
+                obj = new ${className}(values[i][0], values[i][1]);
+                result.Add("null");
+            } else if (op == "flip") {
+                var c = obj.Flip();
+                result.Add("[" + c[0] + "," + c[1] + "]");
+            } else if (op == "reset") {
+                obj.Reset();
+                result.Add("null");
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    // Class-design problems: constructor args and value-returning methods.
+    if (className === 'Shuffler') {
+        return `
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public List<string> Solve(string[] operations, int[][] values) {
+        var result = new List<string>();
+        Shuffler obj = null;
+        for (int i = 0; i < operations.Length; i++) {
+            string op = operations[i];
+            if (op == "Shuffler") {
+                obj = new Shuffler(values[i]);
+                result.Add("null");
+            } else if (op == "shuffle") {
+                result.Add("[" + string.Join(",", obj.Shuffle()) + "]");
+            } else if (op == "reset") {
+                result.Add("[" + string.Join(",", obj.Reset()) + "]");
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'RandPoint') {
+        return `
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public List<string> Solve(string[] operations, int[][] values) {
+        var result = new List<string>();
+        RandPoint obj = null;
+        for (int i = 0; i < operations.Length; i++) {
+            string op = operations[i];
+            if (op == "RandPoint") {
+                obj = new RandPoint(values[i][0], values[i][1], values[i][2]);
+                result.Add("null");
+            } else if (op == "randPoint") {
+                var p = obj.NextPoint();
+                result.Add("[" + p[0] + "," + p[1] + "]");
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'WeightedPicker') {
+        return `
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public List<string> Solve(string[] operations, int[][] values) {
+        var result = new List<string>();
+        WeightedPicker obj = null;
+        for (int i = 0; i < operations.Length; i++) {
+            string op = operations[i];
+            if (op == "WeightedPicker") {
+                obj = new WeightedPicker(values[i]);
+                result.Add("null");
+            } else if (op == "pickIndex") {
+                result.Add(obj.PickIndex().ToString());
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'TwoSum') {
+        return `
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public List<string> Solve(string[] operations, int[][] values) {
+        var result = new List<string>();
+        TwoSum obj = null;
+        for (int i = 0; i < operations.Length; i++) {
+            string op = operations[i];
+            if (op == "TwoSum") {
+                obj = new TwoSum();
+                result.Add("null");
+            } else if (op == "add") {
+                obj.Add(values[i][0]);
+                result.Add("null");
+            } else if (op == "find") {
+                result.Add(obj.Find(values[i][0]).ToString().ToLower());
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'MaxStack') {
+        return `
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public List<string> Solve(string[] operations, int[][] values) {
+        var result = new List<string>();
+        MaxStack obj = null;
+        for (int i = 0; i < operations.Length; i++) {
+            string op = operations[i];
+            if (op == "MaxStack") {
+                obj = new MaxStack();
+                result.Add("null");
+            } else if (op == "push") {
+                obj.Push(values[i][0]);
+                result.Add("null");
+            } else if (op == "pop") {
+                result.Add(obj.Pop().ToString());
+            } else if (op == "top") {
+                result.Add(obj.Top().ToString());
+            } else if (op == "peekMax") {
+                result.Add(obj.PeekMax().ToString());
+            } else if (op == "popMax") {
+                result.Add(obj.PopMax().ToString());
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'MyHashSet') {
+        return `
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public List<string> Solve(string[] operations, int[][] values) {
+        var result = new List<string>();
+        MyHashSet obj = null;
+        for (int i = 0; i < operations.Length; i++) {
+            string op = operations[i];
+            if (op == "MyHashSet") {
+                obj = new MyHashSet();
+                result.Add("null");
+            } else if (op == "add") {
+                obj.Add(values[i][0]);
+                result.Add("null");
+            } else if (op == "remove") {
+                obj.Remove(values[i][0]);
+                result.Add("null");
+            } else if (op == "contains") {
+                result.Add(obj.Contains(values[i][0]).ToString().ToLower());
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'HitCounter') {
+        return `
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public List<string> Solve(string[] operations, int[][] values) {
+        var result = new List<string>();
+        HitCounter obj = null;
+        for (int i = 0; i < operations.Length; i++) {
+            string op = operations[i];
+            if (op == "HitCounter") {
+                obj = new HitCounter();
+                result.Add("null");
+            } else if (op == "hit") {
+                obj.Hit(values[i][0]);
+                result.Add("null");
+            } else if (op == "getHits") {
+                result.Add(obj.GetHits(values[i][0]).ToString());
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'StockSpanner') {
+        return `
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public List<string> Solve(string[] operations, int[][] values) {
+        var result = new List<string>();
+        StockSpanner obj = null;
+        for (int i = 0; i < operations.Length; i++) {
+            string op = operations[i];
+            if (op == "StockSpanner") {
+                obj = new StockSpanner();
+                result.Add("null");
+            } else if (op == "next") {
+                result.Add(obj.Next(values[i][0]).ToString());
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'RandomizedSet' || className === 'RandomizedCollection') {
+        return `
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public List<string> Solve(string[] operations, int[][] values) {
+        var result = new List<string>();
+        ${className} obj = null;
+        for (int i = 0; i < operations.Length; i++) {
+            string op = operations[i];
+            if (op == "${className}") {
+                obj = new ${className}();
+                result.Add("null");
+            } else if (op == "insert") {
+                result.Add(obj.Insert(values[i][0]).ToString().ToLower());
+            } else if (op == "remove") {
+                result.Add(obj.Remove(values[i][0]).ToString().ToLower());
+            } else if (op == "getRandom") {
+                result.Add(obj.GetRandom().ToString());
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'MyHashMap') {
+        return `
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public List<string> Solve(string[] operations, int[][] values) {
+        var result = new List<string>();
+        MyHashMap obj = null;
+        for (int i = 0; i < operations.Length; i++) {
+            string op = operations[i];
+            if (op == "MyHashMap") {
+                obj = new MyHashMap();
+                result.Add("null");
+            } else if (op == "put") {
+                obj.Put(values[i][0], values[i][1]);
+                result.Add("null");
+            } else if (op == "get") {
+                result.Add(obj.Get(values[i][0]).ToString());
+            } else if (op == "remove") {
+                obj.Remove(values[i][0]);
+                result.Add("null");
+            }
+        }
+        return result;
+    }
+}`;
+    }
     const ops = operations || ['addNum', 'findMedian'];
     const branches = generateCsharpBranches(ops, true);
     return `

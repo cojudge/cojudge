@@ -1,35 +1,29 @@
 ## Approach
 
-Replay the session while keeping a frequency table of added numbers. Adding increments a count; finding scans stored keys for a complement that sums to the target, insisting on two copies when both addends are equal. Each find answer is encoded as 1 (yes) or 0 (no), and only find steps produce output.
+Keep a frequency table of added numbers. Adding increments a count. Finding scans the stored keys for a complement that sums to the target, insisting on two copies when both addends are equal. Each `find` is reported as `"true"` or `"false"`, while construction and `add` report `"null"`; the full per-operation trace is compared exactly against the reference.
 
 ## Complexity Analysis
 
-- **Time Complexity:** O(n) per add, O(d) per find where d is the number of distinct stored values.
+- **Time Complexity:** O(1) per `add`, O(d) per `find` where d is the number of distinct stored values.
 - **Space Complexity:** O(d) for the frequency table.
 
 ## Implementation
 
 ```python
-from typing import List
-class Solution:
-    def runTwoSum(self, operations: List[str], values: List[int]) -> List[int]:
-        from collections import defaultdict
-        counts = defaultdict(int)
-        ans = []
-        for op, v in zip(operations, values):
-            if op == "add":
-                counts[v] += 1
-            elif op == "find":
-                ok = False
-                for x, c in counts.items():
-                    need = v - x
-                    if need == x:
-                        if c >= 2:
-                            ok = True
-                            break
-                    elif need in counts:
-                        ok = True
-                        break
-                ans.append(1 if ok else 0)
-        return ans
+class TwoSum:
+    def __init__(self):
+        self.counts = {}
+
+    def add(self, number: int) -> None:
+        self.counts[number] = self.counts.get(number, 0) + 1
+
+    def find(self, value: int) -> bool:
+        for x, c in self.counts.items():
+            need = value - x
+            if need == x:
+                if c >= 2:
+                    return True
+            elif need in self.counts:
+                return True
+        return False
 ```

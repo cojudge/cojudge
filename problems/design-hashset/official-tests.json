@@ -1,131 +1,110 @@
 [
   {
-    "operations": "[\"MyHashSet\",\"add\",\"add\",\"contains\",\"contains\",\"add\",\"contains\",\"remove\",\"contains\"]",
-    "values": "[0,1,2,1,3,2,2,2,2]"
+    "operations": "[\"MyHashSet\", \"add\", \"add\", \"contains\", \"contains\", \"add\", \"contains\", \"remove\", \"contains\"]",
+    "values": "[[], [1], [2], [1], [3], [2], [2], [2], [2]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"contains\",\"add\",\"contains\",\"remove\",\"contains\"]",
-    "values": "[0,5,5,5,5,5]"
+    "operations": "[\"MyHashSet\", \"contains\", \"add\", \"contains\", \"remove\", \"contains\"]",
+    "values": "[[], [5], [5], [5], [5], [5]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"remove\"]",
-    "values": "[0,7,7]"
+    "operations": "[\"MyHashSet\", \"add\", \"remove\"]",
+    "values": "[[], [7], [7]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"contains\",\"remove\",\"contains\"]",
-    "values": "[0,0,0,0,0]"
+    "operations": "[\"MyHashSet\", \"add\", \"contains\", \"remove\", \"contains\"]",
+    "values": "[[], [0], [0], [0], [0]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"add\",\"contains\",\"remove\",\"contains\",\"contains\"]",
-    "values": "[0,1000000,0,1000000,1000000,1000000,0]"
+    "operations": "[\"MyHashSet\", \"add\", \"add\", \"contains\", \"remove\", \"contains\", \"contains\"]",
+    "values": "[[], [1000000], [0], [1000000], [1000000], [1000000], [0]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"add\",\"add\",\"contains\",\"contains\",\"remove\",\"contains\"]",
-    "values": "[0,1,1,1,1,2,1,1]"
+    "operations": "[\"MyHashSet\", \"add\", \"add\", \"add\", \"contains\", \"contains\", \"remove\", \"contains\"]",
+    "values": "[[], [1], [1], [1], [1], [2], [1], [1]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"remove\",\"contains\",\"add\",\"contains\"]",
-    "values": "[0,42,42,42,42]"
+    "operations": "[\"MyHashSet\", \"remove\", \"contains\", \"add\", \"contains\"]",
+    "values": "[[], [42], [42], [42], [42]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"contains\",\"add\",\"contains\",\"remove\",\"contains\",\"add\",\"contains\"]",
-    "values": "[0,10,10,20,20,10,10,10,10]"
+    "operations": "[\"MyHashSet\", \"add\", \"contains\", \"add\", \"contains\", \"remove\", \"contains\", \"add\", \"contains\"]",
+    "values": "[[], [10], [10], [20], [20], [10], [10], [10], [10]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"contains\",\"contains\",\"contains\"]",
-    "values": "[0,5,5,6,5]"
+    "operations": "[\"MyHashSet\", \"add\", \"contains\", \"contains\", \"contains\"]",
+    "values": "[[], [5], [5], [6], [5]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"add\",\"add\",\"add\",\"contains\",\"contains\",\"contains\",\"contains\"]",
-    "values": "[0,1,2,3,4,1,2,5,4]"
+    "operations": "[\"MyHashSet\", \"add\", \"add\", \"add\", \"add\", \"contains\", \"contains\", \"contains\", \"contains\"]",
+    "values": "[[], [1], [2], [3], [4], [1], [2], [5], [4]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"remove\",\"add\",\"contains\"]",
-    "values": "[0,9,9,9,9]"
-  },
-  {
-    "operations": "@javascript:JSON.stringify([\"MyHashSet\",...Array(5000).fill(\"add\"),...Array(5000).fill(\"contains\")])",
-    "values": "@javascript:JSON.stringify([0,...Array.from({length:5000},(_,i)=>i),...Array.from({length:5000},(_,i)=>i)])",
-    "_isLargeTest": true
+    "operations": "[\"MyHashSet\", \"add\", \"remove\", \"add\", \"contains\"]",
+    "values": "[[], [9], [9], [9], [9]]"
   },
   {
     "operations": "[\"MyHashSet\"]",
-    "values": "[0]"
+    "values": "[[]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"contains\"]",
-    "values": "[0,0,0]"
+    "operations": "[\"MyHashSet\", \"add\", \"contains\", \"add\", \"add\", \"contains\", \"contains\", \"add\", \"contains\", \"add\"]",
+    "values": "[[], [40], [30], [-29], [-35], [16], [30], [39], [-16], [30]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"contains\"]",
-    "values": "[0,1000000,1000000]"
+    "operations": "[\"MyHashSet\", \"add\", \"add\", \"add\", \"contains\", \"add\"]",
+    "values": "[[], [21], [-40], [-49], [40], [-1]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"add\",\"contains\",\"contains\"]",
-    "values": "[0,5,5,5,6]"
+    "operations": "[\"MyHashSet\", \"add\", \"add\", \"add\", \"add\", \"add\", \"contains\", \"add\", \"add\", \"remove\"]",
+    "values": "[[], [-6], [15], [24], [28], [-50], [-43], [2], [-18], [45]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"remove\",\"remove\",\"contains\"]",
-    "values": "[0,3,3,3]"
+    "operations": "[\"MyHashSet\", \"add\", \"add\", \"contains\", \"remove\", \"remove\"]",
+    "values": "[[], [-33], [6], [0], [0], [20]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"add\",\"add\",\"contains\",\"contains\",\"contains\"]",
-    "values": "[0,100,200,300,100,200,400]"
+    "operations": "[\"MyHashSet\", \"add\", \"remove\", \"contains\", \"remove\", \"remove\", \"add\", \"add\"]",
+    "values": "[[], [35], [-37], [-12], [-37], [22], [-2], [40]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"remove\",\"add\",\"contains\",\"contains\"]",
-    "values": "[0,15,15,15,15,16]"
+    "operations": "[\"MyHashSet\", \"remove\", \"add\", \"contains\", \"remove\", \"add\", \"contains\", \"add\", \"add\", \"remove\", \"add\", \"contains\", \"contains\"]",
+    "values": "[[], [44], [35], [49], [7], [13], [19], [-15], [-8], [41], [-13], [11], [-6]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"contains\",\"contains\"]",
-    "values": "[0,0,1000000]"
+    "operations": "[\"MyHashSet\", \"remove\", \"remove\", \"add\", \"add\", \"contains\", \"add\", \"remove\", \"remove\", \"contains\", \"add\", \"add\"]",
+    "values": "[[], [0], [-24], [-10], [21], [22], [-20], [31], [34], [4], [-27], [49]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"contains\",\"remove\",\"contains\",\"add\",\"contains\"]",
-    "values": "[0,50,50,50,50,50,50]"
+    "operations": "[\"MyHashSet\", \"contains\", \"remove\", \"remove\", \"contains\", \"remove\"]",
+    "values": "[[], [17], [-36], [-4], [-3], [13]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"add\",\"remove\",\"contains\",\"contains\"]",
-    "values": "[0,11,22,11,11,22]"
+    "operations": "[\"MyHashSet\", \"add\", \"contains\", \"contains\", \"add\", \"remove\", \"contains\"]",
+    "values": "[[], [-19], [27], [-1], [18], [20], [17]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"add\",\"add\",\"add\",\"contains\",\"remove\",\"contains\"]",
-    "values": "[0,1,2,3,4,3,3,3]"
+    "operations": "[\"MyHashSet\", \"add\", \"contains\", \"add\", \"remove\", \"remove\", \"add\", \"add\"]",
+    "values": "[[], [-27], [30], [-41], [19], [36], [36], [39]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"contains\",\"add\",\"contains\"]",
-    "values": "[0,999999,999999,999998,999998]"
+    "operations": "[\"MyHashSet\", \"add\", \"contains\", \"add\", \"contains\", \"add\", \"add\", \"contains\", \"add\", \"contains\", \"remove\", \"contains\", \"add\"]",
+    "values": "[[], [38], [30], [35], [38], [18], [-21], [23], [-19], [31], [30], [10], [-22]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"remove\",\"add\",\"contains\"]",
-    "values": "[0,7,7,7]"
+    "operations": "[\"MyHashSet\", \"remove\", \"contains\", \"remove\", \"contains\", \"contains\", \"contains\", \"add\", \"contains\", \"add\"]",
+    "values": "[[], [6], [32], [3], [7], [33], [13], [4], [-20], [-50]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"add\",\"contains\",\"remove\",\"contains\",\"add\",\"contains\"]",
-    "values": "[0,30,40,30,30,30,30,30]"
+    "operations": "[\"MyHashSet\", \"contains\", \"remove\", \"add\", \"add\", \"add\", \"contains\", \"contains\", \"add\", \"add\"]",
+    "values": "[[], [-48], [-37], [12], [-38], [50], [48], [-7], [-9], [-26]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"contains\",\"contains\",\"remove\",\"contains\"]",
-    "values": "[0,123,123,124,123,123]"
+    "operations": "[\"MyHashSet\", \"add\", \"contains\", \"remove\", \"contains\"]",
+    "values": "[[], [0], [0], [0], [0]]"
   },
   {
-    "operations": "[\"MyHashSet\",\"add\",\"add\",\"add\",\"contains\",\"contains\",\"remove\",\"contains\",\"contains\"]",
-    "values": "[0,8,9,10,8,10,9,9,8]"
-  },
-  {
-    "operations": "[\"MyHashSet\",\"add\",\"remove\",\"contains\",\"add\",\"contains\"]",
-    "values": "[0,500000,500000,500000,500000,500000]"
-  },
-  {
-    "operations": "[\"MyHashSet\",\"add\",\"add\",\"add\",\"add\",\"add\",\"contains\",\"contains\",\"contains\"]",
-    "values": "[0,5,10,15,20,25,5,25,30]"
-  },
-  {
-    "operations": "[\"MyHashSet\",\"add\",\"contains\",\"remove\",\"add\",\"contains\",\"remove\",\"contains\"]",
-    "values": "[0,77,77,77,77,77,77,77]"
-  },
-  {
-    "operations": "[\"MyHashSet\",\"add\",\"add\",\"remove\",\"remove\",\"contains\",\"contains\"]",
-    "values": "[0,1000,2000,1000,2000,1000,2000]"
+    "operations": "[\"MyHashSet\", \"add\", \"add\", \"contains\", \"contains\"]",
+    "values": "[[], [1000000], [-1000000], [1000000], [-1000000]]"
   }
 ]

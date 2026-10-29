@@ -685,6 +685,332 @@ ${branches}
 }
 `;
   }
+  // Stateful flip/reset design (e.g. Random Flip Matrix as FlipMatrix):
+  // constructor takes (m, n) from values[i]; flip() returns Vec<i32> [r, c].
+  if (operations && operations.includes('flip')) {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<${className}> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "${className}" {
+                obj = Some(${className}::new(values[i][0], values[i][1]));
+                result.push("null".to_string());
+            } else if op == "flip" {
+                if let Some(ref mut o) = obj {
+                    let c = o.flip();
+                    result.push(format!("[{},{}]", c[0], c[1]));
+                }
+            } else if op == "reset" {
+                if let Some(ref mut o) = obj {
+                    o.reset();
+                }
+                result.push("null".to_string());
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  // Class-design problems: constructor args and value-returning methods.
+  // (Submit driver; user struct is top-level.)
+  if (className === 'Shuffler') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        fn int_array_to_string(a: &[i32]) -> String {
+            format!("[{}]", a.iter().map(|x| x.to_string()).collect::<Vec<_>>().join(","))
+        }
+        let mut result = Vec::new();
+        let mut obj: Option<Shuffler> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "Shuffler" {
+                obj = Some(Shuffler::new(values[i].clone()));
+                result.push("null".to_string());
+            } else if op == "shuffle" {
+                if let Some(ref mut o) = obj {
+                    result.push(int_array_to_string(&o.shuffle()));
+                }
+            } else if op == "reset" {
+                if let Some(ref mut o) = obj {
+                    result.push(int_array_to_string(&o.reset()));
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'RandPoint') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<RandPoint> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "RandPoint" {
+                obj = Some(RandPoint::new(values[i][0] as f64, values[i][1] as f64, values[i][2] as f64));
+                result.push("null".to_string());
+            } else if op == "randPoint" {
+                if let Some(ref mut o) = obj {
+                    let p = o.rand_point();
+                    result.push(format!("[{},{}]", p[0], p[1]));
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'WeightedPicker') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<WeightedPicker> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "WeightedPicker" {
+                obj = Some(WeightedPicker::new(values[i].clone()));
+                result.push("null".to_string());
+            } else if op == "pickIndex" {
+                if let Some(ref mut o) = obj {
+                    result.push(o.pick_index().to_string());
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'TwoSum') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<TwoSum> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "TwoSum" {
+                obj = Some(TwoSum::new());
+                result.push("null".to_string());
+            } else if op == "add" {
+                if let Some(ref mut o) = obj {
+                    o.add(values[i][0]);
+                }
+                result.push("null".to_string());
+            } else if op == "find" {
+                if let Some(ref o) = obj {
+                    result.push(o.find(values[i][0]).to_string());
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'MaxStack') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<MaxStack> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "MaxStack" {
+                obj = Some(MaxStack::new());
+                result.push("null".to_string());
+            } else if op == "push" {
+                if let Some(ref mut o) = obj {
+                    o.push(values[i][0]);
+                }
+                result.push("null".to_string());
+            } else if op == "pop" {
+                if let Some(ref mut o) = obj {
+                    result.push(o.pop().to_string());
+                }
+            } else if op == "top" {
+                if let Some(ref o) = obj {
+                    result.push(o.top().to_string());
+                }
+            } else if op == "peekMax" {
+                if let Some(ref o) = obj {
+                    result.push(o.peek_max().to_string());
+                }
+            } else if op == "popMax" {
+                if let Some(ref mut o) = obj {
+                    result.push(o.pop_max().to_string());
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'MyHashSet') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<MyHashSet> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "MyHashSet" {
+                obj = Some(MyHashSet::new());
+                result.push("null".to_string());
+            } else if op == "add" {
+                if let Some(ref mut o) = obj {
+                    o.add(values[i][0]);
+                }
+                result.push("null".to_string());
+            } else if op == "remove" {
+                if let Some(ref mut o) = obj {
+                    o.remove(values[i][0]);
+                }
+                result.push("null".to_string());
+            } else if op == "contains" {
+                if let Some(ref o) = obj {
+                    result.push(o.contains(values[i][0]).to_string());
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'HitCounter') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<HitCounter> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "HitCounter" {
+                obj = Some(HitCounter::new());
+                result.push("null".to_string());
+            } else if op == "hit" {
+                if let Some(ref mut o) = obj {
+                    o.hit(values[i][0]);
+                }
+                result.push("null".to_string());
+            } else if op == "getHits" {
+                if let Some(ref o) = obj {
+                    result.push(o.get_hits(values[i][0]).to_string());
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'StockSpanner') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<StockSpanner> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "StockSpanner" {
+                obj = Some(StockSpanner::new());
+                result.push("null".to_string());
+            } else if op == "next" {
+                if let Some(ref mut o) = obj {
+                    result.push(o.next(values[i][0]).to_string());
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'RandomizedSet' || className === 'RandomizedCollection') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<${className}> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "${className}" {
+                obj = Some(${className}::new());
+                result.push("null".to_string());
+            } else if op == "insert" {
+                if let Some(ref mut o) = obj {
+                    result.push(o.insert(values[i][0]).to_string());
+                }
+            } else if op == "remove" {
+                if let Some(ref mut o) = obj {
+                    result.push(o.remove(values[i][0]).to_string());
+                }
+            } else if op == "getRandom" {
+                if let Some(ref mut o) = obj {
+                    result.push(o.get_random().to_string());
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'MyHashMap') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<MyHashMap> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "MyHashMap" {
+                obj = Some(MyHashMap::new());
+                result.push("null".to_string());
+            } else if op == "put" {
+                if let Some(ref mut o) = obj {
+                    o.put(values[i][0], values[i][1]);
+                }
+                result.push("null".to_string());
+            } else if op == "get" {
+                if let Some(ref o) = obj {
+                    result.push(o.get(values[i][0]).to_string());
+                }
+            } else if op == "remove" {
+                if let Some(ref mut o) = obj {
+                    o.remove(values[i][0]);
+                }
+                result.push("null".to_string());
+            }
+        }
+        result
+    }
+}
+`;
+  }
   const ops = operations || ['addNum', 'findMedian'];
   const branches = generateRustBranches(ops, true);
   return `
@@ -900,6 +1226,330 @@ ${branches}
 }
 `;
   }
+  // Stateful flip/reset design (debug driver; user class lives in solution::).
+  if (operations && operations.includes('flip')) {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<solution::${className}> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "${className}" {
+                obj = Some(solution::${className}::new(values[i][0], values[i][1]));
+                result.push("null".to_string());
+            } else if op == "flip" {
+                if let Some(ref mut o) = obj {
+                    let c = o.flip();
+                    result.push(format!("[{},{}]", c[0], c[1]));
+                }
+            } else if op == "reset" {
+                if let Some(ref mut o) = obj {
+                    o.reset();
+                }
+                result.push("null".to_string());
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  // Class-design problems, debug driver (user class lives in solution::).
+  if (className === 'Shuffler') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        fn int_array_to_string(a: &[i32]) -> String {
+            format!("[{}]", a.iter().map(|x| x.to_string()).collect::<Vec<_>>().join(","))
+        }
+        let mut result = Vec::new();
+        let mut obj: Option<solution::Shuffler> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "Shuffler" {
+                obj = Some(solution::Shuffler::new(values[i].clone()));
+                result.push("null".to_string());
+            } else if op == "shuffle" {
+                if let Some(ref mut o) = obj {
+                    result.push(int_array_to_string(&o.shuffle()));
+                }
+            } else if op == "reset" {
+                if let Some(ref mut o) = obj {
+                    result.push(int_array_to_string(&o.reset()));
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'RandPoint') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<solution::RandPoint> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "RandPoint" {
+                obj = Some(solution::RandPoint::new(values[i][0] as f64, values[i][1] as f64, values[i][2] as f64));
+                result.push("null".to_string());
+            } else if op == "randPoint" {
+                if let Some(ref mut o) = obj {
+                    let p = o.rand_point();
+                    result.push(format!("[{},{}]", p[0], p[1]));
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'WeightedPicker') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<solution::WeightedPicker> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "WeightedPicker" {
+                obj = Some(solution::WeightedPicker::new(values[i].clone()));
+                result.push("null".to_string());
+            } else if op == "pickIndex" {
+                if let Some(ref mut o) = obj {
+                    result.push(o.pick_index().to_string());
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'TwoSum') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<solution::TwoSum> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "TwoSum" {
+                obj = Some(solution::TwoSum::new());
+                result.push("null".to_string());
+            } else if op == "add" {
+                if let Some(ref mut o) = obj {
+                    o.add(values[i][0]);
+                }
+                result.push("null".to_string());
+            } else if op == "find" {
+                if let Some(ref o) = obj {
+                    result.push(o.find(values[i][0]).to_string());
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'MaxStack') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<solution::MaxStack> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "MaxStack" {
+                obj = Some(solution::MaxStack::new());
+                result.push("null".to_string());
+            } else if op == "push" {
+                if let Some(ref mut o) = obj {
+                    o.push(values[i][0]);
+                }
+                result.push("null".to_string());
+            } else if op == "pop" {
+                if let Some(ref mut o) = obj {
+                    result.push(o.pop().to_string());
+                }
+            } else if op == "top" {
+                if let Some(ref o) = obj {
+                    result.push(o.top().to_string());
+                }
+            } else if op == "peekMax" {
+                if let Some(ref o) = obj {
+                    result.push(o.peek_max().to_string());
+                }
+            } else if op == "popMax" {
+                if let Some(ref mut o) = obj {
+                    result.push(o.pop_max().to_string());
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'MyHashSet') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<solution::MyHashSet> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "MyHashSet" {
+                obj = Some(solution::MyHashSet::new());
+                result.push("null".to_string());
+            } else if op == "add" {
+                if let Some(ref mut o) = obj {
+                    o.add(values[i][0]);
+                }
+                result.push("null".to_string());
+            } else if op == "remove" {
+                if let Some(ref mut o) = obj {
+                    o.remove(values[i][0]);
+                }
+                result.push("null".to_string());
+            } else if op == "contains" {
+                if let Some(ref o) = obj {
+                    result.push(o.contains(values[i][0]).to_string());
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'HitCounter') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<solution::HitCounter> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "HitCounter" {
+                obj = Some(solution::HitCounter::new());
+                result.push("null".to_string());
+            } else if op == "hit" {
+                if let Some(ref mut o) = obj {
+                    o.hit(values[i][0]);
+                }
+                result.push("null".to_string());
+            } else if op == "getHits" {
+                if let Some(ref o) = obj {
+                    result.push(o.get_hits(values[i][0]).to_string());
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'StockSpanner') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<solution::StockSpanner> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "StockSpanner" {
+                obj = Some(solution::StockSpanner::new());
+                result.push("null".to_string());
+            } else if op == "next" {
+                if let Some(ref mut o) = obj {
+                    result.push(o.next(values[i][0]).to_string());
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'RandomizedSet' || className === 'RandomizedCollection') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<solution::${className}> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "${className}" {
+                obj = Some(solution::${className}::new());
+                result.push("null".to_string());
+            } else if op == "insert" {
+                if let Some(ref mut o) = obj {
+                    result.push(o.insert(values[i][0]).to_string());
+                }
+            } else if op == "remove" {
+                if let Some(ref mut o) = obj {
+                    result.push(o.remove(values[i][0]).to_string());
+                }
+            } else if op == "getRandom" {
+                if let Some(ref mut o) = obj {
+                    result.push(o.get_random().to_string());
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'MyHashMap') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<solution::MyHashMap> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "MyHashMap" {
+                obj = Some(solution::MyHashMap::new());
+                result.push("null".to_string());
+            } else if op == "put" {
+                if let Some(ref mut o) = obj {
+                    o.put(values[i][0], values[i][1]);
+                }
+                result.push("null".to_string());
+            } else if op == "get" {
+                if let Some(ref o) = obj {
+                    result.push(o.get(values[i][0]).to_string());
+                }
+            } else if op == "remove" {
+                if let Some(ref mut o) = obj {
+                    o.remove(values[i][0]);
+                }
+                result.push("null".to_string());
+            }
+        }
+        result
+    }
+}
+`;
+  }
   const ops = operations || ['addNum', 'findMedian'];
   const branches = generateRustBranches(ops, true);
   return `
@@ -920,6 +1570,7 @@ ${branches}
     }
 }
 `;
+
 }
 
 export function generateRustRunner(

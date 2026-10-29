@@ -647,6 +647,277 @@ ${branches}
     }
 }`;
     }
+    // Stateful flip/reset design (e.g. Random Flip Matrix as FlipMatrix):
+    // constructor takes (m, n) from values[i]; flip() returns int[2].
+    if (operations && operations.includes('flip')) {
+        return `
+import java.util.*;
+class Solution {
+    public List<String> solve(String[] operations, int[][] values) {
+        List<String> result = new ArrayList<>();
+        ${className} obj = null;
+        for (int i = 0; i < operations.length; i++) {
+            String op = operations[i];
+            if (op.equals("${className}")) {
+                obj = new ${className}(values[i][0], values[i][1]);
+                result.add("null");
+            } else if (op.equals("flip")) {
+                int[] c = obj.flip();
+                result.add("[" + c[0] + "," + c[1] + "]");
+            } else if (op.equals("reset")) {
+                obj.reset();
+                result.add("null");
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    // Class-design problems: constructor args and value-returning methods.
+    if (className === 'Shuffler') {
+        return `
+import java.util.*;
+class Solution {
+    public List<String> solve(String[] operations, int[][] values) {
+        List<String> result = new ArrayList<>();
+        Shuffler obj = null;
+        for (int i = 0; i < operations.length; i++) {
+            String op = operations[i];
+            if (op.equals("Shuffler")) {
+                obj = new Shuffler(values[i]);
+                result.add("null");
+            } else if (op.equals("shuffle")) {
+                result.add(arrayToString(obj.shuffle()));
+            } else if (op.equals("reset")) {
+                result.add(arrayToString(obj.reset()));
+            }
+        }
+        return result;
+    }
+    private static String arrayToString(int[] a) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int j = 0; j < a.length; j++) {
+            if (j > 0) sb.append(",");
+            sb.append(a[j]);
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+}`;
+    }
+    if (className === 'RandPoint') {
+        return `
+import java.util.*;
+class Solution {
+    public List<String> solve(String[] operations, int[][] values) {
+        List<String> result = new ArrayList<>();
+        RandPoint obj = null;
+        for (int i = 0; i < operations.length; i++) {
+            String op = operations[i];
+            if (op.equals("RandPoint")) {
+                obj = new RandPoint(values[i][0], values[i][1], values[i][2]);
+                result.add("null");
+            } else if (op.equals("randPoint")) {
+                double[] p = obj.randPoint();
+                result.add("[" + p[0] + "," + p[1] + "]");
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'WeightedPicker') {
+        return `
+import java.util.*;
+class Solution {
+    public List<String> solve(String[] operations, int[][] values) {
+        List<String> result = new ArrayList<>();
+        WeightedPicker obj = null;
+        for (int i = 0; i < operations.length; i++) {
+            String op = operations[i];
+            if (op.equals("WeightedPicker")) {
+                obj = new WeightedPicker(values[i]);
+                result.add("null");
+            } else if (op.equals("pickIndex")) {
+                result.add(String.valueOf(obj.pickIndex()));
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'TwoSum') {
+        return `
+import java.util.*;
+class Solution {
+    public List<String> solve(String[] operations, int[][] values) {
+        List<String> result = new ArrayList<>();
+        TwoSum obj = null;
+        for (int i = 0; i < operations.length; i++) {
+            String op = operations[i];
+            if (op.equals("TwoSum")) {
+                obj = new TwoSum();
+                result.add("null");
+            } else if (op.equals("add")) {
+                obj.add(values[i][0]);
+                result.add("null");
+            } else if (op.equals("find")) {
+                result.add(String.valueOf(obj.find(values[i][0])));
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'MaxStack') {
+        return `
+import java.util.*;
+class Solution {
+    public List<String> solve(String[] operations, int[][] values) {
+        List<String> result = new ArrayList<>();
+        MaxStack obj = null;
+        for (int i = 0; i < operations.length; i++) {
+            String op = operations[i];
+            if (op.equals("MaxStack")) {
+                obj = new MaxStack();
+                result.add("null");
+            } else if (op.equals("push")) {
+                obj.push(values[i][0]);
+                result.add("null");
+            } else if (op.equals("pop")) {
+                result.add(String.valueOf(obj.pop()));
+            } else if (op.equals("top")) {
+                result.add(String.valueOf(obj.top()));
+            } else if (op.equals("peekMax")) {
+                result.add(String.valueOf(obj.peekMax()));
+            } else if (op.equals("popMax")) {
+                result.add(String.valueOf(obj.popMax()));
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'MyHashSet') {
+        return `
+import java.util.*;
+class Solution {
+    public List<String> solve(String[] operations, int[][] values) {
+        List<String> result = new ArrayList<>();
+        MyHashSet obj = null;
+        for (int i = 0; i < operations.length; i++) {
+            String op = operations[i];
+            if (op.equals("MyHashSet")) {
+                obj = new MyHashSet();
+                result.add("null");
+            } else if (op.equals("add")) {
+                obj.add(values[i][0]);
+                result.add("null");
+            } else if (op.equals("remove")) {
+                obj.remove(values[i][0]);
+                result.add("null");
+            } else if (op.equals("contains")) {
+                result.add(String.valueOf(obj.contains(values[i][0])));
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'HitCounter') {
+        return `
+import java.util.*;
+class Solution {
+    public List<String> solve(String[] operations, int[][] values) {
+        List<String> result = new ArrayList<>();
+        HitCounter obj = null;
+        for (int i = 0; i < operations.length; i++) {
+            String op = operations[i];
+            if (op.equals("HitCounter")) {
+                obj = new HitCounter();
+                result.add("null");
+            } else if (op.equals("hit")) {
+                obj.hit(values[i][0]);
+                result.add("null");
+            } else if (op.equals("getHits")) {
+                result.add(String.valueOf(obj.getHits(values[i][0])));
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'StockSpanner') {
+        return `
+import java.util.*;
+class Solution {
+    public List<String> solve(String[] operations, int[][] values) {
+        List<String> result = new ArrayList<>();
+        StockSpanner obj = null;
+        for (int i = 0; i < operations.length; i++) {
+            String op = operations[i];
+            if (op.equals("StockSpanner")) {
+                obj = new StockSpanner();
+                result.add("null");
+            } else if (op.equals("next")) {
+                result.add(String.valueOf(obj.next(values[i][0])));
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'RandomizedSet' || className === 'RandomizedCollection') {
+        return `
+import java.util.*;
+class Solution {
+    public List<String> solve(String[] operations, int[][] values) {
+        List<String> result = new ArrayList<>();
+        ${className} obj = null;
+        for (int i = 0; i < operations.length; i++) {
+            String op = operations[i];
+            if (op.equals("${className}")) {
+                obj = new ${className}();
+                result.add("null");
+            } else if (op.equals("insert")) {
+                result.add(String.valueOf(obj.insert(values[i][0])));
+            } else if (op.equals("remove")) {
+                result.add(String.valueOf(obj.remove(values[i][0])));
+            } else if (op.equals("getRandom")) {
+                result.add(String.valueOf(obj.getRandom()));
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'MyHashMap') {
+        return `
+import java.util.*;
+class Solution {
+    public List<String> solve(String[] operations, int[][] values) {
+        List<String> result = new ArrayList<>();
+        MyHashMap obj = null;
+        for (int i = 0; i < operations.length; i++) {
+            String op = operations[i];
+            if (op.equals("MyHashMap")) {
+                obj = new MyHashMap();
+                result.add("null");
+            } else if (op.equals("put")) {
+                obj.put(values[i][0], values[i][1]);
+                result.add("null");
+            } else if (op.equals("get")) {
+                result.add(String.valueOf(obj.get(values[i][0])));
+            } else if (op.equals("remove")) {
+                obj.remove(values[i][0]);
+                result.add("null");
+            }
+        }
+        return result;
+    }
+}`;
+    }
     const intOps = operations || ['addNum', 'findMedian'];
     const branches = intOps.map((op, i) => {
         const cond = i === 0 ? 'if' : 'else if';

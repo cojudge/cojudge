@@ -1,6 +1,6 @@
 ## Approach
 
-Store values in a dense list and remember each value's index in a hash map. Insertion appends a new value and records its slot; deletion swaps the target with the final entry, updates that entry's index, and pops the tail. Sampling draws a uniform list index. The judge accepts any current member for sampling steps.
+Pair a value-to-index map with a dense list of values. `insert` appends a new value at the end and records its index; `remove` swaps the target with the last entry, updates the moved entry's index, and pops the tail — all average O(1). `getRandom` draws a uniform list index.
 
 ## Complexity Analysis
 
@@ -11,34 +11,30 @@ Store values in a dense list and remember each value's index in a hash map. Inse
 
 ```python
 import random
-from typing import List
-class Solution:
-    def runRandomizedSet(self, operations: List[str], values: List[int]) -> List[int]:
-        arr = []
-        pos = {}
-        out = []
-        for i in range(1, len(operations)):
-            op = operations[i]
-            if op == "insert":
-                v = values[i]
-                if v in pos:
-                    out.append(0)
-                else:
-                    pos[v] = len(arr)
-                    arr.append(v)
-                    out.append(1)
-            elif op == "remove":
-                v = values[i]
-                if v not in pos:
-                    out.append(0)
-                else:
-                    idx = pos.pop(v)
-                    last = arr.pop()
-                    if idx < len(arr):
-                        arr[idx] = last
-                        pos[last] = idx
-                    out.append(1)
-            elif op == "getRandom":
-                out.append(random.choice(arr))
-        return out
+
+class RandomizedSet:
+    def __init__(self):
+        self.a = []
+        self.pos = {}
+
+    def insert(self, val: int) -> bool:
+        if val in self.pos:
+            return False
+        self.pos[val] = len(self.a)
+        self.a.append(val)
+        return True
+
+    def remove(self, val: int) -> bool:
+        if val not in self.pos:
+            return False
+        i = self.pos[val]
+        last = self.a[-1]
+        self.a[i] = last
+        self.pos[last] = i
+        self.a.pop()
+        del self.pos[val]
+        return True
+
+    def getRandom(self) -> int:
+        return random.choice(self.a)
 ```

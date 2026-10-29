@@ -1,142 +1,102 @@
 [
   {
-    "m": 3,
-    "n": 1,
-    "count": 2
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\", \"reset\", \"flip\"]",
+    "values": "[[3, 1], [], [], [], [], []]"
   },
   {
-    "m": 2,
-    "n": 2,
-    "count": 4
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\", \"flip\"]",
+    "values": "[[2, 2], [], [], [], []]"
   },
   {
-    "m": 1,
-    "n": 1,
-    "count": 0
+    "operations": "[\"FlipMatrix\", \"flip\", \"reset\", \"flip\"]",
+    "values": "[[1, 1], [], [], []]"
   },
   {
-    "m": 1,
-    "n": 1,
-    "count": 1
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"reset\", \"flip\"]",
+    "values": "[[1, 2], [], [], [], []]"
   },
   {
-    "m": 1,
-    "n": 2,
-    "count": 1
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\"]",
+    "values": "[[2, 3], [], [], []]"
   },
   {
-    "m": 1,
-    "n": 2,
-    "count": 2
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\"]",
+    "values": "[[2, 3], [], [], [], [], [], []]"
   },
   {
-    "m": 2,
-    "n": 3,
-    "count": 3
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\"]",
+    "values": "[[3, 3], [], [], [], [], []]"
   },
   {
-    "m": 2,
-    "n": 3,
-    "count": 6
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\"]",
+    "values": "[[3, 3], [], [], [], [], [], [], [], [], []]"
   },
   {
-    "m": 3,
-    "n": 3,
-    "count": 5
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\"]",
+    "values": "[[4, 4], [], [], [], [], [], [], [], []]"
   },
   {
-    "m": 3,
-    "n": 3,
-    "count": 9
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\"]",
+    "values": "[[5, 5], [], [], [], [], [], [], [], [], [], []]"
   },
   {
-    "m": 4,
-    "n": 4,
-    "count": 8
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\"]",
+    "values": "[[10, 10], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]"
   },
   {
-    "m": 5,
-    "n": 5,
-    "count": 10
+    "operations": "[\"FlipMatrix\", \"flip\", \"reset\", \"flip\", \"flip\", \"reset\", \"flip\"]",
+    "values": "[[2, 2], [], [], [], [], [], []]"
   },
   {
-    "m": 10,
-    "n": 10,
-    "count": 20
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\"]",
+    "values": "[[1, 5], [], [], [], [], []]"
   },
   {
-    "m": 2,
-    "n": 2,
-    "count": 1
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\", \"flip\"]",
+    "values": "[[5, 1], [], [], [], []]"
   },
   {
-    "m": 2,
-    "n": 2,
-    "count": 0
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\"]",
+    "values": "[[3, 4], [], [], [], [], [], [], [], [], [], [], [], []]"
   },
   {
-    "m": 3,
-    "n": 1,
-    "count": 3
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"reset\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\"]",
+    "values": "[[4, 5], [], [], [], [], [], [], [], [], [], [], [], [], []]"
   },
   {
-    "m": 1,
-    "n": 5,
-    "count": 5
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\"]",
+    "values": "[[6, 6], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]"
   },
   {
-    "m": 5,
-    "n": 1,
-    "count": 4
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\"]",
+    "values": "[[20, 20], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]"
   },
   {
-    "m": 4,
-    "n": 5,
-    "count": 7
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\"]",
+    "values": "[[50, 50], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]"
   },
   {
-    "m": 6,
-    "n": 6,
-    "count": 0
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"reset\", \"flip\", \"flip\"]",
+    "values": "[[1, 3], [], [], [], [], []]"
   },
   {
-    "m": 6,
-    "n": 6,
-    "count": 36
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\", \"flip\"]",
+    "values": "[[3, 2], [], [], [], []]"
   },
   {
-    "m": 3,
-    "n": 4,
-    "count": 12
+    "operations": "[\"FlipMatrix\", \"flip\", \"reset\", \"flip\", \"flip\", \"reset\", \"flip\"]",
+    "values": "[[2, 2], [], [], [], [], [], []]"
   },
   {
-    "m": 2,
-    "n": 5,
-    "count": 5
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\"]",
+    "values": "[[4, 3], [], [], [], [], []]"
   },
   {
-    "m": 7,
-    "n": 3,
-    "count": 9
+    "operations": "[\"FlipMatrix\", \"flip\", \"reset\", \"flip\", \"reset\", \"flip\"]",
+    "values": "[[1, 1], [], [], [], [], []]"
   },
   {
-    "m": 8,
-    "n": 8,
-    "count": 15
-  },
-  {
-    "m": 1,
-    "n": 10,
-    "count": 3
-  },
-  {
-    "m": 10,
-    "n": 1,
-    "count": 7
-  },
-  {
-    "m": 4,
-    "n": 4,
-    "count": 1
+    "operations": "[\"FlipMatrix\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\", \"flip\"]",
+    "values": "[[5, 2], [], [], [], [], [], []]"
   }
 ]
