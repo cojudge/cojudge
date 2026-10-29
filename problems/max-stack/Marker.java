@@ -1,26 +1,64 @@
 import java.util.*;
 class Marker {
-    public int[] runMaxStack(String[] operations, int[] values) {
-        List<Integer> st = new ArrayList<>();
-        List<Integer> ans = new ArrayList<>();
+    public List<String> solve(String[] operations, int[][] values) {
+        List<String> result = new ArrayList<>();
+        MaxStack obj = null;
         for (int i = 0; i < operations.length; i++) {
             String op = operations[i];
-            if (op.equals("push")) st.add(values[i]);
-            else if (op.equals("pop")) ans.add(st.remove(st.size() - 1));
-            else if (op.equals("top")) ans.add(st.get(st.size() - 1));
-            else if (op.equals("peekMax")) {
-                int mx = Collections.max(st);
-                ans.add(mx);
+            if (op.equals("MaxStack")) {
+                obj = new MaxStack();
+                result.add("null");
+            } else if (op.equals("push")) {
+                obj.push(values[i][0]);
+                result.add("null");
+            } else if (op.equals("pop")) {
+                result.add(String.valueOf(obj.pop()));
+            } else if (op.equals("top")) {
+                result.add(String.valueOf(obj.top()));
+            } else if (op.equals("peekMax")) {
+                result.add(String.valueOf(obj.peekMax()));
             } else if (op.equals("popMax")) {
-                int mx = Collections.max(st);
-                int idx = st.lastIndexOf(mx);
-                st.remove(idx);
-                ans.add(mx);
-            } else throw new IllegalArgumentException("Unknown op " + op);
+                result.add(String.valueOf(obj.popMax()));
+            }
         }
-        return ans.stream().mapToInt(Integer::intValue).toArray();
+        return result;
     }
-    public boolean isCorrect(String[] operations, int[] values, int[] output) {
-        return output != null && Arrays.equals(runMaxStack(operations, values), output);
+
+    public boolean isCorrect(String[] operations, int[][] values, List<String> output) {
+        if (operations == null || values == null || output == null) return false;
+        if (values.length != operations.length || output.size() != operations.length) return false;
+        return solve(operations, values).equals(output);
+    }
+
+    static class MaxStack {
+        private final Deque<Integer> stack = new ArrayDeque<>();
+        private final Deque<Integer> maxStack = new ArrayDeque<>();
+        void push(int x) {
+            stack.push(x);
+            if (maxStack.isEmpty() || x >= maxStack.peek()) maxStack.push(x);
+            else maxStack.push(maxStack.peek());
+        }
+        int pop() {
+            maxStack.pop();
+            return stack.pop();
+        }
+        int top() {
+            return stack.peek();
+        }
+        int peekMax() {
+            return maxStack.peek();
+        }
+        int popMax() {
+            int mx = maxStack.peek();
+            Deque<Integer> buf = new ArrayDeque<>();
+            while (stack.peek() != mx) {
+                buf.push(stack.pop());
+                maxStack.pop();
+            }
+            stack.pop();
+            maxStack.pop();
+            while (!buf.isEmpty()) push(buf.pop());
+            return mx;
+        }
     }
 }

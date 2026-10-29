@@ -1,16 +1,40 @@
-Replay a multiset with random sampling through one batch function.
+`RandomizedCollection` is a data structure that contains a collection of numbers, possibly duplicates (i.e., a multiset). It should support inserting and removing specific elements and also reporting a random element.
 
-This is a deterministic, function-style adaptation of the classic duplicates-allowed design: implement `runRandomizedCollection(operations, values)`. Both arrays share one length. Entry `0` is always `"RandomizedCollection"` with dummy value `0`. Each later entry is:
+Implement the `RandomizedCollection` class:
 
-- `"insert"` with `values[i] = val`: add one copy of `val` (duplicates allowed). Record `1` when no copy existed before, else `0`.
-- `"remove"` with `values[i] = val`: delete one copy when present. Record `1` when a copy was removed, else `0`.
-- `"getRandom"` with dummy `values[i] = 0`: record one value currently held (any copy).
+- `RandomizedCollection()` Initializes the empty object.
+- `bool insert(int val)` Inserts an item `val` into the multiset, even if the item is already present. Returns `true` if the item is not present, `false` otherwise.
+- `bool remove(int val)` Removes an item `val` from the multiset if present. Returns `true` if the item is present, `false` otherwise. Note that if `val` has multiple occurrences, only one of them is removed.
+- `int getRandom()` Returns a random element from the current multiset. The probability of each element being returned is linearly related to the number of same values it contains (it is guaranteed that at least one element exists when this method is called).
 
-Return one recorded entry per non-constructor step, in order. The classic version also demands sampling proportional to multiplicity and average O(1) time; this portable judge checks only validity — each `getRandom` entry must have a remaining copy — not the distribution. Aim for average O(1) with a list plus index sets.
+You must implement the functions of the class such that each function works in average O(1) time complexity.
+
+The class keeps its LeetCode name `RandomizedCollection` here (instead of `Solution`) because the judge harness reserves `Solution` for its driver; the constructor and methods match the original.
+
+Grading: `insert`/`remove` booleans are compared exactly against a reference model tracking per-value counts, and each `getRandom` output must have a remaining copy at that point. Only validity is checked — the sampling distribution is not statistically tested.
+
+**Example 1:**
+```
+Input: operations = ["RandomizedCollection","insert","insert","insert"], values = [[],[1],[1],[2]]
+Output: [null,true,false,true]
+Explanation: The first insert of 1 is new (true); the second insert of 1 finds a copy (false); inserting 2 is new (true).
+```
+
+**Example 2:**
+```
+Input: operations = ["RandomizedCollection","insert","insert","remove","remove"], values = [[],[2],[2],[2],[2]]
+Output: [null,true,false,true,true]
+Explanation: After two inserts of 2, each remove deletes one copy; one copy remains.
+```
+
+**Example 3:**
+```
+Input: operations = ["RandomizedCollection","insert","getRandom"], values = [[],[9],[]]
+Output: [null,true,9]
+Explanation: With only 9 held, getRandom must return 9.
+```
 
 **Constraints:**
-- `1 <= operations.length == values.length <= 2 * 10^5`
-- `operations[0] == "RandomizedCollection"`
-- Later operations are `insert`, `remove`, or `getRandom`.
 - `-2^31 <= val <= 2^31 - 1`
-- `getRandom` is called only when at least one copy is held.
+- At most `2 * 10^5` calls will be made to `insert`, `remove`, and `getRandom`.
+- `getRandom` will only be called when at least one copy is held.

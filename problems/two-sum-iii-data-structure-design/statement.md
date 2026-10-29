@@ -1,17 +1,35 @@
-This is an offline adaptation of a design task. Instead of writing a class, you write one function that replays a whole session:
+Design a data structure that supports adding numbers and finding whether any pair of previously added numbers sums to a target value.
 
+Implement the `TwoSum` class:
+
+- `TwoSum()` Initializes the `TwoSum` object.
+- `void add(int number)` Adds `number` to the data structure.
+- `boolean find(int value)` Returns `true` if there exist two stored entries (two different additions) whose sum equals `value`, and `false` otherwise. A single stored copy cannot pair with itself: `find` needs two copies of `x` to report `true` for `value = 2 * x`.
+
+The class keeps its LeetCode name `TwoSum` (the harness reserves `Solution` for the driver); the constructor and methods match the original.
+
+**Example 1:**
 ```
-runTwoSum(operations, values)
+Input: operations = ["TwoSum","add","add","add","find","find"], values = [[],[1],[3],[5],[4],[7]]
+Output: [null,null,null,null,true,false]
+Explanation: After storing 1, 3, 5: 4 equals 1 + 3 (true), while no pair sums to 7 (false).
 ```
 
-Both arrays have the same length. Each entry is one step:
+**Example 2:**
+```
+Input: operations = ["TwoSum","add","add","find"], values = [[],[0],[0],[0]]
+Output: [null,null,null,true]
+Explanation: The two stored zeros sum to 0.
+```
 
-- `"add"` with `values[i] = number` stores the number for later queries and produces no output.
-- `"find"` with `values[i] = value` asks whether any pair of stored numbers (using two different stored entries) sums to `value`. Its answer (`1` for yes, `0` for no) is appended to the result.
-
-Return the answers for the `"find"` steps in order. Only `"find"` steps contribute entries.
+**Example 3:**
+```
+Input: operations = ["TwoSum","add","find","find"], values = [[],[5],[5],[10]]
+Output: [null,null,false,false]
+Explanation: A single stored 5 cannot pair with itself; 10 also has no pair yet.
+```
 
 **Constraints:**
-- `0 <= number of steps <= 10^4`
 - `-10^5 <= number, value <= 10^5`
-- `operations` holds only `"add"` or `"find"`.
+- At most `10^4` calls will be made to `add` and `find`.
+- Every trace begins with `TwoSum`; `add` and `find` each take one argument.

@@ -1,6 +1,6 @@
 import { phpImage, generatePhpRunner, generatePhpInteractiveRunner, generatePhpClassSolution, phpGetTypeImports, phpListNodeClass, phpTreeNodeClass, phpGraphNodeClass } from "$lib/utils/phpUtil";
 import { getInteractive } from "$lib/utils/interactiveUtil";
-import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE, type Param } from "$lib/utils/util";
+import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE, extractOperations, type Param } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import fs from 'fs/promises';
 import tar from 'tar-stream';
@@ -62,7 +62,7 @@ export class PhpRunner extends ProgramRunner {
             if (problemData.classProblem) {
                 const className = problemData.classProblem.userClassName || 'MedianFinder';
                 pack.entry({ name: `${className}.php` }, Buffer.from(userCode));
-                const wrapperCode = generatePhpClassSolution(className, problemData.params, problemData.outputType);
+                const wrapperCode = generatePhpClassSolution(className, problemData.params, problemData.outputType, extractOperations(this.testCases, className));
                 pack.entry({ name: 'Solution.php' }, Buffer.from(wrapperCode));
             } else {
                 pack.entry({ name: 'Solution.php' }, Buffer.from(userCode));

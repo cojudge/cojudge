@@ -389,6 +389,15 @@ class Marker {
 }
 ```
 
+### Constructors with arguments and value-returning methods
+
+Most design problems use a no-arg constructor, but some (e.g. **519. Random Flip Matrix**) need constructor arguments and methods that return values. The harness supports this: the constructor reads its arguments from `values[i]`, and each call's output is recorded as a string in the result list. Reference: `random-flip-matrix` (`FlipMatrix(m, n)` + `flip()`/`reset()`).
+
+- Test cases use the same `operations` / `values` shape: `values[i]` holds the constructor args (e.g. `[m, n]`) when `operations[i]` is the class name, and `[]` otherwise.
+- The auto-generated `Solution.solve` wrapper emits `"null"` for the constructor and `void` methods, and a serialized form for value-returning methods (`flip` emits `"[r,c]"`).
+- `Marker.isCorrect` must property-check the trace (bounds, no repeats since the last `reset`) rather than compare against `solve` exactly, since outputs are non-deterministic.
+- Name the user class anything **except** `Solution` (the harness reserves that name for its driver wrapper).
+
 ---
 
 ## 7. Interactive Judge Problems (e.g. Guess the Word)
@@ -587,6 +596,16 @@ cojudge submit <slug> /tmp/solution.java
 | `find-in-mountain-array` | Interactive return-value judge (`mountain-array` + `MountainArray`) | `findInMountainArray(target, mountainArr)`, max 100 `get` calls |
 | `find-the-celebrity` | Interactive return-value judge (`celebrity` + `Relation`) | `findCelebrity(n, relation)`, max `10 + 5*n` `knows` calls |
 | `find-median-from-data-stream` | Class-based | `classProblem` with `string_array`/`int_array_2d` params |
+| `random-flip-matrix` | Class-based (ctor args + `void`/`int[]` methods, property-checked) | `FlipMatrix(m, n)` + `flip()`/`reset()`; wrapper emits `"[r,c]"`, marker checks bounds + no repeats per reset epoch |
+| `shuffle-an-array` | Class-based (array ctor arg, `int[]` methods) | `Shuffler(nums)` + `shuffle()`/`reset()`; marker checks permutation multiset, exact order for `reset` |
+| `generate-random-point-in-a-circle` | Class-based (scalar ctor args, `double[]` method) | `RandPoint(r, xc, yc)` + `randPoint()`; marker checks in-disk (C# method is `NextPoint`: C# forbids a method sharing its class's name) |
+| `random-pick-with-weight` | Class-based (array ctor arg, distribution spot-check) | `WeightedPicker(w)` + `pickIndex()`; marker checks range + coverage of all positive weights on long traces |
+| `two-sum-iii-data-structure-design` | Class-based (no-arg ctor, int-arg/bool methods) | `TwoSum()` + `add(n)`/`find(v)`; exact marker |
+| `max-stack` | Class-based | `MaxStack()` + `push`/`pop`/`top`/`peekMax`/`popMax`; exact marker |
+| `design-hashset` / `design-hashmap` | Class-based | `MyHashSet()` + `add`/`remove`/`contains`; `MyHashMap()` + `put`/`get`/`remove`; exact markers |
+| `design-hit-counter` | Class-based | `HitCounter()` + `hit(t)`/`getHits(t)`; exact marker over the 300s window |
+| `online-stock-span` | Class-based | `StockSpanner()` + `next(price)`; exact marker |
+| `insert-delete-getrandom-o1` (+ duplicates) | Class-based (hybrid exact/property marker) | `RandomizedSet()` + `insert`/`remove`→bool (exact) + `getRandom` (membership in live set) |
 | `encode-and-decode-tinyurl` | Class-based (stateful `Codec`, property-checked) | `solve(urls)` encodes each URL twice + decodes; wrapper emits `[shortA, shortB, decoded]` triples so the marker checks prefix, idempotency, distinctness, and round-trip |
 | `serialize-and-deserialize-bst` | Class-based (`Codec` over `tree_node`) | `solve(root)` serializes then deserializes; marker checks tree equality |
 | `encode-n-ary-tree-to-binary-tree` | Class-based (`Codec` string/binary-string, structurally checked) | `solve(data)` encodes twice + decodes; wrapper emits `[binA, binB, nary]` triples so the marker checks idempotency, canonical N-ary form, and the left-child right-sibling binary structure |

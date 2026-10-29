@@ -1,6 +1,6 @@
 import { tsImage, generateTypeScriptRunner, generateTypeScriptInteractiveRunner, tsJudgeClass, tsGetTypeImports, tsListNodeClass, tsTreeNodeClass, tsGraphNodeClass } from "$lib/utils/tsUtil";
 import { getInteractive, judgeFileForKind } from "$lib/utils/interactiveUtil";
-import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE, type Param } from "$lib/utils/util";
+import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE, extractOperations, type Param } from "$lib/utils/util";
 import Dockerode from "dockerode";
 import fs from 'fs/promises';
 import tar from 'tar-stream';
@@ -74,7 +74,7 @@ export class TypeScriptRunner extends ProgramRunner {
             if (problemData.classProblem) {
                 const className = problemData.classProblem.userClassName || 'MedianFinder';
                 pack.entry({ name: `${className}.ts` }, Buffer.from(prefix + this.code));
-                const wrapperCode = generateTypeScriptClassSolution(className, problemData.params, problemData.outputType);
+                const wrapperCode = generateTypeScriptClassSolution(className, problemData.params, problemData.outputType, extractOperations(this.testCases, className));
                 pack.entry({ name: 'Solution.ts' }, Buffer.from(prefix + wrapperCode));
             } else {
                 pack.entry({ name: 'Solution.ts' }, Buffer.from(prefix + this.code));
@@ -134,8 +134,269 @@ export class TypeScriptRunner extends ProgramRunner {
     }
 }
 
-export function generateTypeScriptClassSolution(className: string, params?: Param[], outputType?: string): string {
+export function generateTypeScriptClassSolution(className: string, params?: Param[], outputType?: string, operations?: string[]): string {
     const importLine = `import { ${className} } from './${className}';`;
+    // Stateful flip/reset design (e.g. Random Flip Matrix as FlipMatrix):
+    // constructor takes (m, n) from values[i]; flip() returns [r, c].
+    if (operations && operations.includes('flip')) {
+        return `
+${importLine}
+export class Solution {
+    solve(operations: string[], values: number[][]): string[] {
+        const result: string[] = [];
+        let obj: any = null;
+        for (let i = 0; i < operations.length; i++) {
+            const op = operations[i];
+            if (op === "${className}") {
+                obj = new ${className}(values[i][0], values[i][1]);
+                result.push("null");
+            } else if (op === "flip") {
+                const c = obj.flip();
+                result.push("[" + c[0] + "," + c[1] + "]");
+            } else if (op === "reset") {
+                obj.reset();
+                result.push("null");
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    // Class-design problems: constructor args and value-returning methods.
+    if (className === 'Shuffler') {
+        return `
+${importLine}
+export class Solution {
+    solve(operations: string[], values: number[][]): string[] {
+        const result: string[] = [];
+        let obj: any = null;
+        for (let i = 0; i < operations.length; i++) {
+            const op = operations[i];
+            if (op === "Shuffler") {
+                obj = new Shuffler(values[i]);
+                result.push("null");
+            } else if (op === "shuffle") {
+                result.push("[" + obj.shuffle().join(",") + "]");
+            } else if (op === "reset") {
+                result.push("[" + obj.reset().join(",") + "]");
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'RandPoint') {
+        return `
+${importLine}
+export class Solution {
+    solve(operations: string[], values: number[][]): string[] {
+        const result: string[] = [];
+        let obj: any = null;
+        for (let i = 0; i < operations.length; i++) {
+            const op = operations[i];
+            if (op === "RandPoint") {
+                obj = new RandPoint(values[i][0], values[i][1], values[i][2]);
+                result.push("null");
+            } else if (op === "randPoint") {
+                const p = obj.randPoint();
+                result.push("[" + p[0] + "," + p[1] + "]");
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'WeightedPicker') {
+        return `
+${importLine}
+export class Solution {
+    solve(operations: string[], values: number[][]): string[] {
+        const result: string[] = [];
+        let obj: any = null;
+        for (let i = 0; i < operations.length; i++) {
+            const op = operations[i];
+            if (op === "WeightedPicker") {
+                obj = new WeightedPicker(values[i]);
+                result.push("null");
+            } else if (op === "pickIndex") {
+                result.push(String(obj.pickIndex()));
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'TwoSum') {
+        return `
+${importLine}
+export class Solution {
+    solve(operations: string[], values: number[][]): string[] {
+        const result: string[] = [];
+        let obj: any = null;
+        for (let i = 0; i < operations.length; i++) {
+            const op = operations[i];
+            if (op === "TwoSum") {
+                obj = new TwoSum();
+                result.push("null");
+            } else if (op === "add") {
+                obj.add(values[i][0]);
+                result.push("null");
+            } else if (op === "find") {
+                result.push(String(obj.find(values[i][0])).toLowerCase());
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'MaxStack') {
+        return `
+${importLine}
+export class Solution {
+    solve(operations: string[], values: number[][]): string[] {
+        const result: string[] = [];
+        let obj: any = null;
+        for (let i = 0; i < operations.length; i++) {
+            const op = operations[i];
+            if (op === "MaxStack") {
+                obj = new MaxStack();
+                result.push("null");
+            } else if (op === "push") {
+                obj.push(values[i][0]);
+                result.push("null");
+            } else if (op === "pop") {
+                result.push(String(obj.pop()));
+            } else if (op === "top") {
+                result.push(String(obj.top()));
+            } else if (op === "peekMax") {
+                result.push(String(obj.peekMax()));
+            } else if (op === "popMax") {
+                result.push(String(obj.popMax()));
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'MyHashSet') {
+        return `
+${importLine}
+export class Solution {
+    solve(operations: string[], values: number[][]): string[] {
+        const result: string[] = [];
+        let obj: any = null;
+        for (let i = 0; i < operations.length; i++) {
+            const op = operations[i];
+            if (op === "MyHashSet") {
+                obj = new MyHashSet();
+                result.push("null");
+            } else if (op === "add") {
+                obj.add(values[i][0]);
+                result.push("null");
+            } else if (op === "remove") {
+                obj.remove(values[i][0]);
+                result.push("null");
+            } else if (op === "contains") {
+                result.push(String(obj.contains(values[i][0])).toLowerCase());
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'HitCounter') {
+        return `
+${importLine}
+export class Solution {
+    solve(operations: string[], values: number[][]): string[] {
+        const result: string[] = [];
+        let obj: any = null;
+        for (let i = 0; i < operations.length; i++) {
+            const op = operations[i];
+            if (op === "HitCounter") {
+                obj = new HitCounter();
+                result.push("null");
+            } else if (op === "hit") {
+                obj.hit(values[i][0]);
+                result.push("null");
+            } else if (op === "getHits") {
+                result.push(String(obj.getHits(values[i][0])));
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'StockSpanner') {
+        return `
+${importLine}
+export class Solution {
+    solve(operations: string[], values: number[][]): string[] {
+        const result: string[] = [];
+        let obj: any = null;
+        for (let i = 0; i < operations.length; i++) {
+            const op = operations[i];
+            if (op === "StockSpanner") {
+                obj = new StockSpanner();
+                result.push("null");
+            } else if (op === "next") {
+                result.push(String(obj.next(values[i][0])));
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'RandomizedSet' || className === 'RandomizedCollection') {
+        return `
+${importLine}
+export class Solution {
+    solve(operations: string[], values: number[][]): string[] {
+        const result: string[] = [];
+        let obj: any = null;
+        for (let i = 0; i < operations.length; i++) {
+            const op = operations[i];
+            if (op === "${className}") {
+                obj = new ${className}();
+                result.push("null");
+            } else if (op === "insert") {
+                result.push(String(obj.insert(values[i][0])).toLowerCase());
+            } else if (op === "remove") {
+                result.push(String(obj.remove(values[i][0])).toLowerCase());
+            } else if (op === "getRandom") {
+                result.push(String(obj.getRandom()));
+            }
+        }
+        return result;
+    }
+}`;
+    }
+    if (className === 'MyHashMap') {
+        return `
+${importLine}
+export class Solution {
+    solve(operations: string[], values: number[][]): string[] {
+        const result: string[] = [];
+        let obj: any = null;
+        for (let i = 0; i < operations.length; i++) {
+            const op = operations[i];
+            if (op === "MyHashMap") {
+                obj = new MyHashMap();
+                result.push("null");
+            } else if (op === "put") {
+                obj.put(values[i][0], values[i][1]);
+                result.push("null");
+            } else if (op === "get") {
+                result.push(String(obj.get(values[i][0])));
+            } else if (op === "remove") {
+                obj.remove(values[i][0]);
+                result.push("null");
+            }
+        }
+        return result;
+    }
+}`;
+    }
     if (params && params.length > 0 && params[0]?.type === 'tree_node') {
         return `
 ${importLine}

@@ -4,48 +4,10 @@
   "difficulty": "Easy",
   "link": "https://leetcode.com/problems/max-stack/",
   "category": "stack",
-  "examples": [
-    {
-      "input": "operations = [\"push\",\"push\",\"push\",\"top\",\"popMax\",\"top\",\"peekMax\",\"pop\",\"top\"], values = [5,1,5,0,0,0,0,0,0]",
-      "output": "[5,5,1,5,1,5]",
-      "explanation": "Pushes 5,1,5. Top is 5; popMax removes the upper 5; top is 1; peekMax is 5; pop removes 1; top is 5."
-    },
-    {
-      "input": "operations = [\"push\",\"push\",\"popMax\",\"top\"], values = [1,2,0,0]",
-      "output": "[2,1]",
-      "explanation": "Push 1 then 2; popMax removes 2; top is 1."
-    },
-    {
-      "input": "operations = [\"push\",\"push\",\"peekMax\",\"pop\",\"peekMax\"], values = [2,7,0,0,0]",
-      "output": "[7,7,2]",
-      "explanation": "Push 2 then 7; max is 7; pop removes 7; max becomes 2."
-    }
-  ],
-  "starterCode": {
-    "java": "class Solution {\n    public int[] runMaxStack(String[] operations, int[] values) {\n        return new int[0];\n    }\n}",
-    "python": "from typing import List\nclass Solution:\n    def runMaxStack(self, operations: List[str], values: List[int]) -> List[int]:\n        return []",
-    "cpp": "#include <vector>\n#include <string>\nusing namespace std;\nclass Solution {\npublic:\n    vector<int> runMaxStack(vector<string>& operations, vector<int>& values) {\n        return {};\n    }\n};",
-    "csharp": "public class Solution \n{\n    public int[] RunMaxStack(string[] operations, int[] values) \n    {\n        return System.Array.Empty<int>();\n    }\n}",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn run_max_stack(operations: Vec<String>, values: Vec<i32>) -> Vec<i32> {\n        vec![]\n    }\n}",
-    "go": "package main\n\nfunc RunMaxStack(operations []string, values []int) []int {\n    return []int{}\n}",
-    "typescript": "export function runMaxStack(operations: string[], values: number[]): number[] {\n    return [];\n}",
-    "php": "class Solution {\n    /**\n     * @param string[] $operations\n     * @param int[] $values\n     * @return int[]\n     */\n    public function runMaxStack($operations, $values) {\n\n    }\n}"
+  "classProblem": {
+    "userClassName": "MaxStack"
   },
-  "testCases": [
-    {
-      "operations": "[\"push\",\"push\",\"push\",\"top\",\"popMax\",\"top\",\"peekMax\",\"pop\",\"top\"]",
-      "values": "[5,1,5,0,0,0,0,0,0]"
-    },
-    {
-      "operations": "[\"push\",\"push\",\"peekMax\",\"pop\",\"peekMax\"]",
-      "values": "[2,7,0,0,0]"
-    },
-    {
-      "operations": "[\"push\",\"push\",\"top\",\"pop\",\"top\"]",
-      "values": "[4,4,0,0,0]"
-    }
-  ],
-  "functionName": "runMaxStack",
+  "functionName": "solve",
   "params": [
     {
       "name": "operations",
@@ -53,13 +15,54 @@
     },
     {
       "name": "values",
-      "type": "int_array"
+      "type": "int_array_2d"
     }
   ],
-  "outputType": "int_array",
+  "outputType": "string_list",
+  "examples": [
+    {
+      "input": "operations = [\"MaxStack\",\"push\",\"push\",\"push\",\"top\",\"popMax\",\"top\",\"peekMax\",\"pop\",\"top\"], values = [[],[5],[1],[5],[],[],[],[],[],[]]",
+      "output": "[null,null,null,null,5,5,1,5,1,5]",
+      "explanation": "Push 5, 1, 5. Top is 5; popMax removes the upper 5; top is 1; peekMax is 5; pop removes 1; top is 5."
+    },
+    {
+      "input": "operations = [\"MaxStack\",\"push\",\"push\",\"popMax\",\"top\"], values = [[],[1],[2],[],[]]",
+      "output": "[null,null,null,2,1]",
+      "explanation": "Push 1 then 2; popMax removes 2; top is 1."
+    },
+    {
+      "input": "operations = [\"MaxStack\",\"push\",\"push\",\"peekMax\",\"pop\",\"peekMax\"], values = [[],[2],[7],[],[],[]]",
+      "output": "[null,null,null,7,7,2]",
+      "explanation": "Push 2 then 7; the max is 7; pop removes 7; the max becomes 2."
+    }
+  ],
+  "testCases": [
+    {
+      "operations": "[\"MaxStack\",\"push\",\"push\",\"push\",\"top\",\"popMax\",\"top\",\"peekMax\",\"pop\",\"top\"]",
+      "values": "[[],[5],[1],[5],[],[],[],[],[],[]]"
+    },
+    {
+      "operations": "[\"MaxStack\",\"push\",\"push\",\"popMax\",\"top\"]",
+      "values": "[[],[1],[2],[],[]]"
+    },
+    {
+      "operations": "[\"MaxStack\",\"push\",\"push\",\"peekMax\",\"pop\",\"peekMax\"]",
+      "values": "[[],[2],[7],[],[],[]]"
+    }
+  ],
+  "starterCode": {
+    "java": "class MaxStack {\n    public MaxStack() {\n\n    }\n\n    public void push(int x) {\n\n    }\n\n    public int pop() {\n        return 0;\n    }\n\n    public int top() {\n        return 0;\n    }\n\n    public int peekMax() {\n        return 0;\n    }\n\n    public int popMax() {\n        return 0;\n    }\n}",
+    "python": "class MaxStack:\n    def __init__(self):\n        pass\n\n    def push(self, x: int) -> None:\n        pass\n\n    def pop(self) -> int:\n        return 0\n\n    def top(self) -> int:\n        return 0\n\n    def peekMax(self) -> int:\n        return 0\n\n    def popMax(self) -> int:\n        return 0",
+    "cpp": "class MaxStack {\npublic:\n    MaxStack() {\n\n    }\n\n    void push(int x) {\n\n    }\n\n    int pop() {\n        return 0;\n    }\n\n    int top() {\n        return 0;\n    }\n\n    int peekMax() {\n        return 0;\n    }\n\n    int popMax() {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class MaxStack {\n    public MaxStack() {\n\n    }\n\n    public void Push(int x) {\n\n    }\n\n    public int Pop() {\n        return 0;\n    }\n\n    public int Top() {\n        return 0;\n    }\n\n    public int PeekMax() {\n        return 0;\n    }\n\n    public int PopMax() {\n        return 0;\n    }\n}",
+    "go": "package main\n\ntype MaxStack struct {\n\n}\n\nfunc Constructor() MaxStack {\n    return MaxStack{}\n}\n\nfunc (this *MaxStack) Push(x int) {\n\n}\n\nfunc (this *MaxStack) Pop() int {\n    return 0\n}\n\nfunc (this *MaxStack) Top() int {\n    return 0\n}\n\nfunc (this *MaxStack) PeekMax() int {\n    return 0\n}\n\nfunc (this *MaxStack) PopMax() int {\n    return 0\n}",
+    "rust": "pub struct MaxStack {\n\n}\n\nimpl MaxStack {\n    pub fn new() -> Self {\n        MaxStack {}\n    }\n\n    pub fn push(&mut self, x: i32) {\n    }\n\n    pub fn pop(&mut self) -> i32 {\n        0\n    }\n\n    pub fn top(&self) -> i32 {\n        0\n    }\n\n    pub fn peek_max(&self) -> i32 {\n        0\n    }\n\n    pub fn pop_max(&mut self) -> i32 {\n        0\n    }\n}",
+    "typescript": "export class MaxStack {\n    constructor() {\n\n    }\n\n    push(x: number): void {\n\n    }\n\n    pop(): number {\n        return 0;\n    }\n\n    top(): number {\n        return 0;\n    }\n\n    peekMax(): number {\n        return 0;\n    }\n\n    popMax(): number {\n        return 0;\n    }\n}",
+    "php": "class MaxStack {\n    public function __construct() {\n\n    }\n\n    public function push($x) {\n\n    }\n\n    public function pop() {\n\n    }\n\n    public function top() {\n\n    }\n\n    public function peekMax() {\n\n    }\n\n    public function popMax() {\n\n    }\n}"
+  },
   "hints": [
-    "Keep a plain list as the stack; scanning for the maximum is fine for correctness and keeps the reference simple.",
-    "popMax must delete the topmost copy of the maximum, not just any copy.",
-    "Only pop, top, peekMax and popMax append answers; push only mutates. Adaptation: operations and values run in parallel (0 marks no argument)."
+    "Track the maximum alongside the values: a parallel max stack makes top and peekMax O(1).",
+    "popMax must remove the topmost copy of the maximum; buffering the elements above it and pushing them back works.",
+    "Construction and push report \"null\"; pop, top, peekMax and popMax report plain integers."
   ]
 }

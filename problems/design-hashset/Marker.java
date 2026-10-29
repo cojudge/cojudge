@@ -1,30 +1,42 @@
 import java.util.*;
-
 class Marker {
-    public int[] runHashSet(String[] operations, int[] values) {
-        if (operations == null || values == null || operations.length != values.length) {
-            return new int[0];
-        }
-        Set<Integer> set = new HashSet<>();
-        List<Integer> answers = new ArrayList<>();
+    public List<String> solve(String[] operations, int[][] values) {
+        List<String> result = new ArrayList<>();
+        MyHashSet obj = null;
         for (int i = 0; i < operations.length; i++) {
             String op = operations[i];
             if (op.equals("MyHashSet")) {
-                set.clear();
+                obj = new MyHashSet();
+                result.add("null");
             } else if (op.equals("add")) {
-                set.add(values[i]);
+                obj.add(values[i][0]);
+                result.add("null");
             } else if (op.equals("remove")) {
-                set.remove(values[i]);
+                obj.remove(values[i][0]);
+                result.add("null");
             } else if (op.equals("contains")) {
-                answers.add(set.contains(values[i]) ? 1 : 0);
-            } else {
-                throw new IllegalArgumentException("Unknown operation: " + op);
+                result.add(String.valueOf(obj.contains(values[i][0])));
             }
         }
-        return answers.stream().mapToInt(Integer::intValue).toArray();
+        return result;
     }
 
-    public boolean isCorrect(String[] operations, int[] values, int[] output) {
-        return output != null && Arrays.equals(runHashSet(operations, values), output);
+    public boolean isCorrect(String[] operations, int[][] values, List<String> output) {
+        if (operations == null || values == null || output == null) return false;
+        if (values.length != operations.length || output.size() != operations.length) return false;
+        return solve(operations, values).equals(output);
+    }
+
+    static class MyHashSet {
+        private final Set<Integer> set = new HashSet<>();
+        void add(int key) {
+            set.add(key);
+        }
+        void remove(int key) {
+            set.remove(key);
+        }
+        boolean contains(int key) {
+            return set.contains(key);
+        }
     }
 }

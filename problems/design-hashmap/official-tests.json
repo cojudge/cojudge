@@ -1,131 +1,110 @@
 [
   {
-    "operations": "[\"MyHashMap\",\"put\",\"put\",\"get\",\"get\",\"put\",\"get\",\"remove\",\"get\"]",
-    "args": "[[],[1,1],[2,2],[1],[3],[2,1],[2],[2],[2]]"
+    "operations": "[\"MyHashMap\", \"put\", \"put\", \"get\", \"get\", \"put\", \"get\", \"remove\", \"get\"]",
+    "values": "[[], [1, 1], [2, 2], [1], [3], [2, 1], [2], [2], [2]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"get\",\"put\",\"get\",\"remove\",\"get\"]",
-    "args": "[[],[5],[5,7],[5],[5],[5]]"
+    "operations": "[\"MyHashMap\", \"get\", \"put\", \"get\", \"remove\", \"get\"]",
+    "values": "[[], [5], [5, 7], [5], [5], [5]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"put\",\"remove\"]",
-    "args": "[[],[3,9],[3]]"
+    "operations": "[\"MyHashMap\", \"put\", \"remove\"]",
+    "values": "[[], [3, 9], [3]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"put\",\"get\",\"put\",\"get\"]",
-    "args": "[[],[0,0],[0],[0,5],[0]]"
+    "operations": "[\"MyHashMap\", \"put\", \"get\", \"put\", \"get\"]",
+    "values": "[[], [0, 0], [0], [0, 5], [0]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"put\",\"put\",\"get\",\"remove\",\"get\"]",
-    "args": "[[],[1000000,5],[1000000,6],[1000000],[1000000],[1000000]]"
+    "operations": "[\"MyHashMap\", \"put\", \"put\", \"get\", \"remove\", \"get\"]",
+    "values": "[[], [1000000, 5], [1000000, 6], [1000000], [1000000], [1000000]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"remove\",\"get\",\"put\",\"get\"]",
-    "args": "[[],[42],[42],[42,1],[42]]"
+    "operations": "[\"MyHashMap\", \"remove\", \"get\", \"put\", \"get\"]",
+    "values": "[[], [42], [42], [42, 1], [42]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"put\",\"put\",\"put\",\"get\",\"get\",\"get\"]",
-    "args": "[[],[1,10],[2,20],[3,30],[1],[2],[4]]"
+    "operations": "[\"MyHashMap\", \"put\", \"put\", \"put\", \"get\", \"get\", \"get\"]",
+    "values": "[[], [1, 10], [2, 20], [3, 30], [1], [2], [4]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"put\",\"get\",\"remove\",\"get\",\"put\",\"get\"]",
-    "args": "[[],[7,3],[7],[7],[7],[7,4],[7]]"
+    "operations": "[\"MyHashMap\", \"put\", \"get\", \"remove\", \"get\", \"put\", \"get\"]",
+    "values": "[[], [7, 3], [7], [7], [7], [7, 4], [7]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"put\",\"put\",\"remove\",\"get\",\"get\"]",
-    "args": "[[],[1,1],[1,2],[1],[1],[2]]"
+    "operations": "[\"MyHashMap\", \"put\", \"put\", \"remove\", \"get\", \"get\"]",
+    "values": "[[], [1, 1], [1, 2], [1], [1], [2]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"get\",\"get\"]",
-    "args": "[[],[0],[1000000]]"
+    "operations": "[\"MyHashMap\", \"get\", \"get\"]",
+    "values": "[[], [0], [1000000]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"put\",\"get\",\"put\",\"get\",\"remove\",\"get\"]",
-    "args": "[[],[5,5],[5],[5,6],[5],[5],[5]]"
+    "operations": "[\"MyHashMap\", \"put\", \"remove\", \"put\", \"get\"]",
+    "values": "[[], [9, 9], [9], [9, 10], [9]]"
   },
   {
-    "operations": "@javascript:JSON.stringify([\"MyHashMap\",...Array(5000).fill(\"put\"),...Array(5000).fill(\"get\")])",
-    "args": "@javascript:JSON.stringify([[],...Array.from({length:5000},(_,i)=>[i,i*2]),...Array.from({length:5000},(_,i)=>[i])])",
-    "_isLargeTest": true
+    "operations": "[\"MyHashMap\", \"put\", \"put\", \"put\", \"put\", \"put\", \"get\", \"get\", \"get\", \"get\", \"get\"]",
+    "values": "[[], [1, 2], [3, 4], [5, 6], [7, 8], [9, 10], [1], [3], [5], [7], [11]]"
   },
   {
-    "operations": "[\"MyHashMap\"]",
-    "args": "[[]]"
+    "operations": "[\"MyHashMap\", \"remove\", \"get\", \"put\", \"put\", \"put\", \"remove\", \"get\", \"get\"]",
+    "values": "[[], [23], [25], [-5, -36], [13, 8], [2, 16], [29], [8], [-18]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"put\",\"get\"]",
-    "args": "[[],[0,0],[0]]"
+    "operations": "[\"MyHashMap\", \"remove\", \"remove\", \"put\", \"put\", \"put\", \"remove\", \"put\", \"remove\", \"put\", \"get\", \"get\", \"put\"]",
+    "values": "[[], [13], [21], [-27, -90], [26, -13], [-9, 39], [23], [25, 71], [16], [-11, -100], [5], [-24], [-3, 70]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"put\",\"get\"]",
-    "args": "[[],[1000000,1000000],[1000000]]"
+    "operations": "[\"MyHashMap\", \"get\", \"put\", \"put\", \"get\", \"get\"]",
+    "values": "[[], [21], [-1, -75], [24, 12], [-16], [-30]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"put\",\"put\",\"get\"]",
-    "args": "[[],[10,20],[10,30],[10]]"
+    "operations": "[\"MyHashMap\", \"put\", \"remove\", \"get\", \"put\", \"remove\", \"remove\", \"remove\", \"remove\", \"get\", \"put\", \"get\", \"get\"]",
+    "values": "[[], [-16, -99], [8], [-17], [18, 36], [12], [-9], [-2], [4], [4], [-8, -80], [-11], [-1]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"remove\",\"get\"]",
-    "args": "[[],[999],[999]]"
+    "operations": "[\"MyHashMap\", \"put\", \"remove\", \"get\", \"remove\", \"get\", \"remove\", \"remove\", \"remove\", \"remove\", \"remove\", \"remove\"]",
+    "values": "[[], [-25, 9], [2], [-5], [-19], [16], [-24], [-3], [19], [16], [-12], [6]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"put\",\"put\",\"put\",\"get\",\"get\",\"get\"]",
-    "args": "[[],[5,50],[6,60],[7,70],[5],[6],[8]]"
+    "operations": "[\"MyHashMap\", \"put\", \"get\", \"get\", \"get\", \"get\", \"get\", \"get\", \"put\"]",
+    "values": "[[], [-18, -31], [-16], [-4], [28], [29], [23], [-7], [-12, 85]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"put\",\"get\",\"remove\",\"get\",\"put\",\"get\"]",
-    "args": "[[],[100,1],[100],[100],[100],[100,2],[100]]"
+    "operations": "[\"MyHashMap\", \"get\", \"get\", \"get\", \"put\", \"get\", \"put\", \"get\", \"put\", \"get\", \"remove\"]",
+    "values": "[[], [-11], [-26], [29], [-29, 36], [17], [7, 38], [18], [-5, -18], [-7], [16]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"put\",\"get\"]",
-    "args": "[[],[0,1000000],[0]]"
+    "operations": "[\"MyHashMap\", \"put\", \"put\", \"put\", \"get\", \"remove\", \"get\", \"put\", \"put\", \"put\", \"remove\", \"remove\", \"get\"]",
+    "values": "[[], [-6, -35], [-5, -30], [6, 76], [-9], [-13], [-4], [7, 3], [-17, -77], [10, 37], [-2], [0], [-1]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"put\",\"put\",\"get\",\"get\"]",
-    "args": "[[],[1,1],[1000000,2],[1],[1000000]]"
+    "operations": "[\"MyHashMap\", \"put\", \"get\", \"remove\", \"get\", \"get\", \"get\", \"remove\", \"get\", \"get\", \"get\"]",
+    "values": "[[], [24, -26], [-13], [19], [19], [-22], [-5], [-24], [-29], [15], [29]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"put\",\"remove\",\"put\",\"get\"]",
-    "args": "[[],[9,9],[9],[9,10],[9]]"
+    "operations": "[\"MyHashMap\", \"get\", \"get\", \"put\", \"remove\", \"get\", \"remove\", \"get\", \"get\", \"remove\"]",
+    "values": "[[], [13], [19], [-17, 70], [14], [-9], [-27], [-5], [-8], [20]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"get\",\"get\",\"get\"]",
-    "args": "[[],[1],[2],[3]]"
+    "operations": "[\"MyHashMap\", \"get\", \"put\", \"get\", \"get\", \"remove\"]",
+    "values": "[[], [-17], [8, -88], [14], [-21], [22]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"put\",\"put\",\"remove\",\"put\",\"get\",\"get\"]",
-    "args": "[[],[4,40],[5,50],[4],[4,44],[4],[5]]"
+    "operations": "[\"MyHashMap\", \"put\", \"get\", \"get\", \"get\", \"get\"]",
+    "values": "[[], [17, 54], [2], [5], [12], [7]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"put\",\"get\",\"put\",\"get\",\"put\",\"get\"]",
-    "args": "[[],[123,456],[123],[123,789],[123],[999999,1],[999999]]"
+    "operations": "[\"MyHashMap\", \"put\", \"get\", \"put\", \"put\", \"get\", \"put\", \"put\", \"get\", \"put\", \"put\", \"remove\", \"remove\"]",
+    "values": "[[], [-21, 99], [-17], [-30, -42], [-30, -16], [28], [-18, -68], [-20, 22], [-22], [13, -60], [-18, 33], [-5], [-1]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"remove\",\"remove\",\"put\",\"get\"]",
-    "args": "[[],[1],[1],[1,5],[1]]"
+    "operations": "[\"MyHashMap\", \"put\", \"put\", \"get\", \"remove\", \"get\"]",
+    "values": "[[], [1, 1], [1, 2], [1], [1], [1]]"
   },
   {
-    "operations": "[\"MyHashMap\",\"put\",\"put\",\"put\",\"put\",\"get\",\"remove\",\"get\"]",
-    "args": "[[],[11,1],[22,2],[33,3],[44,4],[33],[33],[33]]"
-  },
-  {
-    "operations": "[\"MyHashMap\",\"put\",\"get\",\"get\"]",
-    "args": "[[],[500000,0],[500000],[500001]]"
-  },
-  {
-    "operations": "[\"MyHashMap\",\"put\",\"put\",\"get\",\"remove\",\"put\",\"get\"]",
-    "args": "[[],[8,80],[8,81],[8],[8],[8,82],[8]]"
-  },
-  {
-    "operations": "[\"MyHashMap\",\"put\",\"put\",\"put\",\"get\",\"get\",\"remove\",\"get\",\"get\"]",
-    "args": "[[],[2,20],[3,30],[4,40],[2],[4],[2],[2],[4]]"
-  },
-  {
-    "operations": "[\"MyHashMap\",\"put\",\"get\",\"remove\",\"put\",\"get\"]",
-    "args": "[[],[777,888],[777],[777],[777,999],[777]]"
-  },
-  {
-    "operations": "[\"MyHashMap\",\"put\",\"put\",\"put\",\"put\",\"put\",\"get\",\"get\",\"get\",\"get\",\"get\"]",
-    "args": "[[],[1,2],[3,4],[5,6],[7,8],[9,10],[1],[3],[5],[7],[11]]"
+    "operations": "[\"MyHashMap\", \"get\", \"remove\", \"get\"]",
+    "values": "[[], [-5], [-5], [-5]]"
   }
 ]
