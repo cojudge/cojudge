@@ -13,27 +13,6 @@ The class keeps its LeetCode name `RandomizedCollection` here (instead of `Solut
 
 Grading: `insert`/`remove` booleans are compared exactly against a reference model tracking per-value counts, and each `getRandom` output must have a remaining copy at that point. Only validity is checked — the sampling distribution is not statistically tested.
 
-**Example 1:**
-```
-Input: operations = ["RandomizedCollection","insert","insert","insert"], values = [[],[1],[1],[2]]
-Output: [null,true,false,true]
-Explanation: The first insert of 1 is new (true); the second insert of 1 finds a copy (false); inserting 2 is new (true).
-```
-
-**Example 2:**
-```
-Input: operations = ["RandomizedCollection","insert","insert","remove","remove"], values = [[],[2],[2],[2],[2]]
-Output: [null,true,false,true,true]
-Explanation: After two inserts of 2, each remove deletes one copy; one copy remains.
-```
-
-**Example 3:**
-```
-Input: operations = ["RandomizedCollection","insert","getRandom"], values = [[],[9],[]]
-Output: [null,true,9]
-Explanation: With only 9 held, getRandom must return 9.
-```
-
 **Constraints:**
 - `-2^31 <= val <= 2^31 - 1`
 - At most `2 * 10^5` calls will be made to `insert`, `remove`, and `getRandom`.
