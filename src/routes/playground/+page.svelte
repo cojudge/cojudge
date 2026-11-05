@@ -6583,7 +6583,10 @@ echo "hello\\n";`,
         return map;
     })();
     $: previewHtml = (() => {
-        if (!activeTab || activeTab.type !== 'preview' || !activeTab.sourceFileId) return '';
+        // The read-only DOM is hidden while WYSIWYG is active. Re-parsing the
+        // whole document on every keystroke is wasted work and can freeze the
+        // page on pathological Markdown, so only render it when it is visible.
+        if (!activeTab || activeTab.type !== 'preview' || !activeTab.sourceFileId || previewEditMode) return '';
         const fkey = fileKey();
         const files = JSON.parse(fileStoreValue[fkey] || '[]') as FileEntry[];
         const sourceEntry = files.find((f: FileEntry) => f.fileId === activeTab.sourceFileId && f.language === 'markdown');
