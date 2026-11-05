@@ -150,7 +150,7 @@ test('discarding an active WYSIWYG file reloads the restored content', async ({ 
       ])
     });
     localStorage.setItem('files', restoredFiles);
-    window.dispatchEvent(new StorageEvent('storage', { key: 'files', newValue: restoredFiles }));
+    window.dispatchEvent(new StorageEvent('storage', { key: 'files', newValue: restoredFiles, storageArea: localStorage }));
     window.dispatchEvent(new CustomEvent('cojudge:cloud-file-discarded', { detail: { fileId: 'active-file' } }));
     window.dispatchEvent(new Event('cojudge:cloud-flush'));
   });
@@ -1364,7 +1364,7 @@ test('WYSIWYG @ mention inserts a playground file link and click switches tab', 
   // Clicking the in-app link switches tab without leaving playground
   await link.click();
   await expect(page).toHaveURL(/\/playground/);
-  await expect(page.locator('.tab.active')).toContainText('TargetDoc');
+  await expect(page.getByRole('tab', { name: /TargetDoc/ })).toHaveAttribute('aria-selected', 'true');
 });
 
 test('WYSIWYG checklists toggle, continue on Enter, and break out when empty', async ({ page }) => {

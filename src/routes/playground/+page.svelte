@@ -3895,8 +3895,9 @@ echo "hello\\n";`,
         if (!line || line.parentElement !== wysiwygEl || !/^(P|DIV)$/.test(line.tagName)) return;
         // Only the visible text must be the fence: ignore inline formatting
         // wrappers (e.g. <strong>---</strong> when bold is still active after a
-        // bold line). Never trigger inside inline code.
-        if (line.querySelector('pre, code')) return;
+        // bold line). Never trigger inside inline code. A soft break (<br>) is
+        // invisible to textContent, so "-<br>--" must not count as one fence.
+        if (line.querySelector('pre, code, br')) return;
         if ((line.textContent || '').replace(/\u200B/g, '') !== '---') return;
 
         insertWysiwygHorizontalRule(line);
