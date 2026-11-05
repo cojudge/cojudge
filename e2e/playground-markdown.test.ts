@@ -209,6 +209,47 @@ test('WYSIWYG paste turns a URL string into a link', async ({ page }) => {
   await expect.poll(() => getMarkdownContent(page)).toContain('[https://example.com/path](https://example.com/path)');
 });
 
+test('WYSIWYG remains editable and reloadable with repeated incomplete links', async ({ page }) => {
+  const malformed = '[a]('.repeat(1000);
+  const links = Array.from({ length: 20 }, (_, index) =>
+    `[Link ${index}](https://example.com/${index})`
+  ).join(' ');
+  const content = `${links}\n\n${malformed}`;
+  await page.addInitScript((initialContent) => {
+    if (sessionStorage.getItem('malformed-links-seeded')) return;
+    sessionStorage.setItem('malformed-links-seeded', 'true');
+    localStorage.setItem('user-settings', JSON.stringify({ playgroundPreferredLanguage: 'markdown' }));
+    localStorage.setItem('playground-markdown-mode', 'wysiwyg');
+    localStorage.setItem('files', JSON.stringify({
+      playground: JSON.stringify([
+        { fileId: 'malformed-links', fileName: 'Links', language: 'markdown', content: initialContent, isOpen: true, order: 0, lastUpdated: Date.now() }
+      ])
+    }));
+  }, content);
+  const pageErrors: string[] = [];
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+
+  await page.goto('/playground');
+  const editable = page.locator('.wysiwyg-editing');
+  await expect(editable).toBeVisible();
+  await expect(editable.locator('a')).toHaveCount(20);
+  await expect(editable).toContainText('[a]([a]([a](');
+
+  // Exercise the read-only renderer too, then return to the persisted editor.
+  await page.getByRole('button', { name: 'Preview', exact: true }).click();
+  await expect(page.locator('.markdown-preview:not(.wysiwyg-editing) a')).toHaveCount(20);
+  await page.getByRole('button', { name: 'WYSIWYG', exact: true }).click();
+  await expect(editable).toBeVisible();
+  await editable.locator('> p:last-child').click();
+  await page.keyboard.type('still editable');
+  await expect.poll(() => getFileContent(page, 'malformed-links', 'markdown')).toContain('still editable');
+
+  await page.reload();
+  await expect(editable).toBeVisible();
+  await expect(editable).toContainText('still editable');
+  expect(pageErrors).toEqual([]);
+});
+
 test('browser WYSIWYG opens external links in a new tab', async ({ page }) => {
   await page.goto('/playground');
   await page.evaluate(() => {

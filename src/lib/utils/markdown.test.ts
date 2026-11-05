@@ -32,6 +32,16 @@ describe('markdown utils', () => {
         expect(plain).toContain('rel="noopener noreferrer"');
     });
 
+    // marked 16.4.0 backtracks superlinearly on this shape: 500 repetitions
+    // take ~450ms and 1000 take ~2.6s. Keep a generous bound for fixed versions
+    // while preventing the pathological parser behavior from regressing.
+    it('renders repeated incomplete links without pathological backtracking', { timeout: 1000 }, () => {
+        const malformed = '[a]('.repeat(1000);
+        const expected = `<p>${malformed}</p>\n`;
+        expect(renderMarkdownPlain(malformed)).toBe(expected);
+        expect(renderMarkdown(malformed)).toBe(expected);
+    });
+
     it('parses playground file links and renders them as file mentions', () => {
         expect(parsePlaygroundFileId('/playground?fileId=abc-123')).toBe('abc-123');
         expect(parsePlaygroundFileId('https://example.com/playground?fileId=xyz')).toBe('xyz');
