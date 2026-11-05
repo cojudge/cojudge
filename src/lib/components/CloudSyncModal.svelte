@@ -9,14 +9,19 @@
         deleteCloudRevision,
         disconnectCloud,
         discardLocalFileChanges,
+        dropCloudStash,
         fetchCloudFileChanges,
+        listCloudStashes,
+        popCloudStash,
         pushLocalFileChanges,
         refreshCloudLocalState,
         resolveCloudProgress,
         restoreCloudRevision,
+        stashLocalChanges,
         syncCloudNow
     } from '$lib/cloudSync';
     import type { FileChange } from '$lib/cloudFileChange';
+    import type { CloudStashSummary } from '$lib/cloudStash';
     import { activeDialog, showChoice, showConfirm } from '$lib/dialogs';
     import { hasDotFiles, listDotFiles } from '$lib/progressBackup';
 
@@ -37,6 +42,10 @@
     let cloudFileChangesError = '';
     let selectedCloudFileIds = new Set<string>();
     let expandedDiffs = new Set<string>();
+    let cloudStashes: CloudStashSummary[] = [];
+    let cloudStashesLoading = false;
+    let cloudStashActionId = '';
+    let cloudStashMessage = '';
     function toggleDiff(key: string) {
         const next = new Set(expandedDiffs);
         if (next.has(key)) {
@@ -83,6 +92,17 @@
         return formatAgo(value, true);
     }
 
+    function formatExpiresAt(value: number): string {
+        const remaining = value - Date.now();
+        if (remaining <= 0) return 'expired';
+        const minutes = Math.ceil(remaining / 60_000);
+        if (minutes < 60) return `in ${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`;
+        const hours = Math.ceil(remaining / 3_600_000);
+        if (hours < 24) return `in ${hours} ${hours === 1 ? 'hour' : 'hours'}`;
+        const days = Math.ceil(remaining / 86_400_000);
+        return `in ${days} ${days === 1 ? 'day' : 'days'}`;
+    }
+
     function formatCloudRevisionSize(value: number): string {
         if (value < 1024) return `${value} B`;
         if (value < 1024 * 1024) return `${Math.ceil(value / 1024)} KB`;
@@ -96,7 +116,9 @@
     async function openModal() {
         showAllCloudHistory = false;
         selectedCloudFileIds = new Set();
+        cloudStashMessage = '';
         await refreshCloudLocalState();
+        await loadCloudStashes();
         await tick();
         cloudPrimaryButton?.focus();
     }
@@ -227,6 +249,92 @@
             // The shared cloud state renders the actionable error.
         } finally {
             cloudActionPending = false;
+        }
+    }
+
+    async function loadCloudStashes() {
+        if (cloudStashesLoading) return;
+        if ($cloudSyncState.authStatus !== 'signed-in') {
+            cloudStashes = [];
+            return;
+        }
+        cloudStashesLoading = true;
+        try {
+            cloudStashes = await listCloudStashes();
+        } catch (error) {
+            cloudStashMessage = error instanceof Error ? error.message : 'Could not load cloud stashes.';
+            cloudStashes = [];
+        } finally {
+            cloudStashesLoading = false;
+        }
+    }
+
+    async function stashCurrentChanges() {
+        const confirmed = await showConfirm(
+            'Local changes will be saved as a cloud stash, then this device will restore the latest cloud working copy. Pop the stash later to bring those changes back.',
+            {
+                title: 'Stash local changes',
+                confirmLabel: 'Stash changes'
+            }
+        );
+        if (!confirmed) return;
+        cloudActionPending = true;
+        cloudStashMessage = '';
+        try {
+            const stash = await stashLocalChanges();
+            await loadCloudStashes();
+            cloudStashMessage = `Stashed ${stash.changeCount} ${stash.changeCount === 1 ? 'change' : 'changes'} as “${stash.name}”.`;
+            await refreshCloudLocalState();
+        } catch {
+            // The shared cloud state renders the actionable error.
+        } finally {
+            cloudActionPending = false;
+        }
+    }
+
+    function stashConflictSummary(conflicts: Array<{ fileName: string; slug: string; reason: string }>): string {
+        const labels = conflicts.slice(0, 3).map((conflict) => `${conflict.slug}/${conflict.fileName}`).join(', ');
+        const more = conflicts.length > 3 ? ` and ${conflicts.length - 3} more` : '';
+        return `${labels}${more}`;
+    }
+
+    async function popStash(stash: CloudStashSummary) {
+        cloudStashActionId = stash.stashId;
+        cloudStashMessage = '';
+        try {
+            const result = await popCloudStash(stash.stashId);
+            await loadCloudStashes();
+            if (result.conflicts.length > 0) {
+                cloudStashMessage = `Applied ${result.applied.length} ${result.applied.length === 1 ? 'change' : 'changes'}; kept the stash because ${result.conflicts.length} ${result.conflicts.length === 1 ? 'path conflicts' : 'paths conflict'} with newer local work: ${stashConflictSummary(result.conflicts)}.`;
+            } else {
+                cloudStashMessage = result.applied.length > 0
+                    ? `Popped “${stash.name}” and applied ${result.applied.length} ${result.applied.length === 1 ? 'change' : 'changes'}.`
+                    : `“${stash.name}” was already applied.`;
+            }
+            await refreshCloudLocalState();
+        } catch {
+            // The shared cloud state renders the actionable error.
+        } finally {
+            cloudStashActionId = '';
+        }
+    }
+
+    async function deleteStash(stash: CloudStashSummary) {
+        const confirmed = await showConfirm(
+            `Delete “${stash.name}” from Cojudge Cloud? The saved changes cannot be restored after this.`,
+            { title: 'Delete stash', confirmLabel: 'Delete stash', tone: 'danger' }
+        );
+        if (!confirmed) return;
+        cloudStashActionId = stash.stashId;
+        cloudStashMessage = '';
+        try {
+            await dropCloudStash(stash.stashId);
+            await loadCloudStashes();
+            cloudStashMessage = `Deleted “${stash.name}”.`;
+        } catch {
+            // The shared cloud state renders the actionable error.
+        } finally {
+            cloudStashActionId = '';
         }
     }
 
@@ -540,6 +648,7 @@
                                 {#if $cloudSyncState.resolution === 'local-changes'}
                                     <button class="btn cloud-file-push-selected" type="button" onclick={pushSelectedCloudFiles} disabled={cloudActionPending || cloudFileChangesLoading || selectedCloudFileIds.size === 0}>Push selected{selectedCloudFileIds.size > 0 ? ` (${selectedCloudFileIds.size})` : ''}</button>
                                 {/if}
+                                <button class="btn cloud-stash-create" type="button" onclick={stashCurrentChanges} disabled={cloudActionPending || cloudFileChangesLoading}>Stash all changes</button>
                                 <button class="btn cloud-file-discard cloud-file-discard-selected" type="button" onclick={discardSelectedCloudFiles} disabled={cloudActionPending || cloudFileChangesLoading || selectedCloudFileIds.size === 0}>Discard selected{selectedCloudFileIds.size > 0 ? ` (${selectedCloudFileIds.size})` : ''}</button>
                                 <button class="btn cloud-file-select-all" type="button" onclick={selectAllCloudFiles} disabled={cloudActionPending || cloudFileChangesLoading || cloudFileChanges.length === 0 || selectedCloudFileIds.size === cloudFileChanges.length}>Select all</button>
                             </div>
@@ -600,6 +709,39 @@
             {/if}
 
             <p class="cloud-offline-note">Cojudge stays offline-first. Local saves never wait for the cloud, and judging works without signing in or connecting to the internet. Files that start with `.` (e.g. `.env`) are left out of cloud backups and appear faded as hidden files in the playground file tabs</p>
+            {#if $cloudSyncState.authStatus === 'signed-in' && $cloudSyncState.resolution !== 'account'}
+                {#if cloudStashes.length > 0 || cloudStashesLoading || cloudStashMessage}
+                    <div class="cloud-stashes">
+                        <div class="cloud-history-heading">
+                            <strong>Cloud stashes</strong>
+                            <button class="btn cloud-file-reload" type="button" onclick={loadCloudStashes} disabled={cloudStashesLoading || Boolean(cloudStashActionId)}>{cloudStashesLoading ? 'Loading…' : 'Refresh'}</button>
+                        </div>
+                        {#if cloudStashMessage}
+                            <p class="cloud-stash-message" role="status">{cloudStashMessage}</p>
+                        {/if}
+                        {#if cloudStashesLoading && cloudStashes.length === 0}
+                            <p class="cloud-file-changes-empty">Loading stashes…</p>
+                        {:else if cloudStashes.length > 0}
+                            <div class="cloud-stash-list">
+                                {#each cloudStashes as stash}
+                                    <div class="cloud-stash-row">
+                                        <div class="cloud-history-details">
+                                            <strong>{stash.name}</strong>
+                                            <span>{stash.changeCount} {stash.changeCount === 1 ? 'change' : 'changes'} · {formatAgo(stash.createdAt, true)} · expires {formatExpiresAt(stash.expiresAt)}</span>
+                                        </div>
+                                        <div class="cloud-history-actions">
+                                            <button class="btn cloud-restore-version" type="button" onclick={() => popStash(stash)} disabled={cloudActionPending || Boolean(cloudStashActionId)}>{cloudStashActionId === stash.stashId ? 'Popping…' : 'Pop'}</button>
+                                            <button class="btn cloud-delete-version" type="button" onclick={() => deleteStash(stash)} disabled={cloudActionPending || Boolean(cloudStashActionId)}>Delete</button>
+                                        </div>
+                                    </div>
+                                {/each}
+                            </div>
+                        {:else}
+                            <p class="cloud-file-changes-empty">No stashes saved for this workspace.</p>
+                        {/if}
+                    </div>
+                {/if}
+            {/if}
             {#if $cloudSyncState.authStatus === 'signed-in' && $cloudSyncState.resolution !== 'account' && $cloudSyncState.history.length > 0}
                 <div class="cloud-history">
                     <div class="cloud-history-heading">
@@ -1141,6 +1283,41 @@
         padding: 0.75rem;
         border: 1px solid var(--color-border);
         border-radius: 0.65rem;
+    }
+    .cloud-stashes {
+        display: grid;
+        gap: 0.45rem;
+        margin-top: 0.75rem;
+        padding: 0.75rem;
+        border: 1px solid var(--color-border);
+        border-radius: 0.65rem;
+    }
+    .cloud-stashes .cloud-history-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+    }
+    .cloud-stash-message {
+        margin: 0;
+        padding: 0.55rem 0.65rem;
+        border-radius: 0.45rem;
+        background: var(--color-second-bg);
+        color: var(--color-text-secondary);
+        font-size: 0.72rem;
+        line-height: 1.45;
+    }
+    .cloud-stash-list {
+        display: grid;
+    }
+    .cloud-stash-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        min-height: 2.35rem;
+        padding-top: 0.45rem;
+        border-top: 1px solid var(--color-border);
     }
     .cloud-history-heading,
     .cloud-history-details {

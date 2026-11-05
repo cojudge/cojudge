@@ -29,6 +29,89 @@ service cloud.firestore {
       return value is string && value.matches('^[a-f0-9]{64}$');
     }
 
+    function isStashId(stashId) {
+      return stashId is string && stashId.matches('^stash-[A-Za-z0-9-]{8,100}$');
+    }
+
+    function hasValidStashManifest(stashId, data) {
+      return data.keys().hasAll([
+          'schemaVersion', 'stashId', 'name', 'workspaceId', 'repoId',
+          'baseRevisionId', 'baseChecksum', 'checksum', 'changeCount',
+          'partCount', 'totalBytes', 'createdAt', 'expiresAt', 'status',
+          'leaseOwner', 'leaseExpiresAt'
+        ])
+        && data.keys().hasOnly([
+          'schemaVersion', 'stashId', 'name', 'workspaceId', 'repoId',
+          'baseRevisionId', 'baseChecksum', 'checksum', 'changeCount',
+          'partCount', 'totalBytes', 'createdAt', 'expiresAt', 'status',
+          'leaseOwner', 'leaseExpiresAt'
+        ])
+        && data.schemaVersion == 1
+        && data.stashId == stashId
+        && isStashId(stashId)
+        && data.name is string
+        && data.name.size() > 0
+        && data.name.size() <= 80
+        && data.workspaceId is string
+        && data.workspaceId.size() > 0
+        && data.workspaceId.size() <= 250
+        && data.repoId is string
+        && data.repoId.size() > 0
+        && data.repoId.size() <= 100
+        && (data.baseRevisionId == null || isRevisionId(data.baseRevisionId))
+        && (data.baseChecksum == null || isChecksum(data.baseChecksum))
+        && isChecksum(data.checksum)
+        && data.changeCount is int
+        && data.changeCount >= 0
+        && data.changeCount <= 10000
+        && data.partCount is int
+        && data.partCount >= 1
+        && data.partCount <= 12
+        && data.totalBytes is int
+        && data.totalBytes >= 0
+        && data.totalBytes <= 6291456
+        && data.createdAt is int
+        && data.createdAt > 0
+        && data.expiresAt is int
+        && data.expiresAt > data.createdAt
+        && data.leaseExpiresAt is int
+        && data.leaseExpiresAt >= 0
+        && (
+          (data.status == 'ready' && data.leaseOwner == null && data.leaseExpiresAt == 0)
+          || (data.status == 'popping'
+            && data.leaseOwner is string
+            && data.leaseOwner.size() > 0
+            && data.leaseOwner.size() <= 100
+            && data.leaseExpiresAt > 0)
+        );
+    }
+
+    function isValidStashUpdate(stashId, data) {
+      let current = resource.data;
+      return hasValidStashManifest(stashId, data)
+        && data.name == current.name
+        && data.workspaceId == current.workspaceId
+        && data.repoId == current.repoId
+        && data.baseRevisionId == current.baseRevisionId
+        && data.baseChecksum == current.baseChecksum
+        && data.checksum == current.checksum
+        && data.changeCount == current.changeCount
+        && data.partCount == current.partCount
+        && data.totalBytes == current.totalBytes
+        && data.createdAt == current.createdAt
+        && data.expiresAt == current.expiresAt;
+    }
+
+    function isStashPart(partId, index) {
+      return index is int
+        && index >= 0
+        && index < 12
+        && (
+          (index < 10 && partId == '000' + string(index))
+          || (index >= 10 && partId == '00' + string(index))
+        );
+    }
+
     function isSnapshotPart(partId, index) {
       return (partId == '0000' && index == 0)
         || (partId == '0001' && index == 1)
@@ -520,6 +603,29 @@ service cloud.firestore {
           && isValidSharedAssetPartCreate(userId, assetSetId, partId);
         allow delete: if isCloudUser(userId)
           && isValidSharedAssetPartDelete(userId, assetSetId, partId);
+      }
+    }
+
+    match /users/{userId}/cloudStashes/{stashId} {
+      allow read: if isCloudUser(userId);
+      allow create: if isCloudUser(userId)
+        && hasValidStashManifest(stashId, request.resource.data)
+        && request.resource.data.status == 'ready';
+      allow update: if isCloudUser(userId)
+        && isValidStashUpdate(stashId, request.resource.data);
+      allow delete: if isCloudUser(userId);
+
+      match /parts/{partId} {
+        allow read: if isCloudUser(userId);
+        allow create: if isCloudUser(userId)
+          && isStashId(stashId)
+          && request.resource.data.keys().hasOnly(['index', 'data'])
+          && isStashPart(partId, request.resource.data.index)
+          && request.resource.data.data is string
+          && request.resource.data.data.size() <= 819200;
+        // Parts are immutable. The manifest is deleted first, so an interrupted
+        // pop cleanup only leaves orphan chunks that the owner can remove.
+        allow delete: if isCloudUser(userId);
       }
     }
 

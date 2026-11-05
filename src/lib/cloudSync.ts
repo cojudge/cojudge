@@ -73,12 +73,9 @@ import {
 import { FORK_TRANSFER_STORAGE_KEY } from '$lib/forkTransfer';
 import fileStore, { fileSyncVersion } from '$lib/stores/fileStore';
 import {
-	computeFileChanges,
-	computeOtherChanges,
-	computeWhiteboardChange,
-	computeWorkspaceChanges,
 	CLOUD_FILE_DISCARDED_EVENT,
 	applySelectedChanges,
+	computeCloudChanges,
 	WHITEBOARD_BOARD_KEY,
 	WHITEBOARD_FILE_ID,
 	WHITEBOARD_RESTORED_EVENT,
@@ -86,6 +83,28 @@ import {
 	type FileStore,
 	type ProgressStore
 } from '$lib/cloudFileChange';
+import {
+	CLOUD_STASH_LEASE_MS,
+	CLOUD_STASH_SCHEMA_VERSION,
+	CLOUD_STASH_TTL_MS,
+	MAX_CLOUD_STASH_BYTES,
+	MAX_CLOUD_STASH_PARTS,
+	chooseCloudStashBase,
+	cloudStashIsExpired,
+	cloudStashIsLeased,
+	collectStashChanges,
+	collectStashImages,
+	makeCloudStashId,
+	normalizeCloudStashName,
+	parseStashPayload,
+	planStashPop,
+	selectCloudStashIdsForCleanup,
+	serializeStashPayload,
+	type CloudStashSummary,
+	type StashChange,
+	type StashConflict,
+	type StashPayload
+} from '$lib/cloudStash';
 
 const DEVICE_META_KEY = 'cojudge-cloud-sync-meta';
 const CLOUD_CLONE_KEY = 'cojudge-cloud-clone';
@@ -98,6 +117,9 @@ const CLOUD_ASSET_BATCH_PARTS = 8;
 const CLOUD_ASSET_STALE_WAIT_MS = 5 * 60 * 1000;
 const CLOUD_ASSET_READY_WAIT_MS = CLOUD_ASSET_STALE_WAIT_MS + 60 * 1000;
 const CLOUD_RESTORE_WEB_LOCK = 'cojudge-cloud-restore';
+const CLOUD_STASH_WEB_LOCK = 'cojudge-cloud-stash';
+const CLOUD_STASH_REPO_ID = 'cojudge-progress';
+const CLOUD_STASH_CLEANUP_LIMIT = 25;
 
 type CloudAuthStatus = 'initializing' | 'unavailable' | 'signed-out' | 'signing-in' | 'signed-in';
 type CloudOperationStatus = 'idle' | 'syncing' | 'offline' | 'error';
@@ -123,6 +145,14 @@ export type CloudUser = {
 export type CloudProgress = {
 	label: string;
 	value: number | null;
+};
+
+export type CloudStashPopResult = {
+	stash: CloudStashSummary;
+	applied: StashChange[];
+	alreadyApplied: StashChange[];
+	conflicts: StashConflict[];
+	dropped: boolean;
 };
 
 export type CloudSyncState = {
@@ -507,7 +537,7 @@ function reloadForCloudRestore(): void {
 	setTimeout(() => window.location.reload(), 0);
 }
 
-function announceCloudRestore(localDataCleared = false): void {
+function announceCloudRestore(localDataCleared = false, reload = true): void {
 	const completedAt = Date.now().toString();
 	try {
 		if (localDataCleared) localStorage.setItem(LOCAL_CLEAR_COMPLETE_KEY, completedAt);
@@ -516,7 +546,8 @@ function announceCloudRestore(localDataCleared = false): void {
 	} catch (error) {
 		console.warn('Cojudge Cloud could not notify another open window:', error);
 	}
-	reloadForCloudRestore();
+	if (reload) reloadForCloudRestore();
+	else resumeAfterCloudMutation();
 }
 
 function startCoordination(): void {
@@ -669,6 +700,307 @@ function cloudAssetPartsRef(db: Firestore, uid: string, assetSet: CloudAssetSet)
 	return assetSet.storage === 'shared'
 		? sharedAssetPartsRef(db, uid, assetSet.assetSetId)
 		: revisionAssetPartsRef(db, uid, assetSet.snapshotId!, assetSet.assetSetId);
+}
+
+function cloudStashesRef(db: Firestore, uid: string) {
+	return collection(db, 'users', uid, 'cloudStashes');
+}
+
+function cloudStashRef(db: Firestore, uid: string, stashId: string) {
+	return doc(db, 'users', uid, 'cloudStashes', stashId);
+}
+
+function cloudStashPartsRef(db: Firestore, uid: string, stashId: string) {
+	return collection(db, 'users', uid, 'cloudStashes', stashId, 'parts');
+}
+
+function stashContext(context: OperationContext): { workspaceId: string; repoId: string } {
+	return {
+		workspaceId: cloudAccountId(context.projectId, context.uid),
+		repoId: CLOUD_STASH_REPO_ID
+	};
+}
+
+function validStashId(value: string): boolean {
+	return /^stash-[A-Za-z0-9-]{8,100}$/.test(value);
+}
+
+function parseCloudStashMeta(stashId: string, data: Record<string, unknown>): CloudStashSummary {
+	const status = data.status;
+	const baseRevisionId = typeof data.baseRevisionId === 'string' ? data.baseRevisionId : null;
+	const baseChecksum = typeof data.baseChecksum === 'string' ? data.baseChecksum : null;
+	const leaseOwner = typeof data.leaseOwner === 'string' ? data.leaseOwner : null;
+	const leaseExpiresAt = data.leaseExpiresAt;
+	const createdAt = data.createdAt;
+	const expiresAt = data.expiresAt;
+	const changeCount = data.changeCount;
+	const partCount = data.partCount;
+	const totalBytes = data.totalBytes;
+	const checksum = data.checksum;
+	if (
+		data.schemaVersion !== CLOUD_STASH_SCHEMA_VERSION
+		|| !validStashId(stashId)
+		|| data.stashId !== stashId
+		|| typeof data.name !== 'string'
+		|| typeof data.workspaceId !== 'string'
+		|| typeof data.repoId !== 'string'
+		|| (status !== 'ready' && status !== 'popping')
+		|| (baseRevisionId !== null && !validRevisionId(baseRevisionId))
+		|| (baseChecksum !== null && !/^[a-f0-9]{64}$/.test(baseChecksum))
+		|| typeof checksum !== 'string'
+		|| !/^[a-f0-9]{64}$/.test(checksum)
+		|| !Number.isSafeInteger(changeCount)
+		|| (changeCount as number) < 0
+		|| !Number.isSafeInteger(partCount)
+		|| (partCount as number) < 1
+		|| (partCount as number) > MAX_CLOUD_STASH_PARTS
+		|| !Number.isSafeInteger(totalBytes)
+		|| (totalBytes as number) < 0
+		|| (totalBytes as number) > MAX_CLOUD_STASH_BYTES
+		|| !Number.isSafeInteger(createdAt)
+		|| (createdAt as number) <= 0
+		|| !Number.isSafeInteger(expiresAt)
+		|| (expiresAt as number) <= 0
+		|| !Number.isSafeInteger(leaseExpiresAt)
+		|| (leaseExpiresAt as number) < 0
+		|| (leaseOwner !== null && leaseOwner.length === 0)
+	) {
+		throw new Error('Cloud stash metadata is invalid.');
+	}
+	return {
+		stashId,
+		name: data.name,
+		workspaceId: data.workspaceId,
+		repoId: data.repoId,
+		baseRevisionId,
+		baseChecksum,
+		checksum,
+		changeCount: changeCount as number,
+		partCount: partCount as number,
+		totalBytes: totalBytes as number,
+		createdAt: createdAt as number,
+		expiresAt: expiresAt as number,
+		status,
+		leaseOwner,
+		leaseExpiresAt: leaseExpiresAt as number
+	};
+}
+
+async function readCloudStashes(db: Firestore, uid: string): Promise<CloudStashSummary[]> {
+	const result = await getDocs(
+		query(
+			cloudStashesRef(db, uid),
+			orderBy('createdAt', 'desc'),
+			limit(CLOUD_STASH_CLEANUP_LIMIT)
+		)
+	);
+	const stashes: CloudStashSummary[] = [];
+	for (const item of result.docs) {
+		try {
+			stashes.push(parseCloudStashMeta(item.id, item.data()));
+		} catch {
+			// A malformed/foreign record must not block the rest of the stash list.
+		}
+	}
+	return stashes;
+}
+
+async function deleteCloudStash(db: Firestore, uid: string, stashId: string): Promise<void> {
+	const parts = await getDocs(query(cloudStashPartsRef(db, uid, stashId), orderBy('index')));
+	const batch = writeBatch(db);
+	for (const part of parts.docs) batch.delete(part.ref);
+	batch.delete(cloudStashRef(db, uid, stashId));
+	await batch.commit();
+}
+
+async function deleteCloudStashQuietly(db: Firestore, uid: string, stashId: string): Promise<boolean> {
+	try {
+		await deleteCloudStash(db, uid, stashId);
+		return true;
+	} catch (error) {
+		console.warn(`Cojudge Cloud could not clean up stash ${stashId}:`, error);
+		return false;
+	}
+}
+
+async function cleanupCloudStashes(
+	context: OperationContext,
+	stashes: readonly CloudStashSummary[]
+): Promise<Set<string>> {
+	const deleted = new Set<string>();
+	for (const stashId of selectCloudStashIdsForCleanup(stashes)) {
+		if (!isOperationCurrent(context)) break;
+		if (await deleteCloudStashQuietly(context.db, context.uid, stashId)) {
+			deleted.add(stashId);
+		}
+	}
+	return deleted;
+}
+
+async function uploadCloudStash(
+	context: OperationContext,
+	name: string,
+	baseRevisionId: string | null,
+	baseChecksum: string | null,
+	changes: StashChange[],
+	images: Record<string, string>
+): Promise<CloudStashSummary> {
+	const payload: StashPayload = { version: CLOUD_STASH_SCHEMA_VERSION, changes, images };
+	const serialized = serializeStashPayload(payload);
+	const encoded = encodeProgressParts(serialized);
+	if (encoded.totalBytes > MAX_CLOUD_STASH_BYTES || encoded.parts.length > MAX_CLOUD_STASH_PARTS) {
+		throw new Error('These local changes are too large to stash in Cojudge Cloud.');
+	}
+
+	const stashId = makeCloudStashId();
+	const checksum = await hashProgress(serialized);
+	const now = Date.now();
+	const meta: CloudStashSummary = {
+		stashId,
+		name,
+		...stashContext(context),
+		baseRevisionId,
+		baseChecksum,
+		checksum,
+		changeCount: changes.length,
+		partCount: encoded.parts.length,
+		totalBytes: encoded.totalBytes,
+		createdAt: now,
+		expiresAt: now + CLOUD_STASH_TTL_MS,
+		status: 'ready',
+		leaseOwner: null,
+		leaseExpiresAt: 0
+	};
+	const partsBatch = writeBatch(context.db);
+	for (let index = 0; index < encoded.parts.length; index++) {
+		partsBatch.set(
+			doc(cloudStashPartsRef(context.db, context.uid, stashId), index.toString().padStart(4, '0')),
+			{ index, data: encoded.parts[index] }
+		);
+	}
+	try {
+		await partsBatch.commit();
+		await setDoc(cloudStashRef(context.db, context.uid, stashId), {
+			schemaVersion: CLOUD_STASH_SCHEMA_VERSION,
+			stashId,
+			name: meta.name,
+			workspaceId: meta.workspaceId,
+			repoId: meta.repoId,
+			baseRevisionId: meta.baseRevisionId,
+			baseChecksum: meta.baseChecksum,
+			checksum: meta.checksum,
+			changeCount: meta.changeCount,
+			partCount: meta.partCount,
+			totalBytes: meta.totalBytes,
+			createdAt: meta.createdAt,
+			expiresAt: meta.expiresAt,
+			status: meta.status,
+			leaseOwner: meta.leaseOwner,
+			leaseExpiresAt: meta.leaseExpiresAt
+		});
+	} catch (error) {
+		await deleteCloudStashQuietly(context.db, context.uid, stashId);
+		throw error;
+	}
+	return meta;
+}
+
+async function downloadCloudStash(
+	db: Firestore,
+	uid: string,
+	stash: CloudStashSummary
+): Promise<StashPayload> {
+	const result = await getDocs(
+		query(cloudStashPartsRef(db, uid, stash.stashId), orderBy('index'))
+	);
+	if (result.size !== stash.partCount) throw new Error('Cloud stash is incomplete.');
+	const parts = result.docs.map((part, index) => {
+		const data = part.data();
+		if (data.index !== index || typeof data.data !== 'string') {
+			throw new Error('Cloud stash contains an invalid part.');
+		}
+		return data.data;
+	});
+	const serialized = decodeProgressParts(parts, stash.totalBytes);
+	if ((await hashProgress(serialized)) !== stash.checksum) {
+		throw new Error('Cloud stash failed its integrity check.');
+	}
+	let parsed: unknown;
+	try {
+		parsed = JSON.parse(serialized);
+	} catch {
+		throw new Error('Cloud stash has an invalid format.');
+	}
+	return parseStashPayload(parsed);
+}
+
+async function claimCloudStash(
+	context: OperationContext,
+	stashId: string,
+	owner: string
+): Promise<CloudStashSummary> {
+	return runTransaction(context.db, async (transaction) => {
+		const reference = cloudStashRef(context.db, context.uid, stashId);
+		const result = await transaction.get(reference);
+		if (!result.exists()) throw new Error('That stash is no longer available.');
+		const stash = parseCloudStashMeta(stashId, result.data());
+		const scope = stashContext(context);
+		if (stash.workspaceId !== scope.workspaceId || stash.repoId !== scope.repoId) {
+			throw new Error('That stash belongs to another cloud workspace.');
+		}
+		const now = Date.now();
+		if (cloudStashIsLeased(stash, now)) {
+			throw new Error('That stash is being restored on another device. Try again shortly.');
+		}
+		if (cloudStashIsExpired(stash, now)) {
+			throw new Error('That stash has expired. It can only be deleted.');
+		}
+		const leaseExpiresAt = now + CLOUD_STASH_LEASE_MS;
+		transaction.update(reference, {
+			status: 'popping',
+			leaseOwner: owner,
+			leaseExpiresAt
+		});
+		return {
+			...stash,
+			status: 'popping' as const,
+			leaseOwner: owner,
+			leaseExpiresAt
+		};
+	});
+}
+
+async function releaseCloudStash(
+	context: OperationContext,
+	stashId: string,
+	owner: string,
+	drop: boolean
+): Promise<boolean> {
+	const changed = await runTransaction(context.db, async (transaction) => {
+		const reference = cloudStashRef(context.db, context.uid, stashId);
+		const result = await transaction.get(reference);
+		if (!result.exists()) return false;
+		const data = result.data();
+		if (data.status !== 'popping' || data.leaseOwner !== owner) return false;
+		if (drop) transaction.delete(reference);
+		else {
+			transaction.update(reference, {
+				status: 'ready',
+				leaseOwner: null,
+				leaseExpiresAt: 0
+			});
+		}
+		return true;
+	});
+	if (changed && drop) {
+		const parts = await getDocs(query(cloudStashPartsRef(context.db, context.uid, stashId), orderBy('index')));
+		for (let offset = 0; offset < parts.docs.length; offset += 400) {
+			const batch = writeBatch(context.db);
+			for (const part of parts.docs.slice(offset, offset + 400)) batch.delete(part.ref);
+			await batch.commit();
+		}
+	}
+	return changed;
 }
 
 function integer(value: unknown, minimum: number, maximum: number, label: string): number {
@@ -1374,7 +1706,8 @@ async function applyDownloadedSnapshot(
 	context: OperationContext,
 	downloaded: ProgressData,
 	expectedLocal: LocalSnapshot,
-	baseHash: string
+	baseHash: string,
+	options: { resolution?: CloudResolution | null; reload?: boolean } = {}
 ): Promise<void> {
 	const lockManager = (navigator as Navigator & { locks?: LockManager }).locks;
 	if (!lockManager) {
@@ -1420,12 +1753,12 @@ async function applyDownloadedSnapshot(
 				const pastedImages = extractPastedImages(downloaded);
 				if (pastedImages) await importPastedImages(pastedImages);
 				applied = true;
-				markSynced(context, baseHash);
-				announceCloudRestore();
+				markSynced(context, baseHash, options.resolution ?? null);
+				announceCloudRestore(false, options.reload !== false);
 				announced = true;
 			} catch (error) {
 				if (applied) {
-					announceCloudRestore();
+					announceCloudRestore(false, options.reload !== false);
 					announced = true;
 				}
 				throw error;
@@ -1692,22 +2025,9 @@ function readLocalFilesStore(): FileStore {
 }
 
 function fileChangesAgainstCloud(local: ProgressData, cloud: ProgressData): FileChange[] {
-	const localFiles = (local.files as FileStore | undefined) ?? {};
-	// Re-sanitize the cloud side: snapshots uploaded by older builds may still
-	// carry fields that are local-only today (e.g. `order`), which would
-	// otherwise surface as phantom "Files (names or order)" changes.
-	const cloudFiles = (sanitizeCloudFiles(cloud).files as FileStore | undefined) ?? {};
-	const localBoard = local[WHITEBOARD_BOARD_KEY];
-	const cloudBoard = cloud[WHITEBOARD_BOARD_KEY];
-
-	const mergedChanges: FileChange[] = computeFileChanges(localFiles, cloudFiles);
-	const whiteboardChange = computeWhiteboardChange(localBoard, cloudBoard);
-	if (whiteboardChange) mergedChanges.push(whiteboardChange);
-	mergedChanges.push(...computeOtherChanges(local, cloud));
-	mergedChanges.push(
-		...computeWorkspaceChanges(local, cloud, new Set(mergedChanges.map((change) => change.slug)))
-	);
-	return mergedChanges;
+	// Re-sanitizing happens in computeCloudChanges so snapshots uploaded by
+	// older builds cannot surface phantom editor-only changes.
+	return computeCloudChanges(local, cloud);
 }
 
 export async function fetchCloudFileChanges(): Promise<FileChange[]> {
@@ -1716,8 +2036,6 @@ export async function fetchCloudFileChanges(): Promise<FileChange[]> {
 	const local = await readLocalSnapshot(context);
 	if (!isOperationCurrent(context)) return [];
 	const accountId = cloudAccountId(context.projectId, context.uid);
-	const localFiles = (local.data.files as FileStore | undefined) ?? {};
-	const localBoard = local.data[WHITEBOARD_BOARD_KEY];
 
 	// Prefer the local cloud clone so diffs never wait on the network when the
 	// last-synced cloud copy is already cached (the common local-changes case).
@@ -1730,12 +2048,7 @@ export async function fetchCloudFileChanges(): Promise<FileChange[]> {
 	if (!isOperationCurrent(context)) return [];
 
 	if (!remote) {
-		const changes: FileChange[] = computeFileChanges(localFiles, {});
-		const localBoardChange = computeWhiteboardChange(localBoard, null);
-		if (localBoardChange) changes.push(localBoardChange);
-		changes.push(...computeOtherChanges(local.data, {}));
-		changes.push(...computeWorkspaceChanges(local.data, {}, new Set(changes.map((change) => change.slug))));
-		return changes;
+		return computeCloudChanges(local.data, {});
 	}
 
 	const cloudData = await ensureCloudClone(context, remote);
@@ -1921,6 +2234,351 @@ export async function discardLocalFileChanges(fileIds: readonly string[]): Promi
 
 export function discardLocalFileChange(fileId: string): Promise<void> {
 	return discardLocalFileChanges([fileId]);
+}
+
+function queueStashOperation<T>(
+	context: OperationContext,
+	operation: () => Promise<T>
+): Promise<T> {
+	if (syncPromise) {
+		return syncPromise.catch(() => undefined).then(() => {
+			if (!isOperationCurrent(context)) {
+				throw new Error('The signed-in account changed. Try again.');
+			}
+			return queueStashOperation(context, operation);
+		});
+	}
+	const pending = operation();
+	const barrier = pending
+		.then(() => undefined, () => undefined)
+		.finally(() => {
+			if (syncPromise === barrier) {
+				syncPromise = null;
+				syncContext = null;
+			}
+		});
+	syncPromise = barrier;
+	syncContext = context;
+	return pending;
+}
+
+function announceStashApplied(changes: readonly StashChange[]): void {
+	if (changes.some((change) => change.fileId === WHITEBOARD_FILE_ID)) {
+		window.dispatchEvent(new CustomEvent(WHITEBOARD_RESTORED_EVENT));
+	}
+	for (const change of changes) {
+		window.dispatchEvent(new CustomEvent(CLOUD_FILE_DISCARDED_EVENT, { detail: { fileId: change.fileId } }));
+	}
+}
+
+function cloudStashFailure(error: unknown): void {
+	if (!browser) return;
+	const offline = !navigator.onLine;
+	cloudSyncState.update((state) => ({
+		...state,
+		syncStatus: offline ? 'offline' : 'error',
+		remoteStatus: offline ? state.remoteStatus : 'error',
+		error: offline ? null : errorMessage(error),
+		progress: null
+	}));
+}
+
+async function resolveCloudStashBase(
+	context: OperationContext,
+	local: LocalSnapshot,
+	remote: RemoteSnapshotMeta | null,
+	history: readonly RemoteSnapshotMeta[]
+): Promise<{ data: ProgressData; revisionId: string | null; checksum: string | null }> {
+	const cached = readCloudClone(cloudAccountId(context.projectId, context.uid));
+	const choice = chooseCloudStashBase({
+		lastSyncedHash: local.meta.lastSyncedHash,
+		cached,
+		remote,
+		history
+	});
+	if (choice.source === 'unknown') {
+		throw new Error(
+			'Cojudge Cloud cannot verify which cloud version these local changes are based on. Sync or resolve the cloud changes first, then try stashing again.'
+		);
+	}
+	if (choice.source === 'empty') {
+		return { data: {}, revisionId: null, checksum: null };
+	}
+	if (choice.source === 'cached') {
+		if (!cached) throw new Error('The cached cloud baseline is unavailable. Sync again before stashing.');
+		return {
+			data: cached.data,
+			revisionId: cached.revisionId,
+			checksum: cached.checksum
+		};
+	}
+	if (choice.source === 'remote') {
+		if (!remote) throw new Error('The cloud working copy is no longer available. Try again.');
+		const data = await ensureCloudClone(context, remote);
+		if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+		return { data, revisionId: remote.revisionId, checksum: remote.checksum };
+	}
+
+	const retained = history.find((revision) => revision.revisionId === choice.revisionId);
+	if (!retained) {
+		throw new Error('The cloud revision these changes are based on is no longer retained. Sync or resolve the cloud changes first.');
+	}
+	const downloaded = await downloadSnapshot(context.db, context.uid, retained);
+	if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+	return {
+		data: downloaded.data,
+		revisionId: retained.revisionId,
+		checksum: retained.checksum
+	};
+}
+
+async function runStashLocalChanges(
+	context: OperationContext,
+	name: string | undefined
+): Promise<CloudStashSummary> {
+	cloudSyncState.update((state) => ({
+		...state,
+		syncStatus: 'syncing',
+		error: null,
+		progress: { label: 'Preparing stash…', value: 10 }
+	}));
+	try {
+		if (!navigator.onLine) throw new Error('Connect to the internet before stashing local changes.');
+		if (get(cloudSyncState).resolution === 'account') {
+			throw new Error('Choose the account workspace before stashing local changes.');
+		}
+		const lockManager = (navigator as Navigator & { locks?: LockManager }).locks;
+		if (!lockManager) {
+			throw new Error('This browser cannot safely coordinate a stash. Update it and try again.');
+		}
+		return await lockManager.request(
+			CLOUD_STASH_WEB_LOCK,
+			{ mode: 'exclusive', ifAvailable: true },
+			async (lock) => {
+				if (!lock) throw new Error('Another Cojudge window is stashing or restoring changes. Try again shortly.');
+				await coordinateOtherContexts('flush');
+				if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+				const local = await readLocalSnapshot(context);
+				if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+				setCloudProgress('Reading cloud state…', 30);
+				const { remote, history } = await refreshRemoteState(context.db, context.uid);
+				if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+				const base = await resolveCloudStashBase(context, local, remote, history);
+				if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+				const changes = collectStashChanges(base.data, local.data);
+				if (changes.length === 0) {
+					throw new Error('Nothing to stash: the local working copy already matches the cloud version.');
+				}
+				const images = collectStashImages(local.data, changes);
+				setCloudProgress('Uploading stash…', 55);
+				const summary = await uploadCloudStash(
+					context,
+					normalizeCloudStashName(name),
+					base.revisionId,
+					base.checksum,
+					changes,
+					images
+				);
+				if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+				try {
+					await cleanupCloudStashes(context, await readCloudStashes(context.db, context.uid));
+					if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+					setCloudProgress('Restoring cloud working copy…', 80);
+					const latestRemote = await readRemoteMeta(context.db, context.uid);
+					if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+					const latest = latestRemote ? await ensureCloudClone(context, latestRemote) : {};
+					if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+					const latestHash = latestRemote?.checksum
+						?? (await hashProgress(serializeProgressData({})));
+					await applyDownloadedSnapshot(context, latest, local, latestHash, {
+						resolution: null,
+						reload: false
+					});
+					if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+				} catch (error) {
+					throw new Error(
+						`Your changes were saved as stash “${summary.name}”, but Cojudge Cloud could not restore the latest working copy: ${errorMessage(error)} The stash was kept; pop it when ready.`
+					);
+				}
+				announceStashApplied(changes);
+				clearCloudProgress();
+				return summary;
+			}
+		);
+	} catch (error) {
+		if (isOperationCurrent(context)) cloudStashFailure(error);
+		throw error;
+	}
+}
+
+export function stashLocalChanges(name?: string): Promise<CloudStashSummary> {
+	const context = captureOperationContext();
+	if (!context) return Promise.reject(new Error('Sign in to Cojudge Cloud before stashing changes.'));
+	return queueStashOperation(context, () => runStashLocalChanges(context, name));
+}
+
+async function runPopCloudStash(
+	context: OperationContext,
+	stashId: string,
+	owner: string
+): Promise<CloudStashPopResult> {
+	let claimed = false;
+	let released = false;
+	cloudSyncState.update((state) => ({
+		...state,
+		syncStatus: 'syncing',
+		error: null,
+		progress: { label: 'Preparing stash restore…', value: 10 }
+	}));
+	try {
+		if (!navigator.onLine) throw new Error('Connect to the internet before popping a stash.');
+		if (!validStashId(stashId)) throw new Error('That stash id is invalid.');
+		if (get(cloudSyncState).resolution === 'account') {
+			throw new Error('Choose the account workspace before popping a stash.');
+		}
+		const lockManager = (navigator as Navigator & { locks?: LockManager }).locks;
+		if (!lockManager) {
+			throw new Error('This browser cannot safely coordinate a stash restore. Update it and try again.');
+		}
+		return await lockManager.request(
+			CLOUD_STASH_WEB_LOCK,
+			{ mode: 'exclusive', ifAvailable: true },
+			async (lock) => {
+				if (!lock) throw new Error('Another Cojudge window is restoring a stash. Try again shortly.');
+				const stash = await claimCloudStash(context, stashId, owner);
+				claimed = true;
+				if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+				setCloudProgress('Downloading stash…', 40);
+				const payload = await downloadCloudStash(context.db, context.uid, stash);
+				if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+				if (Object.keys(payload.images).length > 0) {
+					setCloudProgress('Restoring stashed images…', 55);
+					try {
+						await importPastedImages(payload.images);
+					} catch (error) {
+						throw new Error(`The stash could not be restored and was kept: ${errorMessage(error)}`);
+					}
+					if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+				}
+				const local = await readLocalSnapshot(context);
+				if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+				const plan = planStashPop(local.data, payload.changes);
+				const remote = await readRemoteMeta(context.db, context.uid);
+				if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+
+				let resolution: CloudResolution | null = plan.conflicts.length > 0 ? 'local-changes' : null;
+				if (plan.applied.length > 0) {
+					setCloudProgress('Applying stash…', 75);
+					const mergedSerialized = serializeProgressData(plan.data);
+					const mergedChecksum = await hashProgress(mergedSerialized);
+					const baseHash = remote?.checksum ?? (await hashProgress(serializeProgressData({})));
+					if (mergedChecksum !== baseHash || plan.conflicts.length > 0) resolution = 'local-changes';
+					try {
+						await applyDownloadedSnapshot(context, plan.data, local, baseHash, {
+							resolution,
+							reload: false
+						});
+					} catch (error) {
+						throw new Error(`The stash could not be applied safely and was kept: ${errorMessage(error)}`);
+					}
+					if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+					announceStashApplied(plan.applied);
+				} else {
+					await refreshCloudLocalState({ flush: false });
+					if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+				}
+
+				if (!isOperationCurrent(context)) throw new Error('The signed-in account changed. Try again.');
+				const dropped = plan.conflicts.length === 0;
+				if (dropped) {
+					try {
+						released = await releaseCloudStash(context, stashId, owner, true);
+					} catch (error) {
+						throw new Error(`The stash was applied, but could not be removed from the cloud: ${errorMessage(error)}`);
+					}
+				} else {
+					released = await releaseCloudStash(context, stashId, owner, false);
+				}
+				if (!released) {
+					throw new Error('The stash was applied, but its cloud record changed or its lease expired. Check Cloud stashes before retrying.');
+				}
+				clearCloudProgress();
+				return {
+					stash,
+					applied: plan.applied,
+					alreadyApplied: plan.alreadyApplied,
+					conflicts: plan.conflicts,
+					dropped
+				};
+			}
+		);
+	} catch (error) {
+		if (claimed && !released) {
+			try {
+				released = await releaseCloudStash(context, stashId, owner, false);
+			} catch {
+				// The lease expires automatically, so a failed release never makes
+				// the stash permanently unavailable.
+			}
+		}
+		if (isOperationCurrent(context)) cloudStashFailure(error);
+		throw error;
+	}
+}
+
+export function popCloudStash(stashId: string): Promise<CloudStashPopResult> {
+	const context = captureOperationContext();
+	if (!context) return Promise.reject(new Error('Sign in to Cojudge Cloud before popping a stash.'));
+	const owner = makeCloudStashId().slice('stash-'.length);
+	return queueStashOperation(context, () => runPopCloudStash(context, stashId, owner));
+}
+
+async function runDropCloudStash(context: OperationContext, stashId: string): Promise<void> {
+	if (!navigator.onLine) throw new Error('Connect to the internet before deleting a stash.');
+	if (!validStashId(stashId)) throw new Error('That stash id is invalid.');
+	const deleted = await runTransaction(context.db, async (transaction) => {
+		const reference = cloudStashRef(context.db, context.uid, stashId);
+		const result = await transaction.get(reference);
+		if (!result.exists()) return false;
+		const stash = parseCloudStashMeta(stashId, result.data());
+		const scope = stashContext(context);
+		if (stash.workspaceId !== scope.workspaceId || stash.repoId !== scope.repoId) {
+			throw new Error('That stash belongs to another cloud workspace.');
+		}
+		if (cloudStashIsLeased(stash)) {
+			throw new Error('That stash is being restored on another device. Try again shortly.');
+		}
+		transaction.delete(reference);
+		return true;
+	});
+	if (deleted) {
+		const parts = await getDocs(query(cloudStashPartsRef(context.db, context.uid, stashId), orderBy('index')));
+		for (let offset = 0; offset < parts.docs.length; offset += 400) {
+			const batch = writeBatch(context.db);
+			for (const part of parts.docs.slice(offset, offset + 400)) batch.delete(part.ref);
+			await batch.commit();
+		}
+	}
+}
+
+export function dropCloudStash(stashId: string): Promise<void> {
+	const context = captureOperationContext();
+	if (!context) return Promise.reject(new Error('Sign in to Cojudge Cloud before deleting a stash.'));
+	return queueStashOperation(context, () => runDropCloudStash(context, stashId));
+}
+
+export async function listCloudStashes(): Promise<CloudStashSummary[]> {
+	const context = captureOperationContext();
+	if (!browser || !context) return [];
+	if (!navigator.onLine) throw new Error('Connect to the internet to load cloud stashes.');
+	const stashes = await readCloudStashes(context.db, context.uid);
+	const cleaned = await cleanupCloudStashes(context, stashes);
+	const scope = stashContext(context);
+	return stashes.filter(
+		(stash) => !cleaned.has(stash.stashId)
+			&& stash.workspaceId === scope.workspaceId
+			&& stash.repoId === scope.repoId
+	);
 }
 
 async function inspectCloudSignOut(context: OperationContext): Promise<CloudSignOutCheck> {

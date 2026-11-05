@@ -2,6 +2,8 @@
 // sanitized `files` store. No storage or Firebase access: callers feed in the
 // raw store maps so this stays unit-testable.
 
+import { sanitizeCloudFiles } from './progressBackup';
+
 export type FileStore = Record<string, string>;
 export type ProgressStore = Record<string, unknown>;
 
@@ -414,6 +416,21 @@ export function computeOtherChanges(localData: ProgressStore, cloudData: Progres
 		});
 	}
 
+	return changes;
+}
+
+// Compares a local progress tree against a cloud snapshot. This is the single
+// change model shared by selective push/discard and cloud stashes.
+export function computeCloudChanges(localData: ProgressStore, cloudData: ProgressStore): FileChange[] {
+	const local = sanitizeCloudFiles(localData);
+	const cloud = sanitizeCloudFiles(cloudData);
+	const localFiles = (local.files as FileStore | undefined) ?? {};
+	const cloudFiles = (cloud.files as FileStore | undefined) ?? {};
+	const changes = computeFileChanges(localFiles, cloudFiles);
+	const whiteboardChange = computeWhiteboardChange(local[WHITEBOARD_BOARD_KEY], cloud[WHITEBOARD_BOARD_KEY]);
+	if (whiteboardChange) changes.push(whiteboardChange);
+	changes.push(...computeOtherChanges(local, cloud));
+	changes.push(...computeWorkspaceChanges(local, cloud, new Set(changes.map((change) => change.slug))));
 	return changes;
 }
 
