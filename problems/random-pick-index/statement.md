@@ -1,8 +1,14 @@
-An array `nums` may hold repeated values. Given a `target` that is guaranteed to occur in `nums`, return any index `i` with `nums[i] == target`.
+Given an integer array `nums` that may contain duplicate values, implement the `RandomPickIndex` class:
 
-*Interface note:* the original formulation is a class that stores `nums` in its constructor and answers many `pick(target)` queries with a uniformly random valid index. Because a judge cannot check randomness directly, this repo adapts the task to a single pure function `pick(nums, target)`. Any valid index is accepted: the checker only verifies `0 <= answer < nums.length` and `nums[answer] == target`, not the distribution. A solution that always returns the first match therefore passes here, while the genuine LeetCode version would additionally require each valid index to be equally likely.
+- `RandomPickIndex(int[] nums)` initializes the object with the array `nums`.
+- `int pick(int target)` returns a random index `i` such that `nums[i] == target`.
+
+Every index whose value equals `target` must have the same probability of being returned. The given `target` is guaranteed to occur at least once in `nums`.
 
 **Constraints:**
 - `1 <= nums.length <= 2 * 10^4`
 - `-2^31 <= nums[i] <= 2^31 - 1`
-- `target` occurs at least once in `nums`.
+- `target` occurs at least once in `nums`
+- At most `10^4` calls will be made to `pick`
+
+**Judge note:** the checker validates each returned index and runs long traces against the same object. A long trace must produce every valid index at least once, and the checker rejects fixed or short repeating sequences. Always returning the first match therefore fails even though it is a valid index.

@@ -730,6 +730,23 @@ func Solve(operations []string, values [][]int) []string {
     return result
 }`;
     }
+    if (className === 'RandomPickIndex') {
+        return `
+func Solve(operations []string, values [][]int) []string {
+    result := []string{}
+    var obj *RandomPickIndex
+    for i, op := range operations {
+        if op == "RandomPickIndex" {
+            __obj := Constructor(values[i])
+            obj = &__obj
+            result = append(result, "null")
+        } else if op == "pick" {
+            result = append(result, strconv.Itoa(obj.Pick(values[i][0])))
+        }
+    }
+    return result
+}`;
+    }
     if (className === 'TwoSum') {
         return `
 func Solve(operations []string, values [][]int) []string {

@@ -1,65 +1,68 @@
 {
-  "category": "array",
-  "difficulty": "Medium",
-  "examples": [
-    {
-      "explanation": "Valid answers are 2, 3 and 4; any one counts as correct.",
-      "input": "nums = [1,2,3,3,3], target = 3",
-      "output": "2"
-    },
-    {
-      "explanation": "Only index 0 holds the value 1.",
-      "input": "nums = [1,2,3,3,3], target = 1",
-      "output": "0"
-    },
-    {
-      "explanation": "Every index is valid; 1 is one acceptable choice.",
-      "input": "nums = [5,5,5,5], target = 5",
-      "output": "1"
-    }
-  ],
-  "functionName": "pick",
-  "hints": [
-    "Scan for positions holding target; any one of them is accepted by the checker.",
-    "The reference returns the first match, but returning a random match is equally valid.",
-    "Uniform randomness (e.g. reservoir sampling) is needed for the original class version, not for passing here."
-  ],
   "id": "random-pick-index",
+  "title": "398. Random Pick Index",
+  "difficulty": "Medium",
   "link": "https://leetcode.com/problems/random-pick-index/",
-  "outputType": "int",
+  "category": "array",
+  "classProblem": {
+    "userClassName": "RandomPickIndex"
+  },
+  "functionName": "solve",
   "params": [
     {
-      "name": "nums",
-      "type": "int_array"
+      "name": "operations",
+      "type": "string_array"
     },
     {
-      "name": "target",
-      "type": "int"
+      "name": "values",
+      "type": "int_array_2d"
+    }
+  ],
+  "outputType": "string_list",
+  "examples": [
+    {
+      "input": "operations = [\"RandomPickIndex\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\"], values = [[1,2,3,3,3],[3],[3],[3],[3],[3],[3]]",
+      "output": "[null,2,3,4,2,4,3]",
+      "explanation": "Valid indexes are 2, 3 and 4. The exact sequence varies; every returned index must hold target 3."
+    },
+    {
+      "input": "operations = [\"RandomPickIndex\",\"pick\",\"pick\",\"pick\"], values = [[1,2,3,3,3],[1],[1],[1]]",
+      "output": "[null,0,0,0]",
+      "explanation": "Only index 0 holds the value 1, so every pick must return 0."
+    },
+    {
+      "input": "operations = [\"RandomPickIndex\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\"], values = [[5,5,5,5],[5],[5],[5],[5],[5],[5]]",
+      "output": "[null,0,2,3,1,0,2]",
+      "explanation": "All four indexes are valid; over a long trace each one must be able to appear."
     }
   ],
   "starterCode": {
-    "cpp": "#include <vector>\nusing namespace std;\nclass Solution {\npublic:\n    int pick(vector<int>& nums, int target) {\n        return 0;\n    }\n};",
-    "csharp": "public class Solution \n{\n    public int Pick(int[] nums, int target) \n    {\n        return 0;\n    }\n}",
-    "go": "package main\n\nfunc Pick(nums []int, target int) int {\n    return 0\n}",
-    "java": "class Solution {\n    public int pick(int[] nums, int target) {\n        return 0;\n    }\n}",
-    "php": "class Solution {\n    /**\n     * @param int[] $nums\n     * @param int $target\n     * @return int\n     */\n    public function pick($nums, $target) {\n\n    }\n}",
-    "python": "from typing import List\nclass Solution:\n    def pick(self, nums: List[int], target: int) -> int:\n        pass",
-    "rust": "pub struct Solution;\n\nimpl Solution {\n    pub fn pick(nums: Vec<i32>, target: i32) -> i32 {\n        0\n    }\n}",
-    "typescript": "export function pick(nums: number[], target: number): number {\n    return 0;\n}"
+    "cpp": "#include <vector>\nusing namespace std;\n\nclass RandomPickIndex {\npublic:\n    RandomPickIndex(vector<int>& nums) {\n        \n    }\n\n    int pick(int target) {\n        return 0;\n    }\n};",
+    "csharp": "using System;\nusing System.Collections.Generic;\n\npublic class RandomPickIndex {\n    public RandomPickIndex(int[] nums) {\n        \n    }\n\n    public int Pick(int target) {\n        return 0;\n    }\n}",
+    "go": "package main\n\ntype RandomPickIndex struct {\n\n}\n\nfunc Constructor(nums []int) RandomPickIndex {\n    return RandomPickIndex{}\n}\n\nfunc (this *RandomPickIndex) Pick(target int) int {\n    return 0\n}",
+    "java": "class RandomPickIndex {\n    public RandomPickIndex(int[] nums) {\n        \n    }\n\n    public int pick(int target) {\n        return 0;\n    }\n}",
+    "php": "class RandomPickIndex {\n    /**\n     * @param int[] $nums\n     */\n    public function __construct($nums) {\n\n    }\n\n    /**\n     * @param int $target\n     * @return int\n     */\n    public function pick($target) {\n\n    }\n}",
+    "python": "from typing import List\n\nclass RandomPickIndex:\n    def __init__(self, nums: List[int]):\n        pass\n\n    def pick(self, target: int) -> int:\n        pass",
+    "rust": "pub struct RandomPickIndex {\n\n}\n\nimpl RandomPickIndex {\n    pub fn new(nums: Vec<i32>) -> Self {\n        RandomPickIndex {}\n    }\n\n    pub fn pick(&mut self, target: i32) -> i32 {\n        0\n    }\n}",
+    "typescript": "export class RandomPickIndex {\n    constructor(nums: number[]) {\n        \n    }\n\n    pick(target: number): number {\n        return 0;\n    }\n}"
   },
   "testCases": [
     {
-      "nums": "[1,2,3,3,3]",
-      "target": 3
+      "operations": "[\"RandomPickIndex\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\"]",
+      "values": "[[1,2,3,3,3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3],[3]]"
     },
     {
-      "nums": "[1,2,3,3,3]",
-      "target": 1
+      "operations": "[\"RandomPickIndex\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\"]",
+      "values": "[[5,5,5,5],[5],[5],[5],[5],[5],[5],[5],[5],[5],[5],[5],[5]]"
     },
     {
-      "nums": "[5,5,5,5]",
-      "target": 5
+      "operations": "[\"RandomPickIndex\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\",\"pick\"]",
+      "values": "[[1,2,1,2,1,2],[1],[1],[1],[1],[1],[1],[1],[1],[1],[1],[1],[1],[2],[2],[2],[2],[2],[2],[2],[2],[2],[2],[2],[2]]"
     }
   ],
-  "title": "473. Random Pick Index"
+  "hints": [
+    "Store the indexes for each value, or use reservoir sampling while scanning nums for a target.",
+    "Every index whose value equals target must have the same chance of being returned.",
+    "The judge runs long traces and requires every valid index to appear; always returning the first match fails."
+  ]
 }

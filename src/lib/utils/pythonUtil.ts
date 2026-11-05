@@ -443,6 +443,24 @@ class Solution:
         return result
 `;
     }
+    if (className === 'RandomPickIndex') {
+        return `
+from typing import List
+from RandomPickIndex import RandomPickIndex
+
+class Solution:
+    def solve(self, operations: List[str], values: List[List[int]]) -> List[str]:
+        result = []
+        obj = None
+        for i, op in enumerate(operations):
+            if op == "RandomPickIndex":
+                obj = RandomPickIndex(values[i])
+                result.append("null")
+            elif op == "pick":
+                result.append(str(obj.pick(values[i][0])))
+        return result
+`;
+    }
     if (className === 'TwoSum') {
         return `
 from typing import List
