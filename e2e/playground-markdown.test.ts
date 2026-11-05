@@ -150,7 +150,7 @@ test('discarding an active WYSIWYG file reloads the restored content', async ({ 
       ])
     });
     localStorage.setItem('files', restoredFiles);
-    window.dispatchEvent(new StorageEvent('storage', { key: 'files', newValue: restoredFiles }));
+    window.dispatchEvent(new StorageEvent('storage', { key: 'files', newValue: restoredFiles, storageArea: localStorage }));
     window.dispatchEvent(new CustomEvent('cojudge:cloud-file-discarded', { detail: { fileId: 'active-file' } }));
     window.dispatchEvent(new Event('cojudge:cloud-flush'));
   });
@@ -207,6 +207,47 @@ test('WYSIWYG paste turns a URL string into a link', async ({ page }) => {
 
   await expect(editable.locator('a[href="https://example.com/path"]')).toHaveAttribute('target', '_blank');
   await expect.poll(() => getMarkdownContent(page)).toContain('[https://example.com/path](https://example.com/path)');
+});
+
+test('WYSIWYG remains editable and reloadable with repeated incomplete links', async ({ page }) => {
+  const malformed = '[a]('.repeat(1000);
+  const links = Array.from({ length: 20 }, (_, index) =>
+    `[Link ${index}](https://example.com/${index})`
+  ).join(' ');
+  const content = `${links}\n\n${malformed}`;
+  await page.addInitScript((initialContent) => {
+    if (sessionStorage.getItem('malformed-links-seeded')) return;
+    sessionStorage.setItem('malformed-links-seeded', 'true');
+    localStorage.setItem('user-settings', JSON.stringify({ playgroundPreferredLanguage: 'markdown' }));
+    localStorage.setItem('playground-markdown-mode', 'wysiwyg');
+    localStorage.setItem('files', JSON.stringify({
+      playground: JSON.stringify([
+        { fileId: 'malformed-links', fileName: 'Links', language: 'markdown', content: initialContent, isOpen: true, order: 0, lastUpdated: Date.now() }
+      ])
+    }));
+  }, content);
+  const pageErrors: string[] = [];
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+
+  await page.goto('/playground');
+  const editable = page.locator('.wysiwyg-editing');
+  await expect(editable).toBeVisible();
+  await expect(editable.locator('a')).toHaveCount(20);
+  await expect(editable).toContainText('[a]([a]([a](');
+
+  // Exercise the read-only renderer too, then return to the persisted editor.
+  await page.getByRole('button', { name: 'Preview', exact: true }).click();
+  await expect(page.locator('.markdown-preview:not(.wysiwyg-editing) a')).toHaveCount(20);
+  await page.getByRole('button', { name: 'WYSIWYG', exact: true }).click();
+  await expect(editable).toBeVisible();
+  await editable.locator('> p:last-child').click();
+  await page.keyboard.type('still editable');
+  await expect.poll(() => getFileContent(page, 'malformed-links', 'markdown')).toContain('still editable');
+
+  await page.reload();
+  await expect(editable).toBeVisible();
+  await expect(editable).toContainText('still editable');
+  expect(pageErrors).toEqual([]);
 });
 
 test('browser WYSIWYG opens external links in a new tab', async ({ page }) => {
@@ -1323,7 +1364,7 @@ test('WYSIWYG @ mention inserts a playground file link and click switches tab', 
   // Clicking the in-app link switches tab without leaving playground
   await link.click();
   await expect(page).toHaveURL(/\/playground/);
-  await expect(page.locator('.tab.active')).toContainText('TargetDoc');
+  await expect(page.getByRole('tab', { name: /TargetDoc/ })).toHaveAttribute('aria-selected', 'true');
 });
 
 test('WYSIWYG checklists toggle, continue on Enter, and break out when empty', async ({ page }) => {
