@@ -226,6 +226,26 @@ export class Solution {
     }
 }`;
     }
+    if (className === 'RandomPickIndex') {
+        return `
+${importLine}
+export class Solution {
+    solve(operations: string[], values: number[][]): string[] {
+        const result: string[] = [];
+        let obj: any = null;
+        for (let i = 0; i < operations.length; i++) {
+            const op = operations[i];
+            if (op === "RandomPickIndex") {
+                obj = new RandomPickIndex(values[i]);
+                result.push("null");
+            } else if (op === "pick") {
+                result.push(String(obj.pick(values[i][0])));
+            }
+        }
+        return result;
+    }
+}`;
+    }
     if (className === 'TwoSum') {
         return `
 ${importLine}

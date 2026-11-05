@@ -779,6 +779,28 @@ public class Solution {
     }
 }`;
     }
+    if (className === 'RandomPickIndex') {
+        return `
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public List<string> Solve(string[] operations, int[][] values) {
+        var result = new List<string>();
+        RandomPickIndex obj = null;
+        for (int i = 0; i < operations.Length; i++) {
+            string op = operations[i];
+            if (op == "RandomPickIndex") {
+                obj = new RandomPickIndex(values[i]);
+                result.Add("null");
+            } else if (op == "pick") {
+                result.Add(obj.Pick(values[i][0]).ToString());
+            }
+        }
+        return result;
+    }
+}`;
+    }
     if (className === 'TwoSum') {
         return `
 using System;

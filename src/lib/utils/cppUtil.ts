@@ -872,6 +872,34 @@ public:
 };
 `;
     }
+    if (className === 'RandomPickIndex') {
+        return `#include <vector>
+#include <string>
+#include <sstream>
+#include "RandomPickIndex.cpp"
+using namespace std;
+
+class Solution {
+public:
+    vector<string> solve(vector<string>& operations, vector<vector<int>>& values) {
+        vector<string> result;
+        RandomPickIndex* obj = nullptr;
+        for (int i = 0; i < operations.size(); i++) {
+            string& op = operations[i];
+            if (op == "RandomPickIndex") {
+                delete obj;
+                obj = new RandomPickIndex(values[i]);
+                result.push_back("null");
+            } else if (op == "pick") {
+                result.push_back(to_string(obj->pick(values[i][0])));
+            }
+        }
+        delete obj;
+        return result;
+    }
+};
+`;
+    }
     if (className === 'TwoSum') {
         return `#include <vector>
 #include <string>

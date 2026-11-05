@@ -795,6 +795,29 @@ impl Solution {
 }
 `;
   }
+  if (className === 'RandomPickIndex') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<RandomPickIndex> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "RandomPickIndex" {
+                obj = Some(RandomPickIndex::new(values[i].clone()));
+                result.push("null".to_string());
+            } else if op == "pick" {
+                if let Some(ref mut o) = obj {
+                    result.push(o.pick(values[i][0]).to_string());
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
   if (className === 'TwoSum') {
     return `
 pub struct Solution;
@@ -1326,6 +1349,29 @@ impl Solution {
             } else if op == "pickIndex" {
                 if let Some(ref mut o) = obj {
                     result.push(o.pick_index().to_string());
+                }
+            }
+        }
+        result
+    }
+}
+`;
+  }
+  if (className === 'RandomPickIndex') {
+    return `
+pub struct Solution;
+
+impl Solution {
+    pub fn solve(operations: Vec<String>, values: Vec<Vec<i32>>) -> Vec<String> {
+        let mut result = Vec::new();
+        let mut obj: Option<solution::RandomPickIndex> = None;
+        for (i, op) in operations.iter().enumerate() {
+            if op == "RandomPickIndex" {
+                obj = Some(solution::RandomPickIndex::new(values[i].clone()));
+                result.push("null".to_string());
+            } else if op == "pick" {
+                if let Some(ref mut o) = obj {
+                    result.push(o.pick(values[i][0]).to_string());
                 }
             }
         }

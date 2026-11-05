@@ -747,6 +747,26 @@ class Solution {
     }
 }`;
     }
+    if (className === 'RandomPickIndex') {
+        return `
+import java.util.*;
+class Solution {
+    public List<String> solve(String[] operations, int[][] values) {
+        List<String> result = new ArrayList<>();
+        RandomPickIndex obj = null;
+        for (int i = 0; i < operations.length; i++) {
+            String op = operations[i];
+            if (op.equals("RandomPickIndex")) {
+                obj = new RandomPickIndex(values[i]);
+                result.add("null");
+            } else if (op.equals("pick")) {
+                result.add(String.valueOf(obj.pick(values[i][0])));
+            }
+        }
+        return result;
+    }
+}`;
+    }
     if (className === 'TwoSum') {
         return `
 import java.util.*;

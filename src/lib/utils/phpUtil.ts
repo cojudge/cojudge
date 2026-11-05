@@ -624,6 +624,27 @@ class Solution {
 }
 `;
     }
+    if (className === 'RandomPickIndex') {
+        return `<?php
+require_once 'RandomPickIndex.php';
+
+class Solution {
+    public function solve($operations, $values) {
+        $result = [];
+        $obj = null;
+        foreach ($operations as $i => $op) {
+            if ($op === 'RandomPickIndex') {
+                $obj = new RandomPickIndex($values[$i]);
+                $result[] = 'null';
+            } elseif ($op === 'pick') {
+                $result[] = (string)$obj->pick($values[$i][0]);
+            }
+        }
+        return $result;
+    }
+}
+`;
+    }
     if (className === 'TwoSum') {
         return `<?php
 require_once 'TwoSum.php';

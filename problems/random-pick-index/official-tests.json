@@ -1,122 +1,114 @@
 [
   {
-    "nums": "[1,2,3,3,3]",
-    "target": 3
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(160).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[1,2,3,3,3], ...Array(160).fill([3])])"
   },
   {
-    "nums": "[1,2,3,3,3]",
-    "target": 1
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(160).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[5,5,5,5], ...Array(160).fill([5])])"
   },
   {
-    "nums": "[5,5,5,5]",
-    "target": 5
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(100).fill('pick'), ...Array(100).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[1,2,1,2,1,2], ...Array(100).fill([1]), ...Array(100).fill([2])])"
   },
   {
-    "nums": "[1]",
-    "target": 1
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(160).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[7,8,7,8,7], ...Array(160).fill([8])])"
   },
   {
-    "nums": "[1,2]",
-    "target": 2
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(160).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[7,8,7,8,7], ...Array(160).fill([7])])"
   },
   {
-    "nums": "[2,1]",
-    "target": 2
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(160).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[-2147483648,0,2147483647,2147483647], ...Array(160).fill([2147483647])])"
   },
   {
-    "nums": "[1,1,1,2,2]",
-    "target": 2
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(30).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[42], ...Array(30).fill([42])])"
   },
   {
-    "nums": "[1,1,1,2,2]",
-    "target": 1
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(240).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[3,3,3,3,3,3], ...Array(240).fill([3])])"
   },
   {
-    "nums": "[-5,0,5]",
-    "target": 0
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(120).fill('pick'), ...Array(120).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[100,200,100,200,100,200], ...Array(120).fill([100]), ...Array(120).fill([200])])"
   },
   {
-    "nums": "[10,20,30]",
-    "target": 30
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(120).fill('pick'), 'RandomPickIndex', ...Array(120).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[5,5,5], ...Array(120).fill([5]), [1,2,3,3,3], ...Array(120).fill([3])])"
   },
   {
-    "nums": "[3,3,3,3,3,3]",
-    "target": 3
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(30).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[1,1,1,1,2], ...Array(30).fill([2])])"
   },
   {
-    "nums": "[1,2,3,4,5]",
-    "target": 5
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(180).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[0,0,0,1,0,0,0], ...Array(180).fill([0])])"
   },
   {
-    "nums": "[5,4,3,2,1]",
-    "target": 1
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(180).fill('pick')])",
+    "values": "@javascript:JSON.stringify([Array.from({length: 20000}, (_, i) => (i === 0 || i === 9999 || i === 19999) ? 7 : 1), ...Array(180).fill([7])])"
   },
   {
-    "nums": "[0,0,0,1]",
-    "target": 1
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(160).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[3,3], ...Array(160).fill([3])])"
   },
   {
-    "nums": "[0,0,0,1]",
-    "target": 0
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(160).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[3,0,0,0,3], ...Array(160).fill([3])])"
   },
   {
-    "nums": "[7,8,7,8,7]",
-    "target": 8
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(240).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[9,1,9,2,9,3,9], ...Array(240).fill([9])])"
   },
   {
-    "nums": "[7,8,7,8,7]",
-    "target": 7
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(240).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[4,4,4,4,4], ...Array(240).fill([4])])"
   },
   {
-    "nums": "[-2147483648,0,2147483647]",
-    "target": 2147483647
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(300).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[6,1,6,2,6,3,6,4,6,5,6], ...Array(300).fill([6])])"
   },
   {
-    "nums": "[-2147483648,0,2147483647]",
-    "target": -2147483648
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(160).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[-5,-5,-5], ...Array(160).fill([-5])])"
   },
   {
-    "nums": "[1,2,1,2,1,2]",
-    "target": 2
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(160).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[0,1,2,0,3,0], ...Array(160).fill([0])])"
   },
   {
-    "nums": "[1,2,1,2,1,2]",
-    "target": 1
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(160).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[-2147483648,2147483647,-2147483648,0,2147483647], ...Array(160).fill([2147483647])])"
   },
   {
-    "nums": "[42]",
-    "target": 42
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(120).fill('pick'), ...Array(120).fill('pick'), ...Array(120).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[1,2,3,1,2,3], ...Array(120).fill([1]), ...Array(120).fill([2]), ...Array(120).fill([3])])"
   },
   {
-    "nums": "[1,3,5,7,9]",
-    "target": 7
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(120).fill('pick'), 'RandomPickIndex', ...Array(120).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[5,5], ...Array(120).fill([5]), [8,9,8,9,8], ...Array(120).fill([8])])"
   },
   {
-    "nums": "[9,7,5,3,1]",
-    "target": 9
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(300).fill('pick')])",
+    "values": "@javascript:JSON.stringify([Array.from({length: 50000}, (_, i) => (i === 0 || i === 25000 || i === 49999) ? 42 : 1), ...Array(300).fill([42])])"
   },
   {
-    "nums": "[2,2]",
-    "target": 2
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(150).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[7], ...Array(150).fill([7])])"
   },
   {
-    "nums": "[100,200,100]",
-    "target": 100
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(240).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[1,1,1,1,2,2,2,2], ...Array(240).fill([2])])"
   },
   {
-    "nums": "[100,200,100]",
-    "target": 200
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(240).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[0,1,0,1,0,1,0,1], ...Array(240).fill([0])])"
   },
   {
-    "nums": "[1,2,3,4,3,2,1]",
-    "target": 3
-  },
-  {
-    "nums": "[0]",
-    "target": 0
-  },
-  {
-    "nums": "[-1,-1,-2]",
-    "target": -2
+    "operations": "@javascript:JSON.stringify(['RandomPickIndex', ...Array(160).fill('pick')])",
+    "values": "@javascript:JSON.stringify([[9,8,7,6,5,9,8,7,6,5], ...Array(160).fill([5])])"
   }
 ]
