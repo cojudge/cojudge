@@ -1,0 +1,53 @@
+name: Deploy Firestore rules
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - firestore.rules
+      - .github/workflows/deploy-firestore-rules.yml
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: firestore-rules-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+          cache: npm
+
+      - name: Deploy Firestore rules
+        env:
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${FIREBASE_PROJECT_ID}" ]]; then
+            echo "::error::FIREBASE_PROJECT_ID is not configured; refusing to deploy Firestore rules."
+            exit 1
+          fi
+          if [[ -z "${FIREBASE_SERVICE_ACCOUNT}" ]]; then
+            echo "::error::FIREBASE_SERVICE_ACCOUNT is not configured; cannot deploy Firestore rules."
+            exit 1
+          fi
+
+          credentials="${RUNNER_TEMP}/firebase-service-account.json"
+          trap 'rm -f "${credentials}"' EXIT
+          printf '%s' "${FIREBASE_SERVICE_ACCOUNT}" > "${credentials}"
+          export GOOGLE_APPLICATION_CREDENTIALS="${credentials}"
+
+          npx --yes firebase-tools@15.35.0 deploy \
+            --only firestore:rules \
+            --project "${FIREBASE_PROJECT_ID}" \
+            --non-interactive

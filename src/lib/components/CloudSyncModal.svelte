@@ -21,7 +21,11 @@
         syncCloudNow
     } from '$lib/cloudSync';
     import type { FileChange } from '$lib/cloudFileChange';
-    import type { CloudStashSummary } from '$lib/cloudStash';
+    import {
+        cloudStashListMode,
+        type CloudStashListMode,
+        type CloudStashSummary
+    } from '$lib/cloudStash';
     import { activeDialog, showChoice, showConfirm } from '$lib/dialogs';
     import { hasDotFiles, listDotFiles } from '$lib/progressBackup';
 
@@ -44,8 +48,16 @@
     let expandedDiffs = new Set<string>();
     let cloudStashes: CloudStashSummary[] = [];
     let cloudStashesLoading = false;
+    let cloudStashesError = '';
+    let cloudStashListModeValue: CloudStashListMode = 'empty';
     let cloudStashActionId = '';
     let cloudStashMessage = '';
+
+    $: cloudStashListModeValue = cloudStashListMode({
+        error: cloudStashesError,
+        loading: cloudStashesLoading,
+        count: cloudStashes.length
+    });
     function toggleDiff(key: string) {
         const next = new Set(expandedDiffs);
         if (next.has(key)) {
@@ -117,6 +129,7 @@
         showAllCloudHistory = false;
         selectedCloudFileIds = new Set();
         cloudStashMessage = '';
+        cloudStashesError = '';
         await refreshCloudLocalState();
         await loadCloudStashes();
         await tick();
@@ -256,13 +269,15 @@
         if (cloudStashesLoading) return;
         if ($cloudSyncState.authStatus !== 'signed-in') {
             cloudStashes = [];
+            cloudStashesError = '';
             return;
         }
+        cloudStashesError = '';
         cloudStashesLoading = true;
         try {
             cloudStashes = await listCloudStashes();
         } catch (error) {
-            cloudStashMessage = error instanceof Error ? error.message : 'Could not load cloud stashes.';
+            cloudStashesError = error instanceof Error ? error.message : 'Could not load cloud stashes.';
             cloudStashes = [];
         } finally {
             cloudStashesLoading = false;
@@ -710,7 +725,7 @@
 
             <p class="cloud-offline-note">Cojudge stays offline-first. Local saves never wait for the cloud, and judging works without signing in or connecting to the internet. Files that start with `.` (e.g. `.env`) are left out of cloud backups and appear faded as hidden files in the playground file tabs</p>
             {#if $cloudSyncState.authStatus === 'signed-in' && $cloudSyncState.resolution !== 'account'}
-                {#if cloudStashes.length > 0 || cloudStashesLoading || cloudStashMessage}
+                {#if cloudStashes.length > 0 || cloudStashesLoading || cloudStashesError || cloudStashMessage}
                     <div class="cloud-stashes">
                         <div class="cloud-history-heading">
                             <strong>Cloud stashes</strong>
@@ -719,9 +734,11 @@
                         {#if cloudStashMessage}
                             <p class="cloud-stash-message" role="status">{cloudStashMessage}</p>
                         {/if}
-                        {#if cloudStashesLoading && cloudStashes.length === 0}
+                        {#if cloudStashListModeValue === 'error'}
+                            <p class="modal-error" role="alert">{cloudStashesError}</p>
+                        {:else if cloudStashListModeValue === 'loading'}
                             <p class="cloud-file-changes-empty">Loading stashes…</p>
-                        {:else if cloudStashes.length > 0}
+                        {:else if cloudStashListModeValue === 'list'}
                             <div class="cloud-stash-list">
                                 {#each cloudStashes as stash}
                                     <div class="cloud-stash-row">

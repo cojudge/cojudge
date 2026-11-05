@@ -41,7 +41,7 @@ For a custom Firebase project:
 3. Put the Google provider's Web OAuth client ID in `VITE_GOOGLE_WEB_CLIENT_ID`. Add each browser origin that hosts Cojudge to that client's authorized JavaScript origins.
 4. Create a Google OAuth client with application type **Desktop app**. Put its client ID in `VITE_GOOGLE_DESKTOP_CLIENT_ID` and its generated client secret in `VITE_GOOGLE_DESKTOP_CLIENT_SECRET` for local/custom builds.
 5. If Identity Platform asks for external Google client IDs, add the desktop client ID there as well.
-6. Deploy the private per-user and sharing rules with `npx firebase-tools deploy --only firestore:rules --project <project-id>`. Deploy rules before distributing a newer client because cloud schema changes are intentionally rejected until their matching rules are active.
+6. Deploy the private per-user and sharing rules with `npx firebase-tools deploy --only firestore:rules --project <project-id>`. Official releases deploy the committed rules automatically after release validation and before installer builds; custom deployments must run this step before distributing a newer client because cloud schema changes are intentionally rejected until their matching rules are active.
 
 Desktop Google sign-in opens the system browser, listens temporarily on a random `127.0.0.1` port, uses OAuth PKCE, and then closes the local listener. No hosted callback server or VPS is involved. Google calls the native credential a client secret, but installed apps cannot keep embedded values confidential; PKCE and callback validation provide the security boundary.
 
@@ -91,10 +91,11 @@ Installer output is written under `src-tauri/target/<target>/release/bundle/`, o
 
 The `Release desktop installers` workflow is manually triggered:
 
-1. Update the version in `package.json` and `src-tauri/Cargo.toml`.
-2. Open the repository's Actions tab.
-3. Select `Release desktop installers` and choose `Run workflow`.
-4. Enter the version without a leading `v`, for example `0.1.0`.
+1. Configure the `FIREBASE_SERVICE_ACCOUNT` repository secret with a service account allowed to deploy Firestore rules. The release workflow deploys `firestore.rules` after validation and before installer builds.
+2. Update the version in `package.json` and `src-tauri/Cargo.toml`.
+3. Open the repository's Actions tab.
+4. Select `Release desktop installers` and choose `Run workflow`.
+5. Enter the version without a leading `v`, for example `0.1.0`.
 
 The workflow builds all platforms before publishing anything. When every build succeeds, it creates tag `v<version>` and a GitHub Release containing:
 
@@ -141,6 +142,7 @@ Before running a release, configure these GitHub Actions repository secrets. Vit
 - `FIREBASE_STORAGE_BUCKET`
 - `FIREBASE_MESSAGING_SENDER_ID`
 - `FIREBASE_APP_ID`
+- `FIREBASE_SERVICE_ACCOUNT` (service-account JSON with permission to deploy Firestore rules)
 - `GOOGLE_WEB_CLIENT_ID`
 - `GOOGLE_DESKTOP_CLIENT_ID`
 - `GOOGLE_DESKTOP_CLIENT_SECRET`

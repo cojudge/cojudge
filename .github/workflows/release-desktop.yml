@@ -63,8 +63,13 @@ jobs:
             exit 1
           fi
 
-  build:
+  deploy-firestore-rules:
     needs: validate
+    uses: ./.github/workflows/deploy-firestore-rules.yml
+    secrets: inherit
+
+  build:
+    needs: [validate, deploy-firestore-rules]
     strategy:
       fail-fast: false
       matrix:

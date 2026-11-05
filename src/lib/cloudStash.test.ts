@@ -3,6 +3,7 @@ import {
 	CLOUD_STASH_LIMIT,
 	CLOUD_STASH_TTL_MS,
 	chooseCloudStashBase,
+	cloudStashListMode,
 	collectStashChanges,
 	collectStashImages,
 	cloudStashIsExpired,
@@ -35,6 +36,26 @@ function readEntries(data: ProgressData, slug = 'playground'): Array<Record<stri
 	const fileStore = data.files as Record<string, string>;
 	return JSON.parse(fileStore[slug]) as Array<Record<string, unknown>>;
 }
+
+describe('cloudStashListMode', () => {
+	it('keeps an error visible instead of presenting an empty stash list', () => {
+		expect(cloudStashListMode({
+			error: 'Missing or insufficient permissions.',
+			loading: false,
+			count: 0
+		})).toBe('error');
+	});
+
+	it('shows loading only when there are no cached stashes', () => {
+		expect(cloudStashListMode({ error: '', loading: true, count: 0 })).toBe('loading');
+		expect(cloudStashListMode({ error: '', loading: true, count: 2 })).toBe('list');
+	});
+
+	it('shows the list or empty state after a successful load', () => {
+		expect(cloudStashListMode({ error: '', loading: false, count: 2 })).toBe('list');
+		expect(cloudStashListMode({ error: '', loading: false, count: 0 })).toBe('empty');
+	});
+});
 
 describe('collectStashChanges', () => {
 	it('captures tracked modifications and untracked files without unrelated state', () => {

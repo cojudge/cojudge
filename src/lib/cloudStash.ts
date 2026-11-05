@@ -94,6 +94,19 @@ export type CloudStashBaseChoice =
 	| { source: 'empty' }
 	| { source: 'unknown' };
 
+export type CloudStashListMode = 'error' | 'loading' | 'list' | 'empty';
+
+export function cloudStashListMode(input: {
+	error: string;
+	loading: boolean;
+	count: number;
+}): CloudStashListMode {
+	if (input.error) return 'error';
+	if (input.count > 0) return 'list';
+	if (input.loading) return 'loading';
+	return 'empty';
+}
+
 function stableValue(value: unknown): string {
 	if (value === null) return 'null';
 	if (typeof value === 'undefined') return 'undefined';
