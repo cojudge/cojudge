@@ -70,7 +70,7 @@ jobs:
       matrix:
         include:
           - id: macos
-            os: macos-14
+            os: macos-15
             target: universal-apple-darwin
             rust_targets: aarch64-apple-darwin,x86_64-apple-darwin
             # NOTE: `app` must be included alongside `dmg` — the bundler only
