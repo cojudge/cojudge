@@ -1,7 +1,7 @@
 import { cppImage } from "$lib/utils/cppUtil";
 import { csharpImage } from "$lib/utils/csharpUtil";
 import { goImage } from "$lib/utils/goUtil";
-import { javaImage } from "$lib/utils/javaUtil";
+import { JAVAC, javaImage } from "$lib/utils/javaUtil";
 import { phpImage } from "$lib/utils/phpUtil";
 import { pythonImage } from "$lib/utils/pythonUtil";
 import { rustImage } from "$lib/utils/rustUtil";
@@ -58,7 +58,7 @@ export class PlaygroundJavaRunner extends PlaygroundRunner {
         await this.container.putArchive(pack as any, { path: '/app' });
 
         const exec = await this.container.exec({
-            Cmd: ['/bin/sh', '-c', 'javac Main.java'],
+            Cmd: ['/bin/sh', '-c', `${JAVAC} Main.java`],
             AttachStdout: true,
             AttachStderr: true
         });

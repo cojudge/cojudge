@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import Dockerode from 'dockerode';
 import { resolveProblemFile } from './server/contentPaths';
 import tar from 'tar-stream';
-import { formatAndSplitJavaString, getDisplayFuncName, javaGetFullParam, javaHelperMethods, javaImage, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from './utils/javaUtil';
+import { JAVAC, formatAndSplitJavaString, getDisplayFuncName, javaGetFullParam, javaHelperMethods, javaImage, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from './utils/javaUtil';
 import { isTranscriptKind } from './utils/interactiveUtil';
 import { ensureImageAvailable, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE, type Param } from './utils/util';
 import ContainerPool from './runners/ContainerPool';
@@ -97,7 +97,7 @@ export async function getMarkerResponses(problemId: string, functionName: string
         await container.putArchive(pack as any, { path: '/app' });
 
         const compileExec = await container.exec({
-            Cmd: ['/bin/sh', '-c', 'javac *.java'],
+            Cmd: ['/bin/sh', '-c', `${JAVAC} *.java`],
             AttachStdout: true,
             AttachStderr: true
         });
