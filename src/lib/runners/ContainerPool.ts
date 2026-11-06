@@ -145,7 +145,7 @@ class ContainerPool {
     private static async cleanContainer(container: Dockerode.Container): Promise<void> {
         try {
             const exec = await container.exec({
-                Cmd: ['sh', '-c', 'rm -f /app/*.java /app/*.py /app/*.cpp /app/*.cs /app/*.rs /app/*.go /app/*.class /app/Main /app/main 2>/dev/null; mkdir -p /app'],
+                Cmd: ['sh', '-c', 'rm -f /app/__marker_outputs.txt /app/*.java /app/*.py /app/*.cpp /app/*.cs /app/*.rs /app/*.go /app/*.class /app/Main /app/main 2>/dev/null; mkdir -p /app'],
                 AttachStdout: true,
                 AttachStderr: true
             });
