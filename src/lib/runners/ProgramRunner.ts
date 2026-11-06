@@ -3,6 +3,9 @@ import fs from "fs/promises";
 import os from "os";
 import path from "path";
 import { EXECUTION_TIMEOUT_SECONDS } from "$lib/utils/util";
+import { cojudgeContainerLabels } from "$lib/server/containerSession";
+
+const docker = new Dockerode();
 
 /**
  * Thrown when the compiled test binary exits non-zero (e.g. SIGSEGV from a
@@ -18,6 +21,21 @@ export class RunnerCrashError extends Error {
         this.partialStdout = partialStdout;
     }
 }
+
+/** A tool provisioned into runner containers (see ProgramRunner.provisionTool). */
+export type ToolSpec = {
+    name: string;
+    /** Shell command that exits 0 iff the tool is usable in the container. */
+    probe: string;
+    /** Shell command installing the tool (needs network). */
+    install: string;
+    /** Path harvested (getArchive) after installing. */
+    harvestPath: string;
+    /** Directory the harvested archive is extracted into (putArchive). */
+    extractTo: string;
+    installTimeoutMs: number;
+    background?: boolean;
+};
 
 export abstract class ProgramRunner {
     protected readonly problemId: string;
@@ -48,18 +66,20 @@ export abstract class ProgramRunner {
 
     /** `${tool}:${containerId}` keys of containers known to have a tool. */
     private static toolReady = new Set<string>();
-    /** In-flight installs, keyed like toolReady. */
-    private static toolInstalls = new Map<string, Promise<boolean>>();
+    /** In-flight background provisioning, keyed like toolReady. */
+    private static toolPending = new Map<string, Promise<boolean>>();
     /**
-     * Tar archives of installed tools harvested from a container, keyed by
-     * `${tool}:${imageId}`. Containers of the same image share the same libc
-     * and filesystem layout, so later containers get the tool via a single
-     * putArchive (~10ms) instead of a network install. Mirrored to disk
+     * Tar archives of tools installed in a pristine sidecar container, keyed
+     * by `${tool}:${imageId}`. Containers of the same image share the same
+     * libc and filesystem layout, so a runner container gets the tool via a
+     * single putArchive (~10ms) instead of a network install. Mirrored to disk
      * (toolCacheDir) so a server restart - and offline use after one online
      * run - does not need the network again. Keyed by image *ID*, so a
      * re-pulled/updated image never receives a stale binary.
      */
     private static toolArchives = new Map<string, Buffer>();
+    /** In-flight sidecar installs, keyed like toolArchives (one per image+tool). */
+    private static sidecars = new Map<string, Promise<Buffer | null>>();
 
     private static toolCacheDir(): string {
         return process.env.COJUDGE_TOOL_CACHE_DIR || path.join(os.homedir(), '.cojudge', 'tool-cache');
@@ -101,75 +121,112 @@ export abstract class ProgramRunner {
     }
 
     /**
-     * Ensure a tool is present in the container: known-ready -> no-op; else
-     * inject the archive harvested from an earlier container of the same
-     * image; else probe; else install (needs network) and harvest the result
-     * for later containers. With `background`, the install is started but not
-     * awaited and this resolves false immediately.
+     * Install a tool in a short-lived sidecar container created from the same
+     * image and harvest it as a tar archive. The sidecar never runs user code,
+     * so the cached archive - which is injected into every later container of
+     * the image, across server restarts - cannot be tampered with by a
+     * submission (installing inside a runner container would let a program
+     * running alongside the install replace the binary before it is cached).
      */
-    static async provisionTool(container: Dockerode.Container, tool: {
-        name: string;
-        probe: string;
-        install: string;
-        harvestPath: string;
-        extractTo: string;
-        installTimeoutMs: number;
-        background?: boolean;
-    }): Promise<boolean> {
+    private static installInSidecar(archiveKey: string, image: string, tool: ToolSpec): Promise<Buffer | null> {
+        const existing = this.sidecars.get(archiveKey);
+        if (existing) return existing;
+        const job = (async () => {
+            let sidecar: Dockerode.Container | null = null;
+            try {
+                sidecar = await docker.createContainer({
+                    Image: image,
+                    Cmd: ['sh', '-c', 'tail -f /dev/null'],
+                    Tty: false,
+                    Labels: cojudgeContainerLabels({ 'cojudge.provision': 'true' })
+                });
+                await sidecar.start();
+                const ok = await ProgramRunner.execOk(sidecar, `${tool.install}; ${tool.probe}`, tool.installTimeoutMs);
+                if (!ok) return null;
+                const archive: any = await sidecar.getArchive({ path: tool.harvestPath });
+                const chunks: Buffer[] = [];
+                await new Promise<void>((resolve, reject) => {
+                    archive.on('data', (c: Buffer) => chunks.push(c));
+                    archive.on('end', resolve);
+                    archive.on('error', reject);
+                });
+                const buf = Buffer.concat(chunks);
+                await ProgramRunner.saveToolArchive(archiveKey, buf);
+                return buf;
+            } catch {
+                return null;
+            } finally {
+                this.sidecars.delete(archiveKey);
+                if (sidecar) {
+                    try { await sidecar.remove({ force: true }); } catch {}
+                }
+            }
+        })();
+        this.sidecars.set(archiveKey, job);
+        return job;
+    }
+
+    /** Inject a trusted archive into the container and confirm the tool works. */
+    private static async injectTool(container: Dockerode.Container, key: string, archiveKey: string, buf: Buffer, tool: ToolSpec): Promise<boolean> {
+        try {
+            await container.putArchive(buf, { path: tool.extractTo });
+        } catch {
+            return false;
+        }
+        if (await ProgramRunner.execOk(container, tool.probe, 10000)) {
+            this.toolReady.add(key);
+            return true;
+        }
+        await ProgramRunner.forgetToolArchive(archiveKey);
+        return false;
+    }
+
+    /**
+     * Ensure a tool is present in the container: known-ready -> no-op; else
+     * inject the cached archive for this image; else probe (the image may
+     * ship it); else install it in a pristine sidecar (needs network), cache
+     * the archive and inject it. With `background`, provisioning continues
+     * without being awaited and this resolves false immediately.
+     */
+    static async provisionTool(container: Dockerode.Container, tool: ToolSpec): Promise<boolean> {
         const key = `${tool.name}:${container.id}`;
         if (this.toolReady.has(key)) return true;
-        const inflight = this.toolInstalls.get(key);
-        if (inflight) return tool.background ? false : inflight;
+        const pending = this.toolPending.get(key);
+        if (pending) return tool.background ? false : pending;
         let image = '';
         try {
             image = (await container.inspect()).Image ?? '';
         } catch {}
         const archiveKey = `${tool.name}:${image}`;
         const cached = image ? await ProgramRunner.loadToolArchive(archiveKey) : undefined;
-        if (cached) {
-            try {
-                await container.putArchive(cached, { path: tool.extractTo });
-            } catch {}
-        }
+        if (cached && await ProgramRunner.injectTool(container, key, archiveKey, cached, tool)) return true;
         if (await ProgramRunner.execOk(container, tool.probe, 10000)) {
             this.toolReady.add(key);
             return true;
         }
-        if (cached) await ProgramRunner.forgetToolArchive(archiveKey);
-        const install = (async () => {
+        if (!image) return false;
+        const job = (async () => {
             try {
-                const ok = await ProgramRunner.execOk(container, `${tool.install}; ${tool.probe}`, tool.installTimeoutMs);
-                if (!ok) return false;
-                this.toolReady.add(key);
-                if (image && !this.toolArchives.has(archiveKey)) {
-                    const archive: any = await container.getArchive({ path: tool.harvestPath });
-                    const chunks: Buffer[] = [];
-                    await new Promise<void>((resolve, reject) => {
-                        archive.on('data', (c: Buffer) => chunks.push(c));
-                        archive.on('end', resolve);
-                        archive.on('error', reject);
-                    });
-                    await ProgramRunner.saveToolArchive(archiveKey, Buffer.concat(chunks));
-                }
-                return true;
+                const buf = await ProgramRunner.installInSidecar(archiveKey, image, tool);
+                return buf ? await ProgramRunner.injectTool(container, key, archiveKey, buf, tool) : false;
             } catch {
                 return false;
             } finally {
-                this.toolInstalls.delete(key);
+                this.toolPending.delete(key);
             }
         })();
-        this.toolInstalls.set(key, install);
-        return tool.background ? false : install;
+        this.toolPending.set(key, job);
+        return tool.background ? false : job;
     }
 
     /**
      * Make /usr/bin/time (used for the memory metric) available WITHOUT
      * blocking execution on the network. Alpine images already ship it;
-     * Debian-based ones (python/gcc/php/rust) get it injected from the archive
-     * harvested from the first container that installed it. When neither
-     * applies, the package install runs in the background: runs fall back to
-     * plain `timeout` until it lands (see wrapWithMetrics), so only the memory
-     * metric of the first run on a fresh container of that image is missing.
+     * Debian-based ones (python/gcc/php/rust) get it injected from the cached
+     * archive. Without one, the package is installed in a sidecar in the
+     * background: runs fall back to plain `timeout` until it lands (see
+     * wrapWithMetrics), so only the memory metric of the first run(s) on that
+     * image is missing.
      * Previously the install was awaited here, costing ~20s on every fresh
      * Debian-based container (beyond the CLI's 12s poll window on cold runs).
      */
