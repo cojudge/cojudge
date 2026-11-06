@@ -1,4 +1,4 @@
-import { generateJavaRunner, generateJavaRunnerWithMarker, generateJavaClassSolution, generateJavaInteractiveRunner, generateJavaInteractiveRunnerWithMarker, javaJudgeClass, javaImage, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from "$lib/utils/javaUtil";
+import { JAVAC, generateJavaRunner, generateJavaRunnerWithMarker, generateJavaClassSolution, generateJavaInteractiveRunner, generateJavaInteractiveRunnerWithMarker, javaJudgeClass, javaImage, javaListNodeClass, javaTreeNodeClass, javaGraphNodeClass } from "$lib/utils/javaUtil";
 import { getInteractive, judgeFileForKind } from "$lib/utils/interactiveUtil";
 import { extractOperations } from "$lib/utils/util";
 import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, LINUX_TIMEOUT_CODE, TIMEOUT_MESSAGE } from "$lib/utils/util";
@@ -100,7 +100,7 @@ export class JavaRunner extends ProgramRunner {
             await ProgramRunner.ensureTimeInstalled(this.container);
 
             const exec = await this.container.exec({
-                Cmd: ['/bin/sh', '-c', 'javac *.java'],
+                Cmd: ['/bin/sh', '-c', `${JAVAC} *.java`],
                 AttachStdout: true,
                 AttachStderr: true
             });

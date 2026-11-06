@@ -4,6 +4,15 @@ import { interactiveBudget, isTranscriptKind } from "./interactiveUtil";
 
 export const javaImage = 'alpine/java:22-jdk';
 
+/**
+ * javac invocation for judge compiles. javac is a short-lived JVM whose cost
+ * is dominated by startup and JIT warm-up: restricting *the compiler's own*
+ * JVM to the C1 tier with the serial GC cuts a typical compile from ~1.9s to
+ * ~1.0s. These flags only affect how javac runs, not the bytecode it emits;
+ * user programs still run on the default JVM configuration.
+ */
+export const JAVAC = 'javac -J-XX:TieredStopAtLevel=1 -J-XX:+UseSerialGC';
+
 // Master judge for interactive guess-word problems. The runner builds one
 // per test case from (secret, wordlist); user code calls master.guess(word).
 export const javaMasterClass = `

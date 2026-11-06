@@ -72,7 +72,10 @@ async function cleanupContainers() {
             const isDebug = containerInfo.Labels && containerInfo.Labels['cojudge.debug'] === 'true';
             console.log(`[cleanup] container ${containerInfo.Id.substring(0, 12)} age=${age}ms inPool=${inPool} debug=${isDebug} image=${containerInfo.Image}`);
 
-            const maxAge = isDebug ? 300000 : TIMEOUT_MS;
+            // Tool-provisioning sidecars (ProgramRunner.installInSidecar) run a
+            // bounded network install (<=120s) and remove themselves.
+            const isProvision = containerInfo.Labels && containerInfo.Labels['cojudge.provision'] === 'true';
+            const maxAge = isDebug || isProvision ? 300000 : TIMEOUT_MS;
             if (age > maxAge && !inPool) {
                 const container = docker.getContainer(containerInfo.Id);
                 try {
