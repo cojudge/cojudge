@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import fs from 'fs/promises';
-import { getMarkerResponses } from '../../../lib/markerRunner';
+import { getMarkerResponses, prepareMarker, type PreparedMarker } from '../../../lib/markerRunner';
 import { ensureUserContentSeeded, resolveProblemFile } from '$lib/server/contentPaths';
 import { ProgramRunner } from '$lib/runners/ProgramRunner';
 import { JavaRunner } from '$lib/runners/JavaRunner';
@@ -49,7 +49,7 @@ function isJavaLanguage(language: string): boolean {
     return language === 'java';
 }
 
-async function judgeRawResults(rawResults: string[], testCases: any[], problemData: any, problemId: string, language: string): Promise<RunSuccess> {
+async function judgeRawResults(rawResults: string[], testCases: any[], problemData: any, problemId: string, language: string, preparedMarker: PreparedMarker | null = null): Promise<RunSuccess> {
     // Check if this is a merged marker result (Java with Marker.java)
     const hasMergedMarker = isJavaLanguage(language) &&
         rawResults.length > 0 &&
@@ -160,7 +160,8 @@ async function judgeRawResults(rawResults: string[], testCases: any[], problemDa
                 problemData.params,
                 testCases,
                 markerOutputs,
-                problemData.outputType
+                problemData.outputType,
+                preparedMarker
             );
         } catch {
             markerResponses = testCases.map(() => ({
@@ -185,6 +186,7 @@ async function judgeRawResults(rawResults: string[], testCases: any[], problemDa
 
 async function executeRun(problemId: string, language: string, code: string, testCases: any[], job: RunJob) {
     let problemData: any = null;
+    let preparedMarker: PreparedMarker | null = null;
     try {
         await ensureUserContentSeeded();
         const problemPath = await resolveProblemFile(problemId, 'metadata.json');
@@ -213,6 +215,12 @@ async function executeRun(problemId: string, language: string, code: string, tes
             throw new Error(`${language} is not supported yet`);
         }
 
+        // Non-Java results are judged by the Java Marker in a separate
+        // container; compile it while the user's program compiles and runs.
+        if (!isJavaLanguage(language)) {
+            preparedMarker = prepareMarker(problemId, problemData.functionName, problemData.params, testCases, problemData.outputType);
+        }
+
         job.status = 'preparing';
         await programRunner.compile();
         job.status = 'running';
@@ -223,9 +231,15 @@ async function executeRun(problemId: string, language: string, code: string, tes
         }
 
         job.status = 'judging';
-        job.results = await judgeRawResults(rawResults, testCases, problemData, problemId, language);
+        const marker = preparedMarker;
+        preparedMarker = null;
+        job.results = await judgeRawResults(rawResults, testCases, problemData, problemId, language, marker);
         job.status = 'completed';
     } catch (error: any) {
+        // Not judged (compile error, TLE, crash): free the marker container.
+        // The crash path below re-judges a test prefix with a fresh marker.
+        preparedMarker?.dispose();
+        preparedMarker = null;
         if (error && error.toString && error.toString().indexOf(TIMEOUT_MESSAGE) !== -1) {
             job.timeout = true;
             job.status = 'completed';

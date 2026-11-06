@@ -3,7 +3,7 @@ import type { RequestHandler } from './$types';
 import fs from 'fs/promises';
 import vm from 'vm';
 import { ensureUserContentSeeded, resolveProblemFile } from '$lib/server/contentPaths';
-import { getMarkerResponses } from '../../../lib/markerRunner';
+import { getMarkerResponses, prepareMarker, type PreparedMarker } from '../../../lib/markerRunner';
 import { ProgramRunner } from '$lib/runners/ProgramRunner';
 import { JavaRunner } from '$lib/runners/JavaRunner';
 import { PythonRunner } from '$lib/runners/PythonRunner';
@@ -52,6 +52,7 @@ function isJavaLanguage(language: string): boolean {
 async function executeSubmit(problemId: string, language: string, code: string, startTcNo: number, job: SubmitJob) {
     let timeoutTestcase: any = null;
     let batchTestCases: any[] = [];
+    let preparedMarker: PreparedMarker | null = null;
     try {
         job.status = 'running';
         await ensureUserContentSeeded();
@@ -139,6 +140,11 @@ async function executeSubmit(problemId: string, language: string, code: string, 
         }
         if (!programRunner) {
             throw new Error(`${language} is not supported yet`);
+        }
+        // Non-Java results are judged by the Java Marker in a separate
+        // container; compile it while the user's program compiles and runs.
+        if (!isJavaLanguage(language)) {
+            preparedMarker = prepareMarker(problemId, problemData.functionName, problemData.params, testCases, problemData.outputType);
         }
         await programRunner.compile();
         const rawResults = await programRunner.run();
@@ -230,8 +236,10 @@ async function executeSubmit(problemId: string, language: string, code: string, 
                     problemData.params,
                     testCases,
                     markerOutputs,
-                    problemData.outputType
+                    problemData.outputType,
+                    preparedMarker
                 );
+                preparedMarker = null;
             } catch (e) {
                 markerResponses = testCases.map((_, i) => ({
                     actualAnswer: parsed[i]?.output ?? '',
@@ -259,6 +267,9 @@ async function executeSubmit(problemId: string, language: string, code: string, 
         job.result = { accepted, totalTc, passedTc: (job.result?.passedTc ? job.result?.passedTc : 0) + testCases.length, results: finalResponse };
         job.status = 'completed';
     } catch (error: any) {
+        // Not judged (compile error, TLE, crash): free the marker container.
+        preparedMarker?.dispose();
+        preparedMarker = null;
         if (error && error.toString() && error.toString().indexOf(TIMEOUT_MESSAGE) !== -1) {
             job.timeout = true;
             job.timeoutTestCase = timeoutTestcase;
