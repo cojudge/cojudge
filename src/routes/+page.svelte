@@ -443,15 +443,13 @@
         return label.replace(/\b\w/g, (c) => c.toUpperCase());
     };
 
-    // Display title: courses may override the leading number via
-    // courseinfo.json "problem-numbers" (e.g. LeetCode IDs in LeetCode 1000).
-    const displayTitle = (p?: { title?: string | null; courseNumber?: number | null } | null) => {
-        const title = p?.title || "";
-        if (p?.courseNumber != null) {
-            return title.replace(/^\d+\.\s*/, `${p.courseNumber}. `);
-        }
-        return title;
-    };
+    // Display title: always the problem's own title ("355. Group Shifted
+    // Strings"), the same number the problem page shows and search matches.
+    // courseinfo.json "problem-numbers" are course positions (LeetCode 1000
+    // numbers its 950 problems 1..950), not LeetCode IDs, so showing them in
+    // place of the title's number made titles that no search could find.
+    // They are still used to order the course (see getSortedGroup).
+    const displayTitle = (p?: { title?: string | null } | null) => p?.title || "";
 
     // Render markdown safely from trusted source (local JSON)
     marked.use({ gfm: true });
@@ -567,7 +565,7 @@
         if (!conf) {
             // default: keep insertion order (already grouped) but fall back to numeric prefix if present
             return arr.slice().toSorted((a, b) => {
-                // Prefer course-specific numbers (e.g. LeetCode IDs) when both sides have them
+                // Prefer the course's own ordering (courseinfo.json problem-numbers) when both sides have it
                 if (a?.courseNumber != null && b?.courseNumber != null) return a.courseNumber - b.courseNumber;
                 // Try numeric prefix like "63. Title"
                 const na = Number.parseInt(a?.title?.split(".")?.[0] ?? "NaN");

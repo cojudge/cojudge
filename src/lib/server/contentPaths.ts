@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { readDerivedCached } from './textFileCache';
 
 /**
  * User-editable content lives in ~/cojudge (overridable via
@@ -159,13 +160,22 @@ const PROBLEM_COMPARE_FILES = [
 
 const COURSE_COMPARE_FILES = ['courseinfo.json'];
 
-async function readIfExists(filePath: string): Promise<string | null> {
-	try {
-		return await fs.readFile(filePath, 'utf-8');
-	} catch {
-		return null;
-	}
+/**
+ * Line-ending-agnostic text for content comparison. The Windows desktop build
+ * is checked out with core.autocrlf, so its bundled files are CRLF, while user
+ * copies written by editors, the CLI or older installs are often LF. Treating
+ * those as "modified" made the Manage Problems dialog list items that differ
+ * only in line endings (and that Reset could not clear for good).
+ */
+function normalizeEol(text: string): string {
+	return text.replace(/\r\n/g, '\n');
 }
+
+// In a production install (desktop app, `cojudge` CLI server) the bundled
+// content ships read-only with the app and never changes while it runs, so
+// bundled files are read once. In dev/tests they may be edited, so every
+// lookup is validated by stat.
+const BUNDLED_IS_IMMUTABLE = process.env.NODE_ENV === 'production';
 
 /** Compare a user dir against its bundled counterpart (missing files only, never writes). */
 async function compareDirToBundled(
@@ -192,9 +202,12 @@ async function compareDirToBundled(
 
 	const comparisons = await Promise.all(
 		files.map(async (file) => {
+			// Cached by stat: repeat checks only re-read files that changed.
 			const [userContent, bundledContent] = await Promise.all([
-				readIfExists(path.join(userDir, file)),
-				readIfExists(path.join(bundledDir, file))
+				readDerivedCached(path.join(userDir, file), 'eol', normalizeEol),
+				readDerivedCached(path.join(bundledDir, file), 'eol', normalizeEol, {
+					immutable: BUNDLED_IS_IMMUTABLE
+				})
 			]);
 			return userContent === bundledContent;
 		})
@@ -570,6 +583,86 @@ async function refreshManifestPrefix(prefix: string): Promise<void> {
 	await writeSeedManifest(next);
 }
 
+const WINDOWS_RETRY_CODES = new Set(['EBUSY', 'EPERM', 'EACCES', 'ENOTEMPTY', 'EMFILE', 'ENFILE']);
+
+/**
+ * Retry an fs operation that Windows can fail transiently (a file briefly
+ * held open by antivirus, the search indexer, an editor or Explorer).
+ */
+async function withFsRetry<T>(op: () => Promise<T>, attempts = 5): Promise<T> {
+	for (let i = 1; ; i++) {
+		try {
+			return await op();
+		} catch (error) {
+			const code = (error as NodeJS.ErrnoException)?.code ?? '';
+			if (i >= attempts || !WINDOWS_RETRY_CODES.has(code)) throw error;
+			await new Promise((resolve) => setTimeout(resolve, 50 * i));
+		}
+	}
+}
+
+/** Copy one file over another, clearing a read-only destination if needed. */
+async function overwriteFile(src: string, dest: string): Promise<void> {
+	await withFsRetry(async () => {
+		try {
+			await fs.copyFile(src, dest);
+		} catch (error) {
+			const code = (error as NodeJS.ErrnoException)?.code;
+			if (code !== 'EPERM' && code !== 'EACCES') throw error;
+			// Windows refuses to overwrite read-only files.
+			await fs.chmod(dest, 0o666).catch(() => {});
+			await fs.copyFile(src, dest);
+		}
+	});
+}
+
+/**
+ * Make `userDir` an exact copy of `bundledDir` by overwriting files in place
+ * and deleting extras, instead of removing and re-creating the directory.
+ * Removing the whole directory fails on Windows whenever anything holds a
+ * handle inside it, which left the user copy unchanged (or half-deleted).
+ */
+async function replaceDirWithBundled(bundledDir: string, userDir: string): Promise<void> {
+	await fs.mkdir(userDir, { recursive: true });
+	const bundledEntries = await fs.readdir(bundledDir, { withFileTypes: true });
+	const keep = new Set<string>();
+	for (const entry of bundledEntries) {
+		const src = path.join(bundledDir, entry.name);
+		const dest = path.join(userDir, entry.name);
+		if (entry.isDirectory()) {
+			const destStat = await fs.lstat(dest).catch(() => null);
+			if (destStat && !destStat.isDirectory()) {
+				await withFsRetry(() => fs.rm(dest, { force: true }));
+			}
+			await replaceDirWithBundled(src, dest);
+			keep.add(entry.name);
+		} else if (entry.isFile()) {
+			const destStat = await fs.lstat(dest).catch(() => null);
+			if (destStat?.isDirectory()) {
+				await withFsRetry(() => fs.rm(dest, { recursive: true, force: true }));
+			}
+			await overwriteFile(src, dest);
+			keep.add(entry.name);
+		}
+	}
+	for (const entry of await fs.readdir(userDir, { withFileTypes: true })) {
+		if (keep.has(entry.name)) continue;
+		const extra = path.join(userDir, entry.name);
+		// On a case-insensitive filesystem (Windows, default macOS) a user file
+		// named e.g. `Statement.md` IS the `statement.md` just written; never
+		// delete it. Compare file identity rather than names.
+		const twin = [...keep].find((name) => name.toLowerCase() === entry.name.toLowerCase());
+		if (twin) {
+			const [a, b] = await Promise.all([
+				fs.stat(extra).catch(() => null),
+				fs.stat(path.join(userDir, twin)).catch(() => null)
+			]);
+			if (a && b && a.ino === b.ino && a.dev === b.dev) continue;
+		}
+		await withFsRetry(() => fs.rm(extra, { recursive: true, force: true }));
+	}
+}
+
 /**
  * Reset a problem to its bundled copy, discarding ~/cojudge edits.
  * Used to recover stale pre-manifest copies and to accept upstream fixes
@@ -586,9 +679,11 @@ export async function resetProblemToBundled(slug: string): Promise<void> {
 		throw new Error(`No bundled problem '${slug}' to reset to`);
 	}
 	const userDir = path.join(getProblemsDir(), slug);
-	await fs.rm(userDir, { recursive: true, force: true });
-	await fs.cp(bundledDir, userDir, { recursive: true });
+	await replaceDirWithBundled(bundledDir, userDir);
 	await refreshManifestPrefix(`problems/${slug}/`);
+	if ((await getProblemSource(slug)) === 'modified') {
+		throw new Error(`Reset of '${slug}' did not take effect: ${userDir} still differs from the bundled copy`);
+	}
 }
 
 /** Reset a course to its bundled copy, discarding ~/cojudge edits. */
@@ -603,9 +698,11 @@ export async function resetCourseToBundled(courseId: string): Promise<void> {
 		throw new Error(`No bundled course '${courseId}' to reset to`);
 	}
 	const userDir = path.join(getCoursesDir(), courseId);
-	await fs.rm(userDir, { recursive: true, force: true });
-	await fs.cp(bundledDir, userDir, { recursive: true });
+	await replaceDirWithBundled(bundledDir, userDir);
 	await refreshManifestPrefix(`courses/${courseId}/`);
+	if ((await getCourseSource(courseId)) === 'modified') {
+		throw new Error(`Reset of '${courseId}' did not take effect: ${userDir} still differs from the bundled copy`);
+	}
 }
 
 /** Reset every `modified` problem/course to its bundled copy. */
