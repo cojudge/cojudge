@@ -106,15 +106,20 @@ export class TypeScriptRunner extends ProgramRunner {
      */
     static readonly TSX_CMD = `sh -c 'if [ -x ${TypeScriptRunner.TSX_DIR}/node_modules/.bin/tsx ]; then exec ${TypeScriptRunner.TSX_DIR}/node_modules/.bin/tsx main.ts; else exec npx --yes tsx main.ts; fi'`;
 
-    /** Install tsx once per container (or inject it from an earlier container of the image). */
+    /**
+     * Provision tsx in the background (never awaited): offline or on the very
+     * first run the command falls back to `npx --yes tsx` exactly as before;
+     * once the sidecar install has been cached, containers get tsx injected.
+     */
     static async ensureTsx(container: Dockerode.Container): Promise<void> {
         await ProgramRunner.provisionTool(container, {
             name: 'tsx',
             probe: `[ -x ${TypeScriptRunner.TSX_DIR}/node_modules/.bin/tsx ]`,
-            install: `timeout 110 npm install --silent --no-audit --no-fund --prefix ${TypeScriptRunner.TSX_DIR} tsx >/dev/null 2>&1`,
+            install: `timeout 110 npm install --silent --no-audit --no-fund --fetch-retries=0 --fetch-timeout=15000 --prefix ${TypeScriptRunner.TSX_DIR} tsx >/dev/null 2>&1`,
             harvestPath: TypeScriptRunner.TSX_DIR,
             extractTo: '/opt',
-            installTimeoutMs: 120000
+            installTimeoutMs: 120000,
+            background: true
         });
     }
 

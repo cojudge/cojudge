@@ -80,6 +80,13 @@ export abstract class ProgramRunner {
     private static toolArchives = new Map<string, Buffer>();
     /** In-flight sidecar installs, keyed like toolArchives (one per image+tool). */
     private static sidecars = new Map<string, Promise<Buffer | null>>();
+    /**
+     * When a sidecar install last failed, keyed like toolArchives. Offline,
+     * every install fails; without this each new runner container would start
+     * another (quickly failing) sidecar.
+     */
+    private static sidecarFailedAt = new Map<string, number>();
+    private static readonly SIDECAR_RETRY_MS = 10 * 60 * 1000;
 
     private static toolCacheDir(): string {
         return process.env.COJUDGE_TOOL_CACHE_DIR || path.join(os.homedir(), '.cojudge', 'tool-cache');
@@ -131,6 +138,10 @@ export abstract class ProgramRunner {
     private static installInSidecar(archiveKey: string, image: string, tool: ToolSpec): Promise<Buffer | null> {
         const existing = this.sidecars.get(archiveKey);
         if (existing) return existing;
+        const failedAt = this.sidecarFailedAt.get(archiveKey);
+        if (failedAt !== undefined && Date.now() - failedAt < ProgramRunner.SIDECAR_RETRY_MS) {
+            return Promise.resolve(null);
+        }
         const job = (async () => {
             let sidecar: Dockerode.Container | null = null;
             try {
@@ -142,7 +153,10 @@ export abstract class ProgramRunner {
                 });
                 await sidecar.start();
                 const ok = await ProgramRunner.execOk(sidecar, `${tool.install}; ${tool.probe}`, tool.installTimeoutMs);
-                if (!ok) return null;
+                if (!ok) {
+                    this.sidecarFailedAt.set(archiveKey, Date.now());
+                    return null;
+                }
                 const archive: any = await sidecar.getArchive({ path: tool.harvestPath });
                 const chunks: Buffer[] = [];
                 await new Promise<void>((resolve, reject) => {
@@ -152,8 +166,10 @@ export abstract class ProgramRunner {
                 });
                 const buf = Buffer.concat(chunks);
                 await ProgramRunner.saveToolArchive(archiveKey, buf);
+                this.sidecarFailedAt.delete(archiveKey);
                 return buf;
             } catch {
+                this.sidecarFailedAt.set(archiveKey, Date.now());
                 return null;
             } finally {
                 this.sidecars.delete(archiveKey);
@@ -238,7 +254,7 @@ export abstract class ProgramRunner {
             name: 'time',
             // Functional probe: an injected binary must actually run here.
             probe: '/usr/bin/time -f %e true >/dev/null 2>&1',
-            install: 'timeout 45 sh -c \'(command -v apt-get >/dev/null 2>&1 && apt-get update -qq -o Acquire::http::Timeout=5 -o Acquire::https::Timeout=5 && apt-get install -y -qq time) || (command -v apk >/dev/null 2>&1 && apk add --no-cache time)\' >/dev/null 2>&1',
+            install: 'timeout 45 sh -c \'(command -v apt-get >/dev/null 2>&1 && apt-get update -qq -o Acquire::Retries=0 -o Acquire::http::Timeout=5 -o Acquire::https::Timeout=5 && apt-get install -y -qq time) || (command -v apk >/dev/null 2>&1 && apk add --no-cache time)\' >/dev/null 2>&1',
             harvestPath: '/usr/bin/time',
             extractTo: '/usr/bin',
             installTimeoutMs: 60000,
