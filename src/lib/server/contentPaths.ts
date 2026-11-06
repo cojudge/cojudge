@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { readDerivedCached } from './textFileCache';
 
 /**
  * User-editable content lives in ~/cojudge (overridable via
@@ -159,14 +160,6 @@ const PROBLEM_COMPARE_FILES = [
 
 const COURSE_COMPARE_FILES = ['courseinfo.json'];
 
-async function readIfExists(filePath: string): Promise<string | null> {
-	try {
-		return await fs.readFile(filePath, 'utf-8');
-	} catch {
-		return null;
-	}
-}
-
 /**
  * Line-ending-agnostic text for content comparison. The Windows desktop build
  * is checked out with core.autocrlf, so its bundled files are CRLF, while user
@@ -174,9 +167,15 @@ async function readIfExists(filePath: string): Promise<string | null> {
  * those as "modified" made the Manage Problems dialog list items that differ
  * only in line endings (and that Reset could not clear for good).
  */
-function normalizeEol(text: string | null): string | null {
-	return text === null ? null : text.replace(/\r\n/g, '\n');
+function normalizeEol(text: string): string {
+	return text.replace(/\r\n/g, '\n');
 }
+
+// In a production install (desktop app, `cojudge` CLI server) the bundled
+// content ships read-only with the app and never changes while it runs, so
+// bundled files are read once. In dev/tests they may be edited, so every
+// lookup is validated by stat.
+const BUNDLED_IS_IMMUTABLE = process.env.NODE_ENV === 'production';
 
 /** Compare a user dir against its bundled counterpart (missing files only, never writes). */
 async function compareDirToBundled(
@@ -203,11 +202,14 @@ async function compareDirToBundled(
 
 	const comparisons = await Promise.all(
 		files.map(async (file) => {
+			// Cached by stat: repeat checks only re-read files that changed.
 			const [userContent, bundledContent] = await Promise.all([
-				readIfExists(path.join(userDir, file)),
-				readIfExists(path.join(bundledDir, file))
+				readDerivedCached(path.join(userDir, file), 'eol', normalizeEol),
+				readDerivedCached(path.join(bundledDir, file), 'eol', normalizeEol, {
+					immutable: BUNDLED_IS_IMMUTABLE
+				})
 			]);
-			return normalizeEol(userContent) === normalizeEol(bundledContent);
+			return userContent === bundledContent;
 		})
 	);
 	return comparisons.every(Boolean) ? 'bundled' : 'modified';
