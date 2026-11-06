@@ -109,8 +109,12 @@ export class PhpRunner extends ProgramRunner {
     async run(): Promise<string[]> {
         if (!this.prepared || !this.container) throw new Error('PhpRunner: not prepared. Call compile() first.');
         try {
+            // PHP CLI prints errors (fatal errors, uncaught exceptions, warnings)
+            // to stdout by default. Send them to stderr so a crash shows the
+            // actual error text, as other languages do, and so diagnostics
+            // never mix with the test outputs parsed from stdout.
             const exec = await this.container.exec({
-                Cmd: ['/bin/sh', '-c', ProgramRunner.wrapWithMetrics('php main.php')],
+                Cmd: ['/bin/sh', '-c', ProgramRunner.wrapWithMetrics('php -d display_errors=stderr main.php')],
                 AttachStdout: true,
                 AttachStderr: true
             } as any);
