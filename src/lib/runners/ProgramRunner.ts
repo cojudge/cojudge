@@ -43,26 +43,118 @@ export abstract class ProgramRunner {
         return `if command -v /usr/bin/time >/dev/null 2>&1; then /usr/bin/time -f "COJUDGE_METRICS:%e|%M" timeout ${EXECUTION_TIMEOUT_SECONDS} ${cmd}; else timeout ${EXECUTION_TIMEOUT_SECONDS} ${cmd}; fi`;
     }
 
-    /** Install the `time` package (provides /usr/bin/time) inside the container */
+    /** `${tool}:${containerId}` keys of containers known to have a tool. */
+    private static toolReady = new Set<string>();
+    /** In-flight installs, keyed like toolReady. */
+    private static toolInstalls = new Map<string, Promise<boolean>>();
+    /**
+     * Tar archives of installed tools harvested from a container, keyed by
+     * `${tool}:${image}`. Containers of the same image share the same libc
+     * and filesystem layout, so later containers get the tool via a single
+     * putArchive (~10ms) instead of a network install.
+     */
+    private static toolArchives = new Map<string, Buffer>();
+
+    /**
+     * Ensure a tool is present in the container: known-ready -> no-op; else
+     * inject the archive harvested from an earlier container of the same
+     * image; else probe; else install (needs network) and harvest the result
+     * for later containers. With `background`, the install is started but not
+     * awaited and this resolves false immediately.
+     */
+    static async provisionTool(container: Dockerode.Container, tool: {
+        name: string;
+        probe: string;
+        install: string;
+        harvestPath: string;
+        extractTo: string;
+        installTimeoutMs: number;
+        background?: boolean;
+    }): Promise<boolean> {
+        const key = `${tool.name}:${container.id}`;
+        if (this.toolReady.has(key)) return true;
+        const inflight = this.toolInstalls.get(key);
+        if (inflight) return tool.background ? false : inflight;
+        let image = '';
+        try {
+            image = (await container.inspect()).Config?.Image ?? '';
+        } catch {}
+        const archiveKey = `${tool.name}:${image}`;
+        const cached = image ? this.toolArchives.get(archiveKey) : undefined;
+        if (cached) {
+            try {
+                await container.putArchive(cached, { path: tool.extractTo });
+            } catch {}
+        }
+        if (await ProgramRunner.execOk(container, tool.probe, 10000)) {
+            this.toolReady.add(key);
+            return true;
+        }
+        const install = (async () => {
+            try {
+                const ok = await ProgramRunner.execOk(container, `${tool.install}; ${tool.probe}`, tool.installTimeoutMs);
+                if (!ok) return false;
+                this.toolReady.add(key);
+                if (image && !this.toolArchives.has(archiveKey)) {
+                    const archive: any = await container.getArchive({ path: tool.harvestPath });
+                    const chunks: Buffer[] = [];
+                    await new Promise<void>((resolve, reject) => {
+                        archive.on('data', (c: Buffer) => chunks.push(c));
+                        archive.on('end', resolve);
+                        archive.on('error', reject);
+                    });
+                    this.toolArchives.set(archiveKey, Buffer.concat(chunks));
+                }
+                return true;
+            } catch {
+                return false;
+            } finally {
+                this.toolInstalls.delete(key);
+            }
+        })();
+        this.toolInstalls.set(key, install);
+        return tool.background ? false : install;
+    }
+
+    /**
+     * Make /usr/bin/time (used for the memory metric) available WITHOUT
+     * blocking execution on the network. Alpine images already ship it;
+     * Debian-based ones (python/gcc/php/rust) get it injected from the archive
+     * harvested from the first container that installed it. When neither
+     * applies, the package install runs in the background: runs fall back to
+     * plain `timeout` until it lands (see wrapWithMetrics), so only the memory
+     * metric of the first run on a fresh container of that image is missing.
+     * Previously the install was awaited here, costing ~20s on every fresh
+     * Debian-based container (beyond the CLI's 12s poll window on cold runs).
+     */
     static async ensureTimeInstalled(container: Dockerode.Container): Promise<void> {
         // The install needs network (apt/apk). Offline, apt-get update can
-        // hang for minutes on DNS/connect timeouts, wedging compile at
-        // "Preparing / Compiling" until the cleanup cron kills the container
-        // (surfacing as HTTP 409). Bound it at both levels: `timeout` in the
-        // shell (fail-safe if the binary is missing: 127 -> `|| true`) plus
-        // short apt timeouts, and a JS-side cap as a final backstop. Missing
-        // metrics are fine: run commands fall back to plain `timeout`.
+        // hang for minutes on DNS/connect timeouts: bound it with `timeout`,
+        // short apt timeouts and the JS-side cap.
+        await ProgramRunner.provisionTool(container, {
+            name: 'time',
+            probe: 'command -v /usr/bin/time >/dev/null 2>&1',
+            install: 'timeout 45 sh -c \'(command -v apt-get >/dev/null 2>&1 && apt-get update -qq -o Acquire::http::Timeout=5 -o Acquire::https::Timeout=5 && apt-get install -y -qq time) || (command -v apk >/dev/null 2>&1 && apk add --no-cache time)\' >/dev/null 2>&1',
+            harvestPath: '/usr/bin/time',
+            extractTo: '/usr/bin',
+            installTimeoutMs: 60000,
+            background: true
+        });
+    }
+
+    /** Run a shell command in the container; resolves true iff it exits 0 within timeoutMs. */
+    static async execOk(container: Dockerode.Container, cmd: string, timeoutMs: number): Promise<boolean> {
         const exec = await container.exec({
-            Cmd: ['/bin/sh', '-c', 'command -v /usr/bin/time >/dev/null 2>&1 || timeout 45 sh -c \'(command -v apt-get >/dev/null 2>&1 && apt-get update -qq -o Acquire::http::Timeout=5 -o Acquire::https::Timeout=5 && apt-get install -y -qq time) || (command -v apk >/dev/null 2>&1 && apk add --no-cache time)\' || true'],
+            Cmd: ['/bin/sh', '-c', cmd],
             AttachStdout: true,
             AttachStderr: true
         });
         const stream: any = await exec.start({ hijack: true, stdin: false });
-        await new Promise((resolve, reject) => {
-            const timer = setTimeout(resolve, 60000);
+        const finished = await new Promise<boolean>((resolve, reject) => {
+            const timer = setTimeout(() => resolve(false), timeoutMs);
             stream.on('end', () => {
                 clearTimeout(timer);
-                resolve(null);
+                resolve(true);
             });
             stream.on('error', (err: unknown) => {
                 clearTimeout(timer);
@@ -70,6 +162,9 @@ export abstract class ProgramRunner {
             });
             stream.resume();
         });
+        if (!finished) return false;
+        const inspect = await exec.inspect();
+        return inspect.ExitCode === 0;
     }
 
     parseMetricsFromStderr(stderr: string): string {
