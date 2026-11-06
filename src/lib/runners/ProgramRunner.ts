@@ -1,4 +1,7 @@
 import Dockerode from "dockerode";
+import fs from "fs/promises";
+import os from "os";
+import path from "path";
 import { EXECUTION_TIMEOUT_SECONDS } from "$lib/utils/util";
 
 /**
@@ -49,11 +52,53 @@ export abstract class ProgramRunner {
     private static toolInstalls = new Map<string, Promise<boolean>>();
     /**
      * Tar archives of installed tools harvested from a container, keyed by
-     * `${tool}:${image}`. Containers of the same image share the same libc
+     * `${tool}:${imageId}`. Containers of the same image share the same libc
      * and filesystem layout, so later containers get the tool via a single
-     * putArchive (~10ms) instead of a network install.
+     * putArchive (~10ms) instead of a network install. Mirrored to disk
+     * (toolCacheDir) so a server restart - and offline use after one online
+     * run - does not need the network again. Keyed by image *ID*, so a
+     * re-pulled/updated image never receives a stale binary.
      */
     private static toolArchives = new Map<string, Buffer>();
+
+    private static toolCacheDir(): string {
+        return process.env.COJUDGE_TOOL_CACHE_DIR || path.join(os.homedir(), '.cojudge', 'tool-cache');
+    }
+
+    private static toolCacheFile(archiveKey: string): string {
+        return path.join(ProgramRunner.toolCacheDir(), archiveKey.replace(/[^A-Za-z0-9_.-]/g, '_') + '.tar');
+    }
+
+    private static async loadToolArchive(archiveKey: string): Promise<Buffer | undefined> {
+        const inMemory = this.toolArchives.get(archiveKey);
+        if (inMemory) return inMemory;
+        try {
+            const buf = await fs.readFile(ProgramRunner.toolCacheFile(archiveKey));
+            this.toolArchives.set(archiveKey, buf);
+            return buf;
+        } catch {
+            return undefined;
+        }
+    }
+
+    private static async saveToolArchive(archiveKey: string, buf: Buffer): Promise<void> {
+        this.toolArchives.set(archiveKey, buf);
+        try {
+            const file = ProgramRunner.toolCacheFile(archiveKey);
+            await fs.mkdir(path.dirname(file), { recursive: true });
+            const tmp = `${file}.${process.pid}.${Date.now()}.tmp`;
+            await fs.writeFile(tmp, buf);
+            await fs.rename(tmp, file);
+        } catch {
+            // Disk cache is best-effort; the in-memory copy still applies.
+        }
+    }
+
+    /** Drop a cached archive that failed to produce a working tool. */
+    private static async forgetToolArchive(archiveKey: string): Promise<void> {
+        this.toolArchives.delete(archiveKey);
+        try { await fs.unlink(ProgramRunner.toolCacheFile(archiveKey)); } catch {}
+    }
 
     /**
      * Ensure a tool is present in the container: known-ready -> no-op; else
@@ -77,10 +122,10 @@ export abstract class ProgramRunner {
         if (inflight) return tool.background ? false : inflight;
         let image = '';
         try {
-            image = (await container.inspect()).Config?.Image ?? '';
+            image = (await container.inspect()).Image ?? '';
         } catch {}
         const archiveKey = `${tool.name}:${image}`;
-        const cached = image ? this.toolArchives.get(archiveKey) : undefined;
+        const cached = image ? await ProgramRunner.loadToolArchive(archiveKey) : undefined;
         if (cached) {
             try {
                 await container.putArchive(cached, { path: tool.extractTo });
@@ -90,6 +135,7 @@ export abstract class ProgramRunner {
             this.toolReady.add(key);
             return true;
         }
+        if (cached) await ProgramRunner.forgetToolArchive(archiveKey);
         const install = (async () => {
             try {
                 const ok = await ProgramRunner.execOk(container, `${tool.install}; ${tool.probe}`, tool.installTimeoutMs);
@@ -103,7 +149,7 @@ export abstract class ProgramRunner {
                         archive.on('end', resolve);
                         archive.on('error', reject);
                     });
-                    this.toolArchives.set(archiveKey, Buffer.concat(chunks));
+                    await ProgramRunner.saveToolArchive(archiveKey, Buffer.concat(chunks));
                 }
                 return true;
             } catch {
@@ -133,7 +179,8 @@ export abstract class ProgramRunner {
         // short apt timeouts and the JS-side cap.
         await ProgramRunner.provisionTool(container, {
             name: 'time',
-            probe: 'command -v /usr/bin/time >/dev/null 2>&1',
+            // Functional probe: an injected binary must actually run here.
+            probe: '/usr/bin/time -f %e true >/dev/null 2>&1',
             install: 'timeout 45 sh -c \'(command -v apt-get >/dev/null 2>&1 && apt-get update -qq -o Acquire::http::Timeout=5 -o Acquire::https::Timeout=5 && apt-get install -y -qq time) || (command -v apk >/dev/null 2>&1 && apk add --no-cache time)\' >/dev/null 2>&1',
             harvestPath: '/usr/bin/time',
             extractTo: '/usr/bin',
