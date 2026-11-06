@@ -324,4 +324,82 @@ describe('contentPaths', () => {
 			cwdSpy.mockRestore();
 		}
 	});
+
+	describe('Windows conditions', () => {
+		// The Windows desktop bundle is checked out with core.autocrlf, so every
+		// bundled text file is CRLF, while user copies are often LF.
+		const crlf = (text: string) => text.replace(/\n/g, '\r\n');
+
+		it('treats CRLF bundled vs LF user copies as unmodified', async () => {
+			const cwdSpy = vi.spyOn(process, 'cwd').mockReturnValue(bundledRoot);
+			try {
+				const bundledDir = path.join(bundledRoot, 'problems', 'search-in-rotated-sorted-array');
+				const userDir = path.join(tmpRoot, 'user', 'problems', 'search-in-rotated-sorted-array');
+				await fs.mkdir(bundledDir, { recursive: true });
+				await fs.mkdir(userDir, { recursive: true });
+				const meta = '{\n  "id": "search-in-rotated-sorted-array"\n}\n';
+				const statement = 'You are given nums.\n\n- 1 ≤ nums.length ≤ 5000\n';
+				await fs.writeFile(path.join(bundledDir, 'metadata.json'), crlf(meta));
+				await fs.writeFile(path.join(bundledDir, 'statement.md'), crlf(statement));
+				await fs.writeFile(path.join(userDir, 'metadata.json'), meta);
+				await fs.writeFile(path.join(userDir, 'statement.md'), statement);
+
+				const mod = await import('./contentPaths');
+				expect(await mod.getProblemSource('search-in-rotated-sorted-array')).toBe('bundled');
+
+				// A real edit is still reported, whatever the line endings.
+				await fs.writeFile(path.join(userDir, 'statement.md'), crlf(statement + 'edited\n'));
+				expect(await mod.getProblemSource('search-in-rotated-sorted-array')).toBe('modified');
+			} finally {
+				cwdSpy.mockRestore();
+			}
+		});
+
+		it('reset clears a modified item when files are read-only, briefly locked or extra', async () => {
+			const cwdSpy = vi.spyOn(process, 'cwd').mockReturnValue(bundledRoot);
+			try {
+				const slug = 'search-in-rotated-sorted-array';
+				const bundledDir = path.join(bundledRoot, 'problems', slug);
+				await fs.mkdir(bundledDir, { recursive: true });
+				await fs.writeFile(path.join(bundledDir, 'metadata.json'), crlf('{\n  "v": 2\n}\n'));
+				await fs.writeFile(path.join(bundledDir, 'Marker.java'), crlf('class Marker {}\n'));
+
+				const mod = await import('./contentPaths');
+				await mod.ensureUserContentSeeded();
+				const userDir = path.join(tmpRoot, 'user', 'problems', slug);
+				const userMeta = path.join(userDir, 'metadata.json');
+				await fs.writeFile(userMeta, '{"stale":true}\n');
+				await fs.chmod(userMeta, 0o444); // read-only, as Windows can leave it
+				await fs.writeFile(path.join(userDir, 'notes.txt'), 'extra');
+				expect(await mod.getProblemSource(slug)).toBe('modified');
+				const dirInode = (await fs.stat(userDir)).ino;
+
+				// First copy attempt fails like a file held open by antivirus.
+				const realCopy = fs.copyFile;
+				let failed = false;
+				const copySpy = vi.spyOn(fs, 'copyFile').mockImplementation(async (...args) => {
+					if (!failed) {
+						failed = true;
+						throw Object.assign(new Error('EBUSY: resource busy or locked'), { code: 'EBUSY' });
+					}
+					return realCopy(...(args as Parameters<typeof realCopy>));
+				});
+				try {
+					await mod.resetProblemToBundled(slug);
+				} finally {
+					copySpy.mockRestore();
+				}
+
+				expect(failed).toBe(true);
+				expect(await fs.readFile(userMeta, 'utf-8')).toBe(crlf('{\n  "v": 2\n}\n'));
+				await expect(fs.access(path.join(userDir, 'notes.txt'))).rejects.toThrow();
+				// The folder is overwritten in place, never removed, so a handle
+				// held on it (Explorer, an editor) cannot make the reset fail.
+				expect((await fs.stat(userDir)).ino).toBe(dirInode);
+				expect(await mod.getProblemSource(slug)).toBe('bundled');
+			} finally {
+				cwdSpy.mockRestore();
+			}
+		});
+	});
 });

@@ -8,3 +8,11 @@ Dockerfile text eol=lf
 
 # Optional: keep these as text with normalized line endings
 *.env text eol=lf
+
+# Problem and course content must be byte-identical on every platform.
+# Without this, a Windows checkout with core.autocrlf=true (as on the
+# windows-2022 release runner) converts every problem file to CRLF, so the
+# Windows installer shipped content that differed from the user's copies and
+# from the macOS/Linux builds. text=auto keeps images (PNG) binary.
+problems/** text=auto eol=lf
+courses/** text=auto eol=lf

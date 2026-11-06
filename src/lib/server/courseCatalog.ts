@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { readDerivedCached, readTextCached } from './textFileCache';
 
 export type CourseInfo = {
     title: string;
@@ -85,13 +86,18 @@ export async function discoverCourses(coursesDir: string): Promise<Course[]> {
         entries
             .filter((entry) => entry.isDirectory() && COURSE_ID_PATTERN.test(entry.name))
             .map(async (entry): Promise<Course | null> => {
-                try {
-                    const content = await fs.readFile(path.join(coursesDir, entry.name, 'courseinfo.json'), 'utf-8');
-                    const info = parseCourseInfo(JSON.parse(content));
-                    return info ? { id: entry.name, info } : null;
-                } catch {
-                    return null;
-                }
+                const info = await readDerivedCached(
+                    path.join(coursesDir, entry.name, 'courseinfo.json'),
+                    'courseinfo',
+                    (content) => {
+                        try {
+                            return parseCourseInfo(JSON.parse(content));
+                        } catch {
+                            return null;
+                        }
+                    }
+                );
+                return info ? { id: entry.name, info } : null;
             })
     );
 
@@ -131,31 +137,37 @@ async function readProblemSummary(
     slug: string,
     includeStatement: boolean
 ): Promise<ProblemSummary | null> {
-    try {
-        const content = await fs.readFile(path.join(problemsDir, slug, 'metadata.json'), 'utf-8');
-        const metadata: unknown = JSON.parse(content);
-        if (!isRecord(metadata) || typeof metadata.id !== 'string' || typeof metadata.title !== 'string' || typeof metadata.difficulty !== 'string') {
-            return null;
-        }
-        let statement: string | undefined = undefined;
-        if (includeStatement) {
+    // Parsed summaries are cached by stat: the home page loads every problem
+    // on each course-tab navigation, and re-reading ~1000 files each time is
+    // slow (especially on Windows, where antivirus scans every file open).
+    const summary = await readDerivedCached(
+        path.join(problemsDir, slug, 'metadata.json'),
+        'summary',
+        (content): Omit<ProblemSummary, 'statement'> | null => {
             try {
-                statement = await fs.readFile(path.join(problemsDir, slug, 'statement.md'), 'utf-8');
+                const metadata: unknown = JSON.parse(content);
+                if (!isRecord(metadata) || typeof metadata.id !== 'string' || typeof metadata.title !== 'string' || typeof metadata.difficulty !== 'string') {
+                    return null;
+                }
+                return {
+                    id: metadata.id,
+                    title: metadata.title,
+                    difficulty: metadata.difficulty,
+                    link: typeof metadata.link === 'string' ? metadata.link : undefined,
+                    category: typeof metadata.category === 'string' ? metadata.category : undefined
+                };
             } catch {
-                // ignore
+                return null;
             }
         }
-        return {
-            id: metadata.id,
-            title: metadata.title,
-            difficulty: metadata.difficulty,
-            link: typeof metadata.link === 'string' ? metadata.link : undefined,
-            category: typeof metadata.category === 'string' ? metadata.category : undefined,
-            statement
-        };
-    } catch {
-        return null;
+    );
+    if (!summary) return null;
+    let statement: string | undefined = undefined;
+    if (includeStatement) {
+        statement = (await readTextCached(path.join(problemsDir, slug, 'statement.md'))) ?? undefined;
     }
+    // Copy so callers can't mutate the cached value.
+    return { ...summary, statement };
 }
 
 export async function loadProblemSummaries(

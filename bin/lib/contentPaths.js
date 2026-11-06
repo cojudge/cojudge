@@ -351,7 +351,7 @@ export function resetProblemToBundledSync(slug) {
     throw new Error(`No bundled problem '${slug}' to reset to`);
   }
   const userDir = path.join(getProblemsDir(), slug);
-  fs.rmSync(userDir, { recursive: true, force: true });
+  fs.rmSync(userDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
   fs.cpSync(bundledDir, userDir, { recursive: true });
   refreshManifestPrefixSync(`problems/${slug}/`);
 }
@@ -365,7 +365,7 @@ export function resetCourseToBundledSync(courseId) {
     throw new Error(`No bundled course '${courseId}' to reset to`);
   }
   const userDir = path.join(getCoursesDir(), courseId);
-  fs.rmSync(userDir, { recursive: true, force: true });
+  fs.rmSync(userDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
   fs.cpSync(bundledDir, userDir, { recursive: true });
   refreshManifestPrefixSync(`courses/${courseId}/`);
 }
@@ -383,10 +383,13 @@ function compareDirToBundledSync(userDir, bundledDir, files) {
   const userExists = fs.existsSync(userDir);
   if (!bundledExists) return userExists ? "custom" : "bundled";
   if (!userExists) return "bundled";
+  // Line-ending-agnostic: the Windows desktop bundle is CRLF (core.autocrlf
+  // checkout) while user copies are often LF. Mirrors the server comparison.
+  const normalizeEol = (text) => (text === null ? null : text.replace(/\r\n/g, "\n"));
   return files.every(
     (file) =>
-      readIfExistsSync(path.join(userDir, file)) ===
-      readIfExistsSync(path.join(bundledDir, file)),
+      normalizeEol(readIfExistsSync(path.join(userDir, file))) ===
+      normalizeEol(readIfExistsSync(path.join(bundledDir, file))),
   )
     ? "bundled"
     : "modified";
