@@ -8,6 +8,13 @@ interface PoolEntry {
     createdAt: number;
     lastUsed: number;
     inUse: boolean;
+    /**
+     * Workspace clean started when the container was released. Cleaning on
+     * release (instead of on acquire) takes one docker exec round trip off
+     * the critical path of the next run; acquire() still waits for it, so a
+     * container is never handed out with the previous submission's files.
+     */
+    cleaning?: Promise<void>;
 }
 
 class ContainerPool {
@@ -37,7 +44,9 @@ class ContainerPool {
             entries.splice(idx, 1);
             return null;
         }
-        await ContainerPool.cleanContainer(entry.container);
+        const cleaning = entry.cleaning ?? ContainerPool.cleanContainer(entry.container);
+        entry.cleaning = undefined;
+        await cleaning;
         return entry.container;
     }
 
@@ -65,6 +74,7 @@ class ContainerPool {
         const entries = this.pools.get(image) || [];
         const existing = entries.find(e => e.container.id === container.id);
         if (existing) {
+            existing.cleaning = ContainerPool.cleanContainer(container);
             existing.inUse = false;
             existing.lastUsed = Date.now();
             return;
@@ -75,7 +85,8 @@ class ContainerPool {
                 image,
                 createdAt: Date.now(),
                 lastUsed: Date.now(),
-                inUse: false
+                inUse: false,
+                cleaning: ContainerPool.cleanContainer(container)
             });
             this.pools.set(image, entries);
         } else {
