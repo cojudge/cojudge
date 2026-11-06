@@ -83,7 +83,10 @@ export class TypeScriptRunner extends ProgramRunner {
             pack.finalize();
             await this.container.putArchive(pack as any, { path: '/app' });
 
-            await ProgramRunner.ensureTimeInstalled(this.container);
+            await Promise.all([
+                ProgramRunner.ensureTimeInstalled(this.container),
+                TypeScriptRunner.ensureTsx(this.container)
+            ]);
             this.prepared = true;
         } catch (e) {
             if (this.container) {
@@ -94,11 +97,32 @@ export class TypeScriptRunner extends ProgramRunner {
         }
     }
 
+    private static readonly TSX_DIR = '/opt/cojudge-tsx';
+    /**
+     * Prefer the per-container tsx install; fall back to `npx --yes tsx`
+     * (previous behaviour) if it is missing. `npx` resolves the package on
+     * every call (~1s even when cached) and, on a fresh container, downloads
+     * it inside the execution timeout window.
+     */
+    static readonly TSX_CMD = `sh -c 'if [ -x ${TypeScriptRunner.TSX_DIR}/node_modules/.bin/tsx ]; then exec ${TypeScriptRunner.TSX_DIR}/node_modules/.bin/tsx main.ts; else exec npx --yes tsx main.ts; fi'`;
+
+    /** Install tsx once per container (or inject it from an earlier container of the image). */
+    static async ensureTsx(container: Dockerode.Container): Promise<void> {
+        await ProgramRunner.provisionTool(container, {
+            name: 'tsx',
+            probe: `[ -x ${TypeScriptRunner.TSX_DIR}/node_modules/.bin/tsx ]`,
+            install: `timeout 110 npm install --silent --no-audit --no-fund --prefix ${TypeScriptRunner.TSX_DIR} tsx >/dev/null 2>&1`,
+            harvestPath: TypeScriptRunner.TSX_DIR,
+            extractTo: '/opt',
+            installTimeoutMs: 120000
+        });
+    }
+
     async run(): Promise<string[]> {
         if (!this.prepared || !this.container) throw new Error('TypeScriptRunner: not prepared. Call compile() first.');
         try {
             const exec = await this.container.exec({
-                Cmd: ['/bin/sh', '-c', ProgramRunner.wrapWithMetrics('npx --yes tsx main.ts')],
+                Cmd: ['/bin/sh', '-c', ProgramRunner.wrapWithMetrics(TypeScriptRunner.TSX_CMD)],
                 AttachStdout: true,
                 AttachStderr: true
             });
