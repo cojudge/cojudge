@@ -7,7 +7,9 @@
 
 <h1 align="center">Cojudge</h1>
 
-<p align="center">Solve classic algorithmic problems without the internet or having to deal with installing runtimes. No discussion forum, no LLM assistant, not even the internet. Solve the curated list with just you, the problem and the judge.</p>
+<p align="center"><b>1,000+ problems · 8 languages · offline</b></p>
+
+<p align="center">Practice coding interviews with a local judge. No AI assistant, no discussion forum, no internet. Just you, the problem and the judge.</p>
 
 <p align="center">
   <a href="https://github.com/cojudge/cojudge/actions/workflows/test.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/cojudge/cojudge/test.yml?branch=main&label=CI&style=flat-square"></a>
@@ -16,34 +18,54 @@
   <a href="https://github.com/cojudge/cojudge"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/cojudge/cojudge?style=flat-square"></a>
 </p>
 
-*This is not intended as a replacement for LeetCode. Use it as a preliminary secondary judge with minimal testcases to practice without internet access, then run the full submission on LeetCode once you are online and ready.*
+<p align="center">
+  <img src="docs/media/demo-cli.gif" alt="cojudge init, run and submit in a terminal" width="720">
+</p>
+
+<p align="center"><a href="https://cojudge.cloud"><b>Try the demo at cojudge.cloud</b></a> · <a href="#install">Install</a> · <a href="#highlights">Highlights</a></p>
+
+## Why Cojudge
+
+- **Honest practice.** Nothing to reach for when a problem gets hard: no AI, no hints tab, no solutions forum (until you open the reference solution yourself).
+- **Works anywhere.** On a plane, on a train, on a locked-down network, or with Wi-Fi off on purpose. Everything runs on your machine.
+- **A real judge.** 1,000+ problems with sample tests, hidden tests and reference solutions, judged in Docker sandboxes, with a step debugger and a visualizer. All problems are tested for all programming languages we support
+- **Free and open source.** MIT-licensed. Your code and progress stay local.
+
+## Install
+
+| Platform | Command |
+| --- | --- |
+| macOS | `brew tap cojudge/tap && brew install --cask cojudge` |
+| Windows | `winget install -e --id Cojudge.Cojudge` |
+| Linux | `.deb`, `.rpm` or `.AppImage` from [Releases](https://github.com/cojudge/cojudge/releases) |
+
+You also need [Docker](https://docs.docker.com/get-docker/) running to judge code. Browsing problems works without it. Don't have Docker? Try [cojudge.cloud](https://cojudge.cloud) first. More options (CLI-only, from source, containerized) are in [Quickstart](#quickstart).
+
+## Screenshots
 
 |![Web UI](/screenshots/problem.png) | ![CLI](/screenshots/cli.png) |
 |:---:|:---:|
-| localhost web | CLI |
-|![Web UI](/screenshots/progresstracker.png) | ![CLI](/screenshots/debugger.png) |
-| Progress Tracker | Debugger |
+| Problem view | CLI |
+|![Progress Tracker](/screenshots/progresstracker.png) | ![Debugger](/screenshots/debugger.png) |
+| Progress tracker | Debugger |
 
-![Demo + Visualizer](./screenshots/ide.gif)
-
-### Demo site: [https://cojudge.cloud](https://cojudge.cloud)
+![Editor and visualizer demo](./screenshots/ide.gif)
 
 ## Highlights
 
-- Offline-first: judge solutions without an internet connection
-- Custom test cases: add your own test cases and compare the expected output with your code output, just like in LeetCode but no internet connection is required here
-- Dynamic judging: judge solutions with custom `isCorrect(output)` logic for each problem instead of just checking `str(output) == str(expected)`
-- Docker sandboxes: consistent, isolated runs across machines
-- LeetCode-style problem packs with statements and tests
-- Simple & fast web UI (SvelteKit) with in-browser editor and light/dark mode support
-- Debugger support (Java/C++/Python/Typescript/Rust/C#/Go/PHP)
-- Multiple languages support for all problems (Java/C++/Python/Typescript/Rust/C#/Go/PHP)
-- Code Playground: Run code snippets in Java, C++, Python, Typescript, Rust, C#, Go or PHP without a problem context
-- Extensible: add new problems by dropping folders in `~/cojudge/problems/` (auto-seeded from bundled `problems/` on first start)
-- Persistent Code & Progress Tracking via Local Storage
-- Optional Cojudge Cloud sync through Google sign-in; local storage remains the source of truth offline
-- Browser-like tabs to organize your local solutions
-- Extensive problems: includes all problems with sample test cases, hidden test cases and reference solutions from Blind 75, NeetCode and LeetCode
+- **1,031 problems**, each with sample tests, hidden tests and a reference solution, organized into packs: Blind 75, NeetCode 150, NeetCode 250, Basic 50 and a 1,000-problem pack
+- **8 languages for every problem**: Java, C++, Python, TypeScript, Rust, C#, Go and PHP
+- **Debugger** for all 8 languages, plus a data-structure visualizer
+- **Custom test cases**: add your own inputs and compare the expected output with yours
+- **Dynamic judging**: each problem can use custom `isCorrect(output)` logic, so any valid answer passes, not just one exact string
+- **Docker sandboxes**: consistent, isolated runs on every machine
+- **Desktop app and CLI**: native app for macOS, Windows and Linux, plus `cojudge init / run / submit` from your own editor
+- **Code playground**: run snippets in any of the 8 languages without a problem
+- **Progress tracking** and browser-like tabs for your solutions, stored locally
+- **Optional cloud sync** through Google sign-in; local storage stays the source of truth offline
+- **Extensible**: add problems by dropping folders into `~/cojudge/problems/`
+
+*Cojudge is a practice judge with a curated set of tests, not a replacement for a full online judge. Practice offline, then run a full submission online when you're ready.*
 
 ## Requirements
 
@@ -83,7 +105,7 @@ source ~/.zshrc # or ~/.bashrc, depending on your shell
 ```
 
 #### Windows Powershell
-```powerhshell
+```powershell
 git clone https://github.com/cojudge/cojudge
 cd cojudge
 ./install.ps1
