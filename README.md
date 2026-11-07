@@ -18,9 +18,14 @@
   <a href="https://github.com/cojudge/cojudge"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/cojudge/cojudge?style=flat-square"></a>
 </p>
 
-<p align="center">
-  <img src="docs/media/demo-cli.gif" alt="cojudge init, run and submit in a terminal" width="720">
-</p>
+
+<table>
+  <tr>
+    <td width="50%" align="center" valign="middle"><img src="screenshots/ide.gif" alt="Editor and visualizer demo" width="100%"></td>
+    <td width="50%" align="center" valign="middle"><img src="docs/media/demo-cli.gif" alt="cojudge init, run and submit in a terminal" width="100%"></td>
+  </tr>
+</table>
+<p align="center"> Two ways to practice, one platform, zero internet. </p>
 
 <p align="center"><a href="https://cojudge.cloud"><b>Try the demo at cojudge.cloud</b></a> · <a href="#install">Install</a> · <a href="#highlights">Highlights</a></p>
 
@@ -31,15 +36,6 @@
 - **A real judge.** 1,000+ problems with sample tests, hidden tests and reference solutions, judged in Docker sandboxes, with a step debugger and a visualizer. All problems are tested for all programming languages we support
 - **Free and open source.** MIT-licensed. Your code and progress stay local.
 
-## Install
-
-| Platform | Command |
-| --- | --- |
-| macOS | `brew tap cojudge/tap && brew install --cask cojudge` |
-| Windows | `winget install -e --id Cojudge.Cojudge` |
-| Linux | `.deb`, `.rpm` or `.AppImage` from [Releases](https://github.com/cojudge/cojudge/releases) |
-
-You also need [Docker](https://docs.docker.com/get-docker/) running to judge code. Browsing problems works without it. Don't have Docker? Try [cojudge.cloud](https://cojudge.cloud) first. More options (CLI-only, from source, containerized) are in [Quickstart](#quickstart).
 
 ## Screenshots
 
@@ -49,7 +45,16 @@ You also need [Docker](https://docs.docker.com/get-docker/) running to judge cod
 |![Progress Tracker](/screenshots/progresstracker.png) | ![Debugger](/screenshots/debugger.png) |
 | Progress tracker | Debugger |
 
-![Editor and visualizer demo](./screenshots/ide.gif)
+
+## Install
+
+| Platform | Command |
+| --- | --- |
+| macOS | `brew tap cojudge/tap && brew install --cask cojudge` |
+| Windows | `winget install -e --id Cojudge.Cojudge` |
+| Linux | `.deb`, `.rpm` or `.AppImage` from [Releases](https://github.com/cojudge/cojudge/releases) |
+
+You also need [Docker](https://docs.docker.com/get-docker/) running to judge code. Browsing problems works without it. Don't have Docker? Try [cojudge.cloud](https://cojudge.cloud) first. More options (CLI-only, from source, containerized) are in [Quickstart](#quickstart).
 
 ## Highlights
 
