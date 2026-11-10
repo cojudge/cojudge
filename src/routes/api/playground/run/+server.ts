@@ -1,4 +1,4 @@
-import { PlaygroundCppRunner, PlaygroundCSharpRunner, PlaygroundGoRunner, PlaygroundJavaRunner, PlaygroundPhpRunner, PlaygroundPythonRunner, PlaygroundRustRunner, PlaygroundTypeScriptRunner } from '$lib/runners/PlaygroundRunners';
+import { PlaygroundRunner, PlaygroundCppRunner, PlaygroundCSharpRunner, PlaygroundGoRunner, PlaygroundJavaRunner, PlaygroundPhpRunner, PlaygroundPythonRunner, PlaygroundRustRunner, PlaygroundTypeScriptRunner } from '$lib/runners/PlaygroundRunners';
 import { startDebugSession, getDebugState } from '$lib/runners/DebugRunner';
 import { TIMEOUT_MESSAGE, type JobStatus } from '$lib/utils/util';
 import { json } from '@sveltejs/kit';
@@ -28,8 +28,8 @@ function genId() {
 }
 
 async function executeRun(language: string, code: string, job: RunJob, stdin: string = '') {
+    let runner: PlaygroundRunner | null = null;
     try {
-        let runner: any = null;
         if (language === 'java') {
             runner = new PlaygroundJavaRunner(code);
         } else if (language === 'python') {
@@ -70,6 +70,8 @@ async function executeRun(language: string, code: string, job: RunJob, stdin: st
             job.error = `Execution failed: details: ${error}`;
             job.status = 'error';
         }
+    } finally {
+        await runner?.dispose().catch(() => {});
     }
 }
 

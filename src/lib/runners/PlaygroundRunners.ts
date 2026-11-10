@@ -10,12 +10,15 @@ import { ensureImageAvailable, EXECUTION_TIMEOUT_SECONDS, TIMEOUT_MESSAGE } from
 import Dockerode from "dockerode";
 import tar from 'tar-stream';
 import ContainerPool from "./ContainerPool";
+import { TypeScriptRunner } from "./TypeScriptRunner";
 import { cojudgeContainerLabels } from "$lib/server/containerSession";
 
 const docker = new Dockerode();
 
 export abstract class PlaygroundRunner {
     protected readonly code: string;
+    protected abstract readonly image: string;
+    protected container: Dockerode.Container | null = null;
 
     constructor(code: string) {
         this.code = code;
@@ -33,10 +36,30 @@ export abstract class PlaygroundRunner {
         stdinPack.finalize();
         await this.container.putArchive(stdinPack as any, { path: '/app' });
     }
+
+    /** Return the held container to the pool (it is cleaned on release). */
+    protected async releaseContainer(): Promise<void> {
+        if (!this.container) return;
+        const container = this.container;
+        this.container = null;
+        await ContainerPool.release(this.image, container);
+    }
+
+    /**
+     * Drop a container still held after compile()/run() failed unexpectedly
+     * (e.g. a Docker error). Its state is unknown, so it is not reused.
+     * No-op after a normal run, timeout or compile error.
+     */
+    async dispose(): Promise<void> {
+        if (!this.container) return;
+        const container = this.container;
+        this.container = null;
+        await ContainerPool.markForCleanup(container);
+    }
 }
 
 export class PlaygroundJavaRunner extends PlaygroundRunner {
-    private container: Dockerode.Container | null = null;
+    protected readonly image = javaImage;
 
     async compile(): Promise<void> {
         this.container = await ContainerPool.acquire(javaImage);
@@ -77,6 +100,9 @@ export class PlaygroundJavaRunner extends PlaygroundRunner {
         
         const inspect = await exec.inspect();
         if (inspect.ExitCode !== 0) {
+            // No user code ran, so the container is safe to reuse: hand it
+            // back to the pool instead of leaking it until cleanupStale.
+            await this.releaseContainer();
             throw new Error(`Compilation failed:\n${stderr || stdout}`);
         }
     }
@@ -117,7 +143,7 @@ export class PlaygroundJavaRunner extends PlaygroundRunner {
 }
 
 export class PlaygroundPythonRunner extends PlaygroundRunner {
-    private container: Dockerode.Container | null = null;
+    protected readonly image = pythonImage;
 
     async compile(): Promise<void> {
         this.container = await ContainerPool.acquire(pythonImage);
@@ -175,7 +201,7 @@ export class PlaygroundPythonRunner extends PlaygroundRunner {
 }
 
 export class PlaygroundCppRunner extends PlaygroundRunner {
-    private container: Dockerode.Container | null = null;
+    protected readonly image = cppImage;
 
     async compile(): Promise<void> {
         this.container = await ContainerPool.acquire(cppImage);
@@ -216,6 +242,9 @@ export class PlaygroundCppRunner extends PlaygroundRunner {
         
         const inspect = await exec.inspect();
         if (inspect.ExitCode !== 0) {
+            // No user code ran, so the container is safe to reuse: hand it
+            // back to the pool instead of leaking it until cleanupStale.
+            await this.releaseContainer();
             throw new Error(`Compilation failed:\n${stderr || stdout}`);
         }
     }
@@ -256,7 +285,7 @@ export class PlaygroundCppRunner extends PlaygroundRunner {
 }
 
 export class PlaygroundCSharpRunner extends PlaygroundRunner {
-    private container: Dockerode.Container | null = null;
+    protected readonly image = csharpImage;
 
     async compile(): Promise<void> {
         this.container = await ContainerPool.acquire(csharpImage);
@@ -309,6 +338,9 @@ export class PlaygroundCSharpRunner extends PlaygroundRunner {
         
         const inspect = await exec.inspect();
         if (inspect.ExitCode !== 0) {
+            // No user code ran, so the container is safe to reuse: hand it
+            // back to the pool instead of leaking it until cleanupStale.
+            await this.releaseContainer();
             throw new Error(`Compilation failed:\n${stderr || stdout}`);
         }
     }
@@ -349,7 +381,7 @@ export class PlaygroundCSharpRunner extends PlaygroundRunner {
 }
 
 export class PlaygroundRustRunner extends PlaygroundRunner {
-    private container: Dockerode.Container | null = null;
+    protected readonly image = rustImage;
 
     async compile(): Promise<void> {
         this.container = await ContainerPool.acquire(rustImage);
@@ -390,6 +422,9 @@ export class PlaygroundRustRunner extends PlaygroundRunner {
         
         const inspect = await exec.inspect();
         if (inspect.ExitCode !== 0) {
+            // No user code ran, so the container is safe to reuse: hand it
+            // back to the pool instead of leaking it until cleanupStale.
+            await this.releaseContainer();
             throw new Error(`Compilation failed:\n${stderr || stdout}`);
         }
     }
@@ -430,7 +465,7 @@ export class PlaygroundRustRunner extends PlaygroundRunner {
 }
 
 export class PlaygroundGoRunner extends PlaygroundRunner {
-    private container: Dockerode.Container | null = null;
+    protected readonly image = goImage;
 
     async compile(): Promise<void> {
         this.container = await ContainerPool.acquire(goImage);
@@ -483,6 +518,9 @@ export class PlaygroundGoRunner extends PlaygroundRunner {
         
         const inspect = await exec.inspect();
         if (inspect.ExitCode !== 0) {
+            // No user code ran, so the container is safe to reuse: hand it
+            // back to the pool instead of leaking it until cleanupStale.
+            await this.releaseContainer();
             throw new Error(`Compilation failed:\n${stderr || stdout}`);
         }
     }
@@ -523,7 +561,7 @@ export class PlaygroundGoRunner extends PlaygroundRunner {
 }
 
 export class PlaygroundTypeScriptRunner extends PlaygroundRunner {
-    private container: Dockerode.Container | null = null;
+    protected readonly image = tsImage;
 
     async compile(): Promise<void> {
         this.container = await ContainerPool.acquire(tsImage);
@@ -555,13 +593,18 @@ export class PlaygroundTypeScriptRunner extends PlaygroundRunner {
         pack.entry({ name: 'main.ts' }, Buffer.from(this.code));
         pack.finalize();
         await this.container.putArchive(pack as any, { path: '/app' });
+
+        // Same tsx provisioning as problem Run/Submit: inject the cached
+        // install if we have one, otherwise provision it in the background.
+        // Never blocks on the network; TSX_CMD falls back to `npx --yes tsx`.
+        await TypeScriptRunner.ensureTsx(this.container);
     }
 
     async run(stdin: string = ''): Promise<{ output: string; logs: string }> {
         await this.stageStdin(stdin);
 
         const exec = await this.container!.exec({
-            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', 'npx --yes tsx main.ts < cojudge_stdin.txt'],
+            Cmd: ['timeout', EXECUTION_TIMEOUT_SECONDS, '/bin/sh', '-c', `${TypeScriptRunner.TSX_CMD} < cojudge_stdin.txt`],
             AttachStdout: true,
             AttachStderr: true
         });
@@ -593,7 +636,7 @@ export class PlaygroundTypeScriptRunner extends PlaygroundRunner {
 }
 
 export class PlaygroundPhpRunner extends PlaygroundRunner {
-    private container: Dockerode.Container | null = null;
+    protected readonly image = phpImage;
 
     async compile(): Promise<void> {
         this.container = await ContainerPool.acquire(phpImage);
