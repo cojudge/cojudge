@@ -17,6 +17,32 @@ export function getLogFile() {
   return path.join(homeConfigDir, "cojudge.log");
 }
 
+const READY_POLL_MS = 200;
+const READY_TIMEOUT_MS = 60000;
+
+/**
+ * Resolve true once the server answers HTTP requests. Polling the port with
+ * netstat/lsof once a second added up to a second of dead time per start,
+ * and the bare port can be open before the app handler has loaded (the
+ * preview server answers 503 until then), so probe a static file instead.
+ */
+async function waitForServer(PORT) {
+  const deadline = Date.now() + READY_TIMEOUT_MS;
+  while (Date.now() < deadline) {
+    try {
+      const response = await fetch(`http://127.0.0.1:${PORT}/robots.txt`, {
+        signal: AbortSignal.timeout(2000),
+      });
+      await response.body?.cancel();
+      if (response.status !== 503) return true;
+    } catch {
+      // Not listening yet.
+    }
+    await new Promise((resolve) => setTimeout(resolve, READY_POLL_MS));
+  }
+  return false;
+}
+
 export function startServer(PORT, callback, shouldExit = true) {
   ensureUserContentSeededSync();
   console.log(`Content: ${getContentRoot()} (edit problems/courses there; overrides bundled content)`);
@@ -85,26 +111,19 @@ export function startServer(PORT, callback, shouldExit = true) {
     child.unref();
 
     console.log(`Waiting for server to start on port ${PORT}...`);
-    let attempts = 0;
-    const maxAttempts = 60;
-    const interval = setInterval(() => {
-      attempts++;
-      if (getPIDs(PORT).length > 0) {
-        clearInterval(interval);
-        console.log("Server started!");
-        if (callback) callback();
-        if (shouldExit) {
-          setTimeout(() => process.exit(0), 1000);
-        }
-      }
-      if (attempts >= maxAttempts) {
-        clearInterval(interval);
+    void waitForServer(PORT).then((ready) => {
+      if (!ready) {
         console.log(
           `Server is taking too long to start. Check logs with 'cojudge -l'.`,
         );
         process.exit(1);
       }
-    }, 1000);
+      console.log("Server started!");
+      if (callback) callback();
+      if (shouldExit) {
+        setTimeout(() => process.exit(0), 1000);
+      }
+    });
   } catch (e) {
     console.error(`Failed to start server: ${e.message}`);
     process.exit(1);

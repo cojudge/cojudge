@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Cojudge</title>
+		<!--
+			Shown by the desktop shell while the bundled backend boots (see
+			show_splash in src-tauri/src/main.rs). It is replaced by the main
+			window once the app's first page has finished loading. Colours
+			mirror the light/dark tokens in src/app.css.
+		-->
+		<style>
+			:root {
+				color-scheme: light;
+				--bg: #f8fafc;
+				--text: #0f172a;
+				--muted: #475569;
+				--primary: #42c882;
+				--skeleton: rgba(15, 23, 42, 0.06);
+				--shine: rgba(255, 255, 255, 0.75);
+				font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+				background: var(--bg);
+				color: var(--text);
+			}
+			@media (prefers-color-scheme: dark) {
+				:root {
+					color-scheme: dark;
+					--bg: #443835;
+					--text: #f0f0f0;
+					--muted: rgba(235, 235, 245, 0.7);
+					--skeleton: rgba(255, 255, 255, 0.07);
+					--shine: rgba(255, 255, 255, 0.12);
+				}
+			}
+			html,
+			body {
+				height: 100%;
+				margin: 0;
+				overflow: hidden;
+				user-select: none;
+				cursor: default;
+			}
+			body {
+				display: grid;
+				place-items: center;
+			}
+			main {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				width: min(420px, 80vw);
+				animation: fade-in 240ms ease-out both;
+			}
+			.brand {
+				display: flex;
+				align-items: center;
+				gap: 14px;
+				margin-bottom: 36px;
+			}
+			.brand svg {
+				width: 56px;
+				height: 56px;
+				color: var(--primary);
+				animation: pulse 1.8s ease-in-out infinite;
+			}
+			.brand h1 {
+				margin: 0;
+				font-size: 32px;
+				font-weight: 650;
+				letter-spacing: -0.02em;
+			}
+			.cursor {
+				animation: blink 1s steps(1) infinite;
+			}
+			.skeleton {
+				display: grid;
+				gap: 12px;
+				width: 100%;
+			}
+			.bar {
+				position: relative;
+				height: 14px;
+				overflow: hidden;
+				border-radius: 7px;
+				background: var(--skeleton);
+			}
+			.bar::after {
+				content: '';
+				position: absolute;
+				inset: 0;
+				transform: translateX(-100%);
+				background: linear-gradient(90deg, transparent, var(--shine), transparent);
+				animation: shimmer 1.4s ease-in-out infinite;
+			}
+			.bar:nth-child(1) {
+				width: 100%;
+			}
+			.bar:nth-child(2) {
+				width: 86%;
+			}
+			.bar:nth-child(3) {
+				width: 64%;
+			}
+			.bar:nth-child(2)::after {
+				animation-delay: 120ms;
+			}
+			.bar:nth-child(3)::after {
+				animation-delay: 240ms;
+			}
+			.status {
+				min-height: 1.5em;
+				margin: 28px 0 0;
+				color: var(--muted);
+				font-size: 14px;
+				text-align: center;
+				transition: opacity 200ms ease;
+			}
+			@keyframes shimmer {
+				to {
+					transform: translateX(100%);
+				}
+			}
+			@keyframes pulse {
+				50% {
+					opacity: 0.55;
+				}
+			}
+			@keyframes blink {
+				50% {
+					opacity: 0;
+				}
+			}
+			@keyframes fade-in {
+				from {
+					opacity: 0;
+					transform: translateY(4px);
+				}
+			}
+			@media (prefers-reduced-motion: reduce) {
+				*,
+				*::before,
+				*::after {
+					animation: none !important;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main role="status" aria-live="polite" aria-label="Cojudge is starting">
+			<div class="brand">
+				<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+					<path
+						d="M3 15.8002V8.2002C3 7.08009 3 6.51962 3.21799 6.0918C3.40973 5.71547 3.71547 5.40973 4.0918 5.21799C4.51962 5 5.08009 5 6.2002 5H17.8002C18.9203 5 19.4796 5 19.9074 5.21799C20.2837 5.40973 20.5905 5.71547 20.7822 6.0918C21 6.5192 21 7.07899 21 8.19691V15.8031C21 16.921 21 17.48 20.7822 17.9074C20.5905 18.2837 20.2837 18.5905 19.9074 18.7822C19.48 19 18.921 19 17.8031 19H6.19691C5.07899 19 4.5192 19 4.0918 18.7822C3.71547 18.5905 3.40973 18.2837 3.21799 17.9074C3 17.4796 3 16.9203 3 15.8002Z"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+					<path
+						d="M7 10l3 2.5L7 15"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+					<path
+						class="cursor"
+						d="M12 15H17"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+					/>
+				</svg>
+				<h1>Cojudge</h1>
+			</div>
+			<div class="skeleton" aria-hidden="true">
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+			</div>
+			<p class="status" id="status">Starting…</p>
+		</main>
+		<script>
+			// Reassure on slow starts (first launch after an install or update
+			// copies and indexes the bundled problems).
+			const status = document.getElementById('status');
+			const messages = [
+				[4000, 'Loading problems…'],
+				[10000, 'Still starting — the first launch after an update takes a little longer.']
+			];
+			for (const [delay, text] of messages) {
+				setTimeout(() => {
+					status.textContent = text;
+				}, delay);
+			}
+		</script>
+	</body>
+</html>

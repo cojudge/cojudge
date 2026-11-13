@@ -37,6 +37,7 @@ use oauth2::{
 };
 use tauri::{
     menu::{Menu, MenuItemBuilder, MenuItemKind, PredefinedMenuItem, Submenu},
+    webview::PageLoadEvent,
     Manager, WebviewUrl, WebviewWindowBuilder,
 };
 use tauri_plugin_opener::OpenerExt;
@@ -52,6 +53,10 @@ const BACKEND_PORT: u16 = 5376;
 
 const NEW_WINDOW_MENU_ID: &str = "new-window";
 const WINDOW_LABEL_PREFIX: &str = "main";
+/// Logo + skeleton window shown while the backend boots (release builds).
+const SPLASH_WINDOW_LABEL: &str = "splash";
+/// Reveal a hidden main window even if its page-load event never arrives.
+const REVEAL_FALLBACK: Duration = Duration::from_secs(20);
 const GOOGLE_AUTH_URL: &str = "https://accounts.google.com/o/oauth2/v2/auth";
 const GOOGLE_TOKEN_URL: &str = "https://oauth2.googleapis.com/token";
 const GOOGLE_OAUTH_CALLBACK_PATH: &str = "/";
@@ -83,6 +88,47 @@ fn open_external(app: &tauri::AppHandle, url: &tauri::Url) {
     }
 }
 
+/// Show a main window that was created hidden behind the splash, in the
+/// splash's place, then close the splash. Safe to call more than once.
+fn reveal_window(window: &tauri::WebviewWindow) {
+    let splash = window.app_handle().get_webview_window(SPLASH_WINDOW_LABEL);
+    if !window.is_visible().unwrap_or(true) {
+        // Take over the splash's geometry so the swap reads as one window,
+        // even if the user moved or resized it while waiting.
+        if let Some(splash) = &splash {
+            if splash.is_maximized().unwrap_or(false) {
+                let _ = window.maximize();
+            } else if let (Ok(position), Ok(size)) = (splash.outer_position(), splash.inner_size()) {
+                let _ = window.set_size(size);
+                let _ = window.set_position(position);
+            }
+        }
+        let _ = window.show();
+        let _ = window.set_focus();
+    }
+    if let Some(splash) = splash {
+        // destroy() skips CloseRequested, which would otherwise quit the app.
+        let _ = splash.destroy();
+    }
+}
+
+#[cfg(not(debug_assertions))]
+fn show_splash(app: &tauri::AppHandle) {
+    if let Err(error) = WebviewWindowBuilder::new(
+        app,
+        SPLASH_WINDOW_LABEL,
+        WebviewUrl::App("splash.html".into()),
+    )
+    .title("Cojudge")
+    .inner_size(1400.0, 900.0)
+    .min_inner_size(300.0, 300.0)
+    .center()
+    .build()
+    {
+        eprintln!("failed to show the splash window: {error}");
+    }
+}
+
 fn create_window(app: &tauri::AppHandle, url: tauri::Url) -> tauri::Result<()> {
     let allowed_origin = url.origin().ascii_serialization();
     let navigation_app = app.clone();
@@ -91,12 +137,22 @@ fn create_window(app: &tauri::AppHandle, url: tauri::Url) -> tauri::Result<()> {
         "{WINDOW_LABEL_PREFIX}-{}",
         WINDOW_COUNTER.fetch_add(1, Ordering::Relaxed)
     );
+    // While the splash is up, build the main window hidden and swap it in
+    // once its first page has loaded: otherwise the window sits blank while
+    // the backend renders the home page.
+    let behind_splash = app.get_webview_window(SPLASH_WINDOW_LABEL).is_some();
 
-    WebviewWindowBuilder::new(app, label, WebviewUrl::External(url))
+    let window = WebviewWindowBuilder::new(app, label, WebviewUrl::External(url))
         .title("Cojudge")
         .inner_size(1400.0, 900.0)
         .min_inner_size(300.0, 300.0)
         .center()
+        .visible(!behind_splash)
+        .on_page_load(|window, payload| {
+            if payload.event() == PageLoadEvent::Finished {
+                reveal_window(&window);
+            }
+        })
         // Required for HTML5 drag-and-drop (Explorer file upload highlight).
         // Tauri's native handler otherwise swallows OS file drags.
         .disable_drag_drop_handler()
@@ -116,6 +172,13 @@ fn create_window(app: &tauri::AppHandle, url: tauri::Url) -> tauri::Result<()> {
             tauri::webview::NewWindowResponse::Deny
         })
         .build()?;
+
+    if behind_splash {
+        thread::spawn(move || {
+            thread::sleep(REVEAL_FALLBACK);
+            reveal_window(&window);
+        });
+    }
 
     Ok(())
 }
@@ -589,6 +652,12 @@ fn show_startup_error(app: &tauri::AppHandle) {
         eprintln!("failed to show the startup error: {error}");
         app.exit(1);
     }
+
+    // Only after the error window exists: destroying the last window would
+    // make Tauri exit before the error is shown.
+    if let Some(splash) = app.get_webview_window(SPLASH_WINDOW_LABEL) {
+        let _ = splash.destroy();
+    }
 }
 
 #[cfg(not(debug_assertions))]
@@ -893,9 +962,15 @@ fn main() {
             }
 
             #[cfg(not(debug_assertions))]
-            if let Err(error) = start_backend(app.handle()) {
-                eprintln!("failed to start the backend: {error}");
-                show_startup_error(app.handle());
+            {
+                // Show something immediately: booting the bundled Node
+                // backend and rendering the first page takes seconds on
+                // Windows, and until now no window existed at all.
+                show_splash(app.handle());
+                if let Err(error) = start_backend(app.handle()) {
+                    eprintln!("failed to start the backend: {error}");
+                    show_startup_error(app.handle());
+                }
             }
 
             Ok(())
@@ -908,7 +983,9 @@ fn main() {
             label,
             event: tauri::WindowEvent::CloseRequested { .. },
             ..
-        } if label == "startup-error" => {
+        } if label == "startup-error" || label == SPLASH_WINDOW_LABEL => {
+            // Closing the splash before the app is ready means "quit": the
+            // hidden main window would otherwise appear later on its own.
             shutdown_backend(app);
             app.exit(0);
         }

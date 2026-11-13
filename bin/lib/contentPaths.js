@@ -96,10 +96,23 @@ function hashFileOrNullSync(filePath) {
 }
 
 const SEED_STATE_FILENAME = ".cojudge-seed.json";
-const SEED_STATE_VERSION = 1;
+const SEED_STATE_VERSION = 2;
+
+// See STAT_CACHE_RACY_WINDOW_MS in src/lib/server/contentPaths.ts: a cached
+// bundled hash is only trusted for files last modified well before the scan
+// that recorded it.
+const STAT_CACHE_RACY_WINDOW_MS = 2000;
 
 function getSeedStatePath() {
   return path.join(getContentRoot(), SEED_STATE_FILENAME);
+}
+
+function isManifestKey(key) {
+  return (
+    (key.startsWith("problems/") || key.startsWith("courses/")) &&
+    !key.includes("..") &&
+    !key.includes("\\")
+  );
 }
 
 function readSeedManifestSync() {
@@ -109,34 +122,63 @@ function readSeedManifestSync() {
     if (parsed && typeof parsed === "object" && parsed.files && typeof parsed.files === "object") {
       const files = {};
       for (const [key, value] of Object.entries(parsed.files)) {
-        if (
-          typeof key === "string" &&
-          typeof value === "string" &&
-          /^[0-9a-f]{64}$/.test(value) &&
-          (key.startsWith("problems/") || key.startsWith("courses/")) &&
-          !key.includes("..") &&
-          !key.includes("\\")
-        ) {
+        if (typeof value === "string" && /^[0-9a-f]{64}$/.test(value) && isManifestKey(key)) {
           files[key] = value;
         }
       }
-      return { files };
+      const stats = {};
+      if (parsed.stats && typeof parsed.stats === "object") {
+        for (const [key, value] of Object.entries(parsed.stats)) {
+          if (typeof value === "string" && /^\d+:[\d.]+$/.test(value) && isManifestKey(key)) {
+            stats[key] = value;
+          }
+        }
+      }
+      const scannedAt =
+        typeof parsed.scannedAt === "number" && Number.isFinite(parsed.scannedAt)
+          ? parsed.scannedAt
+          : 0;
+      return { files, stats, scannedAt, raw };
     }
   } catch {
     // Missing or corrupt manifest — treated as "no baseline".
   }
-  return { files: {} };
+  return { files: {}, stats: {}, scannedAt: 0, raw: null };
 }
 
-function writeSeedManifestSync(files) {
+function serializeSeedManifest(files, bundled, scannedAt) {
+  const sortedFiles = {};
+  for (const rel of Object.keys(files).sort()) sortedFiles[rel] = files[rel];
+  // A stat is only a valid cache key for the hash it was taken with.
+  const stats = {};
+  for (const rel of [...bundled.keys()].sort()) {
+    const file = bundled.get(rel);
+    if (files[rel] === file.hash) stats[rel] = file.sig;
+  }
+  return JSON.stringify(
+    { version: SEED_STATE_VERSION, scannedAt, files: sortedFiles, stats },
+    null,
+    2,
+  );
+}
+
+function writeSeedManifestSync(prev, files, scan) {
+  // Steady state: every hash came from the cache and nothing changed.
+  if (
+    scan.hashed === 0 &&
+    prev.raw !== null &&
+    serializeSeedManifest(files, scan.files, prev.scannedAt) === prev.raw
+  ) {
+    return;
+  }
   fs.writeFileSync(
     getSeedStatePath(),
-    JSON.stringify({ version: SEED_STATE_VERSION, files }, null, 2),
+    serializeSeedManifest(files, scan.files, scan.scannedAt),
     "utf8",
   );
 }
 
-function collectFilesRecursiveSync(baseDir, prefix, out) {
+function collectFilesRecursiveSync(baseDir, prefix, prev, scan) {
   let entries;
   try {
     entries = fs.readdirSync(baseDir, { withFileTypes: true });
@@ -148,19 +190,59 @@ function collectFilesRecursiveSync(baseDir, prefix, out) {
     const abs = path.join(baseDir, entry.name);
     const rel = `${prefix}/${entry.name}`;
     if (entry.isDirectory()) {
-      collectFilesRecursiveSync(abs, rel, out);
+      collectFilesRecursiveSync(abs, rel, prev, scan);
     } else if (entry.isFile()) {
+      let stat;
+      try {
+        stat = fs.statSync(abs);
+      } catch {
+        continue;
+      }
+      const sig = `${stat.size}:${stat.mtimeMs}`;
+      // Reuse the recorded hash when the file provably has not changed:
+      // opening every file is the slow part of a start on Windows.
+      const cached = prev.files[rel];
+      if (
+        cached !== undefined &&
+        prev.stats[rel] === sig &&
+        stat.mtimeMs < prev.scannedAt - STAT_CACHE_RACY_WINDOW_MS
+      ) {
+        scan.files.set(rel, { abs, hash: cached, sig });
+        continue;
+      }
+      scan.hashed++;
       const hash = hashFileOrNullSync(abs);
-      if (hash !== null) out.set(rel, { abs, hash });
+      if (hash !== null) scan.files.set(rel, { abs, hash, sig });
     }
   }
 }
 
 /** All bundled files under problems/ and courses/, keyed by posix-style rel path. */
-function collectBundledFilesSync() {
-  const out = new Map();
-  collectFilesRecursiveSync(getBundledProblemsDir(), "problems", out);
-  collectFilesRecursiveSync(getBundledCoursesDir(), "courses", out);
+function collectBundledFilesSync(prev) {
+  const scan = { files: new Map(), scannedAt: Date.now(), hashed: 0 };
+  collectFilesRecursiveSync(getBundledProblemsDir(), "problems", prev, scan);
+  collectFilesRecursiveSync(getBundledCoursesDir(), "courses", prev, scan);
+  return scan;
+}
+
+/** Every entry (file or dir) under the user's problems/ and courses/, as rel paths. */
+function collectUserEntriesSync(root) {
+  const out = new Set();
+  const walk = (dir, prefix) => {
+    let entries;
+    try {
+      entries = fs.readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const entry of entries) {
+      const rel = `${prefix}/${entry.name}`;
+      out.add(rel);
+      if (entry.isDirectory()) walk(path.join(dir, entry.name), rel);
+    }
+  };
+  walk(path.join(root, "problems"), "problems");
+  walk(path.join(root, "courses"), "courses");
   return out;
 }
 
@@ -193,12 +275,14 @@ function syncUserContentSync() {
   fs.mkdirSync(path.join(root, "problems"), { recursive: true });
   fs.mkdirSync(path.join(root, "courses"), { recursive: true });
   const prev = readSeedManifestSync();
-  const bundled = collectBundledFilesSync();
+  const scan = collectBundledFilesSync(prev);
+  const bundled = scan.files;
+  const userEntries = collectUserEntriesSync(root);
   const next = {};
   for (const [rel, { abs, hash: bundledHash }] of bundled) {
     next[rel] = bundledHash;
     const userPath = path.join(root, ...rel.split("/"));
-    if (!fs.existsSync(userPath)) {
+    if (!userEntries.has(rel)) {
       fs.mkdirSync(path.dirname(userPath), { recursive: true });
       fs.copyFileSync(abs, userPath);
       continue;
@@ -233,7 +317,7 @@ function syncUserContentSync() {
     }
     // Edited copies of upstream-removed files are kept (now custom).
   }
-  writeSeedManifestSync(next);
+  writeSeedManifestSync(prev, next, scan);
   const readmePath = path.join(root, "README.md");
   if (!fs.existsSync(readmePath)) {
     fs.writeFileSync(readmePath, USER_README, "utf8");
@@ -267,6 +351,8 @@ function copyMissingRecursiveSync(src, dest) {
   }
 }
 
+let seededThisProcess = false;
+
 const USER_README = `# Cojudge content
 
 This folder is yours. Cojudge reads problems and courses from here first.
@@ -298,6 +384,10 @@ to use a different folder.
  * versions, and user edits are never overwritten.
  */
 export function ensureUserContentSeededSync() {
+  // Commands call this at entry and again when they auto-start the server;
+  // one sync per CLI process is enough (resets refresh the manifest themselves).
+  if (seededThisProcess) return;
+  seededThisProcess = true;
   try {
     syncUserContentSync();
   } catch {
@@ -331,15 +421,15 @@ function isSafeId(id) {
 
 function refreshManifestPrefixSync(prefix) {
   const prev = readSeedManifestSync();
-  const bundled = collectBundledFilesSync();
+  const scan = collectBundledFilesSync(prev);
   const next = { ...prev.files };
   for (const key of Object.keys(next)) {
     if (key === prefix.slice(0, -1) || key.startsWith(prefix)) delete next[key];
   }
-  for (const [rel, { hash }] of bundled) {
+  for (const [rel, { hash }] of scan.files) {
     if (rel.startsWith(prefix)) next[rel] = hash;
   }
-  writeSeedManifestSync(next);
+  writeSeedManifestSync(prev, next, scan);
 }
 
 /** Reset a problem to its bundled copy, discarding ~/cojudge edits. */
