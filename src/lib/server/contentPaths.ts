@@ -311,42 +311,128 @@ async function hashFileOrNull(filePath: string): Promise<string | null> {
 }
 
 const SEED_STATE_FILENAME = '.cojudge-seed.json';
-const SEED_STATE_VERSION = 1;
+const SEED_STATE_VERSION = 2;
+
+/**
+ * A cached bundled hash is trusted only if the file was last modified at
+ * least this long before the scan that recorded it. Files touched right
+ * around a scan are re-hashed (like git's "racy clean" check), so an edit
+ * that keeps the same size within the filesystem's timestamp granularity
+ * can never be missed.
+ */
+const STAT_CACHE_RACY_WINDOW_MS = 2000;
+
+interface SeedManifest {
+	/** rel path → sha256 of the bundled file at the last sync. */
+	files: Record<string, string>;
+	/** rel path → `${size}:${mtimeMs}` of the bundled file when it was hashed. */
+	stats: Record<string, string>;
+	/** Date.now() when `stats` were recorded. */
+	scannedAt: number;
+	/** Exact file text, so an unchanged manifest is not rewritten. */
+	raw: string | null;
+}
+
+interface BundledFile {
+	abs: string;
+	hash: string;
+	sig: string;
+}
 
 function getSeedStatePath(): string {
 	return path.join(getContentRoot(), SEED_STATE_FILENAME);
 }
 
-async function readSeedManifest(): Promise<{ files: Record<string, string> }> {
+function isManifestKey(key: string): boolean {
+	return (
+		(key.startsWith('problems/') || key.startsWith('courses/')) &&
+		!key.includes('..') &&
+		!key.includes('\\')
+	);
+}
+
+async function readSeedManifest(): Promise<SeedManifest> {
 	try {
 		const raw = await fs.readFile(getSeedStatePath(), 'utf-8');
-		const parsed = JSON.parse(raw) as { files?: unknown };
+		const parsed = JSON.parse(raw) as { files?: unknown; stats?: unknown; scannedAt?: unknown };
 		if (parsed && typeof parsed === 'object' && parsed.files && typeof parsed.files === 'object') {
 			const files: Record<string, string> = {};
 			for (const [key, value] of Object.entries(parsed.files as Record<string, unknown>)) {
-				if (
-					typeof key === 'string' &&
-					typeof value === 'string' &&
-					/^[0-9a-f]{64}$/.test(value) &&
-					(key.startsWith('problems/') || key.startsWith('courses/')) &&
-					!key.includes('..') &&
-					!key.includes('\\')
-				) {
+				if (typeof value === 'string' && /^[0-9a-f]{64}$/.test(value) && isManifestKey(key)) {
 					files[key] = value;
 				}
 			}
-			return { files };
+			// Version 1 manifests have no stats: every bundled file is hashed
+			// once more, then the cache is in place.
+			const stats: Record<string, string> = {};
+			if (parsed.stats && typeof parsed.stats === 'object') {
+				for (const [key, value] of Object.entries(parsed.stats as Record<string, unknown>)) {
+					if (typeof value === 'string' && /^\d+:[\d.]+$/.test(value) && isManifestKey(key)) {
+						stats[key] = value;
+					}
+				}
+			}
+			const scannedAt =
+				typeof parsed.scannedAt === 'number' && Number.isFinite(parsed.scannedAt)
+					? parsed.scannedAt
+					: 0;
+			return { files, stats, scannedAt, raw };
 		}
 	} catch {
 		// Missing or corrupt manifest — treated as "no baseline" (see sync below).
 	}
-	return { files: {} };
+	return { files: {}, stats: {}, scannedAt: 0, raw: null };
 }
 
-async function writeSeedManifest(files: Record<string, string>): Promise<void> {
+interface BundledScan {
+	files: Map<string, BundledFile>;
+	/** Date.now() taken before any file was stat'ed. */
+	scannedAt: number;
+	/** How many files were read and hashed (cache misses). */
+	hashed: number;
+}
+
+function serializeSeedManifest(
+	files: Record<string, string>,
+	bundled: Map<string, BundledFile>,
+	scannedAt: number
+): string {
+	// Sorted keys: the parallel scan yields files in a nondeterministic order,
+	// and a stable serialization lets an unchanged manifest compare equal.
+	const sortedFiles: Record<string, string> = {};
+	for (const rel of Object.keys(files).sort()) sortedFiles[rel] = files[rel];
+	// A stat is only a valid cache key for the hash it was taken with: entries
+	// whose recorded hash is an older baseline (refreshManifestPrefix keeps
+	// those outside the reset prefix) get no stat, so they are re-hashed.
+	const stats: Record<string, string> = {};
+	for (const rel of [...bundled.keys()].sort()) {
+		const file = bundled.get(rel)!;
+		if (files[rel] === file.hash) stats[rel] = file.sig;
+	}
+	return JSON.stringify(
+		{ version: SEED_STATE_VERSION, scannedAt, files: sortedFiles, stats },
+		null,
+		2
+	);
+}
+
+async function writeSeedManifest(
+	prev: SeedManifest,
+	files: Record<string, string>,
+	scan: BundledScan
+): Promise<void> {
+	// Steady state: every hash came from the cache and nothing changed, so
+	// keep the manifest (and its scan time) as is and skip the write.
+	if (
+		scan.hashed === 0 &&
+		prev.raw !== null &&
+		serializeSeedManifest(files, scan.files, prev.scannedAt) === prev.raw
+	) {
+		return;
+	}
 	await fs.writeFile(
 		getSeedStatePath(),
-		JSON.stringify({ version: SEED_STATE_VERSION, files }, null, 2),
+		serializeSeedManifest(files, scan.files, scan.scannedAt),
 		'utf-8'
 	);
 }
@@ -354,33 +440,81 @@ async function writeSeedManifest(files: Record<string, string>): Promise<void> {
 async function collectFilesRecursive(
 	baseDir: string,
 	prefix: string,
-	out: Map<string, { abs: string; hash: string }>
+	prev: SeedManifest,
+	scan: BundledScan
 ): Promise<void> {
+	const out = scan.files;
 	let entries;
 	try {
 		entries = await fs.readdir(baseDir, { withFileTypes: true });
 	} catch {
 		return;
 	}
-	for (const entry of entries) {
-		// Skip OS noise.
-		if (entry.name === '.DS_Store') continue;
-		const abs = path.join(baseDir, entry.name);
-		const rel = `${prefix}/${entry.name}`;
-		if (entry.isDirectory()) {
-			await collectFilesRecursive(abs, rel, out);
-		} else if (entry.isFile()) {
+	await Promise.all(
+		entries.map(async (entry) => {
+			// Skip OS noise.
+			if (entry.name === '.DS_Store') return;
+			const abs = path.join(baseDir, entry.name);
+			const rel = `${prefix}/${entry.name}`;
+			if (entry.isDirectory()) {
+				await collectFilesRecursive(abs, rel, prev, scan);
+				return;
+			}
+			if (!entry.isFile()) return;
+			let stat;
+			try {
+				stat = await fs.stat(abs);
+			} catch {
+				return;
+			}
+			const sig = `${stat.size}:${stat.mtimeMs}`;
+			// Opening every file is the slow part of a start on Windows
+			// (antivirus scans each open), so reuse the recorded hash when
+			// the file provably has not changed since it was hashed.
+			const cached = prev.files[rel];
+			if (
+				cached !== undefined &&
+				prev.stats[rel] === sig &&
+				stat.mtimeMs < prev.scannedAt - STAT_CACHE_RACY_WINDOW_MS
+			) {
+				out.set(rel, { abs, hash: cached, sig });
+				return;
+			}
+			scan.hashed++;
 			const hash = await hashFileOrNull(abs);
-			if (hash !== null) out.set(rel, { abs, hash });
-		}
-	}
+			if (hash !== null) out.set(rel, { abs, hash, sig });
+		})
+	);
 }
 
 /** All bundled files under problems/ and courses/, keyed by posix-style rel path. */
-async function collectBundledFiles(): Promise<Map<string, { abs: string; hash: string }>> {
-	const out = new Map<string, { abs: string; hash: string }>();
-	await collectFilesRecursive(getBundledProblemsDir(), 'problems', out);
-	await collectFilesRecursive(getBundledCoursesDir(), 'courses', out);
+async function collectBundledFiles(prev: SeedManifest): Promise<BundledScan> {
+	const scan: BundledScan = { files: new Map(), scannedAt: Date.now(), hashed: 0 };
+	await collectFilesRecursive(getBundledProblemsDir(), 'problems', prev, scan);
+	await collectFilesRecursive(getBundledCoursesDir(), 'courses', prev, scan);
+	return scan;
+}
+
+/** Every entry (file or dir) under the user's problems/ and courses/, as rel paths. */
+async function collectUserEntries(root: string): Promise<Set<string>> {
+	const out = new Set<string>();
+	async function walk(dir: string, prefix: string): Promise<void> {
+		let entries;
+		try {
+			entries = await fs.readdir(dir, { withFileTypes: true });
+		} catch {
+			return;
+		}
+		await Promise.all(
+			entries.map(async (entry) => {
+				const rel = `${prefix}/${entry.name}`;
+				out.add(rel);
+				if (entry.isDirectory()) await walk(path.join(dir, entry.name), rel);
+			})
+		);
+	}
+	await walk(path.join(root, 'problems'), 'problems');
+	await walk(path.join(root, 'courses'), 'courses');
 	return out;
 }
 
@@ -428,19 +562,13 @@ async function syncUserContent(): Promise<void> {
 	await fs.mkdir(path.join(root, 'problems'), { recursive: true });
 	await fs.mkdir(path.join(root, 'courses'), { recursive: true });
 	const prev = await readSeedManifest();
-	const bundled = await collectBundledFiles();
+	const [scan, userEntries] = await Promise.all([collectBundledFiles(prev), collectUserEntries(root)]);
+	const bundled = scan.files;
 	const next: Record<string, string> = {};
 	for (const [rel, { abs, hash: bundledHash }] of bundled) {
 		next[rel] = bundledHash;
 		const userPath = path.join(root, ...rel.split('/'));
-		let userExists = false;
-		try {
-			await fs.access(userPath);
-			userExists = true;
-		} catch {
-			userExists = false;
-		}
-		if (!userExists) {
+		if (!userEntries.has(rel)) {
 			await fs.mkdir(path.dirname(userPath), { recursive: true });
 			await fs.copyFile(abs, userPath);
 			continue;
@@ -478,7 +606,7 @@ async function syncUserContent(): Promise<void> {
 		}
 		// Edited copies of upstream-removed files are kept (now custom).
 	}
-	await writeSeedManifest(next);
+	await writeSeedManifest(prev, next, scan);
 	const readmePath = path.join(root, 'README.md');
 	try {
 		await fs.access(readmePath);
@@ -572,15 +700,16 @@ function assertSafeContentId(id: string): void {
 }
 
 async function refreshManifestPrefix(prefix: string): Promise<void> {
-	const [prev, bundled] = await Promise.all([readSeedManifest(), collectBundledFiles()]);
+	const prev = await readSeedManifest();
+	const scan = await collectBundledFiles(prev);
 	const next = { ...prev.files };
 	for (const key of Object.keys(next)) {
 		if (key === prefix.slice(0, -1) || key.startsWith(prefix)) delete next[key];
 	}
-	for (const [rel, { hash }] of bundled) {
+	for (const [rel, { hash }] of scan.files) {
 		if (rel.startsWith(prefix)) next[rel] = hash;
 	}
-	await writeSeedManifest(next);
+	await writeSeedManifest(prev, next, scan);
 }
 
 const WINDOWS_RETRY_CODES = new Set(['EBUSY', 'EPERM', 'EACCES', 'ENOTEMPTY', 'EMFILE', 'ENFILE']);
