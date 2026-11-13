@@ -325,6 +325,139 @@ describe('contentPaths', () => {
 		}
 	});
 
+	describe('bundled hash cache', () => {
+		const old = new Date(Date.now() - 24 * 60 * 60 * 1000);
+		const manifestPath = () => path.join(tmpRoot, 'user', '.cojudge-seed.json');
+
+		async function writeBundled(rel: string, content: string, mtime: Date = old) {
+			const abs = path.join(bundledRoot, ...rel.split('/'));
+			await fs.mkdir(path.dirname(abs), { recursive: true });
+			await fs.writeFile(abs, content);
+			await fs.utimes(abs, mtime, mtime);
+			return abs;
+		}
+
+		async function reseed() {
+			vi.resetModules();
+			const mod = await import('./contentPaths');
+			mod.__resetEnsureMemoForTests();
+			await mod.ensureUserContentSeeded();
+			return mod;
+		}
+
+		it('a steady-state start reads no bundled file and does not rewrite the manifest', async () => {
+			const cwdSpy = vi.spyOn(process, 'cwd').mockReturnValue(bundledRoot);
+			try {
+				const meta = await writeBundled('problems/two-sum/metadata.json', '{"v":1}');
+				await writeBundled('courses/blind75/courseinfo.json', '{"title":"Blind 75"}');
+				await reseed();
+				const manifest = JSON.parse(await fs.readFile(manifestPath(), 'utf-8'));
+				expect(manifest.version).toBe(2);
+				expect(Object.keys(manifest.stats).sort()).toEqual([
+					'courses/blind75/courseinfo.json',
+					'problems/two-sum/metadata.json'
+				]);
+				const manifestMtime = (await fs.stat(manifestPath())).mtimeMs;
+
+				const readSpy = vi.spyOn(fs, 'readFile');
+				try {
+					await reseed();
+					const bundledReads = readSpy.mock.calls.filter(([file]) =>
+						String(file).startsWith(bundledRoot)
+					);
+					expect(bundledReads).toEqual([]);
+				} finally {
+					readSpy.mockRestore();
+				}
+				expect((await fs.stat(manifestPath())).mtimeMs).toBe(manifestMtime);
+				expect(await fs.readFile(meta, 'utf-8')).toBe('{"v":1}');
+			} finally {
+				cwdSpy.mockRestore();
+			}
+		});
+
+		it('still picks up a bundled change once the file stat differs', async () => {
+			const cwdSpy = vi.spyOn(process, 'cwd').mockReturnValue(bundledRoot);
+			try {
+				await writeBundled('problems/two-sum/metadata.json', '{"v":1}');
+				await reseed();
+
+				// Same size, new mtime: the cached hash must not be reused.
+				await writeBundled('problems/two-sum/metadata.json', '{"v":2}', new Date());
+				await reseed();
+				expect(
+					await fs.readFile(
+						path.join(tmpRoot, 'user', 'problems', 'two-sum', 'metadata.json'),
+						'utf-8'
+					)
+				).toBe('{"v":2}');
+			} finally {
+				cwdSpy.mockRestore();
+			}
+		});
+
+		it('re-hashes files modified right around the last scan (racy window)', async () => {
+			const cwdSpy = vi.spyOn(process, 'cwd').mockReturnValue(bundledRoot);
+			try {
+				const now = new Date();
+				const abs = await writeBundled('problems/two-sum/metadata.json', '{"v":1}', now);
+				await reseed();
+
+				// Same size AND same mtime: only the racy check can catch this.
+				await fs.writeFile(abs, '{"v":2}');
+				await fs.utimes(abs, now, now);
+				await reseed();
+				expect(
+					await fs.readFile(
+						path.join(tmpRoot, 'user', 'problems', 'two-sum', 'metadata.json'),
+						'utf-8'
+					)
+				).toBe('{"v":2}');
+			} finally {
+				cwdSpy.mockRestore();
+			}
+		});
+
+		it('migrates a version 1 manifest without losing the baseline', async () => {
+			const cwdSpy = vi.spyOn(process, 'cwd').mockReturnValue(bundledRoot);
+			try {
+				await writeBundled('problems/two-sum/metadata.json', '{"v":1}');
+				await reseed();
+				const v2 = JSON.parse(await fs.readFile(manifestPath(), 'utf-8'));
+				await fs.writeFile(manifestPath(), JSON.stringify({ version: 1, files: v2.files }));
+
+				// Upstream fix lands while the user copy is pristine.
+				await writeBundled('problems/two-sum/metadata.json', '{"v":2}');
+				await reseed();
+				expect(
+					await fs.readFile(
+						path.join(tmpRoot, 'user', 'problems', 'two-sum', 'metadata.json'),
+						'utf-8'
+					)
+				).toBe('{"v":2}');
+				const migrated = JSON.parse(await fs.readFile(manifestPath(), 'utf-8'));
+				expect(migrated.version).toBe(2);
+				expect(migrated.stats['problems/two-sum/metadata.json']).toMatch(/^\d+:[\d.]+$/);
+			} finally {
+				cwdSpy.mockRestore();
+			}
+		});
+
+		it('re-seeds a deleted user file even when every hash is cached', async () => {
+			const cwdSpy = vi.spyOn(process, 'cwd').mockReturnValue(bundledRoot);
+			try {
+				await writeBundled('problems/two-sum/metadata.json', '{"v":1}');
+				await reseed();
+				const userFile = path.join(tmpRoot, 'user', 'problems', 'two-sum', 'metadata.json');
+				await fs.rm(path.dirname(userFile), { recursive: true });
+				await reseed();
+				expect(await fs.readFile(userFile, 'utf-8')).toBe('{"v":1}');
+			} finally {
+				cwdSpy.mockRestore();
+			}
+		});
+	});
+
 	describe('Windows conditions', () => {
 		// The Windows desktop bundle is checked out with core.autocrlf, so every
 		// bundled text file is CRLF, while user copies are often LF.
