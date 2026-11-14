@@ -369,6 +369,28 @@ jobs:
           GH_REPO: ${{ github.repository }}
           TAG: v${{ inputs.version }}
           RELEASE_NOTES: |
+            ## Quick install (recommended)
+
+            This is the easiest way to install Cojudge—no macOS `xattr` command, no browser download warnings, and no manual package hunting:
+
+            **macOS / Linux:**
+
+            ```bash
+            curl -fsSL https://raw.githubusercontent.com/cojudge/cojudge/main/install-desktop.sh | sh -s -- v${{ inputs.version }}
+            ```
+
+            **Windows (PowerShell):**
+
+            ```powershell
+            $env:COJUDGE_VERSION='v${{ inputs.version }}'; irm https://raw.githubusercontent.com/cojudge/cojudge/main/install-desktop.ps1 | iex
+            ```
+
+            Or on Windows via `winget`:
+
+            ```powershell
+            winget install -e --id Cojudge.Cojudge
+            ```
+
             ## Automatic updates
 
             Cojudge checks `github.com/cojudge/cojudge/releases` for new versions automatically on startup (desktop only).
@@ -396,20 +418,6 @@ jobs:
 
             ```
             Look at ~/cojudge/README.md, please add this problem: {URL}
-            ```
-
-            ## Quick install
-
-            **macOS / Linux:**
-
-            ```bash
-            curl -fsSL https://raw.githubusercontent.com/cojudge/cojudge/main/install-desktop.sh | sh -s -- v${{ inputs.version }}
-            ```
-
-            **Windows (PowerShell):**
-
-            ```powershell
-            $env:COJUDGE_VERSION='v${{ inputs.version }}'; irm https://raw.githubusercontent.com/cojudge/cojudge/main/install-desktop.ps1 | iex
             ```
 
             ## Linux installation (x86_64)
