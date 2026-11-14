@@ -48,10 +48,15 @@
 
 ## Install
 
-| Platform | Command |
-| --- | --- |
-| macOS / Linux | `curl -fsSL https://raw.githubusercontent.com/cojudge/cojudge/main/install-desktop.sh \| sh` |
-| Windows (PowerShell) | `irm https://raw.githubusercontent.com/cojudge/cojudge/main/install-desktop.ps1 \| iex` |
+macOS / Linux
+```sh
+curl -fsSL https://raw.githubusercontent.com/cojudge/cojudge/main/install-desktop.sh | sh
+```
+
+Windows (PowerShell)
+```powershell
+irm https://raw.githubusercontent.com/cojudge/cojudge/main/install-desktop.ps1 | iex
+```
 
 You also need [Docker](https://docs.docker.com/get-docker/) running to judge code. Browsing problems works without it. Don't have Docker? Try [cojudge.cloud](https://cojudge.cloud) first. More options (CLI-only, from source, containerized) are in [Quickstart](#quickstart).
 
