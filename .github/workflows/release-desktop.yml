@@ -441,7 +441,7 @@ jobs:
 
             Using the `curl` command above avoids browser quarantine, so no `xattr` step is needed.
 
-            If you download the `.dmg` in a browser or install via Homebrew (`brew install --cask cojudge`), the macOS application is ad-hoc signed and not notarized, so after dragging `Cojudge.app` into `/Applications`, run:
+            If you download the `.dmg` in a browser, the macOS application is ad-hoc signed and not notarized, so after dragging `Cojudge.app` into `/Applications`, run:
 
             ```bash
             xattr -dr com.apple.quarantine /Applications/Cojudge.app
