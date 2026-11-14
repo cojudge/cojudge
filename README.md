@@ -50,9 +50,8 @@
 
 | Platform | Command |
 | --- | --- |
-| macOS | `brew tap cojudge/tap && brew install --cask cojudge` |
-| Windows | `winget install -e --id Cojudge.Cojudge` |
-| Linux | `.deb`, `.rpm` or `.AppImage` from [Releases](https://github.com/cojudge/cojudge/releases) |
+| macOS / Linux | `curl -fsSL https://raw.githubusercontent.com/cojudge/cojudge/main/install-desktop.sh \| sh` |
+| Windows (PowerShell) | `irm https://raw.githubusercontent.com/cojudge/cojudge/main/install-desktop.ps1 \| iex` |
 
 You also need [Docker](https://docs.docker.com/get-docker/) running to judge code. Browsing problems works without it. Don't have Docker? Try [cojudge.cloud](https://cojudge.cloud) first. More options (CLI-only, from source, containerized) are in [Quickstart](#quickstart).
 
@@ -84,19 +83,29 @@ You also need [Docker](https://docs.docker.com/get-docker/) running to judge cod
 #### Desktop app
 Desktop builds bundle Node.js; Docker is only required when running, submitting, or debugging code. After installing the app, open the homepage menu and choose **CLI** to put `cojudge` on your PATH (no separate Node.js install).
 
-- **macOS** (Homebrew):
+- **macOS / Linux** (recommended, no Gatekeeper `xattr` needed):
   ```bash
-  brew tap cojudge/tap
-  brew install --cask cojudge
-  xattr -dr com.apple.quarantine /Applications/Cojudge.app
+  curl -fsSL https://raw.githubusercontent.com/cojudge/cojudge/main/install-desktop.sh | sh
   ```
-  The `xattr` step is required on first install (ad-hoc signed, not yet notarized). Update with `brew upgrade --cask cojudge`. Or grab the `.dmg` directly from [GitHub Releases](https://github.com/cojudge/cojudge/releases).
-- **Windows** (winget):
+  On Linux, this installs the `.AppImage` to `~/.local/bin/cojudge-desktop` by default (set `COJUDGE_LINUX_FORMAT=deb` or `rpm` to install system packages instead).
+- **Windows** (PowerShell):
   ```powershell
-  winget install -e --id Cojudge.Cojudge
+  irm https://raw.githubusercontent.com/cojudge/cojudge/main/install-desktop.ps1 | iex
   ```
-  Update with `winget upgrade Cojudge.Cojudge`. Or grab the `-setup.exe` from [GitHub Releases](https://github.com/cojudge/cojudge/releases).
-- **Linux**: download the `.deb`, `.rpm`, or `.AppImage` from [GitHub Releases](https://github.com/cojudge/cojudge/releases) — per-distro install commands are in the release notes.
+- **Alternative package managers / manual downloads**:
+  - **macOS** (Homebrew):
+    ```bash
+    brew tap cojudge/tap
+    brew install --cask cojudge
+    xattr -dr com.apple.quarantine /Applications/Cojudge.app
+    ```
+    The `xattr` step is required for Homebrew / browser `.dmg` installs (ad-hoc signed, not yet notarized). Update with `brew upgrade --cask cojudge`.
+  - **Windows** (winget):
+    ```powershell
+    winget install -e --id Cojudge.Cojudge
+    ```
+    Update with `winget upgrade Cojudge.Cojudge`.
+  - **Manual installers**: `.dmg`, `-setup.exe`, `.deb`, `.rpm`, and `.AppImage` are also attached to [GitHub Releases](https://github.com/cojudge/cojudge/releases).
 
 #### CLI
 If you are not using the desktop app, the easiest way to install the `cojudge` CLI without dealing with NPM permission issues is to run our install script:

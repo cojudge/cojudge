@@ -398,7 +398,23 @@ jobs:
             Look at ~/cojudge/README.md, please add this problem: {URL}
             ```
 
+            ## Quick install
+
+            **macOS / Linux:**
+
+            ```bash
+            curl -fsSL https://raw.githubusercontent.com/cojudge/cojudge/main/install-desktop.sh | sh -s -- v${{ inputs.version }}
+            ```
+
+            **Windows (PowerShell):**
+
+            ```powershell
+            $env:COJUDGE_VERSION='v${{ inputs.version }}'; irm https://raw.githubusercontent.com/cojudge/cojudge/main/install-desktop.ps1 | iex
+            ```
+
             ## Linux installation (x86_64)
+
+            The `curl` command above installs the `.AppImage` to `~/.local/bin/cojudge-desktop` (or set `COJUDGE_LINUX_FORMAT=deb` / `rpm`). Or install manually:
 
             Ubuntu, Debian, and Pop!_OS: download the `.deb` and install it with:
 
@@ -423,7 +439,9 @@ jobs:
 
             ## macOS installation
 
-            The macOS application is ad-hoc signed and is not notarized. After dragging `Cojudge.app` into `/Applications`, this command is required before the first launch:
+            Using the `curl` command above avoids browser quarantine, so no `xattr` step is needed.
+
+            If you download the `.dmg` in a browser or install via Homebrew (`brew install --cask cojudge`), the macOS application is ad-hoc signed and not notarized, so after dragging `Cojudge.app` into `/Applications`, run:
 
             ```bash
             xattr -dr com.apple.quarantine /Applications/Cojudge.app
