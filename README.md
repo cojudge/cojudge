@@ -97,20 +97,13 @@ Desktop builds bundle Node.js; Docker is only required when running, submitting,
   ```powershell
   irm https://raw.githubusercontent.com/cojudge/cojudge/main/install-desktop.ps1 | iex
   ```
-- **Alternative package managers / manual downloads**:
-  - **macOS** (Homebrew):
-    ```bash
-    brew tap cojudge/tap
-    brew install --cask cojudge
-    xattr -dr com.apple.quarantine /Applications/Cojudge.app
-    ```
-    The `xattr` step is required for Homebrew / browser `.dmg` installs (ad-hoc signed, not yet notarized). Update with `brew upgrade --cask cojudge`.
+- **Alternatives / manual downloads**:
   - **Windows** (winget):
     ```powershell
     winget install -e --id Cojudge.Cojudge
     ```
     Update with `winget upgrade Cojudge.Cojudge`.
-  - **Manual installers**: `.dmg`, `-setup.exe`, `.deb`, `.rpm`, and `.AppImage` are also attached to [GitHub Releases](https://github.com/cojudge/cojudge/releases).
+  - **Manual installers**: `.dmg`, `-setup.exe`, `.deb`, `.rpm`, and `.AppImage` are also attached to [GitHub Releases](https://github.com/cojudge/cojudge/releases). On macOS, browser-downloaded `.dmg`s are ad-hoc signed and require `xattr -dr com.apple.quarantine /Applications/Cojudge.app` after dragging to `/Applications`.
 
 #### CLI
 If you are not using the desktop app, the easiest way to install the `cojudge` CLI without dealing with NPM permission issues is to run our install script:
