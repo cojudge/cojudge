@@ -1,44 +1,42 @@
 import {
-    discoverCourses,
-    loadMergedProblemSummaries,
+    loadAllCourses,
+    loadAllProblemSummaries,
     orderProblemsForCourse,
     selectCourse
 } from '$lib/server/courseCatalog';
 import {
     ensureUserContentSeeded,
-    getBundledCoursesDir,
-    getBundledProblemsDir,
     getContentRoot,
     getCourseSources,
-    getCoursesDir,
-    getProblemsDir,
     getProblemSources
 } from '$lib/server/contentPaths';
-import { existsSync } from 'node:fs';
 import type { PageServerLoad } from './$types';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import { getInstalled, pluginForCourse } from '$lib/server/plugins';
+
+/** Packs that used to ship bundled with Cojudge and are now plugins. */
+const MOVED_OUT_PACKS = [
+    { id: 'basic-50', name: 'Basic 50' },
+    { id: 'neetcode-250', name: 'NeetCode 250' },
+    { id: 'leetcode-1000', name: 'LeetCode 1000' }
+];
 import { isExamModeEnabled } from '$lib/server/examMode';
 
-async function resolveContentDir(userDir: string, bundledDir: string): Promise<string> {
-    await ensureUserContentSeeded();
-    return existsSync(userDir) ? userDir : bundledDir;
-}
-
 export const load: PageServerLoad = async ({ url }) => {
-    const coursesDir = await resolveContentDir(getCoursesDir(), getBundledCoursesDir());
-    // Merge user (~/cojudge) and bundled content so newly shipped problems
-    // still appear even before the next seed pass copies them over.
-    const [userCourses, bundledCourses] = await Promise.all([
-        discoverCourses(coursesDir),
-        coursesDir === getBundledCoursesDir() ? Promise.resolve([]) : discoverCourses(getBundledCoursesDir())
-    ]);
-    const courses = [...userCourses];
-    for (const c of bundledCourses) {
-        if (!courses.some((existing) => existing.id === c.id)) courses.push(c);
-    }
-    // Keep LeetCode 1000 (the catch-all archive) as the last tab.
+    // Existing installs (content folder seeded before) that used to get
+    // these packs bundled are offered the plugins once (client dismisses).
+    const isExistingInstall = existsSync(path.join(getContentRoot(), '.cojudge-seed.json'));
+    const suggestedPlugins = isExistingInstall
+        ? MOVED_OUT_PACKS.filter((p) => !getInstalled(p.id))
+        : [];
+    await ensureUserContentSeeded();
+    // Courses from ~/cojudge, enabled plugins and the bundled copy.
+    const courses = await loadAllCourses();
+    // Core courses first, then plugin courses (e.g. the LeetCode 1000 archive).
+    const pluginCourse = new Set(courses.filter((c) => pluginForCourse(c.id)).map((c) => c.id));
     courses.sort((a, b) =>
-        (a.id === 'leetcode-1000' ? 1 : 0) - (b.id === 'leetcode-1000' ? 1 : 0) ||
-        a.id.localeCompare(b.id));
+        Number(pluginCourse.has(a.id)) - Number(pluginCourse.has(b.id)) || a.id.localeCompare(b.id));
     const selectedCourse = selectCourse(courses, url.searchParams.get('course'));
 
     // Single pass over every problem (user copy wins, bundled fills gaps) and
@@ -46,7 +44,7 @@ export const load: PageServerLoad = async ({ url }) => {
     // and are only needed for text search, which fetches them lazily per
     // course from /api/course-statements on the first search keystroke.
     // This load runs on every course-tab navigation, so it must stay lean.
-    const allProblems = await loadMergedProblemSummaries(getProblemsDir(), getBundledProblemsDir());
+    const allProblems = await loadAllProblemSummaries();
     const problems = selectedCourse
         ? orderProblemsForCourse(selectedCourse.info, allProblems)
         : [];
@@ -91,6 +89,7 @@ export const load: PageServerLoad = async ({ url }) => {
         allProblems: allProblemsWithSource,
         // Absolute path of the user-editable content folder (~/cojudge by
         // default), shown in the "Manage Problems" popup.
-        contentDir: getContentRoot()
+        contentDir: getContentRoot(),
+        suggestedPlugins
     };
 };

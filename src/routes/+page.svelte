@@ -1,5 +1,21 @@
 <script lang="ts">
+    import { applyCourseOrder, COURSE_ORDER_STORAGE_KEY, moveCourse, parseCourseOrder } from '$lib/courseOrder';
     export let data;
+
+    // One-time suggestion for installs that used to ship these packs
+    // bundled (Basic 50, LeetCode 1000 are now plugins). Keyed by the set
+    // of suggested packs, so dismissing one set doesn't hide a later one.
+    $: suggestedPlugins = (data.suggestedPlugins ?? []) as { id: string; name: string }[];
+    $: pluginBannerKey = `moved-plugins-banner-dismissed:${suggestedPlugins.map((p) => p.id).join(',')}`;
+    let pluginBannerDismissed = true;
+    let storageReady = false;
+    $: if (storageReady) {
+        try { pluginBannerDismissed = localStorage.getItem(pluginBannerKey) === '1'; } catch { pluginBannerDismissed = false; }
+    }
+    function dismissPluginBanner() {
+        pluginBannerDismissed = true;
+        try { localStorage.setItem(pluginBannerKey, '1'); } catch { /* ignore */ }
+    }
     import { onDestroy, onMount, tick } from "svelte";
     import { marked } from "marked";
     import { browser } from '$app/environment';
@@ -332,6 +348,8 @@
     }
 
     onMount(() => {
+        storageReady = true;
+        try { courseOrder = parseCourseOrder(localStorage.getItem(COURSE_ORDER_STORAGE_KEY)); } catch { /* ignore */ }
         window.addEventListener("click", handleClickOutside);
         if (isDesktopMode) void refreshCliStatus();
         void initializeAppUpdatePreference();
@@ -485,7 +503,40 @@
     let selectedCourseProblems: Problem[] = [];
     let courseDescription = "";
     let categoryOrder: string[] = [];
-    $: courses = (data?.courses ?? []) as CourseSummary[];
+    // User's drag-and-drop tab order (localStorage); default server order until loaded.
+    let courseOrder: string[] = [];
+    $: courses = applyCourseOrder((data?.courses ?? []) as CourseSummary[], courseOrder);
+
+    let draggedCourseId: string | null = null;
+    let dropTarget: { id: string; before: boolean } | null = null;
+
+    function onTabDragStart(event: DragEvent, id: string) {
+        draggedCourseId = id;
+        if (event.dataTransfer) {
+            event.dataTransfer.effectAllowed = 'move';
+            event.dataTransfer.setData('text/plain', id);
+        }
+    }
+    function onTabDragOver(event: DragEvent, id: string) {
+        if (!draggedCourseId) return;
+        event.preventDefault();
+        if (event.dataTransfer) event.dataTransfer.dropEffect = 'move';
+        const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+        const before = event.clientX < rect.left + rect.width / 2;
+        if (dropTarget?.id !== id || dropTarget.before !== before) dropTarget = { id, before };
+    }
+    function onTabDrop(event: DragEvent) {
+        event.preventDefault();
+        if (draggedCourseId && dropTarget) {
+            courseOrder = moveCourse(courses.map((c) => c.id), draggedCourseId, dropTarget.id, dropTarget.before);
+            try { localStorage.setItem(COURSE_ORDER_STORAGE_KEY, JSON.stringify(courseOrder)); } catch { /* ignore */ }
+        }
+        onTabDragEnd();
+    }
+    function onTabDragEnd() {
+        draggedCourseId = null;
+        dropTarget = null;
+    }
     $: selectedCourseId = data?.selectedCourseId ?? null;
     $: selectedCourseProblems = (data?.problems ?? []) as Problem[];
     $: courseDescription = data?.selectedCourseInfo?.description ?? "";
@@ -1532,6 +1583,13 @@
 {/if}
 
 <div class="container">
+    {#if suggestedPlugins.length > 0 && !pluginBannerDismissed && !$page.data.isDemoSite}
+        <div class="plugin-banner" role="status">
+            <span>{new Intl.ListFormat('en', { type: 'conjunction' }).format(suggestedPlugins.map((p) => p.name))} {suggestedPlugins.length > 1 ? 'are now separate plugins' : 'is now a separate plugin'}. Install {suggestedPlugins.length > 1 ? 'them' : 'it'} to get {suggestedPlugins.length > 1 ? 'those courses' : 'the course'} back. Your progress is kept.</span>
+            <a class="plugin-banner-cta" href="/plugins?tab=explore" onclick={dismissPluginBanner}>{suggestedPlugins.length > 1 ? 'Get the plugins' : 'Get the plugin'}</a>
+            <button class="plugin-banner-close" aria-label="Dismiss" onclick={dismissPluginBanner}>×</button>
+        </div>
+    {/if}
     <div class="backup-toolbar">
         <Tooltip text={"Playground"} pos={"bottom"}>
             <a href="playground" class="btn playground-btn" aria-label="Playground">
@@ -1541,6 +1599,16 @@
                 </svg>
             </a>
         </Tooltip>
+        {#if !$page.data.isDemoSite}
+            <Tooltip text={"Plugins"} pos={"bottom"}>
+                <a href="/plugins" class="btn playground-btn" aria-label="Plugins">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block; flex-shrink: 0;">
+                        <path d="M12 2v6M8 4v4M16 4v4M6 8h12v4a6 6 0 0 1-12 0z"></path>
+                        <line x1="12" y1="18" x2="12" y2="22"></line>
+                    </svg>
+                </a>
+            </Tooltip>
+        {/if}
         <div class="dropdown-container" bind:this={dropdownRef}>
             <button
                 bind:this={dropdownToggleButton}
@@ -2257,6 +2325,15 @@
                 class="tab"
                 class:active={!showBookmarks && course.id === selectedCourseId}
                 class:pending={isTabPending(course.id)}
+                class:dragging={draggedCourseId === course.id}
+                class:drop-before={dropTarget?.id === course.id && dropTarget.before && draggedCourseId !== course.id}
+                class:drop-after={dropTarget?.id === course.id && !dropTarget.before && draggedCourseId !== course.id}
+                draggable="true"
+                title="Drag to reorder"
+                ondragstart={(e) => onTabDragStart(e, course.id)}
+                ondragover={(e) => onTabDragOver(e, course.id)}
+                ondrop={onTabDrop}
+                ondragend={onTabDragEnd}
                 href={`/?course=${encodeURIComponent(course.id)}`}
                 aria-current={!showBookmarks && course.id === selectedCourseId ? "page" : undefined}
                 aria-disabled={isTabPending(course.id) ? 'true' : undefined}
@@ -2687,6 +2764,33 @@
         min-width: 220px;
         display: flex;
         flex-direction: column;
+    }
+    .plugin-banner {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.6rem 0.9rem;
+        margin-bottom: 0.75rem;
+        border: 1px solid var(--color-highlight);
+        border-radius: var(--border-radius-sm);
+        background: var(--color-surface);
+        font-size: 0.9rem;
+    }
+    .plugin-banner span { flex: 1; }
+    .plugin-banner-cta {
+        color: var(--color-primary-text);
+        background: var(--color-primary);
+        padding: 0.3rem 0.7rem;
+        border-radius: var(--border-radius-sm);
+        text-decoration: none;
+        white-space: nowrap;
+    }
+    .plugin-banner-close {
+        background: none;
+        border: none;
+        color: var(--color-text-secondary);
+        font-size: 1.2rem;
+        cursor: pointer;
     }
     .dropdown-item {
         background: transparent;
@@ -3622,6 +3726,22 @@
     .import-toast.error {
         border-left-color: var(--color-hard);
     }
+    .tab.dragging {
+        opacity: 0.4;
+    }
+    /* ::before only: .tab.active already uses ::after. */
+    .tab.drop-before::before,
+    .tab.drop-after::before {
+        content: '';
+        position: absolute;
+        top: 20%;
+        bottom: 20%;
+        width: 2px;
+        border-radius: 1px;
+        background: var(--color-highlight);
+    }
+    .tab.drop-before::before { left: -1px; }
+    .tab.drop-after::before { right: -1px; }
     .tab {
         position: relative;
         display: inline-flex;

@@ -23,6 +23,8 @@ Only `statement.md`, `metadata.json`, `official-tests.json`, and `Marker.java` a
 
 After creating the problem files, register it in `~/cojudge/courses/blind75/courseinfo.json`.
 
+> Problems for the LeetCode 1000 pack (or any other pack) belong in that pack's repo, not here. See [`PLUGINS.md`](PLUGINS.md).
+
 > Contributing to the repo itself? Edit `problems/` / `courses/` in the repo — those are the seed contents that get copied to `~/cojudge` on first start.
 
 ---

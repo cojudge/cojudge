@@ -5,6 +5,7 @@ import { startServer } from "../server.js";
 import { markProblem } from "../progress.js";
 import {
   ensureUserContentSeededSync,
+  resolveProblemArgSync,
   resolveProblemDirSync,
 } from "../contentPaths.js";
 
@@ -17,7 +18,14 @@ export async function handleSubmit(argsToUse, PORT) {
     process.exit(1);
   }
 
-  const slug = argsToUse[1];
+  let slug = argsToUse[1];
+  try {
+    slug = resolveProblemArgSync(slug);
+  } catch (e) {
+    console.error(`Error: ${e.message}`);
+    process.exitCode = 1;
+    return;
+  }
   const filename = argsToUse[2];
 
   if (slug === '-h' || slug === '--help') {

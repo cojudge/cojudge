@@ -7,7 +7,7 @@
 
 <h1 align="center">Cojudge</h1>
 
-<p align="center"><b>1,000+ problems · 8 languages · offline</b></p>
+<p align="center"><b>151 built-in problems · installable problem packs · 8 languages · offline</b></p>
 
 <p align="center">Practice coding interviews with a local judge. No AI assistant, no discussion forum, no internet. Just you, the problem and the judge.</p>
 
@@ -19,31 +19,69 @@
 </p>
 
 
-<table>
-  <tr>
-    <td width="50%" align="center" valign="middle"><img src="screenshots/ide.gif" alt="Editor and visualizer demo" width="100%"></td>
-    <td width="50%" align="center" valign="middle"><img src="docs/media/demo-cli.gif" alt="cojudge init, run and submit in a terminal" width="100%"></td>
-  </tr>
-</table>
-<p align="center"> Two ways to practice, one platform, zero internet. </p>
+<p align="center">
+  <img src="screenshots/ide.gif" alt="Cojudge editor and visualizer demo" width="900">
+</p>
 
-<p align="center"><a href="https://cojudge.cloud"><b>Try the demo at cojudge.cloud</b></a> · <a href="#install">Install</a> · <a href="#highlights">Highlights</a></p>
+<p align="center"><a href="https://cojudge.cloud"><b>Try the demo at cojudge.cloud</b></a> · <a href="#install">Install</a> · <a href="#features">Features</a> · <a href="#highlights">Highlights</a></p>
 
 ## Why Cojudge
 
 - **Honest practice.** Nothing to reach for when a problem gets hard: no AI, no hints tab, no solutions forum (until you open the reference solution yourself).
 - **Works anywhere.** On a plane, on a train, on a locked-down network, or with Wi-Fi off on purpose. Everything runs on your machine.
-- **A real judge.** 1,000+ problems with sample tests, hidden tests and reference solutions, judged in Docker sandboxes, with a step debugger and a visualizer. All problems are tested for all programming languages we support
+- **A real judge.** 151 built-in problems (plus more from [problem packs](#problem-packs-plugins)) with sample tests, hidden tests and reference solutions, judged in Docker sandboxes, with a step debugger and a visualizer. All problems are tested for all programming languages we support
 - **Free and open source.** MIT-licensed. Your code and progress stay local.
 
 
-## Screenshots
+## Features
 
-|![Web UI](/screenshots/problem.png) | ![CLI](/screenshots/cli.png) |
-|:---:|:---:|
-| Problem view | CLI |
-|![Progress Tracker](/screenshots/progresstracker.png) | ![Debugger](/screenshots/debugger.png) |
-| Progress tracker | Debugger |
+<table>
+<tr>
+<td width="40%" valign="middle">
+<h3>Problem view</h3>
+Statement, examples and hints on the left; an editor for 8 languages on the right. Run the sample tests or submit against the hidden ones, judged in a Docker sandbox on your machine.
+</td>
+<td width="60%">
+<img src="screenshots/problem.png" alt="Problem view" width="100%" />
+</td>
+</tr>
+<tr>
+<td width="40%" valign="middle">
+<h3>Debugger</h3>
+Step through your solution line by line in any of the 8 languages, with a data-structure visualizer.
+</td>
+<td width="60%">
+<img src="screenshots/debugger.png" alt="Debugger" width="100%" />
+</td>
+</tr>
+<tr>
+<td width="40%" valign="middle">
+<h3>CLI</h3>
+Prefer your own editor? <code>cojudge init</code> writes the starter code; <code>cojudge run</code> and <code>cojudge submit</code> judge it from the terminal.
+</td>
+<td width="60%">
+<img src="screenshots/cli.png" alt="cojudge CLI" width="100%" />
+</td>
+</tr>
+<tr>
+<td width="40%" valign="middle">
+<h3>Progress tracker</h3>
+Courses grouped by pattern, with solved counts per category, bookmarks and search across problem titles and statements.
+</td>
+<td width="60%">
+<img src="screenshots/progresstracker.png" alt="Progress tracker" width="100%" />
+</td>
+</tr>
+<tr>
+<td width="40%" valign="middle">
+<h3>Problem packs (plugins)</h3>
+Add problems and courses from any GitHub repo, public or private: <code>cojudge plugin install leetcode-1000</code>, or one click on the Plugins page. Enable, disable, upgrade or remove packs at any time; installed packs work offline. <a href="#problem-packs-plugins">More</a>
+</td>
+<td width="60%">
+<img src="screenshots/plugins.jpg" alt="Plugins page" width="100%" />
+</td>
+</tr>
+</table>
 
 
 ## Install
@@ -62,7 +100,8 @@ You also need [Docker](https://docs.docker.com/get-docker/) running to judge cod
 
 ## Highlights
 
-- **1,031 problems**, each with sample tests, hidden tests and a reference solution, organized into packs: Blind 75, NeetCode 150, NeetCode 250, Basic 50 and a 1,000-problem pack
+- **151 built-in problems** in two courses (Blind 75, NeetCode 150), each with sample tests, hidden tests and a reference solution
+- **Problem packs (plugins)**: add more problems and courses from any GitHub repo, public or private, with `cojudge plugin` or the in-app Plugins page. Official packs: [Basic 50](https://github.com/cojudge/basic-50) for beginners, [NeetCode 250](https://github.com/cojudge/neetcode-250) and the 950-problem [LeetCode 1000](https://github.com/cojudge/leetcode-1000). Installed packs work offline. See [Problem packs](#problem-packs-plugins)
 - **8 languages for every problem**: Java, C++, Python, TypeScript, Rust, C#, Go and PHP
 - **Debugger** for all 8 languages, plus a data-structure visualizer
 - **Custom test cases**: add your own inputs and compare the expected output with yours
@@ -72,7 +111,7 @@ You also need [Docker](https://docs.docker.com/get-docker/) running to judge cod
 - **Code playground**: run snippets in any of the 8 languages without a problem
 - **Progress tracking** and browser-like tabs for your solutions, stored locally
 - **Optional cloud sync** through Google sign-in; local storage stays the source of truth offline
-- **Extensible**: add problems by dropping folders into `~/cojudge/problems/`
+- **Extensible**: add problems by dropping folders into `~/cojudge/problems/`, or publish your own pack as a GitHub repo
 
 *Cojudge is a practice judge with a curated set of tests, not a replacement for a full online judge. Practice offline, then run a full submission online when you're ready.*
 
@@ -142,6 +181,12 @@ cojudge
 | `cojudge submit <slug> <file>`| Submit code for a problem from CLI (require running Docker) |
 | `cojudge run <file>` | Run a playground file from CLI (require running Docker) |
 | `cojudge list` | List all available problem slugs |
+| `cojudge plugin search [keyword]` | Browse the problem-pack catalog |
+| `cojudge plugin install <id\|owner/repo>` | Install a problem pack (catalog id, GitHub repo, URL or local folder) |
+| `cojudge plugin list` | List installed packs |
+| `cojudge plugin enable\|disable <id>` | Show or hide a pack without removing it |
+| `cojudge plugin upgrade [id]` | Update packs from their source |
+| `cojudge plugin uninstall <id>` | Remove a pack (your progress is kept) |
 | `cojudge mark <slug>` | Mark a problem as solved |
 | `cojudge unmark <slug>` | Unmark a problem as solved |
 | `cojudge -p, --port <port>` | Start server on specific port (default 5375) |
@@ -214,6 +259,22 @@ npm install
 npm run dev
 ```
 
+## Problem packs (plugins)
+
+Cojudge ships 151 problems (Blind 75 and NeetCode 150). Packs add more problems and courses:
+
+```bash
+cojudge plugin search                  # browse the catalog
+cojudge plugin install basic-50        # 50 beginner problems: if/else, loops, arrays, strings, recursion
+cojudge plugin install neetcode-250    # NeetCode 150 plus 100 more
+cojudge plugin install leetcode-1000   # 950-problem archive grouped by pattern
+cojudge plugin install owner/repo      # any GitHub repo, including private ones (after `gh auth login` or with GH_TOKEN)
+```
+
+You can also use the **Plugins** page (plug icon next to the Playground button) to browse, install, enable, disable or remove packs. Packs are downloaded once and then work offline. Packs can't clobber each other: problems with the same slug in different packs are kept apart.
+
+To write and publish your own pack, see [`docs/PLUGINS.md`](docs/PLUGINS.md). To list it in the catalog, open a PR to [`cojudge/plugins`](https://github.com/cojudge/plugins).
+
 ## Add a problem
 
 Local content lives in `~/cojudge` (auto-seeded from the repo's bundled `problems/` + `courses/` on first start; your copy overrides bundled content — edit / add / delete files there, changes apply immediately). Unedited copies auto-update when Cojudge ships fixes; your edits are never overwritten (reset stale "Modified" items in Manage Problems or via `cojudge sync --reset <id>`). Override the location with `COJUDGE_CONTENT_DIR`.
@@ -228,7 +289,7 @@ See [`docs/ADD_PROBLEMS.md`](docs/ADD_PROBLEMS.md) for a comprehensive guide cov
 - Registration in `~/cojudge/courses/blind75/courseinfo.json`
 - Verification checklist (`cojudge init`/`run`/`submit`)
 
-Refer to `~/cojudge/problems/two-sum` (seeded from `problems/two-sum`) for a minimal example.
+Refer to `~/cojudge/problems/two-sum` (seeded from `problems/two-sum`) for a minimal example. To share a set of problems with others, package them as a [problem pack](#problem-packs-plugins).
 
 #### Note on problems
 

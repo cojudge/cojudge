@@ -1,20 +1,15 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import {
-    discoverCourses,
-    loadMergedProblemSummaries,
+    loadAllCourses,
+    loadAllProblemSummaries,
     type ProblemSummary
 } from '$lib/server/courseCatalog';
 import {
     ensureUserContentSeeded,
-    getBundledCoursesDir,
-    getBundledProblemsDir,
     getCourseSources,
-    getCoursesDir,
-    getProblemsDir,
     getProblemSources
 } from '$lib/server/contentPaths';
-import { existsSync } from 'node:fs';
 import { isExamModeEnabled } from '$lib/server/examMode';
 
 /**
@@ -30,18 +25,7 @@ export const GET: RequestHandler = async () => {
     }
     try {
         await ensureUserContentSeeded();
-        const coursesDir = existsSync(getCoursesDir()) ? getCoursesDir() : getBundledCoursesDir();
-        const [userCourses, bundledCourses, allProblems] = await Promise.all([
-            discoverCourses(coursesDir),
-            coursesDir === getBundledCoursesDir()
-                ? Promise.resolve([])
-                : discoverCourses(getBundledCoursesDir()),
-            loadMergedProblemSummaries(getProblemsDir(), getBundledProblemsDir())
-        ]);
-        const courses = [...userCourses];
-        for (const c of bundledCourses) {
-            if (!courses.some((existing) => existing.id === c.id)) courses.push(c);
-        }
+        const [courses, allProblems] = await Promise.all([loadAllCourses(), loadAllProblemSummaries()]);
         const [courseSources, problemSources] = await Promise.all([
             getCourseSources(courses.map((course) => course.id)),
             getProblemSources(allProblems.map((problem: ProblemSummary) => problem.id))

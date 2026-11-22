@@ -4,6 +4,7 @@ import { getPIDs, getLangFromExt, isDockerRunning } from "../utils.js";
 import { startServer } from "../server.js";
 import {
   ensureUserContentSeededSync,
+  resolveProblemArgSync,
   resolveProblemDirSync,
   resolveProblemFileSync,
 } from "../contentPaths.js";
@@ -104,6 +105,13 @@ export async function handleRun(argsToUse, PORT) {
     process.exit(1);
   }
 
+  try {
+    slug = resolveProblemArgSync(slug);
+  } catch (e) {
+    console.error(`Error: ${e.message}`);
+    process.exitCode = 1;
+    return;
+  }
   let problemId = slug;
   let isPlayground = slug === "playground";
   let testCases = [];

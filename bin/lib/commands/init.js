@@ -2,13 +2,21 @@ import fs from "fs";
 import { getParam } from "../utils.js";
 import {
   ensureUserContentSeededSync,
+  resolveProblemArgSync,
   resolveProblemDirSync,
   resolveProblemFileSync,
 } from "../contentPaths.js";
 
 export function handleInit(argsToUse) {
   ensureUserContentSeededSync();
-  const slug = argsToUse[1];
+  let slug = argsToUse[1];
+  try {
+    slug = resolveProblemArgSync(slug);
+  } catch (e) {
+    console.error(`Error: ${e.message}`);
+    process.exitCode = 1;
+    return;
+  }
   if (!slug) {
     console.error("Usage: cojudge init <slug> [--lang <language>] [--output <filename>]");
     process.exit(1);

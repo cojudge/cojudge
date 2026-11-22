@@ -4,6 +4,13 @@ import { existsSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { readDerivedCached } from './textFileCache';
+import {
+	enabledPlugins,
+	listProblemIds,
+	pluginForCourse,
+	problemDirCandidates,
+	qualifyCourseEntry
+} from './plugins';
 
 /**
  * User-editable content lives in ~/cojudge (overridable via
@@ -54,92 +61,110 @@ function isSafeSegment(segment: string): boolean {
 	);
 }
 
-/** Prefer the user copy; fall back to the bundled copy. */
-export function resolveProblemDirSync(slug: string): string {
-	const userDir = path.join(getProblemsDir(), slug);
-	try {
-		if (existsSync(userDir)) return userDir;
-	} catch {
-		// ignore and fall back
-	}
-	return path.join(getBundledProblemsDir(), slug);
-}
-
-/** Prefer the user copy; fall back to the bundled copy. */
-export async function resolveProblemDir(slug: string): Promise<string> {
-	const userDir = path.join(getProblemsDir(), slug);
-	try {
-		await fs.access(userDir);
-		return userDir;
-	} catch {
-		return path.join(getBundledProblemsDir(), slug);
-	}
+function idOpts() {
+	return { userProblemsDir: getProblemsDir(), bundledProblemsDir: getBundledProblemsDir() };
 }
 
 /**
- * Resolve a file inside a problem dir, preferring ~/cojudge and falling
- * back to the bundled repo copy. Returns the first path that exists, or
- * the user path (for a useful error message) when neither exists.
+ * Candidate dirs for a problem id (`slug` or `<plugin>/<slug>`), most
+ * preferred first: the user edit, then the bundled / plugin copies. Null for
+ * malformed ids and ids of plugins that are not installed + enabled.
  */
-export function resolveProblemFileSync(slug: string, ...rest: string[]): string {
-	for (const segment of [slug, ...rest]) {
-		if (!isSafeSegment(segment) && segment !== rest[rest.length - 1]) {
-			// Slugs and intermediate segments must be safe; the leaf file
-			// name is still basename-guarded below by join semantics.
+function problemDirs(id: string): string[] | null {
+	const c = problemDirCandidates(id, idOpts());
+	return c ? [c.user, ...c.bases] : null;
+}
+
+const INVALID_DIR = () => path.join(getProblemsDir(), '@invalid');
+
+function firstExistingSync(paths: string[]): string | null {
+	for (const p of paths) {
+		try {
+			if (existsSync(p)) return p;
+		} catch {
+			// ignore
 		}
 	}
-	const userPath = path.join(getProblemsDir(), slug, ...rest);
-	try {
-		if (existsSync(userPath)) return userPath;
-	} catch {
-		// ignore
-	}
-	const bundledPath = path.join(getBundledProblemsDir(), slug, ...rest);
-	try {
-		if (existsSync(bundledPath)) return bundledPath;
-	} catch {
-		// ignore
-	}
-	return userPath;
+	return null;
 }
 
-export async function resolveProblemFile(slug: string, ...rest: string[]): Promise<string> {
-	const userPath = path.join(getProblemsDir(), slug, ...rest);
-	try {
-		await fs.access(userPath);
-		return userPath;
-	} catch {
-		// fall through to bundled
+async function firstExisting(paths: string[]): Promise<string | null> {
+	for (const p of paths) {
+		try {
+			await fs.access(p);
+			return p;
+		} catch {
+			// try next
+		}
 	}
-	const bundledPath = path.join(getBundledProblemsDir(), slug, ...rest);
-	try {
-		await fs.access(bundledPath);
-		return bundledPath;
-	} catch {
-		return userPath;
-	}
+	return null;
 }
 
-/** Read a problem file from ~/cojudge first, then the bundled copy. */
-export async function readProblemFile(slug: string, file: string): Promise<string> {
-	const filePath = await resolveProblemFile(slug, file);
+/** Prefer the user copy, then the bundled / plugin copy. */
+export function resolveProblemDirSync(id: string): string {
+	const dirs = problemDirs(id);
+	if (!dirs) return INVALID_DIR();
+	return firstExistingSync(dirs) ?? dirs[dirs.length - 1];
+}
+
+/** Prefer the user copy, then the bundled / plugin copy. */
+export async function resolveProblemDir(id: string): Promise<string> {
+	const dirs = problemDirs(id);
+	if (!dirs) return INVALID_DIR();
+	return (await firstExisting(dirs)) ?? dirs[dirs.length - 1];
+}
+
+/**
+ * Resolve a file inside a problem dir, preferring ~/cojudge and falling back
+ * to the bundled / plugin copy. Returns the first path that exists, or the
+ * user path (for a useful error message) when none exists.
+ */
+export function resolveProblemFileSync(id: string, ...rest: string[]): string {
+	const dirs = problemDirs(id);
+	if (!dirs) return path.join(INVALID_DIR(), ...rest);
+	const files = dirs.map((d) => path.join(d, ...rest));
+	return firstExistingSync(files) ?? files[0];
+}
+
+export async function resolveProblemFile(id: string, ...rest: string[]): Promise<string> {
+	const dirs = problemDirs(id);
+	if (!dirs) return path.join(INVALID_DIR(), ...rest);
+	const files = dirs.map((d) => path.join(d, ...rest));
+	return (await firstExisting(files)) ?? files[0];
+}
+
+/** Read a problem file from ~/cojudge first, then the bundled / plugin copy. */
+export async function readProblemFile(id: string, file: string): Promise<string> {
+	const filePath = await resolveProblemFile(id, file);
 	return fs.readFile(filePath, 'utf-8');
 }
 
+/** Course dirs in precedence order: user, enabled plugins, bundled. */
+export function getCourseDirLayers(): string[] {
+	return [getCoursesDir(), ...enabledPlugins().map((p) => p.courses), getBundledCoursesDir()];
+}
+
 export function resolveCourseFileSync(courseId: string, ...rest: string[]): string {
-	const userPath = path.join(getCoursesDir(), courseId, ...rest);
-	try {
-		if (existsSync(userPath)) return userPath;
-	} catch {
-		// ignore
+	const files = getCourseDirLayers().map((d) => path.join(d, courseId, ...rest));
+	return firstExistingSync(files) ?? files[0];
+}
+
+/**
+ * Qualify a course's problem references to full ids: if an enabled plugin
+ * ships this course, its bare entries resolve to the plugin's own problems
+ * first, then core.
+ */
+export function qualifyCourseProblems<T extends { 'problems-of-category': Record<string, string[]> }>(
+	courseId: string,
+	info: T
+): T {
+	const plugin = pluginForCourse(courseId);
+	if (!plugin) return info;
+	const mapping: Record<string, string[]> = {};
+	for (const [cat, ids] of Object.entries(info['problems-of-category'])) {
+		mapping[cat] = ids.map((id) => qualifyCourseEntry(id, plugin));
 	}
-	const bundledPath = path.join(getBundledCoursesDir(), courseId, ...rest);
-	try {
-		if (existsSync(bundledPath)) return bundledPath;
-	} catch {
-		// ignore
-	}
-	return userPath;
+	return { ...info, 'problems-of-category': mapping };
 }
 
 /**
@@ -215,18 +240,18 @@ async function compareDirToBundled(
 	return comparisons.every(Boolean) ? 'bundled' : 'modified';
 }
 
-export function getProblemSource(slug: string): Promise<ContentSource> {
-	return compareDirToBundled(
-		path.join(getProblemsDir(), slug),
-		path.join(getBundledProblemsDir(), slug),
-		PROBLEM_COMPARE_FILES
-	);
+export function getProblemSource(id: string): Promise<ContentSource> {
+	const c = problemDirCandidates(id, idOpts());
+	if (!c) return Promise.resolve('custom');
+	const base = firstExistingSync(c.bases) ?? c.bases[0];
+	return compareDirToBundled(c.user, base, PROBLEM_COMPARE_FILES);
 }
 
 export function getCourseSource(courseId: string): Promise<ContentSource> {
+	const plugin = pluginForCourse(courseId);
 	return compareDirToBundled(
 		path.join(getCoursesDir(), courseId),
-		path.join(getBundledCoursesDir(), courseId),
+		path.join(plugin ? plugin.courses : getBundledCoursesDir(), courseId),
 		COURSE_COMPARE_FILES
 	);
 }
@@ -241,26 +266,15 @@ export async function getCourseSources(ids: string[]): Promise<Record<string, Co
 	return Object.fromEntries(entries);
 }
 
-/** Union of problem slugs from ~/cojudge and the bundled copy (user wins). */
+/** Every problem id: core, unprefixed plugin slugs and `<plugin>/<slug>`. */
 export async function listProblemSlugs(): Promise<string[]> {
-	const seen = new Set<string>();
-	for (const dir of [getProblemsDir(), getBundledProblemsDir()]) {
-		try {
-			const entries = await fs.readdir(dir, { withFileTypes: true });
-			for (const entry of entries) {
-				if (entry.isDirectory()) seen.add(entry.name);
-			}
-		} catch {
-			// missing dir is fine
-		}
-	}
-	return [...seen].sort();
+	return listProblemIds(idOpts());
 }
 
-/** Union of course ids from ~/cojudge and the bundled copy. */
+/** Union of course ids from ~/cojudge, enabled plugins and the bundled copy. */
 export async function listCourseIds(): Promise<string[]> {
 	const seen = new Set<string>();
-	for (const dir of [getCoursesDir(), getBundledCoursesDir()]) {
+	for (const dir of getCourseDirLayers()) {
 		try {
 			const entries = await fs.readdir(dir, { withFileTypes: true });
 			for (const entry of entries) {

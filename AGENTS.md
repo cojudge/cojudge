@@ -18,6 +18,10 @@ When asked to add a new problem, follow the detailed guide in [`docs/ADD_PROBLEM
 
 Note: for repo contributions, edit `problems/` / `courses/` in the repo; at runtime the server and CLI read from `~/cojudge` first with the bundled copy as fallback. Override with `COJUDGE_CONTENT_DIR`.
 
+## Plugins (problem packs)
+
+Problem packs such as Basic 50 (`cojudge/basic-50`), NeetCode 250 (`cojudge/neetcode-250`) and LeetCode 1000 (`cojudge/leetcode-1000`) live in their own repos and are installed with `cojudge plugin install <id|owner/repo>`. See [`docs/PLUGINS.md`](docs/PLUGINS.md) for the format, id rules and lookup order. Shared code: `bin/lib/plugins.js`, which both the CLI and the server use (`src/lib/server/plugins.ts`).
+
 ## Adding Languages
 
 Please refer to `docs/ADD_LANGUAGE.md`

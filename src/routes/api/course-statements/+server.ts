@@ -3,6 +3,7 @@ import type { RequestHandler } from './$types';
 import { parseCourseInfo } from '$lib/server/courseCatalog';
 import {
     ensureUserContentSeeded,
+    qualifyCourseProblems,
     readProblemFile,
     resolveCourseFileSync
 } from '$lib/server/contentPaths';
@@ -31,6 +32,7 @@ export const GET: RequestHandler = async ({ url }) => {
         }
         if (!info) return json({ error: `Unknown course '${courseId}'` }, { status: 404 });
 
+        info = qualifyCourseProblems(courseId, info);
         const ids = [...new Set(Object.values(info['problems-of-category']).flat())];
         const entries = await Promise.all(
             ids.map(async (id) => {
