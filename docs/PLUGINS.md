@@ -24,7 +24,11 @@ with no restart.
 
 - GitHub installs download the **latest release** tarball. If the repo has no
   releases, they download the default branch.
-- Private repos use `GH_TOKEN` / `GITHUB_TOKEN`, or `gh auth token`.
+- **Private repos work.** The installer authenticates with `GH_TOKEN` /
+  `GITHUB_TOKEN` if set, else `gh auth token` (so `gh auth login` once is
+  enough). This works for the CLI and the web UI: the server process does the
+  download. Without auth GitHub reports a private repo as not found, and the
+  error says to log in.
 - Installed packs live in `~/cojudge/plugins/<id>/` (override with
   `COJUDGE_PLUGINS_DIR`). `install.json` records the source, version and
   enabled state.

@@ -192,7 +192,12 @@ async function resolveGithubTarball({ owner, repo, ref }) {
     throw new Error(`GitHub API error ${rel.status} for ${owner}/${repo}`);
   }
   const info = await ghFetch(base);
-  if (!info.ok) throw new Error(`Repository ${owner}/${repo} not found (HTTP ${info.status})`);
+  if (!info.ok) {
+    const hint = info.status === 404 && !githubToken()
+      ? ". If it is private, run `gh auth login` or set GH_TOKEN"
+      : "";
+    throw new Error(`Repository ${owner}/${repo} not found (HTTP ${info.status})${hint}`);
+  }
   return { url: `${base}/tarball`, label: "default branch" };
 }
 
