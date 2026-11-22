@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { applyCourseOrder, COURSE_ORDER_STORAGE_KEY, moveCourse, parseCourseOrder } from '$lib/courseOrder';
     export let data;
 
     // One-time suggestion for installs that used to ship these packs
@@ -348,6 +349,7 @@
 
     onMount(() => {
         storageReady = true;
+        try { courseOrder = parseCourseOrder(localStorage.getItem(COURSE_ORDER_STORAGE_KEY)); } catch { /* ignore */ }
         window.addEventListener("click", handleClickOutside);
         if (isDesktopMode) void refreshCliStatus();
         void initializeAppUpdatePreference();
@@ -501,7 +503,40 @@
     let selectedCourseProblems: Problem[] = [];
     let courseDescription = "";
     let categoryOrder: string[] = [];
-    $: courses = (data?.courses ?? []) as CourseSummary[];
+    // User's drag-and-drop tab order (localStorage); default server order until loaded.
+    let courseOrder: string[] = [];
+    $: courses = applyCourseOrder((data?.courses ?? []) as CourseSummary[], courseOrder);
+
+    let draggedCourseId: string | null = null;
+    let dropTarget: { id: string; before: boolean } | null = null;
+
+    function onTabDragStart(event: DragEvent, id: string) {
+        draggedCourseId = id;
+        if (event.dataTransfer) {
+            event.dataTransfer.effectAllowed = 'move';
+            event.dataTransfer.setData('text/plain', id);
+        }
+    }
+    function onTabDragOver(event: DragEvent, id: string) {
+        if (!draggedCourseId) return;
+        event.preventDefault();
+        if (event.dataTransfer) event.dataTransfer.dropEffect = 'move';
+        const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+        const before = event.clientX < rect.left + rect.width / 2;
+        if (dropTarget?.id !== id || dropTarget.before !== before) dropTarget = { id, before };
+    }
+    function onTabDrop(event: DragEvent) {
+        event.preventDefault();
+        if (draggedCourseId && dropTarget) {
+            courseOrder = moveCourse(courses.map((c) => c.id), draggedCourseId, dropTarget.id, dropTarget.before);
+            try { localStorage.setItem(COURSE_ORDER_STORAGE_KEY, JSON.stringify(courseOrder)); } catch { /* ignore */ }
+        }
+        onTabDragEnd();
+    }
+    function onTabDragEnd() {
+        draggedCourseId = null;
+        dropTarget = null;
+    }
     $: selectedCourseId = data?.selectedCourseId ?? null;
     $: selectedCourseProblems = (data?.problems ?? []) as Problem[];
     $: courseDescription = data?.selectedCourseInfo?.description ?? "";
@@ -2290,6 +2325,15 @@
                 class="tab"
                 class:active={!showBookmarks && course.id === selectedCourseId}
                 class:pending={isTabPending(course.id)}
+                class:dragging={draggedCourseId === course.id}
+                class:drop-before={dropTarget?.id === course.id && dropTarget.before && draggedCourseId !== course.id}
+                class:drop-after={dropTarget?.id === course.id && !dropTarget.before && draggedCourseId !== course.id}
+                draggable="true"
+                title="Drag to reorder"
+                ondragstart={(e) => onTabDragStart(e, course.id)}
+                ondragover={(e) => onTabDragOver(e, course.id)}
+                ondrop={onTabDrop}
+                ondragend={onTabDragEnd}
                 href={`/?course=${encodeURIComponent(course.id)}`}
                 aria-current={!showBookmarks && course.id === selectedCourseId ? "page" : undefined}
                 aria-disabled={isTabPending(course.id) ? 'true' : undefined}
@@ -3682,6 +3726,22 @@
     .import-toast.error {
         border-left-color: var(--color-hard);
     }
+    .tab.dragging {
+        opacity: 0.4;
+    }
+    /* ::before only: .tab.active already uses ::after. */
+    .tab.drop-before::before,
+    .tab.drop-after::before {
+        content: '';
+        position: absolute;
+        top: 20%;
+        bottom: 20%;
+        width: 2px;
+        border-radius: 1px;
+        background: var(--color-highlight);
+    }
+    .tab.drop-before::before { left: -1px; }
+    .tab.drop-after::before { right: -1px; }
     .tab {
         position: relative;
         display: inline-flex;
