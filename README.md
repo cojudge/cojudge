@@ -29,7 +29,7 @@
 
 - **Honest practice.** Nothing to reach for when a problem gets hard: no AI, no hints tab, no solutions forum (until you open the reference solution yourself).
 - **Works anywhere.** On a plane, on a train, on a locked-down network, or with Wi-Fi off on purpose. Everything runs on your machine.
-- **A real judge.** 151 built-in problems (plus more from [problem packs](#problem-packs-plugins)) with sample tests, hidden tests and reference solutions, judged in Docker sandboxes, with a step debugger and a visualizer. All problems are tested for all programming languages we support
+- **A real judge.** 151 built-in problems (plus more from [problem packs](https://github.com/cojudge/plugins)) with sample tests, hidden tests and reference solutions, judged in Docker sandboxes, with a step debugger and a visualizer. All problems are tested for all programming languages we support
 - **Free and open source.** MIT-licensed. Your code and progress stay local.
 
 
@@ -75,7 +75,7 @@ Courses grouped by pattern, with solved counts per category, bookmarks and searc
 <tr>
 <td width="40%" valign="middle">
 <h3>Problem packs (plugins)</h3>
-Add problems and courses from any GitHub repo, public or private: <code>cojudge plugin install leetcode-1000</code>, or one click on the Plugins page. Enable, disable, upgrade or remove packs at any time; installed packs work offline. <a href="#problem-packs-plugins">More</a>
+Add problems and courses from any GitHub repo, public or private: <code>cojudge plugin install leetcode-1000</code>, or one click on the Plugins page. Enable, disable, upgrade or remove packs at any time; installed packs work offline. <a href="https://github.com/cojudge/plugins#create-your-own-problem-set">Create your own</a>
 </td>
 <td width="60%">
 <img src="screenshots/plugins.jpg" alt="Plugins page" width="100%" />
@@ -101,7 +101,7 @@ You also need [Docker](https://docs.docker.com/get-docker/) running to judge cod
 ## Highlights
 
 - **151 built-in problems** in two courses (Blind 75, NeetCode 150), each with sample tests, hidden tests and a reference solution
-- **Problem packs (plugins)**: add more problems and courses from any GitHub repo, public or private, with `cojudge plugin` or the in-app Plugins page. Official packs: [Basic 50](https://github.com/cojudge/basic-50) for beginners, [NeetCode 250](https://github.com/cojudge/neetcode-250) and the 950-problem [LeetCode 1000](https://github.com/cojudge/leetcode-1000). Installed packs work offline. See [Problem packs](#problem-packs-plugins)
+- **Problem packs (plugins)**: add more problems and courses from any GitHub repo, public or private, with `cojudge plugin` or the in-app Plugins page. Official packs: [Basic 50](https://github.com/cojudge/basic-50) for beginners, [NeetCode 250](https://github.com/cojudge/neetcode-250) and the 950-problem [LeetCode 1000](https://github.com/cojudge/leetcode-1000). Installed packs work offline. [Browse packs or create your own](https://github.com/cojudge/plugins)
 - **8 languages for every problem**: Java, C++, Python, TypeScript, Rust, C#, Go and PHP
 - **Debugger** for all 8 languages, plus a data-structure visualizer
 - **Custom test cases**: add your own inputs and compare the expected output with yours
@@ -273,7 +273,7 @@ cojudge plugin install owner/repo      # any GitHub repo, including private ones
 
 You can also use the **Plugins** page (plug icon next to the Playground button) to browse, install, enable, disable or remove packs. Packs are downloaded once and then work offline. Packs can't clobber each other: problems with the same slug in different packs are kept apart.
 
-To write and publish your own pack, see [`docs/PLUGINS.md`](docs/PLUGINS.md). To list it in the catalog, open a PR to [`cojudge/plugins`](https://github.com/cojudge/plugins).
+**Create your own problem set**, public or private: follow the step-by-step guide in [`cojudge/plugins`](https://github.com/cojudge/plugins#create-your-own-problem-set). It covers the folder layout, testing locally, publishing on GitHub, private repos, and getting listed in the catalog. The full reference is [`docs/PLUGINS.md`](docs/PLUGINS.md).
 
 ## Add a problem
 
@@ -289,7 +289,7 @@ See [`docs/ADD_PROBLEMS.md`](docs/ADD_PROBLEMS.md) for a comprehensive guide cov
 - Registration in `~/cojudge/courses/blind75/courseinfo.json`
 - Verification checklist (`cojudge init`/`run`/`submit`)
 
-Refer to `~/cojudge/problems/two-sum` (seeded from `problems/two-sum`) for a minimal example. To share a set of problems with others, package them as a [problem pack](#problem-packs-plugins).
+Refer to `~/cojudge/problems/two-sum` (seeded from `problems/two-sum`) for a minimal example. To share a set of problems with others, package them as a [problem pack](https://github.com/cojudge/plugins#create-your-own-problem-set).
 
 #### Note on problems
 
