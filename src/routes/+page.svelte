@@ -1,13 +1,19 @@
 <script lang="ts">
     export let data;
 
-    // One-time suggestion for installs that used to ship LeetCode 1000
-    // bundled (it is now the `leetcode-1000` plugin).
-    const LC1000_BANNER_KEY = 'lc1000-plugin-banner-dismissed';
-    let lc1000BannerDismissed = true;
-    function dismissLc1000Banner() {
-        lc1000BannerDismissed = true;
-        try { localStorage.setItem(LC1000_BANNER_KEY, '1'); } catch { /* ignore */ }
+    // One-time suggestion for installs that used to ship these packs
+    // bundled (Basic 50, LeetCode 1000 are now plugins). Keyed by the set
+    // of suggested packs, so dismissing one set doesn't hide a later one.
+    $: suggestedPlugins = (data.suggestedPlugins ?? []) as { id: string; name: string }[];
+    $: pluginBannerKey = `moved-plugins-banner-dismissed:${suggestedPlugins.map((p) => p.id).join(',')}`;
+    let pluginBannerDismissed = true;
+    let storageReady = false;
+    $: if (storageReady) {
+        try { pluginBannerDismissed = localStorage.getItem(pluginBannerKey) === '1'; } catch { pluginBannerDismissed = false; }
+    }
+    function dismissPluginBanner() {
+        pluginBannerDismissed = true;
+        try { localStorage.setItem(pluginBannerKey, '1'); } catch { /* ignore */ }
     }
     import { onDestroy, onMount, tick } from "svelte";
     import { marked } from "marked";
@@ -341,7 +347,7 @@
     }
 
     onMount(() => {
-        try { lc1000BannerDismissed = localStorage.getItem(LC1000_BANNER_KEY) === '1'; } catch { lc1000BannerDismissed = false; }
+        storageReady = true;
         window.addEventListener("click", handleClickOutside);
         if (isDesktopMode) void refreshCliStatus();
         void initializeAppUpdatePreference();
@@ -1542,11 +1548,11 @@
 {/if}
 
 <div class="container">
-    {#if data.suggestLc1000Plugin && !lc1000BannerDismissed && !$page.data.isDemoSite}
+    {#if suggestedPlugins.length > 0 && !pluginBannerDismissed && !$page.data.isDemoSite}
         <div class="plugin-banner" role="status">
-            <span>LeetCode 1000 is now a separate plugin. Install it to get its 950-problem course back. Your progress is kept.</span>
-            <a class="plugin-banner-cta" href="/plugins?tab=explore" onclick={dismissLc1000Banner}>Get the plugin</a>
-            <button class="plugin-banner-close" aria-label="Dismiss" onclick={dismissLc1000Banner}>×</button>
+            <span>{suggestedPlugins.map((p) => p.name).join(' and ')} {suggestedPlugins.length > 1 ? 'are now separate plugins' : 'is now a separate plugin'}. Install {suggestedPlugins.length > 1 ? 'them' : 'it'} to get {suggestedPlugins.length > 1 ? 'those courses' : 'the course'} back. Your progress is kept.</span>
+            <a class="plugin-banner-cta" href="/plugins?tab=explore" onclick={dismissPluginBanner}>{suggestedPlugins.length > 1 ? 'Get the plugins' : 'Get the plugin'}</a>
+            <button class="plugin-banner-close" aria-label="Dismiss" onclick={dismissPluginBanner}>×</button>
         </div>
     {/if}
     <div class="backup-toolbar">
@@ -1558,6 +1564,16 @@
                 </svg>
             </a>
         </Tooltip>
+        {#if !$page.data.isDemoSite}
+            <Tooltip text={"Plugins"} pos={"bottom"}>
+                <a href="/plugins" class="btn playground-btn" aria-label="Plugins">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block; flex-shrink: 0;">
+                        <path d="M12 2v6M8 4v4M16 4v4M6 8h12v4a6 6 0 0 1-12 0z"></path>
+                        <line x1="12" y1="18" x2="12" y2="22"></line>
+                    </svg>
+                </a>
+            </Tooltip>
+        {/if}
         <div class="dropdown-container" bind:this={dropdownRef}>
             <button
                 bind:this={dropdownToggleButton}
@@ -1719,20 +1735,6 @@
                                 Manage Problems
                             </span>
                         </button>
-                        <a
-                            class="dropdown-item"
-                            role="menuitem"
-                            href="/plugins"
-                            title="Install, enable or disable problem-pack plugins"
-                        >
-                            <span class="dropdown-item-content">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M12 2v6M8 4v4M16 4v4M6 8h12v4a6 6 0 0 1-12 0z"></path>
-                                    <line x1="12" y1="18" x2="12" y2="22"></line>
-                                </svg>
-                                Plugins
-                            </span>
-                        </a>
                         <button
                             class="dropdown-item"
                             role="menuitem"

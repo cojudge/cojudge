@@ -2,7 +2,7 @@
 
 A plugin (pack) adds problems and courses to Cojudge from its own GitHub
 repo. LeetCode 1000 ([`cojudge/leetcode-1000`](https://github.com/cojudge/leetcode-1000))
-is the reference pack.
+is the reference pack; [`cojudge/basic-50`](https://github.com/cojudge/basic-50) is a smaller one.
 
 ## Using plugins
 
@@ -18,7 +18,7 @@ cojudge plugin upgrade [id]            # re-install from the recorded source
 cojudge plugin uninstall <id>
 ```
 
-The web UI has the same actions under **☰ → Plugins**: an Installed tab and
+The web UI has the same actions on the **Plugins** page (plug icon next to the Playground button): an Installed tab and
 an Explore tab that reads the catalog. Changes apply on the next page load,
 with no restart.
 

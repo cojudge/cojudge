@@ -14,13 +14,21 @@ import type { PageServerLoad } from './$types';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { getInstalled, pluginForCourse } from '$lib/server/plugins';
+
+/** Packs that used to ship bundled with Cojudge and are now plugins. */
+const MOVED_OUT_PACKS = [
+    { id: 'basic-50', name: 'Basic 50' },
+    { id: 'leetcode-1000', name: 'LeetCode 1000' }
+];
 import { isExamModeEnabled } from '$lib/server/examMode';
 
 export const load: PageServerLoad = async ({ url }) => {
     // Existing installs (content folder seeded before) that used to get
-    // LeetCode 1000 bundled are offered the plugin once (client dismisses).
-    const suggestLc1000Plugin =
-        existsSync(path.join(getContentRoot(), '.cojudge-seed.json')) && !getInstalled('leetcode-1000');
+    // these packs bundled are offered the plugins once (client dismisses).
+    const isExistingInstall = existsSync(path.join(getContentRoot(), '.cojudge-seed.json'));
+    const suggestedPlugins = isExistingInstall
+        ? MOVED_OUT_PACKS.filter((p) => !getInstalled(p.id))
+        : [];
     await ensureUserContentSeeded();
     // Courses from ~/cojudge, enabled plugins and the bundled copy.
     const courses = await loadAllCourses();
@@ -81,6 +89,6 @@ export const load: PageServerLoad = async ({ url }) => {
         // Absolute path of the user-editable content folder (~/cojudge by
         // default), shown in the "Manage Problems" popup.
         contentDir: getContentRoot(),
-        suggestLc1000Plugin
+        suggestedPlugins
     };
 };
