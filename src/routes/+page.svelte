@@ -1585,7 +1585,7 @@
 <div class="container">
     {#if suggestedPlugins.length > 0 && !pluginBannerDismissed && !$page.data.isDemoSite}
         <div class="plugin-banner" role="status">
-            <span>{suggestedPlugins.map((p) => p.name).join(' and ')} {suggestedPlugins.length > 1 ? 'are now separate plugins' : 'is now a separate plugin'}. Install {suggestedPlugins.length > 1 ? 'them' : 'it'} to get {suggestedPlugins.length > 1 ? 'those courses' : 'the course'} back. Your progress is kept.</span>
+            <span>{new Intl.ListFormat('en', { type: 'conjunction' }).format(suggestedPlugins.map((p) => p.name))} {suggestedPlugins.length > 1 ? 'are now separate plugins' : 'is now a separate plugin'}. Install {suggestedPlugins.length > 1 ? 'them' : 'it'} to get {suggestedPlugins.length > 1 ? 'those courses' : 'the course'} back. Your progress is kept.</span>
             <a class="plugin-banner-cta" href="/plugins?tab=explore" onclick={dismissPluginBanner}>{suggestedPlugins.length > 1 ? 'Get the plugins' : 'Get the plugin'}</a>
             <button class="plugin-banner-close" aria-label="Dismiss" onclick={dismissPluginBanner}>×</button>
         </div>

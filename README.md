@@ -7,7 +7,7 @@
 
 <h1 align="center">Cojudge</h1>
 
-<p align="center"><b>250 built-in problems · installable problem packs · 8 languages · offline</b></p>
+<p align="center"><b>151 built-in problems · installable problem packs · 8 languages · offline</b></p>
 
 <p align="center">Practice coding interviews with a local judge. No AI assistant, no discussion forum, no internet. Just you, the problem and the judge.</p>
 
@@ -29,7 +29,7 @@
 
 - **Honest practice.** Nothing to reach for when a problem gets hard: no AI, no hints tab, no solutions forum (until you open the reference solution yourself).
 - **Works anywhere.** On a plane, on a train, on a locked-down network, or with Wi-Fi off on purpose. Everything runs on your machine.
-- **A real judge.** 250 built-in problems (plus more from [problem packs](#problem-packs-plugins)) with sample tests, hidden tests and reference solutions, judged in Docker sandboxes, with a step debugger and a visualizer. All problems are tested for all programming languages we support
+- **A real judge.** 151 built-in problems (plus more from [problem packs](#problem-packs-plugins)) with sample tests, hidden tests and reference solutions, judged in Docker sandboxes, with a step debugger and a visualizer. All problems are tested for all programming languages we support
 - **Free and open source.** MIT-licensed. Your code and progress stay local.
 
 
@@ -100,8 +100,8 @@ You also need [Docker](https://docs.docker.com/get-docker/) running to judge cod
 
 ## Highlights
 
-- **250 built-in problems** in three courses (Blind 75, NeetCode 150, NeetCode 250), each with sample tests, hidden tests and a reference solution
-- **Problem packs (plugins)**: add more problems and courses from any GitHub repo, public or private, with `cojudge plugin` or the in-app Plugins page. Official packs: [Basic 50](https://github.com/cojudge/basic-50) for beginners and the 950-problem [LeetCode 1000](https://github.com/cojudge/leetcode-1000). Installed packs work offline. See [Problem packs](#problem-packs-plugins)
+- **151 built-in problems** in two courses (Blind 75, NeetCode 150), each with sample tests, hidden tests and a reference solution
+- **Problem packs (plugins)**: add more problems and courses from any GitHub repo, public or private, with `cojudge plugin` or the in-app Plugins page. Official packs: [Basic 50](https://github.com/cojudge/basic-50) for beginners, [NeetCode 250](https://github.com/cojudge/neetcode-250) and the 950-problem [LeetCode 1000](https://github.com/cojudge/leetcode-1000). Installed packs work offline. See [Problem packs](#problem-packs-plugins)
 - **8 languages for every problem**: Java, C++, Python, TypeScript, Rust, C#, Go and PHP
 - **Debugger** for all 8 languages, plus a data-structure visualizer
 - **Custom test cases**: add your own inputs and compare the expected output with yours
@@ -261,11 +261,12 @@ npm run dev
 
 ## Problem packs (plugins)
 
-Cojudge ships 250 problems. Packs add more problems and courses:
+Cojudge ships 151 problems (Blind 75 and NeetCode 150). Packs add more problems and courses:
 
 ```bash
 cojudge plugin search                  # browse the catalog
 cojudge plugin install basic-50        # 50 beginner problems: if/else, loops, arrays, strings, recursion
+cojudge plugin install neetcode-250    # NeetCode 150 plus 100 more
 cojudge plugin install leetcode-1000   # 950-problem archive grouped by pattern
 cojudge plugin install owner/repo      # any GitHub repo, including private ones (after `gh auth login` or with GH_TOKEN)
 ```

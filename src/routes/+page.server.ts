@@ -18,6 +18,7 @@ import { getInstalled, pluginForCourse } from '$lib/server/plugins';
 /** Packs that used to ship bundled with Cojudge and are now plugins. */
 const MOVED_OUT_PACKS = [
     { id: 'basic-50', name: 'Basic 50' },
+    { id: 'neetcode-250', name: 'NeetCode 250' },
     { id: 'leetcode-1000', name: 'LeetCode 1000' }
 ];
 import { isExamModeEnabled } from '$lib/server/examMode';
