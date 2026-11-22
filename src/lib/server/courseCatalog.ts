@@ -228,3 +228,41 @@ export async function loadMergedProblemSummaries(
 
     return loaded.filter((problem): problem is ProblemSummary => problem !== null);
 }
+
+/**
+ * Every visible problem (core, user-created and enabled plugins), keyed by
+ * full problem id. Plugin-owned problems get `<plugin>/<slug>` ids regardless
+ * of their metadata id, so packs can't collide.
+ */
+export async function loadAllProblemSummaries(
+    opts: { includeStatement?: boolean } = {}
+): Promise<ProblemSummary[]> {
+    const { listProblemSlugs, resolveProblemDir } = await import('./contentPaths');
+    const includeStatement = opts.includeStatement ?? false;
+    const ids = await listProblemSlugs();
+    const loaded = await Promise.all(
+        ids.map(async (id): Promise<ProblemSummary | null> => {
+            const dir = await resolveProblemDir(id);
+            const summary = await readProblemSummary(path.dirname(dir), path.basename(dir), includeStatement);
+            if (!summary) return null;
+            return id.includes('/') ? { ...summary, id } : summary;
+        })
+    );
+    return loaded.filter((problem): problem is ProblemSummary => problem !== null);
+}
+
+/**
+ * Every course from ~/cojudge, enabled plugins and the bundled copy (first
+ * layer wins per id), with plugin-relative problem references qualified.
+ */
+export async function loadAllCourses(): Promise<Course[]> {
+    const { getCourseDirLayers, qualifyCourseProblems } = await import('./contentPaths');
+    const layers = await Promise.all(getCourseDirLayers().map((dir) => discoverCourses(dir)));
+    const byId = new Map<string, Course>();
+    for (const layer of layers) {
+        for (const course of layer) if (!byId.has(course.id)) byId.set(course.id, course);
+    }
+    return [...byId.values()]
+        .map((course) => ({ ...course, info: qualifyCourseProblems(course.id, course.info) }))
+        .toSorted((a, b) => a.id.localeCompare(b.id));
+}

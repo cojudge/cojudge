@@ -23,6 +23,7 @@ Usage:
   cojudge unmark <slug>          Unmark a problem as solved
   cojudge init <slug>           Initialize a problem file with starter code
                                   (Options: --lang java|python|cpp|rust|csharp|go|php)
+  cojudge plugin <cmd>          Manage problem-pack plugins (list|search|install|uninstall|enable|disable|upgrade)
   cojudge sync                  Show content status (auto-updates unedited copies)
   cojudge sync --reset <id>     Reset a problem/course to the bundled version
   cojudge sync --reset --all    Reset all modified content to bundled versions

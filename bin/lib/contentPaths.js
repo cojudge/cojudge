@@ -3,6 +3,13 @@ import fs from "fs";
 import os from "os";
 import path from "path";
 import { rootDir } from "./utils.js";
+import {
+  enabledPlugins,
+  listProblemIds,
+  pluginForCourse,
+  problemDirCandidates,
+  qualifyCourseEntry,
+} from "./plugins.js";
 
 /**
  * User-editable content lives in ~/cojudge (overridable via
@@ -34,46 +41,77 @@ export function getBundledCoursesDir() {
   return path.join(rootDir, "courses");
 }
 
-/** Prefer the user copy; fall back to the bundled copy. */
-export function resolveProblemDirSync(slug) {
-  const userDir = path.join(getProblemsDir(), slug);
-  if (fs.existsSync(userDir)) return userDir;
-  return path.join(getBundledProblemsDir(), slug);
+function idOpts() {
+  return { userProblemsDir: getProblemsDir(), bundledProblemsDir: getBundledProblemsDir() };
 }
 
-export function resolveProblemFileSync(slug, ...rest) {
-  const userPath = path.join(getProblemsDir(), slug, ...rest);
-  if (fs.existsSync(userPath)) return userPath;
-  const bundledPath = path.join(getBundledProblemsDir(), slug, ...rest);
-  if (fs.existsSync(bundledPath)) return bundledPath;
-  return userPath;
+function problemDirs(id) {
+  const c = problemDirCandidates(id, idOpts());
+  return c ? [c.user, ...c.bases] : null;
+}
+
+function firstExisting(paths) {
+  for (const p of paths) if (fs.existsSync(p)) return p;
+  return null;
+}
+
+/**
+ * Resolve a problem id (`slug` or `<plugin>/<slug>`): user edit first, then
+ * the bundled / plugin copy. Malformed or unknown-plugin ids resolve to a
+ * non-existent path under the user dir so callers report "not found".
+ */
+export function resolveProblemDirSync(id) {
+  const dirs = problemDirs(id);
+  if (!dirs) return path.join(getProblemsDir(), "@invalid");
+  return firstExisting(dirs) || dirs[dirs.length - 1];
+}
+
+export function resolveProblemFileSync(id, ...rest) {
+  const dirs = problemDirs(id);
+  if (!dirs) return path.join(getProblemsDir(), "@invalid", ...rest);
+  const files = dirs.map((d) => path.join(d, ...rest));
+  return firstExisting(files) || files[0];
+}
+
+/** Course dirs in precedence order: user, enabled plugins, bundled. */
+function courseDirs(courseId) {
+  return [getCoursesDir(), ...enabledPlugins().map((p) => p.courses), getBundledCoursesDir()].map((d) =>
+    path.join(d, courseId),
+  );
 }
 
 export function resolveCourseFileSync(courseId, ...rest) {
-  const userPath = path.join(getCoursesDir(), courseId, ...rest);
-  if (fs.existsSync(userPath)) return userPath;
-  const bundledPath = path.join(getBundledCoursesDir(), courseId, ...rest);
-  if (fs.existsSync(bundledPath)) return bundledPath;
-  return userPath;
+  const files = courseDirs(courseId).map((d) => path.join(d, ...rest));
+  return firstExisting(files) || files[0];
 }
 
-/** Union of problem slugs from ~/cojudge and the bundled copy. */
-export function listProblemSlugsSync() {
-  const seen = new Set();
-  for (const dir of [getProblemsDir(), getBundledProblemsDir()]) {
-    try {
-      for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-        if (entry.isDirectory()) seen.add(entry.name);
-      }
-    } catch {}
+/**
+ * Read a course's courseinfo.json with plugin-relative problem references
+ * qualified to full ids. Returns null if missing/invalid.
+ */
+export function readCourseInfoSync(courseId) {
+  try {
+    const info = JSON.parse(fs.readFileSync(resolveCourseFileSync(courseId, "courseinfo.json"), "utf8"));
+    const plugin = pluginForCourse(courseId);
+    const map = info["problems-of-category"] || {};
+    for (const cat of Object.keys(map)) {
+      if (Array.isArray(map[cat])) map[cat] = map[cat].map((e) => qualifyCourseEntry(String(e), plugin));
+    }
+    return info;
+  } catch {
+    return null;
   }
-  return [...seen].sort();
 }
 
-/** Union of course ids from ~/cojudge and the bundled copy. */
+/** Every problem id: core, unprefixed plugin slugs and `<plugin>/<slug>`. */
+export function listProblemSlugsSync() {
+  return listProblemIds(idOpts());
+}
+
+/** Union of course ids from ~/cojudge, enabled plugins and the bundled copy. */
 export function listCourseIdsSync() {
   const seen = new Set();
-  for (const dir of [getCoursesDir(), getBundledCoursesDir()]) {
+  for (const dir of [getCoursesDir(), ...enabledPlugins().map((p) => p.courses), getBundledCoursesDir()]) {
     try {
       for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
         if (entry.isDirectory()) seen.add(entry.name);
@@ -511,4 +549,22 @@ export function getCourseSourceSync(courseId) {
     path.join(getBundledCoursesDir(), courseId),
     COURSE_COMPARE_FILES,
   );
+}
+
+/**
+ * CLI convenience: map a user-typed problem argument to a full id. An exact
+ * id wins; otherwise a bare slug that exists in exactly one plugin resolves
+ * to `<plugin>/<slug>`. Ambiguous slugs throw with the candidate ids.
+ * Unknown args are returned unchanged so callers print their own not-found.
+ */
+export function resolveProblemArgSync(arg) {
+  if (!arg || fs.existsSync(resolveProblemDirSync(arg))) return arg;
+  const slug = arg.includes("/") ? null : arg;
+  if (!slug) return arg;
+  const hits = listProblemIds(idOpts()).filter((id) => id.endsWith(`/${slug}`));
+  if (hits.length === 1) return hits[0];
+  if (hits.length > 1) {
+    throw new Error(`'${slug}' exists in several plugins; use one of: ${hits.join(", ")}`);
+  }
+  return arg;
 }

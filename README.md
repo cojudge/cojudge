@@ -62,7 +62,8 @@ You also need [Docker](https://docs.docker.com/get-docker/) running to judge cod
 
 ## Highlights
 
-- **1,031 problems**, each with sample tests, hidden tests and a reference solution, organized into packs: Blind 75, NeetCode 150, NeetCode 250, Basic 50 and a 1,000-problem pack
+- **1,031 problems**, each with sample tests, hidden tests and a reference solution: 300 built in (Blind 75, NeetCode 150, NeetCode 250, Basic 50) plus the 950-problem [LeetCode 1000](https://github.com/cojudge/leetcode-1000) pack, one command away (`cojudge plugin install leetcode-1000`)
+- **Problem-pack plugins**: install, enable, disable or remove packs from any GitHub repo with `cojudge plugin` or the in-app Plugins page ([docs/PLUGINS.md](docs/PLUGINS.md))
 - **8 languages for every problem**: Java, C++, Python, TypeScript, Rust, C#, Go and PHP
 - **Debugger** for all 8 languages, plus a data-structure visualizer
 - **Custom test cases**: add your own inputs and compare the expected output with yours
