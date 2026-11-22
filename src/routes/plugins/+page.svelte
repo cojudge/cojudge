@@ -234,6 +234,9 @@
 	}
 	.tabs button {
 		background: none;
+		font-weight: normal;
+		border-radius: 0;
+		transform: none !important;
 		border: none;
 		color: var(--color-text-secondary);
 		padding: 0.5rem 0.75rem;
@@ -288,32 +291,40 @@
 		align-items: center;
 		flex-shrink: 0;
 	}
+	/* Same look as the problem page's Run / Submit buttons (ExecutionPanel .btn). */
 	button {
-		background: var(--color-surface);
-		color: var(--color-text);
-		border: 1px solid var(--color-border);
+		background-color: var(--color-surface-hover);
+		color: var(--color-text-primary);
+		border: none;
 		border-radius: var(--border-radius-sm);
-		padding: 0.35rem 0.75rem;
+		padding: 0.4rem 0.9rem;
 		cursor: pointer;
 		font-size: 0.85rem;
+		font-weight: 600;
+		transition: all 0.2s ease-in-out;
 	}
 	button:hover:not(:disabled) {
-		background: var(--color-surface-hover);
+		transform: translateY(-2px);
+	}
+	button:active:not(:disabled) {
+		transform: translateY(-1px);
 	}
 	button:disabled {
 		opacity: 0.5;
-		cursor: default;
+		cursor: not-allowed;
+		transform: none;
 	}
 	button.primary {
-		background: var(--color-primary);
+		background-color: var(--color-primary);
 		color: var(--color-primary-text);
-		border-color: transparent;
 	}
 	button.danger {
 		color: var(--color-hard);
 	}
 	button.link {
 		background: none;
+		font-weight: normal;
+		transform: none !important;
 		border: none;
 		padding: 0;
 		color: var(--color-highlight);
