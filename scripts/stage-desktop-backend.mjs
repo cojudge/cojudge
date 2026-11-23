@@ -3,6 +3,7 @@ import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } fr
 import { basename, delimiter, join, sep } from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
+import { WINDOWS_BUNDLED_CONTENT_DIR } from '../bin/lib/bundledContent.js';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const backend = join(root, 'src-tauri', 'resources', 'backend');
@@ -37,10 +38,18 @@ const install = npmExecPath
 if (install.error) throw install.error;
 if (install.status !== 0) process.exit(install.status ?? 1);
 
+const target = process.env.COJUDGE_DESKTOP_TARGET ?? process.env.TAURI_ENV_TARGET_TRIPLE;
+const windows = target ? target.toLowerCase().includes('-windows-') : process.platform === 'win32';
+// NSIS overlays the previous backend on in-place updates. Give the post-plugin
+// course and problem trees a fresh destination so old resources stay out of the catalog.
+const content = windows ? join(backend, WINDOWS_BUNDLED_CONTENT_DIR) : backend;
+mkdirSync(content, { recursive: true });
+
 for (const directory of ['build', 'courses', 'problems', 'docker', 'bin']) {
 	const source = join(root, directory);
 	if (!existsSync(source)) throw new Error(`Missing ${source}`);
-	cpSync(source, join(backend, directory), {
+	const destination = directory === 'courses' || directory === 'problems' ? content : backend;
+	cpSync(source, join(destination, directory), {
 		filter: (entry) => !basename(entry).startsWith('.'),
 		recursive: true
 	});
