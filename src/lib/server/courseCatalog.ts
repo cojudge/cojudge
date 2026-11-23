@@ -133,15 +133,14 @@ export function orderProblemsForCourse(courseInfo: CourseInfo, problems: Problem
 }
 
 async function readProblemSummary(
-    problemsDir: string,
-    slug: string,
-    includeStatement: boolean
+    metadataPath: string,
+    statementPath?: string
 ): Promise<ProblemSummary | null> {
     // Parsed summaries are cached by stat: the home page loads every problem
     // on each course-tab navigation, and re-reading ~1000 files each time is
     // slow (especially on Windows, where antivirus scans every file open).
     const summary = await readDerivedCached(
-        path.join(problemsDir, slug, 'metadata.json'),
+        metadataPath,
         'summary',
         (content): Omit<ProblemSummary, 'statement'> | null => {
             try {
@@ -163,8 +162,8 @@ async function readProblemSummary(
     );
     if (!summary) return null;
     let statement: string | undefined = undefined;
-    if (includeStatement) {
-        statement = (await readTextCached(path.join(problemsDir, slug, 'statement.md'))) ?? undefined;
+    if (statementPath) {
+        statement = (await readTextCached(statementPath)) ?? undefined;
     }
     // Copy so callers can't mutate the cached value.
     return { ...summary, statement };
@@ -185,7 +184,10 @@ export async function loadProblemSummaries(
     const loaded = await Promise.all(
         entries
             .filter((entry) => entry.isDirectory())
-            .map((entry): Promise<ProblemSummary | null> => readProblemSummary(problemsDir, entry.name, includeStatement))
+            .map((entry) => readProblemSummary(
+                path.join(problemsDir, entry.name, 'metadata.json'),
+                includeStatement ? path.join(problemsDir, entry.name, 'statement.md') : undefined
+            ))
     );
 
     return loaded.filter((problem): problem is ProblemSummary => problem !== null);
@@ -221,8 +223,11 @@ export async function loadMergedProblemSummaries(
 
     const loaded = await Promise.all(
         [...slugs].map((slug): Promise<ProblemSummary | null> => {
-            const dir = userSlugs.has(slug) ? userProblemsDir : bundledProblemsDir;
-            return readProblemSummary(dir, slug, includeStatement);
+            const dir = path.join(userSlugs.has(slug) ? userProblemsDir : bundledProblemsDir, slug);
+            return readProblemSummary(
+                path.join(dir, 'metadata.json'),
+                includeStatement ? path.join(dir, 'statement.md') : undefined
+            );
         })
     );
 
@@ -237,13 +242,16 @@ export async function loadMergedProblemSummaries(
 export async function loadAllProblemSummaries(
     opts: { includeStatement?: boolean } = {}
 ): Promise<ProblemSummary[]> {
-    const { listProblemSlugs, resolveProblemDir } = await import('./contentPaths');
+    const { listProblemSlugs, resolveProblemFile } = await import('./contentPaths');
     const includeStatement = opts.includeStatement ?? false;
     const ids = await listProblemSlugs();
     const loaded = await Promise.all(
         ids.map(async (id): Promise<ProblemSummary | null> => {
-            const dir = await resolveProblemDir(id);
-            const summary = await readProblemSummary(path.dirname(dir), path.basename(dir), includeStatement);
+            // A user directory may only contain a solution or other partial override.
+            const summary = await readProblemSummary(
+                await resolveProblemFile(id, 'metadata.json'),
+                includeStatement ? await resolveProblemFile(id, 'statement.md') : undefined
+            );
             if (!summary) return null;
             return id.includes('/') ? { ...summary, id } : summary;
         })

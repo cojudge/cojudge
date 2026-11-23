@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { getBundledContentRoot } from '../../../bin/lib/bundledContent.js';
 import { readDerivedCached } from './textFileCache';
 import {
 	enabledPlugins,
@@ -43,11 +44,11 @@ export function getCoursesDir(): string {
 }
 
 export function getBundledProblemsDir(): string {
-	return path.resolve('problems');
+	return path.join(getBundledContentRoot(process.cwd()), 'problems');
 }
 
 export function getBundledCoursesDir(): string {
-	return path.resolve('courses');
+	return path.join(getBundledContentRoot(process.cwd()), 'courses');
 }
 
 function isSafeSegment(segment: string): boolean {

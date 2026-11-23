@@ -3,6 +3,7 @@ import fs from "fs";
 import os from "os";
 import path from "path";
 import { rootDir } from "./utils.js";
+import { getBundledContentRoot } from "./bundledContent.js";
 import {
   enabledPlugins,
   listProblemIds,
@@ -34,11 +35,11 @@ export function getCoursesDir() {
 }
 
 export function getBundledProblemsDir() {
-  return path.join(rootDir, "problems");
+  return path.join(getBundledContentRoot(rootDir), "problems");
 }
 
 export function getBundledCoursesDir() {
-  return path.join(rootDir, "courses");
+  return path.join(getBundledContentRoot(rootDir), "courses");
 }
 
 function idOpts() {

@@ -13,7 +13,7 @@ async function makeProblem(dir: string, id: string, title: string) {
 }
 
 /** A plugin source folder (what a GitHub repo would contain). */
-async function makePack(root: string, id: string, opts: { unprefixed?: boolean; problems: string[]; course: string[] }) {
+async function makePack(root: string, id: string, opts: { unprefixed?: boolean; problems: string[]; course: string[]; courseId?: string }) {
 	const dir = path.join(root, id);
 	await writeJson(path.join(dir, 'cojudge-plugin.json'), {
 		id,
@@ -22,7 +22,7 @@ async function makePack(root: string, id: string, opts: { unprefixed?: boolean; 
 		...(opts.unprefixed ? { unprefixedIds: true } : {})
 	});
 	for (const slug of opts.problems) await makeProblem(path.join(dir, 'problems', slug), slug, `${id} ${slug}`);
-	await writeJson(path.join(dir, 'courses', `${id}-course`, 'courseinfo.json'), {
+	await writeJson(path.join(dir, 'courses', opts.courseId ?? `${id}-course`, 'courseinfo.json'), {
 		title: `${id} course`,
 		'category-order': ['all'],
 		'problems-of-category': { all: opts.course }
@@ -126,6 +126,61 @@ describe('plugins', () => {
 		expect(await cp.listProblemSlugs()).toContain('google-prep/g-only');
 		plugins.uninstall('google-prep');
 		expect(plugins.listInstalled()).toEqual([]);
+	});
+
+	it.each(['a fresh install', 'an in-place upgrade'])('uses only the current Windows bundle after %s', async (scenario) => {
+		const upgrade = scenario === 'an in-place upgrade';
+		const { ensureUserContentSeeded, __resetEnsureMemoForTests } = await import('./contentPaths');
+		const plugins = await import('./plugins');
+		const { loadAllCourses, loadAllProblemSummaries } = await import('./courseCatalog');
+		const user = path.join(tmp, 'user');
+		const courseInfo = (title: string, slug: string) => ({ title, 'problems-of-category': { all: [slug] } });
+		const basicCourse = path.join('courses', 'basic50', 'courseinfo.json');
+		const leetcodeCourse = path.join('courses', 'leetcode-1000', 'courseinfo.json');
+		const legacyProblem = path.join('problems', 'archive-only');
+
+		if (upgrade) {
+			await writeJson(path.join(bundled, basicCourse), courseInfo('Old Basic 50', 'intro'));
+			await writeJson(path.join(bundled, leetcodeCourse), courseInfo('Old LeetCode 1000', 'archive-only'));
+			await makeProblem(path.join(bundled, 'problems', 'intro'), 'intro', 'Old Intro');
+			await makeProblem(path.join(bundled, legacyProblem), 'archive-only', 'Old Archive Problem');
+			await fs.writeFile(path.join(bundled, legacyProblem, 'solution.md'), 'Original solution');
+			await ensureUserContentSeeded();
+			await fs.writeFile(path.join(user, legacyProblem, 'solution.md'), 'My edits');
+			await plugins.install(await makePack(path.join(tmp, 'src'), 'leetcode-1000', {
+				unprefixed: true, problems: ['archive-only'], course: ['archive-only'], courseId: 'leetcode-1000'
+			}));
+			await plugins.install(await makePack(path.join(tmp, 'src'), 'basic-50', {
+				unprefixed: true, problems: ['intro'], course: ['intro'], courseId: 'basic50'
+			}));
+			plugins.setEnabled('basic-50', false);
+		}
+
+		// Simulate NSIS laying down the new payload without uninstalling the old one.
+		const installedBackend = upgrade ? bundled : path.join(tmp, 'fresh-backend');
+		vi.mocked(process.cwd).mockReturnValue(installedBackend);
+		const current = path.join(installedBackend, 'bundled-content');
+		await makeProblem(path.join(current, 'problems', 'two-sum'), 'two-sum', 'Current Two Sum');
+		await writeJson(path.join(current, 'courses', 'blind75', 'courseinfo.json'), courseInfo('Blind 75', 'two-sum'));
+		__resetEnsureMemoForTests();
+		await ensureUserContentSeeded();
+
+		expect((await loadAllCourses()).map(({ id, info }) => [id, info.title])).toEqual(upgrade
+			? [['blind75', 'Blind 75'], ['leetcode-1000', 'leetcode-1000 course']]
+			: [['blind75', 'Blind 75']]);
+		expect((await loadAllProblemSummaries()).map(({ id, title }) => [id, title])).toEqual(upgrade
+			? [['archive-only', 'leetcode-1000 archive-only'], ['two-sum', 'Current Two Sum']]
+			: [['two-sum', 'Current Two Sum']]);
+		if (upgrade) {
+			await expect(fs.access(path.join(user, basicCourse))).rejects.toMatchObject({ code: 'ENOENT' });
+			await expect(fs.access(path.join(user, leetcodeCourse))).rejects.toMatchObject({ code: 'ENOENT' });
+			await expect(fs.readFile(path.join(user, legacyProblem, 'solution.md'), 'utf8')).resolves.toBe('My edits');
+			expect(plugins.getInstalled('basic-50')).toMatchObject({ enabled: false });
+			await expect(fs.access(path.join(bundled, basicCourse))).resolves.toBeUndefined();
+			plugins.setEnabled('basic-50', true);
+			expect((await loadAllCourses()).find(({ id }) => id === 'basic50')?.info.title).toBe('basic-50 course');
+			expect((await loadAllProblemSummaries()).find(({ id }) => id === 'intro')?.title).toBe('basic-50 intro');
+		}
 	});
 
 	it('parses install sources and rejects bad ones', async () => {
